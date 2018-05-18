@@ -1,0 +1,18 @@
+{
+  "name": "eos-voter",
+  "productName": "eos-voter",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "Aaron Cox",
+    "email": "aaron.cox@greymass.com",
+    "url": "https://github.com/greymass"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "npm run electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
