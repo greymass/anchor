@@ -6,12 +6,12 @@ import {
   Switch
 } from 'react-router-dom';
 
-import Index from './containers/Index';
+import Producers from '../../shared/containers/Producers';
 
 export default () => (
   <HashRouter>
     <Switch>
-      <Route exact path="/" component={Index} />
+      <Route exact path="/" component={Producers} />
     </Switch>
   </HashRouter>
 );

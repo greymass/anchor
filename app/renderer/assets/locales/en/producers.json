@@ -1,0 +1,7 @@
+{
+  "block_producer": "Block Producer",
+  "block_producer_last_produced": "Last Produced",
+  "block_producer_last_active": "Last Active",
+  "block_producer_position": "Position",
+  "block_producer_total_votes": "Total Votes"
+}
