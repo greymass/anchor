@@ -24,15 +24,22 @@ class BasicVoterContainer extends Component<Props> {
     const panes = [
       {
         menuItem: 'My Account',
-        render: () => <Tab.Pane><Wallet {...this.props} /></Tab.Pane>
+        render: () => <Tab.Pane style={{marginTop: '3em'}}><Wallet {...this.props} /></Tab.Pane>
       },
       {
-        menuItem: 'Producers',
-        render: () => <Tab.Pane><Producers {...this.props} /></Tab.Pane>
+        menuItem: 'Producer Voting',
+        render: () => <Tab.Pane style={{marginTop: '3em'}}><Producers {...this.props} /></Tab.Pane>
       }
     ];
     return (
-      <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+      <Tab
+        menu={{
+          fixed: 'top',
+          inverted: true,
+          size: 'large'
+        }}
+        panes={panes}
+      />
     );
   }
 }
