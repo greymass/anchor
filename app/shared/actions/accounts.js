@@ -3,21 +3,15 @@ import * as types from './types';
 
 const Eos = require('eosjs');
 
-const eos = Eos.Localnet({
-  // keyProvider: ['5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'],
-  // httpEndpoint: 'http://192.168.1.4:8888',
-  // debug: true,
-  httpEndpoint: 'https://eos.jesta.us',
-  broadcast: true,
-  sign: true
-});
-
-export function getAccount(account = '') {
+export function getAccount(settings, account = '') {
+  const eos = Eos.Localnet({ httpEndpoint: settings.node });
+  let loadAccount = account;
+  if (!loadAccount && settings.account) loadAccount = settings.account;
   return (dispatch: () => void) => {
     dispatch({
       type: types.GET_ACCOUNT_REQUEST
     });
-    eos.getAccount(account).then((results) => dispatch({
+    eos.getAccount(loadAccount).then((results) => dispatch({
       type: types.GET_ACCOUNT_SUCCESS,
       payload: { results }
     })).catch((err) => dispatch({

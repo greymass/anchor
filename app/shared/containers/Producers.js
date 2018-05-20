@@ -7,6 +7,8 @@ import { withRouter } from 'react-router-dom';
 import Producers from '../components/Producers';
 import * as AccountsActions from '../actions/accounts';
 import * as ProducersActions from '../actions/producers';
+import * as SettingsActions from '../actions/settings';
+import * as WalletActions from '../actions/wallet';
 
 type Props = {};
 
@@ -24,7 +26,8 @@ function mapStateToProps(state) {
   return {
     accounts: state.accounts,
     producers: state.producers,
-    settings: state.settings
+    settings: state.settings,
+    wallet: state.wallet
   };
 }
 
@@ -32,7 +35,9 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
-      ...ProducersActions
+      ...ProducersActions,
+      ...SettingsActions,
+      ...WalletActions
     }, dispatch)
   };
 }

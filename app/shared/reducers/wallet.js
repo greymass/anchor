@@ -1,13 +1,12 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  account: '',
-  node: 'http://eos.jesta.us'
+  key: ''
 };
 
-export default function settings(state = initialState, action) {
+export default function wallet(state = initialState, action) {
   switch (action.type) {
-    case types.SET_SETTING: {
+    case types.SET_WALLET_KEY: {
       return Object.assign({}, state, action.payload);
     }
     default: {

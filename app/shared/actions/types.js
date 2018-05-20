@@ -1,5 +1,8 @@
 // React types
+export const GET_SETTING = 'GET_SETTING';
 export const SET_SETTING = 'SET_SETTING';
+
+export const SET_WALLET_KEY = 'SET_WALLET_KEY';
 
 export const GET_ACCOUNT_REQUEST = 'GET_ACCOUNT_REQUEST';
 export const GET_ACCOUNT_SUCCESS = 'GET_ACCOUNT_SUCCESS';

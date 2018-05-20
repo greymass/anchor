@@ -42,7 +42,7 @@ export default class ProducersTable extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <Table size="small">
+            <Table color="violet" size="small" style={{borderRadius: 0}}>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell textAlign='center' collapsing>
@@ -75,7 +75,7 @@ export default class ProducersTable extends Component<Props> {
                     <Table.Row key={producer.owner} active={isActive}>
                       <Table.Cell textAlign='center'>{idx + 1}</Table.Cell>
                       <Table.Cell>
-                        <Header>
+                        <Header size="small">
                           {producer.owner}
                           <Header.Subheader>
                             <ProducerLink producer={producer} />
@@ -83,7 +83,7 @@ export default class ProducersTable extends Component<Props> {
                         </Header>
                       </Table.Cell>
                       <Table.Cell>
-                        {this.nFormatter(producer.total_votes, 2)}
+                        {this.nFormatter(producer.total_votes, 3)}
                       </Table.Cell>
                       <Table.Cell>
                         {(lastProduced === 946684800000)

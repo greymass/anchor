@@ -1,12 +1,12 @@
 import { send } from 'redux-electron-ipc';
 import * as types from './types';
 
-export function setSetting(key, value) {
+export function setWalletKey(value) {
   return (dispatch: () => void) => {
     dispatch({
-      type: types.SET_SETTING,
+      type: types.SET_WALLET_KEY,
       payload: {
-        [key]: value
+        key: value
       }
     });
   };

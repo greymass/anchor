@@ -3,16 +3,8 @@ import * as types from './types';
 
 const Eos = require('eosjs');
 
-const eos = Eos.Localnet({
-  // keyProvider: ['5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'],
-  // httpEndpoint: 'http://192.168.1.4:8888',
-  // debug: true,
-  httpEndpoint: 'https://eos.jesta.us',
-  broadcast: true,
-  sign: true
-});
-
-export function getProducers() {
+export function getProducers(settings) {
+  const eos = Eos.Localnet({ httpEndpoint: settings.node });
   return (dispatch: () => void) => {
     dispatch({
       type: types.GET_PRODUCERS_REQUEST
