@@ -198,6 +198,7 @@
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0-beta.13",
     "react-i18next": "^7.3.6",
+    "react-json-view": "^1.16.6",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",

@@ -4,6 +4,7 @@ import { I18n } from 'react-i18next';
 import { Header, Segment } from 'semantic-ui-react';
 
 import WalletConfig from './Wallet/Config';
+import WalletStatus from './Wallet/Status';
 
 type Props = {
   actions: {
@@ -56,6 +57,10 @@ export default class Producers extends Component<Props> {
                 actions={actions}
                 settings={settings}
                 wallet={wallet}
+              />
+              <WalletStatus
+                accounts={accounts}
+                settings={settings}
               />
             </div>
           )
