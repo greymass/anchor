@@ -12,7 +12,7 @@ import * as WalletActions from '../actions/wallet';
 
 type Props = {};
 
-class ProducerContainer extends Component<Props> {
+class BasicVoterContainer extends Component<Props> {
   props: Props;
 
   render() {
@@ -42,4 +42,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProducerContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BasicVoterContainer));
