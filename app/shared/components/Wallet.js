@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Header, Segment } from 'semantic-ui-react';
 
-import ProducersTable from './Producers/Table';
 import WalletConfig from './Wallet/Config';
 
 type Props = {
@@ -12,7 +11,6 @@ type Props = {
     getProducers: () => void
   },
   accounts: {},
-  producers: {},
   settings: {},
   wallet: {}
 };
@@ -34,7 +32,6 @@ export default class Producers extends Component<Props> {
     if (settings && settings.account) {
       this.getAccount();
     }
-    this.getProducers();
   }
 
   getAccount = () => {
@@ -43,29 +40,23 @@ export default class Producers extends Component<Props> {
     getAccount(settings);
   }
 
-  getProducers = () => {
-    const { getProducers } = this.props.actions;
-    const { settings } = this.props;
-    getProducers(settings);
-  }
-
   render() {
     const {
-      accounts,
       actions,
-      producers,
+      accounts,
       settings,
       wallet
     } = this.props;
     return (
-      <I18n ns="basic">
+      <I18n ns="wallet">
         {
           (t) => (
             <div>
-              {(producers.list.length > 0)
-                ? <ProducersTable producers={producers} />
-                : "Loading"
-              }
+              <WalletConfig
+                actions={actions}
+                settings={settings}
+                wallet={wallet}
+              />
             </div>
           )
         }

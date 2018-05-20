@@ -6,8 +6,9 @@ export default function accounts(state = {}, action) {
     // GET_ACCOUNT_SUCCESS
     // GET_ACCOUNT_FAILURE
     case types.GET_ACCOUNT_SUCCESS: {
-      console.log(action.payload)
-      return Object.assign({}, state, { list: action.payload.results.rows });
+      return Object.assign({}, state, {
+        [action.payload.results.account_name]: action.payload.results
+      });
     }
     default: {
       return state;
