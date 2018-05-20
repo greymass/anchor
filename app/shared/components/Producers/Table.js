@@ -16,7 +16,9 @@ const notation = [
   { value: 1E15, symbol: ' Pv' },
   { value: 1E18, symbol: ' Ev' },
   { value: 1E21, symbol: ' Zv' },
-  { value: 1E24, symbol: ' Yv' }
+  { value: 1E24, symbol: ' Yv' },
+  { value: 1E27, symbol: ' Nv' },
+  { value: 1E30, symbol: ' Xv' },
 ];
 
 export default class ProducersTable extends Component<Props> {
