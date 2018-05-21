@@ -1,1 +1,10 @@
 @import url("semantic-ui/semantic.min.css");
+
+.ui.progress .bar {
+  min-width: 0;
+}
+
+.ui.grey.button {
+  background-color: #e0e1e2;
+  color: rgba(0,0,0,.6);
+}

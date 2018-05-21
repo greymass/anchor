@@ -1,4 +1,3 @@
-import { send } from 'redux-electron-ipc';
 import * as types from './types';
 
 const Eos = require('eosjs');

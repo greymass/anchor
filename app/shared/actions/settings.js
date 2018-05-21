@@ -1,4 +1,3 @@
-import { send } from 'redux-electron-ipc';
 import * as types from './types';
 
 export function setSetting(key, value) {
@@ -11,3 +10,7 @@ export function setSetting(key, value) {
     });
   };
 }
+
+export default {
+  setSetting
+};

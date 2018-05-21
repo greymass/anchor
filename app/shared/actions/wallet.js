@@ -1,4 +1,3 @@
-import { send } from 'redux-electron-ipc';
 import * as types from './types';
 
 export function setWalletKey(value) {
@@ -11,3 +10,7 @@ export function setWalletKey(value) {
     });
   };
 }
+
+export default {
+  setWalletKey
+};

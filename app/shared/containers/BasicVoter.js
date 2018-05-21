@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { Tab } from 'semantic-ui-react';
+
 import Producers from '../components/Producers';
 import Wallet from '../components/Wallet';
 
@@ -13,7 +15,6 @@ import * as ProducersActions from '../actions/producers';
 import * as SettingsActions from '../actions/settings';
 import * as WalletActions from '../actions/wallet';
 
-import { Tab } from 'semantic-ui-react'
 
 type Props = {
   actions: {
@@ -50,11 +51,19 @@ class BasicVoterContainer extends Component<Props> {
     const panes = [
       {
         menuItem: 'My Account',
-        render: () => <Tab.Pane style={{marginTop: '3em'}}><Wallet {...this.props} /></Tab.Pane>
+        render: () => (
+          <Tab.Pane style={{ marginTop: '3em' }}>
+            <Wallet {...this.props} />
+          </Tab.Pane>
+        )
       },
       {
         menuItem: 'Producer Voting',
-        render: () => <Tab.Pane style={{marginTop: '3em'}}><Producers {...this.props} /></Tab.Pane>
+        render: () => (
+          <Tab.Pane style={{ marginTop: '3em' }}>
+            <Producers {...this.props} />
+          </Tab.Pane>
+        )
       }
     ];
     return (
