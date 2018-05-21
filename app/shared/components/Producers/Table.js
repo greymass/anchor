@@ -2,107 +2,104 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 
-import TimeAgo from 'react-timeago';
-import { Header, Table } from 'semantic-ui-react';
+import { Grid, Header, Input, Table } from 'semantic-ui-react';
 
-import ProducerLink from './Link';
-
-const notation = [
-  { value: 1, symbol: '' },
-  { value: 1E3, symbol: ' kv' },
-  { value: 1E6, symbol: ' Mv' },
-  { value: 1E9, symbol: ' Gv' },
-  { value: 1E12, symbol: ' Tv' },
-  { value: 1E15, symbol: ' Pv' },
-  { value: 1E18, symbol: ' Ev' },
-  { value: 1E21, symbol: ' Zv' },
-  { value: 1E24, symbol: ' Yv' },
-  { value: 1E27, symbol: ' Nv' },
-  { value: 1E30, symbol: ' Xv' },
-];
+import ProducersVoteWeight from './Vote/Weight';
+import ProducersTableRow from './Table/Row';
 
 export default class ProducersTable extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filter: false
+    };
+  }
 
-  nFormatter = (num, digits) => {
-    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-    let i;
-    for (i = notation.length - 1; i > 0; i--) {
-      if (num >= notation[i].value) {
-        break;
-      }
-    }
-    return (num / notation[i].value).toFixed(digits).replace(rx, '$1') + notation[i].symbol;
+  onSearchChange = (e, { value }) => {
+    this.setState({ filter: value });
   }
 
   render() {
     const {
-      producers
+      globals,
+      producers,
+      selected
     } = this.props;
+    const {
+      filter
+    } = this.state;
+    const {
+      current
+    } = globals;
+    const activatedStake = (current.total_activated_stake)
+      ? parseInt(current.total_activated_stake / 10000, 10)
+      : 0;
+    const activatedStakePercent = parseFloat((activatedStake / 1000000000) * 100, 10).toFixed(2);
+    const totalVoteWeight = (current.total_producer_vote_weight)
+      ? current.total_producer_vote_weight
+      : 0;
     return (
       <I18n ns="producers">
         {
           (t) => (
-            <Table color="violet" size="small" style={{borderRadius: 0}}>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell textAlign='center' collapsing>
-                    {t('block_producer_position')}
-                  </Table.HeaderCell>
-                  <Table.HeaderCell>
-                    {t('block_producer')}
-                  </Table.HeaderCell>
-                  <Table.HeaderCell>
-                    {t('block_producer_total_votes')}
-                  </Table.HeaderCell>
-                  <Table.HeaderCell>
-                    {t('block_producer_last_produced')}
-                  </Table.HeaderCell>
-                  <Table.HeaderCell>
-                    {t('block_producer_last_active')}
-                  </Table.HeaderCell>
-                  <Table.HeaderCell collapsing>
-
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {producers.list.sort((a, b) => parseInt(a.total_votes) < parseInt(b.total_votes)).map((producer, idx) => {
-                  const epoch = 946684800000;
-                  const lastProduced = (producer.last_produced_block_time * 500) + epoch;
-                  const lastActive = (producer.time_became_active * 500) + epoch;
-                  const isActive = (Date.now() - lastProduced) < 1000;
-                  return (
-                    <Table.Row key={producer.owner} active={isActive}>
-                      <Table.Cell textAlign='center'>{idx + 1}</Table.Cell>
-                      <Table.Cell>
-                        <Header size="small">
-                          {producer.owner}
-                          <Header.Subheader>
-                            <ProducerLink producer={producer} />
-                          </Header.Subheader>
-                        </Header>
-                      </Table.Cell>
-                      <Table.Cell>
-                        {this.nFormatter(producer.total_votes, 3)}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {(lastProduced === 946684800000)
-                          ? 'never'
-                          : <TimeAgo date={lastProduced} />
-                        }
-                      </Table.Cell>
-                      <Table.Cell>
-                        {(lastActive === 946684800000)
-                          ? 'never'
-                          : <TimeAgo date={lastActive} />
-                        }
-                      </Table.Cell>
-                      <Table.Cell></Table.Cell>
-                    </Table.Row>
-                  )
-                })}
-              </Table.Body>
-            </Table>
+            <div>
+              <Grid columns="equal">
+                <Grid.Column>
+                  <Header>
+                    {activatedStake.toLocaleString()} EOS staked ({activatedStakePercent}%)
+                    <Header.Subheader>
+                      <ProducersVoteWeight
+                        weight={totalVoteWeight}
+                      />
+                      {' '}
+                      total vote weight
+                    </Header.Subheader>
+                  </Header>
+                </Grid.Column>
+                <Grid.Column textAlign="right">
+                  <Input
+                    icon="search"
+                    onChange={this.onSearchChange}
+                    placeholder="Search..."
+                  />
+                </Grid.Column>
+              </Grid>
+              <Table color="violet" size="small" style={{ borderRadius: 0 }}>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell collapsing />
+                    <Table.HeaderCell textAlign="center" collapsing>
+                      {t('block_producer_position')}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t('block_producer')}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell>
+                      {t('block_producer_total_votes')}
+                    </Table.HeaderCell>
+                    <Table.HeaderCell collapsing>
+                      {t('block_producer_last_produced')}
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {producers
+                    .list.filter(producer => (filter ? producer.owner.includes(filter) : true))
+                    .sort((a, b) => parseInt(a.total_votes, 10) < parseInt(b.total_votes, 10))
+                    .map((producer, idx) => (
+                      <ProducersTableRow
+                        addProducer={this.props.addProducer}
+                        position={idx + 1}
+                        producer={producer}
+                        removeProducer={this.props.removeProducer}
+                        selected={selected}
+                        totalVoteWeight={totalVoteWeight}
+                      />
+                    ))
+                  }
+                </Table.Body>
+              </Table>
+            </div>
           )
         }
       </I18n>
