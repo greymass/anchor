@@ -5,7 +5,6 @@ import { configureStore } from '../shared/store/main/configureStore';
 import { configureLocalization } from './shared/i18n';
 
 import { createInterface } from './basic';
-import { windowStateKeeper } from './shared/windowStateKeeper'
 
 const path = require('path');
 const log = require('electron-log');
@@ -88,8 +87,6 @@ app.on('ready', async () => {
 
     initMenu();
   }
-
-  createMainWindow();
 });
 
 // debug event logging
@@ -103,7 +100,7 @@ app.on('will-quit', () => { log.info('app: will-quit'); });
 app.on('quit', () => { log.info('app: quit'); });
 
 const initManager = (route = '/', closable = true) => {
-  ui = createInterface(resourcePath, route, closable);
+  ui = createInterface(resourcePath, route, closable, store);
   ui.on('close', () => {
     ui = null;
   });
@@ -114,25 +111,5 @@ const showManager = () => {
     ui = initManager();
   }
 };
-
-function createMainWindow() {
-  // Get window state
-  const mainWindowStateKeeper = windowStateKeeper(store);
-
-  // Creating the window
-  const windowOptions = {
-    title: 'Main Window',
-    x: mainWindowStateKeeper.x,
-    y: mainWindowStateKeeper.y,
-    width: mainWindowStateKeeper.width,
-    height: mainWindowStateKeeper.height,
-  };
-  
-  mainWindow = new BrowserWindow(windowOptions);
-  // Track window state
-  mainWindowStateKeeper.track(mainWindow);
-    // Load content
-  return mainWindow;
-}
 
 global.showManager = showManager;

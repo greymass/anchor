@@ -1,8 +1,8 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  account: '',
-  node: 'http://eos.jesta.us'
+  account: 'lioninjungle',
+  node: 'http://dev.cryptolions.io:38888'
 };
 
 export default function settings(state = initialState, action) {

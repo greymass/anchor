@@ -1,10 +1,10 @@
-const appConfig = require('electron-settings');
+import {setSetting} from '../../shared/actions/settings'
 
-function windowStateKeeper(store) {
+export function windowStateKeeper(store) {
   let window, windowState;
 
   function setBounds() {
-    // Restore from appConfig
+    // Restore from store
     if (store.getState().settings.setupData) {
       windowState = store.getState().settings.setupData;
       return;
@@ -23,7 +23,7 @@ function windowStateKeeper(store) {
       windowState = window.getBounds();
     }
     windowState.isMaximized = window.isMaximized();
-    appConfig.set(`windowState.${windowName}`, windowState);
+    store.dispatch(setSetting('setupData', windowState));
   }
 
   function track(win) {
