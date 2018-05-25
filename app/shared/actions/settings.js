@@ -55,6 +55,7 @@ export function setSettingWithValidation(settings, key, value) {
 }
 
 export default {
+  clearSettingsCache,
   setSetting,
   setSettingWithValidation
 };
