@@ -9,12 +9,12 @@ import ProducersSelectorItemEmpty from './Selector/Item/Empty';
 export default class ProducersSelector extends Component<Props> {
   render() {
     const {
-      account,
+      // account,
       modified,
       selected,
       submitting
     } = this.props;
-    const { voter_info } = account;
+    // const { voter_info } = account;
     return (
       <I18n ns="producers">
         {
@@ -27,7 +27,7 @@ export default class ProducersSelector extends Component<Props> {
                       {t('producer_voter_total_staked')}
                     </Table.Cell>
                     <Table.Cell>
-                      {(voter_info.staked / 10000).toFixed(4)} EOS
+                      {/* {(voter_info.staked / 10000).toFixed(4)} EOS */}
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>
