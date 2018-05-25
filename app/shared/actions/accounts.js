@@ -37,5 +37,6 @@ export function getAccount(settings, account = '') {
 }
 
 export default {
+  clearAccountCache,
   getAccount
 };
