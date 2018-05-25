@@ -64,18 +64,18 @@ class BasicVoterContainer extends Component<Props> {
   render() {
     const panes = [
       {
-        menuItem: 'My Account',
-        render: () => (
-          <Tab.Pane style={{ marginTop: '3em' }}>
-            <Wallet {...this.props} />
+        menuItem: 'Producer Voting',
+        pane: (
+          <Tab.Pane key="producers" style={{ marginTop: '3em' }}>
+            <Producers {...this.props} />
           </Tab.Pane>
         )
       },
       {
-        menuItem: 'Producer Voting',
-        render: () => (
-          <Tab.Pane style={{ marginTop: '3em' }}>
-            <Producers {...this.props} />
+        menuItem: 'Wallet',
+        pane: (
+          <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
+            <Wallet {...this.props} />
           </Tab.Pane>
         )
       }
@@ -87,6 +87,7 @@ class BasicVoterContainer extends Component<Props> {
           inverted: true,
           size: 'large'
         }}
+        renderActiveOnly={false}
         panes={panes}
       />
     );
