@@ -4,3 +4,9 @@
 *.jpeg binary
 *.ico binary
 *.icns binary
+
+*.otf binary
+*.eot binary
+*.svg binary
+*.ttf binary
+*.woff binary
