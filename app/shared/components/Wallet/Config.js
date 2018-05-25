@@ -1,55 +1,114 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Form, Header, Input, Segment } from 'semantic-ui-react';
+import { I18n } from 'react-i18next';
+import { Button, Form, Input, Message, Segment } from 'semantic-ui-react';
+import debounce from 'lodash/debounce';
 
 export default class WalletConfig extends Component<Props> {
-
-  onInputChange = (e, { name, value }) => {
-    const { setSetting } = this.props.actions;
-    setSetting(name, value);
+  constructor(props) {
+    super(props);
+    this.state = {
+      config: Object.assign({}, props.settings, props.wallet)
+    };
   }
 
-  onWalletChange = (e, { name, value }) => {
-    const { setWalletKey } = this.props.actions;
-    setWalletKey(value);
-  }
+  onChange = debounce((e, { name, value }) => {
+    this.setState({
+      error: false,
+      config: { ...this.state.config, [name]: value },
+    });
+    const {
+      actions,
+      settings
+    } = this.props;
+    const { setSettingWithValidation } = actions;
+    setSettingWithValidation(settings, name, value);
+  }, 300)
+
+  onKeyChange = debounce((e, { value }) => {
+    const {
+      actions,
+      settings
+    } = this.props;
+    const { setWalletKey } = actions;
+    setWalletKey(settings, value);
+  }, 300)
 
   render() {
     const {
+      actions,
+      validate,
+      wallet
+    } = this.props;
+    const {
+      clearSettingsCache
+    } = actions;
+    const {
+      error,
+      config,
+    } = this.state;
+    const {
       account,
       node
-    } = this.props.settings;
+    } = config;
     const {
       key
-    } = this.props.wallet;
+    } = wallet;
     return (
-      <Segment basic>
-        <Form onSubmit={this.onSubmit}>
-          <Form.Group widths="equal">
-            <Form.Field
-              control={Input}
-              label="Account Name"
-              name="account"
-              onChange={this.onInputChange}
-              value={account}
-            />
-            <Form.Field
-              control={Input}
-              label="WIF/Private Key"
-              name="key"
-              onChange={this.onWalletChange}
-              value={key}
-            />
-            <Form.Field
-              control={Input}
-              label="Wallet Node"
-              name="node"
-              onChange={this.onInputChange}
-              value={node}
-            />
-          </Form.Group>
-        </Form>
-      </Segment>
+      <I18n ns="wallet">
+        {
+          (t) => (
+            <Segment basic>
+              <Form onSubmit={this.onSubmit}>
+                <Form.Field
+                  control={Input}
+                  fluid
+                  icon={(validate.NODE === 'SUCCESS') ? 'checkmark' : 'x'}
+                  label={t('wallet_config_node')}
+                  loading={(validate.NODE === 'PENDING')}
+                  name="node"
+                  onChange={this.onChange}
+                  defaultValue={node}
+                />
+                <Form.Field
+                  control={Input}
+                  fluid
+                  icon={(validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS') ? 'checkmark' : 'x'}
+                  label={t('wallet_config_account')}
+                  loading={(validate.ACCOUNT === 'PENDING')}
+                  name="account"
+                  onChange={this.onChange}
+                  defaultValue={account}
+                />
+                <Form.Field
+                  control={Input}
+                  fluid
+                  icon={(validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') ? 'checkmark' : 'x'}
+                  label={t('wallet_config_key')}
+                  loading={(validate.KEY === 'PENDING')}
+                  name="key"
+                  onChange={this.onKeyChange}
+                  type={(validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') ? 'password' : 'text'}
+                  defaultValue={key}
+                />
+                {(error)
+                  ? (
+                    <Message negative>
+                      <p>{t(error)}</p>
+                    </Message>
+                  )
+                  : ''
+                }
+                <Button
+                  onClick={clearSettingsCache}
+                  content="Reset Application"
+                  color="red"
+                />
+              </Form>
+            </Segment>
+          )
+        }
+      </I18n>
     );
   }
 }

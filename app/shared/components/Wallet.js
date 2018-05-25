@@ -1,71 +1,49 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
-import { Header, Segment } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import WalletConfig from './Wallet/Config';
 import WalletStatus from './Wallet/Status';
 
 type Props = {
-  actions: {
-    getAccount: () => void,
-    getProducers: () => void
-  },
+  actions: {},
   accounts: {},
   settings: {},
+  validate: {},
   wallet: {}
 };
 
-export default class Producers extends Component<Props> {
+export default class Wallet extends Component<Props> {
   props: Props;
-
-  componentDidMount() {
-    this.tick();
-    this.interval = setInterval(this.tick.bind(this), 5000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  tick() {
-    const { settings } = this.props;
-    if (settings && settings.account) {
-      this.getAccount();
-    }
-  }
-
-  getAccount = () => {
-    const { getAccount } = this.props.actions;
-    const { settings } = this.props;
-    getAccount(settings);
-  }
 
   render() {
     const {
       actions,
       accounts,
       settings,
+      validate,
       wallet
     } = this.props;
     return (
-      <I18n ns="wallet">
-        {
-          (t) => (
-            <div>
-              <WalletConfig
-                actions={actions}
-                settings={settings}
-                wallet={wallet}
-              />
-              <WalletStatus
-                accounts={accounts}
-                settings={settings}
-              />
-            </div>
-          )
-        }
-      </I18n>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            <WalletConfig
+              actions={actions}
+              accounts={accounts}
+              settings={settings}
+              validate={validate}
+              wallet={wallet}
+            />
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <WalletStatus
+              accounts={accounts}
+              settings={settings}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

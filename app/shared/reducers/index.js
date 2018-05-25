@@ -6,6 +6,7 @@ import accounts from './accounts';
 import globals from './globals';
 import producers from './producers';
 import settings from './settings';
+import validate from './validate';
 import wallet from './wallet';
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   producers,
   router,
   settings,
+  validate,
   wallet
 });
 

@@ -13,6 +13,7 @@ import * as AccountsActions from '../actions/accounts';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';
 import * as SettingsActions from '../actions/settings';
+import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
 
 
@@ -20,7 +21,8 @@ type Props = {
   actions: {
     getGlobals: () => void
   },
-  settings: {}
+  settings: {},
+  validate: {}
 };
 
 class BasicVoterContainer extends Component<Props> {
@@ -30,6 +32,18 @@ class BasicVoterContainer extends Component<Props> {
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 60000);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { validate } = this.props;
+    const nextValidate = nextProps.validate;
+    if (
+      validate.NODE === 'PENDING'
+      && nextValidate.NODE === 'SUCCESS'
+    ) {
+      this.tick();
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
@@ -85,6 +99,7 @@ function mapStateToProps(state) {
     globals: state.globals,
     producers: state.producers,
     settings: state.settings,
+    validate: state.validate,
     wallet: state.wallet
   };
 }
@@ -96,6 +111,7 @@ function mapDispatchToProps(dispatch) {
       ...GlobalsActions,
       ...ProducersActions,
       ...SettingsActions,
+      ...ValidateActions,
       ...WalletActions
     }, dispatch)
   };

@@ -1,0 +1,8 @@
+{
+  "key_validation_no_permission": "The specified private key does not have permission to perform actions as the specified account",
+  "key_validation_invalid_key": "The private key entered could not be resolved to a public key. Please ensure it has been entered correctly.",
+  "key_validation_account_not_found": "The account specified could not be found.",
+  "wallet_config_account": "Account Name",
+  "wallet_config_key": "WIF/Private Key",
+  "wallet_config_node": "Wallet API URL"
+}

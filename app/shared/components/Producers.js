@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
-import { Header, Grid, Segment } from 'semantic-ui-react';
+import { Grid, Transition } from 'semantic-ui-react';
 
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
+import ProducersVotingAccount from './Producers/VotingAccount';
+import ProducersWelcome from './Producers/Welcome';
+import WalletConfig from './Wallet/Config';
 
 type Props = {
   actions: {
@@ -14,7 +16,9 @@ type Props = {
   accounts: {},
   globals: {},
   producers: {},
-  settings: {}
+  settings: {},
+  validate: {},
+  wallet: {}
 };
 
 export default class Producers extends Component<Props> {
@@ -33,11 +37,20 @@ export default class Producers extends Component<Props> {
 
   componentDidMount() {
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 5000);
+    this.interval = setInterval(this.tick.bind(this), 15000);
   }
 
   componentWillReceiveProps(nextProps) {
+    const { validate } = this.props;
+    const nextValidate = nextProps.validate;
     const { accounts, settings } = nextProps;
+    // On a new node connection, update
+    if (
+      validate.NODE === 'PENDING'
+      && nextValidate.NODE === 'SUCCESS'
+    ) {
+      this.tick();
+    }
     // If no selected are loaded, attempt to retrieve them from the props
     if (!this.state.selected_loaded) {
       // If an account is loaded, attempt to load it's votes
@@ -52,7 +65,7 @@ export default class Producers extends Component<Props> {
           });
         } else {
           // otherwise notify users that they must stake before allowed voting
-          console.log('unable to vote, stake first');
+          // console.log('unable to vote, stake first');
         }
       }
     }
@@ -63,11 +76,15 @@ export default class Producers extends Component<Props> {
   }
 
   tick() {
-    const { settings } = this.props;
-    if (settings && settings.account) {
-      this.getAccount();
+    const {
+      validate
+    } = this.props;
+    if (validate.NODE) {
+      if (validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
+        this.getAccount();
+      }
+      this.getProducers();
     }
-    this.getProducers();
   }
 
   getAccount = () => {
@@ -117,63 +134,94 @@ export default class Producers extends Component<Props> {
   getProducers = () => {
     const { getProducers } = this.props.actions;
     const { settings } = this.props;
-    getProducers(settings);
+    // ensure the node is set
+    if (settings.node) {
+      getProducers(settings);
+    }
   }
 
   render() {
     const {
+      actions,
       accounts,
       globals,
       producers,
       settings,
+      validate,
+      wallet
     } = this.props;
+    const {
+      modified,
+      selected,
+      submitting
+    } = this.state;
+    const validUser = (
+      validate.NODE === 'SUCCESS'
+      && validate.ACCOUNT === 'SUCCESS'
+      && validate.KEY === 'SUCCESS'
+    );
+    let sidebar = [(
+      <WalletConfig
+        actions={actions}
+        accounts={accounts}
+        key="WalletConfig"
+        settings={settings}
+        validate={validate}
+        wallet={wallet}
+      />
+    )];
+    if (validUser) {
+      sidebar = [
+        (
+          <ProducersVotingAccount
+            key="ProducersVotingAccount"
+            onLogout={this.onLogout}
+            settings={settings}
+          />
+        ),
+        (
+          <ProducersSelector
+            account={accounts[settings.account]}
+            key="ProducersSelector"
+            modified={modified}
+            selected={selected}
+            removeProducer={this.removeProducer.bind(this)}
+            submitProducerVotes={this.submitProducerVotes.bind(this)}
+            submitting={submitting}
+          />
+        )
+      ];
+    }
     return (
-      <I18n ns="producers">
-        {
-          (t) => (
-            <div>
-              <Grid ref={this.handleContextRef}>
-                <Grid.Row>
-                  <Grid.Column width={6}>
-                    <Segment secondary color="purple">
-                      <Header>
-                        {t('producer_voter_voting_as')}
-                        {settings.account}
-                        <Header.Subheader>
-                          {t('producer_voted_connected_to')}
-                          {settings.node}
-                        </Header.Subheader>
-                      </Header>
-                    </Segment>
-                    <ProducersSelector
-                      account={accounts[settings.account]}
-                      modified={this.state.modified}
-                      selected={this.state.selected}
-                      removeProducer={this.removeProducer.bind(this)}
-                      submitProducerVotes={this.submitProducerVotes.bind(this)}
-                      submitting={this.state.submitting}
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={10}>
-                    {(producers.list.length > 0)
-                     ? (
-                       <ProducersTable
-                         addProducer={this.addProducer.bind(this)}
-                         globals={globals}
-                         producers={producers}
-                         removeProducer={this.removeProducer.bind(this)}
-                         selected={this.state.selected}
-                       />
-                     )
-                     : 'Loading'
-                    }
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </div>
-          )
-        }
-      </I18n>
+      <Grid>
+        <Grid.Row>
+          <Transition.Group
+            as={Grid.Column}
+            duration={200}
+            width={6}
+          >
+            {sidebar}
+          </Transition.Group>
+          <Grid.Column width={10}>
+            {(producers.list.length > 0)
+             ? (
+               <ProducersTable
+                 addProducer={this.addProducer.bind(this)}
+                 globals={globals}
+                 loading={loading}
+                 producers={producers}
+                 removeProducer={this.removeProducer.bind(this)}
+                 selected={selected}
+                 validUser={validUser}
+               />
+             )
+             : (
+               <ProducersWelcome />
+             )
+            }
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
