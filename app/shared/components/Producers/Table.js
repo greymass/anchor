@@ -85,7 +85,7 @@ export default class ProducersTable extends Component<Props> {
                 <Table.Body>
                   {producers
                     .list.filter(producer => (filter ? producer.owner.includes(filter) : true))
-                    .sort((a, b) => parseInt(a.total_votes, 10) < parseInt(b.total_votes, 10))
+                    .sort((a, b) => parseInt(b.total_votes, 10) - parseInt(a.total_votes, 10))
                     .map((producer, idx) => (
                       <ProducersTableRow
                         addProducer={this.props.addProducer}
