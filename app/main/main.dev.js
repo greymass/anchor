@@ -84,6 +84,7 @@ app.on('ready', async () => {
     log.info('new installation detected');
     ui = initManager('/', true);
   } else {
+
     initMenu();
   }
 });
@@ -99,7 +100,7 @@ app.on('will-quit', () => { log.info('app: will-quit'); });
 app.on('quit', () => { log.info('app: quit'); });
 
 const initManager = (route = '/', closable = true) => {
-  ui = createInterface(resourcePath, route, closable);
+  ui = createInterface(resourcePath, route, closable, store);
   ui.on('close', () => {
     ui = null;
   });

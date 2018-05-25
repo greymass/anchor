@@ -1,15 +1,20 @@
 import { BrowserWindow, ipcMain } from 'electron';
+import { windowStateKeeper } from '../shared/windowStateKeeper'
 
 const path = require('path');
 const log = require('electron-log');
 
-const createInterface = (resourcePath, route = '/', closable = true) => {
+const createInterface = (resourcePath, route = '/', closable = true, store) => {
   log.info('ui: creating');
+
+  const uiStateKeeper = windowStateKeeper(store);
 
   const ui = new BrowserWindow({
     closable,
-    width: 960,
-    height: 540,
+    x: uiStateKeeper.x,
+    y: uiStateKeeper.y,
+    width: uiStateKeeper.width,
+    height: uiStateKeeper.height,
     show: false,
     frame: true,
     fullscreenable: false,
@@ -17,6 +22,8 @@ const createInterface = (resourcePath, route = '/', closable = true) => {
     transparent: false,
     alwaysOnTop: false
   });
+
+  uiStateKeeper.track(ui);
 
   ui.loadURL(`file://${path.join(resourcePath, 'renderer/basic/index.html')}#${route}`);
 
