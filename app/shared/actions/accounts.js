@@ -2,6 +2,14 @@ import * as types from './types';
 
 const Eos = require('eosjs');
 
+export function clearAccountCache() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.CLEAR_ACCOUNT_CACHE
+    });
+  };
+}
+
 export function getAccount(settings, account = '') {
   const eos = Eos.Localnet({ httpEndpoint: settings.node });
   let loadAccount = account;
