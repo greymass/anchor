@@ -11,20 +11,28 @@ export function clearAccountCache() {
 }
 
 export function getAccount(settings, account = '') {
-  const eos = Eos.Localnet({ httpEndpoint: settings.node });
-  let loadAccount = account;
-  if (!loadAccount && settings.account) loadAccount = settings.account;
   return (dispatch: () => void) => {
+    const eos = Eos.Localnet({ httpEndpoint: settings.node });
     dispatch({
-      type: types.GET_ACCOUNT_REQUEST
+      type: types.GET_ACCOUNT_REQUEST,
+      payload: { account_name: account }
     });
-    eos.getAccount(loadAccount).then((results) => dispatch({
-      type: types.GET_ACCOUNT_SUCCESS,
-      payload: { results }
-    })).catch((err) => dispatch({
+    if (settings.node || settings.node.length === 0) {
+      let loadAccount = account;
+      if (!loadAccount && settings.account) loadAccount = settings.account;
+      eos.getAccount(loadAccount).then((results) => dispatch({
+        type: types.GET_ACCOUNT_SUCCESS,
+        payload: { results }
+      })).catch((err) => dispatch({
+        type: types.GET_ACCOUNT_FAILURE,
+        payload: { err, account_name: account },
+      }));
+      return;
+    }
+    dispatch({
       type: types.GET_ACCOUNT_FAILURE,
-      payload: { err },
-    }));
+      payload: { account_name: account },
+    });
   };
 }
 
