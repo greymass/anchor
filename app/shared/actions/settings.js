@@ -1,14 +1,14 @@
 import * as types from './types';
 import * as validate from './validate';
 
-const { getCurrentWindow } = require('electron').remote;
+const { remote } = require('electron');
 
 export function clearSettingsCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_ALL_STATES
     });
-    getCurrentWindow().reload();
+    remote.getCurrentWindow().reload();
   };
 }
 
