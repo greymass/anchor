@@ -9,7 +9,7 @@ export default class ProducersSelectorItemEmpty extends Component<Props> {
       modified,
     } = this.props;
     return (
-      <I18n ns="producers" key="none">
+      <I18n ns="producers">
         {
           (t) => (
             <List.Item>

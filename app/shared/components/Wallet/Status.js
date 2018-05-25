@@ -9,8 +9,8 @@ export default class WalletStatus extends Component<Props> {
     const accountName = settings.account;
     const account = accounts[accountName];
     const server = settings.node;
-    let element = `No account data loaded yet (using ${server})...`;
-    if (account) {
+    let element = `No account data loaded yet (connected to: ${server})...`;
+    if (account && account.account_name) {
       element = (
         <div>
           <Header>

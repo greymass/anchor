@@ -41,7 +41,7 @@ export default class ProducersSelector extends Component<Props> {
                 onClick={() => this.props.submitProducerVotes()}
               />
               <List divided relaxed>
-                <List.Item>
+                <List.Item key="header">
                   <Header size="small" textAlign="center">
                     <Header.Subheader>
                       {selected.length}/30 {t('producer_voter_votes_used')}
@@ -51,12 +51,14 @@ export default class ProducersSelector extends Component<Props> {
                 {(selected.length)
                   ? selected.map((producer) => (
                     <ProducersSelectorItem
+                      key={producer}
                       producer={producer}
                       removeProducer={this.props.removeProducer}
                     />
                   ))
                   : (
                     <ProducersSelectorItemEmpty
+                      key="empty"
                       modified={modified}
                     />
                   )

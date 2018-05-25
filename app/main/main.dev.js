@@ -84,15 +84,14 @@ app.on('ready', async () => {
     log.info('new installation detected');
     ui = initManager('/', true);
   } else {
-
-    initMenu();
+    // initMenu();
   }
 });
 
 // debug event logging
 app.on('window-all-closed', () => {
   log.info('app: window-all-closed');
-  app.quit()
+  app.quit();
 });
 app.on('will-finish-launching', () => { log.info('app: will-finish-launching'); });
 app.on('before-quit', () => { log.info('app: before-quit'); });
