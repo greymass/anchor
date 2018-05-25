@@ -1,4 +1,5 @@
 import {setSetting} from '../../shared/actions/settings'
+import debounce from 'lodash/debounce';
 
 export function windowStateKeeper(store) {
   let window, windowState;
@@ -29,7 +30,7 @@ export function windowStateKeeper(store) {
   function track(win) {
     window = win;
     ['resize', 'move', 'close'].forEach(event => {
-      win.on(event, saveState);
+      win.on(event, debounce(saveState, 500));
     });
   }
 
