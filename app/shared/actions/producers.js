@@ -8,7 +8,13 @@ export function getProducers(settings) {
     dispatch({
       type: types.GET_PRODUCERS_REQUEST
     });
-    eos.getTableRows(true, 'eosio', 'eosio', 'producers').then((results) => dispatch({
+    eos.getTableRows({
+      json: true,
+      code: 'eosio',
+      scope: 'eosio',
+      table: 'producers',
+      limit: 1000
+    }).then((results) => dispatch({
       type: types.GET_PRODUCERS_SUCCESS,
       payload: { results }
     })).catch((err) => dispatch({
