@@ -6,6 +6,9 @@ const initialState = {
 
 export default function globals(state = initialState, action) {
   switch (action.type) {
+    case types.RESET_ALL_STATES: {
+      return Object.assign({}, initialState);
+    }
     // GET_GLOBALS_REQUEST
     // GET_GLOBALS_SUCCESS
     // GET_GLOBALS_FAILURE

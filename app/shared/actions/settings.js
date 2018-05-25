@@ -1,6 +1,18 @@
 import * as types from './types';
 import * as validate from './validate';
 
+// NYI - remote isn't loadable at the moment
+// const { getCurrentWindow } = require('electron').remote;
+
+export function clearSettingsCache() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.RESET_ALL_STATES
+    });
+    // getCurrentWindow().reload();
+  };
+}
+
 export function setSetting(key, value) {
   return (dispatch: () => void) => {
     dispatch({
