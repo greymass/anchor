@@ -1,8 +1,8 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  account: 'lioninjungle',
-  node: 'http://dev.cryptolions.io:38888'
+  account: '',
+  node: ''
 };
 
 export default function settings(state = initialState, action) {
