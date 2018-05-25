@@ -46,13 +46,13 @@ export default class ProducersTable extends Component<Props> {
               <Grid columns="equal">
                 <Grid.Column>
                   <Header>
-                    {activatedStake.toLocaleString()} EOS staked ({activatedStakePercent}%)
+                    {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
                     <Header.Subheader>
                       <ProducersVoteWeight
                         weight={totalVoteWeight}
                       />
                       {' '}
-                      total vote weight
+                      {t('block_producer_total_weight')}
                     </Header.Subheader>
                   </Header>
                 </Grid.Column>
@@ -78,7 +78,7 @@ export default class ProducersTable extends Component<Props> {
                       {t('block_producer_total_votes')}
                     </Table.HeaderCell>
                     <Table.HeaderCell collapsing>
-                      {t('block_producer_last_produced')}
+                      {t('block_producer_last_production_status')}
                     </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
@@ -89,6 +89,7 @@ export default class ProducersTable extends Component<Props> {
                     .map((producer, idx) => (
                       <ProducersTableRow
                         addProducer={this.props.addProducer}
+                        key={producer.owner}
                         position={idx + 1}
                         producer={producer}
                         removeProducer={this.props.removeProducer}
