@@ -208,7 +208,6 @@ export default class Producers extends Component<Props> {
                <ProducersTable
                  addProducer={this.addProducer.bind(this)}
                  globals={globals}
-                 loading={loading}
                  producers={producers}
                  removeProducer={this.removeProducer.bind(this)}
                  selected={selected}
