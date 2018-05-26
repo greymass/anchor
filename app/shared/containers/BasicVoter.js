@@ -97,6 +97,7 @@ class BasicVoterContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    balances: state.balances,
     globals: state.globals,
     producers: state.producers,
     settings: state.settings,
