@@ -1,0 +1,10 @@
+{
+  "stake_cpu_amount": "Stake CPU amount",
+  "stake_net_amount": "Stake Bandwidth Amount",
+  "stake_coins": "Stake Coins",
+  "staked_data": "Stake Stats",
+  "total_staked": "Total Staked",
+  "net_staked": "Amount Staked to Bandwidth",
+  "cpu_staked": "Amount Staked to CPU",
+  "amount_not_staked": "Amount Not Staked"
+}
