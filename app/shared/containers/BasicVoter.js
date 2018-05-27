@@ -16,6 +16,7 @@ import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
 
+import logo from '../../renderer/assets/images/greymass.png';
 
 type Props = {
   actions: {
@@ -113,6 +114,17 @@ class BasicVoterContainer extends Component<Props> {
           </Menu.Item>
         )
       },
+      {
+        menuItem: (
+          <Menu.Item key="about" position="right">
+            <img alt="Greymass" src={logo} />
+          </Menu.Item>
+        ),
+        pane: (
+          <Tab.Pane key="about" style={{ marginTop: '3em' }}>
+            about area
+          </Tab.Pane>
+        )
       }
     ];
     return (
