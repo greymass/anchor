@@ -5,7 +5,12 @@ import ReactJson from 'react-json-view';
 
 export default class WalletStatus extends Component<Props> {
   render() {
-    const { accounts, settings } = this.props;
+    const {
+      accounts,
+      keys,
+      settings,
+      wallet
+    } = this.props;
     const accountName = settings.account;
     const account = accounts[accountName];
     const server = settings.node;
@@ -33,6 +38,33 @@ export default class WalletStatus extends Component<Props> {
     }
     return (
       <Segment basic>
+        <ReactJson
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={settings}
+          style={{ padding: '1em' }}
+          theme="harmonic"
+        />
+        <ReactJson
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={keys}
+          style={{ padding: '1em' }}
+          theme="harmonic"
+        />
+        <ReactJson
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={wallet}
+          style={{ padding: '1em' }}
+          theme="harmonic"
+        />
         {element}
       </Segment>
     );

@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Button, Grid } from 'semantic-ui-react';
 
-import WalletConfig from './Wallet/Config';
+import WalletPanel from './Wallet/Panel';
 import WalletStatus from './Wallet/Status';
 
 type Props = {
@@ -20,6 +20,7 @@ export default class Wallet extends Component<Props> {
     const {
       actions,
       accounts,
+      keys,
       settings,
       validate,
       wallet
@@ -28,9 +29,10 @@ export default class Wallet extends Component<Props> {
       <Grid>
         <Grid.Row>
           <Grid.Column width={6}>
-            <WalletConfig
+            <WalletPanel
               actions={actions}
               accounts={accounts}
+              keys={keys}
               settings={settings}
               validate={validate}
               wallet={wallet}
@@ -39,7 +41,9 @@ export default class Wallet extends Component<Props> {
           <Grid.Column width={10}>
             <WalletStatus
               accounts={accounts}
+              keys={keys}
               settings={settings}
+              wallet={wallet}
             />
           </Grid.Column>
         </Grid.Row>

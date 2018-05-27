@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Tab } from 'semantic-ui-react';
+import { Menu, Tab } from 'semantic-ui-react';
 
 import Producers from '../components/Producers';
 import Wallet from '../components/Wallet';
@@ -19,8 +19,10 @@ import * as WalletActions from '../actions/wallet';
 
 type Props = {
   actions: {
+    getAccount: () => void,
     getGlobals: () => void
   },
+  keys: {},
   settings: {},
   validate: {}
 };
@@ -29,9 +31,22 @@ class BasicVoterContainer extends Component<Props> {
   props: Props;
 
   componentDidMount() {
+    // Validate settings on app start
+    const {
+      actions,
+      settings,
+      validate
+    } = this.props;
+    if (!validate.ACCOUNT || validate.ACCOUNT !== 'SUCCESS') {
+      actions.validateAccount(settings, settings.account);
+    }
+    if (!validate.NODE || validate.NODE !== 'SUCCESS') {
+      actions.validateNode(settings, settings.node);
+    }
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 60000);
+    this.interval = setInterval(this.tick.bind(this), 15000);
   }
+
 
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
@@ -49,9 +64,12 @@ class BasicVoterContainer extends Component<Props> {
   }
 
   tick() {
-    const { settings } = this.props;
-    if (settings && settings.node) {
+    const { validate } = this.props;
+    if (validate.NODE === 'SUCCESS') {
       this.getGlobals();
+      if (validate.ACCOUNT === 'SUCCESS') {
+        this.getAccount();
+      }
     }
   }
 
@@ -61,7 +79,16 @@ class BasicVoterContainer extends Component<Props> {
     getGlobals(settings);
   }
 
+  getAccount = () => {
+    const { getAccount } = this.props.actions;
+    const { settings } = this.props;
+    getAccount(settings);
+  }
+
   render() {
+    const { keys } = this.props;
+    const walletLocked = (!keys.key);
+
     const panes = [
       {
         menuItem: 'Producer Voting',
@@ -78,6 +105,14 @@ class BasicVoterContainer extends Component<Props> {
             <Wallet {...this.props} />
           </Tab.Pane>
         )
+      },
+      {
+        menuItem: (
+          <Menu.Item key="status" position="right" disabled>
+            Wallet {(walletLocked) ? 'locked' : 'unlocked'}
+          </Menu.Item>
+        )
+      },
       }
     ];
     return (
@@ -99,6 +134,7 @@ function mapStateToProps(state) {
     accounts: state.accounts,
     balances: state.balances,
     globals: state.globals,
+    keys: state.keys,
     producers: state.producers,
     settings: state.settings,
     validate: state.validate,
