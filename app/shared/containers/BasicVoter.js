@@ -8,6 +8,7 @@ import { Menu, Tab } from 'semantic-ui-react';
 
 import Producers from '../components/Producers';
 import Wallet from '../components/Wallet';
+import WalletLockState from '../components/Wallet/LockState';
 
 import * as AccountsActions from '../actions/accounts';
 import * as GlobalsActions from '../actions/globals';
@@ -25,7 +26,8 @@ type Props = {
   },
   keys: {},
   settings: {},
-  validate: {}
+  validate: {},
+  wallet: {}
 };
 
 class BasicVoterContainer extends Component<Props> {
@@ -87,12 +89,13 @@ class BasicVoterContainer extends Component<Props> {
   }
 
   render() {
-    const { keys } = this.props;
-    const walletLocked = (!keys.key);
-
+    const {
+      keys,
+      wallet
+    } = this.props;
     const panes = [
       {
-        menuItem: 'Producer Voting',
+        menuItem: { key: 'producers', icon: 'check square', content: 'Producer Voting' },
         pane: (
           <Tab.Pane key="producers" style={{ marginTop: '3em' }}>
             <Producers {...this.props} />
@@ -100,7 +103,7 @@ class BasicVoterContainer extends Component<Props> {
         )
       },
       {
-        menuItem: 'Wallet',
+        menuItem: { key: 'wallet', icon: 'protect', content: 'Wallet' },
         pane: (
           <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
             <Wallet {...this.props} />
@@ -109,16 +112,15 @@ class BasicVoterContainer extends Component<Props> {
       },
       {
         menuItem: (
-          <Menu.Item key="status" position="right" disabled>
-            Wallet {(walletLocked) ? 'locked' : 'unlocked'}
-          </Menu.Item>
-        )
-      },
-      {
-        menuItem: (
-          <Menu.Item key="about" position="right">
-            <img alt="Greymass" src={logo} />
-          </Menu.Item>
+          <Menu.Menu key="right" position="right">
+            <WalletLockState
+              keys={keys}
+              wallet={wallet}
+            />
+            <Menu.Item key="about" position="right">
+              <img alt="Greymass" src={logo} />
+            </Menu.Item>
+          </Menu.Menu>
         ),
         pane: (
           <Tab.Pane key="about" style={{ marginTop: '3em' }}>
