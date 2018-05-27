@@ -47,6 +47,7 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
                   icon={matches ? 'checkmark' : 'x'}
                   label={t('wallet_panel_password_label')}
                   onChange={this.compare}
+                  type="password"
                 />
               </Modal.Content>
               <Modal.Actions>
