@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import MenuBuilder from '../menu';
 
-import { windowStateKeeper } from '../shared/windowStateKeeper'
+import { windowStateKeeper } from '../shared/windowStateKeeper';
 
 const path = require('path');
 const log = require('electron-log');
@@ -13,7 +13,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
 
   const ui = new BrowserWindow({
     closable,
-    x: uiStateKeeper.x ,
+    x: uiStateKeeper.x,
     y: uiStateKeeper.y,
     width: uiStateKeeper.width,
     height: uiStateKeeper.height,
