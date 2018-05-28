@@ -1,4 +1,5 @@
 import * as types from './types';
+import * as chain from './chain';
 import * as validate from './validate';
 
 const { remote } = require('electron');
@@ -23,21 +24,19 @@ export function setSetting(key, value) {
   };
 }
 
-export function setSettingWithValidation(settings, key, value) {
+export function setSettingWithValidation(key, value) {
   return (dispatch: () => void) => {
-    const nextSettings = {
-      ...settings,
-      [key]: value
-    };
     switch (key) {
       case 'account': {
-        dispatch(validate.validateAccount(nextSettings, value));
+        dispatch(validate.validateAccount(value));
         break;
       }
       case 'node': {
+        // If nodes are changing, force clear any locally cached data
         dispatch({ type: types.CLEAR_ACCOUNT_CACHE });
         dispatch({ type: types.CLEAR_PRODUCER_CACHE });
-        dispatch(validate.validateNode(nextSettings, value));
+        dispatch(chain.getInfo());
+        dispatch(validate.validateNode(value));
         break;
       }
       default: {

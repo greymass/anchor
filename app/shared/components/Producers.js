@@ -78,20 +78,15 @@ export default class Producers extends Component<Props> {
 
   tick() {
     const {
+      actions,
       validate
     } = this.props;
+    const {
+      getProducers
+    } = actions;
     if (validate.NODE) {
-      if (validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
-        this.getAccount();
-      }
-      this.getProducers();
+      getProducers();
     }
-  }
-
-  getAccount = () => {
-    const { getAccount } = this.props.actions;
-    const { settings } = this.props;
-    getAccount(settings);
   }
 
   addProducer = (producer) => {
@@ -130,15 +125,6 @@ export default class Producers extends Component<Props> {
         original: this.state.selected
       });
     }, 200);
-  }
-
-  getProducers = () => {
-    const { getProducers } = this.props.actions;
-    const { settings } = this.props;
-    // ensure the node is set
-    if (settings.node) {
-      getProducers(settings);
-    }
   }
 
   render() {

@@ -12,6 +12,7 @@ import WalletLockState from '../components/Wallet/LockState';
 import Stake from '../components/Stake';
 
 import * as AccountsActions from '../actions/accounts';
+import * as ChainActions from '../actions/chain';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';
 import * as SettingsActions from '../actions/settings';
@@ -24,7 +25,8 @@ import logo from '../../renderer/assets/images/greymass.png';
 type Props = {
   actions: {
     getAccount: () => void,
-    getGlobals: () => void
+    getGlobals: () => void,
+    getInfo: () => void
   },
   keys: {},
   settings: {},
@@ -43,10 +45,10 @@ class BasicVoterContainer extends Component<Props> {
       validate
     } = this.props;
     if (!validate.ACCOUNT || validate.ACCOUNT !== 'SUCCESS') {
-      actions.validateAccount(settings, settings.account);
+      actions.validateAccount(settings.account);
     }
     if (!validate.NODE || validate.NODE !== 'SUCCESS') {
-      actions.validateNode(settings, settings.node);
+      actions.validateNode(settings.node);
     }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 15000);
@@ -69,25 +71,23 @@ class BasicVoterContainer extends Component<Props> {
   }
 
   tick() {
-    const { validate } = this.props;
+    const {
+      actions,
+      settings,
+      validate
+    } = this.props;
+    const {
+      getGlobals,
+      getInfo,
+      getAccount
+    } = actions;
     if (validate.NODE === 'SUCCESS') {
-      this.getGlobals();
+      getGlobals();
+      getInfo();
       if (validate.ACCOUNT === 'SUCCESS') {
-        this.getAccount();
+        getAccount(settings.account);
       }
     }
-  }
-
-  getGlobals = () => {
-    const { getGlobals } = this.props.actions;
-    const { settings } = this.props;
-    getGlobals(settings);
-  }
-
-  getAccount = () => {
-    const { getAccount } = this.props.actions;
-    const { settings } = this.props;
-    getAccount(settings);
   }
 
   render() {
@@ -157,6 +157,7 @@ function mapStateToProps(state) {
   return {
     accounts: state.accounts,
     balances: state.balances,
+    chain: state.chain,
     globals: state.globals,
     keys: state.keys,
     producers: state.producers,
@@ -170,6 +171,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...ChainActions,
       ...GlobalsActions,
       ...ProducersActions,
       ...SettingsActions,
