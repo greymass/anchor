@@ -15,6 +15,7 @@ type Props = {
   },
   accounts: {},
   globals: {},
+  keys: {},
   producers: {},
   settings: {},
   validate: {},
@@ -156,11 +157,6 @@ export default class Producers extends Component<Props> {
       selected,
       submitting
     } = this.state;
-    const validUser = (
-      validate.NODE === 'SUCCESS'
-      && validate.ACCOUNT === 'SUCCESS'
-      && validate.KEY === 'SUCCESS'
-    );
     let sidebar = [(
       <WalletPanel
         actions={actions}
@@ -171,6 +167,7 @@ export default class Producers extends Component<Props> {
         wallet={wallet}
       />
     )];
+    const validUser = (keys.key);
     if (validUser) {
       sidebar = [
         (

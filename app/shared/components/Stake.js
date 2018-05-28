@@ -50,11 +50,7 @@ export default class Stake extends Component<Props> {
       />
     )];
 
-    const validUser = (
-      validate.NODE === 'SUCCESS'
-      && validate.ACCOUNT === 'SUCCESS'
-      && validate.KEY === 'SUCCESS'
-    );
+    const validUser = (keys.key);
 
     if (validUser) {
       sidebar = [
