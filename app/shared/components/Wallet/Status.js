@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Segment } from 'semantic-ui-react';
+import { Divider, Header, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 export default class WalletStatus extends Component<Props> {
@@ -18,6 +18,7 @@ export default class WalletStatus extends Component<Props> {
     if (account && account.account_name) {
       element = (
         <div>
+          <Divider />
           <Header>
             Account: {accountName}
             <Header.Subheader>
@@ -38,11 +39,14 @@ export default class WalletStatus extends Component<Props> {
     }
     return (
       <Segment basic>
+        <Header>
+          DEBUGGING INFORMATION
+        </Header>
         <ReactJson
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"
-          name={null}
+          name="settings"
           src={settings}
           style={{ padding: '1em' }}
           theme="harmonic"
@@ -51,7 +55,7 @@ export default class WalletStatus extends Component<Props> {
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"
-          name={null}
+          name="keys"
           src={keys}
           style={{ padding: '1em' }}
           theme="harmonic"
@@ -60,7 +64,7 @@ export default class WalletStatus extends Component<Props> {
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"
-          name={null}
+          name="wallet"
           src={wallet}
           style={{ padding: '1em' }}
           theme="harmonic"
