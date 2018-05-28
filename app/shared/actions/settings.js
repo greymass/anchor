@@ -1,5 +1,4 @@
 import * as types from './types';
-import * as chain from './chain';
 import * as validate from './validate';
 
 const { remote } = require('electron');
@@ -35,7 +34,6 @@ export function setSettingWithValidation(key, value) {
         // If nodes are changing, force clear any locally cached data
         dispatch({ type: types.CLEAR_ACCOUNT_CACHE });
         dispatch({ type: types.CLEAR_PRODUCER_CACHE });
-        dispatch(chain.getInfo());
         dispatch(validate.validateNode(value));
         break;
       }
