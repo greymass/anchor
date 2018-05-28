@@ -11,8 +11,10 @@ export default function validate(state = {}, action) {
   if (!matches) return state;
 
   const [, requestName, requestState] = matches;
+
   return {
     ...state,
     [requestName]: requestState,
+    [requestName + "_ERROR"]: action.payload && action.payload.error
   };
 }

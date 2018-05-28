@@ -112,8 +112,31 @@ export function validateKey(settings, key) {
   };
 }
 
+export function validateStake(stake, balance) {
+  return (dispatch: () => void) => {
+    dispatch({ type: types.VALIDATE_STAKE_PENDING });
+    
+    if ((stake.cpu_amount + stake.net_amount) > balance) {
+      dispatch({
+        payload: { error: 'You do not have enough balance.' },
+        type: types.VALIDATE_STAKE_FAILURE
+      });
+
+      return false;
+    }else{
+
+      dispatch({
+        type: types.VALIDATE_STAKE_SUCCESS
+      });
+
+      return true;
+    }    
+  };
+}
+
 export default {
   validateAccount,
   validateNode,
-  validateKey
+  validateKey,
+  validateStake
 };
