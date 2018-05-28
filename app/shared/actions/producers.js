@@ -1,6 +1,6 @@
 import * as types from './types';
 
-const Eos = require('eosjs');
+import eos from './helpers/eos';
 
 export function clearProducerCache() {
   return (dispatch: () => void) => {
@@ -10,13 +10,13 @@ export function clearProducerCache() {
   };
 }
 
-export function getProducers(settings) {
-  const eos = Eos.Localnet({ httpEndpoint: settings.node });
-  return (dispatch: () => void) => {
+export function getProducers() {
+  return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_PRODUCERS_REQUEST
     });
-    eos.getTableRows({
+    const state = getState();
+    eos(state).getTableRows({
       json: true,
       code: 'eosio',
       scope: 'eosio',

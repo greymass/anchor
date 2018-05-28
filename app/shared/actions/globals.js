@@ -1,14 +1,14 @@
 import * as types from './types';
 
-const Eos = require('eosjs');
+import eos from './helpers/eos';
 
-export function getGlobals(settings) {
-  const eos = Eos.Localnet({ httpEndpoint: settings.node });
-  return (dispatch: () => void) => {
+export function getGlobals() {
+  return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_GLOBALS_REQUEST
     });
-    eos.getTableRows(true, 'eosio', 'eosio', 'global').then((results) => dispatch({
+    const state = getState();
+    eos(state).getTableRows(true, 'eosio', 'eosio', 'global').then((results) => dispatch({
       type: types.GET_GLOBALS_SUCCESS,
       payload: { results }
     })).catch((err) => dispatch({

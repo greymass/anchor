@@ -26,15 +26,12 @@ export default class WalletPanelForm extends Component<Props> {
   componentDidMount() {
     // Validate settings on app start
     const {
-      actions,
-      settings
+      actions
     } = this.props;
     const {
       formData
     } = this.state;
-    // console.log(settings)
-    // console.log(this.state.formData)
-    actions.validateKey(settings, formData.key);
+    actions.validateKey(formData.key);
   }
 
   onChange = debounce((e, { name, value }) => {
@@ -44,21 +41,19 @@ export default class WalletPanelForm extends Component<Props> {
     // Determine if field should be saved in persistent settings
     if (['account', 'node'].indexOf(name) > -1) {
       const {
-        actions,
-        settings
+        actions
       } = this.props;
       const { setSettingWithValidation } = actions;
-      setSettingWithValidation(settings, name, value);
+      setSettingWithValidation(name, value);
     }
   }, 300)
 
   onKeyChange = debounce((e, { name, value }) => {
     const {
-      actions,
-      settings
+      actions
     } = this.props;
     const { validateKey } = actions;
-    validateKey(settings, value);
+    validateKey(value);
     this.setState({
       formData: { ...this.state.formData, [name]: value },
     });
@@ -76,8 +71,7 @@ export default class WalletPanelForm extends Component<Props> {
 
   onSubmit = () => {
     const {
-      actions,
-      settings
+      actions
     } = this.props;
     const {
       formData
@@ -92,9 +86,9 @@ export default class WalletPanelForm extends Component<Props> {
       setTemporaryKey
     } = actions;
     if (encryptWallet) {
-      setWalletKey(settings, key, password);
+      setWalletKey(key, password);
     } else {
-      setTemporaryKey(settings, key);
+      setTemporaryKey(key);
     }
     this.setState({
       confirming: false
