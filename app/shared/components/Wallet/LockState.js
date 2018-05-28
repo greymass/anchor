@@ -14,6 +14,7 @@ export default class WalletStatus extends Component<Props> {
     return (
       <Menu.Item
         color={(walletLocked) ? 'green' : 'yellow'}
+        key="lockstate"
         inverted
       >
         {(walletExists)

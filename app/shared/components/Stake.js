@@ -9,6 +9,8 @@ import StakeForm from './Stake/Form';
 type Props = {
   actions: {},
   accounts: {},
+  balances: {},
+  keys: {},
   settings: {},
   validate: {},
   wallet: {}
@@ -32,10 +34,10 @@ export default class Stake extends Component<Props> {
     const {
       actions,
       accounts,
+      balances,
       keys,
       settings,
       validate,
-      balances,
       wallet
     } = this.props;
 

@@ -8,6 +8,7 @@ import WalletStatus from './Wallet/Status';
 type Props = {
   actions: {},
   accounts: {},
+  keys: {},
   settings: {},
   validate: {},
   wallet: {}
