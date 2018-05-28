@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Divider, Form, Header, Icon, Input, Message, Modal, Segment } from 'semantic-ui-react';
-import debounce from 'lodash/debounce';
+import { Button } from 'semantic-ui-react';
 
 export default class WalletPanelButtonLock extends Component<Props> {
   render() {
