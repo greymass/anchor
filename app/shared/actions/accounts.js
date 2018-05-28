@@ -16,10 +16,12 @@ export function getAccount(account = '') {
       type: types.GET_ACCOUNT_REQUEST,
       payload: { account_name: account }
     });
-    const state = getState();
-    const { settings } = state;
+    const {
+      connection,
+      settings
+    } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
-      eos(state).getAccount(account).then((results) => {
+      eos(connection).getAccount(account).then((results) => {
         // Trigger the action to load this accounts balances
         dispatch(getCurrencyBalance(account));
         // Dispatch the results of the account itself
@@ -46,10 +48,12 @@ export function getCurrencyBalance(account) {
       type: types.GET_ACCOUNT_BALANCE_REQUEST,
       payload: { account_name: account }
     });
-    const state = getState();
-    const { settings } = state;
+    const {
+      connection,
+      settings
+    } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
-      return eos(state).getCurrencyBalance('eosio.token', account).then((balances) => dispatch({
+      return eos(connection).getCurrencyBalance('eosio.token', account).then((balances) => dispatch({
         type: types.GET_ACCOUNT_BALANCE_SUCCESS,
         payload: { balances, account_name: account }
       })).catch((err) => dispatch({

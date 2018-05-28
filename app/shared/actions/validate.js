@@ -11,11 +11,13 @@ export function validateAccount(account) {
         type: types.VALIDATE_ACCOUNT_FAILURE
       });
     }
-    const state = getState();
-    const { settings } = state;
+    const {
+      connection,
+      settings
+    } = getState();
     try {
       // A generic info call to make sure it's working
-      eos(state).getAccount(account).then((results) => {
+      eos(connection).getAccount(account).then((results) => {
         // Revalidate the key whenever the account is revalidated
         dispatch(validateKey(settings.key));
         return dispatch({
@@ -37,27 +39,34 @@ export function validateAccount(account) {
 
 export function validateNode(node) {
   return (dispatch: () => void, getState) => {
-    dispatch({ type: types.VALIDATE_NODE_PENDING });
+    dispatch({
+      node,
+      type: types.VALIDATE_NODE_PENDING
+    });
     // Ensure there's a value to test
     if (node || node.length !== 0) {
       // Establish EOS connection
       try {
-        // Establish a modified state to test the connection against
-        const state = getState();
-        const settings = {
-          ...state.settings,
-          node
-        };
-        const newState = {
-          ...state,
+        const {
+          connection,
           settings
+        } = getState();
+        // Establish a modified state to test the connection against
+        const modified = {
+          ...connection,
+          httpEndpoint: node
         };
         // A generic info call to make sure it's working
-        eos(newState).getInfo({}).then(result => {
+        eos(modified).getInfo({}).then(result => {
           // If we received a valid height, confirm this server can be connected to
           if (result.head_block_num > 1) {
-            dispatch(validateAccount(settings.account));
-            return dispatch({ type: types.VALIDATE_NODE_SUCCESS });
+            // Dispatch success
+            dispatch({
+              payload: { node },
+              type: types.VALIDATE_NODE_SUCCESS
+            });
+            // Trigger revalidation on the current account
+            return dispatch(validateAccount(settings.account));
           }
           return dispatch({ type: types.VALIDATE_NODE_FAILURE });
         }).catch((err) => dispatch({
@@ -77,8 +86,10 @@ export function validateNode(node) {
 export function validateKey(key) {
   return (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_KEY_PENDING });
-    const state = getState();
-    const { settings } = state;
+    const {
+      connection,
+      settings
+    } = getState();
     if (!settings.account) {
       return dispatch({
         type: types.VALIDATE_KEY_FAILURE
@@ -86,7 +97,7 @@ export function validateKey(key) {
     }
     try {
       // Establish EOS connection
-      eos(state).getAccount(settings.account).then((account) => {
+      eos(connection).getAccount(settings.account).then((account) => {
         // Keys must resolve to one of these types of permissions
         const permissions = ['active', 'owner'];
         try {

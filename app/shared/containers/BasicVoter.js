@@ -44,11 +44,10 @@ class BasicVoterContainer extends Component<Props> {
       settings,
       validate
     } = this.props;
+    // Always validate the node on startup
+    actions.validateNode(settings.node);
     if (!validate.ACCOUNT || validate.ACCOUNT !== 'SUCCESS') {
       actions.validateAccount(settings.account);
-    }
-    if (!validate.NODE || validate.NODE !== 'SUCCESS') {
-      actions.validateNode(settings.node);
     }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 15000);
