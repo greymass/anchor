@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Grid, Transition } from 'semantic-ui-react';
 
-import WalletConfig from './Wallet/Config';
+import WalletPanel from './Wallet/Panel';
 import StakeStats from './Stake/Stats';
 import StakeForm from './Stake/Form';
 
@@ -32,6 +32,7 @@ export default class Stake extends Component<Props> {
     const {
       actions,
       accounts,
+      keys,
       settings,
       validate,
       balances,
@@ -39,10 +40,10 @@ export default class Stake extends Component<Props> {
     } = this.props;
 
     let sidebar = [(
-      <WalletConfig
+      <WalletPanel
         actions={actions}
         accounts={accounts}
-        key="WalletConfig"
+        keys={keys}
         settings={settings}
         validate={validate}
         wallet={wallet}

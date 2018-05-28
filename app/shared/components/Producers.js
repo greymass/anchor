@@ -6,7 +6,7 @@ import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingAccount from './Producers/VotingAccount';
 import ProducersWelcome from './Producers/Welcome';
-import WalletConfig from './Wallet/Config';
+import WalletPanel from './Wallet/Panel';
 
 type Props = {
   actions: {
@@ -145,6 +145,7 @@ export default class Producers extends Component<Props> {
       actions,
       accounts,
       globals,
+      keys,
       producers,
       settings,
       validate,
@@ -161,10 +162,10 @@ export default class Producers extends Component<Props> {
       && validate.KEY === 'SUCCESS'
     );
     let sidebar = [(
-      <WalletConfig
+      <WalletPanel
         actions={actions}
         accounts={accounts}
-        key="WalletConfig"
+        keys={keys}
         settings={settings}
         validate={validate}
         wallet={wallet}
