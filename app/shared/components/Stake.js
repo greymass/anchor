@@ -19,17 +19,6 @@ type Props = {
 export default class Stake extends Component<Props> {
   props: Props;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      original: [],
-      modified: false,
-      selected: [],
-      selected_loaded: false,
-      submitting: false
-    };
-  }
-
   render() {
     const {
       actions,
