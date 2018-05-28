@@ -15,8 +15,8 @@ export function getProducers() {
     dispatch({
       type: types.GET_PRODUCERS_REQUEST
     });
-    const state = getState();
-    eos(state).getTableRows({
+    const { connection } = getState();
+    eos(connection).getTableRows({
       json: true,
       code: 'eosio',
       scope: 'eosio',

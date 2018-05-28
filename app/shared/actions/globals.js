@@ -7,8 +7,8 @@ export function getGlobals() {
     dispatch({
       type: types.GET_GLOBALS_REQUEST
     });
-    const state = getState();
-    eos(state).getTableRows(true, 'eosio', 'eosio', 'global').then((results) => dispatch({
+    const { connection } = getState();
+    eos(connection).getTableRows(true, 'eosio', 'eosio', 'global').then((results) => dispatch({
       type: types.GET_GLOBALS_SUCCESS,
       payload: { results }
     })).catch((err) => dispatch({

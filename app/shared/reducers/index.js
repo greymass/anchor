@@ -5,6 +5,7 @@ import { routerReducer as router } from 'react-router-redux';
 import accounts from './accounts';
 import balances from './balances';
 import chain from './chain';
+import connection from './connection';
 import keys from './keys';
 import globals from './globals';
 import producers from './producers';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   accounts,
   balances,
   chain,
+  connection,
   globals,
   keys,
   producers,
