@@ -1,4 +1,5 @@
 import * as types from './types';
+import * as chain from './chain';
 import eos from './helpers/eos';
 
 const ecc = require('eosjs-ecc');
@@ -65,6 +66,8 @@ export function validateNode(node) {
               payload: { node },
               type: types.VALIDATE_NODE_SUCCESS
             });
+            // Refresh our connection properties with new chain info
+            dispatch(chain.getInfo());
             // Trigger revalidation on the current account
             return dispatch(validateAccount(settings.account));
           }
