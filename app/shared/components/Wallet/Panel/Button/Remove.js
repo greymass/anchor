@@ -10,10 +10,10 @@ export default class WalletPanelButtonLogout extends Component<Props> {
         {
           (t) => (
             <Button
-              color="blue"
+              color="red"
               content={t('wallet_panel_wallet_remove')}
               fluid
-              icon="lock"
+              icon="trash"
               onClick={this.props.removeWallet}
             />
           )
