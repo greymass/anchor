@@ -4,7 +4,8 @@ const persistConfig = {
   key: 'eos-voter-config',
   storage: createElectronStorage(),
   whitelist: [
-    'settings'
+    'settings',
+    'wallet'
   ]
 };
 

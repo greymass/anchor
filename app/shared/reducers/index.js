@@ -4,6 +4,7 @@ import { routerReducer as router } from 'react-router-redux';
 
 import accounts from './accounts';
 import balances from './balances';
+import keys from './keys';
 import globals from './globals';
 import producers from './producers';
 import settings from './settings';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   accounts,
   balances,
   globals,
+  keys,
   producers,
   router,
   settings,
