@@ -9,6 +9,7 @@ import { Menu, Tab } from 'semantic-ui-react';
 import Producers from '../components/Producers';
 import Wallet from '../components/Wallet';
 import WalletLockState from '../components/Wallet/LockState';
+import Stake from '../components/Stake';
 
 import * as AccountsActions from '../actions/accounts';
 import * as GlobalsActions from '../actions/globals';
@@ -16,6 +17,7 @@ import * as ProducersActions from '../actions/producers';
 import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
+import * as StakeActions from '../actions/stake';
 
 import logo from '../../renderer/assets/images/greymass.png';
 
@@ -127,6 +129,14 @@ class BasicVoterContainer extends Component<Props> {
             about area
           </Tab.Pane>
         )
+      },
+      {
+        menuItem: 'Stake',
+        pane: (
+          <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
+            <Stake {...this.props} />
+          </Tab.Pane>
+        )
       }
     ];
     return (
@@ -164,7 +174,8 @@ function mapDispatchToProps(dispatch) {
       ...ProducersActions,
       ...SettingsActions,
       ...ValidateActions,
-      ...WalletActions
+      ...WalletActions,
+      ...StakeActions
     }, dispatch)
   };
 }
