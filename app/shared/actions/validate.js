@@ -1,17 +1,23 @@
 import * as types from './types';
+import eos from './helpers/eos';
 
-const Eos = require('eosjs');
 const ecc = require('eosjs-ecc');
 
-export function validateAccount(settings, account) {
-  return (dispatch: () => void) => {
+export function validateAccount(account) {
+  return (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_ACCOUNT_PENDING });
-    const eos = Eos.Localnet({ httpEndpoint: settings.node });
+    if (!account) {
+      return dispatch({
+        type: types.VALIDATE_ACCOUNT_FAILURE
+      });
+    }
+    const state = getState();
+    const { settings } = state;
     try {
       // A generic info call to make sure it's working
-      eos.getAccount(account).then((results) => {
+      eos(state).getAccount(account).then((results) => {
         // Revalidate the key whenever the account is revalidated
-        dispatch(validateKey(settings, settings.key));
+        dispatch(validateKey(settings.key));
         return dispatch({
           payload: { results },
           type: types.VALIDATE_ACCOUNT_SUCCESS
@@ -29,19 +35,28 @@ export function validateAccount(settings, account) {
   };
 }
 
-export function validateNode(settings, node) {
-  return (dispatch: () => void) => {
+export function validateNode(node) {
+  return (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_NODE_PENDING });
     // Ensure there's a value to test
-    if (node || node.length === 0) {
+    if (node || node.length !== 0) {
       // Establish EOS connection
-      const eos = Eos.Localnet({ httpEndpoint: node });
       try {
+        // Establish a modified state to test the connection against
+        const state = getState();
+        const settings = {
+          ...state.settings,
+          node
+        };
+        const newState = {
+          ...state,
+          settings
+        };
         // A generic info call to make sure it's working
-        eos.getInfo({}).then(result => {
+        eos(newState).getInfo({}).then(result => {
           // If we received a valid height, confirm this server can be connected to
           if (result.head_block_num > 1) {
-            dispatch(validateAccount(settings, settings.account));
+            dispatch(validateAccount(settings.account));
             return dispatch({ type: types.VALIDATE_NODE_SUCCESS });
           }
           return dispatch({ type: types.VALIDATE_NODE_FAILURE });
@@ -59,13 +74,19 @@ export function validateNode(settings, node) {
   };
 }
 
-export function validateKey(settings, key) {
-  return (dispatch: () => void) => {
+export function validateKey(key) {
+  return (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_KEY_PENDING });
+    const state = getState();
+    const { settings } = state;
+    if (!settings.account) {
+      return dispatch({
+        type: types.VALIDATE_KEY_FAILURE
+      });
+    }
     try {
       // Establish EOS connection
-      const eos = Eos.Localnet({ httpEndpoint: settings.node });
-      eos.getAccount(settings.account).then((account) => {
+      eos(state).getAccount(settings.account).then((account) => {
         // Keys must resolve to one of these types of permissions
         const permissions = ['active', 'owner'];
         try {
@@ -115,7 +136,7 @@ export function validateKey(settings, key) {
 export function validateStake(stake, balance) {
   return (dispatch: () => void) => {
     dispatch({ type: types.VALIDATE_STAKE_PENDING });
-    
+
     if ((stake.cpu_amount + stake.net_amount) > balance) {
       dispatch({
         payload: { error: 'You do not have enough balance.' },
@@ -130,7 +151,7 @@ export function validateStake(stake, balance) {
       });
 
       return true;
-    }    
+    }
   };
 }
 

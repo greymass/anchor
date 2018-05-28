@@ -3,8 +3,9 @@ import * as types from './types';
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 
-export function setWalletKey(settings, key, password) {
-  return (dispatch: () => void) => {
+export function setWalletKey(key, password) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
     const data = encrypt(key, password);
     return dispatch({
       type: types.SET_WALLET_KEY,
@@ -17,8 +18,9 @@ export function setWalletKey(settings, key, password) {
   };
 }
 
-export function setTemporaryKey(settings, key) {
-  return (dispatch: () => void) => {
+export function setTemporaryKey(key) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
     dispatch({
       type: types.SET_TEMPORARY_KEY,
       payload: {

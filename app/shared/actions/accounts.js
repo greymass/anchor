@@ -1,6 +1,6 @@
 import * as types from './types';
 
-const Eos = require('eosjs');
+import eos from './helpers/eos';
 
 export function clearAccountCache() {
   return (dispatch: () => void) => {
@@ -10,19 +10,18 @@ export function clearAccountCache() {
   };
 }
 
-export function getAccount(settings, account = '') {
-  return (dispatch: () => void) => {
-    const eos = Eos.Localnet({ httpEndpoint: settings.node });
+export function getAccount(account = '') {
+  return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_ACCOUNT_REQUEST,
       payload: { account_name: account }
     });
-    if (settings.node || settings.node.length === 0) {
-      let loadAccount = account;
-      if (!loadAccount && settings.account) loadAccount = settings.account;
-      eos.getAccount(loadAccount).then((results) => {
+    const state = getState();
+    const { settings } = state;
+    if (account && (settings.node || settings.node.length !== 0)) {
+      eos(state).getAccount(account).then((results) => {
         // Trigger the action to load this accounts balances
-        dispatch(getCurrencyBalance(settings, loadAccount));
+        dispatch(getCurrencyBalance(account));
         // Dispatch the results of the account itself
         return dispatch({
           type: types.GET_ACCOUNT_SUCCESS,
@@ -41,17 +40,16 @@ export function getAccount(settings, account = '') {
   };
 }
 
-export function getCurrencyBalance(settings, account) {
-  return (dispatch: () => void) => {
-    const eos = Eos.Localnet({ httpEndpoint: settings.node });
+export function getCurrencyBalance(account) {
+  return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_ACCOUNT_BALANCE_REQUEST,
       payload: { account_name: account }
     });
-    if (settings.node || settings.node.length === 0) {
-      let loadAccount = account;
-      if (!loadAccount && settings.account) loadAccount = settings.account;
-      return eos.getCurrencyBalance('eosio.token', loadAccount).then((balances) => dispatch({
+    const state = getState();
+    const { settings } = state;
+    if (account && (settings.node || settings.node.length !== 0)) {
+      return eos(state).getCurrencyBalance('eosio.token', account).then((balances) => dispatch({
         type: types.GET_ACCOUNT_BALANCE_SUCCESS,
         payload: { balances, account_name: account }
       })).catch((err) => dispatch({
