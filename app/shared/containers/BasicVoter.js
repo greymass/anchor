@@ -105,6 +105,14 @@ class BasicVoterContainer extends Component<Props> {
         )
       },
       {
+        menuItem: 'Stake',
+        pane: (
+          <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
+            <Stake {...this.props} />
+          </Tab.Pane>
+        )
+      },
+      {
         menuItem: { key: 'wallet', icon: 'protect', content: 'Wallet' },
         pane: (
           <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
@@ -127,14 +135,6 @@ class BasicVoterContainer extends Component<Props> {
         pane: (
           <Tab.Pane key="about" style={{ marginTop: '3em' }}>
             about area
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: 'Stake',
-        pane: (
-          <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
-            <Stake {...this.props} />
           </Tab.Pane>
         )
       }
