@@ -105,7 +105,7 @@ class BasicVoterContainer extends Component<Props> {
         )
       },
       {
-        menuItem: { key: 'wallet', icon: 'microchip', content: 'Stake' },
+        menuItem: { key: 'stake', icon: 'microchip', content: 'Stake' },
         pane: (
           <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
             <Stake {...this.props} />
