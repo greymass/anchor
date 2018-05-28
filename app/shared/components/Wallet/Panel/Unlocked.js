@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
+import { Button } from 'semantic-ui-react';
 
 import WalletPanelFormNode from './Form/Node';
 import WalletPanelButtonLock from './Button/Lock';
@@ -31,14 +32,14 @@ export default class WalletPanelLocked extends Component<Props> {
                   />
                 )
                 : (
-                  <div>
-                    <WalletPanelButtonRemove
-                      removeWallet={actions.removeWallet}
-                    />
+                  <Button.Group vertical>
                     <WalletPanelButtonLock
                       lockWallet={actions.lockWallet}
                     />
-                  </div>
+                    <WalletPanelButtonRemove
+                      removeWallet={actions.removeWallet}
+                    />
+                  </Button.Group>
                 )
               }
             </div>
