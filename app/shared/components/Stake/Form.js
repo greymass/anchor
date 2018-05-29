@@ -24,7 +24,7 @@ export default class StakeForm extends Component<Props> {
     });
   }, 300)
 
-  onClick = debounce((e, { value }) => {
+  onClick = debounce(() => {
     const {
       actions,
       account,
@@ -38,7 +38,7 @@ export default class StakeForm extends Component<Props> {
 
     const { setStakeWithValidation } = actions;
 
-    setStakeWithValidation(balance, account, net_amount, cpu_amount)
+    setStakeWithValidation(balance, account, net_amount, cpu_amount);
 
     this.setState({
       error: false,
@@ -50,13 +50,8 @@ export default class StakeForm extends Component<Props> {
   render() {
     const {
       actions,
-      validate,
-      balance
+      validate
     } = this.props;
-
-    const {
-      clearSettingsCache
-    } = actions;
 
     const {
       error,

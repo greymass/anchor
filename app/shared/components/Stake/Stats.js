@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Segment, Grid } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
+import { Segment, Grid } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
 export default class WalletStatus extends Component<Props> {
@@ -12,9 +11,9 @@ export default class WalletStatus extends Component<Props> {
     let element = `No account stake data loaded yet (connected to: ${server})...`;
 
     if (account && account.account_name) {
-      const total_staked = (account.net_weight + account.cpu_weight)/10000;
-      const net_weight = (account.net_weight)/10000;
-      const cpu_weight = (account.cpu_weight)/10000;
+      const total_staked = (account.net_weight + account.cpu_weight) / 10000;
+      const net_weight = (account.net_weight) / 10000;
+      const cpu_weight = (account.cpu_weight) / 10000;
       const amount_not_staked = balance - total_staked;
 
       element = (
