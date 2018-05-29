@@ -1,7 +1,8 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  list: []
+  list: [],
+  selected: []
 };
 
 export default function producers(state = initialState, action) {
@@ -22,6 +23,23 @@ export default function producers(state = initialState, action) {
     case types.GET_PRODUCERS_SUCCESS: {
       return Object.assign({}, state, {
         list: action.payload.results.rows
+      });
+    }
+    case types.GET_ACCOUNT_SUCCESS: {
+      const account = action.payload.results;
+      if (account && account.voter_info) {
+        const selected = account.voter_info.producers;
+        if (!state.selected || selected.sort().toString() !== state.selected.sort().toString()) {
+          return Object.assign({}, state, {
+            selected
+          });
+        }
+      }
+      return state;
+    }
+    case types.SET_ACCOUNT_PRODUCER_VOTES_SUCCESS: {
+      return Object.assign({}, state, {
+        selected: action.payload.producers
       });
     }
     case types.GET_PRODUCERS_REQUEST:
