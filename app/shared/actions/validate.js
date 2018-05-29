@@ -156,16 +156,12 @@ export function validateStake(stake, balance) {
         payload: { error: 'not_enough_balance' },
         type: types.VALIDATE_STAKE_FAILURE
       });
-
       return false;
-    }else{
-
-      dispatch({
-        type: types.VALIDATE_STAKE_SUCCESS
-      });
-
-      return true;
     }
+    dispatch({
+      type: types.VALIDATE_STAKE_SUCCESS
+    });
+    return true;
   };
 }
 
