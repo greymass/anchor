@@ -10,7 +10,7 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
     } = getState();
     const { account } = settings;
     dispatch({
-      type: types.SYSTEM_DELEGATEBW_PENDING
+      type: types.SYSTEM_REGPRODUCER_PENDING
     })
     return eos(connection).regproducer({
       producer: account,
