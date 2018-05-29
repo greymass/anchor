@@ -10,9 +10,11 @@ export default class StakeForm extends Component<Props> {
 
     this.state = {
       error: false,
-      cpu_amount: 0,
-      net_amount: 0
+      cpu_amount: '',
+      net_amount: ''
     };
+
+    this.onClick = this.onClick.bind(this);
   }
 
   onChange = debounce((e, { name, value }) => {
@@ -36,7 +38,13 @@ export default class StakeForm extends Component<Props> {
 
     const { setStakeWithValidation } = actions;
 
-    setStakeWithValidation(balance, account, cpu_amount, net_amount)
+    setStakeWithValidation(balance, account, net_amount, cpu_amount)
+
+    this.setState({
+      error: false,
+      cpu_amount: '',
+      net_amount: ''
+    });
   }, 300)
 
   render() {
@@ -65,27 +73,33 @@ export default class StakeForm extends Component<Props> {
                 <Form.Field
                   control={Input}
                   fluid
-                  icon={(validate.STAKE === 'SUCCESS') ? 'checkmark' : 'x'}
-                  label={t('stake_cpu_amount')}
-                  loading={(validate.STAKE === 'PENDING')}
-                  name="cpu_amount"
-                  onChange={this.onChange}
-                  defaultValue={cpu_amount}
-                />
-                <Form.Field
-                  control={Input}
-                  fluid
-                  icon={(validate.STAKE === 'SUCCESS') ? 'checkmark' : 'x'}
                   label={t('stake_net_amount')}
                   loading={(validate.STAKE === 'PENDING')}
                   name="net_amount"
                   onChange={this.onChange}
-                  defaultValue={net_amount}
+                  value={this.state.net_amount}
+                />
+                <Form.Field
+                  control={Input}
+                  fluid
+                  label={t('stake_cpu_amount')}
+                  loading={(validate.STAKE === 'PENDING')}
+                  name="cpu_amount"
+                  onChange={this.onChange}
+                  value={this.state.cpu_amount}
                 />
                 {(validate.STAKE === 'FAILURE')
                   ? (
                     <Message negative>
                       <p>{t(validate.STAKE_ERROR)}</p>
+                    </Message>
+                  )
+                  : ''
+                }
+                {(validate.STAKE === 'SUCCESS')
+                  ? (
+                    <Message positive>
+                      <p>{t('stake_updated')}</p>
                     </Message>
                   )
                   : ''

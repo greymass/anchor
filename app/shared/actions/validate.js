@@ -153,7 +153,7 @@ export function validateStake(stake, balance) {
 
     if ((stake.cpu_amount + stake.net_amount) > balance) {
       dispatch({
-        payload: { error: 'You do not have enough balance.' },
+        payload: { error: 'not_enough_balance' },
         type: types.VALIDATE_STAKE_FAILURE
       });
 
