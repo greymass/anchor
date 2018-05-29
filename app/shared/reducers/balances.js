@@ -1,6 +1,6 @@
 import * as types from '../actions/types';
 
-export default function accounts(state = {}, action) {
+export default function balances(state = {}, action) {
   switch (action.type) {
     case types.CLEAR_ACCOUNT_CACHE:
     case types.RESET_ALL_STATES: {
