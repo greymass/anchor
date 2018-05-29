@@ -82,7 +82,6 @@ export default class ProducersTableRow extends Component<Props> {
                   }
                 />
               </Table.Cell>
-              <Table.Cell textAlign="center">{position}</Table.Cell>
               <Table.Cell>
                 <Header size="small">
                   {producer.owner}
