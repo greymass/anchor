@@ -53,12 +53,6 @@ export default class StakeForm extends Component<Props> {
       validate
     } = this.props;
 
-    const {
-      error,
-      cpu_amount,
-      net_amount
-    } = this.state;
-
     return (
       <I18n ns="stake">
         {
@@ -72,7 +66,6 @@ export default class StakeForm extends Component<Props> {
                   loading={(validate.STAKE === 'PENDING')}
                   name="net_amount"
                   onChange={this.onChange}
-                  value={this.state.net_amount}
                 />
                 <Form.Field
                   control={Input}
@@ -81,7 +74,6 @@ export default class StakeForm extends Component<Props> {
                   loading={(validate.STAKE === 'PENDING')}
                   name="cpu_amount"
                   onChange={this.onChange}
-                  value={this.state.cpu_amount}
                 />
                 {(validate.STAKE === 'FAILURE')
                   ? (
