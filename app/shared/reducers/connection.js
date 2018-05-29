@@ -14,6 +14,13 @@ export default function connection(state = initialState, action) {
         httpEndpoint: action.payload.node
       });
     }
+    case types.SET_TEMPORARY_KEY:
+    case types.SET_WALLET_KEY:
+    case types.VALIDATE_WALLET_PASSWORD_SUCCESS: {
+      return Object.assign({}, state, {
+        keyProvider: action.payload.key,
+      });
+    }
     case types.GET_CHAIN_INFO_SUCCESS: {
       return Object.assign({}, state, {
         chainId: action.payload.chain.chain_id
