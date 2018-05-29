@@ -55,12 +55,13 @@ export default class ProducersTableRow extends Component<Props> {
     const isActive = (Date.now() - lastProduced) < 1000;
     const isSelected = (selected.indexOf(producer.owner) !== -1);
     const votePercent = (totalVoteWeight)
-      ? ((parseInt(producer.total_votes, 10) / parseInt(totalVoteWeight, 10)) * 100).toFixed(2)
+      ? ((parseInt(producer.votes, 10) / parseInt(totalVoteWeight, 10)) * 100).toFixed(2)
       : 0;
-    const voteFormatted = (producer.total_votes > 0)
+    // console.log(votePercent, producer.votes, totalVoteWeight);
+    const voteFormatted = (producer.votes > 0)
       ? (
         <ProducersVoteWeight
-          weight={producer.total_votes}
+          weight={producer.votes}
         />
       )
       : 'None';
