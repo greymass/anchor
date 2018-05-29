@@ -19,9 +19,9 @@ export function setStakeWithValidation(balance, account, net_amount, cpu_amount)
     setTimeout(function(){
       dispatch({type: types.VALIDATE_STAKE_NULL})
     }, 15000);
-    
 
-    if (dispatch(validate.validateStake(nextStake, balance))){
+
+    if (dispatch(validate.validateStake(nextStake, balance))) {
       return dispatch(delegatebw(account.account_name, account.account_name, net_amount, cpu_amount));
     }
   };
