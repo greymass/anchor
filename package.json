@@ -1,7 +1,7 @@
 {
   "name": "eos-voter",
   "productName": "eos-voter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -41,6 +41,7 @@
       "package.json"
     ],
     "dmg": {
+      "icon": "assets/icons/mac/icon.icns",
       "contents": [
         {
           "x": 130,
@@ -54,17 +55,34 @@
         }
       ]
     },
+    "mac": {
+      "icon": "assets/icons/mac/icon.icns"
+    },
     "win": {
+      "icon": "assets/icons/win/icon.ico",
       "target": [
         "nsis"
       ]
     },
     "linux": {
+      "category": "Network",
+      "desktop": {
+        "Name": "eos-voter",
+        "Version": "0.1.0",
+        "GenericName": "EOS Voting Client + Wallet",
+        "X-GNOME-FullName": "eos-voter",
+        "Comment": "A simple voting interface and wallet for EOS accounts.",
+        "Type": "Application",
+        "Terminal": "false",
+        "StartupNotify": "false",
+        "Categories": "Network;",
+        "MimeType": "application/x-eos;x-scheme-handler/eos;"
+      },
+      "icon": "assets/icons/png",
       "target": [
         "deb",
-        "AppImage"
-      ],
-      "category": "Development"
+        "snap"
+      ]
     },
     "directories": {
       "buildResources": "resources",
@@ -86,6 +104,7 @@
   },
   "keywords": [
     "eos",
+    "voting",
     "wallet"
   ],
   "homepage": "https://github.com/aaroncox/eos-voter#readme",
