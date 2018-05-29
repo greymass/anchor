@@ -7,5 +7,6 @@
   "net_staked": "Amount Staked to Bandwidth",
   "cpu_staked": "Amount Staked to CPU",
   "amount_not_staked": "Amount Not Staked",
-  "not_enough_balance": "You do not have enough balance."
+  "not_enough_balance": "You do not have enough balance.",
+  "stake_updated":"Your stake was updated successfully."
 }
