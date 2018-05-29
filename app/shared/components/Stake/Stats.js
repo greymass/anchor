@@ -14,7 +14,7 @@ export default class WalletStatus extends Component<Props> {
       const total_staked = (account.net_weight + account.cpu_weight) / 10000;
       const net_weight = (account.net_weight) / 10000;
       const cpu_weight = (account.cpu_weight) / 10000;
-      const amount_not_staked = balance - total_staked;
+      const amount_not_staked = balance.EOS;
 
       element = (
         <I18n ns="stake">
