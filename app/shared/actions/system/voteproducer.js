@@ -9,18 +9,18 @@ export function voteproducers(producers = []) {
       settings
     } = getState();
     dispatch({
-      type: types.SET_ACCOUNT_PRODUCER_VOTES_REQUEST
+      type: types.SYSTEM_VOTEPRODUCER_REQUEST
     });
     const { account } = settings;
     producers.sort();
     return eos(connection).voteproducer(account, '', producers)
       .then((tx) => dispatch({
         payload: { tx, producers },
-        type: types.SET_ACCOUNT_PRODUCER_VOTES_SUCCESS
+        type: types.SYSTEM_VOTEPRODUCER_SUCCESS
       }))
       .catch((err) => dispatch({
         payload: { err },
-        type: types.SET_ACCOUNT_PRODUCER_VOTES_FAILURE
+        type: types.SYSTEM_VOTEPRODUCER_FAILURE
       }));
   };
 }

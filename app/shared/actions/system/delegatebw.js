@@ -9,13 +9,13 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
     } = getState();
 
     dispatch({
-      type: types.VALIDATE_STAKE_PENDING
+      type: types.SYSTEM_DELEGATEBW_PENDING
     })
 
     const stake_net_amount = parseFloat(net_amount || 0).toPrecision(5);
     const stake_cpu_amount = parseFloat(cpu_amount || 0).toPrecision(5);
 
-    eos(connection).transaction(tr => {
+    return eos(connection).transaction(tr => {
       tr.delegatebw({
         from: delegator,
         receiver,
@@ -24,10 +24,10 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
         transfer: 0
       });
     }).then(() => dispatch({
-      type: types.VALIDATE_STAKE_SUCCESS
+      type: types.SYSTEM_DELEGATEBW_SUCCESS
     })).catch((err) => dispatch({
       payload: { error: err.message },
-      type: types.VALIDATE_STAKE_FAILURE
+      type: types.SYSTEM_DELEGATEBW_FAILURE
     }));
   };
 }
