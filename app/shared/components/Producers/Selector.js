@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Header, List, Table } from 'semantic-ui-react';
+import { Button, Header, List, Segment } from 'semantic-ui-react';
 
 import ProducersSelectorItem from './Selector/Item';
 import ProducersSelectorItemEmpty from './Selector/Item/Empty';
@@ -9,29 +9,16 @@ import ProducersSelectorItemEmpty from './Selector/Item/Empty';
 export default class ProducersSelector extends Component<Props> {
   render() {
     const {
-      // account,
+      account,
       modified,
       selected,
       submitting
     } = this.props;
-    // const { voter_info } = account;
     return (
       <I18n ns="producers">
         {
           (t) => (
-            <div>
-              <Table definition>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell>
-                      {t('producer_voter_total_staked')}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {/* {(voter_info.staked / 10000).toFixed(4)} EOS */}
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
+            <Segment basic loading={!(account)}>
               <Button
                 color={modified ? 'green' : 'grey'}
                 content={modified ? t('producer_voter_save_changes') : t('producer_voter_no_changes')}
@@ -64,7 +51,7 @@ export default class ProducersSelector extends Component<Props> {
                   )
                 }
               </List>
-            </div>
+            </Segment>
           )
         }
       </I18n>

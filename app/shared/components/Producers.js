@@ -11,12 +11,15 @@ import WalletPanel from './Wallet/Panel';
 type Props = {
   actions: {
     getAccount: () => void,
-    getProducers: () => void
+    getProducers: () => void,
+    voteproducers: () => void
   },
   accounts: {},
   globals: {},
   keys: {},
-  producers: {},
+  producers: {
+    selected: []
+  },
   settings: {},
   validate: {},
   wallet: {}
@@ -28,8 +31,6 @@ export default class Producers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      original: [],
-      modified: false,
       selected: [],
       selected_loaded: false,
       submitting: false
@@ -44,7 +45,6 @@ export default class Producers extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
     const nextValidate = nextProps.validate;
-    const { accounts, settings } = nextProps;
     // On a new node connection, update
     if (
       validate.NODE === 'PENDING'
@@ -52,15 +52,18 @@ export default class Producers extends Component<Props> {
     ) {
       this.tick();
     }
+    if (this.state.submitting && this.state.selected === nextProps.producers.selected) {
+      this.setState({ submitting: false });
+    }
     // If no selected are loaded, attempt to retrieve them from the props
     if (!this.state.selected_loaded) {
+      const { accounts, settings } = nextProps;
       // If an account is loaded, attempt to load it's votes
       if (settings.account && accounts[settings.account]) {
         const account = accounts[settings.account];
         if (account.voter_info) {
           // If the voter_info entry exists, load those votes into state
           this.setState({
-            original: account.voter_info.producers,
             selected: account.voter_info.producers,
             selected_loaded: true
           });
@@ -94,7 +97,6 @@ export default class Producers extends Component<Props> {
     if (producers.indexOf(producer) === -1) {
       producers.push(producer);
       this.setState({
-        modified: (producers !== this.state.original),
         selected: producers
       });
     }
@@ -107,24 +109,16 @@ export default class Producers extends Component<Props> {
       producers.splice(index, 1);
     }
     this.setState({
-      modified: (producers !== this.state.original),
       selected: producers
     });
   }
 
   submitProducerVotes = () => {
-    console.log('submitting', this.state.selected);
-    this.setState({
-      submitting: true
-    });
-    // Simulate the state that will occur after submitting
-    setTimeout(() => {
-      this.setState({
-        submitting: false,
-        modified: false,
-        original: this.state.selected
-      });
-    }, 200);
+    const {
+      voteproducers
+    } = this.props.actions;
+    voteproducers(this.state.selected);
+    this.setState({ submitting: true });
   }
 
   render() {
@@ -139,7 +133,6 @@ export default class Producers extends Component<Props> {
       wallet
     } = this.props;
     const {
-      modified,
       selected,
       submitting
     } = this.state;
@@ -154,6 +147,7 @@ export default class Producers extends Component<Props> {
       />
     )];
     const validUser = (keys.key);
+    const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
       sidebar = [
         (

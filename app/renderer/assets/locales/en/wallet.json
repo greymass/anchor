@@ -21,5 +21,7 @@
   "wallet_panel_wallet_unlock_failure_header": "Failed to unlock wallet",
   "wallet_panel_wallet_remove": "Destroy Wallet",
   "wallet_panel_wallet_lock": "Lock Wallet",
-  "wallet_panel_form_use_temporary": "Use account + key without saving"
+  "wallet_panel_form_use_temporary": "Use account + key without saving",
+  "wallet_panel_locked": "Wallet Locked",
+  "wallet_panel_locked_subheader": "To perform actions the wallet must be unlocked."
 }

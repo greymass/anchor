@@ -19,6 +19,7 @@ import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
 import * as StakeActions from '../actions/stake';
+import * as VoteProducerActions from '../actions/system/voteproducer';
 
 import logo from '../../renderer/assets/images/greymass.png';
 
@@ -52,7 +53,6 @@ class BasicVoterContainer extends Component<Props> {
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 15000);
   }
-
 
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
@@ -97,7 +97,7 @@ class BasicVoterContainer extends Component<Props> {
     const panes = [
       {
         menuItem: { key: 'producers', icon: 'check square', content: 'Producer Voting' },
-        pane: (
+        render: () => (
           <Tab.Pane key="producers" style={{ marginTop: '3em' }}>
             <Producers {...this.props} />
           </Tab.Pane>
@@ -105,7 +105,7 @@ class BasicVoterContainer extends Component<Props> {
       },
       {
         menuItem: { key: 'stake', icon: 'microchip', content: 'Stake' },
-        pane: (
+        render: () => (
           <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
             <Stake {...this.props} />
           </Tab.Pane>
@@ -113,7 +113,7 @@ class BasicVoterContainer extends Component<Props> {
       },
       {
         menuItem: { key: 'wallet', icon: 'protect', content: 'Wallet' },
-        pane: (
+        render: () => (
           <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
             <Wallet {...this.props} />
           </Tab.Pane>
@@ -123,6 +123,7 @@ class BasicVoterContainer extends Component<Props> {
         menuItem: (
           <Menu.Menu key="right" position="right">
             <WalletLockState
+              key="lockstate"
               keys={keys}
               wallet={wallet}
             />
@@ -131,7 +132,7 @@ class BasicVoterContainer extends Component<Props> {
             </Menu.Item>
           </Menu.Menu>
         ),
-        pane: (
+        render: () => (
           <Tab.Pane key="about" style={{ marginTop: '3em' }}>
             about area
           </Tab.Pane>
@@ -140,12 +141,13 @@ class BasicVoterContainer extends Component<Props> {
     ];
     return (
       <Tab
-        menu={{
-          fixed: 'top',
-          inverted: true,
-          size: 'large'
-        }}
-        renderActiveOnly={false}
+        menu={(
+          <Menu
+            fixed="top"
+            inverted
+            size="large"
+          />
+        )}
         panes={panes}
       />
     );
@@ -176,7 +178,8 @@ function mapDispatchToProps(dispatch) {
       ...SettingsActions,
       ...ValidateActions,
       ...WalletActions,
-      ...StakeActions
+      ...StakeActions,
+      ...VoteProducerActions
     }, dispatch)
   };
 }
