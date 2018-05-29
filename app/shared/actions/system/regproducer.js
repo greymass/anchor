@@ -9,14 +9,21 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
       settings
     } = getState();
     const { account } = settings;
-    eos(connection).regproducer({
+    dispatch({
+      type: types.SYSTEM_DELEGATEBW_PENDING
+    })
+    return eos(connection).regproducer({
       producer: account,
       producer_key: producerKey,
       url: producerUrl,
       location: 0
-    }).then((result) => {
-      console.log(result);
-    })
+    }).then((tx) => dispatch({
+      payload: { tx, producers },
+      type: types.SYSTEM_REGPRODUCER_SUCCESS
+    })).catch((err) => dispatch({
+      payload: { err },
+      type: types.SYSTEM_REGPRODUCER_FAILURE
+    }));
   };
 }
 

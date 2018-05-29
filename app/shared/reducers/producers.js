@@ -37,7 +37,7 @@ export default function producers(state = initialState, action) {
       }
       return state;
     }
-    case types.SET_ACCOUNT_PRODUCER_VOTES_SUCCESS: {
+    case types.SYSTEM_VOTEPRODUCER_SUCCESS: {
       return Object.assign({}, state, {
         selected: action.payload.producers
       });
