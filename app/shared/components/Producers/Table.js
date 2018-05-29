@@ -99,14 +99,6 @@ export default class ProducersTable extends Component<Props> {
                   <Table.Row>
                     <Table.HeaderCell collapsing />
                     <Table.HeaderCell
-                      collapsing
-                      onClick={this.handleSort('votes')}
-                      sorted={column === 'votes' ? direction : null}
-                      textAlign="center"
-                    >
-                      {t('block_producer_position')}
-                    </Table.HeaderCell>
-                    <Table.HeaderCell
                       onClick={this.handleSort('owner')}
                       sorted={column === 'owner' ? direction : null}
                     >
