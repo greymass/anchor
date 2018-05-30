@@ -7,7 +7,20 @@ import WalletPanelFormNode from './Panel/Form/Node';
 import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
 
+import Stake from './Panel/Stake';
+
+type Props = {
+  actions: {},
+  accounts: {},
+  balances: {},
+  settings: {},
+  validate: {},
+  keys: {},
+  wallet: {}
+};
+
 export default class WalletPanel extends Component<Props> {
+  props: Props;
 
   onSettingChange = (e, {name, value}) => {
     console.log(name, value)
@@ -27,8 +40,15 @@ export default class WalletPanel extends Component<Props> {
       keys,
       settings,
       validate,
-      wallet
+      wallet,
+      accounts,
+      balances
     } = this.props;
+
+    const {
+      clearSettingsCache
+    } = this.props.actions;
+
     let panel = (
       <WalletPanelForm
         actions={actions}
@@ -67,6 +87,19 @@ export default class WalletPanel extends Component<Props> {
           value={settings.node}
         />
         {panel}
+
+        <Stake
+          actions={actions}
+          accounts={accounts}
+          balances={balances}
+          validate={validate}
+          settings={settings}
+        />
+        <Button
+          onClick={clearSettingsCache}
+          content="DEBUG: Reset Application"
+          color="red"
+        />
       </Segment>
     );
   }
