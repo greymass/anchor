@@ -6,10 +6,11 @@ import { withRouter } from 'react-router-dom';
 
 import { Menu, Segment } from 'semantic-ui-react';
 
+import About from '../components/About';
 import Producers from '../components/Producers';
+import Stake from '../components/Stake';
 import Wallet from '../components/Wallet';
 import WalletLockState from '../components/Wallet/LockState';
-import Stake from '../components/Stake';
 
 import * as AccountsActions from '../actions/accounts';
 import * as ChainActions from '../actions/chain';
@@ -96,7 +97,6 @@ class BasicVoterContainer extends Component<Props> {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    console.log(this)
     const {
       activeItem
     } = this.state;
@@ -112,6 +112,10 @@ class BasicVoterContainer extends Component<Props> {
       }
       case 'wallet': {
         activeTab = <Wallet {...this.props} />;
+        break;
+      }
+      case 'about': {
+        activeTab = <About {...this.props} />;
         break;
       }
       default: {

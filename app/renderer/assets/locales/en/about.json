@@ -1,0 +1,14 @@
+{
+  "about_opensource_title": "This application is open source",
+  "about_opensource_message": "We welcome contributions to this application. Please join us on github.",
+  "about_opensource_link": "https://github.com/greymass/eos-voter",
+  "about_message_1": "This application is a standalone desktop application that connects directly to the EOS blockchain through the API endpoint of your choice.",
+  "about_message_2": "Your keys never leave the application itself and only ever stored encrypted - providing the highest level of security a hot wallet can offer.",
+  "about_more": "Please visit our website if you'd like to learn more.",
+  "about_issues": "If you have encounter problems with the application itself, please file an issue on github below:",
+  "about_issues_link": "https://github.com/greymass/eos-voter/issues",
+  "about_greymass_message_1": "This application is an initiative spearheaded by the Greymass organization.",
+  "about_greymass_message_2": "If you would like to support us - we'd encourage you to learn more about our efforts.",
+  "about_license_type": "License Type",
+  "about_license_body": "License Mumbo Jumbo"
+}
