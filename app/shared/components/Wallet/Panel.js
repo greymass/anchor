@@ -15,9 +15,6 @@ export default class WalletPanel extends Component<Props> {
       validate,
       wallet
     } = this.props;
-    const {
-      clearSettingsCache
-    } = actions;
     let panel = (
       <WalletPanelForm
         actions={actions}
@@ -50,11 +47,6 @@ export default class WalletPanel extends Component<Props> {
     return (
       <Segment basic>
         {panel}
-        <Button
-          onClick={clearSettingsCache}
-          content="DEBUG: Reset Application"
-          color="red"
-        />
       </Segment>
     );
   }

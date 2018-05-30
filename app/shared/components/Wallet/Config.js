@@ -41,9 +41,6 @@ export default class WalletConfig extends Component<Props> {
       wallet
     } = this.props;
     const {
-      clearSettingsCache
-    } = actions;
-    const {
       error,
       config,
     } = this.state;
@@ -99,11 +96,6 @@ export default class WalletConfig extends Component<Props> {
                   )
                   : ''
                 }
-                <Button
-                  onClick={clearSettingsCache}
-                  content="Reset Application"
-                  color="red"
-                />
               </Form>
             </Segment>
           )
