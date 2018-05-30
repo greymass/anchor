@@ -122,52 +122,6 @@ class BasicVoterContainer extends Component<Props> {
         break;
       }
     }
-    //
-    // const panes = [
-    //   // {
-    //   //   menuItem: { key: 'producers', icon: 'check square', content: 'Producer Voting' },
-    //   //   render: () => (
-    //   //     <Tab.Pane key="producers" style={{ marginTop: '3em' }}>
-    //   //       <Producers {...this.props} />
-    //   //     </Tab.Pane>
-    //   //   )
-    //   // },
-    //   // {
-    //   //   menuItem: { key: 'stake', icon: 'microchip', content: 'Stake' },
-    //   //   render: () => (
-    //   //     <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
-    //   //       <Stake {...this.props} />
-    //   //     </Tab.Pane>
-    //   //   )
-    //   // },
-    //   {
-    //     menuItem: { key: 'wallet', icon: 'protect', content: 'Wallet' },
-    //     render: () => (
-    //       <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
-    //         <Wallet {...this.props} />
-    //       </Tab.Pane>
-    //     )
-    //   },
-    //   {
-    //     menuItem: (
-          // <Menu.Menu position="right">
-          //   <WalletLockState
-          //     key="lockstate"
-          //     keys={keys}
-          //     wallet={wallet}
-          //   />
-          //   <Menu.Item key="about" position="right">
-          //     <img alt="Greymass" src={logo} />
-          //   </Menu.Item>
-          // </Menu.Menu>
-    //     ),
-    //     render: () => (
-    //       <Tab.Pane key="about" style={{ marginTop: '3em' }}>
-    //         about area
-    //       </Tab.Pane>
-    //     )
-    //   }
-    // ];
     return (
       <div>
         <Menu
