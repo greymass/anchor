@@ -8,7 +8,6 @@ import { Menu, Segment } from 'semantic-ui-react';
 
 import About from '../components/About';
 import Producers from '../components/Producers';
-import Stake from '../components/Stake';
 import Wallet from '../components/Wallet';
 import WalletLockState from '../components/Wallet/LockState';
 
@@ -33,7 +32,9 @@ type Props = {
   keys: {},
   settings: {},
   validate: {},
-  wallet: {}
+  wallet: {},
+  balances: {},
+  accounts: {}
 };
 
 class BasicVoterContainer extends Component<Props> {
@@ -106,10 +107,6 @@ class BasicVoterContainer extends Component<Props> {
     } = this.props;
     let activeTab = <Producers {...this.props} />;
     switch (activeItem) {
-      case 'stake': {
-        activeTab = <Stake {...this.props} />;
-        break;
-      }
       case 'wallet': {
         activeTab = <Wallet {...this.props} />;
         break;
@@ -126,7 +123,6 @@ class BasicVoterContainer extends Component<Props> {
       <div>
         <Menu
           attached
-          inverted
           size="large"
         >
           <Menu.Item
@@ -136,20 +132,7 @@ class BasicVoterContainer extends Component<Props> {
             active={activeItem === 'producers'}
             onClick={this.handleItemClick}
           />
-          <Menu.Item
-            name="stake"
-            icon="microchip"
-            content="Stake"
-            active={activeItem === 'stake'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="wallet"
-            icon="protect"
-            content="Wallet"
-            active={activeItem === 'wallet'}
-            onClick={this.handleItemClick}
-          />
+
           <Menu.Menu position="right">
             <WalletLockState
               key="lockstate"

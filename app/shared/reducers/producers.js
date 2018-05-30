@@ -1,7 +1,7 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  lastError: false,
+  lastError: {},
   lastTransaction: {},
   list: [],
   selected: [],
