@@ -1,10 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid, Transition } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingAccount from './Producers/VotingAccount';
+import ProducersVotingPreview from './Producers/Modal/Preview';
 import ProducersWelcome from './Producers/Welcome';
 import WalletPanel from './Wallet/Panel';
 
@@ -18,6 +19,8 @@ type Props = {
   globals: {},
   keys: {},
   producers: {
+    lastError: {},
+    lastTransaction: {},
     selected: []
   },
   settings: {},
@@ -31,6 +34,9 @@ export default class Producers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      lastError: false,
+      lastTransaction: {},
+      previewing: false,
       selected: [],
       selected_loaded: false,
       submitting: false
@@ -52,8 +58,19 @@ export default class Producers extends Component<Props> {
     ) {
       this.tick();
     }
-    if (this.state.submitting && this.state.selected === nextProps.producers.selected) {
-      this.setState({ submitting: false });
+    // Update state when the transaction has gone through
+    if (
+      this.state.submitting
+      && (
+        this.state.lastTransaction !== nextProps.producers.lastTransaction
+        || this.state.lastError !== nextProps.producers.lastError
+      )
+    ) {
+      this.setState({
+        lastError: nextProps.producers.lastError,
+        lastTransaction: nextProps.producers.lastTransaction,
+        submitting: false
+      });
     }
     // If no selected are loaded, attempt to retrieve them from the props
     if (!this.state.selected_loaded) {
@@ -113,12 +130,25 @@ export default class Producers extends Component<Props> {
     });
   }
 
+  previewProducerVotes = (previewing) => this.setState({
+    previewing,
+    lastError: false, // Reset the last error
+    lastTransaction: {} // Reset the last transaction
+  });
+
   submitProducerVotes = () => {
     const {
       voteproducers
     } = this.props.actions;
-    voteproducers(this.state.selected);
-    this.setState({ submitting: true });
+    const {
+      selected
+    } = this.state;
+    voteproducers(selected);
+    this.setState({
+      lastError: false, // Reset the last error
+      lastTransaction: {}, // Reset the last transaction
+      submitting: true
+    });
   }
 
   render() {
@@ -133,6 +163,9 @@ export default class Producers extends Component<Props> {
       wallet
     } = this.props;
     const {
+      lastError,
+      lastTransaction,
+      previewing,
       selected,
       submitting
     } = this.state;
@@ -164,7 +197,20 @@ export default class Producers extends Component<Props> {
             modified={modified}
             selected={selected}
             removeProducer={this.removeProducer.bind(this)}
-            submitProducerVotes={this.submitProducerVotes.bind(this)}
+            submitProducerVotes={() => this.previewProducerVotes(true)}
+            submitting={submitting}
+          />
+        ),
+        (
+          <ProducersVotingPreview
+            key="ProducersVotingPreview"
+            lastError={lastError}
+            lastTransaction={lastTransaction}
+            open={previewing}
+            onClose={() => this.previewProducerVotes(false)}
+            onConfirm={this.submitProducerVotes.bind(this)}
+            onOpen={() => this.previewProducerVotes(true)}
+            selected={selected}
             submitting={submitting}
           />
         )
@@ -173,13 +219,9 @@ export default class Producers extends Component<Props> {
     return (
       <Grid>
         <Grid.Row>
-          <Transition.Group
-            as={Grid.Column}
-            duration={200}
-            width={6}
-          >
+          <Grid.Column width={6}>
             {sidebar}
-          </Transition.Group>
+          </Grid.Column>
           <Grid.Column width={10}>
             {(producers.list.length > 0)
              ? (
