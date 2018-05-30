@@ -52,10 +52,20 @@ export function validateNode(node) {
           connection,
           settings
         } = getState();
+        let { host, protocol, pathname } = new URL(node);
+        // If the protocol contains the original value with a colon,
+        // it means the protocol was missing and the protocol is the host.
+        //
+        // e.g. `api.example.com` instead of `http://api.example.com`
+        if (`${protocol}${pathname}` === node) {
+          host = node;
+          protocol = 'http:';
+        }
+        const httpEndpoint = `${protocol}//${host}`;
         // Establish a modified state to test the connection against
         const modified = {
           ...connection,
-          httpEndpoint: node
+          httpEndpoint
         };
         // A generic info call to make sure it's working
         eos(modified).getInfo({}).then(result => {
@@ -63,7 +73,7 @@ export function validateNode(node) {
           if (result.head_block_num > 1) {
             // Dispatch success
             dispatch({
-              payload: { node },
+              payload: { node: httpEndpoint },
               type: types.VALIDATE_NODE_SUCCESS
             });
             // Refresh our connection properties with new chain info
