@@ -1,7 +1,7 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  expireInSeconds: 60
+  expireInSeconds: 120
 };
 
 export default function connection(state = initialState, action) {
