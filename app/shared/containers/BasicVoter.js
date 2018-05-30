@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Menu, Tab } from 'semantic-ui-react';
+import { Menu, Segment } from 'semantic-ui-react';
 
 import Producers from '../components/Producers';
 import Wallet from '../components/Wallet';
@@ -37,6 +37,10 @@ type Props = {
 
 class BasicVoterContainer extends Component<Props> {
   props: Props;
+
+  state = {
+    activeItem: 'producers',
+  };
 
   componentDidMount() {
     // Validate settings on app start
@@ -89,67 +93,129 @@ class BasicVoterContainer extends Component<Props> {
     }
   }
 
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
   render() {
+    console.log(this)
+    const {
+      activeItem
+    } = this.state;
     const {
       keys,
       wallet
     } = this.props;
-    const panes = [
-      {
-        menuItem: { key: 'producers', icon: 'check square', content: 'Producer Voting' },
-        render: () => (
-          <Tab.Pane key="producers" style={{ marginTop: '3em' }}>
-            <Producers {...this.props} />
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: { key: 'stake', icon: 'microchip', content: 'Stake' },
-        render: () => (
-          <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
-            <Stake {...this.props} />
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: { key: 'wallet', icon: 'protect', content: 'Wallet' },
-        render: () => (
-          <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
-            <Wallet {...this.props} />
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: (
-          <Menu.Menu key="right" position="right">
+    let activeTab = <Producers {...this.props} />;
+    switch (activeItem) {
+      case 'stake': {
+        activeTab = <Stake {...this.props} />;
+        break;
+      }
+      case 'wallet': {
+        activeTab = <Wallet {...this.props} />;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    //
+    // const panes = [
+    //   // {
+    //   //   menuItem: { key: 'producers', icon: 'check square', content: 'Producer Voting' },
+    //   //   render: () => (
+    //   //     <Tab.Pane key="producers" style={{ marginTop: '3em' }}>
+    //   //       <Producers {...this.props} />
+    //   //     </Tab.Pane>
+    //   //   )
+    //   // },
+    //   // {
+    //   //   menuItem: { key: 'stake', icon: 'microchip', content: 'Stake' },
+    //   //   render: () => (
+    //   //     <Tab.Pane key="stake" style={{ marginTop: '3em' }}>
+    //   //       <Stake {...this.props} />
+    //   //     </Tab.Pane>
+    //   //   )
+    //   // },
+    //   {
+    //     menuItem: { key: 'wallet', icon: 'protect', content: 'Wallet' },
+    //     render: () => (
+    //       <Tab.Pane key="wallet" style={{ marginTop: '3em' }}>
+    //         <Wallet {...this.props} />
+    //       </Tab.Pane>
+    //     )
+    //   },
+    //   {
+    //     menuItem: (
+          // <Menu.Menu position="right">
+          //   <WalletLockState
+          //     key="lockstate"
+          //     keys={keys}
+          //     wallet={wallet}
+          //   />
+          //   <Menu.Item key="about" position="right">
+          //     <img alt="Greymass" src={logo} />
+          //   </Menu.Item>
+          // </Menu.Menu>
+    //     ),
+    //     render: () => (
+    //       <Tab.Pane key="about" style={{ marginTop: '3em' }}>
+    //         about area
+    //       </Tab.Pane>
+    //     )
+    //   }
+    // ];
+    return (
+      <div>
+        <Menu
+          attached
+          inverted
+          size="large"
+        >
+          <Menu.Item
+            name="producers"
+            icon="check square"
+            content="Producer Voting"
+            active={activeItem === 'producers'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name="stake"
+            icon="microchip"
+            content="Stake"
+            active={activeItem === 'stake'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name="wallet"
+            icon="protect"
+            content="Wallet"
+            active={activeItem === 'wallet'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Menu position="right">
             <WalletLockState
               key="lockstate"
               keys={keys}
               wallet={wallet}
             />
-            <Menu.Item key="about" position="right">
+            <Menu.Item
+              name="about"
+              position="right"
+              active={activeItem === 'about'}
+              onClick={this.handleItemClick}
+            >
               <img alt="Greymass" src={logo} />
             </Menu.Item>
           </Menu.Menu>
-        ),
-        render: () => (
-          <Tab.Pane key="about" style={{ marginTop: '3em' }}>
-            about area
-          </Tab.Pane>
-        )
-      }
-    ];
-    return (
-      <Tab
-        menu={(
-          <Menu
-            fixed="top"
-            inverted
-            size="large"
-          />
-        )}
-        panes={panes}
-      />
+        </Menu>
+        <Segment
+          attached="bottom"
+          basic
+        >
+          {activeTab}
+        </Segment>
+
+      </div>
     );
   }
 }
