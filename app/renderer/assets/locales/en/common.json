@@ -1,4 +1,6 @@
 {
+  "application_name": "eos-voter",
+  "application_version": "v0.1.0",
   "cancel": "Cancel",
   "confirm": "Confirm",
   "loading": "Loaded"
