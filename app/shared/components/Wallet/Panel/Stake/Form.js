@@ -1,20 +1,19 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Form, Input, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Input, Message, Segment, Modal } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
 export default class StakeForm extends Component<Props> {
   constructor(props) {
     super(props);
 
-    this.state = {
-      error: false,
-      cpu_amount: '',
-      net_amount: ''
-    };
+    const {
+      account
+    } = this.props;
 
-    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
   }
 
   onChange = debounce((e, { name, value }) => {
@@ -24,7 +23,24 @@ export default class StakeForm extends Component<Props> {
     });
   }, 300)
 
-  onClick = debounce(() => {
+  onSubmit = debounce(() => {
+    const {
+      actions,
+      account,
+      balance
+    } = this.props;
+
+    const {
+      cpu_amount,
+      net_amount
+    } = this.state;
+
+    const { setConfirmingStakeWithValidation } = actions;
+
+    setConfirmingWithValidation(balance, account, net_amount, cpu_amount);
+  }, 300)
+
+  onConfirm = debounce(() => {
     const {
       actions,
       account,
@@ -39,18 +55,13 @@ export default class StakeForm extends Component<Props> {
     const { setStakeWithValidation } = actions;
 
     setStakeWithValidation(balance, account, net_amount, cpu_amount);
-
-    this.setState({
-      error: false,
-      cpu_amount: '',
-      net_amount: ''
-    });
   }, 300)
 
   render() {
     const {
       actions,
-      validate
+      validate,
+      account
     } = this.props;
 
     return (
@@ -66,6 +77,7 @@ export default class StakeForm extends Component<Props> {
                   loading={(validate.STAKE === 'PENDING')}
                   name="net_amount"
                   onChange={this.onChange}
+                  defaultValue={account && (account.net_weight/10000)}
                 />
                 <Form.Field
                   control={Input}
@@ -74,6 +86,7 @@ export default class StakeForm extends Component<Props> {
                   loading={(validate.STAKE === 'PENDING')}
                   name="cpu_amount"
                   onChange={this.onChange}
+                  defaultValue={account && (account.cpu_weight/10000)}
                 />
                 {(validate.STAKE === 'FAILURE')
                   ? (
@@ -87,6 +100,19 @@ export default class StakeForm extends Component<Props> {
                   ? (
                     <Message positive>
                       <p>{t('stake_updated')}</p>
+                    </Message>
+                  )
+                  : ''
+                }
+                {(validate.STAKE === 'CONFIRMING')
+                  ? (
+                    <Message warning>
+                      <p>{t('about_to_stake') +  `${this.state.net_amount + this.state.cpu_amount} EOS`}</p>
+                      <Button
+                        onClick={this.onConfirm}
+                        content={t('confirm_stake')}
+                        color="yellow"
+                      />
                     </Message>
                   )
                   : ''

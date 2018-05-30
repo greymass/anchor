@@ -24,7 +24,8 @@ type Props = {
   },
   settings: {},
   validate: {},
-  wallet: {}
+  wallet: {},
+  balances: {}
 };
 
 export default class Producers extends Component<Props> {
@@ -160,7 +161,8 @@ export default class Producers extends Component<Props> {
       producers,
       settings,
       validate,
-      wallet
+      wallet,
+      balances
     } = this.props;
     const {
       lastError,
@@ -178,6 +180,7 @@ export default class Producers extends Component<Props> {
         settings={settings}
         validate={validate}
         wallet={wallet}
+        balances={balances}
       />
     )];
     const validUser = !!keys.key;
