@@ -49,7 +49,7 @@ export default function producers(state = initialState, action) {
     }
     case types.SYSTEM_VOTEPRODUCER_FAILURE: {
       return Object.assign({}, state, {
-        lastError: action.payload.err,
+        lastError: parseError(action.payload.err),
         lastTransaction: {}
       });
     }
@@ -64,5 +64,13 @@ export default function producers(state = initialState, action) {
     default: {
       return state;
     }
+  }
+}
+
+function parseError(err) {
+  try {
+    return JSON.parse(err);
+  } catch (e) {
+    return err;
   }
 }
