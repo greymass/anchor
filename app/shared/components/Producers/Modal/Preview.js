@@ -36,6 +36,7 @@ export default class ProducersVotingPreview extends Component<Props> {
           : (
             <ProducersVotingPreviewSelection
               lastError={lastError}
+              onClose={onClose}
               onConfirm={onConfirm}
               selected={selected}
               submitting={submitting}
