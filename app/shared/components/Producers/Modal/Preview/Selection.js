@@ -49,7 +49,10 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 >
                   <Icon name="x" /> {t('cancel')}
                 </Button>
-                <Button color="green" onClick={onConfirm}>
+                <Button
+                  color="green"
+                  onClick={onConfirm}
+                >
                   <Icon name="checkmark" /> {t('producer_voter_preview_submit')}
                 </Button>
               </Modal.Actions>
