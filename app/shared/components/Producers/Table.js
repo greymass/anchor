@@ -12,46 +12,18 @@ export default class ProducersTable extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      column: 'votes',
-      data: props.producers.list.slice(0, 1),
-      direction: 'descending',
       filter: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!isEqual(this.state.data, nextProps.producers.list)) {
-      this.setState({
-        data: _.sortBy(nextProps.producers.list, 'votes').reverse()
-      });
-    }
   }
 
   onSearchChange = debounce((e, { value }) => {
     this.setState({ filter: value });
   }, 300);
 
-  handleSort = clickedColumn => () => {
-    const { column, data, direction } = this.state;
-
-    if (column !== clickedColumn) {
-      this.setState({
-        column: clickedColumn,
-        data: _.sortBy(data, [clickedColumn]),
-        direction: 'ascending',
-      });
-      return;
-    }
-
-    this.setState({
-      data: data.reverse(),
-      direction: direction === 'ascending' ? 'descending' : 'ascending',
-    });
-  }
-
   render() {
     const {
       globals,
+      producers,
       selected,
       validUser
     } = this.props;
@@ -75,7 +47,7 @@ export default class ProducersTable extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <Segment basic loading={(data.length <= 1)}>
+            <Segment basic loading={(producers.list.length <= 1)}>
               <Grid>
                 <Grid.Column width="10">
                   <Header>
@@ -128,8 +100,8 @@ export default class ProducersTable extends Component<Props> {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {data.filter(producer => (filter ? producer.owner.includes(filter) : true))
-                    // .sort((a, b) => parseInt(b.total_votes, 10) - parseInt(a.total_votes, 10))
+                  {producers.list
+                    .filter(producer => (filter ? producer.owner.includes(filter) : true))
                     .map((producer, idx) => {
                       const isSelected = (selected.indexOf(producer.owner) !== -1);
                       return (
