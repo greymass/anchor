@@ -109,7 +109,6 @@ export default class ProducersTable extends Component<Props> {
                           addProducer={this.props.addProducer}
                           filter={filter}
                           isSelected={isSelected}
-                          key={producer.key}
                           position={idx + 1}
                           producer={producer}
                           removeProducer={this.props.removeProducer}
