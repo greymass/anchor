@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-
+import { debounce, isEqual } from 'lodash';
 import { Grid, Header, Input, Table } from 'semantic-ui-react';
 
 import ProducersVoteWeight from './Vote/Weight';
@@ -13,15 +13,23 @@ export default class ProducersTable extends Component<Props> {
     super(props);
     this.state = {
       column: 'votes',
-      data: _.sortBy(props.producers.list, ['votes']).reverse(),
+      data: props.producers.list.slice(0, 1),
       direction: 'descending',
       filter: false
     };
   }
 
-  onSearchChange = (e, { value }) => {
-    this.setState({ filter: value });
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(this.state.data, nextProps.producers.list)) {
+      this.setState({
+        data: _.sortBy(nextProps.producers.list, 'votes').reverse()
+      });
+    }
   }
+
+  onSearchChange = debounce((e, { value }) => {
+    this.setState({ filter: value });
+  }, 300);
 
   handleSort = clickedColumn => () => {
     const { column, data, direction } = this.state;
@@ -44,7 +52,6 @@ export default class ProducersTable extends Component<Props> {
   render() {
     const {
       globals,
-      producers,
       selected,
       validUser
     } = this.props;
@@ -123,18 +130,21 @@ export default class ProducersTable extends Component<Props> {
                 <Table.Body>
                   {data.filter(producer => (filter ? producer.owner.includes(filter) : true))
                     // .sort((a, b) => parseInt(b.total_votes, 10) - parseInt(a.total_votes, 10))
-                    .map((producer, idx) => (
-                      <ProducersTableRow
-                        addProducer={this.props.addProducer}
-                        key={producer.owner}
-                        position={idx + 1}
-                        producer={producer}
-                        removeProducer={this.props.removeProducer}
-                        selected={selected}
-                        totalVoteWeight={totalVoteWeight}
-                        validUser={validUser}
-                      />
-                    ))
+                    .map((producer, idx) => {
+                      const isSelected = (selected.indexOf(producer.owner) !== -1);
+                      return (
+                        <ProducersTableRow
+                          addProducer={this.props.addProducer}
+                          filter={filter}
+                          isSelected={isSelected}
+                          position={idx + 1}
+                          producer={producer}
+                          removeProducer={this.props.removeProducer}
+                          totalVoteWeight={totalVoteWeight}
+                          validUser={validUser}
+                        />
+                      )
+                    })
                   }
                 </Table.Body>
               </Table>

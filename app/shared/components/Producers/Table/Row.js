@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Header, Label, Popup, Progress, Table } from 'semantic-ui-react';
+import {isEqual} from 'lodash'
 
 import TimeAgo from 'react-timeago';
 
@@ -27,6 +28,12 @@ const statusCodes = {
 };
 
 export default class ProducersTableRow extends Component<Props> {
+  shouldComponentUpdate = (nextProps) =>
+    !isEqual(this.props.producer.key, nextProps.producer.key)
+    || !isEqual(this.props.validUser, nextProps.validUser)
+    || !isEqual(this.props.filter, nextProps.filter)
+    || !isEqual(this.props.isSelected, nextProps.isSelected);
+
   getProductionStatus = (lastProduced) => {
     const timeAgo = Date.now() - lastProduced;
     // Account for two rounds worth of blocks with a 30 second drift (156 seconds)
@@ -44,16 +51,15 @@ export default class ProducersTableRow extends Component<Props> {
   render() {
     const {
       addProducer,
+      isSelected,
       producer,
       removeProducer,
-      selected,
       totalVoteWeight,
       validUser
     } = this.props;
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
-    const isSelected = (selected.indexOf(producer.owner) !== -1);
     const votePercent = (totalVoteWeight)
       ? ((parseInt(producer.votes, 10) / parseInt(totalVoteWeight, 10)) * 100).toFixed(2)
       : 0;
