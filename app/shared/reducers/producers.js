@@ -27,6 +27,7 @@ export default function producers(state = initialState, action) {
       return Object.assign({}, state, {
         updated: Date.now(),
         list: action.payload.results.rows.map((producer) => Object.assign({}, {
+          key: `${producer.owner}-${producer.last_produced_block_time}`,
           last_produced_block_time: producer.last_produced_block_time,
           owner: producer.owner,
           url: producer.url,
