@@ -100,27 +100,27 @@ export default class ProducersTable extends Component<Props> {
               <Table
                 color="violet"
                 size="small"
-                sortable
+                // sortable
                 style={{ borderRadius: 0 }}
               >
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell collapsing />
                     <Table.HeaderCell
-                      onClick={this.handleSort('owner')}
+                      // onClick={this.handleSort('owner')}
                       sorted={column === 'owner' ? direction : null}
                     >
                       {t('block_producer')}
                     </Table.HeaderCell>
                     <Table.HeaderCell
-                      onClick={this.handleSort('votes')}
+                      // onClick={this.handleSort('votes')}
                       sorted={column === 'votes' ? direction : null}
                     >
                       {t('block_producer_total_votes')}
                     </Table.HeaderCell>
                     <Table.HeaderCell
                       collapsing
-                      onClick={this.handleSort('last_produced_block_time')}
+                      // onClick={this.handleSort('last_produced_block_time')}
                       sorted={column === 'last_produced_block_time' ? direction : null}
                     >
                       {t('block_producer_last_production_status')}
