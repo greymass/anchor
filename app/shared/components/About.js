@@ -20,7 +20,7 @@ export default class About extends Component<Props> {
           (t) => (
             <Grid>
               <Grid.Row>
-                <Grid.Column width={9}>
+                <Grid.Column width={8}>
                   <Segment basic>
                     <Header size="large">
                       {t('application_name')}
@@ -28,47 +28,47 @@ export default class About extends Component<Props> {
                         {t('application_version')}
                       </Header.Subheader>
                     </Header>
+                    <Divider />
                     <p>{t('about_message_1')}</p>
                     <p>{t('about_message_2')}</p>
-                    <p>{t('about_more')}</p>
                     <Header>
                       {t('about_opensource_title')}
-                      <Header.Subheader>
-                        <a
-                          onClick={() => this.openLink(t('about_opensource_link'))}
-                          role="button"
-                        >
-                          {t('about_opensource_link')}
-                        </a>
-
-                      </Header.Subheader>
                     </Header>
-                    <p>{t('about_opensource_message')}</p>
+                    <p>
+                      {t('about_opensource_message')}
+                      {' '}
+                      <a
+                        onClick={() => this.openLink(t('about_opensource_link'))}
+                        role="button"
+                      >
+                        {t('about_opensource_link')}
+                      </a>.
+                    </p>
                   </Segment>
                   <Segment secondary>
                     <p>{t('about_license_type')}</p>
-                    <p>{t('about_license_body')}</p>
+                    <p>{t('about_license_body_1')}</p>
+                    <p>{t('about_license_body_2')}</p>
+                    <p>{t('about_license_body_3')}</p>
+                    <p>{t('about_license_body_4')}</p>
                   </Segment>
                 </Grid.Column>
-                <Grid.Column width={7}>
+                <Grid.Column width={8}>
                   <Segment>
                     <Image src={logo} alt="Greymass" />
                     <Segment basic padded>
                       <p>{t('about_greymass_message_1')}</p>
-                      <p>{t('about_greymass_message_2')}</p>
-                    </Segment>
-                    <Header
-                      textAlign="center"
-                    >
-                      <Header.Subheader>
+                      <p>
+                        {t('about_greymass_message_2')}
+                        {' '}
                         <a
                           onClick={() => this.openLink('https://greymass.com')}
                           role="button"
                         >
                           https://greymass.com
-                        </a>
-                      </Header.Subheader>
-                    </Header>
+                        </a>.
+                      </p>
+                    </Segment>
                   </Segment>
                 </Grid.Column>
               </Grid.Row>
