@@ -16,7 +16,7 @@
 
 ### Security: Private Keys
 
-When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key using AES-256 encryption for future use, using AES-256 encryption.
+When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption.
 
 
 ### Build it yourself
