@@ -14,7 +14,7 @@ export default class WalletStatusBalances extends Component<Props> {
     const rows = [];
     forEach(tokens, (amount, token) => {
       rows.push((
-        <Table.Row>
+        <Table.Row key={token}>
           <Table.Cell collapsing>
             {token}
           </Table.Cell>
@@ -36,7 +36,9 @@ export default class WalletStatusBalances extends Component<Props> {
                 attached="bottom"
                 definition
               >
-                {rows}
+                <Table.Body>
+                  {rows}
+                </Table.Body>
               </Table>
             </Segment>
           )
