@@ -20,11 +20,6 @@ export default class WalletPanelLocked extends Component<Props> {
         {
           (t) => (
             <div>
-              <WalletPanelFormNode
-                onChange={this.onChange}
-                validate={validate}
-                value={settings.node}
-              />
               {(keys.temporary)
                 ? (
                   <WalletPanelButtonRemove
