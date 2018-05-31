@@ -13,7 +13,10 @@ export default function globals(state = initialState, action) {
     // GET_GLOBALS_SUCCESS
     // GET_GLOBALS_FAILURE
     case types.GET_GLOBALS_SUCCESS: {
-      return Object.assign({}, state, { current: action.payload.results.rows[0] });
+      return Object.assign({}, state, {
+        __updated: Date.now(),
+        current: action.payload.results.rows[0]
+      });
     }
     default: {
       return state;
