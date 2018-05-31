@@ -42,8 +42,6 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                   : ''
                 }
                 <Divider />
-              </Modal.Content>
-              <Modal.Actions>
                 <Button
                   onClick={onClose}
                 >
@@ -51,11 +49,12 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 </Button>
                 <Button
                   color="green"
+                  floated="right"
                   onClick={onConfirm}
                 >
                   <Icon name="checkmark" /> {t('producer_voter_preview_submit')}
                 </Button>
-              </Modal.Actions>
+              </Modal.Content>
             </Segment>
           )
         }
