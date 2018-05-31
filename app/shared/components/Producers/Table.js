@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { debounce, isEqual } from 'lodash';
-import { Grid, Header, Input, Table } from 'semantic-ui-react';
+import { Grid, Header, Input, Segment, Table } from 'semantic-ui-react';
 
 import ProducersVoteWeight from './Vote/Weight';
 import ProducersTableRow from './Table/Row';
@@ -75,9 +75,9 @@ export default class ProducersTable extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <div>
-              <Grid columns="equal">
-                <Grid.Column>
+            <Segment loading={(data.length <= 1)}>
+              <Grid>
+                <Grid.Column width="10">
                   <Header>
                     {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
                     <Header.Subheader>
@@ -89,7 +89,7 @@ export default class ProducersTable extends Component<Props> {
                     </Header.Subheader>
                   </Header>
                 </Grid.Column>
-                <Grid.Column textAlign="right">
+                <Grid.Column width="6" textAlign="right">
                   <Input
                     icon="search"
                     onChange={this.onSearchChange}
@@ -137,6 +137,7 @@ export default class ProducersTable extends Component<Props> {
                           addProducer={this.props.addProducer}
                           filter={filter}
                           isSelected={isSelected}
+                          key={producer.key}
                           position={idx + 1}
                           producer={producer}
                           removeProducer={this.props.removeProducer}
@@ -148,7 +149,7 @@ export default class ProducersTable extends Component<Props> {
                   }
                 </Table.Body>
               </Table>
-            </div>
+            </Segment>
           )
         }
       </I18n>
