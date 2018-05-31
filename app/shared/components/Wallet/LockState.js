@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 
-export default class WalletStatus extends Component<Props> {
+export default class WalletLockState extends Component<Props> {
   render() {
     const {
       keys,
@@ -15,7 +15,7 @@ export default class WalletStatus extends Component<Props> {
       <Menu.Item
         color={(walletLocked) ? 'green' : 'yellow'}
         key="lockstate"
-        inverted
+        inverted="true"
       >
         {(walletExists)
           ? (
