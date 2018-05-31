@@ -19,7 +19,6 @@ type Props = {
   globals: {},
   keys: {},
   producers: {
-    lastError: {},
     lastTransaction: {},
     selected: []
   },
@@ -171,6 +170,7 @@ export default class Producers extends Component<Props> {
     } = this.state;
     let sidebar = [(
       <WalletPanel
+        key="WalletPanel"
         actions={actions}
         accounts={accounts}
         keys={keys}
