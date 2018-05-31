@@ -21,6 +21,7 @@ export default class Wallet extends Component<Props> {
     const {
       actions,
       accounts,
+      balances,
       keys,
       settings,
       validate,
@@ -42,6 +43,7 @@ export default class Wallet extends Component<Props> {
           <Grid.Column width={10}>
             <WalletStatus
               accounts={accounts}
+              balances={balances}
               keys={keys}
               settings={settings}
               wallet={wallet}
