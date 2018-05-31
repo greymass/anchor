@@ -1,3 +1,4 @@
+import { getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
 import eos from './helpers/eos';
@@ -28,6 +29,9 @@ export function validateAccount(account) {
           type: types.GET_ACCOUNT_SUCCESS,
           payload: { results }
         });
+        // Fetch balances
+        dispatch(getCurrencyBalance(account));
+        // Return the validated success
         return dispatch({
           payload: { results },
           type: types.VALIDATE_ACCOUNT_SUCCESS
