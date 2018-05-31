@@ -107,10 +107,10 @@ export default class ProducersTableRow extends Component<Props> {
                 <Popup
                   content={
                     (statusCodes[producerStatusCode].status === 'never')
-                    ? 'Never'
+                    ? t('block_producer_last_block_never')
                     : (
                       <span>
-                        Last Block:
+                        {t('block_producer_last_block')}
                         {' '}
                         <TimeAgo date={lastProduced} />
                       </span>
