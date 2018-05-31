@@ -45,7 +45,8 @@ export default class ProducersTable extends Component<Props> {
     const {
       globals,
       producers,
-      selected
+      selected,
+      validUser
     } = this.props;
     const {
       column,
@@ -131,6 +132,7 @@ export default class ProducersTable extends Component<Props> {
                         removeProducer={this.props.removeProducer}
                         selected={selected}
                         totalVoteWeight={totalVoteWeight}
+                        validUser={validUser}
                       />
                     ))
                   }

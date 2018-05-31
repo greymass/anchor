@@ -45,11 +45,10 @@ export default class ProducersTableRow extends Component<Props> {
       addProducer,
       producer,
       removeProducer,
-      position,
       selected,
-      totalVoteWeight
+      totalVoteWeight,
+      validUser
     } = this.props;
-
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
@@ -74,6 +73,7 @@ export default class ProducersTableRow extends Component<Props> {
               <Table.Cell textAlign="center">
                 <Button
                   color={isSelected ? 'blue' : 'grey'}
+                  disabled={!validUser}
                   icon={isSelected ? 'checkmark box' : 'minus square outline'}
                   onClick={
                     (isSelected)
