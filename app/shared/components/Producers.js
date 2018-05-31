@@ -179,7 +179,7 @@ export default class Producers extends Component<Props> {
         wallet={wallet}
       />
     )];
-    const validUser = (keys.key);
+    const validUser = !!keys.key;
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
       sidebar = [
