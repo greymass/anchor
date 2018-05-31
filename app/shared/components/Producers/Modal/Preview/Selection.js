@@ -14,11 +14,11 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
       selected,
       submitting
     } = this.props;
-    const columns = times(selected.length, i => (
-      <Grid.Column width={4} key={i}>
+    const rows = chunk(times(selected.length, i => (
+      <Table.Cell key={i}>
         {selected[i]}
-      </Grid.Column>
-    ));
+      </Table.Cell>
+    )), 4);
     return (
       <I18n ns="producers">
         {
@@ -30,12 +30,14 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                   {t('producer_voter_preview_confirm_changes_message')}
                 </h3>
                 <Segment basic padded>
-                  <Grid celled>
+                  <Table celled>
                     {(selected.length > 0)
-                      ? columns
+                      ? rows.map((row) => (
+                        <Table.Row>{row}</Table.Row>
+                      ))
                       : <Grid.Column textAlign="center" width={12}>{t('producer_voter_preview_confirm_none')}</Grid.Column>
                     }
-                  </Grid>
+                  </Table>
                 </Segment>
                 {(lastError)
                   ? (
