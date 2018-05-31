@@ -4,6 +4,8 @@
   "block_producer_last_produced": "Last Block",
   "block_producer_last_production_status": "Status",
   "block_producer_last_active": "Last Active",
+  "block_producer_last_block_never": "Never",
+  "block_producer_last_block": "Last Block",
   "block_producer_position": "Position",
   "block_producer_total_votes": "Total Votes",
   "block_producer_total_weight": "total vote weight",
