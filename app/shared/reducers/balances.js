@@ -16,6 +16,7 @@ export default function balances(state = {}, action) {
     }
     case types.GET_ACCOUNT_BALANCE_SUCCESS: {
       return Object.assign({}, state, {
+        __updated: Date.now(),
         [action.payload.account_name]: formatBalances(action.payload.balances)
       });
     }

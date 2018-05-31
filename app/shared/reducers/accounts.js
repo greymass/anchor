@@ -8,6 +8,7 @@ export default function accounts(state = {}, action) {
     }
     case types.GET_ACCOUNT_SUCCESS: {
       return Object.assign({}, state, {
+        __updated: Date.now(),
         [action.payload.results.account_name]: action.payload.results
       });
     }
