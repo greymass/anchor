@@ -112,6 +112,7 @@ export default class Producers extends Component<Props> {
     const producers = [...this.state.selected];
     if (producers.indexOf(producer) === -1) {
       producers.push(producer);
+      producers.sort();
       this.setState({
         selected: producers
       });
