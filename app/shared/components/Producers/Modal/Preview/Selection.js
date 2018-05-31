@@ -2,8 +2,8 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
-import times from 'lodash/times';
+import { Button, Divider, Grid, Header, Icon, List, Message, Modal, Segment, Table } from 'semantic-ui-react';
+import { chunk, times } from 'lodash';
 
 export default class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
@@ -40,8 +40,24 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 {(lastError)
                   ? (
                     <Message negative>
-                      <Message.Header>{t(['producer_voter_preview_error_title'])}</Message.Header>
-                      <code>{lastError}</code>
+                      {(lastError.code)
+                        ? (
+                          <div>
+                            <Message.Header>
+                              {lastError.error.code}: {lastError.error.name}
+                            </Message.Header>
+                            <code>{lastError.error.what}</code>
+                          </div>
+                        )
+                        : (
+                          <div>
+                            <Message.Header>
+                              {t(['producer_voter_preview_error_title'])}
+                            </Message.Header>
+                            <code>{lastError}</code>
+                          </div>
+                        )
+                      }
                     </Message>
                   )
                   : ''
