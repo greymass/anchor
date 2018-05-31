@@ -23,6 +23,11 @@ export function validateAccount(account) {
         if (settings.key) {
           dispatch(validateKey(settings.key));
         }
+        // Set this account
+        dispatch({
+          type: types.GET_ACCOUNT_SUCCESS,
+          payload: { results }
+        });
         return dispatch({
           payload: { results },
           type: types.VALIDATE_ACCOUNT_SUCCESS
