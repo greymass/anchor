@@ -29,8 +29,9 @@ const statusCodes = {
 export default class ProducersTableRow extends Component<Props> {
   getProductionStatus = (lastProduced) => {
     const timeAgo = Date.now() - lastProduced;
-    // Account for two rounds worth of time with a 5 second drift (131 seconds)
-    if (timeAgo < ((1000 * 21 * 6 * 0.5 * 2) + 5000)) {
+    // Account for two rounds worth of blocks with a 30 second drift (156 seconds)
+    // seconds in round = 63 (21 producer * 6 block * 0.5 block time)
+    if (timeAgo < ((21 * 6 * 0.5 * 2 * 1000) + 30000)) {
       return 'enabled';
     // If the last produced is less than or equal to the epoch, it's never produced
     } else if (lastProduced <= 946684800000) {
