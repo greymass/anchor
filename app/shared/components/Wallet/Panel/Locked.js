@@ -21,40 +21,33 @@ export default class WalletPanelLocked extends Component<Props> {
       <I18n ns="wallet">
         {
           (t) => (
-            <div>
-              <WalletPanelFormNode
-                onChange={this.onChange}
-                validate={validate}
-                value={settings.node}
-              />
-              <Segment
-                color="grey"
-                padded
-                secondary
-                stacked
+            <Segment
+              color="grey"
+              padded
+              secondary
+              stacked
+            >
+              <Header
+                icon
+                textAlign="center"
               >
-                <Header
-                  icon
-                  textAlign="center"
-                >
-                  <Icon
-                    circular
-                    inverted
-                    color="grey"
-                    name="lock"
-                  />
-                  {t('wallet_panel_locked')}
-                  <Header.Subheader>
-                    {t('wallet_panel_locked_subheader')}
-                  </Header.Subheader>
-                </Header>
-                <WalletPanelButtonUnlock
-                  unlockWallet={unlockWallet}
-                  validate={validate}
-                  wallet={wallet}
+                <Icon
+                  circular
+                  inverted
+                  color="grey"
+                  name="lock"
                 />
-              </Segment>
-            </div>
+                {t('wallet_panel_locked')}
+                <Header.Subheader>
+                  {t('wallet_panel_locked_subheader')}
+                </Header.Subheader>
+              </Header>
+              <WalletPanelButtonUnlock
+                unlockWallet={unlockWallet}
+                validate={validate}
+                wallet={wallet}
+              />
+            </Segment>
           )
         }
       </I18n>

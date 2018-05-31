@@ -8,7 +8,6 @@ import WalletPanelFormAccount from './Form/Account';
 import WalletPanelFormEncrypt from './Form/Encrypt';
 import WalletPanelFormError from './Form/Error';
 import WalletPanelFormKey from './Form/Key';
-import WalletPanelFormNode from './Form/Node';
 import WalletPanelFormSubmit from './Form/Submit';
 
 export default class WalletPanelForm extends Component<Props> {
@@ -38,14 +37,8 @@ export default class WalletPanelForm extends Component<Props> {
     this.setState({
       formData: { ...this.state.formData, [name]: value },
     });
-    // Determine if field should be saved in persistent settings
-    if (['account', 'node'].indexOf(name) > -1) {
-      const {
-        actions
-      } = this.props;
-      const { setSettingWithValidation } = actions;
-      setSettingWithValidation(name, value);
-    }
+    // Call parent settings trigger
+    this.props.onSettingChange(e, { name, value });
   }, 300)
 
   onKeyChange = debounce((e, { name, value }) => {
@@ -128,11 +121,7 @@ export default class WalletPanelForm extends Component<Props> {
                   : this.onSubmit
               }
             >
-              <WalletPanelFormNode
-                onChange={this.onChange}
-                validate={validate}
-                value={node}
-              />
+              <Divider />
               <WalletPanelFormAccount
                 onChange={this.onChange}
                 validate={validate}
