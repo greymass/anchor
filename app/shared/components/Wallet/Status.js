@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Divider, Header, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
+import WalletStatusBalances from './Status/Balances';
 export default class WalletStatus extends Component<Props> {
   render() {
     const {
       accounts,
+      balances,
       keys,
       settings,
       wallet
@@ -18,14 +20,19 @@ export default class WalletStatus extends Component<Props> {
     if (account && account.account_name) {
       element = (
         <div>
+          <WalletStatusBalances
+            balances={balances}
+            settings={settings}
+          />
           <Divider />
           <Header>
-            Account: {accountName}
+            {accountName}
             <Header.Subheader>
-              connected to: {server}
+              {server}
             </Header.Subheader>
           </Header>
           <ReactJson
+            collapsed
             displayDataTypes={false}
             displayObjectSize={false}
             iconStyle="square"
@@ -39,36 +46,6 @@ export default class WalletStatus extends Component<Props> {
     }
     return (
       <Segment basic>
-        <Header>
-          DEBUGGING INFORMATION
-        </Header>
-        <ReactJson
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name="settings"
-          src={settings}
-          style={{ padding: '1em' }}
-          theme="harmonic"
-        />
-        <ReactJson
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name="keys"
-          src={keys}
-          style={{ padding: '1em' }}
-          theme="harmonic"
-        />
-        <ReactJson
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name="wallet"
-          src={wallet}
-          style={{ padding: '1em' }}
-          theme="harmonic"
-        />
         {element}
       </Segment>
     );
