@@ -75,7 +75,7 @@ export default class ProducersTable extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <Segment loading={(data.length <= 1)}>
+            <Segment basic loading={(data.length <= 1)}>
               <Grid>
                 <Grid.Column width="10">
                   <Header>
