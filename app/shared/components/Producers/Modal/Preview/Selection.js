@@ -30,7 +30,12 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                   {t('producer_voter_preview_confirm_changes_message')}
                 </h3>
                 <Segment basic padded>
-                  <Grid celled>{columns}</Grid>
+                  <Grid celled>
+                    {(selected.length > 0)
+                      ? columns
+                      : <Grid.Column textAlign="center" width={12}>{t('producer_voter_preview_confirm_none')}</Grid.Column>
+                    }
+                  </Grid>
                 </Segment>
                 {(lastError)
                   ? (
