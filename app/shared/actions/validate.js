@@ -19,8 +19,10 @@ export function validateAccount(account) {
     try {
       // A generic info call to make sure it's working
       eos(connection).getAccount(account).then((results) => {
-        // Revalidate the key whenever the account is revalidated
-        dispatch(validateKey(settings.key));
+        // Revalidate the key whenever it's part of the validation process
+        if (settings.key) {
+          dispatch(validateKey(settings.key));
+        }
         return dispatch({
           payload: { results },
           type: types.VALIDATE_ACCOUNT_SUCCESS
