@@ -22,7 +22,8 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
     fullscreenable: false,
     resizable: true,
     transparent: false,
-    alwaysOnTop: false
+    alwaysOnTop: false,
+    icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
   });
 
   uiStateKeeper.track(ui);

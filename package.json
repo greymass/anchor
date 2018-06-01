@@ -41,7 +41,7 @@
       "package.json"
     ],
     "dmg": {
-      "icon": "assets/icons/mac/icon.icns",
+      "icon": "app/renderer/assets/icons/mac/icon.icns",
       "contents": [
         {
           "x": 130,
@@ -56,10 +56,10 @@
       ]
     },
     "mac": {
-      "icon": "assets/icons/mac/icon.icns"
+      "icon": "app/renderer/assets/icons/mac/icon.icns"
     },
     "win": {
-      "icon": "assets/icons/win/icon.ico",
+      "icon": "app/renderer/assets/icons/win/icon.ico",
       "target": [
         "nsis"
       ]
@@ -78,7 +78,7 @@
         "Categories": "Network;",
         "MimeType": "application/x-eos;x-scheme-handler/eos;"
       },
-      "icon": "assets/icons/png",
+      "icon": "app/renderer/assets/icons/png",
       "target": [
         "deb",
         "snap"
