@@ -103,7 +103,9 @@ class BasicVoterContainer extends Component<Props> {
       activeItem
     } = this.state;
     const {
+      actions,
       keys,
+      validate,
       wallet
     } = this.props;
     let activeTab = <Producers {...this.props} />;
@@ -144,8 +146,10 @@ class BasicVoterContainer extends Component<Props> {
 
           <Menu.Menu position="right">
             <WalletLockState
+              actions={actions}
               key="lockstate"
               keys={keys}
+              validate={validate}
               wallet={wallet}
             />
             <Menu.Item

@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Input, Menu, Message, Modal } from 'semantic-ui-react';
 
-import WalletModalUnlock from '../../Modal/Unlock';
+import WalletModalUnlock from '../Modal/Unlock';
 
-export default class WalletPanelButtonUnlock extends Component<Props> {
+export default class WalletLockStateLocked extends Component<Props> {
   state = {
     password: '',
     open: false
@@ -24,15 +24,14 @@ export default class WalletPanelButtonUnlock extends Component<Props> {
 
   onSubmit = () => {
     const {
-      unlockWallet,
+      actions,
       wallet
     } = this.props;
     const {
       password
     } = this.state;
-    unlockWallet(wallet, password);
+    actions.unlockWallet(wallet, password);
   }
-
   render() {
     const {
       validate
@@ -51,13 +50,17 @@ export default class WalletPanelButtonUnlock extends Component<Props> {
               onSubmit={this.onSubmit}
               open={open}
               trigger={(
-                <Button
-                  color="blue"
-                  content={t('wallet_panel_wallet_unlock')}
-                  fluid
-                  icon="unlock"
+                <Menu.Item
+                  color="yellow"
+                  key="lockstate"
+                  inverted="true"
                   onClick={this.onOpen}
-                />
+                >
+                  <Icon
+                    color="green"
+                    name="lock"
+                  />
+                </Menu.Item>
               )}
               validate={validate}
             />
