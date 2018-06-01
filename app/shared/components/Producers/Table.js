@@ -65,7 +65,7 @@ export default class ProducersTable extends Component<Props> {
                   <Input
                     icon="search"
                     onChange={this.onSearchChange}
-                    placeholder="Search..."
+                    placeholder={t('search')}
                   />
                 </Grid.Column>
               </Grid>
