@@ -52,7 +52,7 @@ export default class WalletPanelButtonUnlock extends Component<Props> {
               open={open}
               trigger={(
                 <Button
-                  color="blue"
+                  color="purple"
                   content={t('wallet_panel_wallet_unlock')}
                   fluid
                   icon="unlock"

@@ -10,7 +10,7 @@ export default class WalletPanelButtonLock extends Component<Props> {
         {
           (t) => (
             <Button
-              color="blue"
+              color="purple"
               content={t('wallet_panel_wallet_lock')}
               fluid
               icon="lock"

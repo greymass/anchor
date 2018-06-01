@@ -4,6 +4,7 @@ import { Divider, Header, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 import WalletStatusBalances from './Status/Balances';
+import WalletStatusResources from './Status/Resources';
 import WalletStatusStaked from './Status/Staked';
 
 export default class WalletStatus extends Component<Props> {
@@ -11,9 +12,7 @@ export default class WalletStatus extends Component<Props> {
     const {
       accounts,
       balances,
-      keys,
-      settings,
-      wallet
+      settings
     } = this.props;
     const accountName = settings.account;
     const account = accounts[accountName];
@@ -26,11 +25,14 @@ export default class WalletStatus extends Component<Props> {
             balances={balances}
             settings={settings}
           />
-          <WalletStatusStaked
-            account={accounts[settings.account]}
-            key="StakeStats"
+          <WalletStatusResources
+            accounts={accounts}
             settings={settings}
-            balance={balances[settings.account]}
+          />
+          <WalletStatusStaked
+            accounts={accounts}
+            balances={balances}
+            settings={settings}
           />
           <Divider />
           <Header>
