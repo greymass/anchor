@@ -126,6 +126,7 @@ class BasicVoterContainer extends Component<Props> {
       <div>
         <Menu
           attached
+          inverted
           size="large"
         >
           <Menu.Item
