@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Divider, Form } from 'semantic-ui-react';
+import { Divider, Form, Message } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
 import WalletPanelFormAccount from './Form/Account';
@@ -104,7 +104,6 @@ export default class WalletPanelForm extends Component<Props> {
       account,
       encryptWallet,
       key,
-      node,
       password
     } = formData;
     const validUser = (
@@ -125,6 +124,13 @@ export default class WalletPanelForm extends Component<Props> {
                   : this.onSubmit
               }
             >
+              <Message
+                content={t('wallet_panel_form_create_wallet_body')}
+                header={t('wallet_panel_form_create_wallet_header')}
+                icon="bell"
+                info
+                size="small"
+              />
               <WalletPanelFormAccount
                 onChange={this.onChange}
                 validate={validate}
