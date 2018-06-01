@@ -17,8 +17,19 @@ type Props = {
 export default class Stake extends Component<Props> {
   props: Props;
 
-  // onOpen = () => this.setState({ open: true });
-  // onClose = () => this.setState({ open: false });
+  state = {
+    open: false
+  }
+
+  onOpen = () => {
+    const {resetStakeForm} = this.props.actions;
+
+    resetStakeForm();
+
+    this.setState({ open: true });
+  }
+
+  onClose = () => this.setState({ open: false });
 
   render() {
     const {
@@ -31,6 +42,10 @@ export default class Stake extends Component<Props> {
       wallet
     } = this.props;
 
+    const {
+      open
+    } = this.state;
+
     return (
       <I18n ns="stake">
         {
@@ -42,20 +57,21 @@ export default class Stake extends Component<Props> {
                   content={t('stake_form')}
                   fluid
                   icon="money"
+                  onClick={this.onOpen}
                 />
               )}
-              open={false}
+              open={open}
               size="tiny"
             >
-              <Header icon="stake" content={t('wallet_panel_wallet_unlock_modal_title')} />
+              <Header icon="money" content={t('stake_modal_title')} />
               <Modal.Content>
                 <StakeForm
-                  account={accounts && accounts[settings.account]}
+                  account={accounts[settings.account]}
                   key="StakeForm"
                   settings={settings}
                   actions={actions}
                   validate={validate}
-                  balance={balances && balances[settings.account]}
+                  balance={balances[settings.account]}
                 />
               </Modal.Content>
               <Modal.Actions>
@@ -64,12 +80,6 @@ export default class Stake extends Component<Props> {
                 >
                   <Icon name="x" /> {t('cancel')}
                 </Button>
-                <Button
-                  color="green"
-                  content={t('wallet_panel_wallet_unlock')}
-                  icon="money"
-                  onClick={this.onSubmit}
-                />
               </Modal.Actions>
             </Modal>
           )

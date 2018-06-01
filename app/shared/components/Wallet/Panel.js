@@ -7,7 +7,7 @@ import WalletPanelFormNode from './Panel/Form/Node';
 import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
 
-import Stake from './Panel/Stake';
+import Stake from './Stake';
 
 type Props = {
   actions: {},
@@ -71,12 +71,21 @@ export default class WalletPanel extends Component<Props> {
     }
     if (keys && keys.key) {
       panel = (
-        <WalletPanelUnlocked
-          actions={actions}
-          keys={keys}
-          settings={settings}
-          validate={validate}
-        />
+        <div>
+          <WalletPanelUnlocked
+            actions={actions}
+            keys={keys}
+            settings={settings}
+            validate={validate}
+          />
+          <Stake
+            actions={actions}
+            accounts={accounts}
+            balances={balances}
+            validate={validate}
+            settings={settings}
+          />
+        </div>
       );
     }
     return (
@@ -88,13 +97,6 @@ export default class WalletPanel extends Component<Props> {
         />
         {panel}
 
-        <Stake
-          actions={actions}
-          accounts={accounts}
-          balances={balances}
-          validate={validate}
-          settings={settings}
-        />
         <Button
           onClick={clearSettingsCache}
           content="DEBUG: Reset Application"

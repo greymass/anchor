@@ -26,8 +26,7 @@ export default class Wallet extends Component<Props> {
       keys,
       settings,
       validate,
-      wallet,
-      balances
+      wallet
     } = this.props;
     return (
       <Grid>
