@@ -10,10 +10,10 @@ export default class WalletStatus extends Component<Props> {
 
     let element = `No account stake data loaded yet (connected to: ${server})...`;
 
-    if (account && account.account_name) {
-      const total_staked = (account.net_weight + account.cpu_weight) / 10000;
-      const net_weight = (account.net_weight) / 10000;
-      const cpu_weight = (account.cpu_weight) / 10000;
+    if (account.account_name) {
+      const coins_staked_to_net = account.coins_staked_to_net;
+      const coins_staked_to_cpu = account.coins_staked_to_cpu;
+      const total_staked = coins_staked_to_net + coins_staked_to_cpu;
       const amount_not_staked = balance.EOS;
 
       element = (
@@ -26,16 +26,16 @@ export default class WalletStatus extends Component<Props> {
                     <h2>{t('staked_data')}</h2>
                   </Grid.Row>
                   <Grid.Row>
-                    {t('total_staked')}: {total_staked}
+                    {t('total_staked')}: {total_staked.toPrecision(4)}
                   </Grid.Row>
                   <Grid.Row>
-                    {t('net_staked')}: {net_weight}
+                    {t('net_staked')}: {coins_staked_to_net.toPrecision(4)}
                   </Grid.Row>
                   <Grid.Row>
-                    {t('cpu_staked')}: {cpu_weight}
+                    {t('cpu_staked')}: {coins_staked_to_cpu.toPrecision(4)}
                   </Grid.Row>
                   <Grid.Row>
-                    {t('amount_not_staked')}: {amount_not_staked}
+                    {t('amount_not_staked')}: {amount_not_staked.toPrecision(4)}
                   </Grid.Row>
                 </Grid>
               </div>
