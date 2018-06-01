@@ -37,8 +37,11 @@ export default class WalletPanelForm extends Component<Props> {
     this.setState({
       formData: { ...this.state.formData, [name]: value },
     });
-    // Call parent settings trigger
-    this.props.onSettingChange(e, { name, value });
+    const {
+      actions
+    } = this.props;
+    const { setSettingWithValidation } = actions;
+    setSettingWithValidation(name, value);
   }, 300)
 
   onKeyChange = debounce((e, { name, value }) => {
@@ -121,7 +124,6 @@ export default class WalletPanelForm extends Component<Props> {
                   : this.onSubmit
               }
             >
-              <Divider />
               <WalletPanelFormAccount
                 onChange={this.onChange}
                 validate={validate}
