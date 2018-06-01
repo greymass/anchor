@@ -85,7 +85,7 @@ class SidebarConnectionContainer extends Component<Props> {
           (t) => (
             <Segment
               clearing
-              small
+              size="small"
               stacked
             >
               {(!validate.NODE || editing) ? formElement : ''}
@@ -107,12 +107,14 @@ class SidebarConnectionContainer extends Component<Props> {
                   (
                     <Button
                       icon="settings"
+                      key="nodeToggle"
                       floated="right"
                       onClick={this.onToggle}
                       size="small"
                     />
                   ), (
                     <Header
+                      key="nodeHeader"
                       size="tiny"
                       style={{ marginTop: 0 }}
                     >

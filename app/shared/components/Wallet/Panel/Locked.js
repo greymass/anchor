@@ -3,14 +3,12 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
-import WalletPanelFormNode from './Form/Node';
 import WalletPanelButtonUnlock from './Button/Unlock';
 
 export default class WalletPanelLocked extends Component<Props> {
   render() {
     const {
       actions,
-      settings,
       validate,
       wallet
     } = this.props;

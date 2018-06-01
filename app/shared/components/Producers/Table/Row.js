@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Header, Icon, Label, Popup, Progress, Responsive, Table } from 'semantic-ui-react';
-import {isEqual} from 'lodash'
+import { isEqual } from 'lodash';
 
 import TimeAgo from 'react-timeago';
 
@@ -18,7 +18,7 @@ const statusCodes = {
   },
   disabled: {
     status: 'disabled',
-    color: 'yellow',
+    color: 'orange',
     icon: 'clock',
     message: 'producer_production_disabled'
   },

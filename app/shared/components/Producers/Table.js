@@ -29,7 +29,6 @@ export default class ProducersTable extends Component<Props> {
     } = this.props;
     const {
       column,
-      data,
       direction,
       filter
     } = this.state;
@@ -72,7 +71,6 @@ export default class ProducersTable extends Component<Props> {
               <Table
                 color="violet"
                 size="small"
-                // sortable
                 style={{ borderRadius: 0 }}
                 unstackable
               >
@@ -80,20 +78,17 @@ export default class ProducersTable extends Component<Props> {
                   <Table.Row>
                     <Table.HeaderCell collapsing />
                     <Table.HeaderCell
-                      // onClick={this.handleSort('owner')}
                       sorted={column === 'owner' ? direction : null}
                     >
                       {t('block_producer')}
                     </Table.HeaderCell>
                     <Table.HeaderCell
-                      // onClick={this.handleSort('votes')}
                       sorted={column === 'votes' ? direction : null}
                     >
                       {t('block_producer_total_votes')}
                     </Table.HeaderCell>
                     <Table.HeaderCell
                       collapsing
-                      // onClick={this.handleSort('last_produced_block_time')}
                       sorted={column === 'last_produced_block_time' ? direction : null}
                     >
                       {t('block_producer_last_production_status')}
@@ -116,7 +111,7 @@ export default class ProducersTable extends Component<Props> {
                           totalVoteWeight={totalVoteWeight}
                           validUser={validUser}
                         />
-                      )
+                      );
                     })
                   }
                 </Table.Body>
