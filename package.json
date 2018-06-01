@@ -91,7 +91,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aaroncox/eos-voter.git"
+    "url": "git+https://github.com/greymass/eos-voter.git"
   },
   "author": {
     "name": "Aaron Cox",
@@ -100,14 +100,14 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aaroncox/eos-voter/issues"
+    "url": "https://github.com/greymass/eos-voter/issues"
   },
   "keywords": [
     "eos",
     "voting",
     "wallet"
   ],
-  "homepage": "https://github.com/aaroncox/eos-voter#readme",
+  "homepage": "https://github.com/greymass/eos-voter#readme",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
