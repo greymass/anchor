@@ -54,16 +54,16 @@ export default class WalletPanelButtonStake extends Component<Props> {
               trigger={(
                 <Button
                   color="blue"
-                  content={t('stake_form')}
+                  content={t('stake_button_cta')}
                   fluid
-                  icon="money"
+                  icon="microchip"
                   onClick={this.onOpen}
                 />
               )}
               open={open}
               size="small"
             >
-              <Header icon="money" content={t('stake_modal_title')} />
+              <Header icon="microchip" content={t('stake_modal_title')} />
               <Modal.Content>
                 <StakeForm
                   account={accounts[settings.account]}
