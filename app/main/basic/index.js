@@ -33,7 +33,9 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
     log.info('manager: loaded');
     ui.show();
     ui.focus();
-    ui.openDevTools({ mode: 'detach' });
+    if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+      ui.openDevTools({ mode: 'detach' });
+    }
   });
 
   const menuBuilder = new MenuBuilder(ui);
