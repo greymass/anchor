@@ -32,5 +32,10 @@
   "producer_voter_preview_submit": "Submit Votes",
   "producer_voter_preview_transaction_successful_title": "Votes successfully submitted",
   "producer_voter_preview_transaction_successful_message": "This action has been recorded to the blockchain. Transaction information can be found below.",
-  "producer_voter_preview_close": "Close"
+  "producer_voter_preview_close": "Close",
+  "producer_welcome_header": "Welcome to eos-voter",
+  "producer_welcome_subheader": "",
+  "producer_welcome_p1": "",
+  "producer_welcome_p2": "",
+  "producer_welcome_p3": ""
 }
