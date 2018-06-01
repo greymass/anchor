@@ -22,7 +22,7 @@ export default class WalletStatusStaked extends Component<Props> {
             (t) => (
               <Segment vertical basic>
                 <Header size="small">
-                  {t('wallet_status_balances')}
+                  {t('wallet_status_staked_balances')}
                 </Header>
                 <Table
                   attached="bottom"
