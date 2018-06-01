@@ -168,19 +168,30 @@ export function validateKey(key) {
   };
 }
 
-export function validateStake(stake, balance) {
+export function validateStake(next_stake, current_stake, balance) {
   return (dispatch: () => void) => {
     dispatch({ type: types.VALIDATE_STAKE_PENDING });
 
-    if ((stake.cpu_amount + stake.net_amount) > balance) {
+    if (((next_stake.cpu_amount + current_stake.net_amount) > balance) ||
+        ((next_stake.net_amount + current_stake.cpu_amount) > balance) ||
+        ((next_stake.cpu_amount + next_stake.net_amount) > balance)) {
+
       dispatch({
         payload: { error: 'not_enough_balance' },
         type: types.VALIDATE_STAKE_FAILURE
       });
       return false;
     }
+
+    if (stake.cpu_amount < 0 || stake.net_amount < 0) {
+      dispatch({
+        payload: { error: 'negative_stake_amount' },
+        type: types.VALIDATE_STAKE_FAILURE
+      });
+      return false;
+    }
     dispatch({
-      type: types.VALIDATE_STAKE_SUCCESS
+      type: types.VALIDATE_STAKE_PENDING
     });
     return true;
   };

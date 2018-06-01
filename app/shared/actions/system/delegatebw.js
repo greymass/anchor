@@ -23,7 +23,8 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
         stake_cpu_quantity: `${stake_cpu_amount} EOS`,
         transfer: 0
       });
-    }).then(() => dispatch({
+    }).then((tx) => dispatch({
+      payload: { tx },
       type: types.SYSTEM_DELEGATEBW_SUCCESS
     })).catch((err) => dispatch({
       payload: { error: err.message },

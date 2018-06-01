@@ -5,37 +5,63 @@ import {delegatebw} from './system/delegatebw';
 
 export function setStakeWithValidation(balance, account, net_amount, cpu_amount) {
   return (dispatch: () => void) => {
-    const nextStake = stakeFromParams(account, net_amount, cpu_amount)
+    const { nextStake, currentStake } = this.getNextAndCurrentStake(account, net_amount, cpu_amount);
 
-    setTimeout(function(){
-      dispatch({type: types.VALIDATE_STAKE_NULL})
-    }, 15000);
+    if (dispatch(validate.validateStake(nextStake, currentStake, balance))) {
+      increaseInStake = {
+        net_amount: Math.max(0, (nextStake.net_amount - currentStake.net_amount)),
+        cpu_amount: Math.max(0, (nextStake.net_amount - currentStake.net_amount))
+      }
 
-
-    if (dispatch(validate.validateStake(nextStake, balance))) {
-      return dispatch(delegatebw(account.account_name, account.account_name, net_amount, cpu_amount));
+      decreaseInStake = {
+        net_amount: Math.max(0, (currentStake.net_amount - nextStake.net_amount)),
+        cpu_amount: Math.max(0, (currentStake.net_amount - nextStake.net_amount))
+      }
+      if (increaseInStake.net_amount + increaseInStake.cpu_amount > 0){
+        dispatch(delegatebw(account.account_name, account.account_name, increaseInStake.net_amount, increaseInStake.cpu_amount));
+      }
+      if (decreaseInStake.net_amount + increaseInStake.cpu_amount > 0){
+        dispatch(delegatebw(account.account_name, account.account_name, decreaseInStake.net_amount, decreaseInStake.cpu_amount));
+      }
     }
   };
 }
 
-export function setConfirmingWithValidation(balance, account, net_amount, cpu_amount) {
+export function resetStakeForm() {
   return (dispatch: () => void) => {
-    const nextStake = stakeFromParams(account, net_amount, cpu_amount)
+    return dispatch({ type: types.VALIDATE_STAKE_NULL });
+  };
+}
 
-    if (dispatch(validate.validateStake(nextStake, balance))) {
+export function setStakeConfirmingWithValidation(balance, account, net_amount, cpu_amount) {
+  return (dispatch: () => void) => {
+    const { nextStake, currentStake } = this.getNextAndCurrentStake(account, net_amount, cpu_amount);
+
+    if (dispatch(validate.validateStake(nextStake, currentStake, balance))) {
       return dispatch({ type: types.VALIDATE_STAKE_CONFIRMING });
     }
   };
 }
 
-function stakeFromParams(account, net_amount, cpu_amount){
+function getNextAndCurrentStake(account, net_amount, cpu_amount) {
+  const nextStake = {
+    net_amount: net_amount,
+    cpu_amount: cpu_amount
+  }
+
+  const currentStake = {
+    net_amount: (account.net_amount/10000),
+    cpu_amount: (account.cpu_amount/10000)
+  }
+
   return {
-    net_amount: (net_amount + account.net_weight/10000),
-    cpu_amount: (cpu_amount + account.cpu_weight/10000)
-  };
+    nextStake: nextStake,
+    currentStake: currentStake
+  }
 }
 
 export default {
+  resetStakeForm,
   setStakeWithValidation,
-  setConfirmingWithValidation
+  setStakeConfirmingWithValidation
 };
