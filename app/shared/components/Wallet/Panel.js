@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Segment } from 'semantic-ui-react';
 
 import WalletPanelForm from './Panel/Form';
 import WalletPanelLocked from './Panel/Locked';
