@@ -78,7 +78,7 @@ class SidebarConnectionContainer extends Component<Props> {
         />
       </Form>
     );
-    const { host } = new URL(node);
+    const { host } = (node) ? new URL(node) : '';
     return (
       <I18n ns="wallet">
         {
@@ -88,7 +88,7 @@ class SidebarConnectionContainer extends Component<Props> {
               size="small"
               stacked
             >
-              {(!validate.NODE || editing) ? formElement : ''}
+              {(!validate.NODE || editing || !host) ? formElement : ''}
               {(validate.NODE && editing)
                 ? (
                   <Button
@@ -102,7 +102,7 @@ class SidebarConnectionContainer extends Component<Props> {
                 )
                 : ''
               }
-              {(validate.NODE && !editing)
+              {(validate.NODE && !editing && host)
                 ? [
                   (
                     <Button
