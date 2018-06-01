@@ -2,11 +2,10 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import SidebarConnectionContainer from '../containers/Sidebar/Connection';
+import SidebarConnection from './Sidebar/Connection';
 
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
-import ProducersVotingAccount from './Producers/VotingAccount';
 import ProducersVotingPreview from './Producers/Modal/Preview';
 import ProducersWelcome from './Producers/Welcome';
 import WalletPanel from './Wallet/Panel';
@@ -222,7 +221,7 @@ export default class Producers extends Component<Props> {
       <Grid>
         <Grid.Row>
           <Grid.Column width={6}>
-            <SidebarConnectionContainer />
+            <SidebarConnection />
             {sidebar}
           </Grid.Column>
           <Grid.Column width={10}>

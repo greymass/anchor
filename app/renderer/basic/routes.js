@@ -7,11 +7,13 @@ import {
 } from 'react-router-dom';
 
 import BasicVoter from '../../shared/containers/BasicVoter';
+import Welcome from '../../shared/containers/Welcome';
 
 export default () => (
   <HashRouter>
     <Switch>
-      <Route exact path="/" component={BasicVoter} />
+      <Route exact path="/" component={Welcome} />
+      <Route exact path="/voter" component={BasicVoter} />
     </Switch>
   </HashRouter>
 );

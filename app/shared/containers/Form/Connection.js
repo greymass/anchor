@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import debounce from 'lodash/debounce';
 import { I18n } from 'react-i18next';
-import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import { Button, Form, Header } from 'semantic-ui-react';
 
 import WalletPanelFormNode from '../../components/Wallet/Panel/Form/Node';
 import * as SettingsActions from '../../actions/settings';
@@ -23,7 +23,7 @@ type Props = {
   validate: {}
 };
 
-class SidebarConnectionContainer extends Component<Props> {
+class FormConnectionContainer extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class SidebarConnectionContainer extends Component<Props> {
       node
     } = this.state;
     // Validate settings on app start
-    if (!validate.NODE) {
+    if (validate.NODE !== 'SUCCESS') {
       actions.validateNode(node);
     }
   }
@@ -54,7 +54,6 @@ class SidebarConnectionContainer extends Component<Props> {
       actions
     } = this.props;
     const { setSettingWithValidation } = actions;
-    console.log("validate", name, value)
     setSettingWithValidation(name, value);
   }, 300)
 
@@ -78,18 +77,20 @@ class SidebarConnectionContainer extends Component<Props> {
         />
       </Form>
     );
-    const { host } = (node) ? new URL(node) : '';
+    let formattedHost = '';
+    try {
+      const { host } = new URL(node);
+      formattedHost = host;
+    } catch (e) {
+      console.log('url error', e);
+    }
     return (
       <I18n ns="wallet">
         {
           (t) => (
-            <Segment
-              clearing
-              size="small"
-              stacked
-            >
-              {(!validate.NODE || editing || !host) ? formElement : ''}
-              {(validate.NODE && editing)
+            <div>
+              {(validate.NODE !== 'SUCCESS' || editing) ? formElement : ''}
+              {(validate.NODE === 'SUCCESS' && editing)
                 ? (
                   <Button
                     content="Confirm"
@@ -102,7 +103,7 @@ class SidebarConnectionContainer extends Component<Props> {
                 )
                 : ''
               }
-              {(validate.NODE && !editing && host)
+              {(validate.NODE === 'SUCCESS' && !editing)
                 ? [
                   (
                     <Button
@@ -120,14 +121,14 @@ class SidebarConnectionContainer extends Component<Props> {
                     >
                       {t('block_height')}: {chain.head_block_num}
                       <Header.Subheader>
-                        {host}
+                        {formattedHost}
                       </Header.Subheader>
                     </Header>
                   )
                 ]
                 : ''
               }
-            </Segment>
+            </div>
           )
         }
       </I18n>
@@ -152,4 +153,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarConnectionContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FormConnectionContainer));
