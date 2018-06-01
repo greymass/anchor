@@ -5,8 +5,6 @@ import WalletPanelForm from './Panel/Form';
 import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
 
-import Stake from './Stake';
-
 type Props = {
   actions: {},
   accounts: {},
@@ -21,14 +19,14 @@ type Props = {
 export default class WalletPanel extends Component<Props> {
   render() {
     const {
+      accounts,
       actions,
+      balances,
       keys,
       settings,
+      system,
       validate,
-      wallet,
-      accounts,
-      balances,
-      system
+      wallet
     } = this.props;
 
     const {
@@ -56,22 +54,15 @@ export default class WalletPanel extends Component<Props> {
     }
     if (keys && keys.key) {
       panel = (
-        <div>
-          <WalletPanelUnlocked
-            actions={actions}
-            keys={keys}
-            settings={settings}
-            validate={validate}
-          />
-          <Stake
-            actions={actions}
-            accounts={accounts}
-            balances={balances}
-            validate={validate}
-            settings={settings}
-            system={system}
-          />
-        </div>
+        <WalletPanelUnlocked
+          accounts={accounts}
+          balances={balances}
+          actions={actions}
+          keys={keys}
+          settings={settings}
+          system={system}
+          validate={validate}
+        />
       );
     }
     return (

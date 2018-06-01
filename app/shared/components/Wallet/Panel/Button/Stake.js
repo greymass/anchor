@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { Grid, Transition, Modal, Button, Header, Icon } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
-import StakeStats from './Stake/Stats';
-import StakeForm from './Stake/Form';
+import StakeForm from '../Form/Stake';
 
 type Props = {
   actions: {},
@@ -15,7 +14,7 @@ type Props = {
   system: {}
 };
 
-export default class Stake extends Component<Props> {
+export default class WalletPanelButtonStake extends Component<Props> {
   props: Props;
 
   state = {

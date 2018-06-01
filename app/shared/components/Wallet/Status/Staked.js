@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Segment, Grid } from 'semantic-ui-react';
+import { Header, Segment, Table } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
 export default class WalletStatusStaked extends Component<Props> {
@@ -20,25 +20,35 @@ export default class WalletStatusStaked extends Component<Props> {
         <I18n ns="stake">
           {
             (t) => (
-              <div>
-                <Grid>
-                  <Grid.Row>
-                    <h2>{t('staked_data')}</h2>
-                  </Grid.Row>
-                  <Grid.Row>
-                    {t('total_staked')}: {total_staked.toPrecision(4)}
-                  </Grid.Row>
-                  <Grid.Row>
-                    {t('net_staked')}: {coins_staked_to_net.toPrecision(4)}
-                  </Grid.Row>
-                  <Grid.Row>
-                    {t('cpu_staked')}: {coins_staked_to_cpu.toPrecision(4)}
-                  </Grid.Row>
-                  <Grid.Row>
-                    {t('amount_not_staked')}: {amount_not_staked.toPrecision(4)}
-                  </Grid.Row>
-                </Grid>
-              </div>
+              <Segment vertical basic>
+                <Header size="small">
+                  {t('wallet_status_balances')}
+                </Header>
+                <Table
+                  attached="bottom"
+                  definition
+                  unstackable
+                >
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>{t('total_staked')}</Table.Cell>
+                      <Table.Cell>{total_staked.toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>{t('net_staked')}</Table.Cell>
+                      <Table.Cell>{coins_staked_to_net.toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>{t('cpu_staked')}</Table.Cell>
+                      <Table.Cell>{coins_staked_to_cpu.toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>{t('amount_not_staked')}</Table.Cell>
+                      <Table.Cell>{amount_not_staked.toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                </Table>
+              </Segment>
             )
           }
         </I18n>
