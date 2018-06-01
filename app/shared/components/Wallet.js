@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import SidebarConnectionContainer from '../containers/Sidebar/Connection';
 

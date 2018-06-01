@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid, Transition, Modal, Button, Header, Icon } from 'semantic-ui-react';
+import { Modal, Button, Header, Icon } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
 import StakeForm from '../Form/Stake';
@@ -22,7 +22,8 @@ export default class WalletPanelButtonStake extends Component<Props> {
   }
 
   onOpen = () => {
-    const {resetStakeForm} = this.props.actions;
+    const { actions } = this.props;
+    const { resetStakeForm } = actions;
 
     resetStakeForm();
 
@@ -36,10 +37,8 @@ export default class WalletPanelButtonStake extends Component<Props> {
       actions,
       accounts,
       balances,
-      keys,
       settings,
       validate,
-      wallet,
       system
     } = this.props;
 
@@ -62,7 +61,7 @@ export default class WalletPanelButtonStake extends Component<Props> {
                 />
               )}
               open={open}
-              size="tiny"
+              size="small"
             >
               <Header icon="money" content={t('stake_modal_title')} />
               <Modal.Content>

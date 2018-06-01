@@ -168,11 +168,11 @@ export function validateKey(key) {
   };
 }
 
-export function validateStake(next_stake, current_stake, EOSbalance) {
+export function validateStake(nextStake, currentStake, EOSbalance) {
   return (dispatch: () => void) => {
     dispatch({ type: types.VALIDATE_STAKE_PENDING });
 
-    if (next_stake.cpu_amount < 0 || next_stake.net_amount < 0) {
+    if (nextStake.cpu_amount < 0 || nextStake.net_amount < 0) {
       dispatch({
         payload: { error: 'negative_stake_amount' },
         type: types.VALIDATE_STAKE_FAILURE
@@ -180,10 +180,9 @@ export function validateStake(next_stake, current_stake, EOSbalance) {
       return false;
     }
 
-    if (((next_stake.cpu_amount + current_stake.net_amount) > EOSbalance) ||
-        ((next_stake.net_amount + current_stake.cpu_amount) > EOSbalance) ||
-        ((next_stake.cpu_amount + next_stake.net_amount) > EOSbalance)) {
-
+    if (((nextStake.cpu_amount + currentStake.net_amount) > EOSbalance) ||
+        ((nextStake.net_amount + currentStake.cpu_amount) > EOSbalance) ||
+        ((nextStake.cpu_amount + nextStake.net_amount) > EOSbalance)) {
       dispatch({
         payload: { error: 'not_enough_balance' },
         type: types.VALIDATE_STAKE_FAILURE
