@@ -16,7 +16,7 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
     const stake_cpu_amount = parseFloat(cpu_amount || 0).toPrecision(5);
 
     return eos(connection).transaction(tr => {
-      tr.delegatebw({
+      tr.undelegatebw({
         from: delegator,
         receiver,
         stake_net_quantity: `${stake_net_amount} EOS`,
@@ -24,6 +24,7 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
         transfer: 0
       });
     }).then(() => dispatch({
+      payload: { tx },
       type: types.SYSTEM_DELEGATEBW_SUCCESS
     })).catch((err) => dispatch({
       payload: { error: err.message },

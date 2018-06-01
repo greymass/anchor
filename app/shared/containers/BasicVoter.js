@@ -133,6 +133,14 @@ class BasicVoterContainer extends Component<Props> {
             onClick={this.handleItemClick}
           />
 
+          <Menu.Item
+            name="wallet"
+            icon="protect"
+            content="Wallet"
+            active={activeItem === 'wallet'}
+            onClick={this.handleItemClick}
+          />
+
           <Menu.Menu position="right">
             <WalletLockState
               key="lockstate"

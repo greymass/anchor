@@ -7,7 +7,7 @@ export default function validate(state = {}, action) {
     return {};
   }
 
-  const matches = /^VALIDATE_(.*)_(PENDING|SUCCESS|FAILURE|NULL)$/.exec(type);
+  const matches = /^VALIDATE_(.*)_(PENDING|SUCCESS|FAILURE|CONFIRMING|NULL)$/.exec(type);
   if (!matches) return state;
 
   const [, requestName, requestState] = matches;
