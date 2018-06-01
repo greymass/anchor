@@ -12,7 +12,7 @@
   "producer_voter_voting_as": "Voting as:",
   "producer_voted_connected_to": "connected to:",
   "producer_voter_total_staked": "Total Staked",
-  "producer_voter_save_changes": "Save changes and submit to blockchain",
+  "producer_voter_save_changes": "Submit changes to blockchain",
   "producer_voter_no_changes": "No changes to save",
   "producer_voter_votes_used": "total votes cast",
   "producer_voter_remove_all_votes_header": "Remove all votes?",

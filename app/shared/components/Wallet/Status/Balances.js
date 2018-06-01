@@ -35,6 +35,7 @@ export default class WalletStatusBalances extends Component<Props> {
               <Table
                 attached="bottom"
                 definition
+                unstackable
               >
                 <Table.Body>
                   {rows}
