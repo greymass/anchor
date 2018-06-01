@@ -2,33 +2,39 @@
 import React, { Component } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 
+import WalletLockStateLocked from './LockState/Locked';
+
 export default class WalletLockState extends Component<Props> {
   render() {
     const {
+      actions,
       keys,
+      validate,
       wallet
     } = this.props;
-    const walletExists = (wallet.data);
+    const walletExists = !!(wallet.data);
+    if (!walletExists) return '';
     const walletLocked = (!keys.key);
-
-    return (
+    return walletLocked ? (
+      <WalletLockStateLocked
+        actions={actions}
+        keys={keys}
+        validate={validate}
+        wallet={wallet}
+      />
+    ) : (
       <Menu.Item
-        color={(walletLocked) ? 'green' : 'yellow'}
+        color="yellow"
         key="lockstate"
         inverted="true"
+        onClick={actions.lockWallet}
       >
-        {(walletExists)
-          ? (
-            <span>
-              <Icon
-                color={(walletLocked) ? 'green' : 'yellow'}
-                name={(walletLocked) ? 'lock' : 'unlock'}
-              />
-            </span>
-          )
-          : ''
-        }
+        <Icon
+          color="yellow"
+          name="unlock"
+        />
       </Menu.Item>
+
     );
   }
 }
