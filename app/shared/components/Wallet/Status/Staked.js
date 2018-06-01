@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Segment, Grid } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
-export default class WalletStatus extends Component<Props> {
+export default class WalletStatusStaked extends Component<Props> {
   render() {
     const { account, settings, balance } = this.props;
     const server = settings.node;

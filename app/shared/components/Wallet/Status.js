@@ -4,7 +4,7 @@ import { Divider, Header, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 import WalletStatusBalances from './Status/Balances';
-import StakeStats from './Stake/Stats';
+import WalletStatusStaked from './Status/Staked';
 
 export default class WalletStatus extends Component<Props> {
   render() {
