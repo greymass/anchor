@@ -113,6 +113,7 @@ export default class WalletPanelForm extends Component<Props> {
       && validate.KEY === 'SUCCESS'
       && (!encryptWallet || (encryptWallet && password.length > 0))
     );
+    if (validate.NODE !== 'SUCCESS') return '';
     return (
       <I18n ns="wallet">
         {

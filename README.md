@@ -1,7 +1,7 @@
-![version](https://img.shields.io/github/release/aaroncox/eos-voter/all.svg)
-![issues](https://img.shields.io/github/issues/aaroncox/eos-voter.svg)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/aaroncox/eos-voter/master/LICENSE)
-![downloads](https://img.shields.io/github/downloads/aaroncox/eos-voter/total.svg)
+![version](https://img.shields.io/github/release/greymass/eos-voter/all.svg)
+![issues](https://img.shields.io/github/issues/greymass/eos-voter.svg)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/eos-voter/master/LICENSE)
+![downloads](https://img.shields.io/github/downloads/greymass/eos-voter/total.svg)
 
 # eos-voter - EOS Block Producer Voting & Wallet
 
@@ -18,11 +18,22 @@
 
 When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption.
 
+## Get eos-voter
+
+### Download the latest release
+
+The latest release will always be available on the releases page of this repository:
+
+[https://github.com/greymass/eos-voter/releases](https://github.com/greymass/eos-voter/releases)
 
 ### Build it yourself
 
+If you'd rather build the application yourself, please ensure you have nodejs, npm/yarn already installed locally.
+
+**Note**: if you are configuring this electron application under a Windows development environment, it will take some extra steps not outlined here.
+
 ```
-git clone git@github.com:aaroncox/eos-voter.git eos-voter
+git clone git@github.com:greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 ```
@@ -39,13 +50,11 @@ The files built will be located in the `releases` folder within the root folder.
 ### Running development mode
 
 ```
-git clone git@github.com:aaroncox/eos-voter.git eos-voter
+git clone git@github.com:greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 yarn dev
 ```
-
-Note: if you are configuring this electron application under a Windows development environment, it will take some extra steps.
 
 ### Credits
 

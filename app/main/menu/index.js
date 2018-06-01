@@ -90,9 +90,9 @@ export default class MenuBuilder {
     const subMenuHelp = {
       label: 'Help',
       submenu: [
-        { label: 'Source Code (Github)', click() { shell.openExternal('https://github.com/aaroncox/eos-voter'); } },
-        { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/aaroncox/eos-voter/issues'); } },
-        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/aaroncox/eos-voter/releases'); } }
+        { label: 'Source Code (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter'); } },
+        { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/issues'); } },
+        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } }
       ]
     };
 
@@ -160,9 +160,9 @@ export default class MenuBuilder {
     }, {
       label: 'Help',
       submenu: [
-        { label: 'Source Code (Github)', click() { shell.openExternal('https://github.com/aaroncox/eos-voter'); } },
-        { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/aaroncox/eos-voter/issues'); } },
-        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/aaroncox/eos-voter/releases'); } }
+        { label: 'Source Code (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter'); } },
+        { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/issues'); } },
+        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } }
       ]
     }];
 
