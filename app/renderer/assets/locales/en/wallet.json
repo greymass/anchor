@@ -3,7 +3,6 @@
   "key_validation_invalid_key": "The private key entered could not be resolved to a public key. Please ensure it has been entered correctly.",
   "key_validation_account_not_found": "The account specified could not be found.",
   "wallet_status_balances": "Wallet Balances",
-  "wallet_status_staked_balances": "Staked Balances",
   "wallet_panel_form_create_wallet_header": "Import your Account",
   "wallet_panel_form_create_wallet_body": "To use eos-voter to vote, fill in your account name and private key.",
   "wallet_panel_form_will_save": "The account name and private key will be encrypted and saved in the application. The password will be required to unlock the key for usage.",

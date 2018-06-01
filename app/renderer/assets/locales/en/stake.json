@@ -11,6 +11,7 @@
   "stake_updated":"Your stake was updated successfully.",
   "stake_modal_title":"Stake or Unstake some coins",
   "stake_form":"Staking Coins",
+  "staked_balances": "Staked Balances",
   "confirm_stake":"Confirm",
   "stake_success":"You have successfully staked your coins.",
   "unstake_success":"You have successfully unstaked your coins.",
