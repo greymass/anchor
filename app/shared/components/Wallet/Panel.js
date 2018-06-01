@@ -1,9 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Segment } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 
 import WalletPanelForm from './Panel/Form';
-import WalletPanelFormNode from './Panel/Form/Node';
 import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
 
@@ -21,20 +20,6 @@ type Props = {
 };
 
 export default class WalletPanel extends Component<Props> {
-  props: Props;
-
-  onSettingChange = (e, {name, value}) => {
-    console.log(name, value)
-    // Determine if field should be saved in persistent settings
-    if (['account', 'node'].indexOf(name) > -1) {
-      const {
-        actions
-      } = this.props;
-      const { setSettingWithValidation } = actions;
-      setSettingWithValidation(name, value);
-    }
-  }
-
   render() {
     const {
       actions,
@@ -55,7 +40,6 @@ export default class WalletPanel extends Component<Props> {
       <WalletPanelForm
         actions={actions}
         keys={keys}
-        onSettingChange={this.onSettingChange}
         settings={settings}
         validate={validate}
         wallet={wallet}
@@ -92,20 +76,9 @@ export default class WalletPanel extends Component<Props> {
       );
     }
     return (
-      <Segment basic>
-        <WalletPanelFormNode
-          onChange={this.onSettingChange}
-          validate={validate}
-          value={settings.node}
-        />
+      <div>
         {panel}
-
-        <Button
-          onClick={clearSettingsCache}
-          content="DEBUG: Reset Application"
-          color="red"
-        />
-      </Segment>
+      </div>
     );
   }
 }

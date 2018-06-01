@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Button, Grid } from 'semantic-ui-react';
 
+import SidebarConnectionContainer from '../containers/Sidebar/Connection';
+
 import WalletPanel from './Wallet/Panel';
 import WalletStatus from './Wallet/Status';
 
@@ -34,6 +36,7 @@ export default class Wallet extends Component<Props> {
       <Grid>
         <Grid.Row>
           <Grid.Column width={6}>
+            <SidebarConnectionContainer />
             <WalletPanel
               actions={actions}
               accounts={accounts}

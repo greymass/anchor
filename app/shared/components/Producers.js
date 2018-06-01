@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
+import SidebarConnectionContainer from '../containers/Sidebar/Connection';
+
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingAccount from './Producers/VotingAccount';
@@ -191,13 +193,6 @@ export default class Producers extends Component<Props> {
     if (validUser) {
       sidebar = [
         (
-          <ProducersVotingAccount
-            key="ProducersVotingAccount"
-            onLogout={this.onLogout}
-            settings={settings}
-          />
-        ),
-        (
           <ProducersSelector
             account={accounts[settings.account]}
             key="ProducersSelector"
@@ -227,6 +222,7 @@ export default class Producers extends Component<Props> {
       <Grid>
         <Grid.Row>
           <Grid.Column width={6}>
+            <SidebarConnectionContainer />
             {sidebar}
           </Grid.Column>
           <Grid.Column width={10}>
