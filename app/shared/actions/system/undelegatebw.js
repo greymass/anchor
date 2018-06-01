@@ -2,33 +2,33 @@ import * as types from '../types';
 
 import eos from '../helpers/eos';
 
-export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
+export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
   return (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
 
     dispatch({
-      type: types.SYSTEM_DELEGATEBW_PENDING
+      type: types.SYSTEM_UNDELEGATEBW_PENDING
     })
 
-    const stake_net_amount = parseFloat(net_amount || 0).toPrecision(5);
-    const stake_cpu_amount = parseFloat(cpu_amount || 0).toPrecision(5);
+    const unstake_net_amount = parseFloat(net_amount || 0).toPrecision(5);
+    const unstake_cpu_amount = parseFloat(cpu_amount || 0).toPrecision(5);
 
     return eos(connection).transaction(tr => {
       tr.undelegatebw({
         from: delegator,
         receiver,
-        stake_net_quantity: `${stake_net_amount} EOS`,
-        stake_cpu_quantity: `${stake_cpu_amount} EOS`,
+        unstake_net_quantity: `${unstake_net_amount} EOS`,
+        unstake_cpu_quantity: `${unstake_cpu_amount} EOS`,
         transfer: 0
       });
-    }).then(() => dispatch({
+    }).then((tx) => dispatch({
       payload: { tx },
-      type: types.SYSTEM_DELEGATEBW_SUCCESS
+      type: types.SYSTEM_UNDELEGATEBW_SUCCESS
     })).catch((err) => dispatch({
-      payload: { error: err.message },
-      type: types.SYSTEM_DELEGATEBW_FAILURE
+      payload: { err },
+      type: types.SYSTEM_UNDELEGATEBW_FAILURE
     }));
   };
 }

@@ -14,6 +14,7 @@ type Props = {
   accounts: {},
   balances: {},
   settings: {},
+  system: {},
   validate: {},
   keys: {},
   wallet: {}
@@ -42,7 +43,8 @@ export default class WalletPanel extends Component<Props> {
       validate,
       wallet,
       accounts,
-      balances
+      balances,
+      system
     } = this.props;
 
     const {
@@ -84,6 +86,7 @@ export default class WalletPanel extends Component<Props> {
             balances={balances}
             validate={validate}
             settings={settings}
+            system={system}
           />
         </div>
       );

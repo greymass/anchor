@@ -12,7 +12,8 @@ type Props = {
   settings: {},
   validate: {},
   wallet: {},
-  balances: {}
+  balances: {},
+  system: {}
 };
 
 export default class Wallet extends Component<Props> {
@@ -25,6 +26,7 @@ export default class Wallet extends Component<Props> {
       balances,
       keys,
       settings,
+      system,
       validate,
       wallet
     } = this.props;
@@ -40,6 +42,7 @@ export default class Wallet extends Component<Props> {
               validate={validate}
               wallet={wallet}
               balances={balances}
+              system={system}
             />
           </Grid.Column>
           <Grid.Column width={10}>

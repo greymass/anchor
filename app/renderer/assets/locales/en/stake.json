@@ -1,6 +1,6 @@
 {
-  "update_staked_cpu_amount": "UpdateStake CPU amount",
-  "update_staked_net_amount": "Stake Bandwidth Amount",
+  "update_staked_cpu_amount": "Update Stake CPU amount",
+  "update_staked_net_amount": "Update Stake Bandwidth Amount",
   "update_staked_coins": "Update Staked Coins",
   "staked_data": "Stake Stats",
   "total_staked": "Total Staked",
@@ -12,6 +12,8 @@
   "stake_modal_title":"Stake or Unstake some coins",
   "stake_form":"Staking Coins",
   "confirm_stake":"Confirm",
+  "stake_success":"You have successfully staked your coins.",
+  "unstake_success":"You have successfully unstaked your coins.",
   "about_to_stake": "You are about to stake",
   "about_to_unstake": "You are about to unstake",
   "negative_stake_amount": "You cannot set a negative stake amount"
