@@ -40,12 +40,12 @@ export default class Wallet extends Component<Props> {
             <WalletPanel
               actions={actions}
               accounts={accounts}
+              balances={balances}
               keys={keys}
               settings={settings}
+              system={system}
               validate={validate}
               wallet={wallet}
-              balances={balances}
-              system={system}
             />
           </Grid.Column>
           <Grid.Column width={10}>

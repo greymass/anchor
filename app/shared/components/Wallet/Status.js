@@ -26,7 +26,7 @@ export default class WalletStatus extends Component<Props> {
             balances={balances}
             settings={settings}
           />
-          <StakeStats
+          <WalletStatusStaked
             account={accounts[settings.account]}
             key="StakeStats"
             settings={settings}

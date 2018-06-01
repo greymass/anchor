@@ -13,7 +13,7 @@ type Props = {
   system: {}
 };
 
-export default class StakeForm extends Component<Props> {
+export default class WalletPanelFormStake extends Component<Props> {
   props: Props;
 
   constructor(props) {
