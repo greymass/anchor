@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Header, Label, Popup, Progress, Table } from 'semantic-ui-react';
+import { Button, Header, Icon, Label, Popup, Progress, Responsive, Table } from 'semantic-ui-react';
 import {isEqual} from 'lodash'
 
 import TimeAgo from 'react-timeago';
@@ -13,16 +13,19 @@ const statusCodes = {
   enabled: {
     status: 'enabled',
     color: 'green',
+    icon: 'cube',
     message: 'producer_production_enabled'
   },
   disabled: {
     status: 'disabled',
     color: 'yellow',
+    icon: 'clock',
     message: 'producer_production_disabled'
   },
   never: {
     status: 'never',
     color: 'grey',
+    icon: 'x',
     message: 'producer_production_never'
   }
 };
@@ -77,7 +80,10 @@ export default class ProducersTableRow extends Component<Props> {
         {
           (t) => (
             <Table.Row positive={isActive}>
-              <Table.Cell textAlign="center">
+              <Table.Cell
+                singleLine
+                textAlign="center"
+              >
                 <Button
                   color={isSelected ? 'blue' : 'grey'}
                   disabled={!validUser}
@@ -87,22 +93,31 @@ export default class ProducersTableRow extends Component<Props> {
                     ? () => removeProducer(producer.owner)
                     : () => addProducer(producer.owner)
                   }
+                  size="small"
                 />
               </Table.Cell>
-              <Table.Cell>
-                <Header size="small">
+              <Table.Cell
+                singleLine
+              >
+                <Header size="tiny">
                   {producer.owner}
                   <Header.Subheader>
                     <ProducersLink producer={producer} />
                   </Header.Subheader>
                 </Header>
               </Table.Cell>
-              <Table.Cell width={4}>
+              <Table.Cell
+                singleLine
+                width={5}
+              >
                 <Progress
                   color="teal"
                   label={(
                     <div className="label">
-                      {votePercent}% - {voteFormatted}
+                      {votePercent}%
+                      <Responsive as="span" minWidth={800}>
+                        - {voteFormatted}
+                      </Responsive>
                     </div>
                   )}
                   percent={parseFloat(votePercent * 100) / 100}
@@ -110,7 +125,9 @@ export default class ProducersTableRow extends Component<Props> {
                   style={{ minWidth: 0 }}
                 />
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell
+                singleLine
+              >
                 <Popup
                   content={
                     (statusCodes[producerStatusCode].status === 'never')
@@ -129,9 +146,16 @@ export default class ProducersTableRow extends Component<Props> {
                     <Label
                       basic
                       color={statusCodes[producerStatusCode].color}
-                      content={t(statusCodes[producerStatusCode].message)}
                       size="small"
-                    />
+                    >
+                      <Icon
+                        name={statusCodes[producerStatusCode].icon}
+                        style={{ margin: 0 }}
+                      />
+                      <Responsive as={Label.Detail} minWidth={800} style={{ marginLeft: '0.75em' }}>
+                        {t(statusCodes[producerStatusCode].message)}
+                      </Responsive>
+                    </Label>
                   )}
                 />
 

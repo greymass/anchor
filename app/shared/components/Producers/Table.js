@@ -47,10 +47,10 @@ export default class ProducersTable extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <Segment basic loading={(producers.list.length <= 1)}>
+            <Segment basic loading={(producers.list.length <= 1)} vertical>
               <Grid>
                 <Grid.Column width="10">
-                  <Header>
+                  <Header size="small">
                     {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
                     <Header.Subheader>
                       <ProducersVoteWeight
@@ -74,6 +74,7 @@ export default class ProducersTable extends Component<Props> {
                 size="small"
                 // sortable
                 style={{ borderRadius: 0 }}
+                unstackable
               >
                 <Table.Header>
                   <Table.Row>

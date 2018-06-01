@@ -24,14 +24,9 @@ export default class WalletLockState extends Component<Props> {
                 color={(walletLocked) ? 'green' : 'yellow'}
                 name={(walletLocked) ? 'lock' : 'unlock'}
               />
-              {(walletLocked) ? 'Locked' : 'Unlocked'}
             </span>
           )
-          : (
-            <span>
-              New Wallet
-            </span>
-          )
+          : ''
         }
       </Menu.Item>
     );

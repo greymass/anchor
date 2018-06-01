@@ -18,7 +18,7 @@ export default class ProducersSelector extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <Segment basic loading={!(account)}>
+            <Segment vertical basic loading={!(account)}>
               <Button
                 color={modified ? 'green' : 'grey'}
                 content={modified ? t('producer_voter_save_changes') : t('producer_voter_no_changes')}
@@ -27,7 +27,11 @@ export default class ProducersSelector extends Component<Props> {
                 loading={submitting}
                 onClick={() => this.props.submitProducerVotes()}
               />
-              <List divided relaxed>
+              <List
+                divided
+                relaxed
+                size="small"
+              >
                 <List.Item key="header">
                   <Header size="small" textAlign="center">
                     <Header.Subheader>
