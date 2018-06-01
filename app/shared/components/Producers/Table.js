@@ -102,6 +102,7 @@ export default class ProducersTable extends Component<Props> {
                       const isSelected = (selected.indexOf(producer.owner) !== -1);
                       return (
                         <ProducersTableRow
+                          key={idx}
                           addProducer={this.props.addProducer}
                           filter={filter}
                           isSelected={isSelected}
