@@ -18,8 +18,19 @@
 
 When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption.
 
+## Get eos-voter
+
+### Download the latest release
+
+The latest release will always be available on the releases page of this repository:
+
+[https://github.com/greymass/eos-voter/releases](https://github.com/greymass/eos-voter/releases)
 
 ### Build it yourself
+
+If you'd rather build the application yourself, please ensure you have nodejs, npm/yarn already installed locally.
+
+**Note**: if you are configuring this electron application under a Windows development environment, it will take some extra steps not outlined here.
 
 ```
 git clone git@github.com:aaroncox/eos-voter.git eos-voter
@@ -44,8 +55,6 @@ cd eos-voter
 yarn install
 yarn dev
 ```
-
-Note: if you are configuring this electron application under a Windows development environment, it will take some extra steps.
 
 ### Credits
 
