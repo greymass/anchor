@@ -34,7 +34,8 @@ type Props = {
   validate: {},
   wallet: {},
   balances: {},
-  accounts: {}
+  accounts: {},
+  system: {}
 };
 
 class BasicVoterContainer extends Component<Props> {
@@ -178,6 +179,7 @@ function mapStateToProps(state) {
     keys: state.keys,
     producers: state.producers,
     settings: state.settings,
+    system: state.system,
     validate: state.validate,
     wallet: state.wallet
   };

@@ -4,7 +4,18 @@ import { I18n } from 'react-i18next';
 import { Button, Form, Input, Message, Segment } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
+type Props = {
+  actions: {},
+  account: {},
+  balance: {},
+  settings: {},
+  validate: {},
+  system: {}
+};
+
 export default class StakeForm extends Component<Props> {
+  props: Props;
+
   constructor(props) {
     super(props);
 
@@ -13,9 +24,7 @@ export default class StakeForm extends Component<Props> {
     } = this.props;
 
     this.state = {
-      error: false,
-      cpu_amount: '',
-      net_amount: ''
+      error: false
     }
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -36,16 +45,18 @@ export default class StakeForm extends Component<Props> {
       balance
     } = this.props;
 
+    const EOSbalance = balance['EOS'];
+
     const {
       cpu_amount,
       net_amount
     } = this.state;
 
-    const { setStakeConfirmingWithValidation } = actions;
-
     const {real_net_amount, real_cpu_amount} = this.cleanUpStakeAmounts(account, net_amount, cpu_amount);
 
-    setStakeConfirmingWithValidation(balance, account, real_net_amount, real_cpu_amount);
+    const { setStakeConfirmingWithValidation } = actions;
+
+    setStakeConfirmingWithValidation(EOSbalance, account, real_net_amount, real_cpu_amount);
   }, 300)
 
   onConfirm = debounce(() => {
@@ -55,28 +66,37 @@ export default class StakeForm extends Component<Props> {
       balance
     } = this.props;
 
+    const EOSbalance = balance['EOS'];
+
     const {
       cpu_amount,
       net_amount
     } = this.state;
 
+    const {real_net_amount, real_cpu_amount} = this.cleanUpStakeAmounts(account, net_amount, cpu_amount);
+
     const { setStakeWithValidation } = actions;
 
-    setStakeWithValidation(balance, account, net_amount, cpu_amount);
+    setStakeWithValidation(EOSbalance, account, real_net_amount, real_cpu_amount);
   }, 300)
 
   cleanUpStakeAmounts(account, net_amount, cpu_amount) {
-    if (account.net_weight/10000) {
-      net_amount = (account.net_weight/10000);
+    if (net_amount == undefined) {
+      net_amount = account.coins_staked_to_net;
     }
 
-    if (account.cpu_weight/10000) {
-      cpu_amount = (account.cpu_weight/10000);
+    if (cpu_amount == undefined) {
+      cpu_amount = account.coins_staked_to_cpu;
     }
+
+    this.setState({
+      net_amount: parseFloat(net_amount),
+      cpu_amount: parseFloat(cpu_amount)
+    })
 
     return {
-      net_amount: net_amount,
-      cpu_amount: cpu_amount
+      real_net_amount: this.state.net_amount,
+      real_cpu_amount: this.state.cpu_amount
     };
   }
 
@@ -85,11 +105,14 @@ export default class StakeForm extends Component<Props> {
       actions,
       account,
       balance,
-      validate
+      validate,
+      system
     } = this.props;
 
-    const current_net_amount = account && (account.net_weight/10000);
-    const current_cpu_amount = account && (account.cpu_weight/10000);
+    const EOSbalance = balance['EOS'];
+
+    const current_net_amount = (account.coins_staked_to_net);
+    const current_cpu_amount = (account.coins_staked_to_cpu);
     const current_total_stake = current_net_amount + current_cpu_amount;
 
     return (
@@ -102,22 +125,22 @@ export default class StakeForm extends Component<Props> {
                   ? (
                     <div>
                       <Message warning>
-                        <p>{`${t('amount_not_staked')}: ${balance - (current_net_amount + current_cpu_amount)} EOS`}</p>
-                        <p>{`${t('net_staked')}: ${current_net_amount} EOS`}</p>
-                        <p>{`${t('cpu_staked')}: ${current_cpu_amount} EOS`}</p>
+                        <p>{`${t('amount_not_staked')}: ${(EOSbalance - current_net_amount - current_cpu_amount).toPrecision(4)} EOS`}</p>
+                        <p>{`${t('net_staked')}: ${current_net_amount.toPrecision(4)} EOS`}</p>
+                        <p>{`${t('cpu_staked')}: ${current_cpu_amount.toPrecision(4)} EOS`}</p>
                       </Message>
                       <Form onSubmit={this.onSubmit}>
                         <Form.Field
                           control={Input}
                           fluid
-                          label={t('stake_net_amount')}
+                          label={t('update_staked_net_amount')}
                           name="net_amount"
                           onChange={this.onChange}
                         />
                         <Form.Field
                           control={Input}
                           fluid
-                          label={t('stake_cpu_amount')}
+                          label={t('update_staked_cpu_amount')}
                           name="cpu_amount"
                           onChange={this.onChange}
                         />
@@ -139,11 +162,28 @@ export default class StakeForm extends Component<Props> {
                   )
                   : ''
                 }
-                {(validate.STAKE === 'SUCCESS')
+                {(system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS')
                   ? (
                     <Message positive>
-                      <p>{t('stake_updated')}</p>
+                      {(system.DELEGATEBW === 'SUCCESS')
+                        ? (
+                          <p>{`${t('stake_success')} tx # ${system.DELEGATEBW_LAST_TRANSACTION}`}</p>
+                        )
+                        : ''
+                      }
+                      {(system.UNDELEGATEBW === 'SUCCESS')
+                        ? (
+                          <p>{`${t('unstake_success')} tx # ${system.UNDELEGATEBW_LAST_TRANSACTION}`}</p>
+                        )
+                        : ''
+                      }
                     </Message>
+                  )
+                  : ''
+                }
+                {(system.DELEGATEBW === 'PENDING' || system.UNDELEGATEBW === 'PENDING')
+                  ? (
+                    <h2>Loading...</h2>
                   )
                   : ''
                 }
@@ -153,12 +193,12 @@ export default class StakeForm extends Component<Props> {
                       {((this.state.net_amount + this.state.cpu_amount) >= current_total_stake)
                         ? (
                           <p>{t('about_to_stake') +
-                            ` ${(this.state.net_amount + this.state.cpu_amount) - current_total_stake} EOS`}</p>
+                            ` ${(this.state.net_amount + this.state.cpu_amount - current_total_stake).toPrecision(4)} EOS`}</p>
                         )
                         :
                         (
                           <p>{t('about_to_unstake') +
-                            ` ${current_total_stake - this.state.net_amount - this.state.cpu_amount} EOS`}</p>
+                            ` ${(current_total_stake - this.state.net_amount - this.state.cpu_amount).toPrecision(4)} EOS`}</p>
                         )
                       }
 

@@ -12,6 +12,7 @@ type Props = {
   balances: {},
   settings: {},
   validate: {},
+  system: {}
 };
 
 export default class Stake extends Component<Props> {
@@ -39,7 +40,8 @@ export default class Stake extends Component<Props> {
       keys,
       settings,
       validate,
-      wallet
+      wallet,
+      system
     } = this.props;
 
     const {
@@ -72,6 +74,7 @@ export default class Stake extends Component<Props> {
                   actions={actions}
                   validate={validate}
                   balance={balances[settings.account]}
+                  system={system}
                 />
               </Modal.Content>
               <Modal.Actions>

@@ -27,7 +27,7 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
       payload: { tx },
       type: types.SYSTEM_DELEGATEBW_SUCCESS
     })).catch((err) => dispatch({
-      payload: { error: err.message },
+      payload: { err },
       type: types.SYSTEM_DELEGATEBW_FAILURE
     }));
   };
