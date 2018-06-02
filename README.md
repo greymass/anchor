@@ -28,7 +28,7 @@ The latest release will always be available on the releases page of this reposit
 
 If you are a...
 
-- **MacOS User**: Download either the DMG (`eos-voter-***-mac.zip`) or ZIP (`eos-voter-***-mac.zip`) file.
+- **MacOS User**: Download either the DMG (`eos-voter-***.dmg`) or ZIP (`eos-voter-***-mac.zip`) file.
 - **Windows User**: Download the EXE (`eos-voter-***.exe`) file.
 - **Linux User**: Download either the SNAP (`eos-voter-***-_amd64.snap`) or DEB (`eos-voter-***-_amd64.deb`) file
 
