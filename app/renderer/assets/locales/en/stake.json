@@ -16,7 +16,8 @@
   "confirm_stake":"Confirm",
   "stake_success":"You have successfully staked your coins.",
   "unstake_success":"You have successfully unstaked your coins.",
-  "about_to_stake": "You are about to stake",
-  "about_to_unstake": "You are about to unstake",
-  "negative_stake_amount": "You cannot set a negative stake amount"
+  "about_to_stake": "You are about to stake an additional",
+  "about_to_unstake": "You are about to unstake a ",
+  "negative_stake_amount": "You cannot set a negative stake amount",
+  "undelegate_explanation": "Any EOS unstaked from either Bandwidth of CPU will be unavailable for 3 days. After this waiting period it will appear as available."
 }

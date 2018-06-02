@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Form, Input, Message, Segment } from 'semantic-ui-react';
+import { Button, Divider, Header, Form, Input, Message, Segment } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
 type Props = {
@@ -17,14 +17,20 @@ export default class WalletPanelFormStake extends Component<Props> {
 
   constructor(props) {
     super(props);
-
+    const { account } = props;
+    this.state = {
+      cpuAmount: account.coins_staked_to_cpu,
+      cpuOriginal: account.coins_staked_to_cpu,
+      netAmount: account.coins_staked_to_net,
+      netOriginal: account.coins_staked_to_net
+    };
     this.onSubmit = this.onSubmit.bind(this);
     this.onConfirm = this.onConfirm.bind(this);
   }
 
   onChange = debounce((e, { name, value }) => {
     this.setState({
-      [name]: value,
+      [name]: parseFloat(value),
     });
   }, 300)
 
@@ -96,58 +102,103 @@ export default class WalletPanelFormStake extends Component<Props> {
     const {
       account,
       balance,
-      validate,
-      system
+      onClose,
+      system,
+      validate
     } = this.props;
 
+    const {
+      cpuAmount,
+      cpuOriginal,
+      netAmount,
+      netOriginal
+    } = this.state;
+
     const EOSbalance = balance.EOS;
-
-    const currentNetAmount = (account.coins_staked_to_net);
-    const currentCpuAmount = (account.coins_staked_to_cpu);
-    const currentTotalStake = currentNetAmount + currentCpuAmount;
-
+    const currentTotalStake = netOriginal + cpuOriginal;
+    console.log(system);
     return (
       <I18n ns="stake">
         {
           (t) => (
-            <Segment basic>
+            <div>
               {(validate.STAKE === 'ERROR' || validate.STAKE === 'NULL')
                 ? (
                   <div>
-                    <Message warning>
-                      <p>{`${t('amount_not_staked')}: ${(EOSbalance - currentNetAmount - currentCpuAmount).toFixed(4)} EOS`}</p>
-                      <p>{`${t('net_staked')}: ${currentNetAmount.toFixed(4)} EOS`}</p>
-                      <p>{`${t('cpu_staked')}: ${currentCpuAmount.toFixed(4)} EOS`}</p>
-                    </Message>
-                    <Form onSubmit={this.onSubmit}>
-                      <Form.Field
-                        control={Input}
-                        fluid
-                        label={t('update_staked_net_amount')}
-                        name="netAmount"
-                        onChange={this.onChange}
+                    <Segment.Group horizontal>
+                      <Segment>
+                        <Header textAlign="center">
+                          {(EOSbalance).toFixed(4)} EOS
+                          <Header.Subheader>
+                            {t('amount_not_staked')}
+                          </Header.Subheader>
+                        </Header>
+                      </Segment>
+                      <Segment>
+                        <Header textAlign="center">
+                          {cpuOriginal.toFixed(4)} EOS
+                          <Header.Subheader>
+                            {t('cpu_staked')}
+                          </Header.Subheader>
+                        </Header>
+                      </Segment>
+                      <Segment>
+                        <Header textAlign="center">
+                          {netOriginal.toFixed(4)} EOS
+                          <Header.Subheader>
+                            {t('net_staked')}
+                          </Header.Subheader>
+                        </Header>
+                      </Segment>
+                    </Segment.Group>
+                    <Form>
+                      <Form.Group widths='equal'>
+                        <Form.Field
+                          control={Input}
+                          fluid
+                          label={t('update_staked_cpu_amount')}
+                          name="cpuAmount"
+                          onChange={this.onChange}
+                          defaultValue={cpuOriginal.toFixed(4)}
+                        />
+                        <Form.Field
+                          control={Input}
+                          fluid
+                          label={t('update_staked_net_amount')}
+                          name="netAmount"
+                          onChange={this.onChange}
+                          defaultValue={netOriginal.toFixed(4)}
+                        />
+                      </Form.Group>
+                      <Divider />
+                      <Message
+                        icon="info circle"
+                        info
+                        content={t('undelegate_explanation')}
                       />
-                      <Form.Field
-                        control={Input}
-                        fluid
-                        label={t('update_staked_cpu_amount')}
-                        name="cpuAmount"
-                        onChange={this.onChange}
+                      <Divider />
+                      <Button
+                        content={t('cancel')}
+                        color="grey"
+                        onClick={onClose}
                       />
                       <Button
-                        onClick={this.onSubmit}
                         content={t('update_staked_coins')}
                         color="green"
+                        floated="right"
+                        onClick={this.onConfirm}
                       />
                     </Form>
                   </div>
                 )
                 : ''
               }
-              {(validate.STAKE === 'FAILURE')
+              {(validate.STAKE === 'FAILURE' || system.DELEGATEBW === 'FAILURE' || system.UNDELEGATEBW === 'FAILURE')
                 ? (
                   <Message negative>
                     <p>{t(validate.STAKE_ERROR)}</p>
+                    <p>{system.UNDELEGATEBW_LAST_ERROR.message}</p>
+                    <p>{system.UNDELEGATEBW_LAST_ERROR.message}</p>
                   </Message>
                 )
                 : ''
@@ -179,27 +230,40 @@ export default class WalletPanelFormStake extends Component<Props> {
               }
               {(validate.STAKE === 'CONFIRMING')
                 ? (
-                  <Message warning>
-                    {((this.state.netAmount + this.state.cpuAmount) >= currentTotalStake)
-                      ? (
-                        <p>{`${t('about_to_stake')} ${((this.state.netAmount + this.state.cpuAmount) - currentTotalStake).toFixed(4)} EOS`}</p>
-                      )
-                      :
-                      (
-                        <p>{`${t('about_to_unstake')} ${(currentTotalStake - this.state.netAmount - this.state.cpuAmount).toFixed(4)} EOS`}</p>
-                      )
-                    }
-
+                  <Segment>
+                    <Header>
+                      {((cpuAmount + netAmount) >= currentTotalStake)
+                        ? (
+                          <span>
+                            {t('about_to_stake')}
+                            {' '}
+                            {((cpuAmount + netAmount) - currentTotalStake).toFixed(4)}
+                            {' '}
+                            EOS
+                          </span>
+                        )
+                        : (
+                          <span>
+                            {t('about_to_unstake')}
+                            {' '}
+                            {(currentTotalStake - netAmount - cpuAmount).toFixed(4)}
+                            {' '}
+                            EOS
+                          </span>
+                        )
+                      }
+                    </Header>
                     <Button
                       onClick={this.onConfirm}
                       content={t('confirm_stake')}
                       color="yellow"
+                      floated="right"
                     />
-                  </Message>
+                  </Segment>
                 )
                 : ''
               }
-            </Segment>
+            </div>
           )
         }
       </I18n>

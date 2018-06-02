@@ -61,6 +61,7 @@ export default class WalletPanelButtonStake extends Component<Props> {
                 />
               )}
               open={open}
+              onClose={this.onClose}
               size="small"
             >
               <Header icon="microchip" content={t('stake_modal_title')} />
@@ -70,18 +71,12 @@ export default class WalletPanelButtonStake extends Component<Props> {
                   key="StakeForm"
                   settings={settings}
                   actions={actions}
+                  onClose={this.onClose}
                   validate={validate}
                   balance={balances[settings.account]}
                   system={system}
                 />
               </Modal.Content>
-              <Modal.Actions>
-                <Button
-                  onClick={this.onClose}
-                >
-                  <Icon name="x" /> {t('cancel')}
-                </Button>
-              </Modal.Actions>
             </Modal>
           )
         }
