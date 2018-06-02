@@ -68,8 +68,46 @@ export function getCurrencyBalance(account) {
   };
 }
 
+export function getAccountByKey(key) {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.GET_ACCOUNT_BY_KEY_REQUEST,
+      payload: { key }
+    });
+    const {
+      connection,
+      settings
+    } = getState();
+    if (key && (settings.node || settings.node.length !== 0)) {
+      return eos(connection).getKeyAccounts(key).then((accounts) => {
+        return dispatch({
+          type: types.GET_ACCOUNT_BY_KEY_SUCCESS,
+          payload: { accounts }
+        });
+      }).catch((err) => dispatch({
+        type: types.GET_ACCOUNT_BY_KEY_FAILURE,
+        payload: { err, key }
+      }));
+    }
+    dispatch({
+      type: types.GET_ACCOUNT_BY_KEY_FAILURE,
+      payload: { key },
+    });
+  };
+}
+
+export function clearAccountByKey() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.GET_ACCOUNT_BY_KEY_CLEAR
+    });
+  };
+}
+
 export default {
+  clearAccountByKey,
   clearAccountCache,
   getAccount,
+  getAccountByKey,
   getCurrencyBalance
 };
