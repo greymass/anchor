@@ -1,5 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import MenuBuilder from '../menu';
+import packageJson from '../../package.json';
 
 import { windowStateKeeper } from '../shared/windowStateKeeper';
 
@@ -10,6 +11,8 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
   log.info('ui: creating');
 
   const uiStateKeeper = windowStateKeeper(store);
+  const { name, version } = packageJson;
+  const title = `${name} - ${version}`;
 
   const ui = new BrowserWindow({
     closable,
@@ -17,6 +20,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
     y: uiStateKeeper.y,
     width: uiStateKeeper.width,
     height: uiStateKeeper.height,
+    title,
     show: false,
     frame: true,
     fullscreenable: false,
@@ -30,10 +34,15 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
 
   ui.loadURL(`file://${path.join(resourcePath, 'renderer/basic/index.html')}#${route}`);
 
+  ui.on('page-title-updated', (e) => {
+    e.preventDefault();
+  });
+
   ui.webContents.on('did-finish-load', () => {
     log.info('manager: loaded');
     ui.show();
     ui.focus();
+    ui.setTitle(title);
     if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
       ui.openDevTools({ mode: 'detach' });
     }

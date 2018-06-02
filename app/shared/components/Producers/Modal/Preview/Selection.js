@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Divider, Grid, Header, Icon, List, Message, Modal, Segment, Table } from 'semantic-ui-react';
-import { chunk, times } from 'lodash';
+import { chunk, last, times } from 'lodash';
 
 export default class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
@@ -14,11 +14,21 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
       selected,
       submitting
     } = this.props;
+    // Generate and chunk the rows into groups of 4 cells
     const rows = chunk(times(selected.length, i => (
       <Table.Cell key={i}>
         {selected[i]}
       </Table.Cell>
     )), 4);
+    // Fill in any empty cells for the layout to render properly
+    const lastRow = last(rows);
+    if (lastRow.length < 4) {
+      times((4 - lastRow.length), i => {
+        lastRow.push((
+          <Table.Cell key={`blank-${i}`} />
+        ));
+      });
+    }
     return (
       <I18n ns="producers">
         {

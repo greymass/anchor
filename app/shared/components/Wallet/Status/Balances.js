@@ -38,6 +38,18 @@ export default class WalletStatusBalances extends Component<Props> {
                 unstackable
               >
                 <Table.Body>
+                  {(rows.length === 0)
+                    ? (
+                      <Table.Row key="none">
+                        <Table.Cell width={16}>
+                          <Header size="small">
+                            {t('wallet_status_balances_none')}
+                          </Header>
+                        </Table.Cell>
+                      </Table.Row>
+                    )
+                    : false
+                  }
                   {rows}
                 </Table.Body>
               </Table>

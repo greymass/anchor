@@ -45,7 +45,7 @@ export default class WalletPanelFormStake extends Component<Props> {
       netOriginal
     } = this.state;
 
-    const EOSbalance = balance.EOS;
+    const EOSbalance = balance.EOS || 0;
 
     return (
       <div>
