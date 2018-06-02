@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Confirm } from 'semantic-ui-react';
 
-export default class WalletPanelButtonRemove extends Component<Props> {
+export default class WalletPanelButtonResetApp extends Component<Props> {
   state = { open: false }
 
   open = () => this.setState({ open: true })
   close = () => this.setState({ open: false })
 
-  confirmRemoveWallet = () => {
+  confirmResetApp = () => {
     this.setState({ open: false }, () => {
-      this.props.removeWallet();
+      this.props.clearSettingsCache();
     });
   }
 
@@ -22,16 +22,15 @@ export default class WalletPanelButtonRemove extends Component<Props> {
           (t) => (
             <span>
               <Button
+                content="DEBUG: Reset Application"
                 color="red"
-                content={t('wallet_panel_wallet_remove')}
-                fluid
-                icon="trash"
                 onClick={this.open}
+                size="tiny"
               />
               <Confirm
                 open={this.state.open}
                 onCancel={this.close}
-                onConfirm={this.confirmRemoveWallet}
+                onConfirm={this.confirmResetApp}
               />
             </span>
           )
