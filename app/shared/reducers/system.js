@@ -15,7 +15,7 @@ export default function system(state = {}, action) {
   return {
     ...state,
     [requestName]: requestState,
-    [`${requestName}_LAST_ERROR`]: (action.payload) ? action.payload.err : {},
-    [`${requestName}_LAST_TRANSACTION`]: (action.payload) ? action.payload.tx : {}
+    [`${requestName}_LAST_ERROR`]: (action.payload) ? action.payload.err : '',
+    [`${requestName}_LAST_TRANSACTION`]: (action.payload) ? action.payload.tx : ''
   };
 }
