@@ -1,5 +1,5 @@
 import * as types from '../types';
-
+import * as AccountActions from '../accounts';
 import eos from '../helpers/eos';
 
 export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
@@ -23,10 +23,13 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
         stake_cpu_quantity: `${stake_cpu_amount} EOS`,
         transfer: 0
       });
-    }).then((tx) => dispatch({
-      payload: { tx },
-      type: types.SYSTEM_DELEGATEBW_SUCCESS
-    })).catch((err) => dispatch({
+    }).then((tx) => {
+      dispatch(AccountActions.getAccount(delegator));
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_DELEGATEBW_SUCCESS
+      })
+    }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_DELEGATEBW_FAILURE
     }));
