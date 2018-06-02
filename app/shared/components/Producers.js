@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Header, Grid, Segment } from 'semantic-ui-react';
 
 import SidebarConnection from './Sidebar/Connection';
 
@@ -237,13 +237,11 @@ export default class Producers extends Component<Props> {
                />
              )
              : (
-               (
-                 <Segment stacked>
-                   <Header textAlign="center">
-                     {`No producers data loaded (connecting to: ${server})...`}
-                   </Header>
-                 </Segment>
-               );
+               <Segment stacked>
+                 <Header textAlign="center">
+                   {`No producers data loaded...`}
+                 </Header>
+               </Segment>
              )
             }
           </Grid.Column>
