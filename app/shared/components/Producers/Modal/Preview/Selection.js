@@ -22,7 +22,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
     )), 4);
     // Fill in any empty cells for the layout to render properly
     const lastRow = last(rows);
-    if (lastRow.length < 4) {
+    if (lastRow && lastRow.length < 4) {
       times((4 - lastRow.length), i => {
         lastRow.push((
           <Table.Cell key={`blank-${i}`} />
