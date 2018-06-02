@@ -12,7 +12,7 @@
 - **CPU/Bandwidth Staking**: Stake your EOS as either Bandwidth or CPU. This grants rights to resource usage on the network, in addition to conveying weight while voting for block producers.
 - **Block Producer Voting**: Select which block producers to support and cast your vote. Please note that the block producer voting UI is not a research tool; it is a simple interface that provides a secure way to vote.
 - **Local Wallet**: Set a password while importing your private key to create a local wallet. Your key will be encrypted locally using this password. This password will be required each time you need to unlock the wallet.
-- **Temporary Usage**: If you prefer not store your keys within the application, simply choose not to set a password. When the application quits, your key will be forgotten.
+- **Temporary Usage**: If you prefer not to store your keys within the application, simply choose not to set a password. When the application quits, your key will be forgotten.
 
 ### Security: Private Keys
 
@@ -36,7 +36,7 @@ To determine which file you need, if you are a...
 
 If you'd rather build the application yourself, please ensure you have nodejs/npm/yarn already installed locally.
 
-**Note**: if you are configuring this electron application under a Windows development environment, it will take some extra steps not outlined here.
+**Note**: If you are configuring this Electron application within a Windows development environment, it will involve additional steps.
 
 ```
 git clone git@github.com:greymass/eos-voter.git eos-voter
@@ -64,4 +64,4 @@ yarn dev
 
 ### Credits
 
-The development of this application is being lead by members of the [Greymass](https://greymass.com) team in an effort to connect EOS with its stakeholders.
+The development of this application is being led by members of the [Greymass](https://greymass.com) team in an effort to let stakeholders participate in EOS’ governance.
