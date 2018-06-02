@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
+
 import { Form, Divider, Message, Button, Input } from 'semantic-ui-react';
+import InputRange from 'react-input-range';
 
 import debounce from 'lodash/debounce';
 
@@ -14,12 +16,10 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
 
   onConfirm = debounce(() => {
     const {
-      actions,
       account,
-      balance
+      actions,
+      EOSbalance
     } = this.props;
-
-    const EOSbalance = balance.EOS;
 
     const {
       cpuAmount,
@@ -72,6 +72,12 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
                   name="cpuAmount"
                   onChange={this.onChange}
                   defaultValue={cpuOriginal.toFixed(4)}
+                />
+                <InputRange
+                  maxValue={20}
+                  minValue={0}
+                  defaultValue={cpuOriginal.toFixed(4)}
+                  onChange={value => this.setState({ value })}
                 />
                 <Form.Field
                   control={Input}
