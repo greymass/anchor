@@ -87,12 +87,6 @@ export default class ProducersTable extends Component<Props> {
                     >
                       {t('block_producer_total_votes')}
                     </Table.HeaderCell>
-                    <Table.HeaderCell
-                      collapsing
-                      sorted={column === 'last_produced_block_time' ? direction : null}
-                    >
-                      {t('block_producer_last_production_status')}
-                    </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
