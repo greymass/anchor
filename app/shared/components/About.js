@@ -1,9 +1,10 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Grid, Header, Image, Segment } from 'semantic-ui-react';
+import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
 import logo from '../../renderer/assets/images/greymasstext.png';
+import WalletPanelButtonResetApp from './Wallet/Panel/Button/ResetApp';
 
 const { shell } = require('electron');
 
@@ -74,11 +75,8 @@ export default class About extends Component<Props> {
               </Grid.Row>
               <Grid.Row>
                 <Grid.Column textAlign="center">
-                  <Button
-                    onClick={clearSettingsCache}
-                    content="DEBUG: Reset Application"
-                    color="red"
-                    size="tiny"
+                  <WalletPanelButtonResetApp
+                    clearSettingsCache={clearSettingsCache}
                   />
                 </Grid.Column>
               </Grid.Row>
