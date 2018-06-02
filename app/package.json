@@ -5,8 +5,8 @@
   "description": "",
   "main": "./main.prod.js",
   "author": {
-    "name": "Aaron Cox",
-    "email": "aaron.cox@greymass.com",
+    "name": "Greymass",
+    "email": "hello@greymass.com",
     "url": "https://github.com/greymass"
   },
   "scripts": {
