@@ -29,7 +29,7 @@
   "wallet_panel_wallet_unlock_modal_description": "Enter the local wallet password to unlock.",
   "wallet_panel_wallet_unlock_failure_content": "Please try again.",
   "wallet_panel_wallet_unlock_failure_header": "Failed to unlock wallet",
-  "wallet_panel_wallet_remove": "Destroy Local Wallet",
+  "wallet_panel_wallet_remove": "Destroy Wallet Credentials",
   "wallet_panel_wallet_lock": "Lock Wallet",
   "wallet_panel_form_use_temporary": "Use account + key without saving",
   "wallet_panel_locked": "Wallet Locked",
