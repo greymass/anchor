@@ -125,41 +125,6 @@ export default class ProducersTableRow extends Component<Props> {
                   style={{ minWidth: 0 }}
                 />
               </Table.Cell>
-              <Table.Cell
-                singleLine
-              >
-                <Popup
-                  content={
-                    (statusCodes[producerStatusCode].status === 'never')
-                    ? t('block_producer_last_block_never')
-                    : (
-                      <span>
-                        {t('block_producer_last_block')}
-                        {' '}
-                        <TimeAgo date={lastProduced} />
-                      </span>
-                    )
-                  }
-                  inverted
-                  position="top center"
-                  trigger={(
-                    <Label
-                      basic
-                      color={statusCodes[producerStatusCode].color}
-                      size="small"
-                    >
-                      <Icon
-                        name={statusCodes[producerStatusCode].icon}
-                        style={{ margin: 0 }}
-                      />
-                      <Responsive as={Label.Detail} minWidth={800} style={{ marginLeft: '0.75em' }}>
-                        {t(statusCodes[producerStatusCode].message)}
-                      </Responsive>
-                    </Label>
-                  )}
-                />
-
-              </Table.Cell>
             </Table.Row>
           )
         }
