@@ -47,7 +47,7 @@ export default class MenuBuilder {
     const subMenuAbout = {
       label: 'eos-voter',
       submenu: [
-        { label: 'About eos-voter', selector: 'orderFrontStandardAboutPanel:' },
+        { role: 'about' },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
@@ -73,9 +73,15 @@ export default class MenuBuilder {
     const subMenuViewDev = {
       label: 'View',
       submenu: [
-        { label: 'Reload', accelerator: 'Command+R', click: () => { this.mainWindow.webContents.reload(); } },
-        { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } },
-        { label: 'Toggle Developer Tools', accelerator: 'Alt+Command+I', click: () => { this.mainWindow.toggleDevTools(); } }
+        { role: 'reload' },
+        { role: 'forcereload' },
+        { role: 'toggledevtools' },
+        { type: 'separator' },
+        { role: 'resetzoom' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
       ]
     };
     const subMenuWindow = {
