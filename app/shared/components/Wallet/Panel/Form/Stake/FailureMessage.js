@@ -15,10 +15,10 @@ export default class WalletPanelFormStakeFailureMessage extends Component<Props>
       err = validate.STAKE_ERROR;
     }
     if (system.DELEGATEBW === 'FAILURE') {
-      err = system.DELEGATEBW_LAST_ERROR.message;
+      err = system.DELEGATEBW_LAST_ERROR;
     }
     if (system.UNDELEGATEBW === 'FAILURE') {
-      err = system.UNDELEGATEBW_LAST_ERROR.message;
+      err = system.UNDELEGATEBW_LAST_ERROR;
     }
     return (
       <I18n ns="stake">
