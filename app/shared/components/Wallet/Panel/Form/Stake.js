@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeFailureMessage from './Stake/FailureMessage';
@@ -68,11 +69,13 @@ export default class WalletPanelFormStake extends Component<Props> {
           )
           : ''
         }
-        <WalletPanelFormStakeFailureMessage system={system} validate={validate} />
-        <WalletPanelFormStakeSuccessMessage system={system} />
+        <WalletPanelFormStakeFailureMessage onClose={onClose} system={system} validate={validate} />
+        <WalletPanelFormStakeSuccessMessage onClose={onClose} system={system} />
         {(system.DELEGATEBW === 'PENDING' || system.UNDELEGATEBW === 'PENDING')
           ? (
-            <h2>Loading...</h2>
+            <Segment basic textAlign="center">
+              <Icon size="huge" loading name="spinner" />
+            </Segment>
           )
           : ''
         }

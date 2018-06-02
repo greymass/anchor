@@ -3,6 +3,7 @@
   "application_version": "v0.1.0",
   "block_height": "Block Height",
   "cancel": "Cancel",
+  "close": "Close",
   "confirm": "Confirm",
   "loading": "Loaded",
   "search": "Search..."
