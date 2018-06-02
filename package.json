@@ -1,7 +1,7 @@
 {
   "name": "eos-voter",
   "productName": "eos-voter",
-  "version": "0.1.0-RC8",
+  "version": "0.1.0",
   "description": "",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -69,7 +69,7 @@
       "category": "Network",
       "desktop": {
         "Name": "eos-voter",
-        "Version": "0.1.0-RC8",
+        "Version": "0.1.0",
         "GenericName": "EOS Voting Client + Wallet",
         "X-GNOME-FullName": "eos-voter",
         "Comment": "A simple voting interface and wallet for EOS accounts.",
