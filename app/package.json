@@ -1,7 +1,7 @@
 {
   "name": "eos-voter",
   "productName": "eos-voter",
-  "version": "0.1.0-RC5",
+  "version": "0.1.0-RC6",
   "description": "",
   "main": "./main.prod.js",
   "author": {
