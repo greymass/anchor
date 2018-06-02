@@ -31,6 +31,7 @@ export default class WalletPanelFormStake extends Component<Props> {
 
   render() {
     const {
+      account,
       actions,
       balance,
       onClose,
@@ -57,7 +58,9 @@ export default class WalletPanelFormStake extends Component<Props> {
               />
               <WalletPanelFormStakeSliders
                 actions={actions}
+                account={account}
                 cpuOriginal={cpuOriginal}
+                EOSbalance={EOSbalance}
                 netOriginal={netOriginal}
                 onClose={onClose}
               />
