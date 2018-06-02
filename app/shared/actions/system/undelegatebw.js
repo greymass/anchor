@@ -1,5 +1,5 @@
 import * as types from '../types';
-
+import * as AccountActions from '../accounts';
 import eos from '../helpers/eos';
 
 export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
@@ -23,10 +23,13 @@ export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
         unstake_cpu_quantity: `${unstake_cpu_amount} EOS`,
         transfer: 0
       });
-    }).then((tx) => dispatch({
-      payload: { tx },
-      type: types.SYSTEM_UNDELEGATEBW_SUCCESS
-    })).catch((err) => dispatch({
+    }).then((tx) => {
+      dispatch(AccountActions.getAccount(delegator));
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_UNDELEGATEBW_SUCCESS
+      })
+    }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_UNDELEGATEBW_FAILURE
     }));
