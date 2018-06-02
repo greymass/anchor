@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 
 import { Form, Divider, Message, Button, Input } from 'semantic-ui-react';
-import InputRange from 'react-input-range';
 
 import debounce from 'lodash/debounce';
 
@@ -64,7 +63,7 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
         {
           (t) => (
             <Form>
-              <Form.Group widths='equal'>
+              <Form.Group widths="equal">
                 <Form.Field
                   control={Input}
                   fluid
@@ -72,12 +71,6 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
                   name="cpuAmount"
                   onChange={this.onChange}
                   defaultValue={cpuOriginal.toFixed(4)}
-                />
-                <InputRange
-                  maxValue={20}
-                  minValue={0}
-                  defaultValue={cpuOriginal.toFixed(4)}
-                  onChange={value => this.setState({ value })}
                 />
                 <Form.Field
                   control={Input}
@@ -110,6 +103,6 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
           )
         }
       </I18n>
-    )
+    );
   }
 }
