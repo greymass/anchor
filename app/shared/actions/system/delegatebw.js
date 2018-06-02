@@ -2,7 +2,7 @@ import * as types from '../types';
 import * as AccountActions from '../accounts';
 import eos from '../helpers/eos';
 
-export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
+export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -10,17 +10,17 @@ export function delegatebw(delegator, receiver, net_amount, cpu_amount) {
 
     dispatch({
       type: types.SYSTEM_DELEGATEBW_PENDING
-    })
+    });
 
-    const stake_net_amount = parseFloat(net_amount || 0).toPrecision(5);
-    const stake_cpu_amount = parseFloat(cpu_amount || 0).toPrecision(5);
+    const stakeNetAmount = parseFloat(netAmount || 0).toPrecision(5);
+    const stakeCpuAmount = parseFloat(cpuAmount || 0).toPrecision(5);
 
     return eos(connection).transaction(tr => {
       tr.delegatebw({
         from: delegator,
         receiver,
-        stake_net_quantity: `${stake_net_amount} EOS`,
-        stake_cpu_quantity: `${stake_cpu_amount} EOS`,
+        stake_net_quantity: `${stakeNetAmount} EOS`,
+        stake_cpu_quantity: `${stakeCpuAmount} EOS`,
         transfer: 0
       });
     }).then((tx) => {
