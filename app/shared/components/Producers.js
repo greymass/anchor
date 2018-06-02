@@ -237,7 +237,7 @@ export default class Producers extends Component<Props> {
                />
              )
              : (
-               let element = (
+               (
                  <Segment stacked>
                    <Header textAlign="center">
                      {`No producers data loaded (connecting to: ${server})...`}
