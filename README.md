@@ -26,6 +26,12 @@ The latest release will always be available on the releases page of this reposit
 
 [https://github.com/greymass/eos-voter/releases](https://github.com/greymass/eos-voter/releases)
 
+If you are a...
+
+- **MacOS User**: Download either the DMG (`eos-voter-***-mac.zip`) or ZIP (`eos-voter-***-mac.zip`) file.
+- **Windows User**: Download the EXE (`eos-voter-***.exe`) file.
+- **Linux User**: Download either the SNAP (`eos-voter-***-_amd64.snap`) or DEB (`eos-voter-***-_amd64.deb`) file
+
 ### Build it yourself
 
 If you'd rather build the application yourself, please ensure you have nodejs, npm/yarn already installed locally.
