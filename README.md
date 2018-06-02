@@ -1,5 +1,5 @@
-![version](https://img.shields.io/github/release/greymass/eos-voter/all.svg)
-![issues](https://img.shields.io/github/issues/greymass/eos-voter.svg)
+[![version](https://img.shields.io/github/release/greymass/eos-voter/all.svg)](https://github.com/greymass/eos-voter/releases)
+[![issues](https://img.shields.io/github/issues/greymass/eos-voter.svg)](https://github.com/greymass/eos-voter/issues)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/eos-voter/master/LICENSE)
 ![downloads](https://img.shields.io/github/downloads/greymass/eos-voter/total.svg)
 
@@ -16,7 +16,7 @@
 
 ### Security: Private Keys
 
-When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption.
+When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption. The current password/key encryption scheme can [currently be found here](https://github.com/aaroncox/eos-voter/blob/master/app/shared/actions/wallet.js#L71-L86).
 
 ## Get eos-voter
 
@@ -26,7 +26,7 @@ The latest release will always be available on the releases page of this reposit
 
 [https://github.com/greymass/eos-voter/releases](https://github.com/greymass/eos-voter/releases)
 
-If you are a...
+To determine which file you need, if you are a...
 
 - **MacOS User**: Download either the DMG (`eos-voter-***.dmg`) or ZIP (`eos-voter-***-mac.zip`) file.
 - **Windows User**: Download the EXE (`eos-voter-***.exe`) file.
@@ -34,7 +34,7 @@ If you are a...
 
 ### Build it yourself
 
-If you'd rather build the application yourself, please ensure you have nodejs, npm/yarn already installed locally.
+If you'd rather build the application yourself, please ensure you have nodejs/npm/yarn already installed locally.
 
 **Note**: if you are configuring this electron application under a Windows development environment, it will take some extra steps not outlined here.
 
@@ -51,7 +51,7 @@ Then either:
 - Windows: `yarn package-win`
 - All: `yarn package-all`
 
-The files built will be located in the `releases` folder within the root folder.
+The files built will be located in the `releases` folder within the root project folder.
 
 ### Running development mode
 
