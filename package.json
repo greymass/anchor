@@ -76,8 +76,7 @@
         "Type": "Application",
         "Terminal": "false",
         "StartupNotify": "false",
-        "Categories": "Network;",
-        "MimeType": "application/x-eos;x-scheme-handler/eos;"
+        "Categories": "Network;"
       },
       "icon": "app/renderer/assets/icons/png",
       "target": [
