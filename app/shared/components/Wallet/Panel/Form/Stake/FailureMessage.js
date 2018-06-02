@@ -1,31 +1,40 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Message } from 'semantic-ui-react';
+import { Button, Icon, Message } from 'semantic-ui-react';
 
 export default class WalletPanelFormStakeFailureMessage extends Component<Props> {
   render() {
     const {
+      onClose,
       system,
       validate,
     } = this.props;
-
+    let err = false;
+    if (validate.STAKE === 'FAILURE') {
+      err = validate.STAKE_ERROR;
+    }
+    if (system.DELEGATEBW === 'FAILURE') {
+      err = system.DELEGATEBW_LAST_ERROR.message;
+    }
+    if (system.UNDELEGATEBW === 'FAILURE') {
+      err = system.UNDELEGATEBW_LAST_ERROR.message;
+    }
     return (
       <I18n ns="stake">
         {
           (t) => (
             <div>
               {
-                (
-                  validate.STAKE === 'FAILURE' ||
-                  system.DELEGATEBW === 'FAILURE' ||
-                  system.UNDELEGATEBW === 'FAILURE'
-                ) ? (
-                  <Message negative>
-                    <p>{t(validate.STAKE_ERROR)}</p>
-                    <p>{system.DELEGATEBW_LAST_ERROR}</p>
-                    <p>{system.UNDELEGATEBW_LAST_ERROR}</p>
-                  </Message>
+                (err) ? (
+                  <div>
+                    <Message negative>
+                      <p>{err}</p>
+                    </Message>
+                    <Button color="green" onClick={onClose}>
+                      <Icon name="checkmark" /> {t('close')}
+                    </Button>
+                  </div>
                 )
                 : ''
               }
