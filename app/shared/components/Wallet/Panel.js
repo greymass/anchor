@@ -36,6 +36,7 @@ export default class WalletPanel extends Component<Props> {
     let panel = (
       <WalletPanelForm
         actions={actions}
+        accounts={accounts}
         keys={keys}
         settings={settings}
         validate={validate}
