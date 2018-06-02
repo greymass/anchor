@@ -11,7 +11,7 @@ export default class WalletStatusStaked extends Component<Props> {
     const stakedToNet = parseFloat(account.coins_staked_to_net).toFixed(4);
     const stakedToCpu = parseFloat(account.coins_staked_to_cpu).toFixed(4);
     const totalStaked = parseFloat(stakedToNet + stakedToCpu).toFixed(4);
-    const amountNotStaked = parseFloat(balance.EOS).toFixed(4);
+    const amountNotStaked = parseFloat(balance.EOS || 0).toFixed(4);
     return (
       <I18n ns="stake">
         {

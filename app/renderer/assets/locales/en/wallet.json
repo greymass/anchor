@@ -5,6 +5,7 @@
   "wallet_actions": "Wallet Actions",
   "wallet_actions_dangerous": "Warning: Danger Zone",
   "wallet_status_balances": "Wallet Balances",
+  "wallet_status_balances_none": "This wallet has no token balances.",
   "wallet_status_resources_title": "Network Resource Usage",
   "wallet_status_resources_cpu_usage_title": "CPU Usage",
   "wallet_status_resources_cpu_usage_desc": "",
