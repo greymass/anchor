@@ -64,24 +64,30 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
         {
           (t) => (
             <Form>
-              <div>
-                <label>{t('update_staked_cpu_amount')}</label>
-                <InputRange
-                  maxValue={20}
-                  minValue={0}
+              <Form.Group widths='equal'>
+                <Form.Field
+                  control={Input}
+                  fluid
+                  label={t('update_staked_cpu_amount')}
                   name="cpuAmount"
-                  value={String(cpuOriginal.toFixed(4))}
                   onChange={this.onChange}
+                  defaultValue={cpuOriginal.toFixed(4)}
                 />
-                <label>{t('update_staked_net_amount')}</label>
                 <InputRange
                   maxValue={20}
                   minValue={0}
-                  name="netAmount"
-                  value={String(cpuOriginal.toFixed(4))}
-                  onChange={this.onChange}
+                  defaultValue={cpuOriginal.toFixed(4)}
+                  onChange={value => this.setState({ value })}
                 />
-              </div>
+                <Form.Field
+                  control={Input}
+                  fluid
+                  label={t('update_staked_net_amount')}
+                  name="netAmount"
+                  onChange={this.onChange}
+                  defaultValue={netOriginal.toFixed(4)}
+                />
+              </Form.Group>
               <Divider />
               <Message
                 icon="info circle"
