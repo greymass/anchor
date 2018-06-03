@@ -12,8 +12,8 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
       type: types.SYSTEM_DELEGATEBW_PENDING
     });
 
-    const stakeNetAmount = parseFloat(netAmount || 0).toPrecision(5);
-    const stakeCpuAmount = parseFloat(cpuAmount || 0).toPrecision(5);
+    const stakeNetAmount = netAmount || 0;
+    const stakeCpuAmount = cpuAmount || 0;
 
     return eos(connection).transaction(tr => {
       tr.delegatebw({

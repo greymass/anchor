@@ -12,8 +12,8 @@ export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
       type: types.SYSTEM_UNDELEGATEBW_PENDING
     })
 
-    const unstake_net_amount = parseFloat(net_amount || 0).toPrecision(5);
-    const unstake_cpu_amount = parseFloat(cpu_amount || 0).toPrecision(5);
+    const unstake_net_amount = net_amount || 0
+    const unstake_cpu_amount = cpu_amount || 0
 
     return eos(connection).transaction(tr => {
       tr.undelegatebw({
