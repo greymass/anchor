@@ -2,7 +2,7 @@ import * as types from '../types';
 import * as AccountActions from '../accounts';
 import eos from '../helpers/eos';
 
-export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
+export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -10,17 +10,17 @@ export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
 
     dispatch({
       type: types.SYSTEM_UNDELEGATEBW_PENDING
-    })
+    });
 
-    const unstake_net_amount = net_amount || 0
-    const unstake_cpu_amount = cpu_amount || 0
+    const unstakeNetAmount = netAmount || 0;
+    const unstakeCpuAmount = cpuAmount || 0;
 
     return eos(connection).transaction(tr => {
       tr.undelegatebw({
         from: delegator,
         receiver,
-        unstake_net_quantity: `${unstake_net_amount} EOS`,
-        unstake_cpu_quantity: `${unstake_cpu_amount} EOS`,
+        unstake_net_quantity: `${unstakeNetAmount} EOS`,
+        unstake_cpu_quantity: `${unstakeCpuAmount} EOS`,
         transfer: 0
       });
     }).then((tx) => {
@@ -28,7 +28,7 @@ export function undelegatebw(delegator, receiver, net_amount, cpu_amount) {
       return dispatch({
         payload: { tx },
         type: types.SYSTEM_UNDELEGATEBW_SUCCESS
-      })
+      });
     }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_UNDELEGATEBW_FAILURE
