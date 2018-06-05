@@ -2,13 +2,13 @@ import * as types from '../actions/types';
 
 const initialState = {
   __lookups: []
-}
+};
 
 export default function accounts(state = initialState, action) {
   switch (action.type) {
     case types.CLEAR_ACCOUNT_CACHE:
     case types.RESET_ALL_STATES: {
-      return {};
+      return initialState;
     }
     case types.GET_ACCOUNT_SUCCESS: {
       const payload_results = action.payload.results
