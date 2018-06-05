@@ -13,7 +13,8 @@ export default function wallet(state = initialState, action) {
     case types.SET_WALLET_KEY: {
       return Object.assign({}, state, {
         account: action.payload.account,
-        data: action.payload.data
+        data: action.payload.data,
+        version: 1
       });
     }
     default: {
