@@ -85,11 +85,10 @@ export default class WalletModalAccountLookup extends Component<Props> {
                         {t('wallet_account_lookup_modal_accounts_found')}
                       </Header>
                       <List divided relaxed>
-                        {(!__lookups.length)
+                        {(!__lookups || !__lookups.length)
                           ? <List.Item key="none found" content={t('wallet_account_lookup_modal_accounts_found_none')} />
-                          : null
+                          : __lookups.map((account) => <List.Item key={account} content={account} />)
                         }
-                        {__lookups.map((account) => <List.Item key={account} content={account} />)}
                       </List>
                     </Segment>
                   )
