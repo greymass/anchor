@@ -6,12 +6,11 @@ const ecc = require('eosjs-ecc');
 export function setWalletKey(key, password) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
-    const data = encrypt(key, password);
     return dispatch({
       type: types.SET_WALLET_KEY,
       payload: {
         account: settings.account,
-        data,
+        data: encrypt(key, password),
         key
       }
     });
@@ -70,11 +69,11 @@ export function unlockWallet(wallet, password) {
 
 function encrypt(msg, pass) {
   const keySize = 256;
-  const iterations = 10000;
+  const iterations = 4500;
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
   const key = CryptoJS.PBKDF2(pass, salt, {
     iterations,
-    keySize: keySize / 32
+    keySize: keySize / 4
   });
   const iv = CryptoJS.lib.WordArray.random(128 / 8);
   const encrypted = CryptoJS.AES.encrypt(msg, key, {
@@ -87,13 +86,13 @@ function encrypt(msg, pass) {
 
 function decrypt(transitmessage, pass) {
   const keySize = 256;
-  const iterations = 10000;
+  const iterations = 4500;
   const salt = CryptoJS.enc.Hex.parse(transitmessage.substr(0, 32));
   const iv = CryptoJS.enc.Hex.parse(transitmessage.substr(32, 32));
   const encrypted = transitmessage.substring(64);
   const key = CryptoJS.PBKDF2(pass, salt, {
     iterations,
-    keySize: keySize / 32
+    keySize: keySize / 4
   });
   const decrypted = CryptoJS.AES.decrypt(encrypted, key, {
     iv,
