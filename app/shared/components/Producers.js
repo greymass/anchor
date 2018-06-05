@@ -13,6 +13,7 @@ import WalletPanel from './Wallet/Panel';
 type Props = {
   actions: {
     getAccount: () => void,
+    getGlobals: () => void,
     getProducers: () => void,
     voteproducers: () => void
   },
@@ -53,11 +54,12 @@ export default class Producers extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
     const nextValidate = nextProps.validate;
-    // On a new node connection, update
+    // On a new node connection, update props + producers
     if (
       validate.NODE === 'PENDING'
       && nextValidate.NODE === 'SUCCESS'
     ) {
+      this.props.actions.getGlobals();
       this.tick();
     }
     // Update state when the transaction has gone through
