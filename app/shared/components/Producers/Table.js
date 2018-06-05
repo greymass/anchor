@@ -42,11 +42,37 @@ export default class ProducersTable extends Component<Props> {
     const totalVoteWeight = (current.total_producer_vote_weight)
       ? current.total_producer_vote_weight
       : 0;
+    const loading = (producers.list.length < 1 || totalVoteWeight < 1);
+    let body = false;
+    if (!loading) {
+      body = (
+        <Table.Body>
+          {producers.list
+            .filter(producer => (filter ? producer.owner.includes(filter) : true))
+            .map((producer, idx) => {
+              const isSelected = (selected.indexOf(producer.owner) !== -1);
+              return (
+                <ProducersTableRow
+                  addProducer={this.props.addProducer}
+                  filter={filter}
+                  isSelected={isSelected}
+                  position={idx + 1}
+                  producer={producer}
+                  removeProducer={this.props.removeProducer}
+                  totalVoteWeight={totalVoteWeight}
+                  validUser={validUser}
+                />
+              );
+            })
+          }
+        </Table.Body>
+      )
+    }
     return (
       <I18n ns="producers">
         {
           (t) => (
-            <Segment basic loading={(producers.list.length <= 1)} vertical>
+            <Segment basic loading={loading} vertical>
               <Grid>
                 <Grid.Column width="10">
                   <Header size="small">
@@ -89,26 +115,7 @@ export default class ProducersTable extends Component<Props> {
                     </Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
-                <Table.Body>
-                  {producers.list
-                    .filter(producer => (filter ? producer.owner.includes(filter) : true))
-                    .map((producer, idx) => {
-                      const isSelected = (selected.indexOf(producer.owner) !== -1);
-                      return (
-                        <ProducersTableRow
-                          addProducer={this.props.addProducer}
-                          filter={filter}
-                          isSelected={isSelected}
-                          position={idx + 1}
-                          producer={producer}
-                          removeProducer={this.props.removeProducer}
-                          totalVoteWeight={totalVoteWeight}
-                          validUser={validUser}
-                        />
-                      );
-                    })
-                  }
-                </Table.Body>
+                {body}
               </Table>
             </Segment>
           )
