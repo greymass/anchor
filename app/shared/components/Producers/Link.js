@@ -33,7 +33,13 @@ export default class ProducersLink extends Component<Props> {
     let link = this.props.producer.url;
     if (this.isSafeish(this.props.producer.url)) {
       link = (
-        <a href="#" onClick={this.openWarning.bind(this)}>
+        <a
+          onClick={this.openWarning.bind(this)}
+          onKeyPress={this.openWarning.bind(this)}
+          role="link"
+          style={{ cursor: 'pointer' }}
+          tabIndex={0}
+        >
           {this.props.producer.url}
         </a>
       );
