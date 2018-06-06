@@ -22,6 +22,7 @@ export default class ProducersVotingPreview extends Component<Props> {
     const hasError = (lastError);
     return (
       <Modal
+        centered={false}
         open={open}
         onClose={onClose}
         size="small"

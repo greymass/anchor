@@ -51,6 +51,7 @@ export default class WalletPanelButtonStake extends Component<Props> {
         {
           (t) => (
             <Modal
+              centered={false}
               trigger={(
                 <Button
                   color="blue"
