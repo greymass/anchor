@@ -85,6 +85,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
     } = this.state;
     const balance = balances[settings.account];
     const error = system.TRANSFER_LAST_ERROR;
+    const errorMsg = (error && error.code) ? error.error.details[0].message : JSON.stringify(error);
     return (
       <I18n ns="transfer">
         {
@@ -123,11 +124,13 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                         </Table.Row>
                       </Table.Body>
                     </Table>
-                    <Message notice>
-                      <Header icon="warning sign">
-                        {t('transfer_warning_irreversible_title')}
+                    <Message info>
+                      <Header>
+                        <Icon name="warning sign" />
+                        <Header.Content>
+                          {t('transfer_warning_irreversible_body')}
+                        </Header.Content>
                       </Header>
-                      <p>{t('transfer_warning_irreversible_body')}</p>
                     </Message>
                     <Divider />
                     <Button
@@ -180,7 +183,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                     {(error)
                       ? (
                         <Message negative>
-                          {JSON.stringify(error)}
+                          {errorMsg}
                         </Message>
                       )
                       : ''
