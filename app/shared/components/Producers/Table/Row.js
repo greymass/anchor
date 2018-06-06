@@ -66,7 +66,6 @@ export default class ProducersTableRow extends Component<Props> {
     const votePercent = (totalVoteWeight)
       ? ((parseInt(producer.votes, 10) / parseInt(totalVoteWeight, 10)) * 100).toFixed(2)
       : 0;
-    // console.log(votePercent, producer.votes, totalVoteWeight);
     const voteFormatted = (producer.votes > 0)
       ? (
         <ProducersVoteWeight
