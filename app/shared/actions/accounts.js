@@ -42,6 +42,33 @@ export function getAccount(account = '') {
   };
 }
 
+export function getActions(account = '') {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.GET_ACTIONS_REQUEST,
+      payload: { account_name: account }
+    });
+    const {
+      connection,
+      settings
+    } = getState();
+    if (account && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getActions(account).then((results) => dispatch({
+        type: types.GET_ACTIONS_SUCCESS,
+        payload: { results }
+      })).catch((err) => dispatch({
+        type: types.GET_ACTIONS_FAILURE,
+        payload: { err, account_name: account },
+      }));
+      return;
+    }
+    dispatch({
+      type: types.GET_ACTIONS_FAILURE,
+      payload: { account_name: account },
+    });
+  };
+}
+
 export function getCurrencyBalance(account) {
   return (dispatch: () => void, getState) => {
     dispatch({
