@@ -33,46 +33,46 @@ export default class WalletStatusResources extends Component<Props> {
               <Segment.Group horizontal>
                 <Segment>
                   <Header size="small">
-                    {t('wallet_status_resources_cpu_usage_title')}
+                    {t('wallet_status_resources_cpu_available_title')}
                     <Header.Subheader>
-                      {t('wallet_status_resources_cpu_usage_desc')}
+                      {t('wallet_status_resources_cpu_available_desc')}
                     </Header.Subheader>
                   </Header>
                   <Progress
                     color="teal"
                     label={(
                       <div className="label">
-                        {parseFloat(cpuUsage).toFixed(3)}%
+                        {Math.max(0, (100 - parseFloat(cpuUsage))).toFixed(3)}%
                         {' '}
                         <Responsive as="span" minWidth={800}>
 
                         </Responsive>
                       </div>
                     )}
-                    percent={parseFloat(cpuUsage * 100) / 100}
+                    percent={Math.max(0, (100 - (parseFloat(cpuUsage * 100) / 100)))}
                     size="tiny"
                     style={{ minWidth: 0 }}
                   />
                 </Segment>
                 <Segment>
                   <Header size="small">
-                    {t('wallet_status_resources_net_usage_title')}
+                    {t('wallet_status_resources_net_available_title')}
                     <Header.Subheader>
-                      {t('wallet_status_resources_net_usage_desc')}
+                      {t('wallet_status_resources_net_available_desc')}
                     </Header.Subheader>
                   </Header>
                   <Progress
                     color="teal"
                     label={(
                       <div className="label">
-                        {parseFloat(netUsage).toFixed(3)}%
+                        {Math.max(0, (100 - parseFloat(netUsage))).toFixed(3)}%
                         {' '}
                         <Responsive as="span" minWidth={800}>
 
                         </Responsive>
                       </div>
                     )}
-                    percent={parseFloat(netUsage * 100) / 100}
+                    percent={Math.max(0, (100 - (parseFloat(netUsage * 100) / 100)))}
                     size="tiny"
                     style={{ minWidth: 0 }}
                   />
