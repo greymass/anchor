@@ -1,6 +1,6 @@
 {
   "application_name": "eos-voter",
-  "application_version": "v0.1.0",
+  "application_version": "v0.1.1",
   "block_height": "Block Height",
   "cancel": "Cancel",
   "close": "Close",
