@@ -33,7 +33,8 @@ if (!(fs.existsSync(dll) && fs.existsSync(manifest))) {
 }
 
 export default merge.smart(baseConfig, {
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
+  mode: 'development',
 
   target: 'electron-renderer',
 
@@ -206,9 +207,7 @@ export default merge.smart(baseConfig, {
       sourceType: 'var',
     }),
 
-    new webpack.HotModuleReplacementPlugin({
-      multiStep: true
-    }),
+    new webpack.HotModuleReplacementPlugin(),
 
     new webpack.NoEmitOnErrorsPlugin(),
 
