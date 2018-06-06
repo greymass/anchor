@@ -6,5 +6,6 @@
   "close": "Close",
   "confirm": "Confirm",
   "loading": "Loaded",
-  "search": "Search..."
+  "search": "Search...",
+  "waiting": "Waiting..."
 }
