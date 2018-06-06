@@ -19,6 +19,7 @@ export default class WalletModalUnlock extends Component<Props> {
         {
           (t) => (
             <Modal
+              centered={false}
               trigger={trigger}
               onClose={onClose}
               open={open}

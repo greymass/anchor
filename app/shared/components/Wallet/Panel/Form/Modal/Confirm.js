@@ -35,6 +35,7 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
         {
           (t) => (
             <Modal
+              centered={false}
               trigger={(
                 <Button
                   color="blue"
