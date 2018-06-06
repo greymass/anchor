@@ -106,12 +106,10 @@ export function getAccountByKey(key) {
       settings
     } = getState();
     if (key && (settings.node || settings.node.length !== 0)) {
-      return eos(connection).getKeyAccounts(key).then((accounts) => {
-        return dispatch({
-          type: types.GET_ACCOUNT_BY_KEY_SUCCESS,
-          payload: { accounts }
-        });
-      }).catch((err) => dispatch({
+      return eos(connection).getKeyAccounts(key).then((accounts) => dispatch({
+        type: types.GET_ACCOUNT_BY_KEY_SUCCESS,
+        payload: { accounts }
+      })).catch((err) => dispatch({
         type: types.GET_ACCOUNT_BY_KEY_FAILURE,
         payload: { err, key }
       }));
