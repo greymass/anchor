@@ -45,6 +45,15 @@ export default class WalletPanelFormTransfer extends Component<Props> {
     }, 3000);
   }
 
+  onCancel = (e) => {
+    this.setState({
+      confirming: false,
+      waiting: false
+    });
+    e.preventDefault();
+    return false;
+  }
+
   onConfirm = (e) => {
     const {
       from,
@@ -122,7 +131,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                     </Message>
                     <Divider />
                     <Button
-                      onClick={onClose}
+                      onClick={this.onCancel}
                     >
                       <Icon name="x" /> {t('cancel')}
                     </Button>
