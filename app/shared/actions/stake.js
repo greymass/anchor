@@ -62,10 +62,14 @@ function getNextAndCurrentStake(account, netAmount, cpuAmount) {
     netAmount,
     cpuAmount
   };
+  const {
+    cpu_weight,
+    net_weight
+  } = account.total_resources;
 
   const currentStake = {
-    netAmount: (account.coins_staked_to_net),
-    cpuAmount: (account.coins_staked_to_cpu)
+    cpuAmount: parseFloat(net_weight),
+    netAmount: parseFloat(cpu_weight)
   };
 
   return {

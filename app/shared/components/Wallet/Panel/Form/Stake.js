@@ -21,12 +21,15 @@ export default class WalletPanelFormStake extends Component<Props> {
   constructor(props) {
     super(props);
     const { account } = props;
-
+    const {
+      cpu_weight,
+      net_weight
+    } = account.total_resources;
     this.state = {
-      cpuAmount: account.coins_staked_to_cpu,
-      cpuOriginal: account.coins_staked_to_cpu,
-      netAmount: account.coins_staked_to_net,
-      netOriginal: account.coins_staked_to_net
+      cpuAmount: parseFloat(cpu_weight),
+      cpuOriginal: parseFloat(cpu_weight),
+      netAmount: parseFloat(net_weight),
+      netOriginal: parseFloat(net_weight)
     };
   }
 

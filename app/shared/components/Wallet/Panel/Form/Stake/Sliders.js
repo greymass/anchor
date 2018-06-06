@@ -36,9 +36,12 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
   }, 300)
 
   cleanUpStakeAmounts(account, netAmount, cpuAmount) {
-    const cleanedNetAmount = netAmount || account.coins_staked_to_net;
-
-    const cleanedCpuAmount = cpuAmount || account.coins_staked_to_cpu;
+    const {
+      cpu_weight,
+      net_weight
+    } = account.total_resources;
+    const cleanedNetAmount = netAmount || net_weight;
+    const cleanedCpuAmount = cpuAmount || cpu_weight;
 
     this.setState({
       netAmount: parseFloat(cleanedNetAmount),
