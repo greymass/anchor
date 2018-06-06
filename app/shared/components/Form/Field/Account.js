@@ -17,6 +17,7 @@ export default class FormFieldAccount extends Component<Props> {
   }, 300)
   render() {
     const {
+      autoFocus,
       disabled,
       icon,
       label,
@@ -26,6 +27,7 @@ export default class FormFieldAccount extends Component<Props> {
     } = this.props;
     return (
       <Form.Field
+        autoFocus={autoFocus}
         control={Input}
         disabled={disabled}
         fluid

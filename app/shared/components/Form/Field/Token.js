@@ -17,6 +17,7 @@ export default class WalletPanelKey extends Component<Props> {
   }, 300)
   render() {
     const {
+      autoFocus,
       icon,
       label,
       loading,
@@ -25,6 +26,7 @@ export default class WalletPanelKey extends Component<Props> {
     } = this.props;
     return (
       <Form.Field
+        autoFocus={autoFocus}
         control={Input}
         fluid
         icon={icon}

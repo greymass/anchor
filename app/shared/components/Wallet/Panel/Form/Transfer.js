@@ -138,6 +138,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                       value={settings.account}
                     />
                     <FormFieldAccount
+                      autoFocus
                       label={t('transfer_label_to')}
                       name="to"
                       onChange={this.onChange}
