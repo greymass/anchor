@@ -26,6 +26,12 @@ export default class WalletPanelFormTransfer extends Component<Props> {
     this.setState({ [name]: value });
   }
 
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onSubmit();
+    }
+  }
+
   onSubmit = () => {
     this.setState({
       confirming: true,
@@ -76,6 +82,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
           (t) => (
             <Form
               loading={system.TRANSFER === 'PENDING'}
+              onKeyPress={this.onKeyPress}
               onSubmit={this.onSubmit}
             >
               {(confirming)
