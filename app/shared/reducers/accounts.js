@@ -11,16 +11,9 @@ export default function accounts(state = initialState, action) {
       return initialState;
     }
     case types.GET_ACCOUNT_SUCCESS: {
-      const payload_results = action.payload.results
-      const net_weight = payload_results.delegated_bandwidth.net_weight
-      const cpu_weight = payload_results.delegated_bandwidth.cpu_weight
-
-      payload_results.coins_staked_to_net = parseFloat(net_weight.split(" ")[0]);
-      payload_results.coins_staked_to_cpu = parseFloat(cpu_weight.split(" ")[0]);
-
       return Object.assign({}, state, {
         __updated: Date.now(),
-        [action.payload.results.account_name]: payload_results
+        [action.payload.results.account_name]: action.payload.results
       });
     }
     case types.GET_ACCOUNT_BY_KEY_SUCCESS: {

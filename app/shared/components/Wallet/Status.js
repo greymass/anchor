@@ -25,45 +25,43 @@ export default class WalletStatus extends Component<Props> {
       </Segment>
     );
     if (account && account.account_name) {
-      element = (
-        <div>
-          <WalletStatusBalances
-            balances={balances}
-            settings={settings}
-          />
-          <WalletStatusResources
-            accounts={accounts}
-            settings={settings}
-          />
-          <WalletStatusStaked
-            accounts={accounts}
-            balances={balances}
-            settings={settings}
-          />
-          <Divider />
-          <Header>
-            {accountName}
-            <Header.Subheader>
-              {server}
-            </Header.Subheader>
-          </Header>
-          <ReactJson
-            collapsed
-            displayDataTypes={false}
-            displayObjectSize={false}
-            iconStyle="square"
-            name={null}
-            src={account}
-            style={{ padding: '1em' }}
-            theme="harmonic"
-          />
-        </div>
-      );
+      element = [(
+        <WalletStatusResources
+          accounts={accounts}
+          settings={settings}
+        />
+      ), (
+        <WalletStatusStaked
+          accounts={accounts}
+          settings={settings}
+        />
+      ), (
+        <WalletStatusBalances
+          balances={balances}
+          settings={settings}
+        />
+      ), (
+        <Divider />
+      ), (
+        <Header>
+          {accountName}
+          <Header.Subheader>
+            {server}
+          </Header.Subheader>
+        </Header>
+      ), (
+        <ReactJson
+          collapsed
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={account}
+          style={{ padding: '1em' }}
+          theme="harmonic"
+        />
+      )];
     }
-    return (
-      <Segment basic>
-        {element}
-      </Segment>
-    );
+    return element;
   }
 }
