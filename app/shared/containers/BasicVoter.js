@@ -19,6 +19,7 @@ import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
 import * as StakeActions from '../actions/stake';
+import * as TransferActions from '../actions/transfer';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 
 import logo from '../../renderer/assets/images/greymass.png';
@@ -201,6 +202,7 @@ function mapDispatchToProps(dispatch) {
       ...ValidateActions,
       ...WalletActions,
       ...StakeActions,
+      ...TransferActions,
       ...VoteProducerActions
     }, dispatch)
   };

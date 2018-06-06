@@ -7,6 +7,7 @@ import WalletPanelFormNode from './Form/Node';
 import WalletPanelButtonLock from './Button/Lock';
 import WalletPanelButtonRemove from './Button/Remove';
 import WalletPanelButtonStake from './Button/Stake';
+import WalletPanelButtonTransfer from './Button/Transfer';
 
 export default class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 }
@@ -58,17 +59,29 @@ export default class WalletPanelUnlocked extends Component<Props> {
                           index={0}
                           onClick={this.handleClick}
                         />
-                        <Accordion.Content active={activeIndex === 0}>
-                          <Segment basic>
-                            <WalletPanelButtonStake
-                              actions={actions}
-                              accounts={accounts}
-                              balances={balances}
-                              validate={validate}
-                              settings={settings}
-                              system={system}
-                            />
-                          </Segment>
+                        <Accordion.Content
+                          active={activeIndex === 0}
+                        >
+                          <Segment.Group basic>
+                            <Segment basic>
+                              <WalletPanelButtonStake
+                                actions={actions}
+                                accounts={accounts}
+                                balances={balances}
+                                validate={validate}
+                                settings={settings}
+                                system={system}
+                              />
+                            </Segment>
+                            <Segment>
+                              <WalletPanelButtonTransfer
+                                actions={actions}
+                                balances={balances}
+                                settings={settings}
+                                system={system}
+                              />
+                            </Segment>
+                          </Segment.Group>
                         </Accordion.Content>
                       </Menu.Item>
 
