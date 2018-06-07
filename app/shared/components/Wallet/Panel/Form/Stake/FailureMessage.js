@@ -20,6 +20,7 @@ export default class WalletPanelFormStakeFailureMessage extends Component<Props>
     if (system.UNDELEGATEBW === 'FAILURE') {
       err = system.UNDELEGATEBW_LAST_ERROR;
     }
+    const errorMsg = (err && err.code) ? err.error.details[0].message : JSON.stringify(err);
     return (
       <I18n ns="stake">
         {
@@ -29,7 +30,7 @@ export default class WalletPanelFormStakeFailureMessage extends Component<Props>
                 (err) ? (
                   <div>
                     <Message negative>
-                      <p>{err}</p>
+                      <p>{errorMsg}</p>
                     </Message>
                     <Button color="green" onClick={onClose}>
                       <Icon name="checkmark" /> {t('close')}
