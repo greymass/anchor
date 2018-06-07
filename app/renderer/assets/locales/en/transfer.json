@@ -10,5 +10,6 @@
   "transfer_label_from": "Origin Account",
   "transfer_label_to": "Destination Account",
   "transfer_label_quantity": "Quantity",
+  "transfer_label_token_and_quantity": "Token Selection + Quantity",
   "transfer_label_memo": "Transfer Memo"
 }

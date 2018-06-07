@@ -5,10 +5,11 @@ import { Form, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
-export default class WalletPanelKey extends Component<Props> {
+export default class FormFieldToken extends Component<Props> {
   state = { value: '' };
   onChange = debounce((e, { name, value }) => {
-    const parsed = (value > 0) ? `${parseFloat(value).toFixed(4)} EOS` : '0.0000 EOS';
+    const asset = 'EOS';
+    const parsed = (value > 0) ? `${parseFloat(value).toFixed(4)} ${asset}` : `0.0000 ${asset}`;
     this.setState({
       value: parsed,
     }, () => {
