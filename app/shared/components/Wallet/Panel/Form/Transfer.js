@@ -86,7 +86,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
     const balance = balances[settings.account];
     const asset = "EOS";
     const error = system.TRANSFER_LAST_ERROR;
-    const errorMsg = (error && error.code) ? error.error.details[0].message : JSON.stringify(error);
+    const errorMsg = (error && error.error) ? error.error.details[0].message : JSON.stringify(error);
     return (
       <I18n ns="transfer">
         {
