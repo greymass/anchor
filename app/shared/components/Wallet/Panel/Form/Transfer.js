@@ -1,11 +1,11 @@
-// @flow
+ // @flow
 import React, { Component } from 'react';
 import { Button, Divider, Form, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
-import FormFieldAccount from '../../../Form/Field/Account';
-import FormFieldGeneric from '../../../Form/Field/Generic';
-import FormFieldToken from '../../../Form/Field/Token';
+import FormFieldAccount from '../../../Global/Form/Field/Account';
+import FormFieldGeneric from '../../../Global/Form/Field/Generic';
+import FormFieldToken from '../../../Global/Form/Field/Token';
 
 export default class WalletPanelFormTransfer extends Component<Props> {
   constructor(props) {
