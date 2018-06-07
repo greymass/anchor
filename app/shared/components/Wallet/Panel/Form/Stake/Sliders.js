@@ -13,7 +13,7 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
     });
   }, 300)
 
-  onConfirm = debounce(() => {
+  onConfirm = () => {
     const {
       account,
       actions,
@@ -33,7 +33,13 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
     const { setStakeWithValidation } = actions;
 
     setStakeWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
-  }, 300)
+  }
+
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onConfirm();
+    }
+  }
 
   cleanUpStakeAmounts(account, netAmount, cpuAmount) {
     const {
@@ -65,7 +71,9 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
       <I18n ns="stake">
         {
           (t) => (
-            <Form>
+            <Form
+              onKeyPress={this.onKeyPress}
+            >
               <Form.Group widths="equal">
                 <Form.Field
                   autoFocus
