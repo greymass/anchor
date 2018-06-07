@@ -97,6 +97,7 @@ export default class ProducersTable extends Component<Props> {
               <Table
                 color="violet"
                 size="small"
+                striped
                 style={{ borderRadius: 0 }}
                 unstackable
               >
