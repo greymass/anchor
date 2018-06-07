@@ -18,7 +18,7 @@ export default class ProducersSelector extends Component<Props> {
       <I18n ns="producers">
         {
           (t) => (
-            <Segment vertical basic loading={!(account)}>
+            <Segment loading={!(account)}>
               <Button
                 color={modified ? 'green' : 'grey'}
                 content={modified ? t('producer_voter_save_changes') : t('producer_voter_no_changes')}

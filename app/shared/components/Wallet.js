@@ -33,7 +33,7 @@ export default class Wallet extends Component<Props> {
       wallet
     } = this.props;
     return (
-      <Grid>
+      <Grid divided>
         <Grid.Row>
           <Grid.Column width={6}>
             <SidebarConnection />

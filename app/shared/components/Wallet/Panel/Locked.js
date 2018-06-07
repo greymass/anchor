@@ -22,7 +22,6 @@ export default class WalletPanelLocked extends Component<Props> {
             <Segment
               color="grey"
               padded
-              secondary
               stacked
             >
               <Header
