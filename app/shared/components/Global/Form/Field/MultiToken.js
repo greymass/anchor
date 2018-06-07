@@ -10,7 +10,7 @@ export default class FormFieldMultiToken extends Component<Props> {
     super(props);
     const [quantity, asset] = props.value.split(' ');
     this.state = {
-      asset,
+      asset: asset || 'EOS',
       quantity
     };
   }
