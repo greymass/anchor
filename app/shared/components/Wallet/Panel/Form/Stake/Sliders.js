@@ -13,7 +13,7 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
     });
   }, 300)
 
-  onConfirm = () => {
+  onConfirm = (e) => {
     const {
       account,
       actions,
@@ -33,6 +33,8 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
     const { setStakeWithValidation } = actions;
 
     setStakeWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
+    e.preventDefault();
+    return false;
   }
 
   onKeyPress = (e) => {
@@ -73,6 +75,7 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
           (t) => (
             <Form
               onKeyPress={this.onKeyPress}
+              onSubmit={this.onConfirm}
             >
               <Form.Group widths="equal">
                 <Form.Field
@@ -109,7 +112,7 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
                 content={t('update_staked_coins')}
                 color="green"
                 floated="right"
-                onClick={this.onConfirm}
+                primary
               />
             </Form>
           )
