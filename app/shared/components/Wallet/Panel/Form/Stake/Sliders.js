@@ -68,6 +68,7 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
             <Form>
               <Form.Group widths="equal">
                 <Form.Field
+                  autoFocus
                   control={Input}
                   fluid
                   label={t('update_staked_cpu_amount')}
