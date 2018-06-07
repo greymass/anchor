@@ -66,7 +66,7 @@ export default class WalletPanelButtonTransfer extends Component<Props> {
               onClose={this.onClose}
               size="small"
             >
-              <Header icon="handshake outline" content={t('transfer_modal_title')} />
+              <Header icon="exchange" content={t('transfer_modal_title')} />
               <Modal.Content>
                 {(hasTransaction)
                   ? (
