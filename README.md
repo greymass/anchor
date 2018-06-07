@@ -9,18 +9,22 @@
 
 ### Features
 
-- **CPU/Bandwidth Staking**: Stake your EOS as either Bandwidth or CPU. This grants rights to resource usage on the network, in addition to conveying weight while voting for block producers.
 - **Block Producer Voting**: Select which block producers to support and cast your vote. Please note that the block producer voting UI is not a research tool; it is a simple interface that provides a secure way to vote.
+- **Token Transfers**: Transfer EOS or any other token you may have a balance for to another user or exchanges.
+- **CPU/Bandwidth Staking**: Stake your EOS as either Bandwidth or CPU. This grants rights to resource usage on the network, in addition to conveying weight while voting for block producers.
 - **Local Wallet**: Set a password while importing your private key to create a local wallet. Your key will be encrypted locally using this password. This password will be required each time you need to unlock the wallet.
 - **Temporary Usage**: If you prefer not to store your keys within the application, simply choose not to set a password. When the application quits, your key will be forgotten.
 
-### Security: Private Keys
-
-When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption. The current password/key encryption scheme can [currently be found here](https://github.com/aaroncox/eos-voter/blob/master/app/shared/actions/wallet.js#L71-L86).
-
 ## Get eos-voter
 
-### Download the latest release
+### Releases
+
+Current 0.1.2 release downloads:
+
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/untagged-222e1b6f11991d1310a3/eos-voter-setup-0.1.2.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/untagged-222e1b6f11991d1310a3/eos-voter-0.1.2.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.2/eos-voter_0.1.2_amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/untagged-222e1b6f11991d1310a3/eos-voter_0.1.2_amd64.snap)
 
 The latest release will always be available on the releases page of this repository:
 
@@ -31,6 +35,10 @@ To determine which file you need, if you are a...
 - **MacOS User**: Download either the DMG (`eos-voter-***.dmg`) or ZIP (`eos-voter-***-mac.zip`) file.
 - **Windows User**: Download the EXE (`eos-voter-***.exe`) file.
 - **Linux User**: Download either the SNAP (`eos-voter-***-_amd64.snap`) or DEB (`eos-voter-***-_amd64.deb`) file
+
+### Security: Private Keys
+
+When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption. The current password/key encryption scheme can [currently be found here](https://github.com/aaroncox/eos-voter/blob/master/app/shared/actions/wallet.js#L71-L86).
 
 ### Build it yourself
 
