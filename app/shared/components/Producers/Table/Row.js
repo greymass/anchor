@@ -6,7 +6,7 @@ import { isEqual } from 'lodash';
 
 import TimeAgo from 'react-timeago';
 
-import ProducersLink from '../Link';
+import DangerLink from '../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
 
 const statusCodes = {
@@ -101,7 +101,9 @@ export default class ProducersTableRow extends Component<Props> {
                 <Header size="tiny">
                   {producer.owner}
                   <Header.Subheader>
-                    <ProducersLink producer={producer} />
+                    <DangerLink
+                      link={producer.url}
+                    />
                   </Header.Subheader>
                 </Header>
               </Table.Cell>

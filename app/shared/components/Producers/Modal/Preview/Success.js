@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Header, Icon, Modal, Segment } from 'semantic-ui-react';
+import DangerLink from '../../../Global/Modal/DangerLink';
 
 export default class ProducersVotingPreviewSuccess extends Component<Props> {
   render() {
@@ -20,7 +21,10 @@ export default class ProducersVotingPreviewSuccess extends Component<Props> {
                   {t('producer_voter_preview_transaction_successful_message')}
                 </h3>
                 <Segment basic padded textAlign="center">
-                  <pre>{lastTransaction.transaction_id}</pre>
+                  <DangerLink
+                    content={lastTransaction.transaction_id}
+                    link={`http://eostracker.io/transactions/${lastTransaction.transaction_id}`}
+                  />
                 </Segment>
               </Modal.Content>
               <Modal.Actions>
