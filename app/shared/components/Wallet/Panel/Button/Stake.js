@@ -6,7 +6,9 @@ import { I18n } from 'react-i18next';
 import StakeForm from '../Form/Stake';
 
 type Props = {
-  actions: {},
+  actions: {
+    clearSystemState: () => void
+  },
   accounts: {},
   balances: {},
   settings: {},
@@ -30,7 +32,11 @@ export default class WalletPanelButtonStake extends Component<Props> {
     this.setState({ open: true });
   }
 
-  onClose = () => this.setState({ open: false });
+  onClose = () => {
+    this.setState({ open: false }, () => {
+      this.props.actions.clearSystemState();
+    });
+  }
 
   render() {
     const {
