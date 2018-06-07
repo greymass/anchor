@@ -78,34 +78,37 @@ export default class WalletStatus extends Component<Props> {
           accounts={accounts}
           settings={settings}
         />
-        <Menu
-          pointing
-          size="large"
-          secondary
-        >
-          <Menu.Item
-            name="balances"
-            icon="list"
-            content="Token Balances"
-            active={activeItem === 'balances'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="staked"
-            icon="power cord"
-            content="Staked EOS"
-            active={activeItem === 'staked'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="data"
-            icon="dna"
-            content="Account Data"
-            active={activeItem === 'data'}
-            onClick={this.handleItemClick}
-          />
-        </Menu>
-        {activeTab}
+        <Segment>
+          <Menu
+            pointing
+            size="large"
+            secondary
+          >
+            <Menu.Item
+              name="balances"
+              icon="list"
+              content="Token Balances"
+              active={activeItem === 'balances'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="staked"
+              icon="power cord"
+              content="Staked EOS"
+              active={activeItem === 'staked'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="data"
+              icon="dna"
+              content="Account Data"
+              active={activeItem === 'data'}
+              onClick={this.handleItemClick}
+            />
+          </Menu>
+          {activeTab}
+        </Segment>
+
       </div>
     );
   }

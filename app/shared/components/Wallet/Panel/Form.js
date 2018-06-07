@@ -119,52 +119,56 @@ export default class WalletPanelForm extends Component<Props> {
       <I18n ns="wallet">
         {
           (t) => (
-            <Form
-              onSubmit={
-                (encryptWallet)
-                  ? this.onConfirm
-                  : this.onSubmit
-              }
-            >
+            <div>
               <Message
+                attached="top"
                 content={t('wallet_panel_form_create_wallet_body')}
                 header={t('wallet_panel_form_create_wallet_header')}
                 icon="bell"
                 info
                 size="small"
               />
-              <WalletPanelFormAccount
-                actions={actions}
-                accounts={accounts}
-                onChange={this.onChange}
-                validate={validate}
-                value={account}
-              />
-              <WalletPanelFormKey
-                onChange={this.onKeyChange}
-                validate={validate}
-                value={key}
-              />
-              <Divider />
-              <WalletPanelFormEncrypt
-                encryptWallet={encryptWallet}
-                onChange={this.onChange}
-                onToggle={this.onToggle}
-              />
-              <Divider />
-              <WalletPanelFormError
-                error={t(error)}
-              />
-              <WalletPanelFormSubmit
-                confirming={confirming}
-                encryptWallet={encryptWallet}
-                onCancel={this.onCancel}
-                onConfirm={this.onConfirm}
-                onSubmit={this.onSubmit.bind(this)}
-                password={password}
-                validUser={validUser}
-              />
-            </Form>
+              <Form
+                className='attached fluid segment'
+                onSubmit={
+                  (encryptWallet)
+                    ? this.onConfirm
+                    : this.onSubmit
+                }
+              >
+                <WalletPanelFormAccount
+                  actions={actions}
+                  accounts={accounts}
+                  onChange={this.onChange}
+                  validate={validate}
+                  value={account}
+                />
+                <WalletPanelFormKey
+                  onChange={this.onKeyChange}
+                  validate={validate}
+                  value={key}
+                />
+                <Divider />
+                <WalletPanelFormEncrypt
+                  encryptWallet={encryptWallet}
+                  onChange={this.onChange}
+                  onToggle={this.onToggle}
+                />
+                <Divider />
+                <WalletPanelFormError
+                  error={t(error)}
+                />
+                <WalletPanelFormSubmit
+                  confirming={confirming}
+                  encryptWallet={encryptWallet}
+                  onCancel={this.onCancel}
+                  onConfirm={this.onConfirm}
+                  onSubmit={this.onSubmit.bind(this)}
+                  password={password}
+                  validUser={validUser}
+                />
+              </Form>
+            </div>
           )
         }
       </I18n>

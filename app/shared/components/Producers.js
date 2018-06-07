@@ -220,7 +220,7 @@ export default class Producers extends Component<Props> {
       ];
     }
     return (
-      <Grid>
+      <Grid divided>
         <Grid.Row>
           <Grid.Column width={6}>
             <SidebarConnection />
