@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Button, Header, Icon, Modal, Segment } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
+import DangerLink from '../../../Global/Modal/DangerLink';
 
 import WalletPanelFormTransfer from '../Form/Transfer';
 
@@ -74,7 +75,10 @@ export default class WalletPanelButtonTransfer extends Component<Props> {
                       <Modal.Content>
                         {t('transfer_modal_transaction_successful_message')}
                         <Segment basic padded textAlign="center">
-                          <pre>{lastTransaction.transaction_id}</pre>
+                          <DangerLink
+                            content={lastTransaction.transaction_id}
+                            link={`http://eostracker.io/transactions/${lastTransaction.transaction_id}`}
+                          />
                         </Segment>
                       </Modal.Content>
                       <Modal.Actions>

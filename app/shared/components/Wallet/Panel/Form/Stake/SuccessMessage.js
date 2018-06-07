@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Header, Icon, Modal, Segment } from 'semantic-ui-react';
+import { Button, Icon, Modal, Segment } from 'semantic-ui-react';
+import DangerLink from '../../../../Global/Modal/DangerLink';
 
 export default class WalletPanelFormStakeSuccessMessage extends Component<Props> {
   render() {
@@ -25,7 +26,10 @@ export default class WalletPanelFormStakeSuccessMessage extends Component<Props>
                               {t('stake_success')}
                             </h3>
                             <Segment basic padded textAlign="center">
-                              <pre>{system.DELEGATEBW_LAST_TRANSACTION.transaction_id}</pre>
+                              <DangerLink
+                                content={system.DELEGATEBW_LAST_TRANSACTION.transaction_id}
+                                link={`http://eostracker.io/transactions/${system.DELEGATEBW_LAST_TRANSACTION.transaction_id}`}
+                              />
                             </Segment>
                           </div>
                         )
@@ -38,7 +42,10 @@ export default class WalletPanelFormStakeSuccessMessage extends Component<Props>
                               {t('unstake_success')}
                             </h3>
                             <Segment basic padded textAlign="center">
-                              <pre>{system.UNDELEGATEBW_LAST_TRANSACTION.transaction_id}</pre>
+                              <DangerLink
+                                content={system.UNDELEGATEBW_LAST_TRANSACTION.transaction_id}
+                                link={`http://eostracker.io/transactions/${system.UNDELEGATEBW_LAST_TRANSACTION.transaction_id}`}
+                              />
                             </Segment>
                           </div>
                         )
