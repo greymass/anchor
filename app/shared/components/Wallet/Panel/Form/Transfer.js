@@ -5,7 +5,7 @@ import { I18n } from 'react-i18next';
 
 import FormFieldAccount from '../../../Global/Form/Field/Account';
 import FormFieldGeneric from '../../../Global/Form/Field/Generic';
-import FormFieldToken from '../../../Global/Form/Field/Token';
+import FormFieldMultiToken from '../../../Global/Form/Field/MultiToken';
 
 export default class WalletPanelFormTransfer extends Component<Props> {
   constructor(props) {
@@ -84,6 +84,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
       waiting
     } = this.state;
     const balance = balances[settings.account];
+    const asset = "EOS";
     const error = system.TRANSFER_LAST_ERROR;
     const errorMsg = (error && error.code) ? error.error.details[0].message : JSON.stringify(error);
     return (
@@ -163,11 +164,12 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                       onChange={this.onChange}
                       value={to}
                     />
-                    <FormFieldToken
+                    <FormFieldMultiToken
+                      assets={Object.keys(balances[settings.account])}
                       icon="x"
-                      label={t('transfer_label_quantity')}
+                      label={t('transfer_label_token_and_quantity')}
                       loading={false}
-                      maximum={balance.EOS}
+                      maximum={balance[asset]}
                       name="quantity"
                       onChange={this.onChange}
                       value={quantity}
