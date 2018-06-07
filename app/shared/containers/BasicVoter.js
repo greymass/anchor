@@ -167,6 +167,7 @@ class BasicVoterContainer extends Component<Props> {
         <Segment
           attached="bottom"
           basic
+          style={{ borderBottom: 'none' }}
         >
           {activeTab}
         </Segment>
