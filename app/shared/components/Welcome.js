@@ -1,16 +1,28 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid, Image, Header, Message, Segment } from 'semantic-ui-react';
-import { I18n } from 'react-i18next';
+import { Dropdown, Grid, Image, Header, Message, Segment } from 'semantic-ui-react';
+import { I18n, translate } from 'react-i18next';
 import FormConnectionContainer from '../containers/Form/Connection';
 import eos from '../../renderer/assets/images/eos.png';
 
 const { shell } = require('electron');
 
-export default class About extends Component<Props> {
+const languages = [
+  { key: 'en', value: 'en', flag: 'us', text: 'English' },
+  { key: 'kr', value: 'kr', flag: 'kr', text: 'Korean' }
+];
+
+class Welcome extends Component<Props> {
   openLink = (url) => shell.openExternal(url);
 
+  onChange = (e, { value }) => {
+    const { actions, i18n } = this.props;
+    i18n.changeLanguage(value);
+    actions.setSetting('lang', value);
+  }
+
   render() {
+    const { settings } = this.props;
     return (
       <I18n ns="welcome">
         {
@@ -60,13 +72,20 @@ export default class About extends Component<Props> {
                     {t('welcome_more_servers_1')}
                     <p>
                       <a
-                        onClick={() => this.openLink('https://github.com/greymass/eos-voter/blob/master/nodes.md')}
+                        onClick={() => this.openLink(`https://github.com/greymass/eos-voter/blob/master/nodes.md`)}
                         role="link"
                       >
                         {t('welcome_more_servers_2')}
                       </a>
                     </p>
                   </Message>
+                  <Dropdown
+                    defaultValue={settings.lang || 'EN'}
+                    selection
+                    size="small"
+                    onChange={this.onChange}
+                    options={languages}
+                  />
                 </Grid.Column>
               </Grid>
             </div>
@@ -76,3 +95,5 @@ export default class About extends Component<Props> {
     );
   }
 }
+
+export default translate('welcome')(Welcome);
