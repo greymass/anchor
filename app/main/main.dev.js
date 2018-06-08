@@ -2,14 +2,10 @@
 
 import { app, crashReporter } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
-import { configureLocalization } from './shared/i18n';
-
 import { createInterface } from './basic';
 
 const path = require('path');
 const log = require('electron-log');
-
-const { store } = configureStore();
 
 let resourcePath = __dirname;
 let ui = null;
@@ -18,6 +14,8 @@ if (process.mainModule.filename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
   resourcePath = path.join(resourcePath, '../');
 }
+
+const { store } = configureStore({}, resourcePath);
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
@@ -40,9 +38,6 @@ console.log = (...args) => {
 };
 
 log.info('app: initializing');
-
-configureStore();
-configureLocalization(resourcePath);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

@@ -8,19 +8,26 @@ import { reactI18nextModule } from 'react-i18next';
 
 const path = require('path');
 
-const configureLocalization = (resourcePath) => {
+const configureLocalization = (resourcePath, store) => {
+  let lang = false;
+  if (store.settings) {
+    lang = store.settings.lang;
+  }
   // localization provider
+  i18n.use(Backend);
+  if (!lang) {
+    i18n.use(LanguageDetector);
+  }
   i18n
-    .use(Backend)
-    .use(LanguageDetector)
     .use(reactI18nextModule)
     .use(sprintf)
     .init({
+      lng: lang,
       fallbackLng: 'en',
       ns: ['common'],
       defaultNS: 'common',
       fallbackNS: 'common',
-      debug: (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true'),
+      debug: (process.env.DEBUG_PROD === 'true'),
       interpolation: {
         escapeValue: false,
       },
