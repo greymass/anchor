@@ -9,6 +9,7 @@ import { Menu, Segment } from 'semantic-ui-react';
 import About from '../components/About';
 import Producers from '../components/Producers';
 import Wallet from '../components/Wallet';
+import WalletLanguage from '../components/Wallet/Language';
 import WalletLockState from '../components/Wallet/LockState';
 
 import * as AccountsActions from '../actions/accounts';
@@ -106,6 +107,7 @@ class BasicVoterContainer extends Component<Props> {
     const {
       actions,
       keys,
+      settings,
       validate,
       wallet
     } = this.props;
@@ -147,6 +149,11 @@ class BasicVoterContainer extends Component<Props> {
           />
 
           <Menu.Menu position="right">
+            <WalletLanguage
+              actions={actions}
+              key="language"
+              settings={settings}
+            />
             <WalletLockState
               actions={actions}
               key="lockstate"
