@@ -5,7 +5,7 @@ import { Icon, Segment } from 'semantic-ui-react';
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeFailureMessage from './Stake/FailureMessage';
 import WalletPanelFormStakeSuccessMessage from './Stake/SuccessMessage';
-import WalletPanelFormStakeSliders from './Stake/Sliders';
+import WalletPanelFormStakeInputs from './Stake/Inputs';
 
 type Props = {
   actions: {},
@@ -24,7 +24,8 @@ export default class WalletPanelFormStake extends Component<Props> {
     const {
       cpu_weight,
       net_weight
-    } = account.total_resources;
+    } = account.delegated_bandwidth;
+
     this.state = {
       cpuAmount: parseFloat(cpu_weight),
       cpuOriginal: parseFloat(cpu_weight),
@@ -52,7 +53,7 @@ export default class WalletPanelFormStake extends Component<Props> {
 
     return (
       <div>
-        {(validate.STAKE === 'ERROR' || validate.STAKE === 'NULL')
+        {(validate.STAKE === 'ERROR' || validate.STAKE === 'NULL' || validate.STAKE === 'CONFIRMING')
           ? (
             <div>
               <WalletPanelFormStakeStats
@@ -60,13 +61,14 @@ export default class WalletPanelFormStake extends Component<Props> {
                 EOSbalance={EOSbalance}
                 netOriginal={netOriginal}
               />
-              <WalletPanelFormStakeSliders
+              <WalletPanelFormStakeInputs
                 actions={actions}
                 account={account}
                 cpuOriginal={cpuOriginal}
                 EOSbalance={EOSbalance}
                 netOriginal={netOriginal}
                 onClose={onClose}
+                validate={validate}
               />
             </div>
           )

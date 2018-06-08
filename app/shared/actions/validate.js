@@ -180,9 +180,10 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
       return false;
     }
 
-    if (((nextStake.cpu_amount + currentStake.net_amount) > EOSbalance) ||
-        ((nextStake.net_amount + currentStake.cpu_amount) > EOSbalance) ||
-        ((nextStake.cpu_amount + nextStake.net_amount) > EOSbalance)) {
+    const totalNextState = nextStake.cpu_amount + nextStake.net_amount;
+    const totalCurrentStake = currentStake.net_amount - currentStake.cpu_amount;
+
+    if (( totalNextState - totalCurrentStake) > EOSbalance) {
       dispatch({
         payload: { error: 'not_enough_balance' },
         type: types.VALIDATE_STAKE_FAILURE
