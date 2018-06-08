@@ -5,16 +5,12 @@ import thunk from 'redux-thunk';
 
 import rootReducer from '../../reducers';
 import persistConfig from '../shared/persist';
-import logger from '../shared/logger';
+import { configureLocalization } from '../shared/i18n';
 
-const configureStore = (initialState) => {
+const configureStore = (initialState, resourcePath) => {
   const middleware = [];
 
   middleware.push(thunk);
-
-  if (process.env.NODE_ENV !== 'test') {
-    middleware.push(logger);
-  }
 
   const enhancer = compose(
     applyMiddleware(...middleware),
@@ -25,7 +21,10 @@ const configureStore = (initialState) => {
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);
   const store = createStore(persistedReducer, initialState, enhancer);
-  const persistor = persistStore(store);
+  const persistor = persistStore(store, null, () => {
+    // Configure localization after the store has rehydrated to get the language from settings
+    configureLocalization(resourcePath, store.getState());
+  });
 
   if (module.hot) {
     module.hot.accept('../../reducers', () =>
