@@ -82,7 +82,7 @@ class FormConnectionContainer extends Component<Props> {
       const { host } = new URL(node);
       formattedHost = host;
     } catch (e) {
-      console.log('url error', e);
+      // console.log('url error', e);
     }
     return (
       <I18n ns="wallet">
