@@ -4,16 +4,18 @@ import { I18n } from 'react-i18next';
 
 import { Form, Divider, Message, Button, Input } from 'semantic-ui-react';
 
+import WalletPanelFormStakeInputsConfirming from './Inputs/Confirming';
+
 import debounce from 'lodash/debounce';
 
-export default class WalletPanelFormStakeSliders extends Component<Props> {
+export default class WalletPanelFormStakeInputs extends Component<Props> {
   onChange = debounce((e, { name, value }) => {
     this.setState({
       [name]: parseFloat(value),
     });
   }, 300)
 
-  onConfirm = (e) => {
+  onSubmit = (e) => {
     const {
       account,
       actions,
@@ -30,9 +32,14 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
       realCpuAmount
     } = this.cleanUpStakeAmounts(account, netAmount, cpuAmount);
 
-    const { setStakeWithValidation } = actions;
+    this.setState({
+      netAmount: realNetAmount,
+      cpuAmount: realCpuAmount
+    });
 
-    setStakeWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
+    const { setStakeConfirmingWithValidation } = actions;
+
+    setStakeConfirmingWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
     e.preventDefault();
     return false;
   }
@@ -47,35 +54,50 @@ export default class WalletPanelFormStakeSliders extends Component<Props> {
     const {
       cpu_weight,
       net_weight
-    } = account.total_resources;
+    } = account.delegated_bandwidth;
+
     const cleanedNetAmount = netAmount || net_weight;
     const cleanedCpuAmount = cpuAmount || cpu_weight;
 
-    this.setState({
-      netAmount: parseFloat(cleanedNetAmount),
-      cpuAmount: parseFloat(cleanedCpuAmount)
-    });
-
     return {
-      realNetAmount: this.state.netAmount,
-      realCpuAmount: this.state.cpuAmount
+      realNetAmount: parseFloat(cleanedNetAmount),
+      realCpuAmount: parseFloat(cleanedCpuAmount)
     };
   }
 
   render() {
     const {
+      account,
+      actions,
       cpuOriginal,
+      EOSbalance,
       netOriginal,
-      onClose
+      onClose,
+      validate
     } = this.props;
 
+    if (validate.STAKE === 'CONFIRMING') {
+      return (
+        <WalletPanelFormStakeInputsConfirming
+          account={account}
+          actions={actions}
+          cleanUpStakeAmounts={this.cleanUpStakeAmounts}
+          cpuAmount={this.state.cpuAmount}
+          cpuOriginal={cpuOriginal}
+          EOSbalance={EOSbalance}
+          netAmount={this.state.netAmount}
+          netOriginal={netOriginal}
+          validate={validate}
+        />
+      );
+    }
     return (
       <I18n ns="stake">
         {
           (t) => (
             <Form
               onKeyPress={this.onKeyPress}
-              onSubmit={this.onConfirm}
+              onSubmit={this.onSubmit}
             >
               <Form.Group widths="equal">
                 <Form.Field
