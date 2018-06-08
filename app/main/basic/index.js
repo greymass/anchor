@@ -21,12 +21,9 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
     width: uiStateKeeper.width,
     height: uiStateKeeper.height,
     title,
-    show: false,
-    frame: true,
-    fullscreenable: false,
+    show: true,
     resizable: true,
-    transparent: false,
-    alwaysOnTop: false,
+    backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
   });
 
