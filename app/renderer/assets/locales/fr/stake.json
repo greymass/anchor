@@ -1,0 +1,23 @@
+{
+  "update_staked_cpu_amount": "Quantité de EOS attribué en ressource CPU",
+  "update_staked_net_amount": "Quantité de EOS attribué en ressource Bandwidth",
+  "update_staked_coins": "Mettre à jour les EOS attribué",
+  "staked_data": "Statistique de Blocage de EOS",
+  "total_staked": "Quantité total de EOS attribué",
+  "net_staked": "EOS attribué au Bandwidth",
+  "cpu_staked": "EOS attribué au CPU",
+  "amount_not_staked": "EOS disponible (Non Attribué)",
+  "not_enough_balance": "Vous n'avez pas assez de EOS.",
+  "stake_updated":"Vos ressources ont été mise à jour ",
+  "stake_modal_title":"Mettez vos ressources à jour",
+  "stake_form":"Attribué des EOS",
+  "stake_button_cta": "Mettez vos ressources à jour",
+  "staked_balances": "Votre Solde de EOS attribué",
+  "confirm_stake":"Confirmer",
+  "stake_success":"Vos EOS ont été attribué avec succès",
+  "unstake_success":"Vos EOS ont été désattribué avec succès",
+  "about_to_stake": "Vous êtes sur le point d'attribué' ",
+  "about_to_unstake": "Vous êtes sur le point désattribué ",
+  "negative_stake_amount": "Vous ne pouvez pas mettre un nombre négatif de EOS",
+  "undelegate_explanation": "Tout EOS désattribué ne sera pas indisponible pendant 3 jours. Après cette période d'attente, il apparaîtra comme disponible"
+}
