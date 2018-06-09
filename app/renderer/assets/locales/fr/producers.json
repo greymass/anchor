@@ -7,6 +7,7 @@
   "block_producer_last_block_never": "Jamais",
   "block_producer_last_block": "Dernier Bloc",
   "block_producer_position": "Position",
+  "block_producer_votes_none": "Aucun",
   "block_producer_total_votes": "Votes au Total",
   "block_producer_total_weight": "Poids de vote total",
   "producer_voter_voting_as": "Voter à la place de:",

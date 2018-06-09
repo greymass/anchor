@@ -9,6 +9,7 @@ const { shell } = require('electron');
 
 const languages = [
   { key: 'en', value: 'en', flag: 'us', text: 'English' },
+  { key: 'fr', value: 'fr', flag: 'fr', text: 'Français' },
   { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
 ];
 
