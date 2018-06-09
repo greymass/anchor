@@ -1,13 +1,15 @@
 // @flow
 import React, { Component } from 'react';
-import { Divider, Header, Menu, Segment } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 import ReactJson from 'react-json-view';
+
+import { Header, Menu, Segment } from 'semantic-ui-react';
 
 import WalletStatusBalances from './Status/Balances';
 import WalletStatusResources from './Status/Resources';
 import WalletStatusStaked from './Status/Staked';
 
-export default class WalletStatus extends Component<Props> {
+class WalletStatus extends Component<Props> {
   state = {
     activeItem: 'balances',
   };
@@ -18,7 +20,8 @@ export default class WalletStatus extends Component<Props> {
     const {
       accounts,
       balances,
-      settings
+      settings,
+      t
     } = this.props;
     const {
       activeItem
@@ -29,7 +32,7 @@ export default class WalletStatus extends Component<Props> {
     let activeTab = (
       <Segment stacked>
         <Header textAlign="center">
-          {`No account data loaded (connecting to: ${server})...`}
+          {t('no_account_data')}
         </Header>
       </Segment>
     );
@@ -87,21 +90,21 @@ export default class WalletStatus extends Component<Props> {
             <Menu.Item
               name="balances"
               icon="list"
-              content="Token Balances"
+              content={t('wallet_status_tab_token_balances')}
               active={activeItem === 'balances'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
               name="staked"
               icon="power cord"
-              content="Staked EOS"
+              content={t('wallet_status_tab_staked')}
               active={activeItem === 'staked'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
               name="data"
               icon="dna"
-              content="Account Data"
+              content={t('wallet_status_tab_account_data')}
               active={activeItem === 'data'}
               onClick={this.handleItemClick}
             />
@@ -113,3 +116,5 @@ export default class WalletStatus extends Component<Props> {
     );
   }
 }
+
+export default translate('wallet')(WalletStatus);
