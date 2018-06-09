@@ -17,9 +17,6 @@ export default class WalletStatusStaked extends Component<Props> {
         {
           (t) => (
             <Segment vertical basic>
-              <Header size="small">
-                {t('staked_balances')}
-              </Header>
               <Table
                 attached="bottom"
                 definition
