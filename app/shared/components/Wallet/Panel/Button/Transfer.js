@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Header, Icon, Modal, Segment } from 'semantic-ui-react';
+import { Button, Header, Modal } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
-import DangerLink from '../../../Global/Modal/DangerLink';
 
+import FormMessageTransactionSuccess from '../../../Global/Form/Message/TransactionSuccess';
 import WalletPanelFormTransfer from '../Form/Transfer';
 
 type Props = {
@@ -73,25 +73,10 @@ export default class WalletPanelButtonTransfer extends Component<Props> {
               <Modal.Content>
                 {(hasTransaction)
                   ? (
-                    <Segment basic>
-                      <Header icon="checkmark" content={t('transfer_modal_transaction_successful_title')} />
-                      <Modal.Content>
-                        {t('transfer_modal_transaction_successful_message')}
-                        <Segment basic padded textAlign="center">
-                          <DangerLink
-                            content={lastTransaction.transaction_id}
-                            link={`http://eostracker.io/transactions/${lastTransaction.transaction_id}`}
-                          />
-                        </Segment>
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Segment basic clearing>
-                          <Button color="green" floated="right" onClick={this.onClose}>
-                            <Icon name="checkmark" /> {t('close')}
-                          </Button>
-                        </Segment>
-                      </Modal.Actions>
-                    </Segment>
+                    <FormMessageTransactionSuccess
+                      onClose={this.onClose}
+                      transaction={lastTransaction}
+                    />
                   )
                   : (
                     <WalletPanelFormTransfer

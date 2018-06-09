@@ -2,5 +2,10 @@
   "global_dangerlink_warning_title": "Warning: You are leaving this app",
   "global_dangerlink_warning_body_1": "eos-voter can not vouch for the safety of the website you are about to visit. Please be dilligent with the security of your keys and account information, only sharing information when you are absolutely sure it can be trusted.",
   "global_dangerlink_warning_body_2": "Never share your private keys.",
-  "global_dangerlink_warning_body_3": "If you wish to proceed, confirm below."
+  "global_dangerlink_warning_body_3": "If you wish to proceed, confirm below.",
+  "global_transaction_complete_title": "Transaction Submitted",
+  "global_transaction_complete_message": "Your transaction has been submitted to the blockchain.",
+  "global_transaction_complete_warning_title": "Transaction is unconfirmed",
+  "global_transaction_complete_warning_message": "Submitting a transaction does not guarentee it will be confirmed. To ensure that this transaction has been completed and confirmed within the network, please reference the above transaction ID on a block explorer to ensure it enters the last irreversible block."
+
 }
