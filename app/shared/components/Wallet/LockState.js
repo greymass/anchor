@@ -8,17 +8,15 @@ export default class WalletLockState extends Component<Props> {
   render() {
     const {
       actions,
-      keys,
+      locked,
       validate,
       wallet
     } = this.props;
     const walletExists = !!(wallet.data);
     if (!walletExists) return '';
-    const walletLocked = (!keys.key);
-    return walletLocked ? (
+    return locked ? (
       <WalletLockStateLocked
         actions={actions}
-        keys={keys}
         validate={validate}
         wallet={wallet}
       />

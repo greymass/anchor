@@ -28,7 +28,6 @@ class WalletStatus extends Component<Props> {
     } = this.state;
     const accountName = settings.account;
     const account = accounts[accountName];
-    const server = settings.node;
     let activeTab = (
       <Segment stacked>
         <Header textAlign="center">
