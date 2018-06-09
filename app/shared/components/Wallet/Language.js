@@ -5,7 +5,7 @@ import { Dropdown, Flag, Menu } from 'semantic-ui-react';
 
 const languages = [
   { key: 'en', value: 'en', flag: 'us', text: 'EN' },
-  { key: 'kr', value: 'kr', flag: 'kr', text: 'KR' }
+  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
 ];
 
 class WalletLanguage extends Component<Props> {

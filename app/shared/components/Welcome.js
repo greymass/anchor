@@ -9,7 +9,7 @@ const { shell } = require('electron');
 
 const languages = [
   { key: 'en', value: 'en', flag: 'us', text: 'English' },
-  { key: 'kr', value: 'kr', flag: 'kr', text: 'Korean' }
+  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
 ];
 
 class Welcome extends Component<Props> {
