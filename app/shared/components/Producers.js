@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Grid, Segment } from 'semantic-ui-react';
+import { I18n } from 'react-i18next';
 
 import SidebarConnection from './Sidebar/Connection';
 
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingPreview from './Producers/Modal/Preview';
-import ProducersWelcome from './Producers/Welcome';
 import WalletPanel from './Wallet/Panel';
 
 type Props = {
@@ -239,11 +239,17 @@ export default class Producers extends Component<Props> {
                />
              )
              : (
-               <Segment stacked>
-                 <Header textAlign="center">
-                   {`No producers data loaded...`}
-                 </Header>
-               </Segment>
+               <I18n ns="producers">
+                 {
+                   (t) => (
+                     <Segment stacked>
+                       <Header textAlign="center">
+                         {t('producer_none_loaded')}
+                       </Header>
+                     </Segment>
+                   )
+                 }
+               </I18n>
              )
             }
           </Grid.Column>
