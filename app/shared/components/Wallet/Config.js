@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Form, Input, Message, Segment } from 'semantic-ui-react';
+import { Form, Input, Message, Segment } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
 export default class WalletConfig extends Component<Props> {
@@ -36,7 +36,6 @@ export default class WalletConfig extends Component<Props> {
 
   render() {
     const {
-      actions,
       validate,
       wallet
     } = this.props;
