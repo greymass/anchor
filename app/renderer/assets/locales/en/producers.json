@@ -10,6 +10,7 @@
   "block_producer_votes_none": "None",
   "block_producer_total_votes": "Total Votes",
   "block_producer_total_weight": "total vote weight",
+  "producer_none_loaded": "No producers data loaded...",
   "producer_voter_voting_as": "Voting as:",
   "producer_voted_connected_to": "connected to:",
   "producer_voter_total_staked": "Total Staked",
