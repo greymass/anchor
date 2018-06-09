@@ -7,5 +7,6 @@
   "confirm": "Confirmer",
   "loading": "Chargement",
   "search": "Rechercher...",
-  "waiting": "Patientez..."
+  "waiting": "Patientez...",
+  "reset_application": "DÉBOGUER: Réinitialiser l'application"
 }
