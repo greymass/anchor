@@ -81,7 +81,7 @@ class Welcome extends Component<Props> {
                     </p>
                   </Message>
                   <Dropdown
-                    defaultValue={settings.lang || 'EN'}
+                    defaultValue={settings.lang}
                     selection
                     size="small"
                     onChange={this.onChange}
