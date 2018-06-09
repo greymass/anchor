@@ -25,7 +25,7 @@ class WalletLanguage extends Component<Props> {
         inverted="true"
       >
         <Dropdown
-          defaultValue={settings.lang || 'EN'}
+          defaultValue={settings.lang}
           fluid
           onChange={this.onChange}
           options={languages}
