@@ -3707,8 +3707,8 @@ eosjs-ecc@4.0.1:
     randombytes "^2.0.5"
 
 eosjs@^14.1.0:
-  version "14.1.0"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-14.1.0.tgz#b33db40ce8aca2b51a01b27938ecd53e2b926bfb"
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-14.1.1.tgz#164907430819fea693417e1b10fe666dff30263d"
   dependencies:
     babel-polyfill "^6.26.0"
     binaryen "^37.0.0"
