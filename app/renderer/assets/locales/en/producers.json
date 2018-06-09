@@ -7,6 +7,7 @@
   "block_producer_last_block_never": "Never",
   "block_producer_last_block": "Last Block",
   "block_producer_position": "Position",
+  "block_producer_votes_none": "None",
   "block_producer_total_votes": "Total Votes",
   "block_producer_total_weight": "total vote weight",
   "producer_voter_voting_as": "Voting as:",
