@@ -22,7 +22,7 @@ export default class WalletPanelButtonResetApp extends Component<Props> {
           (t) => (
             <span>
               <Button
-                content="DEBUG: Reset Application"
+                content={t('reset_application')}
                 color="red"
                 onClick={this.open}
                 size="tiny"

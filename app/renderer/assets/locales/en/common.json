@@ -7,5 +7,6 @@
   "confirm": "Confirm",
   "loading": "Loaded",
   "search": "Search...",
-  "waiting": "Waiting..."
+  "waiting": "Waiting...",
+  "reset_application": "DEBUG: Reset Application"
 }
