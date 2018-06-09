@@ -53,6 +53,9 @@ export default class WalletPanelButtonTransfer extends Component<Props> {
           (t) => (
             <Modal
               centered={false}
+              closeIcon={true}
+              closeOnDimmerClick={false}
+              closeOnDocumentClick={false}
               trigger={(
                 <Button
                   color="blue"
