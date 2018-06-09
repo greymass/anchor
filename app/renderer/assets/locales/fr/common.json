@@ -1,0 +1,11 @@
+{
+  "application_name": "eos-voter",
+  "application_version": "v0.1.2",
+  "block_height": "Hauteur du Bloc",
+  "cancel": "Annuler",
+  "close": "Fermer",
+  "confirm": "Confirmer",
+  "loading": "Chargement",
+  "search": "Rechercher...",
+  "waiting": "Patientez..."
+}

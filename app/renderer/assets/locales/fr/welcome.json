@@ -1,0 +1,7 @@
+{
+  "welcome_created_by": "Créé par",
+  "welcome_instructions_1": "Pour débuter, eos-voting doit se connecter à un noeud API EOS.",
+  "welcome_instructions_2": "Entrez l'adresse du noeud auquel vous souhaitez vous connecter.",
+  "welcome_more_servers_1": "Vous ne savez pas quel serveur utiliser?",
+  "welcome_more_servers_2": "Cliquez ici pour voir une liste d'options."
+}
