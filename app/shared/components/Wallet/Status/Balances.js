@@ -29,9 +29,6 @@ export default class WalletStatusBalances extends Component<Props> {
         {
           (t) => (
             <Segment vertical basic loading={!tokens}>
-              <Header size="small">
-                {t('wallet_status_balances')}
-              </Header>
               <Table
                 attached="bottom"
                 definition
