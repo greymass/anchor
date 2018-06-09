@@ -15,6 +15,6 @@ export default function validate(state = {}, action) {
   return {
     ...state,
     [requestName]: requestState,
-    [requestName + "_ERROR"]: action.payload && action.payload.error
+    [`${requestName}_ERROR`]: action.payload && action.payload.error
   };
 }

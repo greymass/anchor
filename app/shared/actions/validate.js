@@ -172,9 +172,11 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
   return (dispatch: () => void) => {
     dispatch({ type: types.VALIDATE_STAKE_PENDING });
 
-    if (nextStake.cpu_amount < 0 || nextStake.net_amount < 0) {
+    const decimalRegex = /^\d+(?:\.\d{0,4})$/;
+
+    if (!decimalRegex.test(nextStake.cpu_amount) || !decimalRegex.test(nextStake.net_amount)) {
       dispatch({
-        payload: { error: 'negative_stake_amount' },
+        payload: { error: 'not_valid_stake_amount' },
         type: types.VALIDATE_STAKE_FAILURE
       });
       return false;
@@ -183,7 +185,7 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
     const totalNextState = nextStake.cpu_amount + nextStake.net_amount;
     const totalCurrentStake = currentStake.net_amount - currentStake.cpu_amount;
 
-    if (( totalNextState - totalCurrentStake) > EOSbalance) {
+    if ((totalNextState - totalCurrentStake) > EOSbalance) {
       dispatch({
         payload: { error: 'not_enough_balance' },
         type: types.VALIDATE_STAKE_FAILURE
