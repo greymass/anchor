@@ -60,7 +60,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
                         <Accordion.Content
                           active={activeIndex === 0}
                         >
-                          <Segment.Group basic>
+                          <Segment.Group>
                             <Segment basic>
                               <WalletPanelButtonStake
                                 actions={actions}

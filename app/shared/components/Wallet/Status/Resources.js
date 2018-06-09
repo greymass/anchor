@@ -32,7 +32,7 @@ export default class WalletStatusResources extends Component<Props> {
       <I18n ns="wallet">
         {
           (t) => (
-            <Segment stacked small>
+            <Segment stacked>
               <Header dividing size="small">
                 {t('wallet_status_resources_title')}
               </Header>

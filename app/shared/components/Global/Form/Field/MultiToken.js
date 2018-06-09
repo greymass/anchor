@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
-import { Dropdown, Form, Input } from 'semantic-ui-react';
+import { Dropdown, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
@@ -42,7 +41,7 @@ export default class FormFieldMultiToken extends Component<Props> {
           action
           autoFocus={autoFocus}
           control={Input}
-          icon={icon}
+          icon={icon || false}
           loading={loading}
           name={name}
           onChange={this.onChange}
