@@ -65,7 +65,7 @@ function getNextAndCurrentStake(account, netAmount, cpuAmount) {
   const {
     cpu_weight,
     net_weight
-  } = account.delegated_bandwidth;
+  } = account.self_delegated_bandwidth;
 
   const currentStake = {
     cpuAmount: parseFloat(cpu_weight),

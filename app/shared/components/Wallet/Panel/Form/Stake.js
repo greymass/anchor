@@ -24,7 +24,7 @@ export default class WalletPanelFormStake extends Component<Props> {
     const {
       cpu_weight,
       net_weight
-    } = account.delegated_bandwidth;
+    } = account.self_delegated_bandwidth;
 
     this.state = {
       cpuAmount: parseFloat(cpu_weight),
