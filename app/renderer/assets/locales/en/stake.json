@@ -8,6 +8,7 @@
   "cpu_staked": "EOS staked in CPU",
   "amount_not_staked": "Available EOS (Unstaked)",
   "not_enough_balance": "You do not have enough balance.",
+  "not_valid_stake_amount": "Not a valid Stake Amount (must have be a positive amount with a maximum of 4 decimals of precision eg. 12.1212).",
   "stake_updated":"Your stake was updated successfully.",
   "stake_modal_title":"Update Staked EOS Amounts",
   "stake_form":"Staking Coins",
@@ -20,6 +21,5 @@
   "about_to_unstake_from_net": "You are about to unstake from Bandwidth: ",
   "about_to_stake_to_cpu": "You are about to stake to CPU: ",
   "about_to_unstake_from_cpu": "You are about to unstake from CPU: ",
-  "negative_stake_amount": "You cannot set a negative stake amount",
   "undelegate_explanation": "Any EOS unstaked from either Bandwidth of CPU will be unavailable for 3 days. After this waiting period it will appear as available."
 }
