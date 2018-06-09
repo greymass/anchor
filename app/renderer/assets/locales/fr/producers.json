@@ -10,6 +10,7 @@
   "block_producer_votes_none": "Aucun",
   "block_producer_total_votes": "Votes au Total",
   "block_producer_total_weight": "Poids de vote total",
+  "producer_none_loaded": "Aucune données sur les producteurs trouvées",
   "producer_voter_voting_as": "Voter à la place de:",
   "producer_voted_connected_to": "connecté à:",
   "producer_voter_total_staked": "Total Attribué",
