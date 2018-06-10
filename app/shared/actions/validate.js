@@ -197,6 +197,14 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
   };
 }
 
+export function clearValidationState() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.RESET_VALIDATION_STATES
+    });
+  };
+}
+
 export default {
   validateAccount,
   validateNode,
