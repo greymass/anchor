@@ -17,6 +17,14 @@ export default function settings(state = initialState, action) {
     case types.SET_SETTING: {
       return Object.assign({}, state, action.payload);
     }
+    case types.RESET_INVALID_SETTINGS: {
+      return Object.assign({}, {
+        account: state.account,
+        lang: state.lang,
+        node: state.node,
+        setupData: state.setupData
+      });
+    }
     default: {
       return state;
     }

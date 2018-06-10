@@ -12,6 +12,14 @@ export function clearSettingsCache() {
   };
 }
 
+export function clearSettingsInvalid() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.RESET_INVALID_SETTINGS
+    });
+  };
+}
+
 export function setSetting(key, value) {
   return (dispatch: () => void) => {
     dispatch({
@@ -52,6 +60,7 @@ export function setSettingWithValidation(key, value) {
 
 export default {
   clearSettingsCache,
+  clearSettingsInvalid,
   setSetting,
   setSettingWithValidation
 };
