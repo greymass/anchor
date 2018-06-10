@@ -23,7 +23,7 @@ export default class ProducersVotingPreviewSuccess extends Component<Props> {
                 <Segment basic padded textAlign="center">
                   <DangerLink
                     content={lastTransaction.transaction_id}
-                    link={`http://eostracker.io/transactions/${lastTransaction.transaction_id}`}
+                    link={`https://eospark.com/MainNet/tx/${lastTransaction.transaction_id}`}
                   />
                 </Segment>
               </Modal.Content>
