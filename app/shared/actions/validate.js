@@ -172,9 +172,9 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
   return (dispatch: () => void) => {
     dispatch({ type: types.VALIDATE_STAKE_PENDING });
 
-    const decimalRegex = /^\d+(?:\.\d{0,4})$/;
+    const decimalRegex = /^\d+(\.\d{1,4})?$/;
 
-    if (!decimalRegex.test(nextStake.cpu_amount) || !decimalRegex.test(nextStake.net_amount)) {
+    if (!decimalRegex.test(nextStake.cpuAmount) || !decimalRegex.test(nextStake.netAmount)) {
       dispatch({
         payload: { error: 'not_valid_stake_amount' },
         type: types.VALIDATE_STAKE_FAILURE
@@ -182,8 +182,8 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
       return false;
     }
 
-    const totalNextState = nextStake.cpu_amount + nextStake.net_amount;
-    const totalCurrentStake = currentStake.net_amount - currentStake.cpu_amount;
+    const totalNextState = nextStake.cpuAmount + nextStake.netAmount;
+    const totalCurrentStake = currentStake.netAmount - currentStake.cpuAmount;
 
     if ((totalNextState - totalCurrentStake) > EOSbalance) {
       dispatch({
