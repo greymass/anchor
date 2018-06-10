@@ -24,16 +24,24 @@ export function validateAccount(account) {
         if (settings.key) {
           dispatch(validateKey(settings.key));
         }
-        // Set this account
+        // PATCH - Force in self_delegated_bandwidth if it doesn't exist
+        const modified = results;
+        if (!modified.self_delegated_bandwidth) {
+          modified.self_delegated_bandwidth = {
+            cpu_weight: 0,
+            net_weight: 0
+          };
+        }
+        // Dispatch the results of the account itself
         dispatch({
           type: types.GET_ACCOUNT_SUCCESS,
-          payload: { results }
+          payload: { results: modified }
         });
         // Fetch balances
         dispatch(getCurrencyBalance(account));
         // Return the validated success
         return dispatch({
-          payload: { results },
+          payload: { results: modified },
           type: types.VALIDATE_ACCOUNT_SUCCESS
         });
       }).catch((err) => dispatch({

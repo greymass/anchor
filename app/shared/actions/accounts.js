@@ -24,10 +24,18 @@ export function getAccount(account = '') {
       eos(connection).getAccount(account).then((results) => {
         // Trigger the action to load this accounts balances
         dispatch(getCurrencyBalance(account));
+        // PATCH - Force in self_delegated_bandwidth if it doesn't exist
+        const modified = results;
+        if (!modified.self_delegated_bandwidth) {
+          modified.self_delegated_bandwidth = {
+            cpu_weight: 0,
+            net_weight: 0
+          };
+        }
         // Dispatch the results of the account itself
         return dispatch({
           type: types.GET_ACCOUNT_SUCCESS,
-          payload: { results }
+          payload: { results: modified }
         });
       }).catch((err) => dispatch({
         type: types.GET_ACCOUNT_FAILURE,
