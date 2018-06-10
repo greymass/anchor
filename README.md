@@ -44,6 +44,14 @@ To determine which file you need, if you are a...
 
 When using `eos-voter`, all transactions are signed within the application and your key is never transmitted. If a local wallet password is specified, the application will also save and encrypt your key for future use, using AES-256 encryption. The current password/key encryption scheme can [currently be found here](https://github.com/aaroncox/eos-voter/blob/master/app/shared/actions/wallet.js#L71-L86).
 
+### Endpoints
+
+We offer a public list of nodes within this repository for use with this application:
+
+[https://github.com/greymass/eos-voter/blob/master/nodes.md](https://github.com/greymass/eos-voter/blob/master/nodes.md)
+
+This list will be updated over time and can be referenced from within the initial connection screen in the app.
+
 ### Build it yourself
 
 If you'd rather build the application yourself, please ensure you have nodejs/npm/yarn already installed locally.

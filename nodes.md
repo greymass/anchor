@@ -13,22 +13,10 @@ Even though your keys never leave the `eos-voter` applications, the API node you
 
 If you are concerned about revealing this information to any of these 3rd party API nodes, it is recommended you run your own API Node and connect to that.
 
-# Testnet Nodes
-
-If you'd like to connect to one of the testnets, you can use:
-
-- https://eos.jesta.us (Jungle Testnet)
-
 # EOS Nodes
 
-- (Offline, waiting for main EOS network) https://eos.greymass.com - operated by [greymass](https://greymass.com)
+- https://eos.greymass.com - operated by [greymass](https://greymass.com)
 
 ### Additions
 
-If you are a node operator and would like your node added to the list above, please submit a pull request for this file.
-
-Add your node to the bottom of the list above. The format of this should be:
-
-```
-- https://domain.com:port - operated by [your name/organization](http://website.com)
-```
+We will update this list as the community finds more reliable 3rd party nodes for usage with this tool.
