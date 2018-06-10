@@ -28,7 +28,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
 
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this.onSubmit();
+      this.onSubmit(e);
     }
   }
 

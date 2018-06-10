@@ -9,6 +9,14 @@ import WalletPanelFormStakeInputsConfirming from './Inputs/Confirming';
 import debounce from 'lodash/debounce';
 
 export default class WalletPanelFormStakeInputs extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cpuAmount: props.cpuOriginal,
+      netAmount: props.netOriginal
+    }
+  }
+
   onChange = debounce((e, { name, value }) => {
     this.setState({
       [name]: parseFloat(value),
@@ -46,7 +54,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
 
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this.onConfirm();
+      this.onSubmit(e);
     }
   }
 
@@ -75,6 +83,10 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
       onClose,
       validate
     } = this.props;
+    const {
+      cpuAmount,
+      netAmount
+    } = this.state;
 
     if (validate.STAKE === 'CONFIRMING') {
       return (
@@ -107,7 +119,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
                   label={t('update_staked_cpu_amount')}
                   name="cpuAmount"
                   onChange={this.onChange}
-                  defaultValue={cpuOriginal.toFixed(4)}
+                  defaultValue={cpuAmount.toFixed(4)}
                 />
                 <Form.Field
                   control={Input}
@@ -115,7 +127,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
                   label={t('update_staked_net_amount')}
                   name="netAmount"
                   onChange={this.onChange}
-                  defaultValue={netOriginal.toFixed(4)}
+                  defaultValue={netAmount.toFixed(4)}
                 />
               </Form.Group>
               <Divider />

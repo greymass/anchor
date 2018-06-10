@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Message } from 'semantic-ui-react';
+import { Button, Divider, Header, Icon, Segment } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
@@ -28,6 +28,7 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
 
   render() {
     const {
+      actions,
       cpuAmount,
       netAmount,
       cpuOriginal,
@@ -41,31 +42,39 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
       <I18n ns="stake">
         {
           (t) => (
-            <div>
-              <Message warning>
-                {(netDifference > 0) ? (
-                  <p>{`${t('about_to_stake_to_net')} ${netDifference} EOS`}</p>
-                ) : ''}
+            <Segment padding basic>
+              <Segment padding size="large">
+                <Header>
+                  {(netDifference > 0) ? (
+                    <p>{`${t('about_to_stake_to_net')} +${netDifference} EOS (${netAmount} EOS after)`}</p>
+                  ) : ''}
 
-                {(netDifference < 0) ? (
-                  <p>{`${t('about_to_unstake_from_net')} ${-netDifference} EOS`}</p>
-                ) : ''}
+                  {(netDifference < 0) ? (
+                    <p>{`${t('about_to_unstake_from_net')} -${-netDifference} EOS (${netAmount} EOS after)`}</p>
+                  ) : ''}
 
-                {(cpuDifference > 0) ? (
-                  <p>{`${t('about_to_stake_to_cpu')} ${cpuDifference} EOS`}</p>
-                ) : ''}
+                  {(cpuDifference > 0) ? (
+                    <p>{`${t('about_to_stake_to_cpu')} +${cpuDifference} EOS (${cpuAmount} EOS after)`}</p>
+                  ) : ''}
 
-                {(cpuDifference < 0) ? (
-                  <p>{`${t('about_to_unstake_from_cpu')} ${-cpuDifference} EOS`}</p>
-                ) : ''}
-
-                <Button
-                  onClick={this.onConfirm}
-                  content={t('confirm_stake')}
-                  color="yellow"
-                />
-              </Message>
-            </div>
+                  {(cpuDifference < 0) ? (
+                    <p>{`${t('about_to_unstake_from_cpu')} -${-cpuDifference} EOS (${cpuAmount} EOS after)`}</p>
+                  ) : ''}
+                </Header>
+              </Segment>
+              <Divider />
+              <Button
+                onClick={actions.clearValidationState}
+              >
+                <Icon name="x" /> {t('cancel')}
+              </Button>
+              <Button
+                content={t('confirm_stake')}
+                color="blue"
+                floated="right"
+                onClick={this.onConfirm}
+              />
+            </Segment>
           )
         }
       </I18n>
