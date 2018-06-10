@@ -17,14 +17,14 @@ class FormMessageTransactionSuccess extends Component<Props> {
     if (transaction) {
       links.push(<DangerLink
         content={transaction.transaction_id}
-        link={`http://eostracker.io/transactions/${transaction.transaction_id}`}
+        link={`https://eospark.com/MainNet/tx/${transaction.transaction_id}`}
       />);
     }
     if (transactions) {
       transactions.map((tx) => {
         links.push(<DangerLink
           content={tx.transaction_id}
-          link={`http://eostracker.io/transactions/${tx.transaction_id}`}
+          link={`https://eospark.com/MainNet/tx/${tx.transaction_id}`}
         />);
       })
     }
@@ -46,7 +46,7 @@ class FormMessageTransactionSuccess extends Component<Props> {
                 {link}
               </p>
             ))}
-            <p>(linked to eostracker.io)</p>
+            <p>(linked to eospark.com)</p>
           </Segment>
           <Message
             icon
