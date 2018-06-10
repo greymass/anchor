@@ -29,13 +29,14 @@ export default class FormFieldToken extends Component<Props> {
       <Form.Field
         autoFocus={autoFocus}
         control={Input}
+        defaultValue={value}
         fluid
         icon={icon}
         label={label}
         loading={loading}
         name={name}
         onChange={this.onChange}
-        defaultValue={value}
+        placeholder="0.0000"
       />
     );
   }

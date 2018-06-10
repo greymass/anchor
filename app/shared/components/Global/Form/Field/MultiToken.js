@@ -41,11 +41,12 @@ export default class FormFieldMultiToken extends Component<Props> {
           action
           autoFocus={autoFocus}
           control={Input}
+          defaultValue={this.state.quantity}
           icon={icon || false}
           loading={loading}
           name={name}
           onChange={this.onChange}
-          defaultValue={this.state.quantity}
+          placeholder="0.0000"
         >
           <Dropdown
             defaultValue={this.state.asset || 'EOS'}
