@@ -1,7 +1,7 @@
 {
-  "welcome_created_by": "�쐬��",
-  "welcome_instructions_1": "�n�߂�ɂ�eos-voter��EOS��API�m�[�h�ɐڑ�����K�v������܂��B",
-  "welcome_instructions_2": "�ڑ��������m�[�h�̂���͂��Ă��������B",
-  "welcome_more_servers_1": "�ǂ̃T�[�o�[���g�p����΂悢�̂��킩��܂��񂩁H",
-  "welcome_more_servers_2": "�ꗗ������ɂ͂�������N���b�N���Ă��������B"
+  "welcome_created_by": "作成者",
+  "welcome_instructions_1": "始めるにはeos-voterをEOSのAPIノードに接続する必要があります。",
+  "welcome_instructions_2": "接続したいノードのを入力してください。",
+  "welcome_more_servers_1": "どのサーバーを使用すればよいのかわかりませんか？",
+  "welcome_more_servers_2": "一覧を見るにはこちらをクリックしてください。"
 }

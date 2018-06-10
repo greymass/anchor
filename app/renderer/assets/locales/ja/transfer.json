@@ -1,15 +1,15 @@
 {
-  "transfer_button_cta": "ƒg[ƒNƒ“‚ğ‘—M",
-  "transfer_modal_title": "ƒg[ƒNƒ“‚ğ‘—M",
-  "transfer_modal_transaction_successful_title": "‘—M‚É¬Œ÷‚µ‚Ü‚µ‚½I",
-  "transfer_modal_transaction_successful_message": "ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚Íˆ—‚³‚ê‚Ü‚µ‚½Bƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ID‚ÍˆÈ‰º‚ÅŠm”F‚Å‚«‚Ü‚·B",
-  "transfer_confirming_title": "ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğŠm”F‚µ‚Ä‰º‚³‚¢",
-  "transfer_confirming_body": "‚±‚Ì“]‘—‚Ìˆ¶æA”—ÊAƒƒ‚‚ª³‚µ‚¢‚©‚æ‚­Šm”F‚µ‚Ä‰º‚³‚¢B",
-  "transfer_warning_irreversible_title": "ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚Íæ‚èÁ‚µ‚Å‚«‚Ü‚¹‚ñB",
-  "transfer_warning_irreversible_body": "‚±‚Ìƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğ‘—M‚µ‚½‚çAŒ³‚É–ß‚·‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB",
-  "transfer_label_from": "‘—MŒ³ƒAƒJƒEƒ“ƒg",
-  "transfer_label_to": "ˆ¶æƒAƒJƒEƒ“ƒg",
-  "transfer_label_quantity": "”—Ê",
-  "transfer_label_token_and_quantity": "ƒg[ƒNƒ“‘I‘ğ + ”—Ê",
-  "transfer_label_memo": "“]‘—ƒƒ‚"
+  "transfer_button_cta": "ãƒˆãƒ¼ã‚¯ãƒ³ã‚’é€ä¿¡",
+  "transfer_modal_title": "ãƒˆãƒ¼ã‚¯ãƒ³ã‚’é€ä¿¡",
+  "transfer_modal_transaction_successful_title": "é€ä¿¡ã«æˆåŠŸã—ã¾ã—ãŸï¼",
+  "transfer_modal_transaction_successful_message": "ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã¯å‡¦ç†ã•ã‚Œã¾ã—ãŸã€‚ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³IDã¯ä»¥ä¸‹ã§ç¢ºèªã§ãã¾ã™ã€‚",
+  "transfer_confirming_title": "ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’ç¢ºèªã—ã¦ä¸‹ã•ã„",
+  "transfer_confirming_body": "ã“ã®è»¢é€ã®å®›å…ˆã€æ•°é‡ã€ãƒ¡ãƒ¢ãŒæ­£ã—ã„ã‹ã‚ˆãç¢ºèªã—ã¦ä¸‹ã•ã„ã€‚",
+  "transfer_warning_irreversible_title": "ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã¯å–ã‚Šæ¶ˆã—ã§ãã¾ã›ã‚“ã€‚",
+  "transfer_warning_irreversible_body": "ã“ã®ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’é€ä¿¡ã—ãŸã‚‰ã€å…ƒã«æˆ»ã™ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚",
+  "transfer_label_from": "é€ä¿¡å…ƒã‚¢ã‚«ã‚¦ãƒ³ãƒˆ",
+  "transfer_label_to": "å®›å…ˆã‚¢ã‚«ã‚¦ãƒ³ãƒˆ",
+  "transfer_label_quantity": "æ•°é‡",
+  "transfer_label_token_and_quantity": "ãƒˆãƒ¼ã‚¯ãƒ³é¸æŠ + æ•°é‡",
+  "transfer_label_memo": "è»¢é€ãƒ¡ãƒ¢"
 }
