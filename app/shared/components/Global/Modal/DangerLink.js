@@ -63,6 +63,9 @@ export default class ModalDangerLink extends Component<Props> {
                   <p>
                     {t('global_dangerlink_warning_body_1')}
                   </p>
+                  <p>
+                    URL: {link}
+                  </p>
                   <Header>
                     {t('global_dangerlink_warning_body_2')}
                   </Header>
