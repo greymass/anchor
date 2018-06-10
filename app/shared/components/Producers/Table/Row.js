@@ -102,6 +102,7 @@ export default class ProducersTableRow extends Component<Props> {
                   {producer.owner}
                   <Header.Subheader>
                     <DangerLink
+                      content={producer.url.substring(0,30).replace(/(^\w+:|^)\/\//, '')}
                       link={producer.url}
                     />
                   </Header.Subheader>
