@@ -6,6 +6,7 @@ import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeFailureMessage from './Stake/FailureMessage';
 import WalletPanelFormStakeSuccessMessage from './Stake/SuccessMessage';
 import WalletPanelFormStakeInputs from './Stake/Inputs';
+import FormMessageTransactionSuccess from '../../../Global/Form/Message/TransactionSuccess';
 
 type Props = {
   actions: {},
@@ -51,10 +52,36 @@ export default class WalletPanelFormStake extends Component<Props> {
 
     const EOSbalance = balance.EOS || 0;
 
+    const lastTransactions = [];
+    if (
+      system.DELEGATEBW_LAST_TRANSACTION
+      && system.DELEGATEBW_LAST_TRANSACTION.transaction_id
+    ) {
+      lastTransactions.push(system.DELEGATEBW_LAST_TRANSACTION);
+    }
+    if (
+      system.UNDELEGATEBW_LAST_TRANSACTION
+      && system.UNDELEGATEBW_LAST_TRANSACTION.transaction_id
+    ) {
+      lastTransactions.push(system.UNDELEGATEBW_LAST_TRANSACTION);
+    }
+
     return (
       <div>
-        {(validate.STAKE === 'ERROR' || validate.STAKE === 'NULL' || validate.STAKE === 'CONFIRMING')
+        {(system.DELEGATEBW === 'SUCCESS')
           ? (
+            <FormMessageTransactionSuccess
+              onClose={onClose}
+              transactions={lastTransactions}
+            />
+          )
+          : (system.DELEGATEBW === 'PENDING' || system.UNDELEGATEBW === 'PENDING')
+          ? (
+            <Segment basic textAlign="center">
+              <Icon size="huge" loading name="spinner" />
+            </Segment>
+          )
+          : (
             <div>
               <WalletPanelFormStakeStats
                 cpuOriginal={cpuOriginal}
@@ -70,20 +97,13 @@ export default class WalletPanelFormStake extends Component<Props> {
                 onClose={onClose}
                 validate={validate}
               />
+              <WalletPanelFormStakeFailureMessage onClose={onClose} system={system} validate={validate} />
             </div>
           )
-          : ''
         }
-        <WalletPanelFormStakeFailureMessage onClose={onClose} system={system} validate={validate} />
-        <WalletPanelFormStakeSuccessMessage onClose={onClose} system={system} />
-        {(system.DELEGATEBW === 'PENDING' || system.UNDELEGATEBW === 'PENDING')
-          ? (
-            <Segment basic textAlign="center">
-              <Icon size="huge" loading name="spinner" />
-            </Segment>
-          )
-          : ''
-        }
+
+
+
       </div>
     );
   }
