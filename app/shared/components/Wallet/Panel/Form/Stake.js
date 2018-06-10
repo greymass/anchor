@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
-import WalletPanelFormStakeFailureMessage from './Stake/FailureMessage';
 import WalletPanelFormStakeSuccessMessage from './Stake/SuccessMessage';
 import WalletPanelFormStakeInputs from './Stake/Inputs';
 import FormMessageTransactionSuccess from '../../../Global/Form/Message/TransactionSuccess';
+
+import FormMessageError from '../../../Global/Form/Message/Error';
 
 type Props = {
   actions: {},
@@ -81,7 +82,8 @@ export default class WalletPanelFormStake extends Component<Props> {
               <Icon size="huge" loading name="spinner" />
             </Segment>
           )
-          : (
+          : (validate.STAKE == 'NULL' || validate.STAKE == 'CONFIRMING')
+          ? (
             <div>
               <WalletPanelFormStakeStats
                 cpuOriginal={cpuOriginal}
@@ -97,13 +99,16 @@ export default class WalletPanelFormStake extends Component<Props> {
                 onClose={onClose}
                 validate={validate}
               />
-              <WalletPanelFormStakeFailureMessage onClose={onClose} system={system} validate={validate} />
             </div>
+          ) :
+          (
+            <FormMessageError
+              error={validate.STAKE_ERROR ||
+                     system.DELEGATEBW_LAST_ERROR ||
+                     system.UNDELEGATEBW_LAST_ERROR}
+            />
           )
         }
-
-
-
       </div>
     );
   }

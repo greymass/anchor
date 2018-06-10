@@ -6,9 +6,10 @@ import debounce from 'lodash/debounce';
 
 import WalletPanelFormAccount from './Form/Account';
 import WalletPanelFormEncrypt from './Form/Encrypt';
-import WalletPanelFormError from './Form/Error';
 import WalletPanelFormKey from './Form/Key';
 import WalletPanelFormSubmit from './Form/Submit';
+
+import FormMessageError from '../../Global/Form/Message/Error';
 
 export default class WalletPanelForm extends Component<Props> {
   constructor(props) {
@@ -157,7 +158,7 @@ export default class WalletPanelForm extends Component<Props> {
                   onToggle={this.onToggle}
                 />
                 <Divider />
-                <WalletPanelFormError
+                <FormMessageError
                   error={t(error)}
                 />
                 <WalletPanelFormSubmit

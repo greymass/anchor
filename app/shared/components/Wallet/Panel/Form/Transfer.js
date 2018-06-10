@@ -8,6 +8,8 @@ import FormFieldGeneric from '../../../Global/Form/Field/Generic';
 import FormFieldMultiToken from '../../../Global/Form/Field/MultiToken';
 import WalletMessageContractTransfer from '../../../Global/Message/Contract/Transfer';
 
+import FormMessageError from '../../../Global/Form/Message/Error';
+
 export default class WalletPanelFormTransfer extends Component<Props> {
   constructor(props) {
     super(props);
@@ -86,8 +88,7 @@ export default class WalletPanelFormTransfer extends Component<Props> {
     } = this.state;
     const balance = balances[settings.account];
     const asset = "EOS";
-    const error = system.TRANSFER_LAST_ERROR;
-    const errorMsg = (error && error.error) ? error.error.details[0].message : JSON.stringify(error);
+
     return (
       <I18n ns="transfer">
         {
@@ -185,14 +186,11 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                       onChange={this.onChange}
                       value={memo}
                     />
-                    {(error)
-                      ? (
-                        <Message negative>
-                          {errorMsg}
-                        </Message>
-                      )
-                      : ''
-                    }
+
+                    <FormMessageError
+                      error={system.TRANSFER_LAST_ERROR}
+                    />
+
                     <Divider />
                     <Button
                       onClick={onClose}
