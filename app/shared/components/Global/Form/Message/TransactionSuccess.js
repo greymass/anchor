@@ -10,8 +10,24 @@ class FormMessageTransactionSuccess extends Component<Props> {
     const {
       onClose,
       t,
-      transaction
+      transaction,
+      transactions
     } = this.props;
+    const links = [];
+    if (transaction) {
+      links.push(<DangerLink
+        content={transaction.transaction_id}
+        link={`http://eostracker.io/transactions/${transaction.transaction_id}`}
+      />);
+    }
+    if (transactions) {
+      transactions.map((tx) => {
+        links.push(<DangerLink
+          content={tx.transaction_id}
+          link={`http://eostracker.io/transactions/${tx.transaction_id}`}
+        />);
+      })
+    }
     return (
       <Segment basic>
         <Header
@@ -22,11 +38,15 @@ class FormMessageTransactionSuccess extends Component<Props> {
         <Modal.Content>
           <p>{t('global_transaction_complete_message')}</p>
           <Segment padded textAlign="center">
-            <DangerLink
-              content={transaction.transaction_id}
-              link={`http://eostracker.io/transactions/${transaction.transaction_id}`}
-            />
-            (link to eostracker.io)
+            <p>txids</p>
+            {links.map((link, idx) => (
+              <p key={idx}>
+                #{idx+1}
+                {' - '}
+                {link}
+              </p>
+            ))}
+            <p>(linked to eostracker.io)</p>
           </Segment>
           <Message
             icon
