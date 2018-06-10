@@ -41,7 +41,9 @@ export default class WalletPanelForm extends Component<Props> {
       actions
     } = this.props;
     const { setSettingWithValidation } = actions;
-    setSettingWithValidation(name, value);
+    if (['account', 'node'].indexOf(name) !== -1) {
+      setSettingWithValidation(name, value);
+    }
   }, 300)
 
   onKeyChange = debounce((e, { name, value }) => {
