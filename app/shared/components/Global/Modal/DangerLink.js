@@ -53,7 +53,7 @@ export default class ModalDangerLink extends Component<Props> {
       <I18n ns="global">
         {
           (t) => (
-            <div>
+            <span>
               {el}
               <Modal size="tiny" open={open} onClose={this.close}>
                 <Modal.Header>
@@ -85,7 +85,7 @@ export default class ModalDangerLink extends Component<Props> {
                   />
                 </Modal.Actions>
               </Modal>
-            </div>
+            </span>
           )
         }
       </I18n>
