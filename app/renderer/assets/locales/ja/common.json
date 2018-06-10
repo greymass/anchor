@@ -1,12 +1,12 @@
 {
   "application_name": "eos-voter",
   "application_version": "v0.1.3",
-  "block_height": "ƒuƒƒbƒN‚",
-  "cancel": "ƒLƒƒƒ“ƒZƒ‹",
-  "close": "•Â‚¶‚é",
-  "confirm": "Šm”F",
-  "loading": "ƒ[ƒh‚µ‚Ü‚µ‚½",
-  "search": "ŒŸõ...",
-  "waiting": "‘Ò‹@’†...",
-  "reset_application": "ƒfƒoƒbƒO: ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğƒŠƒZƒbƒg"
+  "block_height": "ãƒ–ãƒ­ãƒƒã‚¯é«˜",
+  "cancel": "ã‚­ãƒ£ãƒ³ã‚»ãƒ«",
+  "close": "é–‰ã˜ã‚‹",
+  "confirm": "ç¢ºèª",
+  "loading": "ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸ",
+  "search": "æ¤œç´¢...",
+  "waiting": "å¾…æ©Ÿä¸­...",
+  "reset_application": "ãƒ‡ãƒãƒƒã‚°: ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ãƒªã‚»ãƒƒãƒˆ"
 }
