@@ -17,9 +17,25 @@ class WalletStatusBalances extends Component<Props> {
       self_delegated_bandwidth
     } = account;
     const totalStaked = (parseFloat(self_delegated_bandwidth.cpu_weight) + parseFloat(self_delegated_bandwidth.net_weight));
-    const tokens = (balances && balances[settings.account]) ? balances[settings.account] : {};
-    const rows = [];
+    const tokens = (balances && balances[settings.account]) ? balances[settings.account] : { EOS: 0 };
+    const rows = [
+      (
+        <Table.Row key="EOS">
+          <Table.Cell width={5}>
+            EOS
+          </Table.Cell>
+          <Table.Cell>
+            {(tokens.EOS) ? tokens.EOS.toFixed(4) : '0.0000'}
+            <span style={{ marginLeft: '0.25em' }}>
+              (+{totalStaked.toFixed(4)} EOS {t('wallet_status_resources_staked')})
+            </span>
+          </Table.Cell>
+        </Table.Row>
+      )
+    ];
+    // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
+      if (token === 'EOS') return;
       rows.push((
         <Table.Row key={token}>
           <Table.Cell width={5}>
@@ -27,14 +43,6 @@ class WalletStatusBalances extends Component<Props> {
           </Table.Cell>
           <Table.Cell>
             {amount.toFixed(4)}
-            {(token === 'EOS')
-              ? (
-                <span style={{ marginLeft: '0.25em' }}>
-                  (+{totalStaked.toFixed(4)} EOS {t('wallet_status_resources_staked')})
-                </span>
-              )
-              : ''
-            }
           </Table.Cell>
         </Table.Row>
       ));
@@ -47,18 +55,6 @@ class WalletStatusBalances extends Component<Props> {
           unstackable
         >
           <Table.Body>
-            {(rows.length === 0)
-              ? (
-                <Table.Row key="none">
-                  <Table.Cell width={16}>
-                    <Header size="small">
-                      {t('wallet_status_balances_none')}
-                    </Header>
-                  </Table.Cell>
-                </Table.Row>
-              )
-              : false
-            }
             {rows}
           </Table.Body>
         </Table>
