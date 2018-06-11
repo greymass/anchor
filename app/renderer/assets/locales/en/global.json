@@ -6,5 +6,5 @@
   "global_transaction_complete_title": "Transaction(s) Submitted",
   "global_transaction_complete_message": "Your transaction(s) have been submitted to the blockchain.",
   "global_transaction_complete_warning_title": "Transaction(s) are unconfirmed",
-  "global_transaction_complete_warning_message": "Submitting a transaction does not guarentee it will be confirmed. To ensure that this transaction has been completed and confirmed within the network, please reference the above transaction ID on a block explorer to ensure it enters the last irreversible block."
+  "global_transaction_complete_warning_message": "Submitting a transaction does not guarantee it will be confirmed. To ensure that this transaction has been completed and confirmed within the network, please reference the above transaction ID on a block explorer to ensure it enters the last irreversible block."
 }
