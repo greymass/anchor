@@ -54,8 +54,7 @@ class FormMessageTransactionSuccess extends Component<Props> {
             warning
           >
             <Icon
-              loading
-              name="circle notched"
+              name="info circle"
             />
             <Message.Content>
               <Message.Header>{t('global_transaction_complete_warning_title')}</Message.Header>
