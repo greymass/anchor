@@ -34,76 +34,73 @@ export default class WalletPanelUnlocked extends Component<Props> {
         {
           (t) => (
             <div>
-              {(keys.temporary)
+              {(!keys.temporary)
                 ? (
-                  <WalletPanelButtonRemove
-                    removeWallet={actions.removeWallet}
+                  <WalletPanelButtonLock
+                    lockWallet={actions.lockWallet}
                   />
                 )
-                : (
-                  <Segment vertical>
-                    <WalletPanelButtonLock
-                      lockWallet={actions.lockWallet}
-                    />
-                    <Accordion
-                      as={Menu}
-                      fluid
-                      vertical
-                    >
-                      <Menu.Item>
-                        <Accordion.Title
-                          active={activeIndex === 0}
-                          content={t('wallet_actions')}
-                          index={0}
-                          onClick={this.handleClick}
-                        />
-                        <Accordion.Content
-                          active={activeIndex === 0}
-                        >
-                          <Segment.Group>
-                            <Segment basic>
-                              <WalletPanelButtonStake
-                                actions={actions}
-                                accounts={accounts}
-                                balances={balances}
-                                validate={validate}
-                                settings={settings}
-                                system={system}
-                              />
-                            </Segment>
-                            <Segment>
-                              <WalletPanelButtonTransfer
-                                actions={actions}
-                                balances={balances}
-                                settings={settings}
-                                system={system}
-                              />
-                            </Segment>
-                          </Segment.Group>
-                        </Accordion.Content>
-                      </Menu.Item>
-
-                      <Menu.Item>
-                        <Accordion.Title
-                          active={activeIndex === 1}
-                          content={t('wallet_actions_dangerous')}
-                          index={1}
-                          onClick={this.handleClick}
-                        />
-                        <Accordion.Content
-                          active={activeIndex === 1}
-                        >
-                          <Segment basic>
-                            <WalletPanelButtonRemove
-                              removeWallet={actions.removeWallet}
-                            />
-                          </Segment>
-                        </Accordion.Content>
-                      </Menu.Item>
-                    </Accordion>
-                  </Segment>
-                )
+                : ''
               }
+              <Segment vertical>
+
+                <Accordion
+                  as={Menu}
+                  fluid
+                  vertical
+                >
+                  <Menu.Item>
+                    <Accordion.Title
+                      active={activeIndex === 0}
+                      content={t('wallet_actions')}
+                      index={0}
+                      onClick={this.handleClick}
+                    />
+                    <Accordion.Content
+                      active={activeIndex === 0}
+                    >
+                      <Segment.Group>
+                        <Segment basic>
+                          <WalletPanelButtonStake
+                            actions={actions}
+                            accounts={accounts}
+                            balances={balances}
+                            validate={validate}
+                            settings={settings}
+                            system={system}
+                          />
+                        </Segment>
+                        <Segment>
+                          <WalletPanelButtonTransfer
+                            actions={actions}
+                            balances={balances}
+                            settings={settings}
+                            system={system}
+                          />
+                        </Segment>
+                      </Segment.Group>
+                    </Accordion.Content>
+                  </Menu.Item>
+
+                  <Menu.Item>
+                    <Accordion.Title
+                      active={activeIndex === 1}
+                      content={t('wallet_actions_dangerous')}
+                      index={1}
+                      onClick={this.handleClick}
+                    />
+                    <Accordion.Content
+                      active={activeIndex === 1}
+                    >
+                      <Segment basic>
+                        <WalletPanelButtonRemove
+                          removeWallet={actions.removeWallet}
+                        />
+                      </Segment>
+                    </Accordion.Content>
+                  </Menu.Item>
+                </Accordion>
+              </Segment>
             </div>
           )
         }
