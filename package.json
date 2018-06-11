@@ -69,7 +69,7 @@
       "category": "Network",
       "desktop": {
         "Name": "eos-voter",
-        "Version": "0.1.0",
+        "Version": "0.1.5",
         "GenericName": "EOS Voting Client + Wallet",
         "X-GNOME-FullName": "eos-voter",
         "Comment": "A simple voting interface and wallet for EOS accounts.",
@@ -80,6 +80,7 @@
       },
       "icon": "app/renderer/assets/icons/png",
       "target": [
+        "AppImage",
         "deb",
         "snap"
       ]
