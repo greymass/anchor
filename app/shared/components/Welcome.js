@@ -8,11 +8,11 @@ import eos from '../../renderer/assets/images/eos.png';
 const { shell } = require('electron');
 
 const languages = [
+  { key: 'cn', value: 'cn', flag: 'cn', text: '中文' },
   { key: 'en', value: 'en', flag: 'us', text: 'English' },
   { key: 'fr', value: 'fr', flag: 'fr', text: 'Français' },
   { key: 'ja', value: 'ja', flag: 'jp', text: '日本語' },
-  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' },
-  { key: 'cn', value: 'cn', flag: 'cn', text: '中文' }
+  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
 ];
 
 class Welcome extends Component<Props> {
