@@ -23,6 +23,7 @@ export default class WalletPanelKey extends Component<Props> {
               name="key"
               onChange={onChange}
               defaultValue={value}
+              type="password"
             />
           )
         }
