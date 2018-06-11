@@ -6,6 +6,7 @@ import { I18n } from 'react-i18next';
 import FormFieldAccount from '../../../Global/Form/Field/Account';
 import FormFieldGeneric from '../../../Global/Form/Field/Generic';
 import FormFieldMultiToken from '../../../Global/Form/Field/MultiToken';
+import WalletMessageContractTransfer from '../../../Global/Message/Contract/Transfer';
 
 export default class WalletPanelFormTransfer extends Component<Props> {
   constructor(props) {
@@ -125,14 +126,16 @@ export default class WalletPanelFormTransfer extends Component<Props> {
                         </Table.Row>
                       </Table.Body>
                     </Table>
-                    <Message info>
-                      <Header>
-                        <Icon name="warning sign" />
-                        <Header.Content>
-                          {t('transfer_warning_irreversible_body')}
-                        </Header.Content>
-                      </Header>
-                    </Message>
+                    <WalletMessageContractTransfer
+                      data={{
+                        from,
+                        quantity,
+                        to,
+                        transaction: {
+                          delay: 60
+                        }
+                      }}
+                    />
                     <Divider />
                     <Button
                       onClick={this.onCancel}
