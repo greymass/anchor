@@ -1,0 +1,17 @@
+{
+  "about_opensource_title":"这个应用程序为开源",
+  "about_opensource_message":"我们欢迎对这个应用的贡献，如果有兴趣，请加入我们的Github",
+  "about_opensource_link": "https://github.com/greymass/eos-voter",
+  "about_message_1":"eos-voter是一个独立的桌面应用程序，通过您选择的API端点直接连接到EOS区块链.",
+  "about_message_2": "您的密钥永远不会离开应用程序，只会被加密存储，提供热钱包的最高级别安全性.",
+  "about_more": "如果您想了解更多信息，请访问https://greymass.com.",
+  "about_issues":"如果您遇到应用程序本身的问题，请在下面的github提问：",
+  "about_issues_link": "https://github.com/greymass/eos-voter/issues",
+  "about_greymass_message_1":"这个应用程序由Greymass带领",
+  "about_greymass_message_2": "如果您想了解更多关于我们团队和我们计划用于EOS的其他项目，我们邀请您访问我们，",
+  "about_license_type": "MIT许可证（MIT）",
+  "about_license_body_1": "Copyright（c）2018-present Greymass",
+  "about_license_body_2": "特此免费授予任何人获得本软件及相关文档文件（'软件'）的副本，以无限制处理本软件，包括但不限于使用，复制，修改，合并，发布，分发，再许可和/或销售本软件的副本，并允许本软件提供给本公司的人员遵守以下条件：",
+  "about_license_body_3":"上述版权声明和本许可声明应包含在本软件的所有副本或主要部分中.",
+  "about_license_body_4":"本软件按'原样'提供，不提供任何形式的明示或暗示担保，包括但不限于对适销性，适用于特定用途和不侵权的保证。在任何情况下，作者或版权所有者对由于与本软件或本软件的使用或其他交易产生或与之相关的合同，侵权或其他责任而引起的任何索赔，损害或其他责任均不承担任何责任."
+}
