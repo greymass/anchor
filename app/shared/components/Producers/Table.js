@@ -1,8 +1,7 @@
 // @flow
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { debounce, isEqual } from 'lodash';
+import { debounce } from 'lodash';
 import { Grid, Header, Input, Segment, Table } from 'semantic-ui-react';
 
 import ProducersVoteWeight from './Vote/Weight';
@@ -17,7 +16,8 @@ export default class ProducersTable extends Component<Props> {
   }
 
   onSearchChange = debounce((e, { value }) => {
-    this.setState({ filter: value });
+    const filter = String(value).toLowerCase();
+    this.setState({ filter });
   }, 300);
 
   render() {
