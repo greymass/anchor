@@ -25,7 +25,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
     if (lastRow && lastRow.length < 4) {
       times((4 - lastRow.length), i => {
         lastRow.push((
-          <Table.Cell key={`blank-${i}`} />
+          <Table.Cell width={4} key={`blank-${i}`} />
         ));
       });
     }
