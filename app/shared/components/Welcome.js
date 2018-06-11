@@ -72,7 +72,9 @@ class Welcome extends Component<Props> {
                     <p>{t('welcome_instructions_2')}</p>
                   </Segment>
                   <Message info>
-                    {t('welcome_more_servers_1')}
+                    <Header>
+                      {t('welcome_more_servers_1')}
+                    </Header>
                     <p>
                       <a
                         onClick={() => this.openLink(`https://github.com/greymass/eos-voter/blob/master/nodes.md`)}
