@@ -1,6 +1,7 @@
 import * as types from '../actions/types';
 
 const initialState = {
+  acceptedConstitution: false,
   account: '',
   lang: 'en',
   node: ''
@@ -19,6 +20,7 @@ export default function settings(state = initialState, action) {
     }
     case types.RESET_INVALID_SETTINGS: {
       return Object.assign({}, {
+        acceptedConstitution: state.acceptedConstitution,
         account: state.account,
         lang: state.lang,
         node: state.node,

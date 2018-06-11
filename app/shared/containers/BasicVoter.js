@@ -10,6 +10,7 @@ import About from '../components/About';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
 import Wallet from '../components/Wallet';
+import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
 import * as ChainActions from '../actions/chain';
@@ -21,7 +22,6 @@ import * as WalletActions from '../actions/wallet';
 import * as StakeActions from '../actions/stake';
 import * as TransferActions from '../actions/transfer';
 import * as VoteProducerActions from '../actions/system/voteproducer';
-
 
 type Props = {
   actions: {
@@ -42,7 +42,7 @@ class BasicVoterContainer extends Component<Props> {
   props: Props;
 
   state = {
-    activeItem: 'producers',
+    activeItem: 'producers'
   };
 
   componentDidMount() {
@@ -141,7 +141,11 @@ class BasicVoterContainer extends Component<Props> {
         >
           {activeTab}
         </Segment>
-
+        <ModalConstitution
+          actions={actions}
+          isUser={(keys.account)}
+          settings={settings}
+        />
       </div>
     );
   }
