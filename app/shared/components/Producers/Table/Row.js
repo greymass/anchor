@@ -99,7 +99,9 @@ export default class ProducersTableRow extends Component<Props> {
                 singleLine
               >
                 <Header size="tiny">
-                  {producer.owner}
+                  <span styles={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
+                    {producer.owner}
+                  </span>
                   <Header.Subheader>
                     <DangerLink
                       content={producer.url.substring(0,30).replace(/(^\w+:|^)\/\//, '')}
