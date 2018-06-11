@@ -190,17 +190,6 @@ export function validateStake(nextStake, currentStake, EOSbalance) {
       return false;
     }
 
-    const totalNextState = nextStake.cpuAmount + nextStake.netAmount;
-    const totalCurrentStake = currentStake.netAmount - currentStake.cpuAmount;
-
-    if ((totalNextState - totalCurrentStake) > EOSbalance) {
-      dispatch({
-        payload: { error: 'not_enough_balance' },
-        type: types.VALIDATE_STAKE_FAILURE
-      });
-      return false;
-    }
-
     return true;
   };
 }
