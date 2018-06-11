@@ -7,7 +7,8 @@ const languages = [
   { key: 'en', value: 'en', flag: 'us', text: 'EN' },
   { key: 'fr', value: 'fr', flag: 'fr', text: 'FR' },
   { key: 'ja', value: 'ja', flag: 'jp', text: '日本語' },
-  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
+  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' },
+  { key: 'cn', value: 'cn', flag: 'cn', text: '中文' }
 ];
 
 class WalletLanguage extends Component<Props> {

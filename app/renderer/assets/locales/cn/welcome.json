@@ -1,0 +1,7 @@
+{
+  "welcome_created_by":"创建于",
+  "welcome_instructions_1":"开始时，eos-vote需要连接到EOS API节点",
+  "welcome_instructions_2":"输入您想要连接的节点",
+  "welcome_more_servers_1":"不确定要使用哪个服务器",
+  "welcome_more_servers_2":"点击此处查看选项列表。"
+}
