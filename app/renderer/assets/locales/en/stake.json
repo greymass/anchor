@@ -21,5 +21,8 @@
   "unstake_success":"You have successfully unstaked EOS.",
   "update_staked_coins": "Update Staked Balances",
   "update_staked_cpu_amount": "Set EOS staked in CPU",
-  "update_staked_net_amount": "Set EOS staked in Bandwidth"
+  "update_staked_net_amount": "Set EOS staked in Bandwidth",
+  "eos_in_cpu_after": "EOS in CPU after",
+  "eos_in_net_after": "EOS in Bandwidth after",
+  "you_will_have":"You will have"
 }
