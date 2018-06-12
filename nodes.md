@@ -20,6 +20,8 @@ If you are concerned about revealing this information to any of these 3rd party 
 - http://api.eosnewyork.io - operated by [EOS New York](https://www.eosnewyork.io/)
 - https://api.eosdetroit.io - operated by [EOS Detroit](http://eosdetroit.io/)
 - http://api.hkeos.com - operated by [HK EOS](https://www.hkeos.com/)
+- http://dc1.eosemerge.io:8888 - operated by [EOS Emerge Poland](http://eosemerge.io/)
+- https://dc1.eosemerge.io:5443 - operated by [EOS Emerge Poland](http://eosemerge.io/)
 
 ### Additions
 
