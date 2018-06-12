@@ -21,6 +21,8 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://api.eosdetroit.io - operated by [EOS Detroit](http://eosdetroit.io/)
 - http://api.hkeos.com - operated by [HK EOS](https://www.hkeos.com/)
 - http://bp.cryptolions.io:8888 - operated by [CryptoLions] (http://CryptoLions.io/)
+- http://dc1.eosemerge.io:8888 - operated by [EOS Emerge Poland](http://eosemerge.io/)
+- https://dc1.eosemerge.io:5443 - operated by [EOS Emerge Poland](http://eosemerge.io/)
 
 ### Additions
 
