@@ -58,7 +58,7 @@ class BasicVoterContainer extends Component<Props> {
       actions.validateAccount(settings.account);
     }
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 15000);
+    this.interval = setInterval(this.tick.bind(this), 30000);
   }
 
   componentWillReceiveProps(nextProps) {
