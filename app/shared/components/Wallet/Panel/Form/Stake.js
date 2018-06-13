@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
-import WalletPanelFormStakeSuccessMessage from './Stake/SuccessMessage';
 import WalletPanelFormStakeInputs from './Stake/Inputs';
 import FormMessageTransactionSuccess from '../../../Global/Form/Message/TransactionSuccess';
 
 import FormMessageError from '../../../Global/Form/Message/Error';
+
+import { Decimal } from 'decimal.js';
 
 type Props = {
   actions: {},
@@ -28,11 +29,14 @@ export default class WalletPanelFormStake extends Component<Props> {
       net_weight
     } = account.self_delegated_bandwidth;
 
+    const parsed_cpu_weight = cpu_weight.split(' ')[0];
+    const parsed_net_weight = net_weight.split(' ')[0];
+
     this.state = {
-      cpuAmount: parseFloat(cpu_weight),
-      cpuOriginal: parseFloat(cpu_weight),
-      netAmount: parseFloat(net_weight),
-      netOriginal: parseFloat(net_weight)
+      cpuAmount: new Decimal(parsed_cpu_weight),
+      cpuOriginal: new Decimal(parsed_cpu_weight),
+      netAmount: new Decimal(parsed_net_weight),
+      netOriginal: new Decimal(parsed_net_weight)
     };
   }
 

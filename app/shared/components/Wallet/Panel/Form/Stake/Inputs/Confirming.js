@@ -42,14 +42,14 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
       <I18n ns="stake">
         {
           (t) => (
-            <Segment padding basic>
-              <Segment padding size="large">
+            <Segment padding='true' basic>
+              <Segment padding='true' size="large">
                 {(netDifference > 0) ? (
                   <p>{t('about_to_stake_to_net')} <b>{netDifference.toFixed(4)} EOS</b><br /> ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})</p>
                 ) : ''}
 
                 {(netDifference < 0) ? (
-                  <p>{t('about_to_unstake_from_net')} <b>{-netDifference.toFixed(4)}</b><br /> EOS ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})</p>
+                  <p>{t('about_to_unstake_from_net')} <b>{(-netDifference).toFixed(4)} EOS</b><br />  ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})</p>
                 ) : ''}
 
                 {(cpuDifference > 0) ? (
@@ -57,7 +57,7 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
                 ) : ''}
 
                 {(cpuDifference < 0) ? (
-                  <p>{t('about_to_unstake_from_cpu')} <b>{-cpuDifference.toFixed(4)} EOS</b><br /> ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})</p>
+                  <p>{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} EOS</b><br /> ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})</p>
                 ) : ''}
               </Segment>
               <Divider />

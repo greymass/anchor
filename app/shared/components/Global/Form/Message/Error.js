@@ -15,7 +15,8 @@ export default class FormMessageError extends Component<Props> {
 
     const errorMessages = errorObjects.map((err) => {
       if (err && err.code) {
-        return err.error.details[0].message;
+        const details = err.error && err.error.details[0].message;
+        return details || err.name;
       }
 
       return JSON.stringify(err);

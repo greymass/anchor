@@ -7,6 +7,7 @@ import { Form, Divider, Message, Button, Input } from 'semantic-ui-react';
 import WalletPanelFormStakeInputsConfirming from './Inputs/Confirming';
 
 import debounce from 'lodash/debounce';
+import { Decimal } from 'decimal.js';
 
 export default class WalletPanelFormStakeInputs extends Component<Props> {
   constructor(props) {
@@ -68,8 +69,8 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
     const cleanedCpuAmount = cpuAmount || cpu_weight;
 
     return {
-      realNetAmount: parseFloat(cleanedNetAmount),
-      realCpuAmount: parseFloat(cleanedCpuAmount)
+      realNetAmount: new Decimal(cleanedNetAmount),
+      realCpuAmount: new Decimal(cleanedCpuAmount)
     };
   }
 
