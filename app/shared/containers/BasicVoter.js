@@ -83,11 +83,13 @@ class BasicVoterContainer extends Component<Props> {
       validate
     } = this.props;
     const {
+      getCurrencyStats,
       getGlobals,
       getInfo,
       getAccount
     } = actions;
     if (validate.NODE === 'SUCCESS') {
+      getCurrencyStats();
       getGlobals();
       getInfo();
       if (validate.ACCOUNT === 'SUCCESS') {
