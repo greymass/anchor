@@ -128,10 +128,7 @@ export default class ProducersTableRow extends Component<Props> {
                     name="cubes"
                     title={t('active_producer')}
                   />
-                  ) : ''
-                }
-
-                {(position > 21)
+                  ) : (producer.isBackup)
                 ? (
                   <Icon
                     color="yellow"
