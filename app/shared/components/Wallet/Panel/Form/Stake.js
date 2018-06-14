@@ -73,7 +73,7 @@ export default class WalletPanelFormStake extends Component<Props> {
 
     return (
       <div>
-        {(system.DELEGATEBW === 'SUCCESS')
+        {(system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS')
           ? (
             <FormMessageTransactionSuccess
               onClose={onClose}
