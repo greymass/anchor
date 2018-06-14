@@ -35,5 +35,7 @@
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
-  "producer_welcome_p3": ""
+  "producer_welcome_p3": "",
+  "active_producer":"Producteur Actif",
+  "backup_producer":"Producteur de Rechange"
 }
