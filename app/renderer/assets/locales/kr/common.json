@@ -5,8 +5,8 @@
   "cancel": "취소",
   "close": "닫기",
   "confirm": "확인",
-  "loading": "올려놓아 졌습니다",
-  "search": "찾기...",
-  "waiting": "기다리는 중...",
+  "loading": "로드",
+  "search": "찾는 중...",
+  "waiting": "잠시만 기다려 주세요...",
   "reset_application": "디버그: 프로그램 초기화"
 }

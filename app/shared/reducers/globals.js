@@ -18,6 +18,14 @@ export default function globals(state = initialState, action) {
         current: action.payload.results.rows[0]
       });
     }
+    // GET_CURRENCYSTATS_REQUEST
+    // GET_CURRENCYSTATS_SUCCESS
+    // GET_CURRENCYSTATS_FAILURE
+    case types.GET_CURRENCYSTATS_SUCCESS: {
+      return Object.assign({}, state, {
+        eos: action.payload.results.EOS
+      });
+    }
     default: {
       return state;
     }
