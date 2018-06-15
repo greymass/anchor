@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Header, Grid, Segment } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
-import SidebarConnection from './Sidebar/Connection';
+import SidebarConnection from '../containers/Sidebar/Connection';
 
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
@@ -210,7 +210,10 @@ export default class Producers extends Component<Props> {
       <Grid divided>
         <Grid.Row>
           <Grid.Column width={6}>
-            <SidebarConnection />
+            <SidebarConnection
+              actions={actions}
+              history={history}
+            />
             {sidebar}
           </Grid.Column>
           <Grid.Column width={10}>
