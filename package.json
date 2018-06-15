@@ -65,6 +65,13 @@
         "nsis"
       ]
     },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "eos-voter"
+    },
     "linux": {
       "category": "Network",
       "desktop": {
