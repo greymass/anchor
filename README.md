@@ -23,12 +23,12 @@
 
 ### Releases
 
-Current 0.1.5 release downloads:
+Current 0.1.6 release downloads:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter-setup-0.1.5.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter-0.1.5.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter_0.1.5_amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter_0.1.5_amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
 
 The latest release will always be available on the releases page of this repository:
 
