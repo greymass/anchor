@@ -56,6 +56,7 @@ export default class ProducersTableRow extends Component<Props> {
       addProducer,
       isSelected,
       producer,
+      position,
       removeProducer,
       totalVoteWeight,
       validUser
@@ -97,6 +98,12 @@ export default class ProducersTableRow extends Component<Props> {
               </Table.Cell>
               <Table.Cell
                 singleLine
+                width={1}
+              >
+                <b>{ position }</b>
+              </Table.Cell>
+              <Table.Cell
+                singleLine
               >
                 <Header size="tiny">
                   <span styles={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
@@ -109,6 +116,28 @@ export default class ProducersTableRow extends Component<Props> {
                     />
                   </Header.Subheader>
                 </Header>
+              </Table.Cell>
+              <Table.Cell
+                singleLine
+                width={3}
+              >
+                {(position < 22)
+                ? (
+                  <Icon
+                    color="green"
+                    name="cubes"
+                    title={t('active_producer')}
+                  />
+                  ) : (producer.isBackup)
+                ? (
+                  <Icon
+                    color="yellow"
+                    name="cube"
+                    title={t('backup_producer')}
+                  />
+                  ) : ''
+                }
+
               </Table.Cell>
               <Table.Cell
                 singleLine

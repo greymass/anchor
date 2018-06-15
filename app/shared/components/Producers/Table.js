@@ -20,6 +20,14 @@ export default class ProducersTable extends Component<Props> {
     this.setState({ filter });
   }, 300);
 
+  filterIsEmpty() {
+    const {
+      filter
+    } = this.state;
+
+    return (!filter || filter.length === 0 );
+  }
+
   render() {
     const {
       globals,
@@ -48,25 +56,26 @@ export default class ProducersTable extends Component<Props> {
       body = (
         <Table.Body>
           {producers.list
-            .filter(producer => (filter ? producer.owner.includes(filter) : true))
             .map((producer, idx) => {
               const isSelected = (selected.indexOf(producer.owner) !== -1);
-              return (
-                <ProducersTableRow
-                  addProducer={this.props.addProducer}
-                  filter={filter}
-                  isSelected={isSelected}
-                  position={idx + 1}
-                  producer={producer}
-                  removeProducer={this.props.removeProducer}
-                  totalVoteWeight={totalVoteWeight}
-                  validUser={validUser}
-                />
-              );
+              if (this.filterIsEmpty() || producer.owner.includes(filter)) {
+                return (
+                  <ProducersTableRow
+                    addProducer={this.props.addProducer}
+                    filter={filter}
+                    isSelected={isSelected}
+                    position={idx + 1}
+                    producer={producer}
+                    removeProducer={this.props.removeProducer}
+                    totalVoteWeight={totalVoteWeight}
+                    validUser={validUser}
+                  />
+                );
+              }
             })
           }
         </Table.Body>
-      )
+      );
     }
     return (
       <I18n ns="producers">
@@ -104,11 +113,16 @@ export default class ProducersTable extends Component<Props> {
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell collapsing />
+                    <Table.HeaderCell collapsing />
+
                     <Table.HeaderCell
                       sorted={column === 'owner' ? direction : null}
                     >
                       {t('block_producer')}
                     </Table.HeaderCell>
+
+                    <Table.HeaderCell collapsing />
+
                     <Table.HeaderCell
                       sorted={column === 'votes' ? direction : null}
                     >
