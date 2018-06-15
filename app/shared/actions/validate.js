@@ -14,8 +14,7 @@ export function validateAccount(account) {
       });
     }
     const {
-      connection,
-      settings
+      connection
     } = getState();
     try {
       // A generic info call to make sure it's working
@@ -64,8 +63,7 @@ export function validateNode(node) {
       // Establish EOS connection
       try {
         const {
-          connection,
-          settings
+          connection
         } = getState();
         let { host, protocol, pathname } = new URL(node);
         // If the protocol contains the original value with a colon,
@@ -150,7 +148,6 @@ export function validateKey(key) {
           }
         } catch (err) {
           // key is likely invalid, an exception was thrown
-          console.log('invalid key', err);
           return dispatch({
             payload: { err },
             type: types.VALIDATE_KEY_FAILURE

@@ -41,27 +41,28 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
                   color="blue"
                   content={t('wallet_panel_password_confirm_button')}
                   disabled={disabled}
-                  fluid
                   onClick={onConfirm}
                 />
               )}
               onClose={onCancel}
               open={open}
               size="tiny"
+              style={{ height: 'auto' }}
             >
               <Header icon="lock" content={t('wallet_panel_password_confirm_title')} />
               <Modal.Content>
                 <h3>{t('wallet_panel_password_confirm_description')}</h3>
-                <Form.Field
-                  autoFocus
-                  control={Input}
-                  fluid
-                  icon={matches ? 'checkmark' : 'x'}
-                  label={t('wallet_panel_password_label')}
-                  onChange={this.compare}
-                  onKeyPress={this.onKeyPress}
-                  type="password"
-                />
+                <Form>
+                  <Form.Field
+                    autoFocus
+                    control={Input}
+                    icon={matches ? 'checkmark' : 'x'}
+                    label={t('wallet_panel_password_label')}
+                    onChange={this.compare}
+                    onKeyPress={this.onKeyPress}
+                    type="password"
+                  />
+                </Form>
               </Modal.Content>
               <Modal.Actions>
                 <Button
