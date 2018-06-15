@@ -6,61 +6,30 @@ import { withRouter } from 'react-router-dom';
 
 import Welcome from '../components/Welcome';
 
-import * as AccountsActions from '../actions/accounts';
-import * as ChainActions from '../actions/chain';
-import * as GlobalsActions from '../actions/globals';
-import * as ProducersActions from '../actions/producers';
 import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
-import * as WalletActions from '../actions/wallet';
-import * as StakeActions from '../actions/stake';
-import * as VoteProducerActions from '../actions/system/voteproducer';
 
 type Props = {
-  keys: {},
-  history: {},
+  actions: {},
   settings: {},
-  validate: {},
-  wallet: {}
+  validate: {}
 };
 
 class WelcomeContainer extends Component<Props> {
   props: Props;
-  componentDidMount() {
-    const {
-      history,
-      validate
-    } = this.props;
-    if (validate.NODE === 'SUCCESS') {
-      history.push('/voter');
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      history,
-      validate
-    } = nextProps;
-    if (validate && validate.NODE === 'SUCCESS') {
-      history.push('/voter');
-    }
-  }
-
   render() {
     const {
       actions,
-      keys,
+      history,
       settings,
-      validate,
-      wallet
+      validate
     } = this.props;
     return (
       <Welcome
         actions={actions}
-        keys={keys}
+        history={history}
         settings={settings}
         validate={validate}
-        wallet={wallet}
       />
     );
   }
@@ -68,31 +37,16 @@ class WelcomeContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    accounts: state.accounts,
-    balances: state.balances,
-    chain: state.chain,
-    globals: state.globals,
-    keys: state.keys,
-    producers: state.producers,
     settings: state.settings,
-    system: state.system,
-    validate: state.validate,
-    wallet: state.wallet
+    validate: state.validate
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...AccountsActions,
-      ...ChainActions,
-      ...GlobalsActions,
-      ...ProducersActions,
       ...SettingsActions,
-      ...ValidateActions,
-      ...WalletActions,
-      ...StakeActions,
-      ...VoteProducerActions
+      ...ValidateActions
     }, dispatch)
   };
 }
