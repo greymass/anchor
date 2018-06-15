@@ -4,8 +4,12 @@ const initialState = {
   acceptedConstitution: false,
   account: '',
   lang: 'en',
-  node: ''
+  node: '',
+  skipImport: false,
+  setupData: {}
 };
+
+const validSettings = Object.keys(initialState);
 
 export default function settings(state = initialState, action) {
   switch (action.type) {
@@ -19,13 +23,7 @@ export default function settings(state = initialState, action) {
       return Object.assign({}, state, action.payload);
     }
     case types.RESET_INVALID_SETTINGS: {
-      return Object.assign({}, {
-        acceptedConstitution: state.acceptedConstitution,
-        account: state.account,
-        lang: state.lang,
-        node: state.node,
-        setupData: state.setupData
-      });
+      return Object.assign({}, validSettings.reduce((o, setting) => ({ ...o, [setting]: state[setting] }), {}));
     }
     default: {
       return state;
