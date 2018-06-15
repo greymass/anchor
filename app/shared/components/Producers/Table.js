@@ -121,13 +121,13 @@ export default class ProducersTable extends Component<Props> {
                       {t('block_producer')}
                     </Table.HeaderCell>
 
-                    <Table.HeaderCell collapsing />
-
                     <Table.HeaderCell
                       sorted={column === 'votes' ? direction : null}
                     >
                       {t('block_producer_total_votes')}
                     </Table.HeaderCell>
+
+                    <Table.HeaderCell collapsing />
                   </Table.Row>
                 </Table.Header>
                 {body}

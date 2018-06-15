@@ -119,7 +119,25 @@ export default class ProducersTableRow extends Component<Props> {
               </Table.Cell>
               <Table.Cell
                 singleLine
-                width={3}
+                width={5}
+              >
+                <Progress
+                  color="teal"
+                  label={(
+                    <div className="label">
+                      {votePercent}%
+                      <Responsive as="span" minWidth={800}>
+                        - {voteFormatted}
+                      </Responsive>
+                    </div>
+                  )}
+                  percent={parseFloat(votePercent * 100) / 100}
+                  size="tiny"
+                  style={{ minWidth: 0 }}
+                />
+              </Table.Cell>
+              <Table.Cell
+                singleLine
               >
                 {(position < 22)
                 ? (
@@ -138,25 +156,6 @@ export default class ProducersTableRow extends Component<Props> {
                   ) : ''
                 }
 
-              </Table.Cell>
-              <Table.Cell
-                singleLine
-                width={5}
-              >
-                <Progress
-                  color="teal"
-                  label={(
-                    <div className="label">
-                      {votePercent}%
-                      <Responsive as="span" minWidth={800}>
-                        - {voteFormatted}
-                      </Responsive>
-                    </div>
-                  )}
-                  percent={parseFloat(votePercent * 100) / 100}
-                  size="tiny"
-                  style={{ minWidth: 0 }}
-                />
               </Table.Cell>
             </Table.Row>
           )
