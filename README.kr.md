@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/eos-voter/master/LICENSE)
 ![downloads](https://img.shields.io/github/downloads/greymass/eos-voter/total.svg)
 
-[English](https://github.com/greymass/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/eos-voter/blob/master/README.kr.md)
+[English](https://github.com/greymass/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/eos-voter/blob/master/README.kr.md) - [中文](https://github.com/greymass/eos-voter/blob/master/README.zh.md) - [日本語](https://github.com/greymass/eos-voter/blob/master/README.ja.md)
 
 # eos-voter - EOS 블록 생산자 투표 및 지갑
 
@@ -23,12 +23,12 @@
 
 ### 가장 최근 버전
 
-현재 0.1.5 버전 다운로드 :
+현재 0.1.6 버전 다운로드 :
 
-- [Windows 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter-setup-0.1.5.exe)
-- [macOS 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter-0.1.5.dmg)
-- [Linux 사용자 (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter_0.1.5_amd64.deb)
-- [Linux 사용자 (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.5/eos-voter_0.1.5_amd64.snap)
+- [Windows 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
+- [macOS 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
+- [Linux 사용자 (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
+- [Linux 사용자 (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
 
 최신 버전은 항상이 저장소의 릴리스 페이지에서 제공됩니다:
 
