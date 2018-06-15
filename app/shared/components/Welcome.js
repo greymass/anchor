@@ -1,9 +1,14 @@
 // @flow
 import React, { Component } from 'react';
-import { Dropdown, Grid, Image, Header, Message, Segment } from 'semantic-ui-react';
-import { I18n, translate } from 'react-i18next';
-import FormConnectionContainer from '../containers/Form/Connection';
+import { Breadcrumb, Button, Container, Dropdown, Grid, Image, Header } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
+
 import eos from '../../renderer/assets/images/eos.png';
+
+import WelcomeAccount from './Welcome/Account';
+import WelcomeConnection from './Welcome/Connection';
+import WelcomeKey from './Welcome/Key';
+import WelcomeWallet from './Welcome/Wallet';
 
 const { shell } = require('electron');
 
@@ -16,6 +21,10 @@ const languages = [
 ];
 
 class Welcome extends Component<Props> {
+  state = {
+    stageSelect: false
+  };
+
   openLink = (url) => shell.openExternal(url);
 
   onChange = (e, { value }) => {
@@ -24,79 +33,139 @@ class Welcome extends Component<Props> {
     actions.setSetting('lang', value);
   }
 
+  onStageSelect = (stage) => this.setState({ stageSelect: stage });
+
+  skipImport = () => {
+    const {
+      actions,
+      history
+    } = this.props;
+    const {
+      setSetting
+    } = actions;
+    setSetting('skipImport', true);
+    history.push('/voter');
+  }
+
   render() {
-    const { settings } = this.props;
-    return (
-      <I18n ns="welcome">
-        {
-          (t) => (
-            <div className="login-form">
-              {/*
-                Heads up! The styles below are necessary for the correct render of this example.
-                You can do same with CSS, the main idea is that all the elements up to the `Grid`
-                below must have a height of 100%.
-              */}
-              <style>
-                {`
-                  body > div,
-                  body > div > div,
-                  body > div > div > div.login-form {
-                    height: 100%;
-                  }
-                `}
-              </style>
-              <Grid
-                textAlign="center"
-                style={{ height: '100%' }}
-                verticalAlign="middle"
-              >
-                <Grid.Column style={{ maxWidth: 450 }}>
-                  <Header
-                    color="teal"
-                    textAlign="center"
-                  >
-                    <Image src={eos} />
-                    <Header.Content>
-                      {t('application_name')}
-                      <Header.Subheader>
-                        {t('application_version')}
-                      </Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                  <Segment
-                    size="small"
-                    stacked
-                  >
-                    <p>{t('welcome_instructions_1')}</p>
-                    <FormConnectionContainer />
-                    <p>{t('welcome_instructions_2')}</p>
-                  </Segment>
-                  <Message info>
-                    <Header>
-                      {t('welcome_more_servers_1')}
-                    </Header>
-                    <p>
-                      <a
-                        onClick={() => this.openLink(`https://github.com/greymass/eos-voter/blob/master/nodes.md`)}
-                        role="link"
-                      >
-                        {t('welcome_more_servers_2')}
-                      </a>
-                    </p>
-                  </Message>
-                  <Dropdown
-                    defaultValue={settings.lang}
-                    selection
-                    size="small"
-                    onChange={this.onChange}
-                    options={languages}
-                  />
-                </Grid.Column>
-              </Grid>
-            </div>
-          )
+    const {
+      settings,
+      t,
+      validate
+    } = this.props;
+    const {
+      stageSelect
+    } = this.state;
+    let stage = 0;
+    if (stageSelect !== false) {
+      stage = stageSelect;
+    }
+    if (validate.NODE === 'SUCCESS') {
+      stage = 1;
+    } else if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS') {
+      stage = 2;
+    } else if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
+      stage = 3;
+    }
+    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} />;
+    if (validate.NODE === 'SUCCESS' && stage >= 1) {
+      stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} />;
+      if (validate.ACCOUNT === 'SUCCESS' && stage >= 2) {
+        stageElement = <WelcomeKey onStageSelect={this.onStageSelect} />;
+        if (validate.KEY === 'SUCCESS' && stage === 3) {
+          stageElement = <WelcomeWallet />;
         }
-      </I18n>
+      }
+    }
+    return (
+      <div className="welcome">
+        <style>
+          {`
+            body > div,
+            body > div > div,
+            body > div > div > div.welcome {
+              height: 100%;
+            }
+          `}
+        </style>
+        <Grid
+          textAlign="center"
+          style={{ height: '100%' }}
+        >
+          <Grid.Column
+            style={{ maxWidth: 450 }}
+            textAlign="left"
+            verticalAlign="middle"
+          >
+            <Header
+              color="teal"
+              textAlign="center"
+            >
+              <Image src={eos} />
+              <Header.Content>
+                {t('application_name')}
+                <Header.Subheader>
+                  {t('application_version')}
+                </Header.Subheader>
+              </Header.Content>
+            </Header>
+            <Container textAlign="center">
+              <Breadcrumb size="large">
+                <Breadcrumb.Section
+                  active={(validate.NODE !== 'SUCCESS' || stage === 0)}
+                  onClick={(validate.NODE === 'SUCCESS' && stage > 0) ? () => this.onStageSelect(0) : null}
+                >
+                  {t('welcome_stage_connection')}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right angle" />
+                <Breadcrumb.Section
+                  active={(validate.NODE === 'SUCCESS' || stage === 1)}
+                  onClick={(stage > 1) ? () => this.onStageSelect(1) : null}
+                >
+                  {t('welcome_stage_account')}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right angle" />
+                <Breadcrumb.Section
+                  active={(stage === 2)}
+                  onClick={(stage > 2) ? () => this.onStageSelect(2) : null}
+                >
+                  {t('welcome_stage_authorize')}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right angle" />
+                <Breadcrumb.Section
+                  active={(stage === 3)}
+                >
+                  {t('welcome_stage_wallet')}
+                </Breadcrumb.Section>
+              </Breadcrumb>
+            </Container>
+            {stageElement}
+            <Container textAlign="center">
+              <Dropdown
+                defaultValue={settings.lang}
+                selection
+                size="small"
+                onChange={this.onChange}
+                options={languages}
+              />
+              {(stage > 0)
+                ? (
+                  <p>
+                    <Button
+                      content={t('welcome:welcome_lookup_account_skip')}
+                      icon="x"
+                      onClick={this.skipImport}
+                      size="small"
+                      style={{ marginTop: '1em' }}
+                    />
+                  </p>
+                )
+                : false
+              }
+            </Container>
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }

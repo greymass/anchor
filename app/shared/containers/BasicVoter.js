@@ -46,30 +46,15 @@ class BasicVoterContainer extends Component<Props> {
   };
 
   componentDidMount() {
-    // Validate settings on app start
     const {
-      actions,
-      settings,
+      history,
       validate
     } = this.props;
-    // Always validate the node on startup
-    actions.validateNode(settings.node);
-    if (!validate.ACCOUNT || validate.ACCOUNT !== 'SUCCESS') {
-      actions.validateAccount(settings.account);
+    if (validate.NODE !== 'SUCCESS') {
+      history.push('/');
     }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 30000);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
-    const nextValidate = nextProps.validate;
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.tick();
-    }
   }
 
   componentWillUnmount() {
