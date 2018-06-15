@@ -8,5 +8,6 @@
   "loading": "Loaded",
   "search": "Search...",
   "waiting": "Waiting...",
-  "reset_application": "DEBUG: Reset Application"
+  "reset_application": "DEBUG: Reset Application",
+  "continue_setup": "Continue Account Setup"
 }
