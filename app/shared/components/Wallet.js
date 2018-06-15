@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import SidebarConnection from './Sidebar/Connection';
+import SidebarConnection from '../containers/Sidebar/Connection';
 
 import WalletPanel from './Wallet/Panel';
 import WalletStatus from './Wallet/Status';
