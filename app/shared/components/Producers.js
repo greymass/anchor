@@ -8,7 +8,6 @@ import SidebarConnection from './Sidebar/Connection';
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingPreview from './Producers/Modal/Preview';
-import WalletPanel from './Wallet/Panel';
 
 type Props = {
   actions: {
@@ -176,19 +175,7 @@ export default class Producers extends Component<Props> {
       selected,
       submitting
     } = this.state;
-    let sidebar = [(
-      <WalletPanel
-        key="WalletPanel"
-        actions={actions}
-        accounts={accounts}
-        keys={keys}
-        settings={settings}
-        validate={validate}
-        wallet={wallet}
-        balances={balances}
-        system={system}
-      />
-    )];
+    let sidebar = [];
     const validUser = !!keys.key;
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
