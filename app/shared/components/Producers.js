@@ -18,16 +18,15 @@ type Props = {
   },
   accounts: {},
   globals: {},
+  history: {},
   keys: {},
   producers: {
+    lastError: {},
     lastTransaction: {},
     selected: []
   },
   settings: {},
-  validate: {},
-  wallet: {},
-  balances: {},
-  system: {}
+  validate: {}
 };
 
 export default class Producers extends Component<Props> {
@@ -160,13 +159,10 @@ export default class Producers extends Component<Props> {
       actions,
       accounts,
       globals,
+      history,
       keys,
       producers,
-      settings,
-      validate,
-      wallet,
-      balances,
-      system
+      settings
     } = this.props;
     const {
       lastError,
