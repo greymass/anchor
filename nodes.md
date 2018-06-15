@@ -26,6 +26,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://api1.eosdublin.io - operated by [EOS Dublin](https://eosdublin.io)
 - https://api2.eosdublin.io - operated by [EOS Dublin](https://eosdublin.io)
 - https://eosapi.blockmatrix.network - operated by [Block Matrix](https://blockmatrix.network)
+- https://mainnet.eoscannon.io - operated by [EOS Cannon](https://eoscannon.io)
 
 ### Additions
 
