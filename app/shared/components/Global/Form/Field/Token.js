@@ -9,7 +9,7 @@ export default class FormFieldToken extends Component<Props> {
   state = { value: '' };
   onChange = debounce((e, { name, value }) => {
     const asset = 'EOS';
-    const parsed = (value > 0) ? `${parseFloat(value).toFixed(4)} ${asset}` : `0.0000 ${asset}`;
+    const parsed = (value > 0) ? `${value.toFixed(4)} ${asset}` : `0.0000 ${asset}`;
     this.setState({
       value: parsed,
     }, () => {

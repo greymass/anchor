@@ -4,6 +4,8 @@ import * as types from './types';
 import { delegatebw } from './system/delegatebw';
 import { undelegatebw } from './system/undelegatebw';
 
+import {Decimal} from 'decimal.js';
+
 export function setStakeWithValidation(EOSbalance, account, netAmount, cpuAmount) {
   return (dispatch: () => void) => {
     const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
@@ -68,8 +70,8 @@ function getNextAndCurrentStake(account, netAmount, cpuAmount) {
   } = account.self_delegated_bandwidth;
 
   const currentStake = {
-    cpuAmount: parseFloat(cpu_weight),
-    netAmount: parseFloat(net_weight)
+    cpuAmount: new Decimal(cpu_weight.split(' ')[0]),
+    netAmount: new Decimal(net_weight.split(' ')[0])
   };
 
   return {
