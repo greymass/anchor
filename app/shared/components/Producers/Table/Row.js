@@ -141,19 +141,31 @@ export default class ProducersTableRow extends Component<Props> {
               >
                 {(position < 22)
                 ? (
-                  <Icon
-                    color="green"
-                    name="cubes"
-                    title={t('active_producer')}
+                  <Popup
+                    content={t('active_producer')}
+                    inverted
+                    position="left center"
+                    trigger={(
+                      <Icon
+                        color="green"
+                        name="cubes"
+                      />
+                    )}
                   />
                   ) : false
                 }
                 {(producer.isBackup && position > 21)
                 ? (
-                  <Icon
-                    color="yellow"
-                    name="cube"
-                    title={t('backup_producer')}
+                  <Popup
+                    content={t('backup_producer')}
+                    inverted
+                    position="left center"
+                    trigger={(
+                      <Icon
+                        color="yellow"
+                        name="cube"
+                      />
+                    )}
                   />
                   ) : ''
                 }
