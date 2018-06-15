@@ -67,7 +67,7 @@ export function getProducers(previous = false) {
         const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
         return Object.assign({}, {
           isBackup,
-          key: `${producer.owner}-${producer.last_produced_block_time}`,
+          key: `${producer.owner}-${producer.total_votes}`,
           last_produced_block_time: producer.last_produced_block_time,
           owner: producer.owner,
           percent,
