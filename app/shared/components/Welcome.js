@@ -60,12 +60,12 @@ class Welcome extends Component<Props> {
     if (stageSelect !== false) {
       stage = stageSelect;
     }
-    if (validate.NODE === 'SUCCESS') {
-      stage = 1;
+    if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
+      stage = 3;
     } else if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS') {
       stage = 2;
-    } else if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
-      stage = 3;
+    } else if (validate.NODE === 'SUCCESS') {
+      stage = 1;
     }
     let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} />;
     if (validate.NODE === 'SUCCESS' && stage >= 1) {
