@@ -1,5 +1,6 @@
 import * as types from './types';
 import sortBy from 'lodash/sortBy';
+import concat from 'lodash/concat';
 
 import eos from './helpers/eos';
 
@@ -11,19 +12,36 @@ export function clearProducerCache() {
   };
 }
 
-export function getProducers() {
+export function getProducers(previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_PRODUCERS_REQUEST
     });
     const { connection } = getState();
-    eos(connection).getTableRows({
+    const query = {
       json: true,
       code: 'eosio',
       scope: 'eosio',
       table: 'producers',
-      limit: 1000
-    }).then((results) => {
+      limit: 1000,
+    };
+    if (previous) {
+      query.lower_bound = previous[previous.length - 1].owner;
+    }
+    eos(connection).getTableRows(query).then((results) => {
+      let { rows } = results;
+      // If previous rows were returned
+      if (previous) {
+        // slice last element to avoid dupes
+        previous.pop();
+        // merge arrays
+        rows = concat(previous, rows);
+      }
+      // if there are missing results
+      if (results.more) {
+        // recurse
+        return dispatch(getProducers(rows));
+      }
       const { globals } = getState();
       const { current } = globals;
       let backupMinimumPercent = false;
@@ -43,7 +61,7 @@ export function getProducers() {
         // Percentage required to earn 100 tokens/day (break point for backups)
         backupMinimumPercent = 100 / tokensToProducersForVotes;
       }
-      const data = results.rows.map((producer) => {
+      const data = rows.map((producer) => {
         const votes = parseInt(producer.total_votes, 10);
         const percent = votes / current.total_producer_vote_weight;
         const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
