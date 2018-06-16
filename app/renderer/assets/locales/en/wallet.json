@@ -52,5 +52,8 @@
   "wallet_panel_wallet_lock": "Lock Wallet",
   "wallet_panel_form_use_temporary": "Use account + key without saving",
   "wallet_panel_locked": "Wallet Locked",
-  "wallet_panel_locked_subheader": "To perform actions the wallet must be unlocked."
+  "wallet_panel_locked_subheader": "To perform actions the wallet must be unlocked.",
+  "wallet_status_resources_being_unstaked": "being Unstaked",
+  "wallet_status_total_balance": "Total",
+  "wallet_status_liquid": "Liquid"
 }
