@@ -19,12 +19,15 @@ class WalletStatusBalances extends Component<Props> {
       refund_request
     } = account;
     const totalStaked = (parseFloat(self_delegated_bandwidth.cpu_weight) + parseFloat(self_delegated_bandwidth.net_weight));
-    const totalBeingUnstaked = (parseFloat(refund_request.net_amount) + parseFloat(refund_request.cpu_amount));
     const tokens = (balances && balances[settings.account]) ? balances[settings.account] : { EOS: 0 };
-    const totalTokens = totalStaked + totalBeingUnstaked + tokens.EOS;
-    const refundDate = new Date(`${refund_request.request_time}z`);
-    refundDate.setHours(refundDate.getHours() + 72);
-
+    let refundDate = false;
+    let totalBeingUnstaked = 0;
+    if (refund_request) {
+      totalBeingUnstaked = parseFloat(refund_request.net_amount) + parseFloat(refund_request.cpu_amount)
+      refundDate = new Date(`${refund_request.request_time}z`);
+      refundDate.setHours(refundDate.getHours() + 72);
+    }
+    const totalTokens = totalStaked + totalBeingUnstaked + ((tokens.EOS) ? tokens.EOS : 0);
     const rows = [
       (
         <Table.Row key="EOS">
@@ -42,10 +45,15 @@ class WalletStatusBalances extends Component<Props> {
                   <Table.Cell>{t('wallet_status_resources_staked')}</Table.Cell>
                   <Table.Cell>{totalStaked.toFixed(4)} EOS </Table.Cell>
                 </Table.Row>
-                <Table.Row>
-                  <Table.Cell>{t('wallet_status_resources_being_unstaked')} </Table.Cell>
-                  <Table.Cell>{totalBeingUnstaked.toFixed(4)} EOS (<TimeAgo date={refundDate} />)</Table.Cell>
-                </Table.Row>
+                {(refund_request)
+                  ? (
+                    <Table.Row>
+                      <Table.Cell>{t('wallet_status_resources_being_unstaked')} </Table.Cell>
+                      <Table.Cell>{totalBeingUnstaked.toFixed(4)} EOS (<TimeAgo date={refundDate} />)</Table.Cell>
+                    </Table.Row>
+                  )
+                  : false
+                }
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_total_balance')}</Table.Cell>
                   <Table.Cell>{totalTokens.toFixed(4)} EOS</Table.Cell>
