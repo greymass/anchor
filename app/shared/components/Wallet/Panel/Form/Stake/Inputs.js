@@ -65,8 +65,8 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
       net_weight
     } = account.self_delegated_bandwidth;
 
-    const cleanedNetAmount = netAmount || net_weight;
-    const cleanedCpuAmount = cpuAmount || cpu_weight;
+    const cleanedNetAmount = netAmount === '' ? net_weight : netAmount;
+    const cleanedCpuAmount = cpuAmount === '' ? cpu_weight : cpuAmount;
 
     return {
       realNetAmount: new Decimal(cleanedNetAmount),
