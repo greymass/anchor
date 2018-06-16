@@ -6,5 +6,6 @@
   "global_transaction_complete_title": "送信されたトランザクション",
   "global_transaction_complete_message": "トランザクションがブロックチェーンに送信されました。",
   "global_transaction_complete_warning_title": "トランザクションは未承認です",
-  "global_transaction_complete_warning_message": "トランザクション送信は承認されることを保証していません。このトランザクションが完了しネットワークで承認されたことを確認するには、上記のトランザクションIDをブロックエクスプローラで参照し、最新の不可逆なブロックに入っていることを確認してください。"
+  "global_transaction_complete_warning_message": "トランザクション送信は承認されることを保証していません。このトランザクションが完了しネットワークで承認されたことを確認するには、上記のトランザクションIDをブロックエクスプローラで参照し、最新の不可逆なブロックに入っていることを確認してください。",
+  "error_not_valid_stake_amount": "ステーク量が不正です (小数点以下4位までの正の数でなければなりません。例 12.1212) 。"
 }

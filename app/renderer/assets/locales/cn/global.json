@@ -6,5 +6,6 @@
   "global_transaction_complete_title": "提交的交易",
   "global_transaction_complete_message": "您的交易已提交至区块链.",
   "global_transaction_complete_warning_title":"交易未确认",
-  "global_transaction_complete_warning_message":"提交交易并不保证会被确认，为了确保交易在网络中完成并确认，请在资源管理器中引用上述交易ID以确保它进入最后一个不可逆转块."
+  "global_transaction_complete_warning_message":"提交交易并不保证会被确认，为了确保交易在网络中完成并确认，请在资源管理器中引用上述交易ID以确保它进入最后一个不可逆转块.",
+  "error_not_valid_stake_amount":"不是有效的放样金额（必须是正数,最大精度为4位小数,例如12.1212）"
 }
