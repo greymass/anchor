@@ -7,6 +7,7 @@ const languages = [
   { key: 'cn', value: 'cn', flag: 'cn', text: '中文' },
   { key: 'en', value: 'en', flag: 'us', text: 'EN' },
   { key: 'fr', value: 'fr', flag: 'fr', text: 'FR' },
+  { key: 'it', value: 'it', flag: 'it', text: 'IT' },
   { key: 'ja', value: 'ja', flag: 'jp', text: '日本語' },
   { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
 ];
