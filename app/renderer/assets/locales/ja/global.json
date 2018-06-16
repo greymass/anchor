@@ -1,5 +1,5 @@
 {
-  "global_dangerlink_warning_title": "注意: このアプリケーションを終了してもよろしいですか？",
+  "global_dangerlink_warning_title": "注意: このアプリケーションから離れてもよろしいですか？",
   "global_dangerlink_warning_body_1": "eos-voterは移動しようとしているウェブサイトの安全を保証できません。キーとアカウント情報の安全に慎重になり、信用できると確信できる場合にのみ情報を共有して下さい。",
   "global_dangerlink_warning_body_2": "秘密鍵は絶対に共有しないで下さい。",
   "global_dangerlink_warning_body_3": "進む場合は、以下の確認ボタンを押して下さい。",
