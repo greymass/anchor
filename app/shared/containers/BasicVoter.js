@@ -46,30 +46,15 @@ class BasicVoterContainer extends Component<Props> {
   };
 
   componentDidMount() {
-    // Validate settings on app start
     const {
-      actions,
-      settings,
+      history,
       validate
     } = this.props;
-    // Always validate the node on startup
-    actions.validateNode(settings.node);
-    if (!validate.ACCOUNT || validate.ACCOUNT !== 'SUCCESS') {
-      actions.validateAccount(settings.account);
+    if (validate.NODE !== 'SUCCESS') {
+      history.push('/');
     }
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 15000);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
-    const nextValidate = nextProps.validate;
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.tick();
-    }
+    this.interval = setInterval(this.tick.bind(this), 30000);
   }
 
   componentWillUnmount() {
@@ -83,11 +68,13 @@ class BasicVoterContainer extends Component<Props> {
       validate
     } = this.props;
     const {
+      getCurrencyStats,
       getGlobals,
       getInfo,
       getAccount
     } = actions;
     if (validate.NODE === 'SUCCESS') {
+      getCurrencyStats();
       getGlobals();
       getInfo();
       if (validate.ACCOUNT === 'SUCCESS') {

@@ -14,16 +14,11 @@ export function validateAccount(account) {
       });
     }
     const {
-      connection,
-      settings
+      connection
     } = getState();
     try {
       // A generic info call to make sure it's working
       eos(connection).getAccount(account).then((results) => {
-        // Revalidate the key whenever it's part of the validation process
-        if (settings.key) {
-          dispatch(validateKey(settings.key));
-        }
         // PATCH - Force in self_delegated_bandwidth if it doesn't exist
         const modified = results;
         if (!modified.self_delegated_bandwidth) {
@@ -68,8 +63,7 @@ export function validateNode(node) {
       // Establish EOS connection
       try {
         const {
-          connection,
-          settings
+          connection
         } = getState();
         let { host, protocol, pathname } = new URL(node);
         // If the protocol contains the original value with a colon,
@@ -96,9 +90,7 @@ export function validateNode(node) {
               type: types.VALIDATE_NODE_SUCCESS
             });
             // Refresh our connection properties with new chain info
-            dispatch(chain.getInfo());
-            // Trigger revalidation on the current account
-            return dispatch(validateAccount(settings.account));
+            return dispatch(chain.getInfo());
           }
           return dispatch({ type: types.VALIDATE_NODE_FAILURE });
         }).catch((err) => dispatch({
@@ -156,7 +148,6 @@ export function validateKey(key) {
           }
         } catch (err) {
           // key is likely invalid, an exception was thrown
-          console.log('invalid key', err);
           return dispatch({
             payload: { err },
             type: types.VALIDATE_KEY_FAILURE

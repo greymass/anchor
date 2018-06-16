@@ -10,6 +10,7 @@
   "block_producer_votes_none": "None",
   "block_producer_total_votes": "Total Votes",
   "block_producer_total_weight": "total vote weight",
+  "producer_none_match": "No producers match the search query.",
   "producer_none_loaded": "No producers data loaded...",
   "producer_voter_voting_as": "Voting as:",
   "producer_voted_connected_to": "connected to:",
@@ -35,5 +36,7 @@
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
-  "producer_welcome_p3": ""
+  "producer_welcome_p3": "",
+  "active_producer":"Active Producer",
+  "backup_producer":"Backup Producer"
 }

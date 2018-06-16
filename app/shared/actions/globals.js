@@ -18,6 +18,25 @@ export function getGlobals() {
   };
 }
 
+export function getCurrencyStats() {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.GET_CURRENCYSTATS_REQUEST
+    });
+    const { connection } = getState();
+    eos(connection).getCurrencyStats("eosio.token", "EOS").then((results) => dispatch({
+      type: types.GET_CURRENCYSTATS_SUCCESS,
+      payload: { results }
+    })).catch((err) => dispatch({
+      type: types.GET_CURRENCYSTATS_FAILURE,
+      payload: { err },
+    }));
+  };
+}
+
+
+
 export default {
+  getCurrencyStats,
   getGlobals
 };

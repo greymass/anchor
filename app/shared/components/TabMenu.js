@@ -35,13 +35,18 @@ export default class BasicMenu extends Component<Props> {
                 onClick={handleItemClick}
               />
 
-              <Menu.Item
-                name="wallet"
-                icon="protect"
-                content={t('wallet')}
-                active={activeItem === 'wallet'}
-                onClick={handleItemClick}
-              />
+              {(settings.account)
+                ? (
+                  <Menu.Item
+                    name="wallet"
+                    icon="protect"
+                    content={t('wallet')}
+                    active={activeItem === 'wallet'}
+                    onClick={handleItemClick}
+                  />
+                )
+                : false
+              }
 
               <Menu.Menu position="right">
                 <WalletLanguage

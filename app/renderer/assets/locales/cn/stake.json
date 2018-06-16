@@ -21,5 +21,8 @@
   "unstake_success":"成功取消EOS。",
   "update_staked_coins":"更新放大的余额",
   "update_staked_cpu_amount":"将EOS放入CPU中",
-  "update_staked_net_amount":"将EOS设置为带宽"
+  "update_staked_net_amount":"将EOS设置为带宽",
+  "eos_in_cpu_after": "EOS在中央处理器之后",
+  "eos_in_net_after": "EOS在宽带之后",
+  "you_will_have":"您会有"
 }

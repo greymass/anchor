@@ -1,7 +1,7 @@
 {
   "name": "eos-voter",
   "productName": "eos-voter",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -65,11 +65,17 @@
         "nsis"
       ]
     },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "eos-voter"
+    },
     "linux": {
       "category": "Network",
       "desktop": {
         "Name": "eos-voter",
-        "Version": "0.1.5",
         "GenericName": "EOS Voting Client + Wallet",
         "X-GNOME-FullName": "eos-voter",
         "Comment": "A simple voting interface and wallet for EOS accounts.",
@@ -208,6 +214,7 @@
   },
   "dependencies": {
     "crypto-js": "^3.1.9-1",
+    "decimal.js": "^10.0.1",
     "electron-store": "^2.0.0",
     "eosjs": "^14.1.0",
     "history": "^4.7.2",

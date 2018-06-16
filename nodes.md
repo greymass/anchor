@@ -25,6 +25,9 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://dc1.eosemerge.io:5443 - operated by [EOS Emerge Poland](http://eosemerge.io/)
 - https://api1.eosdublin.io - operated by [EOS Dublin](https://eosdublin.io)
 - https://api2.eosdublin.io - operated by [EOS Dublin](https://eosdublin.io)
+- https://mainnet.eoscannon.io - operated by [EOS Cannon](https://eoscannon.io)
+- https://eos-api.privex.io - operated by [Privex (privexinceos)](http://eosportal.io/chain/12/producers/privexinceos) (HTTP and HTTPS)
+- https://eosapi.blockmatrix.network - operated by [Block Matrix](https://blockmatrix.network)
 
 ### Additions
 

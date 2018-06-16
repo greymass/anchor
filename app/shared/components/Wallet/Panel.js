@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 
-import WalletPanelForm from './Panel/Form';
 import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
 
@@ -33,16 +32,7 @@ export default class WalletPanel extends Component<Props> {
       clearSettingsCache
     } = this.props.actions;
 
-    let panel = (
-      <WalletPanelForm
-        actions={actions}
-        accounts={accounts}
-        keys={keys}
-        settings={settings}
-        validate={validate}
-        wallet={wallet}
-      />
-    );
+    let panel = false;
     if ((!keys || !keys.key) && wallet.data) {
       panel = (
         <WalletPanelLocked

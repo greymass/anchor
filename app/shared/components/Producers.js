@@ -1,14 +1,15 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Grid, Segment } from 'semantic-ui-react';
-import { I18n } from 'react-i18next';
+import { Header, Grid, Loader, Segment, Sticky, Table, Visibility } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 
-import SidebarConnection from './Sidebar/Connection';
+import SidebarConnection from '../containers/Sidebar/Connection';
+import WalletPanel from './Wallet/Panel';
+
 
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingPreview from './Producers/Modal/Preview';
-import WalletPanel from './Wallet/Panel';
 
 type Props = {
   actions: {
@@ -19,30 +20,31 @@ type Props = {
   },
   accounts: {},
   globals: {},
+  history: {},
   keys: {},
   producers: {
+    lastError: {},
     lastTransaction: {},
     selected: []
   },
   settings: {},
-  validate: {},
-  wallet: {},
-  balances: {},
-  system: {}
+  t: () => void,
+  validate: {}
 };
 
-export default class Producers extends Component<Props> {
+class Producers extends Component<Props> {
   props: Props;
 
   constructor(props) {
     super(props);
     this.state = {
+      amount: 40,
       lastError: false,
       lastTransaction: {},
       previewing: false,
       selected: [],
       selected_loaded: false,
-      submitting: false
+      submitting: false,
     };
   }
 
@@ -99,6 +101,10 @@ export default class Producers extends Component<Props> {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
+  loadMore = () => this.setState({ amount: this.state.amount + 20 });
+
+  resetDisplayAmount = () => this.setState({ amount: 40 });
 
   tick() {
     const {
@@ -160,16 +166,19 @@ export default class Producers extends Component<Props> {
     const {
       actions,
       accounts,
+      balances,
       globals,
+      history,
       keys,
       producers,
       settings,
+      system,
+      t,
       validate,
-      wallet,
-      balances,
-      system
+      wallet
     } = this.props;
     const {
+      amount,
       lastError,
       lastTransaction,
       previewing,
@@ -178,15 +187,14 @@ export default class Producers extends Component<Props> {
     } = this.state;
     let sidebar = [(
       <WalletPanel
-        key="WalletPanel"
         actions={actions}
         accounts={accounts}
+        balances={balances}
         keys={keys}
         settings={settings}
+        system={system}
         validate={validate}
         wallet={wallet}
-        balances={balances}
-        system={system}
       />
     )];
     const validUser = !!keys.key;
@@ -220,41 +228,59 @@ export default class Producers extends Component<Props> {
       ];
     }
     return (
-      <Grid divided>
-        <Grid.Row>
-          <Grid.Column width={6}>
-            <SidebarConnection />
-            {sidebar}
-          </Grid.Column>
-          <Grid.Column width={10}>
-            {(producers.list.length > 0)
-             ? (
-               <ProducersTable
-                 addProducer={this.addProducer.bind(this)}
-                 globals={globals}
-                 producers={producers}
-                 removeProducer={this.removeProducer.bind(this)}
-                 selected={selected}
-                 validUser={validUser}
-               />
-             )
-             : (
-               <I18n ns="producers">
-                 {
-                   (t) => (
-                     <Segment stacked>
-                       <Header textAlign="center">
-                         {t('producer_none_loaded')}
-                       </Header>
-                     </Segment>
-                   )
-                 }
-               </I18n>
-             )
-            }
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div ref={this.handleContextRef}>
+        <Grid divided>
+          <Grid.Row>
+            <Grid.Column width={6}>
+              <SidebarConnection
+                actions={actions}
+                history={history}
+              />
+              {sidebar}
+            </Grid.Column>
+            <Grid.Column width={10}>
+              {(producers.list.length > 0)
+               ? [(
+                 <Visibility
+                   continuous
+                   fireOnMount
+                   onBottomVisible={this.loadMore}
+                   once={false}
+                 >
+                   <ProducersTable
+                     addProducer={this.addProducer.bind(this)}
+                     amount={amount}
+                     attached="top"
+                     globals={globals}
+                     producers={producers}
+                     removeProducer={this.removeProducer.bind(this)}
+                     resetDisplayAmount={this.resetDisplayAmount}
+                     selected={selected}
+                     validUser={validUser}
+                   />
+                 </Visibility>
+               ), (
+                 (amount < producers.list.length)
+                 ? (
+                   <Segment clearing padded vertical>
+                     <Loader active />
+                   </Segment>
+                 ) : false
+               )]
+               : (
+                 <Segment attached="bottom" stacked>
+                   <Header textAlign="center">
+                     {t('producer_none_loaded')}
+                   </Header>
+                 </Segment>
+               )
+              }
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     );
   }
 }
+
+export default translate('producers')(Producers);
