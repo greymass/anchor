@@ -17,6 +17,7 @@
   "welcome_stage_authorize": "Authorize",
   "welcome_stage_wallet": "Wallet",
   "welcome_lookup_account": "Lookup Account",
+  "welcome_select_account": "Select Account",
   "welcome_lookup_account_skip": "Skip Import",
   "welcome_account_select_title": "Account Selection",
   "welcome_account_select_content": "Choose an account from the dropdown above.",
