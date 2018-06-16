@@ -16,6 +16,7 @@ const languages = [
   { key: 'cn', value: 'cn', flag: 'cn', text: '中文' },
   { key: 'en', value: 'en', flag: 'us', text: 'English' },
   { key: 'fr', value: 'fr', flag: 'fr', text: 'Français' },
+  { key: 'it', value: 'it', flag: 'it', text: 'Italiano' },
   { key: 'ja', value: 'ja', flag: 'jp', text: '日本語' },
   { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
 ];

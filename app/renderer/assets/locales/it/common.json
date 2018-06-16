@@ -1,0 +1,12 @@
+{
+  "application_name": "eos-voter",
+  "application_version": "v0.1.6",
+  "block_height": "Numero di Blocco",
+  "cancel": "Cancella",
+  "close": "Chiudi",
+  "confirm": "Conferma",
+  "loading": "Caricato",
+  "search": "Cerca...",
+  "waiting": "In attesa...",
+  "reset_application": "DEBUG: Reset dell'applicazione"
+}
