@@ -4,6 +4,14 @@ body {
   background: #f1f0ee;
 }
 
+.table tbody.visible.transition {
+  display: table-row-group !important;
+}
+
+.table tbody.visible.transition tr {
+  display: table-row !important;
+}
+
 .ui.progress .bar {
   min-width: 0;
 }
