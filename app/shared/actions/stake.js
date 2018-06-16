@@ -10,7 +10,7 @@ export function setStakeWithValidation(EOSbalance, account, netAmount, cpuAmount
   return (dispatch: () => void) => {
     const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
 
-    if (dispatch(validate.validateStake(nextStake, currentStake, EOSbalance))) {
+    if (dispatch(validate.validateStake(nextStake, currentStake))) {
       const increaseInStake = {
         netAmount: Math.max(0, (nextStake.netAmount - currentStake.netAmount)),
         cpuAmount: Math.max(0, (nextStake.cpuAmount - currentStake.cpuAmount))
@@ -45,7 +45,7 @@ export function setStakeConfirmingWithValidation(EOSbalance, account, netAmount,
   return (dispatch: () => void) => {
     const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
 
-    if (dispatch(validate.validateStake(nextStake, currentStake, EOSbalance))) {
+    if (dispatch(validate.validateStake(nextStake, currentStake))) {
       return dispatch({ type: types.VALIDATE_STAKE_CONFIRMING });
     }
   };
