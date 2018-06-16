@@ -49,7 +49,7 @@ class WelcomeConnectionContainer extends Component<Props> {
     this.setState({
       [name]: value,
     });
-  }, 300)
+  }, 500)
 
   onConfirm = (e, { checked }) => {
     this.setState({
@@ -85,11 +85,13 @@ class WelcomeConnectionContainer extends Component<Props> {
     } = this.state;
     // let formattedHost = '';
     let sslEnabled = false;
+    let validUrl = false;
     try {
       const {
         // host,
         protocol
       } = new URL(node);
+      validUrl = true;
       sslEnabled = (protocol === 'https:');
       // formattedHost = host;
     } catch (e) {
@@ -129,7 +131,7 @@ class WelcomeConnectionContainer extends Component<Props> {
       );
     }
     // display a warning + checkbox if non-ssl
-    if (node && !sslEnabled) {
+    if (validUrl && !sslEnabled) {
       if (!sslConfirm) {
         message = (
           <Message
