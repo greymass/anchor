@@ -8,7 +8,6 @@
   "cpu_staked":"EOS放入CPU中",
   "net_staked":"EOS以带宽放样",
   "not_enough_balance":"余额不足.",
-  "not_valid_stake_amount":"不是有效的放样金额（必须是正数,最大精度为4位小数,例如12.1212）",
   "stake_button_cta":"更新放大的EOS",
   "stake_form":"放下硬币",
   "stake_modal_title":"更新放大的EOS金额",

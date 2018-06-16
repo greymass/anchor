@@ -16,7 +16,6 @@
   "confirm_stake":"Confirmer",
   "stake_success":"Vos EOS ont été attribué avec succès",
   "unstake_success":"Vos EOS ont été désattribué avec succès",
-  "not_valid_stake_amount": "Pas un montant valide (doit être un montant positif avec un maximum de 4 décimales, par exemple 12.1212).",
   "about_to_stake_to_net": "Vous êtes sur le point d'attribuer en Bandwidth:",
   "about_to_unstake_from_net": "Vous êtes sur le point de désattribuer en Bandwidth: ",
   "about_to_stake_to_cpu": "Vous êtes sur le point d'attribuer en CPU: ",

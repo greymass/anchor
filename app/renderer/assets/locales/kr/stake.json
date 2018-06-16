@@ -8,7 +8,6 @@
   "cpu_staked": "CPU에 스테이킹된 EOS 총량",
   "net_staked": "대역폭에 스테이킹된 EOS 총량",
   "not_enough_balance": "귀하의 계정 잔액이 충분하지 않습니다.",
-  "not_valid_stake_amount": "유효한 스테이크 수량이 아닙니다 (최대 소수점 이하 4자리 허용, 예시: 12.1212).",
   "stake_button_cta": "스테이킹된 EOS 업데이트",
   "stake_form":"스테이킹된 코인",
   "stake_modal_title":"스테이킹된 EOS 수량 업데이트",
