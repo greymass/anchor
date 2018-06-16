@@ -61,20 +61,23 @@ export function getProducers(previous = false) {
         // Percentage required to earn 100 tokens/day (break point for backups)
         backupMinimumPercent = 100 / tokensToProducersForVotes;
       }
-      const data = rows.map((producer) => {
-        const votes = parseInt(producer.total_votes, 10);
-        const percent = votes / current.total_producer_vote_weight;
-        const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
-        return Object.assign({}, {
-          isBackup,
-          key: `${producer.owner}-${producer.total_votes}`,
-          last_produced_block_time: producer.last_produced_block_time,
-          owner: producer.owner,
-          percent,
-          url: producer.url,
-          votes
+      const data = rows
+        .filter((p) => (p.producer_key !== 'EOS1111111111111111111111111111111114T1Anm'))
+        .map((producer) => {
+          const votes = parseInt(producer.total_votes, 10);
+          const percent = votes / current.total_producer_vote_weight;
+          const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
+          return Object.assign({}, {
+            isBackup,
+            key: `${producer.owner}-${producer.total_votes}`,
+            last_produced_block_time: producer.last_produced_block_time,
+            owner: producer.owner,
+            percent,
+            producer_key: producer.producer_key,
+            url: producer.url,
+            votes
+          });
         });
-      });
       const list = sortBy(data, 'votes').reverse();
       return dispatch({
         type: types.GET_PRODUCERS_SUCCESS,
