@@ -70,7 +70,6 @@ export default class WalletPanelFormStake extends Component<Props> {
     ) {
       lastTransactions.push(system.UNDELEGATEBW_LAST_TRANSACTION);
     }
-
     return (
       <div>
         {(system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS')
@@ -110,6 +109,7 @@ export default class WalletPanelFormStake extends Component<Props> {
               error={validate.STAKE_ERROR ||
                      system.DELEGATEBW_LAST_ERROR ||
                      system.UNDELEGATEBW_LAST_ERROR}
+              onClose={onClose}
             />
           )
         }
