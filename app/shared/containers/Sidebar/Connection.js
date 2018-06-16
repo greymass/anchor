@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
-import { Button, Header, Segment } from 'semantic-ui-react';
+import { Button, Divider, Header, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import WelcomeConnectionContainer from '../Welcome/Connection';
 
+import * as AccountsActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
+import * as ValidateActions from '../../actions/validate';
 
 class SidebarConnection extends Component<Props> {
   state = { editing: false }
@@ -20,9 +22,13 @@ class SidebarConnection extends Component<Props> {
       history
     } = this.props;
     const {
+      clearAccountCache,
+      clearValidationState,
       setSetting
     } = actions;
     setSetting('skipImport', false);
+    clearAccountCache();
+    clearValidationState();
     history.push('/');
   }
   onToggle = () => this.setState({ editing: !this.state.editing });
@@ -71,16 +77,17 @@ class SidebarConnection extends Component<Props> {
         size="small"
         stacked
       >
-        {(wallet.account)
-          ? controls
-          : (
+        {controls}
+        {(!wallet.account)
+          ? [(<Divider />), (
             <Button
               color="purple"
               content={t('continue_setup')}
               fluid
               onClick={this.continueSetup}
             />
-          )
+          )]
+          : false
         }
       </Segment>
     );
@@ -99,7 +106,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...SettingsActions
+      ...AccountsActions,
+      ...SettingsActions,
+      ...ValidateActions
     }, dispatch)
   };
 }
