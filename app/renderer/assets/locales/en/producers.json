@@ -25,6 +25,7 @@
   "producer_production_enabled": "Producing",
   "producer_production_never": "Never",
   "producer_production_disabled": "Inactive",
+  "producer_voter_preview_error_title": "An error has occurred.",
   "producer_voter_preview_confirm_changes_title": "Confirm your vote selection",
   "producer_voter_preview_confirm_changes_message": "This action will set your selected block producers as follows.",
   "producer_voter_preview_confirm_none": "Unvote all block producers",

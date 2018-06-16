@@ -41,19 +41,6 @@ export default function producers(state = initialState, action) {
       }
       return state;
     }
-    case types.SYSTEM_VOTEPRODUCER_FAILURE: {
-      return Object.assign({}, state, {
-        lastError: parseError(action.payload.err),
-        lastTransaction: {}
-      });
-    }
-    case types.SYSTEM_VOTEPRODUCER_SUCCESS: {
-      return Object.assign({}, state, {
-        lastError: false,
-        lastTransaction: action.payload.tx,
-        selected: action.payload.producers
-      });
-    }
     case types.GET_PRODUCERS_REQUEST:
     default: {
       return state;
