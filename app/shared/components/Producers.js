@@ -13,6 +13,7 @@ import ProducersVotingPreview from './Producers/Modal/Preview';
 
 type Props = {
   actions: {
+    clearSystemState: () => void,
     getAccount: () => void,
     getGlobals: () => void,
     getProducers: () => void,
@@ -23,11 +24,11 @@ type Props = {
   history: {},
   keys: {},
   producers: {
-    lastError: {},
     lastTransaction: {},
     selected: []
   },
   settings: {},
+  system: {},
   t: () => void,
   validate: {}
 };
@@ -55,6 +56,7 @@ class Producers extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
+    const { system } = nextProps;
     const nextValidate = nextProps.validate;
     // On a new node connection, update props + producers
     if (
@@ -68,13 +70,13 @@ class Producers extends Component<Props> {
     if (
       this.state.submitting
       && (
-        this.state.lastTransaction !== nextProps.producers.lastTransaction
-        || this.state.lastError !== nextProps.producers.lastError
+        this.state.lastTransaction !== system.VOTEPRODUCER_LAST_TRANSACTION
+        || this.state.lastError !== system.VOTEPRODUCER_LAST_ERROR
       )
     ) {
       this.setState({
-        lastError: nextProps.producers.lastError,
-        lastTransaction: nextProps.producers.lastTransaction,
+        lastError: system.VOTEPRODUCER_LAST_ERROR,
+        lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
         submitting: false
       });
     }
@@ -149,11 +151,13 @@ class Producers extends Component<Props> {
 
   submitProducerVotes = () => {
     const {
+      clearSystemState,
       voteproducers
     } = this.props.actions;
     const {
       selected
     } = this.state;
+    clearSystemState();
     voteproducers(selected);
     this.setState({
       lastError: false, // Reset the last error

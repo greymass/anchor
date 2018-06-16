@@ -68,7 +68,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                             <Message.Header>
                               {t(['producer_voter_preview_error_title'])}
                             </Message.Header>
-                            <code>{lastError}</code>
+                            <code>{new String(lastError)}</code>
                           </div>
                         )
                       }
