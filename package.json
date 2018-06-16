@@ -76,7 +76,6 @@
       "category": "Network",
       "desktop": {
         "Name": "eos-voter",
-        "Version": "0.1.6",
         "GenericName": "EOS Voting Client + Wallet",
         "X-GNOME-FullName": "eos-voter",
         "Comment": "A simple voting interface and wallet for EOS accounts.",
