@@ -58,15 +58,15 @@ class Welcome extends Component<Props> {
       stageSelect
     } = this.state;
     let stage = 0;
-    if (stageSelect !== false) {
-      stage = stageSelect;
-    }
     if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
       stage = 3;
     } else if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS') {
       stage = 2;
     } else if (validate.NODE === 'SUCCESS') {
       stage = 1;
+    }
+    if (stageSelect !== false) {
+      stage = stageSelect;
     }
     let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} />;
     if (validate.NODE === 'SUCCESS' && stage >= 1) {
@@ -113,14 +113,14 @@ class Welcome extends Component<Props> {
             <Container textAlign="center">
               <Breadcrumb size="large">
                 <Breadcrumb.Section
-                  active={(validate.NODE !== 'SUCCESS' || stage === 0)}
-                  onClick={(validate.NODE === 'SUCCESS' && stage > 0) ? () => this.onStageSelect(0) : null}
+                  active={(stage === 0)}
+                  onClick={(stage > 0) ? () => this.onStageSelect(0) : null}
                 >
                   {t('welcome_stage_connection')}
                 </Breadcrumb.Section>
                 <Breadcrumb.Divider icon="right angle" />
                 <Breadcrumb.Section
-                  active={(validate.NODE === 'SUCCESS' || stage === 1)}
+                  active={(stage === 1)}
                   onClick={(stage > 1) ? () => this.onStageSelect(1) : null}
                 >
                   {t('welcome_stage_account')}
