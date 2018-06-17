@@ -1,52 +1,39 @@
-import * as validate from './validate';
 import * as types from './types';
 
 import { delegatebw } from './system/delegatebw';
 import { undelegatebw } from './system/undelegatebw';
 
-import {Decimal} from 'decimal.js';
+import { Decimal } from 'decimal.js';
 
-export function setStakeWithValidation(EOSbalance, account, netAmount, cpuAmount) {
+export function setStake(account, netAmount, cpuAmount) {
   return (dispatch: () => void) => {
     const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
 
-    if (dispatch(validate.validateStake(nextStake, currentStake))) {
-      const increaseInStake = {
-        netAmount: Math.max(0, (nextStake.netAmount - currentStake.netAmount)),
-        cpuAmount: Math.max(0, (nextStake.cpuAmount - currentStake.cpuAmount))
-      };
+    const increaseInStake = {
+      netAmount: Math.max(0, (nextStake.netAmount - currentStake.netAmount)),
+      cpuAmount: Math.max(0, (nextStake.cpuAmount - currentStake.cpuAmount))
+    };
 
-      const decreaseInStake = {
-        netAmount: Math.max(0, (currentStake.netAmount - nextStake.netAmount)),
-        cpuAmount: Math.max(0, (currentStake.cpuAmount - nextStake.cpuAmount))
-      };
+    const decreaseInStake = {
+      netAmount: Math.max(0, (currentStake.netAmount - nextStake.netAmount)),
+      cpuAmount: Math.max(0, (currentStake.cpuAmount - nextStake.cpuAmount))
+    };
 
-      if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
-        dispatch(delegatebw(
-          account.account_name,
-          account.account_name,
-          increaseInStake.netAmount,
-          increaseInStake.cpuAmount
-        ));
-      }
-      if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
-        dispatch(undelegatebw(
-          account.account_name,
-          account.account_name,
-          decreaseInStake.netAmount,
-          decreaseInStake.cpuAmount
-        ));
-      }
+    if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
+      dispatch(delegatebw(
+        account.account_name,
+        account.account_name,
+        increaseInStake.netAmount,
+        increaseInStake.cpuAmount
+      ));
     }
-  };
-}
-
-export function setStakeConfirmingWithValidation(EOSbalance, account, netAmount, cpuAmount) {
-  return (dispatch: () => void) => {
-    const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
-
-    if (dispatch(validate.validateStake(nextStake, currentStake))) {
-      return dispatch({ type: types.VALIDATE_STAKE_CONFIRMING });
+    if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
+      dispatch(undelegatebw(
+        account.account_name,
+        account.account_name,
+        decreaseInStake.netAmount,
+        decreaseInStake.cpuAmount
+      ));
     }
   };
 }
@@ -82,6 +69,5 @@ function getNextAndCurrentStake(account, netAmount, cpuAmount) {
 
 export default {
   resetStakeForm,
-  setStakeWithValidation,
-  setStakeConfirmingWithValidation
+  setStake
 };
