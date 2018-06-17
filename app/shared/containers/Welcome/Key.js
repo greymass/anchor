@@ -177,7 +177,7 @@ class WelcomeKeyContainer extends Component<Props> {
           {t('welcome_key_compare_expecting_match_to')}
           <br />
           {Array.from(validKeys).map((key) => (
-            <small><code>{key}</code><br /></small>
+            <small key={key}><code>{key}</code><br /></small>
           ))}
         </Segment>
         {message}

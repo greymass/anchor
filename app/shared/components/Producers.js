@@ -197,6 +197,7 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
+        key="WalletPanel"
         keys={keys}
         settings={settings}
         system={system}
@@ -250,6 +251,7 @@ class Producers extends Component<Props> {
                ? [(
                  <Visibility
                    continuous
+                   key="ProducersTable"
                    fireOnMount
                    onBottomVisible={this.loadMore}
                    once={false}
@@ -270,7 +272,7 @@ class Producers extends Component<Props> {
                ), (
                  (!querying && amount < producers.list.length)
                  ? (
-                   <Segment clearing padded vertical>
+                   <Segment key="ProducersTableLoading" clearing padded vertical>
                      <Loader active />
                    </Segment>
                  ) : false
