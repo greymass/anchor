@@ -3,6 +3,7 @@ import * as types from '../actions/types';
 const initialState = {
   acceptedConstitution: false,
   account: '',
+  coldStorage: false,
   lang: 'en',
   node: '',
   skipImport: false,
@@ -23,7 +24,8 @@ export default function settings(state = initialState, action) {
       return Object.assign({}, state, action.payload);
     }
     case types.RESET_INVALID_SETTINGS: {
-      return Object.assign({}, validSettings.reduce((o, setting) => ({ ...o, [setting]: state[setting] }), {}));
+      return Object.assign({}, validSettings.reduce((o, setting) =>
+        ({ ...o, [setting]: state[setting] }), {}));
     }
     default: {
       return state;
