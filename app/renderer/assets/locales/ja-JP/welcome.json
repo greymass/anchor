@@ -20,7 +20,7 @@
   "welcome_select_account": "アカウントを選択",
   "welcome_lookup_account_skip": "インポートをスキップ",
   "welcome_account_select_title": "アカウント選択",
-  "welcome_account_select_content": "Choose an account from the dropdown above.",
+  "welcome_account_select_content": "上のドロップダウンリストからアカウントを選択して下さい。",
   "welcome_account_lookup_content": "If you enter a public key, a lookup will be performed to find associated accounts.",
   "welcome_account_lookup_title": "Public Key lookup",
   "welcome_account_lookup_fail_title": "Failed to locate an account",
