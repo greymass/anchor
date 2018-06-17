@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Icon, Segment } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeInputs from './Stake/Inputs';
@@ -33,10 +33,10 @@ export default class WalletPanelFormStake extends Component<Props> {
     const parsed_net_weight = net_weight.split(' ')[0];
 
     this.state = {
-      cpuAmount: new Decimal(parsed_cpu_weight),
-      cpuOriginal: new Decimal(parsed_cpu_weight),
-      netAmount: new Decimal(parsed_net_weight),
-      netOriginal: new Decimal(parsed_net_weight)
+      cpuAmount: Decimal(parsed_cpu_weight),
+      cpuOriginal: Decimal(parsed_cpu_weight),
+      netAmount: Decimal(parsed_net_weight),
+      netOriginal: Decimal(parsed_net_weight)
     };
   }
 
@@ -51,41 +51,50 @@ export default class WalletPanelFormStake extends Component<Props> {
     } = this.props;
 
     const {
+      cpuAmount,
       cpuOriginal,
+      netAmount,
       netOriginal
     } = this.state;
 
     const EOSbalance = balance.EOS || 0;
 
     const lastTransactions = [];
+
     if (
       system.DELEGATEBW_LAST_TRANSACTION
       && system.DELEGATEBW_LAST_TRANSACTION.transaction_id
     ) {
       lastTransactions.push(system.DELEGATEBW_LAST_TRANSACTION);
     }
+
     if (
       system.UNDELEGATEBW_LAST_TRANSACTION
       && system.UNDELEGATEBW_LAST_TRANSACTION.transaction_id
     ) {
       lastTransactions.push(system.UNDELEGATEBW_LAST_TRANSACTION);
     }
+
+    const shouldShowSuccess = (system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS');
+    const shouldShowError = (system.DELEGATEBW === 'FAILURE' || system.UNDELEGATEBW === 'FAILURE');
+    const shouldShowForm = (validate.STAKE === 'NULL' || validate.STAKE === 'CONFIRMING') && !shouldShowSuccess && !shouldShowError;
+
     return (
-      <div>
-        {(system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS')
+      <Segment
+        loading={system.DELEGATEBW === 'PENDING' ||
+                 system.UNDELEGATEBW === 'PENDING'}
+        style={{ minHeight: '100px' }}
+      >
+        {(shouldShowSuccess)
           ? (
             <FormMessageTransactionSuccess
               onClose={onClose}
               transactions={lastTransactions}
             />
           )
-          : (system.DELEGATEBW === 'PENDING' || system.UNDELEGATEBW === 'PENDING')
-          ? (
-            <Segment basic textAlign="center">
-              <Icon size="huge" loading name="spinner" />
-            </Segment>
-          )
-          : (validate.STAKE == 'NULL' || validate.STAKE == 'CONFIRMING')
+          : ''}
+
+        {(shouldShowForm)
           ? (
             <div>
               <WalletPanelFormStakeStats
@@ -96,24 +105,26 @@ export default class WalletPanelFormStake extends Component<Props> {
               <WalletPanelFormStakeInputs
                 actions={actions}
                 account={account}
+                cpuAmount={cpuAmount}
                 cpuOriginal={cpuOriginal}
                 EOSbalance={EOSbalance}
+                netAmount={netAmount}
                 netOriginal={netOriginal}
                 onClose={onClose}
                 validate={validate}
               />
             </div>
-          ) :
-          (
+          ) : ''}
+
+        {(shouldShowError)
+          ? (
             <FormMessageError
-              error={validate.STAKE_ERROR ||
-                     system.DELEGATEBW_LAST_ERROR ||
+              error={system.DELEGATEBW_LAST_ERROR ||
                      system.UNDELEGATEBW_LAST_ERROR}
               onClose={onClose}
             />
-          )
-        }
-      </div>
+          ) : ''}
+      </Segment>
     );
   }
 }

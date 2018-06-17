@@ -6,6 +6,8 @@
   "amount_not_staked": "Available EOS (Unstaked)",
   "confirm_stake":"Confirm",
   "cpu_staked": "EOS staked in CPU",
+  "eos_in_cpu_after": "EOS in CPU after",
+  "eos_in_net_after": "EOS in Bandwidth after",
   "net_staked": "EOS staked in Bandwidth",
   "not_enough_balance": "You do not have enough balance.",
   "stake_button_cta": "Update Staked EOS",
@@ -21,8 +23,6 @@
   "update_staked_coins": "Update Staked Balances",
   "update_staked_cpu_amount": "Set EOS staked in CPU",
   "update_staked_net_amount": "Set EOS staked in Bandwidth",
-  "eos_in_cpu_after": "EOS in CPU after",
-  "eos_in_net_after": "EOS in Bandwidth after",
-  "you_will_have":"You will have",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
+  "you_will_have":"You will have"
 }

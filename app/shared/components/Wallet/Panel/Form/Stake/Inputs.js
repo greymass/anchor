@@ -13,22 +13,62 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      confirming: false,
       cpuAmount: props.cpuOriginal,
+      formError: false,
       netAmount: props.netOriginal
-    }
+    };
+  }
+
+  componentDidMount = () => {
+    const {
+      cpuAmount,
+      netAmount
+    } = this.props;
+
+    this.setState({
+      cpuAmount,
+      netAmount
+    });
   }
 
   onChange = debounce((e, { name, value }) => {
     this.setState({
-      [name]: parseFloat(value),
+      [name]: value,
     });
+
+    const error = this.errorsInForm();
+
+    if (error) {
+      this.setState({
+        formError: error
+      });
+    }
   }, 300)
 
   onSubmit = (e) => {
+    if (!this.errorsInForm()) {
+      this.setState({
+        confirming: true
+      });
+    }
+    e.preventDefault();
+    return false;
+  }
+
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onSubmit(e);
+
+      e.preventDefault();
+      return false;
+    }
+  }
+
+  onConfirm = () => {
     const {
       account,
-      actions,
-      EOSbalance
+      actions
     } = this.props;
 
     const {
@@ -37,53 +77,53 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
     } = this.state;
 
     const {
-      realNetAmount,
-      realCpuAmount
-    } = this.cleanUpStakeAmounts(account, netAmount, cpuAmount);
+      setStake
+    } = actions;
 
     this.setState({
-      netAmount: realNetAmount,
-      cpuAmount: realCpuAmount
+      confirming: false
     });
 
-    const { setStakeConfirmingWithValidation } = actions;
-
-    setStakeConfirmingWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
-    e.preventDefault();
-    return false;
+    setStake(account, netAmount, cpuAmount);
   }
 
-  onKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      const {
-        cpuOriginal,
-        netOriginal,
-      } = this.props;
-      const {
-        cpuAmount,
-        netAmount
-      } = this.state;
-      if (!Decimal(cpuOriginal).equals(cpuAmount) || !Decimal(netOriginal).equals(netAmount)) {
-        this.onSubmit(e);
-      }
-      e.preventDefault();
-      return false;
-    }
-  }
-
-  cleanUpStakeAmounts(account, netAmount, cpuAmount) {
+  errorsInForm = () => {
     const {
-      cpu_weight,
-      net_weight
-    } = account.self_delegated_bandwidth;
+      cpuOriginal,
+      EOSbalance,
+      netOriginal
+    } = this.props;
 
-    const cleanedNetAmount = netAmount === '' ? net_weight : netAmount;
-    const cleanedCpuAmount = cpuAmount === '' ? cpu_weight : cpuAmount;
+    const {
+      cpuAmount,
+      netAmount,
+    } = this.state;
 
-    return {
-      realNetAmount: new Decimal(cleanedNetAmount),
-      realCpuAmount: new Decimal(cleanedCpuAmount)
-    };
+    const decimalRegex = /^\d+(\.\d{1,4})?$/;
+
+    if (!decimalRegex.test(cpuAmount) || !decimalRegex.test(netAmount)) {
+      return 'not_valid_stake_amount';
+    }
+
+    const decimalCpuAmount = Decimal(cpuAmount);
+    const decimalNetAmount = Decimal(netAmount);
+
+    if (cpuOriginal.equals(decimalCpuAmount) && netOriginal.equals(decimalNetAmount)) {
+      return true;
+    }
+
+    if (!decimalCpuAmount.greaterThan(0) || !decimalNetAmount.greaterThan(0)) {
+      return 'no_stake_left';
+    }
+
+    const cpuChange = (decimalCpuAmount - cpuOriginal);
+    const netChange = (decimalNetAmount - netOriginal);
+
+    if (Math.max(0, cpuChange) + Math.max(0, netChange) > EOSbalance) {
+      return 'not_enough_balance';
+    }
+
+    return false;
   }
 
   render() {
@@ -100,20 +140,24 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
       cpuAmount,
       netAmount
     } = this.state;
-    const disabled = Decimal(cpuOriginal).equals(cpuAmount) && Decimal(netOriginal).equals(netAmount)
 
-    if (validate.STAKE === 'CONFIRMING') {
+    const disabled = this.errorsInForm();
+
+    if (this.state.confirming) {
+      const decimalCpuAmount = this.state.cpuAmount;
+      const decimalNetAmount = this.state.netAmount;
+
       return (
         <WalletPanelFormStakeInputsConfirming
           account={account}
           actions={actions}
-          cleanUpStakeAmounts={this.cleanUpStakeAmounts}
-          cpuAmount={this.state.cpuAmount}
+          decimalCpuAmount={decimalCpuAmount}
           cpuOriginal={cpuOriginal}
           EOSbalance={EOSbalance}
-          netAmount={this.state.netAmount}
+          decimalNetAmount={decimalNetAmount}
           netOriginal={netOriginal}
           onClose={onClose}
+          onConfirm={this.onConfirm}
           validate={validate}
         />
       );
@@ -134,7 +178,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
                   label={t('update_staked_cpu_amount')}
                   name="cpuAmount"
                   onChange={this.onChange}
-                  defaultValue={cpuAmount.toFixed(4)}
+                  defaultValue={cpuAmount}
                 />
                 <Form.Field
                   control={Input}
@@ -142,8 +186,16 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
                   label={t('update_staked_net_amount')}
                   name="netAmount"
                   onChange={this.onChange}
-                  defaultValue={netAmount.toFixed(4)}
+                  defaultValue={netAmount}
                 />
+                {(this.state.formError)
+                  ? (
+                    <Message
+                      failure
+                      content={t(this.state.formError)}
+                    />
+                  ) : ''}
+
               </Form.Group>
               <Divider />
               <Message

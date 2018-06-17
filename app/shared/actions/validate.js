@@ -167,32 +167,6 @@ export function validateKey(key) {
   };
 }
 
-export function validateStake(nextStake, currentStake) {
-  return (dispatch: () => void) => {
-    dispatch({ type: types.VALIDATE_STAKE_PENDING });
-
-    const decimalRegex = /^\d+(\.\d{1,4})?$/;
-
-    if (!decimalRegex.test(nextStake.cpuAmount) || !decimalRegex.test(nextStake.netAmount)) {
-      dispatch({
-        payload: { error: 'not_valid_stake_amount' },
-        type: types.VALIDATE_STAKE_FAILURE
-      });
-      return false;
-    }
-
-    if (!nextStake.cpuAmount.greaterThan(0) || !nextStake.netAmount.greaterThan(0)) {
-      dispatch({
-        payload: { error: 'no_stake_left' },
-        type: types.VALIDATE_STAKE_FAILURE
-      });
-      return false;
-    }
-
-    return true;
-  };
-}
-
 export function clearValidationState() {
   return (dispatch: () => void) => {
     dispatch({
@@ -204,6 +178,5 @@ export function clearValidationState() {
 export default {
   validateAccount,
   validateNode,
-  validateKey,
-  validateStake
+  validateKey
 };
