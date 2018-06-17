@@ -3,10 +3,7 @@
   "welcome_instructions_1": "始めるにはeos-voterをEOSのAPIノードに接続する必要があります。",
   "welcome_instructions_2": "接続したいノードのを入力してください。",
   "welcome_instructions_3": "公開鍵またはアカウント名を入力して下さい。",
-<<<<<<< HEAD
   "welcome_instructions_3_cold": "使用するアカウント名を入力して下さい。",
-=======
->>>>>>> New translations welcome.json (Japanese)
   "welcome_instructions_4": "ドロップダウンリストで一致するアカウント一つを選択して下さい。",
   "welcome_instructions_5": "Enter the private for this account.",
   "welcome_instructions_6": "暗号化してローカルウォレットを保存するか、一時的なアクセスで使用を続けるか選択して下さい。",
