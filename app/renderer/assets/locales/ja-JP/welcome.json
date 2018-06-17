@@ -31,13 +31,13 @@
   "welcome_key_compare_fail_invalid_title": "秘密鍵が無効です",
   "welcome_key_compare_fail_invalid_content": "入力した秘密鍵は公開鍵に変換できません。",
   "welcome_key_compare_visible": "秘密鍵を表示",
-  "welcome_key_compare_expecting_match_to": "Expecting a private key that matches one of the below keys.",
+  "welcome_key_compare_expecting_match_to": "以下のキーの一つと一致する秘密鍵が必要です。",
   "welcome_key_compare_matches_content": "",
   "welcome_key_compare_matches_title": "",
-  "welcome_compare_key": "Compare Keys",
-  "welcome_server_connection_fail_content": "Try again or enter a different server.",
-  "welcome_server_connection_fail_title": "Unable to connect",
-  "welcome_ssl_warning_title": "Non-HTTPS API",
-  "welcome_ssl_warning_content": "Using a non-HTTPS API may risk your privacy.",
-  "welcome_ssl_warning_confirm": "I understand the risks - connect anyways."
+  "welcome_compare_key": "キーを比較",
+  "welcome_server_connection_fail_content": "再試行するか、別のサーバーを入力して下さい。",
+  "welcome_server_connection_fail_title": "接続できません",
+  "welcome_ssl_warning_title": "HTTPSではないAPI",
+  "welcome_ssl_warning_content": "HTTPSではないAPIの使用は秘密鍵を危険に晒します。",
+  "welcome_ssl_warning_confirm": "リスクを理解しました、接続して下さい。"
 }
