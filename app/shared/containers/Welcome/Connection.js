@@ -18,6 +18,7 @@ type Props = {
     onStageSelect: () => void,
     setSettingWithValidation: () => void
   },
+  history: {},
   settings: {
     node: string
   },
@@ -37,8 +38,13 @@ class WelcomeConnectionContainer extends Component<Props> {
   componentDidMount() {
     const {
       actions,
+      history,
+      settings,
       validate
     } = this.props;
+    if (settings.coldStorage) {
+      history.push('/coldstorage');
+    }
     if (validate.NODE !== 'SUCCESS' && this.state.node) {
       const { validateNode } = actions;
       validateNode(this.state.node);
