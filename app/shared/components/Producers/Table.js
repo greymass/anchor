@@ -16,8 +16,11 @@ class ProducersTable extends Component<Props> {
   }
 
   onSearchChange = debounce((e, { value }) => {
+    const { isQuerying } = this.props;
     const query = String(value).toLowerCase();
-    this.setState({ query });
+    this.setState({ query }, () => {
+      isQuerying((query && query.length > 0));
+    });
     this.props.resetDisplayAmount();
   }, 400);
 
@@ -56,7 +59,7 @@ class ProducersTable extends Component<Props> {
     let searchTable = (
       <Table.Body>
         <Table.Row>
-          <Table.Cell>
+          <Table.Cell colSpan={5}>
             {t('producer_none_match')}
           </Table.Cell>
         </Table.Row>

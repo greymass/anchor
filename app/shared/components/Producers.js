@@ -43,6 +43,7 @@ class Producers extends Component<Props> {
       lastError: false,
       lastTransaction: {},
       previewing: false,
+      querying: false,
       selected: [],
       selected_loaded: false,
       submitting: false,
@@ -107,6 +108,7 @@ class Producers extends Component<Props> {
   loadMore = () => this.setState({ amount: this.state.amount + 20 });
 
   resetDisplayAmount = () => this.setState({ amount: 40 });
+  isQuerying = (querying) => this.setState({ querying });
 
   tick() {
     const {
@@ -186,6 +188,7 @@ class Producers extends Component<Props> {
       lastError,
       lastTransaction,
       previewing,
+      querying,
       selected,
       submitting
     } = this.state;
@@ -256,6 +259,7 @@ class Producers extends Component<Props> {
                      amount={amount}
                      attached="top"
                      globals={globals}
+                     isQuerying={this.isQuerying}
                      producers={producers}
                      removeProducer={this.removeProducer.bind(this)}
                      resetDisplayAmount={this.resetDisplayAmount}
@@ -264,7 +268,7 @@ class Producers extends Component<Props> {
                    />
                  </Visibility>
                ), (
-                 (amount < producers.list.length)
+                 (!querying && amount < producers.list.length)
                  ? (
                    <Segment clearing padded vertical>
                      <Loader active />
