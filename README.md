@@ -91,21 +91,21 @@ The development of this application is being led by members of the [Greymass](ht
 To verify the integrity of the releases you download from GitHub, below are the shasum results for each of the binaries:
 
 ```
-shasum -b -a 512 eos-voter Setup 0.1.6.exe
-776cacf18c5827b5b9aa15b45e97a7b0a9bd53bbbc1316b7bb3aa8521c4bc8970686fd622ce833d881007c82a8df96def4f650f8b0a39908807fef1366a910d4 *eos-voter Setup 0.1.6.exe
+shasum -b -a 512 eos-voter\ Setup\ 0.1.6.exe
+efca4512c724bf3fa02adcdf20b81c55c8f1fc340a468e51825b9c48950af44a51c197998eb4d909a2a58a30e2a94c6a168e0229a7c5e5c93f0e44de0d48e832 *eos-voter Setup 0.1.6.exe
 
 shasum -b -a 512 eos-voter-0.1.6.dmg
-77b95742e08510e0faf92dafceb764298f4c7c78293aa9f698e543406011586c5edde38acadb7ae7ea71d5814dfe80aca79eb55a23d67c3f061a7bda9275e133 *eos-voter-0.1.6.dmg
+40758a8bd5cb21c6f2f730c6559b6c84123016875d4688b9fc617014f07a1b0757d1b3b4a31de580700ce89164b7527bd9f9f56729b178d4c3a05cde4307d33d *eos-voter-0.1.6.dmg
 
 shasum -b -a 512 eos-voter-0.1.6-mac.zip
-30b41d9064a717c1ea062e922992069e4ab2d6e13a8f63dd9c444fe08dbe8dc6e4bd7c72dd3e791005b0ebbdd4ee9263e4bc6b48953e8bfac5c58d5ad3ecf0a5 *eos-voter-0.1.6-mac.zip
+0546babf79d3630be7f0d1ec442ae27be09bff8eb97b98c9239437645533d6f196ff5fd16a182b2d34b6564434ef742d5686ed04b75c572f0b43fe909f51702a *eos-voter-0.1.6-mac.zip
 
 shasum -b -a 512 eos-voter-0.1.6-x86_64.AppImage
-79ef9a2de2bcc429e3381bca8d4fe78df2fc0937807edad2e8f81df0c1ef4d5305881a6c73ba972a98ca4c356dfe99313b56ec3c5cd036e6b96e1132f6616c60 *eos-voter-0.1.6-x86_64.AppImage
+5bdf8205347c9fd8d8663fc42927ad54ee39c69403706b2c5b9b219c1630fdbcd232c359a06c95771b6a01d1d7fc69260753ceb8b048ade8386678c28acaa0a4 *eos-voter-0.1.6-x86_64.AppImage
 
 shasum -b -a 512 eos-voter_0.1.6_amd64.deb
-24f379351f9262942ea31a52e9a662be3696032a9b24e82b8036bad617f688d853891dfc910ce3607beef3ef26563789784f962be78e1cbaa502e693ba7839fe *eos-voter_0.1.6_amd64.deb
+ff503e323242f7f88418268df623e3c495d2b526b785394988b089c65181c49b805587873f0c0543b618dd3797b4847ce1085d9279cb714c161abc4bbdb1b1b6 *eos-voter_0.1.6_amd64.deb
 
 shasum -b -a 512 eos-voter_0.1.6_amd64.snap
-74f9f0e4096978118d3b0883efdc7c8b377673a2f7ae4a3abd459b53471b6d77927ef54f0a85ad3bb459d767a3340a181ba87ea57812a1a3d7e21f63a25d0cf9 *eos-voter_0.1.6_amd64.snap
+af0cf453636fb9021ffd741c58a8cc5fe3e9492c8f7b7fbbd422d57aa38c7e1cb26e359e6de75bb579eb0249afe68f286fb3a6d1e4e17a259d0c7fbad0c83bb9 *eos-voter_0.1.6_amd64.snap
 ```
