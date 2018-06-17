@@ -49,6 +49,18 @@ class Welcome extends Component<Props> {
     history.push('/voter');
   }
 
+  workOffline = () => {
+    const {
+      actions,
+      history
+    } = this.props;
+    const {
+      setSetting
+    } = actions;
+    setSetting('coldStorage', true);
+    history.push('/coldstorage');
+  }
+
   render() {
     const {
       settings,
@@ -162,7 +174,17 @@ class Welcome extends Component<Props> {
                     />
                   </p>
                 )
-                : false
+                : (
+                  <p>
+                    <Button
+                      content={t('welcome:welcome_work_offline')}
+                      icon="x"
+                      onClick={this.workOffline}
+                      size="small"
+                      style={{ marginTop: '1em' }}
+                    />
+                  </p>
+                )
               }
             </Container>
           </Grid.Column>
