@@ -1,0 +1,15 @@
+{
+  "transfer_button_cta": "トークンを送信",
+  "transfer_modal_title": "トークンを送信",
+  "transfer_modal_transaction_successful_title": "送信に成功しました！",
+  "transfer_modal_transaction_successful_message": "トランザクションは処理されました。トランザクションIDは以下で確認できます。",
+  "transfer_confirming_title": "トランザクションを確認して下さい",
+  "transfer_confirming_body": "この転送の宛先、数量、メモが正しいかよく確認して下さい。",
+  "transfer_warning_irreversible_title": "トランザクションは取り消しできません。",
+  "transfer_warning_irreversible_body": "このトランザクションを送信したら、元に戻すことはできません。",
+  "transfer_label_from": "送信元アカウント",
+  "transfer_label_to": "宛先アカウント",
+  "transfer_label_quantity": "数量",
+  "transfer_label_token_and_quantity": "トークン選択 + 数量",
+  "transfer_label_memo": "転送メモ"
+}

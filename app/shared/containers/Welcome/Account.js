@@ -90,6 +90,8 @@ class WelcomeAccountContainer extends Component<Props> {
     const {
       account
     } = this.state;
+    let buttonColor = 'blue';
+    let buttonText = t('welcome:welcome_lookup_account');
     let instruction = t('welcome:welcome_instructions_3');
     let input = (
       <Form.Field
@@ -125,6 +127,8 @@ class WelcomeAccountContainer extends Component<Props> {
     }
     if (account && accounts.__lookups && accounts.__lookups.length > 0) {
       instruction = t('welcome:welcome_instructions_4');
+      buttonColor = 'purple';
+      buttonText = t('welcome:welcome_select_account');
       input = (
         <Dropdown
           defaultValue={account}
@@ -162,9 +166,9 @@ class WelcomeAccountContainer extends Component<Props> {
         {message}
         <Container textAlign="center">
           <Button
-            content={t('welcome:welcome_lookup_account')}
+            color={buttonColor}
+            content={buttonText}
             icon="search"
-            primary
             size="small"
             style={{ marginTop: '1em' }}
           />

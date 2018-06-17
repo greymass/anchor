@@ -13,6 +13,7 @@ import ProducersVotingPreview from './Producers/Modal/Preview';
 
 type Props = {
   actions: {
+    clearSystemState: () => void,
     getAccount: () => void,
     getGlobals: () => void,
     getProducers: () => void,
@@ -23,11 +24,11 @@ type Props = {
   history: {},
   keys: {},
   producers: {
-    lastError: {},
     lastTransaction: {},
     selected: []
   },
   settings: {},
+  system: {},
   t: () => void,
   validate: {}
 };
@@ -42,6 +43,7 @@ class Producers extends Component<Props> {
       lastError: false,
       lastTransaction: {},
       previewing: false,
+      querying: false,
       selected: [],
       selected_loaded: false,
       submitting: false,
@@ -55,6 +57,7 @@ class Producers extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
+    const { system } = nextProps;
     const nextValidate = nextProps.validate;
     // On a new node connection, update props + producers
     if (
@@ -68,13 +71,13 @@ class Producers extends Component<Props> {
     if (
       this.state.submitting
       && (
-        this.state.lastTransaction !== nextProps.producers.lastTransaction
-        || this.state.lastError !== nextProps.producers.lastError
+        this.state.lastTransaction !== system.VOTEPRODUCER_LAST_TRANSACTION
+        || this.state.lastError !== system.VOTEPRODUCER_LAST_ERROR
       )
     ) {
       this.setState({
-        lastError: nextProps.producers.lastError,
-        lastTransaction: nextProps.producers.lastTransaction,
+        lastError: system.VOTEPRODUCER_LAST_ERROR,
+        lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
         submitting: false
       });
     }
@@ -105,6 +108,7 @@ class Producers extends Component<Props> {
   loadMore = () => this.setState({ amount: this.state.amount + 20 });
 
   resetDisplayAmount = () => this.setState({ amount: 40 });
+  isQuerying = (querying) => this.setState({ querying });
 
   tick() {
     const {
@@ -149,11 +153,13 @@ class Producers extends Component<Props> {
 
   submitProducerVotes = () => {
     const {
+      clearSystemState,
       voteproducers
     } = this.props.actions;
     const {
       selected
     } = this.state;
+    clearSystemState();
     voteproducers(selected);
     this.setState({
       lastError: false, // Reset the last error
@@ -182,6 +188,7 @@ class Producers extends Component<Props> {
       lastError,
       lastTransaction,
       previewing,
+      querying,
       selected,
       submitting
     } = this.state;
@@ -190,6 +197,7 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
+        key="WalletPanel"
         keys={keys}
         settings={settings}
         system={system}
@@ -243,6 +251,7 @@ class Producers extends Component<Props> {
                ? [(
                  <Visibility
                    continuous
+                   key="ProducersTable"
                    fireOnMount
                    onBottomVisible={this.loadMore}
                    once={false}
@@ -252,6 +261,7 @@ class Producers extends Component<Props> {
                      amount={amount}
                      attached="top"
                      globals={globals}
+                     isQuerying={this.isQuerying}
                      producers={producers}
                      removeProducer={this.removeProducer.bind(this)}
                      resetDisplayAmount={this.resetDisplayAmount}
@@ -260,9 +270,9 @@ class Producers extends Component<Props> {
                    />
                  </Visibility>
                ), (
-                 (amount < producers.list.length)
+                 (!querying && amount < producers.list.length)
                  ? (
-                   <Segment clearing padded vertical>
+                   <Segment key="ProducersTableLoading" clearing padded vertical>
                      <Loader active />
                    </Segment>
                  ) : false

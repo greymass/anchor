@@ -1,0 +1,17 @@
+{
+  "about_opensource_title": "このアプリケーションはオープンソースです",
+  "about_opensource_message": " このアプリケーションへの貢献を歓迎します。興味がある場合は、Githubに参加して下さい",
+  "about_opensource_link": "https://github.com/greymass/eos-voter",
+  "about_message_1": "eos-voterは選択したAPIエンドポイントを通じてEOSブロックチェーンに直接接続するスタンドアロンのデスクトップアプリケーションです。",
+  "about_message_2": "あなたのキーはアプリケーション自体の外に出ることはなく、常に暗号化されて保存され、ホットウォレットで可能な最高レベルのセキュリティを提供します。",
+  "about_more": "より詳細な情報はこちら https://greymass.com で見ることができます。",
+  "about_issues": "アプリケーション自体に問題が発生した場合は、以下のgithubから問題を報告してください:",
+  "about_issues_link": "https://github.com/greymass/eos-voter/issues",
+  "about_greymass_message_1": "このアプリケーションはGreymassによって主導されている取り組みです。",
+  "about_greymass_message_2": "チームと我々がEOSで計画しているプロジェクトについてもっと知りたい場合は、以下のサイトを御覧ください",
+  "about_license_type": "The MIT License (MIT)",
+  "about_license_body_1": "Copyright (c) 2018-present Greymass",
+  "about_license_body_2": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
+  "about_license_body_3": "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
+  "about_license_body_4": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+}

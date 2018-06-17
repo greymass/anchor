@@ -28,8 +28,8 @@ export function getAccount(account = '') {
         const modified = results;
         if (!modified.self_delegated_bandwidth) {
           modified.self_delegated_bandwidth = {
-            cpu_weight: 0,
-            net_weight: 0
+            cpu_weight: '0.0000 EOS',
+            net_weight: '0.0000 EOS'
           };
         }
         // Dispatch the results of the account itself

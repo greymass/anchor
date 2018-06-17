@@ -1,0 +1,17 @@
+{
+  "about_opensource_title": "이 프로그램은 오픈소스입니다.",
+  "about_opensource_message": "우리는 이 프로그램에 대한 협력과 기부를 환영합니다.",
+  "about_opensource_link": "https://github.com/greymass/eos-voter",
+  "about_message_1": "eos voter는 선택한 API 엔드포인트를 통해 EOS 블록체인에 직접 연결되는 독립형 데스크톱 프로그램입니다.",
+  "about_message_2": "키들은 본 프로그램에 암호화된 상태로 저장되므로, 라이트 지갑에서 제공할 수 있는 최고 수준의 보안을 제공합니다.",
+  "about_more": "자세한 내용을 보시려면 https://greymass.com을 방문하십시오.",
+  "about_issues": "프로그램 자체에 문제가 발생하면 아래 github에서 문제를 보고 하십시오.",
+  "about_issues_link": "https://github.com/greymass/eos-voter/issues",
+  "about_greymass_message_1": "이 프로그램은 Greymass에서 주관하는 프로젝트입니다.",
+  "about_greymass_message_2": "우리 팀과 EOS 관련된 우리의 프로젝트들에 대해 더 자세히 알고 싶으시다면 다음 사이트를 방문하세요.",
+  "about_license_type": "MIT 라이센스 (MIT)",
+  "about_license_body_1": "저작권 (c) 2018-현재 Greymass",
+  "about_license_body_2": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
+  "about_license_body_3": "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
+  "about_license_body_4": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+}

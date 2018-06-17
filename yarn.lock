@@ -3690,9 +3690,9 @@ enzyme@^3.3.0:
     raf "^3.4.0"
     rst-selector-parser "^2.2.3"
 
-eosjs-api@6.1.3:
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-6.1.3.tgz#a5f7d16ab688373729660b0cb72e107898fc02b6"
+eosjs-api@6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-6.2.1.tgz#4d6f3d33cfa04aee2b4899ad0842bf3b69aa2c35"
   dependencies:
     camel-case "^3.0.0"
     isomorphic-fetch "^2.2.1"
@@ -3710,14 +3710,14 @@ eosjs-ecc@4.0.1:
     ecurve "^1.0.5"
     randombytes "^2.0.5"
 
-eosjs@^14.1.0:
-  version "14.1.1"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-14.1.1.tgz#164907430819fea693417e1b10fe666dff30263d"
+eosjs@15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-15.0.0.tgz#8c9329bb640091db070689f050c2bf14d5219ec7"
   dependencies:
-    babel-polyfill "^6.26.0"
+    babel-runtime "^6.26.0"
     binaryen "^37.0.0"
     create-hash "^1.1.3"
-    eosjs-api "6.1.3"
+    eosjs-api "6.2.1"
     eosjs-ecc "4.0.1"
     fcbuffer "2.2.0"
 

@@ -4,12 +4,12 @@ import { translate } from 'react-i18next';
 import { Dropdown, Flag, Menu } from 'semantic-ui-react';
 
 const languages = [
-  { key: 'cn', value: 'cn', flag: 'cn', text: '中文' },
-  { key: 'en', value: 'en', flag: 'us', text: 'EN' },
-  { key: 'fr', value: 'fr', flag: 'fr', text: 'FR' },
-  { key: 'it', value: 'it', flag: 'it', text: 'IT' },
-  { key: 'ja', value: 'ja', flag: 'jp', text: '日本語' },
-  { key: 'kr', value: 'kr', flag: 'kr', text: '한글' }
+  { key: 'cn', value: 'zh-CN', flag: 'cn', text: '中文' },
+  { key: 'en', value: 'en-US', flag: 'us', text: 'EN' },
+  { key: 'fr', value: 'fr-FR', flag: 'fr', text: 'FR' },
+  { key: 'it', value: 'it-IT', flag: 'it', text: 'IT' },
+  { key: 'ja', value: 'ja-JP', flag: 'jp', text: '日本語' },
+  { key: 'kr', value: 'ko-KR', flag: 'kr', text: '한글' }
 ];
 
 class WalletLanguage extends Component<Props> {

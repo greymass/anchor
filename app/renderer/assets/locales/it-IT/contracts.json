@@ -1,0 +1,15 @@
+{
+  "contract_terms": "Completando questa transazione, accetto i seguenti termini (fare clic per espandere)...",
+  "system_transfer_title": "Termini e condizioni di trasferimento",
+  "system_transfer_1": "Io, {{from}}, certifico che quanto segue è vero al meglio delle mie conoscenze:",
+  "system_transfer_2": "1. Certifico che {{quantity}} non è frutto di attività fraudolente o violente. ",
+  "system_transfer_3": "2. Certifico che, per quanto ne sappia, {{to}} non supporta l'uso della violenza contro gli altri.",
+  "system_transfer_4": "3. Ho comunicato i termini e le condizioni contrattuali relativi a {{quantity}} a {{to}}. ",
+  "system_transfer_5": "Comprendo che i trasferimenti di fondi non sono reversibili dopo  {{transaction.delay}} secondi o altro ritardo configurato dalle autorizzazioni di {{from}}. ",
+  "system_transfer_6": "Se questa azione non viene confermata in modo irreversibile dopo la ricezione di beni o servizi da '{{to}}', accetto di restituire i prodotti o i servizi o di inviare nuovamente {{quantity}} in modo tempestivo.",
+  "system_voteproducer_1": "L'intento dell'azione 'voteproducer' è di esprimere un voto valido per un massimo di 30 candidati BP.",
+  "system_voteproducer_2": "Come parte autorizzata I {{signer}} desidero votare per conto di {{voter}} a favore del candidato block producer {{producers}} 'con un peso di voto uguale a tutti i token attualmente di proprietà di {{voter}} e puntato per CPU o larghezza di banda.",
+  "system_voteproducer_3": "Se non sono il beneficiario effettivo di queste quote, dichiaro che ho la prova che sono stato autorizzato a votare queste quote dal loro proprietario \/ i beneficiario \/ i. ",
+  "system_voteproducer_4": "Dichiaro di non aver accettato e non accetterò nulla di valore in cambio di questi voti, pena la confisca di questi token e altre sanzioni.",
+  "system_voteproducer_5": "Riconosco che l'utilizzo di qualsiasi sistema di votazione automatica, di nuovo voto o di rinnovo del voto, o che consenta l'utilizzo di tale sistema a nome mio o di terzi, è vietato e che viola il presente contratto. "
+}

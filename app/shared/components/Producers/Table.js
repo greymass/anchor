@@ -16,8 +16,11 @@ class ProducersTable extends Component<Props> {
   }
 
   onSearchChange = debounce((e, { value }) => {
+    const { isQuerying } = this.props;
     const query = String(value).toLowerCase();
-    this.setState({ query });
+    this.setState({ query }, () => {
+      isQuerying((query && query.length > 0));
+    });
     this.props.resetDisplayAmount();
   }, 400);
 
@@ -56,7 +59,7 @@ class ProducersTable extends Component<Props> {
     let searchTable = (
       <Table.Body>
         <Table.Row>
-          <Table.Cell>
+          <Table.Cell colSpan={5}>
             {t('producer_none_match')}
           </Table.Cell>
         </Table.Row>
@@ -65,12 +68,13 @@ class ProducersTable extends Component<Props> {
     if (!loading) {
       const fullResults = producers.list.slice(0, amount);
       baseTable = (
-        <Table.Body>
+        <Table.Body key="FullResults">
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
+                key={producer.key}
                 isSelected={isSelected}
                 position={idx + 1}
                 producer={producer}
@@ -87,12 +91,13 @@ class ProducersTable extends Component<Props> {
           producer.owner.indexOf(query) > -1).slice(0, amount);
         if (partResults.length > 0) {
           searchTable = (
-            <Table.Body>
+            <Table.Body key="PartResults">
               {partResults.map((producer) => {
                 const isSelected = (selected.indexOf(producer.owner) !== -1);
                 return (
                   <ProducersTableRow
                     addProducer={this.props.addProducer}
+                    key={producer.key}
                     isSelected={isSelected}
                     position={findIndex(producers.list, { owner: producer.owner }) + 1}
                     producer={producer}

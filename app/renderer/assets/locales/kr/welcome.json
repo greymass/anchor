@@ -1,7 +1,0 @@
-{
-  "welcome_created_by": "창작자",
-  "welcome_instructions_1": "시작하려면 eos-voter를 EOS API 노드에 연결해야 합니다.",
-  "welcome_instructions_2": "연결할 노드를 입력해 주세요.",
-  "welcome_more_servers_1": "서버 선택에 도움이 필요하신가요?",
-  "welcome_more_servers_2": "옵션 목록을 보려면 여기를 클릭하십시오."
-}

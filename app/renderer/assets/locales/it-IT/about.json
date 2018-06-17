@@ -1,0 +1,17 @@
+{
+  "about_opensource_title": "Questa applicazione è open source",
+  "about_opensource_message": "I contributi a questa applicazione sono benvenuti. Se sei interessato, visita il nostro account github",
+  "about_opensource_link": "https://github.com/greymass/eos-voter",
+  "about_message_1": "eos-vote è una applicazione a sé stante che si connette direttamente con la blockchain di EOS attraverso l'endpoint API di tua scelta.",
+  "about_message_2": "Le tue key non escono mai dall'applicazione e sono conservate sempre e soltantostored in forma criptata, dando così il più alto livello di sicurezza che un wallet possa offrire.",
+  "about_more": "Visita  https://greymass.com per saperne di più.",
+  "about_issues": "Se hai avuto problemi con l'applicazione, apri per favore una istanza su github:",
+  "about_issues_link": "https://github.com/greymass/eos-voter/issues",
+  "about_greymass_message_1": "Questa applicazione è una iniziativa guidata da Greymass.",
+  "about_greymass_message_2": "se vuoi saperne di più sul nostro team e gli altri progetti che stiamo realizzando per EOS, ti invitiamo a visitarci su",
+  "about_license_type": "The MIT License (MIT)",
+  "about_license_body_1": "Copyright (c) 2018-present Greymass",
+  "about_license_body_2": "A chiunque ottenga una copia di questo software e la documentazione associata  (vedi \"Software\"),  è concessa con la presente l'autorizzazione , gratis,  a trattare il Software senza limitazioni, inclusi senza limitazione i diritti di utilizzare, copiare, modificare, unire, pubblicare, distribuire, sublicenziare e / o vendere copie del Software e consentire alle persone a cui è fornito il Software di farlo, fatte salve le seguenti condizioni:",
+  "about_license_body_3": "La suddetta nota sul copyright e questa nota di autorizzazione devono essere incluse in tutte le copie o parti sostanziali del Software.",
+  "about_license_body_4": "IL SOFTWARE VIENE FORNITO \"COSÌ COM'È\", SENZA GARANZIE DI ALCUN TIPO, ESPLICITE O IMPLICITE, INCLUSE, A TITOLO ESEMPLIFICATIVO, LE GARANZIE DI COMMERCIABILITÀ, IDONEITÀ PER UN PARTICOLARE SCOPO E ASSENZA DI VIOLAZIONI. IN NESSUN CASO GLI AUTORI O I DETENTORI DEL COPYRIGHT SARANNO RITENUTI RESPONSABILI PER QUALSIASI RECLAMO, DANNO O ALTRO, SIA IN UN ATTO DI CONTRATTO O ALTRO, DERIVANTI DA, ESTERNI A O IN RELAZIONE AL SOFTWARE O ALL'UTILIZZO IN ALTRI AMBITI DEL SOFTWARE."
+}

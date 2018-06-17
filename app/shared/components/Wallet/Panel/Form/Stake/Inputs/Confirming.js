@@ -1,12 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Divider, Header, Icon, Segment } from 'semantic-ui-react';
-
-import debounce from 'lodash/debounce';
+import { Button, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
 export default class WalletPanelFormStakeInputsConfirming extends Component<Props> {
-  onConfirm = debounce(() => {
+  onConfirm = () => {
     const {
       account,
       actions,
@@ -24,11 +22,12 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
     const { setStakeWithValidation } = actions;
 
     setStakeWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
-  }, 300)
+  }
 
   render() {
     const {
       actions,
+      onClose,
       cpuAmount,
       netAmount,
       cpuOriginal,
@@ -59,10 +58,14 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
                 {(cpuDifference < 0) ? (
                   <p>{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} EOS</b><br /> ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})</p>
                 ) : ''}
+
+                {(netAmount < 1 || cpuAmount < 1) ? (
+                  <Message warning>{t('will_have_less_than_one_eos_staked')}</Message>
+                ) : ''}
               </Segment>
               <Divider />
               <Button
-                onClick={actions.clearValidationState}
+                onClick={onClose}
               >
                 <Icon name="x" /> {t('cancel')}
               </Button>

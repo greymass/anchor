@@ -36,7 +36,7 @@ class WelcomeKeyContainer extends Component<Props> {
     super(props);
     const { keys } = props;
     this.state = {
-      key: keys.key,
+      key: (keys) ? keys.key : '',
       visible: false
     };
   }
@@ -157,6 +157,7 @@ class WelcomeKeyContainer extends Component<Props> {
         onSubmit={this.onCompare}
       >
         <Form.Field
+          autoFocus
           control={Input}
           defaultValue={keys.key}
           fluid
@@ -176,7 +177,7 @@ class WelcomeKeyContainer extends Component<Props> {
           {t('welcome_key_compare_expecting_match_to')}
           <br />
           {Array.from(validKeys).map((key) => (
-            <small><code>{key}</code><br /></small>
+            <small key={key}><code>{key}</code><br /></small>
           ))}
         </Segment>
         {message}
