@@ -27,6 +27,7 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
   render() {
     const {
       actions,
+      onClose,
       cpuAmount,
       netAmount,
       cpuOriginal,
@@ -64,7 +65,7 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
               </Segment>
               <Divider />
               <Button
-                onClick={actions.clearValidationState}
+                onClick={onClose}
               >
                 <Icon name="x" /> {t('cancel')}
               </Button>
