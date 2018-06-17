@@ -21,8 +21,15 @@
   "update_staked_coins": "스테이킹 금액 업데이트",
   "update_staked_cpu_amount": "CPU에 스테이킹된 EOS 설정",
   "update_staked_net_amount": "대역폭에 스테이킹된 EOS 설정",
+<<<<<<< HEAD:app/renderer/assets/locales/ko-KR/stake.json
   "eos_in_cpu_after": "EOS in CPU after",
   "eos_in_net_after": "EOS in Bandwidth after",
   "you_will_have": "You will have",
   "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
 }
+=======
+  "eos_in_cpu_after": "CPU의 EOS",
+  "eos_in_net_after": "대역폭 의 EOS",
+  "you_will_have": "선택 후"
+}
+>>>>>>> localization string updates:app/renderer/assets/locales/kr/stake.json
