@@ -52,5 +52,8 @@
   "wallet_panel_wallet_lock": "지갑 잠금",
   "wallet_panel_form_use_temporary": "저장하지 않고 계정 + 키 사용",
   "wallet_panel_locked": "지갑 잠금",
-  "wallet_panel_locked_subheader": "작업을 수행하시려면 지갑 잠금을 해제해야 합니다."
+  "wallet_panel_locked_subheader": "작업을 수행하시려면 지갑 잠금을 해제해야 합니다.",
+  "wallet_status_resources_being_unstaked": "Unstaking",
+  "wallet_status_total_balance": "Total",
+  "wallet_status_liquid": "Liquid"
 }
