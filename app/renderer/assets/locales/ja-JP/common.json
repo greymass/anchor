@@ -5,8 +5,10 @@
   "cancel": "キャンセル",
   "close": "閉じる",
   "confirm": "確認",
+  "error": "Error",
   "loading": "ロードしました",
   "search": "検索...",
   "waiting": "待機中...",
-  "reset_application": "デバッグ: アプリケーションをリセット"
+  "reset_application": "デバッグ: アプリケーションをリセット",
+  "continue_setup": "Continue Account Setup"
 }
