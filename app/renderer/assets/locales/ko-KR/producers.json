@@ -38,6 +38,6 @@
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
-  "active_producer": "Active Producer",
-  "backup_producer": "Backup Producer"
+  "active_producer": "활동중인 생산자",
+  "backup_producer": "백업 생산자"
 }
