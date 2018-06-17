@@ -24,5 +24,5 @@
   "eos_in_cpu_after": "EOSがCPUにステークされます",
   "eos_in_net_after": "EOSが帯域にステークされます",
   "you_will_have": "確認後、",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "will_have_less_than_one_eos_staked": "帯域またはCPUへのステークが1 EOS未満になります。ネットワークが混雑している場合に、トランザクションを送信できなくなる可能性があります。"
 }
