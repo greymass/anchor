@@ -55,7 +55,19 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
 
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this.onSubmit(e);
+      const {
+        cpuOriginal,
+        netOriginal,
+      } = this.props;
+      const {
+        cpuAmount,
+        netAmount
+      } = this.state;
+      if (!Decimal(cpuOriginal).equals(cpuAmount) || !Decimal(netOriginal).equals(netAmount)) {
+        this.onSubmit(e);
+      }
+      e.preventDefault();
+      return false;
     }
   }
 
@@ -88,6 +100,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
       cpuAmount,
       netAmount
     } = this.state;
+    const disabled = Decimal(cpuOriginal).equals(cpuAmount) && Decimal(netOriginal).equals(netAmount)
 
     if (validate.STAKE === 'CONFIRMING') {
       return (
@@ -146,6 +159,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
               <Button
                 content={t('update_staked_coins')}
                 color="green"
+                disabled={disabled}
                 floated="right"
                 primary
               />
