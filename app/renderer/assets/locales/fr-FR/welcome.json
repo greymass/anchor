@@ -4,7 +4,7 @@
   "welcome_instructions_2": "Entrez l'adresse du noeud auquel vous souhaitez vous connecter.",
   "welcome_instructions_3": "Enter the public key or account name.",
   "welcome_instructions_4": "Select one of the matching accounts using the dropdown.",
-  "welcome_instructions_5": "Enter the private for this account.",
+  "welcome_instructions_5": "Enter the private key (wif) for this account.",
   "welcome_instructions_6": "Choose whether to encrypt and save a local wallet or continue using temporary access.",
   "welcome_more_servers_1": "Vous ne savez pas quel serveur utiliser?",
   "welcome_more_servers_2": "Cliquez ici pour voir une liste d'options.",
