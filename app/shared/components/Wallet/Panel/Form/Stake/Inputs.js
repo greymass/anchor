@@ -113,6 +113,7 @@ export default class WalletPanelFormStakeInputs extends Component<Props> {
           EOSbalance={EOSbalance}
           netAmount={this.state.netAmount}
           netOriginal={netOriginal}
+          onClose={onClose}
           validate={validate}
         />
       );
