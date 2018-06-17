@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
-import debounce from 'lodash/debounce';
-
 export default class WalletPanelFormStakeInputsConfirming extends Component<Props> {
-  onConfirm = debounce(() => {
+  onConfirm = () => {
     const {
       account,
       actions,
@@ -24,7 +22,7 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
     const { setStakeWithValidation } = actions;
 
     setStakeWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
-  }, 300)
+  }
 
   render() {
     const {
