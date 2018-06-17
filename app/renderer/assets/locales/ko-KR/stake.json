@@ -24,5 +24,5 @@
   "eos_in_cpu_after": "EOS in CPU after",
   "eos_in_net_after": "EOS in Bandwidth after",
   "you_will_have": "You will have",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "will_have_less_than_one_eos_staked": "대역폭이나 CPU에 EOS가 1 개 미만으로 설정했습니다.  네트워크 사용량이 많을 경우 거래 수행하지 못할 수도 있습니다."
 }
