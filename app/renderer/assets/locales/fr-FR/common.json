@@ -5,8 +5,10 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "confirm": "Confirmer",
+  "error": "Error",
   "loading": "Chargement",
   "search": "Rechercher...",
   "waiting": "Patientez...",
-  "reset_application": "DÉBOGUER: Réinitialiser l'application"
+  "reset_application": "DÉBOGUER: Réinitialiser l'application",
+  "continue_setup": "Continue Account Setup"
 }
