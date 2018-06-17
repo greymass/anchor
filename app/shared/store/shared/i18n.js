@@ -23,7 +23,7 @@ const configureLocalization = (resourcePath, store) => {
     .use(sprintf)
     .init({
       lng: lang,
-      fallbackLng: 'en',
+      fallbackLng: 'en-US',
       ns: ['common'],
       defaultNS: 'common',
       fallbackNS: 'common',
