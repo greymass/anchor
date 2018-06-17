@@ -10,7 +10,7 @@
   "block_producer_votes_none": "없음",
   "block_producer_total_votes": "총 투표수",
   "block_producer_total_weight": "총 투표 가중치",
-  "producer_none_match": "No producers match the search query.",
+  "producer_none_match": "일치하는 생산자가 없습니다.",
   "producer_none_loaded": "프로듀서 정보를 가져오지 못했습니다",
   "producer_voter_voting_as": "투표하는 계정:",
   "producer_voted_connected_to": "연결된 노드:",
@@ -38,6 +38,6 @@
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
-  "active_producer":"활동중인 생산자",
-  "backup_producer":"백업 생산자"
+  "active_producer": "활동중인 생산자",
+  "backup_producer": "백업 생산자"
 }
