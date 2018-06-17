@@ -11,21 +11,28 @@ export function transfer(from, to, quantity, memo) {
     dispatch({
       type: types.SYSTEM_TRANSFER_PENDING
     });
-    return eos(connection).transfer(
-      from,
-      to,
-      quantity,
-      memo
-    ).then((tx) => {
-      dispatch(getCurrencyBalance(from));
+    try {
+      return eos(connection).transfer(
+        from,
+        to,
+        quantity,
+        memo
+      ).then((tx) => {
+        dispatch(getCurrencyBalance(from));
+        return dispatch({
+          payload: { tx },
+          type: types.SYSTEM_TRANSFER_SUCCESS
+        });
+      }).catch((err) => dispatch({
+        payload: { err },
+        type: types.SYSTEM_TRANSFER_FAILURE
+      }));
+    } catch (err) {
       return dispatch({
-        payload: { tx },
-        type: types.SYSTEM_TRANSFER_SUCCESS
+        payload: { err },
+        type: types.SYSTEM_TRANSFER_FAILURE
       });
-    }).catch((err) => dispatch({
-      payload: { err },
-      type: types.SYSTEM_TRANSFER_FAILURE
-    }));
+    }
   };
 }
 
