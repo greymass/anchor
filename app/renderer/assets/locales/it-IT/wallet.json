@@ -52,5 +52,8 @@
   "wallet_panel_wallet_lock": "Blocca il portafoglio",
   "wallet_panel_form_use_temporary": "Usa Account + Key senza salvare",
   "wallet_panel_locked": "Portafoglio bloccato",
-  "wallet_panel_locked_subheader": "Per attuare queste azioni il portafoglio deve essere sbloccato."
+  "wallet_panel_locked_subheader": "Per attuare queste azioni il portafoglio deve essere sbloccato.",
+  "wallet_status_resources_being_unstaked": "Unstaking",
+  "wallet_status_total_balance": "Total",
+  "wallet_status_liquid": "Liquid"
 }
