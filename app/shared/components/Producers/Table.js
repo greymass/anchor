@@ -68,12 +68,13 @@ class ProducersTable extends Component<Props> {
     if (!loading) {
       const fullResults = producers.list.slice(0, amount);
       baseTable = (
-        <Table.Body>
+        <Table.Body key="FullResults">
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
+                key={producer.key}
                 isSelected={isSelected}
                 position={idx + 1}
                 producer={producer}
@@ -90,12 +91,13 @@ class ProducersTable extends Component<Props> {
           producer.owner.indexOf(query) > -1).slice(0, amount);
         if (partResults.length > 0) {
           searchTable = (
-            <Table.Body>
+            <Table.Body key="PartResults">
               {partResults.map((producer) => {
                 const isSelected = (selected.indexOf(producer.owner) !== -1);
                 return (
                   <ProducersTableRow
                     addProducer={this.props.addProducer}
+                    key={producer.key}
                     isSelected={isSelected}
                     position={findIndex(producers.list, { owner: producer.owner }) + 1}
                     producer={producer}

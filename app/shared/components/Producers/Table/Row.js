@@ -38,7 +38,7 @@ class ProducersTableRow extends Component<Props> {
       )
       : 'None';
     return (
-      <Table.Row positive={isActive}>
+      <Table.Row positive={isActive} key={producer.key}>
         <Table.Cell
           singleLine
           textAlign="center"

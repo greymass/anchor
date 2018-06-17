@@ -1,4 +1,4 @@
- // @flow
+// @flow
 import React, { Component } from 'react';
 import { Button, Divider, Form, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
@@ -86,11 +86,9 @@ class WalletPanelFormTransfer extends Component<Props> {
       waiting
     } = this.state;
     const balance = balances[settings.account];
-    const asset = "EOS";
+    const asset = 'EOS';
     const error = system.TRANSFER_LAST_ERROR;
-    console.log(system)
-    console.log(error)
-    let errorMsg = JSON.stringify(error);;
+    let errorMsg = JSON.stringify(error);
     if (error && error.error) {
       if (error.error.details[0]) {
         errorMsg = error.error.details[0].message;

@@ -36,19 +36,21 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
         {
           (t) => (
             <Segment loading={submitting}>
-              <Header icon="alarm outline" content={t('producer_voter_preview_confirm_changes_title')} />
+              <Header icon="alarm" content={t('producer_voter_preview_confirm_changes_title')} />
               <Modal.Content>
                 <h3>
                   {t('producer_voter_preview_confirm_changes_message')}
                 </h3>
                 <Segment basic padded>
                   <Table celled>
-                    {(selected.length > 0)
-                      ? rows.map((row) => (
-                        <Table.Row>{row}</Table.Row>
-                      ))
-                      : <Grid.Column textAlign="center" width={12}>{t('producer_voter_preview_confirm_none')}</Grid.Column>
-                    }
+                    <Table.Body>
+                      {(selected.length > 0)
+                        ? rows.map((row, i) => (
+                          <Table.Row key={i}>{row}</Table.Row>
+                        ))
+                        : <Grid.Column textAlign="center" width={12}>{t('producer_voter_preview_confirm_none')}</Grid.Column>
+                      }
+                    </Table.Body>
                   </Table>
                 </Segment>
                 {(lastError)
