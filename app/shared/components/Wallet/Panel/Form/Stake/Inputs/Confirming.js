@@ -8,34 +8,30 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
     const {
       account,
       actions,
-      cleanUpStakeAmounts,
-      cpuAmount,
-      EOSbalance,
-      netAmount
+      decimalCpuAmount,
+      decimalNetAmount,
+      onConfirm
     } = this.props;
 
-    const {
-      realNetAmount,
-      realCpuAmount
-    } = cleanUpStakeAmounts(account, netAmount, cpuAmount);
+    const { setStake } = actions;
 
-    const { setStakeWithValidation } = actions;
-
-    setStakeWithValidation(EOSbalance, account, realNetAmount, realCpuAmount);
+    onConfirm();
   }
 
   render() {
     const {
-      actions,
-      onClose,
-      cpuAmount,
-      netAmount,
+      decimalCpuAmount,
       cpuOriginal,
+      decimalNetAmount,
       netOriginal,
+      onClose
     } = this.props;
 
-    const netDifference = netAmount - netOriginal;
-    const cpuDifference = cpuAmount - cpuOriginal;
+    const cpuDifference = decimalCpuAmount - cpuOriginal;
+    const netDifference = decimalNetAmount - netOriginal;
+
+    const netAmount = parseFloat(decimalNetAmount);
+    const cpuAmount = parseFloat(decimalCpuAmount);
 
     return (
       <I18n ns="stake">
@@ -44,22 +40,34 @@ export default class WalletPanelFormStakeInputsConfirming extends Component<Prop
             <Segment padding='true' basic>
               <Segment padding='true' size="large">
                 {(netDifference > 0) ? (
-                  <p>{t('about_to_stake_to_net')} <b>{netDifference.toFixed(4)} EOS</b><br /> ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})</p>
+                  <p>
+                    {t('about_to_stake_to_net')} <b>{netDifference.toFixed(4)} EOS</b><br />
+                    ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                  </p>
                 ) : ''}
 
                 {(netDifference < 0) ? (
-                  <p>{t('about_to_unstake_from_net')} <b>{(-netDifference).toFixed(4)} EOS</b><br />  ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})</p>
+                  <p>
+                    {t('about_to_unstake_from_net')} <b>{(-netDifference).toFixed(4)} EOS</b><br />
+                    ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                  </p>
                 ) : ''}
 
                 {(cpuDifference > 0) ? (
-                  <p>{t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} EOS</b><br /> ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})</p>
+                  <p>
+                    {t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} EOS</b><br />
+                    ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
+                  </p>
                 ) : ''}
 
                 {(cpuDifference < 0) ? (
-                  <p>{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} EOS</b><br /> ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})</p>
+                  <p>
+                    {t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} EOS</b><br />
+                    ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
+                  </p>
                 ) : ''}
 
-                {(netAmount < 1 || cpuAmount < 1) ? (
+                {(decimalNetAmount < 1 || decimalCpuAmount < 1) ? (
                   <Message warning>{t('will_have_less_than_one_eos_staked')}</Message>
                 ) : ''}
               </Segment>
