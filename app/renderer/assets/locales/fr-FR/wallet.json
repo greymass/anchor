@@ -52,5 +52,8 @@
   "wallet_panel_wallet_lock": "Verrouiller portefeuille",
   "wallet_panel_form_use_temporary": "Utiliser votre compte et votre clé sans sauvegarder",
   "wallet_panel_locked": "Portefeuille verrouillé",
-  "wallet_panel_locked_subheader": "Pour effectuer des actions, le portefeuille doit être déverrouillé."
+  "wallet_panel_locked_subheader": "Pour effectuer des actions, le portefeuille doit être déverrouillé.",
+  "wallet_status_resources_being_unstaked": "Unstaking",
+  "wallet_status_total_balance": "Total",
+  "wallet_status_liquid": "Liquid"
 }
