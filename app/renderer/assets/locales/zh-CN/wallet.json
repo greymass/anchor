@@ -17,6 +17,7 @@
   "wallet_status_balances": "电子钱包余额",
   "wallet_status_balances_none": "这个钱包没有令牌余额。",
   "wallet_status_resources_title": "可用网络资源",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "网络",
