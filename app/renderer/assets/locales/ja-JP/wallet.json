@@ -17,6 +17,7 @@
   "wallet_status_balances": "ウォレット残高",
   "wallet_status_balances_none": "このウォレットにはトークン残高がありません。",
   "wallet_status_resources_title": "利用可能なネットワークリソース",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "ネットワーク",
