@@ -1,0 +1,15 @@
+{
+  "transfer_button_cta": "Transfer Tokens",
+  "transfer_modal_title": "Transfer Tokens",
+  "transfer_modal_transaction_successful_title": "Transfer successful!",
+  "transfer_modal_transaction_successful_message": "The requested transaction has been processed. The transaction ID can be found below.",
+  "transfer_confirming_title": "Review your Transaction",
+  "transfer_confirming_body": "Please ensure the destination, quantity and memo for this transfer are valid.",
+  "transfer_warning_irreversible_title": "Transactions are irreversible",
+  "transfer_warning_irreversible_body": "Once this transaction is submitted it cannot be reversed.",
+  "transfer_label_from": "Origin Account",
+  "transfer_label_to": "Destination Account",
+  "transfer_label_quantity": "Quantity",
+  "transfer_label_token_and_quantity": "Token Selection + Quantity",
+  "transfer_label_memo": "Transfer Memo"
+}
