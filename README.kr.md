@@ -23,12 +23,12 @@
 
 ### 가장 최근 버전
 
-현재 0.1.6 버전 다운로드 :
+현재 0.1.6.1 버전 다운로드 :
 
-- [Windows 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
-- [macOS 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
-- [Linux 사용자 (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
-- [Linux 사용자 (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
+- [Windows 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter-setup-0.1.6.1.exe)
+- [macOS 사용자](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter-0.1.6.1.dmg)
+- [Linux 사용자 (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter_0.1.6.1_amd64.deb)
+- [Linux 사용자 (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter_0.1.6.1_amd64.snap)
 
 최신 버전은 항상이 저장소의 릴리스 페이지에서 제공됩니다:
 
