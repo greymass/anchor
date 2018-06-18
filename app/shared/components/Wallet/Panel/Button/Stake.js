@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Header, Icon } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
-import StakeForm from '../Form/Stake';
+import WalletPanelFormStake from '../Form/Stake';
 
 type Props = {
   actions: {
@@ -76,7 +76,7 @@ export default class WalletPanelButtonStake extends Component<Props> {
             >
               <Header icon="microchip" content={t('stake_modal_title')} />
               <Modal.Content>
-                <StakeForm
+                <WalletPanelFormStake
                   account={accounts[settings.account]}
                   key="StakeForm"
                   settings={settings}
@@ -85,6 +85,7 @@ export default class WalletPanelButtonStake extends Component<Props> {
                   validate={validate}
                   balance={balances[settings.account]}
                   system={system}
+                  t={t}
                 />
               </Modal.Content>
             </Modal>
