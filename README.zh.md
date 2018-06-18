@@ -23,12 +23,12 @@
 
 ### 发布
 
-当前版本 0.1.6 可供下载:
+当前版本 0.1.6.1 可供下载:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter-setup-0.1.6.1.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter-0.1.6.1.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter_0.1.6.1_amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6.1/eos-voter_0.1.6.1_amd64.snap)
 
 最新的版本将在此REPO的发布页面中找到：
 
