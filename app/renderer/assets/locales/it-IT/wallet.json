@@ -17,6 +17,7 @@
   "wallet_status_balances": "Saldi del portafoglio",
   "wallet_status_balances_none": "Questo Portafoglio non ha bilanci",
   "wallet_status_resources_title": "Risorse di rete disponibili",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "Rete",
