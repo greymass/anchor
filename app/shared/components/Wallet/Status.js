@@ -18,6 +18,7 @@ class WalletStatus extends Component<Props> {
 
   render() {
     const {
+      actions,
       accounts,
       balances,
       settings,
@@ -40,6 +41,7 @@ class WalletStatus extends Component<Props> {
         case 'balances': {
           activeTab = (
             <WalletStatusBalances
+              actions={actions}
               accounts={accounts}
               balances={balances}
               settings={settings}
