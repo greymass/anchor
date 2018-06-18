@@ -2,6 +2,7 @@ import * as types from '../actions/types';
 
 const initialState = {
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  broadcast: true,
   expireInSeconds: 120
 };
 
@@ -21,6 +22,30 @@ export default function connection(state = initialState, action) {
     case types.WALLET_REMOVE: {
       return Object.assign({}, state, {
         keyProvider: []
+      });
+    }
+    // Cold Wallet: increase expiration to 1hr, disable broadcast, enable sign
+    case types.SET_WALLET_COLD: {
+      return Object.assign({}, state, {
+        broadcast: false,
+        expireInSeconds: 3600,
+        sign: true
+      });
+    }
+    // Watch Wallet: increase expiration to 1hr, enable broadcast, disable sign
+    case types.SET_WALLET_WATCH: {
+      return Object.assign({}, state, {
+        broadcast: true,
+        expireInSeconds: 3600,
+        sign: true
+      });
+    }
+    // Hot Wallet: set expire to 2 minutes, enable broadcast, enable sign
+    case types.SET_WALLET_HOT: {
+      return Object.assign({}, state, {
+        broadcast: true,
+        expireInSeconds: 120,
+        sign: true
       });
     }
     // Add key to connection if wallet is set or unlocked
