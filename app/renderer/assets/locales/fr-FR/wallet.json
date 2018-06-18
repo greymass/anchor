@@ -17,6 +17,7 @@
   "wallet_status_balances": "Soldes",
   "wallet_status_balances_none": "Le solde de votre compte est trop bas.",
   "wallet_status_resources_title": "Resources de Réseau Disponible",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "Réseau",
