@@ -60,7 +60,7 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     const decimalNetAmount = Decimal(netAmount);
 
     if (cpuOriginal.equals(decimalCpuAmount) && netOriginal.equals(decimalNetAmount)) {
-      return onError(null);
+      return true;
     }
 
     if (!decimalCpuAmount.greaterThan(0) || !decimalNetAmount.greaterThan(0)) {
