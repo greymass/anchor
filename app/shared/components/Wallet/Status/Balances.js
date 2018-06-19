@@ -5,6 +5,8 @@ import { Button, Header, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
+import { StatsFetcher } from '../../../utils/StateFetcher'
+
 class WalletStatusBalances extends Component<Props> {
   claimUnstaked = () => {
     const {
@@ -20,22 +22,14 @@ class WalletStatusBalances extends Component<Props> {
       settings,
       t
     } = this.props;
+
     const account = accounts[settings.account] || {};
-    const {
-      self_delegated_bandwidth,
-      refund_request
-    } = account;
-    const totalStaked = (parseFloat(self_delegated_bandwidth.cpu_weight) + parseFloat(self_delegated_bandwidth.net_weight));
-    const tokens = (balances && balances[settings.account]) ? balances[settings.account] : { EOS: 0 };
-    let refundDate = false;
-    let totalBeingUnstaked = 0;
-    if (refund_request) {
-      totalBeingUnstaked = parseFloat(refund_request.net_amount) + parseFloat(refund_request.cpu_amount)
-      refundDate = new Date(`${refund_request.request_time}z`);
-      refundDate.setHours(refundDate.getHours() + 72);
-    }
-    const totalTokens = totalStaked + totalBeingUnstaked + ((tokens.EOS) ? tokens.EOS : 0);
-    const claimable = (new Date() > refundDate)
+    const balance = balances[settings.account] || {};
+
+    const statsFetcher = new StatsFetcher(account);
+
+    statsFetcher.fetchBalances(balance);
+
     const rows = [
       (
         <Table.Row key="EOS">
