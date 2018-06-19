@@ -64,7 +64,13 @@ export default class WalletPanelFormStake extends Component<Props> {
     }
   }
 
-  onError = (errorMessage) => {
+  onError = (error) => {
+    let errorMessage;
+
+    if (error !== true) {
+      errorMessage = error;
+    }
+
     this.setState({
       submitDisabled: true,
       formError: errorMessage
@@ -81,6 +87,12 @@ export default class WalletPanelFormStake extends Component<Props> {
     });
   }
 
+  onBack = () => {
+    this.setState({
+      confirming: false
+    });
+  }
+
   onConfirm = () => {
     const {
       account,
@@ -88,8 +100,8 @@ export default class WalletPanelFormStake extends Component<Props> {
     } = this.props;
 
     const {
-      cpuAmount,
-      netAmount
+      decimalCpuAmount,
+      decimalNetAmount
     } = this.state;
 
     const {
@@ -100,7 +112,7 @@ export default class WalletPanelFormStake extends Component<Props> {
       confirming: false
     });
 
-    setStake(account, netAmount, cpuAmount);
+    setStake(account, decimalNetAmount, decimalCpuAmount);
   }
 
   render() {
@@ -167,6 +179,7 @@ export default class WalletPanelFormStake extends Component<Props> {
                 cpuOriginal={cpuOriginal}
                 EOSbalance={EOSbalance}
                 netOriginal={netOriginal}
+                t={t}
               />
               <Form
                 onKeyPress={this.onKeyPress}
@@ -198,13 +211,9 @@ export default class WalletPanelFormStake extends Component<Props> {
                     onError={this.onError}
                   />
                 </Form.Group>
-                {(this.state.formError)
-                  ? (
-                    <Message
-                      failure
-                      content={t(this.state.formError)}
-                    />
-                  ) : ''}
+                <FormMessageError
+                  error={this.state.formError}
+                />
                 <Divider />
                 <Message
                   icon="info circle"
@@ -246,6 +255,7 @@ export default class WalletPanelFormStake extends Component<Props> {
               EOSbalance={EOSbalance}
               decimalNetAmount={decimalNetAmount}
               netOriginal={netOriginal}
+              onBack={this.onBack}
               onClose={onClose}
               onConfirm={this.onConfirm}
               validate={validate}
