@@ -5,6 +5,8 @@ import { Form, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 import { Decimal } from 'decimal.js';
 
+import FormFieldToken from '../../../../Global/Form/Field/Token';
+
 export default class WalletPanelFormStakeInput extends Component<Props> {
   componentDidMount = () => {
     const {
@@ -18,7 +20,7 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     });
   }
 
-  onChange = debounce((e, { name, value }) => {
+  onChange = (e, { name, value }) => {
     const {
       onChange,
       onError
@@ -30,12 +32,14 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
 
     const error = this.errorsInForm();
 
+    debugger;
+
     if (error) {
       onError(error);
     } else {
       onChange(name, value);
     }
-  }, 300)
+  }
 
   errorsInForm = () => {
     const {
@@ -81,15 +85,16 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     const {
       defaultValue,
       label,
+      icon,
       name
     } = this.props;
 
     return (
-      <Form.Field
+      <FormFieldToken
         autoFocus
-        control={Input}
-        fluid
+        icon={icon}
         label={label}
+        loading={false}
         name={name}
         onChange={this.onChange}
         defaultValue={defaultValue.toFixed(4)}
