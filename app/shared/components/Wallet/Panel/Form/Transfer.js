@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
+import { Button, Divider, Form, Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import FormFieldAccount from '../../../Global/Form/Field/Account';
 import FormFieldGeneric from '../../../Global/Form/Field/Generic';
 import FormFieldMultiToken from '../../../Global/Form/Field/MultiToken';
+import FormMessageError from '../../../Global/Form/Message/Error';
 import WalletMessageContractTransfer from '../../../Global/Message/Contract/Transfer';
 
 class WalletPanelFormTransfer extends Component<Props> {
@@ -93,7 +94,7 @@ class WalletPanelFormTransfer extends Component<Props> {
       if (error.error.details[0]) {
         errorMsg = error.error.details[0].message;
       } else {
-        errorMsg = t(error.error.name);
+        errorMsg = error.error.name;
       }
     }
     if (error && error.message) {
@@ -195,15 +196,10 @@ class WalletPanelFormTransfer extends Component<Props> {
                 value={memo}
               />
 
-              {(error)
-                ? (
-                  <Message negative>
-                    <Header>{t('error')}</Header>
-                    {errorMsg}
-                  </Message>
-                )
-                : ''
-              }
+              <FormMessageError
+                error={error}
+                t={t}
+              />
 
               <Divider />
               <Button

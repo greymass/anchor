@@ -156,6 +156,7 @@ export default class WalletPanelFormStake extends Component<Props> {
     const shouldShowSuccess = (system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS') && !shouldShowConfirm;
     const shouldShowError = (system.DELEGATEBW === 'FAILURE' || system.UNDELEGATEBW === 'FAILURE') && !shouldShowConfirm;
     const shouldShowForm = (validate.STAKE === 'NULL') && !shouldShowSuccess && !shouldShowError && !shouldShowConfirm;
+    const errorObject = system.DELEGATEBW_LAST_ERROR || system.UNDELEGATEBW_LAST_ERROR;
 
     return (
       <Segment
@@ -192,6 +193,7 @@ export default class WalletPanelFormStake extends Component<Props> {
                     decimalNetAmount={decimalNetAmount}
                     defaultValue={decimalCpuAmount}
                     EOSbalance={EOSbalance}
+                    icon='microchip'
                     label={t('update_staked_cpu_amount')}
                     name='cpuAmount'
                     netOriginal={netOriginal}
@@ -204,6 +206,7 @@ export default class WalletPanelFormStake extends Component<Props> {
                     decimalNetAmount={decimalNetAmount}
                     defaultValue={decimalNetAmount}
                     EOSbalance={EOSbalance}
+                    icon='wifi'
                     label={t('update_staked_net_amount')}
                     name='netAmount'
                     netOriginal={netOriginal}
@@ -240,9 +243,9 @@ export default class WalletPanelFormStake extends Component<Props> {
         {(shouldShowError)
           ? (
             <FormMessageError
-              error={system.DELEGATEBW_LAST_ERROR ||
-                     system.UNDELEGATEBW_LAST_ERROR}
+              error={errorObject.error.name}
               onClose={onClose}
+              t={t}
             />
           ) : ''}
         {(shouldShowConfirm)
