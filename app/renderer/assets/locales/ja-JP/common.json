@@ -1,14 +1,14 @@
 {
   "application_name": "eos-voter",
-  "application_version": "v0.1.6",
+  "application_version": "v0.1.7",
   "block_height": "ブロック高",
   "cancel": "キャンセル",
   "close": "閉じる",
   "confirm": "確認",
-  "error": "Error",
+  "error": "エラー",
   "loading": "ロードしました",
   "search": "検索...",
   "waiting": "待機中...",
   "reset_application": "デバッグ: アプリケーションをリセット",
-  "continue_setup": "Continue Account Setup"
+  "continue_setup": "アカウント設定を続行する"
 }

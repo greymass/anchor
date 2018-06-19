@@ -50,6 +50,7 @@ export default class Wallet extends Component<Props> {
           </Grid.Column>
           <Grid.Column width={10}>
             <WalletStatus
+              actions={actions}
               accounts={accounts}
               balances={balances}
               keys={keys}
