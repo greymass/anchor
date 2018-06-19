@@ -28,19 +28,21 @@ class FormMessageError extends Component<Props> {
     });
 
     return (error || errors)
-      ? [(
-        <Message negative>
-          { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }
-        </Message>
-      ), (
-        <Button
-          color="red"
-          content={t('close')}
-          fluid
-          onClick={onClose}
-        />
-      )]
-      : '';
+      ? (
+        <div>
+          <Message negative>
+            { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }
+          </Message>
+
+          {(onClose) ? (
+            <Button
+              color="red"
+              content={t('close')}
+              fluid
+              onClick={onClose}
+            />) : ''}
+        </div>
+      ) : '';
   }
 }
 
