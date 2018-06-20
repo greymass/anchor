@@ -24,5 +24,8 @@
   "eos_in_cpu_after": "EOS en CPU après",
   "eos_in_net_after": "EOS en Bandwidth après",
   "you_will_have": "Vous aurez",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "will_have_less_than_one_eos_staked": "Vous aurez moins de 1 EOS attribué à votre Bandwidth ou CPU. Ceci pourrait vous empêcher d'utiliser le réseau quand il est occupé.",
+  "about_to_unstake": "Vous êtes sur le point de désattribué des Coins. Veuillez noter que ceux-ci devront être réquisitionner manuellement dans 72 heures.",
+  "have_already_unstaked":"Vous avez déjà désattribué ",
+  "unstaking_will_be_reset": " qui ne seront pas disponible pour un autre 72 heures si vous confirmez cette transaction."
 }
