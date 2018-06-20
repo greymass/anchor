@@ -23,12 +23,12 @@
 
 ### Релизы
 
-Текущая версия 0.1.6:
+Текущая версия 0.1.7:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.7/eos-voter-setup-0.1.7.exe) 
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.7/eos-voter-0.1.7.dmg) 
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.7/eos-voter_0.1.7_amd64.deb) 
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.7/eos-voter_0.1.7_amd64.snap)
 
 Последняя версия всегда будет доступна на странице выпусков этого репозитория:
 
@@ -91,21 +91,21 @@ yarn dev
 Чтобы проверить целостность выпусков, загружаемых с GitHub, ниже приведены результаты shasum для каждого из двоичных файлов:
 
 ```
-shasum -b -a 512 eos-voter\ Setup\ 0.1.6.exe
-2ebb82264d79407e195b7b40a4ce348b2faf512dbec8de25fe4fd3dea73aa8aaa59f80d89befec0a3a8e1abe412465a9f16dfc5655422ac760a64bca3dfdf452 *eos-voter Setup 0.1.6.exe
+shasum -b -a 512 eos-voter\ Setup\ 0.1.7.exe 
+9799e0fb5398bc4f8ec59a37f08122fd3ba2053066ef7616df85fceaed146c46fc996cfd83b5f13fd5e9f02ade3955f4b773c02cb04cb5a5b19244b91c6ac39c *eos-voter Setup 0.1.7.exe 
 
-shasum -b -a 512 eos-voter-0.1.6.dmg
-2ccd96843bdc4d2fa866ce98479e5ef4374c9828077521c25ab3a2bb528b6dd60e890e6787440c5479e57f22aa192fcf9e443997dd519eb442226aded240611e *eos-voter-0.1.6.dmg
+shasum -b -a 512 eos-voter-0.1.7.dmg 
+3fcaaa9d42d62e34b044ddc40e0ea3183e8c62bc86cc852668e5924139f1cd4afe62cc6a82e5795d355b417245cad39e606067923feded512cb469bba2f748a1 *eos-voter-0.1.7.dmg 
 
-shasum -b -a 512 eos-voter-0.1.6-mac.zip
-4a99e29669494c2f551f1a03bcd64cf74337b3c3409a1a0d5071d672233e58925b1d9cafc05165d13b1f4f7b942523bf16237aee291663a2e023dbd7ea153045 *eos-voter-0.1.6-mac.zip
+shasum -b -a 512 eos-voter-0.1.7-mac.zip 
+b06f9e9e9ff07cd1cd1d358004d4f6044fe5e29e07bf3466684d468542effd235ce13478c2a5a20b10b521fa46d9db550192a26e2bc7f01223e159161c0922df *eos-voter-0.1.7-mac.zip 
 
-shasum -b -a 512 eos-voter-0.1.6-x86_64.AppImage
-a2179b9f9ce2f2e3e9dd4c353541eb7b19c52accf87086293ae198203130fff3a5d9d534cf30536ec631562a21a39fe7bd2021599f29402184608d49e4fc1be2 *eos-voter-0.1.6-x86_64.AppImage
+shasum -b -a 512 eos-voter-0.1.7-x86_64.AppImage 
+742772b314108fa0f1b34aa825c9599859a5092de8a777db88e24dfec09c0dc78676a58482ed461d70bda7a9e30e371160d47632c3cfe4f55572d149ba7131db *eos-voter-0.1.7-x86_64.AppImage 
 
-shasum -b -a 512 eos-voter_0.1.6_amd64.deb
-90b07efe663801c8cac0e4514b770134a67af41af3c07cf43295b806d388db1b620a3f2058e8b995f95cfa76f0eff539c8d3cdef964cfd0456e72fcc3c515473 *eos-voter_0.1.6_amd64.deb
+shasum -b -a 512 eos-voter_0.1.7_amd64.deb 
+6237698738e364aa67820cfcbb3fd7d3e76eff42e5ccc12e7d3e9f9c46cb3d7331be9b2496d8bb2bc04a46466bc25fc68b27699c7ee8f9dd2865ca0b60075fce *eos-voter_0.1.7_amd64.deb 
 
-shasum -b -a 512 eos-voter_0.1.6_amd64.snap
-a18899000dfff5eee61dce6f6b6e799b028ecc5fc1ff6edbaf67b5dc2e08409500e1563df0aa5743d42adebfc69de59dae569802c80294424c2208bfe8d34c0f *eos-voter_0.1.6_amd64.snap
+shasum -b -a 512 eos-voter_0.1.7_amd64.snap 
+fa9c1ab3eb9cf46c76ced8944c340f2e8f640a87da8117eaf9c85bff02e0d0c4093bd22fc52ab74494f48429d73a857b0a922e4ec40189706268aabe985e06a1 *eos-voter_0.1.7_amd64.snap 
 ```
