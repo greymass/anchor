@@ -32,8 +32,6 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
 
     const error = this.errorsInForm();
 
-    debugger;
-
     if (error) {
       onError(error);
     } else {
@@ -45,8 +43,7 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     const {
       cpuOriginal,
       EOSbalance,
-      netOriginal,
-      onError
+      netOriginal
     } = this.props;
 
     const {
