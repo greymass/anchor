@@ -25,5 +25,7 @@
   "update_staked_net_amount": "Set EOS staked in Bandwidth",
   "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have":"You will have",
-  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 3 days."
+  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "have_already_unstaked":"You have already unstaked ",
+  "unstaking_will_be_reset": " which will not be available for a renewed 72 hours if you proceed."
 }
