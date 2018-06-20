@@ -10,6 +10,32 @@ export function clearAccountCache() {
   };
 }
 
+export function claimUnstaked(owner) {
+  return (dispatch: () => void, getState) => {
+    const {
+      connection
+    } = getState();
+    dispatch({
+      type: types.SYSTEM_REFUND_PENDING
+    });
+    return eos(connection).refund({
+      owner
+    }).then((tx) => {
+      // Reload the account
+      dispatch(getAccount(owner));
+      // Reload the balances
+      dispatch(getCurrencyBalance(owner));
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_REFUND_SUCCESS
+      });
+    }).catch((err) => dispatch({
+      payload: { err },
+      type: types.SYSTEM_REFUND_FAILURE
+    }));
+  };
+}
+
 export function getAccount(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({

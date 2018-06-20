@@ -1,11 +1,18 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Segment, Table } from 'semantic-ui-react';
+import { Button, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
 class WalletStatusBalances extends Component<Props> {
+  claimUnstaked = () => {
+    const {
+      actions,
+      settings
+    } = this.props;
+    actions.claimUnstaked(settings.account);
+  }
   render() {
     const {
       statsFetcher,
@@ -19,6 +26,8 @@ class WalletStatusBalances extends Component<Props> {
       totalStaked,
       totalTokens
     } = statsFetcher.fetchAll();
+
+    const claimable = (new Date() > refundDate)
 
     const rows = [
       (
@@ -41,7 +50,21 @@ class WalletStatusBalances extends Component<Props> {
                   ? (
                     <Table.Row>
                       <Table.Cell>{t('wallet_status_resources_being_unstaked')} </Table.Cell>
-                      <Table.Cell>{totalBeingUnstaked.toFixed(4)} EOS (<TimeAgo date={refundDate} />)</Table.Cell>
+                      <Table.Cell>
+                        {(claimable)
+                          ? (
+                            <Button
+                              color="blue"
+                              content={t('wallet_status_resources_claim_unstaked')}
+                              floated="right"
+                              onClick={this.claimUnstaked}
+                              size="small"
+                            />
+                          )
+                          : false
+                        }
+                        {totalBeingUnstaked.toFixed(4)} EOS (<TimeAgo date={refundDate} />)
+                      </Table.Cell>
                     </Table.Row>
                   )
                   : false
