@@ -9,7 +9,8 @@
 
 `eos-voter` - это ограниченный функциональный выпуск лёгкого кошелька, предназначенного для блокцепи EOS. Это приложение может использоваться для подключения к удалённой конечной точке API EOS для голосования за производителей блоков и выполнения основных команд кошелька.
 
-![eos-voter cкриншот] (https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png) (https://raw.githubusercontent.com/greymass/eos-voter /master/eos-voter.png)
+
+[![eos-voter screenshot](https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png)](https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png)
 
 ### Особенности
 
