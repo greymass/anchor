@@ -1,8 +1,18 @@
 
-class StatsFetcher {
-  constructor(account, balance){
+export default class StatsFetcher {
+  constructor(account, balance) {
     this.account = account;
-    this.account = balance;
+    this.balance = balance;
+  }
+
+  fetchAll() {
+    return {
+      refundDate: this.refundDate(),
+      tokens: this.tokens(),
+      totalBeingUnstaked: this.totalBeingUnstaked(),
+      totalStaked: this.totalStaked(),
+      totalTokens: this.totalTokens()
+    };
   }
 
   totalStaked() {
@@ -10,8 +20,10 @@ class StatsFetcher {
       self_delegated_bandwidth
     } = this.account;
 
-    parseFloat(self_delegated_bandwidth.cpu_weight) + parseFloat(self_delegated_bandwidth.net_weight)
+    return parseFloat(self_delegated_bandwidth.cpu_weight) +
+      parseFloat(self_delegated_bandwidth.net_weight);
   }
+
 
   refundDate() {
     const {
@@ -21,28 +33,80 @@ class StatsFetcher {
     let refundDate = false;
 
     if (refund_request) {
-      totalBeingUnstaked = parseFloat(refund_request.net_amount) + parseFloat(refund_request.cpu_amount)
       refundDate = new Date(`${refund_request.request_time}z`);
       refundDate.setHours(refundDate.getHours() + 72);
     }
 
-    refundDate
+    return refundDate;
   }
 
-
+  totalBeingUnstaked() {
     const {
-      self_delegated_bandwidth,
       refund_request
-    } = account;
-    const totalStaked = ;
-    const tokens = (balances && balances[settings.account]) ? balances[settings.account] : { EOS: 0 };
-    let refundDate = false;
+    } = this.account;
+
     let totalBeingUnstaked = 0;
+
     if (refund_request) {
-      totalBeingUnstaked = parseFloat(refund_request.net_amount) + parseFloat(refund_request.cpu_amount)
-      refundDate = new Date(`${refund_request.request_time}z`);
-      refundDate.setHours(refundDate.getHours() + 72);
+      totalBeingUnstaked = parseFloat(refund_request.net_amount) +
+                             parseFloat(refund_request.cpu_amount);
     }
-    const totalTokens = totalStaked + totalBeingUnstaked + ((tokens.EOS) ? tokens.EOS : 0);
+
+    return totalBeingUnstaked;
+  }
+
+  tokens() {
+    return this.balance ? this.balance : { EOS: 0 };
+  }
+
+  totalTokens() {
+    return this.totalStaked() +
+      this.totalBeingUnstaked() +
+      ((this.tokens().EOS) ? this.tokens().EOS : 0);
+  }
+
+  resourceUsage() {
+    const {
+      cpu_limit,
+      net_limit,
+      ram_quota,
+      ram_usage
+    } = this.account;
+
+    let cpuUsage;
+    let netUsage;
+    if (cpu_limit) {
+      const { max, used } = cpu_limit;
+      cpuUsage = Math.max(0, (100 - parseFloat((used / max) * 100))).toFixed(3);
+    }
+
+    if (net_limit) {
+      const { max, used } = net_limit;
+      netUsage = Math.max(0, (100 - parseFloat((used / max) * 100))).toFixed(3);
+    }
+    let ramUsage;
+    if (ram_quota && ram_usage) {
+      ramUsage = Math.max(0, (100 - parseFloat((ram_usage / ram_quota) * 100))).toFixed(3);
+    }
+
+    return {
+      cpuUsage,
+      netUsage,
+      ramUsage
+    };
+  }
+
+  delegatedStats() {
+    const {
+      total_resources,
+      self_delegated_bandwidth
+    } = this.account;
+
+    return {
+      cpuWeight: `${(parseFloat(total_resources.cpu_weight) - parseFloat(self_delegated_bandwidth.cpu_weight)).toFixed(4)} EOS`,
+      netWeight: `${(parseFloat(total_resources.net_weight) - parseFloat(self_delegated_bandwidth.net_weight)).toFixed(4)} EOS`,
+      totalStaked: this.totalStaked()
+    };
+  }
 }
 

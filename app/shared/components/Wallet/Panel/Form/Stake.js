@@ -252,16 +252,14 @@ export default class WalletPanelFormStake extends Component<Props> {
           ? (
             <WalletPanelFormStakeConfirming
               account={account}
-              actions={actions}
+              balance={balance}
               decimalCpuAmount={decimalCpuAmount}
               cpuOriginal={cpuOriginal}
               EOSbalance={EOSbalance}
               decimalNetAmount={decimalNetAmount}
               netOriginal={netOriginal}
               onBack={this.onBack}
-              onClose={onClose}
               onConfirm={this.onConfirm}
-              validate={validate}
               t={t}
             />
           ) : ''}

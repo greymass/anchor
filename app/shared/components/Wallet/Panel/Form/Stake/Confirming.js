@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
+import StatsFetcher from '../../../../../utils/StatsFetcher';
+
 export default class WalletPanelFormStakeConfirming extends Component<Props> {
   onConfirm = () => {
     const {
@@ -13,12 +15,13 @@ export default class WalletPanelFormStakeConfirming extends Component<Props> {
 
   render() {
     const {
+      account,
+      balance,
       decimalCpuAmount,
       cpuOriginal,
       decimalNetAmount,
       netOriginal,
       onBack,
-      onClose,
       t
     } = this.props;
 
@@ -27,6 +30,14 @@ export default class WalletPanelFormStakeConfirming extends Component<Props> {
 
     const cpuDifference = cpuAmount - cpuOriginal;
     const netDifference = netAmount - netOriginal;
+
+    const lessThanOneEosStaked = (decimalNetAmount < 1 || decimalCpuAmount < 1);
+
+    const statsFetcher = new StatsFetcher(account, balance);
+
+    const refundDate = statsFetcher.refundDate();
+
+    const unstakingWhenAmountBeingUnstaked = refundDate && (cpuDifference < 0 || netDifference < 0)
 
     return (
       <Segment padding="true" basic>
@@ -87,8 +98,14 @@ export default class WalletPanelFormStakeConfirming extends Component<Props> {
           ) : ''}
         </Segment.Group>
 
-        {(decimalNetAmount < 1 || decimalCpuAmount < 1) ? (
-          <Message warning>{t('will_have_less_than_one_eos_staked')}</Message>
+        {(lessThanOneEosStaked) ? (
+          <Message warning="true">{t('will_have_less_than_one_eos_staked')}</Message>
+        ) : ''}
+
+        {(unstakingWhenAmountBeingUnstaked) ? (
+          <Message warning="true">
+            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked()} EOS {t('unstaking_will_be_reset')}
+          </Message>
         ) : ''}
 
         <Divider />

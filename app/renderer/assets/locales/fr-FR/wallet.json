@@ -55,5 +55,5 @@
   "wallet_panel_locked_subheader": "Pour effectuer des actions, le portefeuille doit être déverrouillé.",
   "wallet_status_resources_being_unstaked": "En cours de désattribution",
   "wallet_status_total_balance": "Total",
-  "wallet_status_liquid": "Liquid"
+  "wallet_status_liquid": "Liquide"
 }

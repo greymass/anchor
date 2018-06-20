@@ -1,27 +1,24 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Header, Segment, Table } from 'semantic-ui-react';
+import { Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
-
-import { StatsFetcher } from '../../../utils/StateFetcher'
 
 class WalletStatusBalances extends Component<Props> {
   render() {
     const {
-      accounts,
-      balances,
-      settings,
+      statsFetcher,
       t
     } = this.props;
 
-    const account = accounts[settings.account] || {};
-    const balance = balances[settings.account] || {};
-
-    const statsFetcher = new StatsFetcher(account);
-
-    statsFetcher.fetchBalances(balance);
+    const {
+      refundDate,
+      tokens,
+      totalBeingUnstaked,
+      totalStaked,
+      totalTokens
+    } = statsFetcher.fetchAll();
 
     const rows = [
       (
@@ -40,7 +37,7 @@ class WalletStatusBalances extends Component<Props> {
                   <Table.Cell>{t('wallet_status_resources_staked')}</Table.Cell>
                   <Table.Cell>{totalStaked.toFixed(4)} EOS </Table.Cell>
                 </Table.Row>
-                {(refund_request)
+                {(refundDate)
                   ? (
                     <Table.Row>
                       <Table.Cell>{t('wallet_status_resources_being_unstaked')} </Table.Cell>
