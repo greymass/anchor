@@ -11,6 +11,8 @@ import { Button, Checkbox, Container, Form, Input, Message } from 'semantic-ui-r
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 
+const { shell } = require('electron');
+
 type Props = {
   actions: {
     onStageSelect: () => void,
@@ -42,6 +44,8 @@ class WelcomeConnectionContainer extends Component<Props> {
       validateNode(this.state.node);
     }
   }
+
+  openLink = (link) => shell.openExternal(link);
 
   isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
 

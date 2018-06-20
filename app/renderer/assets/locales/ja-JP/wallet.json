@@ -17,6 +17,7 @@
   "wallet_status_balances": "ウォレット残高",
   "wallet_status_balances_none": "このウォレットにはトークン残高がありません。",
   "wallet_status_resources_title": "利用可能なネットワークリソース",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "ネットワーク",
@@ -53,7 +54,7 @@
   "wallet_panel_form_use_temporary": "保存せずにアカウント + キーを使用する",
   "wallet_panel_locked": "ウォレットはロックされています",
   "wallet_panel_locked_subheader": "操作を実行するにはロックを解除する必要があります。",
-  "wallet_status_resources_being_unstaked": "Unstaking",
-  "wallet_status_total_balance": "Total",
-  "wallet_status_liquid": "Liquid"
+  "wallet_status_resources_being_unstaked": "ステーク解除中",
+  "wallet_status_total_balance": "合計",
+  "wallet_status_liquid": "移動可能"
 }

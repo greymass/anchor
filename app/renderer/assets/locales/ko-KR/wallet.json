@@ -17,6 +17,7 @@
   "wallet_status_balances": "지갑 잔액",
   "wallet_status_balances_none": "이 지갑에는 토큰 잔액이 없습니다.",
   "wallet_status_resources_title": "사용 가능한 네트워크 자원",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "네트워크",
