@@ -1,3 +1,7 @@
+project_identifier_env: CROWDIN_PROJECT_ID
+api_key_env: CROWDIN_API_KEY
+base_path_env: CROWDIN_BASE_PATH
+
 files:
   - source: /app/renderer/assets/locales/en-US/*.json
     translation: /app/renderer/assets/locales/%locale%/%original_file_name%
