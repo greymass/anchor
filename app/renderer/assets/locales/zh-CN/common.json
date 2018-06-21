@@ -1,12 +1,17 @@
 {
-  "application_name":"eos-voter",
-  "application_version":"v0.1.4",
-  "block_height":"区块高度",
-  "cancel":"取消",
-  "close":"关闭",
-  "confirm":"确认",
-  "loading":"上传完毕",
-  "search":"搜索...",
-  "waiting":"等待中...",
-  "reset_application":"DEBUG: 重启程序"
+  "application_name": "eos-voter",
+  "application_version": "v0.2.0",
+  "block_height": "区块高度",
+  "cancel": "取消",
+  "close": "关闭",
+  "confirm": "确认",
+  "error": "Error",
+  "loading": "上传完毕",
+  "search": "搜索...",
+  "waiting": "等待中...",
+  "reset_application": "DEBUG: 重启程序",
+  "continue_setup": "Continue Account Setup",
+  "property": "Property",
+  "value": "Value",
+  "back": "Back"
 }
