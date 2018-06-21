@@ -35,6 +35,7 @@ export default class WalletPanelButtonUnlock extends Component<Props> {
 
   render() {
     const {
+      settings,
       validate
     } = this.props;
     const {
@@ -50,6 +51,7 @@ export default class WalletPanelButtonUnlock extends Component<Props> {
               onClose={this.onClose}
               onSubmit={this.onSubmit}
               open={open}
+              settings={settings}
               trigger={(
                 <Button
                   color="purple"
