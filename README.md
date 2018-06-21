@@ -59,7 +59,7 @@ If you'd rather build the application yourself, please ensure you have nodejs/np
 **Note**: If you are configuring this Electron application within a Windows development environment, it will involve additional steps.
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 ```
@@ -76,7 +76,7 @@ The files built will be located in the `releases` folder within the root project
 ### Running development mode
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 yarn dev
