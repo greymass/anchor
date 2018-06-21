@@ -4,8 +4,8 @@ import { app, crashReporter } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from './basic';
 
-const path = require('path');
 const log = require('electron-log');
+const path = require('path');
 
 let resourcePath = __dirname;
 let ui = null;

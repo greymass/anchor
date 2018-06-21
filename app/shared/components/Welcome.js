@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Breadcrumb, Button, Container, Dropdown, Grid, Image, Header } from 'semantic-ui-react';
+import { Button, Container, Dropdown, Grid, Image, Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import eos from '../../renderer/assets/images/eos.png';
 
 import WelcomeAccount from './Welcome/Account';
+import WelcomeBreadcrumb from './Welcome/Breadcrumb';
 import WelcomeConnection from './Welcome/Connection';
 import WelcomeKey from './Welcome/Key';
 import WelcomeWallet from './Welcome/Wallet';
@@ -35,7 +36,9 @@ class Welcome extends Component<Props> {
     actions.setSetting('lang', value);
   }
 
-  onStageSelect = (stage) => this.setState({ stageSelect: stage });
+  onStageSelect = (stage) => {
+    this.setState({ stageSelect: stage });
+  }
 
   skipImport = () => {
     const {
@@ -49,20 +52,9 @@ class Welcome extends Component<Props> {
     history.push('/voter');
   }
 
-  workOffline = () => {
-    const {
-      actions,
-      history
-    } = this.props;
-    const {
-      setSetting
-    } = actions;
-    setSetting('coldStorage', true);
-    history.push('/coldstorage');
-  }
-
   render() {
     const {
+      keys,
       settings,
       t,
       validate
@@ -71,23 +63,29 @@ class Welcome extends Component<Props> {
       stageSelect
     } = this.state;
     let stage = 0;
-    if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') {
+    if (
+      (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS')
+      || (settings.walletMode === 'cold' && settings.account && keys.key)
+    ) {
       stage = 3;
-    } else if (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS') {
+    } else if (
+      (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS')
+      || (settings.walletMode === 'cold' && settings.account)
+    ) {
       stage = 2;
-    } else if (validate.NODE === 'SUCCESS') {
+    } else if (validate.NODE === 'SUCCESS' || settings.walletMode === 'cold') {
       stage = 1;
     }
     if (stageSelect !== false) {
       stage = stageSelect;
     }
-    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} />;
-    if (validate.NODE === 'SUCCESS' && stage >= 1) {
-      stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} />;
-      if (validate.ACCOUNT === 'SUCCESS' && stage >= 2) {
-        stageElement = <WelcomeKey onStageSelect={this.onStageSelect} />;
-        if (validate.KEY === 'SUCCESS' && stage === 3) {
-          stageElement = <WelcomeWallet />;
+    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} stage={stage} />;
+    if (stage >= 1 && (settings.walletMode === 'cold' || validate.NODE === 'SUCCESS')) {
+      stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} stage={stage} />;
+      if (stage >= 2 && (settings.walletMode === 'cold' || validate.ACCOUNT === 'SUCCESS')) {
+        stageElement = <WelcomeKey onStageSelect={this.onStageSelect} stage={stage} />;
+        if (stage === 3) {
+          stageElement = <WelcomeWallet onStageSelect={this.onStageSelect} stage={stage} />;
         }
       }
     }
@@ -124,34 +122,11 @@ class Welcome extends Component<Props> {
               </Header.Content>
             </Header>
             <Container textAlign="center">
-              <Breadcrumb size="large">
-                <Breadcrumb.Section
-                  active={(stage === 0)}
-                  onClick={(stage > 0) ? () => this.onStageSelect(0) : null}
-                >
-                  {t('welcome_stage_connection')}
-                </Breadcrumb.Section>
-                <Breadcrumb.Divider icon="right angle" />
-                <Breadcrumb.Section
-                  active={(stage === 1)}
-                  onClick={(stage > 1) ? () => this.onStageSelect(1) : null}
-                >
-                  {t('welcome_stage_account')}
-                </Breadcrumb.Section>
-                <Breadcrumb.Divider icon="right angle" />
-                <Breadcrumb.Section
-                  active={(stage === 2)}
-                  onClick={(stage > 2) ? () => this.onStageSelect(2) : null}
-                >
-                  {t('welcome_stage_authorize')}
-                </Breadcrumb.Section>
-                <Breadcrumb.Divider icon="right angle" />
-                <Breadcrumb.Section
-                  active={(stage === 3)}
-                >
-                  {t('welcome_stage_wallet')}
-                </Breadcrumb.Section>
-              </Breadcrumb>
+              <WelcomeBreadcrumb
+                onStageSelect={this.onStageSelect}
+                stage={stage}
+                walletMode={settings.walletMode}
+              />
             </Container>
             {stageElement}
             <Container textAlign="center">
@@ -174,17 +149,7 @@ class Welcome extends Component<Props> {
                     />
                   </p>
                 )
-                : (
-                  <p>
-                    <Button
-                      content={t('welcome:welcome_work_offline')}
-                      icon="x"
-                      onClick={this.workOffline}
-                      size="small"
-                      style={{ marginTop: '1em' }}
-                    />
-                  </p>
-                )
+                : false
               }
             </Container>
           </Grid.Column>

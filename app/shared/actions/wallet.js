@@ -1,4 +1,5 @@
 import * as types from './types';
+import { setSetting } from './settings';
 
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
@@ -64,6 +65,32 @@ export function unlockWallet(wallet, password) {
     return dispatch({
       type: types.VALIDATE_WALLET_PASSWORD_FAILURE
     });
+  };
+}
+
+export function setWalletMode(walletMode) {
+  return (dispatch: () => void) => {
+    // Set the wallet mode
+    dispatch(setSetting('walletMode', walletMode));
+    switch (walletMode) {
+      case 'cold': {
+        // Remove any connection string we had
+        dispatch(setSetting('node', null));
+        return dispatch({
+          type: types.SET_WALLET_COLD
+        });
+      }
+      case 'watch': {
+        return dispatch({
+          type: types.SET_WALLET_WATCH
+        });
+      }
+      default: {
+        return dispatch({
+          type: types.SET_WALLET_HOT
+        });
+      }
+    }
   };
 }
 

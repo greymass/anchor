@@ -3,11 +3,14 @@ import * as types from '../actions/types';
 const initialState = {
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   broadcast: true,
-  expireInSeconds: 120
+  expireInSeconds: 120,
+  forceActionDataHex: false,
+  httpEndpoint: null
 };
 
 export default function connection(state = initialState, action) {
   switch (action.type) {
+    case types.WALLET_REMOVE:
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
@@ -18,8 +21,7 @@ export default function connection(state = initialState, action) {
       });
     }
     // Remove key from connection if the wallet is locked/removed
-    case types.WALLET_LOCK:
-    case types.WALLET_REMOVE: {
+    case types.WALLET_LOCK: {
       return Object.assign({}, state, {
         keyProvider: []
       });
@@ -29,15 +31,17 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         broadcast: false,
         expireInSeconds: 3600,
+        forceActionDataHex: false,
         sign: true
       });
     }
     // Watch Wallet: increase expiration to 1hr, enable broadcast, disable sign
     case types.SET_WALLET_WATCH: {
       return Object.assign({}, state, {
-        broadcast: true,
+        broadcast: false,
         expireInSeconds: 3600,
-        sign: true
+        forceActionDataHex: false,
+        sign: false
       });
     }
     // Hot Wallet: set expire to 2 minutes, enable broadcast, enable sign
@@ -45,6 +49,7 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         broadcast: true,
         expireInSeconds: 120,
+        forceActionDataHex: true,
         sign: true
       });
     }
