@@ -118,10 +118,8 @@ export default class WalletPanelFormStake extends Component<Props> {
   render() {
     const {
       account,
-      actions,
       balance,
       onClose,
-      system,
       validate,
       t
     } = this.props;
@@ -144,7 +142,7 @@ export default class WalletPanelFormStake extends Component<Props> {
 
     return (
       <Segment
-        loading={ validate.STAKE === 'PENDING' }
+        loading={validate.STAKE === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
         {(shouldShowSuccess)
@@ -176,9 +174,9 @@ export default class WalletPanelFormStake extends Component<Props> {
                     decimalNetAmount={decimalNetAmount}
                     defaultValue={decimalCpuAmount}
                     EOSbalance={EOSbalance}
-                    icon='microchip'
+                    icon="microchip"
                     label={t('update_staked_cpu_amount')}
-                    name='cpuAmount'
+                    name="cpuAmount"
                     netOriginal={netOriginal}
                     onChange={this.onChange}
                     onError={this.onError}
@@ -189,9 +187,9 @@ export default class WalletPanelFormStake extends Component<Props> {
                     decimalNetAmount={decimalNetAmount}
                     defaultValue={decimalNetAmount}
                     EOSbalance={EOSbalance}
-                    icon='wifi'
+                    icon="wifi"
                     label={t('update_staked_net_amount')}
-                    name='netAmount'
+                    name="netAmount"
                     netOriginal={netOriginal}
                     onChange={this.onChange}
                     onError={this.onError}

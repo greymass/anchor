@@ -20,7 +20,6 @@ class WalletStatus extends Component<Props> {
 
   render() {
     const {
-      actions,
       accounts,
       balances,
       settings,
