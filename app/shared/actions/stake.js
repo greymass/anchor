@@ -26,8 +26,8 @@ export function setStake(account, netAmount, cpuAmount) {
         tr.delegatebw(delegatebwParams(
           account.account_name,
           account.account_name,
-          decreaseInStake.netAmount,
-          decreaseInStake.cpuAmount
+          increaseInStake.netAmount,
+          increaseInStake.cpuAmount
         ));
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
