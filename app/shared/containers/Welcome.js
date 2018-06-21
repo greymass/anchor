@@ -8,19 +8,65 @@ import Welcome from '../components/Welcome';
 
 import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
+import * as WalletActions from '../actions/wallet';
 
 type Props = {
   actions: {},
+  history: {},
+  keys: {},
   settings: {},
   validate: {}
 };
 
 class WelcomeContainer extends Component<Props> {
   props: Props;
+  componentDidMount() {
+    const {
+      actions,
+      history,
+      settings,
+      validate
+    } = this.props;
+    const {
+      setWalletMode
+    } = actions;
+    setWalletMode(settings.walletMode);
+
+    switch (settings.walletMode) {
+      case 'cold': {
+        if (settings.walletInit) {
+          history.push('/coldwallet');
+        }
+        break;
+      }
+      default: {
+        if (validate.NODE !== 'SUCCESS' && settings.node) {
+          const { validateNode } = actions;
+          validateNode(settings.node);
+        }
+        break;
+      }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      history,
+      settings,
+      validate
+    } = this.props;
+    if (validate.NODE !== 'SUCCESS' && nextProps.validate.NODE === 'SUCCESS') {
+      if (settings.walletInit) {
+        history.push('/voter');
+      }
+    }
+  }
+
   render() {
     const {
       actions,
       history,
+      keys,
       settings,
       validate
     } = this.props;
@@ -28,6 +74,7 @@ class WelcomeContainer extends Component<Props> {
       <Welcome
         actions={actions}
         history={history}
+        keys={keys}
         settings={settings}
         validate={validate}
       />
@@ -37,8 +84,10 @@ class WelcomeContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    keys: state.keys,
     settings: state.settings,
-    validate: state.validate
+    validate: state.validate,
+    wallet: state.wallet
   };
 }
 
@@ -46,7 +95,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...SettingsActions,
-      ...ValidateActions
+      ...ValidateActions,
+      ...WalletActions
     }, dispatch)
   };
 }

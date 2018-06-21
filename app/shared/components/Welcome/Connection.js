@@ -8,6 +8,7 @@ class WelcomeConnection extends Component<Props> {
   render() {
     const {
       onStageSelect,
+      stage,
       t
     } = this.props;
     return (
@@ -22,6 +23,7 @@ class WelcomeConnection extends Component<Props> {
         <WelcomeConnectionContainer
           editing
           onStageSelect={onStageSelect}
+          stage={stage}
         />
       </Segment>
     );
