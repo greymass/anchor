@@ -41,7 +41,7 @@ export default class WalletPanel extends Component<Props> {
         />
       );
     }
-    if (keys.key || settings.walletMode === 'watch') {
+    if ((keys && keys.key) || settings.walletMode === 'watch') {
       panel = (
         <WalletPanelUnlocked
           accounts={accounts}
