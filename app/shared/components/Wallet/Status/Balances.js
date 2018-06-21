@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Segment, Table } from 'semantic-ui-react';
+import { Button, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
@@ -15,27 +15,20 @@ class WalletStatusBalances extends Component<Props> {
   }
   render() {
     const {
-      accounts,
-      balances,
-      settings,
+      statsFetcher,
       t
     } = this.props;
-    const account = accounts[settings.account] || {};
+
     const {
-      self_delegated_bandwidth,
-      refund_request
-    } = account;
-    const totalStaked = (parseFloat(self_delegated_bandwidth.cpu_weight) + parseFloat(self_delegated_bandwidth.net_weight));
-    const tokens = (balances && balances[settings.account]) ? balances[settings.account] : { EOS: 0 };
-    let refundDate = false;
-    let totalBeingUnstaked = 0;
-    if (refund_request) {
-      totalBeingUnstaked = parseFloat(refund_request.net_amount) + parseFloat(refund_request.cpu_amount)
-      refundDate = new Date(`${refund_request.request_time}z`);
-      refundDate.setHours(refundDate.getHours() + 72);
-    }
-    const totalTokens = totalStaked + totalBeingUnstaked + ((tokens.EOS) ? tokens.EOS : 0);
+      refundDate,
+      tokens,
+      totalBeingUnstaked,
+      totalStaked,
+      totalTokens
+    } = statsFetcher.fetchAll();
+
     const claimable = (new Date() > refundDate)
+
     const rows = [
       (
         <Table.Row key="EOS">
@@ -53,7 +46,7 @@ class WalletStatusBalances extends Component<Props> {
                   <Table.Cell>{t('wallet_status_resources_staked')}</Table.Cell>
                   <Table.Cell>{totalStaked.toFixed(4)} EOS </Table.Cell>
                 </Table.Row>
-                {(refund_request)
+                {(refundDate)
                   ? (
                     <Table.Row>
                       <Table.Cell>{t('wallet_status_resources_being_unstaked')} </Table.Cell>

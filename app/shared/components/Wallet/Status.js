@@ -9,6 +9,8 @@ import WalletStatusBalances from './Status/Balances';
 import WalletStatusResources from './Status/Resources';
 import WalletStatusStaked from './Status/Staked';
 
+import StatsFetcher from '../../utils/StatsFetcher';
+
 class WalletStatus extends Component<Props> {
   state = {
     activeItem: 'balances',
@@ -24,11 +26,16 @@ class WalletStatus extends Component<Props> {
       settings,
       t
     } = this.props;
+
     const {
       activeItem
     } = this.state;
-    const accountName = settings.account;
-    const account = accounts[accountName];
+
+    const account = accounts[settings.account] || {};
+    const balance = balances[settings.account] || {};
+
+    const statsFetcher = new StatsFetcher(account, balance);
+
     let activeTab = (
       <Segment stacked>
         <Header textAlign="center">
@@ -36,15 +43,14 @@ class WalletStatus extends Component<Props> {
         </Header>
       </Segment>
     );
+
     if (account) {
       switch (activeItem) {
         case 'balances': {
           activeTab = (
             <WalletStatusBalances
-              actions={actions}
-              accounts={accounts}
-              balances={balances}
-              settings={settings}
+              statsFetcher={statsFetcher}
+              t={t}
             />
           );
           break;
@@ -52,8 +58,9 @@ class WalletStatus extends Component<Props> {
         case 'staked': {
           activeTab = (
             <WalletStatusStaked
-              accounts={accounts}
-              settings={settings}
+              account={account}
+              statsFetcher={statsFetcher}
+              t={t}
             />
           );
           break;
@@ -80,8 +87,8 @@ class WalletStatus extends Component<Props> {
     return (
       <div>
         <WalletStatusResources
-          accounts={accounts}
-          settings={settings}
+          statsFetcher={statsFetcher}
+          t={t}
         />
         <Segment>
           <Menu

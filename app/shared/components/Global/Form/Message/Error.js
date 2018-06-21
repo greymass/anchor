@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Message } from 'semantic-ui-react';
+import { Button, Message, Header } from 'semantic-ui-react';
 
 class FormMessageError extends Component<Props> {
   render() {
@@ -12,35 +12,27 @@ class FormMessageError extends Component<Props> {
       t
     } = this.props;
 
-    const errorObjects = (errors || []);
+    const errorMessages = (errors || []);
 
-    errorObjects.push(error);
-
-    const errorMessages = errorObjects.map((err) => {
-      if (err && err.code) {
-        const details = (err.error && err.error.details.length > 0)
-          ? err.error.details[0].message
-          : false;
-        return details || err.error.name || err.name || err.message;
-      }
-
-      return err;
-    });
+    errorMessages.push(error);
 
     return (error || errors)
-      ? [(
-        <Message negative>
-          { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }
-        </Message>
-      ), (
-        <Button
-          color="red"
-          content={t('close')}
-          fluid
-          onClick={onClose}
-        />
-      )]
-      : '';
+      ? (
+        <div>
+          <Message negative>
+            <Header>{t('error')}</Header>
+            { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }
+          </Message>
+
+          {(onClose) ? (
+            <Button
+              color="red"
+              content={t('close')}
+              fluid
+              onClick={onClose}
+            />) : ''}
+        </div>
+      ) : '';
   }
 }
 

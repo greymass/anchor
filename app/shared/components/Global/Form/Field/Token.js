@@ -1,21 +1,14 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
 import { Form, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
 export default class FormFieldToken extends Component<Props> {
-  state = { value: '' };
   onChange = debounce((e, { name, value }) => {
-    const asset = 'EOS';
-    const parsed = (value > 0) ? `${value.toFixed(4)} ${asset}` : `0.0000 ${asset}`;
-    this.setState({
-      value: parsed,
-    }, () => {
-      this.props.onChange(e, { name, value: parsed });
-    });
+    this.props.onChange(e, { name, value });
   }, 300)
+
   render() {
     const {
       autoFocus,
@@ -23,14 +16,13 @@ export default class FormFieldToken extends Component<Props> {
       label,
       loading,
       name,
-      value
+      defaultValue
     } = this.props;
     return (
       <Form.Field
         autoFocus={autoFocus}
         control={Input}
-        defaultValue={value}
-        fluid
+        defaultValue={defaultValue}
         icon={icon}
         label={label}
         loading={loading}
