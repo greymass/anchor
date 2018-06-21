@@ -18,7 +18,6 @@ class WelcomeKey extends Component<Props> {
         <Header>
           {t('welcome_stage')} #3: {t('welcome_stage_authorize')}
         </Header>
-        <p>{t('welcome_instructions_5')}</p>
         <WelcomeKeyContainer
           onStageSelect={onStageSelect}
         />

@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 
-import WalletPanelLocked from './Panel/Locked';
-import WalletPanelUnlocked from './Panel/Unlocked';
+import WalletPanelLocked from '../../Wallet/Panel/Locked';
+import ColdWalletPanelUnlocked from './Panel/Unlocked';
 
 type Props = {
   actions: {},
@@ -10,13 +10,12 @@ type Props = {
   balances: {},
   settings: {},
   system: {},
-  transaction: {},
   validate: {},
   keys: {},
   wallet: {}
 };
 
-export default class WalletPanel extends Component<Props> {
+export default class ColdWalletPanel extends Component<Props> {
   render() {
     const {
       accounts,
@@ -25,13 +24,12 @@ export default class WalletPanel extends Component<Props> {
       keys,
       settings,
       system,
-      transaction,
       validate,
       wallet
     } = this.props;
 
     let panel = false;
-    if (wallet.data) {
+    if ((!keys || !keys.key) && wallet.data) {
       panel = (
         <WalletPanelLocked
           actions={actions}
@@ -41,15 +39,15 @@ export default class WalletPanel extends Component<Props> {
         />
       );
     }
-    if (keys.key || settings.walletMode === 'watch') {
+    if (keys && keys.key) {
       panel = (
-        <WalletPanelUnlocked
+        <ColdWalletPanelUnlocked
           accounts={accounts}
-          balances={balances}
           actions={actions}
+          balances={balances}
+          keys={keys}
           settings={settings}
           system={system}
-          transaction={transaction}
           validate={validate}
         />
       );
