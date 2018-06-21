@@ -4,7 +4,7 @@ import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
 import logo from '../../renderer/assets/images/greymasstext.png';
-import WalletPanelButtonResetApp from './Wallet/Panel/Button/ResetApp';
+import GlobalButtonResetContainer from '../containers/Global/Button/Reset';
 
 const { shell } = require('electron');
 
@@ -12,9 +12,6 @@ export default class About extends Component<Props> {
   openLink = (url) => shell.openExternal(url);
 
   render() {
-    const {
-      clearSettingsCache
-    } = this.props.actions;
     return (
       <I18n ns="about">
         {
@@ -75,9 +72,7 @@ export default class About extends Component<Props> {
               </Grid.Row>
               <Grid.Row>
                 <Grid.Column textAlign="center">
-                  <WalletPanelButtonResetApp
-                    clearSettingsCache={clearSettingsCache}
-                  />
+                  <GlobalButtonResetContainer />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
