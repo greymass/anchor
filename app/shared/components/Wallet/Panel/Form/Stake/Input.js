@@ -8,18 +8,6 @@ import { Decimal } from 'decimal.js';
 import FormFieldToken from '../../../../Global/Form/Field/Token';
 
 export default class WalletPanelFormStakeInput extends Component<Props> {
-  componentDidMount = () => {
-    const {
-      decimalCpuAmount,
-      decimalNetAmount
-    } = this.props;
-
-    this.setState({
-      cpuAmount: decimalCpuAmount,
-      netAmount: decimalNetAmount
-    });
-  }
-
   onChange = (e, { name, value }) => {
     const {
       onChange,
@@ -27,8 +15,8 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     } = this.props;
 
     this.setState({
-      [name]: value,
-    });
+      value
+    })
 
     const error = this.errorsInForm();
 
@@ -42,14 +30,20 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
   errorsInForm = () => {
     const {
       cpuOriginal,
+      decimalCpuAmount,
+      decimalNetAmount,
       EOSbalance,
       netOriginal
     } = this.props;
 
-    const {
-      cpuAmount,
-      netAmount,
-    } = this.state;
+    let cpuAmount = decimalCpuAmount;
+    let netAmount = decimalNetAmount;
+
+    if (this.props.name === 'cpuAmount') {
+      cpuAmount = Decimal(this.state.value);
+    } else {
+      netAmount = Decimal(this.state.value);
+    }
 
     const decimalRegex = /^\d+(\.\d{1,4})?$/;
 
@@ -57,19 +51,16 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
       return 'not_valid_stake_amount';
     }
 
-    const decimalCpuAmount = Decimal(cpuAmount);
-    const decimalNetAmount = Decimal(netAmount);
-
-    if (cpuOriginal.equals(decimalCpuAmount) && netOriginal.equals(decimalNetAmount)) {
+    if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
       return true;
     }
 
-    if (!decimalCpuAmount.greaterThan(0) || !decimalNetAmount.greaterThan(0)) {
+    if (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0)) {
       return 'no_stake_left';
     }
 
-    const cpuChange = (decimalCpuAmount - cpuOriginal);
-    const netChange = (decimalNetAmount - netOriginal);
+    const cpuChange = (cpuAmount - cpuOriginal);
+    const netChange = (netAmount - netOriginal);
 
     if (Math.max(0, cpuChange) + Math.max(0, netChange) > EOSbalance) {
       return 'not_enough_balance';
