@@ -60,7 +60,7 @@
 ** Примечание **: Если вы собираете это приложение в среде разработки Windows, потребуются дополнительные действия.
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 ```
@@ -77,7 +77,7 @@ yarn install
 ### Запуск режима разработки
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 yarn dev
