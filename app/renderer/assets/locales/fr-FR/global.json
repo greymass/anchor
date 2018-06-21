@@ -1,9 +1,9 @@
 {
-  "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
+  "error_not_enough_balance": "Vous n'avez pas suffisamment de fond pour cette transaction.",
   "error_no_stake_left": "Unable to set staked amount to 0. Doing so would prevent you from performing any transactions on the network.",
   "error_not_valid_stake_amount": "Pas un montant valide (doit être un montant positif avec un maximum de 4 décimales, par exemple 12.1212).",
+  "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
   "error_ram_usage_exceeded": "RAM usage exceeded. You will need to buy more ram to carry out this action.",
-  "error_not_enough_balance": "You do not have enough balance for this transaction.",
   "global_dangerlink_warning_body_1": "eos-voter ne peut garantir la sécurité du site que vous êtes sur le point de visiter. Soyez prudent avec la sécurité de vos clés et de vos informations de compte, en partageant uniquement des informations lorsque vous êtes absolument certain de pouvoir faire confiance au site.",
   "global_dangerlink_warning_body_2": "Ne partagez jamais vos clés.",
   "global_dangerlink_warning_body_3": "Si vous souhaitez continues, cliquez le bouton de confirmation ci-dessous.",
@@ -43,5 +43,5 @@
   "global_modal_settings_customtoken_notfound_header": "Token not found",
   "global_modal_settings_customtoken_notfound_subheader": "The details for the token entered could not be found.",
   "global_transaction_complete_warning_title": "La transaction n'est pas confirmée.",
-  "error": "Error"
+  "error":"Erreur"
 }

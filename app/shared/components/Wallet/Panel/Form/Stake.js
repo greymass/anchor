@@ -17,7 +17,6 @@ type Props = {
   account: {},
   balance: {},
   validate: {},
-  system: {}
 };
 
 export default class WalletPanelFormStake extends Component<Props> {
@@ -31,14 +30,14 @@ export default class WalletPanelFormStake extends Component<Props> {
       net_weight
     } = account.self_delegated_bandwidth;
 
-    const parsed_cpu_weight = cpu_weight.split(' ')[0];
-    const parsed_net_weight = net_weight.split(' ')[0];
+    const parsedCpuWeight = cpu_weight.split(' ')[0];
+    const parsedNetWeight = net_weight.split(' ')[0];
 
     this.state = {
-      decimalCpuAmount: Decimal(parsed_cpu_weight),
-      cpuOriginal: Decimal(parsed_cpu_weight),
-      decimalNetAmount: Decimal(parsed_net_weight),
-      netOriginal: Decimal(parsed_net_weight),
+      decimalCpuAmount: Decimal(parsedCpuWeight),
+      cpuOriginal: Decimal(parsedCpuWeight),
+      decimalNetAmount: Decimal(parsedNetWeight),
+      netOriginal: Decimal(parsedNetWeight),
       confirming: false,
       formError: null,
       submitDisabled: true
