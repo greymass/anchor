@@ -137,7 +137,7 @@ class Welcome extends Component<Props> {
                 onChange={this.onChange}
                 options={languages}
               />
-              {(stage > 0)
+              {(stage > 0 && settings.walletMode !== 'cold')
                 ? (
                   <p>
                     <Button
