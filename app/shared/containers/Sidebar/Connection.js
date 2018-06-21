@@ -13,25 +13,19 @@ import WelcomeConnectionContainer from '../Welcome/Connection';
 import * as AccountsActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
+import * as WalletActions from '../../actions/wallet';
 
 class SidebarConnection extends Component<Props> {
   state = { editing: false }
+
   continueSetup = () => {
-    const {
-      actions,
-      history
-    } = this.props;
-    const {
-      clearAccountCache,
-      clearValidationState,
-      setSetting
-    } = actions;
+    const { setSetting } = this.props.actions;
     setSetting('skipImport', false);
-    clearAccountCache();
-    clearValidationState();
-    history.push('/');
+    this.props.history.push('/');
   }
+
   onToggle = () => this.setState({ editing: !this.state.editing });
+
   render() {
     const {
       chain,
@@ -70,7 +64,11 @@ class SidebarConnection extends Component<Props> {
       </Header>
       )];
     if (editing) {
-      controls = <WelcomeConnectionContainer onStageSelect={this.onToggle} />;
+      controls = (
+        <WelcomeConnectionContainer
+          onStageSelect={this.onToggle}
+        />
+      );
     }
     return (
       <Segment
@@ -78,16 +76,19 @@ class SidebarConnection extends Component<Props> {
         stacked
       >
         {controls}
-        {(!wallet.account)
-          ? [(<Divider />), (
-            <Button
-              color="purple"
-              content={t('continue_setup')}
-              fluid
-              onClick={this.continueSetup}
-            />
-          )]
-          : false
+        {(settings && settings.walletInit)
+          ? false
+          : (
+            <React.Fragment>
+              <Divider />
+              <Button
+                color="purple"
+                content={t('continue_setup')}
+                fluid
+                onClick={this.continueSetup}
+              />
+            </React.Fragment>
+          )
         }
       </Segment>
     );
@@ -108,7 +109,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...SettingsActions,
-      ...ValidateActions
+      ...ValidateActions,
+      ...WalletActions
     }, dispatch)
   };
 }
