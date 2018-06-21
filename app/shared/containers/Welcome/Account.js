@@ -205,46 +205,47 @@ class WelcomeAccountContainer extends Component<Props> {
         />
       );
     }
-    return [(
-      <p>{instruction}</p>
-    ), (
-      <Form>
-        {input}
-        {message}
-        <Container>
-          <Button
-            color={buttonColor}
-            content={buttonText}
-            floated="right"
-            icon="search"
-            onClick={this.onLookup}
-            primary
-            size="small"
-            style={{ marginTop: '1em' }}
-          />
-          {(settings.walletMode === 'cold')
-            ? (
-              <Button
-                content={t('welcome_cancel_coldwallet')}
-                icon="x"
-                onClick={this.cancelColdWallet}
-                size="small"
-                style={{ marginTop: '1em' }}
-              />
-            )
-            : (
-              <Button
-                content={t('back')}
-                icon="arrow left"
-                onClick={() => onStageSelect(0)}
-                size="small"
-                style={{ marginTop: '1em' }}
-              />
-            )
-          }
-        </Container>
-      </Form>
-      )];
+    return (
+      <React.Fragment>
+        <p>{instruction}</p>
+        <Form>
+          {input}
+          {message}
+          <Container>
+            <Button
+              color={buttonColor}
+              content={buttonText}
+              floated="right"
+              icon="search"
+              onClick={this.onLookup}
+              primary
+              size="small"
+              style={{ marginTop: '1em' }}
+            />
+            {(settings.walletMode === 'cold')
+              ? (
+                <Button
+                  content={t('welcome_cancel_coldwallet')}
+                  icon="x"
+                  onClick={this.cancelColdWallet}
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+              )
+              : (
+                <Button
+                  content={t('back')}
+                  icon="arrow left"
+                  onClick={() => onStageSelect(0)}
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+              )
+            }
+          </Container>
+        </Form>
+      </React.Fragment>
+    );
   }
 }
 
