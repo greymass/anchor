@@ -17,6 +17,7 @@
   "wallet_status_balances": "Soldes",
   "wallet_status_balances_none": "Le solde de votre compte est trop bas.",
   "wallet_status_resources_title": "Resources de Réseau Disponible",
+  "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "Réseau",
@@ -52,5 +53,11 @@
   "wallet_panel_wallet_lock": "Verrouiller portefeuille",
   "wallet_panel_form_use_temporary": "Utiliser votre compte et votre clé sans sauvegarder",
   "wallet_panel_locked": "Portefeuille verrouillé",
-  "wallet_panel_locked_subheader": "Pour effectuer des actions, le portefeuille doit être déverrouillé."
+  "wallet_panel_locked_subheader": "Pour effectuer des actions, le portefeuille doit être déverrouillé.",
+  "wallet_status_resources_being_unstaked": "Unstaking",
+  "wallet_status_total_balance": "Total",
+  "wallet_status_liquid": "Liquid",
+  "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
+  "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
+  "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet."
 }
