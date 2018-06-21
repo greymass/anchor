@@ -9,6 +9,7 @@ export default class WalletPanelLocked extends Component<Props> {
   render() {
     const {
       actions,
+      settings,
       validate,
       wallet
     } = this.props;
@@ -40,6 +41,7 @@ export default class WalletPanelLocked extends Component<Props> {
                 </Header.Subheader>
               </Header>
               <WalletPanelButtonUnlock
+                settings={settings}
                 unlockWallet={unlockWallet}
                 validate={validate}
                 wallet={wallet}
