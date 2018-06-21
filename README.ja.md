@@ -59,7 +59,7 @@
 **注**: Windows開発環境でこのElectronアプリケーションを構成する場合は、追加の手順が必要です。
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 ```
@@ -76,7 +76,7 @@ yarn install
 ### 開発者モードで実行
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 yarn dev
