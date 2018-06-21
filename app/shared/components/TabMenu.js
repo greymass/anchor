@@ -5,6 +5,7 @@ import { I18n } from 'react-i18next';
 
 import WalletLanguage from './Wallet/Language';
 import WalletLockState from './Wallet/LockState';
+import WalletMode from './Wallet/Mode';
 import logo from '../../renderer/assets/images/greymass.png';
 
 export default class BasicMenu extends Component<Props> {
@@ -56,6 +57,9 @@ export default class BasicMenu extends Component<Props> {
                 <WalletLanguage
                   actions={actions}
                   key="language"
+                  settings={settings}
+                />
+                <WalletMode
                   settings={settings}
                 />
                 <WalletLockState
