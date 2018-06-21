@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Grid, Loader, Segment, Sticky, Table, Visibility } from 'semantic-ui-react';
+import { Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import SidebarConnection from '../containers/Sidebar/Connection';
@@ -20,9 +20,9 @@ type Props = {
     voteproducers: () => void
   },
   accounts: {},
+  balances: {},
   globals: {},
   history: {},
-  keys: {},
   producers: {
     lastTransaction: {},
     selected: []
@@ -30,7 +30,8 @@ type Props = {
   settings: {},
   system: {},
   t: () => void,
-  validate: {}
+  validate: {},
+  wallet: {}
 };
 
 class Producers extends Component<Props> {
@@ -95,7 +96,6 @@ class Producers extends Component<Props> {
           });
         } else {
           // otherwise notify users that they must stake before allowed voting
-          // console.log('unable to vote, stake first');
         }
       }
     }
@@ -175,7 +175,6 @@ class Producers extends Component<Props> {
       balances,
       globals,
       history,
-      keys,
       producers,
       settings,
       system,
@@ -198,31 +197,19 @@ class Producers extends Component<Props> {
         accounts={accounts}
         balances={balances}
         key="WalletPanel"
-        keys={keys}
         settings={settings}
         system={system}
         validate={validate}
         wallet={wallet}
       />
     )];
-    const validUser = !!keys.key;
+    const validUser = (wallet.account || settings.walletMode === 'watch');
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
-      sidebar = [
-        (
-          <ProducersSelector
-            account={accounts[settings.account]}
-            key="ProducersSelector"
-            modified={modified}
-            selected={selected}
-            removeProducer={this.removeProducer.bind(this)}
-            submitProducerVotes={() => this.previewProducerVotes(true)}
-            submitting={submitting}
-          />
-        ),
-        (
+      sidebar = (
+        <React.Fragment>
           <ProducersVotingPreview
-            key="ProducersVotingPreview"
+            actions={actions}
             lastError={lastError}
             lastTransaction={lastTransaction}
             open={previewing}
@@ -230,10 +217,20 @@ class Producers extends Component<Props> {
             onConfirm={this.submitProducerVotes.bind(this)}
             onOpen={() => this.previewProducerVotes(true)}
             selected={selected}
+            settings={settings}
+            submitting={submitting}
+            system={system}
+          />
+          <ProducersSelector
+            account={accounts[settings.account]}
+            modified={modified}
+            selected={selected}
+            removeProducer={this.removeProducer.bind(this)}
+            submitProducerVotes={() => this.previewProducerVotes(true)}
             submitting={submitting}
           />
-        )
-      ];
+        </React.Fragment>
+      );
     }
     return (
       <div ref={this.handleContextRef}>
