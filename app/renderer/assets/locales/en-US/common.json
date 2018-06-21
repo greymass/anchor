@@ -12,5 +12,6 @@
   "reset_application": "DEBUG: Reset Application",
   "continue_setup": "Continue Account Setup",
   "property": "Property",
-  "value": "Value"
+  "value": "Value",
+  "back": "Back"
 }
