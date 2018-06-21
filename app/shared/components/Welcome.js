@@ -15,6 +15,7 @@ const { shell } = require('electron');
 const languages = [
   { key: 'cn', value: 'zh-CN', flag: 'cn', text: '中文' },
   { key: 'en', value: 'en-US', flag: 'us', text: 'English' },
+  { key: 'ru', value: 'ru-RU', flag: 'ru', text: 'Русский' },
   { key: 'fr', value: 'fr-FR', flag: 'fr', text: 'Français' },
   { key: 'it', value: 'it-IT', flag: 'it', text: 'Italiano' },
   { key: 'ja', value: 'ja-FP', flag: 'jp', text: '日本語' },
