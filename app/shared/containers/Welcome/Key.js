@@ -23,9 +23,7 @@ type Props = {
   history: {},
   keys: {},
   onStageSelect: () => void,
-  settings: {
-    node: string
-  },
+  settings: {},
   t: () => void,
   validate: {}
 };
@@ -160,7 +158,6 @@ class WelcomeKeyContainer extends Component<Props> {
             floated="right"
             icon="snowflake"
             info
-            primary
             header={t('welcome_key_coldwallet_title')}
           />
         );
@@ -178,7 +175,6 @@ class WelcomeKeyContainer extends Component<Props> {
             floated="right"
             icon="eye"
             info
-            primary
             header={t('welcome_key_watchwallet_title')}
           />
         );
@@ -242,7 +238,6 @@ class WelcomeKeyContainer extends Component<Props> {
                 label={t('welcome_key_sign_tx')}
                 toggle
                 defaultChecked={(settings.walletMode !== 'watch')}
-                fluid
                 name="hotWallet"
                 onChange={this.onToggleWatch}
               />
@@ -258,7 +253,6 @@ class WelcomeKeyContainer extends Component<Props> {
                 autoFocus
                 control={Input}
                 defaultValue={keys.key}
-                fluid
                 icon={(validate.KEY === 'SUCCESS') ? 'checkmark' : 'x'}
                 loading={(validate.KEY === 'PENDING')}
                 name="key"

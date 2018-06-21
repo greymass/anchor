@@ -20,9 +20,7 @@ type Props = {
     setSettingWithValidation: () => void
   },
   onStageSelect: () => void,
-  settings: {
-    node: string
-  },
+  settings: {},
   t: () => void,
   validate: {}
 };
