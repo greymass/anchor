@@ -1,6 +1,6 @@
 {
   "application_name": "eos-voter",
-  "application_version": "v0.1.7",
+  "application_version": "v0.2.0",
   "block_height": "블록 높이",
   "cancel": "취소",
   "close": "닫기",
