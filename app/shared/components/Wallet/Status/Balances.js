@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Segment, Table } from 'semantic-ui-react';
+import { Button, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
@@ -27,7 +27,7 @@ class WalletStatusBalances extends Component<Props> {
       totalTokens
     } = statsFetcher.fetchAll();
 
-    const claimable = (new Date() > refundDate)
+    const claimable = (new Date() > refundDate);
 
     const rows = [
       (
