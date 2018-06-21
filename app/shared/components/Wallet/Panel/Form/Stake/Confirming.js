@@ -104,7 +104,7 @@ export default class WalletPanelFormStakeConfirming extends Component<Props> {
 
         {(unstakingWhenAmountBeingUnstaked) ? (
           <Message warning="true">
-            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked()} EOS {t('unstaking_will_be_reset')}
+            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked().toFixed(4)} EOS {t('unstaking_will_be_reset')}
           </Message>
         ) : ''}
 
