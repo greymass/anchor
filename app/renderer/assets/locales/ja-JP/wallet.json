@@ -56,5 +56,8 @@
   "wallet_panel_locked_subheader": "操作を実行するにはロックを解除する必要があります。",
   "wallet_status_resources_being_unstaked": "ステーク解除中",
   "wallet_status_total_balance": "合計",
-  "wallet_status_liquid": "移動可能"
+  "wallet_status_liquid": "移動可能",
+  "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
+  "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
+  "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet."
 }

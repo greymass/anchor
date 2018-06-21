@@ -10,5 +10,8 @@
   "search": "찾는 중...",
   "waiting": "잠시만 기다려 주세요...",
   "reset_application": "디버그: 프로그램 초기화",
-  "continue_setup": "계정 설정 계속하기"
+  "continue_setup": "계정 설정 계속하기",
+  "property": "Property",
+  "value": "Value",
+  "back": "Back"
 }

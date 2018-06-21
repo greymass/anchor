@@ -10,5 +10,8 @@
   "search": "検索...",
   "waiting": "待機中...",
   "reset_application": "デバッグ: アプリケーションをリセット",
-  "continue_setup": "アカウント設定を続行する"
+  "continue_setup": "アカウント設定を続行する",
+  "property": "Property",
+  "value": "Value",
+  "back": "Back"
 }
