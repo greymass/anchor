@@ -1,6 +1,6 @@
 {
   "application_name": "eos-voter",
-  "application_version": "v0.1.4",
+  "application_version": "v0.1.7",
   "block_height": "区块高度",
   "cancel": "取消",
   "close": "关闭",
