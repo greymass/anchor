@@ -26,9 +26,10 @@ class GlobalTransactionViewActions extends Component<Props> {
             {t('global_transaction_actions_details_content')}
           </Header.Subheader>
         </Header>
-        {actions.map((action) => (
+        {actions.map((action, idx) => (
           <GlobalTransactionViewAction
             action={action}
+            key={idx}
           />
         ))}
       </React.Fragment>

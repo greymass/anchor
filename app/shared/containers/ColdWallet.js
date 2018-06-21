@@ -90,7 +90,7 @@ class ColdWalletContainer extends Component<Props> {
           basic
           style={{ borderBottom: 'none' }}
         >
-          {(wallet.account)
+          {(keys.key)
             ? activeTab
             : (
               <React.Fragment>
