@@ -1,13 +1,22 @@
 import * as types from '../actions/types';
 
 const initialState = {
+  // If the active session has accepted the EOS constitution
   acceptedConstitution: false,
+  // The loaded account
   account: '',
-  coldStorage: false,
-  lang: 'en',
+  // Default language
+  lang: 'en-US',
+  // The node to connect to
   node: '',
+  // Allows the UI to start with only a connected node
   skipImport: false,
-  setupData: {}
+  // Window State Management
+  setupData: {},
+  // Wallet Status
+  walletInit: false,
+  // Wallet Mode (hot/cold/watch)
+  walletMode: 'hot'
 };
 
 const validSettings = Object.keys(initialState);
@@ -18,7 +27,11 @@ export default function settings(state = initialState, action) {
       return Object.assign({}, initialState);
     }
     case types.WALLET_REMOVE: {
-      return Object.assign({}, state, { account: '' });
+      return Object.assign({}, state, {
+        account: '',
+        walletInit: false,
+        walletMode: 'hot'
+      });
     }
     case types.SET_SETTING: {
       return Object.assign({}, state, action.payload);

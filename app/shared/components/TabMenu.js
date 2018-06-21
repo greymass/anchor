@@ -27,14 +27,18 @@ export default class BasicMenu extends Component<Props> {
               inverted
               size="large"
             >
-              <Menu.Item
-                name="producers"
-                icon="check square"
-                content={t('producer_voting')}
-                active={activeItem === 'producers'}
-                onClick={handleItemClick}
-              />
-
+              {(settings.walletMode !== 'cold')
+                ? (
+                  <Menu.Item
+                    name="producers"
+                    icon="check square"
+                    content={t('producer_voting')}
+                    active={activeItem === 'producers'}
+                    onClick={handleItemClick}
+                  />
+                )
+                : false
+              }
               {(settings.account)
                 ? (
                   <Menu.Item

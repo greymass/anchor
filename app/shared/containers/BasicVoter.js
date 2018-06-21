@@ -20,6 +20,7 @@ import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
 import * as StakeActions from '../actions/stake';
+import * as TransactionActions from '../actions/transaction';
 import * as TransferActions from '../actions/transfer';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 
@@ -29,6 +30,7 @@ type Props = {
     getGlobals: () => void,
     getInfo: () => void
   },
+  history: {},
   keys: {},
   settings: {},
   validate: {},
@@ -48,10 +50,18 @@ class BasicVoterContainer extends Component<Props> {
   componentDidMount() {
     const {
       history,
-      validate
+      settings
     } = this.props;
-    if (validate.NODE !== 'SUCCESS') {
-      history.push('/');
+    switch (settings.walletMode) {
+      case 'cold': {
+        history.push('/coldwallet');
+        break;
+      }
+      default: {
+        if (!settings.walletInit && !settings.skipImport) {
+          history.push('/');
+        }
+      }
     }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 30000);
@@ -68,18 +78,20 @@ class BasicVoterContainer extends Component<Props> {
       validate
     } = this.props;
     const {
+      getAccount,
+      getCurrencyBalance,
       getCurrencyStats,
       getGlobals,
-      getInfo,
-      getAccount
+      getInfo
     } = actions;
     if (validate.NODE === 'SUCCESS') {
+      if (settings.account) {
+        getAccount(settings.account);
+        getCurrencyBalance(settings.account);
+      }
       getCurrencyStats();
       getGlobals();
       getInfo();
-      if (validate.ACCOUNT === 'SUCCESS') {
-        getAccount(settings.account);
-      }
     }
   }
 
@@ -148,6 +160,7 @@ function mapStateToProps(state) {
     producers: state.producers,
     settings: state.settings,
     system: state.system,
+    transaction: state.transaction,
     validate: state.validate,
     wallet: state.wallet
   };
@@ -164,6 +177,7 @@ function mapDispatchToProps(dispatch) {
       ...ValidateActions,
       ...WalletActions,
       ...StakeActions,
+      ...TransactionActions,
       ...TransferActions,
       ...VoteProducerActions
     }, dispatch)

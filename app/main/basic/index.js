@@ -1,11 +1,13 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import MenuBuilder from '../menu';
 import packageJson from '../../package.json';
 
 import { windowStateKeeper } from '../shared/windowStateKeeper';
 
-const path = require('path');
+const { dialog } = require('electron');
+const fs = require('fs');
 const log = require('electron-log');
+const path = require('path');
 
 const createInterface = (resourcePath, route = '/', closable = true, store) => {
   log.info('ui: creating');
@@ -51,10 +53,56 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
   return ui;
 };
 
-// Make method externaly visible
-ipcMain.on('ping', (event, arg1, arg2, arg3) => {
-  console.log('Ping', arg1, arg2, arg3); // eslint-disable-line no-console
-  event.sender.send('pong', arg1, arg2, arg3);
+ipcMain.on('openFile', (event) => {
+  dialog.showOpenDialog((fileNames) => {
+    if (fileNames === undefined) {
+      event.sender.send('fileOpenCancel');
+      return;
+    }
+    const fileName = fileNames[0];
+    fs.readFile(fileName, 'utf-8', () => {
+      readFile(fileNames[0]);
+    });
+  });
+
+  function readFile(filepath) {
+    fs.readFile(filepath, 'utf-8', (err, data) => {
+      if (err) {
+        console.log(`An error ocurred reading the file: ${err.message}`);
+        return;
+      }
+      event.sender.send('fileOpenData', data);
+    });
+  }
+});
+
+const pad = (v) => ((v < 10) ? `0${v}` : v);
+
+const getDateString = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hour = pad(date.getHours());
+  const min = pad(date.getMinutes());
+  const sec = pad(date.getSeconds());
+  return `${year}${month}${day}-${hour}${min}${sec}`;
+};
+
+ipcMain.on('saveFile', (event, data, prefix = 'tx') => {
+  const defaultPath = app.getPath('documents');
+  const defaultFilename = `${prefix}-${getDateString()}.json`;
+  const fileName = dialog.showSaveDialog({
+    title: 'Save Unsigned Transaction',
+    defaultPath: `${defaultPath}/${defaultFilename}`,
+    filters: [
+      { name: 'JSON Files', extensions: ['json'] }
+    ]
+  });
+
+  if (!fileName) return;
+
+  fs.writeFileSync(fileName, data);
 });
 
 export default { createInterface };
