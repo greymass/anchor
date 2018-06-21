@@ -1,0 +1,15 @@
+{
+  "transfer_button_cta": "Послать Токены",
+  "transfer_modal_title": "Передача Токенов",
+  "transfer_modal_transaction_successful_title": "Передача прошла успешно!",
+  "transfer_modal_transaction_successful_message": "Запрошенная транзакция обработана. Идентификатор транзакции можно найти ниже.",
+  "transfer_confirming_title": "Просмотрите свою транзакцию",
+  "transfer_confirming_body": "Убедитесь, что пункт назначения, количество и памятка для этого перевода действительны.",
+  "transfer_warning_irreversible_title": "Транзакции являются необратимыми",
+  "transfer_warning_irreversible_body": "Как только эта транзакция будет отправлена, она не может быть отменена.",
+  "transfer_label_from": "Источник",
+  "transfer_label_to": "Получатель",
+  "transfer_label_quantity": "Количество",
+  "transfer_label_token_and_quantity": "Выбор Токена + Количество",
+  "transfer_label_memo": "Памятка"
+}
