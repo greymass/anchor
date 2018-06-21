@@ -38,7 +38,6 @@
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
-  "active_producer":"Активный Производитель Блоков",
-  "backup_producer":"Запасной Производитель Блоков"
+  "active_producer": "Активный Производитель Блоков",
+  "backup_producer": "Запасной Производитель Блоков"
 }
-
