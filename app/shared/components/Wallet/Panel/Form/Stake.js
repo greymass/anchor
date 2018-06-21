@@ -136,39 +136,22 @@ export default class WalletPanelFormStake extends Component<Props> {
 
     const EOSbalance = balance.EOS || 0;
 
-    const lastTransactions = [];
-
-    if (
-      system.DELEGATEBW_LAST_TRANSACTION
-      && system.DELEGATEBW_LAST_TRANSACTION.transaction_id
-    ) {
-      lastTransactions.push(system.DELEGATEBW_LAST_TRANSACTION);
-    }
-
-    if (
-      system.UNDELEGATEBW_LAST_TRANSACTION
-      && system.UNDELEGATEBW_LAST_TRANSACTION.transaction_id
-    ) {
-      lastTransactions.push(system.UNDELEGATEBW_LAST_TRANSACTION);
-    }
-
     const shouldShowConfirm = this.state.confirming;
-    const shouldShowSuccess = (system.DELEGATEBW === 'SUCCESS' || system.UNDELEGATEBW === 'SUCCESS') && !shouldShowConfirm;
-    const shouldShowError = (system.DELEGATEBW === 'FAILURE' || system.UNDELEGATEBW === 'FAILURE') && !shouldShowConfirm;
-    const shouldShowForm = (validate.STAKE === 'NULL') && !shouldShowSuccess && !shouldShowError && !shouldShowConfirm;
-    const errorObject = system.DELEGATEBW_LAST_ERROR || system.UNDELEGATEBW_LAST_ERROR;
+    const shouldShowSuccess = validate.STAKE === 'SUCCESS' && !shouldShowConfirm;
+    const shouldShowError = validate.STAKE === 'FAILURE' && !shouldShowConfirm;
+    const shouldShowForm = validate.STAKE === 'NULL' && !shouldShowSuccess && !shouldShowError && !shouldShowConfirm;
+    const errorObject = validate.STAKE_LAST_ERROR;
 
     return (
       <Segment
-        loading={system.DELEGATEBW === 'PENDING' ||
-                 system.UNDELEGATEBW === 'PENDING'}
+        loading={ validate.STAKE === 'PENDING' }
         style={{ minHeight: '100px' }}
       >
         {(shouldShowSuccess)
           ? (
             <FormMessageTransactionSuccess
               onClose={onClose}
-              transactions={lastTransactions}
+              transaction={validate.STAKE_LAST_TRANSACTION}
             />
           )
           : ''}

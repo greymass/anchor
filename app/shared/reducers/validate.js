@@ -15,9 +15,31 @@ export default function validate(state = {}, action) {
 
   const [, requestName, requestState] = matches;
 
-  return {
+  const errField = `${requestName}_LAST_ERROR`;
+  const txField = `${requestName}_LAST_TRANSACTION`;
+
+  const newState = {
     ...state,
     [requestName]: requestState,
-    [`${requestName}_ERROR`]: action.payload && action.payload.error
+    [errField]: '',
+    [txField]: ''
   };
+
+  if (action.payload) {
+    // Attempt to process any errors returned
+
+    if (action.payload.err) {
+      try {
+        newState[errField] = JSON.parse(action.payload.err);
+      } catch (e) {
+        newState[errField] = action.payload.err;
+      }
+    }
+
+    // Attach any returned transactions
+    if (action.payload.tx) {
+      newState[txField] = action.payload.tx;
+    }
+  }
+  return newState;
 }
