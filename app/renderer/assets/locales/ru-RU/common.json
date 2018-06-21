@@ -1,13 +1,17 @@
 {
   "application_name": "Настольное приложение для блокцепи EOS (eos-voter)",
-  "application_version": "0.1.7",
+  "application_version": "0.2.0",
   "block_height": "Номер Блока",
   "cancel": "Отменить",
   "close": "Закрыть",
   "confirm": "Подтвердить",
+  "error": "Error",
   "loading": "Загрузка",
   "search": "Поиск...",
   "waiting": "Ожидание...",
-  "reset_application": "Перезагрузить Приложение", 
-  "continue_setup": "Продолжить Настройку" 
+  "reset_application": "Перезагрузить Приложение",
+  "continue_setup": "Продолжить Настройку",
+  "property": "Property",
+  "value": "Value",
+  "back": "Back"
 }
