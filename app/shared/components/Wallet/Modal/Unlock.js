@@ -11,6 +11,7 @@ export default class WalletModalUnlock extends Component<Props> {
       onClose,
       onSubmit,
       open,
+      settings,
       trigger,
       validate
     } = this.props;
@@ -37,7 +38,7 @@ export default class WalletModalUnlock extends Component<Props> {
                   onKeyPress={onKeyPress}
                   type="password"
                 />
-                {(validate.WALLET_PASSWORD === 'FAILURE')
+                {(settings && settings.walletMode !== 'cold' && validate.WALLET_PASSWORD === 'FAILURE')
                   ? (
                     <Message
                       content={t('wallet_panel_wallet_unlock_failure_content')}
@@ -58,7 +59,6 @@ export default class WalletModalUnlock extends Component<Props> {
                   color="green"
                   content={t('wallet_panel_wallet_unlock')}
                   icon="unlock"
-                  loading={validate.WALLET_PASSWORD === 'pending'}
                   onClick={onSubmit}
                 />
               </Modal.Actions>

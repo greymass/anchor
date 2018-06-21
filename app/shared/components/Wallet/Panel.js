@@ -10,6 +10,7 @@ type Props = {
   balances: {},
   settings: {},
   system: {},
+  transaction: {},
   validate: {},
   keys: {},
   wallet: {}
@@ -24,16 +25,13 @@ export default class WalletPanel extends Component<Props> {
       keys,
       settings,
       system,
+      transaction,
       validate,
       wallet
     } = this.props;
 
-    const {
-      clearSettingsCache
-    } = this.props.actions;
-
     let panel = false;
-    if ((!keys || !keys.key) && wallet.data) {
+    if (wallet.data) {
       panel = (
         <WalletPanelLocked
           actions={actions}
@@ -43,15 +41,15 @@ export default class WalletPanel extends Component<Props> {
         />
       );
     }
-    if (keys && keys.key) {
+    if ((keys && keys.key) || settings.walletMode === 'watch') {
       panel = (
         <WalletPanelUnlocked
           accounts={accounts}
           balances={balances}
           actions={actions}
-          keys={keys}
           settings={settings}
           system={system}
+          transaction={transaction}
           validate={validate}
         />
       );

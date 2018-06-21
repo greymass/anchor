@@ -5,9 +5,11 @@ import { I18nextProvider } from 'react-i18next';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { configureStore, history } from '../store/renderer/configureStore';
-
+import { cancelTransaction, setTransaction } from '../actions/transaction';
 import i18n from '../i18n';
 import '../app.global.css';
+
+const { ipcRenderer } = require('electron');
 
 const { store } = configureStore();
 
@@ -25,3 +27,11 @@ export default class Root extends Component<Props> {
     );
   }
 }
+
+ipcRenderer.on('fileOpenCancel', () => {
+  store.dispatch(cancelTransaction());
+});
+
+ipcRenderer.on('fileOpenData', (event, data) => {
+  store.dispatch(setTransaction(data));
+});

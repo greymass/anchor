@@ -11,6 +11,7 @@ import { Button, Container, Dropdown, Form, Input, Message } from 'semantic-ui-r
 import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
+import * as WalletActions from '../../actions/wallet';
 
 const ecc = require('eosjs-ecc');
 
@@ -21,9 +22,7 @@ type Props = {
   },
   history: {},
   onStageSelect: () => void,
-  settings: {
-    node: string
-  },
+  settings: {},
   t: () => void,
   validate: {}
 };
@@ -47,10 +46,29 @@ class WelcomeAccountContainer extends Component<Props> {
     if (settings.skipImport) {
       history.push('/voter');
     }
-    if (validate.ACCOUNT !== 'SUCCESS' && this.state.account) {
-      const { validateAccount } = actions;
-      validateAccount(this.state.account);
+    switch (settings.walletMode) {
+      default: {
+        if (validate.ACCOUNT !== 'SUCCESS' && this.state.account) {
+          const { validateAccount } = actions;
+          validateAccount(this.state.account);
+        }
+        break;
+      }
     }
+  }
+
+  cancelColdWallet = (e) => {
+    const {
+      actions,
+      onStageSelect
+    } = this.props;
+    const {
+      setWalletMode
+    } = actions;
+    setWalletMode('hot');
+    onStageSelect(0);
+    e.preventDefault();
+    return false;
   }
 
   onChange = debounce((e, { name, value }) => {
@@ -65,16 +83,31 @@ class WelcomeAccountContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
-      onStageSelect
+      onStageSelect,
+      settings
     } = this.props;
-    if (ecc.isValidPublic(account) === true) {
-      const { getAccountByKey } = actions;
-      getAccountByKey(account);
-    } else {
-      const { setSettingWithValidation } = actions;
-      setSettingWithValidation('account', account);
-      if (onStageSelect) {
-        onStageSelect(2);
+    switch (settings.walletMode) {
+      // with cold wallets, there's no way to validate, assume true
+      case 'cold': {
+        const { setSetting } = actions;
+        setSetting('account', account);
+        if (onStageSelect) {
+          onStageSelect(2);
+        }
+        break;
+      }
+      default: {
+        if (ecc.isValidPublic(account) === true) {
+          const { getAccountByKey } = actions;
+          getAccountByKey(account);
+        } else {
+          const { setSettingWithValidation } = actions;
+          setSettingWithValidation('account', account);
+          if (onStageSelect) {
+            onStageSelect(2);
+          }
+        }
+        break;
       }
     }
   }
@@ -84,6 +117,8 @@ class WelcomeAccountContainer extends Component<Props> {
   render() {
     const {
       accounts,
+      onStageSelect,
+      settings,
       t,
       validate
     } = this.props;
@@ -156,25 +191,61 @@ class WelcomeAccountContainer extends Component<Props> {
         />
       );
     }
-    return [(
-      <p>{instruction}</p>
-    ), (
-      <Form
-        onSubmit={this.onLookup}
-      >
-        {input}
-        {message}
-        <Container textAlign="center">
-          <Button
-            color={buttonColor}
-            content={buttonText}
-            icon="search"
-            size="small"
-            style={{ marginTop: '1em' }}
-          />
-        </Container>
-      </Form>
-      )];
+    // If we're operating in cold storage
+    if (settings.walletMode === 'cold') {
+      buttonText = t('welcome:welcome_enter_account');
+      buttonColor = 'purple';
+      instruction = t('welcome:welcome_instructions_3_cold');
+      message = (
+        <Message
+          color={buttonColor}
+          content={t('welcome:welcome_account_coldwallet_content')}
+          icon="snowflake"
+          header={t('welcome:welcome_account_coldwallet_title')}
+        />
+      );
+    }
+    return (
+      <React.Fragment>
+        <p>{instruction}</p>
+        <Form>
+          {input}
+          {message}
+          <Container>
+            <Button
+              color={buttonColor}
+              content={buttonText}
+              floated="right"
+              icon="search"
+              onClick={this.onLookup}
+              primary
+              size="small"
+              style={{ marginTop: '1em' }}
+            />
+            {(settings.walletMode === 'cold')
+              ? (
+                <Button
+                  content={t('welcome_cancel_coldwallet')}
+                  icon="x"
+                  onClick={this.cancelColdWallet}
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+              )
+              : (
+                <Button
+                  content={t('back')}
+                  icon="arrow left"
+                  onClick={() => onStageSelect(0)}
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+              )
+            }
+          </Container>
+        </Form>
+      </React.Fragment>
+    );
   }
 }
 
@@ -191,7 +262,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountActions,
       ...SettingsActions,
-      ...ValidateActions
+      ...ValidateActions,
+      ...WalletActions
     }, dispatch)
   };
 }

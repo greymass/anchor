@@ -1,50 +1,47 @@
-
 // @flow
 import React, { Component } from 'react';
-import { Modal } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 
+import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ProducersVotingPreviewSelection from './Preview/Selection';
-import ProducersVotingPreviewSuccess from './Preview/Success';
 
-export default class ProducersVotingPreview extends Component<Props> {
+class ProducersVotingPreview extends Component<Props> {
   render() {
     const {
+      actions,
       lastError,
-      lastTransaction,
-      open,
-      onClose,
       onConfirm,
       selected,
-      submitting
+      settings,
+      submitting,
+      system,
+      t
     } = this.props;
 
-    const hasTransaction = (lastTransaction && lastTransaction.transaction_id);
-    const hasError = (lastError);
     return (
-      <Modal
-        centered={false}
-        open={open}
-        onClose={onClose}
-        size="small"
-      >
-        {(hasTransaction && !hasError)
-          ? (
-            <ProducersVotingPreviewSuccess
-              lastTransaction={lastTransaction}
-              onClose={onClose}
-            />
-          )
-          : (
-            <ProducersVotingPreviewSelection
-              lastError={lastError}
-              onClose={onClose}
-              onConfirm={onConfirm}
-              selected={selected}
-              submitting={submitting}
-            />
-          )
-        }
-      </Modal>
+      <GlobalTransactionModal
+        actionName="VOTEPRODUCER"
+        actions={actions}
+        button={{
+          color: 'green',
+          content: t('producer_voter_save_changes'),
+          icon: ''
+        }}
+        content={(
+          <ProducersVotingPreviewSelection
+            lastError={lastError}
+            onConfirm={onConfirm}
+            selected={selected}
+            submitting={submitting}
+          />
+        )}
+        icon="exchange"
+        title={t('producer_voter_save_changes')}
+        settings={settings}
+        system={system}
+      />
     );
   }
 }
+
+export default translate('producers')(ProducersVotingPreview);

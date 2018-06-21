@@ -11,6 +11,7 @@ import globals from './globals';
 import producers from './producers';
 import settings from './settings';
 import system from './system';
+import transaction from './transaction';
 import validate from './validate';
 import wallet from './wallet';
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   router,
   settings,
   system,
+  transaction,
   validate,
   wallet
 });

@@ -1,6 +1,6 @@
 {
   "application_name": "eos-voter",
-  "application_version": "v0.1.7",
+  "application_version": "v0.2.0",
   "block_height": "Block Height",
   "cancel": "Cancel",
   "close": "Close",
@@ -10,5 +10,8 @@
   "search": "Search...",
   "waiting": "Waiting...",
   "reset_application": "DEBUG: Reset Application",
-  "continue_setup": "Continue Account Setup"
+  "continue_setup": "Continue Account Setup",
+  "property": "Property",
+  "value": "Value",
+  "back": "Back"
 }
