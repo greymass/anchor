@@ -17,6 +17,7 @@
   "wallet_status_balances": "ウォレット残高",
   "wallet_status_balances_none": "このウォレットにはトークン残高がありません。",
   "wallet_status_resources_title": "利用可能なネットワークリソース",
+  "wallet_status_resources_claim_unstaked": "ステーク解除した残高を請求",
   "wallet_status_resources_cpu_available_title": "CPU",
   "wallet_status_resources_cpu_available_desc": "",
   "wallet_status_resources_net_available_title": "ネットワーク",
@@ -52,5 +53,11 @@
   "wallet_panel_wallet_lock": "ウォレットをロック",
   "wallet_panel_form_use_temporary": "保存せずにアカウント + キーを使用する",
   "wallet_panel_locked": "ウォレットはロックされています",
-  "wallet_panel_locked_subheader": "操作を実行するにはロックを解除する必要があります。"
+  "wallet_panel_locked_subheader": "操作を実行するにはロックを解除する必要があります。",
+  "wallet_status_resources_being_unstaked": "ステーク解除中",
+  "wallet_status_total_balance": "合計",
+  "wallet_status_liquid": "移動可能",
+  "wallet_panel_wallet_broadcast": "署名済みトランザクションをブロードキャスト",
+  "wallet_mode_explain_cold": "このウォレットはオフラインで実行し、トランザクションを送信できない「コールド」ウォレットとして実行されています。ブロードキャストはウォッチウォレットから実行する必要があります。",
+  "wallet_mode_explain_watch": "このウォレットは秘密鍵を保存せず、トランザクションに署名できない「ウォッチ」ウォレットとして実行されています。署名はコールドウォレットで実行する必要があります。"
 }
