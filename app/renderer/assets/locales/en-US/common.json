@@ -10,5 +10,7 @@
   "search": "Search...",
   "waiting": "Waiting...",
   "reset_application": "DEBUG: Reset Application",
-  "continue_setup": "Continue Account Setup"
+  "continue_setup": "Continue Account Setup",
+  "property": "Property",
+  "value": "Value"
 }
