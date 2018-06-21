@@ -49,15 +49,8 @@ class WalletStatus extends Component<Props> {
         case 'balances': {
           activeTab = (
             <WalletStatusBalances
-<<<<<<< HEAD
-              actions={actions}
-              accounts={accounts}
-              balances={balances}
-              settings={settings}
-=======
               statsFetcher={statsFetcher}
               t={t}
->>>>>>> 4d27093... added warning message on amount already unstaked when trying to unstake some more
             />
           );
           break;

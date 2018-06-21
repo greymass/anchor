@@ -27,6 +27,8 @@ class WalletStatusBalances extends Component<Props> {
       totalTokens
     } = statsFetcher.fetchAll();
 
+    const claimable = (new Date() > refundDate)
+
     const rows = [
       (
         <Table.Row key="EOS">
