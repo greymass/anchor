@@ -7,6 +7,7 @@
   "global_transaction_complete_message": "Votre transaction a été soumise à la Blockchain.",
   "global_transaction_complete_warning_title": "La transaction n'est pas confirmée.",
   "global_transaction_complete_warning_message": "La soumission d'une transaction ne garantit pas qu'elle sera confirmée. Pour vous assurer que cette transaction a été complétée et confirmée dans le réseau, veuillez faire référence à l'identifiant de transaction ci-dessus.",
+  "error_not_enough_balance": "Vous n'avez pas suffisamment de fond pour cette transaction.",
   "error_no_stake_left": "Unable to set staked amount to 0. Doing so would prevent you from performing any transactions on the network.",
   "error_not_valid_stake_amount": "Pas un montant valide (doit être un montant positif avec un maximum de 4 décimales, par exemple 12.1212).",
   "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
