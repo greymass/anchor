@@ -60,6 +60,10 @@
       "icon": "app/renderer/assets/icons/mac/icon.icns"
     },
     "win": {
+      "arch": [
+        "x64",
+        "ia32"
+      ],
       "icon": "app/renderer/assets/icons/win/icon.ico",
       "target": [
         "nsis"
