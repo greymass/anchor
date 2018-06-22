@@ -6,8 +6,9 @@
   "amount_not_staked": "스테이킹 가능한 EOS",
   "confirm_stake": "확인",
   "cpu_staked": "CPU에 스테이킹된 EOS 총량",
+  "eos_in_cpu_after": "CPU의 EOS",
+  "eos_in_net_after": "대역폭 의 EOS",
   "net_staked": "대역폭에 스테이킹된 EOS 총량",
-  "not_enough_balance": "귀하의 계정 잔액이 충분하지 않습니다.",
   "stake_button_cta": "스테이킹된 EOS 업데이트",
   "stake_form": "스테이킹된 코인",
   "stake_modal_title": "스테이킹된 EOS 수량 업데이트",
@@ -21,8 +22,9 @@
   "update_staked_coins": "스테이킹 금액 업데이트",
   "update_staked_cpu_amount": "CPU에 스테이킹된 EOS 설정",
   "update_staked_net_amount": "대역폭에 스테이킹된 EOS 설정",
-  "eos_in_cpu_after": "CPU의 EOS",
-  "eos_in_net_after": "대역폭 의 EOS",
+  "will_have_less_than_one_eos_staked": "대역폭이나 CPU에 EOS가 1 개 미만으로 설정했습니다.  네트워크 사용량이 많을 경우 거래 수행하지 못할 수도 있습니다.",
   "you_will_have": "선택 후",
-  "will_have_less_than_one_eos_staked": "대역폭이나 CPU에 EOS가 1 개 미만으로 설정했습니다.  네트워크 사용량이 많을 경우 거래 수행하지 못할 수도 있습니다."
+  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "have_already_unstaked": "You have already unstaked ",
+  "unstaking_will_be_reset": " which will not be available for a renewed 72 hours if you proceed."
 }
