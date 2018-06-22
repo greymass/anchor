@@ -31,6 +31,7 @@
   "build": {
     "productName": "eos-voter",
     "appId": "com.greymass.eos-voter",
+    "artifactName": "${productName}-setup-${version}.${ext}",
     "asar": true,
     "files": [
       "dist/",
@@ -41,6 +42,9 @@
       "main.prod.js.map",
       "package.json"
     ],
+    "publish": {
+      "provider": "github"
+    },
     "dmg": {
       "icon": "app/renderer/assets/icons/mac/icon.icns",
       "contents": [
