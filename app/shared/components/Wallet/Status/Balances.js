@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Segment, Table } from 'semantic-ui-react';
+import { Button, Header, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
@@ -22,9 +22,15 @@ class WalletStatusBalances extends Component<Props> {
   }
   render() {
     const {
+      actions,
+      settings,
       statsFetcher,
       t
     } = this.props;
+
+    const {
+      addingToken
+    } = this.state;
 
     const {
       refundDate,
