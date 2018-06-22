@@ -10,7 +10,7 @@ export default function system(state = {}, action) {
     return {};
   }
 
-  const matches = /^SYSTEM_(.*)_(PENDING|SUCCESS|FAILURE|NULL)$/.exec(type);
+  const matches = /^SYSTEM_(.*)_(PENDING|SUCCESS|FAILURE)$/.exec(type);
   if (!matches) return state;
 
   const [, requestName, requestState] = matches;

@@ -1,8 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Modal, Button, Header, Icon } from 'semantic-ui-react';
-import { I18n } from 'react-i18next';
-
+import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import WalletPanelFormStake from '../Form/Stake';
 
 type Props = {
@@ -13,29 +11,15 @@ type Props = {
   balances: {},
   settings: {},
   validate: {},
-  system: {}
+  system: {},
+  t: {}
 };
 
-export default class WalletPanelButtonStake extends Component<Props> {
+class WalletPanelButtonStake extends Component<Props> {
   props: Props;
 
   state = {
     open: false
-  }
-
-  onOpen = () => {
-    const { actions } = this.props;
-    const { resetStakeForm } = actions;
-
-    resetStakeForm();
-
-    this.setState({ open: true });
-  }
-
-  onClose = () => {
-    this.setState({ open: false }, () => {
-      this.props.actions.clearSystemState();
-    });
   }
 
   render() {
@@ -45,7 +29,8 @@ export default class WalletPanelButtonStake extends Component<Props> {
       balances,
       settings,
       validate,
-      system
+      system,
+      t
     } = this.props;
 
     const {
@@ -53,45 +38,34 @@ export default class WalletPanelButtonStake extends Component<Props> {
     } = this.state;
 
     return (
-      <I18n ns="stake">
-        {
-          (t) => (
-            <Modal
-              centered={false}
-              closeIcon={true}
-              closeOnDimmerClick={false}
-              closeOnDocumentClick={false}
-              trigger={(
-                <Button
-                  color="blue"
-                  content={t('stake_button_cta')}
-                  fluid
-                  icon="microchip"
-                  onClick={this.onOpen}
-                />
-              )}
-              open={open}
-              onClose={this.onClose}
-              size="small"
-            >
-              <Header icon="microchip" content={t('stake_modal_title')} />
-              <Modal.Content>
-                <WalletPanelFormStake
-                  account={accounts[settings.account]}
-                  key="StakeForm"
-                  settings={settings}
-                  actions={actions}
-                  onClose={this.onClose}
-                  validate={validate}
-                  balance={balances[settings.account]}
-                  system={system}
-                  t={t}
-                />
-              </Modal.Content>
-            </Modal>
-          )
-        }
-      </I18n>
+      <GlobalTransactionModal
+        actionName="STAKE"
+        actions={actions}
+        button={{
+          color: 'blue',
+          content: t('stake_button_cta'),
+          icon: 'microchip'
+        }}
+        content={(
+          <WalletPanelFormStake
+            account={accounts[settings.account]}
+            key="StakeForm"
+            settings={settings}
+            actions={actions}
+            onClose={this.onClose}
+            validate={validate}
+            balance={balances[settings.account]}
+            system={system}
+            t={t}
+          />
+        )}
+        icon="microchip"
+        title={t('transfer_modal_title')}
+        settings={settings}
+        system={system}
+      />
     );
   }
 }
+
+export default translate('transfer')(WalletPanelButtonStake);

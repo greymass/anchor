@@ -19,7 +19,7 @@ export function setStake(account, netAmount, cpuAmount) {
       decreaseInStake
     } = getStakeChanges(account, netAmount, cpuAmount);
 
-    dispatch({ type: types.VALIDATE_STAKE_PENDING });
+    dispatch({ type: types.SYSTEM_STAKE_PENDING });
 
     return eos(connection).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
@@ -43,22 +43,22 @@ export function setStake(account, netAmount, cpuAmount) {
 
       return dispatch({
         payload: { tx },
-        type: types.VALIDATE_STAKE_SUCCESS
+        type: types.SYSTEM_STAKE_SUCCESS
       });
     }).catch((err) => {
       dispatch({
         payload: { err },
-        type: types.VALIDATE_STAKE_FAILURE
+        type: types.SYSTEM_STAKE_FAILURE
       });
     });
   };
 }
 
-export function resetStakeForm() {
+export function clearSystemState() {
   return (dispatch: () => void) => {
-    dispatch({ type: types.SYSTEM_UNDELEGATEBW_NULL });
-    dispatch({ type: types.SYSTEM_DELEGATEBW_NULL });
-    return dispatch({ type: types.VALIDATE_STAKE_NULL });
+    dispatch({
+      type: types.RESET_SYSTEM_STATES
+    });
   };
 }
 

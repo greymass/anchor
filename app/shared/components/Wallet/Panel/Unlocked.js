@@ -69,6 +69,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
                             validate={validate}
                             settings={settings}
                             system={system}
+                            t={t}
                           />
                         </Segment>
                         <Segment>
@@ -77,6 +78,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
                             balances={balances}
                             settings={settings}
                             system={system}
+                            t={t}
                           />
                         </Segment>
                         {(settings.walletMode === 'watch')
