@@ -6,8 +6,9 @@
   "amount_not_staked": "Available EOS（Unstaked）",
   "confirm_stake": "确认",
   "cpu_staked": "EOS放入CPU中",
+  "eos_in_cpu_after": "EOS在中央处理器之后",
+  "eos_in_net_after": "EOS在宽带之后",
   "net_staked": "EOS以带宽放样",
-  "not_enough_balance": "余额不足.",
   "stake_button_cta": "更新放大的EOS",
   "stake_form": "放下硬币",
   "stake_modal_title": "更新放大的EOS金额",
@@ -21,8 +22,9 @@
   "update_staked_coins": "更新放大的余额",
   "update_staked_cpu_amount": "将EOS放入CPU中",
   "update_staked_net_amount": "将EOS设置为带宽",
-  "eos_in_cpu_after": "EOS在中央处理器之后",
-  "eos_in_net_after": "EOS在宽带之后",
+  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have": "您会有",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "have_already_unstaked": "You have already unstaked ",
+  "unstaking_will_be_reset": " which will not be available for a renewed 72 hours if you proceed."
 }
