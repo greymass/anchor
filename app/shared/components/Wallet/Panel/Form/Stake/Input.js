@@ -49,7 +49,7 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     }
 
     cpuAmount = Decimal(cpuAmount);
-    netAmount = Decimal(decimalNetAmount);
+    netAmount = Decimal(netAmount);
 
     if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
       return true;
@@ -59,8 +59,8 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
       return 'no_stake_left';
     }
 
-    const cpuChange = (cpuAmount - cpuOriginal);
-    const netChange = (netAmount - netOriginal);
+    const cpuChange = cpuAmount.minus(cpuOriginal);
+    const netChange = netAmount.minus(netOriginal);
 
     if (Math.max(0, cpuChange) + Math.max(0, netChange) > EOSbalance) {
       return 'not_enough_balance';
