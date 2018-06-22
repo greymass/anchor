@@ -284,7 +284,6 @@ class WelcomeKeyContainer extends Component<Props> {
             floated="right"
             icon={buttonIcon}
             onClick={this.onCompare}
-            primary
             size="small"
             style={{ marginTop: '1em' }}
           />
