@@ -28,7 +28,6 @@ class GlobalModalSettingsCustomToken extends Component<Props> {
   }
   removeToken = (token) => {
     const { actions, settings } = this.props;
-    console.log(actions)
     const { customTokens } = settings;
 
     let tokens = [];
@@ -76,7 +75,7 @@ class GlobalModalSettingsCustomToken extends Component<Props> {
                   {customTokens.map((token, idx) => (
                     <List.Item
                       content={(
-                        <Segment basic clearing secondary={(idx % 2)}>
+                        <Segment basic clearing secondary={!(idx % 2)}>
                           <Button
                             content={t('remove')}
                             floated="right"
