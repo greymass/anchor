@@ -26,7 +26,6 @@ export default class FormFieldMultiToken extends Component<Props> {
     const {
       assets,
       autoFocus,
-      icon,
       label,
       loading,
       name
@@ -42,7 +41,6 @@ export default class FormFieldMultiToken extends Component<Props> {
           autoFocus={autoFocus}
           control={Input}
           defaultValue={this.state.quantity}
-          icon={icon || false}
           loading={loading}
           name={name}
           onChange={this.onChange}
