@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 import { Segment, Table } from 'semantic-ui-react';
 
 const prettyBytes = require('pretty-bytes');
 
-export default class WalletStatusStaked extends Component<Props> {
+class WalletStatusStaked extends Component<Props> {
   render() {
     const {
       account,
@@ -122,3 +124,5 @@ export default class WalletStatusStaked extends Component<Props> {
     );
   }
 }
+
+export default translate('wallet')(WalletStatusStaked);

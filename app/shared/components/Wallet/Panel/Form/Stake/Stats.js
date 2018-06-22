@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 import { Header, Segment } from 'semantic-ui-react';
 
-export default class WalletPanelFormStakeStats extends Component<Props> {
+class WalletPanelFormStakeStats extends Component<Props> {
   render() {
     const {
       cpuOriginal,
@@ -41,3 +43,5 @@ export default class WalletPanelFormStakeStats extends Component<Props> {
     );
   }
 }
+
+export default translate('stake')(WalletPanelFormStakeStats);

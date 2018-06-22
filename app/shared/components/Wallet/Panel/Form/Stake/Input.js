@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 import { Decimal } from 'decimal.js';
 
 import FormFieldToken from '../../../../Global/Form/Field/Token';
 
-export default class WalletPanelFormStakeInput extends Component<Props> {
+class WalletPanelFormStakeInput extends Component<Props> {
   onChange = (e, { name, value }) => {
     const {
       onChange,
@@ -90,3 +92,5 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     );
   }
 }
+
+export default translate('stake')(WalletPanelFormStakeInput);
