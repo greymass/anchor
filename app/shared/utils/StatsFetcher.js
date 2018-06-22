@@ -21,6 +21,8 @@ export default class StatsFetcher {
       self_delegated_bandwidth
     } = this.account;
 
+    if (!self_delegated_bandwidth) return 0;
+
     const cpu_amount = Decimal(self_delegated_bandwidth.cpu_weight.split(' ')[0]);
     const net_amount = Decimal(self_delegated_bandwidth.net_weight.split(' ')[0]);
 
@@ -122,4 +124,3 @@ export default class StatsFetcher {
     };
   }
 }
-
