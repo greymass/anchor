@@ -2,11 +2,24 @@
 import React, { Component } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 
+import { Decimal } from 'decimal.js';
 import debounce from 'lodash/debounce';
 
 export default class FormFieldToken extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.defaultValue
+    };
+  }
   onChange = debounce((e, { name, value }) => {
-    this.props.onChange(e, { name, value });
+    const asset = 'EOS';
+    const parsed = (value > 0) ? `${new Decimal(value).toFixed(4)} ${asset}` : `0.0000 ${asset}`;
+    this.setState({
+      value: parsed,
+    }, () => {
+      this.props.onChange(e, { name, value: parsed });
+    });
   }, 300)
 
   render() {
@@ -15,14 +28,16 @@ export default class FormFieldToken extends Component<Props> {
       icon,
       label,
       loading,
-      name,
-      defaultValue
+      name
     } = this.props;
+    const {
+      value
+    } = this.state;
     return (
       <Form.Field
         autoFocus={autoFocus}
         control={Input}
-        defaultValue={defaultValue}
+        defaultValue={value}
         icon={icon}
         label={label}
         loading={loading}
