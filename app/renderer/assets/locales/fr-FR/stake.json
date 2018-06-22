@@ -6,8 +6,9 @@
   "amount_not_staked": "EOS disponible (Non Attribué)",
   "confirm_stake": "Confirmer",
   "cpu_staked": "EOS attribué au CPU",
+  "eos_in_cpu_after": "EOS en CPU après",
+  "eos_in_net_after": "EOS en Bandwidth après",
   "net_staked": "EOS attribué au Bandwidth",
-  "not_enough_balance": "Vous n'avez pas assez de EOS.",
   "stake_button_cta": "Mettez vos ressources à jour",
   "stake_form": "Attribué des EOS",
   "stake_modal_title": "Mettez vos ressources à jour",
@@ -21,8 +22,9 @@
   "update_staked_coins": "Mettre à jour les EOS attribué",
   "update_staked_cpu_amount": "Quantité de EOS attribué en ressource CPU",
   "update_staked_net_amount": "Quantité de EOS attribué en ressource Bandwidth",
-  "eos_in_cpu_after": "EOS en CPU après",
-  "eos_in_net_after": "EOS en Bandwidth après",
+  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have": "Vous aurez",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "have_already_unstaked": "You have already unstaked ",
+  "unstaking_will_be_reset": " which will not be available for a renewed 72 hours if you proceed."
 }
