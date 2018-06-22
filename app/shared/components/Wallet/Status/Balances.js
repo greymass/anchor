@@ -9,7 +9,7 @@ import GlobalModalSettingsCustomToken from '../../Global/Modal/Settings/CustomTo
 
 class WalletStatusBalances extends Component<Props> {
   state = {
-    'addingToken': false
+    addingToken: false
   }
   showCustomToken = () => this.setState({ addingToken: true });
   hideCustomToken = () => this.setState({ addingToken: false });
