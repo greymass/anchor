@@ -36,13 +36,17 @@ class WalletPanelFormStakeInput extends Component<Props> {
       netOriginal
     } = this.props;
 
+    const {
+      value
+    } = this.state;
+
     let cpuAmount = decimalCpuAmount;
     let netAmount = decimalNetAmount;
 
     if (this.props.name === 'cpuAmount') {
-      cpuAmount = this.state.value;
+      cpuAmount = value;
     } else {
-      netAmount = this.state.value;
+      netAmount = value;
     }
 
     const decimalRegex = /^\d+(\.\d{1,4})?$/;
