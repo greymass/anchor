@@ -38,6 +38,10 @@ export function setStake(account, netAmount, cpuAmount) {
           decreaseInStake.cpuAmount
         ));
       }
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       dispatch(AccountActions.getAccount(account.account_name));
 
