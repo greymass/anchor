@@ -37,9 +37,9 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     let netAmount = decimalNetAmount;
 
     if (this.props.name === 'cpuAmount') {
-      cpuAmount = Decimal(this.state.value);
+      cpuAmount = this.state.value;
     } else {
-      netAmount = Decimal(this.state.value);
+      netAmount = this.state.value;
     }
 
     const decimalRegex = /^\d+(\.\d{1,4})?$/;
@@ -47,6 +47,9 @@ export default class WalletPanelFormStakeInput extends Component<Props> {
     if (!decimalRegex.test(cpuAmount) || !decimalRegex.test(netAmount)) {
       return 'not_valid_stake_amount';
     }
+
+    cpuAmount = Decimal(cpuAmount);
+    netAmount = Decimal(decimalNetAmount);
 
     if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
       return true;
