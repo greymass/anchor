@@ -38,11 +38,11 @@ class WelcomeKeyContainer extends Component<Props> {
     };
   }
 
-  onChange = debounce((e, { name, value }) => {
+  onChange = (e, { name, value }) => {
     this.setState({
       [name]: value.trim()
     });
-  }, 300)
+  }
 
   onCompare = () => {
     const {
