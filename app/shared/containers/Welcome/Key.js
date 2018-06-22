@@ -211,7 +211,7 @@ class WelcomeKeyContainer extends Component<Props> {
         </Message>
       );
     }
-    if (settings.walletMode !== 'watch' && (validate.KEY === 'FAILURE' || (keys.key && !currentPublic))) {
+    if (settings.walletMode !== 'watch' && validate.KEY === 'FAILURE' && !currentPublic) {
       message = (
         <Message
           color="red"
@@ -220,7 +220,8 @@ class WelcomeKeyContainer extends Component<Props> {
         />
       );
     }
-    if (validate.KEY === 'SUCCESS' && Array.from(validKeys).indexOf(currentPublic) >= 0) {
+    if (settings.walletMode !== 'watch' && validate.KEY === 'SUCCESS' && Array.from(validKeys).indexOf(currentPublic) >= 0) {
+      matching = false;
       message = (
         <Message
           color="green"
