@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 
 import accounts from './accounts';
+import app from './app';
 import balances from './balances';
 import chain from './chain';
 import connection from './connection';
@@ -17,6 +18,7 @@ import wallet from './wallet';
 
 const rootReducer = combineReducers({
   accounts,
+  app,
   balances,
   chain,
   connection,
