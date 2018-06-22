@@ -37,7 +37,7 @@ class ModalConstitution extends Component<Props> {
         closeOnDimmerClick={false}
         closeOnDocumentClick={false}
         open={open}
-        size="tiny"
+        size="wide"
       >
         <Modal.Header>
           {t('constitution_title')}
