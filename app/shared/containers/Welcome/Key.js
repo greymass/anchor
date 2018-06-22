@@ -117,6 +117,7 @@ class WelcomeKeyContainer extends Component<Props> {
       account
     } = settings;
     const {
+      key,
       visible
     } = this.state;
     let currentPublic;
@@ -254,7 +255,7 @@ class WelcomeKeyContainer extends Component<Props> {
               <Form.Field
                 autoFocus
                 control={Input}
-                defaultValue={keys.key}
+                defaultValue={key}
                 icon={(validate.KEY === 'SUCCESS') ? 'checkmark' : 'x'}
                 loading={(validate.KEY === 'PENDING')}
                 name="key"
