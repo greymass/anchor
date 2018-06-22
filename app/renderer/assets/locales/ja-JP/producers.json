@@ -10,6 +10,7 @@
   "block_producer_votes_none": "なし",
   "block_producer_total_votes": "総投票数",
   "block_producer_total_weight": "総投票ウェイト",
+  "producer_none_match": "検索条件に一致するプロデューサがありません。",
   "producer_none_loaded": "プロデューサデータがありません...",
   "producer_voter_voting_as": "投票者:",
   "producer_voted_connected_to": "接続先:",
@@ -24,6 +25,7 @@
   "producer_production_enabled": "プロデュース中",
   "producer_production_never": "なし",
   "producer_production_disabled": "非アクティブ",
+  "producer_voter_preview_error_title": "エラーが発生しました。",
   "producer_voter_preview_confirm_changes_title": "投票選択を確認してください",
   "producer_voter_preview_confirm_changes_message": "これにより、以下のブロックプロデューサを投票先に設定します。",
   "producer_voter_preview_confirm_none": "全てのブロックプロデューサの投票を解除",
@@ -35,5 +37,7 @@
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
-  "producer_welcome_p3": ""
+  "producer_welcome_p3": "",
+  "active_producer": "アクティブプロデューサ",
+  "backup_producer": "バックアッププロデューサ"
 }
