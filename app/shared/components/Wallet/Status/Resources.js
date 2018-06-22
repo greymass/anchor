@@ -1,9 +1,11 @@
 
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 import { Grid, Header, Progress, Responsive, Segment } from 'semantic-ui-react';
 
-export default class WalletStatusResources extends Component<Props> {
+class WalletStatusResources extends Component<Props> {
   render() {
     const {
       statsFetcher,
@@ -92,3 +94,5 @@ export default class WalletStatusResources extends Component<Props> {
     );
   }
 }
+
+export default translate('wallet')(WalletStatusResources);
