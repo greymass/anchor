@@ -18,6 +18,6 @@
   "coldwallet_wallet_instructions_6": "コールドウォレットを使用し、ウォレットのロックを解除して「トランザクションに署名」ボタンをクリックして未署名のトランザクションファイルを選択して下さい。",
   "coldwallet_wallet_instructions_7": "トランザクションの詳細を見直して、それらが正しいことを確認して下さい。確認したら、「このトランザクションに署名」ボタンをクリックし、署名済みのトランザクションを保存してファイル名をメモして下さい。",
   "coldwallet_wallet_instructions_8": "署名済みトランザクションファイルを取り出し、ウォッチウォレット用コンピュータへ移して下さい (USBドライブを使用する等)。",
-  "coldwallet_wallet_instructions_9": "Using the Watch Wallet, click 'Broadcast Signed Transaction' and select the file signed transaction file.",
-  "coldwallet_wallet_instructions_10": "Review the details of the signed transaction to again ensure they are correct. Once verfied, click 'Broadcast Transaction' to submit the transaction to the network"
+  "coldwallet_wallet_instructions_9": "ウォッチウォレットを使用し、「署名済みトランザクションをブロードキャスト」をクリックして、署名済みトランザクションファイルを選択して下さい。",
+  "coldwallet_wallet_instructions_10": "署名済みトランザクションファイルを見直して、それらが正しいことをもう一度確認して下さい。確認したら、「トランザクションをブロードキャスト」ボタンをクリックしてネットワークへ送信して下さい。"
 }
