@@ -5,7 +5,14 @@ import { Button, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
+import GlobalModalSettingsCustomToken from '../../Global/Modal/Settings/CustomTokens';
+
 class WalletStatusBalances extends Component<Props> {
+  state = {
+    'addingToken': false
+  }
+  showCustomToken = () => this.setState({ addingToken: true });
+  hideCustomToken = () => this.setState({ addingToken: false });
   claimUnstaked = () => {
     const {
       actions,
@@ -95,6 +102,25 @@ class WalletStatusBalances extends Component<Props> {
     });
     return (
       <Segment vertical basic loading={!tokens}>
+        <GlobalModalSettingsCustomToken
+          actions={actions}
+          onClose={this.hideCustomToken}
+          open={addingToken}
+          settings={settings}
+        />
+        <Header>
+          <Button
+            color="blue"
+            content={t('wallet_status_add_custom_token_action')}
+            floated="right"
+            onClick={this.showCustomToken}
+            size="small"
+          />
+          {t('wallet_status_add_custom_token_header')}
+          <Header.Subheader>
+            {t('wallet_status_add_custom_token_subheader')}
+          </Header.Subheader>
+        </Header>
         <Table
           attached="bottom"
           definition
