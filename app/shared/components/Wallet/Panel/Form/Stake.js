@@ -16,7 +16,7 @@ type Props = {
   actions: {},
   account: {},
   balance: {},
-  validate: {},
+  system: {}
 };
 
 export default class WalletPanelFormStake extends Component<Props> {
@@ -119,7 +119,7 @@ export default class WalletPanelFormStake extends Component<Props> {
       account,
       balance,
       onClose,
-      validate,
+      system,
       t
     } = this.props;
 
@@ -134,25 +134,13 @@ export default class WalletPanelFormStake extends Component<Props> {
     const EOSbalance = balance.EOS || 0;
 
     const shouldShowConfirm = this.state.confirming;
-    const shouldShowSuccess = validate.STAKE === 'SUCCESS' && !shouldShowConfirm;
-    const shouldShowError = validate.STAKE === 'FAILURE' && !shouldShowConfirm;
-    const shouldShowForm = validate.STAKE === 'NULL' && !shouldShowSuccess && !shouldShowError && !shouldShowConfirm;
-    const errorObject = validate.STAKE_LAST_ERROR;
+    const shouldShowForm = !shouldShowConfirm;
 
     return (
       <Segment
-        loading={validate.STAKE === 'PENDING'}
+        loading={system.STAKE === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
-        {(shouldShowSuccess)
-          ? (
-            <FormMessageTransactionSuccess
-              onClose={onClose}
-              transaction={validate.STAKE_LAST_TRANSACTION}
-            />
-          )
-          : ''}
-
         {(shouldShowForm)
           ? (
             <div>
@@ -220,14 +208,6 @@ export default class WalletPanelFormStake extends Component<Props> {
             </div>
           ) : ''}
 
-        {(shouldShowError)
-          ? (
-            <FormMessageError
-              error={errorObject.error.name}
-              onClose={onClose}
-              t={t}
-            />
-          ) : ''}
         {(shouldShowConfirm)
           ? (
             <WalletPanelFormStakeConfirming
