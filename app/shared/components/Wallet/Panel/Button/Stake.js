@@ -1,5 +1,7 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import WalletPanelFormStake from '../Form/Stake';
 
@@ -68,4 +70,4 @@ class WalletPanelButtonStake extends Component<Props> {
   }
 }
 
-export default translate('transfer')(WalletPanelButtonStake);
+export default translate('stake')(WalletPanelButtonStake);
