@@ -87,7 +87,6 @@ class BasicVoterContainer extends Component<Props> {
     if (validate.NODE === 'SUCCESS') {
       if (settings.account) {
         getAccount(settings.account);
-        getCurrencyBalance(settings.account);
       }
       getCurrencyStats();
       getGlobals();
