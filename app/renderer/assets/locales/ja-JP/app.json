@@ -1,6 +1,6 @@
 {
-  "app_updating_header": "Updating",
-  "app_updating_subheader": "The app will prompt to restart when completed.",
-  "app_updating_percent_complete": "complete",
-  "app_updating_rate": "sec"
+  "app_updating_header": "更新",
+  "app_updating_subheader": "完了したら、アプリケーションから再起動を求められます。",
+  "app_updating_percent_complete": "完了",
+  "app_updating_rate": "秒"
 }
