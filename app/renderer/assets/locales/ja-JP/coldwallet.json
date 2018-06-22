@@ -1,8 +1,8 @@
 {
-  "collwallet_load_transaction": "Load Unsigned Transaction",
-  "coldwallet_transaction_invalid_signed": "Transaction is already signed.",
-  "coldwallet_transaction_invalid_expired": "Transaction has expired.",
-  "coldwallet_transaction_signature_request_title": "Signature request",
+  "collwallet_load_transaction": "未署名トランザクションをロード",
+  "coldwallet_transaction_invalid_signed": "トランザクションは署名済みです。",
+  "coldwallet_transaction_invalid_expired": "トランザクションは期限切れです。",
+  "coldwallet_transaction_signature_request_title": "署名リクエスト",
   "coldwallet_transaction_signature_request_content": "Listed below are all the contracts/actions specified in this transaction. Review the below transaction and once the transaction is verified, sign the transaction using the button below.",
   "collwallet_transaction_sign_confirm": "Sign this Transaction",
   "collwallet_transaction_sign_cancel": "Cancel",
