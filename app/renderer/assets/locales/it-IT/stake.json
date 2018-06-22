@@ -6,8 +6,9 @@
   "amount_not_staked": "EOS disponibili (non investiti)",
   "confirm_stake": "Conferma",
   "cpu_staked": "EOS investiti per la CPU",
+  "eos_in_cpu_after": "EOS in CPU after",
+  "eos_in_net_after": "EOS in Bandwidth after",
   "net_staked": "EOS investiti per la banda",
-  "not_enough_balance": "Non hai un bilancio sufficiente.",
   "stake_button_cta": "Aggiorna gli EOS investiti",
   "stake_form": "Investimento valuta",
   "stake_modal_title": "Aggiorna l'ammontare degli EOS investiti",
@@ -21,8 +22,9 @@
   "update_staked_coins": "Aggiorna il bilancio investito",
   "update_staked_cpu_amount": "Imposta EOS investiti in CPU",
   "update_staked_net_amount": "Imposta EOS investiti in banda",
-  "eos_in_cpu_after": "EOS in CPU after",
-  "eos_in_net_after": "EOS in Bandwidth after",
+  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have": "You will have",
-  "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy."
+  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "have_already_unstaked": "You have already unstaked ",
+  "unstaking_will_be_reset": " which will not be available for a renewed 72 hours if you proceed."
 }
