@@ -71,11 +71,11 @@ class WelcomeAccountContainer extends Component<Props> {
     return false;
   }
 
-  onChange = debounce((e, { name, value }) => {
+  onChange = (e, { name, value }) => {
     this.setState({
       [name]: value,
     });
-  }, 300)
+  }
 
   onLookup = () => {
     const {
