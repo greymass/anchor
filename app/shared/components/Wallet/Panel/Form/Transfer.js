@@ -96,7 +96,7 @@ class WalletPanelFormTransfer extends Component<Props> {
       if (error.error.details[0]) {
         errorMsg = error.error.details[0].message;
       } else {
-        errorMsg = error.error.name;
+        errorMsg = t('error.error.name');
       }
     }
     if (error && error.message) {
@@ -201,7 +201,6 @@ class WalletPanelFormTransfer extends Component<Props> {
 
               <FormMessageError
                 error={error}
-                t={t}
               />
 
               <Divider />

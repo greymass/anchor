@@ -49,7 +49,6 @@ class WalletStatus extends Component<Props> {
           activeTab = (
             <WalletStatusBalances
               statsFetcher={statsFetcher}
-              t={t}
             />
           );
           break;
@@ -59,7 +58,6 @@ class WalletStatus extends Component<Props> {
             <WalletStatusStaked
               account={account}
               statsFetcher={statsFetcher}
-              t={t}
             />
           );
           break;
@@ -87,7 +85,6 @@ class WalletStatus extends Component<Props> {
       <div>
         <WalletStatusResources
           statsFetcher={statsFetcher}
-          t={t}
         />
         <Segment>
           <Menu
