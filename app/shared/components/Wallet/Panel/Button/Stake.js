@@ -58,7 +58,6 @@ class WalletPanelButtonStake extends Component<Props> {
             validate={validate}
             balance={balances[settings.account]}
             system={system}
-            t={t}
           />
         )}
         icon="microchip"

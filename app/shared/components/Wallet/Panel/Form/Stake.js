@@ -148,7 +148,6 @@ export default class WalletPanelFormStake extends Component<Props> {
                 cpuOriginal={cpuOriginal}
                 EOSbalance={EOSbalance}
                 netOriginal={netOriginal}
-                t={t}
               />
               <Form
                 onKeyPress={this.onKeyPress}
@@ -220,7 +219,6 @@ export default class WalletPanelFormStake extends Component<Props> {
               netOriginal={netOriginal}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
-              t={t}
             />
           ) : ''}
       </Segment>
