@@ -46,7 +46,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
         <Header textAlign="center">
           {t('about_to_unstake')}
         </Header>
-        <Segment.Group vertical>
+        <Segment.Group>
           {(netDifference > 0) ? (
             <Segment>
               <Header textAlign="center">
