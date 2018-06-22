@@ -1,5 +1,6 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
+import { checkForUpdates } from './updater';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -49,8 +50,6 @@ export default class MenuBuilder {
       submenu: [
         { role: 'about' },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
         { label: 'Hide eos-voter', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
@@ -98,7 +97,9 @@ export default class MenuBuilder {
       submenu: [
         { label: 'Source Code (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter'); } },
         { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/issues'); } },
-        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } }
+        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } },
+        { type: 'separator' },
+        { label: 'Check for Updates', click: (menuItem, browserWindow) => { checkForUpdates(menuItem, browserWindow); } }
       ]
     };
 
@@ -168,7 +169,9 @@ export default class MenuBuilder {
       submenu: [
         { label: 'Source Code (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter'); } },
         { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/issues'); } },
-        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } }
+        { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } },
+        { type: 'separator' },
+        { label: 'Check Updates...', click: (menuItem, browserWindow) => { checkForUpdates(menuItem, browserWindow); } }
       ]
     }];
 
