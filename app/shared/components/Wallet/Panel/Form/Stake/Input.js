@@ -13,17 +13,18 @@ class WalletPanelFormStakeInput extends Component<Props> {
       onError
     } = this.props;
 
+    const parsed = new Decimal(value.split(' ')[0]).toFixed(4);
+
     this.setState({
-      value
+      value: parsed
+    }, () => {
+      const error = this.errorsInForm();
+      if (error) {
+        onError(error);
+      } else {
+        onChange(name, parsed);
+      }
     });
-
-    const error = this.errorsInForm();
-
-    if (error) {
-      onError(error);
-    } else {
-      onChange(name, value);
-    }
   }
 
   errorsInForm = () => {
