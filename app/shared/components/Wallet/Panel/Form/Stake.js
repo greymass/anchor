@@ -1,6 +1,8 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
+
 import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
@@ -19,7 +21,7 @@ type Props = {
   system: {}
 };
 
-export default class WalletPanelFormStake extends Component<Props> {
+class WalletPanelFormStake extends Component<Props> {
   props: Props;
 
   constructor(props) {
@@ -225,3 +227,6 @@ export default class WalletPanelFormStake extends Component<Props> {
     );
   }
 }
+
+
+export default translate('stake')(WalletPanelFormStake);

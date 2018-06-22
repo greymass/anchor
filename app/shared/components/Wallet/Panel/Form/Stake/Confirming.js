@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
 import StatsFetcher from '../../../../../utils/StatsFetcher';
 
-export default class WalletPanelFormStakeConfirming extends Component<Props> {
+class WalletPanelFormStakeConfirming extends Component<Props> {
   onConfirm = () => {
     const {
       onConfirm
@@ -125,3 +127,5 @@ export default class WalletPanelFormStakeConfirming extends Component<Props> {
     );
   }
 }
+
+export default translate('stake')(WalletPanelFormStakeConfirming);
