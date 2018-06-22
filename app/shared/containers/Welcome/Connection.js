@@ -61,11 +61,11 @@ class WelcomeConnectionContainer extends Component<Props> {
 
   isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
 
-  onChange = debounce((e, { name, value }) => {
+  onChange =  (e, { name, value }) => {
     this.setState({
       [name]: value,
     });
-  }, 500)
+  }
 
   onConfirm = (e, { checked }) => {
     this.setState({
