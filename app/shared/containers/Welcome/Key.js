@@ -128,6 +128,10 @@ class WelcomeKeyContainer extends Component<Props> {
     }
     // For hot wallets
     let validKeys = false;
+    if (accounts[account]) {
+      validKeys = new Set(accounts[account].permissions.map((perm) =>
+        perm.required_auth.keys[0].key));
+    }
     let buttonColor = 'blue';
     let buttonIcon = 'search';
     let buttonText = t('welcome_compare_key');
@@ -184,10 +188,7 @@ class WelcomeKeyContainer extends Component<Props> {
         break;
       }
       default: {
-        if (accounts[account]) {
-          validKeys = new Set(accounts[account].permissions.map((perm) =>
-            perm.required_auth.keys[0].key));
-        }
+        // no default
         break;
       }
     }
