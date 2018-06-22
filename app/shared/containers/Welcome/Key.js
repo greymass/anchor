@@ -99,6 +99,8 @@ class WelcomeKeyContainer extends Component<Props> {
     } else {
       // Immediately set the wallet into watch wallet mode
       setWalletMode('watch');
+      // Remove any key we may have had
+      this.setState({key: ''});
     }
   }
 
