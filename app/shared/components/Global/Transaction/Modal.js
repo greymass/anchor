@@ -14,8 +14,7 @@ type Props = {
   icon: string,
   title: string,
   settings: {},
-  system: {},
-  transaction: {}
+  system: {}
 };
 
 class GlobalTransactionModal extends Component<Props> {
