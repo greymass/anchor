@@ -1,3 +1,4 @@
+import { Decimal } from 'decimal.js';
 
 export default class StatsFetcher {
   constructor(account, balance) {
@@ -20,8 +21,8 @@ export default class StatsFetcher {
       self_delegated_bandwidth
     } = this.account;
 
-    return parseFloat(self_delegated_bandwidth.cpu_weight) +
-      parseFloat(self_delegated_bandwidth.net_weight);
+    return Decimal(self_delegated_bandwidth.cpu_weight) +
+      Decimal(self_delegated_bandwidth.net_weight);
   }
 
 
@@ -48,8 +49,8 @@ export default class StatsFetcher {
     let totalBeingUnstaked = 0;
 
     if (refund_request) {
-      totalBeingUnstaked = parseFloat(refund_request.net_amount) +
-                             parseFloat(refund_request.cpu_amount);
+      totalBeingUnstaked = Decimal(refund_request.net_amount) +
+                             Decimal(refund_request.cpu_amount);
     }
 
     return totalBeingUnstaked;
@@ -77,16 +78,16 @@ export default class StatsFetcher {
     let netUsage;
     if (cpu_limit) {
       const { max, used } = cpu_limit;
-      cpuUsage = Math.max(0, (100 - parseFloat((used / max) * 100))).toFixed(3);
+      cpuUsage = Math.max(0, (100 - Decimal((used / max) * 100))).toFixed(3);
     }
 
     if (net_limit) {
       const { max, used } = net_limit;
-      netUsage = Math.max(0, (100 - parseFloat((used / max) * 100))).toFixed(3);
+      netUsage = Math.max(0, (100 - Decimal((used / max) * 100))).toFixed(3);
     }
     let ramUsage;
     if (ram_quota && ram_usage) {
-      ramUsage = Math.max(0, (100 - parseFloat((ram_usage / ram_quota) * 100))).toFixed(3);
+      ramUsage = Math.max(0, (100 - Decimal((ram_usage / ram_quota) * 100))).toFixed(3);
     }
 
     return {
@@ -103,8 +104,8 @@ export default class StatsFetcher {
     } = this.account;
 
     return {
-      cpuWeight: `${(parseFloat(total_resources.cpu_weight) - parseFloat(self_delegated_bandwidth.cpu_weight)).toFixed(4)} EOS`,
-      netWeight: `${(parseFloat(total_resources.net_weight) - parseFloat(self_delegated_bandwidth.net_weight)).toFixed(4)} EOS`,
+      cpuWeight: `${(Decimal(total_resources.cpu_weight) - Decimal(self_delegated_bandwidth.cpu_weight)).toFixed(4)} EOS`,
+      netWeight: `${(Decimal(total_resources.net_weight) - Decimal(self_delegated_bandwidth.net_weight)).toFixed(4)} EOS`,
       totalStaked: this.totalStaked()
     };
   }
