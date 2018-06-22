@@ -5,6 +5,8 @@ const initialState = {
   acceptedConstitution: false,
   // The loaded account
   account: '',
+  // Custom tokens the wallet should be tracking
+  customTokens: [],
   // Default language
   lang: 'en-US',
   // The node to connect to
