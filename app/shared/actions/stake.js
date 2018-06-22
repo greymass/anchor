@@ -54,7 +54,7 @@ export function setStake(account, netAmount, cpuAmount) {
   };
 }
 
-export function clearSystemState() {
+export function resetStakeForm() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_SYSTEM_STATES
