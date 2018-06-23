@@ -203,7 +203,7 @@ class WelcomeConnectionContainer extends Component<Props> {
             content={t('welcome:welcome_connect_server')}
             disabled={disabled}
             icon="exchange"
-            floated={(!settings.walletInit) ? 'right' : false}
+            floated={(!settings.walletInit) ? 'right' : null}
             fluid={(settings.walletInit)}
             onClick={this.onConnect}
             primary

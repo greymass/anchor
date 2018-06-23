@@ -11,8 +11,7 @@ type Props = {
   },
   balances: {},
   settings: {},
-  system: {},
-  t: {}
+  system: {}
 };
 
 class WalletPanelButtonTransfer extends Component<Props> {
