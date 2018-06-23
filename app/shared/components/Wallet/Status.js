@@ -23,6 +23,7 @@ class WalletStatus extends Component<Props> {
       accounts,
       actions,
       balances,
+      globals,
       settings,
       t
     } = this.props;
@@ -44,12 +45,14 @@ class WalletStatus extends Component<Props> {
       </Segment>
     );
 
-    if (account) {
+    if (account && account.account_name) {
       switch (activeItem) {
         case 'balances': {
           activeTab = (
             <WalletStatusBalances
               actions={actions}
+              balances={balances}
+              globals={globals}
               statsFetcher={statsFetcher}
               settings={settings}
             />
