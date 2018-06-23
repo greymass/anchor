@@ -10,8 +10,7 @@ type Props = {
   onClose: () => void,
   content: {},
   settings: {},
-  system: {},
-  transaction: {}
+  system: {}
 };
 
 export default class GlobalTransactionHandler extends Component<Props> {

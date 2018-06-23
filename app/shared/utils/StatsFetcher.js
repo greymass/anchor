@@ -21,7 +21,7 @@ export default class StatsFetcher {
       self_delegated_bandwidth
     } = this.account;
 
-    if (!self_delegated_bandwidth) return 0;
+    if (!self_delegated_bandwidth || !self_delegated_bandwidth.cpu_weight) return Decimal(0);
 
     const cpu_amount = Decimal(self_delegated_bandwidth.cpu_weight.split(' ')[0]);
     const net_amount = Decimal(self_delegated_bandwidth.net_weight.split(' ')[0]);
@@ -69,7 +69,7 @@ export default class StatsFetcher {
   totalTokens() {
     const totalStaked = this.totalStaked();
     const totalBeingUnstaked = this.totalBeingUnstaked();
-    const totalTokens = this.tokens().EOS || 0;
+    const totalTokens = this.tokens().EOS || new Decimal(0);
 
     return totalStaked.plus(totalBeingUnstaked).plus(totalTokens);
   }
