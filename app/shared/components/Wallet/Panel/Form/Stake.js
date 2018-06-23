@@ -7,11 +7,7 @@ import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeInput from './Stake/Input';
-
-import FormMessageTransactionSuccess from '../../../Global/Form/Message/TransactionSuccess';
 import WalletPanelFormStakeConfirming from './Stake/Confirming';
-
-
 import FormMessageError from '../../../Global/Form/Message/Error';
 
 type Props = {
@@ -36,6 +32,7 @@ class WalletPanelFormStake extends Component<Props> {
     const parsedNetWeight = net_weight.split(' ')[0];
 
     this.state = {
+      EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
       decimalCpuAmount: Decimal(parsedCpuWeight),
       cpuOriginal: Decimal(parsedCpuWeight),
       decimalNetAmount: Decimal(parsedNetWeight),
@@ -80,12 +77,55 @@ class WalletPanelFormStake extends Component<Props> {
 
   onChange = (name, value) => {
     const decimalFieldName = `decimal${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-
     this.setState({
       submitDisabled: false,
       formError: null,
       [decimalFieldName]: Decimal(value)
+    }, () => {
+      const error = this.errorsInForm();
+      if (error) {
+        this.onError(error);
+      }
     });
+  }
+
+  errorsInForm = () => {
+    const {
+      cpuOriginal,
+      decimalCpuAmount,
+      decimalNetAmount,
+      EOSbalance,
+      netOriginal
+    } = this.state;
+
+    let cpuAmount = decimalCpuAmount;
+    let netAmount = decimalNetAmount;
+
+    const decimalRegex = /^\d+(\.\d{1,4})?$/;
+
+    if (!decimalRegex.test(cpuAmount) || !decimalRegex.test(netAmount)) {
+      return 'not_valid_stake_amount';
+    }
+
+    cpuAmount = Decimal(cpuAmount);
+    netAmount = Decimal(netAmount);
+
+    if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
+      return true;
+    }
+
+    if (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0)) {
+      return 'no_stake_left';
+    }
+
+    const cpuChange = cpuAmount.minus(cpuOriginal);
+    const netChange = netAmount.minus(netOriginal);
+
+    if (Math.max(0, cpuChange) + Math.max(0, netChange) > EOSbalance) {
+      return 'not_enough_balance';
+    }
+
+    return false;
   }
 
   onBack = () => {
@@ -157,28 +197,18 @@ class WalletPanelFormStake extends Component<Props> {
               >
                 <Form.Group widths="equal">
                   <WalletPanelFormStakeInput
-                    cpuOriginal={cpuOriginal}
-                    decimalCpuAmount={decimalCpuAmount}
-                    decimalNetAmount={decimalNetAmount}
                     defaultValue={decimalCpuAmount}
-                    EOSbalance={EOSbalance}
                     icon="microchip"
                     label={t('update_staked_cpu_amount')}
                     name="cpuAmount"
-                    netOriginal={netOriginal}
                     onChange={this.onChange}
                     onError={this.onError}
                   />
                   <WalletPanelFormStakeInput
-                    cpuOriginal={cpuOriginal}
-                    decimalCpuAmount={decimalCpuAmount}
-                    decimalNetAmount={decimalNetAmount}
                     defaultValue={decimalNetAmount}
-                    EOSbalance={EOSbalance}
                     icon="wifi"
                     label={t('update_staked_net_amount')}
                     name="netAmount"
-                    netOriginal={netOriginal}
                     onChange={this.onChange}
                     onError={this.onError}
                   />
