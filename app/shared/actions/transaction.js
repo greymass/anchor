@@ -59,7 +59,11 @@ export function signTransaction(tx) {
       connection
     } = getState();
     eos(connection)
-      .transaction(tx.transaction.transaction, { broadcast: false })
+      .transaction(tx.transaction.transaction, {
+        broadcast: connection.broadcast,
+        expireInSeconds: connection.expireInSeconds,
+        sign: connection.sign
+      })
       .then((signed) =>
         dispatch(setTransaction(JSON.stringify(signed))))
       .catch((err) => dispatch({
