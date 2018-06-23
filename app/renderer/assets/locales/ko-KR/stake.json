@@ -25,6 +25,6 @@
   "will_have_less_than_one_eos_staked": "대역폭이나 CPU에 EOS가 1 개 미만으로 설정했습니다.  네트워크 사용량이 많을 경우 거래 수행하지 못할 수도 있습니다.",
   "you_will_have": "선택 후",
   "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
-  "have_already_unstaked": "You have already unstaked ",
-  "unstaking_will_be_reset": " which will not be available for a renewed 72 hours if you proceed."
+  "have_already_unstaked": "You are currently unstaking ",
+  "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
 }
