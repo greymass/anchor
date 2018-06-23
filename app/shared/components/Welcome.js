@@ -43,12 +43,17 @@ class Welcome extends Component<Props> {
   skipImport = () => {
     const {
       actions,
-      history
+      history,
+      settings
     } = this.props;
     const {
       setSetting
     } = actions;
+    setSetting('account', '');
     setSetting('skipImport', true);
+    actions.lockWallet();
+    actions.clearValidationState();
+    actions.validateNode(settings.node);
     history.push('/voter');
   }
 
