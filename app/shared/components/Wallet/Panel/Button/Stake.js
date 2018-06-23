@@ -13,8 +13,7 @@ type Props = {
   balances: {},
   settings: {},
   validate: {},
-  system: {},
-  t: {}
+  system: {}
 };
 
 class WalletPanelButtonStake extends Component<Props> {
@@ -61,7 +60,7 @@ class WalletPanelButtonStake extends Component<Props> {
           />
         )}
         icon="microchip"
-        title={t('transfer_modal_title')}
+        title={t('update_staked_coins')}
         settings={settings}
         system={system}
       />
