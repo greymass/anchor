@@ -1,7 +1,8 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  current: {}
+  current: {},
+  contract: {}
 };
 
 export default function globals(state = initialState, action) {
@@ -21,9 +22,24 @@ export default function globals(state = initialState, action) {
     // GET_CURRENCYSTATS_REQUEST
     // GET_CURRENCYSTATS_SUCCESS
     // GET_CURRENCYSTATS_FAILURE
+    case types.GET_CURRENCYSTATS_FAILURE: {
+      return Object.assign({}, state, {
+        contract: Object.assign({}, state.contract, {
+          [action.payload.account]: Object.assign({}, state.contract[action.payload.account], {
+            [action.payload.symbol]: {
+              status: 'not-found'
+            }
+          })
+        })
+      });
+    }
     case types.GET_CURRENCYSTATS_SUCCESS: {
       return Object.assign({}, state, {
-        eos: action.payload.results.EOS
+        contract: Object.assign({}, state.contract, {
+          [action.payload.account]: Object.assign({}, state.contract[action.payload.account], {
+            [action.payload.symbol]: action.payload.results[action.payload.symbol]
+          })
+        })
       });
     }
     default: {

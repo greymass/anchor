@@ -17,6 +17,7 @@ class WalletPanelFormTransfer extends Component<Props> {
       from: props.settings.account,
       memo: '',
       quantity: '',
+      symbol: 'EOS',
       to: '',
       waiting: false,
       waitingStarted: 0
@@ -26,7 +27,12 @@ class WalletPanelFormTransfer extends Component<Props> {
   state = {};
 
   onChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
+    const newState = { [name]: value };
+    if (name === 'quantity') {
+      const [, symbol] = value.split(' ');
+      newState.symbol = symbol;
+    }
+    this.setState(newState);
   }
 
   onSubmit = () => {
@@ -59,12 +65,13 @@ class WalletPanelFormTransfer extends Component<Props> {
   onConfirm = (e) => {
     const {
       from,
-      to,
+      memo,
       quantity,
-      memo
+      symbol,
+      to
     } = this.state;
     this.setState({ confirming: false }, () => {
-      this.props.actions.transfer(from, to, quantity, memo);
+      this.props.actions.transfer(from, to, quantity, memo, symbol);
     });
     e.preventDefault();
     return false;
@@ -83,11 +90,13 @@ class WalletPanelFormTransfer extends Component<Props> {
       from,
       memo,
       quantity,
+      symbol,
       to,
       waiting,
       waitingStarted
     } = this.state;
     const balance = balances[settings.account];
+    const contract = balances.__contracts[symbol];
     const asset = 'EOS';
     const error = system.TRANSFER_LAST_ERROR;
     const validTransfer = (quantity <= 0 || !to || !from);
@@ -131,7 +140,11 @@ class WalletPanelFormTransfer extends Component<Props> {
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>{t('transfer_label_quantity')}</Table.Cell>
-                    <Table.Cell>{quantity}</Table.Cell>
+                    <Table.Cell>
+                      {quantity}
+                      {' '}
+                      ({contract})
+                    </Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>{t('transfer_label_memo')}</Table.Cell>

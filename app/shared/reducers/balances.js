@@ -1,6 +1,10 @@
 import * as types from '../actions/types';
 
-const initialState = {};
+const initialState = {
+  __contracts: {
+    'EOS': 'eosio.token'
+  }
+};
 
 export default function balances(state = initialState, action) {
   switch (action.type) {
@@ -16,9 +20,16 @@ export default function balances(state = initialState, action) {
       return state;
     }
     case types.GET_ACCOUNT_BALANCE_SUCCESS: {
-      const { account_name, tokens } = action.payload;
+      const {
+        account_name,
+        contract,
+        symbol,
+        tokens
+      } = action.payload;
       return Object.assign({}, state, {
-        __updated: Date.now(),
+        __contracts: Object.assign({}, state.__contracts, {
+          [symbol]: contract
+        }),
         [account_name]: Object.assign({}, state[account_name], tokens)
       });
     }
