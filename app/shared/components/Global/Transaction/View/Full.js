@@ -6,7 +6,6 @@ import ReactJson from 'react-json-view';
 import { Header } from 'semantic-ui-react';
 
 type Props = {
-  t: {},
   transaction: {}
 };
 
