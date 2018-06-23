@@ -142,7 +142,10 @@ class Welcome extends Component<Props> {
                 onChange={this.onChange}
                 options={languages}
               />
-              {(stage > 0 && settings.walletMode !== 'cold')
+              {(
+                (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
+                && settings.walletMode !== 'cold'
+              )
                 ? (
                   <p>
                     <Button
