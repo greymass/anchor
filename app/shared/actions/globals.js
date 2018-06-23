@@ -20,7 +20,9 @@ export function getGlobals() {
   };
 }
 
-export function getCurrencyStats(account = "eosio.token", symbol = "EOS") {
+export function getCurrencyStats(contractName = "eosio.token", symbolName = "EOS") {
+  const account = contractName.toLowerCase();
+  const symbol = symbolName.toUpperCase();
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_CURRENCYSTATS_REQUEST
