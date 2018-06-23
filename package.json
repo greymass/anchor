@@ -31,7 +31,7 @@
   "build": {
     "productName": "eos-voter",
     "appId": "com.greymass.eos-voter",
-    "artifactName": "${productName}-setup-${version}.${ext}",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "asar": true,
     "files": [
       "dist/",
@@ -96,8 +96,16 @@
       },
       "icon": "app/renderer/assets/icons/png",
       "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "armv7l",
+            "arm64",
+            "x64",
+            "ia32"
+          ]
+        },
         "AppImage",
-        "deb",
         "snap"
       ]
     },
