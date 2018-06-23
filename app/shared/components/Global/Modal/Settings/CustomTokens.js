@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Container, Form, Header, Input, List, Modal, Segment } from 'semantic-ui-react';
 
-class GlobalModalSettingsCustomToken extends Component<Props> {
+class GlobalModalSettingsCustomTokens extends Component<Props> {
   state = {
     name: ''
   }
@@ -134,4 +134,4 @@ class GlobalModalSettingsCustomToken extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalModalSettingsCustomToken);
+export default translate('global')(GlobalModalSettingsCustomTokens);
