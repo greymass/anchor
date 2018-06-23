@@ -24,7 +24,6 @@ type Props = {
   history: {},
   keys: {},
   settings: {},
-  validate: {},
   wallet: {}
 };
 
@@ -81,7 +80,6 @@ class ColdWalletContainer extends Component<Props> {
           handleItemClick={this.handleItemClick}
           locked={(!keys.key)}
           settings={settings}
-          validate={validate}
           wallet={wallet}
         />
         <Segment
@@ -89,7 +87,7 @@ class ColdWalletContainer extends Component<Props> {
           basic
           style={{ borderBottom: 'none' }}
         >
-          {(keys.key)
+          {(wallet.data || keys.key)
             ? activeTab
             : (
               <React.Fragment>

@@ -6,11 +6,8 @@ import ColdWalletPanelUnlocked from './Panel/Unlocked';
 
 type Props = {
   actions: {},
-  accounts: {},
-  balances: {},
   settings: {},
   system: {},
-  validate: {},
   keys: {},
   wallet: {}
 };
@@ -18,13 +15,10 @@ type Props = {
 export default class ColdWalletPanel extends Component<Props> {
   render() {
     const {
-      accounts,
       actions,
-      balances,
       keys,
       settings,
       system,
-      validate,
       wallet
     } = this.props;
 
@@ -34,7 +28,6 @@ export default class ColdWalletPanel extends Component<Props> {
         <WalletPanelLocked
           actions={actions}
           settings={settings}
-          validate={validate}
           wallet={wallet}
         />
       );
@@ -42,13 +35,10 @@ export default class ColdWalletPanel extends Component<Props> {
     if (keys && keys.key) {
       panel = (
         <ColdWalletPanelUnlocked
-          accounts={accounts}
           actions={actions}
-          balances={balances}
           keys={keys}
           settings={settings}
           system={system}
-          validate={validate}
         />
       );
     }
