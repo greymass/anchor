@@ -25,7 +25,8 @@ class WelcomeContainer extends Component<Props> {
       actions,
       history,
       settings,
-      validate
+      validate,
+      wallet
     } = this.props;
     const {
       setWalletMode
@@ -34,7 +35,7 @@ class WelcomeContainer extends Component<Props> {
 
     switch (settings.walletMode) {
       case 'cold': {
-        if (settings.walletInit) {
+        if (settings.walletInit && wallet.data) {
           history.push('/coldwallet');
         }
         break;
