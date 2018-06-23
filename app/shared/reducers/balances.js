@@ -28,7 +28,7 @@ export default function balances(state = initialState, action) {
       } = action.payload;
       return Object.assign({}, state, {
         __contracts: Object.assign({}, state.__contracts, {
-          [symbol]: contract
+          [symbol.toUpperCase()]: contract
         }),
         [account_name]: Object.assign({}, state[account_name], tokens)
       });

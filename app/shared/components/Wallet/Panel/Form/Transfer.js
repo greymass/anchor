@@ -96,7 +96,7 @@ class WalletPanelFormTransfer extends Component<Props> {
       waitingStarted
     } = this.state;
     const balance = balances[settings.account];
-    const contract = balances.__contracts[symbol];
+    const contract = balances.__contracts[symbol.toUpperCase()];
     const asset = 'EOS';
     const error = system.TRANSFER_LAST_ERROR;
     const validTransfer = (quantity <= 0 || !to || !from);

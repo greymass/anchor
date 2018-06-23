@@ -20,8 +20,10 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
     if (globals) {
       const { contract } = globals;
       const { account, loading, symbol } = this.state;
-      if (loading && contract[account] && contract[account][symbol]) {
-        const token = contract[account][symbol];
+      const contractName = account.toLowerCase();
+      const symbolName = symbol.toUpperCase();
+      if (loading && contract[contractName] && contract[contractName][symbolName]) {
+        const token = contract[contractName][symbolName];
         this.setState({
           loading: false,
           token
@@ -33,7 +35,9 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
     const { actions, settings } = this.props;
     const { account, symbol } = this.state;
     const { getCurrencyStats } = actions;
-    getCurrencyStats(account, symbol);
+    const contractName = account.toLowerCase();
+    const symbolName = symbol.toUpperCase();
+    getCurrencyStats(contractName, symbolName);
     this.setState({
       loading: true
     });
