@@ -131,19 +131,27 @@ export function getCurrencyBalance(account) {
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
       const { customTokens } = settings;
-      forEach([...customTokens, 'eosio.token'], (contract) =>
-        eos(connection).getCurrencyBalance(contract, account).then((results) =>
+      let selectedTokens = ['eosio.token:EOS'];
+      if (customTokens && customTokens.length > 0) {
+        selectedTokens = [...customTokens, ...selectedTokens];
+      }
+      forEach(selectedTokens, (namespace) => {
+        const [contract, symbol] = namespace.split(':');
+        eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
           dispatch({
             type: types.GET_ACCOUNT_BALANCE_SUCCESS,
             payload: {
               account_name: account,
+              contract,
+              symbol,
               tokens: formatBalances(results)
             }
           }))
           .catch((err) => dispatch({
             type: types.GET_ACCOUNT_BALANCE_FAILURE,
             payload: { err, account_name: account }
-          })));
+          }));
+      });
     }
     dispatch({
       type: types.GET_ACCOUNT_BALANCE_FAILURE,
