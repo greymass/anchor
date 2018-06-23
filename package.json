@@ -31,7 +31,7 @@
   "build": {
     "productName": "eos-voter",
     "appId": "com.greymass.eos-voter",
-    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "artifactName": "${os}-${productName}-${version}-${arch}.${ext}",
     "asar": true,
     "files": [
       "dist/",
