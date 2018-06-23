@@ -89,7 +89,7 @@ class Welcome extends Component<Props> {
       stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} stage={stage} />;
       if (stage >= 2 && (settings.walletMode === 'cold' || validate.ACCOUNT === 'SUCCESS')) {
         stageElement = <WelcomeKey onStageSelect={this.onStageSelect} stage={stage} />;
-        if (stage === 3  && (settings.walletMode === 'cold' || validate.KEY === 'SUCCESS')) {
+        if (stage === 3 && (settings.walletMode === 'cold' || validate.KEY === 'SUCCESS')) {
           stageElement = <WelcomeWallet onStageSelect={this.onStageSelect} stage={stage} />;
         }
       }
