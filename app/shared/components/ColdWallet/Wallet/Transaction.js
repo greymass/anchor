@@ -41,11 +41,14 @@ class ColdWalletTransaction extends Component<Props> {
       data,
       signed
     } = transaction;
-    const { expiration } = data.transaction.transaction;
+    const { actions, expiration } = data.transaction.transaction;
     const expires = new Date(`${expiration}z`);
     const now = new Date();
     const expired = (now > expires);
-    const disabled = (expired || signed);
+    const validContracts = ['eosio', 'eosio.token', 'eosio.msig'];
+    const validActions = actions.filter((action) => validContracts.indexOf(action.account) >= 0);
+    const invalidContract = validActions.length !== actions.length;
+    const disabled = (expired || signed || invalidContract);
     return (
       <Segment basic>
         <Segment attached="top">
@@ -72,6 +75,14 @@ class ColdWalletTransaction extends Component<Props> {
               ? (
                 <Message error>
                   {t('coldwallet_transaction_invalid_expired')}
+                </Message>
+              )
+              : false
+            }
+            {(invalidContract)
+              ? (
+                <Message error>
+                  {t('coldwallet_transaction_invalid_contract')}
                 </Message>
               )
               : false
