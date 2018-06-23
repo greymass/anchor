@@ -24,7 +24,6 @@ type Props = {
   history: {},
   keys: {},
   settings: {},
-  t: {},
   validate: {},
   wallet: {}
 };
