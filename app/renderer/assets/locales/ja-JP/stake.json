@@ -26,5 +26,5 @@
   "you_will_have": "確認後、",
   "about_to_unstake": "コインのステーク/ステーク解除をしようとしています。ステーク解除したコインは72時間後に請求する必要があることに注意して下さい。",
   "have_already_unstaked": "現在ステーク解除中: ",
-  "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
+  "unstaking_will_be_reset": "。この新しい値でステーク解除を行うと、前回のリクエストと置き換えられ、72時間縛りがリセットされます。"
 }
