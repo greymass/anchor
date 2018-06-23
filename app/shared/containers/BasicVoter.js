@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { forEach } from 'lodash';
 
 import { Segment } from 'semantic-ui-react';
 
@@ -49,9 +50,15 @@ class BasicVoterContainer extends Component<Props> {
 
   componentDidMount() {
     const {
+      actions,
       history,
       settings
     } = this.props;
+
+    const {
+      getCurrencyStats
+    } = actions;
+
     switch (settings.walletMode) {
       case 'cold': {
         history.push('/coldwallet');
@@ -60,6 +67,12 @@ class BasicVoterContainer extends Component<Props> {
       default: {
         if (!settings.walletInit && !settings.skipImport) {
           history.push('/');
+        } else {
+          getCurrencyStats();
+          forEach(settings.customTokens, (token) => {
+            const [contract, symbol] = token.split(':');
+            getCurrencyStats(contract, symbol);
+          })
         }
       }
     }
@@ -79,8 +92,6 @@ class BasicVoterContainer extends Component<Props> {
     } = this.props;
     const {
       getAccount,
-      getCurrencyBalance,
-      getCurrencyStats,
       getGlobals,
       getInfo
     } = actions;
@@ -88,7 +99,6 @@ class BasicVoterContainer extends Component<Props> {
       if (settings.account) {
         getAccount(settings.account);
       }
-      getCurrencyStats();
       getGlobals();
       getInfo();
     }
@@ -102,6 +112,7 @@ class BasicVoterContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      globals,
       keys,
       settings,
       validate,

@@ -23,6 +23,8 @@ class WalletStatusBalances extends Component<Props> {
   render() {
     const {
       actions,
+      balances,
+      globals,
       settings,
       statsFetcher,
       t
@@ -39,14 +41,19 @@ class WalletStatusBalances extends Component<Props> {
       totalStaked,
       totalTokens
     } = statsFetcher.fetchAll();
-
+    const contracts = balances.__contracts;
     const claimable = (new Date() > refundDate);
 
     const rows = [
       (
         <Table.Row key="EOS">
           <Table.Cell width={2}>
-            EOS
+            <Header>
+              EOS
+              <Header.Subheader>
+                eosio.token
+              </Header.Subheader>
+            </Header>
           </Table.Cell>
           <Table.Cell width={10}>
             <Table size="small">
@@ -98,7 +105,12 @@ class WalletStatusBalances extends Component<Props> {
       rows.push((
         <Table.Row key={token}>
           <Table.Cell width={5}>
-            {token}
+            <Header>
+              {token}
+              <Header.Subheader>
+                {contracts[token]}
+              </Header.Subheader>
+            </Header>
           </Table.Cell>
           <Table.Cell>
             {amount.toFixed(4)}
@@ -110,6 +122,7 @@ class WalletStatusBalances extends Component<Props> {
       <Segment vertical basic loading={!tokens}>
         <GlobalModalSettingsCustomToken
           actions={actions}
+          globals={globals}
           onClose={this.hideCustomToken}
           open={addingToken}
           settings={settings}
