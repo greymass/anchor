@@ -180,6 +180,7 @@ class Producers extends Component<Props> {
       settings,
       system,
       t,
+      transaction,
       validate,
       wallet
     } = this.props;
@@ -201,6 +202,7 @@ class Producers extends Component<Props> {
         keys={keys}
         settings={settings}
         system={system}
+        transaction={transaction}
         validate={validate}
         wallet={wallet}
       />
