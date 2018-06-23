@@ -32,6 +32,18 @@ class ColdWalletContainer extends Component<Props> {
   state = {
     activeItem: 'wallet'
   };
+  componentDidMount = () => {
+    const {
+      keys,
+      wallet
+    } = this.props;
+    if (!wallet.data && !keys.key) {
+      const {
+        history
+      } = this.props;
+      history.push('/');
+    }
+  }
   continueSetup = () => {
     const {
       actions,
