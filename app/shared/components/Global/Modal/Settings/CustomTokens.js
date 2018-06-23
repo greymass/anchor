@@ -1,16 +1,48 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Container, Form, Header, Input, List, Modal, Segment } from 'semantic-ui-react';
+import { Button, Header, Message, Modal, Segment } from 'semantic-ui-react';
+
+import GlobalModalSettingsCustomTokenConfirm from './CustomTokens/Confirm';
+import GlobalModalSettingsCustomTokenForm from './CustomTokens/Form';
+
+const initialState = {
+  account: '',
+  loading: false,
+  symbol: '',
+  token: {}
+};
 
 class GlobalModalSettingsCustomTokens extends Component<Props> {
-  state = {
-    name: ''
+  state = initialState;
+  componentWillReceiveProps(nextProps) {
+    const { globals } = nextProps;
+    if (globals) {
+      const { contract } = globals;
+      const { account, loading, symbol } = this.state;
+      if (loading && contract[account] && contract[account][symbol]) {
+        const token = contract[account][symbol];
+        this.setState({
+          loading: false,
+          token
+        });
+      }
+    }
+  }
+  checkToken = () => {
+    const { actions, settings } = this.props;
+    const { account, symbol } = this.state;
+    const { getCurrencyStats } = actions;
+    getCurrencyStats(account, symbol);
+    this.setState({
+      loading: true
+    });
   }
   addToken = () => {
-    const { actions, settings } = this.props;
-    const { name } = this.state;
+    const { actions, onClose, settings } = this.props;
+    const { account, symbol } = this.state;
     const { customTokens } = settings;
+    const name = [account, symbol].join(':');
 
     let tokens = [];
     if (customTokens) {
@@ -19,10 +51,12 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
 
     if (name && name.length > 0) {
       const { refreshAccountBalances, setSetting } = actions;
-      tokens.push(this.state.name);
+      tokens.push(name);
       tokens = new Set(tokens.filter((e) => e));
       setSetting('customTokens', Array.from(tokens));
-      this.setState({ name: '' });
+      this.setState({ name: '', token: {} }, () => {
+        onClose();
+      });
       refreshAccountBalances(settings.account);
     }
   }
@@ -44,13 +78,21 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
       refreshAccountBalances(settings.account);
     }
   }
-  onChange = (e, { value }) => this.setState({ name: value.trim() });
+  onChange = (e, { name, value }) => this.setState({ [name]: value.trim() });
+  onClose = () => {
+    this.setState(initialState);
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
+  }
   render() {
     const {
-      name
+      account,
+      loading,
+      symbol,
+      token
     } = this.state;
     const {
-      onClose,
       open,
       settings,
       t
@@ -60,6 +102,7 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
     } = settings;
     return (
       <Modal
+        onClose={this.onClose}
         open={open}
         size="small"
       >
@@ -68,63 +111,43 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
         </Modal.Header>
         <Modal.Content>
           <p>{t('global_modal_settings_customtoken_description')}</p>
-          {(customTokens && customTokens.length > 0)
+          {(token && token.supply)
             ? (
-              <Segment>
-                <List>
-                  {customTokens.map((token, idx) => (
-                    <List.Item
-                      content={(
-                        <Segment basic clearing secondary={!(idx % 2)}>
-                          <Button
-                            content={t('remove')}
-                            floated="right"
-                            onClick={() => this.removeToken(token)}
-                            size="mini"
-                          />
-                          {token}
-                        </Segment>
-                      )}
-                      key={token}
-                    />
-                  ))}
-                </List>
-              </Segment>
+              <GlobalModalSettingsCustomTokenConfirm
+                token={token}
+                onSubmit={this.addToken}
+              />
             )
             : (
-              <Segment>
-                <p>{t('global_modal_settings_customtoken_none_tracked')}</p>
-              </Segment>
+              <GlobalModalSettingsCustomTokenForm
+                loading={loading}
+                onChange={this.onChange}
+                onSubmit={this.checkToken}
+                ref={(c) => { this.form = c; }}
+                values={this.state}
+              />
             )
           }
-          <Form
-            onSubmit={this.addToken}
-            ref={(c) => { this.form = c; }}
-          >
-            <Form.Field
-              autoFocus
-              control={Input}
-              fluid
-              label={t('global_modal_settings_customtoken_form_label')}
-              name="token"
-              onChange={this.onChange}
-              placeholder={t('global_modal_settings_customtoken_form_placeholder')}
-              type="text"
-              value={name}
-            />
-            <Container textAlign="center">
-              <Button
-                color="green"
-                content={t('global_modal_settings_customtoken_add')}
-              />
-            </Container>
-          </Form>
+          {(token && token.status === 'not-found')
+            ? (
+              <Message error icon="warning sign">
+                <Header>
+                  {t('global_modal_settings_customtoken_notfound_header')}
+                  <Header.Subheader>
+                    {t('global_modal_settings_customtoken_notfound_subheader')}
+                  </Header.Subheader>
+                </Header>
+              </Message>
+            )
+            : false
+          }
+
         </Modal.Content>
         <Modal.Actions>
           <Segment basic clearing>
             <Button
               content={t('close')}
-              onClick={onClose}
+              onClick={this.onClose}
               primary
             />
           </Segment>
