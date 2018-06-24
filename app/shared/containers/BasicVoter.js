@@ -10,6 +10,7 @@ import { Segment } from 'semantic-ui-react';
 import About from '../components/About';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
+import Tools from './Tools';
 import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
@@ -126,6 +127,10 @@ class BasicVoterContainer extends Component<Props> {
       }
       case 'about': {
         activeTab = <About {...this.props} />;
+        break;
+      }
+      case 'tools': {
+        activeTab = <Tools />;
         break;
       }
       default: {

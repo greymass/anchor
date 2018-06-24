@@ -52,7 +52,13 @@ export default class BasicMenu extends Component<Props> {
                 )
                 : false
               }
-
+              <Menu.Item
+                name="tools"
+                icon="cog"
+                content={t('tools')}
+                active={activeItem === 'tools'}
+                onClick={handleItemClick}
+              />
               <Menu.Menu position="right">
                 <WalletLanguage
                   actions={actions}
