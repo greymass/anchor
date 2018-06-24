@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
+import { Button, Divider, Form, Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import FormFieldAccount from '../../../Global/Form/Field/Account';
 import FormFieldGeneric from '../../../Global/Form/Field/Generic';
 import FormFieldMultiToken from '../../../Global/Form/Field/MultiToken';
+import FormMessageError from '../../../Global/Form/Message/Error';
 import WalletMessageContractTransfer from '../../../Global/Message/Contract/Transfer';
 
 class WalletPanelFormTransfer extends Component<Props> {
@@ -16,35 +17,41 @@ class WalletPanelFormTransfer extends Component<Props> {
       from: props.settings.account,
       memo: '',
       quantity: '',
+      symbol: 'EOS',
       to: '',
-      waiting: false
+      waiting: false,
+      waitingStarted: 0
     };
   }
 
   state = {};
 
   onChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
-  }
-
-  onKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.onSubmit(e);
+    const newState = { [name]: value };
+    if (name === 'quantity') {
+      const [, symbol] = value.split(' ');
+      newState.symbol = symbol;
     }
+    this.setState(newState);
   }
 
   onSubmit = () => {
     this.setState({
       confirming: true,
-      waiting: true
+      waiting: true,
+      waitingStarted: new Date()
     });
+    const tick = setInterval(this.tick, 250);
     // Make the user wait 3 seconds before they can confirm
     setTimeout(() => {
+      clearInterval(tick);
       this.setState({
         waiting: false
       });
     }, 3000);
   }
+
+  tick = () => this.setState({ waiting: true });
 
   onCancel = (e) => {
     this.setState({
@@ -58,12 +65,13 @@ class WalletPanelFormTransfer extends Component<Props> {
   onConfirm = (e) => {
     const {
       from,
-      to,
+      memo,
       quantity,
-      memo
+      symbol,
+      to
     } = this.state;
     this.setState({ confirming: false }, () => {
-      this.props.actions.transfer(from, to, quantity, memo);
+      this.props.actions.transfer(from, to, quantity, memo, symbol);
     });
     e.preventDefault();
     return false;
@@ -82,24 +90,29 @@ class WalletPanelFormTransfer extends Component<Props> {
       from,
       memo,
       quantity,
+      symbol,
       to,
-      waiting
+      waiting,
+      waitingStarted
     } = this.state;
     const balance = balances[settings.account];
+    const contract = balances.__contracts[symbol.toUpperCase()];
     const asset = 'EOS';
     const error = system.TRANSFER_LAST_ERROR;
+    const validTransfer = (quantity <= 0 || !to || !from);
     let errorMsg = JSON.stringify(error);
     if (error && error.error) {
       if (error.error.details[0]) {
         errorMsg = error.error.details[0].message;
       } else {
-        errorMsg = t(error.error.name);
+        errorMsg = t('error.error.name');
       }
     }
     if (error && error.message) {
       errorMsg = error.message;
     }
-    // console.log(errorMsg)
+    const secondsElapsed = new Date() - waitingStarted;
+    const secondsRemaining = parseInt((3000 - secondsElapsed) / 1000, 10) + 1;
     return (
       <Form
         loading={system.TRANSFER === 'PENDING'}
@@ -127,7 +140,11 @@ class WalletPanelFormTransfer extends Component<Props> {
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>{t('transfer_label_quantity')}</Table.Cell>
-                    <Table.Cell>{quantity}</Table.Cell>
+                    <Table.Cell>
+                      {quantity}
+                      {' '}
+                      ({contract})
+                    </Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>{t('transfer_label_memo')}</Table.Cell>
@@ -147,17 +164,17 @@ class WalletPanelFormTransfer extends Component<Props> {
               />
               <Divider />
               <Button
-                onClick={this.onCancel}
-              >
-                <Icon name="x" /> {t('cancel')}
-              </Button>
-              <Button
-                color={(waiting) ? 'grey' : 'green'}
-                content={(waiting) ? t('waiting') : t('confirm')}
+                color="green"
+                content={(waiting) ? `${t('confirm')} (${secondsRemaining})` : t('confirm')}
                 disabled={waiting}
                 floated="right"
                 onClick={this.onConfirm}
               />
+              <Button
+                onClick={this.onCancel}
+              >
+                <Icon name="x" /> {t('cancel')}
+              </Button>
             </Segment>
           )
           : (
@@ -195,27 +212,22 @@ class WalletPanelFormTransfer extends Component<Props> {
                 value={memo}
               />
 
-              {(error)
-                ? (
-                  <Message negative>
-                    <Header>{t('error')}</Header>
-                    {errorMsg}
-                  </Message>
-                )
-                : ''
-              }
+              <FormMessageError
+                error={error}
+              />
 
               <Divider />
+              <Button
+                content={t('confirm')}
+                disabled={validTransfer}
+                floated="right"
+                primary
+              />
               <Button
                 onClick={onClose}
               >
                 <Icon name="x" /> {t('cancel')}
               </Button>
-              <Button
-                content={t('confirm')}
-                floated="right"
-                primary
-              />
             </Segment>
           )
         }

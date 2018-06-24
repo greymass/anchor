@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Container, Form, Input, Message, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Form, Input, Message, Radio, Segment } from 'semantic-ui-react';
 
 import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
@@ -23,12 +23,9 @@ type Props = {
   history: {},
   keys: {},
   onStageSelect: () => void,
-  settings: {
-    node: string
-  },
+  settings: {},
   t: () => void,
-  validate: {},
-  wallet: {}
+  validate: {}
 };
 
 class WelcomeKeyContainer extends Component<Props> {
@@ -41,21 +38,11 @@ class WelcomeKeyContainer extends Component<Props> {
     };
   }
 
-  componentDidMount() {
-    const {
-      history,
-      wallet
-    } = this.props;
-    if (wallet.account) {
-      history.push('/voter');
-    }
-  }
-
-  onChange = debounce((e, { name, value }) => {
+  onChange = (e, { name, value }) => {
     this.setState({
       [name]: value.trim()
     });
-  }, 300)
+  }
 
   onCompare = () => {
     const {
@@ -63,28 +50,65 @@ class WelcomeKeyContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      history,
       onStageSelect,
       settings
     } = this.props;
     const {
+      setSetting,
       setTemporaryKey,
       validateKey
     } = actions;
-    // Validate against account
-    validateKey(key, settings);
     // Set for temporary usage
     setTemporaryKey(key);
-    if (onStageSelect) {
-      onStageSelect(3);
+    switch (settings.walletMode) {
+      case 'cold': {
+        if (ecc.isValidPrivate(key) && onStageSelect) {
+          onStageSelect(3);
+        }
+        break;
+      }
+      case 'watch': {
+        setSetting('walletInit', true);
+        history.push('/voter');
+        break;
+      }
+      default: {
+        // Validate against account
+        validateKey(key, settings);
+        if (onStageSelect) {
+          onStageSelect(3);
+        }
+        break;
+      }
     }
   }
 
-  onToggle = () => this.setState({ visible: !this.state.visible });
+  onToggleKey = () => this.setState({ visible: !this.state.visible });
+
+  onToggleWatch = (e, { checked }) => {
+    const {
+      actions
+    } = this.props;
+    const {
+      setWalletMode
+    } = actions;
+    if (checked) {
+      // Immediately set the wallet into hot wallet mode
+      setWalletMode('hot');
+    } else {
+      // Immediately set the wallet into watch wallet mode
+      setWalletMode('watch');
+      // Remove any key we may have had
+      this.setState({key: ''});
+    }
+  }
 
   render() {
     const {
       accounts,
       keys,
+      onStageSelect,
       settings,
       t,
       validate
@@ -93,6 +117,7 @@ class WelcomeKeyContainer extends Component<Props> {
       account
     } = settings;
     const {
+      key,
       visible
     } = this.state;
     let currentPublic;
@@ -101,9 +126,25 @@ class WelcomeKeyContainer extends Component<Props> {
     } catch (e) {
       // invalid key
     }
-
-    const validKeys = new Set(accounts[account].permissions.map((perm) =>
-      perm.required_auth.keys[0].key));
+    // For hot wallets
+    let validKeys = false;
+    if (accounts[account]) {
+      validKeys = new Set(accounts[account].permissions
+        .filter((perm) => perm.required_auth.keys.length > 0)
+        .map((perm) => perm.required_auth.keys[0].key));
+    }
+    let buttonColor = 'blue';
+    let buttonIcon = 'search';
+    let buttonText = t('welcome_compare_key');
+    let matching = (
+      <Segment secondary>
+        {t('welcome_key_compare_expecting_match_to')}
+        <br />
+        {Array.from(validKeys).map((key) => (
+          <small key={key}><code>{key}</code><br /></small>
+        ))}
+      </Segment>
+    );
     let message = (
       <Message
         color="blue"
@@ -113,9 +154,47 @@ class WelcomeKeyContainer extends Component<Props> {
         header={t('welcome_key_compare_title')}
       />
     );
-
+    switch (settings.walletMode) {
+      case 'cold': {
+        buttonColor = 'purple';
+        buttonText = t('welcome_key_coldwallet');
+        matching = false;
+        message = (
+          <Message
+            color={buttonColor}
+            content={t('welcome_key_coldwallet_content')}
+            floated="right"
+            icon="snowflake"
+            info
+            header={t('welcome_key_coldwallet_title')}
+          />
+        );
+        break;
+      }
+      case 'watch': {
+        buttonColor = 'orange';
+        buttonIcon = 'circle checkmark';
+        buttonText = t('welcome_key_watchwallet');
+        matching = false;
+        message = (
+          <Message
+            color={buttonColor}
+            content={t('welcome_key_watchwallet_content')}
+            floated="right"
+            icon="eye"
+            info
+            header={t('welcome_key_watchwallet_title')}
+          />
+        );
+        break;
+      }
+      default: {
+        // no default
+        break;
+      }
+    }
     // display an error if the account could not be found
-    if (validate.KEY === 'FAILURE' && currentPublic) {
+    if (settings.walletMode !== 'watch' && validate.KEY === 'FAILURE' && currentPublic) {
       message = (
         <Message
           color="red"
@@ -133,7 +212,7 @@ class WelcomeKeyContainer extends Component<Props> {
         </Message>
       );
     }
-    if (validate.KEY === 'FAILURE' && !currentPublic) {
+    if (settings.walletMode !== 'watch' && validate.KEY === 'FAILURE' && !currentPublic) {
       message = (
         <Message
           color="red"
@@ -142,7 +221,8 @@ class WelcomeKeyContainer extends Component<Props> {
         />
       );
     }
-    if (validate.KEY === 'SUCCESS' && Array.from(validKeys).indexOf(currentPublic) >= 0) {
+    if (settings.walletMode !== 'watch' && validate.KEY === 'SUCCESS' && Array.from(validKeys).indexOf(currentPublic) >= 0) {
+      matching = false;
       message = (
         <Message
           color="green"
@@ -153,39 +233,65 @@ class WelcomeKeyContainer extends Component<Props> {
     }
     if (validate.KEY === 'PENDING') message = false;
     return (
-      <Form
-        onSubmit={this.onCompare}
-      >
-        <Form.Field
-          autoFocus
-          control={Input}
-          defaultValue={keys.key}
-          fluid
-          icon={(validate.KEY === 'SUCCESS') ? 'checkmark' : 'x'}
-          loading={(validate.KEY === 'PENDING')}
-          name="key"
-          onChange={this.onChange}
-          placeholder={t('welcome_key_compare_placeholder')}
-          type={(visible) ? 'text' : 'password'}
-        />
-        <Checkbox
-          label={t('welcome_key_compare_visible')}
-          onChange={this.onToggle}
-          checked={visible}
-        />
-        <Segment secondary>
-          {t('welcome_key_compare_expecting_match_to')}
-          <br />
-          {Array.from(validKeys).map((key) => (
-            <small key={key}><code>{key}</code><br /></small>
-          ))}
-        </Segment>
+      <Form>
+        {(settings.walletMode !== 'cold')
+          ? (
+            <React.Fragment>
+              <p>{t('welcome_instructions_sign_tx')}</p>
+              <Form.Field
+                autoFocus
+                control={Radio}
+                label={t('welcome_key_sign_tx')}
+                toggle
+                defaultChecked={(settings.walletMode !== 'watch')}
+                name="hotWallet"
+                onChange={this.onToggleWatch}
+              />
+            </React.Fragment>
+          )
+          : false
+        }
+        {(settings.walletMode !== 'watch')
+          ? (
+            <React.Fragment>
+              <p>{t('welcome_instructions_5')}</p>
+              <Form.Field
+                autoFocus
+                control={Input}
+                defaultValue={key}
+                icon={(validate.KEY === 'SUCCESS') ? 'checkmark' : 'x'}
+                loading={(validate.KEY === 'PENDING')}
+                name="key"
+                onChange={this.onChange}
+                placeholder={t('welcome_key_compare_placeholder')}
+                type={(visible) ? 'text' : 'password'}
+              />
+              <Checkbox
+                label={t('welcome_key_compare_visible')}
+                onChange={this.onToggleKey}
+                checked={visible}
+              />
+            </React.Fragment>
+          )
+          : false
+        }
+
+        {matching}
         {message}
-        <Container textAlign="center">
+        <Container>
           <Button
-            content={t('welcome_compare_key')}
-            icon="search"
-            primary
+            color={buttonColor}
+            content={buttonText}
+            floated="right"
+            icon={buttonIcon}
+            onClick={this.onCompare}
+            size="small"
+            style={{ marginTop: '1em' }}
+          />
+          <Button
+            content={t('back')}
+            icon="arrow left"
+            onClick={() => onStageSelect(1)}
             size="small"
             style={{ marginTop: '1em' }}
           />

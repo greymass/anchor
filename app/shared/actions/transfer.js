@@ -3,21 +3,30 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
 
-export function transfer(from, to, quantity, memo) {
+export function transfer(from, to, quantity, memo, symbol = 'EOS') {
   return (dispatch: () => void, getState) => {
     const {
+      balances,
       connection
     } = getState();
     dispatch({
       type: types.SYSTEM_TRANSFER_PENDING
     });
     try {
-      return eos(connection).transfer(
-        from,
-        to,
-        quantity,
-        memo
-      ).then((tx) => {
+      const contracts = balances.__contracts;
+      const account = contracts[symbol];
+      return eos(connection).transaction(account, contract => {
+        contract.transfer(
+          from,
+          to,
+          quantity,
+          memo
+        );
+      }, {
+        broadcast: connection.broadcast,
+        expireInSeconds: connection.expireInSeconds,
+        sign: connection.sign
+      }).then((tx) => {
         dispatch(getCurrencyBalance(from));
         return dispatch({
           payload: { tx },

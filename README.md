@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/eos-voter/master/LICENSE)
 ![downloads](https://img.shields.io/github/downloads/greymass/eos-voter/total.svg)
 
-[English](https://github.com/greymass/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/eos-voter/blob/master/README.kr.md) - [中文](https://github.com/greymass/eos-voter/blob/master/README.zh.md) - [日本語](https://github.com/greymass/eos-voter/blob/master/README.ja.md)
+[English](https://github.com/greymass/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/eos-voter/blob/master/README.kr.md) - [中文](https://github.com/greymass/eos-voter/blob/master/README.zh.md) - [日本語](https://github.com/greymass/eos-voter/blob/master/README.ja.md) - [Русский](https://github.com/greymass/eos-voter/blob/master/README.ru.md)
 
 # eos-voter - EOS Block Producer Voting & Wallet
 
@@ -23,12 +23,12 @@
 
 ### Releases
 
-Current 0.1.6 release downloads:
+Current 0.2.0 release downloads:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter-setup-0.2.0.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter-0.2.0.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter_0.2.0_amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter_0.2.0_amd64.snap)
 
 The latest release will always be available on the releases page of this repository:
 
@@ -59,7 +59,7 @@ If you'd rather build the application yourself, please ensure you have nodejs/np
 **Note**: If you are configuring this Electron application within a Windows development environment, it will involve additional steps.
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 ```
@@ -76,7 +76,7 @@ The files built will be located in the `releases` folder within the root project
 ### Running development mode
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 yarn dev
@@ -91,21 +91,21 @@ The development of this application is being led by members of the [Greymass](ht
 To verify the integrity of the releases you download from GitHub, below are the shasum results for each of the binaries:
 
 ```
-shasum -b -a 512 eos-voter Setup 0.1.6.exe
-776cacf18c5827b5b9aa15b45e97a7b0a9bd53bbbc1316b7bb3aa8521c4bc8970686fd622ce833d881007c82a8df96def4f650f8b0a39908807fef1366a910d4 *eos-voter Setup 0.1.6.exe
+shasum -b -a 512 eos-voter\ Setup\ 0.2.0.exe
+9799e0fb5398bc4f8ec59a37f08122fd3ba2053066ef7616df85fceaed146c46fc996cfd83b5f13fd5e9f02ade3955f4b773c02cb04cb5a5b19244b91c6ac39c *eos-voter Setup 0.2.0.exe
 
-shasum -b -a 512 eos-voter-0.1.6.dmg
-77b95742e08510e0faf92dafceb764298f4c7c78293aa9f698e543406011586c5edde38acadb7ae7ea71d5814dfe80aca79eb55a23d67c3f061a7bda9275e133 *eos-voter-0.1.6.dmg
+shasum -b -a 512 eos-voter-0.2.0.dmg
+3fcaaa9d42d62e34b044ddc40e0ea3183e8c62bc86cc852668e5924139f1cd4afe62cc6a82e5795d355b417245cad39e606067923feded512cb469bba2f748a1 *eos-voter-0.2.0.dmg
 
-shasum -b -a 512 eos-voter-0.1.6-mac.zip
-30b41d9064a717c1ea062e922992069e4ab2d6e13a8f63dd9c444fe08dbe8dc6e4bd7c72dd3e791005b0ebbdd4ee9263e4bc6b48953e8bfac5c58d5ad3ecf0a5 *eos-voter-0.1.6-mac.zip
+shasum -b -a 512 eos-voter-0.2.0-mac.zip
+b06f9e9e9ff07cd1cd1d358004d4f6044fe5e29e07bf3466684d468542effd235ce13478c2a5a20b10b521fa46d9db550192a26e2bc7f01223e159161c0922df *eos-voter-0.2.0-mac.zip
 
-shasum -b -a 512 eos-voter-0.1.6-x86_64.AppImage
-79ef9a2de2bcc429e3381bca8d4fe78df2fc0937807edad2e8f81df0c1ef4d5305881a6c73ba972a98ca4c356dfe99313b56ec3c5cd036e6b96e1132f6616c60 *eos-voter-0.1.6-x86_64.AppImage
+shasum -b -a 512 eos-voter-0.2.0-x86_64.AppImage
+742772b314108fa0f1b34aa825c9599859a5092de8a777db88e24dfec09c0dc78676a58482ed461d70bda7a9e30e371160d47632c3cfe4f55572d149ba7131db *eos-voter-0.2.0-x86_64.AppImage
 
-shasum -b -a 512 eos-voter_0.1.6_amd64.deb
-24f379351f9262942ea31a52e9a662be3696032a9b24e82b8036bad617f688d853891dfc910ce3607beef3ef26563789784f962be78e1cbaa502e693ba7839fe *eos-voter_0.1.6_amd64.deb
+shasum -b -a 512 eos-voter_0.2.0_amd64.deb
+6237698738e364aa67820cfcbb3fd7d3e76eff42e5ccc12e7d3e9f9c46cb3d7331be9b2496d8bb2bc04a46466bc25fc68b27699c7ee8f9dd2865ca0b60075fce *eos-voter_0.2.0_amd64.deb
 
-shasum -b -a 512 eos-voter_0.1.6_amd64.snap
-74f9f0e4096978118d3b0883efdc7c8b377673a2f7ae4a3abd459b53471b6d77927ef54f0a85ad3bb459d767a3340a181ba87ea57812a1a3d7e21f63a25d0cf9 *eos-voter_0.1.6_amd64.snap
+shasum -b -a 512 eos-voter_0.2.0_amd64.snap
+fa9c1ab3eb9cf46c76ced8944c340f2e8f640a87da8117eaf9c85bff02e0d0c4093bd22fc52ab74494f48429d73a857b0a922e4ec40189706268aabe985e06a1 *eos-voter_0.2.0_amd64.snap
 ```

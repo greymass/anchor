@@ -1,36 +1,40 @@
 import * as types from '../actions/types';
 
-export default function balances(state = {}, action) {
+const initialState = {
+  __contracts: {
+    'EOS': 'eosio.token'
+  }
+};
+
+export default function balances(state = initialState, action) {
   switch (action.type) {
     case types.CLEAR_ACCOUNT_CACHE:
+    case types.CLEAR_BALANCE_CACHE:
     case types.RESET_ALL_STATES: {
       return {};
     }
     case types.GET_ACCOUNT_BALANCE_FAILURE: {
-      return {
-        [action.payload.account_name]: false
-      };
+      return state;
     }
     case types.GET_ACCOUNT_BALANCE_REQUEST: {
       return state;
     }
     case types.GET_ACCOUNT_BALANCE_SUCCESS: {
+      const {
+        account_name,
+        contract,
+        symbol,
+        tokens
+      } = action.payload;
       return Object.assign({}, state, {
-        __updated: Date.now(),
-        [action.payload.account_name]: formatBalances(action.payload.balances)
+        __contracts: Object.assign({}, state.__contracts, {
+          [symbol.toUpperCase()]: contract
+        }),
+        [account_name]: Object.assign({}, state[account_name], tokens)
       });
     }
     default: {
       return state;
     }
   }
-}
-
-function formatBalances(balances) {
-  const formatted = {};
-  for (let i = 0; i < balances.length; i += 1) {
-    const [amount, symbol] = balances[i].split(' ');
-    formatted[symbol] = parseFloat(amount);
-  }
-  return formatted;
 }

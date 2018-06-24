@@ -1,5 +1,7 @@
 import * as types from './types';
+import { clearAccountCache } from './accounts';
 import * as validate from './validate';
+import { removeWallet, setWalletMode } from './wallet';
 
 const { remote } = require('electron');
 
@@ -17,6 +19,17 @@ export function clearSettingsInvalid() {
     dispatch({
       type: types.RESET_INVALID_SETTINGS
     });
+  };
+}
+
+export function resetApp() {
+  return (dispatch: () => void) => {
+    dispatch(clearSettingsCache());
+    dispatch(clearAccountCache());
+    dispatch(validate.clearValidationState());
+    dispatch(removeWallet());
+    dispatch(setSetting('skipImport', false));
+    dispatch(setWalletMode('hot'));
   };
 }
 

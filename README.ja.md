@@ -23,12 +23,12 @@
 
 ### リリース
 
-現在の 0.1.6 リリースのダウンロード：
+現在の 0.2.0 リリースのダウンロード：
 
-- [Windowsインストーラ](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-setup-0.1.6.exe)
-- [macOSパッケージ](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter-0.1.6.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.1.6/eos-voter_0.1.6_amd64.snap)
+- [Windowsインストーラ](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter-setup-0.2.0.exe)
+- [macOSパッケージ](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter-0.2.0.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter_0.2.0_amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.2.0/eos-voter_0.2.0_amd64.snap)
 
 最新のリリースはこのリポジトリのリリースページでいつでも利用可能です:
 
@@ -59,7 +59,7 @@
 **注**: Windows開発環境でこのElectronアプリケーションを構成する場合は、追加の手順が必要です。
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 ```
@@ -76,7 +76,7 @@ yarn install
 ### 開発者モードで実行
 
 ```
-git clone git@github.com:greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
 yarn install
 yarn dev

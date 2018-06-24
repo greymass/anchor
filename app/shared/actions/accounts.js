@@ -1,5 +1,6 @@
-import * as types from './types';
+import { forEach } from 'lodash';
 
+import * as types from './types';
 import eos from './helpers/eos';
 
 export function clearAccountCache() {
@@ -7,6 +8,47 @@ export function clearAccountCache() {
     dispatch({
       type: types.CLEAR_ACCOUNT_CACHE
     });
+  };
+}
+
+export function clearBalanceCache() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.CLEAR_BALANCE_CACHE
+    });
+  };
+}
+
+export function refreshAccountBalances(account) {
+  return (dispatch: () => void) => {
+    dispatch(clearBalanceCache());
+    return dispatch(getCurrencyBalance(account));
+  };
+}
+
+export function claimUnstaked(owner) {
+  return (dispatch: () => void, getState) => {
+    const {
+      connection
+    } = getState();
+    dispatch({
+      type: types.SYSTEM_REFUND_PENDING
+    });
+    return eos(connection).refund({
+      owner
+    }).then((tx) => {
+      // Reload the account
+      dispatch(getAccount(owner));
+      // Reload the balances
+      dispatch(getCurrencyBalance(owner));
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_REFUND_SUCCESS
+      });
+    }).catch((err) => dispatch({
+      payload: { err },
+      type: types.SYSTEM_REFUND_FAILURE
+    }));
   };
 }
 
@@ -88,19 +130,43 @@ export function getCurrencyBalance(account) {
       settings
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
-      return eos(connection).getCurrencyBalance('eosio.token', account).then((balances) => dispatch({
-        type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-        payload: { balances, account_name: account }
-      })).catch((err) => dispatch({
-        type: types.GET_ACCOUNT_BALANCE_FAILURE,
-        payload: { err, account_name: account }
-      }));
+      const { customTokens } = settings;
+      let selectedTokens = ['eosio.token:EOS'];
+      if (customTokens && customTokens.length > 0) {
+        selectedTokens = [...customTokens, ...selectedTokens];
+      }
+      forEach(selectedTokens, (namespace) => {
+        const [contract, symbol] = namespace.split(':');
+        eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
+          dispatch({
+            type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+            payload: {
+              account_name: account,
+              contract,
+              symbol,
+              tokens: formatBalances(results)
+            }
+          }))
+          .catch((err) => dispatch({
+            type: types.GET_ACCOUNT_BALANCE_FAILURE,
+            payload: { err, account_name: account }
+          }));
+      });
     }
     dispatch({
       type: types.GET_ACCOUNT_BALANCE_FAILURE,
       payload: { account_name: account },
     });
   };
+}
+
+function formatBalances(balances) {
+  const formatted = {};
+  for (let i = 0; i < balances.length; i += 1) {
+    const [amount, symbol] = balances[i].split(' ');
+    formatted[symbol] = parseFloat(amount);
+  }
+  return formatted;
 }
 
 export function getAccountByKey(key) {
@@ -142,5 +208,6 @@ export default {
   clearAccountCache,
   getAccount,
   getAccountByKey,
-  getCurrencyBalance
+  getCurrencyBalance,
+  refreshAccountBalances
 };

@@ -1,28 +1,29 @@
-import * as validate from './validate';
+import { Decimal } from 'decimal.js';
+
 import * as types from './types';
 
-import { delegatebw } from './system/delegatebw';
-import { undelegatebw } from './system/undelegatebw';
+import { delegatebwParams } from './system/delegatebw';
+import { undelegatebwParams } from './system/undelegatebw';
 
-import {Decimal} from 'decimal.js';
+import * as AccountActions from './accounts';
+import eos from './helpers/eos';
 
-export function setStakeWithValidation(EOSbalance, account, netAmount, cpuAmount) {
-  return (dispatch: () => void) => {
-    const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
+export function setStake(account, netAmount, cpuAmount) {
+  return (dispatch: () => void, getState) => {
+    const {
+      connection
+    } = getState();
 
-    if (dispatch(validate.validateStake(nextStake, currentStake))) {
-      const increaseInStake = {
-        netAmount: Math.max(0, (nextStake.netAmount - currentStake.netAmount)),
-        cpuAmount: Math.max(0, (nextStake.cpuAmount - currentStake.cpuAmount))
-      };
+    const {
+      increaseInStake,
+      decreaseInStake
+    } = getStakeChanges(account, netAmount, cpuAmount);
 
-      const decreaseInStake = {
-        netAmount: Math.max(0, (currentStake.netAmount - nextStake.netAmount)),
-        cpuAmount: Math.max(0, (currentStake.cpuAmount - nextStake.cpuAmount))
-      };
+    dispatch({ type: types.SYSTEM_STAKE_PENDING });
 
+    return eos(connection).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
-        dispatch(delegatebw(
+        tr.delegatebw(delegatebwParams(
           account.account_name,
           account.account_name,
           increaseInStake.netAmount,
@@ -30,58 +31,67 @@ export function setStakeWithValidation(EOSbalance, account, netAmount, cpuAmount
         ));
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
-        dispatch(undelegatebw(
+        tr.undelegatebw(undelegatebwParams(
           account.account_name,
           account.account_name,
           decreaseInStake.netAmount,
           decreaseInStake.cpuAmount
         ));
       }
-    }
-  };
-}
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
+    }).then((tx) => {
+      dispatch(AccountActions.getAccount(account.account_name));
 
-export function setStakeConfirmingWithValidation(EOSbalance, account, netAmount, cpuAmount) {
-  return (dispatch: () => void) => {
-    const { nextStake, currentStake } = getNextAndCurrentStake(account, netAmount, cpuAmount);
-
-    if (dispatch(validate.validateStake(nextStake, currentStake))) {
-      return dispatch({ type: types.VALIDATE_STAKE_CONFIRMING });
-    }
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_STAKE_SUCCESS
+      });
+    }).catch((err) => {
+      dispatch({
+        payload: { err },
+        type: types.SYSTEM_STAKE_FAILURE
+      });
+    });
   };
 }
 
 export function resetStakeForm() {
   return (dispatch: () => void) => {
-    dispatch({ type: types.SYSTEM_UNDELEGATEBW_NULL });
-    dispatch({ type: types.SYSTEM_DELEGATEBW_NULL });
-    return dispatch({ type: types.VALIDATE_STAKE_NULL });
+    dispatch({
+      type: types.RESET_SYSTEM_STATES
+    });
   };
 }
 
-function getNextAndCurrentStake(account, netAmount, cpuAmount) {
-  const nextStake = {
-    netAmount,
-    cpuAmount
-  };
+function getStakeChanges(account, nextNetAmount, nextCpuAmount) {
   const {
     cpu_weight,
     net_weight
   } = account.self_delegated_bandwidth;
 
-  const currentStake = {
-    cpuAmount: new Decimal(cpu_weight.split(' ')[0]),
-    netAmount: new Decimal(net_weight.split(' ')[0])
+  const currentCpuAmount = new Decimal(cpu_weight.split(' ')[0]);
+  const currentNetAmount = new Decimal(net_weight.split(' ')[0]);
+
+  const increaseInStake = {
+    netAmount: Math.max(0, (nextNetAmount - currentNetAmount)),
+    cpuAmount: Math.max(0, (nextCpuAmount - currentCpuAmount))
+  };
+
+  const decreaseInStake = {
+    netAmount: Math.max(0, (currentNetAmount - nextNetAmount)),
+    cpuAmount: Math.max(0, (currentCpuAmount - nextCpuAmount))
   };
 
   return {
-    nextStake,
-    currentStake
+    increaseInStake,
+    decreaseInStake
   };
 }
 
 export default {
   resetStakeForm,
-  setStakeWithValidation,
-  setStakeConfirmingWithValidation
+  setStake
 };

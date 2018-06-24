@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Accordion, Menu, Segment } from 'semantic-ui-react';
 
+import GlobalButtonResetContainer from '../../../containers/Global/Button/Reset';
+import WalletPanelButtonBroadcast from './Button/Broadcast';
 import WalletPanelButtonLock from './Button/Lock';
-import WalletPanelButtonRemove from './Button/Remove';
 import WalletPanelButtonStake from './Button/Stake';
 import WalletPanelButtonTransfer from './Button/Transfer';
 
@@ -24,17 +25,17 @@ export default class WalletPanelUnlocked extends Component<Props> {
       actions,
       accounts,
       balances,
-      keys,
       validate,
       settings,
-      system
+      system,
+      transaction
     } = this.props;
     return (
       <I18n ns="wallet">
         {
           (t) => (
             <div>
-              {(!keys.temporary)
+              {(settings.walletMode !== 'watch')
                 ? (
                   <WalletPanelButtonLock
                     lockWallet={actions.lockWallet}
@@ -60,7 +61,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
                       active={activeIndex === 0}
                     >
                       <Segment.Group>
-                        <Segment basic>
+                        <Segment>
                           <WalletPanelButtonStake
                             actions={actions}
                             accounts={accounts}
@@ -78,6 +79,19 @@ export default class WalletPanelUnlocked extends Component<Props> {
                             system={system}
                           />
                         </Segment>
+                        {(settings.walletMode === 'watch')
+                          ? (
+                            <Segment>
+                              <WalletPanelButtonBroadcast
+                                actions={actions}
+                                settings={settings}
+                                system={system}
+                                transaction={transaction}
+                              />
+                            </Segment>
+                          )
+                          : false
+                        }
                       </Segment.Group>
                     </Accordion.Content>
                   </Menu.Item>
@@ -93,9 +107,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
                       active={activeIndex === 1}
                     >
                       <Segment basic>
-                        <WalletPanelButtonRemove
-                          removeWallet={actions.removeWallet}
-                        />
+                        <GlobalButtonResetContainer />
                       </Segment>
                     </Accordion.Content>
                   </Menu.Item>

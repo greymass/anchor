@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { forEach } from 'lodash';
 
 import { Segment } from 'semantic-ui-react';
 
 import About from '../components/About';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
+import Tools from './Tools';
 import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
@@ -20,6 +22,7 @@ import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
 import * as StakeActions from '../actions/stake';
+import * as TransactionActions from '../actions/transaction';
 import * as TransferActions from '../actions/transfer';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 
@@ -29,6 +32,7 @@ type Props = {
     getGlobals: () => void,
     getInfo: () => void
   },
+  history: {},
   keys: {},
   settings: {},
   validate: {},
@@ -47,11 +51,31 @@ class BasicVoterContainer extends Component<Props> {
 
   componentDidMount() {
     const {
+      actions,
       history,
-      validate
+      settings
     } = this.props;
-    if (validate.NODE !== 'SUCCESS') {
-      history.push('/');
+
+    const {
+      getCurrencyStats
+    } = actions;
+
+    switch (settings.walletMode) {
+      case 'cold': {
+        history.push('/coldwallet');
+        break;
+      }
+      default: {
+        if (!settings.walletInit && !settings.skipImport) {
+          history.push('/');
+        } else {
+          getCurrencyStats();
+          forEach(settings.customTokens, (token) => {
+            const [contract, symbol] = token.split(':');
+            getCurrencyStats(contract, symbol.toUpperCase());
+          })
+        }
+      }
     }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 30000);
@@ -68,18 +92,16 @@ class BasicVoterContainer extends Component<Props> {
       validate
     } = this.props;
     const {
-      getCurrencyStats,
+      getAccount,
       getGlobals,
-      getInfo,
-      getAccount
+      getInfo
     } = actions;
     if (validate.NODE === 'SUCCESS') {
-      getCurrencyStats();
-      getGlobals();
-      getInfo();
-      if (validate.ACCOUNT === 'SUCCESS') {
+      if (settings.account) {
         getAccount(settings.account);
       }
+      getGlobals();
+      getInfo();
     }
   }
 
@@ -91,6 +113,7 @@ class BasicVoterContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      globals,
       keys,
       settings,
       validate,
@@ -104,6 +127,10 @@ class BasicVoterContainer extends Component<Props> {
       }
       case 'about': {
         activeTab = <About {...this.props} />;
+        break;
+      }
+      case 'tools': {
+        activeTab = <Tools />;
         break;
       }
       default: {
@@ -148,6 +175,7 @@ function mapStateToProps(state) {
     producers: state.producers,
     settings: state.settings,
     system: state.system,
+    transaction: state.transaction,
     validate: state.validate,
     wallet: state.wallet
   };
@@ -164,6 +192,7 @@ function mapDispatchToProps(dispatch) {
       ...ValidateActions,
       ...WalletActions,
       ...StakeActions,
+      ...TransactionActions,
       ...TransferActions,
       ...VoteProducerActions
     }, dispatch)

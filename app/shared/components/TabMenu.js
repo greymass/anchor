@@ -5,6 +5,7 @@ import { I18n } from 'react-i18next';
 
 import WalletLanguage from './Wallet/Language';
 import WalletLockState from './Wallet/LockState';
+import WalletMode from './Wallet/Mode';
 import logo from '../../renderer/assets/images/greymass.png';
 
 export default class BasicMenu extends Component<Props> {
@@ -27,14 +28,18 @@ export default class BasicMenu extends Component<Props> {
               inverted
               size="large"
             >
-              <Menu.Item
-                name="producers"
-                icon="check square"
-                content={t('producer_voting')}
-                active={activeItem === 'producers'}
-                onClick={handleItemClick}
-              />
-
+              {(settings.walletMode !== 'cold')
+                ? (
+                  <Menu.Item
+                    name="producers"
+                    icon="check square"
+                    content={t('producer_voting')}
+                    active={activeItem === 'producers'}
+                    onClick={handleItemClick}
+                  />
+                )
+                : false
+              }
               {(settings.account)
                 ? (
                   <Menu.Item
@@ -47,11 +52,20 @@ export default class BasicMenu extends Component<Props> {
                 )
                 : false
               }
-
+              <Menu.Item
+                name="tools"
+                icon="cog"
+                content={t('tools')}
+                active={activeItem === 'tools'}
+                onClick={handleItemClick}
+              />
               <Menu.Menu position="right">
                 <WalletLanguage
                   actions={actions}
                   key="language"
+                  settings={settings}
+                />
+                <WalletMode
                   settings={settings}
                 />
                 <WalletLockState

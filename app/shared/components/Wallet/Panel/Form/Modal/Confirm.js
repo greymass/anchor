@@ -40,8 +40,10 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
                 <Button
                   color="blue"
                   content={t('wallet_panel_password_confirm_button')}
+                  floated="right"
                   disabled={disabled}
                   onClick={onConfirm}
+                  size="small"
                 />
               )}
               onClose={onCancel}

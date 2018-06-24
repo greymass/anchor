@@ -9,6 +9,8 @@ import { translate } from 'react-i18next';
 import { Button, Container, Form, Input, Message } from 'semantic-ui-react';
 
 import WalletPanelFormModalConfirm from '../../components/Wallet/Panel/Form/Modal/Confirm';
+
+import * as SettingsActions from '../../actions/settings';
 import * as WalletActions from '../../actions/wallet';
 
 type Props = {
@@ -18,6 +20,8 @@ type Props = {
   },
   history: {},
   keys: {},
+  onStageSelect: () => void,
+  settings: {},
   t: () => void
 };
 
@@ -47,14 +51,16 @@ class WelcomeWalletContainer extends Component<Props> {
     const {
       actions,
       history,
-      keys
+      keys,
+      settings
     } = this.props;
     const {
       key
     } = keys;
     const {
-      setWalletKey,
-      setTemporaryKey
+      setSetting,
+      setTemporaryKey,
+      setWalletKey
     } = actions;
     if (encryptWallet) {
       setWalletKey(key, password);
@@ -64,18 +70,22 @@ class WelcomeWalletContainer extends Component<Props> {
     this.setState({
       confirming: false
     });
-    history.push('/voter');
+    setSetting('walletInit', true);
+    if (settings.walletMode === 'cold') {
+      history.push('/coldwallet');
+    } else {
+      history.push('/voter');
+    }
   }
 
   onToggle = () => this.setState({ encryptWallet: !this.state.encryptWallet });
   onConfirm = () => this.setState({ confirming: true });
   onCancel = () => this.setState({ confirming: false });
-  // REMOVE 5JVXUUeXbpCdYTb4UjBC5goqqaZsB87aa7MfJzYLuLfrrd4teRZ
-  // 5Ke1xus68ykFAHz5zsaYZEZp9LZF8KxZRgKxiyvMNRfA9rL5AAK
 
   render() {
     const {
-      t,
+      onStageSelect,
+      t
     } = this.props;
     const {
       confirming,
@@ -108,13 +118,19 @@ class WelcomeWalletContainer extends Component<Props> {
               content={t('wallet_panel_form_will_save')}
             />
           ), (
-            <Container textAlign="center">
+            <Container>
               <WalletPanelFormModalConfirm
                 open={confirming}
                 onCancel={this.onCancel}
                 onConfirm={this.onConfirm}
                 onSubmit={this.onComplete}
                 password={password}
+              />
+              <Button
+                content={t('back')}
+                icon="arrow left"
+                onClick={() => onStageSelect(2)}
+                size="small"
               />
             </Container>
           )]
@@ -123,11 +139,18 @@ class WelcomeWalletContainer extends Component<Props> {
             content={t('wallet_panel_form_not_saved')}
           />
         ), (
-          <Container textAlign="center">
+          <Container>
             <Button
               content={t('wallet_panel_form_use_temporary')}
               color="green"
+              floated="right"
               onClick={this.onComplete}
+            />
+            <Button
+              content={t('back')}
+              icon="arrow left"
+              onClick={() => onStageSelect(2)}
+              size="small"
             />
           </Container>
           )]
@@ -139,13 +162,15 @@ class WelcomeWalletContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    keys: state.keys
+    keys: state.keys,
+    settings: state.settings
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...SettingsActions,
       ...WalletActions
     }, dispatch)
   };

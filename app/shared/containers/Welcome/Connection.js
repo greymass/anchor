@@ -8,17 +8,19 @@ import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
 import { Button, Checkbox, Container, Form, Input, Message } from 'semantic-ui-react';
 
+import * as AccountsActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
+import * as WalletActions from '../../actions/wallet';
+
+const { shell } = require('electron');
 
 type Props = {
   actions: {
-    onStageSelect: () => void,
     setSettingWithValidation: () => void
   },
-  settings: {
-    node: string
-  },
+  onStageSelect: () => void,
+  settings: {},
   t: () => void,
   validate: {}
 };
@@ -33,23 +35,37 @@ class WelcomeConnectionContainer extends Component<Props> {
   }
 
   componentDidMount() {
-    const {
-      actions,
-      validate
-    } = this.props;
-    if (validate.NODE !== 'SUCCESS' && this.state.node) {
-      const { validateNode } = actions;
-      validateNode(this.state.node);
+    const { actions, settings } = this.props;
+    if (settings.skipImport) {
+      actions.validateNode(settings.node);
     }
   }
 
+  useColdWallet = (e) => {
+    const {
+      actions,
+      onStageSelect
+    } = this.props;
+    const {
+      setWalletMode
+    } = actions;
+    // Immediately set the wallet into cold storage mode
+    setWalletMode('cold');
+    // Move to account stage
+    onStageSelect(1);
+    e.preventDefault();
+    return false;
+  }
+
+  openLink = (link) => shell.openExternal(link);
+
   isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
 
-  onChange = debounce((e, { name, value }) => {
+  onChange =  (e, { name, value }) => {
     this.setState({
       [name]: value,
     });
-  }, 500)
+  }
 
   onConfirm = (e, { checked }) => {
     this.setState({
@@ -63,12 +79,23 @@ class WelcomeConnectionContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
-      onStageSelect
+      onStageSelect,
+      settings
     } = this.props;
-    const { setSettingWithValidation } = actions;
+    const {
+      getAccount,
+      setSettingWithValidation,
+      setWalletMode
+    } = actions;
     setSettingWithValidation('node', node);
     if (onStageSelect) {
       onStageSelect(1);
+    }
+    if (settings.walletMode === 'cold') {
+      setWalletMode('hot');
+    }
+    if (settings.account) {
+      getAccount(settings.account);
     }
   }
 
@@ -77,6 +104,7 @@ class WelcomeConnectionContainer extends Component<Props> {
   render() {
     const {
       t,
+      settings,
       validate
     } = this.props;
     const {
@@ -155,9 +183,7 @@ class WelcomeConnectionContainer extends Component<Props> {
     // safeish true and ssl or non-ssl confirmed
     const disabled = !(this.isSafeish(node) && (sslConfirm || sslEnabled));
     return (
-      <Form
-        onSubmit={this.onConnect}
-      >
+      <Form>
         <Form.Field
           autoFocus
           control={Input}
@@ -172,15 +198,30 @@ class WelcomeConnectionContainer extends Component<Props> {
         />
         {message}
         {checkbox}
-        <Container textAlign="center">
+        <Container>
           <Button
             content={t('welcome:welcome_connect_server')}
             disabled={disabled}
             icon="exchange"
+            floated={(!settings.walletInit) ? 'right' : null}
+            fluid={(settings.walletInit)}
+            onClick={this.onConnect}
             primary
             size="small"
             style={{ marginTop: '1em' }}
           />
+          {(!settings.walletInit)
+            ? (
+              <Button
+                content={t('welcome:welcome_use_coldwallet')}
+                icon="snowflake"
+                onClick={this.useColdWallet}
+                size="small"
+                style={{ marginTop: '1em' }}
+              />
+            )
+            : false
+          }
         </Container>
       </Form>
     );
@@ -197,8 +238,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...AccountsActions,
       ...SettingsActions,
-      ...ValidateActions
+      ...ValidateActions,
+      ...WalletActions
     }, dispatch)
   };
 }
