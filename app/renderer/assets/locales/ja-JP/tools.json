@@ -1,10 +1,11 @@
 {
-  "tools_title": "Wallet Tools",
-  "tools_description": "A set of common tools useful in managing accounts.",
-  "tools_menu_index": "Wallet Tools",
-  "tools_menu_keys": "Key Generator",
-  "tools_keys_key_generation_header": "Generate public/private key pair combos for usage throughout EOS.",
-  "tools_keys_key_generation_warning_content": "This key generator does NOT save these key pairs within the application. Please ensure you backup these keys in another location if you are planning on using them.",
-  "tools_keys_key_generation_new_key": "Generate Key",
-  "tools_keys_key_generation_copy_clipboard": "Copy to Clipboard"
+  "tools_title": "ウォレットツール",
+  "tools_description": "アカウント管理に便利な共通ツールのセット。",
+  "tools_menu_index": "ウォレットツール",
+  "tools_menu_keys": "キージェネレータ",
+  "tools_keys_key_generation_header": "キーペアの生成",
+  "tools_keys_key_generation_subheader": "EOSで使用する公開鍵/秘密鍵のペアを生成します。",
+  "tools_keys_key_generation_warning_content": "このキージェネレータはアプリケーション内にキーペアを保存しません。そのキーを使用する場合は、キーを他の場所にバックアップするようにしてください。",
+  "tools_keys_key_generation_new_key": "キーを生成",
+  "tools_keys_key_generation_copy_clipboard": "クリップボードにコピー"
 }
