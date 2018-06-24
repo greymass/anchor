@@ -11,6 +11,7 @@ import ReactJson from 'react-json-view';
 import About from '../components/About';
 import ColdWallet from '../components/ColdWallet/Wallet';
 import TabMenu from '../components/TabMenu';
+import Tools from './Tools';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
@@ -78,6 +79,10 @@ class ColdWalletContainer extends Component<Props> {
     switch (activeItem) {
       case 'about': {
         activeTab = <About {...this.props} />;
+        break;
+      }
+      case 'tools': {
+        activeTab = <Tools />;
         break;
       }
       default: {
