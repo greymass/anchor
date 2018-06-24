@@ -35,7 +35,7 @@ class ToolsKeys extends Component<Props> {
         <Header>
           {t('tools_keys_key_generation_header')}
           <Header.Subheader>
-            {t('tools_keys_key_generation_header')}
+            {t('tools_keys_key_generation_subheader')}
           </Header.Subheader>
         </Header>
         <Message
