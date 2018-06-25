@@ -111,7 +111,7 @@ shasum -b -a 512 linux-eos-voter-0.2.0-x86_64.AppImage
 43f6df8c9e187cc02dfcfd6c3ac2e7ea3945ead44a29ad8d8a08585e855ff94b51b2486e76b633bfce1bf5f88e530e0d4896e75136661d66ae7f7a6310c8d9c9 *linux-eos-voter-0.2.0-x86_64.AppImage
 
 shasum -b -a 512 mac-eos-voter-0.2.0.zip
-shasum: mac-eos-voter-0.2.0.zip:
+50b34915924e432b99ad79e72e413432599b6e1a4e1ddeb4bd30b20febf08bd86c25bac1f484feb9771abe51f3ffcf9e90ac917417c1a49f41af44ba271d1008 *eos-voter-0.2.0-mac.zip
 
 shasum -b -a 512 win-eos-voter-0.2.0.exe
 b8ed0befb7af56de6481235a4e49502b4fd9b97646d0f4003a75260ebb1c4de9a7c67977cde36d24b9c4bc065ef05d75ad6e0c7e912ebbfccdb2f98d899db6e0 *win-eos-voter-0.2.0.exe
