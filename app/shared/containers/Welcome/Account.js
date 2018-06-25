@@ -73,7 +73,7 @@ class WelcomeAccountContainer extends Component<Props> {
 
   onChange = (e, { name, value }) => {
     this.setState({
-      [name]: value,
+      [name]: new String(value).toLowerCase(),
     });
   }
 
