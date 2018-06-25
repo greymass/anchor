@@ -11,6 +11,7 @@ import About from '../components/About';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
 import Tools from './Tools';
+import Transactions from '../components/Transactions';
 import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
@@ -126,6 +127,10 @@ class BasicVoterContainer extends Component<Props> {
         activeTab = <Wallet {...this.props} />;
         break;
       }
+      case 'transactions': {
+        activeTab = <Transactions {...this.props} />;
+        break;
+      }
       case 'about': {
         activeTab = <About {...this.props} />;
         break;
@@ -177,6 +182,7 @@ function mapStateToProps(state) {
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
+    transactions: state.transactions,
     validate: state.validate,
     wallet: state.wallet
   };
