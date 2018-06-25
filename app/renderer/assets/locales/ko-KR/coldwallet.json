@@ -6,7 +6,7 @@
   "coldwallet_transaction_signature_request_title": "Signature request",
   "coldwallet_transaction_signature_request_content": "Listed below are all the contracts/actions specified in this transaction. Review the below transaction and once the transaction is verified, sign the transaction using the button below.",
   "collwallet_transaction_sign_confirm": "Sign this Transaction",
-  "collwallet_transaction_sign_cancel": "Cancel",
+  "collwallet_transaction_sign_cancel": "취소",
   "coldwallet_wallet_title": "Cold Storage Wallet",
   "coldwallet_wallet_description": "An offline mode for secure storage",
   "coldwallet_wallet_workflow": "Sample workflow to sign a transaction offline:",
