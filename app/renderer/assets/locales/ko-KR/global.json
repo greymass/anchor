@@ -43,5 +43,5 @@
   "global_modal_settings_customtoken_notfound_header": "Token not found",
   "global_modal_settings_customtoken_notfound_subheader": "The details for the token entered could not be found.",
   "global_transaction_complete_warning_title": "거래가 승인되지 않았습니다.",
-  "error": "Error"
+  "error": "에러"
 }
