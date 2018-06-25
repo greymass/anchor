@@ -52,12 +52,18 @@ class WelcomeContainer extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     const {
+      actions,
       history,
       settings,
-      validate
+      validate,
+      wallet
     } = this.props;
     if (validate.NODE !== 'SUCCESS' && nextProps.validate.NODE === 'SUCCESS') {
       if (settings.walletInit) {
+        history.push('/voter');
+      } else if (!!wallet.account && !!wallet.data && wallet.version === 1) {
+        // If a wallet account + data exists and the wallet is V1, update init flag and proceed.
+        actions.setSetting('walletInit', true);
         history.push('/voter');
       }
     }
