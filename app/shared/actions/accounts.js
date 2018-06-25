@@ -95,7 +95,7 @@ export function getAccount(account = '') {
 export function getActions(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.GET_ACTIONS_REQUEST,
+      type: types.GET_TRANSACTIONS_REQUEST,
       payload: { account_name: account }
     });
     const {
@@ -104,16 +104,16 @@ export function getActions(account = '') {
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
       eos(connection).getActions(account).then((results) => dispatch({
-        type: types.GET_ACTIONS_SUCCESS,
+        type: types.GET_TRANSACTIONS_SUCCESS,
         payload: { results }
       })).catch((err) => dispatch({
-        type: types.GET_ACTIONS_FAILURE,
+        type: types.GET_TRANSACTIONS_FAILURE,
         payload: { err, account_name: account },
       }));
       return;
     }
     dispatch({
-      type: types.GET_ACTIONS_FAILURE,
+      type: types.GET_TRANSACTIONS_FAILURE,
       payload: { account_name: account },
     });
   };
@@ -208,6 +208,7 @@ export default {
   clearAccountCache,
   getAccount,
   getAccountByKey,
+  getActions,
   getCurrencyBalance,
   refreshAccountBalances
 };
