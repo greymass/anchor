@@ -209,7 +209,7 @@ class Producers extends Component<Props> {
     )];
     const validUser = (wallet.account || settings.walletMode === 'watch');
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
-    if (validUser) {
+    if (validUser && (keys && keys.key)) {
       sidebar = (
         <React.Fragment>
           <ProducersVotingPreview
