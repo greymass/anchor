@@ -58,7 +58,7 @@
   "wallet_status_total_balance": "총",
   "wallet_status_liquid": "거래에 사용할 수있는 잔액",
   "wallet_status_add_custom_token_action": "Add Custom Token",
-  "wallet_status_add_custom_token_header": "Token Balances",
+  "wallet_status_add_custom_token_header": "토큰 잔액",
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
   "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
