@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react';
+import { translate } from 'react-i18next';
 
 import { Button, Divider, Dropdown, Header, Input, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+
+import GlobalButtonAccountImport from '../Button/Account/Import';
 
 class GlobalSidebarAccount extends Component<Props> {
   render() {
@@ -39,10 +41,7 @@ class GlobalSidebarAccount extends Component<Props> {
             </Dropdown.Menu>
           </Dropdown.Menu>
         </Dropdown>
-        <Button
-          labelPosition='right'
-          icon='plus circle'
-          content='Add Account'
+        <GlobalButtonAccountImport
         />
       </Button.Group>
     );
