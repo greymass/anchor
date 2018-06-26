@@ -62,5 +62,5 @@
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
   "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
-  "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet."
+  "wallet_mode_explain_watch": "이 지갑은 현재 관찰지갑 으로 진행 중이오니 거래 서명과 개인 키 저장을 못 합니다. 서명은 콜드지갑에서 하세요."
 }
