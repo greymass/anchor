@@ -42,7 +42,7 @@ class ToolsContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-
+    settings: state.settings,
   };
 }
 
