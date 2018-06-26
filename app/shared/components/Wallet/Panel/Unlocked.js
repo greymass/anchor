@@ -47,7 +47,6 @@ export default class WalletPanelUnlocked extends Component<Props> {
                 : ''
               }
               <Segment vertical>
-
                 <Accordion
                   as={Menu}
                   fluid
