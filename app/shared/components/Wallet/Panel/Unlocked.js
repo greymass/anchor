@@ -84,10 +84,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
                         </Segment>
                         <Segment>
                           <WalletPanelButtonTransferReceive
-                            actions={actions}
-                            balances={balances}
-                            settings={settings}
-                            system={system}
+                            accountName={settings.account}
                           />
                         </Segment>
                         {(settings.walletMode === 'watch')
