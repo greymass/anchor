@@ -19,6 +19,6 @@
   "coldwallet_wallet_instructions_6": "콜드지갑을 사용하여 지갑의 잠금을 해제하고 '거래 서명' 버튼을 클릭하고, 서명되지 않은 거래 파일을 선택하세오.",
   "coldwallet_wallet_instructions_7": "거래 내용이 올바른지 검토하시고, 확인이 끝나면 '이 거래를 서명하기' 를 클릭하고 서명 된 거래를 나타내는 파일 이름을 저장하세요.",
   "coldwallet_wallet_instructions_8": "서명된 거래 파일을 관찰집갑 있는 컴퓨터로 전송하세요 (예: USB 사용).",
-  "coldwallet_wallet_instructions_9": "Using the Watch Wallet, click 'Broadcast Signed Transaction' and select the file signed transaction file.",
-  "coldwallet_wallet_instructions_10": "Review the details of the signed transaction to again ensure they are correct. Once verfied, click 'Broadcast Transaction' to submit the transaction to the network"
+  "coldwallet_wallet_instructions_9": "관찰지갑을 사용하여 '서명된 거래 방송(브로드캐스트) 하기'를 클릭하고 서명 된 거래 파일을 선택하세요.",
+  "coldwallet_wallet_instructions_10": "서명된 거래를 올바른지 다시 확인한 후, '거래 방송(브로드캐스트) 하기'를 클릭하여 거래를 네트워크에 제출하세요."
 }
