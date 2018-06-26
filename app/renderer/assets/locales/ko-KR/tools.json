@@ -1,8 +1,8 @@
 {
-  "tools_title": "Wallet Tools",
+  "tools_title": "지갑 도구",
   "tools_description": "A set of common tools useful in managing accounts.",
-  "tools_menu_index": "Wallet Tools",
-  "tools_menu_keys": "Key Generator",
+  "tools_menu_index": "지갑 도구",
+  "tools_menu_keys": "키 생산기",
   "tools_keys_key_generation_header": "Key Pair Generation",
   "tools_keys_key_generation_subheader": "Generate public/private key pair combos for usage throughout EOS.",
   "tools_keys_key_generation_warning_content": "This key generator does NOT save these key pairs within the application. Please ensure you backup these keys in another location if you are planning on using them.",
