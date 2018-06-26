@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import GlobalTransactionModal from '../../../Global/Transaction/Modal';
-import WalletPanelFormTransfer from '../Form/Transfer';
+import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
+import WalletPanelFormTransfer from '../../Form/Transfer/Send';
 
 type Props = {
   actions: {
@@ -11,7 +11,8 @@ type Props = {
   },
   balances: {},
   settings: {},
-  system: {}
+  system: {},
+  t: () => void
 };
 
 class WalletPanelButtonTransfer extends Component<Props> {
@@ -31,8 +32,8 @@ class WalletPanelButtonTransfer extends Component<Props> {
         actions={actions}
         button={{
           color: 'blue',
-          content: t('transfer_button_cta'),
-          icon: 'exchange'
+          content: t('send_button_cta'),
+          icon: 'arrow up'
         }}
         content={(
           <WalletPanelFormTransfer
@@ -42,7 +43,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
             system={system}
           />
         )}
-        icon="exchange"
+        icon="arrow up"
         title={t('transfer_modal_title')}
         settings={settings}
         system={system}
