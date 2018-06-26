@@ -38,7 +38,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
         {
           (t) => (
             <div>
-              {(settings.walletMode !== 'watch')
+              {(settings.walletMode !== 'watch' && !settings.walletTemp)
                 ? (
                   <WalletPanelButtonLock
                     lockWallet={actions.lockWallet}

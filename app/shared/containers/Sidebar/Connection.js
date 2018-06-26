@@ -76,7 +76,7 @@ class SidebarConnection extends Component<Props> {
         stacked
       >
         {controls}
-        {(settings && settings.walletInit)
+        {(settings && (settings.walletInit || settings.walletTemp))
           ? false
           : (
             <React.Fragment>
