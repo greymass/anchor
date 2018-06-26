@@ -11,13 +11,12 @@ type Props = {
   actions: {
     clearSystemState: () => void,
     getAccount: () => void,
-    getGlobals: () => void,
     getActions: () => void
   },
   actionObjects: {},
   accounts: {},
+  amount: 0,
   balances: {},
-  globals: {},
   history: {},
   keys: {},
   settings: {},
@@ -39,19 +38,6 @@ class Actions extends Component<Props> {
   componentDidMount() {
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 15000);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
-    const nextValidate = nextProps.validate;
-    // On a new node connection, update props + producers
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.props.actions.getGlobals();
-      this.tick();
-    }
   }
 
   componentWillUnmount() {
@@ -76,11 +62,10 @@ class Actions extends Component<Props> {
       actions,
       actionObjects,
       accounts,
+      amount,
       balances,
-      globals,
       history,
       keys,
-      querying,
       settings,
       system,
       t,
@@ -101,7 +86,7 @@ class Actions extends Component<Props> {
         wallet={wallet}
       />
     )];
-    const validUser = (wallet.account || settings.walletMode === 'watch');
+    const validUser = (wallet.account && wallet.key && wallet.key.keys);
 
     if (validUser) {
       sidebar = (
@@ -124,7 +109,7 @@ class Actions extends Component<Props> {
                ? [(
                  <Visibility
                    continuous
-                   key="ProducersTable"
+                   key="ActionsTable"
                    fireOnMount
                    onBottomVisible={this.loadMore}
                    once={false}
@@ -132,15 +117,13 @@ class Actions extends Component<Props> {
                    <ActionsTable
                      amount={amount}
                      attached="top"
-                     globals={globals}
                      actions={actionObjects}
-                     validUser={validUser}
                    />
                  </Visibility>
                ), (
-                 (!querying && amount < actions.list.length)
+                 (amount < actions.list.length)
                  ? (
-                   <Segment key="ProducersTableLoading" clearing padded vertical>
+                   <Segment key="ActionsTableLoading" clearing padded vertical>
                      <Loader active />
                    </Segment>
                  ) : false
@@ -148,7 +131,7 @@ class Actions extends Component<Props> {
                : (
                  <Segment attached="bottom" stacked>
                    <Header textAlign="center">
-                     {t('producer_none_loaded')}
+                     {t('action_none_loaded')}
                    </Header>
                  </Segment>
                )
