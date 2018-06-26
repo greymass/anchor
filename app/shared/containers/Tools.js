@@ -10,6 +10,7 @@ import { Tab } from 'semantic-ui-react';
 
 import Tools from '../components/Tools';
 import ToolsKeys from '../components/Tools/Keys';
+import ToolsState from '../components/Tools/State';
 
 class ToolsContainer extends Component<Props> {
   props: Props;
@@ -23,6 +24,10 @@ class ToolsContainer extends Component<Props> {
       {
         menuItem: t('tools_menu_keys'),
         render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
+      },
+      {
+        menuItem: t('tools_menu_state'),
+        render: () => <Tab.Pane><ToolsState {...this.props} /></Tab.Pane>,
       }
     ];
     return (
@@ -42,7 +47,7 @@ class ToolsContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-
+    settings: state.settings
   };
 }
 

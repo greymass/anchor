@@ -18,7 +18,9 @@ const initialState = {
   // Wallet Status
   walletInit: false,
   // Wallet Mode (hot/cold/watch)
-  walletMode: 'hot'
+  walletMode: 'hot',
+  // Wallet is Temporary
+  walletTemp: false
 };
 
 const validSettings = Object.keys(initialState);

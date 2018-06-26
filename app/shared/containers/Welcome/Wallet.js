@@ -28,10 +28,11 @@ type Props = {
 class WelcomeWalletContainer extends Component<Props> {
   constructor(props) {
     super(props);
+    const { settings } = props;
     this.state = {
       // editing: props.editing || false,
       confirming: false,
-      encryptWallet: true
+      encryptWallet: !(settings.walletTemp)
     };
   }
 
@@ -63,14 +64,15 @@ class WelcomeWalletContainer extends Component<Props> {
       setWalletKey
     } = actions;
     if (encryptWallet) {
+      setSetting('walletInit', true);
       setWalletKey(key, password);
     } else {
+      setSetting('walletTemp', true);
       setTemporaryKey(key);
     }
     this.setState({
       confirming: false
     });
-    setSetting('walletInit', true);
     if (settings.walletMode === 'cold') {
       history.push('/coldwallet');
     } else {
