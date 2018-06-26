@@ -207,7 +207,7 @@ class Producers extends Component<Props> {
         wallet={wallet}
       />
     )];
-    const validUser = (wallet.account || settings.walletMode === 'watch');
+    const validUser = ((keys && keys.key) || settings.walletMode === 'watch');
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
       sidebar = (
