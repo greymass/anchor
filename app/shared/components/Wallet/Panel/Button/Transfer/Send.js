@@ -32,8 +32,8 @@ class WalletPanelButtonTransfer extends Component<Props> {
         actions={actions}
         button={{
           color: 'blue',
-          content: t('send_button_cta'),
-          icon: 'arrow up'
+          content: t('transfer_send_button_cta'),
+          icon: 'arrow circle up'
         }}
         content={(
           <WalletPanelFormTransfer
@@ -43,7 +43,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
             system={system}
           />
         )}
-        icon="arrow up"
+        icon="arrow circle up"
         title={t('transfer_modal_title')}
         settings={settings}
         system={system}

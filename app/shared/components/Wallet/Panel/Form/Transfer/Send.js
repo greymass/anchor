@@ -139,7 +139,7 @@ class WalletPanelFormTransfer extends Component<Props> {
       >
         {(confirming)
           ? (
-            <WalletPanelFormTransferConfirming
+            <WalletPanelFormTransferSendConfirming
               balances={balances}
               from={from}
               memo={memo}

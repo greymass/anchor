@@ -21,14 +21,11 @@ class WalletPanelModalTransferReceive extends Component<Props> {
         open={open}
         size="tiny"
       >
-        <Header icon="unlock" content={t('wallet_panel_wallet_unlock_modal_title')} />
+        <Header icon="arrow circle down" content={t('transfer_receive_modal_title')} />
         <Modal.Content>
           <Segment basic clearing vertical textAlign="center">
             <Header>
-              {t('transfer_receiving_title')}
-            </Header>
-            <Header size="small">
-              {t('transfer_receiving_body')}
+              {t('transfer_receive_body')}
             </Header>
             <Segment
               basic
@@ -52,4 +49,4 @@ class WalletPanelModalTransferReceive extends Component<Props> {
   }
 }
 
-export default translate('receive')(WalletPanelModalTransferReceive);
+export default translate('transfer')(WalletPanelModalTransferReceive);

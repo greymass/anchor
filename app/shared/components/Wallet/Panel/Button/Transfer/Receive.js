@@ -32,9 +32,9 @@ class WalletPanelButtonTransferReceive extends Component<Props> {
         trigger={(
           <Button
             color="blue"
-            content={t('receive_button_cta')}
+            content={t('transfer_receive_button_cta')}
             fluid
-            icon="arrow down"
+            icon="arrow circle down"
             onClick={this.onOpen}
           />
         )}
@@ -43,4 +43,4 @@ class WalletPanelButtonTransferReceive extends Component<Props> {
   }
 }
 
-export default translate('receive')(WalletPanelButtonTransferReceive);
+export default translate('transfer')(WalletPanelButtonTransferReceive);
