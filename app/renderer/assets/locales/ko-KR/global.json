@@ -2,8 +2,8 @@
   "error_eosio_assert_message_exception": "귀하의 EOS 블록 체인 요청에 따라 일반 오류가 발생했습니다. 정보가 유효한지 확인하고 다시 시도하세오.",
   "error_no_stake_left": "스테이크 된 금액을 0으로 설정할 수 없습니다. 이렇게하면 네트워크에서 거래를 중단 될 수 있습니다.",
   "error_not_valid_stake_amount": "유효한 스테이크 수량이 아닙니다 (최대 소수점 이하 4자리 허용, 예시: 12.1212).",
-  "error_ram_usage_exceeded": "RAM usage exceeded. You will need to buy more ram to carry out this action.",
-  "error_not_enough_balance": "You do not have enough balance for this transaction.",
+  "error_ram_usage_exceeded": "RAM 사용량이 초과되었습니다. 이 작업을 수행하려면 더 많은 RAM 을 구입하세요.",
+  "error_not_enough_balance": "이 거래에 잔액이 부족합니다.",
   "global_dangerlink_warning_body_1": "eos-voter는 사용자가 방문하는 웹 사이트의 안전을 보장하지 않습니다. 키와 계정 정보의 보안에 유의하여 신뢰 가능한 사이트에서만 정보를 공유하십시오.",
   "global_dangerlink_warning_body_2": "절대 개인 키를 공유하지 마십시오.",
   "global_dangerlink_warning_body_3": "계속 진행하시려면 아래의 확인 버튼을 누르십시오..",
@@ -11,7 +11,7 @@
   "global_transaction_complete_message": "귀하의 거래가 블록체인에 제출되었습니다.",
   "global_transaction_complete_title": "거래 승인 요청",
   "global_transaction_complete_warning_message": "제출된 모든 거래의 승인을 보장할 수는 없습니다. 네트워크 내에서 거래가 완료되었는지 확인하시려면 블록 탐색기에서 위의 거래 ID를 검색하여 최근 비가역 블록에 입력되었는지 확인하십시오.",
-  "global_transaction_unsigned_title": "Unsigned Transaction Created",
+  "global_transaction_unsigned_title": "서명되지 않은 거래 생성되었습니다.",
   "global_transaction_unsigned_message": "An unsigned transaction has been created by this watch-mode wallet. Use the button below to save it as a file which can then be signed by a cold wallet.",
   "global_transaction_unsigned_raw_tx": "Raw Transaction Details",
   "global_transaction_unsigned_save_file": "Save Unsigned Transaction to Disk",
@@ -43,5 +43,5 @@
   "global_modal_settings_customtoken_notfound_header": "Token not found",
   "global_modal_settings_customtoken_notfound_subheader": "The details for the token entered could not be found.",
   "global_transaction_complete_warning_title": "거래가 승인되지 않았습니다.",
-  "error": "Error"
+  "error": "에러"
 }
