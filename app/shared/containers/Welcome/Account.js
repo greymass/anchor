@@ -73,7 +73,7 @@ class WelcomeAccountContainer extends Component<Props> {
 
   onChange = (e, { name, value }) => {
     this.setState({
-      [name]: new String(value).toLowerCase(),
+      [name]: value
     });
   }
 
@@ -86,6 +86,7 @@ class WelcomeAccountContainer extends Component<Props> {
       onStageSelect,
       settings
     } = this.props;
+
     switch (settings.walletMode) {
       // with cold wallets, there's no way to validate, assume true
       case 'cold': {
@@ -102,7 +103,9 @@ class WelcomeAccountContainer extends Component<Props> {
           getAccountByKey(account);
         } else {
           const { setSettingWithValidation } = actions;
-          setSettingWithValidation('account', account);
+          const loweCasedAccount = String(account).toLowerCase();
+
+          setSettingWithValidation('account', loweCasedAccount);
           if (onStageSelect) {
             onStageSelect(2);
           }
