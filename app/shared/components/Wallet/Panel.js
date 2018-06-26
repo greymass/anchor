@@ -45,8 +45,8 @@ export default class WalletPanel extends Component<Props> {
       panel = (
         <WalletPanelUnlocked
           accounts={accounts}
-          balances={balances}
           actions={actions}
+          balances={balances}
           settings={settings}
           system={system}
           transaction={transaction}
