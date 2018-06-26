@@ -1,6 +1,6 @@
 {
-  "app_updating_header": "Updating",
-  "app_updating_subheader": "The app will prompt to restart when completed.",
-  "app_updating_percent_complete": "complete",
-  "app_updating_rate": "sec"
+  "app_updating_header": "업데이트 중",
+  "app_updating_subheader": "완료되면 앱을 다시 시작하라는 메시지가 나타납니다.",
+  "app_updating_percent_complete": "완료",
+  "app_updating_rate": "초"
 }
