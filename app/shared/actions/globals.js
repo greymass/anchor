@@ -57,8 +57,6 @@ export function getCurrencyStats(contractName = "eosio.token", symbolName = "EOS
   };
 }
 
-
-
 export default {
   getCurrencyStats,
   getGlobals
