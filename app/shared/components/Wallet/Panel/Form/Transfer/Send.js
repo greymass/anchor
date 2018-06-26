@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Button, Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import FormFieldAccount from '../../../Global/Form/Field/Account';
-import FormFieldGeneric from '../../../Global/Form/Field/Generic';
-import FormFieldMultiToken from '../../../Global/Form/Field/MultiToken';
-import FormMessageError from '../../../Global/Form/Message/Error';
-import WalletMessageContractTransfer from '../../../Global/Message/Contract/Transfer';
+import FormFieldAccount from '../../../../Global/Form/Field/Account';
+import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
+import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
+import FormMessageError from '../../../../Global/Form/Message/Error';
+import WalletPanelFormTransferSendConfirming from './Send/Confirming';
 
 class WalletPanelFormTransfer extends Component<Props> {
   constructor(props) {
@@ -33,6 +33,20 @@ class WalletPanelFormTransfer extends Component<Props> {
       newState.symbol = symbol;
     }
     this.setState(newState);
+  }
+
+  onConfirm = () => {
+    const {
+      from,
+      memo,
+      quantity,
+      symbol,
+      to
+    } = this.state;
+
+    this.setState({ confirming: false }, () => {
+      this.props.actions.transfer(from, to, quantity, memo, symbol);
+    });
   }
 
   onSubmit = () => {
@@ -62,17 +76,20 @@ class WalletPanelFormTransfer extends Component<Props> {
     return false;
   }
 
-  onConfirm = (e) => {
-    const {
-      from,
-      memo,
-      quantity,
-      symbol,
-      to
-    } = this.state;
-    this.setState({ confirming: false }, () => {
-      this.props.actions.transfer(from, to, quantity, memo, symbol);
+  onSendClick = (e) => {
+    this.setState({
+      sending: true
     });
+
+    e.preventDefault();
+    return false;
+  }
+
+  onReceiveClick = (e) => {
+    this.setState({
+      sending: false
+    });
+
     e.preventDefault();
     return false;
   }
@@ -91,15 +108,17 @@ class WalletPanelFormTransfer extends Component<Props> {
       memo,
       quantity,
       symbol,
+      sending,
       to,
       waiting,
       waitingStarted
     } = this.state;
+
     const balance = balances[settings.account];
-    const contract = balances.__contracts[symbol.toUpperCase()];
     const asset = 'EOS';
     const error = system.TRANSFER_LAST_ERROR;
     const validTransfer = (quantity <= 0 || !to || !from);
+
     let errorMsg = JSON.stringify(error);
     if (error && error.error) {
       if (error.error.details[0]) {
@@ -111,8 +130,7 @@ class WalletPanelFormTransfer extends Component<Props> {
     if (error && error.message) {
       errorMsg = error.message;
     }
-    const secondsElapsed = new Date() - waitingStarted;
-    const secondsRemaining = parseInt((3000 - secondsElapsed) / 1000, 10) + 1;
+
     return (
       <Form
         loading={system.TRANSFER === 'PENDING'}
@@ -121,63 +139,18 @@ class WalletPanelFormTransfer extends Component<Props> {
       >
         {(confirming)
           ? (
-            <Segment basic clearing vertical>
-              <Header size="small">
-                {t('transfer_confirming_title')}
-                <Header.Subheader>
-                  {t('transfer_confirming_body')}
-                </Header.Subheader>
-              </Header>
-              <Table compact definition striped>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell width={4}>{t('transfer_label_from')}</Table.Cell>
-                    <Table.Cell>{from}</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>{t('transfer_label_to')}</Table.Cell>
-                    <Table.Cell>{to}</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>{t('transfer_label_quantity')}</Table.Cell>
-                    <Table.Cell>
-                      {quantity}
-                      {' '}
-                      ({contract})
-                    </Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>{t('transfer_label_memo')}</Table.Cell>
-                    <Table.Cell>{memo}</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-              <WalletMessageContractTransfer
-                data={{
-                  from,
-                  quantity,
-                  to,
-                  transaction: {
-                    delay: 60
-                  }
-                }}
-              />
-              <Divider />
-              <Button
-                color="green"
-                content={(waiting) ? `${t('confirm')} (${secondsRemaining})` : t('confirm')}
-                disabled={waiting}
-                floated="right"
-                onClick={this.onConfirm}
-              />
-              <Button
-                onClick={this.onCancel}
-              >
-                <Icon name="x" /> {t('cancel')}
-              </Button>
-            </Segment>
-          )
-          : (
+            <WalletPanelFormTransferSendConfirming
+              balances={balances}
+              from={from}
+              memo={memo}
+              onConfirm={this.onConfirm}
+              quantity={quantity}
+              symbol={symbol}
+              to={to}
+              waiting={waiting}
+              waitingStarted={waitingStarted}
+            />
+          ) : (
             <Segment basic clearing>
               <FormFieldAccount
                 disabled
@@ -213,7 +186,7 @@ class WalletPanelFormTransfer extends Component<Props> {
               />
 
               <FormMessageError
-                error={error}
+                error={errorMsg}
               />
 
               <Divider />
@@ -229,8 +202,7 @@ class WalletPanelFormTransfer extends Component<Props> {
                 <Icon name="x" /> {t('cancel')}
               </Button>
             </Segment>
-          )
-        }
+          )}
       </Form>
     );
   }

@@ -39,13 +39,17 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
     const refundDate = statsFetcher.refundDate();
 
-    const unstakingWhenAmountBeingUnstaked = refundDate && (cpuDifference < 0 || netDifference < 0);
+    const unstaking = (cpuDifference < 0 || netDifference < 0);
+
+    const unstakingWhenAmountBeingUnstaked = refundDate && unstaking;
 
     return (
       <Segment padding="true" basic>
-        <Header textAlign="center">
-          {t('about_to_unstake')}
-        </Header>
+        {(unstaking) ? (
+          <Header textAlign="center">
+            {t('about_to_unstake')}
+          </Header>
+        ) : ''}
         <Segment.Group>
           {(netDifference > 0) ? (
             <Segment>
