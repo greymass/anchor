@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { debounce, filter, findIndex } from 'lodash';
-import { Grid, Header, Input, Loader, Segment, Transition, Table } from 'semantic-ui-react';
+import { Grid, Header, Input, Segment, Transition, Table } from 'semantic-ui-react';
 
 import ProducersVoteWeight from './Vote/Weight';
 import ProducersTableRow from './Table/Row';
