@@ -1,11 +1,11 @@
 {
-  "tools_title": "Wallet Tools",
-  "tools_description": "A set of common tools useful in managing accounts.",
-  "tools_menu_index": "Wallet Tools",
-  "tools_menu_keys": "Key Generator",
-  "tools_keys_key_generation_header": "Key Pair Generation",
-  "tools_keys_key_generation_subheader": "Generate public/private key pair combos for usage throughout EOS.",
-  "tools_keys_key_generation_warning_content": "This key generator does NOT save these key pairs within the application. Please ensure you backup these keys in another location if you are planning on using them.",
-  "tools_keys_key_generation_new_key": "Generate Key",
-  "tools_keys_key_generation_copy_clipboard": "Copy to Clipboard"
+  "tools_title": "Инструменты",
+  "tools_description": "Набор общих инструментов для управления учетными записями.",
+  "tools_menu_index": "Инструменты",
+  "tools_menu_keys": "Генератор Ключей",
+  "tools_keys_key_generation_header": "Создание Пары Ключей",
+  "tools_keys_key_generation_subheader": "Генерация пар открытого и закрытого ключей для использования в блокцепи EOS.",
+  "tools_keys_key_generation_warning_content": "Этот генератор ключей не сохраняет эти пары ключей в приложении. Убедитесь, что вы создали резервную копию этих ключей в другом месте, если вы планируете их использовать.",
+  "tools_keys_key_generation_new_key": "Создать Ключ",
+  "tools_keys_key_generation_copy_clipboard": "Копировать в Буфер"
 }
