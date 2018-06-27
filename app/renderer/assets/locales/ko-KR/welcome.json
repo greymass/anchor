@@ -53,7 +53,7 @@
   "welcome_key_watchwallet_content": "관찰지갑 설정하면 - 거래는 이 지갑에서만 생성 / 저장되고 서명되지 않습니다.",
   "welcome_key_watchwallet_title": "관찰지갑 - 서명 없음",
   "welcome_key_sign_tx": "지갑 서명 작업을 사용 하시겠습니까?",
-  "welcome_instructions_sign_tx": "Use this wallet to sign transactions?",
+  "welcome_instructions_sign_tx": "이 지갑을 사용하여 거래에 서명 하시겠습니까?",
   "welcome_use_coldwallet": "콜드지갑 설정",
   "welcome_cancel_coldwallet": "콜드지갑 취소"
 }
