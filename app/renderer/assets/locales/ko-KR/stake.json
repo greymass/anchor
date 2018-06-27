@@ -24,7 +24,7 @@
   "update_staked_net_amount": "대역폭에 스테이킹된 EOS 설정",
   "will_have_less_than_one_eos_staked": "대역폭이나 CPU에 EOS가 1 개 미만으로 설정했습니다.  네트워크 사용량이 많을 경우 거래 수행하지 못할 수도 있습니다.",
   "you_will_have": "선택 후",
-  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
-  "have_already_unstaked": "You are currently unstaking ",
-  "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
+  "about_to_unstake": "코인 스테이킹/언스테이킹 할 예정입니다. 언스테이킹 된 모든 코인은 72 시간 이내에 주장해야 합니다,",
+  "have_already_unstaked": "스테이킹 풀 예정 ",
+  "unstaking_will_be_reset": "이 새로운 값으로 스테이킹 을 푸시면, 전 요청을 대체하고, 72 시간제한을 재설정됩니다."
 }
