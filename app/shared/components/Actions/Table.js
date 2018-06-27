@@ -9,20 +9,20 @@ class ActionsTable extends Component<Props> {
   render() {
     const {
       amount,
-      actions,
+      actionObjects,
       t
     } = this.props;
 
-    const loading = (actions.list.length < 1);
+    const loading = (actionObjects.list.length < 1);
     let baseTable = <Table.Body />;
     if (!loading) {
-      const fullResults = actions.list.slice(0, amount);
+      const fullResults = actionObjects.list.slice(0, amount);
       baseTable = (
         <Table.Body key="FullResults">
-          {fullResults.map((action) => (
+          {fullResults.map((actionObject) => (
             <ActionsTableRow
-              key={action.key}
-              action={action}
+              key={actionObject.account_action_seq}
+              actionObject={actionObject}
             />
           ))}
         </Table.Body>
@@ -39,15 +39,13 @@ class ActionsTable extends Component<Props> {
         >
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell collapsing />
-              <Table.HeaderCell collapsing />
-              <Table.HeaderCell>
-                {t('action_type')}
-              </Table.HeaderCell>
               <Table.HeaderCell width={5}>
-                {t('action_time')}
+                {t('actions_name')}
               </Table.HeaderCell>
-              <Table.HeaderCell collapsing />
+              <Table.HeaderCell width={2}>
+                {t('actions_time')}
+              </Table.HeaderCell>
+              <Table.HeaderCell width={3} />
             </Table.Row>
           </Table.Header>
           <Transition animation="slide down" duration={200}>
