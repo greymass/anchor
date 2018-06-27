@@ -7,28 +7,28 @@ const initialState = {
   updated: null
 };
 
-export default function transactions(state = initialState, action) {
+export default function actions(state = initialState, action) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
-    case types.CLEAR_TRANSACTIONS_CACHE: {
+    case types.CLEAR_ACTIONS_CACHE: {
       return Object.assign({}, state, {
         list: []
       });
     }
-    case types.GET_TRANSACTIONS_FAILURE: {
+    case types.GET_ACTIONS_FAILURE: {
       return Object.assign({}, state, {
         list: []
       });
     }
-    case types.GET_TRANSACTIONS_SUCCESS: {
+    case types.GET_ACTIONS_SUCCESS: {
       return Object.assign({}, state, {
         __updated: Date.now(),
         list: action.payload.list
       });
     }
-    case types.GET_TRANSACTIONS_REQUEST:
+    case types.GET_ACTIONS_REQUEST:
     default: {
       return state;
     }

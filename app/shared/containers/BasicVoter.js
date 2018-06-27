@@ -11,7 +11,7 @@ import About from '../components/About';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
 import Tools from './Tools';
-import Transactions from '../components/Transactions';
+import Actions from '../components/Actions';
 import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
@@ -75,7 +75,7 @@ class BasicVoterContainer extends Component<Props> {
           forEach(settings.customTokens, (token) => {
             const [contract, symbol] = token.split(':');
             getCurrencyStats(contract, symbol.toUpperCase());
-          })
+          });
         }
       }
     }
@@ -115,7 +115,6 @@ class BasicVoterContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
-      globals,
       keys,
       settings,
       validate,
@@ -127,8 +126,8 @@ class BasicVoterContainer extends Component<Props> {
         activeTab = <Wallet {...this.props} />;
         break;
       }
-      case 'transactions': {
-        activeTab = <Transactions {...this.props} />;
+      case 'actions': {
+        activeTab = <Actions {...this.props} />;
         break;
       }
       case 'about': {
@@ -174,6 +173,7 @@ class BasicVoterContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    actionObjects: state.actions,
     balances: state.balances,
     chain: state.chain,
     globals: state.globals,
@@ -182,7 +182,6 @@ function mapStateToProps(state) {
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
-    transactions: state.transactions,
     validate: state.validate,
     wallet: state.wallet
   };
