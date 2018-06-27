@@ -11,7 +11,7 @@ type Props = {
   actions: {
     clearSystemState: () => void,
     getAccount: () => void,
-    getActions: () => void
+    getAccountActions: () => void
   },
   actionObjects: {},
   accounts: {},
@@ -50,10 +50,10 @@ class Actions extends Component<Props> {
       validate
     } = this.props;
     const {
-      getActions
+      getAccountActions
     } = actions;
     if (validate.NODE) {
-      getActions();
+      getAccountActions();
     }
   }
 
@@ -87,7 +87,7 @@ class Actions extends Component<Props> {
       />
     )];
     const validUser = (wallet.account && wallet.key && wallet.key.keys);
-
+    debugger
     if (validUser) {
       sidebar = (
         <React.Fragment />
@@ -105,7 +105,7 @@ class Actions extends Component<Props> {
               {sidebar}
             </Grid.Column>
             <Grid.Column width={10}>
-              {(actions.list.length > 0)
+              {(actionObjects.list.length > 0)
                ? [(
                  <Visibility
                    continuous
@@ -121,7 +121,7 @@ class Actions extends Component<Props> {
                    />
                  </Visibility>
                ), (
-                 (amount < actions.list.length)
+                 (amount < actionObjects.list.length)
                  ? (
                    <Segment key="ActionsTableLoading" clearing padded vertical>
                      <Loader active />
