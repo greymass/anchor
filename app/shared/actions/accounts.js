@@ -102,19 +102,22 @@ export function getAccountActions(account = '') {
       connection,
       settings
     } = getState();
-    if (account && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getActions(account).then((results) => dispatch({
+
+    const accountName = settings.account;
+
+    if (accountName && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getActions(accountName).then((results) => dispatch({
         type: types.GET_ACCOUNT_ACTIONS_SUCCESS,
         payload: { results }
       })).catch((err) => dispatch({
         type: types.GET_ACCOUNT_ACTIONS_FAILURE,
-        payload: { err, account_name: account },
+        payload: { err, account_name: accountName },
       }));
       return;
     }
     dispatch({
       type: types.GET_ACCOUNT_ACTIONS_FAILURE,
-      payload: { account_name: account },
+      payload: { account_name: accountName },
     });
   };
 }
