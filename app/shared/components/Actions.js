@@ -15,7 +15,6 @@ type Props = {
   },
   actionObjects: {},
   accounts: {},
-  amount: 0,
   balances: {},
   history: {},
   keys: {},
@@ -23,6 +22,7 @@ type Props = {
   system: {},
   t: () => void,
   actionObjects: {},
+  transaction: {},
   validate: {},
   wallet: {}
 };
@@ -62,16 +62,18 @@ class Actions extends Component<Props> {
       actions,
       actionObjects,
       accounts,
-      amount,
       balances,
       history,
       keys,
       settings,
       system,
       t,
+      transaction,
       validate,
       wallet
     } = this.props;
+
+    const amount = 20;
 
     let sidebar = [(
       <WalletPanel
@@ -82,17 +84,20 @@ class Actions extends Component<Props> {
         keys={keys}
         settings={settings}
         system={system}
+        transaction={transaction}
         validate={validate}
         wallet={wallet}
       />
     )];
-    const validUser = (wallet.account && wallet.key && wallet.key.keys);
-    debugger
+
+    const validUser = (keys && keys.key);
+
     if (validUser) {
       sidebar = (
         <React.Fragment />
       );
     }
+
     return (
       <div ref={this.handleContextRef}>
         <Grid divided>
@@ -105,7 +110,7 @@ class Actions extends Component<Props> {
               {sidebar}
             </Grid.Column>
             <Grid.Column width={10}>
-              {(actionObjects.list.length > 0)
+              {(keys.key && actionObjects.list.length > 0)
                ? [(
                  <Visibility
                    continuous
@@ -117,7 +122,7 @@ class Actions extends Component<Props> {
                    <ActionsTable
                      amount={amount}
                      attached="top"
-                     actions={actionObjects}
+                     actionObjects={actionObjects}
                    />
                  </Visibility>
                ), (
@@ -131,7 +136,7 @@ class Actions extends Component<Props> {
                : (
                  <Segment attached="bottom" stacked>
                    <Header textAlign="center">
-                     {t('action_none_loaded')}
+                     {t('actions_need_to_enter_password')}
                    </Header>
                  </Segment>
                )
