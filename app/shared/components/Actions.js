@@ -32,7 +32,9 @@ class Actions extends Component<Props> {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      amount: 20
+    };
   }
 
   componentDidMount() {
@@ -44,6 +46,10 @@ class Actions extends Component<Props> {
     clearInterval(this.interval);
   }
 
+  loadMore = () => this.setState({ amount: this.state.amount + 20 }, () => {
+    this.tick();
+  });
+
   tick() {
     const {
       actions,
@@ -52,8 +58,13 @@ class Actions extends Component<Props> {
     const {
       getAccountActions
     } = actions;
+
     if (validate.NODE) {
-      getAccountActions();
+      const {
+        amount
+      } = this.state;
+
+      getAccountActions(amount);
     }
   }
 
@@ -73,7 +84,10 @@ class Actions extends Component<Props> {
       wallet
     } = this.props;
 
-    const amount = 20;
+    const {
+      amount
+    } = this.state;
+
 
     let sidebar = [(
       <WalletPanel
@@ -136,7 +150,7 @@ class Actions extends Component<Props> {
                : (
                  <Segment attached="bottom" stacked>
                    <Header textAlign="center">
-                     {t('actions_need_to_enter_password')}
+                     {t('actions_none')}
                    </Header>
                  </Segment>
                )

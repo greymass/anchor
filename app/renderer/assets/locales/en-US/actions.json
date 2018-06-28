@@ -2,7 +2,7 @@
   "actions_and_statement": "and",
   "actions_link_content": "View Transaction",
   "actions_name": "Past Actions",
-  "actions_need_to_enter_password":"You will need to enter your password to view your past actions.",
+  "actions_none":"No actions data loaded yet.",
   "actions_refunded":"Your stake was refunded.",
   "actions_stake_cpu_after_amount": "to CPU",
   "actions_stake_net_after_amount": "to Bandwidth",
