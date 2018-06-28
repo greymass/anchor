@@ -29,7 +29,7 @@ class ActionsTableRow extends Component<Props> {
               style={iconStyle}
             />
             <div>
-              { `${t('actions_refunded')}.` }
+              { t('actions_refunded') }
             </div>
           </div>
         );
@@ -111,8 +111,11 @@ class ActionsTableRow extends Component<Props> {
           producers
         } = data;
 
-        const producersInSentence =
-          `${producers.slice(0, producers.length - 1).join(', ')} and ${producers.slice(-1)}`;
+        const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
+
+        const andStatement = (producers.length > 1) ? (` ${t('actions_and_statement')}`) : '';
+
+        const lastProducer = producers.slice(-1);
 
         return (
           <div>
@@ -122,7 +125,7 @@ class ActionsTableRow extends Component<Props> {
               style={iconStyle}
             />
             <div>
-              { `${t('actions_voted')} ${producersInSentence}.` }
+              { `${t('actions_voted')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
             </div>
           </div>
         );
@@ -149,9 +152,9 @@ class ActionsTableRow extends Component<Props> {
         <Table.Cell
           width={6}
         >
-          <p style={textStyle}>
+          <div style={textStyle}>
             { this.actionDescriptionFromAct(actionObject.action_trace.act) }
-          </p>
+          </div>
         </Table.Cell>
         <Table.Cell
           width={2}
