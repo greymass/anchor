@@ -110,7 +110,7 @@ class Actions extends Component<Props> {
               {sidebar}
             </Grid.Column>
             <Grid.Column width={10}>
-              {(keys.key && actionObjects.list.length > 0)
+              {(actionObjects.list.length > 0)
                ? [(
                  <Visibility
                    continuous

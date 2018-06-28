@@ -19,7 +19,7 @@ class ActionsTable extends Component<Props> {
       const fullResults = actionObjects.list.slice(0, amount);
       baseTable = (
         <Table.Body key="FullResults">
-          {fullResults.map((actionObject) => (
+          {fullResults.reverse().map((actionObject) => (
             <ActionsTableRow
               key={actionObject.account_action_seq}
               actionObject={actionObject}
@@ -39,13 +39,13 @@ class ActionsTable extends Component<Props> {
         >
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell width={5}>
+              <Table.HeaderCell width={6}>
                 {t('actions_name')}
               </Table.HeaderCell>
               <Table.HeaderCell width={2}>
                 {t('actions_time')}
               </Table.HeaderCell>
-              <Table.HeaderCell width={3} />
+              <Table.HeaderCell width={2} />
             </Table.Row>
           </Table.Header>
           <Transition animation="slide down" duration={200}>
