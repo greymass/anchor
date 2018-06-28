@@ -54,7 +54,6 @@ class BasicVoterContainer extends Component<Props> {
     const {
       actions,
       history,
-      keys,
       settings
     } = this.props;
 

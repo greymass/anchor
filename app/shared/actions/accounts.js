@@ -92,23 +92,25 @@ export function getAccount(account = '') {
   };
 }
 
-export function getAccountActions(account = '') {
+export function getAccountActions(amount) {
   return (dispatch: () => void, getState) => {
-    dispatch({
-      type: types.GET_ACCOUNT_ACTIONS_REQUEST,
-      payload: { account_name: account }
-    });
     const {
       connection,
-      settings
+      settings,
+      actions
     } = getState();
 
     const accountName = settings.account;
 
+    dispatch({
+      type: types.GET_ACCOUNT_ACTIONS_REQUEST,
+      payload: { account_name: accountName }
+    });
+
     if (accountName && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getActions(accountName).then((results) => dispatch({
+      eos(connection).getActions(accountName, -1, -amount).then((results) => dispatch({
         type: types.GET_ACCOUNT_ACTIONS_SUCCESS,
-        payload: { results }
+        payload: { list: results.actions }
       })).catch((err) => dispatch({
         type: types.GET_ACCOUNT_ACTIONS_FAILURE,
         payload: { err, account_name: accountName },
@@ -120,6 +122,21 @@ export function getAccountActions(account = '') {
       payload: { account_name: accountName },
     });
   };
+}
+
+function mergeActionsList(previousActionsList, newActionsList) {
+  const allActionsList = previousActionsList.concat(newActionsList);
+  const allActionsListWithoutDuplicates = allActionsList.filter(onlyUnique);
+  //sort((firstAction, secondAction) => firstAction.speed - secondAction.speed;
+
+  return allActionsListWithoutDuplicates;
+}
+
+function onlyUnique(actionObject, index, self) {
+  const matchingIndex = self.map(actionObj => actionObj.global_action_seq)
+    .indexOf(actionObject.global_action_seq);
+
+  return matchingIndex === -11;
 }
 
 export function getCurrencyBalance(account) {
