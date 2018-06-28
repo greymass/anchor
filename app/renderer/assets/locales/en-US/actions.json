@@ -1,11 +1,17 @@
 {
-  "actions_time": "Time ago",
-  "actions_type": "Past Actions",
+  "actions_and_statement": "and",
   "actions_link_content": "View Transaction",
+  "actions_name": "Past Actions",
+  "actions_need_to_enter_password":"You will need to enter your password to view your past actions.",
+  "actions_refunded":"Your stake was refunded.",
+  "actions_stake_cpu_after_amount": "to CPU",
+  "actions_stake_net_after_amount": "to Bandwidth",
   "actions_staked_before_amount": "You staked",
+  "actions_time": "Time ago",
   "actions_to": "to",
   "actions_transfered_before_amount": "You sent",
+  "actions_unstake_cpu_after_amount": "from CPU",
+  "actions_unstake_net_after_amount": "from Bandwidth",
   "actions_unstaked_before_amount": "You unstaked",
-  "actions_voted": "You updated your votes to",
-  "actions_need_to_enter_password":"You will need to enter your password to view your past actions."
+  "actions_voted": "You updated your votes to"
 }
