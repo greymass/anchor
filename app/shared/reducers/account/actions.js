@@ -24,12 +24,10 @@ export default function actions(state = initialState, action) {
       });
     }
     case types.GET_ACCOUNT_ACTIONS_SUCCESS: {
-      const actionsList = action.payload.results.actions;
-
       return Object.assign({}, state, {
         updated: Date.now(),
-        list: actionsList,
-        lastTransaction: actionsList[actionsList.length - 1]
+        list: action.payload.list,
+        lastTransaction: action.payload.list[0]
       });
     }
     case types.GET_ACCOUNT_ACTIONS_REQUEST:
