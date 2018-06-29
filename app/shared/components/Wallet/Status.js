@@ -76,6 +76,7 @@ class WalletStatus extends Component<Props> {
             <WalletStatusActions
               actionObjects={actionObjects}
               actions={actions}
+              settings={settings}
               validate={validate}
             />
           );
