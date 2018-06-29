@@ -9,6 +9,7 @@ import DangerLink from '../../../../Global/Modal/DangerLink';
 class WalletStatusActionsTableRow extends Component<Props> {
   actionDescriptionFromAct(act) {
     const {
+      settings,
       t
     } = this.props;
 
@@ -43,7 +44,12 @@ class WalletStatusActionsTableRow extends Component<Props> {
               style={iconStyle}
             />
             <div>
-              { `${t('actions_transfered_before_amount')} ${act.data.quantity} ${t('actions_to')} ${act.data.to}.` }
+              {(act.data.to === settings.account) ? (
+                  `${t('actions_received_before_amount')} ${act.data.quantity} ${t('actions_from')} ${act.data.from}.`
+                ) : (
+                  `${t('actions_sent_before_amount')} ${act.data.quantity} ${t('actions_to')} ${act.data.to}.`
+                )
+              }
             </div>
           </div>
         );
