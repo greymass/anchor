@@ -10,6 +10,7 @@ class WalletStatusActionsTable extends Component<Props> {
     const {
       amount,
       actionObjects,
+      settings,
       t
     } = this.props;
 
@@ -21,8 +22,9 @@ class WalletStatusActionsTable extends Component<Props> {
         <Table.Body key="FullResults">
           {fullResults.map((actionObject) => (
             <ActionsTableRow
-              key={actionObject.account_action_seq}
               actionObject={actionObject}
+              key={actionObject.account_action_seq}
+              settings={settings}
             />
           ))}
         </Table.Body>

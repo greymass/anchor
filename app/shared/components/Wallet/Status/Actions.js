@@ -58,6 +58,7 @@ class Actions extends Component<Props> {
   render() {
     const {
       actionObjects,
+      settings,
       t,
     } = this.props;
 
@@ -79,8 +80,9 @@ class Actions extends Component<Props> {
              >
                <ActionsTable
                  amount={amount}
-                 attached="top"
                  actionObjects={actionObjects}
+                 attached="top"
+                 settings={settings}
                />
              </Visibility>
            ), (
