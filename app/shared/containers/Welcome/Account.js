@@ -73,7 +73,7 @@ class WelcomeAccountContainer extends Component<Props> {
 
   onChange = (e, { name, value }) => {
     this.setState({
-      [name]: new String(value).toLowerCase(),
+      [name]: value,
     });
   }
 
@@ -102,7 +102,7 @@ class WelcomeAccountContainer extends Component<Props> {
           getAccountByKey(account);
         } else {
           const { setSettingWithValidation } = actions;
-          setSettingWithValidation('account', account);
+          setSettingWithValidation('account', String(account).toLowerCase());
           if (onStageSelect) {
             onStageSelect(2);
           }

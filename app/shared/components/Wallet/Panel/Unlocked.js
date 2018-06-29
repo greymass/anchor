@@ -7,7 +7,10 @@ import GlobalButtonResetContainer from '../../../containers/Global/Button/Reset'
 import WalletPanelButtonBroadcast from './Button/Broadcast';
 import WalletPanelButtonLock from './Button/Lock';
 import WalletPanelButtonStake from './Button/Stake';
-import WalletPanelButtonTransfer from './Button/Transfer';
+
+import WalletPanelButtonTransferReceive from './Button/Transfer/Receive';
+import WalletPanelButtonTransferSend from './Button/Transfer/Send';
+
 
 export default class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 }
@@ -35,7 +38,7 @@ export default class WalletPanelUnlocked extends Component<Props> {
         {
           (t) => (
             <div>
-              {(settings.walletMode !== 'watch')
+              {(settings.walletMode !== 'watch' && !settings.walletTemp)
                 ? (
                   <WalletPanelButtonLock
                     lockWallet={actions.lockWallet}
@@ -72,11 +75,16 @@ export default class WalletPanelUnlocked extends Component<Props> {
                           />
                         </Segment>
                         <Segment>
-                          <WalletPanelButtonTransfer
+                          <WalletPanelButtonTransferSend
                             actions={actions}
                             balances={balances}
                             settings={settings}
                             system={system}
+                          />
+                        </Segment>
+                        <Segment>
+                          <WalletPanelButtonTransferReceive
+                            accountName={settings.account}
                           />
                         </Segment>
                         {(settings.walletMode === 'watch')

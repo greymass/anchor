@@ -53,6 +53,7 @@ class BasicVoterContainer extends Component<Props> {
     const {
       actions,
       history,
+      keys,
       settings
     } = this.props;
 
@@ -66,7 +67,7 @@ class BasicVoterContainer extends Component<Props> {
         break;
       }
       default: {
-        if (!settings.walletInit && !settings.skipImport) {
+        if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
           history.push('/');
         } else {
           getCurrencyStats();

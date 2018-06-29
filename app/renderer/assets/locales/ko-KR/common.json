@@ -1,6 +1,6 @@
 {
   "application_name": "eos-voter",
-  "application_version": "v0.2.1",
+  "application_version": "v0.2.2",
   "block_height": "블록 높이",
   "cancel": "취소",
   "close": "닫기",
@@ -13,6 +13,6 @@
   "continue_setup": "계정 설정 계속하기",
   "property": "Property",
   "value": "Value",
-  "back": "Back",
-  "remove": "Remove"
+  "back": "뒤로",
+  "remove": "제거"
 }

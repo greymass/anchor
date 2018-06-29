@@ -1,5 +1,6 @@
 {
-  "transfer_button_cta": "Transfer Tokens",
+  "transfer_send_button_cta": "Send Tokens",
+  "transfer_receive_button_cta": "Receive Tokens",
   "transfer_modal_title": "Transfer Tokens",
   "transfer_modal_transaction_successful_title": "Transfer successful!",
   "transfer_modal_transaction_successful_message": "The requested transaction has been processed. The transaction ID can be found below.",
@@ -11,5 +12,9 @@
   "transfer_label_to": "Destination Account",
   "transfer_label_quantity": "Quantity",
   "transfer_label_token_and_quantity": "Token Selection + Quantity",
-  "transfer_label_memo": "Transfer Memo"
+  "transfer_label_memo": "Transfer Memo",
+  "transfer_label_send": "This is where you can send coins to another account. Fill in the below form and press on confirm.",
+  "transfer_label_receive": "To receive coins on your account, please follow the instuctions below.",
+  "transfer_receive_modal_title": "Receive Coins",
+  "transfer_receive_body": "To receive Coins simply give the following account name to the sender."
 }
