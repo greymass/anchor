@@ -5,10 +5,10 @@ import { Decimal } from 'decimal.js';
 
 import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
 
-import WalletPanelFormStakeStats from './Stake/Stats';
-import WalletPanelFormStakeInput from './Stake/Input';
-import WalletPanelFormStakeConfirming from './Stake/Confirming';
-import FormMessageError from '../../../Global/Form/Message/Error';
+import WalletPanelFormRamBuyConfirming from './Buy/Confirming';
+import WalletPanelFormRamStats from './Stats';
+import FormMessageError from '../../../../Global/Form/Message/Error';
+import FormFieldToken from '../../../../Global/Form/Field/Token';
 
 type Props = {
   actions: {},
@@ -17,26 +17,17 @@ type Props = {
   system: {}
 };
 
-class WalletPanelFormStake extends Component<Props> {
+class WalletPanelFormRamBuy extends Component<Props> {
   props: Props;
 
   constructor(props) {
     super(props);
     const { account } = props;
-    const {
-      cpu_weight,
-      net_weight
-    } = account.self_delegated_bandwidth;
-
-    const parsedCpuWeight = cpu_weight.split(' ')[0];
-    const parsedNetWeight = net_weight.split(' ')[0];
 
     this.state = {
-      EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
-      decimalCpuAmount: Decimal(parsedCpuWeight),
-      cpuOriginal: Decimal(parsedCpuWeight),
-      decimalNetAmount: Decimal(parsedNetWeight),
-      netOriginal: Decimal(parsedNetWeight),
+      ramUsage: Decimal(account.ram_usage),
+      ramQuota: Decimal(account.ram_quota),
+      ramToBuy: 0,
       confirming: false,
       formError: null,
       submitDisabled: true
@@ -75,12 +66,11 @@ class WalletPanelFormStake extends Component<Props> {
     });
   }
 
-  onChange = (name, value) => {
-    const decimalFieldName = `decimal${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+  onChange = (name, ramToBuy) => {
     this.setState({
       submitDisabled: false,
       formError: null,
-      [decimalFieldName]: Decimal(value)
+      ramToBuy: (ramToBuy * 1000)
     }, () => {
       const error = this.errorsInForm();
       if (error) {
@@ -91,38 +81,30 @@ class WalletPanelFormStake extends Component<Props> {
 
   errorsInForm = () => {
     const {
-      cpuOriginal,
-      decimalCpuAmount,
-      decimalNetAmount,
-      EOSbalance,
-      netOriginal
-    } = this.state;
+      balance
+    } = this.props;
 
-    let cpuAmount = decimalCpuAmount;
-    let netAmount = decimalNetAmount;
+    const {
+      ramToBuy,
+    } = this.state;
 
     const decimalRegex = /^\d+(\.\d{1,4})?$/;
 
-    if (!decimalRegex.test(cpuAmount) || !decimalRegex.test(netAmount)) {
-      return 'not_valid_stake_amount';
+    if (!decimalRegex.test(ramToBuy)) {
+      return 'ram_error_not_valid_ram_amount';
     }
 
-    cpuAmount = Decimal(cpuAmount);
-    netAmount = Decimal(netAmount);
+    const decimalRamToBuy = Decimal(ramToBuy);
 
-    if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
+    if (!decimalRamToBuy.greaterThan(0)) {
       return true;
     }
 
-    if (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0)) {
-      return 'no_stake_left';
-    }
+    const priceOfRam = Decimal(0.001);
+    const costOfRam = priceOfRam.times(decimalRamToBuy);
 
-    const cpuChange = cpuAmount.minus(cpuOriginal);
-    const netChange = netAmount.minus(netOriginal);
-
-    if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(EOSbalance)) {
-      return 'not_enough_balance';
+    if (balance.EOS.lessThan(costOfRam)) {
+      return 'ram_error_not_enough_balance';
     }
 
     return false;
@@ -141,24 +123,22 @@ class WalletPanelFormStake extends Component<Props> {
     } = this.props;
 
     const {
-      decimalCpuAmount,
-      decimalNetAmount
+      ramToBuy
     } = this.state;
 
     const {
-      setStake
+      buyRam
     } = actions;
 
     this.setState({
       confirming: false
     });
 
-    setStake(account, decimalNetAmount, decimalCpuAmount);
+    buyRam(account, ramToBuy);
   }
 
   render() {
     const {
-      account,
       balance,
       onClose,
       system,
@@ -166,14 +146,11 @@ class WalletPanelFormStake extends Component<Props> {
     } = this.props;
 
     const {
-      decimalCpuAmount,
-      cpuOriginal,
-      decimalNetAmount,
-      netOriginal,
+      ramQuota,
+      ramUsage,
+      ramToSell,
       submitDisabled
     } = this.state;
-
-    const EOSbalance = balance.EOS || 0;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
@@ -186,31 +163,23 @@ class WalletPanelFormStake extends Component<Props> {
         {(shouldShowForm)
           ? (
             <div>
-              <WalletPanelFormStakeStats
-                cpuOriginal={cpuOriginal}
-                EOSbalance={EOSbalance}
-                netOriginal={netOriginal}
+              <WalletPanelFormRamStats
+                ramQuota={ramQuota}
+                ramUsage={ramUsage}
               />
               <Form
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
-                <Form.Group widths="equal">
-                  <WalletPanelFormStakeInput
-                    defaultValue={decimalCpuAmount}
-                    icon="microchip"
-                    label={t('update_staked_cpu_amount')}
-                    name="cpuAmount"
+                <Form.Group>
+                  <FormFieldToken
+                    autoFocus
+                    icon="database"
+                    label={t('ram_amount_to_sell')}
+                    loading={false}
+                    name="ram_to_sell"
                     onChange={this.onChange}
-                    onError={this.onError}
-                  />
-                  <WalletPanelFormStakeInput
-                    defaultValue={decimalNetAmount}
-                    icon="wifi"
-                    label={t('update_staked_net_amount')}
-                    name="netAmount"
-                    onChange={this.onChange}
-                    onError={this.onError}
+                    defaultValue={0}
                   />
                 </Form.Group>
                 <FormMessageError
@@ -241,14 +210,10 @@ class WalletPanelFormStake extends Component<Props> {
 
         {(shouldShowConfirm)
           ? (
-            <WalletPanelFormStakeConfirming
-              account={account}
-              balance={balance}
-              decimalCpuAmount={decimalCpuAmount}
-              cpuOriginal={cpuOriginal}
-              EOSbalance={EOSbalance}
-              decimalNetAmount={decimalNetAmount}
-              netOriginal={netOriginal}
+            <WalletPanelFormRamBuyConfirming
+              ramQuota={ramQuota}
+              ramToSell={ramToSell}
+              EOSbalance={balance.EOS}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
             />
@@ -259,4 +224,4 @@ class WalletPanelFormStake extends Component<Props> {
 }
 
 
-export default translate('stake')(WalletPanelFormStake);
+export default translate('ram')(WalletPanelFormRamBuy);
