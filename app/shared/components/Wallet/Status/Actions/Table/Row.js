@@ -36,7 +36,18 @@ class WalletStatusActionsTableRow extends Component<Props> {
         );
       }
       case 'transfer': {
-        return (
+        return (act.data.to === settings.account) ? (
+          <div>
+            <Icon
+              name="arrow circle down"
+              size="large"
+              style={iconStyle}
+            />
+            <div>
+              {`${t('actions_received_before_amount')} ${act.data.quantity} ${t('actions_from')} ${act.data.from}.`}
+            </div>
+          </div>
+        ) : (
           <div>
             <Icon
               name="arrow circle up"
@@ -44,12 +55,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
               style={iconStyle}
             />
             <div>
-              {(act.data.to === settings.account) ? (
-                  `${t('actions_received_before_amount')} ${act.data.quantity} ${t('actions_from')} ${act.data.from}.`
-                ) : (
-                  `${t('actions_sent_before_amount')} ${act.data.quantity} ${t('actions_to')} ${act.data.to}.`
-                )
-              }
+              {`${t('actions_sent_before_amount')} ${act.data.quantity} ${t('actions_to')} ${act.data.to}.`}
             </div>
           </div>
         );
