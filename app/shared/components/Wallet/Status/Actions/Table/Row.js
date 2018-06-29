@@ -4,9 +4,9 @@ import { translate } from 'react-i18next';
 import { Icon, Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
-import DangerLink from '../../Global/Modal/DangerLink';
+import DangerLink from '../../../../Global/Modal/DangerLink';
 
-class ActionsTableRow extends Component<Props> {
+class WalletStatusActionsTableRow extends Component<Props> {
   actionDescriptionFromAct(act) {
     const {
       t
@@ -160,7 +160,7 @@ class ActionsTableRow extends Component<Props> {
           width={2}
         >
           <span>
-            <TimeAgo date={actionObject.block_time} />
+            <TimeAgo date={`${actionObject.block_time}z`} />
           </span>
         </Table.Cell>
         <Table.Cell
@@ -176,4 +176,4 @@ class ActionsTableRow extends Component<Props> {
   }
 }
 
-export default translate('actions')(ActionsTableRow);
+export default translate('actions')(WalletStatusActionsTableRow);

@@ -8,6 +8,7 @@ import { Header, Menu, Segment } from 'semantic-ui-react';
 import WalletStatusBalances from './Status/Balances';
 import WalletStatusResources from './Status/Resources';
 import WalletStatusStaked from './Status/Staked';
+import WalletStatusActions from './Status/Actions';
 
 import StatsFetcher from '../../utils/StatsFetcher';
 
@@ -22,10 +23,12 @@ class WalletStatus extends Component<Props> {
     const {
       accounts,
       actions,
+      actionObjects,
       balances,
       globals,
       settings,
-      t
+      t,
+      validate
     } = this.props;
 
     const {
@@ -64,6 +67,16 @@ class WalletStatus extends Component<Props> {
             <WalletStatusStaked
               account={account}
               statsFetcher={statsFetcher}
+            />
+          );
+          break;
+        }
+        case 'actions': {
+          activeTab = (
+            <WalletStatusActions
+              actionObjects={actionObjects}
+              actions={actions}
+              validate={validate}
             />
           );
           break;
@@ -110,6 +123,13 @@ class WalletStatus extends Component<Props> {
               icon="power cord"
               content={t('wallet_status_tab_staked')}
               active={activeItem === 'staked'}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="actions"
+              icon="book"
+              content={t('wallet_status_tab_account_history')}
+              active={activeItem === 'actions'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
