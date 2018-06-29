@@ -40,22 +40,13 @@ class TabMenu extends Component<Props> {
         }
         {(settings.account)
           ? (
-            [
-              <Menu.Item
-                name="wallet"
-                icon="protect"
-                content={t('wallet')}
-                active={activeItem === 'wallet'}
-                onClick={handleItemClick}
-              />,
-              <Menu.Item
-                name="actions"
-                icon="book"
-                content={t('actions')}
-                active={activeItem === 'actions'}
-                onClick={handleItemClick}
-              />
-            ]
+            <Menu.Item
+              name="wallet"
+              icon="protect"
+              content={t('wallet')}
+              active={activeItem === 'wallet'}
+              onClick={handleItemClick}
+            />
           )
           : false
         }

@@ -9,6 +9,7 @@ import WalletStatus from './Wallet/Status';
 
 type Props = {
   actions: {},
+  actionObjects: {},
   accounts: {},
   globals: {},
   keys: {},
@@ -26,6 +27,7 @@ export default class Wallet extends Component<Props> {
   render() {
     const {
       actions,
+      actionObjects,
       accounts,
       balances,
       globals,
@@ -36,6 +38,7 @@ export default class Wallet extends Component<Props> {
       validate,
       wallet
     } = this.props;
+
     return (
       <Grid divided>
         <Grid.Row>
@@ -56,11 +59,13 @@ export default class Wallet extends Component<Props> {
           <Grid.Column width={10}>
             <WalletStatus
               actions={actions}
+              actionObjects={actionObjects}
               accounts={accounts}
               balances={balances}
               globals={globals}
               keys={keys}
               settings={settings}
+              validate={validate}
               wallet={wallet}
             />
           </Grid.Column>
