@@ -5,7 +5,7 @@ import { Segment, Transition, Table } from 'semantic-ui-react';
 
 import ActionsTableRow from './Table/Row';
 
-class ActionsTable extends Component<Props> {
+class WalletStatusActionsTable extends Component<Props> {
   render() {
     const {
       amount,
@@ -19,7 +19,7 @@ class ActionsTable extends Component<Props> {
       const fullResults = actionObjects.list.slice(0, amount);
       baseTable = (
         <Table.Body key="FullResults">
-          {fullResults.reverse().map((actionObject) => (
+          {fullResults.map((actionObject) => (
             <ActionsTableRow
               key={actionObject.account_action_seq}
               actionObject={actionObject}
@@ -57,4 +57,4 @@ class ActionsTable extends Component<Props> {
   }
 }
 
-export default translate('actions')(ActionsTable);
+export default translate('actions')(WalletStatusActionsTable);
