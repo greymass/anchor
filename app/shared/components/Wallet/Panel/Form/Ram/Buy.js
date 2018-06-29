@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
+import { Segment, Form, Divider, Grid, Button } from 'semantic-ui-react';
 
 import WalletPanelFormRamBuyConfirming from './Buy/Confirming';
 import WalletPanelFormRamStats from './Stats';
 import FormMessageError from '../../../../Global/Form/Message/Error';
-import FormFieldToken from '../../../../Global/Form/Field/Token';
+import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
 
 type Props = {
   actions: {},
@@ -162,50 +162,47 @@ class WalletPanelFormRamBuy extends Component<Props> {
       >
         {(shouldShowForm)
           ? (
-            <div>
-              <WalletPanelFormRamStats
-                ramQuota={ramQuota}
-                ramUsage={ramUsage}
-              />
-              <Form
-                onKeyPress={this.onKeyPress}
-                onSubmit={this.onSubmit}
-              >
-                <Form.Group>
-                  <FormFieldToken
+            <Form
+              onKeyPress={this.onKeyPress}
+              onSubmit={this.onSubmit}
+            >
+              <Grid>
+                <Grid.Column width={8}>
+                  <WalletPanelFormRamStats
+                    ramQuota={ramQuota}
+                    ramUsage={ramUsage}
+                  />
+                </Grid.Column>
+                <Grid.Column width={8}>
+                  <FormFieldGeneric
                     autoFocus
                     icon="database"
-                    label={t('ram_amount_to_sell')}
+                    label={t('ram_form_label_amount_to_buy')}
                     loading={false}
-                    name="ram_to_sell"
+                    name="ram_to_buy"
                     onChange={this.onChange}
-                    defaultValue={0}
+                    value="0.000"
                   />
-                </Form.Group>
-                <FormMessageError
-                  error={this.state.formError}
-                />
-                <Divider />
-                <Message
-                  icon="info circle"
-                  info
-                  content={t('undelegate_explanation')}
-                />
-                <Divider />
-                <Button
-                  content={t('cancel')}
-                  color="grey"
-                  onClick={onClose}
-                />
-                <Button
-                  content={t('update_staked_coins')}
-                  color="green"
-                  disabled={submitDisabled}
-                  floated="right"
-                  primary
-                />
-              </Form>
-            </div>
+                </Grid.Column>
+              </Grid>
+              <FormMessageError
+                style={{ marginTop: '20px' }}
+                error={this.state.formError}
+              />
+              <Divider />
+              <Button
+                content={t('cancel')}
+                color="grey"
+                onClick={onClose}
+              />
+              <Button
+                content={t('ram_form_button_buy')}
+                color="green"
+                disabled={submitDisabled}
+                floated="right"
+                primary
+              />
+            </Form>
           ) : ''}
 
         {(shouldShowConfirm)

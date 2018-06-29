@@ -34,8 +34,8 @@ class WalletPanelButtonRamSell extends Component<Props> {
         actions={actions}
         button={{
           color: 'blue',
-          content: t('sell_ram_send_button_cta'),
-          icon: 'arrow circle up'
+          content: t('ram_sell_button_cta'),
+          icon: 'database'
         }}
         content={(
           <WalletPanelFormRamSell
@@ -46,8 +46,8 @@ class WalletPanelButtonRamSell extends Component<Props> {
             system={system}
           />
         )}
-        icon="arrow circle up"
-        title={t('sell_ram_modal_title')}
+        icon="database"
+        title={t('ram_sell_modal_title')}
         settings={settings}
         system={system}
       />

@@ -9,6 +9,7 @@ class FormMessageError extends Component<Props> {
       error,
       errors,
       onClose,
+      style,
       t
     } = this.props;
 
@@ -18,7 +19,7 @@ class FormMessageError extends Component<Props> {
 
     return (error || errors)
       ? (
-        <div>
+        <div style={style}>
           <Message negative>
             <Header>{t('error')}</Header>
             { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }

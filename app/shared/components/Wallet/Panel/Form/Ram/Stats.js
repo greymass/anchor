@@ -14,20 +14,24 @@ class WalletPanelFormStakeStats extends Component<Props> {
 
     const ramUsagePercentage = (ramUsage / ramQuota) * 100;
 
+    const ramUsageString = (parseFloat(ramUsage) / 1000).toFixed(3);
+    const ramQuotaString = (parseFloat(ramQuota) / 1000).toFixed(3);
+
+    const ramUsageHeader = `${t('ram_stats_available_title_one')} ${ramUsageString} ${t('ram_stats_available_title_two')} ${ramQuotaString} kbs ${t('ram_stats_available_title_three')}`;
+
     return (
       <Segment>
         <Header
-          content={t('wallet_status_resources_ram_available_title')}
           icon="database"
           size="small"
-          subheader={t('wallet_status_resources_ram_available_desc')}
-        />
+        >
+          {ramUsageHeader}
+        </Header>
         <Progress
           color="teal"
           label={(
             <div className="label">
-              {ramUsagePercentage.toFixed}%
-              {' '}
+              {ramUsagePercentage.toFixed(2)}%
               <Responsive as="span" minWidth={800} />
             </div>
           )}

@@ -11,6 +11,8 @@ import WalletPanelButtonStake from './Button/Stake';
 import WalletPanelButtonTransferReceive from './Button/Transfer/Receive';
 import WalletPanelButtonTransferSend from './Button/Transfer/Send';
 
+import WalletPanelButtonRamSell from './Button/Ram/Sell';
+import WalletPanelButtonRamBuy from './Button/Ram/Buy';
 
 export default class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 }
@@ -88,13 +90,21 @@ export default class WalletPanelUnlocked extends Component<Props> {
                           />
                         </Segment>
                         <Segment>
-                          <WalletPanelButtonRamReceive
-                            accountName={settings.account}
+                          <WalletPanelButtonRamBuy
+                            account={accounts[settings.account]}
+                            actions={actions}
+                            balances={balances}
+                            settings={settings}
+                            system={system}
                           />
                         </Segment>
                         <Segment>
-                          <WalletPanelButtonTransferReceive
-                            accountName={settings.account}
+                          <WalletPanelButtonRamSell
+                            account={accounts[settings.account]}
+                            actions={actions}
+                            balances={balances}
+                            settings={settings}
+                            system={system}
                           />
                         </Segment>
                         {(settings.walletMode === 'watch')

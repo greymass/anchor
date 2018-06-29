@@ -21,6 +21,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
 
   render() {
     const {
+      account,
       actions,
       balances,
       settings,
@@ -29,12 +30,12 @@ class WalletPanelButtonRamBuy extends Component<Props> {
     } = this.props;
     return (
       <GlobalTransactionModal
-        actionName="TRANSFER"
+        actionName="BUYRAM"
         actions={actions}
         button={{
           color: 'blue',
-          content: t('transfer_send_button_cta'),
-          icon: 'arrow circle up'
+          content: t('ram_buy_button_cta'),
+          icon: 'database'
         }}
         content={(
           <WalletPanelFormRamBuy
@@ -45,8 +46,8 @@ class WalletPanelButtonRamBuy extends Component<Props> {
             system={system}
           />
         )}
-        icon="arrow circle up"
-        title={t('transfer_modal_title')}
+        icon="database"
+        title={t('ram_buy_modal_title')}
         settings={settings}
         system={system}
       />
