@@ -11,7 +11,6 @@ import About from '../components/About';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
 import Tools from './Tools';
-import Actions from '../components/Actions';
 import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
@@ -123,10 +122,6 @@ class BasicVoterContainer extends Component<Props> {
     switch (activeItem) {
       case 'wallet': {
         activeTab = <Wallet {...this.props} />;
-        break;
-      }
-      case 'actions': {
-        activeTab = <Actions {...this.props} />;
         break;
       }
       case 'about': {

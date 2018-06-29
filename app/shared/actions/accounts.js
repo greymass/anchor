@@ -96,8 +96,7 @@ export function getAccountActions(amount) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      settings,
-      actions
+      settings
     } = getState();
 
     const accountName = settings.account;
@@ -110,7 +109,7 @@ export function getAccountActions(amount) {
     if (accountName && (settings.node || settings.node.length !== 0)) {
       eos(connection).getActions(accountName, -1, -amount).then((results) => dispatch({
         type: types.GET_ACCOUNT_ACTIONS_SUCCESS,
-        payload: { list: results.actions }
+        payload: { list: results.actions.reverse() }
       })).catch((err) => dispatch({
         type: types.GET_ACCOUNT_ACTIONS_FAILURE,
         payload: { err, account_name: accountName },
@@ -122,21 +121,6 @@ export function getAccountActions(amount) {
       payload: { account_name: accountName },
     });
   };
-}
-
-function mergeActionsList(previousActionsList, newActionsList) {
-  const allActionsList = previousActionsList.concat(newActionsList);
-  const allActionsListWithoutDuplicates = allActionsList.filter(onlyUnique);
-  //sort((firstAction, secondAction) => firstAction.speed - secondAction.speed;
-
-  return allActionsListWithoutDuplicates;
-}
-
-function onlyUnique(actionObject, index, self) {
-  const matchingIndex = self.map(actionObj => actionObj.global_action_seq)
-    .indexOf(actionObject.global_action_seq);
-
-  return matchingIndex === -11;
 }
 
 export function getCurrencyBalance(account) {
