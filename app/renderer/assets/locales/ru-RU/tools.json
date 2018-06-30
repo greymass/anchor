@@ -7,5 +7,7 @@
   "tools_keys_key_generation_subheader": "Генерация пар открытого и закрытого ключей для использования в блокцепи EOS.",
   "tools_keys_key_generation_warning_content": "Этот генератор ключей не сохраняет эти пары ключей в приложении. Убедитесь, что вы создали резервную копию этих ключей в другом месте, если вы планируете их использовать.",
   "tools_keys_key_generation_new_key": "Создать Ключ",
-  "tools_keys_key_generation_copy_clipboard": "Копировать в Буфер"
+  "tools_keys_key_generation_copy_clipboard": "Копировать в Буфер",
+  "tools_wallet_state_header": "Состояние Локального Кошелька",
+  "tools_wallet_state_subheader": "Обзор состояния локального Кошелька. Эти сведения можно использовать для отладки приложения."
 }
