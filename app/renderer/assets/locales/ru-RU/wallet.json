@@ -29,7 +29,7 @@
   "wallet_status_resources_delegated": "Делегировано",
   "wallet_status_resources_usage": "Использовано",
   "wallet_status_tab_token_balances": "Балансы",
-  "wallet_status_tab_staked": "Фиксированные",
+  "wallet_status_tab_staked": "Ресурсы",
   "wallet_status_tab_account_data": "Учётные Данные",
   "wallet_panel_form_create_wallet_header": "Импорт учётной записи",
   "wallet_panel_form_create_wallet_body": "Чтобы использовать приложение, введите имя учётной записи и закрытый ключ.",
