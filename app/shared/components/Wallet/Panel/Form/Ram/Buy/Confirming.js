@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-
-import { Button, Divider, Icon, Segment } from 'semantic-ui-react';
+import { Decimal } from 'decimal.js';
+import { Button, Header, Divider, Icon, Segment } from 'semantic-ui-react';
 
 class WalletPanelFormRamBuyConfirming extends Component<Props> {
   onConfirm = () => {
@@ -15,28 +15,36 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
 
   render() {
     const {
-      aboutToBuy,
+      ramToBuyinKbs,
       onBack,
+      priceOfRam,
       ramQuota,
       t
     } = this.props;
 
+    const ramToBuy = Decimal(ramToBuyinKbs).times(1000);
+
+    const costOfRam = ramToBuy.times(priceOfRam);
+
     return (
-      <Segment padding="true" textAlign="center" basic>
+      <Segment padding="true" textAlign="center" style={{ minHeight: '180px' }} basic>
         <Segment textAlign="center">
-          <h2>
-            {`${t('ram_confirming_message_about_to_sell')} ${(parseFloat(aboutToBuy) / 1000)}`}
-          </h2>
-          <h2>
-            {`${t('ram_confirming_message_will_have')} ${(parseFloat(ramQuota.minus(aboutToBuy)) / 1000)}`}
-          </h2>
+          <Header>
+            {t('ram_confirming_message_about_to_buy')}
+            <font color="green">{` ${ramToBuyinKbs} Kbs `}</font>
+            {` ${t('ram_confirming_message_kbs_in_ram_for')} ${costOfRam} EOS.`}
+          </Header>
+          <Header>
+            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1000)} ${t('ram_confirming_message_kbs_in_ram_left')}`}
+          </Header>
         </Segment>
 
         <Divider />
         <Button
+          floated="left"
           onClick={onBack}
         >
-          <Icon name="arrow left" /> {t('ram_button_back')}
+          <Icon name="arrow left" /> {t('ram_button_confirm_back')}
         </Button>
         <Button
           color="blue"

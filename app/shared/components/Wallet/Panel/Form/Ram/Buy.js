@@ -27,7 +27,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     this.state = {
       ramUsage: Decimal(account.ram_usage),
       ramQuota: Decimal(account.ram_quota),
-      ramToBuy: 0,
+      ramToBuyInKbs: 0,
       confirming: false,
       formError: null,
       submitDisabled: true
@@ -66,11 +66,11 @@ class WalletPanelFormRamBuy extends Component<Props> {
     });
   }
 
-  onChange = (name, ramToBuy) => {
+  onChange = (e, { value }) => {
     this.setState({
       submitDisabled: false,
       formError: null,
-      ramToBuy: (ramToBuy * 1000)
+      ramToBuyInKbs: value
     }, () => {
       const error = this.errorsInForm();
       if (error) {
@@ -85,16 +85,16 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.props;
 
     const {
-      ramToBuy,
+      ramToBuyInKbs,
     } = this.state;
 
-    const decimalRegex = /^\d+(\.\d{1,4})?$/;
+    const decimalRegex = /^\d+(\.\d{1,3})?$/;
 
-    if (!decimalRegex.test(ramToBuy)) {
-      return 'ram_error_not_valid_ram_amount';
+    if (!decimalRegex.test(ramToBuyInKbs)) {
+      return 'ram_not_valid_amount';
     }
 
-    const decimalRamToBuy = Decimal(ramToBuy);
+    const decimalRamToBuy = Decimal(ramToBuyInKbs).times(1000);
 
     if (!decimalRamToBuy.greaterThan(0)) {
       return true;
@@ -103,8 +103,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const priceOfRam = Decimal(0.001);
     const costOfRam = priceOfRam.times(decimalRamToBuy);
 
-    if (balance.EOS.lessThan(costOfRam)) {
-      return 'ram_error_not_enough_balance';
+    if (Decimal(balance.EOS).lessThan(costOfRam)) {
+      return 'not_enough_balance';
     }
 
     return false;
@@ -118,23 +118,22 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
   onConfirm = () => {
     const {
-      account,
       actions
     } = this.props;
 
     const {
-      ramToBuy
+      ramToBuyInKbs
     } = this.state;
 
     const {
-      buyRam
+      buyram
     } = actions;
 
     this.setState({
       confirming: false
     });
 
-    buyRam(account, ramToBuy);
+    buyram(Decimal(ramToBuyInKbs).times(1000));
   }
 
   render() {
@@ -148,16 +147,17 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const {
       ramQuota,
       ramUsage,
-      ramToSell,
+      ramToBuyInKbs,
       submitDisabled
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
+    const priceOfRam = Decimal(0.001);
 
     return (
       <Segment
-        loading={system.STAKE === 'PENDING'}
+        loading={system.BUYRAM === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
         {(shouldShowForm)
@@ -181,7 +181,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                     loading={false}
                     name="ram_to_buy"
                     onChange={this.onChange}
-                    value="0.000"
+                    value={ramToBuyInKbs || '0.000'}
                   />
                 </Grid.Column>
               </Grid>
@@ -209,7 +209,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
           ? (
             <WalletPanelFormRamBuyConfirming
               ramQuota={ramQuota}
-              ramToSell={ramToSell}
+              ramToBuyinKbs={ramToBuyInKbs}
+              priceOfRam={priceOfRam}
               EOSbalance={balance.EOS}
               onBack={this.onBack}
               onConfirm={this.onConfirm}

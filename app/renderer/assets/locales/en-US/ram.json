@@ -1,13 +1,21 @@
 {
-  "ram_sell_button_cta": "Sell RAM",
+  "ram_button_confirm_back": "Back",
+  "ram_button_confirm_buy": "Confirm",
+  "ram_button_confirm_sell": "Confirm",
   "ram_buy_button_cta": "Buy RAM",
   "ram_buy_modal_title": "Buy RAM",
-  "ram_sell_modal_title": "Sell RAM",
-  "ram_stats_available_title_one": "You are using",
-  "ram_stats_available_title_two": "of your",
-  "ram_stats_available_title_three": "available",
+  "ram_confirming_message_about_to_buy": "You are about to buy",
+  "ram_confirming_message_about_to_sell": "You are about to sell",
+  "ram_confirming_message_kbs_in_ram_for": "in RAM for",
+  "ram_confirming_message_kbs_in_ram_left": "in RAM.",
+  "ram_confirming_message_will_have": "After this transaction, you will have",
+  "ram_form_button_buy": "Buy RAM",
+  "ram_form_button_sell": "Sell RAM",
   "ram_form_label_amount_to_buy": "Amount of RAM to Buy (in Kbs)",
   "ram_form_label_amount_to_sell": "Amount of RAM to Sell (in Kbs)",
-  "ram_form_button_buy": "Buy RAM",
-  "ram_form_button_sell": "Sell RAM"
+  "ram_sell_button_cta": "Sell RAM",
+  "ram_sell_modal_title": "Sell RAM",
+  "ram_stats_available_title_one": "You are using",
+  "ram_stats_available_title_three": "of RAM available.",
+  "ram_stats_available_title_two": "of your"
 }

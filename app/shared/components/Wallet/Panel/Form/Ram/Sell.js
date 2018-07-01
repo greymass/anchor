@@ -13,7 +13,6 @@ import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
 type Props = {
   actions: {},
   account: {},
-  balance: {},
   system: {}
 };
 
@@ -27,7 +26,7 @@ class WalletPanelFormRamSell extends Component<Props> {
     this.state = {
       ramUsage: Decimal(account.ram_usage),
       ramQuota: Decimal(account.ram_quota),
-      ramToSell: 0,
+      ramToSellInKbs: 0,
       confirming: false,
       formError: null,
       submitDisabled: true
@@ -66,11 +65,11 @@ class WalletPanelFormRamSell extends Component<Props> {
     });
   }
 
-  onChange = (name, ramToSell) => {
+  onChange = (e, { value }) => {
     this.setState({
       submitDisabled: false,
       formError: null,
-      ramToSell: Decimal(ramToSell * 1000)
+      ramToSellInKbs: value
     }, () => {
       const error = this.errorsInForm();
       if (error) {
@@ -83,16 +82,16 @@ class WalletPanelFormRamSell extends Component<Props> {
     const {
       ramQuota,
       ramUsage,
-      ramToSell,
+      ramToSellInKbs,
     } = this.state;
 
-    const decimalRegex = /^\d+(\.\d{1,4})?$/;
+    const decimalRegex = /^\d+(\.\d{1,3})?$/;
 
-    if (!decimalRegex.test(ramToSell)) {
-      return 'ram_error_not_valid_ram_amount';
+    if (!decimalRegex.test(ramToSellInKbs)) {
+      return 'ram_not_valid_amount';
     }
 
-    const decimalRamToSell = Decimal(ramToSell);
+    const decimalRamToSell = Decimal(ramToSellInKbs).times(1000);
 
     if (!decimalRamToSell.greaterThan(0)) {
       return true;
@@ -101,7 +100,7 @@ class WalletPanelFormRamSell extends Component<Props> {
     const ramLeft = ramQuota.minus(decimalRamToSell);
 
     if (ramLeft.lessThan(ramUsage)) {
-      return 'ram_error_using_more_than_usage';
+      return 'ram_using_more_than_usage';
     }
 
     return false;
@@ -120,7 +119,7 @@ class WalletPanelFormRamSell extends Component<Props> {
     } = this.props;
 
     const {
-      ramToSell
+      ramToSellInKbs
     } = this.state;
 
     const {
@@ -131,7 +130,7 @@ class WalletPanelFormRamSell extends Component<Props> {
       confirming: false
     });
 
-    sellRam(account, ramToSell);
+    sellRam(account, Decimal(ramToSellInKbs).times(1000));
   }
 
   render() {
@@ -145,16 +144,18 @@ class WalletPanelFormRamSell extends Component<Props> {
     const {
       ramQuota,
       ramUsage,
-      ramToSell,
+      ramToSellInKbs,
       submitDisabled
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
 
+    const priceOfRam = Decimal(0.001);
+
     return (
       <Segment
-        loading={system.STAKE === 'PENDING'}
+        loading={system.SELLRAM === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
         {(shouldShowForm)
@@ -178,7 +179,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                     loading={false}
                     name="ram_to_sell"
                     onChange={this.onChange}
-                    value="0.000"
+                    value={ramToSellInKbs || '0.000'}
                   />
                 </Grid.Column>
               </Grid>
@@ -207,7 +208,8 @@ class WalletPanelFormRamSell extends Component<Props> {
             <WalletPanelFormRamSellConfirming
               account={account}
               ramQuota={ramQuota}
-              ramToSell={ramToSell}
+              ramToSellInKbs={ramToSellInKbs}
+              priceOfRam={priceOfRam}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
             />

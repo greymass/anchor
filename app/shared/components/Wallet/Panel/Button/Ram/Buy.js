@@ -41,7 +41,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
           <WalletPanelFormRamBuy
             account={account}
             actions={actions}
-            balances={balances}
+            balance={balances[settings.account]}
             settings={settings}
             system={system}
           />
