@@ -15,7 +15,7 @@ import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
-import * as BuyRamActions from '../actions/system/buyram';
+import * as BuyRamActions from '../actions/system/buyrambytes';
 import * as ChainActions from '../actions/chain';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';

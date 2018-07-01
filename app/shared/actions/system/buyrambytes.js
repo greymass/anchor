@@ -2,7 +2,7 @@ import * as types from '../types';
 
 import eos from '../helpers/eos';
 
-export function buyram(amount) {
+export function buyrambytes(amount) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -15,7 +15,7 @@ export function buyram(amount) {
 
     const { account } = settings;
 
-    return eos(connection).buyram({
+    return eos(connection).buyrambytes({
       payer: account,
       receiver: account,
       bytes: Number(amount)
@@ -30,5 +30,5 @@ export function buyram(amount) {
 }
 
 export default {
-  buyram
+  buyrambytes
 };

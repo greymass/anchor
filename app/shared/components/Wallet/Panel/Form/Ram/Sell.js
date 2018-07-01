@@ -123,14 +123,14 @@ class WalletPanelFormRamSell extends Component<Props> {
     } = this.state;
 
     const {
-      sellRam
+      sellram
     } = actions;
 
     this.setState({
       confirming: false
     });
 
-    sellRam(account, Decimal(ramToSellInKbs).times(1000));
+    sellram(Decimal(ramToSellInKbs).times(1000));
   }
 
   render() {

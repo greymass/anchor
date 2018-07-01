@@ -10,7 +10,7 @@ export function sellram(amount) {
     } = getState();
 
     dispatch({
-      type: types.SYSTEM_BUYRAM_PENDING
+      type: types.SYSTEM_SELLRAM_PENDING
     });
 
     const { account } = settings;

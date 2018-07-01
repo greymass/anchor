@@ -96,8 +96,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const decimalRamToBuy = Decimal(ramToBuyInKbs).times(1000);
 
-    if (!decimalRamToBuy.greaterThan(0)) {
-      return true;
+    if (!decimalRamToBuy.greaterThan(2)) {
+      return 'ram_has_to_be_over_minimum_value';
     }
 
     const priceOfRam = Decimal(0.001);
@@ -126,14 +126,14 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.state;
 
     const {
-      buyram
+      buyrambytes
     } = actions;
 
     this.setState({
       confirming: false
     });
 
-    buyram(Decimal(ramToBuyInKbs).times(1000));
+    buyrambytes(Decimal(ramToBuyInKbs).times(1000));
   }
 
   render() {
