@@ -8,6 +8,7 @@ export function regproxy() {
       connection,
       wallet
     } = getState();
+
     const { account } = wallet;
 
     dispatch({
