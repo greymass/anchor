@@ -7,156 +7,22 @@ import TimeAgo from 'react-timeago';
 import DangerLink from '../../../../Global/Modal/DangerLink';
 
 class WalletStatusActionsTableRow extends Component<Props> {
-  actionDescriptionFromAct(act) {
-    const {
-      settings,
-      t
-    } = this.props;
-
-    const iconStyle = {
-      margin: '5px',
-      marginRight: '20px',
-      float: 'left',
-      verticalAlign: 'top'
-    };
-
-    switch (act.name) {
-      case 'refund': {
-        return (
-          <div>
-            <Icon
-              name="arrow circle up"
-              size="large"
-              style={iconStyle}
-            />
-            <div>
-              { t('actions_refunded') }
-            </div>
-          </div>
-        );
-      }
-      case 'transfer': {
-        return (act.data.to === settings.account) ? (
-          <div>
-            <Icon
-              name="arrow circle down"
-              size="large"
-              style={iconStyle}
-            />
-            <div>
-              {`${t('actions_received_before_amount')} ${act.data.quantity} ${t('actions_from')} ${act.data.from}.`}
-            </div>
-          </div>
-        ) : (
-          <div>
-            <Icon
-              name="arrow circle up"
-              size="large"
-              style={iconStyle}
-            />
-            <div>
-              {`${t('actions_sent_before_amount')} ${act.data.quantity} ${t('actions_to')} ${act.data.to}.`}
-            </div>
-          </div>
-        );
-      }
-      case 'delegatebw': {
-        const stakeToCpuDescription = (act.data.stake_cpu_quantity !== '0.0000 EOS') ? (
-          `${act.data.stake_cpu_quantity} ${t('actions_unstake_cpu_after_amount')}`
-        ) : '';
-
-        const stakeToNetDescription = (act.data.stake_net_quantity !== '0.0000 EOS') ? (
-          `${act.data.stake_net_quantity} ${t('actions_unstake_net_after_amount')}`
-        ) : '';
-
-        const stakeConnector =
-          (act.data.stake_cpu_quantity !== '0.0000 EOS' && act.data.stake_net_quantity !== '0.0000 EOS') ? (
-            ` ${t('actions_and_statement')} `
-          ) : '';
-
-        return (
-          <div>
-            <Icon
-              name="microchip"
-              size="large"
-              style={iconStyle}
-            />
-            <div>
-              { `${t('actions_unstaked_before_amount')} ${stakeToCpuDescription}${stakeConnector}${stakeToNetDescription}.` }
-            </div>
-          </div>
-        );
-      }
-      case 'undelegatebw': {
-        const unstakeToCpuDescription = (act.data.unstake_cpu_quantity !== '0.0000 EOS') ? (
-          `${act.data.unstake_cpu_quantity} ${t('actions_stake_cpu_after_amount')}`
-        ) : '';
-
-        const unstakeToNetDescription = (act.data.unstake_net_quantity !== '0.0000 EOS') ? (
-          `${act.data.unstake_net_quantity} ${t('actions_stake_net_after_amount')}`
-        ) : '';
-
-        const unstakeConnector =
-          (act.data.unstake_cpu_quantity !== '0.0000 EOS' && act.data.unstake_net_quantity !== '0.0000 EOS') ? (
-            ` ${t('actions_and_statement')} `
-          ) : '';
-
-        return (
-          <div>
-            <Icon
-              name="microchip"
-              size="large"
-              style={iconStyle}
-            />
-            <div>
-              { `${t('actions_staked_before_amount')} ${unstakeToCpuDescription} ${unstakeConnector} ${unstakeToNetDescription}.` }
-            </div>
-          </div>
-        );
-      }
-      case 'voteproducer': {
-        const {
-          data
-        } = act;
-
-        const {
-          producers
-        } = data;
-
-        const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
-
-        const andStatement = (producers.length > 1) ? (` ${t('actions_and_statement')}`) : '';
-
-        const lastProducer = producers.slice(-1);
-
-        return (
-          <div>
-            <Icon
-              name="check square"
-              size="large"
-              style={iconStyle}
-            />
-            <div>
-              { `${t('actions_voted')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
-            </div>
-          </div>
-        );
-      }
-      default: {
-        return null;
-      }
-    }
-  }
-
   render() {
     const {
-      actionObject,
+      action,
       t
     } = this.props;
 
     const textStyle = {
-      fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace',
       fontSize: '16'
+    };
+
+    const rowComponentsMapping = {
+      transfer: 'WalletStatusActionTableRowTransfer',
+      delegatebw: 'WalletStatusActionTableRowDelegatebw',
+      refund: 'WalletStatusActionTableRowRefund',
+      undelegatebw: 'WalletStatusActionTableRowUndelegatebw',
+      voteproducer: 'WalletStatusActionTableRowVoteproducer'
     };
 
     return (
@@ -165,14 +31,14 @@ class WalletStatusActionsTableRow extends Component<Props> {
           width={6}
         >
           <div style={textStyle}>
-            { this.actionDescriptionFromAct(actionObject.action_trace.act) }
+            { rowComponentsMapping[action.action_trace.act.name] }
           </div>
         </Table.Cell>
         <Table.Cell
           width={2}
         >
           <span>
-            <TimeAgo date={`${actionObject.block_time}z`} />
+            <TimeAgo date={`${action.block_time}z`} />
           </span>
         </Table.Cell>
         <Table.Cell
@@ -180,7 +46,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
         >
           <DangerLink
             content={t('actions_link_content')}
-            link={`https://eospark.com/MainNet/tx/${actionObject.action_trace.trx_id}`}
+            link={`https://eospark.com/MainNet/tx/${action.action_trace.trx_id}`}
           />
         </Table.Cell>
       </Table.Row>
