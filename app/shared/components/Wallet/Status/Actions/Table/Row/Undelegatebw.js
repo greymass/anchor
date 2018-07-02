@@ -27,7 +27,7 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
 
     const unstakeConnector =
       (data.unstake_cpu_quantity !== '0.0000 EOS' && data.unstake_net_quantity !== '0.0000 EOS') ? (
-        ` ${t('actions_table_row_and_text')} `
+        ` ${t('actions_table_row_text_and')} `
       ) : '';
 
     return (

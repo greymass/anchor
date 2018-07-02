@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Icon, Table } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
 import DangerLink from '../../../../Global/Modal/DangerLink';
