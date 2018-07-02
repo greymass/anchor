@@ -22,8 +22,8 @@ class WalletStatus extends Component<Props> {
   render() {
     const {
       accounts,
+      actionHistories,
       actions,
-      actionObjects,
       balances,
       globals,
       settings,
@@ -74,7 +74,7 @@ class WalletStatus extends Component<Props> {
         case 'actions': {
           activeTab = (
             <WalletStatusActions
-              actionObjects={actionObjects}
+              actionHistory={actionHistories[settings.account]}
               actions={actions}
               settings={settings}
               validate={validate}

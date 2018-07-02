@@ -8,9 +8,9 @@ import WalletPanel from './Wallet/Panel';
 import WalletStatus from './Wallet/Status';
 
 type Props = {
-  actions: {},
-  actionObjects: {},
   accounts: {},
+  actionHistory: {},
+  actions: {},
   globals: {},
   keys: {},
   settings: {},
@@ -26,8 +26,8 @@ export default class Wallet extends Component<Props> {
 
   render() {
     const {
+      actionHistories,
       actions,
-      actionObjects,
       accounts,
       balances,
       globals,
@@ -59,7 +59,7 @@ export default class Wallet extends Component<Props> {
           <Grid.Column width={10}>
             <WalletStatus
               actions={actions}
-              actionObjects={actionObjects}
+              actionHistories={actionHistories}
               accounts={accounts}
               balances={balances}
               globals={globals}

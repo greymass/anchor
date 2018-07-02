@@ -9,21 +9,21 @@ class WalletStatusActionsTable extends Component<Props> {
   render() {
     const {
       amount,
-      actionObjects,
+      actionHistory,
       settings,
       t
     } = this.props;
 
-    const loading = (actionObjects.list.length < 1);
+    const loading = (actionHistory.list.length < 1);
     let baseTable = <Table.Body />;
     if (!loading) {
-      const fullResults = actionObjects.list.slice(0, amount);
+      const fullResults = actionHistory.list.slice(0, amount);
       baseTable = (
         <Table.Body key="FullResults">
-          {fullResults.map((actionObject) => (
+          {fullResults.map((action) => (
             <ActionsTableRow
-              actionObject={actionObject}
-              key={actionObject.account_action_seq}
+              action={action}
+              key={action.account_action_seq}
               settings={settings}
             />
           ))}
@@ -42,10 +42,10 @@ class WalletStatusActionsTable extends Component<Props> {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell width={6}>
-                {t('actions_name')}
+                {t('actions_table_header_one')}
               </Table.HeaderCell>
               <Table.HeaderCell width={2}>
-                {t('actions_time')}
+                {t('actions_table_header_two')}
               </Table.HeaderCell>
               <Table.HeaderCell width={2} />
             </Table.Row>
