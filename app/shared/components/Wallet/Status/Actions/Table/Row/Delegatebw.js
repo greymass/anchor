@@ -27,7 +27,7 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
 
     const stakeConnector =
       (data.stake_cpu_quantity !== '0.0000 EOS' && data.stake_net_quantity !== '0.0000 EOS') ? (
-        ` ${t('actions_table_row_and_text')} `
+        ` ${t('actions_table_row_text_and')} `
       ) : '';
 
     return (
