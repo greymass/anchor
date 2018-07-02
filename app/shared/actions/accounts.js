@@ -92,33 +92,31 @@ export function getAccount(account = '') {
   };
 }
 
-export function getAccountActions(amount) {
+export function getActions(account, start, offset) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
       settings
     } = getState();
 
-    const accountName = settings.account;
-
     dispatch({
-      type: types.GET_ACCOUNT_ACTIONS_REQUEST,
-      payload: { account_name: accountName }
+      type: types.GET_ACTIONS_REQUEST,
+      payload: { account_name: account }
     });
 
-    if (accountName && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getActions(accountName, -1, -amount).then((results) => dispatch({
-        type: types.GET_ACCOUNT_ACTIONS_SUCCESS,
+    if (account && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getActions(account, start, offset).then((results) => dispatch({
+        type: types.GET_ACTIONS_SUCCESS,
         payload: { list: results.actions.reverse() }
       })).catch((err) => dispatch({
-        type: types.GET_ACCOUNT_ACTIONS_FAILURE,
-        payload: { err, account_name: accountName },
+        type: types.GET_ACTIONS_FAILURE,
+        payload: { err, account_name: account },
       }));
       return;
     }
     dispatch({
-      type: types.GET_ACCOUNT_ACTIONS_FAILURE,
-      payload: { account_name: accountName },
+      type: types.GET_ACTIONS_FAILURE,
+      payload: { account_name: account },
     });
   };
 }
