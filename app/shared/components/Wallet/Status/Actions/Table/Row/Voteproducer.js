@@ -23,7 +23,7 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
 
     const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
 
-    const andStatement = (producers.length > 1) ? (` ${t('actions_table_row_and_text')}`) : '';
+    const andStatement = (producers.length > 1) ? (` ${t('actions_table_row_text_and')}`) : '';
 
     const lastProducer = producers.slice(-1);
 
@@ -35,7 +35,7 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
           style={iconStyle}
         />
         <div>
-          { `${t('actions_table_row_voteproducer_text_one')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
+          { `${t('actions_table_row_voteproducer_text')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
         </div>
       </div>
     );

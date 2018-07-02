@@ -97,7 +97,7 @@ class Actions extends Component<Props> {
            : (
              <Segment attached="bottom" stacked>
                <Header textAlign="center">
-                 {t('actions_none')}
+                 {t('actions_table_none')}
                </Header>
              </Segment>
            )
