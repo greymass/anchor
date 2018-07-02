@@ -35,25 +35,48 @@ class Actions extends Component<Props> {
   }
 
   loadMore = () => this.setState({ amount: this.state.amount + 20 }, () => {
-    this.tick();
+    const {
+      actionHistory,
+      actions,
+      settings
+    } = this.props;
+
+    if (!this.reachedEndOfActions() && actionHistory.list.length < this.state.amount) {
+      const {
+        getActions
+      } = actions;
+
+      const relevantActionsCached = actionHistory.list.filter((action) => {
+        return (actionHistory.last_loaded_request_id...actionHistory.last_loaded_request_id - 19).include(action.request_id)
+      })
+
+      // Check if all of the needed items are already in the store, if so skip the API call.
+
+      if (relevantActionsCached !== 20) {
+        getActions(settings.account, actionHistory.oldest_request_id, -20);
+      }
+    }
   });
+
+  reachedEndOfActions() {
+    const {
+      actionHistory
+    } = this.props;
+
+    return actionHistory.oldest_request_id === 1;
+  }
 
   tick() {
     const {
       actions,
-      validate
+      settings
     } = this.props;
+
     const {
-      getAccountActions
+      getActions
     } = actions;
 
-    if (validate.NODE) {
-      const {
-        amount
-      } = this.state;
-
-      getAccountActions(amount);
-    }
+    getActions(settings.account, -1, -20);
   }
 
   render() {
@@ -87,7 +110,7 @@ class Actions extends Component<Props> {
                />
              </Visibility>
            ), (
-             (amount > actionHistory.list.length)
+             (amount > actionHistory.list.length && !this.reachedEndOfActions())
              ? (
                <Segment key="ActionsTableLoading" clearing padded vertical>
                  <Loader active />

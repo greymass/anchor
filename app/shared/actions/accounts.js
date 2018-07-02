@@ -96,8 +96,11 @@ export function getActions(account, start, offset) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      settings
+      settings,
+      actionHistories
     } = getState();
+
+    const actionHistory = actionHistories[account];
 
     dispatch({
       type: types.GET_ACTIONS_REQUEST,
@@ -105,10 +108,16 @@ export function getActions(account, start, offset) {
     });
 
     if (account && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getActions(account, start, offset).then((results) => dispatch({
-        type: types.GET_ACTIONS_SUCCESS,
-        payload: { list: results.actions.reverse() }
-      })).catch((err) => dispatch({
+      eos(connection).getActions(account, start, offset).then((results) => {
+        if (results.actions[0] && (results.actions[0].request_id == actionHistory.list[0])) {
+          return;
+        }
+
+        dispatch({
+          type: types.GET_ACTIONS_SUCCESS,
+          payload: { list: mergeActionLists(actionHistory.list, results.actions), account_name: account }
+        })
+      }).catch((err) => dispatch({
         type: types.GET_ACTIONS_FAILURE,
         payload: { err, account_name: account },
       }));
@@ -119,6 +128,24 @@ export function getActions(account, start, offset) {
       payload: { account_name: account },
     });
   };
+}
+
+function mergeActionLists(originalList, newActions) {
+  const newList = originalList.append(newActions);
+
+  newList.filter(uniqFilter);
+
+  newList.sort(sortFunction);
+
+  return newList;
+}
+
+function uniqFilter(self, index, action) {
+  return self.map((actionItem) => actionItem.req_id).indexOf(action.req_id) === index;
+}
+
+function sortFunction(actionOne, actionTwo) {
+  return actionOne.req_id <==> actionTwo.req_id;
 }
 
 export function getCurrencyBalance(account) {
