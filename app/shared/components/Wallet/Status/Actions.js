@@ -6,10 +6,11 @@ import { translate } from 'react-i18next';
 import ActionsTable from './Actions/Table';
 
 type Props = {
+  actionHistory: {},
   actions: {
     getAccountActions: () => void
   },
-  actionObjects: {},
+  settings: {},
   t: () => void,
   validate: {}
 };
@@ -57,7 +58,7 @@ class Actions extends Component<Props> {
 
   render() {
     const {
-      actionObjects,
+      actionHistory,
       settings,
       t,
     } = this.props;
@@ -69,7 +70,7 @@ class Actions extends Component<Props> {
     return (
       <div ref={this.handleContextRef}>
         <Grid.Column width={10}>
-          {(actionObjects.list.length > 0)
+          {(actionHistory.list.length > 0)
            ? [(
              <Visibility
                continuous
@@ -80,13 +81,13 @@ class Actions extends Component<Props> {
              >
                <ActionsTable
                  amount={amount}
-                 actionObjects={actionObjects}
+                 actionHistory={actionHistory}
                  attached="top"
                  settings={settings}
                />
              </Visibility>
            ), (
-             (amount > actionObjects.list.length)
+             (amount > actionHistory.list.length)
              ? (
                <Segment key="ActionsTableLoading" clearing padded vertical>
                  <Loader active />
