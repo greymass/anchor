@@ -97,10 +97,10 @@ export function getActions(account, start, offset) {
     const {
       connection,
       settings,
-      actionHistories
+      actions
     } = getState();
 
-    const actionHistory = actionHistories[account];
+    const actionHistory = (actions && actions[account]) || { list: [] };
 
     dispatch({
       type: types.GET_ACTIONS_REQUEST,
@@ -109,14 +109,29 @@ export function getActions(account, start, offset) {
 
     if (account && (settings.node || settings.node.length !== 0)) {
       eos(connection).getActions(account, start, offset).then((results) => {
-        if (results.actions[0] && (results.actions[0].request_id == actionHistory.list[0])) {
-          return;
+        const resultNewestAction = results.actions[results.actions.length - 1];
+        const resultsNewestActionId = resultNewestAction && resultNewestAction.account_action_seq;
+
+        const stateNewestAction = actionHistory.list[0];
+        const stateNewestActionId = stateNewestAction && stateNewestAction.account_action_seq;
+
+        if (resultsNewestActionId === stateNewestActionId) {
+          return dispatch({
+            type: types.GET_ACTIONS_SUCCESS,
+            payload: {
+              no_change: true,
+              account_name: account
+            }
+          });
         }
 
-        dispatch({
+        return dispatch({
           type: types.GET_ACTIONS_SUCCESS,
-          payload: { list: mergeActionLists(actionHistory.list, results.actions), account_name: account }
-        })
+          payload: {
+            list: mergeActionLists(actionHistory.list, results.actions),
+            account_name: account
+          }
+        });
       }).catch((err) => dispatch({
         type: types.GET_ACTIONS_FAILURE,
         payload: { err, account_name: account },
@@ -131,21 +146,19 @@ export function getActions(account, start, offset) {
 }
 
 function mergeActionLists(originalList, newActions) {
-  const newList = originalList.append(newActions);
+  const newList = originalList.concat(newActions);
 
-  newList.filter(uniqFilter);
-
-  newList.sort(sortFunction);
-
-  return newList;
+  return newList.filter(uniqReqId).sort(sortByReqId);
 }
 
-function uniqFilter(self, index, action) {
-  return self.map((actionItem) => actionItem.req_id).indexOf(action.req_id) === index;
+function uniqReqId(action, index, self) {
+  const actionId = action.account_action_seq;
+
+  return self.map(actionItem => actionItem.account_action_seq).indexOf(actionId) === index;
 }
 
-function sortFunction(actionOne, actionTwo) {
-  return actionOne.req_id <==> actionTwo.req_id;
+function sortByReqId(actionOne, actionTwo) {
+  return actionTwo.account_action_seq - actionOne.account_action_seq;
 }
 
 export function getCurrencyBalance(account) {
@@ -237,7 +250,7 @@ export default {
   clearAccountCache,
   getAccount,
   getAccountByKey,
-  getAccountActions,
+  getActions,
   getCurrencyBalance,
   refreshAccountBalances
 };

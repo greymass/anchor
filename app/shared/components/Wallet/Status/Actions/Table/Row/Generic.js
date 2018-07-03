@@ -18,15 +18,24 @@ class WalletStatusActionsTableRowGeneric extends Component<Props> {
       verticalAlign: 'top'
     };
 
+    const parameterTexts = [];
+
+    Object.keys(data).forEach(param => {
+      parameterTexts.push(`${param} ${t('actions_table_row_default_text_three')} ${data[param]}`);
+    });
+
     return (
       <div>
         <Icon
-          name="arrow circle up"
+          name="exclamation circle"
           size="large"
           style={iconStyle}
         />
         <div>
-          {`${t('actions_table_row_default_text_one')} ${name} ${t('actions_table_row_default_text_two')}: ${data.join(' | ')}.`}
+          {`${t('actions_table_row_default_text_one')} ${name} ${t('actions_table_row_default_text_two')}:`}
+          <ul style={{ marginLeft: '30px' }}>
+            {parameterTexts.map((parameterText, index) => <li key={index}>{parameterText}</li>)}
+          </ul>
         </div>
       </div>
     );
