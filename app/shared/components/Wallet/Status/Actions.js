@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
-import debounce from 'lodash/debounce';
 import range from 'lodash/range';
 
 import ActionsTable from './Actions/Table';
@@ -35,7 +34,7 @@ class Actions extends Component<Props> {
     clearInterval(this.interval);
   }
 
-  loadMore = debounce(() => this.setState({ amount: this.state.amount + 20 }, () => {
+  loadMore = () => this.setState({ amount: this.state.amount + 20 }, () => {
     const {
       actionHistory,
       actions,
@@ -54,7 +53,7 @@ class Actions extends Component<Props> {
       const lastLoadedAction = actionHistory.list[amount - 21] || actionHistory.list[-1];
 
       if (!lastLoadedAction) {
-        this.setState({ amount: this.state.amount - 20 })
+        this.setState({ amount: this.state.amount - 20 });
         return;
       }
 
@@ -75,7 +74,7 @@ class Actions extends Component<Props> {
         getActions(settings.account, lastLoadedActionId, -20);
       }
     }
-  }), 200);
+  })
 
   reachedEndOfActions() {
     const {

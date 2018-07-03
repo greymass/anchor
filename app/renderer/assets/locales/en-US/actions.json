@@ -16,5 +16,8 @@
   "actions_table_row_undelegatebw_text_one": "You unstaked",
   "actions_table_row_undelegatebw_text_three": "from Bandwidth",
   "actions_table_row_undelegatebw_text_two": "from CPU",
-  "actions_table_row_voteproducer_text": "You updated your votes to"
+  "actions_table_row_voteproducer_text": "You updated your votes to",
+  "actions_table_row_generic_text_one": "Unknown action",
+  "actions_table_row_generic_text_two": "to account",
+  "actions_table_row_generic_text_three": "with"
 }
