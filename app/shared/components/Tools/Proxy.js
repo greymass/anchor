@@ -4,6 +4,9 @@ import { translate } from 'react-i18next';
 
 import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
 
+import { ToolsProxyButtonRegister } from './Button/Register';
+import { ToolsProxyButtonUnregister } from './Button/Register';
+
 type Props = {
   actions: {
     clearSystemState: () => void
