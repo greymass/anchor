@@ -2,17 +2,18 @@
 import React, { Component } from 'react';
 import { Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import debounce from 'lodash/debounce';
+import range from 'lodash/range';
 
 import ActionsTable from './Actions/Table';
 
 type Props = {
   actionHistory: {},
   actions: {
-    getAccountActions: () => void
+    getActions: () => void
   },
   settings: {},
-  t: () => void,
-  validate: {}
+  t: () => void
 };
 
 class Actions extends Component<Props> {
@@ -21,7 +22,7 @@ class Actions extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 20
+      amount: 20,
     };
   }
 
@@ -34,7 +35,7 @@ class Actions extends Component<Props> {
     clearInterval(this.interval);
   }
 
-  loadMore = () => this.setState({ amount: this.state.amount + 20 }, () => {
+  loadMore = debounce(() => this.setState({ amount: this.state.amount + 20 }, () => {
     const {
       actionHistory,
       actions,
@@ -46,24 +47,42 @@ class Actions extends Component<Props> {
         getActions
       } = actions;
 
+      const {
+        amount
+      } = this.state;
+
+      const lastLoadedAction = actionHistory.list[amount - 21] || actionHistory.list[-1];
+
+      if (!lastLoadedAction) {
+        this.setState({ amount: this.state.amount - 20 })
+        return;
+      }
+
+      const lastLoadedActionId = lastLoadedAction.account_action_seq;
+
       const relevantActionsCached = actionHistory.list.filter((action) => {
-        return (actionHistory.last_loaded_request_id...actionHistory.last_loaded_request_id - 19).include(action.request_id)
-      })
+        const firstActionId = lastLoadedActionId;
+        const lastActionId = lastLoadedActionId - 19;
+
+        const arrayOfActionIds = range(firstActionId, lastActionId);
+
+        return arrayOfActionIds.includes(action.account_action_seq);
+      });
 
       // Check if all of the needed items are already in the store, if so skip the API call.
 
       if (relevantActionsCached !== 20) {
-        getActions(settings.account, actionHistory.oldest_request_id, -20);
+        getActions(settings.account, lastLoadedActionId, -20);
       }
     }
-  });
+  }), 200);
 
   reachedEndOfActions() {
     const {
       actionHistory
     } = this.props;
 
-    return actionHistory.oldest_request_id === 1;
+    return actionHistory.oldest_request_id === 0;
   }
 
   tick() {
@@ -92,40 +111,42 @@ class Actions extends Component<Props> {
 
     return (
       <div ref={this.handleContextRef}>
-        <Grid.Column width={10}>
-          {(actionHistory.list.length > 0)
-           ? [(
-             <Visibility
-               continuous
-               key="ActionsTable"
-               fireOnMount
-               onBottomVisible={this.loadMore}
-               once={false}
-             >
-               <ActionsTable
-                 amount={amount}
-                 actionHistory={actionHistory}
-                 attached="top"
-                 settings={settings}
-               />
-             </Visibility>
-           ), (
-             (amount > actionHistory.list.length && !this.reachedEndOfActions())
-             ? (
-               <Segment key="ActionsTableLoading" clearing padded vertical>
-                 <Loader active />
+        {(actionHistory) ? (
+          <Grid.Column width={10}>
+            {(actionHistory.list.length > 0)
+             ? [(
+               <Visibility
+                 continuous
+                 key="ActionsTable"
+                 fireOnMount
+                 onBottomVisible={this.loadMore}
+                 once={false}
+               >
+                 <ActionsTable
+                   amount={amount}
+                   actionHistory={actionHistory}
+                   attached="top"
+                   settings={settings}
+                 />
+               </Visibility>
+             ), (
+               (amount > actionHistory.list.length && !this.reachedEndOfActions())
+               ? (
+                 <Segment key="ActionsTableLoading" clearing padded vertical>
+                   <Loader active />
+                 </Segment>
+               ) : false
+             )]
+             : (
+               <Segment attached="bottom" stacked>
+                 <Header textAlign="center">
+                   {t('actions_table_none')}
+                 </Header>
                </Segment>
-             ) : false
-           )]
-           : (
-             <Segment attached="bottom" stacked>
-               <Header textAlign="center">
-                 {t('actions_table_none')}
-               </Header>
-             </Segment>
-           )
-          }
-        </Grid.Column>
+             )
+            }
+          </Grid.Column>
+        ) : ''}
       </div>
     );
   }
