@@ -41,7 +41,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
 
     const DescComponent = rowComponentsMapping[act.name] || WalletStatusActionTableRowGeneric;
 
-    return <DescComponent name={act.name} data={data} />;
+    return <DescComponent act={act} data={data} />;
   }
   render() {
     const {
