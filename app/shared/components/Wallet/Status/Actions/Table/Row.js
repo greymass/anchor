@@ -6,7 +6,43 @@ import TimeAgo from 'react-timeago';
 
 import DangerLink from '../../../../Global/Modal/DangerLink';
 
+import WalletStatusActionTableRowTransfer from './Row/Transfer';
+import WalletStatusActionTableRowDelegatebw from './Row/Delegatebw';
+import WalletStatusActionTableRowRefund from './Row/Refund';
+import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
+import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
+import WalletStatusActionTableRowGeneric from './Row/Generic';
+
 class WalletStatusActionsTableRow extends Component<Props> {
+  generateDescriptionComponent() {
+    const {
+      action
+    } = this.props;
+
+    const {
+      action_trace
+    } = action;
+
+    const {
+      act
+    } = action_trace;
+
+    const {
+      data
+    } = act;
+
+    const rowComponentsMapping = {
+      transfer: WalletStatusActionTableRowTransfer,
+      delegatebw: WalletStatusActionTableRowDelegatebw,
+      refund: WalletStatusActionTableRowRefund,
+      undelegatebw: WalletStatusActionTableRowUndelegatebw,
+      voteproducer: WalletStatusActionTableRowVoteproducer
+    };
+
+    const DescComponent = rowComponentsMapping[act.name] || WalletStatusActionTableRowGeneric;
+
+    return <DescComponent name={act.name} data={data} />;
+  }
   render() {
     const {
       action,
@@ -17,21 +53,13 @@ class WalletStatusActionsTableRow extends Component<Props> {
       fontSize: '16'
     };
 
-    const rowComponentsMapping = {
-      transfer: 'WalletStatusActionTableRowTransfer',
-      delegatebw: 'WalletStatusActionTableRowDelegatebw',
-      refund: 'WalletStatusActionTableRowRefund',
-      undelegatebw: 'WalletStatusActionTableRowUndelegatebw',
-      voteproducer: 'WalletStatusActionTableRowVoteproducer'
-    };
-
     return (
       <Table.Row style={{ height: '60px' }}>
         <Table.Cell
           width={6}
         >
           <div style={textStyle}>
-            { rowComponentsMapping[action.action_trace.act.name] }
+            {this.generateDescriptionComponent()}
           </div>
         </Table.Cell>
         <Table.Cell
