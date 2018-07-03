@@ -46,7 +46,7 @@ export default function actions(state = {}, action) {
 
       if (action.payload.no_change) {
         return Object.assign({}, state, {
-          [accountName]: Object.assign({}, {}, {
+          [accountName]: Object.assign({}, state[accountName], {
             updated: Date.now(),
           })
         });
