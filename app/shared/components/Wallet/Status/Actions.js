@@ -7,7 +7,6 @@ import range from 'lodash/range';
 import ActionsTable from './Actions/Table';
 
 type Props = {
-  actionHistory: {},
   actions: {
     getActions: () => void
   },
