@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Header, Segment, Progress, Responsive } from 'semantic-ui-react';
+import { Segment, Progress, Responsive } from 'semantic-ui-react';
 
 class WalletPanelFormStakeStats extends Component<Props> {
   render() {
@@ -21,12 +21,9 @@ class WalletPanelFormStakeStats extends Component<Props> {
 
     return (
       <Segment>
-        <Header
-          icon="database"
-          size="small"
-        >
+        <p>
           {ramUsageHeader}
-        </Header>
+        </p>
         <Progress
           color="teal"
           label={(

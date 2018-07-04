@@ -24,23 +24,21 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
 
     const ramToBuy = Decimal(ramToBuyinKbs).times(1000);
 
-    const costOfRam = ramToBuy.times(priceOfRam);
-
     return (
-      <Segment padding="true" textAlign="center" style={{ minHeight: '180px' }} basic>
+      <Segment padding="true" textAlign="center" style={{ minHeight: '235px' }} basic>
         <Segment textAlign="center">
           <Header>
             {t('ram_buy_confirming_message_one')}
             <font color="green">{` ${ramToBuyinKbs} Kbs `}</font>
-            {` ${t('ram_confirming_message_kbs_in_ram_for')} ${costOfRam} EOS.`}
+            {` ${t('ram_confirming_message_kbs_in_ram_for')} ${priceOfRam.toFixed(4)} EOS.`}
           </Header>
           <Header>
-            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1000)} ${t('ram_confirming_message_kbs_in_ram_left')}`}
+            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1000)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
-          <Message warning>
-            {t('ram_confirming_message_price_includes_fee')}
-          </Message>
         </Segment>
+        <Message warning>
+          {t('ram_confirming_message_price_includes_fee')}
+        </Message>
 
         <Divider />
         <Button

@@ -61,7 +61,7 @@ export function getCurrencyStats(contractName = "eosio.token", symbolName = "EOS
 export function getRamStats() {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.GET_RAMPRICE_REQUEST
+      type: types.GET_RAMSTATS_REQUEST
     });
     const { connection } = getState();
     const query = {
@@ -73,19 +73,18 @@ export function getRamStats() {
 
     eos(connection).getTableRows(query).then((results) => {
       const { rows } = results;
-
-      const baseBalance = Decimal(rows[0].base.balance.split()[0]);
-      const quoteBalance = Decimal(rows[0].quote.balance.split()[0]);
+      const baseBalance = rows[0].base.balance.split(' ')[0];
+      const quoteBalance = rows[0].quote.balance.split(' ')[0];
 
       return dispatch({
-        type: types.GET_RAMPRICE_SUCCESS,
+        type: types.GET_RAMSTATS_SUCCESS,
         payload: {
           base_balance: baseBalance,
           quote_balance: quoteBalance
         }
       });
     }).catch((err) => dispatch({
-      type: types.GET_RAMPRICE_FAILURE,
+      type: types.GET_RAMSTATS_FAILURE,
       payload: { err },
     }));
   };

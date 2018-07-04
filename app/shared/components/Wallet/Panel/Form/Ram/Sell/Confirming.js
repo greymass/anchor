@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Divider, Icon, Segment } from 'semantic-ui-react';
+import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 import { Decimal } from 'decimal.js';
 
 class WalletPanelFormRamSellConfirming extends Component<Props> {
@@ -23,23 +23,22 @@ class WalletPanelFormRamSellConfirming extends Component<Props> {
     } = this.props;
 
     const ramToSell = Decimal(ramToSellInKbs).times(1000);
-    const costOfRam = ramToSell.times(priceOfRam);
 
     return (
-      <Segment padding="true" textAlign="center" style={{ minHeight: '180px' }} basic>
+      <Segment padding="true" textAlign="center" style={{ minHeight: '235px' }} basic>
         <Segment textAlign="center">
           <Header>
             {t('ram_sell_confirming_message_one')}
             <font color="red">{ ` ${ramToSellInKbs} Kbs ` }</font>
-            {`${t('ram_confirming_message_kbs_in_ram_for')} ${costOfRam} EOS.`}
+            {`${t('ram_confirming_message_kbs_in_ram_for')} ${priceOfRam.toFixed(4)} EOS.`}
           </Header>
           <Header>
-            {`${t('ram_confirming_message_kbs_in_ram_for')} ${ramQuota.minus(ramToSell).dividedBy(1000)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
+            {`${t('ram_confirming_message_will_have')} ${ramQuota.minus(ramToSell).dividedBy(1000)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
-          <Message warning>
-            {t('ram_confirming_message_price_includes_fee')}
-          </Message>
         </Segment>
+        <Message warning>
+          {t('ram_confirming_message_price_includes_fee')}
+        </Message>
 
         <Divider />
         <Button

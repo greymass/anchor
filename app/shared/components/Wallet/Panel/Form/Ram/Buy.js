@@ -91,16 +91,24 @@ class WalletPanelFormRamBuy extends Component<Props> {
       globals
     } = this.props;
 
-    const baseBalance = Decimal(globals.ram.base_balance);
-    const quoteBalance = Decimal(globals.ram.quote_balance);
+    const decBaseBal = Decimal(globals.ram.base_balance);
+    const decQuoteBal = Decimal(globals.ram.quote_balance);
+    const decValueInBytes = Decimal(value).times(1000);
+
+    let priceOfRam = 0;
+
+    if (decValueInBytes.greaterThan(0)) {
+      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes).times(1.05);
+    }
 
     this.setState({
       submitDisabled: false,
       formError: null,
       ramToBuyInKbs: value,
-      priceOfRam: calculatePriceOfRam(baseBalance, quoteBalance, value).times(1.05)
+      priceOfRam
     }, () => {
       const error = this.errorsInForm();
+
       if (error) {
         this.onError(error);
       }

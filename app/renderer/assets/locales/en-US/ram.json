@@ -8,7 +8,7 @@
   "ram_sell_confirming_message_one": "You are about to sell",
   "ram_confirming_message_kbs_in_ram_for": "in RAM for",
   "ram_confirming_message_kbs_in_ram_left": "in RAM.",
-  "ram_confirming_message_price_includes_fee": "Please note, that this price includes a 0.5% system fee which is charged by the EOS network.",
+  "ram_confirming_message_price_includes_fee": "Please note, that this price includes a 0.5 percent system fee which is charged by the EOS network.",
   "ram_confirming_message_will_have": "After this transaction, you will have",
   "ram_form_button_buy": "Buy RAM",
   "ram_form_button_sell": "Sell RAM",

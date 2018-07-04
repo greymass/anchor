@@ -90,14 +90,21 @@ class WalletPanelFormRamSell extends Component<Props> {
       globals
     } = this.props;
 
-    const baseBalance = Decimal(globals.ram.base_balance);
-    const quoteBalance = Decimal(globals.ram.quote_balance);
+    const decBaseBal = Decimal(globals.ram.base_balance);
+    const decQuoteBal = Decimal(globals.ram.quote_balance);
+    const decValueInBytes = Decimal(value).times(1000);
+
+    let priceOfRam = 0;
+
+    if (decValueInBytes.greaterThan(0)) {
+      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes).times(1.05);
+    }
 
     this.setState({
       submitDisabled: false,
       formError: null,
       ramToSellInKbs: value,
-      priceOfRam: calculatePriceOfRam(baseBalance, quoteBalance, value).times(0.95)
+      priceOfRam
     }, () => {
       const error = this.errorsInForm();
       if (error) {
