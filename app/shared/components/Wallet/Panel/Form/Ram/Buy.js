@@ -98,7 +98,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     let priceOfRam = 0;
 
     if (decValueInBytes.greaterThan(0)) {
-      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes).times(1.05);
+      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes).times(1.005);
     }
 
     this.setState({
