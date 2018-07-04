@@ -27,6 +27,7 @@ import * as TransferActions from '../actions/transfer';
 import * as ValidateActions from '../actions/validate';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 import * as WalletActions from '../actions/wallet';
+import * as SystemStateActions from '../actions/system/systemstate';
 
 type Props = {
   actions: {
@@ -194,6 +195,7 @@ function mapDispatchToProps(dispatch) {
       ...SellRamActions,
       ...SettingsActions,
       ...StakeActions,
+      ...SystemStateActions,
       ...TransactionActions,
       ...TransferActions,
       ...ValidateActions,
