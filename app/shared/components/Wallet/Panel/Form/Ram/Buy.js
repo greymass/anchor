@@ -10,10 +10,13 @@ import WalletPanelFormRamStats from './Stats';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
 
+import calculatePriceOfRam from './helpers/calculatePriceOfRam';
+
 type Props = {
   actions: {},
   account: {},
   balance: {},
+  globals: {},
   system: {}
 };
 
@@ -32,6 +35,23 @@ class WalletPanelFormRamBuy extends Component<Props> {
       formError: null,
       submitDisabled: true
     };
+  }
+
+  componentDidMount() {
+    this.tick();
+    this.interval = setInterval(this.tick.bind(this), 15000);
+  }
+
+  tick() {
+    const {
+      actions
+    } = this.props;
+
+    const {
+      getRamStats
+    } = actions;
+
+    getRamStats();
   }
 
   onSubmit = (e) => {
@@ -67,10 +87,18 @@ class WalletPanelFormRamBuy extends Component<Props> {
   }
 
   onChange = (e, { value }) => {
+    const {
+      globals
+    } = this.props;
+
+    const baseBalance = Decimal(globals.ram.base_balance);
+    const quoteBalance = Decimal(globals.ram.quote_balance);
+
     this.setState({
       submitDisabled: false,
       formError: null,
-      ramToBuyInKbs: value
+      ramToBuyInKbs: value,
+      priceOfRam: calculatePriceOfRam(baseBalance, quoteBalance, value).times(1.05)
     }, () => {
       const error = this.errorsInForm();
       if (error) {
@@ -86,6 +114,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const {
       ramToBuyInKbs,
+      priceOfRam
     } = this.state;
 
     const decimalRegex = /^\d+(\.\d{1,3})?$/;
@@ -100,10 +129,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
       return 'ram_has_to_be_over_minimum_value';
     }
 
-    const priceOfRam = Decimal(0.001);
-    const costOfRam = priceOfRam.times(decimalRamToBuy);
-
-    if (Decimal(balance.EOS).lessThan(costOfRam)) {
+    if (Decimal(balance.EOS).lessThan(priceOfRam)) {
       return 'not_enough_balance';
     }
 
@@ -145,6 +171,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.props;
 
     const {
+      priceOfRam,
       ramQuota,
       ramUsage,
       ramToBuyInKbs,
@@ -153,7 +180,6 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
-    const priceOfRam = Decimal(0.001);
 
     return (
       <Segment

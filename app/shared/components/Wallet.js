@@ -48,6 +48,7 @@ export default class Wallet extends Component<Props> {
               actions={actions}
               accounts={accounts}
               balances={balances}
+              globals={globals}
               keys={keys}
               settings={settings}
               system={system}

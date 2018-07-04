@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash';
+import { Decimal } from 'decimal.js';
 
 import * as types from './types';
 
@@ -57,7 +58,41 @@ export function getCurrencyStats(contractName = "eosio.token", symbolName = "EOS
   };
 }
 
+export function getRamStats() {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.GET_RAMPRICE_REQUEST
+    });
+    const { connection } = getState();
+    const query = {
+      scope: 'eosio',
+      code: 'eosio',
+      table: 'rammarket',
+      json: true
+    };
+
+    eos(connection).getTableRows(query).then((results) => {
+      const { rows } = results;
+
+      const baseBalance = Decimal(rows[0].base.balance.split()[0]);
+      const quoteBalance = Decimal(rows[0].quote.balance.split()[0]);
+
+      return dispatch({
+        type: types.GET_RAMPRICE_SUCCESS,
+        payload: {
+          base_balance: baseBalance,
+          quote_balance: quoteBalance
+        }
+      });
+    }).catch((err) => dispatch({
+      type: types.GET_RAMPRICE_FAILURE,
+      payload: { err },
+    }));
+  };
+}
+
 export default {
   getCurrencyStats,
-  getGlobals
+  getGlobals,
+  getRamStats
 };

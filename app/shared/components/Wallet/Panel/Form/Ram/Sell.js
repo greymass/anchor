@@ -10,9 +10,12 @@ import WalletPanelFormRamStats from './Stats';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
 
+import calculatePriceOfRam from './helpers/calculatePriceOfRam';
+
 type Props = {
   actions: {},
   account: {},
+  globals: {},
   system: {}
 };
 
@@ -31,6 +34,23 @@ class WalletPanelFormRamSell extends Component<Props> {
       formError: null,
       submitDisabled: true
     };
+  }
+
+  componentDidMount() {
+    this.tick();
+    this.interval = setInterval(this.tick.bind(this), 15000);
+  }
+
+  tick() {
+    const {
+      actions
+    } = this.props;
+
+    const {
+      getRamStats
+    } = actions;
+
+    getRamStats();
   }
 
   onSubmit = (e) => {
@@ -66,10 +86,18 @@ class WalletPanelFormRamSell extends Component<Props> {
   }
 
   onChange = (e, { value }) => {
+    const {
+      globals
+    } = this.props;
+
+    const baseBalance = Decimal(globals.ram.base_balance);
+    const quoteBalance = Decimal(globals.ram.quote_balance);
+
     this.setState({
       submitDisabled: false,
       formError: null,
-      ramToSellInKbs: value
+      ramToSellInKbs: value,
+      priceOfRam: calculatePriceOfRam(baseBalance, quoteBalance, value).times(0.95)
     }, () => {
       const error = this.errorsInForm();
       if (error) {
@@ -114,7 +142,6 @@ class WalletPanelFormRamSell extends Component<Props> {
 
   onConfirm = () => {
     const {
-      account,
       actions
     } = this.props;
 
@@ -136,6 +163,7 @@ class WalletPanelFormRamSell extends Component<Props> {
   render() {
     const {
       account,
+      globals,
       onClose,
       system,
       t
@@ -145,13 +173,12 @@ class WalletPanelFormRamSell extends Component<Props> {
       ramQuota,
       ramUsage,
       ramToSellInKbs,
-      submitDisabled
+      submitDisabled,
+      priceOfRam
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
-
-    const priceOfRam = Decimal(0.001);
 
     return (
       <Segment

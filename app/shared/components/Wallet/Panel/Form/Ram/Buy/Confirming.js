@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
-import { Button, Header, Divider, Icon, Segment } from 'semantic-ui-react';
+import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
 class WalletPanelFormRamBuyConfirming extends Component<Props> {
   onConfirm = () => {
@@ -30,13 +30,16 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
       <Segment padding="true" textAlign="center" style={{ minHeight: '180px' }} basic>
         <Segment textAlign="center">
           <Header>
-            {t('ram_confirming_message_about_to_buy')}
+            {t('ram_buy_confirming_message_one')}
             <font color="green">{` ${ramToBuyinKbs} Kbs `}</font>
             {` ${t('ram_confirming_message_kbs_in_ram_for')} ${costOfRam} EOS.`}
           </Header>
           <Header>
             {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1000)} ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
+          <Message warning>
+            {t('ram_confirming_message_price_includes_fee')}
+          </Message>
         </Segment>
 
         <Divider />

@@ -11,6 +11,7 @@ type Props = {
     clearSystemState: () => void
   },
   balances: {},
+  globals: {},
   settings: {},
   system: {},
   t: () => void
@@ -24,6 +25,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
       account,
       actions,
       balances,
+      globals,
       settings,
       system,
       t
@@ -42,6 +44,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
             account={account}
             actions={actions}
             balance={balances[settings.account]}
+            globals={globals}
             settings={settings}
             system={system}
           />

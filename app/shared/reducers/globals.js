@@ -42,6 +42,21 @@ export default function globals(state = initialState, action) {
         })
       });
     }
+    case types.GET_RAMPRICE_FAILURE: {
+      return Object.assign({}, state, {
+        ram: Object.assign({}, state.ram, {
+          lastPrice: null
+        })
+      });
+    }
+    case types.GET_RAMPRICE_SUCCESS: {
+      return Object.assign({}, state, {
+        ram: Object.assign({}, state.contract, {
+          updated: Date.now(),
+          lastPrice: action.payload.lastPrice
+        })
+      });
+    }
     default: {
       return state;
     }
