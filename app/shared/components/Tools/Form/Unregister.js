@@ -34,19 +34,19 @@ class ToolsFormUnregister extends Component<Props> {
           <Message
             icon="info circle"
             info
-            content={t('proxy_form_message_about_to_register')}
+            content={t('tools_proxy_form_message_about_to_unregister')}
           />
           <Divider />
           <Form
             onSubmit={this.onSubmit}
           >
             <Button
-              content={t('proxy_form_button_cancel')}
+              content={t('tools_proxy_form_button_cancel')}
               color="grey"
               onClick={onClose}
             />
             <Button
-              content={t('proxy_form_button_register')}
+              content={t('tools_proxy_form_button_unregister')}
               color="green"
               floated="right"
               primary
@@ -59,4 +59,4 @@ class ToolsFormUnregister extends Component<Props> {
 }
 
 
-export default translate('proxy')(ToolsFormUnregister);
+export default translate('tools')(ToolsFormUnregister);
