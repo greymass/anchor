@@ -14,6 +14,12 @@ import Tools from '../components/Tools';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsState from '../components/Tools/State';
 import ToolsWallets from '../components/Tools/Wallets';
+import ToolsProxy from '../components/Tools/Proxy';
+
+import * as WalletActions from '../actions/wallet';
+import * as RegProxyActions from '../actions/system/regproxy';
+import * as UnregProxyActions from '../actions/system/unregproxy';
+import * as SystemStateActions from '../actions/system/systemstate';
 
 class ToolsContainer extends Component<Props> {
   props: Props;
@@ -35,6 +41,10 @@ class ToolsContainer extends Component<Props> {
       {
         menuItem: t('tools_menu_state'),
         render: () => <Tab.Pane><ToolsState {...this.props} /></Tab.Pane>,
+      },
+      {
+        menuItem: t('tools_menu_proxy'),
+        render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
       }
     ];
     return (
@@ -54,19 +64,25 @@ class ToolsContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    accounts: state.accounts,
     app: state.app,
     keys: state.keys,
     settings: state.settings,
+    system: state.system,
     validate: state.validate,
     wallet: state.wallet,
-    wallets: state.wallets
+    wallets: state.wallets,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...WalletsActions
+      ...WalletsActions,
+      ...WalletActions,
+      ...RegProxyActions,
+      ...UnregProxyActions,
+      ...SystemStateActions
     }, dispatch)
   };
 }

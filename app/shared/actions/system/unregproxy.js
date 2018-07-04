@@ -13,8 +13,9 @@ export function unregproxy() {
     dispatch({
       type: types.SYSTEM_UNREGPROXY_PENDING
     });
-    return eos(connection).unregproxy({
-      proxy: account
+    return eos(connection).regproxy({
+      proxy: account,
+      isproxy: 0
     }).then((tx) => dispatch({
       payload: { tx },
       type: types.SYSTEM_UNREGPROXY_SUCCESS

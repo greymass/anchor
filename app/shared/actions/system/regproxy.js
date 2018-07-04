@@ -14,9 +14,10 @@ export function regproxy() {
     dispatch({
       type: types.SYSTEM_REGPROXY_PENDING
     });
+
     return eos(connection).regproxy({
       proxy: account,
-      isproxy: true
+      isproxy: 1
     }).then((tx) => dispatch({
       payload: { tx },
       type: types.SYSTEM_REGPROXY_SUCCESS
