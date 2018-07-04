@@ -9,7 +9,7 @@ import WalletStatus from './Wallet/Status';
 
 type Props = {
   accounts: {},
-  actionHistory: {},
+  actionHistories: {},
   actions: {},
   globals: {},
   keys: {},
