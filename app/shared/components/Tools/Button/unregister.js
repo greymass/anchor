@@ -3,64 +3,37 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import ToolsModalUnregister from '../Modal/Register';
-
-type Props = {
-  actions: {
-    clearSystemState: () => void
-  },
-  accounts: {},
-  balances: {},
-  settings: {},
-  validate: {},
-  system: {}
-};
+import ToolsFormUnregister from '../Form/Unregister';
 
 class ToolsButtonUnregister extends Component<Props> {
-  props: Props;
-
-  state = {
-    open: false
-  }
-
   render() {
     const {
+      account,
       actions,
-      accounts,
-      balances,
       settings,
-      validate,
       system,
       t
     } = this.props;
 
-    const {
-      open
-    } = this.state;
-
     return (
       <GlobalTransactionModal
-        actionName="PROXY"
+        actionName="UNREGPROXY"
         actions={actions}
         button={{
-          color: 'blue',
-          content: t('stake_button_cta'),
-          icon: 'microchip'
+          color: 'red',
+          content: t('tools_proxy_button_unregister'),
+          icon: 'share square'
         }}
         content={(
-          <ToolsModalUnregister
-            account={accounts[settings.account]}
-            key="StakeForm"
-            settings={settings}
+          <ToolsFormUnregister
+            account={account}
             actions={actions}
-            onClose={this.onClose}
-            validate={validate}
-            balance={balances[settings.account]}
+            key="UnregisterProxyForm"
             system={system}
           />
         )}
-        icon="microchip"
-        title={t('update_staked_coins')}
+        icon="share square"
+        title={t('tools_proxy_header_unregister')}
         settings={settings}
         system={system}
       />

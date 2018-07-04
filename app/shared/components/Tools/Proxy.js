@@ -2,81 +2,89 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
+import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
 
-import { ToolsProxyButtonRegister } from './Button/Register';
-import { ToolsProxyButtonUnregister } from './Button/Register';
-
-type Props = {
-  actions: {
-    clearSystemState: () => void
-  },
-  accounts: {},
-  balances: {},
-  settings: {},
-  validate: {},
-  system: {}
-};
+import ToolsProxyButtonRegister from './Button/Register';
+import ToolsProxyButtonUnregister from './Button/Unregister';
+import WalletPanelLocked from '../Wallet/Panel/Locked';
 
 class ToolsProxy extends Component<Props> {
-  props: Props;
-
-  state = {
-    open: false
-  }
-
   render() {
     const {
-      actions,
       accounts,
-      balances,
+      actions,
+      keys,
       settings,
-      validate,
       system,
+      validate,
+      wallet,
       t
     } = this.props;
 
-    const {
-      open
-    } = this.state;
+    const account = accounts[wallet.account];
 
-    const isRegistered = true;
+    const {
+      voter_info
+    } = account;
+
+    const {
+      is_proxy
+    } = voter_info;
 
     return (
-      <Segment basic>
-        <Header>
-          {t('tools_proxy_header')}
-          <Header.Subheader>
-            {t('tools_proxy_subheader')}
-          </Header.Subheader>
-        </Header>
-        <Segment basic>
-          {(!isRegistered) ? (
-            <ToolsProxyButtonRegister
-              displayDataTypes={false}
-              displayObjectSize={false}
-              iconStyle="square"
-              name={null}
-              src={settings}
-              style={{ padding: '1em' }}
-              theme="harmonic"
+      <Grid centered>
+        <Grid.Column width={8} style={{ textAlign: 'center' }} >
+          {(keys && keys.key) ?
+          (
+            <div>
+              <Header>
+                {t('tools_proxy_header_registration')}
+              </Header>
+              {(!is_proxy) ? (
+                <Segment basic>
+                  <p>
+                    {t('tools_proxy_text_not_registered')}
+                  </p>
+                  <Divider />
+                  <ToolsProxyButtonRegister
+                    account={account}
+                    actions={actions}
+                    settings={settings}
+                    system={system}
+                  />
+                </Segment>
+              ) : ''}
+              {(is_proxy) ? (
+                <Segment basic>
+                  <p>
+                    {t('tools_proxy_text_registered')}
+                  </p>
+                  <Divider />
+                  <p>
+                    {wallet.account}
+                  </p>
+                  <Divider />
+                  <ToolsProxyButtonUnregister
+                    account={account}
+                    actions={actions}
+                    settings={settings}
+                    system={system}
+                  />
+                </Segment>
+              ) : ''}
+            </div>
+          ) : (
+            <WalletPanelLocked
+              actions={actions}
+              settings={settings}
+              validate={validate}
+              wallet={wallet}
             />
-          ) : ''}
-          {(isRegistered) ? (
-            <ToolsProxyButtonUnregister
-              displayDataTypes={false}
-              displayObjectSize={false}
-              iconStyle="square"
-              name={null}
-              src={settings}
-              style={{ padding: '1em' }}
-              theme="harmonic"
-            />
-          ) : ''}
-        </Segment>
-      </Segment>
+          )}
+        </Grid.Column>
+      </Grid>
     );
   }
 }
 
-export default translate('tools')(WalletPanelButtonStake);
+export default translate('tools')(ToolsProxy);
