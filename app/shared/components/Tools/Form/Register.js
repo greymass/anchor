@@ -36,7 +36,7 @@ class ToolsFormRegister extends Component<Props> {
           <Message
             icon="info circle"
             info
-            content={t('proxy_form_message_about_to_register')}
+            content={t('tools_proxy_form_message_about_to_register')}
           />
           <Divider />
           <Form
@@ -61,4 +61,4 @@ class ToolsFormRegister extends Component<Props> {
 }
 
 
-export default translate('proxy')(ToolsFormRegister);
+export default translate('tools')(ToolsFormRegister);

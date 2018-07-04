@@ -41,4 +41,4 @@ class ToolsButtonUnregister extends Component<Props> {
   }
 }
 
-export default translate('stake')(ToolsButtonUnregister);
+export default translate('tools')(ToolsButtonUnregister);
