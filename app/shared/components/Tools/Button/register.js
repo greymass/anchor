@@ -3,64 +3,39 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import ToolsModalRegister from '../Modal/Register';
-
-type Props = {
-  actions: {
-    clearSystemState: () => void
-  },
-  accounts: {},
-  balances: {},
-  settings: {},
-  validate: {},
-  system: {}
-};
+import ToolsFormRegister from '../Form/Register';
 
 class ToolsButtonRegister extends Component<Props> {
   props: Props;
 
-  state = {
-    open: false
-  }
-
   render() {
     const {
+      account,
       actions,
-      accounts,
-      balances,
       settings,
-      validate,
       system,
       t
     } = this.props;
 
-    const {
-      open
-    } = this.state;
-
     return (
       <GlobalTransactionModal
-        actionName="PROXY"
+        actionName="REGPROXY"
         actions={actions}
         button={{
           color: 'blue',
-          content: t('stake_button_cta'),
-          icon: 'microchip'
+          content: t('tools_proxy_button_register'),
+          icon: 'share square'
         }}
         content={(
-          <ToolsModalRegister
-            account={accounts[settings.account]}
-            key="StakeForm"
-            settings={settings}
+          <ToolsFormRegister
+            account={account}
             actions={actions}
-            onClose={this.onClose}
-            validate={validate}
-            balance={balances[settings.account]}
+            key="RegisterProxyForm"
             system={system}
           />
         )}
-        icon="microchip"
-        title={t('update_staked_coins')}
+        icon="share square"
+        title={t('tools_proxy_header_register')}
         settings={settings}
         system={system}
       />
@@ -68,4 +43,4 @@ class ToolsButtonRegister extends Component<Props> {
   }
 }
 
-export default translate('stake')(ToolsButtonRegister);
+export default translate('tools')(ToolsButtonRegister);
