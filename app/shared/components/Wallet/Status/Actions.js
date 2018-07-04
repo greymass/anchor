@@ -14,7 +14,7 @@ type Props = {
   t: () => void
 };
 
-class Actions extends Component<Props> {
+class WalletStatusActions extends Component<Props> {
   props: Props;
 
   constructor(props) {
@@ -150,4 +150,4 @@ class Actions extends Component<Props> {
   }
 }
 
-export default translate('actions')(Actions);
+export default translate('actions')(WalletStatusActions);
