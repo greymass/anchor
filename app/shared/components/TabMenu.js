@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
+import GlobalAccountDropdown from '../containers/Global/Account/Dropdown';
 import WalletLanguage from './Wallet/Language';
 import WalletLockState from './Wallet/LockState';
 import WalletMode from './Wallet/Mode';
@@ -26,6 +27,7 @@ class TabMenu extends Component<Props> {
         inverted
         size="large"
       >
+        <GlobalAccountDropdown />
         {(settings.walletMode !== 'cold')
           ? (
             <Menu.Item

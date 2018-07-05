@@ -24,13 +24,12 @@ export default class WalletPanelButtonUnlock extends Component<Props> {
 
   onSubmit = () => {
     const {
-      unlockWallet,
-      wallet
+      unlockWallet
     } = this.props;
     const {
       password
     } = this.state;
-    unlockWallet(wallet, password);
+    unlockWallet(password);
   }
 
   render() {

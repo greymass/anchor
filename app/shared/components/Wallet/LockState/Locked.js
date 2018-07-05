@@ -24,13 +24,12 @@ export default class WalletLockStateLocked extends Component<Props> {
 
   onSubmit = () => {
     const {
-      actions,
-      wallet
+      actions
     } = this.props;
     const {
       password
     } = this.state;
-    actions.unlockWallet(wallet, password);
+    actions.unlockWallet(password);
   }
   render() {
     const {

@@ -10,8 +10,6 @@ import { translate } from 'react-i18next';
 
 import WelcomeConnectionContainer from '../Welcome/Connection';
 
-import GlobalSidebarAccount from '../../components/Global/Sidebar/Account';
-
 import * as AccountsActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
@@ -72,39 +70,27 @@ class SidebarAccount extends Component<Props> {
         />
       );
     }
-    const tagOptions = [
-      {
-        text: 'accountname',
-        value: 'accountname',
-        label: { color: 'black', empty: true, circular: true },
-      },
-    ];
     return (
-      <React.Fragment>
-        <GlobalSidebarAccount
-          wallet={wallet}
-        />
-        <Segment
-          size="small"
-          stacked
-        >
-          {controls}
-          {(settings && (settings.walletInit || settings.walletTemp))
-            ? false
-            : (
-              <React.Fragment>
-                <Divider />
-                <Button
-                  color="purple"
-                  content={t('continue_setup')}
-                  fluid
-                  onClick={this.continueSetup}
-                />
-              </React.Fragment>
-            )
-          }
-        </Segment>
-      </React.Fragment>
+      <Segment
+        size="small"
+        stacked
+      >
+        {controls}
+        {(settings && (settings.walletInit || settings.walletTemp))
+          ? false
+          : (
+            <React.Fragment>
+              <Divider />
+              <Button
+                color="purple"
+                content={t('continue_setup')}
+                fluid
+                onClick={this.continueSetup}
+              />
+            </React.Fragment>
+          )
+        }
+      </Segment>
     );
   }
 }

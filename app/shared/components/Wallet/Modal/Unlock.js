@@ -63,7 +63,6 @@ export default class WalletModalUnlock extends Component<Props> {
                 />
               </Modal.Actions>
             </Modal>
-
           )
         }
       </I18n>
