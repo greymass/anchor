@@ -8,7 +8,6 @@ import ProducersFormProxy from '../Form/Proxy';
 class ToolsButtonUnregister extends Component<Props> {
   render() {
     const {
-      account,
       actions,
       settings,
       system,
@@ -20,20 +19,19 @@ class ToolsButtonUnregister extends Component<Props> {
         actionName="UNREGPROXY"
         actions={actions}
         button={{
-          color: 'red',
-          content: t('tools_proxy_button_unregister'),
+          color: 'green',
+          content: t('producers_button_proxy_text'),
           icon: 'share square'
         }}
         content={(
           <ProducersFormProxy
-            account={account}
             actions={actions}
             key="UnregisterProxyForm"
             system={system}
           />
         )}
         icon="share square"
-        title={t('tools_proxy_header_unregister')}
+        title={t('producers_form_proxy_header')}
         settings={settings}
         system={system}
       />
