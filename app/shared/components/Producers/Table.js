@@ -6,6 +6,7 @@ import { Grid, Header, Input, Segment, Transition, Table } from 'semantic-ui-rea
 
 import ProducersVoteWeight from './Vote/Weight';
 import ProducersTableRow from './Table/Row';
+import ProducersTableButtonProxy from './Button/Proxy';
 
 class ProducersTable extends Component<Props> {
   constructor(props) {
@@ -115,7 +116,7 @@ class ProducersTable extends Component<Props> {
     return (
       <Segment basic loading={loading} vertical>
         <Grid>
-          <Grid.Column width="10">
+          <Grid.Column width="6">
             <Header size="small">
               {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
               <Header.Subheader>
@@ -125,6 +126,14 @@ class ProducersTable extends Component<Props> {
                 {' '}
                 {t('block_producer_total_weight')}
               </Header.Subheader>
+            </Header>
+          </Grid.Column>
+          <Grid.Column width="4">
+            <Header size="small">
+              {t('block_producer_eos_staked')}
+              <ProducersTableButtonProxy
+                account={account}
+              />
             </Header>
           </Grid.Column>
           <Grid.Column width="6" textAlign="right">
