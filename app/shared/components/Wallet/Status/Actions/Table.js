@@ -24,7 +24,6 @@ class WalletStatusActionsTable extends Component<Props> {
             <ActionsTableRow
               action={action}
               key={action.account_action_seq}
-              settings={settings}
             />
           ))}
         </Table.Body>
