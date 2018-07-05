@@ -13,14 +13,6 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
       data
     } = action.action_trace.act;
 
-
-    const iconStyle = {
-      margin: '5px',
-      marginRight: '20px',
-      float: 'left',
-      verticalAlign: 'top'
-    };
-
     const unstakeToCpuDescription = (data.unstake_cpu_quantity !== '0.0000 EOS') ? (
       `${data.unstake_cpu_quantity} ${t('actions_table_row_undelegatebw_text_two')}`
     ) : '';
@@ -35,16 +27,14 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
       ) : '';
 
     return (
-      <div>
+      <React.Fragment>
         <Icon
+          floated="left"
           name="microchip"
           size="large"
-          style={iconStyle}
         />
-        <div>
-          { `${t('actions_table_row_undelegatebw_text_one')} ${unstakeToCpuDescription} ${unstakeConnector} ${unstakeToNetDescription}.` }
-        </div>
-      </div>
+        { `${t('actions_table_row_undelegatebw_text_one')} ${unstakeToCpuDescription} ${unstakeConnector} ${unstakeToNetDescription}.` }
+      </React.Fragment>
     );
   }
 }

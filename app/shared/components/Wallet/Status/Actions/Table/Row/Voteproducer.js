@@ -17,13 +17,6 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
       producers
     } = data;
 
-    const iconStyle = {
-      margin: '5px',
-      marginRight: '20px',
-      float: 'left',
-      verticalAlign: 'top'
-    };
-
     const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
 
     const andStatement = (producers.length > 1) ? (` ${t('actions_table_row_text_and')}`) : '';
@@ -31,16 +24,14 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
     const lastProducer = producers.slice(-1);
 
     return (
-      <div>
+      <React.Fragment>
         <Icon
+          floated="left"
           name="check square"
           size="large"
-          style={iconStyle}
         />
-        <div>
-          { `${t('actions_table_row_voteproducer_text')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
-        </div>
-      </div>
+        { `${t('actions_table_row_voteproducer_text')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
+      </React.Fragment>
     );
   }
 }
