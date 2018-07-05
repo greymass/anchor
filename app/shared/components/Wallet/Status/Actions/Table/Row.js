@@ -13,70 +13,68 @@ import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
 import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
 import WalletStatusActionTableRowGeneric from './Row/Generic';
 
+const rowComponentsMapping = {
+  transfer: WalletStatusActionTableRowTransfer,
+  delegatebw: WalletStatusActionTableRowDelegatebw,
+  refund: WalletStatusActionTableRowRefund,
+  undelegatebw: WalletStatusActionTableRowUndelegatebw,
+  voteproducer: WalletStatusActionTableRowVoteproducer
+};
+
 class WalletStatusActionsTableRow extends Component<Props> {
-  generateDescriptionComponent() {
+  constructor(props) {
+    super(props);
     const {
       action
     } = this.props;
 
     const {
-      action_trace
-    } = action;
-
-    const {
       act
-    } = action_trace;
+    } = action.action_trace;
 
-    const {
-      data
-    } = act;
-
-    const rowComponentsMapping = {
-      transfer: WalletStatusActionTableRowTransfer,
-      delegatebw: WalletStatusActionTableRowDelegatebw,
-      refund: WalletStatusActionTableRowRefund,
-      undelegatebw: WalletStatusActionTableRowUndelegatebw,
-      voteproducer: WalletStatusActionTableRowVoteproducer
+    this.state = {
+      ComponentType: rowComponentsMapping[act.name] || WalletStatusActionTableRowGeneric,
+      generic: !(rowComponentsMapping[act.name])
     };
-
-    const DescComponent = rowComponentsMapping[act.name] || WalletStatusActionTableRowGeneric;
-
-    return <DescComponent act={act} data={data} />;
   }
   render() {
     const {
       action,
       t
     } = this.props;
-
-    const textStyle = {
-      fontSize: '16'
-    };
+    const {
+      ComponentType,
+      generic
+    } = this.state;
 
     return (
       <Table.Row style={{ height: '60px' }}>
         <Table.Cell
-          width={6}
+          colSpan={(generic) ? 3 : 1}
+          width={(generic) ? 16 : 10}
         >
-          <div style={textStyle}>
-            {this.generateDescriptionComponent()}
-          </div>
+          <ComponentType action={action} />
         </Table.Cell>
-        <Table.Cell
-          width={2}
-        >
-          <span>
-            <TimeAgo date={`${action.block_time}z`} />
-          </span>
-        </Table.Cell>
-        <Table.Cell
-          width={2}
-        >
-          <DangerLink
-            content={t('actions_link_content')}
-            link={`https://eospark.com/MainNet/tx/${action.action_trace.trx_id}`}
-          />
-        </Table.Cell>
+        {(!generic)
+          ? (
+            <React.Fragment>
+              <Table.Cell
+                width={3}
+              >
+                <TimeAgo date={`${action.block_time}z`} />
+              </Table.Cell>
+              <Table.Cell
+                width={3}
+              >
+                <DangerLink
+                  content={t('actions_link_content')}
+                  link={`https://eospark.com/MainNet/tx/${action.action_trace.trx_id}`}
+                />
+              </Table.Cell>
+            </React.Fragment>
+          )
+          : false
+        }
       </Table.Row>
     );
   }

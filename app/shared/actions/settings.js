@@ -44,6 +44,15 @@ export function setSetting(key, value) {
   };
 }
 
+export function setSettings(values) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.SET_SETTING,
+      payload: values
+    });
+  };
+}
+
 export function setSettingWithValidation(key, value) {
   return (dispatch: () => void) => {
     switch (key) {
@@ -75,5 +84,6 @@ export default {
   clearSettingsCache,
   clearSettingsInvalid,
   setSetting,
+  setSettings,
   setSettingWithValidation
 };

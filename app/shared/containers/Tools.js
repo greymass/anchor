@@ -8,9 +8,12 @@ import compose from 'lodash/fp/compose';
 
 import { Tab } from 'semantic-ui-react';
 
+import * as WalletsActions from '../actions/wallets';
+
 import Tools from '../components/Tools';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsState from '../components/Tools/State';
+import ToolsWallets from '../components/Tools/Wallets';
 
 class ToolsContainer extends Component<Props> {
   props: Props;
@@ -20,6 +23,10 @@ class ToolsContainer extends Component<Props> {
       {
         menuItem: t('tools_menu_index'),
         render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
+      },
+      {
+        menuItem: t('tools_menu_wallets'),
+        render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
       },
       {
         menuItem: t('tools_menu_keys'),
@@ -47,14 +54,18 @@ class ToolsContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    settings: state.settings
+    app: state.app,
+    keys: state.keys,
+    settings: state.settings,
+    wallet: state.wallet,
+    wallets: state.wallets
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
+      ...WalletsActions
     }, dispatch)
   };
 }

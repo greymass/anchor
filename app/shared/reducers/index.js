@@ -16,6 +16,7 @@ import system from './system';
 import transaction from './transaction';
 import validate from './validate';
 import wallet from './wallet';
+import wallets from './wallets';
 
 const rootReducer = combineReducers({
   accounts,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   system,
   transaction,
   validate,
-  wallet
+  wallet,
+  wallets
 });
 
 export default rootReducer;

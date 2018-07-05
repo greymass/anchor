@@ -152,15 +152,17 @@ class WalletPanelFormTransfer extends Component<Props> {
             />
           ) : (
             <Segment basic clearing>
-              <FormFieldAccount
+              <GlobalFormFieldAccount
                 disabled
+                fluid
                 label={t('transfer_label_from')}
                 name="from"
                 onChange={this.onChange}
                 value={settings.account}
               />
-              <FormFieldAccount
+              <GlobalFormFieldAccount
                 autoFocus
+                fluid
                 label={t('transfer_label_to')}
                 name="to"
                 onChange={this.onChange}

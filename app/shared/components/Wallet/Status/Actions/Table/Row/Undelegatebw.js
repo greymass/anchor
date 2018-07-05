@@ -6,9 +6,13 @@ import { Icon } from 'semantic-ui-react';
 class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
   render() {
     const {
-      data,
+      action,
       t
     } = this.props;
+    const {
+      data
+    } = action.action_trace.act;
+
 
     const iconStyle = {
       margin: '5px',

@@ -92,6 +92,11 @@ export function getAccount(account = '') {
   };
 }
 
+export function getAccounts(accounts = []) {
+  return (dispatch: () => void) =>
+    forEach(accounts, (account) => dispatch(getAccount(account)));
+}
+
 export function getActions(account, start, offset) {
   return (dispatch: () => void, getState) => {
     const {
@@ -214,7 +219,7 @@ function formatBalances(balances) {
 export function getAccountByKey(key) {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.GET_ACCOUNT_BY_KEY_REQUEST,
+      type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
       payload: { key }
     });
     const {
@@ -223,15 +228,15 @@ export function getAccountByKey(key) {
     } = getState();
     if (key && (settings.node || settings.node.length !== 0)) {
       return eos(connection).getKeyAccounts(key).then((accounts) => dispatch({
-        type: types.GET_ACCOUNT_BY_KEY_SUCCESS,
+        type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
         payload: { accounts }
       })).catch((err) => dispatch({
-        type: types.GET_ACCOUNT_BY_KEY_FAILURE,
+        type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
         payload: { err, key }
       }));
     }
     dispatch({
-      type: types.GET_ACCOUNT_BY_KEY_FAILURE,
+      type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
       payload: { key },
     });
   };
@@ -240,7 +245,7 @@ export function getAccountByKey(key) {
 export function clearAccountByKey() {
   return (dispatch: () => void) => {
     dispatch({
-      type: types.GET_ACCOUNT_BY_KEY_CLEAR
+      type: types.SYSTEM_ACCOUNT_BY_KEY_CLEAR
     });
   };
 }

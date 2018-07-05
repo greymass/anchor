@@ -54,9 +54,8 @@ export default function connection(state = initialState, action) {
       });
     }
     // Add key to connection if wallet is set or unlocked
-    case types.SET_TEMPORARY_KEY:
-    case types.SET_WALLET_KEY:
-    case types.VALIDATE_WALLET_PASSWORD_SUCCESS: {
+    case types.SET_WALLET_KEYS_ACTIVE:
+    case types.SET_WALLET_KEYS_TEMPORARY: {
       return Object.assign({}, state, {
         keyProvider: action.payload.key,
       });

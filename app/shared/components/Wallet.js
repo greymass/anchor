@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import SidebarConnection from '../containers/Sidebar/Connection';
+import SidebarAccount from '../containers/Sidebar/Account';
 
 import WalletPanel from './Wallet/Panel';
 import WalletStatus from './Wallet/Status';
@@ -43,7 +43,7 @@ export default class Wallet extends Component<Props> {
       <Grid divided>
         <Grid.Row>
           <Grid.Column width={6}>
-            <SidebarConnection />
+            <SidebarAccount />
             <WalletPanel
               actions={actions}
               accounts={accounts}

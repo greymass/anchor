@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import SidebarConnection from '../containers/Sidebar/Connection';
+import SidebarAccount from '../containers/Sidebar/Account';
 import WalletPanel from './Wallet/Panel';
 
 
@@ -241,9 +241,10 @@ class Producers extends Component<Props> {
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={6}>
-              <SidebarConnection
+              <SidebarAccount
                 actions={actions}
                 history={history}
+                wallet={wallet}
               />
               {sidebar}
             </Grid.Column>

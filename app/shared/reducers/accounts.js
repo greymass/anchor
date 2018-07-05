@@ -16,14 +16,14 @@ export default function accounts(state = initialState, action) {
         [action.payload.results.account_name]: action.payload.results
       });
     }
-    case types.GET_ACCOUNT_BY_KEY_SUCCESS: {
+    case types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS: {
       return Object.assign({}, state, {
         __lookups: action.payload.accounts.account_names
       });
     }
-    case types.GET_ACCOUNT_BY_KEY_REQUEST:
-    case types.GET_ACCOUNT_BY_KEY_FAILURE:
-    case types.GET_ACCOUNT_BY_KEY_CLEAR: {
+    case types.SYSTEM_ACCOUNT_BY_KEY_PENDING:
+    case types.SYSTEM_ACCOUNT_BY_KEY_FAILURE:
+    case types.SYSTEM_ACCOUNT_BY_KEY_CLEAR: {
       return Object.assign({}, state, {
         __lookups: []
       });
