@@ -79,7 +79,7 @@ class GlobalButtonElevate extends Component<Props> {
               control={Input}
               disabled={pending}
               fluid
-              label={t('wallet_panel_password_label')}
+              label={t('wallet:wallet_panel_password_label')}
               onChange={this.onChange}
               onKeyPress={this.onKeyPress}
               type="password"
