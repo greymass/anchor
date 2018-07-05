@@ -259,6 +259,7 @@ class Producers extends Component<Props> {
                    once={false}
                  >
                    <ProducersTable
+                     actions={actions}
                      addProducer={this.addProducer.bind(this)}
                      amount={amount}
                      attached="top"
