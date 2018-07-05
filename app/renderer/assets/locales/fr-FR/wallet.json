@@ -30,6 +30,7 @@
   "wallet_status_resources_usage": "Usage",
   "wallet_status_tab_token_balances": "Soldes de Tokens",
   "wallet_status_tab_staked": "EOS Attribué",
+  "wallet_status_tab_account_history": "Account History",
   "wallet_status_tab_account_data": "Données du compte",
   "wallet_panel_form_create_wallet_header": "Import de votre Compte",
   "wallet_panel_form_create_wallet_body": "Pour utiliser eos-voter, entrez votre nom de compte et votre clé privée.",
