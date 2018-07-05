@@ -30,6 +30,7 @@ export default class Wallet extends Component<Props> {
       actions,
       accounts,
       balances,
+      chain,
       globals,
       keys,
       settings,
@@ -63,6 +64,7 @@ export default class Wallet extends Component<Props> {
               actionHistories={actionHistories}
               accounts={accounts}
               balances={balances}
+              chain={chain}
               globals={globals}
               keys={keys}
               settings={settings}
