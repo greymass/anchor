@@ -30,6 +30,7 @@
   "wallet_status_resources_usage": "使用量",
   "wallet_status_tab_token_balances": "トークン残高",
   "wallet_status_tab_staked": "ステーク中のEOS",
+  "wallet_status_tab_account_history": "Account History",
   "wallet_status_tab_account_data": "アカウントデータ",
   "wallet_panel_form_create_wallet_header": "アカウントをインポートする",
   "wallet_panel_form_create_wallet_body": "eos-voterを使用するには、アカウント名と秘密鍵を入力してください。",
