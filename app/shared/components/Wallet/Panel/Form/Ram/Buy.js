@@ -93,7 +93,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const decBaseBal = Decimal(globals.ram.base_balance);
     const decQuoteBal = Decimal(globals.ram.quote_balance);
-    const decValueInBytes = Decimal(value).times(1000);
+    const decValueInBytes = Decimal(parseFloat(value)).times(1000);
 
     let priceOfRam = 0;
 
