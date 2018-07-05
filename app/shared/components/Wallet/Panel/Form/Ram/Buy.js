@@ -137,7 +137,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
       return 'ram_has_to_be_over_minimum_value';
     }
 
-    if (Decimal(balance.EOS).lessThan(priceOfRam)) {
+    if (!balance.EOS || Decimal(balance.EOS).lessThan(priceOfRam)) {
       return 'not_enough_balance';
     }
 
