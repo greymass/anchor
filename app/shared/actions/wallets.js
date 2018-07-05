@@ -43,7 +43,6 @@ export function useWallet(account) {
       type: types.WALLET_LOCK
     });
     if (wallet.mode !== 'cold') {
-      console.log(wallet)
       // Update the settings for the current account
       dispatch(setSettings({
         account,
