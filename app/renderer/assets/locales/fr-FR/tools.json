@@ -1,14 +1,22 @@
 {
   "tools_title": "Wallet Tools",
   "tools_description": "A set of common tools useful in managing accounts.",
-  "tools_menu_index": "Wallet Tools",
+  "tools_menu_index": "Home",
   "tools_menu_keys": "Key Generator",
   "tools_menu_state": "Wallet State",
+  "tools_menu_wallets": "Manage Wallets",
   "tools_keys_key_generation_header": "Key Pair Generation",
   "tools_keys_key_generation_subheader": "Generate public/private key pair combos for usage throughout EOS.",
   "tools_keys_key_generation_warning_content": "This key generator does NOT save these key pairs within the application. Please ensure you backup these keys in another location if you are planning on using them.",
   "tools_keys_key_generation_new_key": "Generate Key",
   "tools_keys_key_generation_copy_clipboard": "Copy to Clipboard",
   "tools_wallet_state_header": "Local Wallet State",
-  "tools_wallet_state_subheader": "An overview of the local wallet state. This information can be used to help debug the application."
+  "tools_wallet_state_subheader": "An overview of the local wallet state. This information can be used to help debug the application.",
+  "tools_wallets_account": "Accounts",
+  "tools_wallets_mode": "Wallet Mode",
+  "tools_wallets_controls": "Wallet Controls",
+  "tools_wallets_swap": "Use Wallet",
+  "tools_wallets_remove": "Remove Wallet",
+  "tools_wallets_header": "Manage Wallets",
+  "tools_wallets_subheader": "Add, remove, and swap between the various wallets loaded within the app."
 }
