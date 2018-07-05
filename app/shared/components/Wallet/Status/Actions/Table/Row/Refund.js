@@ -9,24 +9,15 @@ class WalletStatusActionsTableRowRefund extends Component<Props> {
       t
     } = this.props;
 
-    const iconStyle = {
-      margin: '5px',
-      marginRight: '20px',
-      float: 'left',
-      verticalAlign: 'top'
-    };
-
     return (
-      <div>
+      <React.Fragment>
         <Icon
+          floated="left"
           name="arrow circle up"
           size="large"
-          style={iconStyle}
         />
-        <div>
-          { t('actions_table_row_refund_text') }
-        </div>
-      </div>
+        { t('actions_table_row_refund_text') }
+      </React.Fragment>
     );
   }
 }
