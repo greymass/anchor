@@ -7,7 +7,7 @@ import FormFieldGeneric from '../../Global/Form/Field/Generic';
 import FormMessageError from '../../Global/Form/Message/Error';
 import ProducersFormProxyConfirming from './Proxy/Confirming';
 
-class WalletPanelFormTransfer extends Component<Props> {
+class ProducersFormProxy extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -138,4 +138,4 @@ class WalletPanelFormTransfer extends Component<Props> {
   }
 }
 
-export default translate('producers')(WalletPanelFormProxy);
+export default translate('producers')(ProducersFormProxy);

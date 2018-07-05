@@ -34,6 +34,7 @@ class ProducersTable extends Component<Props> {
 
   render() {
     const {
+      actions,
       amount,
       globals,
       producers,
@@ -130,9 +131,9 @@ class ProducersTable extends Component<Props> {
           </Grid.Column>
           <Grid.Column width="4">
             <Header size="small">
-              {t('block_producer_eos_staked')}
+              {t('block_producer_table_want_to_proxy')}
               <ProducersTableButtonProxy
-                account={account}
+                actions={actions}
               />
             </Header>
           </Grid.Column>
