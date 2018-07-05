@@ -3,7 +3,7 @@ import { find, forEach } from 'lodash';
 import * as types from './types';
 import { getAccount } from './accounts';
 import { setSettings } from './settings';
-import { encrypt } from './wallet';
+import { encrypt, setWalletMode } from './wallet';
 
 export function importWallet(account, key = false, password = false, mode = 'hot') {
   const data = (key && password) ? encrypt(key, password) : false;
@@ -42,11 +42,12 @@ export function useWallet(account) {
     dispatch({
       type: types.WALLET_LOCK
     });
+    // Set the wallet mode configuration
+    dispatch(setWalletMode(wallet.mode));
     if (wallet.mode !== 'cold') {
       // Update the settings for the current account
       dispatch(setSettings({
-        account,
-        walletMode: wallet.mode
+        account
       }));
       // Update the account in local state
       dispatch(getAccount(account));
