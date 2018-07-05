@@ -14,7 +14,6 @@ class WalletStatusActionsTable extends Component<Props> {
       settings,
       t
     } = this.props;
-
     const loading = (actionHistory.list.length < 1);
     let baseTable = <Table.Body />;
     if (!loading) {
@@ -35,7 +34,7 @@ class WalletStatusActionsTable extends Component<Props> {
     return (
       <Segment basic loading={loading} vertical>
         <Table
-          color="violet"
+          attached
           size="small"
           striped
           style={{ borderRadius: 0 }}
