@@ -13,13 +13,6 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
       data
     } = action.action_trace.act;
 
-    const iconStyle = {
-      margin: '5px',
-      marginRight: '20px',
-      float: 'left',
-      verticalAlign: 'top'
-    };
-
     const stakeToCpuDescription = (data.stake_cpu_quantity !== '0.0000 EOS') ? (
       `${data.stake_cpu_quantity} ${t('actions_table_row_delegatebw_text_two')}`
     ) : '';
@@ -34,16 +27,14 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
       ) : '';
 
     return (
-      <div>
+      <React.Fragment>
         <Icon
+          floated="left"
           name="microchip"
           size="large"
-          style={iconStyle}
         />
-        <div>
-          { `${t('actions_table_row_delegatebw_text_one')} ${stakeToCpuDescription}${stakeConnector}${stakeToNetDescription}.` }
-        </div>
-      </div>
+        { `${t('actions_table_row_delegatebw_text_one')} ${stakeToCpuDescription}${stakeConnector}${stakeToNetDescription}.` }
+      </React.Fragment>
     );
   }
 }
