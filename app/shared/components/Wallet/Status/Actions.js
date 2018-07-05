@@ -109,7 +109,7 @@ class WalletStatusActions extends Component<Props> {
 
     return (
       <div ref={this.handleContextRef}>
-        {(actionHistory) ? (
+        {(actionHistory && actionHistory.list) ? (
           <Grid.Column width={10}>
             {(actionHistory.list.length > 0)
              ? [(
