@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Button, Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import FormFieldAccount from '../../../../Global/Form/Field/Account';
+import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
 import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
 import FormMessageError from '../../../../Global/Form/Message/Error';
