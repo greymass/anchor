@@ -30,6 +30,7 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      settings,
       wallet,
       wallets
     } = this.props;
@@ -40,20 +41,71 @@ class GlobalAccountDropdown extends Component<Props> {
       return false;
     }
     const accounts = wallets.map(wallet => wallet.account).sort();
-    const tagOptions = accounts.map((account) => {
-      return {
-        label: { color: 'black', empty: true, circular: true },
-        onClick: () => this.swapAccount(account),
-        text: account,
-        value: account,
-      };
-    });
+    const tagOptions = wallets
+      .filter(w => w.account !== settings.account)
+      .map((w) => {
+        let icon = {
+          color: 'green',
+          name: 'id card'
+        };
+        switch (w.mode) {
+          case 'cold': {
+            icon = {
+              color: 'blue',
+              name: 'snowflake'
+            };
+            break;
+          }
+          case 'watch': {
+            icon = {
+              color: 'orange',
+              name: 'eye'
+            };
+            break;
+          }
+          default: {
+            // no default
+          }
+        }
+        return {
+          icon,
+          onClick: () => this.swapAccount(w.account),
+          text: w.account,
+          value: w.account,
+        };
+      });
+    let icon = {
+      color: 'green',
+      name: 'id card'
+    };
+    switch (wallet.mode) {
+      case 'cold': {
+        icon = {
+          color: 'blue',
+          name: 'snowflake'
+        };
+        break;
+      }
+      case 'watch': {
+        icon = {
+          color: 'orange',
+          name: 'eye'
+        };
+        break;
+      }
+      default: {
+        // no default
+      }
+    }
     return (
       <Dropdown
-        className="icon"
         item
         labeled
-        text={wallet.account}
+        trigger={(
+          <span>
+            <Icon color={icon.color} name={icon.name} /> {wallet.account}
+          </span>
+        )}
       >
         <Dropdown.Menu>
           <Dropdown.Menu scrolling>
