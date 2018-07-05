@@ -13,7 +13,6 @@ class WalletStatusActionsTableRowTransfer extends Component<Props> {
     const {
       data
     } = action.action_trace.act;
-    console.log(action)
     return (
       <React.Fragment>
         <Icon
