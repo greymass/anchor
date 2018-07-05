@@ -2,7 +2,7 @@ import * as types from '../types';
 
 import eos from '../helpers/eos';
 
-export function voteproducers(producers = []) {
+export function voteproducers(producers = [], proxyAccount = '') {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -13,7 +13,7 @@ export function voteproducers(producers = []) {
     });
     const { account } = settings;
     producers.sort();
-    return eos(connection).voteproducer(account, '', producers)
+    return eos(connection).voteproducer(account, proxyAccount, producers)
       .then((tx) => dispatch({
         payload: { tx, producers },
         type: types.SYSTEM_VOTEPRODUCER_SUCCESS
