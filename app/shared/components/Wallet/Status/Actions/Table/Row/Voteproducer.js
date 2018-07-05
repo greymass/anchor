@@ -6,9 +6,12 @@ import { Icon } from 'semantic-ui-react';
 class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
   render() {
     const {
-      data,
+      action,
       t
     } = this.props;
+    const {
+      data
+    } = action.action_trace.act;
 
     const {
       producers

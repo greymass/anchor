@@ -2,33 +2,44 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import ReactJson from 'react-json-view';
-import { Header, Icon } from 'semantic-ui-react';
+import { Header, Icon, Segment } from 'semantic-ui-react';
+import TimeAgo from 'react-timeago';
+
+import DangerLink from '../../../../../Global/Modal/DangerLink';
 
 class WalletStatusActionsTableRowGeneric extends Component<Props> {
   render() {
     const {
-      act,
+      action,
+      t
     } = this.props;
-
-    const headerStyle = {
-      backgroundColor: '#737373',
-      borderTopLeftRadius: '15px',
-      borderTopRightRadius: '15px',
-      color: 'white',
-      fontSize: '14px',
-      fontweight: '600',
-      height: '40px',
-      marginBottom: '0',
-      padding: '9px'
-    };
-
+    const {
+      act
+    } = action.action_trace;
     return (
       <div>
         <div>
-          <Header style={headerStyle}>
-            <Icon name="clipboard outline" />
-            {`${act.account}   ${act.name}`}
-          </Header>
+          <Segment attached="top" clearing size="small" tertiary>
+            <Header
+              floated="right"
+              size="tiny"
+              style={{ margin: 0 }}
+            >
+              <TimeAgo date={`${action.block_time}z`} />
+              {' - '}
+              <DangerLink
+                content={t('actions_link_content')}
+                link={`https://eospark.com/MainNet/tx/${action.trx_id}`}
+              />
+            </Header>
+            <Header
+              floated="left"
+              size="tiny"
+            >
+              <Icon name="clipboard outline" />
+              {`${act.account}   ${act.name}`}
+            </Header>
+          </Segment>
           <ReactJson
             displayDataTypes={false}
             displayObjectSize={false}
@@ -45,4 +56,3 @@ class WalletStatusActionsTableRowGeneric extends Component<Props> {
 }
 
 export default translate('actions')(WalletStatusActionsTableRowGeneric);
-
