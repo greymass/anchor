@@ -144,6 +144,7 @@ class Welcome extends Component<Props> {
               />
               {(
                 (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
+                && !settings.walletInit
                 && settings.walletMode !== 'cold'
               )
                 ? (
