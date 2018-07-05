@@ -30,6 +30,7 @@
   "wallet_status_resources_usage": "사용",
   "wallet_status_tab_token_balances": "토큰 잔액",
   "wallet_status_tab_staked": "스테이킹된 EOS",
+  "wallet_status_tab_account_history": "Account History",
   "wallet_status_tab_account_data": "계정 정보",
   "wallet_panel_form_create_wallet_header": "계정 불러오기",
   "wallet_panel_form_create_wallet_body": "eos-voter를 사용하여 투표하시려면 계정 이름과 개인 키를 입력하세요.",
