@@ -15,16 +15,18 @@ import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
+import * as BuyRamActions from '../actions/system/buyrambytes';
 import * as ChainActions from '../actions/chain';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';
+import * as SellRamActions from '../actions/system/sellram';
 import * as SettingsActions from '../actions/settings';
-import * as ValidateActions from '../actions/validate';
-import * as WalletActions from '../actions/wallet';
 import * as StakeActions from '../actions/stake';
 import * as TransactionActions from '../actions/transaction';
 import * as TransferActions from '../actions/transfer';
+import * as ValidateActions from '../actions/validate';
 import * as VoteProducerActions from '../actions/system/voteproducer';
+import * as WalletActions from '../actions/wallet';
 
 type Props = {
   actions: {
@@ -185,16 +187,18 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...BuyRamActions,
       ...ChainActions,
       ...GlobalsActions,
       ...ProducersActions,
+      ...SellRamActions,
       ...SettingsActions,
-      ...ValidateActions,
-      ...WalletActions,
       ...StakeActions,
       ...TransactionActions,
       ...TransferActions,
-      ...VoteProducerActions
+      ...ValidateActions,
+      ...VoteProducerActions,
+      ...WalletActions
     }, dispatch)
   };
 }
