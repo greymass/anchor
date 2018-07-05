@@ -12,6 +12,7 @@ import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
+import * as WalletsActions from '../../actions/wallets';
 
 const ecc = require('eosjs-ecc');
 
@@ -55,8 +56,10 @@ class WelcomeKeyContainer extends Component<Props> {
       settings
     } = this.props;
     const {
+      importWallet,
       setSetting,
       setTemporaryKey,
+      useWallet,
       validateKey
     } = actions;
     // Set for temporary usage
@@ -69,7 +72,13 @@ class WelcomeKeyContainer extends Component<Props> {
         break;
       }
       case 'watch': {
+        // Import the watch wallet
+        importWallet(settings.account, false, false, 'watch');
+        // Set this wallet as the used wallet
+        useWallet(settings.account);
+        // Initialize the wallet setting
         setSetting('walletInit', true);
+        // Move on to the voter
         history.push('/voter');
         break;
       }
@@ -317,7 +326,8 @@ function mapDispatchToProps(dispatch) {
       ...AccountActions,
       ...SettingsActions,
       ...ValidateActions,
-      ...WalletActions
+      ...WalletActions,
+      ...WalletsActions
     }, dispatch)
   };
 }
