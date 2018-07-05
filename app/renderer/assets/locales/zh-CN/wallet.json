@@ -30,6 +30,7 @@
   "wallet_status_resources_usage": "用法",
   "wallet_status_tab_token_balances": "令牌余额",
   "wallet_status_tab_staked": "放样的EOS",
+  "wallet_status_tab_account_history": "Account History",
   "wallet_status_tab_account_data": "账户数据",
   "wallet_panel_form_create_wallet_header": "导入您的帐户",
   "wallet_panel_form_create_wallet_body": "要使用eos-voter进行投票,请填写您的账户名称和私钥。",
