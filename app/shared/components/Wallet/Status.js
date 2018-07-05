@@ -111,7 +111,7 @@ class WalletStatus extends Component<Props> {
         <Segment>
           <Menu
             pointing
-            size="large"
+            size="small"
             secondary
           >
             <Menu.Item
