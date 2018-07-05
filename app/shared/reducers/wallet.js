@@ -10,11 +10,11 @@ export default function wallet(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
-    case types.SET_WALLET_KEY: {
+    case types.SET_WALLET_ACTIVE: {
       return Object.assign({}, state, {
         account: action.payload.account,
         data: action.payload.data,
-        version: 1
+        mode: action.payload.mode
       });
     }
     default: {

@@ -7,7 +7,7 @@ import GlobalModalAccountImport from '../../Modal/Account/Import';
 
 class GlobalButtonAccountImport extends Component<Props> {
   state = {
-    open: true
+    open: false
   }
 
   onOpen = () => this.setState({ open: true });
@@ -15,6 +15,7 @@ class GlobalButtonAccountImport extends Component<Props> {
 
   render() {
     const {
+      settings,
       t
     } = this.props;
     const {
@@ -24,12 +25,11 @@ class GlobalButtonAccountImport extends Component<Props> {
       <GlobalModalAccountImport
         onClose={this.onClose}
         open={open}
+        settings={settings}
         trigger={(
           <Button
-            color="purple"
-            content={t('wallet_panel_wallet_unlock')}
-            fluid
-            icon="unlock"
+            content={t('global_button_account_import_action')}
+            icon="circle plus"
             onClick={this.onOpen}
           />
         )}
