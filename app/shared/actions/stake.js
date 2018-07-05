@@ -45,7 +45,7 @@ export function setStake(account, netAmount, cpuAmount) {
     }).then((tx) => {
       setTimeout(() => {
         dispatch(AccountActions.getAccount(account.account_name));
-      }, 500)
+      }, 500);
       return dispatch({
         payload: { tx },
         type: types.SYSTEM_STAKE_SUCCESS
