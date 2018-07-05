@@ -41,6 +41,10 @@ class WalletPanelFormRamSell extends Component<Props> {
     this.interval = setInterval(this.tick.bind(this), 15000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   tick() {
     const {
       actions
