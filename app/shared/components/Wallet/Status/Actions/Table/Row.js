@@ -40,6 +40,8 @@ class WalletStatusActionsTableRow extends Component<Props> {
   render() {
     const {
       action,
+      chain,
+      settings,
       t
     } = this.props;
     const {
@@ -53,7 +55,11 @@ class WalletStatusActionsTableRow extends Component<Props> {
           colSpan={(generic) ? 3 : 1}
           width={(generic) ? 16 : 10}
         >
-          <ComponentType action={action} />
+          <ComponentType
+            action={action}
+            chain={chain}
+            settings={settings}
+          />
         </Table.Cell>
         {(!generic)
           ? (
