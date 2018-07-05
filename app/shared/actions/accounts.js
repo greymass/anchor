@@ -92,6 +92,11 @@ export function getAccount(account = '') {
   };
 }
 
+export function getAccounts(accounts = []) {
+  return (dispatch: () => void) =>
+    forEach(accounts, (account) => dispatch(getAccount(account)));
+}
+
 export function getActions(account, start, offset) {
   return (dispatch: () => void, getState) => {
     const {
