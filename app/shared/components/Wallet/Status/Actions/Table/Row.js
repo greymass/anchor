@@ -48,7 +48,13 @@ class WalletStatusActionsTableRow extends Component<Props> {
       ComponentType,
       generic
     } = this.state;
-
+    const {
+      receipt
+    } = action.action_trace;
+    // Filter out duplicate actions
+    if ([settings.account, 'eosio'].indexOf(receipt.receiver) === -1) {
+      return false;
+    }
     return (
       <Table.Row style={{ height: '60px' }}>
         <Table.Cell
