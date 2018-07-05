@@ -99,6 +99,7 @@ class WalletStatusActions extends Component<Props> {
   render() {
     const {
       actionHistory,
+      chain,
       settings,
       t,
     } = this.props;
@@ -124,6 +125,7 @@ class WalletStatusActions extends Component<Props> {
                    amount={amount}
                    actionHistory={actionHistory}
                    attached="top"
+                   chain={chain}
                    settings={settings}
                  />
                </Visibility>
