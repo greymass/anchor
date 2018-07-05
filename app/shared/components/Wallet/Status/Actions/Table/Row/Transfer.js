@@ -7,31 +7,34 @@ class WalletStatusActionsTableRowTransfer extends Component<Props> {
   render() {
     const {
       action,
+      settings,
       t
     } = this.props;
     const {
       data
     } = action.action_trace.act;
-
-
-    const iconStyle = {
-      margin: '5px',
-      marginRight: '20px',
-      float: 'left',
-      verticalAlign: 'top'
-    };
-
+    console.log(action)
     return (
-      <div>
+      <React.Fragment>
         <Icon
+          floated="left"
           name="arrow circle up"
           size="large"
-          style={iconStyle}
         />
-        <div>
-          {`${t('actions_table_row_transfer_text_one')} ${data.quantity} ${t('actions_table_row_transfer_text_two')} ${data.to}.`}
-        </div>
-      </div>
+        {(data.to === settings.account)
+          ? t('actions_table_row_transfer_received')
+          : t('actions_table_row_transfer_sent')
+        }
+        {' '}
+        <strong>
+          {data.quantity}
+        </strong>
+        {' '}
+        {(data.to === settings.account)
+          ? `${t('actions_table_row_transfer_from')} ${data.from}`
+          : `${t('actions_table_row_transfer_to')} ${data.to}`
+        }
+      </React.Fragment>
     );
   }
 }
