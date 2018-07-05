@@ -30,6 +30,7 @@
   "wallet_status_resources_usage": "Использование ресурсов",
   "wallet_status_tab_token_balances": "Балансы Токенов",
   "wallet_status_tab_staked": "Закреплённые EOS",
+  "wallet_status_tab_account_history": "Account History",
   "wallet_status_tab_account_data": "Учётные данные",
   "wallet_panel_form_create_wallet_header": "Импорт учётной записи",
   "wallet_panel_form_create_wallet_body": "Чтобы использовать приложение, введите имя учётной записи и закрытый ключ.",
