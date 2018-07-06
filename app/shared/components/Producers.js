@@ -47,6 +47,7 @@ class Producers extends Component<Props> {
       previewing: false,
       querying: false,
       selected: [],
+      selected_account: false,
       selected_loaded: false,
       submitting: false,
     };
@@ -59,7 +60,7 @@ class Producers extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
-    const { system } = nextProps;
+    const { settings, system } = nextProps;
     const nextValidate = nextProps.validate;
     // On a new node connection, update props + producers
     if (
@@ -84,7 +85,7 @@ class Producers extends Component<Props> {
       });
     }
     // If no selected are loaded, attempt to retrieve them from the props
-    if (!this.state.selected_loaded) {
+    if (!this.state.selected_loaded || this.state.selected_account !== settings.account) {
       const { accounts, settings } = nextProps;
       // If an account is loaded, attempt to load it's votes
       if (settings.account && accounts[settings.account]) {
@@ -93,6 +94,7 @@ class Producers extends Component<Props> {
           // If the voter_info entry exists, load those votes into state
           this.setState({
             selected: account.voter_info.producers,
+            selected_account: account.account_name,
             selected_loaded: true
           });
         } else {
