@@ -4,7 +4,6 @@ import { Button, Divider, Form, Icon, Segment, Header } from 'semantic-ui-react'
 import { translate } from 'react-i18next';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
-import FormMessageError from '../../Global/Form/Message/Error';
 import ProducersFormProxyConfirming from './Proxy/Confirming';
 
 class ProducersFormProxy extends Component<Props> {
@@ -69,34 +68,21 @@ class ProducersFormProxy extends Component<Props> {
     return false;
   }
 
-  onError = (error) => {
-    let errorMessage;
-
-    if (error !== true) {
-      errorMessage = error;
-    }
-
-    this.setState({
-      submitDisabled: true,
-      formError: errorMessage
-    });
-  }
-
   render() {
     const {
       currentProxyAccount,
       onClose,
+      isProxying,
+      settings,
       system,
       t
     } = this.props;
 
     const {
       confirming,
-      formError,
       proxyAccount,
       submitDisabled
     } = this.state;
-
     return (
       <Form
         loading={system.VOTEPRODUCER === 'PENDING'}
@@ -110,10 +96,11 @@ class ProducersFormProxy extends Component<Props> {
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               proxyAccount={proxyAccount}
+              settings={settings}
             />
           ) : (
             <Segment basic clearing>
-              {(currentProxyAccount) ? (
+              {(isProxying) ? (
                 <Header block size="large">
                   <Icon name="circle info" />
                   <Header.Content>
@@ -125,6 +112,7 @@ class ProducersFormProxy extends Component<Props> {
                 </Header>
               ) : ''}
               <GlobalFormFieldAccount
+                autoFocus
                 label={`${t('producers_form_proxy_label')}:`}
                 name="account"
                 onChange={this.onChange}
@@ -142,7 +130,7 @@ class ProducersFormProxy extends Component<Props> {
                 floated="right"
                 primary
               />
-              {(currentProxyAccount) ? (
+              {(isProxying) ? (
                 <Button
                   content={t('producers_form_proxy_remove')}
                   floated="right"

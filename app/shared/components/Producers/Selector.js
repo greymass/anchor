@@ -10,6 +10,7 @@ export default class ProducersSelector extends Component<Props> {
   render() {
     const {
       account,
+      isProxying,
       modified,
       selected
     } = this.props;
@@ -24,7 +25,8 @@ export default class ProducersSelector extends Component<Props> {
                 size="small"
               >
                 <List.Item key="header">
-                  <Header size="small" textAlign="center">
+                  <Header color="blue" textAlign="center">
+                    {(isProxying) ? t('producer_voter_proxying_vote') : false}
                     <Header.Subheader>
                       {selected.length}/30 {t('producer_voter_votes_used')}
                     </Header.Subheader>
@@ -33,14 +35,16 @@ export default class ProducersSelector extends Component<Props> {
                 {(selected.length)
                   ? selected.map((producer) => (
                     <ProducersSelectorItem
-                      key={producer}
+                      isProxying={isProxying}
+                      key={`${isProxying}-${producer}`}
                       producer={producer}
                       removeProducer={this.props.removeProducer}
                     />
                   ))
                   : (
                     <ProducersSelectorItemEmpty
-                      key="empty"
+                      isProxying={isProxying}
+                      key={`${isProxying}-empty`}
                       modified={modified}
                     />
                   )

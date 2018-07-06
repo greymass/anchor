@@ -9,6 +9,7 @@ class ProducersButtonProxy extends Component<Props> {
   render() {
     const {
       actions,
+      isProxying,
       proxyAccount,
       settings,
       system,
@@ -34,7 +35,9 @@ class ProducersButtonProxy extends Component<Props> {
           <ProducersFormProxy
             actions={actions}
             currentProxyAccount={proxyAccount}
+            isProxying={isProxying}
             key="UnregisterProxyForm"
+            settings={settings}
             system={system}
           />
         )}
