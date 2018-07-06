@@ -140,6 +140,7 @@ class GlobalAccountDropdown extends Component<Props> {
                   content={(
                     <p>{t('global_accounts_dropdown_no_accounts')}</p>
                   )}
+                  key="empty"
                   style={{
                     lineHeight: '1.25em',
                     width: '300px',
