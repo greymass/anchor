@@ -41,17 +41,17 @@ class WalletStatusActionsTableRow extends Component<Props> {
     const {
       action,
       chain,
-      settings,
-      t
+      settings
     } = this.props;
     const {
       ComponentType,
       generic
     } = this.state;
     const {
-      receipt
+      receipt,
+      trx_id
     } = action.action_trace;
-    // Filter out duplicate actions
+    // Filter out duplicate actions returned by API
     if ([settings.account, 'eosio'].indexOf(receipt.receiver) === -1) {
       return false;
     }
@@ -79,7 +79,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
                 width={3}
               >
                 <DangerLink
-                  content={t('actions_link_content')}
+                  content={`${trx_id.substr(0, 4)}...${trx_id.substr(-4)}`}
                   link={`https://eospark.com/MainNet/tx/${action.action_trace.trx_id}`}
                 />
               </Table.Cell>
