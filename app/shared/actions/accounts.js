@@ -67,12 +67,16 @@ export function getAccount(account = '') {
         // Trigger the action to load this accounts balances
         dispatch(getCurrencyBalance(account));
         // PATCH - Force in self_delegated_bandwidth if it doesn't exist
-        const modified = results;
+        const modified = Object.assign({}, results);
         if (!modified.self_delegated_bandwidth) {
           modified.self_delegated_bandwidth = {
             cpu_weight: '0.0000 EOS',
             net_weight: '0.0000 EOS'
           };
+        }
+        // If a proxy voter is set, cache it's data for vote referencing
+        if (modified.voter_info && modified.voter_info.proxy) {
+          dispatch(getAccount(modified.voter_info.proxy));
         }
         // Dispatch the results of the account itself
         return dispatch({
