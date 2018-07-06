@@ -22,14 +22,10 @@ class ToolsProxy extends Component<Props> {
     } = this.props;
 
     const account = accounts[settings.account];
-
-    const {
-      voter_info
-    } = account;
-
-    const {
-      is_proxy
-    } = voter_info;
+    let is_proxy = false;
+    if (account && account.voter_info && account.voter_info.is_proxy) {
+      is_proxy = account.voter_info.is_proxy;
+    }
 
     return (
       <Grid centered>
