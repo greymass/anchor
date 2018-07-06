@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Icon } from 'semantic-ui-react';
 
-class WalletStatusActionsTableRowBuyrambytes extends Component<Props> {
+class WalletStatusActionsTableRowSellram extends Component<Props> {
   render() {
     const {
       action,
@@ -20,10 +20,10 @@ class WalletStatusActionsTableRowBuyrambytes extends Component<Props> {
           name="database"
           size="large"
         />
-        {`${t('actions_table_row_buyrambytes_text_one')} ${(data.bytes/1000).toFixed(3)} Kbs ${t('actions_table_row_of_ram')}.`}
+        {`${t('actions_table_row_sellram_text_one')} ${(data.bytes/1000).toFixed(3)} Kbs ${t('actions_table_row_of_ram')}.`}
       </React.Fragment>
     );
   }
 }
 
-export default translate('actions')(WalletStatusActionsTableRowBuyrambytes);
+export default translate('actions')(WalletStatusActionsTableRowSellram);
