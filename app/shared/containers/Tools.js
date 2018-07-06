@@ -8,6 +8,7 @@ import compose from 'lodash/fp/compose';
 
 import { Tab } from 'semantic-ui-react';
 
+import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
 
 import Tools from '../components/Tools';
@@ -78,11 +79,16 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+<<<<<<< HEAD
       ...WalletsActions,
       ...WalletActions,
       ...RegProxyActions,
       ...UnregProxyActions,
       ...SystemStateActions
+=======
+      ...WalletActions,
+      ...WalletsActions
+>>>>>>> Elevate and Unlock when switching
     }, dispatch)
   };
 }

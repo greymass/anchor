@@ -6,6 +6,8 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
 
+import GlobalButtonElevate from '../Button/Elevate';
+import * as WalletActions from '../../../actions/wallet';
 import * as WalletsActions from '../../../actions/wallets';
 
 class GlobalAccountDropdown extends Component<Props> {
@@ -23,13 +25,17 @@ class GlobalAccountDropdown extends Component<Props> {
   onSearchChange = (e, { searchQuery }) => {
     // console.log(searchQuery);
   }
-  swapAccount = (account) =>  {
+  swapAccount = (account, password = false) =>  {
     const { actions } = this.props;
     actions.useWallet(account);
+    if (password) {
+      actions.unlockWallet(password);
+    }
   }
   render() {
     const {
       settings,
+      validate,
       wallet,
       wallets
     } = this.props;
@@ -40,7 +46,7 @@ class GlobalAccountDropdown extends Component<Props> {
       return false;
     }
     const accounts = wallets.map(wallet => wallet.account).sort();
-    const tagOptions = wallets
+    const options = wallets
       .filter(w => w.account !== settings.account)
       .sort((a, b) => a.account > b.account)
       .map((w) => {
@@ -68,10 +74,15 @@ class GlobalAccountDropdown extends Component<Props> {
           }
         }
         return {
-          icon,
-          onClick: () => this.swapAccount(w.account),
-          text: w.account,
-          value: w.account,
+          props: {
+            icon,
+            onClick: () => {
+              return (w.mode === 'watch') ? this.swapAccount(w.account) : false;
+            },
+            text: w.account,
+            value: w.account,
+          },
+          w
         };
       });
     let icon = {
@@ -109,7 +120,24 @@ class GlobalAccountDropdown extends Component<Props> {
       >
         <Dropdown.Menu>
           <Dropdown.Menu scrolling>
-            {tagOptions.map(option => <Dropdown.Item key={option.value} {...option} />)}
+            {options.map(option => {
+              const {
+                props,
+                w
+              } = option;
+              if (w.mode === 'watch') {
+                return <Dropdown.Item key={option.value} {...props} />;
+              }
+              return (
+                <GlobalButtonElevate
+                  onSuccess={(password) => this.swapAccount(w.account, password)}
+                  settings={settings}
+                  trigger={<Dropdown.Item key={props.value} {...props} />}
+                  validate={validate}
+                  wallet={w}
+                />
+              );
+            })}
           </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
@@ -121,6 +149,7 @@ class GlobalAccountDropdown extends Component<Props> {
 function mapStateToProps(state) {
   return {
     settings: state.settings,
+    validate: state.validate,
     wallet: state.wallet,
     wallets: state.wallets
   };
@@ -129,6 +158,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...WalletActions,
       ...WalletsActions,
     }, dispatch)
   };
