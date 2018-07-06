@@ -7,10 +7,10 @@ export function regproxy() {
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      wallet
+      settings
     } = getState();
 
-    const { account } = wallet;
+    const { account } = settings;
 
     dispatch({
       type: types.SYSTEM_REGPROXY_PENDING

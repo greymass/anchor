@@ -21,7 +21,7 @@ class ToolsProxy extends Component<Props> {
       t
     } = this.props;
 
-    const account = accounts[wallet.account];
+    const account = accounts[settings.account];
 
     const {
       voter_info
@@ -61,7 +61,7 @@ class ToolsProxy extends Component<Props> {
                   </p>
                   <Divider />
                   <p>
-                    {wallet.account}
+                    {settings.account}
                   </p>
                   <Divider />
                   <ToolsProxyButtonUnregister
