@@ -13,6 +13,7 @@
   "global_account_import_select_accounts": "Select one or more accounts to import with this private key",
   "global_account_import_watch_description": "Import an account as a Watch Wallet, which can monitor the account and create unsigned transactions.",
   "global_account_import_watch_account": "Account Name",
+  "global_accounts_dropdown_no_accounts": "No additional wallets created. To get started go to 'Tools', then 'Manage Wallets'.",
   "global_button_account_import_action": "Import Account(s)",
   "global_account_import_watch_account_not_found": "Account not found!",
   "global_account_import_private_requires_hot_header": "This action requires an existing Hot Wallet.",
