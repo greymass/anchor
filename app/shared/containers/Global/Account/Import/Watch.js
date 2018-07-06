@@ -117,7 +117,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
             ? (
               <Segment stacked color="blue">
                 {(selected.map((account) => (
-                  <p>
+                  <div key={account}>
                     <Checkbox
                       checked
                       label={account}
@@ -135,7 +135,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
                         />
                       )
                     }
-                  </p>
+                  </div>
                 )))}
               </Segment>
             )
