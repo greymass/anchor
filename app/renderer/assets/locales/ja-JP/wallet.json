@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "キーに一致するアカウントがありません",
   "wallet_account_lookup_modal_key_invalid": "入力されたキーは有効なEOSの公開鍵ではありません。",
   "wallet_actions": "ウォレットの操作",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "警告: 危険ゾーン",
   "wallet_status_balances": "ウォレット残高",
   "wallet_status_balances_none": "このウォレットにはトークン残高がありません。",
