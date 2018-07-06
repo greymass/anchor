@@ -1,15 +1,15 @@
 {
-  "contract_terms": "By completing this transaction, I agree to the following terms (click to expand)...",
-  "system_transfer_title": "Transfer Terms & Conditions",
-  "system_transfer_1": "I, {{from}}, certify the following to be true to the best of my knowledge:",
-  "system_transfer_2": "1. I certify that {{quantity}} is not the proceeds of fraudulent or violent activities.",
-  "system_transfer_3": "2. I certify that, to the best of my knowledge, {{to}} is not supporting initiation of violence against others.",
-  "system_transfer_4": "3. I have disclosed any contractual terms & conditions with respect to {{quantity}} to {{to}}.",
-  "system_transfer_5": "I understand that funds transfers are not reversible after the {{transaction.delay}} seconds or other delay as configured by {{from}}'s permissions.",
-  "system_transfer_6": "If this action fails to be irreversibly confirmed after receiving goods or services from '{{to}}', I agree to either return the goods or services or resend {{quantity}} in a timely manner.",
-  "system_voteproducer_1": "The intent of the 'voteproducer' action is to cast a valid vote for up to 30 BP candidates.",
-  "system_voteproducer_2": "As an authorized party I {{ signer }} wish to vote on behalf of {{ voter }} in favor of the block producer candidates '{{ producers }}' with a voting weight equal to all tokens currently owned by {{ voter }} and staked for CPU or bandwidth.",
-  "system_voteproducer_3": "If I am not the beneficial owner of these shares I stipulate I have proof that I’ve been authorized to vote these shares by their beneficial owner(s).",
-  "system_voteproducer_4": "I stipulate I have not and will not accept anything of value in exchange for these votes, on penalty of confiscation of these tokens, and other penalties.",
-  "system_voteproducer_5": "I acknowledge that using any system of automatic voting, re-voting, or vote refreshing, or allowing such a system to be used on my behalf or on behalf of another, is forbidden and doing so violates this contract."
+  "contract_terms": "Выполнив эту транзакцию, я соглашаюсь со следующими условиями (нажмите, чтобы развернуть)...",
+  "system_transfer_title": "Условия Перевода",
+  "system_transfer_1": "Я, {{from}}, подтверждаю следующее, насколько мне известно:",
+  "system_transfer_2": "1. Я удостоверяю, что {{quantity}} не является доходом от мошеннической или насильственной деятельности.",
+  "system_transfer_3": "2. Я подтверждаю, что, насколько мне известно, {{to}} не поддерживает инициирование насилия в отношении других.",
+  "system_transfer_4": "3. Я раскрыл {{to}} любые договорные условия в отношении {{quantity}}.",
+  "system_transfer_5": "Я понимаю, что переводы средств не являются обратимыми после {{transaction.delay}} секунды или другой задержке, настроенной с разрешениями {{from}}.",
+  "system_transfer_6": "Если эта транзакция не будет необратимо подтверждена в блокцепи после получения товаров или услуг от \"{{to}}\", я соглашаюсь либо вернуть товары или услуги, либо отправить {{quantity}} повторно, своевременно.",
+  "system_voteproducer_1": "Цель действия \"voteproducer\" - проголосовать за 0 до 30 кандидатов в Продюсеры Блоков.",
+  "system_voteproducer_2": "Как уполномоченная партия я {{signer}} хочу проголосовать от имени {{voter}} в пользу кандидатов в Производителей Блоков \"{{producers}}\" с весом голосования, равным всем токенам, в настоящее время принадлежащим {{voter}} и фиксированными для резервации части процессорных мощностей или пропускной способности блокцепи.",
+  "system_voteproducer_3": "Если я не являюсь бенефициарным владельцем этих токенов, я оговариваю, что у меня есть доказательство того, что я был уполномочен голосовать за эти токены их бенефициарным владельцем или владельцами.",
+  "system_voteproducer_4": "Я оговариваю, что не имею и не буду принимать ничего ценного в обмен на эти голоса, в случае нарушения этого условия возможен штраф в виде конфискации этих токенов и других штрафов.",
+  "system_voteproducer_5": "Я признаю, что использование любой системы автоматического голосования, повторного голосования или обновления голосов или разрешение такой системе использоваться от моего имени или от имени другого лица запрещено и нарушает настоящий договор."
 }
