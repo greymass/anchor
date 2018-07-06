@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Icon, Segment } from 'semantic-ui-react';
+import { Button, Divider, Form, Icon, Segment, Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import FormFieldGeneric from '../../Global/Form/Field/Generic';
@@ -96,6 +96,7 @@ class ProducersFormProxy extends Component<Props> {
 
   render() {
     const {
+      currentProxyAccount,
       onClose,
       system,
       t
@@ -117,15 +118,21 @@ class ProducersFormProxy extends Component<Props> {
         {(confirming)
           ? (
             <ProducersFormProxyConfirming
+              currentProxyAccount={currentProxyAccount}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               proxyAccount={proxyAccount}
             />
           ) : (
             <Segment basic clearing>
+              {(currentProxyAccount) ? (
+                <Header style={{ lineHeight: '50px', textAlign: 'center' }}>
+                  {`${t('producers_table_votes_proxied')} ${currentProxyAccount}.`}
+                </Header>
+              ) : ''}
               <FormFieldGeneric
                 icon="x"
-                label={t('producers_form_proxy_label')}
+                label={`${t('producers_form_proxy_label')}:`}
                 loading={false}
                 name="memo"
                 onChange={this.onChange}
@@ -147,12 +154,14 @@ class ProducersFormProxy extends Component<Props> {
                 floated="right"
                 primary
               />
-              <Button
-                content={t('producers_form_proxy_remove')}
-                floated="right"
-                onClick={this.onRemove}
-                color="red"
-              />
+              {(currentProxyAccount) ? (
+                <Button
+                  content={t('producers_form_proxy_remove')}
+                  floated="right"
+                  onClick={this.onRemove}
+                  color="red"
+                />
+              ) : ''}
             </Segment>
           )}
       </Form>
