@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "키에 일치하는 계정이 없습니다.",
   "wallet_account_lookup_modal_key_invalid": "입력한 키는 유효한 EOS 공개 키가 아닙니다.",
   "wallet_actions": "지갑 기능",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "경고: 조심하십시오",
   "wallet_status_balances": "지갑 잔액",
   "wallet_status_balances_none": "이 지갑에는 토큰 잔액이 없습니다.",
