@@ -1,15 +1,20 @@
 {
-  "transfer_button_cta": "Послать Токены",
-  "transfer_modal_title": "Передача Токенов",
-  "transfer_modal_transaction_successful_title": "Передача прошла успешно!",
+  "transfer_send_button_cta": "Отправить Токены",
+  "transfer_receive_button_cta": "Получить Токены",
+  "transfer_modal_title": "Отправить Токены",
+  "transfer_modal_transaction_successful_title": "Перевод прошёл успешно!",
   "transfer_modal_transaction_successful_message": "Запрошенная транзакция обработана. Идентификатор транзакции можно найти ниже.",
   "transfer_confirming_title": "Просмотрите свою транзакцию",
-  "transfer_confirming_body": "Убедитесь, что пункт назначения, количество и памятка для этого перевода действительны.",
+  "transfer_confirming_body": "Пожалуйста, убедитесь, что пункт назначения, количество и памятка для этого перевода действительны.",
   "transfer_warning_irreversible_title": "Транзакции являются необратимыми",
-  "transfer_warning_irreversible_body": "Как только эта транзакция будет отправлена, она не может быть отменена.",
+  "transfer_warning_irreversible_body": "Как только эта транзакция отправлена, она не может быть отменена.",
   "transfer_label_from": "Источник",
   "transfer_label_to": "Получатель",
   "transfer_label_quantity": "Количество",
-  "transfer_label_token_and_quantity": "Выбор Токена + Количество",
-  "transfer_label_memo": "Памятка"
+  "transfer_label_token_and_quantity": "Выбор Токена",
+  "transfer_label_memo": "Памятка",
+  "transfer_label_send": "Здесь вы можете отправлять токены на другой счёт. Заполните форму ниже и нажмите подтвердить.",
+  "transfer_label_receive": "Чтобы получить токены на свой счет, следуйте инструкциям ниже.",
+  "transfer_receive_modal_title": "Получить Токены",
+  "transfer_receive_body": "Для получения токенов просто дайте следующее имя учетной записи отправителю."
 }
