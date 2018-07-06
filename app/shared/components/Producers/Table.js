@@ -34,20 +34,25 @@ class ProducersTable extends Component<Props> {
 
   render() {
     const {
+      account,
       actions,
       amount,
       globals,
+      keys,
       producers,
       selected,
+      system,
       t,
       validUser
     } = this.props;
+
     const {
       query
     } = this.state;
     const {
       current
     } = globals;
+    const proxyAccount = account.voter_info.proxy;
     const activatedStake = (current.total_activated_stake)
       ? parseInt(current.total_activated_stake / 10000, 10)
       : 0;
@@ -117,7 +122,7 @@ class ProducersTable extends Component<Props> {
     return (
       <Segment basic loading={loading} vertical>
         <Grid>
-          <Grid.Column width="6">
+          <Grid.Column width="7">
             <Header size="small">
               {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
               <Header.Subheader>
@@ -131,13 +136,23 @@ class ProducersTable extends Component<Props> {
           </Grid.Column>
           <Grid.Column width="4">
             <Header size="small">
-              {t('block_producer_table_want_to_proxy')}
-              <ProducersTableButtonProxy
-                actions={actions}
-              />
+              {(proxyAccount)
+                ? (
+                  `${t('producers_table_votes_proxied')} ${proxyAccount}`
+                ) : ''}
+
+              {((keys && keys.key))
+                ? (
+                  <ProducersTableButtonProxy
+                    actions={actions}
+                    proxyAccount={proxyAccount}
+                    system={system}
+                  />
+                ) : ''}
+
             </Header>
           </Grid.Column>
-          <Grid.Column width="6" textAlign="right">
+          <Grid.Column width="4" textAlign="right">
             <Input
               icon="search"
               onChange={this.onSearchChange}

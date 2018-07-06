@@ -27,6 +27,15 @@ class ProducersFormProxy extends Component<Props> {
     this.setState(newState);
   }
 
+  onRemove = (e) => {
+    this.setState({ proxyAccountName: '' }, () => {
+      this.onSubmit();
+    });
+
+    e.preventDefault();
+    return false;
+  }
+
   onConfirm = () => {
     const {
       proxyAccountName
@@ -43,7 +52,7 @@ class ProducersFormProxy extends Component<Props> {
     });
   }
 
-  onCancel = (e) => {
+  onBack = (e) => {
     this.setState({
       confirming: false
     });
@@ -101,14 +110,15 @@ class ProducersFormProxy extends Component<Props> {
         {(confirming)
           ? (
             <ProducersFormProxyConfirming
-              proxyAccountName={proxyAccountName}
+              onBack={this.onBack}
               onConfirm={this.onConfirm}
+              proxyAccountName={proxyAccountName}
             />
           ) : (
             <Segment basic clearing>
               <FormFieldGeneric
                 icon="x"
-                label={t('transfer_label_memo')}
+                label={t('producers_form_proxy_label')}
                 loading={false}
                 name="memo"
                 onChange={this.onChange}
@@ -118,19 +128,25 @@ class ProducersFormProxy extends Component<Props> {
               <FormMessageError
                 error={formError}
               />
-
               <Divider />
-              <Button
-                content={t('confirm')}
-                disabled={submitDisabled}
-                floated="right"
-                primary
-              />
               <Button
                 onClick={onClose}
               >
-                <Icon name="x" /> {t('cancel')}
+                <Icon name="x" /> {t('close')}
               </Button>
+              <Button
+                content={t('producers_form_proxy_confirm')}
+                disabled={submitDisabled}
+                floated="right"
+                onClick={onRemove}
+                primary
+              />
+              <Button
+                content={t('producers_form_proxy_remove')}
+                disabled={submitDisabled}
+                floated="right"
+                color="red"
+              />
             </Segment>
           )}
       </Form>

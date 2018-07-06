@@ -119,7 +119,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
         <Divider />
         <Button
-          onClick={onBack}
+          onClick={onClose}
         >
           <Icon name="arrow left" /> {t('back')}
         </Button>

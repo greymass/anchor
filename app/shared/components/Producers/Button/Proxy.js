@@ -9,18 +9,27 @@ class ToolsButtonUnregister extends Component<Props> {
   render() {
     const {
       actions,
+      proxyVoter,
       settings,
       system,
       t
     } = this.props;
 
+    let buttonText;
+
+    if (proxyVoter) {
+      buttonText = t('producers_button_proxy_change_text');
+    } else {
+      buttonText = t('producers_button_proxy_setup_text');
+    }
+
     return (
       <GlobalTransactionModal
-        actionName="UNREGPROXY"
+        actionName="VOTEPRODUCER"
         actions={actions}
         button={{
           color: 'green',
-          content: t('producers_button_proxy_text'),
+          content: buttonText,
           icon: 'share square'
         }}
         content={(
