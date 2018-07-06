@@ -18,6 +18,7 @@
   "actions_table_row_transfer_sent": "Sent",
   "actions_table_row_transfer_from": "from",
   "actions_table_row_transfer_to": "to",
+  "actions_table_row_transfer_memo": "Memo",
   "actions_table_row_undelegatebw_text_one": "You unstaked",
   "actions_table_row_undelegatebw_text_three": "from Bandwidth",
   "actions_table_row_undelegatebw_text_two": "from CPU",
