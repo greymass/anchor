@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "Nessun account trovato con questa chiave",
   "wallet_account_lookup_modal_key_invalid": "La chiave inserita non è una chiave pubblica EOS valida.",
   "wallet_actions": "Opzioni Portafoglio",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "Attenzione: Pericolo",
   "wallet_status_balances": "Saldi del portafoglio",
   "wallet_status_balances_none": "Questo Portafoglio non ha bilanci",
