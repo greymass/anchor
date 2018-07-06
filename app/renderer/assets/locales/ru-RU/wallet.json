@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "Учётных записей с совпадающим ключом не найдено",
   "wallet_account_lookup_modal_key_invalid": "Введенный ключ не является действительным открытым ключом EOS",
   "wallet_actions": "Действия Кошелька",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "Предупреждение: Опасная Зона",
   "wallet_status_balances": "Балансы Кошелька",
   "wallet_status_balances_none": "Этот кошелек не имеет баланса.",
