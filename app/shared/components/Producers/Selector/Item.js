@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import { Button, List } from 'semantic-ui-react';
 
-export default class ProducersSelectorItemEmpty extends Component<Props> {
+export default class ProducersSelectorItem extends Component<Props> {
   render() {
     const {
+      isProxying,
       producer,
       removeProducer
     } = this.props;
@@ -13,6 +14,7 @@ export default class ProducersSelectorItemEmpty extends Component<Props> {
         <List.Content>
           <Button
             color="red"
+            disabled={isProxying}
             icon="circle minus"
             onClick={() => removeProducer(producer)}
             size="tiny"
