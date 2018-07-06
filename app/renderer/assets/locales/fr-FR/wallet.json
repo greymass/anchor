@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "Aucun compte trouvé avec votre clé",
   "wallet_account_lookup_modal_key_invalid": "La clé entrée n'est pas une clé publique de EOS.",
   "wallet_actions": "Actions de portefeuille",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "Attention: Zone Dangereuse",
   "wallet_status_balances": "Soldes",
   "wallet_status_balances_none": "Le solde de votre compte est trop bas.",
@@ -28,9 +29,10 @@
   "wallet_status_resources_staked": "Attribué",
   "wallet_status_resources_delegated": "Délégué",
   "wallet_status_resources_usage": "Usage",
-  "wallet_status_tab_token_balances": "Soldes de Tokens",
+  "wallet_status_tab_token_balances": "Balances",
   "wallet_status_tab_staked": "EOS Attribué",
-  "wallet_status_tab_account_data": "Données du compte",
+  "wallet_status_tab_account_history": "History",
+  "wallet_status_tab_account_data": "Data",
   "wallet_panel_form_create_wallet_header": "Import de votre Compte",
   "wallet_panel_form_create_wallet_body": "Pour utiliser eos-voter, entrez votre nom de compte et votre clé privée.",
   "wallet_panel_form_will_save": "Le nom du compte et la clé privée seront cryptés et sauvegardés. Le mot de passe sera nécessaire pour déverrouiller l'application dans le futur.",
@@ -61,6 +63,7 @@
   "wallet_status_add_custom_token_header": "Token Balances",
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
+  "wallet_mode_explain_hot": "This wallet is running as a 'Hot' wallet, meaning it can create, sign, and broadcast transactions without the assistance of any other wallet.",
   "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
   "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet."
 }

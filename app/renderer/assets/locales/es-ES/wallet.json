@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "No accounts found matching key",
   "wallet_account_lookup_modal_key_invalid": "The key entered is not a valid EOS public key.",
   "wallet_actions": "Wallet Actions",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "Warning: Danger Zone",
   "wallet_status_balances": "Wallet Balances",
   "wallet_status_balances_none": "This wallet has no token balances.",
@@ -28,9 +29,10 @@
   "wallet_status_resources_staked": "Staked",
   "wallet_status_resources_delegated": "Delegated",
   "wallet_status_resources_usage": "Usage",
-  "wallet_status_tab_token_balances": "Token Balances",
+  "wallet_status_tab_token_balances": "Balances",
   "wallet_status_tab_staked": "Staked EOS",
-  "wallet_status_tab_account_data": "Account Data",
+  "wallet_status_tab_account_history": "History",
+  "wallet_status_tab_account_data": "Data",
   "wallet_panel_form_create_wallet_header": "Import your Account",
   "wallet_panel_form_create_wallet_body": "To use eos-voter to vote, fill in your account name and private key.",
   "wallet_panel_form_will_save": "The account name and private key will be encrypted and saved in the application. The password will be required to unlock the key for usage.",
@@ -61,6 +63,7 @@
   "wallet_status_add_custom_token_header": "Token Balances",
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
+  "wallet_mode_explain_hot": "This wallet is running as a 'Hot' wallet, meaning it can create, sign, and broadcast transactions without the assistance of any other wallet.",
   "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
   "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet."
 }
