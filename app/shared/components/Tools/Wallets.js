@@ -5,6 +5,7 @@ import { translate } from 'react-i18next';
 import { Button, Header, Label, Popup, Segment, Table } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
+import GlobalButtonElevate from '../../containers/Global/Button/Elevate';
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 
 class ToolsWallets extends Component<Props> {
@@ -20,6 +21,7 @@ class ToolsWallets extends Component<Props> {
     const {
       settings,
       t,
+      validate,
       wallet,
       wallets
     } = this.props;
@@ -77,12 +79,30 @@ class ToolsWallets extends Component<Props> {
                         icon="random"
                         onClick={() => this.swapWallet(account.account)}
                       />
-                      <Button
-                        color="red"
-                        disabled={(account.account === wallet.account)}
-                        icon="trash"
-                        onClick={() => this.removeWallet(account.account)}
-                      />
+                      {(account.mode === 'watch')
+                        ? (
+                          <Button
+                            color="red"
+                            disabled={(account.account === wallet.account)}
+                            icon="trash"
+                            onClick={() => this.removeWallet(account.account)}
+                          />
+                        )
+                        : (
+                          <GlobalButtonElevate
+                            onSuccess={() => this.removeWallet(account.account)}
+                            settings={settings}
+                            trigger={(
+                              <Button
+                                color="red"
+                                disabled={(account.account === wallet.account)}
+                                icon="trash"
+                              />
+                            )}
+                            validate={validate}
+                          />
+                        )
+                      }
                     </Table.Cell>
                   </Table.Row>
             )))}
