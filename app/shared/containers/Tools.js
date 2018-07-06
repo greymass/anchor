@@ -57,6 +57,7 @@ function mapStateToProps(state) {
     app: state.app,
     keys: state.keys,
     settings: state.settings,
+    validate: state.validate,
     wallet: state.wallet,
     wallets: state.wallets
   };
