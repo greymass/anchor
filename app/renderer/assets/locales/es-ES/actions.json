@@ -1,6 +1,6 @@
 {
   "actions_link_content": "View Transaction",
-  "actions_table_warning_content": "Depending on the API node you are connected to, the history of your account many vary. If results are missing, either change the API node you connect to or verify your account history on an external block explorer using the link below.",
+  "actions_table_warning_content": "Depending on the API node you are connected to, the history of your account may vary. If results are missing, either change the API node you connect to or verify your account history on an external block explorer using the link below.",
   "actions_table_warning_header": "Missing Transactions?",
   "actions_table_view_explorer": "View Account on Block Explorer",
   "actions_table_header_one": "Past Actions",
@@ -18,6 +18,7 @@
   "actions_table_row_transfer_sent": "Sent",
   "actions_table_row_transfer_from": "from",
   "actions_table_row_transfer_to": "to",
+  "actions_table_row_transfer_memo": "Memo",
   "actions_table_row_undelegatebw_text_one": "You unstaked",
   "actions_table_row_undelegatebw_text_three": "from Bandwidth",
   "actions_table_row_undelegatebw_text_two": "from CPU",
