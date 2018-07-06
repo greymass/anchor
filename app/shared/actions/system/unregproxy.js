@@ -7,9 +7,9 @@ export function unregproxy() {
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      wallet
+      settings
     } = getState();
-    const { account } = wallet;
+    const { account } = settings;
 
     dispatch({
       type: types.SYSTEM_UNREGPROXY_PENDING
