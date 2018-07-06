@@ -13,8 +13,8 @@ export default class GlobalFormFieldAccount extends Component<Props> {
     };
   }
   onChange = (e, { name, value }) => {
-    const parsed = value.trim();
-    const valid = !!(parsed.match(/[A-z]/g));
+    const parsed = value.trim().toLowerCase();
+    const valid = !!(parsed.match(/^[a-z12345.]+$/g));
     this.setState({
       value: parsed
     }, () => {
