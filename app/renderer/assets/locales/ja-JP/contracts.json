@@ -11,5 +11,10 @@
   "system_voteproducer_2": "承認された当事者として私{{ signer }}は、ブロックプロデューサ候補'{{ producers }}'を支持し、{{ voter }}に代わって{{ voter }}が持つすべてのトークンおよびCPUまたは帯域へステークしているトークンと等しい投票加重で投票することを望みます。",
   "system_voteproducer_3": "私がこれらのトークンの実質的な所有者ではない場合は、私は実質的な所有者からこれらのトークンを投票する許可を得ていることを証明できることを約束します。",
   "system_voteproducer_4": "私は、これらのトークンの規約違反やその他の規約違反となるような、この投票に対する何らかの対価を受け入れていないことを約束します。",
-  "system_voteproducer_5": "私は、何らかの自動化された投票、再投票、投票更新のシステムを使用することや、またはそのようなシステムを自分または他者の代わりに使用することが禁止されており、この契約に違反することに同意します。"
+  "system_voteproducer_5": "私は、何らかの自動化された投票、再投票、投票更新のシステムを使用することや、またはそのようなシステムを自分または他者の代わりに使用することが禁止されており、この契約に違反することに同意します。",
+  "system_buyrambytes_1": "This action will attempt to reserve about {{bytes}} bytes of RAM on behalf of {{receiver}}.",
+  "system_buyrambytes_2": "{{buyer}} authorizes this contract to transfer sufficient EOS tokens to buy the RAM based upon the current price as determined by the market maker algorithm.",
+  "system_buyrambytes_3": "{{buyer}} accepts that a 0.5% fee will be charged on the EOS spent and that the actual RAM received may be slightly less than requested due to the approximations necessary to enable this service. {{buyer}} accepts that a 0.5% fee will be charged if and when they sell the RAM received. {{buyer}} accepts that rounding errors resulting from limits of computational precision may result in less RAM being allocated. {{buyer}} acknowledges that the supply of RAM may be increased at any time up to the limits of off-the-shelf computer equipment and that this may result in RAM selling for less than purchase price. {{buyer}} acknowledges that the price of RAM may increase or decrease over time according to supply and demand. {{buyer}} acknowledges that RAM is non-transferable. {{buyer}} acknowledges RAM currently in use by their account cannot be sold until it is freed and that freeing RAM may be subject to terms of other contracts.",
+  "system_sellrambytes_1": "The sellram action sells unused RAM for tokens.",
+  "system_sellrambytes_2": "As an authorized party I {{ signer }} wish to sell {{ bytes }} of unused RAM from account {{ account }}."
 }
