@@ -114,8 +114,14 @@ class ProducersFormProxy extends Component<Props> {
           ) : (
             <Segment basic clearing>
               {(currentProxyAccount) ? (
-                <Header style={{ lineHeight: '50px', textAlign: 'center' }}>
-                  {`${t('producers_table_votes_proxied')} ${currentProxyAccount}.`}
+                <Header block size="large">
+                  <Icon name="circle info" />
+                  <Header.Content>
+                    <Header.Subheader>
+                      {t('producers_table_votes_proxied')}
+                    </Header.Subheader>
+                    {currentProxyAccount}
+                  </Header.Content>
                 </Header>
               ) : ''}
               <GlobalFormFieldAccount
