@@ -30,6 +30,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://eosapi.blockmatrix.network - operated by [Block Matrix](https://blockmatrix.network)
 - https://user-api.eoseoul.io - operated by [EOSeoul](https://portal.eoseoul.io/)
 - https://api.eos.bitspace.no - operated by [Bitspace](https://eos.bitspace.no/)
+- https://node.eosflare.io - operated by [EOS Flare](https://eosflare.io/)
 
 ### Additions
 
