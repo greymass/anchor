@@ -9,10 +9,11 @@ export function voteproducers(producers = [], proxyAccount = '') {
       settings
     } = getState();
     dispatch({
-      type: types.SYSTEM_VOTEPRODUCER_REQUEST
+      type: types.SYSTEM_VOTEPRODUCER_PENDING
     });
     const { account } = settings;
     producers.sort();
+
     return eos(connection).voteproducer(account, proxyAccount, producers)
       .then((tx) => dispatch({
         payload: { tx, producers },

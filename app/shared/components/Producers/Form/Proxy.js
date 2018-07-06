@@ -12,19 +12,25 @@ class ProducersFormProxy extends Component<Props> {
     super(props);
     this.state = {
       confirming: false,
-      proxyAccountName: ''
+      formError: '',
+      proxyAccountName: '',
+      submitDisabled: true
     };
   }
 
   state = {};
 
-  onChange = (e, { name, value }) => {
-    const newState = { [name]: value };
-    if (name === 'quantity') {
-      const [, symbol] = value.split(' ');
-      newState.symbol = symbol;
-    }
-    this.setState(newState);
+  onChange = (e, { value }) => {
+    this.setState({
+      submitDisabled: false,
+      formError: null,
+      proxyAccountName: value
+    }, () => {
+      const error = this.errorsInForm();
+      if (error) {
+        this.onError(error);
+      }
+    });
   }
 
   onRemove = (e) => {
@@ -62,13 +68,13 @@ class ProducersFormProxy extends Component<Props> {
 
   errorsInForm = () => {
     const {
-      username
+      proxyAccountName
     } = this.state;
 
     const usernameRegex = /^[a-z]{12}$/;
 
-    if (!usernameRegex.test(username)) {
-      return 'not_valid_username';
+    if (!usernameRegex.test(proxyAccountName)) {
+      return 'not_valid_account_name';
     }
 
     return false;
@@ -103,7 +109,7 @@ class ProducersFormProxy extends Component<Props> {
 
     return (
       <Form
-        loading={system.SETPROXY === 'PENDING'}
+        loading={system.VOTEPRODUCER === 'PENDING'}
         onKeyPress={this.onKeyPress}
         onSubmit={this.onSubmit}
       >
@@ -138,13 +144,12 @@ class ProducersFormProxy extends Component<Props> {
                 content={t('producers_form_proxy_confirm')}
                 disabled={submitDisabled}
                 floated="right"
-                onClick={onRemove}
                 primary
               />
               <Button
                 content={t('producers_form_proxy_remove')}
-                disabled={submitDisabled}
                 floated="right"
+                onClick={this.onRemove}
                 color="red"
               />
             </Segment>
