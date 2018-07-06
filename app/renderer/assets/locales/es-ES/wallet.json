@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "No accounts found matching key",
   "wallet_account_lookup_modal_key_invalid": "The key entered is not a valid EOS public key.",
   "wallet_actions": "Wallet Actions",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "Warning: Danger Zone",
   "wallet_status_balances": "Wallet Balances",
   "wallet_status_balances_none": "This wallet has no token balances.",
