@@ -34,9 +34,8 @@
   "tools_proxy_header_register": "Register as a Proxy Voter",
   "tools_proxy_header_registration": "Proxy Voter Registration",
   "tools_proxy_header_unregister": "Unregister as a Proxy Voter",
-  "tools_proxy_subheader": "People will be able to proxy their voting power to you when you give them your username.",
-  "tools_proxy_text_not_registered": "People will be able to proxy their votes to you if you give them your username.",
-  "tools_proxy_text_registered": "You are registered. People can proxy their votes to you if you give them the following username.",
+  "tools_proxy_text_not_registered": "People will be able to proxy their votes to you if you give them your account name.",
+  "tools_proxy_text_registered": "You are registered. People can proxy their votes to you if you give them the following account name.",
   "tools_title": "Wallet Tools",
   "tools_wallet_state_header": "Local Wallet State",
   "tools_wallet_state_subheader": "An overview of the local wallet state. This information can be used to help debug the application."
