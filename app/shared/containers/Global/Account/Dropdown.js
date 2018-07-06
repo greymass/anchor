@@ -12,8 +12,7 @@ import * as WalletsActions from '../../../actions/wallets';
 
 class GlobalAccountDropdown extends Component<Props> {
   state = { open: false }
-  onClose = (e, data) => {
-    console.log(e, data)
+  onClose = () => {
     this.setState({ open: false });
   }
   onOpen = () => {
@@ -25,7 +24,7 @@ class GlobalAccountDropdown extends Component<Props> {
   onSearchChange = (e, { searchQuery }) => {
     // console.log(searchQuery);
   }
-  swapAccount = (account, password = false) =>  {
+  swapAccount = (account, password = false) => {
     const { actions } = this.props;
     actions.useWallet(account);
     if (password) {
@@ -35,17 +34,14 @@ class GlobalAccountDropdown extends Component<Props> {
   render() {
     const {
       settings,
+      t,
       validate,
       wallet,
       wallets
     } = this.props;
-    const {
-      open
-    } = this.state;
     if (!wallets || wallets.length === 0) {
       return false;
     }
-    const accounts = wallets.map(wallet => wallet.account).sort();
     const options = wallets
       .filter(w => w.account !== settings.account)
       .sort((a, b) => a.account > b.account)
@@ -120,24 +116,40 @@ class GlobalAccountDropdown extends Component<Props> {
       >
         <Dropdown.Menu>
           <Dropdown.Menu scrolling>
-            {options.map(option => {
-              const {
-                props,
-                w
-              } = option;
-              if (w.mode === 'watch') {
-                return <Dropdown.Item key={option.value} {...props} />;
-              }
-              return (
-                <GlobalButtonElevate
-                  onSuccess={(password) => this.swapAccount(w.account, password)}
-                  settings={settings}
-                  trigger={<Dropdown.Item key={props.value} {...props} />}
-                  validate={validate}
-                  wallet={w}
+            {(options.length > 0)
+              ? options.map(option => {
+                const {
+                  props,
+                  w
+                } = option;
+                if (w.mode === 'watch') {
+                  return <Dropdown.Item key={option.value} {...props} />;
+                }
+                return (
+                  <GlobalButtonElevate
+                    onSuccess={(password) => this.swapAccount(w.account, password)}
+                    settings={settings}
+                    trigger={<Dropdown.Item key={props.value} {...props} />}
+                    validate={validate}
+                    wallet={w}
+                  />
+                );
+              })
+              : (
+                <Dropdown.Item
+                  content={(
+                    <p>{t('global_accounts_dropdown_no_accounts')}</p>
+                  )}
+                  style={{
+                    lineHeight: '1.25em',
+                    width: '300px',
+                    maxWidth: '300px',
+                    padding: '1em',
+                    whiteSpace: 'normal'
+                  }}
                 />
-              );
-            })}
+              )
+            }
           </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
