@@ -191,7 +191,7 @@ export function getCurrencyBalance(account) {
               account_name: account,
               contract,
               symbol,
-              tokens: formatBalances(results)
+              tokens: formatBalances(results, symbol)
             }
           }))
           .catch((err) => dispatch({
@@ -207,8 +207,11 @@ export function getCurrencyBalance(account) {
   };
 }
 
-function formatBalances(balances) {
+function formatBalances(balances, forcedSymbol = false) {
   const formatted = {};
+  if (forcedSymbol) {
+    formatted[forcedSymbol] = 0;
+  }
   for (let i = 0; i < balances.length; i += 1) {
     const [amount, symbol] = balances[i].split(' ');
     formatted[symbol] = parseFloat(amount);
