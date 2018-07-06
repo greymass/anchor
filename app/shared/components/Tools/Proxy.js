@@ -34,7 +34,7 @@ class ToolsProxy extends Component<Props> {
     return (
       <Grid centered>
         <Grid.Column width={8} style={{ textAlign: 'center' }} >
-          {(keys && keys.key) ?
+          {(keys && keys.key || settings.walletMode === 'watch') ?
           (
             <div>
               <Header>
