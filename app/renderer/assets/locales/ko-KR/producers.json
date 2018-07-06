@@ -39,5 +39,18 @@
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
   "active_producer": "활동중인 생산자",
-  "backup_producer": "백업 생산자"
+  "backup_producer": "백업 생산자",
+  "producers_table_votes_proxied": "Your votes are currently proxied to",
+  "producers_button_proxy_setup_text": "Setup Proxy",
+  "producers_button_proxy_change_text": "Change Proxy",
+  "producers_form_proxy_header": "Proxy your votes",
+  "producers_form_proxy_label": "Account name of user you wish to proxy your vote to",
+  "producers_form_proxy_confirming_change_text_one": "You are about to proxy your votes to",
+  "producers_form_proxy_confirming_change_text_two": "Whoever owns that account will be casting all your votes for you moving forward.",
+  "producers_form_proxy_confirming_remove_text_one": "You are about to remove",
+  "producers_form_proxy_confirming_remove_text_two": "as your proxy voter. You will now be responsible for casting your own votes.",
+  "producers_form_proxy_cancel": "Cancel",
+  "producers_form_proxy_back": "Cancel",
+  "producers_form_proxy_confirm": "Confirm",
+  "producers_form_proxy_remove": "Remove Proxy Voter"
 }
