@@ -16,6 +16,7 @@ class ProducersFormProxyConfirming extends Component<Props> {
 
   render() {
     const {
+      onBack,
       proxyAccountName,
       t
     } = this.props;
@@ -33,11 +34,12 @@ class ProducersFormProxyConfirming extends Component<Props> {
           color="green"
           floated="right"
           onClick={this.onConfirm}
+          content={t('producers_form_proxy_confirm')}
         />
         <Button
-          onClick={this.onCancel}
+          onClick={onBack}
         >
-          <Icon name="x" /> {t('cancel')}
+          <Icon name="x" /> {t('producers_form_proxy_cancel')}
         </Button>
       </Segment>
     );
