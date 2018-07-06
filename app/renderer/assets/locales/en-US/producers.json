@@ -44,7 +44,7 @@
   "producers_button_proxy_setup_text":"Setup Proxy",
   "producers_button_proxy_change_text":"Change Proxy",
   "producers_form_proxy_header":"Proxy your votes",
-  "producers_form_proxy_label": "Account name of user you wish to proxy your vote to",
+  "producers_form_proxy_label": "account name of user you wish to proxy your vote to",
   "producers_form_proxy_confirming_change_text_one": "You are about to proxy your votes to",
   "producers_form_proxy_confirming_change_text_two": "Whoever owns that account will be casting all your votes for you.",
   "producers_form_proxy_confirming_remove_text": "You are about to remove your proxy voter. You will now be responsible for casting your votes.",
