@@ -259,16 +259,19 @@ class Producers extends Component<Props> {
                    once={false}
                  >
                    <ProducersTable
+                     account={accounts[settings.account]}
                      actions={actions}
                      addProducer={this.addProducer.bind(this)}
                      amount={amount}
                      attached="top"
                      globals={globals}
                      isQuerying={this.isQuerying}
+                     keys={keys}
                      producers={producers}
                      removeProducer={this.removeProducer.bind(this)}
                      resetDisplayAmount={this.resetDisplayAmount}
                      selected={selected}
+                     system={system}
                      validUser={validUser}
                    />
                  </Visibility>
