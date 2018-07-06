@@ -1,8 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Segment, Transition, Table } from 'semantic-ui-react';
+import { Header, Icon, Message, Segment, Transition, Table } from 'semantic-ui-react';
 
+import DangerLink from '../../../Global/Modal/DangerLink';
 import ActionsTableRow from './Table/Row';
 
 class WalletStatusActionsTable extends Component<Props> {
@@ -33,6 +34,25 @@ class WalletStatusActionsTable extends Component<Props> {
     }
     return (
       <Segment basic loading={loading} vertical>
+        <Segment secondary>
+          <Header>
+            <Icon
+              name="external"
+            />
+            <Header.Content>
+              <DangerLink
+                content={t('actions_table_view_explorer')}
+                link={`https://eospark.com/MainNet/account/${settings.account}`}
+              />
+            </Header.Content>
+          </Header>
+        </Segment>
+        <Message
+          content={t('actions_table_warning_content')}
+          header={t('actions_table_warning_header')}
+          icon="warning sign"
+          warning
+        />
         <Table
           attached
           size="small"
