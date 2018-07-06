@@ -1,8 +1,8 @@
 {
-  "broadcast_transaction_confirm_details_title": "Подтвердить Транзакцию",
-  "broadcast_transaction_confirm_details_content": "Ознакомьтесь с подробностями этой транзакции, чтобы убедиться, что она содержит только те действия, которые вы хотите выполнить.",
-  "broadcast_transaction_no_details_title": "Транзакция не загружена",
-  "broadcast_transaction_no_details_content": "Выберете файл с подписаной транзакцией для начала",
-  "broadcast_transaction_broadcast": "Транслировать Транзакцию",
-  "broadcast_transaction_not_signed": "Не возможно транслировать не подписаную транзакцию."
+  "broadcast_transaction_confirm_details_title": "Confirm Transaction",
+  "broadcast_transaction_confirm_details_content": "Please review the details of this transaction to ensure it only contains actions you wish to perform.",
+  "broadcast_transaction_no_details_title": "No transaction loaded",
+  "broadcast_transaction_no_details_content": "Selecte a signed transaction file to begin",
+  "broadcast_transaction_broadcast": "Broadcast Transaction",
+  "broadcast_transaction_not_signed": "Cannot broadcast an unsigned transaction."
 }

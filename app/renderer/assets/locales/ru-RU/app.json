@@ -1,6 +1,6 @@
 {
-  "app_updating_header": "Обновление",
-  "app_updating_subheader": "Приложение предложит перезапустить после завершения обновления.",
-  "app_updating_percent_complete": "Завершено",
-  "app_updating_rate": "сек"
+  "app_updating_header": "Updating",
+  "app_updating_subheader": "The app will prompt to restart when completed.",
+  "app_updating_percent_complete": "complete",
+  "app_updating_rate": "sec"
 }
