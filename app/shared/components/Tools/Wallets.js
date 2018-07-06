@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import { Button, Header, Label, Popup, Segment, Table } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
 
 import GlobalButtonElevate from '../../containers/Global/Button/Elevate';
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
@@ -53,7 +52,7 @@ class ToolsWallets extends Component<Props> {
             {([].concat(wallets)
                 .sort((a, b) => a.account > b.account)
                 .map((account) => (
-                  <Table.Row>
+                  <Table.Row key={account.account}>
                     <Table.Cell>
                       <strong>{account.account}</strong>
                     </Table.Cell>
