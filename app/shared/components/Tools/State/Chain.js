@@ -5,19 +5,18 @@ import { translate } from 'react-i18next';
 import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
-class ToolsState extends Component<Props> {
+class ToolsStateChain extends Component<Props> {
   render() {
     const {
-      settings,
-      t,
-      wallet
+      chain,
+      t
     } = this.props;
     return (
       <Segment basic>
         <Header>
-          {t('tools_wallet_state_header')}
+          {t('tools_state_chain_header')}
           <Header.Subheader>
-            {t('tools_wallet_state_subheader')}
+            {t('tools_state_chain_subheader')}
           </Header.Subheader>
         </Header>
         <Segment basic>
@@ -26,7 +25,7 @@ class ToolsState extends Component<Props> {
             displayObjectSize={false}
             iconStyle="square"
             name={null}
-            src={settings}
+            src={chain}
             style={{ padding: '1em' }}
             theme="harmonic"
           />
@@ -36,4 +35,4 @@ class ToolsState extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsState);
+export default translate('tools')(ToolsStateChain);
