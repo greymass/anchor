@@ -25,7 +25,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
       t
     } = this.props;
 
-    const ramToBuy = Decimal(ramToBuyinKbs).times(1000);
+    const ramToBuy = Decimal(ramToBuyinKbs).times(1024);
 
     return (
       <Segment basic clearing padding="true">
@@ -39,10 +39,10 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
           <Header>
             {t('ram_buy_confirming_message_one')}
             <font color="green">{` ${ramToBuyinKbs} Kbs `}</font>
-            {` ${t('ram_confirming_message_kbs_in_ram_for')} ${priceOfRam.toFixed(4)} EOS.`}
+            {` ${t('ram_confirming_message_kbs_in_ram_for')} ~${priceOfRam.toFixed(4)} EOS.`}
           </Header>
           <Header>
-            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1000)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
+            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1024)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
         </Segment>
 
