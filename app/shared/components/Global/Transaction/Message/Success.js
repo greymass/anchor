@@ -16,17 +16,16 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
     const links = [];
     if (transaction) {
       links.push(<DangerLink
-        content={transaction.transaction_id}
+        content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
         link={`https://eospark.com/MainNet/tx/${transaction.transaction_id}`}
       />);
     }
     if (transactions) {
-      transactions.map((tx) => {
+      transactions.map((tx) =>
         links.push(<DangerLink
-          content={tx.transaction_id}
+          content={`${tx.transaction_id.substr(0, 8)}...${tx.transaction_id.substr(-8)}`}
           link={`https://eospark.com/MainNet/tx/${tx.transaction_id}`}
-        />);
-      })
+        />));
     }
     return (
       <Segment basic>
