@@ -1,5 +1,6 @@
 import * as types from '../types';
 
+import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
 export function regproxy() {
@@ -18,10 +19,14 @@ export function regproxy() {
     return eos(connection).regproxy({
       proxy: account,
       isproxy: 1
-    }).then((tx) => dispatch({
-      payload: { tx },
-      type: types.SYSTEM_REGPROXY_SUCCESS
-    })).catch((err) => dispatch({
+    }).then((tx) => {
+      // Refresh the account
+      setTimeout(dispatch(getAccount(account)), 500);
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_REGPROXY_SUCCESS
+      });
+    }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_REGPROXY_FAILURE
     }));
