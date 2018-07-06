@@ -34,6 +34,15 @@ class ProducersFormProxy extends Component<Props> {
     });
   }
 
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onSubmit(e);
+
+      e.preventDefault();
+      return false;
+    }
+  }
+
   onRemove = (e) => {
     this.setState({ proxyAccount: '' }, () => {
       this.onSubmit();
