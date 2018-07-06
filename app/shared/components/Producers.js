@@ -199,6 +199,7 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
+        globals={globals}
         key="WalletPanel"
         keys={keys}
         settings={settings}
