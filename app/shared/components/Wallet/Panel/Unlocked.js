@@ -124,6 +124,31 @@ class WalletPanelUnlocked extends Component<Props> {
                 </Segment.Group>
               </Accordion.Content>
             </Menu.Item>
+            {(settings.walletMode === 'hot')
+              ? (
+                <Menu.Item>
+                  <Accordion.Title
+                    active={activeIndex === 1}
+                    content={t('wallet_actions_advanced')}
+                    index={1}
+                    onClick={this.handleClick}
+                  />
+                  <Accordion.Content
+                    active={activeIndex === 1}
+                  >
+                    <Segment basic>
+                      <WalletPanelButtonBroadcast
+                        actions={actions}
+                        settings={settings}
+                        system={system}
+                        transaction={transaction}
+                      />
+                    </Segment>
+                  </Accordion.Content>
+                </Menu.Item>
+              )
+              : false
+            }
           </Accordion>
         </Segment>
       </div>
