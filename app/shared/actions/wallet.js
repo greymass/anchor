@@ -54,11 +54,13 @@ export function removeWallet() {
   };
 }
 
-export function validateWalletPassword(password) {
+export function validateWalletPassword(password, useWallet = false) {
   return (dispatch: () => void, getState) => {
-    const {
-      wallet
-    } = getState();
+    let { wallet } = getState();
+    // If a wallet was passed to be used, use that instead of state.
+    if (useWallet && useWallet.data) {
+      wallet = useWallet;
+    }
     dispatch({
       type: types.VALIDATE_WALLET_PASSWORD_PENDING
     });
@@ -83,11 +85,13 @@ export function validateWalletPassword(password) {
   };
 }
 
-export function unlockWallet(password) {
+export function unlockWallet(password, useWallet = false) {
   return (dispatch: () => void, getState) => {
-    const {
-      wallet
-    } = getState();
+    let { wallet } = getState();
+    // If a wallet was passed to be used, use that instead of state.
+    if (useWallet && useWallet.data) {
+      wallet = useWallet;
+    }
     dispatch({
       type: types.VALIDATE_WALLET_PASSWORD_PENDING
     });
