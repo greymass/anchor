@@ -43,6 +43,9 @@ class ToolsContainer extends Component<Props> {
         render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
       },
       {
+        menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
+      },
+      {
         menuItem: t('tools_menu_proxy'),
         render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
       },
