@@ -35,11 +35,11 @@ class ProducersTable extends Component<Props> {
     const {
       amount,
       globals,
+      isProxying,
+      isValidUser,
       producers,
-      proxyAccount,
       selected,
-      t,
-      validUser
+      t
     } = this.props;
 
     const {
@@ -76,14 +76,14 @@ class ProducersTable extends Component<Props> {
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
-                key={producer.key}
+                key={`${isProxying}-${producer.key}`}
+                isProxying={isProxying}
                 isSelected={isSelected}
                 position={idx + 1}
                 producer={producer}
                 removeProducer={this.props.removeProducer}
                 totalVoteWeight={totalVoteWeight}
-                validUser={validUser}
-                proxyAccount={proxyAccount}
+                isValidUser={isValidUser}
               />
             );
           })}
@@ -106,8 +106,8 @@ class ProducersTable extends Component<Props> {
                     producer={producer}
                     removeProducer={this.props.removeProducer}
                     totalVoteWeight={totalVoteWeight}
-                    validUser={validUser}
-                    proxyAccount={proxyAccount}
+                    isValidUser={isValidUser}
+                    isProxying={isProxying}
                   />
                 );
               })}
@@ -119,7 +119,7 @@ class ProducersTable extends Component<Props> {
     return (
       <Segment basic loading={loading} vertical>
         <Grid>
-          <Grid.Column width="8">
+          <Grid.Column width={8}>
             <Header size="small">
               {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
               <Header.Subheader>
@@ -131,7 +131,7 @@ class ProducersTable extends Component<Props> {
               </Header.Subheader>
             </Header>
           </Grid.Column>
-          <Grid.Column width="ProducersVotingPreview" textAlign="right">
+          <Grid.Column width={8} key="ProducersVotingPreview" textAlign="right">
             <Input
               icon="search"
               onChange={this.onSearchChange}
