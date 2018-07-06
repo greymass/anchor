@@ -10,7 +10,7 @@ import WalletPanel from './Wallet/Panel';
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingPreview from './Producers/Modal/Preview';
-import ProducersTableButtonProxy from './Button/Proxy';
+import ProducersProxy from './Producers/Proxy';
 
 type Props = {
   actions: {
@@ -210,28 +210,33 @@ class Producers extends Component<Props> {
     )];
     const validUser = ((keys && keys.key) || settings.walletMode === 'watch');
     const account = accounts[settings.account];
-    const proxyAccount = account.voter_info.proxy;
+    const proxyAccount = account && account.voter_info.proxy;
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
       sidebar = (
         <React.Fragment>
-          <ProducersVotingPreview
+          <ProducersProxy
             actions={actions}
-            lastError={lastError}
-            lastTransaction={lastTransaction}
-            open={previewing}
-            onClose={() => this.previewProducerVotes(false)}
-            onConfirm={this.submitProducerVotes.bind(this)}
-            onOpen={() => this.previewProducerVotes(true)}
-            selected={selected}
-            settings={settings}
-            submitting={submitting}
+            keys={keys}
+            proxyAccount={proxyAccount}
             system={system}
           />
 
-          <ProducersProxy
-
-          />
+          {(!proxyAccount) ? (
+            <ProducersVotingPreview
+              actions={actions}
+              lastError={lastError}
+              lastTransaction={lastTransaction}
+              open={previewing}
+              onClose={() => this.previewProducerVotes(false)}
+              onConfirm={this.submitProducerVotes.bind(this)}
+              onOpen={() => this.previewProducerVotes(true)}
+              selected={selected}
+              settings={settings}
+              submitting={submitting}
+              system={system}
+            />
+          ) : ''}
 
           <ProducersSelector
             account={accounts[settings.account]}

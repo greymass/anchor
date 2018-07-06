@@ -40,7 +40,7 @@
   "producer_welcome_p3": "",
   "active_producer":"Active Producer",
   "backup_producer":"Backup Producer",
-  "producers_table_votes_proxied": "Vote Proxy",
+  "producers_table_votes_proxied": "Your votes are currently proxied to",
   "producers_button_proxy_setup_text":"Setup Proxy",
   "producers_button_proxy_change_text":"Change Proxy",
   "producers_form_proxy_header":"Proxy your votes",

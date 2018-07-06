@@ -10,10 +10,11 @@ import ProducersFormProxyConfirming from './Proxy/Confirming';
 class ProducersFormProxy extends Component<Props> {
   constructor(props) {
     super(props);
+
     this.state = {
       confirming: false,
       formError: '',
-      proxyAccountName: '',
+      proxyAccount: '',
       submitDisabled: true
     };
   }
@@ -24,7 +25,7 @@ class ProducersFormProxy extends Component<Props> {
     this.setState({
       submitDisabled: false,
       formError: null,
-      proxyAccountName: value
+      proxyAccount: value
     }, () => {
       const error = this.errorsInForm();
       if (error) {
@@ -34,7 +35,7 @@ class ProducersFormProxy extends Component<Props> {
   }
 
   onRemove = (e) => {
-    this.setState({ proxyAccountName: '' }, () => {
+    this.setState({ proxyAccount: '' }, () => {
       this.onSubmit();
     });
 
@@ -44,11 +45,11 @@ class ProducersFormProxy extends Component<Props> {
 
   onConfirm = () => {
     const {
-      proxyAccountName
+      proxyAccount
     } = this.state;
 
     this.setState({ confirming: false }, () => {
-      this.props.actions.voteproducers([], proxyAccountName);
+      this.props.actions.voteproducers([], proxyAccount);
     });
   }
 
@@ -68,12 +69,12 @@ class ProducersFormProxy extends Component<Props> {
 
   errorsInForm = () => {
     const {
-      proxyAccountName
+      proxyAccount
     } = this.state;
 
     const usernameRegex = /^[a-z]{12}$/;
 
-    if (!usernameRegex.test(proxyAccountName)) {
+    if (!usernameRegex.test(proxyAccount)) {
       return 'not_valid_account_name';
     }
 
@@ -103,7 +104,7 @@ class ProducersFormProxy extends Component<Props> {
     const {
       confirming,
       formError,
-      proxyAccountName,
+      proxyAccount,
       submitDisabled
     } = this.state;
 
@@ -118,7 +119,7 @@ class ProducersFormProxy extends Component<Props> {
             <ProducersFormProxyConfirming
               onBack={this.onBack}
               onConfirm={this.onConfirm}
-              proxyAccountName={proxyAccountName}
+              proxyAccount={proxyAccount}
             />
           ) : (
             <Segment basic clearing>
@@ -128,7 +129,7 @@ class ProducersFormProxy extends Component<Props> {
                 loading={false}
                 name="memo"
                 onChange={this.onChange}
-                value={proxyAccountName}
+                value={proxyAccount}
               />
 
               <FormMessageError

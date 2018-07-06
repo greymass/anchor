@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Header,  } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
 import ProducersButtonProxy from './Button/Proxy';
 
-class ProducersVotingAccount extends Component<Props> {
+class ProducersProxy extends Component<Props> {
   render() {
     const {
       actions,
@@ -15,11 +15,11 @@ class ProducersVotingAccount extends Component<Props> {
       t
     } = this.props;
     return (
-      <div>
+      <div style={{ marginBottom: '20px' }}>
         {(proxyAccount)
           ? (
-            <Header>
-              {`${t('producers_table_votes_proxied')}: ${proxyAccount}`}
+            <Header style={{ lineHeight: '50px', textAlign: 'center' }}>
+              {`${t('producers_table_votes_proxied')} ${proxyAccount}.`}
             </Header>
           ) : ''}
 
@@ -35,3 +35,5 @@ class ProducersVotingAccount extends Component<Props> {
     );
   }
 }
+
+export default translate('producers')(ProducersProxy);
