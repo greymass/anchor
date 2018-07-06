@@ -33,14 +33,11 @@ class ProducersTable extends Component<Props> {
 
   render() {
     const {
-      actions,
       amount,
       globals,
-      keys,
       producers,
       proxyAccount,
       selected,
-      system,
       t,
       validUser
     } = this.props;
@@ -134,7 +131,7 @@ class ProducersTable extends Component<Props> {
               </Header.Subheader>
             </Header>
           </Grid.Column>
-          <Grid.Column width="8" textAlign="right">
+          <Grid.Column width="ProducersVotingPreview" textAlign="right">
             <Input
               icon="search"
               onChange={this.onSearchChange}
