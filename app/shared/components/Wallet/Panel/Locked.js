@@ -24,8 +24,8 @@ export default class WalletPanelLocked extends Component<Props> {
               as={Segment}
               blurring
               color="grey"
-              dimmed={validate.WALLET_PASSWORD}
-              loading={validate.WALLET_PASSWORD}
+              dimmed={validate.WALLET_PASSWORD === 'PENDING'}
+              loading={validate.WALLET_PASSWORD === 'PENDING'}
               padded
               stacked
             >

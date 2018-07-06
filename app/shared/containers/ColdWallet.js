@@ -97,6 +97,7 @@ class ColdWalletContainer extends Component<Props> {
           handleItemClick={this.handleItemClick}
           locked={(!keys.key)}
           settings={settings}
+          validate={validate}
           wallet={wallet}
         />
         <Segment
@@ -143,6 +144,7 @@ function mapStateToProps(state) {
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
+    validate: state.validate,
     wallet: state.wallet
   };
 }
