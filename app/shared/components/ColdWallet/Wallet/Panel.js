@@ -9,6 +9,7 @@ type Props = {
   settings: {},
   system: {},
   keys: {},
+  validate: {},
   wallet: {}
 };
 
@@ -19,6 +20,7 @@ export default class ColdWalletPanel extends Component<Props> {
       keys,
       settings,
       system,
+      validate,
       wallet
     } = this.props;
 
@@ -28,6 +30,7 @@ export default class ColdWalletPanel extends Component<Props> {
         <WalletPanelLocked
           actions={actions}
           settings={settings}
+          validate={validate}
           wallet={wallet}
         />
       );

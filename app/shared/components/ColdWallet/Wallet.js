@@ -25,6 +25,7 @@ export default class ColdWallet extends Component<Props> {
       settings,
       system,
       transaction,
+      validate,
       wallet
     } = this.props;
     return (
@@ -36,6 +37,7 @@ export default class ColdWallet extends Component<Props> {
               keys={keys}
               settings={settings}
               system={system}
+              validate={validate}
               wallet={wallet}
             />
           </Grid.Column>
