@@ -6,19 +6,23 @@ import TimeAgo from 'react-timeago';
 
 import DangerLink from '../../../../Global/Modal/DangerLink';
 
-import WalletStatusActionTableRowTransfer from './Row/Transfer';
 import WalletStatusActionTableRowDelegatebw from './Row/Delegatebw';
+import WalletStatusActionTableRowGeneric from './Row/Generic';
 import WalletStatusActionTableRowRefund from './Row/Refund';
+import WalletStatusActionTableRowRegproxy from './Row/Regproxy';
+import WalletStatusActionTableRowTransfer from './Row/Transfer';
 import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
 import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
-import WalletStatusActionTableRowGeneric from './Row/Generic';
+import WalletStatusActionTableRowBuyrambytes from './Row/Buyrambytes';
 
 const rowComponentsMapping = {
-  transfer: WalletStatusActionTableRowTransfer,
   delegatebw: WalletStatusActionTableRowDelegatebw,
   refund: WalletStatusActionTableRowRefund,
+  regproxy: WalletStatusActionTableRowRegproxy,
+  transfer: WalletStatusActionTableRowTransfer,
   undelegatebw: WalletStatusActionTableRowUndelegatebw,
-  voteproducer: WalletStatusActionTableRowVoteproducer
+  voteproducer: WalletStatusActionTableRowVoteproducer,
+  buyrambytes: WalletStatusActionTableRowBuyrambytes
 };
 
 class WalletStatusActionsTableRow extends Component<Props> {
