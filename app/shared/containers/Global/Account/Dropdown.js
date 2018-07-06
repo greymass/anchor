@@ -18,11 +18,10 @@ class GlobalAccountDropdown extends Component<Props> {
     this.setState({ open: true });
   }
   onToggle = () => {
-    console.log("toglge")
     this.setState({ open: !this.state.open });
   }
   onSearchChange = (e, { searchQuery }) => {
-    console.log(searchQuery);
+    // console.log(searchQuery);
   }
   swapAccount = (account) =>  {
     const { actions } = this.props;
@@ -43,6 +42,7 @@ class GlobalAccountDropdown extends Component<Props> {
     const accounts = wallets.map(wallet => wallet.account).sort();
     const tagOptions = wallets
       .filter(w => w.account !== settings.account)
+      .sort((a, b) => a.account > b.account)
       .map((w) => {
         let icon = {
           color: 'green',
