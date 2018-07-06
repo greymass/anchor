@@ -17,7 +17,8 @@ class GlobalButtonElevate extends Component<Props> {
   componentDidUpdate(prevProps) {
     const { validate } = this.props;
     if (
-      prevProps.validate.WALLET_PASSWORD === 'PENDING'
+      this.state.open
+      && prevProps.validate.WALLET_PASSWORD === 'PENDING'
       && validate.WALLET_PASSWORD === 'SUCCESS'
     ) {
       this.setState({
