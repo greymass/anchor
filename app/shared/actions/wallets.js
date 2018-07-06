@@ -44,11 +44,11 @@ export function useWallet(account) {
     });
     // Set the wallet mode configuration
     dispatch(setWalletMode(wallet.mode));
+    // Update the settings for the current account
+    dispatch(setSettings({
+      account
+    }));
     if (wallet.mode !== 'cold') {
-      // Update the settings for the current account
-      dispatch(setSettings({
-        account
-      }));
       // Update the account in local state
       dispatch(getAccount(account));
     }
