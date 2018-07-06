@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ProducersFormProxy from '../Form/Proxy';
 
-class ToolsButtonUnregister extends Component<Props> {
+class ProducersButtonProxy extends Component<Props> {
   render() {
     const {
       actions,
@@ -41,10 +41,11 @@ class ToolsButtonUnregister extends Component<Props> {
         icon="share square"
         title={t('producers_form_proxy_header')}
         settings={settings}
+        size=""
         system={system}
       />
     );
   }
 }
 
-export default translate('producers')(ToolsButtonUnregister);
+export default translate('producers')(ProducersButtonProxy);
