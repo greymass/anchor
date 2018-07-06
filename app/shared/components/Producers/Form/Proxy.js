@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Button, Divider, Form, Icon, Segment, Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import FormFieldGeneric from '../../Global/Form/Field/Generic';
+import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import FormMessageError from '../../Global/Form/Message/Error';
 import ProducersFormProxyConfirming from './Proxy/Confirming';
 
@@ -13,7 +13,6 @@ class ProducersFormProxy extends Component<Props> {
 
     this.state = {
       confirming: false,
-      formError: '',
       proxyAccount: '',
       submitDisabled: true
     };
@@ -21,16 +20,10 @@ class ProducersFormProxy extends Component<Props> {
 
   state = {};
 
-  onChange = (e, { value }) => {
+  onChange = (e, { value, valid }) => {
     this.setState({
-      submitDisabled: false,
-      formError: null,
+      submitDisabled: !valid,
       proxyAccount: value
-    }, () => {
-      const error = this.errorsInForm();
-      if (error) {
-        this.onError(error);
-      }
     });
   }
 
@@ -73,20 +66,6 @@ class ProducersFormProxy extends Component<Props> {
       confirming: false
     });
     e.preventDefault();
-    return false;
-  }
-
-  errorsInForm = () => {
-    const {
-      proxyAccount
-    } = this.state;
-
-    const usernameRegex = /^[a-z]{12}$/;
-
-    if (!usernameRegex.test(proxyAccount)) {
-      return 'not_valid_account_name';
-    }
-
     return false;
   }
 
@@ -139,17 +118,11 @@ class ProducersFormProxy extends Component<Props> {
                   {`${t('producers_table_votes_proxied')} ${currentProxyAccount}.`}
                 </Header>
               ) : ''}
-              <FormFieldGeneric
-                icon="x"
+              <GlobalFormFieldAccount
                 label={`${t('producers_form_proxy_label')}:`}
-                loading={false}
-                name="memo"
+                name="account"
                 onChange={this.onChange}
                 value={proxyAccount}
-              />
-
-              <FormMessageError
-                error={formError}
               />
               <Divider />
               <Button
