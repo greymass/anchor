@@ -33,6 +33,7 @@ class ToolsButtonUnregister extends Component<Props> {
         content={(
           <ProducersFormProxy
             actions={actions}
+            currentProxyAccount={proxyAccount}
             key="UnregisterProxyForm"
             system={system}
           />
