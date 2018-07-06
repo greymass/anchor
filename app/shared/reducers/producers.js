@@ -4,6 +4,7 @@ const initialState = {
   lastError: {},
   lastTransaction: {},
   list: [],
+  proxy: '',
   selected: [],
   updated: null
 };
@@ -34,6 +35,12 @@ export default function producers(state = initialState, action) {
         selected: []
       });
     }
+    case types.SYSTEM_VOTEPRODUCER_SUCCESS: {
+      return Object.assign({}, state, {
+        proxy: action.payload.proxy,
+        selected: action.payload.producers
+      });
+    }
     case types.GET_ACCOUNT_SUCCESS: {
       const account = action.payload.results;
       if (account && account.voter_info) {
@@ -50,13 +57,5 @@ export default function producers(state = initialState, action) {
     default: {
       return state;
     }
-  }
-}
-
-function parseError(err) {
-  try {
-    return JSON.parse(err);
-  } catch (e) {
-    return err;
   }
 }
