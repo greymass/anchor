@@ -7,6 +7,7 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
   render() {
     const {
       action,
+      settings,
       t
     } = this.props;
     const {
@@ -20,16 +21,19 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
     let iconName = 'share square';
     let textSetence = t('actions_table_row_voteproducer_text_one');
 
-    if (data.proxy) {
-      iconName = 'share square';
-      textSetence = `${t('actions_table_row_voteproducer_text_two')} ${data.proxy}.`;
+    if (data.proxy === settings.account) {
+      const capitalizedVoterName = data.voter.charAt(0).toUpperCase() + data.voter.slice(1);
+
+      textSetence = `${capitalizedVoterName} ${t('actions_table_row_voteproducer_text_two')}`;
+    } else if (data.proxy) {
+      textSetence = `${t('actions_table_row_voteproducer_text_three')} ${data.proxy}.`;
     } else if (data.producers.length !== 0) {
       const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
       const andStatement = (producers.length > 1) ? (` ${t('actions_table_row_text_and')}`) : '';
       const lastProducer = producers.slice(-1);
 
       iconName = 'check square';
-      textSetence = `${t('actions_table_row_voteproducer_text_three')} ${allButLastProducers}${andStatement} ${lastProducer}.`;
+      textSetence = `${t('actions_table_row_voteproducer_text_four')} ${allButLastProducers}${andStatement} ${lastProducer}.`;
     }
 
     return (

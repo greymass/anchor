@@ -24,10 +24,14 @@
   "actions_table_row_undelegatebw_text_one": "You unstaked",
   "actions_table_row_undelegatebw_text_three": "from Bandwidth",
   "actions_table_row_undelegatebw_text_two": "from CPU",
-  "actions_table_row_voteproducer_text_one": "You removed your proxy voter.",
-  "actions_table_row_voteproducer_text_two": "You proxied your voting power to",
-  "actions_table_row_voteproducer_text_three": "You updated your votes to",
+  "actions_table_row_voteproducer_text_one": "You have stopped proxying your producer votes.",
+  "actions_table_row_voteproducer_text_two": "proxied his/her producer votes to you.",
+  "actions_table_row_voteproducer_text_three": "You proxied your producer votes to",
+  "actions_table_row_voteproducer_text_four": "You updated your producer votes to",
   "actions_table_row_generic_text_one": "Unknown action",
   "actions_table_row_generic_text_two": "to account",
-  "actions_table_row_generic_text_three": "with"
+  "actions_table_row_generic_text_three": "with",
+  "actions_table_row_buyrambytes_text_one": "You bought ",
+  "actions_table_row_sellram_text_one": "You sold ",
+  "actions_table_row_of_ram": "of RAM"
 }

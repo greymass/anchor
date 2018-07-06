@@ -6,13 +6,16 @@ import { Icon } from 'semantic-ui-react';
 class WalletStatusActionsTableRowRegproxy extends Component<Props> {
   render() {
     const {
-      data,
+      action,
       t
     } = this.props;
+    const {
+      data
+    } = action.action_trace.act;
 
     let textSentence = t('actions_table_row_regproxy_text_one');
 
-    if (data) {
+    if (data.isproxy) {
       textSentence = t('actions_table_row_regproxy_text_two');
     }
 

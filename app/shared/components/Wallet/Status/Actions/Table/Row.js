@@ -14,6 +14,7 @@ import WalletStatusActionTableRowTransfer from './Row/Transfer';
 import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
 import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
 import WalletStatusActionTableRowBuyrambytes from './Row/Buyrambytes';
+import WalletStatusActionTableRowSellram from './Row/Sellram';
 
 const rowComponentsMapping = {
   delegatebw: WalletStatusActionTableRowDelegatebw,
@@ -22,7 +23,8 @@ const rowComponentsMapping = {
   transfer: WalletStatusActionTableRowTransfer,
   undelegatebw: WalletStatusActionTableRowUndelegatebw,
   voteproducer: WalletStatusActionTableRowVoteproducer,
-  buyrambytes: WalletStatusActionTableRowBuyrambytes
+  buyrambytes: WalletStatusActionTableRowBuyrambytes,
+  sellram: WalletStatusActionTableRowSellram
 };
 
 class WalletStatusActionsTableRow extends Component<Props> {
