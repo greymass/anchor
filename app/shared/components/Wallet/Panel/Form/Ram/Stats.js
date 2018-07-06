@@ -14,8 +14,8 @@ class WalletPanelFormStakeStats extends Component<Props> {
 
     const ramUsagePercentage = (ramUsage / ramQuota) * 100;
 
-    const ramUsageString = (parseFloat(ramUsage) / 1000).toFixed(3);
-    const ramQuotaString = (parseFloat(ramQuota) / 1000).toFixed(3);
+    const ramUsageString = (parseFloat(ramUsage) / 1024).toFixed(3);
+    const ramQuotaString = (parseFloat(ramQuota) / 1024).toFixed(3);
 
     const ramUsageHeader = `${t('ram_stats_available_title_one')} ${ramUsageString} kbs ${t('ram_stats_available_title_two')} ${ramQuotaString} kbs ${t('ram_stats_available_title_three')}`;
 
