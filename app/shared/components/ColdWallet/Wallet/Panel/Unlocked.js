@@ -62,22 +62,6 @@ export default class ColdWalletPanelUnlocked extends Component<Props> {
                       </Segment.Group>
                     </Accordion.Content>
                   </Menu.Item>
-
-                  <Menu.Item>
-                    <Accordion.Title
-                      active={activeIndex === 1}
-                      content={t('wallet_actions_dangerous')}
-                      index={1}
-                      onClick={this.handleClick}
-                    />
-                    <Accordion.Content
-                      active={activeIndex === 1}
-                    >
-                      <Segment basic>
-                        <GlobalButtonResetContainer />
-                      </Segment>
-                    </Accordion.Content>
-                  </Menu.Item>
                 </Accordion>
               </Segment>
             </div>
