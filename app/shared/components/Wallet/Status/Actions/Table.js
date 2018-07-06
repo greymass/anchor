@@ -34,25 +34,30 @@ class WalletStatusActionsTable extends Component<Props> {
     }
     return (
       <Segment basic loading={loading} vertical>
-        <Segment secondary>
-          <Header>
-            <Icon
-              name="external"
-            />
-            <Header.Content>
-              <DangerLink
-                content={t('actions_table_view_explorer')}
-                link={`https://eospark.com/MainNet/account/${settings.account}`}
-              />
-            </Header.Content>
-          </Header>
-        </Segment>
         <Message
-          content={t('actions_table_warning_content')}
-          header={t('actions_table_warning_header')}
-          icon="warning sign"
+          icon
           warning
-        />
+        >
+          <Icon name="warning sign" />
+          <Message.Content>
+            <Message.Header>
+              {t('actions_table_warning_header')}
+            </Message.Header>
+            <p>
+              {t('actions_table_warning_content')}
+            </p>
+            <Message.Header
+              size="small"
+            >
+              <Header.Content>
+                <DangerLink
+                  content={t('actions_table_view_explorer')}
+                  link={`https://eospark.com/MainNet/account/${settings.account}`}
+                />
+              </Header.Content>
+            </Message.Header>
+          </Message.Content>
+        </Message>
         <Table
           attached
           size="small"
