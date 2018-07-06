@@ -22,14 +22,21 @@ class ProducersFormProxyConfirming extends Component<Props> {
     } = this.props;
 
     return (
-      <Segment basic clearing vertical>
-        <Header size="small">
-          {t('producers_proxy_confirming_title')}
-        </Header>
-        <p>
-          {t('producers_proxy_confirming_text')} <b>{proxyAccountName}</b>
-        </p>
-        <Divider />
+      <Segment style={{ textAlign: 'center' }} basic clearing vertical>
+        {(proxyAccountName)
+          ? (
+            <div>
+              {t('producers_form_proxy_confirming_change_text_one')}
+              &nbsp;<b><u>{proxyAccountName}</u></b>.<br /><br />
+              {t('producers_form_proxy_confirming_change_text_two')}
+            </div>
+          ) : (
+            <div>
+              {t('producers_form_proxy_confirming_remove_text')}
+            </div>
+          )
+        }
+        <Divider style={{ marginTop: '40px' }} />
         <Button
           color="green"
           floated="right"
@@ -38,8 +45,9 @@ class ProducersFormProxyConfirming extends Component<Props> {
         />
         <Button
           onClick={onBack}
+          floated="left"
         >
-          <Icon name="x" /> {t('producers_form_proxy_cancel')}
+          <Icon name="arrow left" /> {t('producers_form_proxy_cancel')}
         </Button>
       </Segment>
     );

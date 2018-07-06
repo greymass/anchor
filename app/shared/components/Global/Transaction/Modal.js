@@ -74,6 +74,7 @@ class GlobalTransactionModal extends Component<Props> {
             fluid
             icon={button.icon}
             onClick={this.handleOpen}
+            size={button.size}
           />
         )}
         open={open}

@@ -10,6 +10,7 @@ import WalletPanel from './Wallet/Panel';
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingPreview from './Producers/Modal/Preview';
+import ProducersTableButtonProxy from './Button/Proxy';
 
 type Props = {
   actions: {
@@ -208,6 +209,8 @@ class Producers extends Component<Props> {
       />
     )];
     const validUser = ((keys && keys.key) || settings.walletMode === 'watch');
+    const account = accounts[settings.account];
+    const proxyAccount = account.voter_info.proxy;
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (validUser) {
       sidebar = (
@@ -225,11 +228,17 @@ class Producers extends Component<Props> {
             submitting={submitting}
             system={system}
           />
+
+          <ProducersProxy
+
+          />
+
           <ProducersSelector
             account={accounts[settings.account]}
             modified={modified}
-            selected={selected}
+            proxyAccount={proxyAccount}
             removeProducer={this.removeProducer.bind(this)}
+            selected={selected}
             submitProducerVotes={() => this.previewProducerVotes(true)}
             submitting={submitting}
           />
@@ -268,6 +277,7 @@ class Producers extends Component<Props> {
                      isQuerying={this.isQuerying}
                      keys={keys}
                      producers={producers}
+                     proxyAccount={proxyAccount}
                      removeProducer={this.removeProducer.bind(this)}
                      resetDisplayAmount={this.resetDisplayAmount}
                      selected={selected}

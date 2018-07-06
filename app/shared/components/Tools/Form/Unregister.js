@@ -47,9 +47,8 @@ class ToolsFormUnregister extends Component<Props> {
             />
             <Button
               content={t('tools_proxy_form_button_unregister')}
-              color="green"
+              color="red"
               floated="right"
-              primary
             />
           </Form>
         </div>

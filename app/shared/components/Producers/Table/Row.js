@@ -19,6 +19,7 @@ class ProducersTableRow extends Component<Props> {
       isSelected,
       producer,
       position,
+      proxyAccount,
       removeProducer,
       t,
       totalVoteWeight,
@@ -45,7 +46,7 @@ class ProducersTableRow extends Component<Props> {
         >
           <Button
             color={isSelected ? 'blue' : 'grey'}
-            disabled={!validUser}
+            disabled={!validUser || proxyAccount}
             icon={isSelected ? 'checkmark box' : 'minus square outline'}
             onClick={
               (isSelected)
