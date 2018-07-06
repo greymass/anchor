@@ -17,20 +17,29 @@ class WalletStatusActionsTableRowVoteproducer extends Component<Props> {
       producers
     } = data;
 
-    const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
+    let iconName = 'share square';
+    let textSetence = t('actions_table_row_voteproducer_text_one');
 
-    const andStatement = (producers.length > 1) ? (` ${t('actions_table_row_text_and')}`) : '';
+    if (data.proxy) {
+      iconName = 'share square';
+      textSetence = `${t('actions_table_row_voteproducer_text_two')} ${data.proxy}.`;
+    } else if (data.producers.length !== 0) {
+      const allButLastProducers = producers.slice(0, producers.length - 1).join(', ');
+      const andStatement = (producers.length > 1) ? (` ${t('actions_table_row_text_and')}`) : '';
+      const lastProducer = producers.slice(-1);
 
-    const lastProducer = producers.slice(-1);
+      iconName = 'check square';
+      textSetence = `${t('actions_table_row_voteproducer_text_three')} ${allButLastProducers}${andStatement} ${lastProducer}.`;
+    }
 
     return (
       <React.Fragment>
         <Icon
           floated="left"
-          name="check square"
+          name={iconName}
           size="large"
         />
-        { `${t('actions_table_row_voteproducer_text')} ${allButLastProducers}${andStatement} ${lastProducer}.` }
+        {textSetence}
       </React.Fragment>
     );
   }

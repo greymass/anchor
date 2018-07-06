@@ -43,15 +43,15 @@ class ToolsContainer extends Component<Props> {
         render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
       },
       {
+        menuItem: t('tools_menu_proxy'),
+        render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
+      },
+      {
         menuItem: <Menu.Header className="ui">{t('tools_menu_state_header')}</Menu.Header>
       },
       {
         menuItem: t('tools_menu_state'),
         render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: t('tools_menu_proxy'),
-        render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
       },
       {
         menuItem: t('tools_menu_state_globals'),
