@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Header, Icon, Segment } from 'semantic-ui-react';
+import { Dimmer, Header, Loader, Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelButtonUnlock from './Button/Unlock';
 
@@ -20,8 +20,12 @@ export default class WalletPanelLocked extends Component<Props> {
       <I18n ns="wallet">
         {
           (t) => (
-            <Segment
+            <Dimmer.Dimmable
+              as={Segment}
+              blurring
               color="grey"
+              dimmed={validate.WALLET_PASSWORD}
+              loading={validate.WALLET_PASSWORD}
               padded
               stacked
             >
@@ -46,7 +50,7 @@ export default class WalletPanelLocked extends Component<Props> {
                 validate={validate}
                 wallet={wallet}
               />
-            </Segment>
+            </Dimmer.Dimmable>
           )
         }
       </I18n>
