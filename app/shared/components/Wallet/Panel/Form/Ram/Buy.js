@@ -97,7 +97,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const decBaseBal = Decimal(globals.ram.base_balance);
     const decQuoteBal = Decimal(globals.ram.quote_balance);
-    const decValueInBytes = Decimal(parseFloat(value)).times(1000);
+    const decValueInBytes = Decimal(parseFloat(value)).times(1024);
 
     let priceOfRam = 0;
 
@@ -135,7 +135,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
       return 'ram_not_valid_amount';
     }
 
-    const decimalRamToBuy = Decimal(ramToBuyInKbs).times(1000);
+    const decimalRamToBuy = Decimal(ramToBuyInKbs).times(1024);
 
     if (!decimalRamToBuy.greaterThan(2)) {
       return 'ram_has_to_be_over_minimum_value';
@@ -171,7 +171,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
       confirming: false
     });
 
-    buyrambytes(Decimal(ramToBuyInKbs).times(1000));
+    buyrambytes(Decimal(ramToBuyInKbs).times(1024).floor());
   }
 
   render() {
