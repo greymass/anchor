@@ -30,6 +30,12 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
     return (
       <Segment basic clearing padding="true">
         <Segment textAlign="center">
+          <Header size="large">
+            {t('ram_confirming_message_price_estimate_header')}
+            <Header.Subheader>
+              {t('ram_confirming_message_price_estimate_subheader')}
+            </Header.Subheader>
+          </Header>
           <Header>
             {t('ram_buy_confirming_message_one')}
             <font color="green">{` ${ramToBuyinKbs} Kbs `}</font>
