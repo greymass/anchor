@@ -178,6 +178,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const {
       balance,
       onClose,
+      settings,
       system,
       t
     } = this.props;
@@ -246,12 +247,13 @@ class WalletPanelFormRamBuy extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <WalletPanelFormRamBuyConfirming
-              ramQuota={ramQuota}
-              ramToBuyinKbs={ramToBuyInKbs}
-              priceOfRam={priceOfRam}
               EOSbalance={balance.EOS}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
+              priceOfRam={priceOfRam}
+              ramQuota={ramQuota}
+              ramToBuyinKbs={ramToBuyInKbs}
+              settings={settings}
             />
           ) : ''}
       </Segment>

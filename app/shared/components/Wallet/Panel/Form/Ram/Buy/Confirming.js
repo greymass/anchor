@@ -4,6 +4,8 @@ import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
+import WalletMessageContractBuyRamBytes from '../../../../../Global/Message/Contract/BuyRamBytes';
+
 class WalletPanelFormRamBuyConfirming extends Component<Props> {
   onConfirm = () => {
     const {
@@ -19,13 +21,14 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
       onBack,
       priceOfRam,
       ramQuota,
+      settings,
       t
     } = this.props;
 
     const ramToBuy = Decimal(ramToBuyinKbs).times(1000);
 
     return (
-      <Segment padding="true" textAlign="center" style={{ minHeight: '235px' }} basic>
+      <Segment basic clearing padding="true">
         <Segment textAlign="center">
           <Header>
             {t('ram_buy_confirming_message_one')}
@@ -36,11 +39,20 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
             {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1000)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
         </Segment>
+
         <Message warning>
           {t('ram_confirming_message_price_includes_fee')}
         </Message>
 
         <Divider />
+
+        <WalletMessageContractBuyRamBytes
+          data={{
+            buyer: settings.account,
+            bytes: `${ramToBuyinKbs * 1024}kbs`,
+          }}
+        />
+
         <Button
           floated="left"
           onClick={onBack}

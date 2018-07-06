@@ -176,6 +176,7 @@ class WalletPanelFormRamSell extends Component<Props> {
       account,
       globals,
       onClose,
+      settings,
       system,
       t
     } = this.props;
@@ -250,6 +251,7 @@ class WalletPanelFormRamSell extends Component<Props> {
               priceOfRam={priceOfRam}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
+              settings={settings}
             />
           ) : ''}
       </Segment>
