@@ -6,7 +6,6 @@ import { Grid, Header, Input, Segment, Transition, Table } from 'semantic-ui-rea
 
 import ProducersVoteWeight from './Vote/Weight';
 import ProducersTableRow from './Table/Row';
-import ProducersTableButtonProxy from './Button/Proxy';
 
 class ProducersTable extends Component<Props> {
   constructor(props) {
@@ -34,12 +33,12 @@ class ProducersTable extends Component<Props> {
 
   render() {
     const {
-      account,
       actions,
       amount,
       globals,
       keys,
       producers,
+      proxyAccount,
       selected,
       system,
       t,
@@ -52,7 +51,6 @@ class ProducersTable extends Component<Props> {
     const {
       current
     } = globals;
-    const proxyAccount = account.voter_info.proxy;
     const activatedStake = (current.total_activated_stake)
       ? parseInt(current.total_activated_stake / 10000, 10)
       : 0;
@@ -88,6 +86,7 @@ class ProducersTable extends Component<Props> {
                 removeProducer={this.props.removeProducer}
                 totalVoteWeight={totalVoteWeight}
                 validUser={validUser}
+                proxyAccount={proxyAccount}
               />
             );
           })}
@@ -111,6 +110,7 @@ class ProducersTable extends Component<Props> {
                     removeProducer={this.props.removeProducer}
                     totalVoteWeight={totalVoteWeight}
                     validUser={validUser}
+                    proxyAccount={proxyAccount}
                   />
                 );
               })}
@@ -122,7 +122,7 @@ class ProducersTable extends Component<Props> {
     return (
       <Segment basic loading={loading} vertical>
         <Grid>
-          <Grid.Column width="7">
+          <Grid.Column width="8">
             <Header size="small">
               {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
               <Header.Subheader>
@@ -134,25 +134,7 @@ class ProducersTable extends Component<Props> {
               </Header.Subheader>
             </Header>
           </Grid.Column>
-          <Grid.Column width="4">
-            <Header size="small">
-              {(proxyAccount)
-                ? (
-                  `${t('producers_table_votes_proxied')} ${proxyAccount}`
-                ) : ''}
-
-              {((keys && keys.key))
-                ? (
-                  <ProducersTableButtonProxy
-                    actions={actions}
-                    proxyAccount={proxyAccount}
-                    system={system}
-                  />
-                ) : ''}
-
-            </Header>
-          </Grid.Column>
-          <Grid.Column width="4" textAlign="right">
+          <Grid.Column width="8" textAlign="right">
             <Input
               icon="search"
               onChange={this.onSearchChange}

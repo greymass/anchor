@@ -9,18 +9,18 @@ class ToolsButtonUnregister extends Component<Props> {
   render() {
     const {
       actions,
-      proxyVoter,
+      proxyAccount,
       settings,
       system,
       t
     } = this.props;
 
-    let buttonText;
+    let buttonText = t('producers_button_proxy_setup_text');
+    let buttonSize = 'Medium';
 
-    if (proxyVoter) {
+    if (proxyAccount) {
       buttonText = t('producers_button_proxy_change_text');
-    } else {
-      buttonText = t('producers_button_proxy_setup_text');
+      buttonSize = 'mini';
     }
 
     return (
@@ -30,7 +30,8 @@ class ToolsButtonUnregister extends Component<Props> {
         button={{
           color: 'green',
           content: buttonText,
-          icon: 'share square'
+          icon: 'share square',
+          size: buttonSize
         }}
         content={(
           <ProducersFormProxy
