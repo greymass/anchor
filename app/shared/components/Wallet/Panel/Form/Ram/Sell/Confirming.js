@@ -4,6 +4,8 @@ import { translate } from 'react-i18next';
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 import { Decimal } from 'decimal.js';
 
+import WalletMessageContractSellRamBytes from '../../../../../Global/Message/Contract/SellRamBytes';
+
 class WalletPanelFormRamSellConfirming extends Component<Props> {
   onConfirm = () => {
     const {
@@ -15,17 +17,18 @@ class WalletPanelFormRamSellConfirming extends Component<Props> {
 
   render() {
     const {
-      ramToSellInKbs,
       onBack,
       priceOfRam,
+      ramToSellInKbs,
       ramQuota,
+      settings,
       t
     } = this.props;
 
     const ramToSell = Decimal(ramToSellInKbs).times(1000);
 
     return (
-      <Segment padding="true" textAlign="center" style={{ minHeight: '235px' }} basic>
+      <Segment basic clearing padding="true">
         <Segment textAlign="center">
           <Header>
             {t('ram_sell_confirming_message_one')}
@@ -41,6 +44,15 @@ class WalletPanelFormRamSellConfirming extends Component<Props> {
         </Message>
 
         <Divider />
+
+        <WalletMessageContractSellRamBytes
+          data={{
+            account: settings.account,
+            bytes: `${ramToSellInKbs * 1024}kbs`,
+            signer: settings.account,
+          }}
+        />
+
         <Button
           floated="left"
           onClick={onBack}
