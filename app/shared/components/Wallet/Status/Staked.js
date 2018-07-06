@@ -70,7 +70,7 @@ class WalletStatusStaked extends Component<Props> {
                         {t('wallet_status_resources_usage')}
                       </Table.Cell>
                       <Table.Cell>
-                        {(cpu_limit.used / 100000).toFixed(4)} sec / {(cpu_limit.max / 1000000).toFixed(4)} sec
+                        {(cpu_limit.used / 1000000).toFixed(4)} sec / {(cpu_limit.max / 1000000).toFixed(4)} sec
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
