@@ -33,6 +33,10 @@ class WalletStatusActionsTableRowTransfer extends Component<Props> {
           ? `${t('actions_table_row_transfer_from')} ${data.from}`
           : `${t('actions_table_row_transfer_to')} ${data.to}`
         }
+        {(data.memo)
+          ? <p>{t('actions_table_row_transfer_memo')}: {data.memo}</p>
+          : false
+        }
       </React.Fragment>
     );
   }
