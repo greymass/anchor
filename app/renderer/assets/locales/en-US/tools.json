@@ -5,6 +5,7 @@
   "tools_menu_state": "Wallet State",
   "tools_menu_wallet_header": "Wallet Tools",
   "tools_menu_state_header": "Local Data States",
+  "tools_menu_utilities_header": "Utilities",
   "tools_menu_state_globals": "Global State",
   "tools_state_globals_header": "Global State",
   "tools_state_globals_subheader": "Current global values for the EOS blockchain.",
