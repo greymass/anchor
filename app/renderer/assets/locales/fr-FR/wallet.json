@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "Aucun compte trouvé avec votre clé",
   "wallet_account_lookup_modal_key_invalid": "La clé entrée n'est pas une clé publique de EOS.",
   "wallet_actions": "Actions de portefeuille",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "Attention: Zone Dangereuse",
   "wallet_status_balances": "Soldes",
   "wallet_status_balances_none": "Le solde de votre compte est trop bas.",
