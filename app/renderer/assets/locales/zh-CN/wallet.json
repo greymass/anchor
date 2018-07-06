@@ -13,6 +13,7 @@
   "wallet_account_lookup_modal_accounts_found_none": "没有找到与帐户匹配的帐户",
   "wallet_account_lookup_modal_key_invalid": "输入的密钥不是有效的EOS公钥.",
   "wallet_actions": "钱包操作",
+  "wallet_actions_advanced": "Advanced Actions",
   "wallet_actions_dangerous": "警告:危险区域",
   "wallet_status_balances": "电子钱包余额",
   "wallet_status_balances_none": "这个钱包没有令牌余额。",
