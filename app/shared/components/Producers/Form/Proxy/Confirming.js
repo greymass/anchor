@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Button, Divider, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 class ProducersFormProxyConfirming extends Component<Props> {
@@ -17,17 +17,17 @@ class ProducersFormProxyConfirming extends Component<Props> {
   render() {
     const {
       onBack,
-      proxyAccountName,
+      proxyAccount,
       t
     } = this.props;
 
     return (
       <Segment style={{ textAlign: 'center' }} basic clearing vertical>
-        {(proxyAccountName)
+        {(proxyAccount)
           ? (
             <div>
               {t('producers_form_proxy_confirming_change_text_one')}
-              &nbsp;<b><u>{proxyAccountName}</u></b>.<br /><br />
+              &nbsp;<b><u>{proxyAccount}</u></b>.<br /><br />
               {t('producers_form_proxy_confirming_change_text_two')}
             </div>
           ) : (
