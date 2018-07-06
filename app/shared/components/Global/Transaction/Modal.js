@@ -48,6 +48,7 @@ class GlobalTransactionModal extends Component<Props> {
       icon,
       title,
       settings,
+      size,
       system
     } = this.props;
     let {
@@ -80,6 +81,7 @@ class GlobalTransactionModal extends Component<Props> {
         open={open}
         onOpen={this.onOpen}
         onClose={this.onClose}
+        size={size || 'small'}
       >
         <Header
           icon={icon}
