@@ -12,9 +12,12 @@ class ToolsWallets extends Component<Props> {
     const { actions } = this.props;
     actions.removeWallet(account);
   }
-  swapWallet = (account) => {
+  swapWallet = (account, password = false) => {
     const { actions } = this.props;
     actions.useWallet(account);
+    if (password) {
+      actions.unlockWallet(password);
+    }
   }
   render() {
     const {
@@ -71,13 +74,33 @@ class ToolsWallets extends Component<Props> {
                       />
                     </Table.Cell>
                     <Table.Cell collapsing>
-                      <Button
-                        color="green"
-                        content={t('tools_wallets_swap')}
-                        disabled={(account.account === wallet.account)}
-                        icon="random"
-                        onClick={() => this.swapWallet(account.account)}
-                      />
+                      {(account.mode === 'watch')
+                        ? (
+                          <Button
+                            color="green"
+                            content={t('tools_wallets_swap')}
+                            disabled={(account.account === wallet.account)}
+                            icon="random"
+                            onClick={() => this.swapWallet(account.account)}
+                          />
+                        )
+                        : (
+                          <GlobalButtonElevate
+                            onSuccess={(password) => this.swapWallet(account.account, password)}
+                            settings={settings}
+                            trigger={(
+                              <Button
+                                color="green"
+                                content={t('tools_wallets_swap')}
+                                disabled={(account.account === wallet.account)}
+                                icon="random"
+                              />
+                            )}
+                            validate={validate}
+                            wallet={account}
+                          />
+                        )
+                      }
                       {(account.mode === 'watch')
                         ? (
                           <Button
@@ -99,6 +122,7 @@ class ToolsWallets extends Component<Props> {
                               />
                             )}
                             validate={validate}
+                            wallet={account}
                           />
                         )
                       }

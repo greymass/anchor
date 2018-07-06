@@ -15,7 +15,7 @@ class GlobalButtonElevate extends Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { validate } = this.props;
+    const { validate} = this.props;
     if (
       this.state.open
       && prevProps.validate.WALLET_PASSWORD === 'PENDING'
@@ -43,12 +43,16 @@ class GlobalButtonElevate extends Component<Props> {
 
   onSubmit = () => {
     const {
+      actions,
+      wallet
+    } = this.props;
+    const {
       validateWalletPassword
-    } = this.props.actions;
+    } = actions;
     const {
       password
     } = this.state;
-    validateWalletPassword(password);
+    validateWalletPassword(password, wallet);
   }
 
   render() {
