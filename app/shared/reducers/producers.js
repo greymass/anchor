@@ -29,6 +29,11 @@ export default function producers(state = initialState, action) {
         list: action.payload.list
       });
     }
+    case types.SET_WALLET_ACTIVE: {
+      return Object.assign({}, state, {
+        selected: []
+      });
+    }
     case types.GET_ACCOUNT_SUCCESS: {
       const account = action.payload.results;
       if (account && account.voter_info) {
