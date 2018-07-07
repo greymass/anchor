@@ -14,7 +14,7 @@
   "system_voteproducer_5": "私は、何らかの自動化された投票、再投票、投票更新のシステムを使用することや、またはそのようなシステムを自分または他者の代わりに使用することが禁止されており、この契約に違反することに同意します。",
   "system_buyrambytes_1": "この操作は約{{bytes}}バイトのRAMを{{receiver}}の代わりに予約しようとします。",
   "system_buyrambytes_2": "{{buyer}}は、マーケットメイカーアルゴリズムによって決定された現在の価格に基づいて、RAMを購入するのに十分なEOSトークンを送信することをこのコントラクトに許可します。",
-  "system_buyrambytes_3": "{{buyer}} accepts that a 0.5% fee will be charged on the EOS spent and that the actual RAM received may be slightly less than requested due to the approximations necessary to enable this service. {{buyer}} accepts that a 0.5% fee will be charged if and when they sell the RAM received. {{buyer}} accepts that rounding errors resulting from limits of computational precision may result in less RAM being allocated. {{buyer}} acknowledges that the supply of RAM may be increased at any time up to the limits of off-the-shelf computer equipment and that this may result in RAM selling for less than purchase price. {{buyer}} acknowledges that the price of RAM may increase or decrease over time according to supply and demand. {{buyer}} acknowledges that RAM is non-transferable. {{buyer}} acknowledges RAM currently in use by their account cannot be sold until it is freed and that freeing RAM may be subject to terms of other contracts.",
-  "system_sellrambytes_1": "The sellram action sells unused RAM for tokens.",
-  "system_sellrambytes_2": "As an authorized party I {{ signer }} wish to sell {{ bytes }} of unused RAM from account {{ account }}."
+  "system_buyrambytes_3": "{{buyer}}は使用したEOSの0.5％の手数料がかかり、このサービスを可能にするための近似によって実際に受け取るRAMがリクエストしたものよりわずかに小さくなることに同意します。{{buyer}}は受け取ったRAMを売却する際に0.5％の手数料がかかることに同意します。{{buyer}}は計算精度の制限による丸め誤差によって割り当てられるRAMが小さくなることに同意します。{{buyer}}は、RAMの供給量が市販のコンピュータ機器の限界までいつでも上昇し、その結果としてRAMの売却価格が購入価格を下回ることがあることを承知しています。{{buyer}}はRAM価格が供給と需要によって常に上昇または下落することを承知しています。{{buyer}}はRAMが譲渡不可能であることを承知しています。{{buyer}}は、アカウントで現在使用中のRAMは解放されるまで売却することができず、また、RAMの解放には他のコントラクトの条件の対象になる場合があることを承知しています。",
+  "system_sellrambytes_1": "selram操作は未使用RAMをトークンで売却します。",
+  "system_sellrambytes_2": "承認された当事者として、私{{ signer }}はアカウント{{ account }}の未使用RAM{{ bytes }}を売却することを望みます。"
 }
