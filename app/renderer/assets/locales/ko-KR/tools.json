@@ -40,6 +40,6 @@
   "tools_proxy_header_register": "대리 투표자로 등록",
   "tools_proxy_header_registration": "대리 투표자 등록",
   "tools_proxy_header_unregister": "대리 투표자 등록 취소",
-  "tools_proxy_text_not_registered": "By registering as a proxy voter, other accounts will be able to set this account as their proxy. Any producer voting weight from those accounts will be applied to the votes this account makes.",
-  "tools_proxy_text_registered": "This account is now registered and available to be used as a proxy account."
+  "tools_proxy_text_not_registered": "프록시 유권자로 등록하면 다른 계정에서 이 계정을 프록시로 설정할 수 있습니다. 다른 계정에서 얻는 모든 투표 무게가 이 계정에서 투표 시 적용됩니다.",
+  "tools_proxy_text_registered": "이 계정은 등록되어 프록시 계정으로 사용할 수 있습니다."
 }
