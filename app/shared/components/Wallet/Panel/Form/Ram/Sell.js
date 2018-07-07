@@ -182,6 +182,7 @@ class WalletPanelFormRamSell extends Component<Props> {
     } = this.props;
 
     const {
+      formError,
       ramQuota,
       ramUsage,
       ramToSellInKbs,
@@ -220,11 +221,16 @@ class WalletPanelFormRamSell extends Component<Props> {
                     onChange={this.onChange}
                     value={ramToSellInKbs || '0.000'}
                   />
+                  {(priceOfRam && !formError) ? (
+                    <h4 style={{ textAlign: 'center', margin: '10px' }}>
+                      {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} EOS.`}
+                    </h4>
+                  ) : ''}
                 </Grid.Column>
               </Grid>
               <FormMessageError
                 style={{ marginTop: '20px' }}
-                error={this.state.formError}
+                error={formError}
               />
               <Divider />
               <Button
