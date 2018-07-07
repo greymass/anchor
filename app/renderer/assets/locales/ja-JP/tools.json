@@ -41,5 +41,5 @@
   "tools_proxy_header_registration": "プロキシ投票者登録",
   "tools_proxy_header_unregister": "プロキシ投票者としての登録を解除",
   "tools_proxy_text_not_registered": "プロキシ投票者として登録すると、他のアカウントはこのアカウントをプロキシとして設定できるようになります。それらのアカウントのプロデューサ投票ウェイトはこのアカウントの投票に適用されます。",
-  "tools_proxy_text_registered": "This account is now registered and available to be used as a proxy account."
+  "tools_proxy_text_registered": "このアカウントはプロキシアカウントとして登録され使用可能になりました。"
 }
