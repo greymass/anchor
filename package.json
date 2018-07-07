@@ -2,7 +2,7 @@
   "name": "eos-voter",
   "productName": "eos-voter",
   "version": "0.3.0",
-  "description": "",
+  "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
