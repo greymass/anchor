@@ -42,9 +42,9 @@
   "active_producer": "アクティブプロデューサ",
   "backup_producer": "バックアッププロデューサ",
   "producers_table_votes_proxied": "現在のプロデューサ投票プロキシ:",
-  "producers_button_proxy_setup_text": "投票プロキシを設定する",
-  "producers_button_proxy_change_text": "投票プロキシを変更する",
-  "producers_form_proxy_header": "プロデューサ投票プロキシを構成する",
+  "producers_button_proxy_setup_text": "投票プロキシを設定",
+  "producers_button_proxy_change_text": "投票プロキシを変更",
+  "producers_form_proxy_header": "プロデューサ投票プロキシを構成",
   "producers_form_proxy_label": "プロデューサ投票ウェイトを委任したいアカウント名を入力して下さい",
   "producers_form_proxy_confirming_change_text_one": "この操作によりあなたの投票を次のアカウントに委任します:",
   "producers_form_proxy_confirming_change_text_two": "上記のプロキシによってキャストされたすべてのプロデューサ投票があなたのステーク中EOSの利益とウェイトを得るようになります。あなたは自身で投票することができなくなります。",
@@ -53,5 +53,5 @@
   "producers_form_proxy_cancel": "キャンセル",
   "producers_form_proxy_back": "キャンセル",
   "producers_form_proxy_confirm": "確認",
-  "producers_form_proxy_remove": "Remove Voting Proxy"
+  "producers_form_proxy_remove": "投票プロキシを削除"
 }
