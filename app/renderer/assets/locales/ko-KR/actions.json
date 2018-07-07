@@ -1,6 +1,6 @@
 {
-  "actions_link_content": "View Transaction",
-  "actions_table_warning_content": "Depending on the API node you are connected to, the history of your account may vary. If results are missing, either change the API node you connect to or verify your account history on an external block explorer using the link below.",
+  "actions_link_content": "거래 보기",
+  "actions_table_warning_content": "연결된 API 노드에 따라 계정 기록이 달라질 수 있습니다. 결과가 누락 된 경우 연결하는 API 노드를 변경하거나 아래 링크를 사용해서 외부 블록 탐색기에 계정 기록을 확인하세요.",
   "actions_table_warning_header": "Missing Transactions?",
   "actions_table_view_explorer": "View Account on Block Explorer",
   "actions_table_header_one": "Past Actions",
