@@ -46,7 +46,7 @@
   "producers_button_proxy_change_text": "투표자 프록시 변경",
   "producers_form_proxy_header": "생산자 투표 프록시 구성",
   "producers_form_proxy_label": "생산자 투표 가중치를 프록시하려는 계정 이름을 입력하세요.",
-  "producers_form_proxy_confirming_change_text_one": "This action will proxy your votes to",
+  "producers_form_proxy_confirming_change_text_one": "이 작업은 본인 투표를 다음 계정에 개 프록시를 합니다.",
   "producers_form_proxy_confirming_change_text_two": "All producer votes cast by the proxy above will now gain the benefit and weight of this accounts staked EOS. You will no longer be able to cast votes on your own.",
   "producers_form_proxy_confirming_remove_text_one": "You are about to remove",
   "producers_form_proxy_confirming_remove_text_two": "as your proxy voter. Afterwards you will be able to cast your own votes again or set a different proxy account.",
