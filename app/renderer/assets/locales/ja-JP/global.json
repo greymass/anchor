@@ -7,7 +7,7 @@
   "error_ram_has_to_be_over_minimum_value": "最小0.003 KbのRAMから購入できます。",
   "error_ram_not_valid_amount": "RAM数量が不正です。数量は3桁以下の数値にする必要があります。",
   "error_ram_using_more_than_usage": "このトランザクションの後に残るRAMより多くを使用中です。",
-  "error_not_valid_account_name": "This is not a valid account name",
+  "error_not_valid_account_name": "アカウント名が無効です",
   "global_account_import_private_description": "To import additional accounts, simply enter the private key. The app will convert it to a public key and lookup all accounts with relevant permissions.",
   "global_account_import_private_key": "Private Key (51 characters and starts with the number 5)",
   "global_account_import_select_accounts": "Select one or more accounts to import with this private key",
