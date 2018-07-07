@@ -1,7 +1,7 @@
 {
-  "ram_button_confirm_back": "Back",
-  "ram_button_confirm_buy": "Confirm",
-  "ram_button_confirm_sell": "Confirm",
+  "ram_button_confirm_back": "뒤로",
+  "ram_button_confirm_buy": "확인",
+  "ram_button_confirm_sell": "확인",
   "ram_buy_button_cta": "Buy RAM",
   "ram_buy_modal_title": "Buy RAM",
   "ram_buy_confirming_message_one": "You are about to buy",
