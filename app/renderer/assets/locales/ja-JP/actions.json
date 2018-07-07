@@ -6,7 +6,7 @@
   "actions_table_header_one": "過去の操作",
   "actions_table_header_two": "時間",
   "actions_table_none": "まだロード済みの操作データがありません。",
-  "actions_table_row_default_text_one": "You executed the action",
+  "actions_table_row_default_text_one": "操作を実行しました",
   "actions_table_row_default_text_three": "with a value of",
   "actions_table_row_default_text_two": "with the following parameters",
   "actions_table_row_delegatebw_text_one": "You staked",
