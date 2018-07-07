@@ -15,7 +15,7 @@
   "producer_voter_voting_as": "투표하는 계정:",
   "producer_voted_connected_to": "연결된 노드:",
   "producer_voter_total_staked": "스테이킹된 EOS 총량",
-  "producer_voter_save_changes": "Submit votes for selected producers",
+  "producer_voter_save_changes": "선택한 생산자에 투표 제출하기",
   "producer_voter_no_changes": "저장할 변경사항 없음",
   "producer_voter_votes_used": "총 투표 수",
   "producer_voter_remove_all_votes_header": "모든 표를 제거하시겠습니까?",
@@ -33,7 +33,7 @@
   "producer_voter_preview_transaction_successful_title": "투표가 성공적으로 제출되었습니다.",
   "producer_voter_preview_transaction_successful_message": "이 작업은 블록체인에 기록되었습니다. 거래 정보는 아래에서 확인할 수 있습니다.",
   "producer_voter_preview_close": "닫기",
-  "producer_voter_proxying_vote": "Currently selected proxy votes",
+  "producer_voter_proxying_vote": "현재 선택된 프록시 투표",
   "producer_welcome_header": "eos-voter에 오신 것을 환영합니다.",
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
@@ -50,8 +50,8 @@
   "producers_form_proxy_confirming_change_text_two": "All producer votes cast by the proxy above will now gain the benefit and weight of this accounts staked EOS. You will no longer be able to cast votes on your own.",
   "producers_form_proxy_confirming_remove_text_one": "You are about to remove",
   "producers_form_proxy_confirming_remove_text_two": "as your proxy voter. Afterwards you will be able to cast your own votes again or set a different proxy account.",
-  "producers_form_proxy_cancel": "Cancel",
-  "producers_form_proxy_back": "Cancel",
-  "producers_form_proxy_confirm": "Confirm",
-  "producers_form_proxy_remove": "Remove Voting Proxy"
+  "producers_form_proxy_cancel": "취소",
+  "producers_form_proxy_back": "취소",
+  "producers_form_proxy_confirm": "확인",
+  "producers_form_proxy_remove": "투표 프록시 제거"
 }
