@@ -36,38 +36,34 @@ class ToolsProxy extends Component<Props> {
               <Header>
                 {t('tools_proxy_header_registration')}
               </Header>
-              {(!is_proxy) ? (
-                <Segment basic>
-                  <p>
-                    {t('tools_proxy_text_not_registered')}
-                  </p>
-                  <Divider />
-                  <ToolsProxyButtonRegister
-                    account={account}
-                    actions={actions}
-                    settings={settings}
-                    system={system}
-                  />
-                </Segment>
-              ) : ''}
-              {(is_proxy) ? (
-                <Segment basic>
-                  <p>
-                    {t('tools_proxy_text_registered')}
-                  </p>
-                  <Divider />
-                  <p>
-                    {settings.account}
-                  </p>
-                  <Divider />
-                  <ToolsProxyButtonUnregister
-                    account={account}
-                    actions={actions}
-                    settings={settings}
-                    system={system}
-                  />
-                </Segment>
-              ) : ''}
+              <Segment style={(is_proxy) ? ({ display: 'none' }) : {}} basic>
+                <p>
+                  {t('tools_proxy_text_not_registered')}
+                </p>
+                <Divider />
+                <ToolsProxyButtonRegister
+                  account={account}
+                  actions={actions}
+                  settings={settings}
+                  system={system}
+                />
+              </Segment>
+              <Segment style={(!is_proxy) ? ({ display: 'none' }) : {}} basic>
+                <p>
+                  {t('tools_proxy_text_registered')}
+                </p>
+                <Divider />
+                <p>
+                  {settings.account}
+                </p>
+                <Divider />
+                <ToolsProxyButtonUnregister
+                  account={account}
+                  actions={actions}
+                  settings={settings}
+                  system={system}
+                />
+              </Segment>
             </div>
           ) : (
             <WalletPanelLocked

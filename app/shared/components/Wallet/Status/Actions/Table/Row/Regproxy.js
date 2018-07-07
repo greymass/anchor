@@ -13,10 +13,10 @@ class WalletStatusActionsTableRowRegproxy extends Component<Props> {
       data
     } = action.action_trace.act;
 
-    let textSentence = t('actions_table_row_regproxy_text_one');
+    let textSentence = t('actions_table_row_regproxy_text_two');
 
     if (data.isproxy) {
-      textSentence = t('actions_table_row_regproxy_text_two');
+      textSentence = t('actions_table_row_regproxy_text_one');
     }
 
     return (
