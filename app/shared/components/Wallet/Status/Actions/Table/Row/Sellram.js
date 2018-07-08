@@ -20,7 +20,7 @@ class WalletStatusActionsTableRowSellram extends Component<Props> {
           name="database"
           size="large"
         />
-        {`${t('actions_table_row_sellram_text_one')} ${(data.bytes/1024).toFixed(3)} Kbs ${t('actions_table_row_of_ram')}.`}
+        {`${t('actions_table_row_sellram_text_one')} ${(data.bytes/1024).toFixed(3)} KB ${t('actions_table_row_of_ram')}.`}
       </React.Fragment>
     );
   }
