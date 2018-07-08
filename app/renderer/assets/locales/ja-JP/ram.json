@@ -13,8 +13,7 @@
   "ram_confirming_message_will_have": "このトランザクションのあと、あなたは",
   "ram_form_button_buy": "RAMを購入",
   "ram_form_button_sell": "RAMを売却",
-  "ram_form_label_amount_to_buy": "購入するRAM (単位Kbs)",
-  "ram_form_label_amount_to_sell": "売却するRAM (単位Kbs)",
+  "ram_form_label_amount_to_sell": "売却するRAM (単位KB)",
   "ram_form_text_estimate": "Estimated cost is",
   "ram_sell_button_cta": "RAMを売却",
   "ram_sell_confirming_message_one": "売却予定:",
@@ -22,4 +21,5 @@
   "ram_stats_available_title_one": "現在、",
   "ram_stats_available_title_three": "の利用可能RAMから使用しています。",
   "ram_stats_available_title_two": "を"
+  "ram_form_label_amount_to_buy": "購入するRAM (単位KB)",
 }

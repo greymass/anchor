@@ -13,6 +13,7 @@
   "ram_confirming_message_will_have": "After this transaction, you will have",
   "ram_form_button_buy": "Buy RAM",
   "ram_form_button_sell": "Sell RAM",
+  "ram_form_text_estimate": "Estimated cost is",
   "ram_form_label_amount_to_buy": "Amount of RAM to Buy (in KB)",
   "ram_form_label_amount_to_sell": "Amount of RAM to Sell (in KB)",
   "ram_form_text_estimate": "Estimated cost is",
