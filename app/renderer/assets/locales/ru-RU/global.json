@@ -4,7 +4,7 @@
   "error_not_valid_stake_amount": "Не действительная сумма закрёпленых токенов EOS (должна быть положительная сумма с максимум 4 десятичной точностью, например. 15.1012).",
   "error_not_enough_balance": "You do not have enough balance for this transaction.",
   "error_ram_usage_exceeded": "RAM usage exceeded. You will need to buy more ram to carry out this action.",
-  "error_ram_has_to_be_over_minimum_value": "You can only buy a minimum of 0.003 Kbs of RAM.",
+  "error_ram_has_to_be_over_minimum_value": "You can only buy a minimum of 0.003 KB of RAM.",
   "error_ram_not_valid_amount": "That is not a valid ram amount. The amount should be a number with a maximum of 3 decimals.",
   "error_ram_using_more_than_usage": "You are using more ram than what would remain after this transaction.",
   "error_not_valid_account_name": "This is not a valid account name",

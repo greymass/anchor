@@ -38,11 +38,11 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
           </Header>
           <Header>
             {t('ram_buy_confirming_message_one')}
-            <font color="green">{` ${ramToBuyinKbs} Kbs `}</font>
+            <font color="green">{` ${ramToBuyinKbs} KB `}</font>
             {` ${t('ram_confirming_message_kbs_in_ram_for')} ~${priceOfRam.toFixed(4)} EOS.`}
           </Header>
           <Header>
-            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1024)} Kbs ${t('ram_confirming_message_kbs_in_ram_left')}`}
+            {`${t('ram_confirming_message_will_have')} ${ramQuota.plus(ramToBuy).dividedBy(1024)} KB ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
         </Segment>
 
@@ -55,7 +55,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
         <WalletMessageContractBuyRamBytes
           data={{
             buyer: settings.account,
-            bytes: `${ramToBuyinKbs * 1024}kbs`,
+            bytes: `${ramToBuyinKbs * 1024}KB`,
           }}
         />
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Grid, Button } from 'semantic-ui-react';
+import { Segment, Form, Divider, Grid, Button, Message } from 'semantic-ui-react';
 
 import WalletPanelFormRamBuyConfirming from './Buy/Confirming';
 import WalletPanelFormRamStats from './Stats';
@@ -137,7 +137,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const decimalRamToBuy = Decimal(ramToBuyInKbs).times(1024);
 
-    if (!decimalRamToBuy.greaterThan(2)) {
+    if (!decimalRamToBuy.greaterThan(3)) {
       return 'ram_has_to_be_over_minimum_value';
     }
 
@@ -184,6 +184,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.props;
 
     const {
+      formError,
       priceOfRam,
       ramQuota,
       ramUsage,
@@ -222,11 +223,17 @@ class WalletPanelFormRamBuy extends Component<Props> {
                     onChange={this.onChange}
                     value={ramToBuyInKbs || '0.000'}
                   />
+                  {(priceOfRam && !formError) ? (
+                    <h4 style={{ textAlign: 'center', margin: '10px' }}>
+                      {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} EOS.`}
+                    </h4>
+                  ) : ''}
                 </Grid.Column>
               </Grid>
+
               <FormMessageError
                 style={{ marginTop: '20px' }}
-                error={this.state.formError}
+                error={formError}
               />
               <Divider />
               <Button

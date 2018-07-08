@@ -38,11 +38,11 @@ class WalletPanelFormRamSellConfirming extends Component<Props> {
           </Header>
           <Header>
             {t('ram_sell_confirming_message_one')}
-            <font color="red">{ ` ${ramToSellInKbs} kBs ` }</font>
+            <font color="red">{ ` ${ramToSellInKbs} KB ` }</font>
             {`${t('ram_confirming_message_kbs_in_ram_for')} ~${priceOfRam.toFixed(4)} EOS.`}
           </Header>
           <Header>
-            {`${t('ram_confirming_message_will_have')} ${ramQuota.minus(ramToSell).dividedBy(1024)} kBs ${t('ram_confirming_message_kbs_in_ram_left')}`}
+            {`${t('ram_confirming_message_will_have')} ${ramQuota.minus(ramToSell).dividedBy(1024)} KB ${t('ram_confirming_message_kbs_in_ram_left')}`}
           </Header>
         </Segment>
         <Message warning>
@@ -54,7 +54,7 @@ class WalletPanelFormRamSellConfirming extends Component<Props> {
         <WalletMessageContractSellRamBytes
           data={{
             account: settings.account,
-            bytes: `${ramToSellInKbs * 1024}kBs`,
+            bytes: `${ramToSellInKbs * 1024}KB`,
             signer: settings.account,
           }}
         />
