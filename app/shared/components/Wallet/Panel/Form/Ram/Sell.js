@@ -5,12 +5,13 @@ import { Decimal } from 'decimal.js';
 
 import { Segment, Form, Divider, Grid, Button } from 'semantic-ui-react';
 
-import WalletPanelFormRamSellConfirming from './Confirming';
+import WalletPanelFormRamConfirming from './Confirming';
 import WalletPanelFormRamStats from './Stats';
 import FormMessageError from '../../../../Global/Form/Message/Error';
-import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
 
-import calculatePriceOfRam from './helpers/calculatePriceOfRam';
+import WalletPanelFormRamByAmount from './ByAmount';
+import WalletPanelFormRamByCost from './ByCost';
+
 
 type Props = {
   actions: {},
@@ -89,30 +90,18 @@ class WalletPanelFormRamSell extends Component<Props> {
     });
   }
 
-  onChange = (e, { value }) => {
-    const {
-      globals
-    } = this.props;
-
-    const decBaseBal = Decimal(globals.ram.base_balance);
-    const decQuoteBal = Decimal(globals.ram.quote_balance);
-    const decValueInBytes = Decimal(parseFloat(value));
-
-    let priceOfRam = 0;
-
-    if (decValueInBytes.greaterThan(0)) {
-      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes).times(0.995);
-    }
-
+  onChange = (amountOfRam, priceOfRam) => {
     this.setState({
-      submitDisabled: false,
       formError: null,
-      ramToSell: value,
+      amountToBuy: value,
       priceOfRam
     }, () => {
       const error = this.errorsInForm();
+
+      onChange(e, { name, value });
+
       if (error) {
-        this.onError(error);
+        onError(error);
       }
     });
   }
@@ -170,6 +159,10 @@ class WalletPanelFormRamSell extends Component<Props> {
     sellram(Decimal(ramToSell));
   }
 
+  handleTabClick = (e, { name }) => {
+    this.setState({ activeTab: name })
+  }
+
   render() {
     const {
       account,
@@ -181,6 +174,7 @@ class WalletPanelFormRamSell extends Component<Props> {
     } = this.props;
 
     const {
+      activeTab,
       formError,
       ramQuota,
       ramUsage,
@@ -197,6 +191,11 @@ class WalletPanelFormRamSell extends Component<Props> {
         loading={system.SELLRAM === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
+        <Menu tabular>
+          <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
+          <Menu.Item name="byEOSAmount" active={activeTab === 'byEOSAmount'} onClick={this.handleTabClick} />
+        </Menu>
+
         {(shouldShowForm)
           ? (
             <Form
@@ -211,20 +210,21 @@ class WalletPanelFormRamSell extends Component<Props> {
                   />
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <FormFieldGeneric
-                    autoFocus
-                    icon="database"
-                    label={t('ram_form_label_amount_to_sell')}
-                    loading={false}
-                    name="ram_to_sell"
-                    onChange={this.onChange}
-                    value={ramToSell}
-                  />
-                  {(priceOfRam && !formError) ? (
-                    <h4 style={{ textAlign: 'center', margin: '10px' }}>
-                      {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} EOS.`}
-                    </h4>
-                  ) : ''}
+                  {(activeTab === 'byRAMAmount')
+                    ? (
+                      <WalletPanelFormRamByAmount
+                        globals={globals}
+                        onChange={onChange}
+                        onError={this.onError}
+                      />
+                    ) : (
+                      <WalletPanelFormRamByCost
+                        globals={globals}
+                        onChange={onChange}
+                        onError={this.onError}
+                      />
+                    )
+                  }
                 </Grid.Column>
               </Grid>
               <FormMessageError
@@ -249,13 +249,13 @@ class WalletPanelFormRamSell extends Component<Props> {
 
         {(shouldShowConfirm)
           ? (
-            <WalletPanelFormRamSellConfirming
+            <WalletPanelFormRamConfirming
               ramAmount={ramToSell}
               priceOfRam={priceOfRam}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               settings={settings}
-              newRamAmount={ramQuota - ramToSell}
+              newRamAmount={ramQuota - Number(ramToSell)}
             />
           ) : ''}
       </Segment>
