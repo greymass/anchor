@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
+import { Button, Header, Divider, Icon, Segment, Message, Popup } from 'semantic-ui-react';
 
 import WalletMessageContractBuyRamBytes from '../../../../Global/Message/Contract/BuyRamBytes';
+
+const prettyBytes = require('pretty-bytes');
 
 class WalletPanelFormRamBuyConfirming extends Component<Props> {
   onConfirm = () => {
@@ -36,11 +38,29 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
           </Header>
           <Header>
             {t('ram_buy_confirming_message_one')}
-            <font color="green">{` ${ramAmount} B `}</font>
-            {` ${t('ram_confirming_message_kbs_in_ram_for')} ~${priceOfRam.toFixed(4)} EOS.`}
+            <Popup
+              content={`${ramAmount} B`}
+              inverted
+              trigger={
+                <span>
+                  <font color="green">{` ${prettyBytes(Number(ramAmount))}`}</font>
+                </span>
+              }
+            />
+
+            {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} EOS.`}
           </Header>
           <Header>
-            {`${t('ram_confirming_message_will_have')} ${newRamAmount} B ${t('ram_confirming_message_kbs_in_ram_left')}`}
+            {t('ram_confirming_message_will_have')}
+            <Popup
+              content={`${newRamAmount} B`}
+              inverted
+              trigger={
+                <span>
+                  {` ${prettyBytes(newRamAmount)} ${t('ram_confirming_message_in_ram_left')}`}
+                </span>
+              }
+            />
           </Header>
         </Segment>
 
