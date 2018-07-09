@@ -54,6 +54,7 @@ class WalletStatus extends Component<Props> {
         case 'balances': {
           activeTab = (
             <WalletStatusBalances
+              account={account}
               actions={actions}
               balances={balances}
               globals={globals}

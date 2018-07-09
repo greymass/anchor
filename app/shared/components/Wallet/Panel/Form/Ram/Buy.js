@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Grid, Button, Message } from 'semantic-ui-react';
+import { Segment, Form, Divider, Grid, Button } from 'semantic-ui-react';
 
 import WalletPanelFormRamBuyConfirming from './Confirming';
 import WalletPanelFormRamStats from './Stats';
@@ -28,8 +28,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const { account } = props;
 
     this.state = {
-      ramUsage: Decimal(account.ram_usage),
-      ramQuota: Decimal(account.ram_quota),
+      ramUsage: account.ram_usage,
+      ramQuota: account.ram_quota,
       ramToBuy: 0,
       confirming: false,
       formError: null,
@@ -254,9 +254,9 @@ class WalletPanelFormRamBuy extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <WalletPanelFormRamBuyConfirming
-              buying={true}
+              buying
               ramAmount={ramToBuy}
-              newRamAmount={ramQuota + ramToBuy}
+              newRamAmount={ramQuota + Number(ramToBuy)}
               EOSbalance={balance.EOS}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
