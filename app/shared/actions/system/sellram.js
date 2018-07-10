@@ -1,5 +1,6 @@
 import * as types from '../types';
 
+import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
 export function sellram(amount) {
@@ -18,10 +19,14 @@ export function sellram(amount) {
     return eos(connection).sellram({
       account,
       bytes: Number(amount)
-    }).then((tx) => dispatch({
-      payload: { tx },
-      type: types.SYSTEM_SELLRAM_SUCCESS
-    })).catch((err) => dispatch({
+    }).then((tx) => {
+      setTimeout(dispatch(getAccount(account)), 500);
+
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_SELLRAM_SUCCESS
+      });
+    }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_SELLRAM_FAILURE
     }));

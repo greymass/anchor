@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Grid, Button } from 'semantic-ui-react';
+import { Segment, Form, Divider, Grid, Button, Menu } from 'semantic-ui-react';
 
 import WalletPanelFormRamConfirming from './Confirming';
 import WalletPanelFormRamStats from './Stats';
@@ -17,7 +17,9 @@ type Props = {
   actions: {},
   account: {},
   globals: {},
-  system: {}
+  settings: {},
+  system: {},
+  t: () => void
 };
 
 class WalletPanelFormRamSell extends Component<Props> {
@@ -28,11 +30,12 @@ class WalletPanelFormRamSell extends Component<Props> {
     const { account } = props;
 
     this.state = {
-      ramUsage: Number(account.ram_usage),
-      ramQuota: Number(account.ram_quota),
-      ramToSell: 0,
+      activeTab: 'byRAMAmount',
       confirming: false,
       formError: null,
+      ramQuota: Number(account.ram_quota),
+      ramToSell: null,
+      ramUsage: Number(account.ram_usage),
       submitDisabled: true
     };
   }
@@ -93,15 +96,14 @@ class WalletPanelFormRamSell extends Component<Props> {
   onChange = (amountOfRam, priceOfRam) => {
     this.setState({
       formError: null,
-      amountToBuy: value,
+      ramToSell: Number(amountOfRam),
+      submitDisabled: false,
       priceOfRam
     }, () => {
       const error = this.errorsInForm();
 
-      onChange(e, { name, value });
-
       if (error) {
-        onError(error);
+        this.onError(error);
       }
     });
   }
@@ -159,13 +161,10 @@ class WalletPanelFormRamSell extends Component<Props> {
     sellram(Decimal(ramToSell));
   }
 
-  handleTabClick = (e, { name }) => {
-    this.setState({ activeTab: name })
-  }
+  handleTabClick = (e, { name }) => this.setState({ activeTab: name, confirming: false })
 
   render() {
     const {
-      account,
       globals,
       onClose,
       settings,
@@ -213,15 +212,19 @@ class WalletPanelFormRamSell extends Component<Props> {
                   {(activeTab === 'byRAMAmount')
                     ? (
                       <WalletPanelFormRamByAmount
+                        amountOfRam={ramToSell}
+                        formError={formError}
                         globals={globals}
-                        onChange={onChange}
+                        onChange={this.onChange}
                         onError={this.onError}
                       />
                     ) : (
                       <WalletPanelFormRamByCost
+                        formError={formError}
                         globals={globals}
-                        onChange={onChange}
+                        onChange={this.onChange}
                         onError={this.onError}
+                        priceOfRam={priceOfRam}
                       />
                     )
                   }

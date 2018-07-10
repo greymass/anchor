@@ -5,5 +5,8 @@ export default function calculateAmountOfRam(baseBalance, quoteBalance, EOSAmoun
   const C = quoteBalance.plus(EOSAmount);
   const F = 1.0;
 
-  return (0).minus(R.times(1.0.minus(Decimal.pow((1.0).plus(EOSAmount).dividedBy(C), F))))
+  const base = EOSAmount.dividedBy(C).plus(Decimal(1.0));
+  const multiplier = Decimal(1.0).minus(Decimal.pow(base, F));
+
+  return Decimal(0).minus(R.times(multiplier));
 }

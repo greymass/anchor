@@ -1,5 +1,6 @@
 import * as types from '../types';
 
+import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
 export function buyram(amount) {
@@ -18,11 +19,15 @@ export function buyram(amount) {
     return eos(connection).buyram({
       payer: account,
       receiver: account,
-      quant: amount
-    }).then((tx) => dispatch({
-      payload: { tx },
-      type: types.SYSTEM_BUYRAM_SUCCESS
-    })).catch((err) => dispatch({
+      quant: `${amount.toFixed(4)} EOS`
+    }).then((tx) => {
+      setTimeout(dispatch(getAccount(account)), 500);
+
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_BUYRAM_SUCCESS
+      });
+    }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_BUYRAM_FAILURE
     }));

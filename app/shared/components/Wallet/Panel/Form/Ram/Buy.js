@@ -9,8 +9,6 @@ import WalletPanelFormRamConfirming from './Confirming';
 import WalletPanelFormRamStats from './Stats';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 
-import FormFieldToken from '../../../../Global/Form/Field/Token';
-
 import WalletPanelFormRamByAmount from './ByAmount';
 import WalletPanelFormRamByCost from './ByCost';
 
@@ -33,7 +31,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
       activeTab: 'byRAMAmount',
       ramUsage: account.ram_usage,
       ramQuota: account.ram_quota,
-      ramToBuy: 0,
+      ramToBuy: null,
       confirming: false,
       formError: null,
       submitDisabled: true
@@ -83,15 +81,14 @@ class WalletPanelFormRamBuy extends Component<Props> {
   onChange = (amountOfRam, priceOfRam) => {
     this.setState({
       formError: null,
-      amountToBuy: value,
-      priceOfRam
+      ramToBuy: amountOfRam,
+      submitDisabled: false,
+      priceOfRam: Decimal(priceOfRam).times(1.005)
     }, () => {
       const error = this.errorsInForm();
 
-      onChange(e, { name, value });
-
       if (error) {
-        onError(error);
+        this.onError(error);
       }
     });
   }
@@ -102,19 +99,17 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.props;
 
     const {
-      amountToBuy,
+      ramToBuy,
       priceOfRam
     } = this.state;
 
     const decimalRegex = /^\d+$/;
 
-    if (!decimalRegex.test(amountToBuy)) {
+    if (!decimalRegex.test(ramToBuy)) {
       return 'ram_not_valid_amount';
     }
 
-    const decimalRamToBuy = Decimal(amountToBuy);
-
-    if (!decimalRamToBuy > 2) {
+    if (!(Number(ramToBuy) > 2)) {
       return 'ram_has_to_be_over_minimum_amount';
     }
 
@@ -150,25 +145,33 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.props;
 
     const {
+      priceOfRam,
       ramToBuy
     } = this.state;
 
     const {
-      buyrambytes
+      activeTab,
+      buyrambytes,
+      buyram
     } = actions;
 
     this.setState({
       confirming: false
     });
 
-    buyrambytes(ramToBuy);
+    if (activeTab === 'byRAMAmount') {
+      buyrambytes(ramToBuy);
+    } else {
+      buyram(priceOfRam);
+    }
   }
 
-  handleTabClick = (e, { name }) => this.setState({ activeTab: name })
+  handleTabClick = (e, { name }) => this.setState({ activeTab: name, confirming: false })
 
   render() {
     const {
       balance,
+      globals,
       onClose,
       settings,
       system,
@@ -177,7 +180,6 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
     const {
       activeTab,
-      amountOfRam,
       formError,
       priceOfRam,
       ramQuota,
@@ -216,15 +218,19 @@ class WalletPanelFormRamBuy extends Component<Props> {
                   {(activeTab === 'byRAMAmount')
                     ? (
                       <WalletPanelFormRamByAmount
+                        amountOfRam={ramToBuy}
+                        formError={formError}
                         globals={globals}
-                        onChange={onChange}
+                        onChange={this.onChange}
                         onError={this.onError}
                       />
                     ) : (
                       <WalletPanelFormRamByCost
+                        formError={formError}
                         globals={globals}
-                        onChange={onChange}
+                        onChange={this.onChange}
                         onError={this.onError}
+                        priceOfRam={priceOfRam}
                       />
                     )
                   }
@@ -262,7 +268,6 @@ class WalletPanelFormRamBuy extends Component<Props> {
               onConfirm={this.onConfirm}
               priceOfRam={priceOfRam}
               ramQuota={ramQuota}
-              ramToBuy={ramToBuy}
               settings={settings}
             />
           ) : ''}
