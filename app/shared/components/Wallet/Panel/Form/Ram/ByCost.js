@@ -2,12 +2,11 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
-import { Popup } from 'semantic-ui-react';
 
 import FormFieldToken from '../../../../Global/Form/Field/Token';
 import calculateAmountOfRam from './helpers/calculateAmountOfRam';
 
-const prettyBytes = require('pretty-bytes');
+import GlobalDataBytes from '../../../../Global/Data/Bytes';
 
 class WalletPanelFormRamBuyByAmount extends Component<Props> {
   constructor(props) {
@@ -81,14 +80,8 @@ class WalletPanelFormRamBuyByAmount extends Component<Props> {
         {(amountOfRam && !formError) ? (
           <h4 style={{ textAlign: 'center', margin: '10px' }}>
             {t('ram_form_text_amount_estimate')}
-            <Popup
-              content={`${amountOfRam.toFixed(0)} B`}
-              inverted
-              trigger={
-                <span>
-                  {` ${prettyBytes(Number(amountOfRam))}.`}
-                </span>
-              }
+            <GlobalDataBytes
+              bytes={Number(amountOfRam)}
             />
           </h4>
         ) : ''}

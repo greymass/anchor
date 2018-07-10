@@ -1,12 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Segment, Table, Popup } from 'semantic-ui-react';
+import { Button, Header, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
-import prettyBytes from 'pretty-bytes';
 
 import GlobalModalSettingsCustomToken from '../../Global/Modal/Settings/CustomTokens';
+
+import GlobalDataBytes from '../../Global/Data/Bytes';
 
 class WalletStatusBalances extends Component<Props> {
   state = {
@@ -98,14 +99,8 @@ class WalletStatusBalances extends Component<Props> {
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_ram_amount')}</Table.Cell>
                   <Table.Cell>
-                    <Popup
-                      content={`${account.ram_quota} B`}
-                      inverted
-                      trigger={
-                        <span>
-                          {prettyBytes(account.ram_quota)}
-                        </span>
-                      }
+                    <GlobalDataBytes
+                      bytes={account.ram_quota}
                     />
 
                   </Table.Cell>

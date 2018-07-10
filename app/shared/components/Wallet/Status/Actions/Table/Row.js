@@ -13,7 +13,7 @@ import WalletStatusActionTableRowRegproxy from './Row/Regproxy';
 import WalletStatusActionTableRowTransfer from './Row/Transfer';
 import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
 import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
-import WalletStatusActionTableRowBuyrambytes from './Row/Buyrambytes';
+import WalletStatusActionTableRowBuyram from './Row/Buyram';
 import WalletStatusActionTableRowSellram from './Row/Sellram';
 
 const rowComponentsMapping = {
@@ -23,7 +23,8 @@ const rowComponentsMapping = {
   transfer: WalletStatusActionTableRowTransfer,
   undelegatebw: WalletStatusActionTableRowUndelegatebw,
   voteproducer: WalletStatusActionTableRowVoteproducer,
-  buyrambytes: WalletStatusActionTableRowBuyrambytes,
+  buyram: WalletStatusActionTableRowBuyram,
+  buyrambytes: WalletStatusActionTableRowBuyram,
   sellram: WalletStatusActionTableRowSellram
 };
 

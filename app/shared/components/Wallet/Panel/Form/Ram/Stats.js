@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Segment, Progress, Responsive } from 'semantic-ui-react';
 
-import { Segment, Progress, Responsive, Popup } from 'semantic-ui-react';
-
-const prettyBytes = require('pretty-bytes');
+import GlobalDataBytes from '../../../../Global/Data/Bytes';
 
 class WalletPanelFormStakeStats extends Component<Props> {
   render() {
@@ -20,24 +19,12 @@ class WalletPanelFormStakeStats extends Component<Props> {
       <Segment>
         <p>
           {t('ram_stats_available_title_one')}
-          <Popup
-            content={`${ramUsage} B`}
-            inverted
-            trigger={
-              <span>
-                {` ${prettyBytes(Number(ramUsage))} `}
-              </span>
-            }
+          <GlobalDataBytes
+            bytes={Number(ramUsage)}
           />
           {t('ram_stats_available_title_two')}
-          <Popup
-            content={`${ramQuota} B`}
-            inverted
-            trigger={
-              <span>
-                {` ${prettyBytes(Number(ramQuota))} `}
-              </span>
-            }
+          <GlobalDataBytes
+            bytes={Number(ramQuota)}
           />
           {t('ram_stats_available_title_three')}
         </p>
