@@ -3,10 +3,23 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import FormFieldGeneric from '../../../../../Global/Form/Field/Generic';
-import calculatePriceOfRam from '../helpers/calculatePriceOfRam';
+import FormFieldRam from '../../../../Global/Form/Field/Ram';
+import calculatePriceOfRam from './helpers/calculatePriceOfRam';
 
 class WalletPanelFormRamBuyByAmount extends Component<Props> {
+  constructor(props) {
+    super(props);
+
+    const {
+      amountOfRam
+    } = this.props;
+
+    this.state = {
+      amountOfRam,
+      priceOfRam: null
+    };
+  }
+
   onConfirm = () => {
     const {
       onConfirm
@@ -18,8 +31,7 @@ class WalletPanelFormRamBuyByAmount extends Component<Props> {
   onChange = (e, { value }) => {
     const {
       globals,
-      onChange,
-      onError
+      onChange
     } = this.props;
 
     const decBaseBal = Decimal(globals.ram.base_balance);
@@ -29,34 +41,38 @@ class WalletPanelFormRamBuyByAmount extends Component<Props> {
     let priceOfRam = 0;
 
     if (decValueInBytes.greaterThan(0)) {
-      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes).times(1.005);
+      priceOfRam = calculatePriceOfRam(decBaseBal, decQuoteBal, decValueInBytes);
     }
 
-    onChange(amountOfRam, priceOfRam);
+    onChange(value, priceOfRam);
 
+    this.setState({
+      amountOfRam: value,
+      priceOfRam
+    });
   }
 
   render() {
     const {
-      ramToBuy,
+      formError,
       t
     } = this.props;
 
     const {
-      formError,
+      amountOfRam,
       priceOfRam
     } = this.state;
 
     return (
       <div>
-        <FormFieldGeneric
+        <FormFieldRam
           autoFocus
           icon="database"
-          label={t('ram_form_label_amount_in_bytes_to_buy')}
+          label={t('ram_form_label_amount_in_bytes')}
           loading={false}
           name="ram_to_buy"
           onChange={this.onChange}
-          value={ramToBuy}
+          defaultValue={amountOfRam}
         />
         {(priceOfRam && !formError) ? (
           <h4 style={{ textAlign: 'center', margin: '10px' }}>

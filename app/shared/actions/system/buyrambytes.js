@@ -1,5 +1,6 @@
 import * as types from '../types';
 
+import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
 export function buyrambytes(amount) {
@@ -19,10 +20,14 @@ export function buyrambytes(amount) {
       payer: account,
       receiver: account,
       bytes: Number(amount)
-    }).then((tx) => dispatch({
-      payload: { tx },
-      type: types.SYSTEM_BUYRAM_SUCCESS
-    })).catch((err) => dispatch({
+    }).then((tx) => {
+      setTimeout(dispatch(getAccount(account)), 500);
+
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_BUYRAM_SUCCESS
+      });
+    }).catch((err) => dispatch({
       payload: { err },
       type: types.SYSTEM_BUYRAM_FAILURE
     }));
