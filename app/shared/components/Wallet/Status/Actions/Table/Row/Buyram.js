@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 
 import GlobalDataBytes from '../../../../../Global/Data/Bytes';
 
-class WalletStatusActionsTableRowSellram extends Component<Props> {
+class WalletStatusActionsTableRowBuyram extends Component<Props> {
   render() {
     const {
       action,
@@ -22,15 +22,20 @@ class WalletStatusActionsTableRowSellram extends Component<Props> {
           name="database"
           size="large"
         />
-        {t('actions_table_row_sellram_text_one')}
-        <GlobalDataBytes
-          bytes={data.bytes}
-        />
-
-        {`${t('actions_table_row_of_ram')}.`}
+        {t('actions_table_row_buyrambytes_text_one')}
+        {(data.quant) ? (
+          <span>
+            {`${data.quant} `}
+          </span>
+        ) : (
+          <GlobalDataBytes
+            bytes={data.bytes}
+          />
+        )}
+        {t('actions_table_row_of_ram')}
       </React.Fragment>
     );
   }
 }
 
-export default translate('actions')(WalletStatusActionsTableRowSellram);
+export default translate('actions')(WalletStatusActionsTableRowBuyram);
