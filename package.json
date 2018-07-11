@@ -84,11 +84,12 @@
     },
     "linux": {
       "category": "Network",
+      "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
       "desktop": {
         "Name": "eos-voter",
         "GenericName": "EOS Voting Client + Wallet",
         "X-GNOME-FullName": "eos-voter",
-        "Comment": "A simple voting interface and wallet for EOS accounts.",
+        "Comment": "Simple light wallet and block producer voting tool for the EOS blockchain",
         "Type": "Application",
         "Terminal": "false",
         "StartupNotify": "false",
@@ -108,6 +109,9 @@
         "AppImage",
         "snap"
       ]
+    },
+    "snap": {
+      "synopsis": "Simple light wallet and block producer voting tool for the EOS blockchain"
     },
     "directories": {
       "buildResources": "resources",
@@ -176,7 +180,7 @@
     "detect-port": "^1.2.3",
     "devtron": "^1.4.0",
     "electron": "^2.0.2",
-    "electron-builder": "20.14.7",
+    "electron-builder": "20.19.2",
     "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-log": "^2.2.14",
