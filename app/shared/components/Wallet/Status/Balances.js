@@ -46,7 +46,7 @@ class WalletStatusBalances extends Component<Props> {
     } = statsFetcher.fetchAll();
     const contracts = balances.__contracts;
     const claimable = (new Date() > refundDate);
-
+    const watchedTokens = settings.customTokens.map((token) => token.split(':')[1]);
     const rows = [
       (
         <Table.Row key="EOS">
@@ -113,7 +113,7 @@ class WalletStatusBalances extends Component<Props> {
     ];
     // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
-      if (token === 'EOS') return;
+      if (token === 'EOS' || watchedTokens.indexOf(token) === -1) return;
       rows.push((
         <Table.Row key={token}>
           <Table.Cell width={5}>
