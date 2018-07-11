@@ -14,6 +14,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
       onClose,
       onConfirm,
       selected,
+      settings,
       submitting
     } = this.props;
     // Generate and chunk the rows into groups of 4 cells
@@ -80,9 +81,9 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 }
                 <WalletMessageContractVoteProducer
                   data={{
-                    signer: '',
+                    signer: settings.account,
                     producers: selected.join(', '),
-                    voter: ''
+                    voter: settings.account
                   }}
                 />
                 <Divider />
