@@ -19,7 +19,8 @@
   "ram_sell_button_cta": "Sell RAM",
   "ram_sell_confirming_message_one": "You are about to sell",
   "ram_sell_modal_title": "Sell RAM",
-  "ram_stats_available_title_one": "You are using",
-  "ram_stats_available_title_three": "of RAM available.",
-  "ram_stats_available_title_two": "of your"
+  "ram_stats_title_one": "EOS Balance",
+  "ram_stats_title_two": "Available RAM",
+  "ram_stats_title_three": "Used RAM",
+  "ram_stats_title_four": "Total RAM"
 }
