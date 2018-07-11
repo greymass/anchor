@@ -2,11 +2,11 @@
   "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
   "error_no_stake_left": "Unable to set staked amount to 0. Doing so would prevent you from performing any transactions on the network.",
   "error_not_valid_stake_amount": "不是有效的放样金额（必须是正数,最大精度为4位小数,例如12.1212）",
-  "error_not_enough_balance": "You do not have enough balance for this transaction.",
+  "error_not_enough_balance": "Insufficient available EOS balance to complete transaction.",
   "error_ram_usage_exceeded": "RAM usage exceeded. You will need to buy more ram to carry out this action.",
-  "error_ram_has_to_be_over_minimum_amount": "You can only buy a minimum of 3 B of RAM.",
-  "error_ram_not_valid_amount": "That is not a valid ram amount. The amount should be a number with a maximum of 3 decimals.",
-  "error_ram_using_more_than_usage": "You are using more ram than what would remain after this transaction.",
+  "error_ram_has_to_be_over_minimum_amount": "A minimum of 3 bytes of RAM is required per transaction.",
+  "error_ram_not_valid_amount": "Invalid RAM amount. A valid amount should be a whole number with no decimals.",
+  "error_ram_using_more_than_usage": "Insufficient available RAM balance to complete transaction.",
   "error_not_valid_account_name": "This is not a valid account name",
   "global_account_import_private_description": "To import additional accounts, simply enter the private key. The app will convert it to a public key and lookup all accounts with relevant permissions.",
   "global_account_import_private_key": "Private Key (51 characters and starts with the number 5)",
@@ -65,6 +65,7 @@
   "global_modal_account_import_watch_wallet": "Watch Wallet",
   "global_modal_account_import_cold_wallet": "Cold Wallet",
   "global_modal_account_import_hot_check_key": "Find Accounts",
+  "global_modal_account_import_undefined_wallet": "Legacy Wallet",
   "global_transaction_complete_warning_title": "交易未确认",
   "error": "Error"
 }

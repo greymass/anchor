@@ -66,5 +66,6 @@
   "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
   "wallet_mode_explain_hot": "This wallet is running as a 'Hot' wallet, meaning it can create, sign, and broadcast transactions without the assistance of any other wallet.",
   "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
+  "wallet_mode_explain_undefined": "This wallet is from a legacy version and it's type is unknown. This should not cause any problems, and once you swap to another wallet and back, it should upgrade properly.",
   "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet."
 }
