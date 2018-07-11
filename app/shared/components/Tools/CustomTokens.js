@@ -44,9 +44,6 @@ class ToolsCustomTokens extends Component<Props> {
       t,
       wallets
     } = this.props;
-    if (!wallets || !wallets.length) {
-      return false;
-    }
     const {
       customTokens
     } = settings;
