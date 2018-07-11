@@ -1,46 +1,52 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Segment, Progress, Responsive } from 'semantic-ui-react';
-
-import GlobalDataBytes from '../../../../Global/Data/Bytes';
+import { Table, Header } from 'semantic-ui-react';
 
 class WalletPanelFormStakeStats extends Component<Props> {
   render() {
     const {
+      EOSbalance,
       ramUsage,
       ramQuota,
       t
     } = this.props;
 
-    const ramUsagePercentage = (ramUsage / ramQuota) * 100;
-
     return (
-      <Segment>
-        <p>
-          {t('ram_stats_available_title_one')}
-          <GlobalDataBytes
-            bytes={Number(ramUsage)}
-          />
-          {t('ram_stats_available_title_two')}
-          <GlobalDataBytes
-            bytes={Number(ramQuota)}
-          />
-          {t('ram_stats_available_title_three')}
-        </p>
-        <Progress
-          color="teal"
-          label={(
-            <div className="label">
-              {ramUsagePercentage.toFixed(2)}%
-              <Responsive as="span" minWidth={800} />
-            </div>
-          )}
-          percent={ramUsagePercentage}
-          size="tiny"
-          style={{ minWidth: 0 }}
-        />
-      </Segment>
+      <Table celled>
+        <Table.Row>
+          <Table.Cell width={8}>
+            {t('ram_stats_title_one')}
+          </Table.Cell>
+          <Table.Cell width={8}>
+            {`${EOSbalance} EOS`}
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell width={8}>
+            {t('ram_stats_title_two')}
+          </Table.Cell>
+          <Table.Cell width={8}>
+            {`${ramQuota - ramUsage} B`}
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell width={8}>
+            {t('ram_stats_title_three')}
+          </Table.Cell>
+          <Table.Cell width={8}>
+            {`${ramUsage} B`}
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell width={8}>
+            {t('ram_stats_title_four')}
+          </Table.Cell>
+          <Table.Cell width={8}>
+            {`${ramQuota} B`}
+          </Table.Cell>
+        </Table.Row>
+      </Table>
     );
   }
 }

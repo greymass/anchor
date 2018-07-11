@@ -16,6 +16,7 @@ import WalletPanelFormRamByCost from './ByCost';
 type Props = {
   actions: {},
   account: {},
+  balances: {},
   globals: {},
   settings: {},
   system: {},
@@ -165,6 +166,7 @@ class WalletPanelFormRamSell extends Component<Props> {
 
   render() {
     const {
+      balances,
       globals,
       onClose,
       settings,
@@ -190,64 +192,66 @@ class WalletPanelFormRamSell extends Component<Props> {
         loading={system.SELLRAM === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
-        <Menu tabular>
-          <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
-          <Menu.Item name="byEOSAmount" active={activeTab === 'byEOSAmount'} onClick={this.handleTabClick} />
-        </Menu>
-
         {(shouldShowForm)
           ? (
-            <Form
-              onKeyPress={this.onKeyPress}
-              onSubmit={this.onSubmit}
-            >
-              <Grid>
-                <Grid.Column width={8}>
-                  <WalletPanelFormRamStats
-                    ramQuota={ramQuota}
-                    ramUsage={ramUsage}
-                  />
-                </Grid.Column>
-                <Grid.Column width={8}>
-                  {(activeTab === 'byRAMAmount')
-                    ? (
-                      <WalletPanelFormRamByAmount
-                        amountOfRam={ramToSell}
-                        formError={formError}
-                        globals={globals}
-                        onChange={this.onChange}
-                        onError={this.onError}
-                      />
-                    ) : (
-                      <WalletPanelFormRamByCost
-                        formError={formError}
-                        globals={globals}
-                        onChange={this.onChange}
-                        onError={this.onError}
-                        priceOfRam={priceOfRam}
-                      />
-                    )
-                  }
-                </Grid.Column>
-              </Grid>
-              <FormMessageError
-                style={{ marginTop: '20px' }}
-                error={formError}
-              />
-              <Divider />
-              <Button
-                content={t('cancel')}
-                color="grey"
-                onClick={onClose}
-              />
-              <Button
-                content={t('ram_form_button_sell')}
-                color="green"
-                disabled={submitDisabled}
-                floated="right"
-                primary
-              />
-            </Form>
+            <div>
+              <Menu tabular>
+                <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
+                <Menu.Item name="byEOSAmount" active={activeTab === 'byEOSAmount'} onClick={this.handleTabClick} />
+              </Menu>
+              <Form
+                onKeyPress={this.onKeyPress}
+                onSubmit={this.onSubmit}
+              >
+                <Grid>
+                  <Grid.Column width={8}>
+                    <WalletPanelFormRamStats
+                      EOSbalance={balances[settings.account].EOS}
+                      ramQuota={ramQuota}
+                      ramUsage={ramUsage}
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    {(activeTab === 'byRAMAmount')
+                      ? (
+                        <WalletPanelFormRamByAmount
+                          amountOfRam={ramToSell}
+                          formError={formError}
+                          globals={globals}
+                          onChange={this.onChange}
+                          onError={this.onError}
+                        />
+                      ) : (
+                        <WalletPanelFormRamByCost
+                          formError={formError}
+                          globals={globals}
+                          onChange={this.onChange}
+                          onError={this.onError}
+                          priceOfRam={priceOfRam}
+                        />
+                      )
+                    }
+                  </Grid.Column>
+                </Grid>
+                <FormMessageError
+                  style={{ marginTop: '20px' }}
+                  error={formError}
+                />
+                <Divider />
+                <Button
+                  content={t('cancel')}
+                  color="grey"
+                  onClick={onClose}
+                />
+                <Button
+                  content={t('ram_form_button_sell')}
+                  color="green"
+                  disabled={submitDisabled}
+                  floated="right"
+                  primary
+                />
+              </Form>
+            </div>
           ) : ''}
 
         {(shouldShowConfirm)

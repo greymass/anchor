@@ -196,65 +196,67 @@ class WalletPanelFormRamBuy extends Component<Props> {
         loading={system.BUYRAM === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
-        <Menu tabular>
-          <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
-          <Menu.Item name="byEOSAmount" active={activeTab === 'byEOSAmount'} onClick={this.handleTabClick} />
-        </Menu>
-
         {(shouldShowForm)
           ? (
-            <Form
-              onKeyPress={this.onKeyPress}
-              onSubmit={this.onSubmit}
-            >
-              <Grid>
-                <Grid.Column width={8}>
-                  <WalletPanelFormRamStats
-                    ramQuota={ramQuota}
-                    ramUsage={ramUsage}
-                  />
-                </Grid.Column>
-                <Grid.Column width={8}>
-                  {(activeTab === 'byRAMAmount')
-                    ? (
-                      <WalletPanelFormRamByAmount
-                        amountOfRam={ramToBuy}
-                        formError={formError}
-                        globals={globals}
-                        onChange={this.onChange}
-                        onError={this.onError}
-                      />
-                    ) : (
-                      <WalletPanelFormRamByCost
-                        formError={formError}
-                        globals={globals}
-                        onChange={this.onChange}
-                        onError={this.onError}
-                        priceOfRam={priceOfRam}
-                      />
-                    )
-                  }
-                </Grid.Column>
-              </Grid>
+            <div>
+              <Menu tabular>
+                <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
+                <Menu.Item name="byEOSAmount" active={activeTab === 'byEOSAmount'} onClick={this.handleTabClick} />
+              </Menu>
+              <Form
+                onKeyPress={this.onKeyPress}
+                onSubmit={this.onSubmit}
+              >
+                <Grid>
+                  <Grid.Column width={8}>
+                    <WalletPanelFormRamStats
+                      EOSbalance={balance.EOS}
+                      ramQuota={ramQuota}
+                      ramUsage={ramUsage}
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    {(activeTab === 'byRAMAmount')
+                      ? (
+                        <WalletPanelFormRamByAmount
+                          amountOfRam={ramToBuy}
+                          formError={formError}
+                          globals={globals}
+                          onChange={this.onChange}
+                          onError={this.onError}
+                        />
+                      ) : (
+                        <WalletPanelFormRamByCost
+                          formError={formError}
+                          globals={globals}
+                          onChange={this.onChange}
+                          onError={this.onError}
+                          priceOfRam={priceOfRam}
+                        />
+                      )
+                    }
+                  </Grid.Column>
+                </Grid>
 
-              <FormMessageError
-                style={{ marginTop: '20px' }}
-                error={formError}
-              />
-              <Divider />
-              <Button
-                content={t('cancel')}
-                color="grey"
-                onClick={onClose}
-              />
-              <Button
-                content={t('ram_form_button_buy')}
-                color="green"
-                disabled={submitDisabled}
-                floated="right"
-                primary
-              />
-            </Form>
+                <FormMessageError
+                  style={{ marginTop: '20px' }}
+                  error={formError}
+                />
+                <Divider />
+                <Button
+                  content={t('cancel')}
+                  color="grey"
+                  onClick={onClose}
+                />
+                <Button
+                  content={t('ram_form_button_buy')}
+                  color="green"
+                  disabled={submitDisabled}
+                  floated="right"
+                  primary
+                />
+              </Form>
+            </div>
           ) : ''}
 
         {(shouldShowConfirm)
