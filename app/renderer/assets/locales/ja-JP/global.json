@@ -4,7 +4,7 @@
   "error_not_valid_stake_amount": "ステーク量が不正です (小数点以下4位までの正の数でなければなりません。例 12.1212) 。",
   "error_not_enough_balance": "このトランザクションに十分な残高がありません。",
   "error_ram_usage_exceeded": "RAM使用量が超過しています。この操作を実行するにはRAMを買い足す必要があります。",
-  "error_ram_has_to_be_over_minimum_value": "最小0.003 KbsのRAMから購入できます。",
+  "error_ram_has_to_be_over_minimum_amount": "You can only buy a minimum of 3 B of RAM.",
   "error_ram_not_valid_amount": "RAM数量が不正です。数量は3桁以下の数値にする必要があります。",
   "error_ram_using_more_than_usage": "このトランザクションの後に残るRAMより多くを使用中です。",
   "error_not_valid_account_name": "アカウント名が無効です",
