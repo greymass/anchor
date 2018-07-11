@@ -19,6 +19,7 @@ import ToolsWallets from '../components/Tools/Wallets';
 
 import * as AccountsActions from '../actions/accounts';
 import * as CustomTokensActions from '../actions/customtokens';
+import * as GlobalsActions from '../actions/globals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as SettingsActions from '../actions/settings';
 import * as SystemStateActions from '../actions/system/systemstate';
@@ -110,6 +111,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...CustomTokensActions,
+      ...GlobalsActions,
       ...RegProxyActions,
       ...SettingsActions,
       ...SystemStateActions,
