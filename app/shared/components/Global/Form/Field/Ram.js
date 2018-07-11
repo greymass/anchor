@@ -40,7 +40,7 @@ export default class FormFieldRam extends Component<Props> {
         loading={loading}
         name={name}
         onChange={this.onChange}
-        placeholder="0000"
+        placeholder="0"
       />
     );
   }
