@@ -176,6 +176,7 @@ class WalletPanelFormTransfer extends Component<Props> {
                 maximum={balance[asset]}
                 name="quantity"
                 onChange={this.onChange}
+                settings={settings}
                 value={quantity}
               />
               <FormFieldGeneric
