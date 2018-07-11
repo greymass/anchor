@@ -8,6 +8,7 @@ import app from './app';
 import balances from './balances';
 import chain from './chain';
 import connection from './connection';
+import customtokens from './customtokens';
 import keys from './keys';
 import globals from './globals';
 import producers from './producers';
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   balances,
   chain,
   connection,
+  customtokens,
   globals,
   keys,
   producers,

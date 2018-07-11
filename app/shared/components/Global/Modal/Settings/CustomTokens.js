@@ -45,42 +45,10 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
   addToken = () => {
     const { actions, onClose, settings } = this.props;
     const { account, symbol } = this.state;
-    const { customTokens } = settings;
-    const name = [account, symbol].join(':');
-
-    let tokens = [];
-    if (customTokens) {
-      tokens = customTokens.slice(0);
-    }
-
-    if (name && name.length > 0) {
-      const { refreshAccountBalances, setSetting } = actions;
-      tokens.push(name);
-      tokens = new Set(tokens.filter((e) => e));
-      setSetting('customTokens', Array.from(tokens));
-      this.setState({ name: '', token: {} }, () => {
-        onClose();
-      });
-      refreshAccountBalances(settings.account);
-    }
-  }
-  removeToken = (token) => {
-    const { actions, settings } = this.props;
-    const { customTokens } = settings;
-
-    let tokens = [];
-    if (customTokens) {
-      tokens = customTokens.slice(0);
-    }
-
-    const position = tokens.indexOf(token);
-    if (position >= 0) {
-      const { refreshAccountBalances, setSetting } = actions;
-      tokens.splice(position, 1);
-      tokens = new Set(tokens.filter((e) => e));
-      setSetting('customTokens', Array.from(tokens));
-      refreshAccountBalances(settings.account);
-    }
+    actions.addCustomToken(account, symbol);
+    this.setState({ name: '', token: {} }, () => {
+      onClose();
+    });
   }
   onChange = (e, { name, value }) => this.setState({ [name]: value.trim() });
   onClose = () => {
