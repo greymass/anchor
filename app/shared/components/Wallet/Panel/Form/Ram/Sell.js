@@ -205,13 +205,6 @@ class WalletPanelFormRamSell extends Component<Props> {
               >
                 <Grid>
                   <Grid.Column width={8}>
-                    <WalletPanelFormRamStats
-                      EOSbalance={balances[settings.account].EOS}
-                      ramQuota={ramQuota}
-                      ramUsage={ramUsage}
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={8}>
                     {(activeTab === 'byRAMAmount')
                       ? (
                         <WalletPanelFormRamByAmount
@@ -231,6 +224,13 @@ class WalletPanelFormRamSell extends Component<Props> {
                         />
                       )
                     }
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    <WalletPanelFormRamStats
+                      EOSbalance={balances[settings.account].EOS}
+                      ramQuota={ramQuota}
+                      ramUsage={ramUsage}
+                    />
                   </Grid.Column>
                 </Grid>
                 <FormMessageError

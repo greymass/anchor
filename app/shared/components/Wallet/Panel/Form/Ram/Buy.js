@@ -209,13 +209,6 @@ class WalletPanelFormRamBuy extends Component<Props> {
               >
                 <Grid>
                   <Grid.Column width={8}>
-                    <WalletPanelFormRamStats
-                      EOSbalance={balance.EOS}
-                      ramQuota={ramQuota}
-                      ramUsage={ramUsage}
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={8}>
                     {(activeTab === 'byRAMAmount')
                       ? (
                         <WalletPanelFormRamByAmount
@@ -235,6 +228,13 @@ class WalletPanelFormRamBuy extends Component<Props> {
                         />
                       )
                     }
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    <WalletPanelFormRamStats
+                      EOSbalance={balance.EOS}
+                      ramQuota={ramQuota}
+                      ramUsage={ramUsage}
+                    />
                   </Grid.Column>
                 </Grid>
 

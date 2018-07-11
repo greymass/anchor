@@ -78,7 +78,7 @@ class WalletPanelFormRamBuyByAmount extends Component<Props> {
           defaultValue={priceOfRam && priceOfRam.toFixed(4)}
         />
         {(amountOfRam && !formError) ? (
-          <h4 style={{ textAlign: 'center', margin: '10px' }}>
+          <h4 style={{ textAlign: 'center', margin: '30px' }}>
             {t('ram_form_text_amount_estimate')}
             <GlobalDataBytes
               bytes={Number(amountOfRam)}

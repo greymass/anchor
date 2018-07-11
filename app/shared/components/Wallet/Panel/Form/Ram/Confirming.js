@@ -36,7 +36,13 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
             </Header.Subheader>
           </Header>
           <Header>
-            {t('ram_buy_confirming_message_one')}
+            {(buying)
+              ? (
+                <span>{t('ram_buy_confirming_message_one')}</span>
+              ) : (
+                <span>{t('ram_sell_confirming_message_one')}</span>
+              )}
+
             <font color="green">
               <GlobalDataBytes
                 bytes={Number(ramAmount)}
