@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import ReactJson from 'react-json-view';
+import { findIndex } from 'lodash';
 
-import { Button, Checkbox, Container, Header, Label, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Header, Segment, Table } from 'semantic-ui-react';
 
 import GlobalModalSettingsCustomToken from '../Global/Modal/Settings/CustomTokens';
 
@@ -27,7 +27,7 @@ class ToolsCustomTokens extends Component<Props> {
   }
   toggleCustomToken = (e, { checked, name }) => {
     const { actions } = this.props;
-    const [ contract, symbol ] = name.split(':');
+    const [contract, symbol] = name.split(':');
     if (checked) {
       actions.addCustomToken(contract, symbol);
     } else {
@@ -48,8 +48,26 @@ class ToolsCustomTokens extends Component<Props> {
       return false;
     }
     const {
+      customTokens
+    } = settings;
+    const {
       addingToken
     } = this.state;
+    const {
+      tokens
+    } = customtokens;
+    if (customTokens && customTokens.length) {
+      customTokens.forEach((token) => {
+        const [contract, symbol] = token.split(':');
+        if (findIndex(customtokens.tokens, { symbol, contract }) === -1) {
+          tokens.unshift({
+            contract,
+            custom: true,
+            symbol
+          });
+        }
+      });
+    }
     return (
       <Segment basic>
         <Header>
@@ -92,7 +110,7 @@ class ToolsCustomTokens extends Component<Props> {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {([].concat(customtokens.tokens)
+            {([].concat(tokens)
                 .filter((token) => (token.symbol !== 'EOS'))
                 .map((token) => {
                   const name = `${token.contract}:${token.symbol}`;
@@ -104,7 +122,14 @@ class ToolsCustomTokens extends Component<Props> {
                   return (
                     <Table.Row key={`${token.contract}-${token.symbol}`}>
                       <Table.Cell>
-                        {token.contract}
+                        <Header size="small">
+                          {token.contract}
+                          {(token.custom) ? (
+                            <Header.Subheader>
+                              {t('tools_customtokens_track_custom')}
+                            </Header.Subheader>
+                          ) : false }
+                        </Header>
                       </Table.Cell>
                       <Table.Cell>
                         {token.symbol}
@@ -113,7 +138,6 @@ class ToolsCustomTokens extends Component<Props> {
                         <strong>
                           {balance}
                         </strong>
-
                       </Table.Cell>
                       <Table.Cell>
                         <Checkbox
