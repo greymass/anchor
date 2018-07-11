@@ -33,10 +33,10 @@ export default class FormFieldMultiToken extends Component<Props> {
     } = this.props;
     const { customTokens } = settings;
     // Determine which tokens are being tracked
-    const trackedTokens = customTokens.map((tokenName) => {
+    const trackedTokens = (customTokens) ? customTokens.map((tokenName) => {
       const [, symbol] = tokenName.split(':');
       return symbol;
-    });
+    }) : ['EOS'];
     const options = [];
     // Iterate assets and build the options list based on tracked tokens
     assets.forEach((asset) => {

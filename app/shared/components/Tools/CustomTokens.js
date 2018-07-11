@@ -111,7 +111,7 @@ class ToolsCustomTokens extends Component<Props> {
                 .filter((token) => (token.symbol !== 'EOS'))
                 .map((token) => {
                   const name = `${token.contract}:${token.symbol}`;
-                  const isSelected = !!(settings.customTokens.indexOf(name) !== -1);
+                  const isSelected = !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);
                   let balance = false;
                   if (balances && settings.account && balances[settings.account]) {
                     balance = balances[settings.account][token.symbol];

@@ -33,7 +33,7 @@ class WalletStatusBalances extends Component<Props> {
     } = statsFetcher.fetchAll();
     const contracts = balances.__contracts;
     const claimable = (new Date() > refundDate);
-    const watchedTokens = settings.customTokens.map((token) => token.split(':')[1]);
+    const watchedTokens = (settings.customTokens) ? settings.customTokens.map((token) => token.split(':')[1]) : [];
     const rows = [
       (
         <Table.Row key="EOS">
