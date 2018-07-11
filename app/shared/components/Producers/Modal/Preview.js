@@ -32,6 +32,7 @@ class ProducersVotingPreview extends Component<Props> {
             lastError={lastError}
             onConfirm={onConfirm}
             selected={selected}
+            settings={settings}
             submitting={submitting}
           />
         )}
