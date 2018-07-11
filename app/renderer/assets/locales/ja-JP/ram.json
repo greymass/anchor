@@ -19,7 +19,8 @@
   "ram_sell_button_cta": "RAMを売却",
   "ram_sell_confirming_message_one": "売却予定:",
   "ram_sell_modal_title": "RAMを売却",
-  "ram_stats_available_title_one": "現在、",
-  "ram_stats_available_title_three": "の利用可能RAMから使用しています。",
-  "ram_stats_available_title_two": "を"
+  "ram_stats_title_one": "EOS Balance",
+  "ram_stats_title_two": "Available RAM",
+  "ram_stats_title_three": "Used RAM",
+  "ram_stats_title_four": "Total RAM"
 }
