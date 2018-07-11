@@ -9,6 +9,8 @@ const fs = require('fs');
 const log = require('electron-log');
 const path = require('path');
 
+require('electron-context-menu')();
+
 const createInterface = (resourcePath, route = '/', closable = true, store) => {
   log.info('ui: creating');
 
