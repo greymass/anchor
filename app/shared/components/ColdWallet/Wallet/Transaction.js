@@ -48,7 +48,7 @@ class ColdWalletTransaction extends Component<Props> {
     const validContracts = ['eosio', 'eosio.token', 'eosio.msig'];
     const validActions = actions.filter((action) => validContracts.indexOf(action.account) >= 0);
     const invalidContract = validActions.length !== actions.length;
-    const disabled = (expired || signed || invalidContract);
+    const disabled = (signed || invalidContract);
     return (
       <Segment basic>
         <Segment attached="top">
