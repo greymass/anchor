@@ -7,6 +7,7 @@
   "tools_customtokens_subheader": "Select which custom tokens to track and scan for any available balances.",
   "tools_customtokens_symbol": "Token Symbol",
   "tools_customtokens_track_token": "Track Token?",
+  "tools_customtokens_track_custom": "(Manually Added)",
   "tools_description": "A set of common tools useful in managing accounts.",
   "tools_keys_key_generation_copy_clipboard": "Copy to Clipboard",
   "tools_keys_key_generation_header": "Key Pair Generation",
