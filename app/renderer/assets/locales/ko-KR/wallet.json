@@ -17,6 +17,7 @@
   "wallet_actions_dangerous": "경고: 조심하십시오",
   "wallet_status_balances": "지갑 잔액",
   "wallet_status_balances_none": "이 지갑에는 토큰 잔액이 없습니다.",
+  "wallet_status_ram_amount": "RAM Amount",
   "wallet_status_resources_title": "사용 가능한 네트워크 자원",
   "wallet_status_resources_claim_unstaked": "스테이킹 푼 잔액 돌려받기",
   "wallet_status_resources_cpu_available_title": "CPU",

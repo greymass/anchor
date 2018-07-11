@@ -17,6 +17,7 @@
   "wallet_actions_dangerous": "警告: 危険ゾーン",
   "wallet_status_balances": "ウォレット残高",
   "wallet_status_balances_none": "このウォレットにはトークン残高がありません。",
+  "wallet_status_ram_amount": "RAM Amount",
   "wallet_status_resources_title": "利用可能なネットワークリソース",
   "wallet_status_resources_claim_unstaked": "ステーク解除した残高を請求",
   "wallet_status_resources_cpu_available_title": "CPU",

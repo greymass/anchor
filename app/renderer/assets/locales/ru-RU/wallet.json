@@ -17,6 +17,7 @@
   "wallet_actions_dangerous": "Предупреждение: Опасная Зона",
   "wallet_status_balances": "Балансы Кошелька",
   "wallet_status_balances_none": "Этот кошелек не имеет баланса.",
+  "wallet_status_ram_amount": "RAM Amount",
   "wallet_status_resources_title": "Доступные ресурсы сети",
   "wallet_status_resources_claim_unstaked": "Получить высвобожденный баланс",
   "wallet_status_resources_cpu_available_title": "Процессорные мощности (CPU)",

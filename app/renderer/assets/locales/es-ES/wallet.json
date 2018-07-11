@@ -17,6 +17,7 @@
   "wallet_actions_dangerous": "Warning: Danger Zone",
   "wallet_status_balances": "Wallet Balances",
   "wallet_status_balances_none": "This wallet has no token balances.",
+  "wallet_status_ram_amount": "RAM Amount",
   "wallet_status_resources_title": "Network Resources Available",
   "wallet_status_resources_claim_unstaked": "Claim Unstaked Balance",
   "wallet_status_resources_cpu_available_title": "CPU",
