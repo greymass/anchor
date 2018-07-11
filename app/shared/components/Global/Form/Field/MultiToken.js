@@ -28,9 +28,26 @@ export default class FormFieldMultiToken extends Component<Props> {
       autoFocus,
       label,
       loading,
-      name
+      name,
+      settings
     } = this.props;
-    const options = assets.map((asset) => ({ key: asset, text: asset, value: asset }));
+    const { customTokens } = settings;
+    // Determine which tokens are being tracked
+    const trackedTokens = customTokens.map((tokenName) => {
+      const [, symbol] = tokenName.split(':');
+      return symbol;
+    });
+    const options = [];
+    // Iterate assets and build the options list based on tracked tokens
+    assets.forEach((asset) => {
+      if (trackedTokens.indexOf(asset) !== -1) {
+        options.push({
+          key: asset,
+          text: asset,
+          value: asset
+        });
+      }
+    });
     return (
       <div className="field">
         <label htmlFor={name}>
