@@ -13,7 +13,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
     } = this.props;
 
     return (
-      <Table celled>
+      <Table size='small' celled>
         <Table.Row>
           <Table.Cell width={8}>
             {t('ram_stats_title_one')}
