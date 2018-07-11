@@ -66,5 +66,6 @@
   "wallet_panel_wallet_broadcast": "署名済みトランザクションをブロードキャスト",
   "wallet_mode_explain_hot": "このウォレットは「ホット」ウォレットとして起動しています。トランザクションの作成、署名、ブロードキャストを他のウォレットを使用せずに行うことができます。",
   "wallet_mode_explain_cold": "このウォレットはオフラインで実行し、トランザクションを送信できない「コールド」ウォレットとして実行されています。ブロードキャストはウォッチウォレットから実行する必要があります。",
+  "wallet_mode_explain_undefined": "This wallet is from a legacy version and it's type is unknown. This should not cause any problems, and once you swap to another wallet and back, it should upgrade properly.",
   "wallet_mode_explain_watch": "このウォレットは秘密鍵を保存せず、トランザクションに署名できない「ウォッチ」ウォレットとして実行されています。署名はコールドウォレットで実行する必要があります。"
 }
