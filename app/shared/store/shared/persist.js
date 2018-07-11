@@ -28,12 +28,39 @@ const migrations = {
       // Create the new wallets state and inject the first wallet
       wallets: [existingWallet]
     };
-  }
+  },
+  /*
+    Wallet Migration 3
+
+      - Ensure the customTokens field is set with the base token
+
+  */
+  3: (state) => {
+    const {
+      settings
+    } = state;
+    const newSettings = Object.assign({}, settings);
+    if (
+      !newSettings.customTokens
+      || !newSettings.customTokens.length
+    ) {
+      newSettings.customTokens = ['eosio.token:EOS'];
+    }
+    if (
+      newSettings.customTokens
+      && newSettings.customTokens.indexOf('eosio.token:EOS') === -1
+    ) {
+      newSettings.customTokens.push('eosio.token:EOS');
+    }
+    return Object.assign({}, state, {
+      settings: newSettings
+    });
+  },
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 2,
+  version: 3,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
