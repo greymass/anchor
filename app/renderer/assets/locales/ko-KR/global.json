@@ -4,7 +4,7 @@
   "error_not_valid_stake_amount": "유효한 스테이크 수량이 아닙니다 (최대 소수점 이하 4자리 허용, 예시: 12.1212).",
   "error_not_enough_balance": "이 거래에 잔액이 부족합니다.",
   "error_ram_usage_exceeded": "RAM 사용량이 초과되었습니다. 이 작업을 수행하려면 더 많은 RAM 을 구입하세요.",
-  "error_ram_has_to_be_over_minimum_value": "최소 0.003 Kbs의 RAM 만 살 수 있습니다.",
+  "error_ram_has_to_be_over_minimum_amount": "You can only buy a minimum of 3 B of RAM.",
   "error_ram_not_valid_amount": "유효한 램 양 아닙니다. 숫자는 최대 세 자리를 초과 할 수 없습니다.",
   "error_ram_using_more_than_usage": "이 거래를 수행할 수 없습니다, 램 부족합니다.",
   "error_not_valid_account_name": "유효한 계정 아닙니다.",
