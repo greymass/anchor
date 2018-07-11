@@ -19,11 +19,9 @@ export function clearBalanceCache() {
   };
 }
 
-export function refreshAccountBalances(account) {
-  return (dispatch: () => void) => {
-    dispatch(clearBalanceCache());
-    return dispatch(getCurrencyBalance(account));
-  };
+export function refreshAccountBalances(account, requestedTokens) {
+  return (dispatch: () => void) =>
+    dispatch(getCurrencyBalance(account, requestedTokens));
 }
 
 export function claimUnstaked(owner) {
@@ -170,12 +168,8 @@ function sortByReqId(actionOne, actionTwo) {
   return actionTwo.account_action_seq - actionOne.account_action_seq;
 }
 
-export function getCurrencyBalance(account) {
+export function getCurrencyBalance(account, requestedTokens = false) {
   return (dispatch: () => void, getState) => {
-    dispatch({
-      type: types.GET_ACCOUNT_BALANCE_REQUEST,
-      payload: { account_name: account }
-    });
     const {
       connection,
       settings
@@ -186,6 +180,17 @@ export function getCurrencyBalance(account) {
       if (customTokens && customTokens.length > 0) {
         selectedTokens = [...customTokens, ...selectedTokens];
       }
+      // if specific tokens are requested, use them
+      if (requestedTokens) {
+        selectedTokens = requestedTokens;
+      }
+      dispatch({
+        type: types.GET_ACCOUNT_BALANCE_REQUEST,
+        payload: {
+          account_name: account,
+          tokens: selectedTokens
+        }
+      });
       forEach(selectedTokens, (namespace) => {
         const [contract, symbol] = namespace.split(':');
         eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
@@ -204,10 +209,6 @@ export function getCurrencyBalance(account) {
           }));
       });
     }
-    dispatch({
-      type: types.GET_ACCOUNT_BALANCE_FAILURE,
-      payload: { account_name: account },
-    });
   };
 }
 

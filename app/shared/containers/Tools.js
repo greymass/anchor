@@ -9,6 +9,7 @@ import compose from 'lodash/fp/compose';
 import { Menu, Tab } from 'semantic-ui-react';
 
 import Tools from '../components/Tools';
+import ToolsCustomTokens from '../components/Tools/CustomTokens';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsStateChain from '../components/Tools/State/Chain';
 import ToolsStateGlobals from '../components/Tools/State/Globals';
@@ -16,7 +17,10 @@ import ToolsStateWallet from '../components/Tools/State/Wallet';
 import ToolsProxy from '../components/Tools/Proxy';
 import ToolsWallets from '../components/Tools/Wallets';
 
+import * as AccountsActions from '../actions/accounts';
+import * as CustomTokensActions from '../actions/customtokens';
 import * as RegProxyActions from '../actions/system/regproxy';
+import * as SettingsActions from '../actions/settings';
 import * as SystemStateActions from '../actions/system/systemstate';
 import * as UnregProxyActions from '../actions/system/unregproxy';
 import * as WalletActions from '../actions/wallet';
@@ -35,15 +39,19 @@ class ToolsContainer extends Component<Props> {
         menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
       },
       {
+        menuItem: t('tools_menu_customtokens'),
+        render: () => <Tab.Pane><ToolsCustomTokens {...this.props} /></Tab.Pane>,
+      },
+      {
         menuItem: t('tools_menu_wallets'),
         render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
       },
       {
-        menuItem: t('tools_menu_keys'),
-        render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
+        menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
       },
       {
-        menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
+        menuItem: t('tools_menu_keys'),
+        render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
       },
       {
         menuItem: t('tools_menu_proxy'),
@@ -84,7 +92,9 @@ function mapStateToProps(state) {
   return {
     accounts: state.accounts,
     app: state.app,
+    balances: state.balances,
     chain: state.chain,
+    customtokens: state.customtokens,
     globals: state.globals,
     keys: state.keys,
     settings: state.settings,
@@ -98,7 +108,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...AccountsActions,
+      ...CustomTokensActions,
       ...RegProxyActions,
+      ...SettingsActions,
       ...SystemStateActions,
       ...UnregProxyActions,
       ...WalletActions,
