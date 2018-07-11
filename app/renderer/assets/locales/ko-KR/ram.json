@@ -19,7 +19,8 @@
   "ram_sell_button_cta": "RAM 판매하기",
   "ram_sell_confirming_message_one": "다음과 같이 판매 합니다",
   "ram_sell_modal_title": "RAM 판매하기",
-  "ram_stats_available_title_one": "사용중인",
-  "ram_stats_available_title_three": "남은 RAM",
-  "ram_stats_available_title_two": "의"
+  "ram_stats_title_one": "EOS Balance",
+  "ram_stats_title_two": "Available RAM",
+  "ram_stats_title_three": "Used RAM",
+  "ram_stats_title_four": "Total RAM"
 }
