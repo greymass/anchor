@@ -3,12 +3,19 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import ReactJson from 'react-json-view';
 
-import { Button, Checkbox, Header, Label, Popup, Segment, Table } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Header, Label, Popup, Segment, Table } from 'semantic-ui-react';
+
+import GlobalModalSettingsCustomToken from '../Global/Modal/Settings/CustomTokens';
 
 class ToolsCustomTokens extends Component<Props> {
+  state = {
+    addingToken: false
+  }
   componentDidMount() {
     this.sync();
   }
+  showCustomToken = () => this.setState({ addingToken: true });
+  hideCustomToken = () => this.setState({ addingToken: false });
   sync = () => {
     const { actions } = this.props;
     actions.getCustomTokens();
@@ -29,8 +36,10 @@ class ToolsCustomTokens extends Component<Props> {
   }
   render() {
     const {
+      actions,
       balances,
       customtokens,
+      globals,
       settings,
       t,
       wallets
@@ -38,26 +47,41 @@ class ToolsCustomTokens extends Component<Props> {
     if (!wallets || !wallets.length) {
       return false;
     }
+    const {
+      addingToken
+    } = this.state;
     return (
       <Segment basic>
-        <Button
-          floated="right"
-          icon="refresh"
-          onClick={this.sync}
-        />
-        <Button
-          color="blue"
-          content={t('tools_customtokens_scan')}
-          floated="right"
-          icon="search"
-          onClick={this.scan}
-        />
-        <Header floated="left">
+        <Header>
           {t('tools_customtokens_header')}
           <Header.Subheader>
             {t('tools_customtokens_subheader')}
           </Header.Subheader>
         </Header>
+        <Container>
+          <Button
+            color="green"
+            content={t('tools_customtokens_scan')}
+            icon="search"
+            onClick={this.scan}
+            size="small"
+          />
+          <Button
+            color="blue"
+            content={t('wallet:wallet_status_add_custom_token_action')}
+            floated="right"
+            icon="circle plus"
+            onClick={this.showCustomToken}
+            size="small"
+          />
+        </Container>
+        <GlobalModalSettingsCustomToken
+          actions={actions}
+          globals={globals}
+          onClose={this.hideCustomToken}
+          open={addingToken}
+          settings={settings}
+        />
         <Table columns={5} definition striped unstackable>
           <Table.Header>
             <Table.Row>
