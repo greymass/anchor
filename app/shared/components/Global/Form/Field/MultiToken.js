@@ -4,7 +4,7 @@ import { Dropdown, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
-export default class FormFieldMultiToken extends Component<Props> {
+export default class GlobalFormFieldMultiToken extends Component<Props> {
   constructor(props) {
     super(props);
     const [quantity, asset] = props.value.split(' ');
