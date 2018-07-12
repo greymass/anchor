@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Segment, Table } from 'semantic-ui-react';
+import { Button, Header, Icon, Popup, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
@@ -124,6 +124,28 @@ class WalletStatusBalances extends Component<Props> {
     return (
       <Segment vertical basic loading={!tokens}>
         <Header>
+          <Popup
+            content={(
+              <Header size="small">
+                <Icon name="info circle" />
+                <Header.Content>
+                  {t('wallet_status_add_custom_token_action_subheader')}
+                  <Header.Subheader>
+                    {t('wallet_status_add_custom_token_action_subheader')}
+                  </Header.Subheader>
+                </Header.Content>
+              </Header>
+            )}
+            inverted
+            trigger={(
+              <Button
+                color="blue"
+                content={t('wallet_status_add_custom_token_action')}
+                floated="right"
+                size="small"
+              />
+            )}
+          />
           {t('wallet_status_add_custom_token_header')}
           <Header.Subheader>
             {t('wallet_status_add_custom_token_subheader')}
