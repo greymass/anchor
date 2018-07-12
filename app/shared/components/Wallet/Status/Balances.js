@@ -129,7 +129,7 @@ class WalletStatusBalances extends Component<Props> {
               <Header size="small">
                 <Icon name="info circle" />
                 <Header.Content>
-                  {t('wallet_status_add_custom_token_action_subheader')}
+                  {t('wallet_status_add_custom_token_header')}
                   <Header.Subheader>
                     {t('wallet_status_add_custom_token_action_subheader')}
                   </Header.Subheader>
