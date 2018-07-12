@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { Button, Header, Modal } from 'semantic-ui-react';
-import debounce from 'lodash/debounce';
 
 const { shell } = require('electron');
 
-export default class ModalDangerLink extends Component<Props> {
+class GlobalModalDangerLink extends Component<Props> {
   state = { open: false }
 
   isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
@@ -33,7 +32,8 @@ export default class ModalDangerLink extends Component<Props> {
     } = this.state;
     const {
       content,
-      link
+      link,
+      t
     } = this.props;
     let el = content || link;
     if (this.isSafeish(link)) {
@@ -50,48 +50,44 @@ export default class ModalDangerLink extends Component<Props> {
       );
     }
     return (
-      <I18n ns="global">
-        {
-          (t) => (
-            <span>
-              {el}
-              <Modal size="tiny" open={open} onClose={this.close}>
-                <Modal.Header>
-                  {t('global_dangerlink_warning_title')}
-                </Modal.Header>
-                <Modal.Content>
-                  <p>
-                    {t('global_dangerlink_warning_body_1')}
-                  </p>
-                  <p>
-                    URL: {link}
-                  </p>
-                  <Header>
-                    {t('global_dangerlink_warning_body_2')}
-                  </Header>
-                  <p>
-                    {t('global_dangerlink_warning_body_3')}
-                  </p>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button
-                    content={t('cancel')}
-                    onClick={this.close}
-                    negative
-                  />
-                  <Button
-                    positive
-                    onClick={this.openLink.bind(this)}
-                    icon="external"
-                    labelPosition="right"
-                    content={t('confirm')}
-                  />
-                </Modal.Actions>
-              </Modal>
-            </span>
-          )
-        }
-      </I18n>
+      <span>
+        {el}
+        <Modal size="tiny" open={open} onClose={this.close}>
+          <Modal.Header>
+            {t('global_dangerlink_warning_title')}
+          </Modal.Header>
+          <Modal.Content>
+            <p>
+              {t('global_dangerlink_warning_body_1')}
+            </p>
+            <p>
+              URL: {link}
+            </p>
+            <Header>
+              {t('global_dangerlink_warning_body_2')}
+            </Header>
+            <p>
+              {t('global_dangerlink_warning_body_3')}
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content={t('cancel')}
+              onClick={this.close}
+              negative
+            />
+            <Button
+              positive
+              onClick={this.openLink.bind(this)}
+              icon="external"
+              labelPosition="right"
+              content={t('confirm')}
+            />
+          </Modal.Actions>
+        </Modal>
+      </span>
     );
   }
 }
+
+export default translate('global')(GlobalModalDangerLink);

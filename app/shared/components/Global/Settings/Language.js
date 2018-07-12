@@ -28,7 +28,7 @@ export default class GlobalFormFieldLanguage extends Component<Props> {
 
   render() {
     const {
-      name,
+      name
     } = this.props;
 
     const {
