@@ -61,6 +61,8 @@
   "wallet_status_total_balance": "合計",
   "wallet_status_liquid": "移動可能",
   "wallet_status_add_custom_token_action": "カスタムトークンを追加",
+  "wallet_status_add_custom_token_action_header": "This feature has moved!",
+  "wallet_status_add_custom_token_action_subheader": "To manage Custom Tokens in this wallet, click on the Tools section, and look under the 'Airdrops / Custom Tokens' section.",
   "wallet_status_add_custom_token_header": "トークン残高",
   "wallet_status_add_custom_token_subheader": "監視中のすべてのコントラクトのこのアカウントのトークン残高 (既定では'eosio.token'のみ)。",
   "wallet_panel_wallet_broadcast": "署名済みトランザクションをブロードキャスト",
