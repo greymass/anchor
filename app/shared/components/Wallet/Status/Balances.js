@@ -101,10 +101,13 @@ class WalletStatusBalances extends Component<Props> {
     // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
       if (token === 'EOS' || watchedTokens.indexOf(token) === -1) return;
-      const {
-        contract,
-        precision
-      } = contracts[token];
+      let contract = 'unknown';
+      let precision = {
+        [token]: 4
+      };
+      if (contracts && contracts[token]) {
+        ({ contract, precision } = contracts[token]);
+      }
       rows.push((
         <Table.Row key={token}>
           <Table.Cell width={5}>
