@@ -5,7 +5,7 @@ import { Form, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
-export default class FormFieldGeneric extends Component<Props> {
+export default class GlobalFormFieldGeneric extends Component<Props> {
   state = { value: '' };
   onChange = debounce((e, { name, value }) => {
     const parsed = value;

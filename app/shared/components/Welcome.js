@@ -135,7 +135,7 @@ class Welcome extends Component<Props> {
             </Container>
             {stageElement}
             <Container textAlign="center">
-              <Dropdown
+              <LanguageDropdown
                 defaultValue={settings.lang}
                 selection
                 size="small"

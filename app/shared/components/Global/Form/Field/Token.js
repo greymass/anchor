@@ -5,7 +5,7 @@ import { Form, Input } from 'semantic-ui-react';
 import { Decimal } from 'decimal.js';
 import debounce from 'lodash/debounce';
 
-export default class FormFieldToken extends Component<Props> {
+export default class GlobalFormFieldToken extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
