@@ -62,8 +62,10 @@ export function getAccount(account = '') {
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
       eos(connection).getAccount(account).then((results) => {
-        // Trigger the action to load this accounts balances
-        dispatch(getCurrencyBalance(account));
+        // Trigger the action to load this accounts balances'
+        if (settings.account == account) {
+          dispatch(getCurrencyBalance(account));
+        }
         // PATCH - Force in self_delegated_bandwidth if it doesn't exist
         const modified = Object.assign({}, results);
         if (!modified.self_delegated_bandwidth) {
@@ -199,6 +201,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
             payload: {
               account_name: account,
               contract,
+              precision: formatPrecisions(results),
               symbol,
               tokens: formatBalances(results, symbol)
             }
@@ -210,6 +213,16 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       });
     }
   };
+}
+
+function formatPrecisions(balances) {
+  const precision = {};
+  for (let i = 0; i < balances.length; i += 1) {
+    const [amount, symbol] = balances[i].split(' ');
+    const [, suffix] = amount.split('.');
+    precision[symbol] = suffix.length;
+  }
+  return precision;
 }
 
 function formatBalances(balances, forcedSymbol = false) {

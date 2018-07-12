@@ -29,7 +29,7 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
       waitingStarted
     } = this.props;
 
-    const contract = balances.__contracts[symbol.toUpperCase()];
+    const contract = balances.__contracts[symbol.toUpperCase()].contract;
 
     const secondsElapsed = new Date() - waitingStarted;
     const secondsRemaining = parseInt((3000 - secondsElapsed) / 1000, 10) + 1;
