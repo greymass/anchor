@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Container, Dropdown, Grid, Image, Header } from 'semantic-ui-react';
+import { Button, Container, Grid, Image, Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import eos from '../../renderer/assets/images/eos.png';
@@ -11,17 +11,9 @@ import WelcomeConnection from './Welcome/Connection';
 import WelcomeKey from './Welcome/Key';
 import WelcomeWallet from './Welcome/Wallet';
 
-const { shell } = require('electron');
+import GlobalSettingsLanguage from './Global/Settings/Language';
 
-const languages = [
-  { key: 'cn', value: 'zh-CN', flag: 'cn', text: '中文' },
-  { key: 'en', value: 'en-US', flag: 'us', text: 'English' },
-  { key: 'fr', value: 'fr-FR', flag: 'fr', text: 'Français' },
-  { key: 'it', value: 'it-IT', flag: 'it', text: 'Italiano' },
-  { key: 'ja', value: 'ja-FP', flag: 'jp', text: '日本語' },
-  { key: 'kr', value: 'ko-KR', flag: 'kr', text: '한글' },
-  { key: 'ru', value: 'ru-RU', flag: 'ru', text: 'Русский' }
-];
+const { shell } = require('electron');
 
 class Welcome extends Component<Props> {
   state = {
@@ -29,12 +21,6 @@ class Welcome extends Component<Props> {
   };
 
   openLink = (url) => shell.openExternal(url);
-
-  onChange = (e, { value }) => {
-    const { actions, i18n } = this.props;
-    i18n.changeLanguage(value);
-    actions.setSetting('lang', value);
-  }
 
   onStageSelect = (stage) => {
     this.setState({ stageSelect: stage });
@@ -59,6 +45,8 @@ class Welcome extends Component<Props> {
 
   render() {
     const {
+      actions,
+      i18n,
       keys,
       settings,
       t,
@@ -135,12 +123,10 @@ class Welcome extends Component<Props> {
             </Container>
             {stageElement}
             <Container textAlign="center">
-              <LanguageDropdown
+              <GlobalSettingsLanguage
+                actions={actions}
                 defaultValue={settings.lang}
-                selection
-                size="small"
-                onChange={this.onChange}
-                options={languages}
+                i18n={i18n}
               />
               {(
                 (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
