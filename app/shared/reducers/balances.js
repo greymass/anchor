@@ -17,12 +17,16 @@ export default function balances(state = initialState, action) {
       const {
         account_name,
         contract,
+        precision,
         symbol,
         tokens
       } = action.payload;
       return Object.assign({}, state, {
         __contracts: Object.assign({}, state.__contracts, {
-          [symbol.toUpperCase()]: contract
+          [symbol.toUpperCase()]: {
+            contract,
+            precision
+          }
         }),
         [account_name]: Object.assign({}, state[account_name], tokens)
       });
