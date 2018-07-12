@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Form, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
-export default class FormFieldRam extends Component<Props> {
+export default class GlobalFormFieldRam extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +40,7 @@ export default class FormFieldRam extends Component<Props> {
         loading={loading}
         name={name}
         onChange={this.onChange}
-        placeholder="0"
+        placeholder="00"
       />
     );
   }

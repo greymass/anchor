@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
-import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
 import { Button, Checkbox, Container, Form, Input, Message } from 'semantic-ui-react';
 
