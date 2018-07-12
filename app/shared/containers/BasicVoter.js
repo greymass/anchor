@@ -133,7 +133,7 @@ class BasicVoterContainer extends Component<Props> {
         break;
       }
       case 'tools': {
-        activeTab = <Tools />;
+        activeTab = <Tools {...this.props} />;
         break;
       }
       default: {
