@@ -5,14 +5,9 @@ import { translate } from 'react-i18next';
 
 import WelcomeConnectionContainer from '../containers/Welcome/Connection';
 import GlobalSettingsLanguage from './Global/Settings/Language';
+import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 
 class Tools extends Component<Props> {
-  onLanguageChange = (e, { value }) => {
-    const { actions, i18n } = this.props;
-    i18n.changeLanguage(value);
-    actions.setSetting('lang', value);
-  }
-
   render() {
     const {
       actions,
@@ -20,6 +15,14 @@ class Tools extends Component<Props> {
       settings,
       t
     } = this.props;
+
+    const dropdownStyling = {
+      width: '200px',
+      border: '1px solid #D3D3D3',
+      padding: '12px',
+      margin: '20px'
+    };
+
     return (
       <Segment attached="top" textAlign="center">
         <Header icon size="large">
@@ -31,7 +34,6 @@ class Tools extends Component<Props> {
             content={t('tools_description')}
           />
         </Header>
-        <Divider />
         <Table divided>
           <Table.Row>
             <Table.Cell width={4}>
@@ -46,18 +48,24 @@ class Tools extends Component<Props> {
               {t('tools_change_language')}
             </Table.Cell>
             <Table.Cell width={8}>
-              <div style={{
-                width: '200px',
-                border: '1px solid #D3D3D3',
-                padding: '12px',
-                margin: '20px'
-              }}
-              >
+              <div style={dropdownStyling}>
                 <GlobalSettingsLanguage
                   actions={actions}
                   defaultValue={settings.lang}
                   i18n={i18n}
-                  onChange={this.onChange}
+                />
+              </div>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell width={4}>
+              {t('tools_change_block_explorer')}
+            </Table.Cell>
+            <Table.Cell width={8}>
+              <div style={dropdownStyling}>
+                <GlobalSettingsBlockExplorer
+                  actions={actions}
+                  defaultValue={settings.block_explorer}
                 />
               </div>
             </Table.Cell>
