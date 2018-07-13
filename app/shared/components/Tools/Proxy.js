@@ -13,6 +13,7 @@ class ToolsProxy extends Component<Props> {
     const {
       accounts,
       actions,
+      blockExplorers,
       keys,
       settings,
       system,
@@ -22,21 +23,21 @@ class ToolsProxy extends Component<Props> {
     } = this.props;
 
     const account = accounts[settings.account];
-    let is_proxy = false;
+    let isProxy = false;
     if (account && account.voter_info && account.voter_info.is_proxy) {
-      is_proxy = account.voter_info.is_proxy;
+      isProxy = account.voter_info.is_proxy;
     }
 
     return (
       <Grid centered>
         <Grid.Column width={8} style={{ textAlign: 'center' }} >
-          {(keys && keys.key || settings.walletMode === 'watch') ?
+          {((keys && keys.key) || settings.walletMode === 'watch') ?
           (
             <div>
               <Header>
                 {t('tools_proxy_header_registration')}
               </Header>
-              <Segment style={(is_proxy) ? ({ display: 'none' }) : {}} basic>
+              <Segment style={(isProxy) ? ({ display: 'none' }) : {}} basic>
                 <p>
                   {t('tools_proxy_text_not_registered')}
                 </p>
@@ -44,11 +45,12 @@ class ToolsProxy extends Component<Props> {
                 <ToolsProxyButtonRegister
                   account={account}
                   actions={actions}
+                  blockExplorers={blockExplorers}
                   settings={settings}
                   system={system}
                 />
               </Segment>
-              <Segment style={(!is_proxy) ? ({ display: 'none' }) : {}} basic>
+              <Segment style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
                 <p>
                   {t('tools_proxy_text_registered')}
                 </p>
@@ -60,6 +62,7 @@ class ToolsProxy extends Component<Props> {
                 <ToolsProxyButtonUnregister
                   account={account}
                   actions={actions}
+                  blockExplorers={blockExplorers}
                   settings={settings}
                   system={system}
                 />

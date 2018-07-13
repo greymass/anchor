@@ -22,6 +22,7 @@ type Props = {
   },
   accounts: {},
   balances: {},
+  blockExplorers: {},
   globals: {},
   history: {},
   producers: {
@@ -185,6 +186,7 @@ class Producers extends Component<Props> {
       actions,
       accounts,
       balances,
+      blockExplorers,
       globals,
       history,
       keys,
@@ -210,6 +212,7 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
+        blockExplorers={blockExplorers}
         globals={globals}
         key="WalletPanel"
         keys={keys}
@@ -230,6 +233,7 @@ class Producers extends Component<Props> {
           <ProducersProxy
             account={account}
             actions={actions}
+            blockExplorers={blockExplorers}
             keys={keys}
             isProxying={isProxying}
             isValidUser={isValidUser}
@@ -242,6 +246,7 @@ class Producers extends Component<Props> {
           {(!isProxying) ? (
             <ProducersVotingPreview
               actions={actions}
+              blockExplorers={blockExplorers}
               lastError={lastError}
               lastTransaction={lastTransaction}
               open={previewing}

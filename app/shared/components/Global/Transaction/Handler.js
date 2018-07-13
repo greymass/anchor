@@ -7,6 +7,7 @@ import GlobalTransactionMessageUnsigned from './Message/Unsigned';
 
 type Props = {
   actionName: string,
+  blockExplorers: {},
   onClose: () => void,
   content: {},
   settings: {},
@@ -17,6 +18,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
   render() {
     const {
       actionName,
+      blockExplorers,
       onClose,
       settings,
       system,
@@ -31,7 +33,9 @@ export default class GlobalTransactionHandler extends Component<Props> {
 
     if (broadcastTransaction) {
       content = (
-        <GlobalTransactionMessageSuccess />
+        <GlobalTransactionMessageSuccess
+          blockExplorer={blockExplorers[settings.block_explorer]}
+        />
       );
     } else if (hasError) {
       content = (

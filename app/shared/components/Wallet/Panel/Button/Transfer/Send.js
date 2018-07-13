@@ -9,6 +9,7 @@ type Props = {
   actions: {
     clearSystemState: () => void
   },
+  blockExplorers: {},
   balances: {},
   settings: {},
   system: {},
@@ -21,6 +22,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       balances,
       settings,
       system,
@@ -30,6 +32,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
       <GlobalTransactionModal
         actionName="TRANSFER"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'blue',
           content: t('transfer_send_button_cta'),

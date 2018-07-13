@@ -173,6 +173,7 @@ function mapStateToProps(state) {
     accounts: state.accounts,
     actionHistories: state.actions,
     balances: state.balances,
+    blockExplorers: state.block_explorers,
     chain: state.chain,
     globals: state.globals,
     keys: state.keys,
