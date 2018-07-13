@@ -16,7 +16,7 @@ export function sellram(amount) {
 
     const { account } = settings;
 
-    return eos(connection).sellram({
+    return eos(connection, true).sellram({
       account,
       bytes: Number(amount)
     }).then((tx) => {

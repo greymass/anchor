@@ -32,7 +32,7 @@ export function claimUnstaked(owner) {
     dispatch({
       type: types.SYSTEM_REFUND_PENDING
     });
-    return eos(connection).refund({
+    return eos(connection, true).refund({
       owner
     }).then((tx) => {
       // Reload the account
@@ -63,7 +63,7 @@ export function getAccount(account = '') {
     if (account && (settings.node || settings.node.length !== 0)) {
       eos(connection).getAccount(account).then((results) => {
         // Trigger the action to load this accounts balances'
-        if (settings.account == account) {
+        if (settings.account === account) {
           dispatch(getCurrencyBalance(account));
         }
         // PATCH - Force in self_delegated_bandwidth if it doesn't exist

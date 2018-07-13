@@ -7,11 +7,15 @@ const ecc = require('eosjs-ecc');
 export function setWalletKey(key, password, mode = 'hot') {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
+    // Obfuscate key for in-memory storage
+    const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+    const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     dispatch({
       type: types.SET_WALLET_KEYS_ACTIVE,
       payload: {
         account: settings.account,
-        key
+        hash,
+        key: obfuscated
       }
     });
     return dispatch({
@@ -28,11 +32,15 @@ export function setWalletKey(key, password, mode = 'hot') {
 export function setTemporaryKey(key) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
+    // Obfuscate key for in-memory storage
+    const hash = encrypt(key, key, 1).toString(CryptoJS.enc.Utf8);
+    const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     dispatch({
       type: types.SET_WALLET_KEYS_TEMPORARY,
       payload: {
         account: settings.account,
-        key
+        hash,
+        key: obfuscated
       }
     });
   };
@@ -97,17 +105,21 @@ export function unlockWallet(password, useWallet = false) {
     });
     setTimeout(() => {
       try {
-        const key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(key) === true) {
           // Set the active wallet
           dispatch({
             payload: wallet,
             type: types.SET_WALLET_ACTIVE
           });
+          // Obfuscate key for in-memory storage
+          const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the keys for use
           dispatch({
             payload: {
               account: wallet.account,
+              hash,
               key
             },
             type: types.SET_WALLET_KEYS_ACTIVE
@@ -155,16 +167,15 @@ export function setWalletMode(walletMode) {
   };
 }
 
-export function encrypt(msg, pass) {
+export function encrypt(data, pass, iterations = 4500) {
   const keySize = 256;
-  const iterations = 4500;
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
   const key = CryptoJS.PBKDF2(pass, salt, {
     iterations,
     keySize: keySize / 4
   });
   const iv = CryptoJS.lib.WordArray.random(128 / 8);
-  const encrypted = CryptoJS.AES.encrypt(msg, key, {
+  const encrypted = CryptoJS.AES.encrypt(data, key, {
     iv,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7
@@ -172,12 +183,11 @@ export function encrypt(msg, pass) {
   return salt.toString() + iv.toString() + encrypted.toString();
 }
 
-function decrypt(transitmessage, pass) {
+export function decrypt(data, pass, iterations = 4500) {
   const keySize = 256;
-  const iterations = 4500;
-  const salt = CryptoJS.enc.Hex.parse(transitmessage.substr(0, 32));
-  const iv = CryptoJS.enc.Hex.parse(transitmessage.substr(32, 32));
-  const encrypted = transitmessage.substring(64);
+  const salt = CryptoJS.enc.Hex.parse(data.substr(0, 32));
+  const iv = CryptoJS.enc.Hex.parse(data.substr(32, 32));
+  const encrypted = data.substring(64);
   const key = CryptoJS.PBKDF2(pass, salt, {
     iterations,
     keySize: keySize / 4
