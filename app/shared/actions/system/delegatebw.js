@@ -12,7 +12,7 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
       type: types.SYSTEM_DELEGATEBW_PENDING
     });
 
-    return eos(connection).transaction(tr => {
+    return eos(connection, true).transaction(tr => {
       tr.delegatebw(delegatebwParams(delegator, receiver, netAmount, cpuAmount));
     }).then((tx) => {
       dispatch(AccountActions.getAccount(delegator));

@@ -68,7 +68,6 @@ class WelcomeWalletContainer extends Component<Props> {
       setWalletKey(key, password, settings.walletMode);
     } else {
       setSetting('walletTemp', true);
-      setTemporaryKey(key);
     }
     this.setState({
       confirming: false

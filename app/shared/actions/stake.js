@@ -21,7 +21,7 @@ export function setStake(account, netAmount, cpuAmount) {
 
     dispatch({ type: types.SYSTEM_STAKE_PENDING });
 
-    return eos(connection).transaction(tr => {
+    return eos(connection, true).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
         tr.delegatebw(delegatebwParams(
           account.account_name,

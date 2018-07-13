@@ -23,7 +23,8 @@ export default function connection(state = initialState, action) {
     // Remove key from connection if the wallet is locked/removed
     case types.WALLET_LOCK: {
       return Object.assign({}, state, {
-        keyProvider: []
+        keyProvider: [],
+        keyProviderObfuscated: {}
       });
     }
     // Cold Wallet: increase expiration to 1hr, disable broadcast, enable sign
@@ -57,7 +58,10 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_KEYS_ACTIVE:
     case types.SET_WALLET_KEYS_TEMPORARY: {
       return Object.assign({}, state, {
-        keyProvider: action.payload.key,
+        keyProviderObfuscated: {
+          hash: action.payload.hash,
+          key: action.payload.key
+        }
       });
     }
     // Update chainId on successful chain info request

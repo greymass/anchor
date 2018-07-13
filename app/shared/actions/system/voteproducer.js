@@ -15,7 +15,7 @@ export function voteproducers(producers = [], proxy = '') {
     const { account } = settings;
     // sort (required by EOS)
     producers.sort();
-    return eos(connection).voteproducer(account, proxy, producers)
+    return eos(connection, true).voteproducer(account, proxy, producers)
       .then((tx) => {
         const accounts = [account];
         // If a proxy is set, that account also needs to be loaded
