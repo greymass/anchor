@@ -43,6 +43,7 @@ class GlobalTransactionModal extends Component<Props> {
   render() {
     const {
       actionName,
+      blockExplorers,
       button,
       content,
       icon,
@@ -90,6 +91,7 @@ class GlobalTransactionModal extends Component<Props> {
         <Modal.Content>
           <GlobalTransactionHandler
             actionName={actionName}
+            blockExplorers={blockExplorers}
             content={content}
             onClose={this.onClose}
             settings={settings}

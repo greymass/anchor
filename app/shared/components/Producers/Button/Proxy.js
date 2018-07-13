@@ -9,6 +9,7 @@ class ProducersButtonProxy extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       isProxying,
       proxyAccount,
       settings,
@@ -26,6 +27,7 @@ class ProducersButtonProxy extends Component<Props> {
       <GlobalTransactionModal
         actionName="VOTEPRODUCER"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'blue',
           content: buttonText,
