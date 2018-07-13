@@ -16,7 +16,7 @@ export function buyram(amount) {
 
     const { account } = settings;
 
-    return eos(connection).buyram({
+    return eos(connection, true).buyram({
       payer: account,
       receiver: account,
       quant: `${amount.toFixed(4)} EOS`

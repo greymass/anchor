@@ -12,7 +12,7 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
     dispatch({
       type: types.SYSTEM_REGPRODUCER_PENDING
     });
-    return eos(connection).regproducer({
+    return eos(connection, true).regproducer({
       producer: account,
       producer_key: producerKey,
       url: producerUrl,
