@@ -56,11 +56,35 @@ const migrations = {
       settings: newSettings
     });
   },
+  /*
+  Wallet Migration 4
+
+    - Correct format of all customTokens
+
+  */
+  4: (state) => {
+    const {
+      settings
+    } = state;
+    const newSettings = Object.assign({}, settings);
+    if (
+      newSettings.customTokens
+      && newSettings.customTokens.length > 0
+    ) {
+      newSettings.customTokens.forEach((token, idx) => {
+        const [contract, symbol] = token.split(':');
+        newSettings.customTokens[idx] = [contract.toLowerCase(), symbol.toUpperCase()].join(':');
+      });
+    }
+    return Object.assign({}, state, {
+      settings: newSettings
+    });
+  },
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 3,
+  version: 4,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
