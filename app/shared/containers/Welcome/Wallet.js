@@ -56,16 +56,18 @@ class WelcomeWalletContainer extends Component<Props> {
       settings
     } = this.props;
     const {
+      hash,
       key
     } = keys;
     const {
+      decrypt,
       setSetting,
       setTemporaryKey,
       setWalletKey
     } = actions;
     if (encryptWallet) {
       setSetting('walletInit', true);
-      setWalletKey(key, password, settings.walletMode);
+      setWalletKey(key, password, settings.walletMode, hash);
     } else {
       setSetting('walletTemp', true);
     }
