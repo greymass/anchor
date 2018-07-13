@@ -4,12 +4,18 @@ import { setSetting } from './settings';
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 
-export function setWalletKey(key, password, mode = 'hot') {
+export function setWalletKey(data, password, mode = 'hot', existingHash = false) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
-    // Obfuscate key for in-memory storage
-    const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
-    const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+    let hash = existingHash;
+    let key = data;
+    let obfuscated = data;
+    if (existingHash) {
+      key = decrypt(data, existingHash, 1).toString(CryptoJS.enc.Utf8);
+    } else {
+      hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+      obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+    }
     dispatch({
       type: types.SET_WALLET_KEYS_ACTIVE,
       payload: {
