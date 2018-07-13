@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
 
-import DangerLink from '../../Modal/DangerLink';
+import ExplorerLink from '../../Modal/ExplorerLink';
 
 class GlobalTransactionMessageSuccess extends Component<Props> {
   render() {
     const {
+      blockExplorer,
       onClose,
       t,
       transaction,
@@ -15,16 +16,20 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
     } = this.props;
     const links = [];
     if (transaction) {
-      links.push(<DangerLink
+      links.push(<ExplorerLink
+        blockExplorer={blockExplorer}
         content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
-        link={`https://eospark.com/MainNet/tx/${transaction.transaction_id}`}
+        linkData={transaction.transaction_id}
+        linkType="tx"
       />);
     }
     if (transactions) {
       transactions.map((tx) =>
-        links.push(<DangerLink
+        links.push(<ExplorerLink
+          blockExplorer={blockExplorer}
           content={`${tx.transaction_id.substr(0, 8)}...${tx.transaction_id.substr(-8)}`}
-          link={`https://eospark.com/MainNet/tx/${tx.transaction_id}`}
+          linkData={tx.transaction_id}
+          linkType="tx"
         />));
     }
     return (

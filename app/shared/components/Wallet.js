@@ -11,6 +11,8 @@ type Props = {
   accounts: {},
   actionHistories: {},
   actions: {},
+  balances: {},
+  blockExplorers: {},
   globals: {},
   keys: {},
   settings: {},
@@ -30,6 +32,7 @@ export default class Wallet extends Component<Props> {
       actions,
       accounts,
       balances,
+      blockExplorers,
       chain,
       globals,
       keys,
@@ -49,6 +52,7 @@ export default class Wallet extends Component<Props> {
               actions={actions}
               accounts={accounts}
               balances={balances}
+              blockExplorers={blockExplorers}
               globals={globals}
               keys={keys}
               settings={settings}

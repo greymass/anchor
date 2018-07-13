@@ -11,6 +11,7 @@ class Tools extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       i18n,
       settings,
       t
@@ -34,42 +35,45 @@ class Tools extends Component<Props> {
             content={t('tools_description')}
           />
         </Header>
-        <Table divided>
-          <Table.Row>
-            <Table.Cell width={4}>
-              {t('tools_change_node')}
-            </Table.Cell>
-            <Table.Cell style={{ maxWidth: '600px' }} width={8}>
-              <WelcomeConnectionContainer />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell width={4}>
-              {t('tools_change_language')}
-            </Table.Cell>
-            <Table.Cell width={8}>
-              <div style={dropdownStyling}>
-                <GlobalSettingsLanguage
-                  actions={actions}
-                  defaultValue={settings.lang}
-                  i18n={i18n}
-                />
-              </div>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell width={4}>
-              {t('tools_change_block_explorer')}
-            </Table.Cell>
-            <Table.Cell width={8}>
-              <div style={dropdownStyling}>
-                <GlobalSettingsBlockExplorer
-                  actions={actions}
-                  defaultValue={settings.block_explorer}
-                />
-              </div>
-            </Table.Cell>
-          </Table.Row>
+        <Table>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell width={4}>
+                {t('tools_change_node')}
+              </Table.Cell>
+              <Table.Cell style={{ maxWidth: '600px' }} width={8}>
+                <WelcomeConnectionContainer />
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={4}>
+                {t('tools_change_language')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                <div style={dropdownStyling}>
+                  <GlobalSettingsLanguage
+                    actions={actions}
+                    defaultValue={settings.lang}
+                    i18n={i18n}
+                  />
+                </div>
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={4}>
+                {t('tools_change_block_explorer')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                <div style={dropdownStyling}>
+                  <GlobalSettingsBlockExplorer
+                    actions={actions}
+                    blockExplorers={blockExplorers}
+                    defaultValue={settings.block_explorer}
+                  />
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
         </Table>
       </Segment>
     );

@@ -9,6 +9,7 @@ class ProducersVotingPreview extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       lastError,
       onConfirm,
       selected,
@@ -22,6 +23,7 @@ class ProducersVotingPreview extends Component<Props> {
       <GlobalTransactionModal
         actionName="VOTEPRODUCER"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'green',
           content: t('producer_voter_save_changes'),
