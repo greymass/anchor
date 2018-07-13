@@ -12,7 +12,7 @@ export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
       type: types.SYSTEM_UNDELEGATEBW_PENDING
     });
 
-    return eos(connection).transaction(tr => {
+    return eos(connection, true).transaction(tr => {
       tr.undelegatebw(undelegatebwParams(delegator, receiver, netAmount, cpuAmount));
     }).then((tx) => {
       dispatch(AccountActions.getAccount(delegator));

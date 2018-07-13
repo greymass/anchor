@@ -15,7 +15,7 @@ export function transfer(from, to, quantity, memo, symbol = 'EOS') {
     try {
       const contracts = balances.__contracts;
       const account = contracts[symbol].contract;
-      return eos(connection).transaction(account, contract => {
+      return eos(connection, true).transaction(account, contract => {
         contract.transfer(
           from,
           to,

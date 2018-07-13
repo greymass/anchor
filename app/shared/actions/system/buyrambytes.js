@@ -16,7 +16,7 @@ export function buyrambytes(amount) {
 
     const { account } = settings;
 
-    return eos(connection).buyrambytes({
+    return eos(connection, true).buyrambytes({
       payer: account,
       receiver: account,
       bytes: Number(amount)

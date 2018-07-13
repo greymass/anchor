@@ -16,7 +16,7 @@ export function regproxy() {
       type: types.SYSTEM_REGPROXY_PENDING
     });
 
-    return eos(connection).regproxy({
+    return eos(connection, true).regproxy({
       proxy: account,
       isproxy: 1
     }).then((tx) => {

@@ -58,7 +58,7 @@ export function signTransaction(tx) {
     const {
       connection
     } = getState();
-    eos(connection)
+    eos(connection, true)
       .transaction(tx.transaction.transaction, {
         broadcast: connection.broadcast,
         expireInSeconds: connection.expireInSeconds,
