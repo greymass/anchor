@@ -20,18 +20,6 @@ export default class GlobalFormFieldLanguage extends Component<Props> {
     const {
       name
     } = this.props;
-    const blockExplorers = {
-      'bloks.io': {
-        account: 'https://www.bloks.io/account/{account}',
-        block: '',
-        tx: 'https://www.bloks.io/transaction/{txid}'
-      },
-      'eospark.com': {
-        account: 'https://eospark.com/MainNet/account/{account}',
-        block: '',
-        tx: 'https://eospark.com/MainNet/tx/{txid}'
-      }
-    };
 
     const {
       value

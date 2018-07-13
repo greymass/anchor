@@ -33,7 +33,6 @@ const validSettings = Object.keys(initialState);
 export default function settings(state = initialState, action) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
-      debugger
       return Object.assign({}, initialState);
     }
     case types.WALLET_REMOVE: {
