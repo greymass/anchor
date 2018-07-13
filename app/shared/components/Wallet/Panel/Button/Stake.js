@@ -11,37 +11,33 @@ type Props = {
   },
   accounts: {},
   balances: {},
+  blockExplorers: {},
   settings: {},
   validate: {},
-  system: {}
+  system: {},
+  t: () => void
 };
 
 class WalletPanelButtonStake extends Component<Props> {
   props: Props;
-
-  state = {
-    open: false
-  }
 
   render() {
     const {
       actions,
       accounts,
       balances,
+      blockExplorers,
       settings,
       validate,
       system,
       t
     } = this.props;
 
-    const {
-      open
-    } = this.state;
-
     return (
       <GlobalTransactionModal
         actionName="STAKE"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'blue',
           content: t('stake_button_cta'),

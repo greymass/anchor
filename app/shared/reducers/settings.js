@@ -6,7 +6,7 @@ const initialState = {
   // The loaded account
   account: '',
   // The block producer used
-  block_producer: 'eospark.com',
+  block_explorer: 'eospark.com',
   // Custom tokens the wallet should be tracking
   customTokens: [
     // Always track the EOS token
@@ -33,6 +33,7 @@ const validSettings = Object.keys(initialState);
 export default function settings(state = initialState, action) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
+      debugger
       return Object.assign({}, initialState);
     }
     case types.WALLET_REMOVE: {

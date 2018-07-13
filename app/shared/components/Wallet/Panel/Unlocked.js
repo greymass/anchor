@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Accordion, Menu, Segment } from 'semantic-ui-react';
 
-import GlobalButtonResetContainer from '../../../containers/Global/Button/Reset';
 import WalletPanelButtonBroadcast from './Button/Broadcast';
 import WalletPanelButtonLock from './Button/Lock';
 import WalletPanelButtonStake from './Button/Stake';
@@ -30,6 +29,7 @@ class WalletPanelUnlocked extends Component<Props> {
       actions,
       accounts,
       balances,
+      blockExplorers,
       globals,
       validate,
       settings,
@@ -70,6 +70,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       actions={actions}
                       accounts={accounts}
                       balances={balances}
+                      blockExplorers={blockExplorers}
                       validate={validate}
                       settings={settings}
                       system={system}
@@ -79,6 +80,7 @@ class WalletPanelUnlocked extends Component<Props> {
                     <WalletPanelButtonTransferSend
                       actions={actions}
                       balances={balances}
+                      blockExplorers={blockExplorers}
                       settings={settings}
                       system={system}
                     />
@@ -93,6 +95,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       account={accounts[settings.account]}
                       actions={actions}
                       balances={balances}
+                      blockExplorers={blockExplorers}
                       globals={globals}
                       settings={settings}
                       system={system}
@@ -103,6 +106,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       account={accounts[settings.account]}
                       actions={actions}
                       balances={balances}
+                      blockExplorers={blockExplorers}
                       globals={globals}
                       settings={settings}
                       system={system}
@@ -113,6 +117,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       <Segment>
                         <WalletPanelButtonBroadcast
                           actions={actions}
+                          blockExplorers={blockExplorers}
                           settings={settings}
                           system={system}
                           transaction={transaction}
@@ -139,6 +144,7 @@ class WalletPanelUnlocked extends Component<Props> {
                     <Segment basic>
                       <WalletPanelButtonBroadcast
                         actions={actions}
+                        blockExplorers={blockExplorers}
                         settings={settings}
                         system={system}
                         transaction={transaction}

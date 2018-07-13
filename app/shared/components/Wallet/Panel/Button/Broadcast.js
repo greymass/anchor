@@ -14,6 +14,7 @@ class WalletPanelButtonBroadcast extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       settings,
       system,
       t,
@@ -23,6 +24,7 @@ class WalletPanelButtonBroadcast extends Component<Props> {
       <GlobalTransactionModal
         actionName="TRANSACTION_BROADCAST"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'purple',
           content: t('wallet_panel_wallet_broadcast'),
