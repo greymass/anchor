@@ -15,6 +15,7 @@ import Wallet from '../components/Wallet';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
+import * as BlockExplorersActions from '../actions/blockexplorers';
 import * as BuyRamBytesActions from '../actions/system/buyrambytes';
 import * as BuyRamActions from '../actions/system/buyram';
 import * as ChainActions from '../actions/chain';
@@ -61,6 +62,7 @@ class BasicVoterContainer extends Component<Props> {
     } = this.props;
 
     const {
+      getBlockExplorers,
       getCurrencyStats
     } = actions;
 
@@ -74,6 +76,7 @@ class BasicVoterContainer extends Component<Props> {
           history.push('/');
         } else {
           getCurrencyStats();
+          getBlockExplorers();
           forEach(settings.customTokens, (token) => {
             const [contract, symbol] = token.split(':');
             getCurrencyStats(contract, symbol.toUpperCase());
@@ -190,6 +193,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...BlockExplorersActions,
       ...BuyRamActions,
       ...BuyRamBytesActions,
       ...ChainActions,

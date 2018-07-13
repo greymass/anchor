@@ -6,6 +6,7 @@ import accounts from './accounts';
 import actions from './actions';
 import app from './app';
 import balances from './balances';
+import blockexplorers from './blockexplorers';
 import chain from './chain';
 import connection from './connection';
 import customtokens from './customtokens';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   actions,
   app,
   balances,
+  blockexplorers,
   chain,
   connection,
   customtokens,
