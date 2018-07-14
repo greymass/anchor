@@ -94,7 +94,7 @@ function mapStateToProps(state) {
     accounts: state.accounts,
     app: state.app,
     balances: state.balances,
-    blockExplorers: state.block_explorers,
+    blockExplorers: state.blockexplorers,
     chain: state.chain,
     customtokens: state.customtokens,
     globals: state.globals,

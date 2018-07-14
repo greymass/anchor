@@ -11,6 +11,7 @@ type Props = {
     clearSystemState: () => void
   },
   balances: {},
+  blockExplorers: {},
   globals: {},
   settings: {},
   system: {},
@@ -25,6 +26,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
       actions,
       account,
       balances,
+      blockExplorers,
       globals,
       settings,
       system,
@@ -34,6 +36,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
       <GlobalTransactionModal
         actionName="SELLRAM"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'blue',
           content: t('ram_sell_button_cta'),

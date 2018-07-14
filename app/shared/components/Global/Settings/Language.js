@@ -13,13 +13,6 @@ const languages = [
 ];
 
 export default class GlobalFormFieldLanguage extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.defaultValue
-    };
-  }
-
   onChange = (e, { value }) => {
     const { actions, i18n } = this.props;
     i18n.changeLanguage(value);
@@ -28,16 +21,13 @@ export default class GlobalFormFieldLanguage extends Component<Props> {
 
   render() {
     const {
-      name
+      name,
+      setLanguage
     } = this.props;
-
-    const {
-      value
-    } = this.state;
 
     return (
       <Dropdown
-        defaultValue={value}
+        value={setLanguage}
         fluid
         name={name}
         onChange={this.onChange}

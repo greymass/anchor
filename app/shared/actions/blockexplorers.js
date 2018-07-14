@@ -22,15 +22,14 @@ export function getBlockExplorers() {
         name: 'bloks.io',
         patterns: {
           account: 'https://www.bloks.io/account/{account}',
-          tx: 'https://www.bloks.io/transaction/{txid}'
+          txid: 'https://www.bloks.io/transaction/{txid}'
         }
       },
       {
         name: 'eospark.com',
         patterns: {
           account: 'https://eospark.com/MainNet/account/{account}',
-          block: '',
-          tx: 'https://eospark.com/MainNet/tx/{txid}'
+          txid: 'https://eospark.com/MainNet/tx/{txid}'
         }
       }
     ];
