@@ -25,6 +25,7 @@ class WalletStatus extends Component<Props> {
       actionHistories,
       actions,
       balances,
+      blockExplorers,
       chain,
       globals,
       settings,
@@ -78,6 +79,7 @@ class WalletStatus extends Component<Props> {
             <WalletStatusActions
               actionHistory={actionHistories[settings.account]}
               actions={actions}
+              blockExplorers={blockExplorers}
               chain={chain}
               settings={settings}
               validate={validate}

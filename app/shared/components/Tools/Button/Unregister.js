@@ -10,6 +10,7 @@ class ToolsButtonUnregister extends Component<Props> {
     const {
       account,
       actions,
+      blockExplorers,
       settings,
       system,
       t
@@ -19,6 +20,7 @@ class ToolsButtonUnregister extends Component<Props> {
       <GlobalTransactionModal
         actionName="UNREGPROXY"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'red',
           content: t('tools_proxy_button_unregister'),

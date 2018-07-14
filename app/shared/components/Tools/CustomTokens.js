@@ -41,8 +41,7 @@ class ToolsCustomTokens extends Component<Props> {
       customtokens,
       globals,
       settings,
-      t,
-      wallets
+      t
     } = this.props;
     const {
       customTokens

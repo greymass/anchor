@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
-import DangerLink from '../../../../Global/Modal/DangerLink';
+import ExplorerLink from '../../../../Global/Modal/ExplorerLink';
 
 import WalletStatusActionTableRowDelegatebw from './Row/Delegatebw';
 import WalletStatusActionTableRowGeneric from './Row/Generic';
@@ -47,6 +47,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
   render() {
     const {
       action,
+      blockExplorers,
       chain,
       settings
     } = this.props;
@@ -62,6 +63,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
     if ([settings.account, 'eosio'].indexOf(receipt.receiver) === -1) {
       return false;
     }
+
     return (
       <Table.Row style={{ height: '60px' }}>
         <Table.Cell
@@ -70,6 +72,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
         >
           <ComponentType
             action={action}
+            blockExplorers={blockExplorers}
             chain={chain}
             settings={settings}
           />
@@ -85,9 +88,11 @@ class WalletStatusActionsTableRow extends Component<Props> {
               <Table.Cell
                 width={3}
               >
-                <DangerLink
+                <ExplorerLink
+                  blockExplorer={blockExplorers[settings.block_explorer]}
                   content={`${trx_id.substr(0, 4)}...${trx_id.substr(-4)}`}
-                  link={`https://eospark.com/MainNet/tx/${action.action_trace.trx_id}`}
+                  linkData={action.action_trace.trx_id}
+                  linkType="txid"
                 />
               </Table.Cell>
             </React.Fragment>
