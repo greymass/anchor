@@ -34,7 +34,8 @@ export default class GlobalTransactionHandler extends Component<Props> {
     if (broadcastTransaction) {
       content = (
         <GlobalTransactionMessageSuccess
-          blockExplorer={blockExplorers[settings.block_explorer]}
+          blockExplorers={blockExplorers}
+          settings={settings}
         />
       );
     } else if (hasError) {

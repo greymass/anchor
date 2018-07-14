@@ -12,6 +12,7 @@ class ToolsButtonRegister extends Component<Props> {
     const {
       account,
       actions,
+      blockExplorers,
       settings,
       system,
       t
@@ -21,6 +22,7 @@ class ToolsButtonRegister extends Component<Props> {
       <GlobalTransactionModal
         actionName="REGPROXY"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: 'blue',
           content: t('tools_proxy_button_register'),

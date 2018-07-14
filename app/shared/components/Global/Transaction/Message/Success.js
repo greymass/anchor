@@ -8,19 +8,23 @@ import ExplorerLink from '../../Modal/ExplorerLink';
 class GlobalTransactionMessageSuccess extends Component<Props> {
   render() {
     const {
-      blockExplorer,
+      blockExplorers,
       onClose,
+      settings,
       t,
       transaction,
       transactions
     } = this.props;
+
     const links = [];
+    const blockExplorer = blockExplorers[settings.block_explorer];
+
     if (transaction) {
       links.push(<ExplorerLink
         blockExplorer={blockExplorer}
         content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
         linkData={transaction.transaction_id}
-        linkType="tx"
+        linkType="txid"
       />);
     }
     if (transactions) {
@@ -29,7 +33,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
           blockExplorer={blockExplorer}
           content={`${tx.transaction_id.substr(0, 8)}...${tx.transaction_id.substr(-8)}`}
           linkData={tx.transaction_id}
-          linkType="tx"
+          linkType="txid"
         />));
     }
     return (
@@ -50,7 +54,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
                 {link}
               </p>
             ))}
-            <p>(linked to eospark.com)</p>
+            <p>({`${t('global_transaction_complete_link_to')} ${settings.block_explorer}`})</p>
           </Segment>
           <Message
             icon

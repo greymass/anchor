@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Header, Icon, Message, Segment, Transition, Table } from 'semantic-ui-react';
 
-import DangerLink from '../../../Global/Modal/DangerLink';
+import ExplorerLink from '../../../Global/Modal/ExplorerLink';
 import ActionsTableRow from './Table/Row';
 
 class WalletStatusActionsTable extends Component<Props> {
@@ -11,6 +11,7 @@ class WalletStatusActionsTable extends Component<Props> {
     const {
       amount,
       actionHistory,
+      blockExplorers,
       chain,
       settings,
       t
@@ -24,6 +25,7 @@ class WalletStatusActionsTable extends Component<Props> {
           {fullResults.map((action) => (
             <ActionsTableRow
               action={action}
+              blockExplorers={blockExplorers}
               chain={chain}
               key={action.account_action_seq}
               settings={settings}
@@ -50,9 +52,11 @@ class WalletStatusActionsTable extends Component<Props> {
               size="small"
             >
               <Header.Content>
-                <DangerLink
+                <ExplorerLink
+                  blockExplorer={blockExplorers[settings.block_explorer]}
                   content={t('actions_table_view_explorer')}
-                  link={`https://eospark.com/MainNet/account/${settings.account}`}
+                  linkData={settings.account}
+                  linkType="account"
                 />
               </Header.Content>
             </Message.Header>

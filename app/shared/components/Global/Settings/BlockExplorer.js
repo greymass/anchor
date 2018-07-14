@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
-export default class GlobalFormFieldLanguage extends Component<Props> {
+export default class GlobalSettingsBlockExplorer extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +18,7 @@ export default class GlobalFormFieldLanguage extends Component<Props> {
 
   render() {
     const {
+      blockExplorers,
       name
     } = this.props;
 

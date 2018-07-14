@@ -125,7 +125,7 @@ class Welcome extends Component<Props> {
             <Container textAlign="center">
               <GlobalSettingsLanguage
                 actions={actions}
-                defaultValue={settings.lang}
+                setLanguage={settings.lang}
                 i18n={i18n}
               />
               {(
