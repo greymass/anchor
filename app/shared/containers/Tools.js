@@ -30,50 +30,87 @@ import * as WalletsActions from '../actions/wallets';
 class ToolsContainer extends Component<Props> {
   props: Props;
   render() {
-    const { t } = this.props;
-    const panes = [
-      {
-        menuItem: t('tools_menu_index'),
-        render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
-      },
-      {
-        menuItem: t('tools_menu_customtokens'),
-        render: () => <Tab.Pane><ToolsCustomTokens {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: t('tools_menu_wallets'),
-        render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
-      },
-      {
-        menuItem: t('tools_menu_keys'),
-        render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: t('tools_menu_proxy'),
-        render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: <Menu.Header className="ui">{t('tools_menu_state_header')}</Menu.Header>
-      },
-      {
-        menuItem: t('tools_menu_state'),
-        render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: t('tools_menu_state_globals'),
-        render: () => <Tab.Pane><ToolsStateGlobals {...this.props} /></Tab.Pane>,
-      },
-      {
-        menuItem: t('tools_menu_state_chain'),
-        render: () => <Tab.Pane><ToolsStateChain {...this.props} /></Tab.Pane>,
-      }
-    ];
+    const {
+      settings,
+      t
+    } = this.props;
+
+    let panes = [];
+
+    if (settings.walletMode === 'cold') {
+      panes = [
+        {
+          menuItem: t('tools_menu_index'),
+          render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_wallets'),
+          render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_keys'),
+          render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_state_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_state'),
+          render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
+        }
+      ];
+    } else {
+      panes = [
+        {
+          menuItem: t('tools_menu_index'),
+          render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_customtokens'),
+          render: () => <Tab.Pane><ToolsCustomTokens {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: t('tools_menu_wallets'),
+          render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_keys'),
+          render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: t('tools_menu_proxy'),
+          render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_state_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_state'),
+          render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: t('tools_menu_state_globals'),
+          render: () => <Tab.Pane><ToolsStateGlobals {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: t('tools_menu_state_chain'),
+          render: () => <Tab.Pane><ToolsStateChain {...this.props} /></Tab.Pane>,
+        }
+      ];
+    }
+
     return (
       <Tab
         menu={{

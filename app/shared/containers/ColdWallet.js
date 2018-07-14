@@ -82,7 +82,7 @@ class ColdWalletContainer extends Component<Props> {
         break;
       }
       case 'tools': {
-        activeTab = <Tools />;
+        activeTab = <Tools settings={settings} />;
         break;
       }
       default: {
