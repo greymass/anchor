@@ -13,7 +13,7 @@
   "global_account_import_select_accounts": "この秘密鍵でインポートする1つ以上のアカウントを選択してください。",
   "global_account_import_watch_description": "アカウントのモニタと未署名トランザクションの作成が可能なウォッチウォレットとしてアカウントをインポートします。",
   "global_account_import_watch_account": "アカウント名",
-  "global_accounts_dropdown_no_accounts": "追加のウォレットが作成されませんでした。開始するには、「ツール」の「ウォレットの管理」へ行きます。",
+  "global_accounts_dropdown_no_accounts": "他のウォレットがありません。開始するには、「ツール」の「ウォレットの管理」へ行きます。",
   "global_button_account_import_action": "アカウントをインポート",
   "global_account_import_watch_account_not_found": "アカウントが見つかりません！",
   "global_account_import_private_requires_hot_header": "この操作には既存のホットウォレットが必要です。",
