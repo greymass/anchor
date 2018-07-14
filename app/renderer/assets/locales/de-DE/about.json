@@ -1,6 +1,6 @@
 {
-  "about_opensource_title": "This application is open source",
-  "about_opensource_message": " We welcome contributions to this application. If you are interested, please join us on Github at",
+  "about_opensource_title": "Diese Anwendung ist Open Source",
+  "about_opensource_message": " Wir freuen uns über Beiträge zu dieser Anwendung. Wenn Sie interessiert sind, besuchen Sie uns bitte auf Github",
   "about_opensource_link": "https://github.com/greymass/eos-voter",
   "about_message_1": "eos-voter is a standalone desktop application that connects directly to the EOS blockchain through the API endpoint of your choice.",
   "about_message_2": "Your keys never leave the application itself and are only ever stored encrypted, providing the highest level of security a hot wallet can offer.",
