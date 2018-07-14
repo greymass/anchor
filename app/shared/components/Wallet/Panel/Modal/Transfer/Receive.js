@@ -41,7 +41,7 @@ class WalletPanelModalTransferReceive extends Component<Props> {
           <Button
             onClick={onClose}
           >
-            <Icon name="x" /> {t('cancel')}
+            <Icon name="x" /> {t('transfer_close')}
           </Button>
         </Modal.Actions>
       </Modal>
