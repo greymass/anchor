@@ -68,6 +68,7 @@ export default class Wallet extends Component<Props> {
               actionHistories={actionHistories}
               accounts={accounts}
               balances={balances}
+              blockExplorers={blockExplorers}
               chain={chain}
               globals={globals}
               keys={keys}

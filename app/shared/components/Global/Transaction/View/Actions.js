@@ -7,7 +7,8 @@ import { Header } from 'semantic-ui-react';
 import GlobalTransactionViewAction from './Action';
 
 type Props = {
-  actions: []
+  actions: [],
+  t: () => void
 };
 
 class GlobalTransactionViewActions extends Component<Props> {

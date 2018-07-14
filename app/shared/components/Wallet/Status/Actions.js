@@ -10,6 +10,7 @@ type Props = {
   actions: {
     getActions: () => void
   },
+  blockExplorers: {},
   settings: {},
   t: () => void
 };
@@ -99,6 +100,7 @@ class WalletStatusActions extends Component<Props> {
   render() {
     const {
       actionHistory,
+      blockExplorers,
       chain,
       settings,
       t,
@@ -126,6 +128,7 @@ class WalletStatusActions extends Component<Props> {
                      amount={amount}
                      actionHistory={actionHistory}
                      attached="top"
+                     blockExplorers={blockExplorers}
                      chain={chain}
                      settings={settings}
                    />

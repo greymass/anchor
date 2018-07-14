@@ -53,7 +53,7 @@ class Tools extends Component<Props> {
                 <div style={dropdownStyling}>
                   <GlobalSettingsLanguage
                     actions={actions}
-                    defaultValue={settings.lang}
+                    setLanguage={settings.lang}
                     i18n={i18n}
                   />
                 </div>
