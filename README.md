@@ -73,6 +73,19 @@ Then either:
 
 The files built will be located in the `releases` folder within the root project folder.
 
+### Docker
+
+If you use Docker on Linux, you can run the following commands to build and run the wallet.
+
+```
+docker build . -t eos-voter
+xhost local:root
+docker run -it --rm \
+       -e DISPLAY=$DISPLAY \
+       -v /tmp/.X11-unix:/tmp/.X11-unix \
+       eos-voter
+```
+
 ### Running development mode
 
 ```
