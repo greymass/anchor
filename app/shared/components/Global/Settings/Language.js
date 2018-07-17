@@ -12,7 +12,7 @@ const languages = [
   { key: 'ru', value: 'ru-RU', flag: 'ru', text: 'Русский' },
 ];
 
-export default class GlobalFormFieldLanguage extends Component<Props> {
+export default class GlobalSettingsLanguage extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions, i18n } = this.props;
     i18n.changeLanguage(value);
@@ -22,16 +22,17 @@ export default class GlobalFormFieldLanguage extends Component<Props> {
   render() {
     const {
       name,
-      setLanguage
+      setLanguage,
+      selection
     } = this.props;
 
     return (
       <Dropdown
         value={setLanguage}
-        fluid
         name={name}
         onChange={this.onChange}
         options={languages}
+        selection={selection}
       />
     );
   }

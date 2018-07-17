@@ -17,13 +17,6 @@ class Tools extends Component<Props> {
       t
     } = this.props;
 
-    const dropdownStyling = {
-      width: '200px',
-      border: '1px solid #D3D3D3',
-      padding: '12px',
-      margin: '20px'
-    };
-
     return (
       <Segment attached="top" textAlign="center">
         <Header icon size="large">
@@ -53,13 +46,12 @@ class Tools extends Component<Props> {
                       {t('tools_change_block_explorer')}
                     </Table.Cell>
                     <Table.Cell width={8}>
-                      <div style={dropdownStyling}>
-                        <GlobalSettingsBlockExplorer
-                          actions={actions}
-                          blockExplorers={blockExplorers}
-                          defaultValue={settings.block_explorer}
-                        />
-                      </div>
+                      <GlobalSettingsBlockExplorer
+                        actions={actions}
+                        blockExplorers={blockExplorers}
+                        defaultValue={settings.blockExplorer}
+                        selection
+                      />
                     </Table.Cell>
                   </Table.Row>
                 ]
@@ -69,13 +61,12 @@ class Tools extends Component<Props> {
                 {t('tools_change_language')}
               </Table.Cell>
               <Table.Cell width={8}>
-                <div style={dropdownStyling}>
-                  <GlobalSettingsLanguage
-                    actions={actions}
-                    setLanguage={settings.lang}
-                    i18n={i18n}
-                  />
-                </div>
+                <GlobalSettingsLanguage
+                  actions={actions}
+                  setLanguage={settings.lang}
+                  i18n={i18n}
+                  selection
+                />
               </Table.Cell>
             </Table.Row>
           </Table.Body>

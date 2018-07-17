@@ -127,6 +127,8 @@ class Welcome extends Component<Props> {
                 actions={actions}
                 setLanguage={settings.lang}
                 i18n={i18n}
+                settings
+                selection
               />
               {(
                 (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
