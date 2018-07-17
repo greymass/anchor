@@ -17,7 +17,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
     } = this.props;
 
     const links = [];
-    const blockExplorer = blockExplorers[settings.block_explorer];
+    const blockExplorer = blockExplorers[settings.blockExplorer] || blockExplorers[0];
 
     if (transaction) {
       links.push(<ExplorerLink
@@ -54,7 +54,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
                 {link}
               </p>
             ))}
-            <p>({`${t('global_transaction_complete_link_to')} ${settings.block_explorer}`})</p>
+            <p>({`${t('global_transaction_complete_link_to')} ${settings.blockExplorer}`})</p>
           </Segment>
           <Message
             icon

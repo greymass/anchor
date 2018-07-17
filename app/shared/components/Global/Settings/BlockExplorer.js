@@ -13,13 +13,14 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions } = this.props;
 
-    actions.setSetting('block_explorer', value);
+    actions.setSetting('blockExplorer', value);
   }
 
   render() {
     const {
       blockExplorers,
-      name
+      name,
+      selection
     } = this.props;
 
     const {
@@ -33,10 +34,10 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
     return (
       <Dropdown
         defaultValue={value}
-        fluid
         name={name}
         onChange={this.onChange}
         options={blockExplorerOptions}
+        selection={selection}
       />
     );
   }
