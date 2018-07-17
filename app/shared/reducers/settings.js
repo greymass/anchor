@@ -13,7 +13,7 @@ const initialState = {
     'eosio.token:EOS'
   ],
   // Default language
-  lang: 'en-US',
+  lang: '',
   // The node to connect to
   node: '',
   // Allows the UI to start with only a connected node
