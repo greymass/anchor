@@ -53,7 +53,7 @@ class WalletStatusActionsTable extends Component<Props> {
             >
               <Header.Content>
                 <ExplorerLink
-                  blockExplorer={blockExplorers[settings.block_explorer]}
+                  blockExplorer={blockExplorers[settings.blockExplorer] || blockExplorers[0]}
                   content={t('actions_table_view_explorer')}
                   linkData={settings.account}
                   linkType="account"

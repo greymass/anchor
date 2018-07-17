@@ -5,8 +5,8 @@ const initialState = {
   acceptedConstitution: false,
   // The loaded account
   account: '',
-  // The block producer used
-  block_explorer: 'eospark.com',
+  // The block explorer used
+  blockExplorer: 'bloks.io',
   // Custom tokens the wallet should be tracking
   customTokens: [
     // Always track the EOS token
