@@ -4,11 +4,10 @@ import { translate } from 'react-i18next';
 
 import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
 
-import ToolsButtonProxyRegister from './Button/Register';
-import ToolsButtonProxyUnregister from './Button/Unregister';
+import ToolsButtonCreateAccount from './Button/CreateAccount';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
 
-class ToolsProxy extends Component<Props> {
+class ToolsNewAccount extends Component<Props> {
   render() {
     const {
       accounts,
@@ -35,31 +34,14 @@ class ToolsProxy extends Component<Props> {
           (
             <div>
               <Header>
-                {t('tools_proxy_header_registration')}
+                {t('tools_new_account_header')}
               </Header>
-              <Segment style={(isProxy) ? ({ display: 'none' }) : {}} basic>
+              <Segment basic>
                 <p>
-                  {t('tools_proxy_text_not_registered')}
+                  {t('tools_new_account_text')}
                 </p>
                 <Divider />
-                <ToolsButtonProxyRegister
-                  account={account}
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  settings={settings}
-                  system={system}
-                />
-              </Segment>
-              <Segment style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
-                <p>
-                  {t('tools_proxy_text_registered')}
-                </p>
-                <Divider />
-                <p>
-                  {settings.account}
-                </p>
-                <Divider />
-                <ToolsButtonProxyUnregister
+                <ToolsButtonCreateAccount
                   account={account}
                   actions={actions}
                   blockExplorers={blockExplorers}
@@ -82,4 +64,4 @@ class ToolsProxy extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsProxy);
+export default translate('tools')(ToolsNewAccount);
