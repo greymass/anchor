@@ -22,6 +22,7 @@ class WalletLanguage extends Component<Props> {
           setLanguage={settings.lang}
           i18n={i18n}
           onChange={this.onChange}
+          settings
         />
 
       </Menu.Item>
