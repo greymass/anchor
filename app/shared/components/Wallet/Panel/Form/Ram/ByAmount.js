@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
 import FormFieldRam from '../../../../Global/Form/Field/Ram';
-import calculatePriceOfRam from './helpers/calculatePriceOfRam';
+import calculatePriceOfRam from '../../../../helpers/calculatePriceOfRam';
 
 class WalletPanelFormRamBuyByAmount extends Component<Props> {
   constructor(props) {

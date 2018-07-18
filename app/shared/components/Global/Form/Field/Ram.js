@@ -11,6 +11,8 @@ export default class GlobalFormFieldRam extends Component<Props> {
     };
   }
   onChange = debounce((e, { name, value }) => {
+
+    const valid = !!(parsed.match(/^[0-9]{1,9}/g));
     this.setState({
       value
     }, () => {
