@@ -16,10 +16,10 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
   render() {
     const {
       accountName,
+      delegatedResources,
       onBack,
       publicKey,
       ramAmount,
-      startingBalance,
       t
     } = this.props;
 
@@ -32,7 +32,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_create_account_confirming_title_one')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {`${startingBalance} EOS`}
+                {`${delegatedResources} EOS`}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
