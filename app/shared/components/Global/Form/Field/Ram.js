@@ -11,12 +11,11 @@ export default class GlobalFormFieldRam extends Component<Props> {
     };
   }
   onChange = debounce((e, { name, value }) => {
-
-    const valid = !!(parsed.match(/^[0-9]{1,9}/g));
+    const valid = !!(value.match(/^[0-9]{1,9}/g));
     this.setState({
       value
     }, () => {
-      this.props.onChange(e, { name, value });
+      this.props.onChange(e, { name, value, valid });
     });
   }, 300)
 

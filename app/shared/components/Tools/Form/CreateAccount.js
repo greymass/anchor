@@ -68,7 +68,11 @@ class ToolsFormCreateAccount extends Component<Props> {
 
       if (!valid) {
         formErrors[name] = `invalid_${name}`;
-      } else if (this.allFieldsHaveValidFormat()) {
+      } else {
+        formErrors[name] = null;
+      }
+
+      if (this.allFieldsHaveValidFormat()) {
         formErrors = this.errorsInForm(formErrors);
       }
 
@@ -85,22 +89,22 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors,
       publicKey,
       ramAmount,
-      startingBalance
+      delegatedResources
     } = this.state;
 
-    if (!accountName || formErrors.accountName === 'invalid_account_name') {
+    if (!accountName || formErrors.accountName === 'invalid_accountName') {
       return false;
     }
 
-    if (!publicKey || formErrors.publicKey === 'invalid_public_key') {
+    if (!publicKey || formErrors.publicKey === 'invalid_publicKey') {
       return false;
     }
 
-    if (!ramAmount || formErrors.ramAmount === 'invalid_ram_amount') {
+    if (!ramAmount || formErrors.ramAmount === 'invalid_ramAmount') {
       return false;
     }
 
-    if (!startingBalance || formErrors.startingBalance === 'invalid_starting_balance') {
+    if (!delegatedResources || formErrors.delegatedResources === 'invalid_startingBalance') {
       return false;
     }
 
@@ -112,9 +116,9 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
+      delegatedResources,
       EOSbalance,
-      ramAmount,
-      startingBalance
+      ramAmount
     } = this.state;
 
     if (false) {
@@ -127,9 +131,9 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const ramPrice = calculatePriceOfRam(ramAmount);
 
-    if (Decimal(ramPrice).plus(Decimal(startingBalance)).greaterThan(EOSbalance)) {
-      if (startingBalance > 0) {
-        errorsInForm.startingBalance = 'not_enough_balance';
+    if (Decimal(ramPrice).plus(Decimal(delegatedResources)).greaterThan(EOSbalance)) {
+      if (delegatedResources > 2) {
+        errorsInForm.delegatedResources = 'not_enough_balance';
       } else {
         errorsInForm.ramAmount = 'not_enough_balance';
       }
@@ -159,12 +163,12 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
+      delegatedResources,
       publicKey,
-      ramAmount,
-      startingBalance
+      ramAmount
     } = this.state;
 
-    createAccount(accountName, publicKey, ramAmount, startingBalance);
+    createAccount(accountName, publicKey, ramAmount, delegatedResources);
   }
 
   render() {
@@ -178,14 +182,16 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
+      delegatedResources,
       publicKey,
       ramAmount,
-      startingBalance,
       submitDisabled
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
+
+    const formErrorKeys = Object.keys(this.state.formErrors);
 
     return (
       <Segment
@@ -221,17 +227,23 @@ class ToolsFormCreateAccount extends Component<Props> {
                     onChange={this.onChange}
                   />
                   <GlobalFormFieldToken
-                    defaultValue={startingBalance}
-                    label={t('tools_form_create_account_starting_balance')}
-                    name="startingBalance"
+                    defaultValue={delegatedResources}
+                    label={t('tools_form_create_account_delegated_resources')}
+                    name="delegatedResources"
                     onChange={this.onChange}
                   />
                 </Form.Group>
                 <FormMessageError
-                  error={
-                    Object.keys(this.state.formErrors).map((key) => {
-                      return this.state.formErrors[key];
-                    }).join('\n')
+                  errors={
+                    formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
+                      const error = this.state.formErrors[key];
+
+                      if (error) {
+                        errors.push(error);
+                      }
+
+                      return errors;
+                    })
                   }
                 />
                 <Divider />
