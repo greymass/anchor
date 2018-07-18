@@ -7,7 +7,7 @@ import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
 import ToolsButtonCreateAccount from './Button/CreateAccount';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
 
-class ToolsNewAccount extends Component<Props> {
+class ToolsCreateAccount extends Component<Props> {
   render() {
     const {
       accounts,
@@ -22,10 +22,6 @@ class ToolsNewAccount extends Component<Props> {
     } = this.props;
 
     const account = accounts[settings.account];
-    let isProxy = false;
-    if (account && account.voter_info && account.voter_info.is_proxy) {
-      isProxy = account.voter_info.is_proxy;
-    }
 
     return (
       <Grid centered>
@@ -34,11 +30,11 @@ class ToolsNewAccount extends Component<Props> {
           (
             <div>
               <Header>
-                {t('tools_new_account_header')}
+                {t('tools_create_account_header')}
               </Header>
               <Segment basic>
                 <p>
-                  {t('tools_new_account_text')}
+                  {t('tools_create_account_text')}
                 </p>
                 <Divider />
                 <ToolsButtonCreateAccount
@@ -64,4 +60,4 @@ class ToolsNewAccount extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsNewAccount);
+export default translate('tools')(ToolsCreateAccount);

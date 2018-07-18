@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
 import FormFieldToken from '../../../../Global/Form/Field/Token';
-import calculateAmountOfRam from './helpers/calculateAmountOfRam';
+import calculateAmountOfRam from '../../../../helpers/calculateAmountOfRam';
 
 import GlobalDataBytes from '../../../../Global/Data/Bytes';
 
