@@ -9,10 +9,12 @@ export default class GlobalFormFieldKeyPublic extends Component<Props> {
   state = { value: '' };
   onChange = debounce((e, { name, value }) => {
     const parsed = value.trim();
+    const valid = !!(parsed.match(/^EOS[a-zA-Z1-9.]{50}?$/g));
+
     this.setState({
       value: parsed
     }, () => {
-      this.props.onChange(e, { name, value: parsed });
+      this.props.onChange(e, { name, value: parsed, valid });
     });
   }, 300)
   render() {

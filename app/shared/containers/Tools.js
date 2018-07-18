@@ -16,6 +16,7 @@ import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
 import ToolsProxy from '../components/Tools/Proxy';
 import ToolsWallets from '../components/Tools/Wallets';
+import ToolsCreateAccount from '../components/Tools/CreateAccount';
 
 import * as AccountsActions from '../actions/accounts';
 import * as CustomTokensActions from '../actions/customtokens';
@@ -84,6 +85,10 @@ class ToolsContainer extends Component<Props> {
         },
         {
           menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_create_account'),
+          render: () => <Tab.Pane><ToolsCreateAccount {...this.props} /></Tab.Pane>,
         },
         {
           menuItem: t('tools_menu_keys'),
