@@ -12,7 +12,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
       value: props.value
     };
   }
-  onChange = (e, { name, value }) => {
+  onChange = debounce((e, { name, value }) => {
     const parsed = value.trim().toLowerCase();
     const valid = !!(parsed.match(/^[a-z]{5,12}]?$/g));
     this.setState({
@@ -24,7 +24,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
         valid
       });
     });
-  }
+  }, 300)
   reset = () => this.setState({ value: '' });
   render() {
     const {

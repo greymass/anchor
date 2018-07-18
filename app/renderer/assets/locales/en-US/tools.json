@@ -5,7 +5,7 @@
   "tools_form_create_account_account_name": "Account Name",
   "tools_form_create_account_public_key": "Public Key",
   "tools_form_create_account_ram_amount": "RAM Amount",
-  "tools_form_create_account_starting_balance": "Starting Balance",
+  "tools_form_create_account_delegated_resources": "Delegated Resources",
   "tools_create_account_header": "Create Account",
   "tools_create_account_text": "This is where you can create an account for a friend.",
   "tools_change_block_explorer": "Change Block Explorer",
