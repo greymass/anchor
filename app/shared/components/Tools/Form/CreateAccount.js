@@ -60,7 +60,6 @@ class ToolsFormCreateAccount extends Component<Props> {
   onChange = (e, { name, value, valid }) => {
     this.setState({
       submitDisabled: false,
-      formErrors: {},
       [name]: value
     }, () => {
       let {
@@ -105,9 +104,6 @@ class ToolsFormCreateAccount extends Component<Props> {
       return false;
     }
 
-    debugger
-
-
     return true;
   }
 
@@ -149,25 +145,26 @@ class ToolsFormCreateAccount extends Component<Props> {
   }
 
   onConfirm = () => {
-    const {
-      account,
-      actions
-    } = this.props;
-
-    const {
-      decimalCpuAmount,
-      decimalNetAmount
-    } = this.state;
-
-    const {
-      setStake
-    } = actions;
-
     this.setState({
       confirming: false
     });
 
-    setStake(account, decimalNetAmount, decimalCpuAmount);
+    const {
+      actions
+    } = this.props;
+
+    const {
+      createAccount
+    } = actions;
+
+    const {
+      accountName,
+      publicKey,
+      ramAmount,
+      startingBalance
+    } = this.state;
+
+    createAccount(accountName, publicKey, ramAmount, startingBalance);
   }
 
   render() {
@@ -231,7 +228,11 @@ class ToolsFormCreateAccount extends Component<Props> {
                   />
                 </Form.Group>
                 <FormMessageError
-                  error={this.state.formError}
+                  error={
+                    Object.keys(this.state.formErrors).map((key) => {
+                      return this.state.formErrors[key];
+                    }).join('\n')
+                  }
                 />
                 <Divider />
                 <Button
