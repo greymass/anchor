@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import ToolsFormCreateAccount from '../Form/Register';
+import ToolsFormCreateAccount from '../Form/CreateAccount';
 
 class ToolsButtonCreateAccount extends Component<Props> {
   props: Props;
@@ -20,24 +20,24 @@ class ToolsButtonCreateAccount extends Component<Props> {
 
     return (
       <GlobalTransactionModal
-        actionName="REGPROXY"
+        actionName="CREATEACCOUNT"
         actions={actions}
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
-          content: t('tools_proxy_button_register'),
+          content: t('tools_button_create_account'),
           icon: 'share square'
         }}
         content={(
           <ToolsFormCreateAccount
             account={account}
             actions={actions}
-            key="RegisterProxyForm"
+            key="CreateAccountForm"
             system={system}
           />
         )}
         icon="share square"
-        title={t('tools_proxy_header_register')}
+        title={t('tools_create_account_header')}
         settings={settings}
         system={system}
       />

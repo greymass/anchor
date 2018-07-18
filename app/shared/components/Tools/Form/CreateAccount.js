@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
+import { Segment, Form, Divider, Button } from 'semantic-ui-react';
 
-import WalletPanelFormStakeStats from './Stake/Stats';
-import WalletPanelFormStakeInput from './Stake/Input';
-import WalletPanelFormStakeConfirming from './Stake/Confirming';
-import FormMessageError from '../../../Global/Form/Message/Error';
+import GlobalFormFieldRam from '../../Global/Form/Field/Ram';
+import GlobalFormFieldToken from '../../Global/Form/Field/Token';
+import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
+import GlobalFormFieldKeyPublic from '../../Global/Form/Field/Key/Public';
+import FormMessageError from '../../Global/Form/Message/Error';
+import ToolsFormCreateAccountConfirming from './CreateAccount/Confirming';
+import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 
 type Props = {
   actions: {},
@@ -28,9 +31,9 @@ class ToolsFormCreateAccount extends Component<Props> {
     } = props;
 
     this.state = {
-      EOSbalance: (balance && balance.EOS) ? balance.EOS : 0,
       confirming: false,
-      formError: null,
+      EOSbalance: (balance && balance.EOS) ? balance.EOS : 0,
+      formErrors: {},
       submitDisabled: true
     };
   }
@@ -54,69 +57,89 @@ class ToolsFormCreateAccount extends Component<Props> {
     }
   }
 
-  onError = (error) => {
-    let errorMessage;
-
-    if (error !== true) {
-      errorMessage = error;
-    }
-
-    this.setState({
-      submitDisabled: true,
-      formError: errorMessage
-    });
-  }
-
-  onChange = (name, value) => {
+  onChange = (e, { name, value, valid }) => {
     this.setState({
       submitDisabled: false,
-      formError: null,
+      formErrors: {},
       [name]: value
     }, () => {
-      const error = this.errorsInForm();
-      if (error) {
-        this.onError(error);
+      let {
+        formErrors
+      } = this.state;
+
+      if (!valid) {
+        formErrors[name] = `invalid_${name}`;
+      } else if (this.allFieldsHaveValidFormat()) {
+        formErrors = this.errorsInForm(formErrors);
       }
+
+      this.setState({
+        formErrors,
+        submitDisabled: Object.keys(formErrors).length !== 0
+      });
     });
   }
 
-  errorsInForm = () => {
+  allFieldsHaveValidFormat = () => {
     const {
-      cpuOriginal,
-      decimalCpuAmount,
-      decimalNetAmount,
-      EOSbalance,
-      netOriginal
+      accountName,
+      formErrors,
+      publicKey,
+      ramAmount,
+      startingBalance
     } = this.state;
 
-    let cpuAmount = decimalCpuAmount;
-    let netAmount = decimalNetAmount;
-
-    const decimalRegex = /^\d+(\.\d{1,4})?$/;
-
-    if (!decimalRegex.test(cpuAmount) || !decimalRegex.test(netAmount)) {
-      return 'not_valid_stake_amount';
+    if (!accountName || formErrors.accountName === 'invalid_account_name') {
+      return false;
     }
 
-    cpuAmount = Decimal(cpuAmount);
-    netAmount = Decimal(netAmount);
-
-    if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
-      return true;
+    if (!publicKey || formErrors.publicKey === 'invalid_public_key') {
+      return false;
     }
 
-    if (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0)) {
-      return 'no_stake_left';
+    if (!ramAmount || formErrors.ramAmount === 'invalid_ram_amount') {
+      return false;
     }
 
-    const cpuChange = cpuAmount.minus(cpuOriginal);
-    const netChange = netAmount.minus(netOriginal);
-
-    if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(EOSbalance)) {
-      return 'not_enough_balance';
+    if (!startingBalance || formErrors.startingBalance === 'invalid_starting_balance') {
+      return false;
     }
 
-    return false;
+    debugger
+
+
+    return true;
+  }
+
+  errorsInForm = (errors) => {
+    const errorsInForm = errors;
+
+    const {
+      accountName,
+      EOSbalance,
+      ramAmount,
+      startingBalance
+    } = this.state;
+
+    if (false) {
+      errorsInForm.accountName = 'account_name_not_available';
+    }
+
+    if (ramAmount < 3000) {
+      errorsInForm.ramAmount = 'not_enough_ram_for_new_account';
+    }
+
+    const ramPrice = calculatePriceOfRam(ramAmount);
+
+    if (Decimal(ramPrice).plus(Decimal(startingBalance)).greaterThan(EOSbalance)) {
+      if (startingBalance > 0) {
+        errorsInForm.startingBalance = 'not_enough_balance';
+      } else {
+        errorsInForm.ramAmount = 'not_enough_balance';
+      }
+    }
+
+    return errorsInForm;
   }
 
   onBack = () => {
@@ -180,35 +203,31 @@ class ToolsFormCreateAccount extends Component<Props> {
                 onSubmit={this.onSubmit}
               >
                 <Form.Group widths="equal">
-                  <GlobalFormFieldAccountName
+                  <GlobalFormFieldAccount
                     defaultValue={accountName}
                     label={t('tools_form_create_account_account_name')}
-                    name="cpuAmount"
+                    name="accountName"
                     onChange={this.onChange}
-                    onError={this.onError}
                   />
                   <GlobalFormFieldKeyPublic
                     defaultValue={publicKey}
                     label={t('tools_form_create_account_public_key')}
-                    name="netAmount"
+                    name="publicKey"
                     onChange={this.onChange}
-                    onError={this.onError}
                   />
                 </Form.Group>
                 <Form.Group widths="equal">
                   <GlobalFormFieldRam
                     defaultValue={ramAmount}
                     label={t('tools_form_create_account_ram_amount')}
-                    name="cpuAmount"
+                    name="ramAmount"
                     onChange={this.onChange}
-                    onError={this.onError}
                   />
-                  <GlobalFormFieldBalance
+                  <GlobalFormFieldToken
                     defaultValue={startingBalance}
                     label={t('tools_form_create_account_starting_balance')}
-                    name="netAmount"
+                    name="startingBalance"
                     onChange={this.onChange}
-                    onError={this.onError}
                   />
                 </Form.Group>
                 <FormMessageError
@@ -216,12 +235,12 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 <Divider />
                 <Button
-                  content={t('cancel')}
+                  content={t('tools_form_create_account_cancel')}
                   color="grey"
                   onClick={onClose}
                 />
                 <Button
-                  content={t('update_staked_coins')}
+                  content={t('tools_form_create_account_button')}
                   color="green"
                   disabled={submitDisabled}
                   floated="right"
@@ -246,4 +265,4 @@ class ToolsFormCreateAccount extends Component<Props> {
 }
 
 
-export default translate('stake')(ToolsFormCreateAccount);
+export default translate('tools')(ToolsFormCreateAccount);
