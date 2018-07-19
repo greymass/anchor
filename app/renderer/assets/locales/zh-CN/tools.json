@@ -1,4 +1,7 @@
 {
+  "tools_change_block_explorer": "Change Block Explorer",
+  "tools_change_language": "Change language",
+  "tools_change_node": "Change API node",
   "tools_customtokens_balance": "Balance",
   "tools_customtokens_contract": "Contract Account",
   "tools_customtokens_controls": "Controls",
