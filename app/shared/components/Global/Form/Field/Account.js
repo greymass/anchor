@@ -9,7 +9,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value
+      value: props.defaultValue
     };
   }
   onChange = debounce((e, { name, value }) => {
@@ -52,7 +52,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
         name={name}
         onChange={this.onChange}
         ref={ref => { this.input = ref; }}
-        value={value}
+        defaultValue={value}
         width={width}
       />
     );
