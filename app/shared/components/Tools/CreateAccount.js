@@ -12,7 +12,9 @@ class ToolsCreateAccount extends Component<Props> {
     const {
       accounts,
       actions,
+      balances,
       blockExplorers,
+      globals,
       keys,
       settings,
       system,
@@ -40,7 +42,9 @@ class ToolsCreateAccount extends Component<Props> {
                 <ToolsButtonCreateAccount
                   account={account}
                   actions={actions}
+                  balance={balances[settings.account]}
                   blockExplorers={blockExplorers}
+                  globals={globals}
                   settings={settings}
                   system={system}
                 />

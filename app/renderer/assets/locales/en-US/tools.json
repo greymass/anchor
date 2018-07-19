@@ -1,5 +1,9 @@
 {
   "tools_button_create_account": "Create Account Now",
+  "tools_create_account_confirming_title_one": "Account Name",
+  "tools_create_account_confirming_title_two": "Delegated Resources",
+  "tools_create_account_confirming_title_three": "Public Key",
+  "tools_create_account_confirming_title_four": "RAM Amount",
   "tools_form_create_account_cancel": "Cancel",
   "tools_form_create_account_button": "Create Account",
   "tools_form_create_account_account_name": "Account Name",
