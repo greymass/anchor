@@ -27,13 +27,13 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
     return (
       <Segment padding="true" basic>
         <Header>
-          {t('tools_create_account_confirming_header')}
+          {t('tools_form_create_account_confirming_header')}
         </Header>
         <Table size="small" celled>
           <Table.Body>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_create_account_confirming_title_one')}
+                {t('tools_form_create_account_confirming_title_one')}
               </Table.Cell>
               <Table.Cell width={8}>
                 {accountName}
@@ -41,7 +41,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_create_account_confirming_title_two')}
+                {t('tools_form_create_account_confirming_title_two')}
               </Table.Cell>
               <Table.Cell width={8}>
                 {delegatedResources}
@@ -49,7 +49,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_create_account_confirming_title_three')}
+                {t('tools_form_create_account_confirming_title_three')}
               </Table.Cell>
               <Table.Cell width={8}>
                 {publicKey}
@@ -57,7 +57,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_create_account_confirming_title_four')}
+                {t('tools_form_create_account_confirming_title_four')}
               </Table.Cell>
               <Table.Cell width={8}>
                 <GlobalDataBytes
@@ -72,14 +72,14 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
         <Button
           onClick={onBack}
         >
-          <Icon name="arrow left" /> {t('back')}
+          <Icon name="arrow left" /> {t('tools_form_create_account_back')}
         </Button>
         <Button
           color="blue"
           floated="right"
           onClick={this.onConfirm}
         >
-          <Icon name="check" /> {t('confirm_stake')}
+          <Icon name="check" /> {t('tools_form_create_account_button')}
         </Button>
       </Segment>
     );
