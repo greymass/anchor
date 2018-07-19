@@ -7,6 +7,7 @@
   "error_ram_has_to_be_over_minimum_amount": "A minimum of 3 bytes of RAM is required per transaction.",
   "error_ram_not_valid_amount": "Invalid RAM amount. A valid amount should be a whole number with no decimals.",
   "error_ram_using_more_than_usage": "Insufficient available RAM balance to complete transaction.",
+  "error_not_enough_ram_for_new_account": "A minimum of 3 KB of RAM is required to create a new account."
   "error_not_valid_account_name": "This is not a valid account name",
   "error_invalid_accountName": "Invalid Account Name, make sure it is made of 1 to 12 letters.",
   "error_invalid_delegatedResources": "Invalid EOS Amount, eg. '12.121'.",
