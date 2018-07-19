@@ -15,9 +15,11 @@ class FormMessageError extends Component<Props> {
 
     const errorMessages = (errors || []);
 
-    errorMessages.push(error);
+    if (error) {
+      errorMessages.push(error);
+    }
 
-    return (error || errors)
+    return (error || (errors && errors.length > 0))
       ? (
         <div style={style}>
           <Message negative>

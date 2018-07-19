@@ -16,7 +16,6 @@ import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 type Props = {
   actions: {},
   account: {},
-  balance: {},
   system: {}
 };
 
@@ -36,6 +35,27 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors: {},
       submitDisabled: true
     };
+  }
+
+  componentDidMount() {
+    this.tick();
+    this.interval = setInterval(this.tick.bind(this), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  tick() {
+    const {
+      actions,
+    } = this.props;
+
+    const {
+      getRamStats
+    } = actions;
+
+    getRamStats();
   }
 
   onSubmit = (e) => {
@@ -66,6 +86,8 @@ class ToolsFormCreateAccount extends Component<Props> {
         formErrors
       } = this.state;
 
+      let submitDisabled = false;
+
       if (!valid) {
         formErrors[name] = `invalid_${name}`;
       } else {
@@ -73,12 +95,14 @@ class ToolsFormCreateAccount extends Component<Props> {
       }
 
       if (this.allFieldsHaveValidFormat()) {
-        formErrors = this.errorsInForm(formErrors);
+        ({ formErrors, submitDisabled } = this.errorsInForm(formErrors));
+      } else {
+        submitDisabled = true;
       }
 
       this.setState({
         formErrors,
-        submitDisabled: Object.keys(formErrors).length !== 0
+        submitDisabled
       });
     });
   }
@@ -111,8 +135,10 @@ class ToolsFormCreateAccount extends Component<Props> {
     return true;
   }
 
-  errorsInForm = (errors) => {
-    const errorsInForm = errors;
+  errorsInForm = (errors, disabled) => {
+    const {
+      globals
+    } = this.props;
 
     const {
       accountName,
@@ -121,25 +147,42 @@ class ToolsFormCreateAccount extends Component<Props> {
       ramAmount
     } = this.state;
 
+    const formErrors = errors;
+    let submitDisabled = disabled;
+
+    formErrors.accountName = null;
+    formErrors.ramAmount = null;
+    formErrors.delegatedResources = null;
+
     if (false) {
-      errorsInForm.accountName = 'account_name_not_available';
+      formErrors.accountName = 'account_name_not_available';
+      submitDisabled = true;
     }
 
-    if (ramAmount < 3000) {
-      errorsInForm.ramAmount = 'not_enough_ram_for_new_account';
+    if (Number(ramAmount) < 3000) {
+      formErrors.ramAmount = 'not_enough_ram_for_new_account';
+      submitDisabled = true;
     }
 
-    const ramPrice = calculatePriceOfRam(ramAmount);
+    const decBaseBal = Decimal(globals.ram.base_balance);
+    const decQuoteBal = Decimal(globals.ram.quote_balance);
 
-    if (Decimal(ramPrice).plus(Decimal(delegatedResources)).greaterThan(EOSbalance)) {
+    const ramPrice = calculatePriceOfRam(decBaseBal, decQuoteBal, Decimal(ramAmount));
+
+    const decimalBalance = Decimal(EOSbalance);
+    const decimalDelegatedResources = Decimal(delegatedResources.split(' ')[0]);
+
+    if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
       if (delegatedResources > 2) {
-        errorsInForm.delegatedResources = 'not_enough_balance';
+        formErrors.delegatedResources = 'not_enough_balance';
       } else {
-        errorsInForm.ramAmount = 'not_enough_balance';
+        formErrors.ramAmount = 'not_enough_balance';
       }
+
+      submitDisabled = true;
     }
 
-    return errorsInForm;
+    return { formErrors, submitDisabled };
   }
 
   onBack = () => {
@@ -207,13 +250,13 @@ class ToolsFormCreateAccount extends Component<Props> {
               >
                 <Form.Group widths="equal">
                   <GlobalFormFieldAccount
-                    defaultValue={accountName}
+                    defaultValue={accountName || ''}
                     label={t('tools_form_create_account_account_name')}
                     name="accountName"
                     onChange={this.onChange}
                   />
                   <GlobalFormFieldKeyPublic
-                    defaultValue={publicKey}
+                    defaultValue={publicKey || ''}
                     label={t('tools_form_create_account_public_key')}
                     name="publicKey"
                     onChange={this.onChange}
@@ -221,13 +264,13 @@ class ToolsFormCreateAccount extends Component<Props> {
                 </Form.Group>
                 <Form.Group widths="equal">
                   <GlobalFormFieldRam
-                    defaultValue={ramAmount}
+                    defaultValue={ramAmount || ''}
                     label={t('tools_form_create_account_ram_amount')}
                     name="ramAmount"
                     onChange={this.onChange}
                   />
                   <GlobalFormFieldToken
-                    defaultValue={delegatedResources}
+                    defaultValue={delegatedResources && delegatedResources.split(' ')[0]}
                     label={t('tools_form_create_account_delegated_resources')}
                     name="delegatedResources"
                     onChange={this.onChange}
@@ -237,13 +280,11 @@ class ToolsFormCreateAccount extends Component<Props> {
                   errors={
                     formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
                       const error = this.state.formErrors[key];
-
                       if (error) {
                         errors.push(error);
                       }
-
                       return errors;
-                    })
+                    }, [])
                   }
                 />
                 <Divider />
@@ -266,10 +307,13 @@ class ToolsFormCreateAccount extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <ToolsFormCreateAccountConfirming
-              account={account}
+              accountName={accountName}
               balance={balance}
+              delegatedResources={delegatedResources}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
+              publicKey={publicKey}
+              ramAmount={ramAmount}
             />
           ) : ''}
       </Segment>

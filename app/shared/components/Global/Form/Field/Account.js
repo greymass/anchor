@@ -14,7 +14,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
   }
   onChange = debounce((e, { name, value }) => {
     const parsed = value.trim().toLowerCase();
-    const valid = !!(parsed.match(/^[a-z]{5,12}]?$/g));
+    const valid = !!(parsed.match(/^[a-z12345.]+$/g));
     this.setState({
       value: parsed
     }, () => {
