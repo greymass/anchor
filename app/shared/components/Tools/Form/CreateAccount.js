@@ -238,7 +238,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     return (
       <Segment
-        loading={system.STAKE === 'PENDING'}
+        loading={system.CREATEACCOUNT === 'PENDING'}
         style={{ minHeight: '100px' }}
       >
         {(shouldShowForm)
