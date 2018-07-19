@@ -1,8 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Button, Divider, Icon, Segment, Table, Header } from 'semantic-ui-react';
 
-import { Button, Divider, Icon, Segment, Table } from 'semantic-ui-react';
+import GlobalDataBytes from '../../../Global/Data/Bytes';
 
 class ToolsFormCreateAccountConfirming extends Component<Props> {
   onConfirm = () => {
@@ -25,6 +26,9 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
 
     return (
       <Segment padding="true" basic>
+        <Header>
+          {t('tools_create_account_confirming_header')}
+        </Header>
         <Table size="small" celled>
           <Table.Body>
             <Table.Row>
@@ -32,7 +36,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_create_account_confirming_title_one')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {`${delegatedResources} EOS`}
+                {accountName}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -40,7 +44,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_create_account_confirming_title_two')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {`${ramAmount} B`}
+                {delegatedResources}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -56,7 +60,9 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_create_account_confirming_title_four')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {accountName}
+                <GlobalDataBytes
+                  bytes={Number(ramAmount)}
+                />
               </Table.Cell>
             </Table.Row>
           </Table.Body>

@@ -6,7 +6,7 @@ import { Decimal } from 'decimal.js';
 import FormFieldRam from '../../../../Global/Form/Field/Ram';
 import calculatePriceOfRam from '../../../../helpers/calculatePriceOfRam';
 
-class WalletPanelFormRamBuyByAmount extends Component<Props> {
+class WalletPanelFormRamByAmount extends Component<Props> {
   constructor(props) {
     super(props);
 
@@ -84,4 +84,4 @@ class WalletPanelFormRamBuyByAmount extends Component<Props> {
   }
 }
 
-export default translate('ram')(WalletPanelFormRamBuyByAmount);
+export default translate('ram')(WalletPanelFormRamByAmount);

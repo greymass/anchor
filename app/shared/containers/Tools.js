@@ -30,6 +30,7 @@ import * as WalletsActions from '../actions/wallets';
 
 class ToolsContainer extends Component<Props> {
   props: Props;
+
   render() {
     const {
       settings,

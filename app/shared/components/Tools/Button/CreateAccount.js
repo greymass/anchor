@@ -12,7 +12,9 @@ class ToolsButtonCreateAccount extends Component<Props> {
     const {
       account,
       actions,
+      balance,
       blockExplorers,
+      globals,
       settings,
       system,
       t
@@ -32,6 +34,8 @@ class ToolsButtonCreateAccount extends Component<Props> {
           <ToolsFormCreateAccount
             account={account}
             actions={actions}
+            balance={balance}
+            globals={globals}
             key="CreateAccountForm"
             system={system}
           />
@@ -39,6 +43,7 @@ class ToolsButtonCreateAccount extends Component<Props> {
         icon="share square"
         title={t('tools_create_account_header')}
         settings={settings}
+        size="large"
         system={system}
       />
     );
