@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Button } from 'semantic-ui-react';
+import { Segment, Form, Divider, Button, Message } from 'semantic-ui-react';
 
 import GlobalFormFieldRam from '../../Global/Form/Field/Ram';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
@@ -18,6 +18,8 @@ type Props = {
   account: {},
   system: {}
 };
+
+const formAttributes = ['accountName', 'activeKey', 'ownerKey', 'delegatedBw', 'delegatedCpu', 'ramAmount'];
 
 class ToolsFormCreateAccount extends Component<Props> {
   props: Props;
@@ -109,28 +111,14 @@ class ToolsFormCreateAccount extends Component<Props> {
 
   allFieldsHaveValidFormat = () => {
     const {
-      accountName,
-      formErrors,
-      publicKey,
-      ramAmount,
-      delegatedResources
+      formErrors
     } = this.state;
 
-    if (!accountName || formErrors.accountName === 'invalid_accountName') {
-      return false;
-    }
-
-    if (!publicKey || formErrors.publicKey === 'invalid_publicKey') {
-      return false;
-    }
-
-    if (!ramAmount || formErrors.ramAmount === 'invalid_ramAmount') {
-      return false;
-    }
-
-    if (!delegatedResources || formErrors.delegatedResources === 'invalid_startingBalance') {
-      return false;
-    }
+    formAttributes.forEach((attribute) => {
+      if (!this.state[attribute] || formErrors[attribute] === `invalid_${attribute}`) {
+        return false;
+      }
+    });
 
     return true;
   }
@@ -142,7 +130,8 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
-      delegatedResources,
+      delegatedBw,
+      delegatedCpu,
       EOSbalance,
       ramAmount
     } = this.state;
@@ -150,16 +139,16 @@ class ToolsFormCreateAccount extends Component<Props> {
     const formErrors = errors;
     let submitDisabled = disabled;
 
-    formErrors.accountName = null;
-    formErrors.ramAmount = null;
-    formErrors.delegatedResources = null;
+    formAttributes.forEach((attribute) => {
+      formErrors[attribute] = null;
+    });
 
     if (false) {
       formErrors.accountName = 'account_name_not_available';
       submitDisabled = true;
     }
 
-    if (Number(ramAmount) < 3000) {
+    if (Number(ramAmount) < 3100) {
       formErrors.ramAmount = 'not_enough_ram_for_new_account';
       submitDisabled = true;
     }
@@ -170,11 +159,16 @@ class ToolsFormCreateAccount extends Component<Props> {
     const ramPrice = calculatePriceOfRam(decBaseBal, decQuoteBal, Decimal(ramAmount));
 
     const decimalBalance = Decimal(EOSbalance);
-    const decimalDelegatedResources = Decimal(delegatedResources.split(' ')[0]);
+    const decimalDelegatedBw = Decimal(delegatedBw.split(' ')[0]);
+    const decimalDelegatedCpu = Decimal(delegatedCpu.split(' ')[0]);
+
+    const decimalDelegatedResources = decimalDelegatedBw.plus(decimalDelegatedCpu);
 
     if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
-      if (delegatedResources > 2) {
-        formErrors.delegatedResources = 'not_enough_balance';
+      if (delegatedBw > 1) {
+        formErrors.delegatedBw = 'not_enough_balance';
+      } else if (delegatedCpu > 1) {
+        formErrors.delegatedCpu = 'not_enough_balance';
       } else {
         formErrors.ramAmount = 'not_enough_balance';
       }
@@ -206,17 +200,25 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
-      delegatedResources,
-      publicKey,
+      activeKey,
+      delegatedBw,
+      delegatedCpu,
+      ownerKey,
       ramAmount
     } = this.state;
 
-    createAccount(accountName, publicKey, ramAmount, delegatedResources);
+    createAccount(
+      accountName,
+      activeKey,
+      delegatedBw,
+      delegatedCpu,
+      ownerKey,
+      ramAmount
+    );
   }
 
   render() {
     const {
-      account,
       balance,
       onClose,
       system,
@@ -225,8 +227,10 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
-      delegatedResources,
-      publicKey,
+      activeKey,
+      delegatedBw,
+      delegatedCpu,
+      ownerKey,
       ramAmount,
       submitDisabled
     } = this.state;
@@ -249,30 +253,44 @@ class ToolsFormCreateAccount extends Component<Props> {
                 onSubmit={this.onSubmit}
               >
                 <Form.Group widths="equal">
+                  <GlobalFormFieldKeyPublic
+                    defaultValue={ownerKey || ''}
+                    label={t('tools_form_create_account_public_key')}
+                    name="ownerKey"
+                    onChange={this.onChange}
+                  />
+                  <GlobalFormFieldKeyPublic
+                    defaultValue={activeKey || ''}
+                    label={t('tools_form_create_account_public_key')}
+                    name="activeKey"
+                    onChange={this.onChange}
+                  />
+                </Form.Group>
+                <Form.Group widths="equal">
                   <GlobalFormFieldAccount
                     defaultValue={accountName || ''}
                     label={t('tools_form_create_account_account_name')}
                     name="accountName"
                     onChange={this.onChange}
                   />
-                  <GlobalFormFieldKeyPublic
-                    defaultValue={publicKey || ''}
-                    label={t('tools_form_create_account_public_key')}
-                    name="publicKey"
-                    onChange={this.onChange}
-                  />
-                </Form.Group>
-                <Form.Group widths="equal">
                   <GlobalFormFieldRam
                     defaultValue={ramAmount || ''}
                     label={t('tools_form_create_account_ram_amount')}
                     name="ramAmount"
                     onChange={this.onChange}
                   />
+                </Form.Group>
+                <Form.Group widths="equal">
                   <GlobalFormFieldToken
-                    defaultValue={delegatedResources && delegatedResources.split(' ')[0]}
-                    label={t('tools_form_create_account_delegated_resources')}
-                    name="delegatedResources"
+                    defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
+                    label={t('tools_form_create_account_delegated_bw')}
+                    name="delegatedBw"
+                    onChange={this.onChange}
+                  />
+                  <GlobalFormFieldToken
+                    defaultValue={delegatedCpu && delegatedCpu.split(' ')[0]}
+                    label={t('tools_form_create_account_delegated_cpu')}
+                    name="delegatedCpu"
                     onChange={this.onChange}
                   />
                 </Form.Group>
@@ -287,6 +305,12 @@ class ToolsFormCreateAccount extends Component<Props> {
                     }, [])
                   }
                 />
+                {(accountName && accountName.length !== 12)
+                  ? (
+                    <Message warning>
+                      {t('tools_form_create_account_accountname_warning')}
+                    </Message>
+                  ) : ''}
                 <Divider />
                 <Button
                   content={t('tools_form_create_account_cancel')}
@@ -308,11 +332,12 @@ class ToolsFormCreateAccount extends Component<Props> {
           ? (
             <ToolsFormCreateAccountConfirming
               accountName={accountName}
-              balance={balance}
-              delegatedResources={delegatedResources}
+              activeKey={activeKey}
+              delegatedBw={delegatedBw}
+              delegatedCpu={delegatedCpu}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
-              publicKey={publicKey}
+              ownerKey={ownerKey}
               ramAmount={ramAmount}
             />
           ) : ''}

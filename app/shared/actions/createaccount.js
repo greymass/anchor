@@ -6,7 +6,14 @@ import eos from './helpers/eos';
 
 import { delegatebwParams } from './system/delegatebw';
 
-export function createAccount(accountName, publicKey, ramAmount, delegatedResources) {
+export function createAccount(
+  accountName,
+  activeKey,
+  delegatedBw,
+  delegatedCpu,
+  ownerKey,
+  ramAmount
+) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -21,8 +28,8 @@ export function createAccount(accountName, publicKey, ramAmount, delegatedResour
       tr.newaccount({
         creator: currentAccount,
         name: accountName,
-        owner: publicKey,
-        active: publicKey
+        owner: ownerKey,
+        active: activeKey
       });
 
       tr.buyrambytes({
@@ -31,13 +38,11 @@ export function createAccount(accountName, publicKey, ramAmount, delegatedResour
         bytes: Number(ramAmount)
       });
 
-      const halfOfDelegatedResources = Decimal(delegatedResources.split(' ')[0]).dividedBy(2);
-
       tr.delegatebw(delegatebwParams(
         currentAccount,
         accountName,
-        halfOfDelegatedResources,
-        halfOfDelegatedResources
+        delegatedBw.split(' ')[0],
+        delegatedCpu.split(' ')[0]
       ));
     }, {
       broadcast: connection.broadcast,
