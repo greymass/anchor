@@ -30,9 +30,13 @@ export default class GlobalFormFieldKeyPublic extends Component<Props> {
       icon,
       label,
       loading,
-      name,
-      value
+      name
     } = this.props;
+
+    const {
+      value
+    } = this.state;
+
     return (
       <Form.Field
         autoFocus={autoFocus}

@@ -17,9 +17,11 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
   render() {
     const {
       accountName,
-      delegatedResources,
+      activeKey,
+      delegatedBw,
+      delegatedCpu,
       onBack,
-      publicKey,
+      ownerKey,
       ramAmount,
       t
     } = this.props;
@@ -44,7 +46,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_form_create_account_confirming_title_two')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {delegatedResources}
+                {delegatedBw}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -52,12 +54,28 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_form_create_account_confirming_title_three')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {publicKey}
+                {delegatedCpu}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
                 {t('tools_form_create_account_confirming_title_four')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                {ownerKey}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={8}>
+                {t('tools_form_create_account_confirming_title_five')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                {activeKey}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={8}>
+                {t('tools_form_create_account_confirming_title_six')}
               </Table.Cell>
               <Table.Cell width={8}>
                 <GlobalDataBytes
