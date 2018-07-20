@@ -7,7 +7,7 @@
   "error_ram_has_to_be_over_minimum_amount": "A minimum of 3 bytes of RAM is required per transaction.",
   "error_ram_not_valid_amount": "Invalid RAM amount. A valid amount should be a whole number with no decimals.",
   "error_ram_using_more_than_usage": "Insufficient available RAM balance to complete transaction.",
-  "error_not_valid_account_name": "This is not a valid account name",
+  "error_not_valid_account_name": "See pole sobiv kontonimi",
   "global_account_import_private_description": "To import additional accounts, simply enter the private key. The app will convert it to a public key and lookup all accounts with relevant permissions.",
   "global_account_import_private_key": "Private Key (51 characters and starts with the number 5)",
   "global_account_import_select_accounts": "Select one or more accounts to import with this private key",
