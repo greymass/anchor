@@ -13,9 +13,9 @@
   "transfer_label_quantity": "数量",
   "transfer_label_token_and_quantity": "トークン選択 + 数量",
   "transfer_label_memo": "転送メモ",
-  "transfer_label_send": "This is where you can send coins to another account. Fill in the below form and press on confirm.",
-  "transfer_label_receive": "To receive coins on your account, please follow the instuctions below.",
+  "transfer_label_send": "ここで他のアカウントにコインを送ることができます。以下のフォームに記入し、確認ボタンを押して下さい。",
+  "transfer_label_receive": "あなたのアカウントでコインを受け取るには、以下の指示に従って下さい。",
   "transfer_receive_modal_title": "コインを受け取る",
-  "transfer_receive_body": "To receive Coins simply give the following account name to the sender.",
+  "transfer_receive_body": "コインを受け取るには、単に以下のアカウント名を送信者に教えて下さい。",
   "transfer_close": "閉じる"
 }
