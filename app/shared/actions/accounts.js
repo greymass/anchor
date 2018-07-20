@@ -50,6 +50,43 @@ export function claimUnstaked(owner) {
   };
 }
 
+export function checkAccountAvailability(account = '') {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_ACCOUNT_AVAILABLE_PENDING,
+      payload: { account_name: account }
+    });
+    const {
+      connection,
+      settings
+    } = getState();
+
+    if (account && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getAccount(account).then(() => dispatch({
+        type: types.SYSTEM_ACCOUNT_AVAILABLE_FAILURE,
+        payload: { account_name: account }
+      })).catch((err) => {
+        if (err.status === 500) {
+          dispatch({
+            type: types.SYSTEM_ACCOUNT_AVAILABLE_SUCCESS,
+            payload: { account_name: account }
+          });
+        } else {
+          return dispatch({
+            type: types.SYSTEM_ACCOUNT_AVAILABLE_FAILURE,
+            payload: { err },
+          });
+        }
+      });
+      return;
+    }
+    dispatch({
+      type: types.GET_ACCOUNT_AVAILABLE_FAILURE,
+      payload: { account_name: account },
+    });
+  };
+}
+
 export function getAccount(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -272,6 +309,7 @@ export function clearAccountByKey() {
 }
 
 export default {
+  checkAccountAvailability,
   clearAccountByKey,
   clearAccountCache,
   getAccount,

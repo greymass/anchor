@@ -9,6 +9,7 @@
   "error_ram_using_more_than_usage": "Insufficient available RAM balance to complete transaction.",
   "error_not_enough_ram_for_new_account": "A minimum of 3100 Bytes of RAM is required to create a new account.",
   "error_not_valid_account_name": "This is not a valid account name",
+  "error_account_name_not_available": "This account name has already been taken.",
   "error_invalid_accountName": "Invalid Account Name, make sure it is made of 1 to 12 letters.",
   "error_invalid_delegatedBw": "Invalid Bandwidth Amount, eg. '12.121'.",
   "error_invalid_delegatedCpu": "Invalid CPU Amount, eg. '12.121'.",
