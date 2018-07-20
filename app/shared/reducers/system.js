@@ -15,6 +15,7 @@ export default function system(state = {}, action) {
 
   const [, requestName, requestState] = matches;
 
+  const accountField = `${requestName}_LAST_ACCOUNT`;
   const errField = `${requestName}_LAST_ERROR`;
   const txField = `${requestName}_LAST_TRANSACTION`;
 
@@ -26,6 +27,10 @@ export default function system(state = {}, action) {
   };
 
   if (action.payload) {
+    // Attach the account name associated to request when given
+    if (action.payload.account_name) {
+      newState[accountField] = action.payload.account_name;
+    }
     // Attempt to process any errors returned
     if (action.payload.err) {
       try {
