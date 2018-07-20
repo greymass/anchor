@@ -1,9 +1,9 @@
 {
-  "about_opensource_title": "This application is open source",
-  "about_opensource_message": " We welcome contributions to this application. If you are interested, please join us on Github at",
+  "about_opensource_title": "See rakendus on avatud lähtekoodiga",
+  "about_opensource_message": " Kui soovid kaasa aidata selle rakenduse arendamisele, palun liitu meiega Github'is",
   "about_opensource_link": "https://github.com/greymass/eos-voter",
-  "about_message_1": "eos-voter is a standalone desktop application that connects directly to the EOS blockchain through the API endpoint of your choice.",
-  "about_message_2": "Your keys never leave the application itself and are only ever stored encrypted, providing the highest level of security a hot wallet can offer.",
+  "about_message_1": "eos-voter on eraldiseisev töölauarakendus, mis ühendub otse EOS plokkahela külge sinu valitud API lõpp-punkti kaudu.",
+  "about_message_2": "Sinu võtmed ei lahku kunagi rakendusest. Neid salvestatakse alati krüpteeritult, pakkudes kõrgeimat turvalisuse taset, mida kuum rahakott võib pakkuda.",
   "about_more": "Please visit us at https://greymass.com if you would like to learn more.",
   "about_issues": "If you have encounter problems with the application itself, please file an issue on github below:",
   "about_issues_link": "https://github.com/greymass/eos-voter/issues",
