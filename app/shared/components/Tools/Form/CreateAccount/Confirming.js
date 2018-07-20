@@ -35,31 +35,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
           <Table.Body>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_confirming_title_one')}
-              </Table.Cell>
-              <Table.Cell width={8}>
-                {accountName}
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell width={8}>
-                {t('tools_form_create_account_confirming_title_two')}
-              </Table.Cell>
-              <Table.Cell width={8}>
-                {delegatedBw}
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell width={8}>
-                {t('tools_form_create_account_confirming_title_three')}
-              </Table.Cell>
-              <Table.Cell width={8}>
-                {delegatedCpu}
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell width={8}>
-                {t('tools_form_create_account_confirming_title_four')}
+                {t('tools_form_create_account_owner_key')}
               </Table.Cell>
               <Table.Cell width={8}>
                 {ownerKey}
@@ -67,7 +43,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_confirming_title_five')}
+                {t('tools_form_create_account_active_key')}
               </Table.Cell>
               <Table.Cell width={8}>
                 {activeKey}
@@ -75,12 +51,36 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_confirming_title_six')}
+                {t('tools_form_create_account_account_name')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                {accountName}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={8}>
+                {t('tools_form_create_account_ram_amount')}
               </Table.Cell>
               <Table.Cell width={8}>
                 <GlobalDataBytes
                   bytes={Number(ramAmount)}
                 />
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={8}>
+                {t('tools_form_create_account_delegated_bw')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                {delegatedBw}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell width={8}>
+                {t('tools_form_create_account_delegated_cpu')}
+              </Table.Cell>
+              <Table.Cell width={8}>
+                {delegatedCpu}
               </Table.Cell>
             </Table.Row>
           </Table.Body>
