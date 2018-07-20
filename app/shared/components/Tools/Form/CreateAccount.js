@@ -88,6 +88,25 @@ class ToolsFormCreateAccount extends Component<Props> {
         formErrors
       } = this.state;
 
+      const {
+        accountName
+      } = this.state;
+
+      const {
+        actions,
+        system
+      } = this.props;
+
+      const {
+        checkAccountAvailability
+      } = actions;
+
+      if (name === 'accountName' &&
+          accountName.length === 12 &&
+          system.ACCOUNT_AVAILABLE_LAST_ACCOUNT !== accountName) {
+        checkAccountAvailability(accountName);
+      }
+
       let submitDisabled = false;
 
       if (!valid) {
@@ -114,18 +133,21 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors
     } = this.state;
 
+    let validFormat = true;
+
     formAttributes.forEach((attribute) => {
       if (!this.state[attribute] || formErrors[attribute] === `invalid_${attribute}`) {
-        return false;
+        validFormat = false;
       }
     });
 
-    return true;
+    return validFormat;
   }
 
   errorsInForm = (errors, disabled) => {
     const {
-      globals
+      globals,
+      system
     } = this.props;
 
     const {
@@ -142,11 +164,6 @@ class ToolsFormCreateAccount extends Component<Props> {
     formAttributes.forEach((attribute) => {
       formErrors[attribute] = null;
     });
-
-    if (false) {
-      formErrors.accountName = 'account_name_not_available';
-      submitDisabled = true;
-    }
 
     if (Number(ramAmount) < 3100) {
       formErrors.ramAmount = 'not_enough_ram_for_new_account';
@@ -231,14 +248,30 @@ class ToolsFormCreateAccount extends Component<Props> {
       delegatedBw,
       delegatedCpu,
       ownerKey,
-      ramAmount,
+      ramAmount
+    } = this.state;
+
+    let {
+      formErrors,
       submitDisabled
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
 
-    const formErrorKeys = Object.keys(this.state.formErrors);
+    if (accountName &&
+        accountName.length === 12 &&
+        system.ACCOUNT_AVAILABLE === 'FAILURE' &&
+        system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === accountName) {
+      formErrors.accountName = 'account_name_not_available';
+      submitDisabled = true;
+    }
+
+    if (system.ACCOUNT_AVAILABLE === 'FAILURE') {
+      submitDisabled = true;
+    }
+
+    const formErrorKeys = Object.keys(formErrors);
 
     return (
       <Segment
@@ -255,13 +288,13 @@ class ToolsFormCreateAccount extends Component<Props> {
                 <Form.Group widths="equal">
                   <GlobalFormFieldKeyPublic
                     defaultValue={ownerKey || ''}
-                    label={t('tools_form_create_account_public_key')}
+                    label={t('tools_form_create_account_owner_key')}
                     name="ownerKey"
                     onChange={this.onChange}
                   />
                   <GlobalFormFieldKeyPublic
                     defaultValue={activeKey || ''}
-                    label={t('tools_form_create_account_public_key')}
+                    label={t('tools_form_create_account_active_key')}
                     name="activeKey"
                     onChange={this.onChange}
                   />
@@ -307,8 +340,8 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 {(accountName && accountName.length !== 12)
                   ? (
-                    <Message warning>
-                      {t('tools_form_create_account_accountname_warning')}
+                    <Message info>
+                      {t('tools_form_create_account_account_name_warning')}
                     </Message>
                   ) : ''}
                 <Divider />
