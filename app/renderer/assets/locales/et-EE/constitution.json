@@ -1,7 +1,7 @@
 {
-  "constitution_accept": "I accept these terms",
-  "constitution_title": "EOS Governance - Constitution",
-  "constitution_preface": "This Constitution is a multi-party contract entered into by the Members by virtue of their use of this blockchain.",
+  "constitution_accept": "Nõustun tingimustega",
+  "constitution_title": "EOS Valitsemine - Põhiseadus",
+  "constitution_preface": "See Põhiseadus on mitme osapoolega leping millega Liikmed on liitunud selle kaudu, et kasutavad seda plokiahelat.",
   "constitution_article_01_title": "Article I - No Initiation of Violence",
   "constitution_article_01_body": "Members shall not initiate violence or the threat of violence against another Member. Lawful prosecution of crimes with the goal of preserving life, liberty and property does not constitute initiation of violence.",
   "constitution_article_02_title": "Article II - No Perjury",
