@@ -2,12 +2,17 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
+import { Header, Segment, Divider } from 'semantic-ui-react';
 
-import ToolsButtonCreateAccount from './Button/CreateAccount';
+import GlobalTransactionHandler from '../Global/Transaction/Handler';
+import ToolsFormCreateAccount from './Form/CreateAccount';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
 
 class ToolsCreateAccount extends Component<Props> {
+  onClose = () => {
+    this.props.actions.clearSystemState();
+  }
+
   render() {
     const {
       accounts,
@@ -25,41 +30,51 @@ class ToolsCreateAccount extends Component<Props> {
 
     const account = accounts[settings.account];
 
+    const transaction = system && system.CREATEACCOUNT_LAST_TRANSACTION;
+
     return (
-      <Grid centered>
-        <Grid.Column width={8} textAlign="center">
-          {((keys && keys.key) || settings.walletMode === 'watch') ?
-          (
-            <div>
+      <div>
+        {((keys && keys.key) || settings.walletMode === 'watch') ?
+        (
+          <Segment basic>
+            <div style={{ textAlign: 'center' }}>
               <Header>
                 {t('tools_create_account_header')}
               </Header>
-              <Segment basic>
-                <p>
-                  {t('tools_create_account_text')}
-                </p>
-                <Divider />
-                <ToolsButtonCreateAccount
+              <p>
+                {t('tools_create_account_text')}
+              </p>
+            </div>
+            <Divider />
+            <GlobalTransactionHandler
+              actionName="CREATEACCOUNT"
+              blockExplorers={blockExplorers}
+              content={(
+                <ToolsFormCreateAccount
                   account={account}
                   actions={actions}
                   balance={balances[settings.account]}
-                  blockExplorers={blockExplorers}
                   globals={globals}
-                  settings={settings}
+                  hideCancel
+                  key="CreateAccountForm"
                   system={system}
                 />
-              </Segment>
-            </div>
-          ) : (
-            <WalletPanelLocked
-              actions={actions}
+              )}
+              onClose={this.onClose}
               settings={settings}
-              validate={validate}
-              wallet={wallet}
+              system={system}
+              transaction={transaction}
             />
-          )}
-        </Grid.Column>
-      </Grid>
+          </Segment>
+        ) : (
+          <WalletPanelLocked
+            actions={actions}
+            settings={settings}
+            validate={validate}
+            wallet={wallet}
+          />
+        )}
+      </div>
     );
   }
 }
