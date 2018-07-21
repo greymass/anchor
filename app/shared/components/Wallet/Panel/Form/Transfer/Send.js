@@ -143,6 +143,7 @@ class WalletPanelFormTransfer extends Component<Props> {
               balances={balances}
               from={from}
               memo={memo}
+              onClose={onClose}
               onConfirm={this.onConfirm}
               quantity={quantity}
               symbol={symbol}
