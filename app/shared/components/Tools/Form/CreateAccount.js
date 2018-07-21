@@ -15,7 +15,7 @@ import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 
 type Props = {
   actions: {},
-  account: {},
+  globals: {},
   system: {}
 };
 
@@ -85,7 +85,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       [name]: value
     }, () => {
       let {
-        formErrors
+        formErrors,
+        ramPrice
       } = this.state;
 
       const {
@@ -94,6 +95,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
       const {
         actions,
+        globals,
         system
       } = this.props;
 
@@ -105,6 +107,13 @@ class ToolsFormCreateAccount extends Component<Props> {
           accountName.length === 12 &&
           system.ACCOUNT_AVAILABLE_LAST_ACCOUNT !== accountName) {
         checkAccountAvailability(accountName);
+      }
+
+      if (name === 'ramAmount') {
+        const decBaseBal = Decimal(globals.ram.base_balance);
+        const decQuoteBal = Decimal(globals.ram.quote_balance);
+
+        ramPrice = calculatePriceOfRam(decBaseBal, decQuoteBal, Decimal(Number(value)));
       }
 
       let submitDisabled = false;
@@ -123,6 +132,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
       this.setState({
         formErrors,
+        ramPrice,
         submitDisabled
       });
     });
@@ -146,16 +156,11 @@ class ToolsFormCreateAccount extends Component<Props> {
 
   errorsInForm = (errors, disabled) => {
     const {
-      globals,
-      system
-    } = this.props;
-
-    const {
-      accountName,
       delegatedBw,
       delegatedCpu,
       EOSbalance,
-      ramAmount
+      ramAmount,
+      ramPrice
     } = this.state;
 
     const formErrors = errors;
@@ -170,10 +175,15 @@ class ToolsFormCreateAccount extends Component<Props> {
       submitDisabled = true;
     }
 
-    const decBaseBal = Decimal(globals.ram.base_balance);
-    const decQuoteBal = Decimal(globals.ram.quote_balance);
+    if (parseFloat(delegatedCpu) === 0) {
+      formErrors.delegatedCpu = 'not_enough_delegated_cpu_for_new_account';
+      submitDisabled = true;
+    }
 
-    const ramPrice = calculatePriceOfRam(decBaseBal, decQuoteBal, Decimal(ramAmount));
+    if (parseFloat(delegatedBw) === 0) {
+      formErrors.delegatedBw = 'not_enough_delegated_bw_for_new_account';
+      submitDisabled = true;
+    }
 
     const decimalBalance = Decimal(EOSbalance);
     const decimalDelegatedBw = Decimal(delegatedBw.split(' ')[0]);
@@ -236,7 +246,6 @@ class ToolsFormCreateAccount extends Component<Props> {
 
   render() {
     const {
-      balance,
       onClose,
       system,
       t
@@ -248,7 +257,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       delegatedBw,
       delegatedCpu,
       ownerKey,
-      ramAmount
+      ramAmount,
+      ramPrice
     } = this.state;
 
     let {
@@ -272,6 +282,25 @@ class ToolsFormCreateAccount extends Component<Props> {
     }
 
     const formErrorKeys = Object.keys(formErrors);
+
+    const decimalDelegatedBw = delegatedBw && Decimal(delegatedBw.split(' ')[0]);
+    const decimalDelegatedCpu = delegatedCpu && Decimal(delegatedCpu.split(' ')[0]);
+
+    let totalCost;
+
+    if (decimalDelegatedBw && decimalDelegatedCpu && ramAmount) {
+      totalCost = decimalDelegatedBw.plus(decimalDelegatedCpu).plus(ramPrice);
+    }
+
+    const shouldShowAccountNameWarning = accountName && accountName.length !== 12
+
+    const shouldShowDelegatedResourceWarning =
+      (decimalDelegatedBw &&
+        decimalDelegatedBw.lessThan(1) &&
+        decimalDelegatedBw.greaterThan(0)) ||
+      (decimalDelegatedCpu &&
+        decimalDelegatedCpu.lessThan(1) &&
+        decimalDelegatedCpu.greaterThan(0));
 
     return (
       <Segment
@@ -338,10 +367,17 @@ class ToolsFormCreateAccount extends Component<Props> {
                     }, [])
                   }
                 />
-                {(accountName && accountName.length !== 12)
+                {(shouldShowAccountNameWarning)
                   ? (
                     <Message info>
                       {t('tools_form_create_account_account_name_warning')}
+                    </Message>
+                  ) : ''}
+
+                {(shouldShowDelegatedResourceWarning)
+                  ? (
+                    <Message info>
+                      {t('tools_form_create_account_delegated_resources_warning')}
                     </Message>
                   ) : ''}
                 <Divider />
@@ -372,6 +408,7 @@ class ToolsFormCreateAccount extends Component<Props> {
               onConfirm={this.onConfirm}
               ownerKey={ownerKey}
               ramAmount={ramAmount}
+              totalCost={totalCost}
             />
           ) : ''}
       </Segment>
