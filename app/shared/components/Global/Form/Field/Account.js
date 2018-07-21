@@ -52,7 +52,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
         name={name}
         onChange={this.onChange}
         ref={ref => { this.input = ref; }}
-        defaultValue={value}
+        value={value}
         width={width}
       />
     );
