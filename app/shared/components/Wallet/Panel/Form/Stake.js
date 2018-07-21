@@ -181,7 +181,6 @@ class WalletPanelFormStake extends Component<Props> {
     return (
       <Segment
         loading={system.STAKE === 'PENDING'}
-        style={{ minHeight: '100px' }}
       >
         {(shouldShowForm)
           ? (
