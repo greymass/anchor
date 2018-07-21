@@ -27,7 +27,7 @@ class ToolsCreateAccount extends Component<Props> {
 
     return (
       <Grid centered>
-        <Grid.Column width={8} style={{ textAlign: 'center' }} >
+        <Grid.Column width={8} textAlign="center">
           {((keys && keys.key) || settings.walletMode === 'watch') ?
           (
             <div>

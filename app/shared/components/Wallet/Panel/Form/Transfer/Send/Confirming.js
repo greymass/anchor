@@ -21,6 +21,7 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
       balances,
       from,
       memo,
+      onClose,
       quantity,
       symbol,
       to,
@@ -84,7 +85,7 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
           onClick={this.onConfirm}
         />
         <Button
-          onClick={this.onCancel}
+          onClick={onClose}
         >
           <Icon name="x" /> {t('cancel')}
         </Button>

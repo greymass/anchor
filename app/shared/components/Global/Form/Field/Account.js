@@ -9,10 +9,10 @@ export default class GlobalFormFieldAccount extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.defaultValue
+      value: props.value
     };
   }
-  onChange = debounce((e, { name, value }) => {
+  onChange = (e, { name, value }) => {
     const parsed = value.trim().toLowerCase();
     const valid = !!(parsed.match(/^[a-z12345.]+$/g));
     this.setState({
@@ -24,7 +24,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
         valid
       });
     });
-  }, 300)
+  }
   reset = () => this.setState({ value: '' });
   render() {
     const {
