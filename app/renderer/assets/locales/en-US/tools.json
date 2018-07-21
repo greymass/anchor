@@ -14,7 +14,7 @@
   "tools_form_create_account_ram_amount": "RAM Amount",
   "tools_form_create_account_account_name_warning": "Only account names that you have previously bid will be allowed to have less than 12 characters.",
   "tools_form_create_account_delegated_resources_warning": "We recommend delegating at least 1.0000 EOS to both CPU and Bandwidth to ensure the user is given a proper share of the network's capacity.",
-  "tools_create_account_text": "This is where you can create an account for a friend. This will involve registering that user's private key, buying them some RAM and delegating CPU and Bandwidth resources to them.",
+  "tools_create_account_text": "This is where you can create an account for a friend.",
   "tools_change_block_explorer": "Change Block Explorer",
   "tools_change_language": "Change language",
   "tools_change_node": "Change API node",
