@@ -292,7 +292,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       totalCost = decimalDelegatedBw.plus(decimalDelegatedCpu).plus(ramPrice);
     }
 
-    const shouldShowAccountNameWarning = accountName && accountName.length !== 12
+    const shouldShowAccountNameWarning = accountName && accountName.length !== 12;
 
     const shouldShowDelegatedResourceWarning =
       (decimalDelegatedBw &&
@@ -305,7 +305,6 @@ class ToolsFormCreateAccount extends Component<Props> {
     return (
       <Segment
         loading={system.CREATEACCOUNT === 'PENDING'}
-        style={{ minHeight: '100px' }}
       >
         {(shouldShowForm)
           ? (
@@ -330,7 +329,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                 </Form.Group>
                 <Form.Group widths="equal">
                   <GlobalFormFieldAccount
-                    defaultValue={accountName || ''}
+                    value={accountName || ''}
                     label={t('tools_form_create_account_account_name')}
                     name="accountName"
                     onChange={this.onChange}

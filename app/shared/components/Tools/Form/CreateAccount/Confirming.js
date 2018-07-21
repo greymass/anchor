@@ -29,7 +29,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
 
     return (
       <Segment padding="true" basic>
-        <Header style={{ textAlign: 'center' }}>
+        <Header textAlign="center">
           {`${t('tools_form_create_account_confirming_header')} ${totalCost.toFixed(4)} EOS.`}
         </Header>
         <Table size="small" celled>
