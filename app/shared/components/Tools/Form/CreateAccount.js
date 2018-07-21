@@ -95,17 +95,14 @@ class ToolsFormCreateAccount extends Component<Props> {
 
       const {
         actions,
-        globals,
-        system
+        globals
       } = this.props;
 
       const {
         checkAccountAvailability
       } = actions;
 
-      if (name === 'accountName' &&
-          accountName.length === 12 &&
-          system.ACCOUNT_AVAILABLE_LAST_ACCOUNT !== accountName) {
+      if (name === 'accountName' && accountName.length !== 0) {
         checkAccountAvailability(accountName);
       }
 
@@ -271,7 +268,7 @@ class ToolsFormCreateAccount extends Component<Props> {
     const shouldShowForm = !shouldShowConfirm;
 
     if (accountName &&
-        accountName.length === 12 &&
+        accountName.length !== 0 &&
         system.ACCOUNT_AVAILABLE === 'FAILURE' &&
         system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === accountName) {
       formErrors.accountName = 'account_name_not_available';
