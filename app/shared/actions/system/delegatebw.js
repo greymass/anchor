@@ -28,8 +28,8 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
 }
 
 export function delegatebwParams(delegator, receiver, netAmount, cpuAmount) {
-  const stakeNetAmount = netAmount || 0;
-  const stakeCpuAmount = cpuAmount || 0;
+  const stakeNetAmount = parseFloat(netAmount) || 0;
+  const stakeCpuAmount = parseFloat(cpuAmount) || 0;
 
   return {
     from: delegator,

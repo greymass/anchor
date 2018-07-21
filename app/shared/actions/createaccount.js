@@ -24,7 +24,7 @@ export function createAccount(
 
     dispatch({ type: types.SYSTEM_CREATEACCOUNT_PENDING });
 
-    return eos(connection).transaction(tr => {
+    return eos(connection, true).transaction(tr => {
       tr.newaccount({
         creator: currentAccount,
         name: accountName,
