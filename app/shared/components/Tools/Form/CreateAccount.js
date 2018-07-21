@@ -246,6 +246,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
   render() {
     const {
+      hideCancel,
       onClose,
       system,
       t
@@ -313,48 +314,42 @@ class ToolsFormCreateAccount extends Component<Props> {
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
-                <Form.Group widths="equal">
-                  <GlobalFormFieldKeyPublic
-                    defaultValue={ownerKey || ''}
-                    label={t('tools_form_create_account_owner_key')}
-                    name="ownerKey"
-                    onChange={this.onChange}
-                  />
-                  <GlobalFormFieldKeyPublic
-                    defaultValue={activeKey || ''}
-                    label={t('tools_form_create_account_active_key')}
-                    name="activeKey"
-                    onChange={this.onChange}
-                  />
-                </Form.Group>
-                <Form.Group widths="equal">
-                  <GlobalFormFieldAccount
-                    value={accountName || ''}
-                    label={t('tools_form_create_account_account_name')}
-                    name="accountName"
-                    onChange={this.onChange}
-                  />
-                  <GlobalFormFieldRam
-                    defaultValue={ramAmount || ''}
-                    label={t('tools_form_create_account_ram_amount')}
-                    name="ramAmount"
-                    onChange={this.onChange}
-                  />
-                </Form.Group>
-                <Form.Group widths="equal">
-                  <GlobalFormFieldToken
-                    defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
-                    label={t('tools_form_create_account_delegated_bw')}
-                    name="delegatedBw"
-                    onChange={this.onChange}
-                  />
-                  <GlobalFormFieldToken
-                    defaultValue={delegatedCpu && delegatedCpu.split(' ')[0]}
-                    label={t('tools_form_create_account_delegated_cpu')}
-                    name="delegatedCpu"
-                    onChange={this.onChange}
-                  />
-                </Form.Group>
+                <GlobalFormFieldKeyPublic
+                  defaultValue={ownerKey || ''}
+                  label={t('tools_form_create_account_owner_key')}
+                  name="ownerKey"
+                  onChange={this.onChange}
+                />
+                <GlobalFormFieldKeyPublic
+                  defaultValue={activeKey || ''}
+                  label={t('tools_form_create_account_active_key')}
+                  name="activeKey"
+                  onChange={this.onChange}
+                />
+                <GlobalFormFieldAccount
+                  value={accountName || ''}
+                  label={t('tools_form_create_account_account_name')}
+                  name="accountName"
+                  onChange={this.onChange}
+                />
+                <GlobalFormFieldRam
+                  defaultValue={ramAmount || ''}
+                  label={t('tools_form_create_account_ram_amount')}
+                  name="ramAmount"
+                  onChange={this.onChange}
+                />
+                <GlobalFormFieldToken
+                  defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
+                  label={t('tools_form_create_account_delegated_bw')}
+                  name="delegatedBw"
+                  onChange={this.onChange}
+                />
+                <GlobalFormFieldToken
+                  defaultValue={delegatedCpu && delegatedCpu.split(' ')[0]}
+                  label={t('tools_form_create_account_delegated_cpu')}
+                  name="delegatedCpu"
+                  onChange={this.onChange}
+                />
                 <FormMessageError
                   errors={
                     formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
@@ -380,18 +375,24 @@ class ToolsFormCreateAccount extends Component<Props> {
                     </Message>
                   ) : ''}
                 <Divider />
-                <Button
-                  content={t('tools_form_create_account_cancel')}
-                  color="grey"
-                  onClick={onClose}
-                />
-                <Button
-                  content={t('tools_form_create_account_button')}
-                  color="green"
-                  disabled={submitDisabled}
-                  floated="right"
-                  primary
-                />
+                <div style={{ height: '35px' }}>
+                  {(!hideCancel)
+                    ? (
+                      <Button
+                        content={t('tools_form_create_account_cancel')}
+                        color="grey"
+                        onClick={onClose}
+                      />
+                    ) : ''}
+
+                  <Button
+                    content={t('tools_form_create_account_button')}
+                    color="green"
+                    disabled={submitDisabled}
+                    floated="right"
+                    primary
+                  />
+                </div>
               </Form>
             </div>
           ) : ''}
