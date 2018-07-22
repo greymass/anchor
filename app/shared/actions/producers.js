@@ -93,6 +93,42 @@ export function getProducers(previous = false) {
   };
 }
 
+export function getProducerInfo(producer) {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_PRODUCERJSON_PENDING
+    });
+    const { connection } = getState();
+    const query = {
+      json: true,
+      code: 'producerjson',
+      scope: 'producerjson',
+      table: 'producerjson',
+      limit: 1,
+      table_key: 'owner',
+      lower_bound: producer
+    };
+    eos(connection).getTableRows(query).then((results) => {
+      const result = results.rows[0];
+      // const list = sortBy(data, 'symbol');
+      // const tokens = uniqWith(list, isEqual);
+      return dispatch({
+        type: types.SYSTEM_PRODUCERJSON_SUCCESS,
+        payload: {
+          owner: result.owner,
+          json: JSON.parse(result.value)
+        }
+      });
+    }).catch((err) => dispatch({
+      type: types.SYSTEM_PRODUCERJSON_FAILURE,
+      payload: { err },
+    }));
+  };
+}
+
+
+
 export default {
-  getProducers
+  getProducers,
+  getProducerInfo
 };
