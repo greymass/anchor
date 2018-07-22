@@ -35,11 +35,11 @@
   "constitution_article_16_title": "Artikkel XVI - Arendaja Vastutus",
   "constitution_article_16_body": "Liikmed lepivad kokku mitte hoida tarkvaraarendajad vastutavatena tahtmatute vigade eest, mis tehti lepinguliste kavatsuste väljendamisel, olenemata sellest kas nimetatud vead olid või ei olnud tingitud hooletusest.",
   "constitution_article_17_title": "Artikkel XVII - Kaalutlemine",
-  "constitution_article_17_body": "All rights and obligations under this Constitution are mutual and reciprocal and of equally significant value and cost to all parties.",
-  "constitution_article_18_title": "Article XVIII - Acceptance",
-  "constitution_article_18_body": "A contract is deemed accepted when a member signs a transaction which incorporates a TAPOS proof of a block whose implied state incorporates an ABI of said contract and said transaction is incorporated into the blockchain.",
-  "constitution_article_19_title": "Article XIX - Counterparts",
-  "constitution_article_19_body": "This Constitution may be executed in any number of counterparts, each of which when executed and delivered shall constitute a duplicate original, but all counterparts together shall constitute a single agreement.",
-  "constitution_article_20_title": "Article XX - Interim Constitution",
+  "constitution_article_17_body": "Kõik õigused ja kohustused selle Põhiseaduse kohaselt on vastastikused ja võrdselt olulise väärtuse ja hinnaga kõigile osapooltele.",
+  "constitution_article_18_title": "Artikkel XVIII - Vastuvõtmine",
+  "constitution_article_18_body": "Leping loetakse heakskiidetuks, kui liige allkirjastab tehingu, mis lisab TAPOS ploki tõendit, mille eeldatud olek kehastab nimetatud Lepingut ja antud tehing lisatakse plokiahelasse.",
+  "constitution_article_19_title": "Artikkel XIX - Osapooled",
+  "constitution_article_19_body": "Konstitutsiooni võib täita ükskõik mitme osapoolega, kus iga osapool moodustab duplitseeritud originaali, kuid kõik osapooled koos moodustavad ühe lepingu.",
+  "constitution_article_20_title": "Artikkel XX - Ajutine Põhiseadus",
   "constitution_article_20_body": "This constitution is interim and is intended to remain in effect until a permanent constitution is written and ratified in a referendum."
 }
