@@ -15,6 +15,7 @@ import ToolsFormCreateAccountConfirming from './CreateAccount/Confirming';
 import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 
 type Props = {
+  account: {},
   actions: {},
   globals: {},
   system: {}
@@ -48,11 +49,15 @@ class ToolsFormCreateAccount extends Component<Props> {
 
   tick() {
     const {
-      actions,
+      account,
+      actions
     } = this.props;
     const {
+      getCurrencyBalance,
       getRamStats
     } = actions;
+
+    getCurrencyBalance(account);
     getRamStats();
   }
 
