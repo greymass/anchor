@@ -18,57 +18,58 @@ class Tools extends Component<Props> {
     } = this.props;
 
     return (
-      <Segment attached="top">
-        <Header icon size="large" textAlign="center">
-          <Icon
-            name="cog"
-          />
-          {t('tools_title')}
-          <Header.Subheader
-            content={t('tools_description')}
-          />
-        </Header>
-        <Divider />
-        <Header>
-          {t('tools_settings_header')}
-          <Header.Subheader
-            content={t('tools_settings_subheader')}
-          />
-        </Header>
-        <Form>
-          {(settings.walletMode !== 'cold')
-            ? (
-              <Form.Field>
-                <label>{t('tools_change_block_explorer')}</label>
-                <GlobalSettingsBlockExplorer
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  defaultValue={settings.blockExplorer}
-                  selection
-                />
-              </Form.Field>
-            ) : false
-          }
-          <Form.Field>
-            <label>{t('tools_change_language')}</label>
-            <GlobalSettingsLanguage
-              actions={actions}
-              setLanguage={settings.lang}
-              i18n={i18n}
-              selection
+      <React.Fragment>
+        <Segment attached="top">
+          <Header icon size="large" textAlign="center">
+            <Icon
+              name="cog"
             />
-          </Form.Field>
-          {(settings.walletMode !== 'cold')
-            ? (
-              <Form.Field>
-                <Segment secondary stacked>
-                  <WelcomeConnectionContainer />
-                </Segment>
-              </Form.Field>
-            ) : false
-          }
-        </Form>
-      </Segment>
+            {t('tools_title')}
+            <Header.Subheader
+              content={t('tools_description')}
+            />
+          </Header>
+        </Segment>
+        <Segment attached padded="very">
+          <Header>
+            {t('tools_settings_header')}
+            <Header.Subheader
+              content={t('tools_settings_subheader')}
+            />
+          </Header>
+          <Form>
+            {(settings.walletMode !== 'cold')
+              ? (
+                <Form.Field>
+                  <label>{t('tools_change_block_explorer')}</label>
+                  <GlobalSettingsBlockExplorer
+                    actions={actions}
+                    blockExplorers={blockExplorers}
+                    defaultValue={settings.blockExplorer}
+                    selection
+                  />
+                </Form.Field>
+              ) : false
+            }
+            <Form.Field>
+              <label>{t('tools_change_language')}</label>
+              <GlobalSettingsLanguage
+                actions={actions}
+                setLanguage={settings.lang}
+                i18n={i18n}
+                selection
+              />
+            </Form.Field>
+          </Form>
+        </Segment>
+        {(settings.walletMode !== 'cold')
+          ? (
+            <Segment attached="bottom" padded="very" secondary stacked>
+              <WelcomeConnectionContainer />
+            </Segment>
+          ) : false
+        }
+      </React.Fragment>
     );
   }
 }
