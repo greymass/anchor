@@ -6,7 +6,7 @@
   "tools_form_create_account_button": "Create Account",
   "tools_form_create_account_cancel": "Cancel",
   "tools_form_create_account_confirming_header_one": "The following account will be created at a cost of",
-  "tools_form_create_account_confirming_header_two": "You have also chosen to delegate a total of",
+  "tools_form_create_account_confirming_header_two": "You have also chosen to delegate to it a total of",
   "tools_form_create_account_confirming_header_three": "in resources.",
   "tools_form_create_account_account_name": "Account Name",
   "tools_form_create_account_active_key": "Active Public Key",
