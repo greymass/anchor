@@ -1,11 +1,12 @@
 import * as types from '../actions/types';
 
 const initialState = {
+  contract: false,
   data: false,
   signed: false
 };
 
-export default function keys(state = initialState, action) {
+export default function transaction(state = initialState, action) {
   switch (action.type) {
     case types.CLEAR_TRANSACTION:
     case types.RESET_ALL_STATES:
@@ -16,6 +17,7 @@ export default function keys(state = initialState, action) {
     }
     case types.SET_TRANSACTION: {
       return Object.assign({}, state, {
+        contract: action.payload.contract,
         data: action.payload.transaction,
         signed: (action.payload.transaction.transaction.signatures.length > 0)
       });
