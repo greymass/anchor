@@ -353,22 +353,26 @@ class ToolsFormCreateAccount extends Component<Props> {
                       return errors;
                     }, [])
                   }
+                  icon="warning sign"
                 />
                 {(shouldShowAccountNameWarning)
                   ? (
-                    <Message info>
-                      {t('tools_form_create_account_account_name_warning')}
-                    </Message>
+                    <Message
+                      content={t('tools_form_create_account_account_name_warning')}
+                      icon="info circle"
+                      warning
+                    />
                   ) : ''}
 
                 {(shouldShowDelegatedResourceWarning)
                   ? (
-                    <Message info>
-                      {t('tools_form_create_account_delegated_resources_warning')}
-                    </Message>
+                    <Message
+                      content={t('tools_form_create_account_delegated_resources_warning')}
+                      icon="info circle"
+                      warning
+                    />
                   ) : ''}
-                <Divider />
-                <div style={{ height: '35px' }}>
+                <Segment basic clearing>
                   {(!hideCancel)
                     ? (
                       <Button
@@ -385,7 +389,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                     floated="right"
                     primary
                   />
-                </div>
+                </Segment>
               </Form>
             </div>
           ) : ''}
