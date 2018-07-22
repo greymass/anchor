@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 
 import GlobalTransactionMessageError from './Message/Error';
 import GlobalTransactionMessageSuccess from './Message/Success';
-import GlobalTransactionMessageUnsigned from './Message/Unsigned';
+import GlobalTransactionMessageUnsignedSign from './Message/Unsigned/Sign';
+import GlobalTransactionMessageUnsignedDownload from './Message/Unsigned/Download';
 
 type Props = {
   actionName: string,
@@ -18,7 +19,9 @@ export default class GlobalTransactionHandler extends Component<Props> {
   render() {
     const {
       actionName,
+      actions,
       blockExplorers,
+      contract,
       onClose,
       settings,
       system,
@@ -44,13 +47,19 @@ export default class GlobalTransactionHandler extends Component<Props> {
           error={system[`${actionName}_LAST_ERROR`]}
         />
       );
+    } else if (hasTransaction && settings.walletMode !== 'watch') {
+      content = (
+        <GlobalTransactionMessageUnsignedSign />
+      );
     } else if (hasTransaction && settings.walletMode === 'watch') {
       content = (
-        <GlobalTransactionMessageUnsigned />
+        <GlobalTransactionMessageUnsignedDownload />
       );
     }
 
     return React.cloneElement(content, {
+      actions,
+      contract,
       onClose,
       transaction
     });

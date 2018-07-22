@@ -6,10 +6,13 @@ import ReactJson from 'react-json-view';
 
 const { ipcRenderer } = require('electron');
 
-class GlobalTransactionMessageUnsigned extends Component<Props> {
+class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   promptSave = () => {
-    const { transaction } = this.props;
-    const data = JSON.stringify(transaction, null, 2);
+    const { contract, transaction } = this.props;
+    const data = JSON.stringify({
+      contract,
+      transaction
+    }, null, 2);
     ipcRenderer.send('saveFile', data);
   }
   render() {
@@ -77,4 +80,4 @@ class GlobalTransactionMessageUnsigned extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageUnsigned);
+export default translate('global')(GlobalTransactionMessageUnsignedDownload);
