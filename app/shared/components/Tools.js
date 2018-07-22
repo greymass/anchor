@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import WelcomeConnectionContainer from '../containers/Welcome/Connection';
@@ -18,8 +18,8 @@ class Tools extends Component<Props> {
     } = this.props;
 
     return (
-      <Segment attached="top" textAlign="center">
-        <Header icon size="large">
+      <Segment attached="top">
+        <Header icon size="large" textAlign="center">
           <Icon
             name="cog"
           />
@@ -28,49 +28,46 @@ class Tools extends Component<Props> {
             content={t('tools_description')}
           />
         </Header>
-        <Table>
-          <Table.Body>
-            {(settings.walletMode !== 'cold')
-              ? (
-                [
-                  <Table.Row>
-                    <Table.Cell width={4}>
-                      {t('tools_change_node')}
-                    </Table.Cell>
-                    <Table.Cell style={{ maxWidth: '600px' }} width={8}>
-                      <WelcomeConnectionContainer />
-                    </Table.Cell>
-                  </Table.Row>,
-                  <Table.Row>
-                    <Table.Cell width={4}>
-                      {t('tools_change_block_explorer')}
-                    </Table.Cell>
-                    <Table.Cell width={8}>
-                      <GlobalSettingsBlockExplorer
-                        actions={actions}
-                        blockExplorers={blockExplorers}
-                        defaultValue={settings.blockExplorer}
-                        selection
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                ]
-              ) : ''}
-            <Table.Row>
-              <Table.Cell width={4}>
-                {t('tools_change_language')}
-              </Table.Cell>
-              <Table.Cell width={8}>
-                <GlobalSettingsLanguage
+        <Divider />
+        <Header>
+          {t('tools_settings_header')}
+          <Header.Subheader
+            content={t('tools_settings_subheader')}
+          />
+        </Header>
+        <Form>
+          {(settings.walletMode !== 'cold')
+            ? (
+              <Form.Field>
+                <label>{t('tools_change_block_explorer')}</label>
+                <GlobalSettingsBlockExplorer
                   actions={actions}
-                  setLanguage={settings.lang}
-                  i18n={i18n}
+                  blockExplorers={blockExplorers}
+                  defaultValue={settings.blockExplorer}
                   selection
                 />
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
+              </Form.Field>
+            ) : false
+          }
+          <Form.Field>
+            <label>{t('tools_change_language')}</label>
+            <GlobalSettingsLanguage
+              actions={actions}
+              setLanguage={settings.lang}
+              i18n={i18n}
+              selection
+            />
+          </Form.Field>
+          {(settings.walletMode !== 'cold')
+            ? (
+              <Form.Field>
+                <Segment secondary stacked>
+                  <WelcomeConnectionContainer />
+                </Segment>
+              </Form.Field>
+            ) : false
+          }
+        </Form>
       </Segment>
     );
   }
