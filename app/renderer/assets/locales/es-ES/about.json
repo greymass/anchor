@@ -3,7 +3,7 @@
   "about_opensource_message": " Acogemos con satisfacción las contribuciones a esta aplicación. Si usted está interesado, por favor únase a nosotros en Github en",
   "about_opensource_link": "https://github.com/greymass/eos-voter",
   "about_message_1": "eos-voter es una aplicación de escritorio independiente que se conecta directamente a la blockchain de EOS a través del endpoint API de su elección.",
-  "about_message_2": "Sus llaves nunca dejan la aplicación en sí y sólo se almacenan encriptados, proporcionando el máximo nivel de seguridad que una billetera caliente puede ofrecer.",
+  "about_message_2": "Sus llaves nunca dejan la aplicación en sí y sólo se almacenan encriptados, proporcionando el máximo nivel de seguridad que un monedero caliente puede ofrecer.",
   "about_more": "Por favor visítenos en https://greymass.com si desea saber más.",
   "about_issues": "Si encuentras problemas con la propia aplicación, por favor preséntalos en github a continuación:",
   "about_issues_link": "https://github.com/greymass/eos-voter/issues",
