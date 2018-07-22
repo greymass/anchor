@@ -48,6 +48,8 @@
   "tools_menu_utilities_header": "Utilities",
   "tools_menu_wallet_header": "Wallet Tools",
   "tools_menu_wallets": "Manage Wallets",
+  "tools_settings_header": "Application Settings",
+  "tools_settings_subheader": "Configure the local application settings based on your preference.",
   "tools_proxy_button_register": "Register as Proxy Voter",
   "tools_proxy_button_unregister": "Unregister as Proxy Voter",
   "tools_proxy_form_button_cancel": "Cancel",
