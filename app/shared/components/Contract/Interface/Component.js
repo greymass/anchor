@@ -13,7 +13,7 @@ import EOSContract from '../../../utils/EOS/Contract';
 class ContractInterfaceComponent extends Component<Props> {
   state = {
     contractAction: '',
-    contractName: 'customtokens',
+    contractName: '',
     contractTable: ''
   }
   isValidContract = (name) => {
