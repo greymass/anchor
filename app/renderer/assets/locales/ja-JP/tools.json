@@ -32,6 +32,7 @@
   "tools_keys_key_generation_new_key": "キーを生成",
   "tools_keys_key_generation_subheader": "EOSで使用する公開鍵/秘密鍵のペアを生成します。",
   "tools_keys_key_generation_warning_content": "このキージェネレータはアプリケーション内にキーペアを保存しません。そのキーを使用する場合は、キーを他の場所にバックアップするようにしてください。",
+  "tools_menu_contracts": "Smart Contracts",
   "tools_menu_create_account": "Create Account",
   "tools_menu_customtokens": "エアドロップ / カスタムトークン",
   "tools_menu_index": "ホーム",
