@@ -4,14 +4,14 @@
   "about_opensource_link": "https://github.com/greymass/eos-voter",
   "about_message_1": "eos-voter on eraldiseisev töölauarakendus, mis ühendub otse EOS plokkahela külge sinu valitud API lõpp-punkti kaudu.",
   "about_message_2": "Sinu võtmed ei lahku kunagi rakendusest. Neid salvestatakse alati krüpteeritult, pakkudes kõrgeimat turvalisuse taset, mida kuum rahakott võib pakkuda.",
-  "about_more": "Please visit us at https://greymass.com if you would like to learn more.",
-  "about_issues": "If you have encounter problems with the application itself, please file an issue on github below:",
+  "about_more": "Kui soovid rohkem teada külasta meid https://greymass.com.",
+  "about_issues": "Kui teil esineb rakendusega probleeme, palun esitage probleemikirjeldus githubis:",
   "about_issues_link": "https://github.com/greymass/eos-voter/issues",
-  "about_greymass_message_1": "This application is an initiative spearheaded by Greymass.",
-  "about_greymass_message_2": "If you would like to learn more about our team and the other projects we have planned for EOS, we invite you to visit us at",
-  "about_license_type": "The MIT License (MIT)",
-  "about_license_body_1": "Copyright (c) 2018-present Greymass",
-  "about_license_body_2": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:",
-  "about_license_body_3": "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
-  "about_license_body_4": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+  "about_greymass_message_1": "Selle rakenduse eestvedajaks on Greymass.",
+  "about_greymass_message_2": "Kui soovite saada rohkem teada meie meeskonna ja teiste projektide kohta, mida oleme plaaninud EOS'i jaoks, palun külastage meid",
+  "about_license_type": "MIT Litsents (MIT)",
+  "about_license_body_1": "Copyright (c) Greymass 2018-tänaseni",
+  "about_license_body_2": "Käesolevaga on igale isikule lubatud piiranguteta soetada selle tarkvara ja seotud dokumentatsiooni (\"Tarkvara\") failidest tasuta koopia, sealhulgas ilma piiraguteta õigus kasutada, kopeerida, muuta, ühendada, avaldada, levitada, edasi-litsentseerida ja/või müüa Tarkvara koopiaid ning lubada isikutel, kellele Tarkvara on loodud teha samuti järgmistel tingimustel:",
+  "about_license_body_3": "Iga koopia või oluline Tarkvara osa sisaldab eespool nimetatud autoriõiguse märget ning luba.",
+  "about_license_body_4": "TARKVARA ON AVALDATUD \"NAGU ON\", ILMA IGASUGUSE OTSESE EGA EELDATUD GARANTIITA, SEALHULGAS, KUID MITTE AINULT KAUBANDUSLIKU GARANTII, EESMÄRGIKS SOBIVUSE JA TÕELEVASTAVUSE GARANTIITA. MITTE MINGIL JUHUL EI OLE AUTORID VÕI AUTORIÕIGUSE OMANIKUD VASTUTAVAD MIS TAHES KAHJUNÕUDE, KAHJU VÕI MUU KOHUSTUSE EEST. OLGU SEE SIIS TEGEVUSES VÕI LEPINGUS, ÕIGUSRIKKUMISES VÕI MITTE, MIS TEKIB SEOSES TARKVARAGA VÕI TEHINGUTEGA TARKVARA KAUDU."
 }
