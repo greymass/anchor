@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
+import debounce from 'lodash/debounce';
 
 import { Segment, Form, Divider, Button, Message } from 'semantic-ui-react';
 
@@ -22,11 +23,8 @@ type Props = {
 const formAttributes = ['accountName', 'activeKey', 'ownerKey', 'delegatedBw', 'delegatedCpu', 'ramAmount'];
 
 class ToolsFormCreateAccount extends Component<Props> {
-  props: Props;
-
   constructor(props) {
     super(props);
-
     const {
       balance
     } = props;
@@ -52,11 +50,9 @@ class ToolsFormCreateAccount extends Component<Props> {
     const {
       actions,
     } = this.props;
-
     const {
       getRamStats
     } = actions;
-
     getRamStats();
   }
 
@@ -79,7 +75,7 @@ class ToolsFormCreateAccount extends Component<Props> {
     }
   }
 
-  onChange = (e, { name, value, valid }) => {
+  onChange = debounce((e, { name, value, valid }) => {
     this.setState({
       submitDisabled: false,
       [name]: value
@@ -133,7 +129,7 @@ class ToolsFormCreateAccount extends Component<Props> {
         submitDisabled
       });
     });
-  }
+  }, 500)
 
   allFieldsHaveValidFormat = () => {
     const {

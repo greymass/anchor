@@ -48,11 +48,11 @@ class ToolsCreateAccount extends Component<Props> {
             <Divider />
             <GlobalTransactionHandler
               actionName="CREATEACCOUNT"
+              actions={actions}
               blockExplorers={blockExplorers}
               content={(
                 <ToolsFormCreateAccount
                   account={account}
-                  actions={actions}
                   balance={balances[settings.account]}
                   globals={globals}
                   hideCancel
