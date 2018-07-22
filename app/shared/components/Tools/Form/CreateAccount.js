@@ -255,6 +255,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       activeKey,
       delegatedBw,
       delegatedCpu,
+      formErrors,
       ownerKey,
       ramAmount,
       ramPrice
@@ -262,10 +263,6 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     let {
       submitDisabled
-    } = this.state;
-
-    const {
-      formErrors
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
@@ -339,6 +336,11 @@ class ToolsFormCreateAccount extends Component<Props> {
                   name="ramAmount"
                   onChange={this.onChange}
                 />
+                {(ramPrice && !formErrors.ramAmount) ? (
+                  <h4 style={{ textAlign: 'center', margin: '30px' }}>
+                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
+                  </h4>
+                ) : ''}
                 <GlobalFormFieldToken
                   defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
                   label={t('tools_form_create_account_delegated_bw')}
