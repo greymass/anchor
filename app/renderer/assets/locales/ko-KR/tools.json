@@ -32,6 +32,7 @@
   "tools_keys_key_generation_new_key": "키 생산 하기",
   "tools_keys_key_generation_subheader": "EOS에서 사용하기 위해 공개 / 개인 키 한 쌍 생성하기.",
   "tools_keys_key_generation_warning_content": "이 키 생성기는 본 프로그램 내에서 키 쌍을 저장하지 않습니다. 이 키들을 사용하실 거면 다른 위치에 백업하세요.",
+  "tools_menu_contracts": "Smart Contracts",
   "tools_menu_create_account": "Create Account",
   "tools_menu_customtokens": "Airdrops / Custom Tokens",
   "tools_menu_index": "홈",
