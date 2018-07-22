@@ -4,7 +4,7 @@ import { Button, Divider, Form, Header, Icon, Segment } from 'semantic-ui-react'
 import { translate } from 'react-i18next';
 
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
-import FormFieldGeneric from '../../../../Global/Form/Field/Generic';
+import GlobalFormFieldGeneric from '../../../../Global/Form/Field/Generic';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
@@ -180,7 +180,7 @@ class WalletPanelFormTransfer extends Component<Props> {
                 settings={settings}
                 value={quantity}
               />
-              <FormFieldGeneric
+              <GlobalFormFieldGeneric
                 icon="x"
                 label={t('transfer_label_memo')}
                 loading={false}
