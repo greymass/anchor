@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Header, Segment, Divider } from 'semantic-ui-react';
+import { Header, Segment } from 'semantic-ui-react';
 
 import GlobalTransactionHandler from '../Global/Transaction/Handler';
 import ToolsFormCreateAccount from './Form/CreateAccount';
