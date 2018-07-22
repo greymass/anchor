@@ -43,6 +43,7 @@ class GlobalTransactionModal extends Component<Props> {
   render() {
     const {
       actionName,
+      actions,
       blockExplorers,
       button,
       content,
@@ -53,6 +54,7 @@ class GlobalTransactionModal extends Component<Props> {
       system
     } = this.props;
     let {
+      contract,
       transaction
     } = this.props;
     const {
@@ -63,22 +65,29 @@ class GlobalTransactionModal extends Component<Props> {
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
     }
+    // Load the contract from props by default, but overwrite
+    //   with last contract from the system if exists
+    if (system && system[`${actionName}_LAST_CONTRACT`]) {
+      contract = system[`${actionName}_LAST_CONTRACT`];
+    }
     return (
       <Modal
         centered={false}
         closeIcon
         closeOnDimmerClick={false}
         closeOnDocumentClick={false}
-        trigger={(
-          <Button
-            color={button.color}
-            content={button.content}
-            fluid
-            icon={button.icon}
-            onClick={this.handleOpen}
-            size={button.size}
-          />
-        )}
+        trigger={(button)
+          ? (
+            <Button
+              color={button.color}
+              content={button.content}
+              fluid
+              icon={button.icon}
+              onClick={this.handleOpen}
+              size={button.size}
+            />
+          ) : false
+        }
         open={open}
         onOpen={this.onOpen}
         onClose={this.onClose}
@@ -91,8 +100,10 @@ class GlobalTransactionModal extends Component<Props> {
         <Modal.Content>
           <GlobalTransactionHandler
             actionName={actionName}
+            actions={actions}
             blockExplorers={blockExplorers}
             content={content}
+            contract={contract}
             onClose={this.onClose}
             settings={settings}
             system={system}

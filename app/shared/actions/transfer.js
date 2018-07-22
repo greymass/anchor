@@ -27,6 +27,17 @@ export function transfer(from, to, quantity, memo, symbol = 'EOS') {
         expireInSeconds: connection.expireInSeconds,
         sign: connection.sign
       }).then((tx) => {
+        // If this is an offline transaction, also store the ABI
+        if (!connection.sign) {
+          return eos(connection, true).getAbi(account).then((contract) =>
+            dispatch({
+              payload: {
+                contract,
+                tx
+              },
+              type: types.SYSTEM_TRANSFER_SUCCESS
+            }));
+        }
         dispatch(getCurrencyBalance(from));
         return dispatch({
           payload: { tx },

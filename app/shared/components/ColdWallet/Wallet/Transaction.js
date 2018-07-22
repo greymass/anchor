@@ -8,6 +8,8 @@ import GlobalTransactionViewActions from '../../Global/Transaction/View/Actions'
 import GlobalTransactionViewDetail from '../../Global/Transaction/View/Detail';
 import GlobalTransactionViewFull from '../../Global/Transaction/View/Full';
 
+import EOSTransaction from '../../../utils/EOS/Transaction';
+
 const { ipcRenderer } = require('electron');
 
 class ColdWalletTransaction extends Component<Props> {
@@ -16,8 +18,8 @@ class ColdWalletTransaction extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     const { transaction } = this.props;
     if (!transaction.signed && nextProps.transaction.signed) {
-      const data = JSON.stringify(nextProps.transaction.data, null, 2);
-      ipcRenderer.send('saveFile', data, 'signed');
+      const data = new EOSTransaction(nextProps.transaction);
+      ipcRenderer.send('saveFile', data.json(), 'signed');
     }
   }
 
@@ -29,7 +31,7 @@ class ColdWalletTransaction extends Component<Props> {
     const {
       transaction
     } = this.props;
-    this.props.actions.signTransaction(transaction.data);
+    this.props.actions.signTransaction(transaction.data, transaction.contract);
   }
 
   render() {
@@ -41,14 +43,11 @@ class ColdWalletTransaction extends Component<Props> {
       data,
       signed
     } = transaction;
-    const { actions, expiration } = data.transaction.transaction;
+    const { expiration } = data.transaction.transaction;
     const expires = new Date(`${expiration}z`);
     const now = new Date();
     const expired = (now > expires);
-    const validContracts = ['eosio', 'eosio.token', 'eosio.msig'];
-    const validActions = actions.filter((action) => validContracts.indexOf(action.account) >= 0);
-    const invalidContract = validActions.length !== actions.length;
-    const disabled = (signed || invalidContract);
+    const disabled = (signed);
     return (
       <Segment basic>
         <Segment attached="top">
@@ -79,14 +78,6 @@ class ColdWalletTransaction extends Component<Props> {
               )
               : false
             }
-            {(invalidContract)
-              ? (
-                <Message error>
-                  {t('coldwallet_transaction_invalid_contract')}
-                </Message>
-              )
-              : false
-            }
             <Button
               color="orange"
               content={t('collwallet_transaction_sign_confirm')}
@@ -111,7 +102,7 @@ class ColdWalletTransaction extends Component<Props> {
         </Segment>
         <Segment attached>
           <GlobalTransactionViewFull
-            transaction={transaction}
+            transaction={data}
           />
         </Segment>
       </Segment>
