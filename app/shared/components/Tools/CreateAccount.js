@@ -37,15 +37,12 @@ class ToolsCreateAccount extends Component<Props> {
         {((keys && keys.key) || settings.walletMode === 'watch') ?
         (
           <Segment basic>
-            <div style={{ textAlign: 'center' }}>
-              <Header>
-                {t('tools_create_account_header')}
-              </Header>
-              <p>
+            <Header>
+              {t('tools_create_account_header')}
+              <Header.Subheader>
                 {t('tools_create_account_text')}
-              </p>
-            </div>
-            <Divider />
+              </Header.Subheader>
+            </Header>
             <GlobalTransactionHandler
               actionName="CREATEACCOUNT"
               actions={actions}
