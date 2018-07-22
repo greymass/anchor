@@ -57,7 +57,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       getRamStats
     } = actions;
 
-    getCurrencyBalance(account);
+    getCurrencyBalance(account.account_name);
     getRamStats();
   }
 
@@ -368,7 +368,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                     <Message
                       content={t('tools_form_create_account_account_name_warning')}
                       icon="info circle"
-                      warning
+                      info
                     />
                   ) : ''}
 
@@ -377,7 +377,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                     <Message
                       content={t('tools_form_create_account_delegated_resources_warning')}
                       icon="info circle"
-                      warning
+                      info
                     />
                   ) : ''}
                 <Segment basic clearing>
