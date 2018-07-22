@@ -293,6 +293,8 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const shouldShowAccountNameWarning = accountName && accountName.length !== 12;
 
+    const shouldShowPublicKeysWarning = activeKey && activeKey === ownerKey;
+
     const shouldShowDelegatedResourceWarning =
       (decimalDelegatedBw &&
         decimalDelegatedBw.lessThan(1) &&
@@ -336,11 +338,6 @@ class ToolsFormCreateAccount extends Component<Props> {
                   name="ramAmount"
                   onChange={this.onChange}
                 />
-                {(ramPrice && !formErrors.ramAmount) ? (
-                  <h4 style={{ textAlign: 'center', margin: '30px' }}>
-                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
-                  </h4>
-                ) : ''}
                 <GlobalFormFieldToken
                   defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
                   label={t('tools_form_create_account_delegated_bw')}
@@ -365,6 +362,11 @@ class ToolsFormCreateAccount extends Component<Props> {
                   }
                   icon="warning sign"
                 />
+                {(ramPrice && !formErrors.ramAmount) ? (
+                  <h4 style={{ margin: '30px' }}>
+                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
+                  </h4>
+                ) : ''}
                 {(shouldShowAccountNameWarning)
                   ? (
                     <Message
@@ -378,6 +380,15 @@ class ToolsFormCreateAccount extends Component<Props> {
                   ? (
                     <Message
                       content={t('tools_form_create_account_delegated_resources_warning')}
+                      icon="info circle"
+                      info
+                    />
+                  ) : ''}
+
+                {(shouldShowPublicKeysWarning)
+                  ? (
+                    <Message
+                      content={t('tools_form_create_account_public_keys_warning')}
                       icon="info circle"
                       info
                     />
