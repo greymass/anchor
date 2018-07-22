@@ -16,6 +16,7 @@ export default function system(state = {}, action) {
   const [, requestName, requestState] = matches;
 
   const accountField = `${requestName}_LAST_ACCOUNT`;
+  const contractField = `${requestName}_LAST_CONTRACT`;
   const errField = `${requestName}_LAST_ERROR`;
   const txField = `${requestName}_LAST_TRANSACTION`;
 
@@ -43,6 +44,11 @@ export default function system(state = {}, action) {
     if (action.payload.tx) {
       newState[txField] = action.payload.tx;
     }
+    // Attach any returned ABIs
+    if (action.payload.contract) {
+      newState[contractField] = action.payload.contract;
+    }
   }
+
   return newState;
 }

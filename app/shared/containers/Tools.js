@@ -8,6 +8,7 @@ import compose from 'lodash/fp/compose';
 
 import { Menu, Tab } from 'semantic-ui-react';
 
+import ContractInterface from './Contract/Interface';
 import Tools from '../components/Tools';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
 import ToolsKeys from '../components/Tools/Keys';
@@ -19,12 +20,14 @@ import ToolsWallets from '../components/Tools/Wallets';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
 
 import * as AccountsActions from '../actions/accounts';
+import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as SettingsActions from '../actions/settings';
 import * as SystemStateActions from '../actions/system/systemstate';
+import * as TransactionActions from '../actions/transaction';
 import * as UnregProxyActions from '../actions/system/unregproxy';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
@@ -70,6 +73,10 @@ class ToolsContainer extends Component<Props> {
       ];
     } else {
       panes = [
+        {
+          menuItem: t('tools_menu_contracts'),
+          render: () => <Tab.Pane><ContractInterface /></Tab.Pane>,
+        },
         {
           menuItem: t('tools_menu_index'),
           render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
@@ -140,11 +147,13 @@ function mapStateToProps(state) {
     balances: state.balances,
     blockExplorers: state.blockexplorers,
     chain: state.chain,
+    contracts: state.contracts,
     customtokens: state.customtokens,
     globals: state.globals,
     keys: state.keys,
     settings: state.settings,
     system: state.system,
+    transaction: state.transaction,
     validate: state.validate,
     wallet: state.wallet,
     wallets: state.wallets,
@@ -155,12 +164,14 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...ContractsActions,
       ...CreateAccountActions,
       ...CustomTokensActions,
       ...GlobalsActions,
       ...RegProxyActions,
       ...SettingsActions,
       ...SystemStateActions,
+      ...TransactionActions,
       ...UnregProxyActions,
       ...WalletActions,
       ...WalletsActions,
