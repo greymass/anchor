@@ -61,6 +61,8 @@
   "wallet_status_total_balance": "총",
   "wallet_status_liquid": "거래에 사용할 수있는 잔액",
   "wallet_status_add_custom_token_action": "사용자 지정 토큰 추가",
+  "wallet_status_add_custom_token_action_header": "This feature has moved!",
+  "wallet_status_add_custom_token_action_subheader": "To manage Custom Tokens in this wallet, click on the Tools section, and look under the 'Airdrops / Custom Tokens' section.",
   "wallet_status_add_custom_token_header": "토큰 잔액",
   "wallet_status_add_custom_token_subheader": "이 계정의 추적 중인 계약에 토큰 잔액들 (기본적으로 'eosio.token').",
   "wallet_panel_wallet_broadcast": "서명된 거래 방송(브로드캐스트) 하기",
