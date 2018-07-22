@@ -261,8 +261,11 @@ class ToolsFormCreateAccount extends Component<Props> {
     } = this.state;
 
     let {
-      formErrors,
       submitDisabled
+    } = this.state;
+
+    const {
+      formErrors
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
@@ -285,10 +288,10 @@ class ToolsFormCreateAccount extends Component<Props> {
     const decimalDelegatedBw = delegatedBw && Decimal(delegatedBw.split(' ')[0]);
     const decimalDelegatedCpu = delegatedCpu && Decimal(delegatedCpu.split(' ')[0]);
 
-    let totalCost;
+    let totalDelegated;
 
-    if (decimalDelegatedBw && decimalDelegatedCpu && ramAmount) {
-      totalCost = decimalDelegatedBw.plus(decimalDelegatedCpu).plus(ramPrice);
+    if (decimalDelegatedBw && decimalDelegatedCpu) {
+      totalDelegated = decimalDelegatedBw.plus(decimalDelegatedCpu);
     }
 
     const shouldShowAccountNameWarning = accountName && accountName.length !== 12;
@@ -410,7 +413,8 @@ class ToolsFormCreateAccount extends Component<Props> {
               onConfirm={this.onConfirm}
               ownerKey={ownerKey}
               ramAmount={ramAmount}
-              totalCost={totalCost}
+              totalCost={ramPrice}
+              totalDelegated={totalDelegated}
             />
           ) : ''}
       </Segment>

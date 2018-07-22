@@ -24,13 +24,15 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
       ownerKey,
       ramAmount,
       t,
-      totalCost
+      totalCost,
+      totalDelegated
     } = this.props;
 
     return (
       <Segment padding="true" basic>
         <Header textAlign="center">
-          {`${t('tools_form_create_account_confirming_header')} ${totalCost.toFixed(4)} EOS.`}
+          {`${t('tools_form_create_account_confirming_header_one')} ${totalCost.toFixed(4)} EOS.`}
+          {`${t('tools_form_create_account_confirming_header_two')} ${totalDelegated.toFixed(4)} EOS ${t('tools_form_create_account_confirming_header_three')}`}
         </Header>
         <Table size="small" celled>
           <Table.Body>
