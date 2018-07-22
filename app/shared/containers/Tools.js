@@ -74,10 +74,6 @@ class ToolsContainer extends Component<Props> {
     } else {
       panes = [
         {
-          menuItem: t('tools_menu_contracts'),
-          render: () => <Tab.Pane><ContractInterface /></Tab.Pane>,
-        },
-        {
           menuItem: t('tools_menu_index'),
           render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
         },
@@ -91,6 +87,10 @@ class ToolsContainer extends Component<Props> {
         {
           menuItem: t('tools_menu_wallets'),
           render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: t('tools_menu_contracts'),
+          render: () => <Tab.Pane><ContractInterface /></Tab.Pane>,
         },
         {
           menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
