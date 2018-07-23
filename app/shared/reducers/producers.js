@@ -1,9 +1,13 @@
+import { set } from 'dot-prop-immutable';
 import * as types from '../actions/types';
 
 const initialState = {
   lastError: {},
   lastTransaction: {},
   list: [],
+  producerInfo: null,
+  producerInfoErrors: {},
+  producersInfo: {},
   proxy: '',
   selected: [],
   updated: null
@@ -33,6 +37,34 @@ export default function producers(state = initialState, action) {
     case types.SET_WALLET_ACTIVE: {
       return Object.assign({}, state, {
         selected: []
+      });
+    }
+    case types.SYSTEM_PRODUCERJSON_CLEAR:
+    case types.SYSTEM_PRODUCERJSON_PENDING: {
+      return Object.assign({}, state, {
+        producerInfo: null
+      });
+    }
+    case types.SYSTEM_PRODUCERJSON_FAILURE: {
+      return set(state, `producerInfoErrors.${action.payload.producer}`, action.payload.err);
+    }
+    case types.SYSTEM_PRODUCERJSON_SUCCESS: {
+      return Object.assign({}, state, {
+        producerInfo: action.payload
+      });
+    }
+    case types.SYSTEM_PRODUCERSJSON_SUCCESS: {
+      const producersInfo = {};
+      const { rows } = action.payload;
+      rows.forEach((row) => {
+        try {
+          producersInfo[row.owner] = JSON.parse(row.json);
+        } catch (err) {
+          // invalid json
+        }
+      });
+      return Object.assign({}, state, {
+        producersInfo
       });
     }
     case types.SYSTEM_VOTEPRODUCER_SUCCESS: {
