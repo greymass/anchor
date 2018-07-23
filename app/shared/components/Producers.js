@@ -57,6 +57,7 @@ class Producers extends Component<Props> {
   componentDidMount() {
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 15000);
+    this.props.actions.getProducersInfo();
   }
 
   componentWillReceiveProps(nextProps) {

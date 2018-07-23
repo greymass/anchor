@@ -3,15 +3,18 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { debounce, filter, findIndex } from 'lodash';
 import { Grid, Header, Input, Segment, Transition, Table } from 'semantic-ui-react';
+import { get } from 'dot-prop-immutable';
 
-import ProducersVoteWeight from './Vote/Weight';
+import ProducersModalInfo from './Modal/Info.js';
 import ProducersTableRow from './Table/Row';
+import ProducersVoteWeight from './Vote/Weight';
 
 class ProducersTable extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      query: false
+      query: false,
+      viewing: false
     };
   }
 
@@ -31,19 +34,24 @@ class ProducersTable extends Component<Props> {
     return (query && query.length > 0);
   }
 
+  clearProducerInfo = () => this.setState({ viewing: false });
+  getProducerInfo = (producer) => this.setState({ viewing: producer });
+
   render() {
     const {
+      actions,
       amount,
       globals,
       isProxying,
       isValidUser,
       producers,
       selected,
+      system,
       t
     } = this.props;
-
     const {
-      query
+      query,
+      viewing
     } = this.state;
     const {
       current
@@ -73,17 +81,21 @@ class ProducersTable extends Component<Props> {
         <Table.Body key="FullResults">
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
+            const hasInfo = !!(get(producers.producersInfo, producer.owner));
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
-                key={`${isProxying}-${producer.key}`}
+                getProducerInfo={this.getProducerInfo}
+                hasInfo={hasInfo}
+                key={`${isProxying}-${producer.key}-${hasInfo}`}
                 isProxying={isProxying}
                 isSelected={isSelected}
+                isValidUser={isValidUser}
                 position={idx + 1}
                 producer={producer}
                 removeProducer={this.props.removeProducer}
+                system={system}
                 totalVoteWeight={totalVoteWeight}
-                isValidUser={isValidUser}
               />
             );
           })}
@@ -97,17 +109,20 @@ class ProducersTable extends Component<Props> {
             <Table.Body key="PartResults">
               {partResults.map((producer) => {
                 const isSelected = (selected.indexOf(producer.owner) !== -1);
+                const hasInfo = !!(get(producers.producersInfo, producer.owner));
                 return (
                   <ProducersTableRow
                     addProducer={this.props.addProducer}
+                    getProducerInfo={this.getProducerInfo}
+                    hasInfo={hasInfo}
                     key={producer.key}
+                    isProxying={isProxying}
                     isSelected={isSelected}
+                    isValidUser={isValidUser}
                     position={findIndex(producers.list, { owner: producer.owner }) + 1}
                     producer={producer}
                     removeProducer={this.props.removeProducer}
                     totalVoteWeight={totalVoteWeight}
-                    isValidUser={isValidUser}
-                    isProxying={isProxying}
                   />
                 );
               })}
@@ -118,6 +133,11 @@ class ProducersTable extends Component<Props> {
     }
     return (
       <Segment basic loading={loading} vertical>
+        <ProducersModalInfo
+          producerInfo={producers.producersInfo[viewing]}
+          onClose={this.clearProducerInfo}
+          viewing={viewing}
+        />
         <Grid>
           <Grid.Column width={8}>
             <Header size="small">
