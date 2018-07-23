@@ -8,7 +8,7 @@ const { shell } = require('electron');
 class GlobalModalDangerLink extends Component<Props> {
   state = { open: false }
 
-  isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
+  isSafeish = (url) => (url && (url.startsWith('http:') || url.startsWith('https:') || url.startsWith('mailto:')))
 
   openLink() {
     const { link } = this.props;

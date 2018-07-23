@@ -16,6 +16,8 @@ class ProducersTableRow extends Component<Props> {
   render() {
     const {
       addProducer,
+      getProducerInfo,
+      hasInfo,
       isSelected,
       producer,
       position,
@@ -45,16 +47,49 @@ class ProducersTableRow extends Component<Props> {
           singleLine
           textAlign="center"
         >
-          <Button
-            color={isSelected ? 'blue' : 'grey'}
-            disabled={!isValidUser || isProxying}
-            icon={isSelected ? 'checkmark box' : 'minus square outline'}
-            onClick={
-              (isSelected)
-              ? () => removeProducer(producer.owner)
-              : () => addProducer(producer.owner)
-            }
-            size="small"
+          {(hasInfo)
+            ? (
+              <Button
+                color="purple"
+                icon="magnify"
+                onClick={() => getProducerInfo(producer.owner)}
+                size="small"
+              />
+            )
+            : (
+              <Popup
+                content={t('producer_json_unavailable_content')}
+                header={t('producer_json_unavailable_header')}
+                hoverable
+                inverted
+                position="left center"
+                trigger={(
+                  <Button
+                    icon="magnify"
+                    size="small"
+                  />
+                )}
+              />
+            )
+          }
+          <Popup
+            content={t('producer_vote_content')}
+            header={t('producer_vote_header', { producer: producer.owner })}
+            hoverable
+            position="right center"
+            trigger={(
+              <Button
+                color={isSelected ? 'blue' : 'grey'}
+                disabled={!isValidUser || isProxying}
+                icon={isSelected ? 'checkmark box' : 'minus square outline'}
+                onClick={
+                  (isSelected)
+                  ? () => removeProducer(producer.owner)
+                  : () => addProducer(producer.owner)
+                }
+                size="small"
+              />
+            )}
           />
         </Table.Cell>
         <Table.Cell
@@ -65,7 +100,7 @@ class ProducersTableRow extends Component<Props> {
         <Table.Cell
           singleLine
         >
-          <Header size="tiny">
+          <Header size="small">
             <span styles={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
               {producer.owner}
             </span>
