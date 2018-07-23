@@ -331,6 +331,13 @@ class ToolsFormCreateAccount extends Component<Props> {
         decimalDelegatedCpu.lessThan(1) &&
         decimalDelegatedCpu.greaterThan(0));
 
+    const shouldShowtransferTokensWarning = transferTokens;
+
+    const hasWarnings = shouldShowAccountNameWarning ||
+                        shouldShowPublicKeysWarning ||
+                        shouldShowDelegatedResourceWarning ||
+                        shouldShowtransferTokensWarning;
+
     return (
       <Segment
         loading={system.CREATEACCOUNT === 'PENDING'}
@@ -339,6 +346,7 @@ class ToolsFormCreateAccount extends Component<Props> {
           ? (
             <div>
               <Form
+                warning={hasWarnings}
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
@@ -401,12 +409,12 @@ class ToolsFormCreateAccount extends Component<Props> {
                   }
                   icon="warning sign"
                 />
-                {(transferTokens)
+                {(shouldShowtransferTokensWarning)
                   ? (
                     <Message
                       content={t('tools_form_create_account_transfer_tokens_warning')}
                       icon="info circle"
-                      info
+                      warning
                     />
                   ) : ''}
                 {(shouldShowAccountNameWarning)
@@ -414,7 +422,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                     <Message
                       content={t('tools_form_create_account_account_name_warning')}
                       icon="info circle"
-                      info
+                      warning
                     />
                   ) : ''}
 
@@ -423,7 +431,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                     <Message
                       content={t('tools_form_create_account_delegated_resources_warning')}
                       icon="info circle"
-                      info
+                      warning
                     />
                   ) : ''}
 
@@ -432,7 +440,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                     <Message
                       content={t('tools_form_create_account_public_keys_warning')}
                       icon="info circle"
-                      info
+                      warning
                     />
                   ) : ''}
                 <Segment basic clearing>
