@@ -16,8 +16,15 @@ import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 
 type Props = {
   account: {},
+  accountName: null,
   actions: {},
+  activeKey: null,
+  balance: {},
+  delegatedBw: null,
+  delegatedCpu: null,
   globals: {},
+  ownerKey: null,
+  ramAmount: null,
   system: {}
 };
 
@@ -27,13 +34,25 @@ class ToolsFormCreateAccount extends Component<Props> {
   constructor(props) {
     super(props);
     const {
-      balance
+      accountName,
+      activeKey,
+      balance,
+      delegatedBw,
+      delegatedCpu,
+      ownerKey,
+      ramAmount
     } = props;
 
     this.state = {
+      accountName,
+      activeKey,
       confirming: false,
+      delegatedBw,
+      delegatedCpu,
       EOSbalance: (balance && balance.EOS) ? balance.EOS : 0,
       formErrors: {},
+      ownerKey,
+      ramAmount,
       submitDisabled: true
     };
   }
