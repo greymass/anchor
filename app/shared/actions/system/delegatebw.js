@@ -27,7 +27,7 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
   };
 }
 
-export function delegatebwParams(delegator, receiver, netAmount, cpuAmount) {
+export function delegatebwParams(delegator, receiver, netAmount, cpuAmount, transfer) {
   const stakeNetAmount = parseFloat(netAmount) || 0;
   const stakeCpuAmount = parseFloat(cpuAmount) || 0;
 
@@ -36,7 +36,7 @@ export function delegatebwParams(delegator, receiver, netAmount, cpuAmount) {
     receiver,
     stake_net_quantity: `${stakeNetAmount.toFixed(4)} EOS`,
     stake_cpu_quantity: `${stakeCpuAmount.toFixed(4)} EOS`,
-    transfer: 0
+    transfer
   };
 }
 

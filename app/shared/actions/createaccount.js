@@ -12,7 +12,8 @@ export function createAccount(
   delegatedBw,
   delegatedCpu,
   ownerKey,
-  ramAmount
+  ramAmount,
+  transferTokens
 ) {
   return (dispatch: () => void, getState) => {
     const {
@@ -42,7 +43,8 @@ export function createAccount(
         currentAccount,
         accountName,
         delegatedBw.split(' ')[0],
-        delegatedCpu.split(' ')[0]
+        delegatedCpu.split(' ')[0],
+        transferTokens
       ));
     }, {
       broadcast: connection.broadcast,
