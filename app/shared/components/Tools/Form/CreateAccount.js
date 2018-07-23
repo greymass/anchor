@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 import debounce from 'lodash/debounce';
 
-import { Segment, Form, Divider, Button, Message } from 'semantic-ui-react';
+import { Segment, Form, Button, Message } from 'semantic-ui-react';
 
 import GlobalFormFieldRam from '../../Global/Form/Field/Ram';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
@@ -155,6 +155,12 @@ class ToolsFormCreateAccount extends Component<Props> {
     });
   }, 500)
 
+  onToggle = (e, { name }) => {
+    this.setState({
+      [name]: !this.state[name]
+    });
+  }
+
   allFieldsHaveValidFormat = () => {
     const {
       formErrors
@@ -248,7 +254,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       delegatedBw,
       delegatedCpu,
       ownerKey,
-      ramAmount
+      ramAmount,
+      transferTokens
     } = this.state;
 
     createAccount(
@@ -257,7 +264,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       delegatedBw,
       delegatedCpu,
       ownerKey,
-      ramAmount
+      ramAmount,
+      transferTokens
     );
   }
 
@@ -277,7 +285,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors,
       ownerKey,
       ramAmount,
-      ramPrice
+      ramPrice,
+      transferTokens
     } = this.state;
 
     let {
@@ -369,6 +378,17 @@ class ToolsFormCreateAccount extends Component<Props> {
                   name="delegatedCpu"
                   onChange={this.onChange}
                 />
+                <Form.Checkbox
+                  checked={transferTokens}
+                  label={t('tools_form_create_account_transfer')}
+                  name="transferTokens"
+                  onChange={this.onToggle}
+                />
+                {(ramPrice && !formErrors.ramAmount) ? (
+                  <h4 style={{ margin: '30px' }}>
+                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
+                  </h4>
+                ) : ''}
                 <FormMessageError
                   errors={
                     formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
@@ -381,11 +401,14 @@ class ToolsFormCreateAccount extends Component<Props> {
                   }
                   icon="warning sign"
                 />
-                {(ramPrice && !formErrors.ramAmount) ? (
-                  <h4 style={{ margin: '30px' }}>
-                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
-                  </h4>
-                ) : ''}
+                {(transferTokens)
+                  ? (
+                    <Message
+                      content={t('tools_form_create_account_transfer_tokens_warning')}
+                      icon="info circle"
+                      info
+                    />
+                  ) : ''}
                 {(shouldShowAccountNameWarning)
                   ? (
                     <Message
