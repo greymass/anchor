@@ -6,7 +6,7 @@
   "system_transfer_3": "2. Kinnitan, et minu parima teadmise juures {{to}} ei toeta vägivalla algatamist teiste suhtes.",
   "system_transfer_4": "3. Olen avaldanud kõik lepingulised tingimused seoses {{quantity}} edastamisega {{to}}le.",
   "system_transfer_5": "Mõistan, et varade ülekanded ei ole tagasipööratavad peale {{transaction.delay}} sekundi, või muu viivituse, mis on seadistatud minu {{from}} õiguste poolt, möödumist.",
-  "system_transfer_6": "If this action fails to be irreversibly confirmed after receiving goods or services from '{{to}}', I agree to either return the goods or services or resend {{quantity}} in a timely manner.",
+  "system_transfer_6": "Kui tehingu pöördumatu kinnitamine nurjub peale {{to}} kaupade või teenuste kättesaamist, nõustun kas tagastama kaubad või teenused või uuesti õigeaegselt saatma {{quantity}}.",
   "system_voteproducer_1": "The intent of the 'voteproducer' action is to cast a valid vote for up to 30 BP candidates.",
   "system_voteproducer_2": "As an authorized party I {{ signer }} wish to vote on behalf of {{ voter }} in favor of the block producer candidates '{{ producers }}' with a voting weight equal to all tokens currently owned by {{ voter }} and staked for CPU or bandwidth.",
   "system_voteproducer_3": "If I am not the beneficial owner of these shares I stipulate I have proof that I’ve been authorized to vote these shares by their beneficial owner(s).",
