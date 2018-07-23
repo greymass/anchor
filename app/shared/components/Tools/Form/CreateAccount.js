@@ -214,17 +214,17 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const decimalDelegatedResources = decimalDelegatedBw.plus(decimalDelegatedCpu);
 
-    if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
-      if (delegatedBw > 1) {
-        formErrors.delegatedBw = 'not_enough_balance';
-      } else if (delegatedCpu > 1) {
-        formErrors.delegatedCpu = 'not_enough_balance';
-      } else {
-        formErrors.ramAmount = 'not_enough_balance';
-      }
+    // if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
+    //   if (delegatedBw > 1) {
+    //     formErrors.delegatedBw = 'not_enough_balance';
+    //   } else if (delegatedCpu > 1) {
+    //     formErrors.delegatedCpu = 'not_enough_balance';
+    //   } else {
+    //     formErrors.ramAmount = 'not_enough_balance';
+    //   }
 
-      submitDisabled = true;
-    }
+    //   submitDisabled = true;
+    // }
 
     return { formErrors, submitDisabled };
   }
