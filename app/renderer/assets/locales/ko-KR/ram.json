@@ -1,6 +1,6 @@
 {
   "ram_button_confirm_back": "뒤로",
-  "ram_button_confirm_transaction": "Confirm",
+  "ram_button_confirm_transaction": "확인",
   "ram_buy_button_cta": "RAM 구매하기",
   "ram_buy_confirming_message_one": "다음과 같이 구매 합니다",
   "ram_buy_modal_title": "RAM 구매하기",
@@ -12,15 +12,15 @@
   "ram_confirming_message_will_have": "이 거래 이후 잔액 은",
   "ram_form_button_buy": "RAM 구매하기",
   "ram_form_button_sell": "RAM 판매하기",
-  "ram_form_label_amount_in_bytes": "Amount of RAM (in Bytes)",
-  "ram_form_label_amount_in_eos": "Cost of RAM (in EOS)",
-  "ram_form_text_amount_estimate": "Estimated amount is",
-  "ram_form_text_estimate": "Estimated cost is",
+  "ram_form_label_amount_in_bytes": "RAM 양 (바이트)",
+  "ram_form_label_amount_in_eos": "RAM의 비용 (EOS)",
+  "ram_form_text_amount_estimate": "예상 양",
+  "ram_form_text_estimate": "예상 비용",
   "ram_sell_button_cta": "RAM 판매하기",
   "ram_sell_confirming_message_one": "다음과 같이 판매 합니다",
   "ram_sell_modal_title": "RAM 판매하기",
-  "ram_stats_title_one": "EOS Balance",
-  "ram_stats_title_two": "Available RAM",
-  "ram_stats_title_three": "Used RAM",
-  "ram_stats_title_four": "Total RAM"
+  "ram_stats_title_one": "EOS 잔액",
+  "ram_stats_title_two": "사용 가능한 RAM",
+  "ram_stats_title_three": "사용 된 RAM",
+  "ram_stats_title_four": "총 RAM"
 }

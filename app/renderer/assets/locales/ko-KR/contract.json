@@ -1,0 +1,23 @@
+{
+  "abi": "ABI",
+  "actions": "작업들",
+  "tables": "테이블들",
+  "interface_actions_header": "계약 작업들",
+  "interface_actions_instructions": "아래의 드롭다운은 스마트 계약 내에 모든 작업을 표시합니다. 매개 변수에 사용 가능한 작업을 선택 후 폼을 생성 하세요.",
+  "interface_actions_subheader": "EOS 네트워크의 스마트 계약에는 실행 가능한 작업이 포함될 수 있습니다.",
+  "interface_contract_account_name": "계약 계정 이름",
+  "interface_contract_load": "계약 가져오기",
+  "interface_contract_reset": "계약 변경",
+  "interface_contract_loaded_header": "가져온 계약:",
+  "interface_contract_loaded_subheader": "계약을 성공적으로 가져왔습니다.",
+  "interface_data_header": "계약 ABI",
+  "interface_data_subheader": "스마트 계약 코드 전체가 아래에 표시됩니다.",
+  "interface_form_action_header": "작업 매개 변수",
+  "interface_form_action_subheader": "선택한 계약 작업은 다음 매개 변수를 사용합니다.",
+  "interface_form_action_instructions": "이 작업에 대해 스마트 계약서에 거래를 제출하려면 아래 입력란을 작성하세요.",
+  "interface_header": "스마트 계약 인터페이스 도구",
+  "interface_subheader": "EOS 블록체인에 스마트 계약을 가져오기, 보기, 및 다른 작업 하기.",
+  "interface_tables_header": "계약 테이블",
+  "interface_tables_subheader": "EOS 네트워크의 스마트 계약에는 공개 정보가 포함 된 테이블이 포함될 수 있습니다.",
+  "interface_tables_instructions": "아래 드롭 다운에는이 스마트 계약 내에서 사용 가능한 모든 테이블이 포함되어 있습니다. 내용을 볼 테이블을 선택하세요."
+}
