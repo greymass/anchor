@@ -1,6 +1,6 @@
 {
-  "transfer_send_button_cta": "Send Tokens",
-  "transfer_receive_button_cta": "Receive Tokens",
+  "transfer_send_button_cta": "토큰 보내기",
+  "transfer_receive_button_cta": "토큰 받기",
   "transfer_modal_title": "토큰 전송",
   "transfer_modal_transaction_successful_title": "전송 성공!",
   "transfer_modal_transaction_successful_message": "요청한 거래가 처리되었습니다. 거래 ID는 아래에서 확인할 수 있습니다.",
@@ -15,7 +15,7 @@
   "transfer_label_memo": "거래 메모",
   "transfer_label_send": "This is where you can send coins to another account. Fill in the below form and press on confirm.",
   "transfer_label_receive": "To receive coins on your account, please follow the instuctions below.",
-  "transfer_receive_modal_title": "Receive Coins",
+  "transfer_receive_modal_title": "코인 받기",
   "transfer_receive_body": "To receive Coins simply give the following account name to the sender.",
-  "transfer_close": "Close"
+  "transfer_close": "닫기"
 }
