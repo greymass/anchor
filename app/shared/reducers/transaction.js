@@ -11,6 +11,7 @@ export default function transaction(state = initialState, action) {
     case types.CLEAR_TRANSACTION:
     case types.RESET_ALL_STATES:
     case types.RESET_SYSTEM_STATES:
+    case types.SYSTEM_TRANSACTION_BUILD_PENDING:
     case types.WALLET_LOCK:
     case types.WALLET_REMOVE: {
       return Object.assign({}, initialState);
