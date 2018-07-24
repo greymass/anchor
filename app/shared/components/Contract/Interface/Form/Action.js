@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Divider, Form, Header, Message } from 'semantic-ui-react';
+import ReactJson from 'react-json-view';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
@@ -13,15 +14,41 @@ const initialState = {
 
 class ContractInterfaceFormAction extends Component<Props> {
   state = initialState;
+  componentDidMount() {
+    this.resetForm(this.props.contractAction);
+  }
   componentWillReceiveProps(nextProps) {
-    const { contractAction } = this.props;
-    if (contractAction.name !== nextProps.contractAction.name) {
-      this.resetForm();
+    const {
+      contractAction
+    } = this.props;
+    if (contractAction !== nextProps.contractAction) {
+      this.resetForm(nextProps.contractAction);
+    }
+  }
+  formatField = (contractAction, name, value = "") => {
+    const {
+      contract
+    } = this.props;
+    const fieldType = contract.getFieldType(contractAction, name);
+    switch (fieldType) {
+      case 'int': {
+        return parseInt(value, 10);
+      }
+      default: {
+        return String(value);
+      }
     }
   }
   onChange = (e, { name, value }) => {
+    const { contractAction } = this.props;
     this.setState({
-      form: Object.assign({}, this.state.form, { [name]: value })
+      form: Object.assign(
+        {},
+        this.state.form,
+        {
+          [name]: this.formatField(contractAction, name, value)
+        }
+      )
     });
   }
   onSubmit = () => {
@@ -34,8 +61,16 @@ class ContractInterfaceFormAction extends Component<Props> {
     const { form } = this.state;
     actions.buildTransaction(contract, contractAction, settings.account, form);
   }
-  resetForm = () => {
-    this.setState({ ...initialState });
+  resetForm = (contractAction) => {
+    const {
+      contract
+    } = this.props;
+    const formData = {};
+    const fields = contract.getFields(contractAction);
+    fields.forEach((field) => {
+      formData[field.name] = this.formatField(contractAction, field.name);
+    });
+    this.setState({ form: formData });
   }
   render() {
     const {
@@ -49,7 +84,6 @@ class ContractInterfaceFormAction extends Component<Props> {
       transaction
     } = this.props;
 
-    const action = contract.getAction(contractAction);
     const fields = contract.getFields(contractAction);
 
     const formFields = [];
@@ -76,7 +110,7 @@ class ContractInterfaceFormAction extends Component<Props> {
     }
 
     let modal;
-    if (system.TRANSACTION_SUCCESS
+    if (system.TRANSACTION_BUILD
       && transaction
       && transaction.data
       && transaction.data.transaction_id
@@ -101,14 +135,14 @@ class ContractInterfaceFormAction extends Component<Props> {
         />
       );
     }
-    if (system.TRANSACTION_BUILD === 'SUCCESS'
+    if (system.TRANSACTION_BROADCAST === 'SUCCESS'
       && transaction
       && transaction.data
       && transaction.data.transaction_id
     ) {
       modal = (
         <GlobalTransactionModal
-          actionName="TRANSACTION_BUILD"
+          actionName="TRANSACTION_BROADCAST"
           actions={actions}
           blockExplorers={blockExplorers}
           content={(
@@ -168,6 +202,15 @@ class ContractInterfaceFormAction extends Component<Props> {
         <Divider />
         {modal}
         {formFields}
+        <ReactJson
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={this.state}
+          style={{ padding: '1em' }}
+          theme="harmonic"
+        />
         {errors}
         <Button
           content={t('build')}

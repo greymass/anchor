@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Dropdown, Header } from 'semantic-ui-react';
+import { Form, Header, Segment } from 'semantic-ui-react';
 
 class ContractInterfaceSelectorAction extends Component<Props> {
   render() {
@@ -26,13 +26,19 @@ class ContractInterfaceSelectorAction extends Component<Props> {
         <p>
           {t('interface_actions_instructions')}
         </p>
-        <Dropdown
-          name="contractAction"
-          placeholder={t('interface_actions_header')}
-          onChange={onChange}
-          options={actionOptions}
-          selection
-        />
+        <Segment secondary stacked>
+          <Form>
+            <Form.Dropdown
+              fluid
+              label={t('interface_actions_header')}
+              name="contractAction"
+              placeholder={t('interface_actions_header')}
+              onChange={onChange}
+              options={actionOptions}
+              selection
+            />
+          </Form>
+        </Segment>
       </React.Fragment>
     );
   }
