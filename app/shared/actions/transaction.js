@@ -1,3 +1,5 @@
+import { set } from 'dot-prop-immutable';
+
 import * as types from './types';
 import eos from './helpers/eos';
 
@@ -6,10 +8,18 @@ export function buildTransaction(contract, action, account, data) {
     const {
       connection
     } = getState();
+    // Modify forceActionDataHex to allow for viewing of the action data
+    const modified = set(connection, 'forceActionDataHex', false);
+    // Reset system state to clear any previous transactions
+    dispatch({
+      type: types.RESET_SYSTEM_STATES
+    });
+    // Issue the pending transaction event
     dispatch({
       type: types.SYSTEM_TRANSACTION_BUILD_PENDING
     });
-    const tx = {
+    // Build the operation to perform
+    const op = {
       actions: [
         {
           account: contract.account,
@@ -22,27 +32,26 @@ export function buildTransaction(contract, action, account, data) {
         }
       ]
     };
-    eos(connection)
-      .transaction(tx, {
+    eos(modified)
+      .transaction(op, {
         broadcast: false,
+        forceActionDataHex: false,
         sign: false
       })
       .then((tx) => {
         dispatch(setTransaction(JSON.stringify({
           contract,
           transaction: tx
-        })))
+        })));
         return dispatch({
           payload: { tx },
           type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
         });
       })
-      .catch((err) => {
-        return dispatch({
-          payload: { err },
-          type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
-        });
-      });
+      .catch((err) => dispatch({
+        payload: { err },
+        type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
+      }));
   };
 }
 
@@ -114,8 +123,9 @@ export function signTransaction(tx, contract = false) {
         sign: connection.sign
       })
       .then((signed) => {
+        console.log(signed)
         if (signed.broadcast) {
-          dispatch({
+          return dispatch({
             payload: { tx: signed },
             type: types.SYSTEM_TRANSACTION_BROADCAST_SUCCESS
           });
