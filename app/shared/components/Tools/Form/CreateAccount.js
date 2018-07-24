@@ -153,7 +153,7 @@ class ToolsFormCreateAccount extends Component<Props> {
         submitDisabled
       });
     });
-  }, 500)
+  }, 200)
 
   onToggle = (e, { name }) => {
     this.setState({
