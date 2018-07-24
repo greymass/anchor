@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Divider, Icon, Segment, Table, Header } from 'semantic-ui-react';
+import { Button, Divider, Icon, Segment, Table, Header, Message } from 'semantic-ui-react';
 
 import GlobalDataBytes from '../../../Global/Data/Bytes';
 
@@ -25,7 +25,8 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
       ramAmount,
       t,
       totalCost,
-      totalDelegated
+      totalDelegated,
+      transferTokens
     } = this.props;
 
     return (
@@ -90,6 +91,14 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
           </Table.Body>
         </Table>
+        {(transferTokens)
+          ? (
+            <Message
+              content={t('tools_form_create_account_transfer_tokens_warning')}
+              icon="info circle"
+              warning
+            />
+          ) : ''}
 
         <Divider />
         <Button
