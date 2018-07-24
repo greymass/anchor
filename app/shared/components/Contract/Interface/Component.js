@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Divider, Header, Label, Menu, Segment, Tab } from 'semantic-ui-react';
+import { Checkbox, Divider, Header, Icon, Label, Menu, Segment, Tab } from 'semantic-ui-react';
 
 import ContractInterfaceTabActions from './Tab/Actions';
 import ContractInterfaceTabData from './Tab/Data';
@@ -14,7 +14,8 @@ class ContractInterfaceComponent extends Component<Props> {
   state = {
     contractAction: '',
     contractName: '',
-    contractTable: ''
+    contractTable: '',
+    contractTableScope: ''
   }
   isValidContract = (name) => {
     const { contracts } = this.props;
@@ -29,14 +30,21 @@ class ContractInterfaceComponent extends Component<Props> {
     if (name === 'contractName' && value !== this.state.contractName) {
       state.contractAction = '';
       state.contractTable = '';
+      state.contractTableScope = '';
     }
     this.setState(state);
   }
+  onSet = (data, callback = () => {}) => this.setState(data, callback)
   onSubmit = () => {
     const { actions } = this.props;
     const { contractName } = this.state;
     actions.getAbi(contractName);
   }
+  // Reset table scope to prevent visibility element from retriggering constantly
+  onTabChange = () => this.setState({
+    contractTable: '',
+    contractTableScope: ''
+  });
   resetContract = () => this.setState({ contractName: '' });
   render() {
     const {
@@ -53,7 +61,8 @@ class ContractInterfaceComponent extends Component<Props> {
     const {
       contractAction,
       contractName,
-      contractTable
+      contractTable,
+      contractTableScope
     } = this.state;
 
     // Ensure the contract is loaded and valid
@@ -98,8 +107,9 @@ class ContractInterfaceComponent extends Component<Props> {
               actions={actions}
               contract={contract}
               contractTable={contractTable}
+              contractTableScope={contractTableScope}
               onChange={this.onChange}
-              onSubmit={this.onSubmit}
+              onSet={this.onSet}
               tables={tables}
             />
           )
@@ -123,31 +133,65 @@ class ContractInterfaceComponent extends Component<Props> {
     ];
 
     return (
-      <Segment basic>
-        <Header>
-          {t('interface_header')}
-          <Header.Subheader>
-            {t('interface_subheader')}
-          </Header.Subheader>
-        </Header>
-        <ContractInterfaceSelectorContract
-          contract={contract}
-          contractName={contractName}
-          onChange={this.onChange}
-          onReset={this.resetContract}
-          onSubmit={this.onSubmit}
-        />
-        <Divider hidden />
+      <React.Fragment>
+        {(!settings.acceptedContractInterface)
+          ? (
+            (
+              <Segment
+                color="blue"
+                content={(
+                  <React.Fragment>
+                    <Header>
+                      <Icon color="blue" name="info circle" />
+                      <Header.Content>
+                        {t('interface_instructions_header')}
+                        <Header.Subheader>
+                          {t('interface_instructions_subheader')}
+                        </Header.Subheader>
+                      </Header.Content>
+                    </Header>
+                    <p>
+                      {t('interface_instructions_body_1')}
+                    </p>
+                    <p>
+                      {t('interface_instructions_body_2')}
+                    </p>
+                    <p>
+                      {t('interface_instructions_body_3')}
+                    </p>
+                    <Checkbox
+                      label={t('interface_instructions_understood')}
+                      onChange={() => this.props.actions.setSetting('acceptedContractInterface', true)}
+                    />
+                  </React.Fragment>
+                )}
+                padded
+                secondary
+                stacked
+              />
+            )
+          ) : (
+            <ContractInterfaceSelectorContract
+              contract={contract}
+              contractName={contractName}
+              onReset={this.resetContract}
+              onSet={this.onSet}
+              onSubmit={this.onSubmit}
+            />
+          )
+        }
         {(validContract)
           ? (
             <Tab
-              defaultActiveIndex={0}
+              defaultActiveIndex={1}
+              onTabChange={this.onTabChange}
               panes={panes}
               renderActiveOnly={false}
             />
-          ) : false
+          )
+          : false
         }
-      </Segment>
+      </React.Fragment>
     );
   }
 }

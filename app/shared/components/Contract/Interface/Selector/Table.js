@@ -2,13 +2,27 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Dropdown, Header } from 'semantic-ui-react';
+import { Dropdown, Form, Header, Segment } from 'semantic-ui-react';
 
 class ContractInterfaceSelectorTable extends Component<Props> {
+  constructor(props) {
+    super(props);
+    const {
+      contractTable,
+      contractTableScope
+    } = props;
+    this.state = {
+      contractTable,
+      contractTableScope
+    };
+  }
+  onChange = (e, { name, value }) => this.setState({ [name]: value });
+  onSubmit = () => this.props.onSet(this.state);
   render() {
     const {
       contract,
-      onChange,
+      contractTable,
+      contractTableScope,
       t
     } = this.props;
     const tableOptions = contract.getTables().map((table) => ({
@@ -26,13 +40,36 @@ class ContractInterfaceSelectorTable extends Component<Props> {
         <p>
           {t('interface_tables_instructions')}
         </p>
-        <Dropdown
-          name="contractTable"
-          placeholder={t('interface_tables_header')}
-          onChange={onChange}
-          options={tableOptions}
-          selection
-        />
+        <Segment secondary stacked>
+          <Form
+            onSubmit={this.onSubmit}
+          >
+            <Form.Group inline widths="equal">
+              <Form.Dropdown
+                defaultValue={contractTable}
+                fluid
+                label={t('interface_tables_header')}
+                name="contractTable"
+                placeholder={t('interface_tables_scope_placeholder')}
+                onChange={this.onChange}
+                options={tableOptions}
+                selection
+              />
+              <Form.Input
+                defaultValue={contractTableScope}
+                fluid
+                label={t('interface_tables_scope')}
+                name="contractTableScope"
+                placeholder={contract.account}
+                onChange={this.onChange}
+              />
+            </Form.Group>
+            <Form.Button
+              content={t('load')}
+              primary
+            />
+          </Form>
+        </Segment>
       </React.Fragment>
     );
   }

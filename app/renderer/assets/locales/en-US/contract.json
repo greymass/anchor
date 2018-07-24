@@ -19,5 +19,12 @@
   "interface_subheader": "Load, view, and interact with any smart contract from the EOS blockchain.",
   "interface_tables_header": "Contract Tables",
   "interface_tables_subheader": "Smact Contracts on the EOS network can contain tables containing public information.",
-  "interface_tables_instructions": "The dropdown below contains all of the available tables within this Smart Contract. Select a table to view the contents."
+  "interface_tables_instructions": "The dropdown below contains all of the available tables within this Smart Contract. Select a table to view the contents.",
+  "interface_tables_no_records": "No records found that match this contract and scope.",
+  "interface_instructions_header": "Note: This tool is meant for advanced operations",
+  "interface_instructions_subheader": "Please use caution when interacting with this tool",
+  "interface_instructions_body_1": "Actions submitted from the Smart Contract Interface Tool are real transactions on the EOS blockchain. From this interface you are able to perform every action on any contract, including transferring EOS, creating accounts, and altering an accounts permissions/keys. These actions, once submitted, are irreversable and could lead to loss of or harm to your account.",
+  "interface_instructions_body_2": "While this tool is useful for things like AirGrabs, ICO Registrations, and claiming wizards - please be cautious. Do not follow any instructions that request you 'transfer EOS with eosio.token' or 'set your account permissions' unless you have an understanding of the actions you are going to perform.",
+  "interface_instructions_body_3": "If you are unsure of exactly what you're doing, ask in a public telegram channel, on reddit, or seek the advice of a trusted block producer before proceeding.",
+  "interface_instructions_understood": "I understand and wish to use this tool."
 }
