@@ -8,6 +8,7 @@ class ContractInterfaceSelectorAction extends Component<Props> {
   render() {
     const {
       contract,
+      contractAction,
       onChange,
       t
     } = this.props;
@@ -29,6 +30,7 @@ class ContractInterfaceSelectorAction extends Component<Props> {
         <Segment secondary stacked>
           <Form>
             <Form.Dropdown
+              defaultValue={contractAction}
               fluid
               label={t('interface_actions_header')}
               name="contractAction"

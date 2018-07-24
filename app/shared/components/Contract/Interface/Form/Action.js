@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Divider, Form, Header, Message } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
@@ -202,15 +201,6 @@ class ContractInterfaceFormAction extends Component<Props> {
         <Divider />
         {modal}
         {formFields}
-        <ReactJson
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name={null}
-          src={this.state}
-          style={{ padding: '1em' }}
-          theme="harmonic"
-        />
         {errors}
         <Button
           content={t('build')}

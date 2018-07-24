@@ -123,7 +123,6 @@ export function signTransaction(tx, contract = false) {
         sign: connection.sign
       })
       .then((signed) => {
-        console.log(signed)
         if (signed.broadcast) {
           return dispatch({
             payload: { tx: signed },

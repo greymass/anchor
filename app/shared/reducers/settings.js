@@ -3,6 +3,8 @@ import * as types from '../actions/types';
 const initialState = {
   // If the active session has accepted the EOS constitution
   acceptedConstitution: false,
+  // If the wallet has ackknowledged understanding the smart contract tool
+  acceptedContractInterface: false,
   // The loaded account
   account: '',
   // The block explorer used
