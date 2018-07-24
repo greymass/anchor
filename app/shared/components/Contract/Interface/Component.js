@@ -183,7 +183,7 @@ class ContractInterfaceComponent extends Component<Props> {
         {(validContract)
           ? (
             <Tab
-              defaultActiveIndex={1}
+              defaultActiveIndex={0}
               onTabChange={this.onTabChange}
               panes={panes}
               renderActiveOnly={false}
