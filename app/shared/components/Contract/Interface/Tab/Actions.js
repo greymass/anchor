@@ -24,6 +24,7 @@ class ContractInterfaceTabActions extends Component<Props> {
       <React.Fragment>
         <ContractInterfaceSelectorAction
           contract={contract}
+          contractAction={contractAction}
           onChange={onChange}
           onSubmit={onSubmit}
         />
