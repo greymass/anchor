@@ -28,57 +28,52 @@ class ToolsProxy extends Component<Props> {
       isProxy = account.voter_info.is_proxy;
     }
 
-    return (
-      <Grid centered>
-        <Grid.Column width={8} style={{ textAlign: 'center' }} >
-          {((keys && keys.key) || settings.walletMode === 'watch') ?
-          (
-            <div>
-              <Header>
-                {t('tools_proxy_header_registration')}
-              </Header>
-              <Segment style={(isProxy) ? ({ display: 'none' }) : {}} basic>
-                <p>
-                  {t('tools_proxy_text_not_registered')}
-                </p>
-                <Divider />
-                <ToolsButtonProxyRegister
-                  account={account}
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  settings={settings}
-                  system={system}
-                />
-              </Segment>
-              <Segment style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
-                <p>
-                  {t('tools_proxy_text_registered')}
-                </p>
-                <Divider />
-                <p>
-                  {settings.account}
-                </p>
-                <Divider />
-                <ToolsButtonProxyUnregister
-                  account={account}
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  settings={settings}
-                  system={system}
-                />
-              </Segment>
-            </div>
-          ) : (
-            <WalletPanelLocked
+    return ((keys && keys.key) || settings.walletMode === 'watch')
+      ? (
+        <React.Fragment>
+          <Header>
+            {t('tools_proxy_header_registration')}
+          </Header>
+          <Segment style={(isProxy) ? ({ display: 'none' }) : {}} basic>
+            <p>
+              {t('tools_proxy_text_not_registered')}
+            </p>
+            <Divider />
+            <ToolsButtonProxyRegister
+              account={account}
               actions={actions}
+              blockExplorers={blockExplorers}
               settings={settings}
-              validate={validate}
-              wallet={wallet}
+              system={system}
             />
-          )}
-        </Grid.Column>
-      </Grid>
-    );
+          </Segment>
+          <Segment style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
+            <p>
+              {t('tools_proxy_text_registered')}
+            </p>
+            <Divider />
+            <p>
+              {settings.account}
+            </p>
+            <Divider />
+            <ToolsButtonProxyUnregister
+              account={account}
+              actions={actions}
+              blockExplorers={blockExplorers}
+              settings={settings}
+              system={system}
+            />
+          </Segment>
+        </React.Fragment>
+      )
+      : (
+        <WalletPanelLocked
+          actions={actions}
+          settings={settings}
+          validate={validate}
+          wallet={wallet}
+        />
+      );
   }
 }
 
