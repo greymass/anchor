@@ -2,10 +2,16 @@ import { find, map, pick } from 'lodash';
 
 const Eos = require('eosjs');
 
+export const typeMap = {
+  uint64: 'int',
+  uint32: 'int',
+};
+
 export default class EOSContract {
   constructor(abi, account = undefined) {
     this.account = account;
     this.abi = abi;
+    this.typeMap = typeMap;
   }
 
   tx(actionName, account, data) {
@@ -42,8 +48,20 @@ export default class EOSContract {
     return this.abi.actions;
   }
 
+  getField(struct, name) {
+    return find(this.getStruct(struct).fields, { name });
+  }
+
   getFields(name) {
     return this.getStruct(name).fields;
+  }
+
+  getFieldType(struct, name) {
+    const field = this.getField(struct, name);
+    if (field && field.type in this.typeMap) {
+      return this.typeMap[field.type];
+    }
+    return 'string';
   }
 
   getStruct(name) {
