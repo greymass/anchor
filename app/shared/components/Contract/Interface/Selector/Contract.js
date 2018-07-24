@@ -7,31 +7,53 @@ import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
 
 class ContractInterfaceSelectorContract extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      contractName: props.contractName
+    };
+  }
+  onChange = (e, { name, value }) => this.setState({ [name]: value });
+  onSubmit = () => {
+    const {
+      onSet,
+      onSubmit
+    } = this.props;
+    onSet(this.state, onSubmit);
+  }
   render() {
     const {
       contract,
-      contractName,
-      onChange,
       onReset,
-      onSubmit,
       t
     } = this.props;
+    const {
+      contractName
+    } = this.state;
     let display = (
-      <Form
-        onSubmit={onSubmit}
-      >
-        <GlobalFormFieldGeneric
-          autoFocus
-          label={t('interface_contract_account_name')}
-          name="contractName"
-          onChange={onChange}
-          value={contractName}
-        />
-        <Button
-          content={t('interface_contract_load')}
-          primary
-        />
-      </Form>
+      <Segment basic>
+        <Form
+          onSubmit={this.onSubmit}
+        >
+          <Header>
+            {t('interface_header')}
+            <Header.Subheader>
+              {t('interface_subheader')}
+            </Header.Subheader>
+          </Header>
+          <GlobalFormFieldGeneric
+            autoFocus
+            label={t('interface_contract_account_name')}
+            name="contractName"
+            onChange={this.onChange}
+            value={contractName}
+          />
+          <Button
+            content={t('interface_contract_load')}
+            primary
+          />
+        </Form>
+      </Segment>
     );
     if (contract && contract.account === contractName) {
       display = (
