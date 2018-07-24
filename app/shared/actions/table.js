@@ -1,4 +1,3 @@
-import sortBy from 'lodash/sortBy';
 import concat from 'lodash/concat';
 
 import * as types from './types';
@@ -18,7 +17,10 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
       limit,
     };
     if (index && previous) {
-      query.lower_bound = previous[previous.length - 1][index];
+      // Adding a space in front of every lower bounds
+      //   related: https://github.com/EOSIO/eos/issues/4442
+      query.lower_bound = ` ${previous[previous.length - 1][index]}`;
+      query.table_key = index;
     }
     eos(connection).getTableRows(query).then((results) => {
       const { more } = results;
