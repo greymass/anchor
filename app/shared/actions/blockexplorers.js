@@ -26,10 +26,31 @@ export function getBlockExplorers() {
         }
       },
       {
+        name: 'eosflare.io',
+        patterns: {
+          account: 'https://eosflare.io/account/{account}',
+          txid: 'https://eosflare.io/tx/{txid}'
+        }
+      },
+      {
+        name: 'eosmonitor.io',
+        patterns: {
+          account: 'https://eosmonitor.io/account/{account}',
+          txid: 'https://eosmonitor.io/txn/{txid}'
+        }
+      },
+      {
         name: 'eospark.com',
         patterns: {
           account: 'https://eospark.com/MainNet/account/{account}',
           txid: 'https://eospark.com/MainNet/tx/{txid}'
+        }
+      },
+      {
+        name: 'eosweb.net',
+        patterns: {
+          account: 'https://eosweb.net/account/{account}',
+          txid: 'https://eosweb.net/transaction/{txid}'
         }
       }
     ];
