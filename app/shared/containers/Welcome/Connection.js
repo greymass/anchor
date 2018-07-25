@@ -51,7 +51,7 @@ class WelcomeConnectionContainer extends Component<Props> {
     // Immediately set the wallet into cold storage mode
     setWalletMode('cold');
     // Move to account stage
-    onStageSelect(1);
+    onStageSelect(2);
     e.preventDefault();
     return false;
   }
@@ -88,7 +88,7 @@ class WelcomeConnectionContainer extends Component<Props> {
     } = actions;
     setSettingWithValidation('node', node);
     if (onStageSelect) {
-      onStageSelect(1);
+      onStageSelect(2);
     }
     if (settings.walletMode === 'cold') {
       setWalletMode('hot');

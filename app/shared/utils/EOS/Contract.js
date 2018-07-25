@@ -53,7 +53,9 @@ export default class EOSContract {
   }
 
   getFields(name) {
-    return this.getStruct(name).fields;
+    const struct = this.getStruct(name);
+    if (struct && struct.fields) return struct.fields;
+    return [];
   }
 
   getFieldType(struct, name) {

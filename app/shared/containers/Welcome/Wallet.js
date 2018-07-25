@@ -132,7 +132,7 @@ class WelcomeWalletContainer extends Component<Props> {
               <Button
                 content={t('back')}
                 icon="arrow left"
-                onClick={() => onStageSelect(2)}
+                onClick={() => onStageSelect(3)}
                 size="small"
               />
             </Container>
@@ -152,7 +152,7 @@ class WelcomeWalletContainer extends Component<Props> {
             <Button
               content={t('back')}
               icon="arrow left"
-              onClick={() => onStageSelect(2)}
+              onClick={() => onStageSelect(3)}
               size="small"
             />
           </Container>
