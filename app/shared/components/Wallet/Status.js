@@ -9,6 +9,7 @@ import WalletStatusBalances from './Status/Balances';
 import WalletStatusResources from './Status/Resources';
 import WalletStatusStaked from './Status/Staked';
 import WalletStatusActions from './Status/Actions';
+import WalletStatusWaiting from './Status/Waiting';
 
 import StatsFetcher from '../../utils/StatsFetcher';
 
@@ -36,6 +37,10 @@ class WalletStatus extends Component<Props> {
     const {
       activeItem
     } = this.state;
+
+    if (settings.walletMode === 'wait') {
+      return <WalletStatusWaiting />;
+    }
 
     const account = accounts[settings.account] || {};
     const balance = balances[settings.account] || {};

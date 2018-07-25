@@ -92,7 +92,7 @@ class WelcomeAccountContainer extends Component<Props> {
         const { setSetting } = actions;
         setSetting('account', account);
         if (onStageSelect) {
-          onStageSelect(2);
+          onStageSelect(3);
         }
         break;
       }
@@ -104,7 +104,7 @@ class WelcomeAccountContainer extends Component<Props> {
           const { setSettingWithValidation } = actions;
           setSettingWithValidation('account', String(account).toLowerCase());
           if (onStageSelect) {
-            onStageSelect(2);
+            onStageSelect(3);
           }
         }
         break;

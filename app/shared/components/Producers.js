@@ -6,7 +6,6 @@ import { translate } from 'react-i18next';
 import SidebarAccount from '../containers/Sidebar/Account';
 import WalletPanel from './Wallet/Panel';
 
-
 import ProducersSelector from './Producers/Selector';
 import ProducersTable from './Producers/Table';
 import ProducersVotingPreview from './Producers/Modal/Preview';
@@ -225,11 +224,11 @@ class Producers extends Component<Props> {
         wallet={wallet}
       />
     )];
-    const isValidUser = !!((keys && keys.key) || settings.walletMode === 'watch');
+    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
     const account = accounts[settings.account];
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
-    if (isValidUser) {
+    if (isValidUser && settings.walletMode !== 'wait') {
       sidebar = (
         <React.Fragment>
           <ProducersProxy

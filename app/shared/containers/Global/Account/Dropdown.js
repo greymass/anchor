@@ -65,6 +65,13 @@ class GlobalAccountDropdown extends Component<Props> {
             };
             break;
           }
+          case 'wait': {
+            icon = {
+              color: 'grey',
+              name: 'sync'
+            };
+            break;
+          }
           default: {
             // no default
           }
@@ -90,6 +97,13 @@ class GlobalAccountDropdown extends Component<Props> {
         icon = {
           color: 'blue',
           name: 'snowflake'
+        };
+        break;
+      }
+      case 'wait': {
+        icon = {
+          color: 'grey',
+          name: 'sync'
         };
         break;
       }

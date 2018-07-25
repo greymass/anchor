@@ -22,6 +22,7 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
 
   render() {
     const {
+      button,
       disabled,
       open,
       onCancel,
@@ -36,16 +37,19 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
           (t) => (
             <Modal
               centered={false}
-              trigger={(
-                <Button
-                  color="blue"
-                  content={t('wallet_panel_password_confirm_button')}
-                  floated="right"
-                  disabled={disabled}
-                  onClick={onConfirm}
-                  size="small"
-                />
-              )}
+              trigger={
+                button ||
+                (
+                  <Button
+                    color="blue"
+                    content={button || t('wallet_panel_password_confirm_button')}
+                    floated="right"
+                    disabled={disabled}
+                    onClick={onConfirm}
+                    size="small"
+                  />
+                )
+              }
               onClose={onCancel}
               open={open}
               size="tiny"

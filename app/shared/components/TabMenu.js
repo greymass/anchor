@@ -40,7 +40,7 @@ class TabMenu extends Component<Props> {
           )
           : false
         }
-        {(settings.account)
+        {(settings.account || settings.walletMode === 'wait')
           ? (
             <Menu.Item
               name="wallet"
@@ -52,13 +52,18 @@ class TabMenu extends Component<Props> {
           )
           : false
         }
-        <Menu.Item
-          name="tools"
-          icon="cog"
-          content={t('tools')}
-          active={activeItem === 'tools'}
-          onClick={handleItemClick}
-        />
+        {(settings.walletMode !== 'wait')
+          ? (
+            <Menu.Item
+              name="tools"
+              icon="cog"
+              content={t('tools')}
+              active={activeItem === 'tools'}
+              onClick={handleItemClick}
+            />
+          )
+          : false
+        }
         <Menu.Menu position="right">
           <WalletLanguage
             actions={actions}
