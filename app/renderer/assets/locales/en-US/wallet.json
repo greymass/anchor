@@ -20,6 +20,8 @@
   "wallet_account_request_encrypt_backup": "Save Encrypted Key File",
   "wallet_account_request_encrypt_password": "Encryption Password",
   "wallet_account_request_encrypt_password_visible": "Reveal entered password?",
+  "wallet_account_request_form_header": "Account Name & Keys",
+  "wallet_account_request_form_subheader": "",
   "wallet_account_request_header": "Requesting an Account",
   "wallet_account_request_step_generate": "Account Name & Keys",
   "wallet_account_request_step_generate_desc": "Pick a name and generate keys.",
@@ -51,6 +53,9 @@
   "wallet_panel_password_confirm_description": "Re-enter the local wallet password to proceed.",
   "wallet_panel_password_confirm_title": "Confirm Password",
   "wallet_panel_password_label": "Local Wallet Password",
+  "wallet_panel_waiting_header": "Awaiting Creation",
+  "wallet_panel_waiting_instructions": "The application will monitor for the creation of this new account. Once the new account has been created, the application will prompt you to enter your backup password once more, and then establish a local hot wallet.",
+  "wallet_panel_waiting_subheader": "This account has not yet been created.",
   "wallet_panel_wallet_broadcast": "Broadcast Signed Transaction",
   "wallet_panel_wallet_lock": "Lock Wallet",
   "wallet_panel_wallet_remove": "Destroy Wallet Credentials",
@@ -86,8 +91,5 @@
   "wallet_status_tab_account_history": "History",
   "wallet_status_tab_staked": "Staked EOS",
   "wallet_status_tab_token_balances": "Balances",
-  "wallet_status_total_balance": "Total",
-  "wallet_panel_waiting_header": "Awaiting Creation",
-  "wallet_panel_waiting_subheader": "This account has not yet been created.",
-  "wallet_panel_waiting_instructions": "The application will monitor for the creation of this new account. Once the new account has been created, the application will prompt you to enter your backup password once more, and then establish a local hot wallet.",
+  "wallet_status_total_balance": "Total"
 }
