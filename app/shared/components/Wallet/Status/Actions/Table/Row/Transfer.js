@@ -19,7 +19,6 @@ class WalletStatusActionsTableRowTransfer extends Component<Props> {
           floated="left"
           name={`arrow circle ${data.to === settings.account ? 'down' : 'up'}`}
           size="large"
-          style={{ marginTop: '15px' }}
         />
         {(data.to === settings.account)
           ? t('actions_table_row_transfer_received')
@@ -35,7 +34,7 @@ class WalletStatusActionsTableRowTransfer extends Component<Props> {
           : `${t('actions_table_row_transfer_to')} ${data.to}`
         }
         {(data.memo)
-          ? <p style={{ marginLeft: '25px' }}>{t('actions_table_row_transfer_memo')}: {data.memo}</p>
+          ? <p>{t('actions_table_row_transfer_memo')}: {data.memo}</p>
           : false
         }
       </React.Fragment>
