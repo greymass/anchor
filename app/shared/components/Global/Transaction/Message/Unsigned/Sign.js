@@ -87,4 +87,4 @@ class GlobalTransactionMessageUnsignedSign extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageUnsignedSign);
+export default translate('transaction')(GlobalTransactionMessageUnsignedSign);
