@@ -50,7 +50,7 @@ class ContractInterfaceSelectorTable extends Component<Props> {
                 fluid
                 label={t('interface_tables_header')}
                 name="contractTable"
-                placeholder={t('interface_tables_scope_placeholder')}
+                placeholder={t('interface_tables_placeholder')}
                 onChange={this.onChange}
                 options={tableOptions}
                 selection
@@ -65,7 +65,7 @@ class ContractInterfaceSelectorTable extends Component<Props> {
               />
             </Form.Group>
             <Form.Button
-              content={t('load')}
+              content={t('interface_tables_load')}
               primary
             />
           </Form>

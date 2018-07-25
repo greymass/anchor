@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "Lock Wallet",
   "wallet_panel_wallet_remove": "Destroy Wallet Credentials",
   "wallet_panel_wallet_save": "Save Local Wallet",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "Unlock Wallet",
   "wallet_panel_wallet_unlock_failure_content": "Please try again.",
   "wallet_panel_wallet_unlock_failure_header": "Failed to unlock wallet",

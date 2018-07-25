@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import debounce from 'lodash/debounce';
 
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 
@@ -14,13 +15,13 @@ class ContractInterfaceSelectorContract extends Component<Props> {
     };
   }
   onChange = (e, { name, value }) => this.setState({ [name]: value });
-  onSubmit = () => {
+  onSubmit = debounce(() => {
     const {
       onSet,
       onSubmit
     } = this.props;
     onSet(this.state, onSubmit);
-  }
+  }, 300)
   render() {
     const {
       contract,

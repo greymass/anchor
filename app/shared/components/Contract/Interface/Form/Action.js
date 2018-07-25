@@ -127,7 +127,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           contract={transaction.contract}
           icon="wifi"
           open
-          title={t('wallet_panel_wallet_broadcast')}
+          title={t('wallet_panel_wallet_signbroadcast')}
           settings={settings}
           system={system}
           transaction={transaction.data}
@@ -152,7 +152,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           contract={transaction.contract}
           icon="wifi"
           open
-          title={t('wallet_panel_wallet_broadcast')}
+          title={t('wallet_panel_wallet_signbroadcast')}
           settings={settings}
           system={system}
           transaction={transaction.data}
@@ -177,7 +177,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           contract={transaction.contract}
           icon="wifi"
           open
-          title={t('wallet_panel_wallet_broadcast')}
+          title={t('wallet_panel_wallet_signbroadcast')}
           settings={settings}
           system={system}
           transaction={transaction.data}
@@ -203,7 +203,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         {formFields}
         {errors}
         <Button
-          content={t('build')}
+          content={t('interface_form_action_button')}
           primary
         />
       </Form>
