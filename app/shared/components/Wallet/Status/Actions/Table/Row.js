@@ -8,6 +8,7 @@ import ExplorerLink from '../../../../Global/Modal/ExplorerLink';
 
 import WalletStatusActionsTableRowNewaccount from './Row/Newaccount';
 import WalletStatusActionTableRowBuyram from './Row/Buyram';
+import WalletStatusActionsTableRowClaim from './Row/Claim';
 import WalletStatusActionTableRowClaimrewards from './Row/Claimrewards';
 import WalletStatusActionTableRowDelegatebw from './Row/Delegatebw';
 import WalletStatusActionTableRowGeneric from './Row/Generic';
@@ -16,11 +17,13 @@ import WalletStatusActionTableRowRegproxy from './Row/Regproxy';
 import WalletStatusActionTableRowSellram from './Row/Sellram';
 import WalletStatusActionTableRowTransfer from './Row/Transfer';
 import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
+import WalletStatusActionTableRowUpdateauth from './Row/Updateauth';
 import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
 
 const rowComponentsMapping = {
   buyram: WalletStatusActionTableRowBuyram,
   buyrambytes: WalletStatusActionTableRowBuyram,
+  claim: WalletStatusActionsTableRowClaim,
   claimrewards: WalletStatusActionTableRowClaimrewards,
   delegatebw: WalletStatusActionTableRowDelegatebw,
   newaccount: WalletStatusActionsTableRowNewaccount,
@@ -29,6 +32,7 @@ const rowComponentsMapping = {
   sellram: WalletStatusActionTableRowSellram,
   transfer: WalletStatusActionTableRowTransfer,
   undelegatebw: WalletStatusActionTableRowUndelegatebw,
+  updateauth: WalletStatusActionTableRowUpdateauth,
   voteproducer: WalletStatusActionTableRowVoteproducer
 };
 
