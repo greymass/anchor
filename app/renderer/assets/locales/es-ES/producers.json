@@ -1,5 +1,5 @@
 {
-  "block_producer": "Block Producer",
+  "block_producer": "Productor de bloque",
   "block_producer_eos_staked": "EOS Staked Globally",
   "block_producer_last_produced": "Last Block",
   "block_producer_last_production_status": "Status",
