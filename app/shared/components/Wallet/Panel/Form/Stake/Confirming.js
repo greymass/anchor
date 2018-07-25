@@ -47,7 +47,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
       <Segment padding="true" basic>
         {(unstaking) ? (
           <Header textAlign="center">
-            {t('about_to_unstake')}
+            {t('about_to_unstake_tokens')}
           </Header>
         ) : ''}
         <Segment.Group>
