@@ -56,8 +56,7 @@ class Producers extends Component<Props> {
 
   componentDidMount() {
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 15000);
-    this.props.actions.getProducersInfo();
+    this.interval = setInterval(this.tick.bind(this), 60000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -130,10 +129,12 @@ class Producers extends Component<Props> {
       validate
     } = this.props;
     const {
-      getProducers
+      getProducers,
+      getProducersInfo
     } = actions;
     if (validate.NODE) {
       getProducers();
+      getProducersInfo();
     }
   }
 
