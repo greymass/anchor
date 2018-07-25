@@ -123,7 +123,7 @@ export function validateKey(key) {
       // Establish EOS connection
       eos(connection).getAccount(settings.account).then((account) => {
         // Keys must resolve to one of these types of permissions
-        const permissions = ['active', 'owner'];
+        const permissions = ['active'];
         try {
           // Derive the public key from the private key provided
           const expect = ecc.privateToPublic(key);
