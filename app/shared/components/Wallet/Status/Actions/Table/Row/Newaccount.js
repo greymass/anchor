@@ -19,7 +19,7 @@ class WalletStatusActionsTableRowNewaccount extends Component<Props> {
       <React.Fragment>
         <Icon
           floated="left"
-          name="angle-double-down"
+          name="angle double down"
           size="large"
         />
         { `${t('actions_table_row_newaccount_text_one')} ${newAccount}.` }

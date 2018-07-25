@@ -17,7 +17,7 @@ class WalletStatusActionsTableRowTransfer extends Component<Props> {
       <React.Fragment>
         <Icon
           floated="left"
-          name="arrow circle up"
+          name={`arrow circle ${data.to === settings.account ? 'down' : 'up'}`}
           size="large"
         />
         {(data.to === settings.account)
