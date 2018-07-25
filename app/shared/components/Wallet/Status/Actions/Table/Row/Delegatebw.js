@@ -26,6 +26,14 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
         ` ${t('actions_table_row_text_and')} `
       ) : '';
 
+    let onAccount = '';
+
+    if (data.from !== data.receiver) {
+      onAccount = ` ${t('actions_table_row_on_account')} ${data.receiver}`;
+    }
+
+    const sentence = `${t('actions_table_row_delegatebw_text_one')} ${stakeToCpuDescription}${stakeConnector}${stakeToNetDescription}${onAccount}.`;
+
     return (
       <React.Fragment>
         <Icon
@@ -33,7 +41,7 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
           name="microchip"
           size="large"
         />
-        { `${t('actions_table_row_delegatebw_text_one')} ${stakeToCpuDescription}${stakeConnector}${stakeToNetDescription}.` }
+        { sentence }
       </React.Fragment>
     );
   }
