@@ -8,6 +8,7 @@ import ExplorerLink from '../../../../Global/Modal/ExplorerLink';
 
 import WalletStatusActionTableRowDelegatebw from './Row/Delegatebw';
 import WalletStatusActionTableRowGeneric from './Row/Generic';
+import WalletStatusActionsTableRowNewaccount from './Row/Newaccount';
 import WalletStatusActionTableRowRefund from './Row/Refund';
 import WalletStatusActionTableRowRegproxy from './Row/Regproxy';
 import WalletStatusActionTableRowTransfer from './Row/Transfer';
@@ -17,15 +18,16 @@ import WalletStatusActionTableRowBuyram from './Row/Buyram';
 import WalletStatusActionTableRowSellram from './Row/Sellram';
 
 const rowComponentsMapping = {
-  delegatebw: WalletStatusActionTableRowDelegatebw,
-  refund: WalletStatusActionTableRowRefund,
-  regproxy: WalletStatusActionTableRowRegproxy,
-  transfer: WalletStatusActionTableRowTransfer,
-  undelegatebw: WalletStatusActionTableRowUndelegatebw,
-  voteproducer: WalletStatusActionTableRowVoteproducer,
   buyram: WalletStatusActionTableRowBuyram,
   buyrambytes: WalletStatusActionTableRowBuyram,
-  sellram: WalletStatusActionTableRowSellram
+  delegatebw: WalletStatusActionTableRowDelegatebw,
+  newaccount: WalletStatusActionsTableRowNewaccount,
+  refund: WalletStatusActionTableRowRefund,
+  regproxy: WalletStatusActionTableRowRegproxy,
+  sellram: WalletStatusActionTableRowSellram,
+  transfer: WalletStatusActionTableRowTransfer,
+  undelegatebw: WalletStatusActionTableRowUndelegatebw,
+  voteproducer: WalletStatusActionTableRowVoteproducer
 };
 
 class WalletStatusActionsTableRow extends Component<Props> {
