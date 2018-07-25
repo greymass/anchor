@@ -1,6 +1,6 @@
 {
   "abi": "ABI",
-  "actions": "Actions",
+  "actions": "Acciones",
   "tables": "Tables",
   "interface_actions_header": "Contract Actions",
   "interface_actions_instructions": "The dropdown below contains all of the actions within this Smart Contract. Select an action to generate a form with the available parameters.",
