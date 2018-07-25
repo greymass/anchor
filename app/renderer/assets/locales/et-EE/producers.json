@@ -45,7 +45,7 @@
   "producer_welcome_p3": "",
   "active_producer": "Aktiivne Tootja",
   "backup_producer": "Varutootja",
-  "producers_table_votes_proxied": "Current producer voting proxy:",
+  "producers_table_votes_proxied": "Praegune tootja hääletamise volitus:",
   "producers_button_proxy_setup_text": "Set Voter Proxy",
   "producers_button_proxy_change_text": "Change Voter Proxy",
   "producers_form_proxy_header": "Configure Producer Voting Proxy",
