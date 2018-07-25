@@ -1,8 +1,8 @@
 {
   "abi": "ABI",
-  "actions": "Actions",
-  "tables": "Tables",
-  "interface_actions_header": "Contract Actions",
+  "actions": "アクション",
+  "tables": "テーブル",
+  "interface_actions_header": "コントラクトアクション",
   "interface_actions_instructions": "The dropdown below contains all of the actions within this Smart Contract. Select an action to generate a form with the available parameters.",
   "interface_actions_subheader": "Smart Contracts on the EOS network can contain executable actions.",
   "interface_contract_account_name": "Contract Account Name",
