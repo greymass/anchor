@@ -1,18 +1,20 @@
 {
   "application_name": "eos-voter",
   "application_version": "v0.4.0",
+  "back": "Back",
   "block_height": "Numero di Blocco",
   "cancel": "Cancella",
   "close": "Chiudi",
   "confirm": "Conferma",
+  "continue_setup": "Continue Account Setup",
+  "copy_to_clipboard": "Copy to Clipboard",
   "error": "Error",
   "loading": "Caricato",
-  "search": "Cerca...",
-  "waiting": "In attesa...",
-  "reset_application": "DEBUG: Reset dell'applicazione",
-  "continue_setup": "Continue Account Setup",
+  "next": "Next",
   "property": "Property",
+  "remove": "Remove",
+  "reset_application": "DEBUG: Reset dell'applicazione",
+  "search": "Cerca...",
   "value": "Value",
-  "back": "Back",
-  "remove": "Remove"
+  "waiting": "In attesa..."
 }
