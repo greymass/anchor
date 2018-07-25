@@ -15,12 +15,12 @@
   "ram_form_label_amount_in_bytes": "Cantidad de RAM (en Bytes)",
   "ram_form_label_amount_in_eos": "Costo de la RAM (en EOS)",
   "ram_form_text_amount_estimate": "La cantidad estimada es",
-  "ram_form_text_estimate": "Estimated cost is",
+  "ram_form_text_estimate": "El costo estimado es",
   "ram_sell_button_cta": "Vender RAM",
-  "ram_sell_confirming_message_one": "You are about to sell",
-  "ram_sell_modal_title": "Sell RAM",
-  "ram_stats_title_one": "EOS Balance",
-  "ram_stats_title_two": "Available RAM",
-  "ram_stats_title_three": "Used RAM",
-  "ram_stats_title_four": "Total RAM"
+  "ram_sell_confirming_message_one": "Está a punto de vender",
+  "ram_sell_modal_title": "Vender RAM",
+  "ram_stats_title_one": "Balance EOS",
+  "ram_stats_title_two": "RAM Disponible",
+  "ram_stats_title_three": "RAM Utilizada",
+  "ram_stats_title_four": "RAM Total"
 }
