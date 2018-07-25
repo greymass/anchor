@@ -95,7 +95,7 @@ ipcMain.on('saveFile', (event, data, prefix = 'tx') => {
   const defaultPath = app.getPath('documents');
   const defaultFilename = `${prefix}-${getDateString()}.json`;
   const fileName = dialog.showSaveDialog({
-    title: 'Save Unsigned Transaction',
+    title: 'Save File',
     defaultPath: `${defaultPath}/${defaultFilename}`,
     filters: [
       { name: 'JSON Files', extensions: ['json'] }
