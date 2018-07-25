@@ -46,14 +46,14 @@ class WelcomeBreadcrumb extends Component<Props> {
           ? (
             <React.Fragment>
               <Breadcrumb.Section
-                active={(stage === 2)}
-                onClick={(stage > 2) ? () => onStageSelect(2) : null}
+                active={(stage === 3)}
+                onClick={(stage > 3) ? () => onStageSelect(3) : null}
               >
                 {t('welcome_stage_authorize')}
               </Breadcrumb.Section>
               <Breadcrumb.Divider icon="right angle" />
               <Breadcrumb.Section
-                active={(stage === 3)}
+                active={(stage === 4)}
               >
                 {t('welcome_stage_wallet')}
               </Breadcrumb.Section>
@@ -61,7 +61,7 @@ class WelcomeBreadcrumb extends Component<Props> {
           )
           : (
             <Breadcrumb.Section
-              active={(stage === 2)}
+              active={(stage === 3)}
             >
               {t('welcome_stage_watchwallet')}
             </Breadcrumb.Section>
