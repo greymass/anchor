@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
+import WalletPanelWaiting from './Panel/Waiting';
 
 type Props = {
   actions: {},
@@ -35,6 +36,14 @@ export default class WalletPanel extends Component<Props> {
     } = this.props;
 
     let panel = false;
+
+    if (settings.walletMode === 'wait') {
+      return (
+        <WalletPanelWaiting />
+      );
+    }
+
+
     if (wallet.data) {
       panel = (
         <WalletPanelLocked

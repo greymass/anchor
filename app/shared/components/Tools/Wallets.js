@@ -66,10 +66,10 @@ class ToolsWallets extends Component<Props> {
                         trigger={(
                           <Label
                             basic
+                            content={t(`global:global_modal_account_import_${account.mode}_wallet`)}
+                            icon={(account.mode === 'wait') ? 'loading sync' : 'disk' }
                             position="left center"
-                          >
-                            {t(`global:global_modal_account_import_${account.mode}_wallet`)}
-                          </Label>
+                          />
                         )}
                       />
                     </Table.Cell>
