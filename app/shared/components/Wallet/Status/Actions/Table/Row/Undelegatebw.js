@@ -26,6 +26,14 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
         ` ${t('actions_table_row_text_and')} `
       ) : '';
 
+    let onAccount = '';
+
+    if (data.from !== data.receiver) {
+      onAccount = ` ${t('actions_table_row_on_account')} ${data.receiver}`;
+    }
+
+    const sentence = `${t('actions_table_row_undelegatebw_text_one')} ${unstakeToCpuDescription} ${unstakeConnector} ${unstakeToNetDescription}${onAccount}.`;
+
     return (
       <React.Fragment>
         <Icon
@@ -33,7 +41,7 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
           name="microchip"
           size="large"
         />
-        { `${t('actions_table_row_undelegatebw_text_one')} ${unstakeToCpuDescription} ${unstakeConnector} ${unstakeToNetDescription}.` }
+        { sentence }
       </React.Fragment>
     );
   }
