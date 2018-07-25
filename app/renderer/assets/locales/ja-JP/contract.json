@@ -24,7 +24,7 @@
   "interface_instructions_header": "注: このツールは高度な操作を提供するものです",
   "interface_instructions_subheader": "このツールを使用する際は注意してください",
   "interface_instructions_body_1": "スマートコントラクトインターフェースツールから送信されたアクションはEOSブロックチェーンの実際のトランザクションです。このインターフェースから、EOSの移転、アカウント作成およびアカウントの権限/キーの変更を含む任意のコントラクトのすべてのアクションを実行できます。これらのアクションは、一度送信したら取り消し不可能であり、損失に繋がる場合やアカウントに害をなす場合があります。",
-  "interface_instructions_body_2": "While this tool is useful for things like AirGrabs, ICO Registrations, and claiming wizards - please be cautious. Do not follow any instructions that request you 'transfer EOS with eosio.token' or 'set your account permissions' unless you have an understanding of the actions you are going to perform.",
-  "interface_instructions_body_3": "If you are unsure of exactly what you're doing, ask in a public telegram channel, on reddit, or seek the advice of a trusted block producer before proceeding.",
-  "interface_instructions_understood": "I understand and wish to use this tool."
+  "interface_instructions_body_2": "このツールはAirGrabやICO登録、請求ウィザードなどに便利ですが、とにかく気をつけてください。実行しようとしているアクションを理解している場合を除いて、「eosio.tokenでEOSを移転する」や「アカウント権限を設定する」といったことを要求する指示には従わないで下さい。",
+  "interface_instructions_body_3": "しようとしていることを完全には理解していない場合は、進める前に公開telegramチャンネルやredditで質問するか、または信用できるブロックプロデューサのアドバイスを探して下さい。",
+  "interface_instructions_understood": "理解してこのツールを使用します。"
 }
