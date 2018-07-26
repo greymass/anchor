@@ -10,7 +10,6 @@
   "eos_in_net_after": "EOS резервирующих пропускной способности сети (NET) после",
   "net_staked": "EOS закреплённые для резервации пропускной способности сети (NET)",
   "stake_button_cta": "Измененить количество закреплённых EOS",
-  "stake_form": "Закрепление токенов",
   "stake_modal_title": "Изменение количества закреплённых EOS",
   "stake_success": "Вы успешно закрепили дополнительные EOS.",
   "stake_updated": "Ваша ставка была успешно обновлена.",
@@ -24,7 +23,7 @@
   "update_staked_net_amount": "Измененить баланс EOS закреплённых для резервации пропускной способности сети (NET)",
   "will_have_less_than_one_eos_staked": "У вас будет меньше 1 EOS, закреплённых для резервации ресурсов блокцепи. Это может помешать вам выполнять транзакции, когда сеть занята.",
   "you_will_have": "У вас будет",
-  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "about_to_unstake_tokens": "You are about to unstake some tokens, please note that all tokens that were unstaked will have to be claimed in 72 hours.",
   "have_already_unstaked": "You are currently unstaking ",
   "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
 }
