@@ -1,5 +1,7 @@
 import * as types from '../actions/types';
 
+import EOSContract from '../utils/EOS/Contract';
+
 export default function system(state = {}, action) {
   const { type } = action;
 
@@ -46,7 +48,8 @@ export default function system(state = {}, action) {
     }
     // Attach any returned ABIs
     if (action.payload.contract) {
-      newState[contractField] = action.payload.contract;
+      const { abi, account_name } = action.payload.contract;
+      newState[contractField] = new EOSContract(abi, account_name);
     }
   }
 
