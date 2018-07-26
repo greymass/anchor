@@ -1,18 +1,20 @@
 {
   "application_name": "eos-voter",
   "application_version": "v0.4.0",
+  "back": "Tagasi",
   "block_height": "Ploki kõrgus",
   "cancel": "Loobu",
   "close": "Sulge",
   "confirm": "Kinnita",
+  "continue_setup": "Jätka konto seadistamisega",
+  "copy_to_clipboard": "Kopeeri vahemälusse",
   "error": "Tõrge",
   "loading": "Laaditud",
-  "search": "Otsi...",
-  "waiting": "Ootan...",
-  "reset_application": "DEBUG: Taaskäivita rakendus",
-  "continue_setup": "Jätka konto seadistamisega",
+  "next": "Edasi",
   "property": "Vara",
+  "remove": "Eemalda",
+  "reset_application": "DEBUG: Taaskäivita rakendus",
+  "search": "Otsi...",
   "value": "Väärtus",
-  "back": "Tagasi",
-  "remove": "Eemalda"
+  "waiting": "Ootan..."
 }
