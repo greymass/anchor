@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "ウォレットをロック",
   "wallet_panel_wallet_remove": "ウォレット資格情報を破棄",
   "wallet_panel_wallet_save": "ローカルウォレットを保存",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "ウォレットをアンロック",
   "wallet_panel_wallet_unlock_failure_content": "もう一度やり直してください。",
   "wallet_panel_wallet_unlock_failure_header": "ウォレットのアンロックに失敗しました",
