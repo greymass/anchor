@@ -10,7 +10,6 @@
   "eos_in_net_after": "EOS en Bandwidth après",
   "net_staked": "EOS attribué au Bandwidth",
   "stake_button_cta": "Mettez vos ressources à jour",
-  "stake_form": "Attribué des EOS",
   "stake_modal_title": "Mettez vos ressources à jour",
   "stake_success": "Vos EOS ont été attribué avec succès",
   "stake_updated": "Vos ressources ont été mise à jour ",
@@ -24,7 +23,7 @@
   "update_staked_net_amount": "Quantité de EOS attribué en ressource Bandwidth",
   "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have": "Vous aurez",
-  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "about_to_unstake_tokens": "You are about to unstake some tokens, please note that all tokens that were unstaked will have to be claimed in 72 hours.",
   "have_already_unstaked": "You are currently unstaking ",
   "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
 }
