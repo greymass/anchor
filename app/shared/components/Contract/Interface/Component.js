@@ -177,6 +177,7 @@ class ContractInterfaceComponent extends Component<Props> {
               onReset={this.resetContract}
               onSet={this.onSet}
               onSubmit={this.onSubmit}
+              settings={settings}
             />
           )
         }
