@@ -1,18 +1,20 @@
 {
   "application_name": "eos-voter",
   "application_version": "v0.4.0",
+  "back": "Back",
   "block_height": "Block Height",
   "cancel": "Cancel",
   "close": "Close",
   "confirm": "Confirm",
+  "continue_setup": "Continue Account Setup",
+  "copy_to_clipboard": "Copy to Clipboard",
   "error": "Error",
   "loading": "Loaded",
-  "search": "Search...",
-  "waiting": "Waiting...",
-  "reset_application": "DEBUG: Reset Application",
-  "continue_setup": "Continue Account Setup",
+  "next": "Next",
   "property": "Property",
+  "remove": "Remove",
+  "reset_application": "DEBUG: Reset Application",
+  "search": "Search...",
   "value": "Value",
-  "back": "Back",
-  "remove": "Remove"
+  "waiting": "Waiting..."
 }
