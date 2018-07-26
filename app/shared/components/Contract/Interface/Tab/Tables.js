@@ -42,7 +42,7 @@ class ContractInterfaceTabTables extends Component<Props> {
       }
     }
   }, 500)
-  load = throttle(() => {
+  load = throttle((refresh = false) => {
     // The selected contract
     const {
       actions,
@@ -61,10 +61,10 @@ class ContractInterfaceTabTables extends Component<Props> {
     const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`)
     let rows = false;
     let more = false;
-    if (tableData) {
+    if (!refresh && tableData) {
       ({ more, rows } = tableData);
     }
-    if (!rows || more) {
+    if (!rows || more || refresh) {
       actions.getTable(
         contract.account,
         tableScope,
@@ -75,6 +75,7 @@ class ContractInterfaceTabTables extends Component<Props> {
       );
     }
   }, 1000)
+  onSet = (data) => this.props.onSet(data, () => this.load(true));
   render() {
     const {
       contract,
@@ -88,12 +89,15 @@ class ContractInterfaceTabTables extends Component<Props> {
     let rows = [];
     let fields = [];
     if (contractTable) {
-      const { type: dataType } = contract.getTable(contractTable);
-      const tableScope = contractTableScope || contract.account;
-      ({ fields } = contract.getStruct(dataType));
-      const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`)
-      if (tableData) {
-        ({ rows } = tableData);
+      const table = contract.getTable(contractTable);
+      if (table) {
+        const { type: dataType } = table;
+        const tableScope = contractTableScope || contract.account;
+        ({ fields } = contract.getStruct(dataType));
+        const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`)
+        if (tableData) {
+          ({ rows } = tableData);
+        }
       }
     }
 
@@ -104,7 +108,7 @@ class ContractInterfaceTabTables extends Component<Props> {
           contractTable={contractTable}
           contractTableScope={contractTableScope}
           onChange={onChange}
-          onSet={onSet}
+          onSet={this.onSet}
         />
         {(contractTable)
           ? (
