@@ -18,7 +18,7 @@
   "tools_form_create_account_delegated_resources_warning": "新規アカウントにはCPUと帯域の両方に最小0.5000 EOSを委任して、ネットワーク上で操作を実行する権利を与えることを推奨します。",
   "tools_form_create_account_ram_price_estimate": "RAMの見積もり価格は",
   "tools_form_create_account_public_keys_warning": "ベストプラクティスでは、異なるアクティブキーとオーナーキーを使用することを推奨します。オーナーキーはオフラインで保持し、アクティブキーは通常の使用時にウォレットで使用します。",
-  "tools_form_create_account_transfer_tokens_warning": "The tokens amounts specified for staked CPU and Bandwidth will be transferred and owned by the new account.",
+  "tools_form_create_account_transfer_tokens_warning": "CPUと帯域へステークに指定したトークン数は移転され、新しいアカウントによって所有されます。",
   "tools_create_account_text": "EOSネットワークにアカウントの作成 (および料金の支払い) をします。",
   "tools_change_block_explorer": "ブロックエクスプローラを変更",
   "tools_change_language": "言語を変更",
