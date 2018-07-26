@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "Blocca il portafoglio",
   "wallet_panel_wallet_remove": "Distruggi le credenziali del portafoglio",
   "wallet_panel_wallet_save": "Salva il portafoglio locale",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "Sblocca il portafoglio",
   "wallet_panel_wallet_unlock_failure_content": "Per favore, riprova.",
   "wallet_panel_wallet_unlock_failure_header": "Errore - Portafoglio no sbloccato",
