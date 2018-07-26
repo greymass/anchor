@@ -27,7 +27,7 @@
   "actions_table_row_undelegatebw_text_one": "(ステーク解除)",
   "actions_table_row_undelegatebw_text_three": "を帯域から",
   "actions_table_row_undelegatebw_text_two": "をCPUから",
-  "actions_table_row_update_auth_text": "Permissions updated (view transaction on block explorer for details).",
+  "actions_table_row_update_auth_text": "アクセス権限が更新されました (詳細はブロックエクスプローラでトランザクションを表示)。",
   "actions_table_row_voteproducer_text_one": "プロデューサ投票の委任を中止しました。",
   "actions_table_row_voteproducer_text_two": "がプロデューサ投票をあなたに委任しました。",
   "actions_table_row_voteproducer_text_three": "プロデューサ投票を次のアカウントに委任しました:",
@@ -38,5 +38,5 @@
   "actions_table_row_buyrambytes_text_one": "(購入) ",
   "actions_table_row_sellram_text_one": "(売却) ",
   "actions_table_row_of_ram": "のRAM",
-  "actions_table_row_on_account": "on account"
+  "actions_table_row_on_account": "のアカウント"
 }
