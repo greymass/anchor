@@ -29,10 +29,11 @@ class WalletStatusActionsTableRowGeneric extends Component<Props> {
             <TimeAgo date={`${action.block_time}z`} />
             {' - '}
             <ExplorerLink
-              blockExplorer={blockExplorers[settings.blockExplorer] || blockExplorers[0]}
+              blockExplorers={blockExplorers}
               content={t('actions_link_content')}
               linkData={action.trx_id}
               linkType="txid"
+              settings={settings}
             />
           </Header>
           <Header

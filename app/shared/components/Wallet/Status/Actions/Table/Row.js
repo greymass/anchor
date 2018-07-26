@@ -97,10 +97,11 @@ class WalletStatusActionsTableRow extends Component<Props> {
                 width={3}
               >
                 <ExplorerLink
-                  blockExplorer={blockExplorers[settings.blockExplorer] || blockExplorers[0]}
+                  blockExplorers={blockExplorers}
                   content={`${trx_id.substr(0, 4)}...${trx_id.substr(-4)}`}
                   linkData={action.action_trace.trx_id}
                   linkType="txid"
+                  settings={settings}
                 />
               </Table.Cell>
             </React.Fragment>
