@@ -1,18 +1,20 @@
 {
   "application_name": "eos-voter",
   "application_version": "v0.4.0",
+  "back": "戻る",
   "block_height": "ブロック高",
   "cancel": "キャンセル",
   "close": "閉じる",
   "confirm": "確認",
+  "continue_setup": "アカウント設定を続行する",
+  "copy_to_clipboard": "Copy to Clipboard",
   "error": "エラー",
   "loading": "ロードしました",
-  "search": "検索...",
-  "waiting": "待機中...",
-  "reset_application": "デバッグ: アプリケーションをリセット",
-  "continue_setup": "アカウント設定を続行する",
+  "next": "Next",
   "property": "プロパティ",
+  "remove": "削除",
+  "reset_application": "デバッグ: アプリケーションをリセット",
+  "search": "検索...",
   "value": "値",
-  "back": "戻る",
-  "remove": "削除"
+  "waiting": "待機中..."
 }
