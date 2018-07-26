@@ -12,7 +12,7 @@
   "wallet_account_lookup_modal_key_invalid": "入力されたキーは有効なEOSの公開鍵ではありません。",
   "wallet_account_lookup_modal_title": "公開鍵でアカウント名を検索します",
   "wallet_account_lookup_modal_trigger": "あなたのアカウント名を検索しますか？",
-  "wallet_account_request_backup_header": "Backup your new account",
+  "wallet_account_request_backup_header": "新しいアカウントをバックアップ",
   "wallet_account_request_backup_instructions": "This process will prompt you to save your newly created public and private keys to an encrypted wallet file on your local computer using a password. The password will be required when using importing the backup and cannot the keys cannot be recovered without it.",
   "wallet_account_request_backup_subheader": "Encrypt and save your private keys",
   "wallet_account_request_code_header": "Account Request Code",
