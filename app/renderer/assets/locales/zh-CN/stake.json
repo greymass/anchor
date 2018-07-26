@@ -10,7 +10,6 @@
   "eos_in_net_after": "EOS在宽带之后",
   "net_staked": "EOS以带宽放样",
   "stake_button_cta": "更新放大的EOS",
-  "stake_form": "放下硬币",
   "stake_modal_title": "更新放大的EOS金额",
   "stake_success": "您已成功放置额外的EOS.",
   "stake_updated": "您的股份已成功更新.",
@@ -24,7 +23,7 @@
   "update_staked_net_amount": "将EOS设置为带宽",
   "will_have_less_than_one_eos_staked": "You will have less than 1 EOS staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have": "您会有",
-  "about_to_unstake": "You are about to stake/unstake some coins, please note that all coins that were unstaked will have to be claimed in 72 hours.",
+  "about_to_unstake_tokens": "You are about to unstake some tokens, please note that all tokens that were unstaked will have to be claimed in 72 hours.",
   "have_already_unstaked": "You are currently unstaking ",
   "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
 }
