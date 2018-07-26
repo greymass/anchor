@@ -13,9 +13,7 @@
   "transfer_label_quantity": "Kogus",
   "transfer_label_token_and_quantity": "Osaku valik + Kogus",
   "transfer_label_memo": "Ülekande Teade",
-  "transfer_label_send": "Siit saad saata osakuid teisele kontole. Täida väljad ja vali Kinnita.",
-  "transfer_label_receive": "Osakute vastuvõtmiseks enda kontole, palun järgi allpool toodud juhiseid.",
-  "transfer_receive_modal_title": "Võta vastu osakud",
-  "transfer_receive_body": "Osakute vastuvõtmiseks pead lihtsalt andma saatjale järgmise kontonime.",
+  "transfer_receive_modal_header": "Receive Tokens",
+  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
   "transfer_close": "Sulge"
 }
