@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "Заблокировать Кошелёк",
   "wallet_panel_wallet_remove": "Уничтожить Кошелек",
   "wallet_panel_wallet_save": "Сохранить Кошелёк",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "Разблокировать Кошелёк",
   "wallet_panel_wallet_unlock_failure_content": "Попробуйте еще раз.",
   "wallet_panel_wallet_unlock_failure_header": "Не удалось разблокировать кошелёк",
