@@ -13,9 +13,7 @@
   "transfer_label_quantity": "Cantidad",
   "transfer_label_token_and_quantity": "Selección de token + cantidad",
   "transfer_label_memo": "Transferir Memo",
-  "transfer_label_send": "Aquí es donde puede enviar monedas a otra cuenta. Rellene el siguiente formulario y presione confirmar.",
-  "transfer_label_receive": "Para recibir monedas en su cuenta, siga las instrucciones de abajo.",
-  "transfer_receive_modal_title": "Recibir Monedas",
-  "transfer_receive_body": "Para recibir Monedas simplemente envíe el siguiente nombre de cuenta a quien se las enviará.",
+  "transfer_receive_modal_header": "Receive Tokens",
+  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
   "transfer_close": "Cerrar"
 }
