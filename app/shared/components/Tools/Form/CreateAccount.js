@@ -76,7 +76,10 @@ class ToolsFormCreateAccount extends Component<Props> {
       getRamStats
     } = actions;
 
-    getCurrencyBalance(account.account_name);
+    if (account) {
+      getCurrencyBalance(account.account_name);
+    }
+
     getRamStats();
   }
 
@@ -193,8 +196,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors[attribute] = null;
     });
 
-    if (Number(ramAmount) < 3100) {
-      formErrors.ramAmount = 'not_enough_ram_for_new_account';
+    if (Number(ramAmount) < 4000) {
+      formErrors.ramAmount = 'ram_under_minimum_for_new_account';
       submitDisabled = true;
     }
 
