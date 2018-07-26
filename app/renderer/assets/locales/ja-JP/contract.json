@@ -8,6 +8,7 @@
   "interface_contract_load": "コントラクトをロード",
   "interface_contract_loaded_header": "ロードしたコントラクト:",
   "interface_contract_loaded_subheader": "コントラクトのロードに成功しました。",
+  "interface_contract_account_name_placeholder": "Enter the contract account name or search through recently used contracts.",
   "interface_contract_reset": "コントラクトを変更",
   "interface_data_header": "コントラクトABI",
   "interface_data_subheader": "スマートコントラクトの全コード自体は以下に表示されます。",
