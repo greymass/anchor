@@ -1,6 +1,6 @@
 {
-  "transfer_send_button_cta": "Send Tokens",
-  "transfer_receive_button_cta": "Receive Tokens",
+  "transfer_send_button_cta": "토큰 보내기",
+  "transfer_receive_button_cta": "토큰 받기",
   "transfer_modal_title": "토큰 전송",
   "transfer_modal_transaction_successful_title": "전송 성공!",
   "transfer_modal_transaction_successful_message": "요청한 거래가 처리되었습니다. 거래 ID는 아래에서 확인할 수 있습니다.",
@@ -13,5 +13,7 @@
   "transfer_label_quantity": "수량",
   "transfer_label_token_and_quantity": "토큰 선택 + 수량",
   "transfer_label_memo": "거래 메모",
-  "transfer_close": "Close"
+  "transfer_receive_modal_header": "Receive Tokens",
+  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
+  "transfer_close": "닫기"
 }

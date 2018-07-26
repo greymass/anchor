@@ -1,18 +1,20 @@
 {
   "application_name": "eos-voter",
   "application_version": "v0.4.0",
+  "back": "뒤로",
   "block_height": "블록 높이",
   "cancel": "취소",
   "close": "닫기",
   "confirm": "확인",
+  "continue_setup": "계정 설정 계속하기",
+  "copy_to_clipboard": "Copy to Clipboard",
   "error": "에러",
   "loading": "로드",
-  "search": "찾는 중...",
-  "waiting": "잠시만 기다려 주세요...",
-  "reset_application": "디버그: 프로그램 초기화",
-  "continue_setup": "계정 설정 계속하기",
+  "next": "Next",
   "property": "설정",
+  "remove": "제거",
+  "reset_application": "디버그: 프로그램 초기화",
+  "search": "찾는 중...",
   "value": "값",
-  "back": "뒤로",
-  "remove": "제거"
+  "waiting": "잠시만 기다려 주세요..."
 }
