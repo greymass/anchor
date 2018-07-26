@@ -112,7 +112,7 @@ export function signTransaction(tx, contract = false) {
     } = getState();
     const signer = eos(connection, true);
     // If a contract was specified along with the transaction, load it.
-    if (contract) {
+    if (contract && contract.account && contract.abi) {
       signer.fc.abiCache.abi(contract.account, contract.abi);
     }
     // Sign the transaction
