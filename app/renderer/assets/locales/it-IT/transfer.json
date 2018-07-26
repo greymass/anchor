@@ -13,9 +13,7 @@
   "transfer_label_quantity": "Quantità",
   "transfer_label_token_and_quantity": "Token scelto + Quantità",
   "transfer_label_memo": "Memo del trasferimento",
-  "transfer_label_send": "This is where you can send coins to another account. Fill in the below form and press on confirm.",
-  "transfer_label_receive": "To receive coins on your account, please follow the instuctions below.",
-  "transfer_receive_modal_title": "Receive Coins",
-  "transfer_receive_body": "To receive Coins simply give the following account name to the sender.",
+  "transfer_receive_modal_header": "Receive Tokens",
+  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
   "transfer_close": "Close"
 }
