@@ -14,7 +14,14 @@ class ContractInterfaceSelectorContract extends Component<Props> {
       contractName: props.contractName
     };
   }
-  onChange = (e, { name, value }) => this.setState({ [name]: value });
+  onChange = (e, { name, selection, value }) => {
+    this.setState({ [name]: value }, () => {
+      // If this is the dropdown, fire the submit
+      if (selection) {
+        this.onSubmit();
+      }
+    });
+  }
   onSubmit = debounce(() => {
     const {
       onSet,
@@ -26,11 +33,21 @@ class ContractInterfaceSelectorContract extends Component<Props> {
     const {
       contract,
       onReset,
-      t
+      t,
+      settings
     } = this.props;
     const {
       contractName
     } = this.state;
+
+    let recentOptions = [];
+    if (settings && settings.recentContracts) {
+      recentOptions = settings.recentContracts.map((recentContract) => ({
+        text: recentContract,
+        value: recentContract,
+      }));
+    }
+
     let display = (
       <Segment basic>
         <Form
@@ -42,13 +59,25 @@ class ContractInterfaceSelectorContract extends Component<Props> {
               {t('interface_subheader')}
             </Header.Subheader>
           </Header>
-          <GlobalFormFieldGeneric
-            autoFocus
-            label={t('interface_contract_account_name')}
-            name="contractName"
-            onChange={this.onChange}
-            value={contractName}
-          />
+          <Form.Group inline widths="equal">
+            <Form.Dropdown
+              additionLabel=""
+              allowAdditions
+              autoFocus
+              fluid
+              label={t('interface_contract_account_name')}
+              name="contractName"
+              placeholder={t('interface_contract_account_name_placeholder')}
+              onChange={this.onChange}
+              openOnFocus={false}
+              options={recentOptions}
+              search
+              searchInput={{ autoFocus: true }}
+              selection
+              selectOnBlur={false}
+              selectOnNavigation={false}
+            />
+          </Form.Group>
           <Button
             content={t('interface_contract_load')}
             primary

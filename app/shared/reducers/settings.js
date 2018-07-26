@@ -1,3 +1,5 @@
+import { get } from 'dot-prop-immutable';
+
 import * as types from '../actions/types';
 
 const initialState = {
@@ -18,6 +20,8 @@ const initialState = {
   lang: '',
   // The node to connect to
   node: '',
+  // Recent contracts the wallet has recently used
+  recentContracts: [],
   // Allows the UI to start with only a connected node
   skipImport: false,
   // Window State Management
@@ -42,6 +46,16 @@ export default function settings(state = initialState, action) {
         account: '',
         walletInit: false,
         walletMode: 'hot'
+      });
+    }
+    case types.SYSTEM_GETABI_SUCCESS: {
+      const recentContracts = [...state.recentContracts];
+      const contractName = get(action, 'payload.contract.account_name');
+      if (!recentContracts.includes(contractName)) {
+        recentContracts.unshift(contractName);
+      }
+      return Object.assign({}, state, {
+        recentContracts: recentContracts.slice(0, 50)
       });
     }
     case types.SET_SETTING: {
