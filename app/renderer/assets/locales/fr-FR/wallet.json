@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "Verrouiller portefeuille",
   "wallet_panel_wallet_remove": "Effacer tous les donnés de votre portefeuille",
   "wallet_panel_wallet_save": "Sauvegardez votre portefeuille",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "Déverrouillez votre portefeuille",
   "wallet_panel_wallet_unlock_failure_content": "Veuillez réessayer.",
   "wallet_panel_wallet_unlock_failure_header": "Le portefeuille n'a pu être déverrouillé",
