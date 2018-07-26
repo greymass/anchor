@@ -8,6 +8,7 @@
   "interface_contract_load": "Load Contract",
   "interface_contract_loaded_header": "Contract Loaded:",
   "interface_contract_loaded_subheader": "The contract has been successfully loaded.",
+  "interface_contract_account_name_placeholder": "Enter the contract account name or search through recently used contracts.",
   "interface_contract_reset": "Change Contract",
   "interface_data_header": "Contract ABI",
   "interface_data_subheader": "The entire Smart Contract code itself is displayed below.",
