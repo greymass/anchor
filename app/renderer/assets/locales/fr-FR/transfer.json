@@ -13,5 +13,7 @@
   "transfer_label_quantity": "Quantité",
   "transfer_label_token_and_quantity": "Selèction des Tokens + Quantité",
   "transfer_label_memo": "Message",
+  "transfer_receive_modal_header": "Receive Tokens",
+  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
   "transfer_close": "Close"
 }
