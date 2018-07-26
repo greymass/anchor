@@ -17,7 +17,7 @@
   "tools_form_create_account_account_name_warning": "アカウント名は通常ちょうど12文字でなければなりません。プレミアム名前空間へのアクセスがない場合はアカウントの作成は失敗します。",
   "tools_form_create_account_delegated_resources_warning": "新規アカウントにはCPUと帯域の両方に最小0.5000 EOSを委任して、ネットワーク上で操作を実行する権利を与えることを推奨します。",
   "tools_form_create_account_ram_price_estimate": "RAMの見積もり価格は",
-  "tools_form_create_account_public_keys_warning": "Best practices recommend using a different active and owner key. The owner key should be kept offline and active key used in a wallet for normal usage.",
+  "tools_form_create_account_public_keys_warning": "ベストプラクティスでは、異なるアクティブキーとオーナーキーを使用することを推奨します。オーナーキーはオフラインで保持し、アクティブキーは通常の使用時にウォレットで使用します。",
   "tools_form_create_account_transfer_tokens_warning": "The tokens amounts specified for staked CPU and Bandwidth will be transferred and owned by the new account.",
   "tools_create_account_text": "EOSネットワークにアカウントの作成 (および料金の支払い) をします。",
   "tools_change_block_explorer": "ブロックエクスプローラを変更",
