@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "锁定钱包",
   "wallet_panel_wallet_remove": "销毁电子钱包凭证",
   "wallet_panel_wallet_save": "保存本地电子钱包",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "解锁钱包",
   "wallet_panel_wallet_unlock_failure_content": "请再试一次。",
   "wallet_panel_wallet_unlock_failure_header": "解锁钱包失败",
