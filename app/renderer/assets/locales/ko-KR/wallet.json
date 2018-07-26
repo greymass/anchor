@@ -60,6 +60,7 @@
   "wallet_panel_wallet_lock": "지갑 잠금",
   "wallet_panel_wallet_remove": "지갑 관련 정보 삭제",
   "wallet_panel_wallet_save": "로컬 지갑 저장",
+  "wallet_panel_wallet_signbroadcast": "Sign and Broadcast Transaction",
   "wallet_panel_wallet_unlock": "지갑 잠금 해제",
   "wallet_panel_wallet_unlock_failure_content": "다시 시도하십시오.",
   "wallet_panel_wallet_unlock_failure_header": "지갑 잠금을 해제하지 못했습니다.",
