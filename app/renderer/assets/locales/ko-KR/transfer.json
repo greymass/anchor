@@ -13,9 +13,7 @@
   "transfer_label_quantity": "수량",
   "transfer_label_token_and_quantity": "토큰 선택 + 수량",
   "transfer_label_memo": "거래 메모",
-  "transfer_label_send": "This is where you can send coins to another account. Fill in the below form and press on confirm.",
-  "transfer_label_receive": "To receive coins on your account, please follow the instuctions below.",
-  "transfer_receive_modal_title": "코인 받기",
-  "transfer_receive_body": "To receive Coins simply give the following account name to the sender.",
+  "transfer_receive_modal_header": "Receive Tokens",
+  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
   "transfer_close": "닫기"
 }
