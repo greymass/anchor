@@ -104,6 +104,7 @@ class BasicVoterContainer extends Component<Props> {
       getGlobals,
       getInfo
     } = actions;
+
     if (validate.NODE === 'SUCCESS') {
       if (settings.account) {
         getAccount(settings.account);
@@ -126,6 +127,7 @@ class BasicVoterContainer extends Component<Props> {
       validate,
       wallet
     } = this.props;
+
     let activeTab = <Producers {...this.props} />;
     switch (activeItem) {
       case 'wallet': {
