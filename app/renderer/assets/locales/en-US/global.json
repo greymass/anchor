@@ -80,5 +80,10 @@
   "global_transaction_view_is_expired": "Expired",
   "global_transaction_view_is_signed": "Signed Transaction",
   "global_transaction_view_is_unsigned": "Unsigned Transaction",
-  "global_transaction_view_status": "Transaction Status"
+  "global_transaction_view_status": "Transaction Status",
+  "global_settings_idle_timeout_five_minutes": "Auto lock my wallet after 5 minutes of inactivity",
+  "global_settings_idle_timeout_fifteen_minutes": "Auto lock my wallet after 15 minutes of inactivity",
+  "global_settings_idle_timeout_thirty_minutes": "Auto lock my wallet after 30 minutes of inactivity",
+  "global_settings_idle_timeout_sixty_minutes": "Auto lock my wallet after 60 minutes of inactivity",
+  "global_settings_idle_timeout_no_timeout": "Don't auto lock my wallet"
 }
