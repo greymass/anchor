@@ -39,13 +39,13 @@ class ProducersTable extends Component<Props> {
 
   render() {
     const {
-      actions,
       amount,
       globals,
       isProxying,
       isValidUser,
       producers,
       selected,
+      settings,
       system,
       t
     } = this.props;
@@ -136,6 +136,7 @@ class ProducersTable extends Component<Props> {
         <ProducersModalInfo
           producerInfo={producers.producersInfo[viewing]}
           onClose={this.clearProducerInfo}
+          settings={settings}
           viewing={viewing}
         />
         <Grid>

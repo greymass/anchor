@@ -25,6 +25,7 @@ export default class GlobalModalExplorerLink extends Component<Props> {
       <GlobalModalDangerLink
         content={content}
         link={generatedLink}
+        settings={settings}
       />
     );
   }
