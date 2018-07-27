@@ -45,6 +45,7 @@ class ColdWalletContainer extends Component<Props> {
       history.push('/');
     }
   }
+
   continueSetup = () => {
     const {
       actions,
@@ -76,6 +77,7 @@ class ColdWalletContainer extends Component<Props> {
       activeItem
     } = this.state;
     let activeTab = <ColdWallet {...this.props} />;
+
     switch (activeItem) {
       case 'about': {
         activeTab = <About {...this.props} />;
