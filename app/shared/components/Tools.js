@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import WelcomeConnectionContainer from '../containers/Welcome/Connection';
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
+import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 
 class Tools extends Component<Props> {
   render() {
@@ -57,6 +58,14 @@ class Tools extends Component<Props> {
                 actions={actions}
                 setLanguage={settings.lang}
                 i18n={i18n}
+                selection
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>{t('tools_change_timeout')}</label>
+              <GlobalSettingsIdleTimeout
+                actions={actions}
+                defaultValue={settings.idleTimeout}
                 selection
               />
             </Form.Field>

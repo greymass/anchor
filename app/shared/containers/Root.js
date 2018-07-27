@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { ConnectedRouter } from 'react-router-redux';
 import IdleTimer from 'react-idle-timer';
-import debounce from 'lodash/debounce';
 
 import { configureStore, history } from '../store/renderer/configureStore';
 import i18n from '../i18n';
@@ -27,23 +26,6 @@ export default class Root extends Component<Props> {
     super(props);
 
     this.idleTimer = null;
-
-    this.onActive = this._onActive.bind(this);
-    this.onIdle = this._onIdle.bind(this);
-  }
-
-  _onActive(e) {
-    console.log('user is active', e);
-    console.log('time remaining', this.idleTimer.getRemainingTime());
-  }
-
-  _onIdle(e) {
-    console.log('user is idle', e);
-    console.log('last active', this.idleTimer.getLastActiveTime());
-
-    if (store.getState()) {
-      store.dispatch(lockWallet());
-    }
   }
 
   render() {
@@ -55,19 +37,24 @@ export default class Root extends Component<Props> {
           <IdleTimer
             ref={ref => { this.idleTimer = ref; }}
             element={document}
-            onActive={this.onActive}
-            onIdle={this.onIdle}
-            timeout={1000 * 10}
+            onIdle={onIdle}
+            timeout={store.getState().settings.idleTimeout || 999999999}
           >
             <UpdaterContainer>
               <ConnectedRouter history={history}>
-                <Routes idle={this.state.idle} />
+                <Routes />
               </ConnectedRouter>
             </UpdaterContainer>
           </IdleTimer>
         </Provider>
       </I18nextProvider>
     );
+  }
+}
+
+function onIdle() {
+  if (store.getState().keys.key.length > 0) {
+    store.dispatch(lockWallet());
   }
 }
 
