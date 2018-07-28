@@ -95,12 +95,14 @@ class ProducersTable extends Component<Props> {
                 producer={producer}
                 removeProducer={this.props.removeProducer}
                 system={system}
+                settings={settings}
                 totalVoteWeight={totalVoteWeight}
               />
             );
           })}
         </Table.Body>
       );
+
       if (querying) {
         const partResults = filter(producers.list, (producer) =>
           producer.owner.indexOf(query) > -1).slice(0, amount);
@@ -122,6 +124,7 @@ class ProducersTable extends Component<Props> {
                     position={findIndex(producers.list, { owner: producer.owner }) + 1}
                     producer={producer}
                     removeProducer={this.props.removeProducer}
+                    settings={settings}
                     totalVoteWeight={totalVoteWeight}
                   />
                 );
