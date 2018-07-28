@@ -17,7 +17,7 @@
   "interface_form_action_instructions": "이 작업에 대해 스마트 계약서에 거래를 제출하려면 아래 입력란을 작성하세요.",
   "interface_form_action_subheader": "선택한 계약 작업은 다음 매개 변수를 사용합니다.",
   "interface_header": "스마트 계약 인터페이스 도구",
-  "interface_instructions_body_1": "Actions submitted from the Smart Contract Interface Tool are real transactions on the EOS blockchain. From this interface you are able to perform every action on any contract, including transferring EOS, creating accounts, and altering an accounts permissions/keys. These actions, once submitted, are irreversable and could lead to loss of or harm to your account.",
+  "interface_instructions_body_1": "Smart Contract Interface Tool에서 제출 된 작업은 EOS 블록 체인의 실제 거래입니다. 이 인터페이스에서 EOS를 전송하고, 계정을 만들고, 계정 권한 / 키를 변경하는 등 모든 계약에서 모든 작업을 수행 할 수 있습니다. 제출 된 이러한 행위는 돌이킬 수 없으며 귀하의 계정을 손실하거나 손상할 수 있습니다.",
   "interface_instructions_body_2": "While this tool is useful for things like AirGrabs, ICO Registrations, and claiming wizards - please be cautious. Do not follow any instructions that request you 'transfer EOS with eosio.token' or 'set your account permissions' unless you have an understanding of the actions you are going to perform.",
   "interface_instructions_body_3": "If you are unsure of exactly what you're doing, ask in a public telegram channel, on reddit, or seek the advice of a trusted block producer before proceeding.",
   "interface_instructions_header": "Note: This tool is meant for advanced operations",
