@@ -85,5 +85,7 @@
   "global_settings_idle_timeout_fifteen_minutes": "Auto lock my wallet after 15 minutes of inactivity",
   "global_settings_idle_timeout_thirty_minutes": "Auto lock my wallet after 30 minutes of inactivity",
   "global_settings_idle_timeout_sixty_minutes": "Auto lock my wallet after 60 minutes of inactivity",
-  "global_settings_idle_timeout_no_timeout": "Don't auto lock my wallet"
+  "global_settings_idle_timeout_no_timeout": "Don't auto lock my wallet",
+  "global_settings_skip_link_modal_skip": "Skip the warning when clicking on a link to outside resource",
+  "global_settings_skip_link_modal_do_not_skip": "Do not skip the warning when clicking on a link to outside resource"
 }
