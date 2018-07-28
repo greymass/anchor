@@ -1,6 +1,6 @@
 {
   "error": "에러",
-  "error_account_name_not_available": "This Account Name has already been taken.",
+  "error_account_name_not_available": "이 계정 이름은 이미 사용중입니다.",
   "error_eosio_assert_message_exception": "귀하의 EOS 블록 체인 요청에 따라 일반 오류가 발생했습니다. 정보가 유효한지 확인하고 다시 시도하세오.",
   "error_invalid_accountName": "Invalid Account Name, make sure it is comprised of 1 to 12 letters.",
   "error_invalid_activeKey": "Invalid Active Key, make sure it starts with 'EOS' and is comprised of 53 characters.",
