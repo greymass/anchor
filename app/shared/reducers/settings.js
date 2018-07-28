@@ -26,6 +26,8 @@ const initialState = {
   recentContracts: [],
   // Allows the UI to start with only a connected node
   skipImport: false,
+  // Allows users to go to link directly (without passing through DangerLink) when set to true
+  skipLinkModal: false,
   // Window State Management
   setupData: {},
   // Wallet Status

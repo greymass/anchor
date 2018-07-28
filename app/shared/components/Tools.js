@@ -7,6 +7,7 @@ import WelcomeConnectionContainer from '../containers/Welcome/Connection';
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
+import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 
 class Tools extends Component<Props> {
   render() {
@@ -66,6 +67,14 @@ class Tools extends Component<Props> {
               <GlobalSettingsIdleTimeout
                 actions={actions}
                 defaultValue={settings.idleTimeout}
+                selection
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>{t('tools_change_skip_link_modal')}</label>
+              <GlobalSettingsSkipLinkModal
+                actions={actions}
+                defaultValue={settings.skipLinkModal}
                 selection
               />
             </Form.Field>
