@@ -24,6 +24,18 @@ class GlobalModalDangerLink extends Component<Props> {
     this.setState({ open: true });
   }
 
+  openLinkOrWarning() {
+    const {
+      settings
+    } = this.props;
+
+    if (settings.skipLinkModal) {
+      this.openLink();
+    } else {
+      this.openWarning();
+    }
+  }
+
   close = () => this.setState({ open: false })
 
   render() {
@@ -38,24 +50,17 @@ class GlobalModalDangerLink extends Component<Props> {
     } = this.props;
     let el = content || link;
     if (this.isSafeish(link)) {
-      el = (settings.skipLinkModal)
-        ? (
-          <a
-            onClick={this.openWarning.bind(this)}
-            onKeyPress={this.openWarning.bind(this)}
-            role="link"
-            style={{ cursor: 'pointer' }}
-            tabIndex={0}
-          >
-            {content || link}
-          </a>
-        ) : (
-          <a
-            href={link}
-          >
-            {content || link}
-          </a>
-        );
+      el = (
+        <a
+          onClick={this.openLinkOrWarning.bind(this)}
+          onKeyPress={this.openLinkOrWarning.bind(this)}
+          role="link"
+          style={{ cursor: 'pointer' }}
+          tabIndex={0}
+        >
+          {content || link}
+        </a>
+      );
     }
     return (
       <span>
