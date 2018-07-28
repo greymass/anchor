@@ -19,8 +19,8 @@ class GlobalSettingsSkipLinkModal extends Component<Props> {
     } = this.props;
 
     const options = [
-      { key: 'skip_link_modal', value: false, text: t('global_settings_skip_link_modal_skip') },
-      { key: 'do_not_skip_link_modal', value: true, text: t('global_settings_skip_link_modal_do_not_skip') }
+      { key: 'skip_link_modal', value: true, text: t('global_settings_skip_link_modal_skip') },
+      { key: 'do_not_skip_link_modal', value: false, text: t('global_settings_skip_link_modal_do_not_skip') }
     ];
 
     return (
