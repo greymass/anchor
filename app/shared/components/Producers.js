@@ -309,6 +309,7 @@ class Producers extends Component<Props> {
                      removeProducer={this.removeProducer.bind(this)}
                      resetDisplayAmount={this.resetDisplayAmount}
                      selected={selected}
+                     settings={settings}
                      system={system}
                      isValidUser={isValidUser}
                    />

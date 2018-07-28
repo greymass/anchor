@@ -24,6 +24,7 @@ class ProducersTableRow extends Component<Props> {
       isProxying,
       isValidUser,
       removeProducer,
+      settings,
       t,
       totalVoteWeight
     } = this.props;
@@ -108,6 +109,7 @@ class ProducersTableRow extends Component<Props> {
               <DangerLink
                 content={producer.url.substring(0, 30).replace(/(^\w+:|^)\/\//, '')}
                 link={producer.url}
+                settings={settings}
               />
             </Header.Subheader>
           </Header>
