@@ -19,6 +19,7 @@ class WalletPanelFormTransfer extends Component<Props> {
       quantity: '',
       symbol: 'EOS',
       to: '',
+      validQuantityFormat: true,
       waiting: false,
       waitingStarted: 0
     };
@@ -26,12 +27,15 @@ class WalletPanelFormTransfer extends Component<Props> {
 
   state = {};
 
-  onChange = (e, { name, value }) => {
+  onChange = (e, { name, value, valid }) => {
     const newState = { [name]: value };
     if (name === 'quantity') {
       const [, symbol] = value.split(' ');
       newState.symbol = symbol;
     }
+
+    newState[`${name}Valid`] = valid;
+
     this.setState(newState);
   }
 
@@ -76,21 +80,41 @@ class WalletPanelFormTransfer extends Component<Props> {
     return false;
   }
 
-  onSendClick = (e) => {
-    this.setState({
-      sending: true
-    });
+  onError = (error) => {
+    let errorMessage;
 
-    e.preventDefault();
-    return false;
+    if (error !== true) {
+      errorMessage = error;
+    }
+
+    this.setState({
+      submitDisabled: true,
+      formError: errorMessage
+    });
   }
 
-  onReceiveClick = (e) => {
-    this.setState({
-      sending: false
-    });
+  errorsInForm = () => {
+    const {
+      quantity,
+      quantityValid,
+      toValid,
+      memo,
+      to,
+      quantity
+    } = this.state;
 
-    e.preventDefault();
+    if (!quantityValid) {
+      return 'invalid_amount';
+    }
+
+    if (!toValid) {
+      return 'invalid_account_name';
+    }
+
+    if (!memoValid) {
+      return 'invalid_memo';
+    }
+
     return false;
   }
 
@@ -108,7 +132,6 @@ class WalletPanelFormTransfer extends Component<Props> {
       memo,
       quantity,
       symbol,
-      sending,
       to,
       waiting,
       waitingStarted
@@ -116,20 +139,6 @@ class WalletPanelFormTransfer extends Component<Props> {
 
     const balance = balances[settings.account];
     const asset = 'EOS';
-    const error = system.TRANSFER_LAST_ERROR;
-    const validTransfer = (quantity <= 0 || !to || !from);
-
-    let errorMsg = JSON.stringify(error);
-    if (error && error.error) {
-      if (error.error.details[0]) {
-        errorMsg = error.error.details[0].message;
-      } else {
-        errorMsg = t('error.error.name');
-      }
-    }
-    if (error && error.message) {
-      errorMsg = error.message;
-    }
 
     return (
       <Form
@@ -154,14 +163,6 @@ class WalletPanelFormTransfer extends Component<Props> {
           ) : (
             <Segment basic clearing>
               <GlobalFormFieldAccount
-                disabled
-                fluid
-                label={t('transfer_label_from')}
-                name="from"
-                onChange={this.onChange}
-                value={settings.account}
-              />
-              <GlobalFormFieldAccount
                 autoFocus
                 fluid
                 label={t('transfer_label_to')}
@@ -177,9 +178,13 @@ class WalletPanelFormTransfer extends Component<Props> {
                 maximum={balance[asset]}
                 name="quantity"
                 onChange={this.onChange}
+                onAssetChange={this.onAssetChange}
                 settings={settings}
                 value={quantity}
               />
+              <Header>
+                {`${t('transfer_header_available_one')} ${balance[asset]} ${t('transfer_header_available_one')}`}
+              </Header>
               <GlobalFormFieldGeneric
                 icon="x"
                 label={t('transfer_label_memo')}
@@ -190,13 +195,13 @@ class WalletPanelFormTransfer extends Component<Props> {
               />
 
               <FormMessageError
-                error={errorMsg}
+                error={error}
               />
 
               <Divider />
               <Button
                 content={t('confirm')}
-                disabled={validTransfer}
+                disabled={submitDisabled}
                 floated="right"
                 primary
               />

@@ -14,8 +14,13 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     };
   }
   onChange = debounce((e, { name, value }) => {
+    let { valid } = this.state;
+    if (name !== 'asset') {
+      valid = !!(value.match(/^\d+(\.\d{1,4})?$/g));
+    }
     this.setState({
       [name]: value,
+      valid
     }, () => {
       const { asset, quantity } = this.state;
       const { balances } = this.props;
@@ -23,7 +28,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
       const parsed = (quantity > 0)
         ? `${parseFloat(quantity).toFixed(precision[asset])} ${asset}`
         : `${parseFloat(0).toFixed(precision[asset])} ${asset}`;
-      this.props.onChange(e, { name: this.props.name, value: parsed });
+      this.props.onChange(e, { name: this.props.name, value: parsed, valid });
     });
   }, 300)
   render() {
