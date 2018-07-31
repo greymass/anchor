@@ -1,16 +1,12 @@
 // @flow
-import IdleTimer from 'react-idle-timer';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import IdleTimer from 'react-idle-timer';
 
-import { history } from '../store/renderer/configureStore';
-import UpdaterContainer from './Updater';
+import WalletActions from '../../actions/wallet';
 
-import WalletActions from '../actions/wallet';
-
-class IdleHandler extends Component<Props> {
+class IdleContainer extends Component<Props> {
   constructor(props) {
     super(props);
 
@@ -20,14 +16,14 @@ class IdleHandler extends Component<Props> {
   onIdle = () => {
     const {
       actions,
-      keys
+      settings
     } = this.props;
 
     const {
       lockWallet
     } = actions;
 
-    if (keys.key.length > 0) {
+    if (['cold', 'hot'].includes(settings.walletMode)) {
       lockWallet();
     }
   }
@@ -37,8 +33,6 @@ class IdleHandler extends Component<Props> {
       settings
     } = this.props;
 
-    const Routes = this.props.routes;
-
     return (
       <IdleTimer
         ref={ref => { this.idleTimer = ref; }}
@@ -46,11 +40,7 @@ class IdleHandler extends Component<Props> {
         onIdle={this.onIdle}
         timeout={settings.idleTimeout}
       >
-        <UpdaterContainer>
-          <ConnectedRouter history={history}>
-            <Routes />
-          </ConnectedRouter>
-        </UpdaterContainer>
+        {this.props.children}
       </IdleTimer>
     );
   }
@@ -58,7 +48,6 @@ class IdleHandler extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    keys: state.keys,
     settings: state.settings
   };
 }
@@ -71,4 +60,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(IdleHandler);
+export default connect(mapStateToProps, mapDispatchToProps)(IdleContainer);
