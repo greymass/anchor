@@ -1,9 +1,9 @@
 {
   "broadcast_transaction_broadcast": "トランザクションをブロードキャストします",
-  "broadcast_transaction_confirm_details_content": "Review the details of this transaction, and if the details look correct, click the button below to sign and broadcast the transaction.",
-  "broadcast_transaction_confirm_details_title": "Review Transaction",
+  "broadcast_transaction_confirm_details_content": "このトランザクションの詳細をレビューし、間違いがないようであれば、以下のボタンをクリックしてトランザクションの署名とブロードキャストをして下さい。",
+  "broadcast_transaction_confirm_details_title": "トランザクションをレビュー",
   "broadcast_transaction_no_details_content": "始めるには署名済みトランザクションファイルを選択して下さい",
   "broadcast_transaction_no_details_title": "読み込まれたトランザクションがありません",
   "broadcast_transaction_not_signed": "署名されていないトランザクションはブロードキャストできません。",
-  "broadcast_transaction_signbroadcast": "Sign + Broadcast Transaction"
+  "broadcast_transaction_signbroadcast": "トランザクションに署名 + ブロードキャスト"
 }

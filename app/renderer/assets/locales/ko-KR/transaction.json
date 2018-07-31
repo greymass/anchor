@@ -1,9 +1,9 @@
 {
   "broadcast_transaction_broadcast": "거래 방송(브로드캐스트) 하기",
-  "broadcast_transaction_confirm_details_content": "Review the details of this transaction, and if the details look correct, click the button below to sign and broadcast the transaction.",
-  "broadcast_transaction_confirm_details_title": "Review Transaction",
+  "broadcast_transaction_confirm_details_content": "이 거래의 세부 정보를 검토하고 아래 버튼을 클릭하여 거래를 서명하고 방송(브로드캐스트) 하세요.",
+  "broadcast_transaction_confirm_details_title": "거래 검토",
   "broadcast_transaction_no_details_content": "서명된 거래를 선택하세요.",
   "broadcast_transaction_no_details_title": "가져온 거래 없음.",
   "broadcast_transaction_not_signed": "서명 되지 않은 거래를 방송(브로드캐스트) 할수 없습니다.",
-  "broadcast_transaction_signbroadcast": "Sign + Broadcast Transaction"
+  "broadcast_transaction_signbroadcast": "거래 서명 + 방송(브로드캐스트) 하기"
 }

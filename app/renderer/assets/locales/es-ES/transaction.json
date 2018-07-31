@@ -1,9 +1,9 @@
 {
-  "broadcast_transaction_broadcast": "Broadcast Transaction",
-  "broadcast_transaction_confirm_details_content": "Review the details of this transaction, and if the details look correct, click the button below to sign and broadcast the transaction.",
-  "broadcast_transaction_confirm_details_title": "Review Transaction",
-  "broadcast_transaction_no_details_content": "Selecte a signed transaction file to begin",
-  "broadcast_transaction_no_details_title": "No transaction loaded",
-  "broadcast_transaction_not_signed": "Cannot broadcast an unsigned transaction.",
-  "broadcast_transaction_signbroadcast": "Sign + Broadcast Transaction"
+  "broadcast_transaction_broadcast": "Transmitir Transacción",
+  "broadcast_transaction_confirm_details_content": "Revise los detalles de esta transacción, y si son correctos, haga clic en el botón que hay debajo para firmar y emitir la transacción.",
+  "broadcast_transaction_confirm_details_title": "Revisar transacción",
+  "broadcast_transaction_no_details_content": "Selecte un archivo de transacción firmado para comenzar",
+  "broadcast_transaction_no_details_title": "No hay transacciones cargadas",
+  "broadcast_transaction_not_signed": "No puede emitir una transacción sin firmar.",
+  "broadcast_transaction_signbroadcast": "Firmar + Transmitir Transacción"
 }
