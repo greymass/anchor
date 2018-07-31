@@ -1,10 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
-import { Form, Input } from 'semantic-ui-react';
-
 import debounce from 'lodash/debounce';
-
 import GlobalFormFieldGeneric from './Generic';
 
 export default class GlobalFormFieldMemo extends Component<Props> {
@@ -16,7 +12,11 @@ export default class GlobalFormFieldMemo extends Component<Props> {
   }
   onChange = debounce((e, { name, value }) => {
     const parsed = value;
-    const valid = !parsed.match(/^[a-zA-Z0-9]{200,}|.*?5[a-zA-Z0-9.]{50}.*?/g);
+    let valid = !parsed.match(/.*?5[a-zA-Z0-9.]{50}.*?/g);
+
+    if (valid) {
+      valid = (new TextEncoder('utf-8').encode(parsed)).length <= 256;
+    }
 
     this.setState({
       value: parsed
