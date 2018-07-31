@@ -24,7 +24,7 @@ class ContractInterfaceFormAction extends Component<Props> {
       this.resetForm(nextProps.contractAction);
     }
   }
-  formatField = (contractAction, name, value = "") => {
+  formatField = (contractAction, name, value = '') => {
     const {
       contract
     } = this.props;
@@ -32,6 +32,9 @@ class ContractInterfaceFormAction extends Component<Props> {
     switch (fieldType) {
       case 'int': {
         return parseInt(value, 10);
+      }
+      case 'bool': {
+        return value ? 1 : 0;
       }
       default: {
         return String(value);
@@ -46,6 +49,17 @@ class ContractInterfaceFormAction extends Component<Props> {
         this.state.form,
         {
           [name]: this.formatField(contractAction, name, value)
+        }
+      )
+    });
+  }
+  onToggle = (e, { name, checked }) => {
+    this.setState({
+      form: Object.assign(
+        {},
+        this.state.form,
+        {
+          [name]: checked ? 1 : 0
         }
       )
     });
@@ -87,14 +101,29 @@ class ContractInterfaceFormAction extends Component<Props> {
 
     const formFields = [];
     fields.forEach((field) => {
-      formFields.push((
-        <GlobalFormFieldGeneric
-          key={`${contractAction}-${field.name}-${field.type}`}
-          label={`${field.name} (${field.type})`}
-          name={field.name}
-          onChange={this.onChange}
-        />
-      ));
+      switch (field.type) {
+        case 'bool': {
+          formFields.push((
+            <Form.Checkbox
+              key={`${contractAction}-${field.name}-${field.type}`}
+              label={`${field.name} (${field.type})`}
+              name={field.name}
+              onChange={this.onToggle}
+            />
+          ));
+          break;
+        }
+        default: {
+          formFields.push((
+            <GlobalFormFieldGeneric
+              key={`${contractAction}-${field.name}-${field.type}`}
+              label={`${field.name} (${field.type})`}
+              name={field.name}
+              onChange={this.onChange}
+            />
+          ));
+        }
+      }
     });
 
     let errors = '';
@@ -211,4 +240,4 @@ class ContractInterfaceFormAction extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceFormAction)
+export default translate('contract')(ContractInterfaceFormAction);
