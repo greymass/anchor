@@ -13,7 +13,7 @@
   "transfer_label_quantity": "수량",
   "transfer_label_token_and_quantity": "토큰 선택 + 수량",
   "transfer_label_memo": "거래 메모",
-  "transfer_receive_modal_header": "Receive Tokens",
-  "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
+  "transfer_receive_modal_header": "토큰 받기",
+  "transfer_receive_body_text": "토큰을 받으려면 발신자에게 다음 계정 이름을 제공하세요.",
   "transfer_close": "닫기"
 }
