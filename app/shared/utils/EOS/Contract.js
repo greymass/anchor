@@ -5,6 +5,7 @@ const Eos = require('eosjs');
 export const typeMap = {
   uint64: 'int',
   uint32: 'int',
+  bool: 'bool'
 };
 
 export default class EOSContract {
