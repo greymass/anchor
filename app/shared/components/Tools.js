@@ -83,7 +83,9 @@ class Tools extends Component<Props> {
         {(settings.walletMode !== 'cold')
           ? (
             <Segment attached="bottom" padded="very" secondary stacked>
-              <WelcomeConnectionContainer />
+              <WelcomeConnectionContainer
+                autoFocus={false}
+              />
             </Segment>
           ) : false
         }
