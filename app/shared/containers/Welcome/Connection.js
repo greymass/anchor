@@ -106,6 +106,12 @@ class WelcomeConnectionContainer extends Component<Props> {
       settings,
       validate
     } = this.props;
+    let {
+      autoFocus
+    } = this.props;
+    if (autoFocus === undefined) {
+      autoFocus = true;
+    }
     const {
       node,
       sslConfirm
@@ -184,7 +190,7 @@ class WelcomeConnectionContainer extends Component<Props> {
     return (
       <Form>
         <Form.Field
-          autoFocus
+          autoFocus={autoFocus}
           control={Input}
           fluid
           icon={(validate.NODE === 'SUCCESS') ? 'checkmark' : 'x'}
