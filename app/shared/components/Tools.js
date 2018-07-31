@@ -43,7 +43,7 @@ class Tools extends Component<Props> {
             {(settings.walletMode !== 'cold')
               ? (
                 <Form.Field>
-                  <label>{t('tools_change_block_explorer')}</label>
+                  <label>{t('tools_change_block_explorer2')}</label>
                   <GlobalSettingsBlockExplorer
                     actions={actions}
                     blockExplorers={blockExplorers}
@@ -54,7 +54,7 @@ class Tools extends Component<Props> {
               ) : false
             }
             <Form.Field>
-              <label>{t('tools_change_language')}</label>
+              <label>{t('tools_change_language2')}</label>
               <GlobalSettingsLanguage
                 actions={actions}
                 setLanguage={settings.lang}
