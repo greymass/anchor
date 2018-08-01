@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Header, Message, Icon, Segment } from 'semantic-ui-react';
+import { Button, Divider, Form, Message, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
