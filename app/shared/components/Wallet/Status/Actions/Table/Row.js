@@ -64,11 +64,22 @@ class WalletStatusActionsTableRow extends Component<Props> {
       generic
     } = this.state;
     const {
+      act,
       receipt,
       trx_id
     } = action.action_trace;
+
+    const {
+      authorization
+    } = act;
+    const mentionedInReceiverField = [settings.account, 'eosio'].indexOf(receipt.receiver) === -1;
+
+    const permissionActors = authorization.map((permission) => permission.actor);
+    const mentionedInActObject =
+      permissionActors.concat(act.account).indexOf(settings.account) === -1;
+
     // Filter out duplicate actions returned by API
-    if ([settings.account, 'eosio'].indexOf(receipt.receiver) === -1) {
+    if (mentionedInReceiverField && mentionedInActObject) {
       return false;
     }
 
