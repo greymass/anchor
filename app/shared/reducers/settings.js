@@ -11,6 +11,8 @@ const initialState = {
   account: '',
   // The block explorer used
   blockExplorer: 'bloks.io',
+  // List of contacts
+  contacts: [],
   // Custom tokens the wallet should be tracking
   customTokens: [
     // Always track the EOS token
