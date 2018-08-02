@@ -12,6 +12,7 @@ class ToolsModalContact extends Component<Props> {
       contacts,
       contactToEdit,
       onClose,
+      onSuccess,
       open,
       t,
       trigger
@@ -32,6 +33,7 @@ class ToolsModalContact extends Component<Props> {
             contactToEdit={contactToEdit}
             contacts={contacts}
             onClose={onClose}
+            onSuccess={onSuccess}
           />
         </Modal.Content>
       </Modal>

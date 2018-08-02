@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Table, Grid, Confirm } from 'semantic-ui-react';
+import { Button, Header, Table, Grid, Confirm, Message } from 'semantic-ui-react';
 
 import ToolsModalContact from './Modal/Contact';
 
@@ -32,6 +32,19 @@ class ToolsContacts extends Component<Props> {
     this.setState({ openModal: true, contactToEdit: contact });
   }
 
+  onSuccess = () => {
+    this.setState({
+      openModal: false,
+      showSuccessMessage: true
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          showSuccessMessage: false
+        });
+      }, 5000);
+    });
+  }
+
   render() {
     const {
       actions,
@@ -42,7 +55,8 @@ class ToolsContacts extends Component<Props> {
     const {
       confirmDelete,
       contactToEdit,
-      openModal
+      openModal,
+      showSuccessMessage
     } = this.state;
 
     const {
@@ -54,12 +68,20 @@ class ToolsContacts extends Component<Props> {
         <Header>
           {t('tools_contact_header_text')}
         </Header>
+        {(showSuccessMessage)
+          ? (
+            <Message
+              content={t('tools_contact_message_success_text')}
+              success
+            />
+          ) : ''}
         <ToolsModalContact
           open={openModal}
           actions={actions}
           contacts={contacts}
           contactToEdit={contactToEdit}
           onClose={this.onCloseModal}
+          onSuccess={this.onSuccess}
           trigger={
             <Button
               color="blue"
