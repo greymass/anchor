@@ -40,7 +40,7 @@ class ToolsFormContact extends Component<Props> {
     });
   }
 
-  errorsInForm = () => {
+  errorInForm = () => {
     const {
       accountNameValid,
       defaultMemoValid,
@@ -65,7 +65,8 @@ class ToolsFormContact extends Component<Props> {
   onSubmit = () => {
     const {
       actions,
-      contacts
+      contacts,
+      onClose
     } = this.props;
 
     const {
@@ -82,6 +83,8 @@ class ToolsFormContact extends Component<Props> {
         fullName
       })
     );
+
+    onClose();
   }
 
   render() {
