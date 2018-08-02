@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Table, Grid } from 'semantic-ui-react';
+import { Button, Header, Table, Grid, Confirm } from 'semantic-ui-react';
 
 import ToolsModalContact from './Modal/Contact';
 
@@ -10,6 +10,7 @@ class ToolsContacts extends Component<Props> {
     super(props);
 
     this.state = {
+      confirmDelete: false,
       contactToEdit: null,
       openModal: false
     };
@@ -19,6 +20,18 @@ class ToolsContacts extends Component<Props> {
 
   onCloseModal = () => this.setState({ openModal: false });
 
+  deleteContact = (contact) => {
+    const {
+      contacts
+    } = this.state;
+
+    const position = contacts.map((cont) => cont.accountName).indexOf(contact.accountName);
+
+    contacts.slice(position, 1);
+
+    this.setState({ openModal: true, contactToEdit: contact });
+  }
+
   render() {
     const {
       actions,
@@ -27,6 +40,7 @@ class ToolsContacts extends Component<Props> {
     } = this.props;
 
     const {
+      confirmDelete,
       contactToEdit,
       openModal
     } = this.state;
@@ -45,22 +59,23 @@ class ToolsContacts extends Component<Props> {
           actions={actions}
           contacts={contacts}
           contactToEdit={contactToEdit}
+          onClose={this.onCloseModal}
           trigger={
             <Button
               color="blue"
               content={t('tools_contact_button_cta')}
               fluid
               icon="address book"
-              onClick={this.onOpenModal()}
+              onClick={this.onOpenModal}
             />
           }
         />
 
         <Table>
-          {contacts.forEach((contact) => {
+          {(contacts).map((contact) => {
             return (
               <Table.Row>
-                <Table.Cell width="10">
+                <Table.Cell width="12">
                   <Grid>
                     <Grid.Row>
                       <Grid.Column width="8">
@@ -75,16 +90,23 @@ class ToolsContacts extends Component<Props> {
                     </Grid.Row>
                   </Grid>
                 </Table.Cell>
-                <Table.Cell width="3">
+                <Table.Cell width="2">
                   <Button
+                    size="mini"
                     content={t('tools_contact_button_edit')}
-                    onClick={this.onOpenModal(contact)}
+                    onClick={() => this.onOpenModal(contact)}
                   />
                 </Table.Cell>
-                <Table.Cell width="3">
+                <Table.Cell width="2">
                   <Button
+                    size="mini"
                     content={t('tools_contact_button_delete')}
-                    onClick={this.deleteContact(contact)}
+                    onClick={() => this.setState({ confirmDelete: true })}
+                  />
+                  <Confirm
+                    open={confirmDelete}
+                    onCancel={() => this.setState({ confirmDelete: false })}
+                    onConfirm={() => this.deleteContact(contact)}
                   />
                 </Table.Cell>
               </Table.Row>
