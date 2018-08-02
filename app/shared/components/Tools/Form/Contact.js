@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { findIndex } from 'lodash';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldGeneric from '../../Global/Form/Field/Generic';
@@ -22,6 +23,26 @@ class ToolsFormContact extends Component<Props> {
     };
   }
 
+  componentWillMount() {
+    const {
+      contactToEdit
+    } = this.props;
+
+    if (contactToEdit) {
+      const {
+        accountName,
+        defaultMemo,
+        fullName
+      } = contactToEdit;
+
+      this.setState({
+        accountName,
+        defaultMemo,
+        fullName
+      });
+    }
+  }
+
   onChange = (e, { name, value, valid }) => {
     this.setState({
       formError: null,
@@ -29,9 +50,14 @@ class ToolsFormContact extends Component<Props> {
       [`${name}Valid`]: valid,
       [name]: value
     }, () => {
-      const formError = this.errorInForm();
+      const error = this.errorInForm();
 
-      if (formError) {
+      if (error) {
+        let formError;
+
+        if (error !== true) {
+          formError = error;
+        }
         this.setState({
           formError,
           submitDisabled: true
@@ -42,6 +68,12 @@ class ToolsFormContact extends Component<Props> {
 
   errorInForm = () => {
     const {
+      contacts,
+      contactToEdit,
+    } = this.props;
+
+    const {
+      accountName,
       accountNameValid,
       defaultMemoValid,
       fullName
@@ -55,8 +87,19 @@ class ToolsFormContact extends Component<Props> {
       return 'invalid_default_memo';
     }
 
+    if (!fullName || fullName.length === 0) {
+      return true;
+    }
+
     if (!accountNameValid) {
       return 'invalid_accountName';
+    }
+
+    const accountNameHasChanged = !contactToEdit || contactToEdit.accountName !== accountName;
+    const accountNameIsInList = findIndex(contacts, { accountName }) > -1;
+
+    if (accountNameHasChanged && accountNameIsInList) {
+      return 'accountName_not_unique';
     }
 
     return false;
@@ -65,7 +108,9 @@ class ToolsFormContact extends Component<Props> {
   onSubmit = () => {
     const {
       actions,
+      contactToEdit,
       contacts,
+      deleteContact,
       onSuccess
     } = this.props;
 
@@ -74,6 +119,10 @@ class ToolsFormContact extends Component<Props> {
       defaultMemo,
       fullName
     } = this.state;
+
+    if (contactToEdit) {
+      deleteContact(contactToEdit);
+    }
 
     actions.setSetting(
       'contacts',
@@ -89,21 +138,18 @@ class ToolsFormContact extends Component<Props> {
       defaultMemo: null,
       fullName: null
     }, () => {
-      onSuccess();
+      onSuccess((contactToEdit) ? 'tools_contacts_success_edit' : null);
     });
   }
 
   render() {
     const {
       onClose,
+      contactToEdit,
       t
     } = this.props;
 
-    let {
-      contact
-    } = this.props;
-
-    contact = contact || {};
+    const contact = contactToEdit || {};
 
     const {
       accountName,
@@ -119,20 +165,20 @@ class ToolsFormContact extends Component<Props> {
         onSubmit={this.onSubmit}
       >
         <GlobalFormFieldAccount
-          defaultValue={accountName || contact.accountName || ''}
+          value={accountName || ''}
           label={t('tools_form_contact_account_name')}
           name="accountName"
           offerOptions={false}
           onChange={this.onChange}
         />
         <GlobalFormFieldGeneric
-          defaultValue={fullName || contact.fullName || ''}
+          value={fullName || ''}
           label={t('tools_form_contact_full_name')}
           name="fullName"
           onChange={this.onChange}
         />
         <GlobalFormFieldMemo
-          defaultValue={defaultMemo || contact.defaultMemo || ''}
+          value={defaultMemo || ''}
           label={t('tools_form_contact_memo')}
           name="defaultMemo"
           onChange={this.onChange}
