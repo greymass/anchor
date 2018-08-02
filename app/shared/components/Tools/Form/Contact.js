@@ -66,7 +66,7 @@ class ToolsFormContact extends Component<Props> {
     const {
       actions,
       contacts,
-      onClose
+      onSuccess
     } = this.props;
 
     const {
@@ -84,7 +84,13 @@ class ToolsFormContact extends Component<Props> {
       })
     );
 
-    onClose();
+    this.setState({
+      accountName: null,
+      defaultMemo: null,
+      fullName: null
+    }, () => {
+      onSuccess();
+    });
   }
 
   render() {
@@ -92,6 +98,12 @@ class ToolsFormContact extends Component<Props> {
       onClose,
       t
     } = this.props;
+
+    let {
+      contact
+    } = this.props;
+
+    contact = contact || {};
 
     const {
       accountName,
@@ -107,20 +119,20 @@ class ToolsFormContact extends Component<Props> {
         onSubmit={this.onSubmit}
       >
         <GlobalFormFieldAccount
-          defaultValue={accountName || ''}
+          defaultValue={accountName || contact.accountName || ''}
           label={t('tools_form_contact_account_name')}
           name="accountName"
           offerOptions={false}
           onChange={this.onChange}
         />
         <GlobalFormFieldGeneric
-          defaultValue={fullName || ''}
+          defaultValue={fullName || contact.fullName || ''}
           label={t('tools_form_contact_full_name')}
           name="fullName"
           onChange={this.onChange}
         />
         <GlobalFormFieldMemo
-          defaultValue={defaultMemo || ''}
+          defaultValue={defaultMemo || contact.defaultMemo || ''}
           label={t('tools_form_contact_memo')}
           name="defaultMemo"
           onChange={this.onChange}
