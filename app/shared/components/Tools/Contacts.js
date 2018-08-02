@@ -1,7 +1,21 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Table, Grid, Confirm, Message } from 'semantic-ui-react';
+
+import {
+  Button,
+  Confirm,
+  Grid,
+  Header,
+  Input,
+  Loader,
+  Message,
+  Segment,
+  Table,
+  Visibility
+} from 'semantic-ui-react';
+
+import { debounce, filter, findIndex } from 'lodash';
 
 import ToolsModalContact from './Modal/Contact';
 
@@ -12,6 +26,7 @@ class ToolsContacts extends Component<Props> {
     this.state = {
       confirmDelete: false,
       contactToEdit: null,
+      numberToLoad: 10,
       openModal: false
     };
   }
@@ -20,30 +35,47 @@ class ToolsContacts extends Component<Props> {
 
   onCloseModal = () => this.setState({ openModal: false });
 
+  onSearchChange = debounce((e, { value }) => {
+    const query = String(value).toLowerCase();
+
+    this.setState({ query });
+  }, 300);
+
   deleteContact = (contact) => {
     const {
+      actions,
+      settings
+    } = this.props;
+    const {
       contacts
-    } = this.state;
+    } = settings;
 
-    const position = contacts.map((cont) => cont.accountName).indexOf(contact.accountName);
+    const position = findIndex(contacts, { accountName: contact.accountName });
 
-    contacts.slice(position, 1);
+    contacts.splice(position, 1);
 
-    this.setState({ openModal: true, contactToEdit: contact });
+    actions.setSetting(
+      'contacts',
+      contacts
+    );
+
+    this.onSuccess('tools_contacts_success_delete');
   }
 
-  onSuccess = () => {
+  onSuccess = (message) => {
     this.setState({
       openModal: false,
-      showSuccessMessage: true
+      successMessage: message || 'tools_contacts_success_create'
     }, () => {
       setTimeout(() => {
         this.setState({
-          showSuccessMessage: false
+          successMessage: false
         });
       }, 5000);
     });
   }
+
+  loadMore = () => this.setState({ numberToLoad: this.state.numberToLoad + 20 });
 
   render() {
     const {
@@ -55,23 +87,38 @@ class ToolsContacts extends Component<Props> {
     const {
       confirmDelete,
       contactToEdit,
+      numberToLoad,
       openModal,
-      showSuccessMessage
+      query,
+      successMessage
     } = this.state;
 
     const {
       contacts
     } = settings;
 
+    const contactsToDisplay = filter(contacts, (contact) => {
+      const matchesFullName = (String(contact.fullName).toLowerCase()).indexOf(query) > -1;
+      const matchesAccountName =
+        (String(contact.accountName).toLowerCase()).indexOf(query) > -1;
+
+      return !query || matchesFullName || matchesAccountName;
+    }).slice(0, numberToLoad);
+
     return (
       <React.Fragment>
         <Header>
           {t('tools_contact_header_text')}
         </Header>
-        {(showSuccessMessage)
+        <Input
+          icon="search"
+          onChange={this.onSearchChange}
+          placeholder={t('search')}
+        />
+        {(successMessage)
           ? (
             <Message
-              content={t('tools_contact_message_success_text')}
+              content={t(successMessage)}
               success
             />
           ) : ''}
@@ -80,6 +127,7 @@ class ToolsContacts extends Component<Props> {
           actions={actions}
           contacts={contacts}
           contactToEdit={contactToEdit}
+          deleteContact={this.deleteContact}
           onClose={this.onCloseModal}
           onSuccess={this.onSuccess}
           trigger={
@@ -88,15 +136,21 @@ class ToolsContacts extends Component<Props> {
               content={t('tools_contact_button_cta')}
               fluid
               icon="address book"
-              onClick={this.onOpenModal}
+              onClick={() => this.onOpenModal()}
             />
           }
         />
 
         <Table>
-          {(contacts).map((contact) => {
-            return (
-              <Table.Row>
+          <Visibility
+            continuous
+            key="ContactsTable"
+            fireOnMount
+            onBottomVisible={this.loadMore}
+            once={false}
+          >
+            {contactsToDisplay.map((contact) => (
+              <Table.Row key={contact.accountName}>
                 <Table.Cell width="12">
                   <Grid>
                     <Grid.Row>
@@ -128,12 +182,15 @@ class ToolsContacts extends Component<Props> {
                   <Confirm
                     open={confirmDelete}
                     onCancel={() => this.setState({ confirmDelete: false })}
-                    onConfirm={() => this.deleteContact(contact)}
+                    onConfirm={() => {
+                      this.deleteContact(contact);
+                      this.setState({ confirmDelete: false });
+                    }}
                   />
                 </Table.Cell>
               </Table.Row>
-            );
-          })}
+            ))}
+          </Visibility>
         </Table>
       </React.Fragment>
     );
