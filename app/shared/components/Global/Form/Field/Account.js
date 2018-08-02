@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Form, Input } from 'semantic-ui-react';
+import { Form, Input, Dropdown } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
@@ -29,6 +29,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
   render() {
     const {
       autoFocus,
+      contacts,
       disabled,
       fluid,
       icon,
@@ -38,23 +39,50 @@ export default class GlobalFormFieldAccount extends Component<Props> {
       width
     } = this.props;
     const {
+      useDropdown,
       value
     } = this.state;
+
+    let dropdownOptions;
+
+    if (useDropdown === 'contacts') {
+      dropdownOptions = contacts.map((contact) => contact.fullName);
+    } else if (useDropdown === 'exchanges') {
+      dropdownOptions = exchanges;
+    }
+
     return (
-      <Form.Field
-        autoFocus={autoFocus}
-        control={Input}
-        disabled={disabled}
-        fluid={fluid}
-        icon={icon}
-        label={label}
-        loading={loading}
-        name={name}
-        onChange={this.onChange}
-        ref={ref => { this.input = ref; }}
-        value={value}
-        width={width}
-      />
+      <div>
+        {(!useDropdown)
+        ? (
+          <Form.Field
+            autoFocus={autoFocus}
+            control={Input}
+            disabled={disabled}
+            fluid={fluid}
+            icon={icon}
+            label={label}
+            loading={loading}
+            name={name}
+            onChange={this.onChange}
+            ref={ref => { this.input = ref; }}
+            value={value}
+            width={width}
+          />
+        ) : ''}
+
+        {(useDropdown)
+        ? (
+          <Dropdown
+            defaultValue={value}
+            name={name}
+            onChange={this.onChange}
+            options={dropdownOptions}
+            search
+            selection
+          />
+        ) : ''}
+      </div>
     );
   }
 }
