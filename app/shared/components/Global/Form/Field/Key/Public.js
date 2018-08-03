@@ -101,4 +101,4 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
 }
 
 
-export default translate('tools')(GlobalFormFieldKeyPublic);
+export default translate('global')(GlobalFormFieldKeyPublic);
