@@ -13,13 +13,13 @@ class ToolsFormContact extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      formError: false,
-      submitDisabled: false,
+      accountName: null,
+      accountNameValid: true,
       defaultMemo: null,
       defaultMemoValid: true,
+      formError: false,
       fullName: null,
-      accountName: null,
-      accountNameValid: true
+      submitDisabled: true
     };
   }
 
