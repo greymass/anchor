@@ -93,8 +93,12 @@
   "tools_form_contact_submit": "Save",
   "tools_form_contact_cancel": "Cancel",
   "tools_contact_default_memo": "Default Memo",
-  "tools_contact_confirm_delete_text": "Are you sure you want to delete that contact?",
+  "tools_contact_confirm_delete_text": "Are you sure you want to delete this contact?",
   "tools_form_contact_account_name": "Account Name",
   "tools_form_contact_full_name": "Full Name",
-  "tools_form_contact_default_memo": "Default Memo"
+  "tools_form_contact_default_memo": "Default Memo",
+  "tools_modal_contact_header_text": "Contact",
+  "tools_contacts_success_delete": "You have successfully deleted your contact.",
+  "tools_contacts_success_edit": "You have successfully updated your contact.",
+  "tools_contacts_success_add": "You have successfully added your contact."
 }

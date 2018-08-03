@@ -67,7 +67,7 @@ class GlobalFormFieldAccount extends Component<Props> {
     return (
       <div>
         <label htmlFor={name}>
-          {label}
+          <strong>{label}</strong>
           {(fieldOption === 'manual')
           ? (
             <Form.Field
@@ -111,7 +111,7 @@ class GlobalFormFieldAccount extends Component<Props> {
                 />
               ))}
             </Form.Field>
-          ) : ''}
+          ) : <br />}
       </div>
     );
   }

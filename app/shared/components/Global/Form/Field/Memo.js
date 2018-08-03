@@ -1,16 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import debounce from 'lodash/debounce';
-import GlobalFormFieldGeneric from './Generic';
+import { Form, Input } from 'semantic-ui-react';
 
 export default class GlobalFormFieldMemo extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value
-    };
-  }
-  onChange = debounce((e, { name, value }) => {
+  onChange = (e, { name, value }) => {
     const parsed = value;
     let valid = !parsed.match(/.*?5[a-zA-Z0-9.]{50}.*?/g);
 
@@ -18,28 +11,22 @@ export default class GlobalFormFieldMemo extends Component<Props> {
       valid = (new TextEncoder('utf-8').encode(parsed)).length <= 256;
     }
 
-    this.setState({
-      value: parsed
-    }, () => {
-      this.props.onChange(e, { name, value: parsed, valid });
-    });
-  }, 300)
+    this.props.onChange(e, { name, value: parsed, valid });
+  }
   render() {
     const {
       autoFocus,
       label,
       loading,
-      name
+      name,
+      value
     } = this.props;
 
-    const {
-      value
-    } = this.state;
-
     return (
-      <GlobalFormFieldGeneric
+      <Form.Field
         autoFocus={autoFocus}
-        icon="x"
+        control={Input}
+        fluid
         label={label}
         loading={loading}
         name={name}
