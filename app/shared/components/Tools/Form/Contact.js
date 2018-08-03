@@ -38,7 +38,7 @@ class ToolsFormContact extends Component<Props> {
       this.setState({
         accountName,
         defaultMemo,
-        fullName
+        fullName,
       });
     }
   }
