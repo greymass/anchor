@@ -99,11 +99,16 @@ class WalletPanelFormTransferSend extends Component<Props> {
     });
   }
 
+  onBack = () => {
+    this.setState({
+      confirming: false
+    });
+  }
+
   errorInForm = () => {
     const {
       memo,
       memoValid,
-      quantityValid,
       to,
       toValid
     } = this.state;
@@ -111,10 +116,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const {
       settings
     } = this.props;
-
-    if (!quantityValid) {
-      return 'invalid_amount';
-    }
 
     if (!toValid) {
       return 'invalid_accountName';
@@ -186,7 +187,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               balances={balances}
               from={from}
               memo={memo}
-              onClose={onClose}
+              onBack={this.onBack}
               onConfirm={this.onConfirm}
               quantity={quantity}
               symbol={symbol}
@@ -198,6 +199,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
             <Segment basic clearing>
               <GlobalFormFieldAccount
                 autoFocus
+                contacts={settings.contacts}
                 fluid
                 label={t('transfer_label_to')}
                 name="to"

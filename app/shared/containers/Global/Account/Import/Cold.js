@@ -67,6 +67,7 @@ class GlobalModalAccountImportCold extends Component<Props> {
             <GlobalFormFieldAccount
               autoFocus
               fluid
+              hideOptions
               label={t('global_account_import_watch_account')}
               name="account"
               placeholder={t('welcome:welcome_account_compare_placeholder')}
