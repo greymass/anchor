@@ -9,7 +9,7 @@ import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
 import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
 
-const exchangeAccounts = ['bitfinexdep1', 'binancecleos', 'krakenkraken'];
+import exchangeAccounts from '../../../../../constants/exchangeAccounts';
 
 class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {

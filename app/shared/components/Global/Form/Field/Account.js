@@ -1,14 +1,15 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
-import { Form, Input, Dropdown } from 'semantic-ui-react';
+import { Form, Input, Dropdown, Radio } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 
-import debounce from 'lodash/debounce';
+import exchangeAccounts from '../../../../constants/exchangeAccounts';
 
-export default class GlobalFormFieldAccount extends Component<Props> {
+class GlobalFormFieldAccount extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      fieldOption: 'manual',
       value: props.value
     };
   }
@@ -26,34 +27,42 @@ export default class GlobalFormFieldAccount extends Component<Props> {
     });
   }
   reset = () => this.setState({ value: '' });
+
+  handleRadioChange = (e, { value }) => {
+    this.setState({ fieldOption: value });
+  }
+
   render() {
     const {
       autoFocus,
       contacts,
       disabled,
       fluid,
+      hideOptions,
       icon,
       label,
       loading,
       name,
-      width
+      width,
+      t
     } = this.props;
+
     const {
-      useDropdown,
+      fieldOption,
       value
     } = this.state;
 
     let dropdownOptions;
 
-    if (useDropdown === 'contacts') {
-      dropdownOptions = contacts.map((contact) => contact.fullName);
-    } else if (useDropdown === 'exchanges') {
-      dropdownOptions = exchanges;
+    if (fieldOption === 'contacts') {
+      dropdownOptions = contacts.map((contact) => contact.accountName);
+    } else if (fieldOption === 'exchanges') {
+      dropdownOptions = exchangeAccounts;
     }
 
     return (
       <div>
-        {(!useDropdown)
+        {(fieldOption === 'manual')
         ? (
           <Form.Field
             autoFocus={autoFocus}
@@ -71,7 +80,7 @@ export default class GlobalFormFieldAccount extends Component<Props> {
           />
         ) : ''}
 
-        {(useDropdown)
+        {(fieldOption !== 'manual')
         ? (
           <Dropdown
             defaultValue={value}
@@ -82,7 +91,26 @@ export default class GlobalFormFieldAccount extends Component<Props> {
             selection
           />
         ) : ''}
+
+        {(!hideOptions)
+          ? (
+            <div>
+              {['manual', 'exchanges', 'contacts'].map((option) => (
+                <Form.Field>
+                  <Radio
+                    label={t(`global_form_field_${option}`)}
+                    name="inputRadioOptions"
+                    value={option}
+                    checked={this.state.fieldOption === option}
+                    onChange={this.handleRadioChange}
+                  />
+                </Form.Field>
+              ))}
+            </div>
+          ) : ''}
       </div>
     );
   }
 }
+
+export default translate('global')(GlobalFormFieldAccount);
