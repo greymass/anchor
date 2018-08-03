@@ -87,10 +87,6 @@ class ToolsFormContact extends Component<Props> {
       return true;
     }
 
-    if (!fullName || fullName.length === 0) {
-      return true;
-    }
-
     if (!accountNameValid) {
       return 'invalid_accountName';
     }
@@ -100,6 +96,10 @@ class ToolsFormContact extends Component<Props> {
 
     if (accountNameHasChanged && accountNameIsInList) {
       return 'accountName_not_unique_in_contacts';
+    }
+
+    if (!fullName || fullName.length === 0) {
+      return true;
     }
 
     return false;
