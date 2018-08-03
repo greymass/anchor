@@ -66,7 +66,7 @@ class ToolsContacts extends Component<Props> {
   onSuccess = (message) => {
     this.setState({
       openModal: false,
-      successMessage: message || 'tools_contacts_success_create'
+      successMessage: message || 'tools_contacts_success_add'
     }, () => {
       setTimeout(() => {
         this.setState({
@@ -199,7 +199,7 @@ class ToolsContacts extends Component<Props> {
           content={t('tools_contact_confirm_delete_text')}
           open={confirmDelete}
           onCancel={() => {
-            this.setState({ confirmDelete: false,  });
+            this.setState({ confirmDelete: false });
           }}
           onConfirm={() => {
             this.deleteContact();

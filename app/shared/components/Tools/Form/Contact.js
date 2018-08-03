@@ -99,7 +99,7 @@ class ToolsFormContact extends Component<Props> {
     const accountNameIsInList = findIndex(contacts, { accountName }) > -1;
 
     if (accountNameHasChanged && accountNameIsInList) {
-      return 'accountName_not_unique';
+      return 'accountName_not_unique_in_contacts';
     }
 
     return false;
