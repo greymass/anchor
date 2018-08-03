@@ -33,7 +33,8 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
       label,
       loading,
       name,
-      settings
+      settings,
+      style
     } = this.props;
     const assets = Object.keys(balances[settings.account]);
     const { customTokens } = settings;
@@ -62,7 +63,6 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
           {label}
         </label>
         <Input
-          action
           autoFocus={autoFocus}
           control={Input}
           defaultValue={this.state.quantity}
@@ -70,6 +70,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
           name={name}
           onChange={this.onChange}
           placeholder="0.0000"
+          style={style}
         >
           <Dropdown
             defaultValue={this.state.asset || 'EOS'}
