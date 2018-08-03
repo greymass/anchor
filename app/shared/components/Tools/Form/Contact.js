@@ -79,12 +79,12 @@ class ToolsFormContact extends Component<Props> {
       fullName
     } = this.state;
 
-    if (!fullName || fullName.length === 0) {
-      return 'needed_full_name';
-    }
-
     if (!defaultMemoValid) {
       return 'invalid_default_memo';
+    }
+
+    if (!accountName || accountName.length === 0) {
+      return true;
     }
 
     if (!fullName || fullName.length === 0) {
@@ -144,8 +144,8 @@ class ToolsFormContact extends Component<Props> {
 
   render() {
     const {
+      contacts,
       onClose,
-      contactToEdit,
       t
     } = this.props;
 
@@ -163,6 +163,7 @@ class ToolsFormContact extends Component<Props> {
         onSubmit={this.onSubmit}
       >
         <GlobalFormFieldAccount
+          contacts={contacts}
           hideOptions
           label={t('tools_form_contact_account_name')}
           name="accountName"
@@ -177,7 +178,7 @@ class ToolsFormContact extends Component<Props> {
         />
         <GlobalFormFieldMemo
           value={defaultMemo || ''}
-          label={t('tools_form_contact_memo')}
+          label={t('tools_form_contact_default_memo')}
           name="defaultMemo"
           onChange={this.onChange}
         />
@@ -189,7 +190,7 @@ class ToolsFormContact extends Component<Props> {
 
         <Segment basic clearing>
           <Button
-            content={t('tools_form_contact_button')}
+            content={t('tools_form_contact_submit')}
             color="green"
             disabled={submitDisabled}
             floated="right"
@@ -198,7 +199,7 @@ class ToolsFormContact extends Component<Props> {
           <Button
             onClick={onClose}
           >
-            <Icon name="x" /> {t('cancel')}
+            <Icon name="x" /> {t('tools_form_contact_cancel')}
           </Button>
         </Segment>
       </Form>

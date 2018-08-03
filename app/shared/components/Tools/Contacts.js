@@ -8,9 +8,7 @@ import {
   Grid,
   Header,
   Input,
-  Loader,
   Message,
-  Segment,
   Table,
   Visibility
 } from 'semantic-ui-react';
@@ -49,8 +47,11 @@ class ToolsContacts extends Component<Props> {
     const {
       contacts
     } = settings;
+    const {
+      contactToDelete
+    } = this.state;
 
-    const position = findIndex(contacts, { accountName: contact.accountName });
+    const position = findIndex(contacts, { accountName: (contact || contactToDelete).accountName });
 
     contacts.splice(position, 1);
 
@@ -105,6 +106,11 @@ class ToolsContacts extends Component<Props> {
       return !query || matchesFullName || matchesAccountName;
     }).slice(0, numberToLoad);
 
+    const rowButtonContainerStyle = {
+      paddingTop: '30px',
+      paddingBottom: '30px'
+    };
+
     return (
       <React.Fragment>
         <Header>
@@ -113,15 +119,8 @@ class ToolsContacts extends Component<Props> {
         <Input
           icon="search"
           onChange={this.onSearchChange}
-          placeholder={t('search')}
+          placeholder={t('tools_contact_search_text')}
         />
-        {(successMessage)
-          ? (
-            <Message
-              content={t(successMessage)}
-              success
-            />
-          ) : ''}
         <ToolsModalContact
           open={openModal}
           actions={actions}
@@ -133,13 +132,21 @@ class ToolsContacts extends Component<Props> {
           trigger={
             <Button
               color="blue"
-              content={t('tools_contact_button_cta')}
-              fluid
-              icon="address book"
+              content={t('tools_contact_button_add')}
+              icon="plus circle"
+              style={{ float: 'right' }}
               onClick={() => this.onOpenModal()}
             />
           }
         />
+
+        {(successMessage)
+          ? (
+            <Message
+              content={t(successMessage)}
+              success
+            />
+          ) : ''}
 
         <Table>
           <Visibility
@@ -154,44 +161,51 @@ class ToolsContacts extends Component<Props> {
                 <Table.Cell width="12">
                   <Grid>
                     <Grid.Row>
-                      <Grid.Column width="8">
+                      <Grid.Column width="4">
                         <p>{contact.fullName}</p>
                       </Grid.Column>
-                      <Grid.Column width="8">
-                        <p>{contact.accountName}</p>
+                      <Grid.Column width="3">
+                        <u>{contact.accountName}</u>
                       </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <p>{contact.defaultMemo}</p>
+                      <Grid.Column width="9">
+                        <p><strong>{t('tools_contact_default_memo')}:</strong>&nbsp;{contact.defaultMemo}</p>
+                      </Grid.Column>
                     </Grid.Row>
                   </Grid>
                 </Table.Cell>
-                <Table.Cell width="2">
+                <Table.Cell style={rowButtonContainerStyle} width="2">
                   <Button
-                    size="mini"
                     content={t('tools_contact_button_edit')}
+                    icon="address book"
+                    fluid
                     onClick={() => this.onOpenModal(contact)}
+                    size="mini"
                   />
                 </Table.Cell>
-                <Table.Cell width="2">
+                <Table.Cell style={rowButtonContainerStyle} width="1">
                   <Button
+                    color="red"
+                    fluid
+                    icon="minus circle"
+                    onClick={() => this.setState({ confirmDelete: true, contactToDelete: contact })}
                     size="mini"
-                    content={t('tools_contact_button_delete')}
-                    onClick={() => this.setState({ confirmDelete: true })}
-                  />
-                  <Confirm
-                    open={confirmDelete}
-                    onCancel={() => this.setState({ confirmDelete: false })}
-                    onConfirm={() => {
-                      this.deleteContact(contact);
-                      this.setState({ confirmDelete: false });
-                    }}
                   />
                 </Table.Cell>
               </Table.Row>
             ))}
           </Visibility>
         </Table>
+        <Confirm
+          content={t('tools_contact_confirm_delete_text')}
+          open={confirmDelete}
+          onCancel={() => {
+            this.setState({ confirmDelete: false,  });
+          }}
+          onConfirm={() => {
+            this.deleteContact();
+            this.setState({ confirmDelete: false });
+          }}
+        />
       </React.Fragment>
     );
   }

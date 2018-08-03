@@ -113,6 +113,7 @@ class ProducersFormProxy extends Component<Props> {
               ) : ''}
               <GlobalFormFieldAccount
                 autoFocus
+                contacts={settings.contacts}
                 label={`${t('producers_form_proxy_label')}:`}
                 name="account"
                 onChange={this.onChange}
