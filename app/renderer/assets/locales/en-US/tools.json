@@ -7,6 +7,11 @@
   "tools_change_node": "Change API node",
   "tools_change_skip_link_modal": "Display a warning when clicking links to external sites?",
   "tools_change_timeout": "Lock wallet automatically based on inactivity",
+  "tools_contact_button_add": "Add Contact",
+  "tools_contact_button_delete": "Delete",
+  "tools_contact_button_edit": "Edit",
+  "tools_contact_header_text": "Your contacts",
+  "tools_contact_search_text": "Search",
   "tools_create_account_header": "Create Account",
   "tools_create_account_text": "Create (and pay for) an account on the EOS network.",
   "tools_customtokens_balance": "Balance",
@@ -42,6 +47,7 @@
   "tools_keys_key_generation_new_key": "Generate Key",
   "tools_keys_key_generation_subheader": "Generate public/private key pair combos for usage throughout EOS.",
   "tools_keys_key_generation_warning_content": "This key generator does NOT save these key pairs within the application. Please ensure you backup these keys in another location if you are planning on using them.",
+  "tools_menu_address_book": "Address Book",
   "tools_menu_contracts": "Smart Contracts",
   "tools_menu_create_account": "Create Account",
   "tools_menu_customtokens": "Airdrops / Custom Tokens",
@@ -83,5 +89,12 @@
   "tools_wallets_mode": "Wallet Mode",
   "tools_wallets_remove": "Remove Wallet",
   "tools_wallets_subheader": "Add, remove, and swap between the various wallets loaded within the app.",
-  "tools_wallets_swap": "Use Wallet"
+  "tools_wallets_swap": "Use Wallet",
+  "tools_form_contact_submit": "Save",
+  "tools_form_contact_cancel": "Cancel",
+  "tools_contact_default_memo": "Default Memo",
+  "tools_contact_confirm_delete_text": "Are you sure you want to delete that contact?",
+  "tools_form_contact_account_name": "Account Name",
+  "tools_form_contact_full_name": "Full Name",
+  "tools_form_contact_default_memo": "Default Memo"
 }
