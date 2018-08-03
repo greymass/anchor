@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Dropdown, Radio } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { sortBy } from 'lodash';
 
 import exchangeAccounts from '../../../../constants/exchangeAccounts';
 
@@ -55,11 +56,11 @@ class GlobalFormFieldAccount extends Component<Props> {
     let dropdownOptions;
 
     if (fieldOption === 'contacts') {
-      dropdownOptions = contacts.map((contact) => {
+      dropdownOptions = sortBy(contacts, c => c.fullName).map((contact) => {
         return { value: contact.accountName, text: (contact.fullName || contact.accountName) };
       });
     } else if (fieldOption === 'exchanges') {
-      dropdownOptions = exchangeAccounts.map((exchangeAccount) => {
+      dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => {
         return { value: exchangeAccount, text: exchangeAccount };
       });
     }
