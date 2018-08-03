@@ -148,6 +148,14 @@ class ToolsContacts extends Component<Props> {
             />
           ) : ''}
 
+        {(!contacts || contacts.length === 0)
+          ? (
+            <Message
+              content={t('tools_contacts_none')}
+              warning
+            />
+          ) : ''}
+
         <Table>
           <Visibility
             continuous

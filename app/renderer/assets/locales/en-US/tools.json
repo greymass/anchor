@@ -100,5 +100,6 @@
   "tools_modal_contact_header_text": "Contact",
   "tools_contacts_success_delete": "You have successfully deleted your contact.",
   "tools_contacts_success_edit": "You have successfully updated your contact.",
-  "tools_contacts_success_add": "You have successfully added your contact."
+  "tools_contacts_success_add": "You have successfully added your contact.",
+  "tools_contacts_none": "You do not seem to have any contacts."
 }
