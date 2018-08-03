@@ -22,6 +22,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       memo: '',
       memoValid: true,
       quantity: '',
+      submitDisabled: true,
       symbol: 'EOS',
       to: '',
       toValid: true,
@@ -109,9 +110,15 @@ class WalletPanelFormTransferSend extends Component<Props> {
   }
 
   onError = (error) => {
+    let formError;
+
+    if (error !== true) {
+      formError = error;
+    }
+
     this.setState({
-      submitDisabled: true,
-      formError: error
+      formError,
+      submitDisabled: true
     });
   }
 
@@ -125,6 +132,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const {
       memo,
       memoValid,
+      quantity,
       to,
       toValid
     } = this.state;
@@ -139,6 +147,10 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     if (!memoValid) {
       return 'invalid_memo';
+    }
+
+    if (!quantity || quantity === '' || quantity === '0.0000') {
+      return true;
     }
 
     if (to === settings.account) {

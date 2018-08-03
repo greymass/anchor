@@ -104,6 +104,7 @@ class GlobalFormFieldAccount extends Component<Props> {
               {['manual', 'exchanges', 'contacts'].map((option) => (
                 <Radio
                   label={t(`global_form_field_${option}`)}
+                  key={option}
                   name="inputRadioOptions"
                   style={{ marginLeft: '10px' }}
                   value={option}
