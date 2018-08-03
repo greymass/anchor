@@ -55,58 +55,62 @@ class GlobalFormFieldAccount extends Component<Props> {
     let dropdownOptions;
 
     if (fieldOption === 'contacts') {
-      dropdownOptions = contacts.map((contact) => contact.accountName);
+      dropdownOptions = contacts.map((contact) => {
+        return { value: contact.accountName, text: (contact.fullName || contact.accountName) };
+      });
     } else if (fieldOption === 'exchanges') {
-      dropdownOptions = exchangeAccounts;
+      dropdownOptions = exchangeAccounts.map((exchangeAccount) => {
+        return { value: exchangeAccount, text: exchangeAccount };
+      });
     }
 
     return (
       <div>
-        {(fieldOption === 'manual')
-        ? (
-          <Form.Field
-            autoFocus={autoFocus}
-            control={Input}
-            disabled={disabled}
-            fluid={fluid}
-            icon={icon}
-            label={label}
-            loading={loading}
-            name={name}
-            onChange={this.onChange}
-            ref={ref => { this.input = ref; }}
-            value={value}
-            width={width}
-          />
-        ) : ''}
+        <label htmlFor={name}>
+          {label}
+          {(fieldOption === 'manual')
+          ? (
+            <Form.Field
+              autoFocus={autoFocus}
+              control={Input}
+              disabled={disabled}
+              fluid={fluid}
+              icon={icon}
+              loading={loading}
+              name={name}
+              onChange={this.onChange}
+              ref={ref => { this.input = ref; }}
+              value={value}
+              width={width}
+            />
+          ) : ''}
 
-        {(fieldOption !== 'manual')
-        ? (
-          <Dropdown
-            defaultValue={value}
-            name={name}
-            onChange={this.onChange}
-            options={dropdownOptions}
-            search
-            selection
-          />
-        ) : ''}
-
+          {(fieldOption !== 'manual')
+          ? (
+            <Dropdown
+              defaultValue={value}
+              fluid
+              name={name}
+              onChange={this.onChange}
+              options={dropdownOptions}
+              selection
+            />
+          ) : ''}
+        </label>
         {(!hideOptions)
           ? (
-            <div>
+            <Form.Field style={{ margin: '10px' }}>
               {['manual', 'exchanges', 'contacts'].map((option) => (
-                <Form.Field>
-                  <Radio
-                    label={t(`global_form_field_${option}`)}
-                    name="inputRadioOptions"
-                    value={option}
-                    checked={this.state.fieldOption === option}
-                    onChange={this.handleRadioChange}
-                  />
-                </Form.Field>
+                <Radio
+                  label={t(`global_form_field_${option}`)}
+                  name="inputRadioOptions"
+                  style={{ marginLeft: '10px' }}
+                  value={option}
+                  checked={this.state.fieldOption === option}
+                  onChange={this.handleRadioChange}
+                />
               ))}
-            </div>
+            </Form.Field>
           ) : ''}
       </div>
     );
