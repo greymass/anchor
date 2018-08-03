@@ -2,6 +2,7 @@
   "error": "Error",
   "error_account_name_not_available": "This Account Name has already been taken.",
   "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
+  "error_accountName_not_unique_in_contacts": "This account name is already in your list of contacts.",
   "error_invalid_accountName": "Invalid Account Name, make sure it is comprised of 1 to 12 letters.",
   "error_invalid_activeKey": "Invalid Active Key, make sure it starts with 'EOS' and is comprised of 53 characters.",
   "error_invalid_delegatedBw": "Invalid DelegatedBandwidth Amount, eg. '12.121'.",

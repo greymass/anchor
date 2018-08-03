@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Button, Divider, Form, Message, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { findIndex } from 'lodash';
 
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
 import FormMessageError from '../../../../Global/Form/Message/Error';
@@ -21,7 +22,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
       memo: '',
       memoValid: true,
       quantity: '',
-      quantityValid: true,
       symbol: 'EOS',
       to: '',
       toValid: true,
@@ -72,6 +72,22 @@ class WalletPanelFormTransferSend extends Component<Props> {
   }
 
   onChange = (e, { name, value, valid }) => {
+    if (name === 'to') {
+      const {
+        settings
+      } = this.props;
+      const {
+        contacts
+      } = settings;
+
+      const position = findIndex(contacts, { accountName: value });
+
+      if (position > -1) {
+        this.onChange(e, { name: 'memo', value: contacts[position].defaultMemo, valid: true });
+      }
+    }
+
+
     const newState = { [name]: value };
     if (name === 'quantity') {
       const [, symbol] = value.split(' ');
