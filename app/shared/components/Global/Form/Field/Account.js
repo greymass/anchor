@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Form, Input, Dropdown, Radio } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { I18n } from 'react-i18next';
 import { sortBy } from 'lodash';
 
 import exchangeAccounts from '../../../../constants/exchangeAccounts';
@@ -44,8 +44,7 @@ class GlobalFormFieldAccount extends Component<Props> {
       label,
       loading,
       name,
-      width,
-      t
+      width
     } = this.props;
 
     const {
@@ -65,77 +64,74 @@ class GlobalFormFieldAccount extends Component<Props> {
       });
     }
 
+    const inlineLabel = (hideOptions ? label : false);
+
+    const inputField = (
+      <Form.Field
+        autoFocus={autoFocus}
+        control={Input}
+        disabled={disabled}
+        fluid={fluid}
+        icon={icon}
+        label={inlineLabel}
+        loading={loading}
+        name={name}
+        onChange={this.onChange}
+        ref={ref => { this.input = ref; }}
+        value={value}
+        width={width}
+      />
+    );
+
     return (hideOptions)
       ? (
-        <Form.Field
-          autoFocus={autoFocus}
-          control={Input}
-          disabled={disabled}
-          fluid={fluid}
-          icon={icon}
-          loading={loading}
-          name={name}
-          onChange={this.onChange}
-          ref={ref => {
-            this.input = ref;
-          }}
-          value={value}
-          width={width}
-        />
+        inputField
       ) : (
-        <div>
-          <label htmlFor={name}>
-            <strong>{label}</strong>
-            {(fieldOption === 'manual')
-            ? (
-              <Form.Field
-                autoFocus={autoFocus}
-                control={Input}
-                disabled={disabled}
-                fluid={fluid}
-                icon={icon}
-                loading={loading}
-                name={name}
-                onChange={this.onChange}
-                ref={ref => {
-                  this.input = ref;
-                }}
-                value={value}
-                width={width}
-              />
-            ) : ''}
+        <I18n ns="global">
+          {
+            (t) => (
+              <div>
+                <label htmlFor={name}>
+                  <strong>{label}</strong>
+                  {(fieldOption === 'manual')
+                  ? (
+                    inputField
+                  ) : ''}
 
-            {(fieldOption !== 'manual')
-            ? (
-              <Dropdown
-                defaultValue={value}
-                fluid
-                name={name}
-                onChange={this.onChange}
-                options={dropdownOptions}
-                selection
-              />
-            ) : ''}
-          </label>
-          {(!hideOptions)
-            ? (
-              <Form.Field style={{ margin: '10px' }}>
-                {['manual', 'exchanges', 'contacts'].map((option) => (
-                  <Radio
-                    label={t(`global_form_field_${option}`)}
-                    key={option}
-                    name="inputRadioOptions"
-                    style={{ marginLeft: '10px' }}
-                    value={option}
-                    checked={this.state.fieldOption === option}
-                    onChange={this.handleRadioChange}
-                  />
-                ))}
-              </Form.Field>
-            ) : <br />}
-        </div>
+                  {(fieldOption !== 'manual')
+                  ? (
+                    <Dropdown
+                      defaultValue={value}
+                      fluid
+                      name={name}
+                      onChange={this.onChange}
+                      options={dropdownOptions}
+                      selection
+                    />
+                  ) : ''}
+                </label>
+                {(!hideOptions)
+                  ? (
+                    <Form.Field style={{ margin: '10px' }}>
+                      {['manual', 'exchanges', 'contacts'].map((option) => (
+                        <Radio
+                          label={t(`global_form_field_${option}`)}
+                          key={option}
+                          name="inputRadioOptions"
+                          style={{ marginLeft: '10px' }}
+                          value={option}
+                          checked={this.state.fieldOption === option}
+                          onChange={this.handleRadioChange}
+                        />
+                      ))}
+                    </Form.Field>
+                  ) : <br />}
+              </div>
+            )
+          }
+        </I18n>
       );
   }
 }
 
-export default translate('global')(GlobalFormFieldAccount);
+export default GlobalFormFieldAccount;
