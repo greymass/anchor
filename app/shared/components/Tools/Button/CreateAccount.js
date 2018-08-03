@@ -35,6 +35,7 @@ class ToolsButtonCreateAccount extends Component<Props> {
             account={account}
             actions={actions}
             balance={balance}
+            contacts={settings.contacts}
             globals={globals}
             key="CreateAccountForm"
             system={system}

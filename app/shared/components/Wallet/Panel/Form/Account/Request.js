@@ -33,6 +33,7 @@ class WalletPanelFormAccountRequest extends Component<Props> {
         </Header>
         <GlobalFormFieldAccount
           autofocus
+          hideOptions
           label={t('tools:tools_form_create_account_account_name')}
           name="accountName"
           onChange={debounce(onChange, 300)}

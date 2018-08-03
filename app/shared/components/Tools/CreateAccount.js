@@ -51,6 +51,7 @@ class ToolsCreateAccount extends Component<Props> {
                 <ToolsFormCreateAccount
                   account={account}
                   balance={balances[settings.account]}
+                  contacts={settings.contacts}
                   globals={globals}
                   hideCancel
                   key="CreateAccountForm"
