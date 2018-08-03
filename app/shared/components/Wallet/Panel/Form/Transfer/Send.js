@@ -242,7 +242,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 maximum={balance[asset]}
                 name="quantity"
                 onChange={this.onChange}
-                onAssetChange={this.onAssetChange}
                 settings={settings}
                 value={quantity}
               />
