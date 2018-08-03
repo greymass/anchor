@@ -149,8 +149,6 @@ class ToolsFormContact extends Component<Props> {
       t
     } = this.props;
 
-    const contact = contactToEdit || {};
-
     const {
       accountName,
       defaultMemo,
@@ -165,11 +163,11 @@ class ToolsFormContact extends Component<Props> {
         onSubmit={this.onSubmit}
       >
         <GlobalFormFieldAccount
-          value={accountName || ''}
+          hideOptions
           label={t('tools_form_contact_account_name')}
           name="accountName"
-          offerOptions={false}
           onChange={this.onChange}
+          value={accountName || ''}
         />
         <GlobalFormFieldGeneric
           value={fullName || ''}
