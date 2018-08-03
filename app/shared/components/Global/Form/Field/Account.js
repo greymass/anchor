@@ -83,6 +83,12 @@ class GlobalFormFieldAccount extends Component<Props> {
       />
     );
 
+    const availableOptions = ['manual', 'exchanges'];
+
+    if (contacts.length > 0) {
+      availableOptions.push('contacts');
+    }
+
     return (hideOptions)
       ? (
         inputField
@@ -113,7 +119,7 @@ class GlobalFormFieldAccount extends Component<Props> {
                 {(!hideOptions)
                   ? (
                     <Form.Field style={{ margin: '10px' }}>
-                      {['manual', 'exchanges', 'contacts'].map((option) => (
+                      {availableOptions.map((option) => (
                         <Radio
                           label={t(`global_form_field_${option}`)}
                           key={option}
