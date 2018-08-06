@@ -30,6 +30,7 @@ import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
+import * as ProposalsActions from '../actions/governance/proposals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
 import * as SettingsActions from '../actions/settings';
@@ -77,6 +78,15 @@ const paneMapping = [
     element: ContractInterface,
     modes: ['hot', 'watch', 'skip'],
     name: 'contracts',
+  },
+  {
+    header: true,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'governance',
+  },
+  {
+    element: ToolsGovernanceProposals,
+    modes: ['hot', 'watch', 'skip']
   },
   {
     header: true,
@@ -207,6 +217,7 @@ function mapStateToProps(state) {
     tables: state.tables,
     globals: state.globals,
     keys: state.keys,
+    proposals: state.proposals,
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
@@ -224,6 +235,7 @@ function mapDispatchToProps(dispatch) {
       ...CreateAccountActions,
       ...CustomTokensActions,
       ...GlobalsActions,
+      ...ProposalsActions,
       ...RegProxyActions,
       ...SettingsActions,
       ...StakeActions,
