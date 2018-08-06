@@ -14,6 +14,7 @@ import customtokens from './customtokens';
 import keys from './keys';
 import globals from './globals';
 import producers from './producers';
+import proposals from './proposals';
 import settings from './settings';
 import system from './system';
 import tables from './tables';
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   globals,
   keys,
   producers,
+  proposals,
   router,
   settings,
   system,
