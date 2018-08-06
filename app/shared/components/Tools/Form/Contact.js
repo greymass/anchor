@@ -164,7 +164,6 @@ class ToolsFormContact extends Component<Props> {
       >
         <GlobalFormFieldAccount
           contacts={contacts}
-          hideOptions
           label={t('tools_form_contact_account_name')}
           name="accountName"
           onChange={this.onChange}

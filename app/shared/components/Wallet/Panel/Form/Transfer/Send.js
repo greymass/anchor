@@ -228,6 +228,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
               <GlobalFormFieldAccount
                 autoFocus
                 contacts={settings.contacts}
+                enableContacts
+                enableExchanges
                 fluid
                 label={t('transfer_label_to')}
                 name="to"
