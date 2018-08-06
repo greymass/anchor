@@ -93,7 +93,6 @@ class GlobalModalAccountImportWatch extends Component<Props> {
             <Form.Group>
               <GlobalFormFieldAccount
                 autoFocus
-                hideOptions
                 label={t('global_account_import_watch_account')}
                 name="key"
                 placeholder={t('welcome:welcome_account_compare_placeholder')}

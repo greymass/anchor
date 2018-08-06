@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Form, Input, Dropdown, Radio } from 'semantic-ui-react';
-import { I18n } from 'react-i18next';
+import { translate } from 'react-i18next';
 import { sortBy } from 'lodash';
 
 import exchangeAccounts from '../../../../constants/exchangeAccounts';
@@ -30,7 +30,10 @@ class GlobalFormFieldAccount extends Component<Props> {
   reset = () => this.setState({ value: '' });
 
   handleRadioChange = (e, { value }) => {
-    this.setState({ fieldOption: value });
+    this.setState({
+      fieldOption: value,
+      value: ''
+    });
   }
 
   render() {
@@ -38,12 +41,14 @@ class GlobalFormFieldAccount extends Component<Props> {
       autoFocus,
       contacts,
       disabled,
+      enableContacts,
+      enableExchanges,
       fluid,
-      hideOptions,
       icon,
       label,
       loading,
       name,
+      t,
       width
     } = this.props;
 
@@ -55,16 +60,28 @@ class GlobalFormFieldAccount extends Component<Props> {
     let dropdownOptions;
 
     if (fieldOption === 'contacts') {
-      dropdownOptions = sortBy(contacts, c => c.fullName).map((contact) => {
-        return { value: contact.accountName, text: (contact.fullName || contact.accountName) };
-      });
+      dropdownOptions = sortBy(contacts, c => c.fullName).map((contact) => ({
+        value: contact.accountName,
+        text: contact.fullName || contact.accountName
+      }));
     } else if (fieldOption === 'exchanges') {
-      dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => {
-        return { value: exchangeAccount, text: exchangeAccount };
-      });
+      dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => ({
+        value: exchangeAccount,
+        text: exchangeAccount
+      }));
     }
 
-    const inlineLabel = (hideOptions ? label : false);
+    const availableOptions = ['manual'];
+    if (enableExchanges) {
+      availableOptions.push('exchanges');
+    }
+    if (enableContacts && contacts && contacts.length > 0) {
+      availableOptions.push('contacts');
+    }
+
+    const showOptions = (availableOptions.length > 1);
+
+    const inlineLabel = (!showOptions ? label : false);
 
     const inputField = (
       <Form.Field
@@ -83,61 +100,50 @@ class GlobalFormFieldAccount extends Component<Props> {
       />
     );
 
-    const availableOptions = ['manual', 'exchanges'];
-
-    if (contacts.length > 0) {
-      availableOptions.push('contacts');
-    }
-
-    return (hideOptions)
+    return (!showOptions)
       ? (
         inputField
       ) : (
-        <I18n ns="global">
-          {
-            (t) => (
-              <div>
-                <label htmlFor={name}>
-                  <strong>{label}</strong>
-                  {(fieldOption === 'manual')
-                  ? (
-                    inputField
-                  ) : ''}
+        <Form.Field>
+          {(showOptions)
+            ? (
+              <Form.Group inline>
+                <label>{t('global_form_field_account_options')}</label>
+                {availableOptions.map((option) => (
+                  <Form.Radio
+                    label={t(`global_form_field_account_${option}`)}
+                    key={option}
+                    name="inputRadioOptions"
+                    style={{ marginLeft: '10px' }}
+                    value={option}
+                    checked={this.state.fieldOption === option}
+                    onChange={this.handleRadioChange}
+                  />
+                ))}
+              </Form.Group>
+            ) : <br />}
+          <label htmlFor={name}>
+            <strong>{label}</strong>
+            {(fieldOption === 'manual')
+            ? (
+              inputField
+            ) : ''}
 
-                  {(fieldOption !== 'manual')
-                  ? (
-                    <Dropdown
-                      defaultValue={value}
-                      fluid
-                      name={name}
-                      onChange={this.onChange}
-                      options={dropdownOptions}
-                      selection
-                    />
-                  ) : ''}
-                </label>
-                {(!hideOptions)
-                  ? (
-                    <Form.Field style={{ margin: '10px' }}>
-                      {availableOptions.map((option) => (
-                        <Radio
-                          label={t(`global_form_field_${option}`)}
-                          key={option}
-                          name="inputRadioOptions"
-                          style={{ marginLeft: '10px' }}
-                          value={option}
-                          checked={this.state.fieldOption === option}
-                          onChange={this.handleRadioChange}
-                        />
-                      ))}
-                    </Form.Field>
-                  ) : <br />}
-              </div>
-            )
-          }
-        </I18n>
+            {(fieldOption !== 'manual')
+            ? (
+              <Form.Dropdown
+                defaultValue={value}
+                fluid
+                name={name}
+                onChange={this.onChange}
+                options={dropdownOptions}
+                selection
+              />
+            ) : ''}
+          </label>
+        </Form.Field>
       );
   }
 }
 
-export default GlobalFormFieldAccount;
+export default translate('global')(GlobalFormFieldAccount);
