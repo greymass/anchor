@@ -37,7 +37,8 @@ const configureLocalization = (resourcePath, store) => {
       },
       overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,
       react: {
-        wait: true
+        wait: true,
+        withRef: true
       }
     });
   global.i18n = i18n;
