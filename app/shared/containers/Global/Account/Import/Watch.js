@@ -49,10 +49,13 @@ class GlobalModalAccountImportWatch extends Component<Props> {
     const { value } = this.state;
     const selected = [...this.state.selected];
     const existing = selected.indexOf(value);
+    const input = this.input.getWrappedInstance();
     if (existing < 0) {
       selected.push(value);
     }
-    this.input.reset();
+    if (input) {
+      input.reset();
+    }
     this.props.actions.getAccounts(selected);
     this.setState({
       selected,
@@ -185,6 +188,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global'),
+  translate('global', {
+    withRef: true
+  }),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportWatch);
