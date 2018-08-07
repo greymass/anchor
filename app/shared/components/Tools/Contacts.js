@@ -157,6 +157,20 @@ class ToolsContacts extends Component<Props> {
           ) : ''}
 
         <Table>
+          <Table.Header>
+            <Table.Row key="tools_contacts_headers">
+              <Table.HeaderCell width="2">
+                <p>{t('tools_contacts_contact_account_name')}</p>
+              </Table.HeaderCell>
+              <Table.HeaderCell width="3">
+                <p>{t('tools_contacts_contact_full_name')}</p>
+              </Table.HeaderCell>
+              <Table.HeaderCell width="5">
+                <p>{t('tools_contacts_contact_default_memo')}</p>
+              </Table.HeaderCell>
+              <Table.HeaderCell width="3" />
+            </Table.Row>
+          </Table.Header>
           <Visibility
             continuous
             key="ContactsTable"
@@ -166,13 +180,13 @@ class ToolsContacts extends Component<Props> {
           >
             {contactsToDisplay.map((contact) => (
               <Table.Row key={contact.accountName}>
-                <Table.Cell width="3">
+                <Table.Cell width="2">
                   <p>{contact.accountName}</p>
                 </Table.Cell>
-                <Table.Cell width="4">
+                <Table.Cell width="3">
                   <p>{contact.fullName}</p>
                 </Table.Cell>
-                <Table.Cell width="9">
+                <Table.Cell width="8">
                   <p>{contact.defaultMemo}</p>
                 </Table.Cell>
                 <Table.Cell style={rowButtonContainerStyle} width="2">
