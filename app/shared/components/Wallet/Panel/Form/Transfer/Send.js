@@ -141,20 +141,20 @@ class WalletPanelFormTransferSend extends Component<Props> {
       settings
     } = this.props;
 
-    if (!toValid) {
-      return 'invalid_accountName';
-    }
-
-    if (!memoValid) {
-      return 'invalid_memo';
-    }
-
     if (!to || to === '') {
       return true;
     }
 
     if (!quantity || quantity === '' || quantity === '0.0000') {
       return true;
+    }
+
+    if (!toValid) {
+      return 'invalid_accountName';
+    }
+
+    if (!memoValid) {
+      return 'invalid_memo';
     }
 
     if (to === settings.account) {
@@ -194,15 +194,17 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     let exchangeWarning;
 
-    exchangeAccounts.forEach((exchangeAccount) => {
-      if (memo && memo.match(`.*?${exchangeAccount}.*?`)) {
-        exchangeWarning = (
-          <Message warning>
-            {`${t('transfer_send_exchange_in_memo_one')} ${exchangeAccount} ${t('transfer_send_exchange_in_memo_two')}`}
-          </Message>
-        );
-      }
-    });
+    if (memo) {
+      exchangeAccounts.forEach((exchangeAccount) => {
+        if (memo.match(`.*?${exchangeAccount}.*?`)) {
+          exchangeWarning = (
+            <Message warning>
+              {`${t('transfer_send_exchange_in_memo_one')} ${exchangeAccount} ${t('transfer_send_exchange_in_memo_two')}`}
+            </Message>
+          );
+        }
+      });
+    }
 
     const hasWarnings = exchangeWarning;
 
