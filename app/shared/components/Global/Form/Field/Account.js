@@ -30,9 +30,14 @@ class GlobalFormFieldAccount extends Component<Props> {
   reset = () => this.setState({ value: '' });
 
   handleRadioChange = (e, { value }) => {
+    const {
+      name
+    } = this.props;
+
     this.setState({
-      fieldOption: value,
-      value: ''
+      fieldOption: value
+    }, () => {
+      this.onChange(e, { name, value: '' });
     });
   }
 
