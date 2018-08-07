@@ -18,7 +18,7 @@ class ToolsFormContact extends Component<Props> {
       defaultMemo: null,
       defaultMemoValid: true,
       formError: false,
-      fullName: null,
+      label: null,
       submitDisabled: true
     };
   }
@@ -32,13 +32,13 @@ class ToolsFormContact extends Component<Props> {
       const {
         accountName,
         defaultMemo,
-        fullName
+        label
       } = contactToEdit;
 
       this.setState({
         accountName,
         defaultMemo,
-        fullName,
+        label,
       });
     }
   }
@@ -76,7 +76,7 @@ class ToolsFormContact extends Component<Props> {
       accountName,
       accountNameValid,
       defaultMemoValid,
-      fullName
+      label
     } = this.state;
 
     if (!defaultMemoValid) {
@@ -98,7 +98,7 @@ class ToolsFormContact extends Component<Props> {
       return 'accountName_not_unique_in_contacts';
     }
 
-    if (!fullName || fullName.length === 0) {
+    if (!label || label.length === 0) {
       return true;
     }
 
@@ -117,7 +117,7 @@ class ToolsFormContact extends Component<Props> {
     const {
       accountName,
       defaultMemo,
-      fullName
+      label
     } = this.state;
 
     if (contactToEdit) {
@@ -129,14 +129,14 @@ class ToolsFormContact extends Component<Props> {
       contacts.concat({
         accountName,
         defaultMemo,
-        fullName
+        label
       })
     );
 
     this.setState({
       accountName: null,
       defaultMemo: null,
-      fullName: null
+      label: null
     }, () => {
       onSuccess((contactToEdit) ? 'tools_contacts_success_edit' : null);
     });
@@ -153,7 +153,7 @@ class ToolsFormContact extends Component<Props> {
       accountName,
       defaultMemo,
       formError,
-      fullName,
+      label,
       submitDisabled
     } = this.state;
 
@@ -170,9 +170,9 @@ class ToolsFormContact extends Component<Props> {
           value={accountName || ''}
         />
         <GlobalFormFieldGeneric
-          value={fullName || ''}
-          label={t('tools_form_contact_full_name')}
-          name="fullName"
+          value={label || ''}
+          label={t('tools_form_contact_label')}
+          name="label"
           onChange={this.onChange}
         />
         <GlobalFormFieldMemo
