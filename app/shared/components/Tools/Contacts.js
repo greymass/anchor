@@ -24,7 +24,7 @@ class ToolsContacts extends Component<Props> {
     this.state = {
       confirmDelete: false,
       contactToEdit: null,
-      numberToLoad: 10,
+      numberToLoad: 20,
       openModal: false
     };
   }
