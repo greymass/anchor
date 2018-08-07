@@ -194,7 +194,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     let exchangeWarning;
 
-    if (memo) {
+    if (memo && memo !== '') {
       exchangeAccounts.forEach((exchangeAccount) => {
         if (memo.match(`.*?${exchangeAccount}.*?`)) {
           exchangeWarning = (
