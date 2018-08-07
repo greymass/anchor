@@ -195,7 +195,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     let exchangeWarning;
 
     exchangeAccounts.forEach((exchangeAccount) => {
-      if (memo.match(`.*?${exchangeAccount}.*?`)) {
+      if (memo && memo.match(`.*?${exchangeAccount}.*?`)) {
         exchangeWarning = (
           <Message warning>
             {`${t('transfer_send_exchange_in_memo_one')} ${exchangeAccount} ${t('transfer_send_exchange_in_memo_two')}`}
