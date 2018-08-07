@@ -114,7 +114,7 @@ class WalletStatus extends Component<Props> {
     return (
       <div>
         <WalletStatusResources
-          displayAvailableSetting={settings.displayAvailable}
+          displayResourcesUsedSetting={settings.displayResourcesUsed}
           statsFetcher={statsFetcher}
         />
         <Segment>

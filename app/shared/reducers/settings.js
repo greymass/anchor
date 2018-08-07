@@ -19,7 +19,7 @@ const initialState = {
     'eosio.token:EOS'
   ],
   // Defaults to displaying resources remaining
-  displayResourcesAvailable: false,
+  displayResourcesUsed: false,
   // Default Idle Timeout
   idleTimeout: 999999999,
   // Default language
