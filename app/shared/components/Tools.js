@@ -80,10 +80,10 @@ class Tools extends Component<Props> {
               />
             </Form.Field>
             <Form.Field>
-              <label>{t('tools_change_display_resource_format')}</label>
+              <label>{t('tools_change_resource_display_format')}</label>
               <GlobalSettingsResourceDisplayFormat
                 actions={actions}
-                defaultValue={settings.skipLinkModal}
+                defaultValue={settings.displayResourcesAvailable || false}
                 selection
               />
             </Form.Field>

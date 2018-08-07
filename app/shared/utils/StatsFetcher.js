@@ -86,16 +86,16 @@ export default class StatsFetcher {
     let netUsage;
     if (cpu_limit) {
       const { max, used } = cpu_limit;
-      cpuUsage = Math.max(100, (Decimal((used / max) * 100))).toFixed(3);
+      cpuUsage = Math.min(100, (Decimal((used / max) * 100)));
     }
 
     if (net_limit) {
       const { max, used } = net_limit;
-      netUsage = Math.min(100, (Decimal((used / max) * 100))).toFixed(3);
+      netUsage = Math.min(100, (Decimal((used / max) * 100)));
     }
     let ramUsage;
     if (ram_quota && ram_usage) {
-      ramUsage = Math.max(100, (Decimal((ram_usage / ram_quota) * 100))).toFixed(3);
+      ramUsage = Math.min(100, (Decimal((ram_usage / ram_quota) * 100)));
     }
 
     return {
