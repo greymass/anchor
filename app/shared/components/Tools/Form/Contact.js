@@ -75,8 +75,7 @@ class ToolsFormContact extends Component<Props> {
     const {
       accountName,
       accountNameValid,
-      defaultMemoValid,
-      label
+      defaultMemoValid
     } = this.state;
 
     if (!defaultMemoValid) {
@@ -96,10 +95,6 @@ class ToolsFormContact extends Component<Props> {
 
     if (accountNameHasChanged && accountNameIsInList) {
       return 'accountName_not_unique_in_contacts';
-    }
-
-    if (!label || label.length === 0) {
-      return true;
     }
 
     return false;
