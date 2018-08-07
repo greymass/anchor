@@ -166,20 +166,14 @@ class ToolsContacts extends Component<Props> {
           >
             {contactsToDisplay.map((contact) => (
               <Table.Row key={contact.accountName}>
-                <Table.Cell width="12">
-                  <Grid>
-                    <Grid.Row>
-                      <Grid.Column width="4">
-                        <p>{contact.fullName}</p>
-                      </Grid.Column>
-                      <Grid.Column width="3">
-                        <u>{contact.accountName}</u>
-                      </Grid.Column>
-                      <Grid.Column width="9">
-                        <p><strong>{t('tools_contact_default_memo')}:</strong>&nbsp;{contact.defaultMemo}</p>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
+                <Table.Cell width="3">
+                  <p>{contact.accountName}</p>
+                </Table.Cell>
+                <Table.Cell width="4">
+                  <p>{contact.fullName}</p>
+                </Table.Cell>
+                <Table.Cell width="9">
+                  <p>{contact.defaultMemo}</p>
                 </Table.Cell>
                 <Table.Cell style={rowButtonContainerStyle} width="2">
                   <Button
