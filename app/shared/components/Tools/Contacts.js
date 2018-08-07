@@ -13,7 +13,7 @@ import {
   Visibility
 } from 'semantic-ui-react';
 
-import { debounce, filter, findIndex } from 'lodash';
+import { debounce, filter, findIndex, sortBy } from 'lodash';
 
 import ToolsModalContact from './Modal/Contact';
 
@@ -59,8 +59,6 @@ class ToolsContacts extends Component<Props> {
       'contacts',
       contacts
     );
-
-    this.onSuccess('tools_contacts_success_delete');
   }
 
   onSuccess = (message) => {
@@ -98,18 +96,15 @@ class ToolsContacts extends Component<Props> {
       contacts
     } = settings;
 
-    const contactsToDisplay = filter(contacts, (contact) => {
+    const sortedContacts = sortBy(contacts, 'accountName');
+
+    const contactsToDisplay = filter(sortedContacts, (contact) => {
       const matchesLabel = (String(contact.label).toLowerCase()).indexOf(query) > -1;
       const matchesAccountName =
         (String(contact.accountName).toLowerCase()).indexOf(query) > -1;
 
       return !query || matchesLabel || matchesAccountName;
     }).slice(0, numberToLoad);
-
-    const rowButtonContainerStyle = {
-      paddingTop: '30px',
-      paddingBottom: '30px'
-    };
 
     return (
       <React.Fragment>
@@ -146,7 +141,7 @@ class ToolsContacts extends Component<Props> {
               content={t(successMessage)}
               success
             />
-          ) : ''}
+          ) : <br />}
 
         {(!contacts || contacts.length === 0)
           ? (
@@ -154,74 +149,84 @@ class ToolsContacts extends Component<Props> {
               content={t('tools_contacts_none')}
               warning
             />
-          ) : ''}
-
-        <Table>
-          <Table.Header>
-            <Table.Row key="tools_contacts_headers">
-              <Table.HeaderCell width="2">
-                <p>{t('tools_contacts_contact_account_name')}</p>
-              </Table.HeaderCell>
-              <Table.HeaderCell width="3">
-                <p>{t('tools_contacts_contact_label')}</p>
-              </Table.HeaderCell>
-              <Table.HeaderCell width="5">
-                <p>{t('tools_contacts_contact_default_memo')}</p>
-              </Table.HeaderCell>
-              <Table.HeaderCell width="3" />
-            </Table.Row>
-          </Table.Header>
-          <Visibility
-            continuous
-            key="ContactsTable"
-            fireOnMount
-            onBottomVisible={this.loadMore}
-            once={false}
-          >
-            {contactsToDisplay.map((contact) => (
-              <Table.Row key={contact.accountName}>
-                <Table.Cell width="2">
-                  <p>{contact.accountName}</p>
-                </Table.Cell>
-                <Table.Cell width="3">
-                  <p>{contact.label}</p>
-                </Table.Cell>
-                <Table.Cell width="8">
-                  <p>{contact.defaultMemo}</p>
-                </Table.Cell>
-                <Table.Cell style={rowButtonContainerStyle} width="2">
-                  <Button
-                    content={t('tools_contact_button_edit')}
-                    icon="address book"
-                    fluid
-                    onClick={() => this.onOpenModal(contact)}
-                    size="mini"
-                  />
-                </Table.Cell>
-                <Table.Cell style={rowButtonContainerStyle} width="1">
-                  <Button
-                    color="red"
-                    fluid
-                    icon="minus circle"
-                    onClick={() => this.setState({ confirmDelete: true, contactToDelete: contact })}
-                    size="mini"
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Visibility>
-        </Table>
-        <Confirm
-          content={t('tools_contact_confirm_delete_text')}
-          open={confirmDelete}
-          onCancel={() => {
-            this.setState({ confirmDelete: false });
-          }}
-          onConfirm={() => {
-            this.deleteContact();
-            this.setState({ confirmDelete: false });
-          }}
-        />
+          ) : (
+            <div>
+              <br />
+              <Visibility
+                continuous
+                key="ContactsTable"
+                fireOnMount
+                onBottomVisible={this.loadMore}
+                once={false}
+              >
+                <Table>
+                  <Table.Header>
+                    <Table.Row key="tools_contacts_headers">
+                      <Table.HeaderCell width="3">
+                        {t('tools_contacts_contact_account_name')}
+                      </Table.HeaderCell>
+                      <Table.HeaderCell>
+                        {t('tools_contacts_contact_label')}
+                      </Table.HeaderCell>
+                      <Table.HeaderCell>
+                        {t('tools_contacts_contact_default_memo')}
+                      </Table.HeaderCell>
+                      <Table.HeaderCell />
+                      <Table.HeaderCell />
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {contactsToDisplay.map((contact) => (
+                      <Table.Row>
+                        <Table.Cell>
+                          {contact.accountName}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {contact.label}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {contact.defaultMemo}
+                        </Table.Cell>
+                        <Table.Cell width="2">
+                          <Button
+                            content={t('tools_contact_button_edit')}
+                            icon="address book"
+                            fluid
+                            onClick={() => this.onOpenModal(contact)}
+                            size="mini"
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Button
+                            color="red"
+                            fluid
+                            icon="minus circle"
+                            onClick={() => {
+                              this.setState({ confirmDelete: true, contactToDelete: contact });
+                            }}
+                            size="mini"
+                          />
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              </Visibility>
+              <Confirm
+                content={t('tools_contact_confirm_delete_text')}
+                open={confirmDelete}
+                onCancel={() => {
+                  this.setState({ confirmDelete: false });
+                }}
+                onConfirm={() => {
+                  this.deleteContact();
+                  this.setState({ confirmDelete: false }, () => {
+                    this.onSuccess('tools_contacts_success_delete');
+                  });
+                }}
+              />
+            </div>
+          )}
       </React.Fragment>
     );
   }
