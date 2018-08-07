@@ -6,14 +6,14 @@ export default class GlobalDataResourcePercentage extends Component<Props> {
   render() {
     const {
       color,
-      displayAvailableSetting,
-      percentageAvailable,
+      displayResourcesUsedSetting,
+      percentageUsed,
       size,
       style
     } = this.props;
 
     const percentageToDisplay =
-      (displayAvailableSetting ? (100 - percentageAvailable) : percentageAvailable);
+      (displayResourcesUsedSetting ? percentageUsed : (100 - percentageUsed));
 
     return (
       <Progress
