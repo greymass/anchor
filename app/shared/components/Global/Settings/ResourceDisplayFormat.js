@@ -19,8 +19,8 @@ class GlobalSettingsResourceDisplayFormat extends Component<Props> {
     } = this.props;
 
     const options = [
-      { key: 'display_resources_available', value: false, text: t('global_settings_display_resources_available') },
-      { key: 'display_resources_used', value: true, text: t('global_settings_display_resources_used') }
+      { key: 'display_resources_available', value: true, text: t('global_settings_display_resources_available') },
+      { key: 'display_resources_used', value: false, text: t('global_settings_display_resources_used') }
     ];
 
     return (

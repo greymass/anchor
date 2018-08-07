@@ -8,7 +8,7 @@ import ResourcePercentage from '../../Global/Data/Resource/Percentage';
 class WalletStatusResources extends Component<Props> {
   render() {
     const {
-      displayResourcesUsedSetting,
+      displayResourcesAvailableSetting,
       statsFetcher,
       t
     } = this.props;
@@ -22,7 +22,12 @@ class WalletStatusResources extends Component<Props> {
     return (
       <Segment stacked>
         <Header dividing size="small">
-          {t('wallet_status_resources_title')}
+          {(displayResourcesAvailableSetting)
+          ? (
+              t('wallet_status_resources_title_available')
+            ) : (
+              t('wallet_status_resources_title_used')
+            )}
         </Header>
         <Grid columns={3} divided>
           <Grid.Row>
@@ -37,7 +42,7 @@ class WalletStatusResources extends Component<Props> {
               <ResourcePercentage
                 color="teal"
                 percentageUsed={ramUsage}
-                displayResourcesUsedSetting={displayResourcesUsedSetting}
+                displayResourcesAvailableSetting={displayResourcesAvailableSetting}
                 size="tiny"
                 style={{ minWidth: 0 }}
               />
@@ -53,7 +58,7 @@ class WalletStatusResources extends Component<Props> {
               <ResourcePercentage
                 color="teal"
                 percentageUsed={cpuUsage}
-                displayResourcesUsedSetting={displayResourcesUsedSetting}
+                displayResourcesAvailableSetting={displayResourcesAvailableSetting}
                 size="tiny"
                 style={{ minWidth: 0 }}
               />
@@ -68,7 +73,7 @@ class WalletStatusResources extends Component<Props> {
               <ResourcePercentage
                 color="teal"
                 percentageUsed={netUsage}
-                displayResourcesUsedSetting={displayResourcesUsedSetting}
+                displayResourcesAvailableSetting={displayResourcesAvailableSetting}
                 size="tiny"
                 style={{ minWidth: 0 }}
               />
