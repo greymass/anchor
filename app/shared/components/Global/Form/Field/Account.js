@@ -65,9 +65,9 @@ class GlobalFormFieldAccount extends Component<Props> {
     let dropdownOptions;
 
     if (fieldOption === 'contacts') {
-      dropdownOptions = sortBy(contacts, c => c.fullName).map((contact) => ({
+      dropdownOptions = sortBy(contacts, c => c.label).map((contact) => ({
         value: contact.accountName,
-        text: `${contact.fullName} (${contact.accountName})`
+        text: `${contact.label} (${contact.accountName})`
       }));
     } else if (fieldOption === 'exchanges') {
       dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => ({
