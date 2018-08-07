@@ -65,12 +65,6 @@ class ToolsContacts extends Component<Props> {
     this.setState({
       openModal: false,
       successMessage: message || 'tools_contacts_success_add'
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          successMessage: false
-        });
-      }, 5000);
     });
   }
 
