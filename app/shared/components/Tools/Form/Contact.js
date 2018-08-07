@@ -79,7 +79,7 @@ class ToolsFormContact extends Component<Props> {
     } = this.state;
 
     if (!defaultMemoValid) {
-      return 'invalid_default_memo';
+      return 'invalid_memo';
     }
 
     if (!accountName || accountName.length === 0) {
