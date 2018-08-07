@@ -18,7 +18,7 @@
   "tools_contacts_contact_label": "Description/Label",
   "tools_contacts_none": "To get started with the Address Book, add your first contact by clicking the 'Add Contact' button above.",
   "tools_contacts_success_add": "You have successfully added your contact.",
-  "tools_contacts_success_delete": "You have successfully deleted your contact.",
+  "tools_contacts_success_delete": "You have deleted your contact.",
   "tools_contacts_success_edit": "You have successfully updated your contact.",
   "tools_create_account_header": "Create Account",
   "tools_create_account_text": "Create (and pay for) an account on the EOS network.",
