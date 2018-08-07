@@ -99,11 +99,11 @@ class ToolsContacts extends Component<Props> {
     } = settings;
 
     const contactsToDisplay = filter(contacts, (contact) => {
-      const matchesFullName = (String(contact.fullName).toLowerCase()).indexOf(query) > -1;
+      const matchesLabel = (String(contact.label).toLowerCase()).indexOf(query) > -1;
       const matchesAccountName =
         (String(contact.accountName).toLowerCase()).indexOf(query) > -1;
 
-      return !query || matchesFullName || matchesAccountName;
+      return !query || matchesLabel || matchesAccountName;
     }).slice(0, numberToLoad);
 
     const rowButtonContainerStyle = {
@@ -163,7 +163,7 @@ class ToolsContacts extends Component<Props> {
                 <p>{t('tools_contacts_contact_account_name')}</p>
               </Table.HeaderCell>
               <Table.HeaderCell width="3">
-                <p>{t('tools_contacts_contact_full_name')}</p>
+                <p>{t('tools_contacts_contact_label')}</p>
               </Table.HeaderCell>
               <Table.HeaderCell width="5">
                 <p>{t('tools_contacts_contact_default_memo')}</p>
@@ -184,7 +184,7 @@ class ToolsContacts extends Component<Props> {
                   <p>{contact.accountName}</p>
                 </Table.Cell>
                 <Table.Cell width="3">
-                  <p>{contact.fullName}</p>
+                  <p>{contact.label}</p>
                 </Table.Cell>
                 <Table.Cell width="8">
                   <p>{contact.defaultMemo}</p>
