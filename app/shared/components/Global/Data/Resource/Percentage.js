@@ -6,21 +6,21 @@ export default class GlobalDataResourcePercentage extends Component<Props> {
   render() {
     const {
       color,
-      displayResourcesUsedSetting,
+      displayResourcesAvailableSetting,
       percentageUsed,
       size,
       style
     } = this.props;
 
     const percentageToDisplay =
-      (displayResourcesUsedSetting ? percentageUsed : (100 - percentageUsed));
+      (displayResourcesAvailableSetting ? (100 - percentageUsed) : percentageUsed);
 
     return (
       <Progress
         color={color}
         label={(
           <div className="label">
-            {percentageToDisplay}%
+            {percentageToDisplay.toFixed(3)}%
             {' '}
             <Responsive as="span" minWidth={800} />
           </div>
