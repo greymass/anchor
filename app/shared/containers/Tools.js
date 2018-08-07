@@ -82,7 +82,7 @@ class ToolsContainer extends Component<Props> {
           menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
         },
         {
-          menuItem: t('tools_menu_address_book'),
+          menuItem: t('tools_menu_contacts'),
           render: () => <Tab.Pane><ToolsContacts {...this.props} /></Tab.Pane>,
         },
         {
