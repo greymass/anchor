@@ -23,14 +23,14 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
       memo,
       onBack,
       quantity,
-      symbol,
+      asset,
       to,
       t,
       waiting,
       waitingStarted
     } = this.props;
 
-    const contract = balances.__contracts[symbol.toUpperCase()].contract;
+    const contract = balances.__contracts[asset.toUpperCase()].contract;
 
     const secondsElapsed = new Date() - waitingStarted;
     const secondsRemaining = parseInt((3000 - secondsElapsed) / 1000, 10) + 1;

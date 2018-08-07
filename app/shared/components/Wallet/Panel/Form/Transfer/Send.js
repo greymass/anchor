@@ -16,6 +16,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      asset: 'EOS',
       confirming: false,
       formError: false,
       from: props.settings.account,
@@ -23,7 +24,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
       memoValid: true,
       quantity: '',
       submitDisabled: true,
-      symbol: 'EOS',
       to: '',
       toValid: true,
       waiting: false,
@@ -91,8 +91,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     const newState = { [name]: value };
     if (name === 'quantity') {
-      const [, symbol] = value.split(' ');
-      newState.symbol = symbol;
+      const [, asset] = value.split(' ');
+      newState.asset = asset;
     }
 
     newState[`${name}Valid`] = valid;
@@ -149,6 +149,10 @@ class WalletPanelFormTransferSend extends Component<Props> {
       return 'invalid_memo';
     }
 
+    if (!to || to === '') {
+      return true;
+    }
+
     if (!quantity || quantity === '' || quantity === '0.0000') {
       return true;
     }
@@ -173,6 +177,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       t
     } = this.props;
     const {
+      asset,
       confirming,
       formError,
       from,
@@ -186,7 +191,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
-    const asset = 'EOS';
 
     let exchangeWarning;
 
@@ -212,13 +216,13 @@ class WalletPanelFormTransferSend extends Component<Props> {
         {(confirming)
           ? (
             <WalletPanelFormTransferSendConfirming
+              asset={asset}
               balances={balances}
               from={from}
               memo={memo}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               quantity={quantity}
-              symbol={symbol}
               to={to}
               waiting={waiting}
               waitingStarted={waitingStarted}
@@ -248,7 +252,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 value={quantity}
               />
               <p>
-                {`${balance[asset].toFixed(4)} EOS ${t('transfer_header_available')}`}
+                {`${balance[asset].toFixed(4)} ${asset} ${t('transfer_header_available')}`}
               </p>
               <GlobalFormFieldMemo
                 icon="x"
