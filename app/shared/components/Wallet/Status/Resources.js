@@ -8,7 +8,7 @@ import ResourcePercentage from '../../Global/Data/Resource/Percentage';
 class WalletStatusResources extends Component<Props> {
   render() {
     const {
-      displayAvailableSetting,
+      displayResourcesUsedSetting,
       statsFetcher,
       t
     } = this.props;
@@ -37,7 +37,7 @@ class WalletStatusResources extends Component<Props> {
               <ResourcePercentage
                 color="teal"
                 percentageUsed={ramUsage}
-                displayAvailableSetting={displayAvailableSetting}
+                displayResourcesUsedSetting={displayResourcesUsedSetting}
                 size="tiny"
                 style={{ minWidth: 0 }}
               />
@@ -53,7 +53,7 @@ class WalletStatusResources extends Component<Props> {
               <ResourcePercentage
                 color="teal"
                 percentageUsed={cpuUsage}
-                displayAvailableSetting={displayAvailableSetting}
+                displayResourcesUsedSetting={displayResourcesUsedSetting}
                 size="tiny"
                 style={{ minWidth: 0 }}
               />
@@ -68,7 +68,7 @@ class WalletStatusResources extends Component<Props> {
               <ResourcePercentage
                 color="teal"
                 percentageUsed={netUsage}
-                displayAvailableSetting={displayAvailableSetting}
+                displayResourcesUsedSetting={displayResourcesUsedSetting}
                 size="tiny"
                 style={{ minWidth: 0 }}
               />
