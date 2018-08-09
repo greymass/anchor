@@ -1,47 +1,48 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Message } from 'semantic-ui-react';
+
+import GlobalTransactionErrorAuthorization from './Error/Authorization';
+import GlobalTransactionErrorDefault from './Error/Default';
+
+const transactionErrorsMapping = {
+  unsatisfied_authorization: GlobalTransactionErrorAuthorization
+};
 
 class GlobalTransactionMessageError extends Component<Props> {
+  constructor(props) {
+    super(props);
+    const {
+      error
+    } = this.props;
+
+    this.state = {
+      ComponentType: transactionErrorsMapping[error.error && error.error.name] ||
+        GlobalTransactionErrorDefault
+    };
+  }
+
   render() {
     const {
       error,
-      errors,
       onClose,
-      t
+      style
     } = this.props;
 
-    const errorObjects = (errors || []);
+    const {
+      ComponentType
+    } = this.state;
 
-    errorObjects.push(error);
+    debugger
 
-    const errorMessages = errorObjects.map((err) => {
-      if (err && err.code) {
-        const details = (err.error && err.error.details.length > 0)
-          ? err.error.details[0].message
-          : false;
-        return details || err.error.name || err.name || err.message;
-      }
-
-      return err;
-    });
-
-    return (error || errors)
-      ? [(
-        <Message negative>
-          { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }
-        </Message>
-      ), (
-        <Button
-          color="red"
-          content={t('close')}
-          fluid
-          onClick={onClose}
-        />
-      )]
-      : '';
+    return (
+      <ComponentType
+        error={error}
+        onClose={onClose}
+        style={style}
+      />
+    );
   }
 }
 
-export default translate('global')(GlobalTransactionMessageError);
+export default GlobalTransactionMessageError;
