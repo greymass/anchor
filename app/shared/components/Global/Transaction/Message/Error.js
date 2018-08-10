@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Button, Header, Message } from 'semantic-ui-react';
 
 import GlobalTransactionErrorAuthorization from './Error/Authorization';
 import GlobalTransactionErrorDefault from './Error/Default';
@@ -16,9 +17,10 @@ class GlobalTransactionMessageError extends Component<Props> {
       error
     } = this.props;
 
+    const errorName = error.error && error.error.name;
+
     this.state = {
-      ComponentType: transactionErrorsMapping[error.error && error.error.name] ||
-        GlobalTransactionErrorDefault
+      ComponentType: transactionErrorsMapping[errorName] || GlobalTransactionErrorDefault
     };
   }
 
@@ -26,7 +28,8 @@ class GlobalTransactionMessageError extends Component<Props> {
     const {
       error,
       onClose,
-      style
+      style,
+      t
     } = this.props;
 
     const {
@@ -36,13 +39,25 @@ class GlobalTransactionMessageError extends Component<Props> {
     debugger
 
     return (
-      <ComponentType
-        error={error}
-        onClose={onClose}
-        style={style}
-      />
+      <div style={style}>
+        <Message negative>
+          <Header>{t('error')}</Header>
+          <ComponentType
+            error={error}
+            onClose={onClose}
+            style={style}
+          />
+        </Message>
+        {(onClose) ? (
+          <Button
+            color="red"
+            content={t('close')}
+            fluid
+            onClick={onClose}
+          />) : ''}
+      </div>
     );
   }
 }
 
-export default GlobalTransactionMessageError;
+export default translate('global')(GlobalTransactionMessageError);
