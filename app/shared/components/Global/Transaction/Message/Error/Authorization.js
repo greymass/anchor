@@ -8,23 +8,27 @@ class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
       t
     } = this.props;
 
+    const colorStyle = { color: '#3C3A3B' };
+
     return (
       <div>
         <p>
           {t('global_transaction_message_error_authorization_paragraph')}
         </p>
-        <List>
+        <hr style={colorStyle} />
+        <List style={colorStyle} ordered>
           <List.Item>
-            1) {t('global_transaction_message_error_authorization_list_item_one')}
+            {t('global_transaction_message_error_authorization_list_item_one')}
           </List.Item>
           <List.Item>
-            2) {t('global_transaction_message_error_authorization_list_item_two')}
+            {t('global_transaction_message_error_authorization_list_item_two')}
           </List.Item>
           <List.Item>
-            3) {t('global_transaction_message_error_authorization_list_item_three')}
+            {t('global_transaction_message_error_authorization_list_item_three')}
           </List.Item>
         </List>
-        <p>**&nbsp;{t('global_transaction_message_error_authorization_note')}</p>
+        <hr style={colorStyle} />
+        <p style={colorStyle}>*&nbsp;{t('global_transaction_message_error_authorization_note')}</p>
       </div>
     );
   }
