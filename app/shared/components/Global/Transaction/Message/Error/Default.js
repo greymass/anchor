@@ -1,31 +1,20 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Message } from 'semantic-ui-react';
 
 class GlobalTransactionMessageErrorDefault extends Component<Props> {
   render() {
     const {
-      error,
-      onClose,
-      style,
-      t
+      error
     } = this.props;
 
-    return (
-      <div style={style}>
-        <Message negative>
-          <Header>{t('error')}</Header>
-          <p key={error}>{t(`error_${error}`)}</p>
-        </Message>
+    let errorMessage = error.error.details[0] && error.error.details[0].message;
 
-        {(onClose) ? (
-          <Button
-            color="red"
-            content={t('close')}
-            fluid
-            onClick={onClose}
-          />) : ''}
-      </div>
+    if (errorMessage) {
+      errorMessage = errorMessage.split('assertion failure with message:')[0];
+    }
+
+    return (
+      <p key={error}>{errorMessage || error.message}</p>
     );
   }
 }
