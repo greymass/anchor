@@ -36,8 +36,6 @@ class GlobalTransactionMessageError extends Component<Props> {
       ComponentType
     } = this.state;
 
-    debugger
-
     return (
       <div style={style}>
         <Message negative>
