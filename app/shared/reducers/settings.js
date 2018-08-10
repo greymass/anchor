@@ -22,6 +22,8 @@ const initialState = {
   ],
   // Defaults to displaying resources remaining
   displayResourcesAvailable: false,
+  // Default filter spam transfers to false
+  filter_spam_transfers: false,
   // Default Idle Timeout
   idleTimeout: 999999999,
   // Default language
