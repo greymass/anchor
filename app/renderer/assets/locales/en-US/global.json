@@ -98,5 +98,8 @@
   "global_transaction_view_is_expired": "Expired",
   "global_transaction_view_is_signed": "Signed Transaction",
   "global_transaction_view_is_unsigned": "Unsigned Transaction",
-  "global_transaction_view_status": "Transaction Status"
+  "global_transaction_view_status": "Transaction Status",
+  "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter.",
+  "account_that_uses_a_proxy_is_not_allowed_to_become_a_proxy": "You will have to stop proxying your votes before you can register as a proxy. You can stop proxying your votes by clicking the 'Change Voter Proxy' button on the 'Producer Voting' page.",
+  "account_registered_as_a_proxy_is_not_allowed_to_use_a_proxy": "You will have to unregister as a proxy voter before you can start proxying your votes to another account. You can unregister on the 'Register Voting Proxy' tab of the 'Tools' section."
 }
