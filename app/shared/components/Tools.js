@@ -9,6 +9,7 @@ import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
+import GlobalSettingsFilterSpamTransfers from './Global/Settings/FilterSpamTransfers';
 
 class Tools extends Component<Props> {
   render() {
@@ -84,6 +85,14 @@ class Tools extends Component<Props> {
               <GlobalSettingsResourceDisplayFormat
                 actions={actions}
                 defaultValue={settings.displayResourcesAvailable || false}
+                selection
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>{t('tools_change_spam_transfer_filter')}</label>
+              <GlobalSettingsFilterSpamTransfers
+                actions={actions}
+                defaultValue={settings.filterSpamTransfers}
                 selection
               />
             </Form.Field>
