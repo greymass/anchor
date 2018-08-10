@@ -47,7 +47,7 @@ class ToolsProxy extends Component<Props> {
               system={system}
             />
           </Segment>
-          <Segment style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
+          <Segment textAlign="center" style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
             <p>
               {t('tools_proxy_text_registered')}
             </p>
