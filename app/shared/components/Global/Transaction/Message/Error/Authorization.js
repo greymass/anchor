@@ -5,7 +5,6 @@ import { List } from 'semantic-ui-react';
 class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
   render() {
     const {
-      error,
       t
     } = this.props;
 
@@ -25,6 +24,7 @@ class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
             3) {t('global_transaction_message_error_authorization_list_item_three')}
           </List.Item>
         </List>
+        <p>**&nbsp;{t('global_transaction_message_error_authorization_note')}</p>
       </div>
     );
   }

@@ -97,7 +97,12 @@
   "global_transaction_view_is_signed": "Signed Transaction",
   "global_transaction_view_is_unsigned": "Unsigned Transaction",
   "global_transaction_view_status": "Transaction Status",
+  "global_transaction_message_error_authorization_paragraph": "The secret key used does not seem to be authorized to carry out this action. This can be the case in a number of situations.",
+  "global_transaction_message_error_authorization_list_item_one": "The owner key is being used to try to sign transactions. This is not allowed and the active key should be used instead.",
+  "global_transaction_message_error_authorization_list_item_two": "The private key that is used has only been given permission to execute certain actions and this is not one of them.",
+  "global_transaction_message_error_authorization_list_item_three": "The private key that is used has lost the permission to execute this action.",
+  "global_transaction_message_error_authorization_note": "The private key can be changed by removing this account and reentering it using the correct key.",
   "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter.",
-  "account_that_uses_a_proxy_is_not_allowed_to_become_a_proxy": "You will have to stop proxying your votes before you can register as a proxy. You can stop proxying your votes by clicking the 'Change Voter Proxy' button on the 'Producer Voting' page.",
-  "account_registered_as_a_proxy_is_not_allowed_to_use_a_proxy": "You will have to unregister as a proxy voter before you can start proxying your votes to another account. You can unregister on the 'Register Voting Proxy' tab of the 'Tools' section."
+  "account_that_uses_a_proxy_is_not_allowed_to_become_a_proxy": "Accounts must stop proxying votes before they can register as a proxy. Click the Change Voter Proxy button on the Producer Voting page to stop proxying votes.",
+  "account_registered_as_a_proxy_is_not_allowed_to_use_a_proxy": "Accounts need to unregister as a proxy before they can proxy votes to another account. To unregister, go to the Register Voting Proxy tab of the Tools section."
 }
