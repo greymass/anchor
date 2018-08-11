@@ -88,7 +88,7 @@
   "tools_proxy_header_registration": "Proxy Voter Registration",
   "tools_proxy_header_unregister": "Unregister as a Proxy Voter",
   "tools_proxy_text_not_registered": "By registering as a proxy voter, other accounts will be able to set this account as their proxy. Any producer voting weight from those accounts will be applied to the votes this account makes.",
-  "tools_proxy_text_registered": "This account is now registered and available to be usedrett as a proxy account.",
+  "tools_proxy_text_registered": "This account is now registered and available to be used as a proxy account.",
   "tools_settings_header": "Application Settings",
   "tools_settings_subheader": "Configure the local application settings based on your preference.",
   "tools_state_chain_header": "Chain State",
