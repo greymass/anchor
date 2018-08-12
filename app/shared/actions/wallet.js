@@ -42,7 +42,7 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
 export function setTemporaryKey(key) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
-    const pubkey = ecc.privateToPublic(key);
+    const pubkey = (key) ? ecc.privateToPublic(key) : '';
     // Obfuscate key for in-memory storage
     const hash = encrypt(key, key, 1).toString(CryptoJS.enc.Utf8);
     const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
