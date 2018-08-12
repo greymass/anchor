@@ -18,6 +18,7 @@ import ToolsKeys from '../components/Tools/Keys';
 import ToolsStateChain from '../components/Tools/State/Chain';
 import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
+import ToolsPermissions from '../components/Tools/Permissions';
 import ToolsProxy from '../components/Tools/Proxy';
 import ToolsWallets from '../components/Tools/Wallets';
 import ToolsReset from '../components/Tools/Reset';
@@ -31,6 +32,7 @@ import * as RegProxyActions from '../actions/system/regproxy';
 import * as SettingsActions from '../actions/settings';
 import * as SystemStateActions from '../actions/system/systemstate';
 import * as TransactionActions from '../actions/transaction';
+import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as UnregProxyActions from '../actions/system/unregproxy';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
@@ -101,6 +103,10 @@ class ToolsContainer extends Component<Props> {
         {
           menuItem: t('tools_menu_wallets'),
           render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
+        },
+        {
+          menuItem: t('tools_menu_permissions'),
+          render: () => <Tab.Pane><ToolsPermissions {...this.props} /></Tab.Pane>,
         },
         {
           menuItem: t('tools_menu_contracts'),
@@ -193,6 +199,7 @@ function mapDispatchToProps(dispatch) {
       ...SettingsActions,
       ...SystemStateActions,
       ...TransactionActions,
+      ...UpdateAuthActions,
       ...UnregProxyActions,
       ...WalletActions,
       ...WalletsActions,
