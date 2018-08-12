@@ -86,7 +86,10 @@ export function validateNode(node) {
           if (result.head_block_num > 1) {
             // Dispatch success
             dispatch({
-              payload: { node: httpEndpoint },
+              payload: {
+                node: httpEndpoint,
+                info: result
+              },
               type: types.VALIDATE_NODE_SUCCESS
             });
             // Refresh our connection properties with new chain info
