@@ -88,15 +88,17 @@ export default function connection(state = initialState, action) {
 }
 
 function getAuthorization(account, pubkey) {
-  // Find the matching permission
-  const permission = find(account.permissions, (perm) =>
-    find(perm.required_auth.keys, (key) => key.key === pubkey));
-  if (permission) {
-    // Return an authorization for this key
-    return {
-      actor: account.account_name,
-      permission: permission.perm_name
-    };
+  if (account) {
+    // Find the matching permission
+    const permission = find(account.permissions, (perm) =>
+      find(perm.required_auth.keys, (key) => key.key === pubkey));
+    if (permission) {
+      // Return an authorization for this key
+      return {
+        actor: account.account_name,
+        permission: permission.perm_name
+      };
+    }
   }
   return undefined;
 }
