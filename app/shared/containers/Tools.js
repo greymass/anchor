@@ -37,121 +37,137 @@ import * as UnregProxyActions from '../actions/system/unregproxy';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
 
+const paneMapping = [
+  {
+    element: Tools,
+    modes: ['cold', 'hot', 'watch', 'skip'],
+    name: 'index',
+  },
+  {
+    header: true,
+    modes: ['cold', 'hot', 'watch', 'skip'],
+    name: 'wallet',
+  },
+  {
+    element: ToolsContacts,
+    modes: ['hot', 'watch'],
+    name: 'contacts',
+  },
+  {
+    element: ToolsCustomTokens,
+    modes: ['hot', 'watch'],
+    name: 'customtokens',
+  },
+  {
+    element: ToolsWallets,
+    modes: ['cold', 'hot', 'watch'],
+    name: 'wallets',
+  },
+  {
+    element: ToolsPermissions,
+    modes: ['hot', 'watch'],
+    name: 'permissions',
+  },
+  {
+    element: ContractInterface,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'contracts',
+  },
+  {
+    header: true,
+    modes: ['cold', 'hot', 'watch', 'skip'],
+    name: 'utilities',
+  },
+  {
+    element: ToolsCreateAccount,
+    modes: ['hot', 'watch'],
+    name: 'create_account',
+  },
+  {
+    element: ToolsKeys,
+    modes: ['cold', 'hot', 'skip', 'watch'],
+    name: 'keys',
+  },
+  {
+    element: ToolsProxy,
+    modes: ['hot', 'watch'],
+    name: 'proxy',
+  },
+  {
+    header: true,
+    modes: ['cold', 'hot', 'watch', 'skip'],
+    name: 'state',
+  },
+  {
+    element: ToolsStateWallet,
+    modes: ['cold', 'hot', 'skip', 'watch'],
+    name: 'state',
+  },
+  {
+    element: ToolsStateGlobals,
+    modes: ['hot', 'watch'],
+    name: 'state_globals',
+  },
+  {
+    element: ToolsStateChain,
+    modes: ['hot', 'watch'],
+    name: 'state_chain',
+  },
+  {
+    header: true,
+    modes: ['cold', 'hot', 'watch', 'skip'],
+    name: 'advanced',
+  },
+  {
+    element: ToolsReset,
+    modes: ['cold', 'hot', 'skip', 'watch'],
+    name: 'reset',
+  },
+]
+
 class ToolsContainer extends Component<Props> {
-  props: Props;
+  constructor(props) {
+    super(props);
+    this.getPanes(props);
+  }
+
+  getPanes(props) {
+    const { t } = props;
+    this.panes = paneMapping
+      .filter((pane) => {
+        const { settings } = props;
+        const {
+          skipImport,
+          walletMode
+        } = settings;
+        return (
+          (!skipImport && pane.modes.includes(walletMode))
+          || (skipImport && pane.modes.includes('skip'))
+        );
+      })
+      .map((pane) => {
+        if (pane.header) {
+          return {
+            menuItem: <Menu.Header className="ui">{t(`tools_menu_${pane.name}_header`)}</Menu.Header>
+          };
+        }
+        return {
+          menuItem: t(`tools_menu_${pane.name}`),
+          render: () => (
+            <Tab.Pane>
+              {React.createElement(pane.element, { ...props })}
+            </Tab.Pane>
+          )
+        };
+      });
+  }
 
   render() {
     const {
       settings,
       t
     } = this.props;
-
-    let panes = [];
-
-    if (settings.walletMode === 'cold') {
-      panes = [
-        {
-          menuItem: t('tools_menu_index'),
-          render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_wallets'),
-          render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_keys'),
-          render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_state_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_state'),
-          render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_advanced_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_reset'),
-          render: () => <Tab.Pane><ToolsReset {...this.props} /></Tab.Pane>,
-        },
-      ];
-    } else {
-      panes = [
-        {
-          menuItem: t('tools_menu_index'),
-          render: () => <Tab.Pane><Tools {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_wallet_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_contacts'),
-          render: () => <Tab.Pane><ToolsContacts {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_customtokens'),
-          render: () => <Tab.Pane><ToolsCustomTokens {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_wallets'),
-          render: () => <Tab.Pane><ToolsWallets {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_permissions'),
-          render: () => <Tab.Pane><ToolsPermissions {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_contracts'),
-          render: () => <Tab.Pane><ContractInterface /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_utilities_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_create_account'),
-          render: () => <Tab.Pane><ToolsCreateAccount {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_keys'),
-          render: () => <Tab.Pane><ToolsKeys {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_proxy'),
-          render: () => <Tab.Pane><ToolsProxy {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_state_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_state'),
-          render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_state_globals'),
-          render: () => <Tab.Pane><ToolsStateGlobals {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: t('tools_menu_state_chain'),
-          render: () => <Tab.Pane><ToolsStateChain {...this.props} /></Tab.Pane>,
-        },
-        {
-          menuItem: <Menu.Header className="ui">{t('tools_menu_advanced_header')}</Menu.Header>
-        },
-        {
-          menuItem: t('tools_menu_reset'),
-          render: () => <Tab.Pane><ToolsReset {...this.props} /></Tab.Pane>,
-        },
-      ];
-    }
-
+    const panes = this.panes;
     return (
       <Tab
         menu={{
