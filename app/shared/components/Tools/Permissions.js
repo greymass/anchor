@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Container, Icon, Header, Segment, Table } from 'semantic-ui-react';
+import { Container, Icon, Header, Message, Segment, Table } from 'semantic-ui-react';
 
 import ToolsModalPermissionAuth from './Modal/Permissions/Auth';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
@@ -74,6 +74,12 @@ class ToolsPermissions extends Component<Props> {
             textAlign="left"
           />
         </Container>
+        <Message
+          content={t('tools_permissions_info_content')}
+          header={t('tools_permissions_info_header')}
+          icon="info circle"
+          info
+        />
         <Segment
           color="blue"
         >
@@ -125,8 +131,10 @@ class ToolsPermissions extends Component<Props> {
             </Header>
             <Table>
               <Table.Header>
-                <Table.HeaderCell textAlign="right">Weight</Table.HeaderCell>
-                <Table.HeaderCell>Permission</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell textAlign="right">Weight</Table.HeaderCell>
+                  <Table.HeaderCell>Permission</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 {data.required_auth.accounts.map((permission) => (
