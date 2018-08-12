@@ -103,6 +103,7 @@ class Tools extends Component<Props> {
             <Segment attached="bottom" padded="very" secondary stacked>
               <WelcomeConnectionContainer
                 autoFocus={false}
+                onStageSelect={() => undefined}
               />
             </Segment>
           ) : false
