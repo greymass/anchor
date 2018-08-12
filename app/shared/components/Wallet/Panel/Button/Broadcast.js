@@ -28,6 +28,7 @@ class WalletPanelButtonBroadcast extends Component<Props> {
         button={{
           color: 'purple',
           content: t('wallet_panel_wallet_broadcast'),
+          fluid: true,
           icon: 'wifi'
         }}
         content={(
