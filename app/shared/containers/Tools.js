@@ -50,11 +50,6 @@ const paneMapping = [
     name: 'wallet',
   },
   {
-    element: ToolsContacts,
-    modes: ['hot', 'watch'],
-    name: 'contacts',
-  },
-  {
     element: ToolsCustomTokens,
     modes: ['hot', 'watch'],
     name: 'customtokens',
@@ -78,6 +73,11 @@ const paneMapping = [
     header: true,
     modes: ['cold', 'hot', 'watch', 'skip'],
     name: 'utilities',
+  },
+  {
+    element: ToolsContacts,
+    modes: ['hot', 'watch'],
+    name: 'contacts',
   },
   {
     element: ToolsCreateAccount,
