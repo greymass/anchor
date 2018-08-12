@@ -1,11 +1,18 @@
+import { find } from 'lodash';
+
 import * as types from '../actions/types';
 
 const initialState = {
+  chain: 'eos-mainnet',
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   broadcast: true,
   expireInSeconds: 120,
   forceActionDataHex: false,
   httpEndpoint: null
+};
+
+const blockchains = {
+  aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'eos-mainnet'
 };
 
 export default function connection(state = initialState, action) {
@@ -17,6 +24,8 @@ export default function connection(state = initialState, action) {
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
       return Object.assign({}, state, {
+        chain: blockchains[action.payload.info.chain_id] || 'unknown',
+        chainId: action.payload.info.chain_id,
         httpEndpoint: action.payload.node
       });
     }

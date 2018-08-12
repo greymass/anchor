@@ -188,6 +188,7 @@ class Producers extends Component<Props> {
       accounts,
       balances,
       blockExplorers,
+      connection,
       globals,
       history,
       keys,
@@ -224,9 +225,10 @@ class Producers extends Component<Props> {
         wallet={wallet}
       />
     )];
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
     const account = accounts[settings.account];
+    const isMainnet = (connection && connection.chain === 'eos-mainnet');
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
+    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (isValidUser && settings.walletMode !== 'wait') {
       sidebar = (
@@ -302,6 +304,7 @@ class Producers extends Component<Props> {
                      amount={amount}
                      attached="top"
                      globals={globals}
+                     isMainnet={isMainnet}
                      isProxying={isProxying}
                      isQuerying={this.isQuerying}
                      keys={keys}
