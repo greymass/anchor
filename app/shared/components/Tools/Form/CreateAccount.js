@@ -14,20 +14,6 @@ import FormMessageError from '../../Global/Form/Message/Error';
 import ToolsFormCreateAccountConfirming from './CreateAccount/Confirming';
 import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 
-type Props = {
-  account: {},
-  accountName: null,
-  actions: {},
-  activeKey: null,
-  balance: {},
-  delegatedBw: null,
-  delegatedCpu: null,
-  globals: {},
-  ownerKey: null,
-  ramAmount: null,
-  system: {}
-};
-
 const formAttributes = ['accountName', 'activeKey', 'ownerKey', 'delegatedBw', 'delegatedCpu', 'ramAmount'];
 
 class ToolsFormCreateAccount extends Component<Props> {
