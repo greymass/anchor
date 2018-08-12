@@ -126,22 +126,18 @@ const paneMapping = [
 ]
 
 class ToolsContainer extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.getPanes(props);
-  }
-
-  getPanes(props) {
-    const { t } = props;
-    this.panes = paneMapping
+  getPanes() {
+    const { t } = this.props;
+    return paneMapping
       .filter((pane) => {
-        const { settings } = props;
+        const { settings } = this.props;
         const {
           skipImport,
           walletMode
         } = settings;
         return (
-          (!skipImport && pane.modes.includes(walletMode))
+          !walletMode
+          || (!skipImport && pane.modes.includes(walletMode))
           || (skipImport && pane.modes.includes('skip'))
         );
       })
@@ -155,19 +151,18 @@ class ToolsContainer extends Component<Props> {
           menuItem: t(`tools_menu_${pane.name}`),
           render: () => (
             <Tab.Pane>
-              {React.createElement(pane.element, { ...props })}
+              {React.createElement(pane.element, { ...this.props })}
             </Tab.Pane>
           )
         };
       });
   }
-
   render() {
     const {
       settings,
       t
     } = this.props;
-    const panes = this.panes;
+    const panes = this.getPanes();
     return (
       <Tab
         menu={{
