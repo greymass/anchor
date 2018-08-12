@@ -57,7 +57,9 @@ class ToolsWallets extends Component<Props> {
                 .map((account) => (
                   <Table.Row key={account.account}>
                     <Table.Cell>
-                      <strong>{account.account}</strong>
+                      <Header size="small">
+                        {account.account}
+                      </Header>
                     </Table.Cell>
                     <Table.Cell textAlign="center">
                       <Popup
