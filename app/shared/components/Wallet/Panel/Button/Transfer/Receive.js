@@ -27,6 +27,7 @@ class WalletPanelButtonTransferReceive extends Component<Props> {
     return (
       <WalletPanelModalTransferReceive
         accountName={accountName}
+        fluid
         onClose={this.onClose}
         open={open}
         trigger={(
