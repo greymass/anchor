@@ -36,6 +36,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
         button={{
           color: 'blue',
           content: t('transfer_send_button_cta'),
+          fluid: true,
           icon: 'arrow circle up'
         }}
         content={(
