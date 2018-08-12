@@ -7,6 +7,8 @@ const initialState = {
   acceptedConstitution: false,
   // If the wallet has ackknowledged understanding the smart contract tool
   acceptedContractInterface: false,
+  // Enable advanced permissions management
+  advancedPermissions: false,
   // The loaded account
   account: '',
   // The block explorer used
