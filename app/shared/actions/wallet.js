@@ -6,7 +6,7 @@ const ecc = require('eosjs-ecc');
 
 export function setWalletKey(data, password, mode = 'hot', existingHash = false) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+    const { accounts, settings } = getState();
     let hash = existingHash;
     let key = data;
     let obfuscated = data;
@@ -16,12 +16,15 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
       hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
       obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     }
+    const pubkey = ecc.privateToPublic(key);
     dispatch({
       type: types.SET_WALLET_KEYS_ACTIVE,
       payload: {
         account: settings.account,
+        accountData: accounts[settings.account],
         hash,
-        key: obfuscated
+        key: obfuscated,
+        pubkey
       }
     });
     return dispatch({
@@ -29,7 +32,8 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
       payload: {
         account: settings.account,
         data: encrypt(key, password),
-        mode
+        mode,
+        pubkey
       }
     });
   };
@@ -38,6 +42,7 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
 export function setTemporaryKey(key) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
+    const pubkey = ecc.privateToPublic(key);
     // Obfuscate key for in-memory storage
     const hash = encrypt(key, key, 1).toString(CryptoJS.enc.Utf8);
     const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
@@ -46,7 +51,8 @@ export function setTemporaryKey(key) {
       payload: {
         account: settings.account,
         hash,
-        key: obfuscated
+        key: obfuscated,
+        pubkey
       }
     });
   };
@@ -101,7 +107,9 @@ export function validateWalletPassword(password, useWallet = false) {
 
 export function unlockWallet(password, useWallet = false) {
   return (dispatch: () => void, getState) => {
-    let { wallet } = getState();
+    const state = getState();
+    const { accounts } = state;
+    let { wallet } = state;
     // If a wallet was passed to be used, use that instead of state.
     if (useWallet && useWallet.data) {
       wallet = useWallet;
@@ -113,9 +121,10 @@ export function unlockWallet(password, useWallet = false) {
       try {
         let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(key) === true) {
+          const pubkey = ecc.privateToPublic(key);
           // Set the active wallet
           dispatch({
-            payload: wallet,
+            payload: { ...wallet, pubkey },
             type: types.SET_WALLET_ACTIVE
           });
           // Obfuscate key for in-memory storage
@@ -125,8 +134,10 @@ export function unlockWallet(password, useWallet = false) {
           dispatch({
             payload: {
               account: wallet.account,
+              accountData: accounts[wallet.account],
               hash,
-              key
+              key,
+              pubkey
             },
             type: types.SET_WALLET_KEYS_ACTIVE
           });

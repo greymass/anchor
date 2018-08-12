@@ -3,6 +3,7 @@ import { find } from 'lodash';
 import * as types from '../actions/types';
 
 const initialState = {
+  authorization: undefined,
   chain: 'eos-mainnet',
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   broadcast: true,
@@ -67,6 +68,7 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_KEYS_ACTIVE:
     case types.SET_WALLET_KEYS_TEMPORARY: {
       return Object.assign({}, state, {
+        authorization: getAuthorization(action.payload.accountData, action.payload.pubkey),
         keyProviderObfuscated: {
           hash: action.payload.hash,
           key: action.payload.key
@@ -83,4 +85,19 @@ export default function connection(state = initialState, action) {
       return state;
     }
   }
+}
+
+function getAuthorization(account, pubkey) {
+  // Find the matching permission
+  const permission = find(account.permissions, (perm) =>
+    find(perm.required_auth.keys, (key) => key.key === pubkey));
+  if (permission) {
+    // Return an authorization for this key
+    // return `${account.account_name}@${permission.perm_name}`;
+    return {
+      actor: account.account_name,
+      permission: permission.perm_name
+    };
+  }
+  return undefined;
 }

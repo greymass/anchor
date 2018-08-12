@@ -19,6 +19,7 @@ export default function keys(state = initialState, action) {
         account: action.payload.account,
         hash: action.payload.hash,
         key: action.payload.key,
+        pubkey: action.payload.pubkey,
         temporary: true
       });
     }
@@ -27,6 +28,7 @@ export default function keys(state = initialState, action) {
         account: action.payload.account,
         hash: action.payload.hash,
         key: action.payload.key,
+        pubkey: action.payload.pubkey,
         temporary: false
       });
     }
