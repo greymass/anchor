@@ -9,7 +9,10 @@ import compose from 'lodash/fp/compose';
 import { Menu, Tab } from 'semantic-ui-react';
 
 import ContractInterface from './Contract/Interface';
+
 import Tools from '../components/Tools';
+import ToolsCreateAccount from '../components/Tools/CreateAccount';
+import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsStateChain from '../components/Tools/State/Chain';
@@ -17,8 +20,7 @@ import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
 import ToolsProxy from '../components/Tools/Proxy';
 import ToolsWallets from '../components/Tools/Wallets';
-import ToolsCreateAccount from '../components/Tools/CreateAccount';
-import ToolsContacts from '../components/Tools/Contacts';
+import ToolsReset from '../components/Tools/Reset';
 
 import * as AccountsActions from '../actions/accounts';
 import * as ContractsActions from '../actions/contracts';
@@ -70,7 +72,14 @@ class ToolsContainer extends Component<Props> {
         {
           menuItem: t('tools_menu_state'),
           render: () => <Tab.Pane><ToolsStateWallet {...this.props} /></Tab.Pane>,
-        }
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_advanced_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_reset'),
+          render: () => <Tab.Pane><ToolsReset {...this.props} /></Tab.Pane>,
+        },
       ];
     } else {
       panes = [
@@ -126,7 +135,14 @@ class ToolsContainer extends Component<Props> {
         {
           menuItem: t('tools_menu_state_chain'),
           render: () => <Tab.Pane><ToolsStateChain {...this.props} /></Tab.Pane>,
-        }
+        },
+        {
+          menuItem: <Menu.Header className="ui">{t('tools_menu_advanced_header')}</Menu.Header>
+        },
+        {
+          menuItem: t('tools_menu_reset'),
+          render: () => <Tab.Pane><ToolsReset {...this.props} /></Tab.Pane>,
+        },
       ];
     }
 
@@ -135,8 +151,8 @@ class ToolsContainer extends Component<Props> {
         menu={{
           fluid: true,
           vertical: true,
-          secondary: true,
-          pointing: true
+          pointing: true,
+          secondary: true
         }}
         panes={panes}
         defaultActiveIndex={0}
