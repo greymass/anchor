@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 
 const languages = [
   { key: 'cn', value: 'zh-CN', flag: 'cn', text: '中文' },
@@ -12,7 +13,7 @@ const languages = [
   { key: 'ru', value: 'ru-RU', flag: 'ru', text: 'Русский' },
 ];
 
-export default class GlobalSettingsLanguage extends Component<Props> {
+class GlobalSettingsLanguage extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions, i18n } = this.props;
     i18n.changeLanguage(value);
@@ -23,17 +24,21 @@ export default class GlobalSettingsLanguage extends Component<Props> {
     const {
       name,
       setLanguage,
-      selection
+      selection,
+      t
     } = this.props;
 
     return (
       <Dropdown
-        value={setLanguage}
         name={name}
         onChange={this.onChange}
         options={languages}
+        placeholder={t('global_select_language')}
         selection={selection}
+        value={setLanguage}
       />
     );
   }
 }
+
+export default translate('global')(GlobalSettingsLanguage);
