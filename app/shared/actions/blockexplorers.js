@@ -9,6 +9,12 @@ export function getBlockExplorers() {
       type: types.SYSTEM_BLOCKEXPLORERS_PENDING
     });
     // const { connection } = getState();
+    // // Don't retrieve if we're not on mainnet
+    // if (connection.chain !== 'eos-mainnet') {
+    //   return dispatch({
+    //     type: types.SYSTEM_BLOCKEXPLORERS_FAILURE
+    //   });
+    // }
     // const query = {
     //   json: true,
     //   code: 'blockexplorers',

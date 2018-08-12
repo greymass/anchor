@@ -18,6 +18,7 @@ class ProducersTableRow extends Component<Props> {
       addProducer,
       getProducerInfo,
       hasInfo,
+      isMainnet,
       isSelected,
       producer,
       position,
@@ -64,12 +65,11 @@ class ProducersTableRow extends Component<Props> {
                 hoverable
                 inverted
                 position="left center"
-                trigger={(
-                  <Button
-                    icon="magnify"
-                    size="small"
-                  />
-                )}
+                trigger={
+                  (isMainnet)
+                  ? <Button icon="magnify" size="small" />
+                  : false
+                }
               />
             )
           }
