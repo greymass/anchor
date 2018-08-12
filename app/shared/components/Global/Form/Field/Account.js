@@ -105,49 +105,50 @@ class GlobalFormFieldAccount extends Component<Props> {
       />
     );
 
-    return (!showOptions)
-      ? (
-        inputField
-      ) : (
-        <Form.Field>
-          {(showOptions)
-            ? (
-              <Form.Group inline>
-                <label>{t('global_form_field_account_options')}</label>
-                {availableOptions.map((option) => (
-                  <Form.Radio
-                    label={t(`global_form_field_account_${option}`)}
-                    key={option}
-                    name="inputRadioOptions"
-                    style={{ marginLeft: '10px' }}
-                    value={option}
-                    checked={this.state.fieldOption === option}
-                    onChange={this.handleRadioChange}
-                  />
-                ))}
-              </Form.Group>
-            ) : <br />}
-          <label htmlFor={name}>
-            <strong>{label}</strong>
-            {(fieldOption === 'manual')
-            ? (
-              inputField
-            ) : ''}
+    if (!showOptions) {
+      return inputField;
+    }
 
-            {(fieldOption !== 'manual')
-            ? (
-              <Form.Dropdown
-                defaultValue={value}
-                fluid
-                name={name}
-                onChange={this.onChange}
-                options={dropdownOptions}
-                selection
-              />
-            ) : ''}
-          </label>
-        </Form.Field>
-      );
+    return (
+      <Form.Field>
+        {(showOptions)
+          ? (
+            <Form.Group inline>
+              <label>{t('global_form_field_account_options')}</label>
+              {availableOptions.map((option) => (
+                <Form.Radio
+                  label={t(`global_form_field_account_${option}`)}
+                  key={option}
+                  name="inputRadioOptions"
+                  style={{ marginLeft: '10px' }}
+                  value={option}
+                  checked={this.state.fieldOption === option}
+                  onChange={this.handleRadioChange}
+                />
+              ))}
+            </Form.Group>
+          ) : <br />}
+        <label htmlFor={name}>
+          <strong>{label}</strong>
+          {(fieldOption === 'manual')
+          ? (
+            inputField
+          ) : ''}
+
+          {(fieldOption !== 'manual')
+          ? (
+            <Form.Dropdown
+              defaultValue={value}
+              fluid
+              name={name}
+              onChange={this.onChange}
+              options={dropdownOptions}
+              selection
+            />
+          ) : ''}
+        </label>
+      </Form.Field>
+    );
   }
 }
 
