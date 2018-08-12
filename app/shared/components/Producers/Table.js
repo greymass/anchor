@@ -41,6 +41,7 @@ class ProducersTable extends Component<Props> {
     const {
       amount,
       globals,
+      isMainnet,
       isProxying,
       isValidUser,
       producers,
@@ -88,6 +89,7 @@ class ProducersTable extends Component<Props> {
                 getProducerInfo={this.getProducerInfo}
                 hasInfo={hasInfo}
                 key={`${isProxying}-${producer.key}-${hasInfo}`}
+                isMainnet={isMainnet}
                 isProxying={isProxying}
                 isSelected={isSelected}
                 isValidUser={isValidUser}
@@ -118,6 +120,7 @@ class ProducersTable extends Component<Props> {
                     getProducerInfo={this.getProducerInfo}
                     hasInfo={hasInfo}
                     key={producer.key}
+                    is={isMainnet}
                     isProxying={isProxying}
                     isSelected={isSelected}
                     isValidUser={isValidUser}
