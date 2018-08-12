@@ -107,6 +107,8 @@ export function getProducersInfo(previous = false) {
       type: types.SYSTEM_PRODUCERSJSON_PENDING
     });
     const { connection } = getState();
+    // Don't retrieve if we're not on mainnet
+    if (connection.chain !== 'eos-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',
@@ -151,6 +153,8 @@ export function getProducerInfo(producer) {
       payload: { producer }
     });
     const { connection } = getState();
+    // Don't retrieve if we're not on mainnet
+    if (connection.chain !== 'eos-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',
