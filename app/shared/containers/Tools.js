@@ -15,6 +15,7 @@ import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
 import ToolsKeys from '../components/Tools/Keys';
+import ToolsKeysValidator from '../components/Tools/Keys/Validator';
 import ToolsStateChain from '../components/Tools/State/Chain';
 import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
@@ -86,7 +87,12 @@ const paneMapping = [
   {
     element: ToolsKeys,
     modes: ['cold', 'hot', 'skip', 'watch'],
-    name: 'keys',
+    name: 'keygenerator',
+  },
+  {
+    element: ToolsKeysValidator,
+    modes: ['cold', 'hot', 'skip', 'watch'],
+    name: 'keyvalidator',
   },
   {
     element: ToolsProxy,
