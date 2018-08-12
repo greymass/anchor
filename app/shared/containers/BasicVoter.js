@@ -181,6 +181,7 @@ function mapStateToProps(state) {
     balances: state.balances,
     blockExplorers: state.blockexplorers,
     chain: state.chain,
+    connection: state.connection,
     globals: state.globals,
     keys: state.keys,
     producers: state.producers,
