@@ -40,6 +40,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
         button={{
           color: 'blue',
           content: t('ram_sell_button_cta'),
+          fluid: true,
           icon: 'database'
         }}
         content={(

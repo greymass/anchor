@@ -41,6 +41,7 @@ class WalletPanelButtonStake extends Component<Props> {
         button={{
           color: 'blue',
           content: t('stake_button_cta'),
+          fluid: true,
           icon: 'microchip'
         }}
         content={(
