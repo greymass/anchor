@@ -32,10 +32,11 @@ class WalletStatusActionsTable extends Component<Props> {
           }
 
           const {
+            from,
             quantity
           } = act.data;
 
-          if (Number(quantity) > 0.001) {
+          if (Number(quantity) > 0.0005 || from === settings.account) {
             return true;
           }
 
