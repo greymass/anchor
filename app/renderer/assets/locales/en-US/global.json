@@ -80,6 +80,8 @@
   "global_settings_idle_timeout_thirty_minutes": "Automatically lock wallet after 30 minutes of inactivity",
   "global_settings_skip_link_modal_do_not_skip": "Display warnings when links are clicked",
   "global_settings_skip_link_modal_skip": "Never display warnings when links are clicked",
+  "global_settings_filter_spam_transfers_do_not": "Do not filter out spam transfers",
+  "global_settings_filter_spam_transfers_do": "Filter out spam transfers",
   "global_transaction_actions_details_content": "Each action within this transaction are listed below.",
   "global_transaction_actions_details_title": "Action Details",
   "global_transaction_complete_link_to": "Link to",

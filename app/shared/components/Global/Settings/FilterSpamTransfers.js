@@ -7,7 +7,7 @@ class GlobalSettingsFilterSpamTransfers extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions } = this.props;
 
-    actions.setSetting('filter_spam_transfers', value);
+    actions.setSetting('filterSpamTransfers', value);
   }
 
   render() {
@@ -19,8 +19,8 @@ class GlobalSettingsFilterSpamTransfers extends Component<Props> {
     } = this.props;
 
     const options = [
-      { key: 'filter_spam_transfers', value: true, text: t('filter_spam_transfers') },
-      { key: 'do_not_filter_spam_transfers', value: false, text: t('do_not_filter_spam_transfers') }
+      { key: 'global_settings_filter_spam_transfers_do', value: true, text: t('global_settings_filter_spam_transfers_do') },
+      { key: 'global_settings_filter_spam_transfers_do_not', value: false, text: t('global_settings_filter_spam_transfers_do_not') }
     ];
 
     return (
