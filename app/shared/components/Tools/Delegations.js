@@ -31,13 +31,7 @@ class ToolsDelegations extends Component<Props> {
 
   onCloseModal = () => this.setState({ openModal: false });
 
-  onSearchChange = debounce((e, { value }) => {
-    const query = String(value).toLowerCase();
-
-    this.setState({ query });
-  }, 300);
-
-  deleteContact = (contact) => {
+  deleteDelegation = (contact) => {
     const {
       actions,
       settings
@@ -70,7 +64,6 @@ class ToolsDelegations extends Component<Props> {
     const {
       actions,
       delegations,
-      settings,
       t
     } = this.props;
 
