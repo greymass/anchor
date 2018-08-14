@@ -28,11 +28,11 @@ class GlobalSettingsIdleTimeout extends Component<Props> {
 
     return (
       <Dropdown
-        value={defaultValue}
         name={name}
         onChange={this.onChange}
         options={timeoutOptions}
         selection={selection}
+        value={defaultValue || 999999999}
       />
     );
   }

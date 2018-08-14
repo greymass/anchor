@@ -25,11 +25,11 @@ class GlobalSettingsResourceDisplayFormat extends Component<Props> {
 
     return (
       <Dropdown
-        value={defaultValue}
         name={name}
         onChange={this.onChange}
         options={options}
         selection={selection}
+        value={defaultValue || false}
       />
     );
   }

@@ -38,7 +38,7 @@ class IdleContainer extends Component<Props> {
         ref={ref => { this.idleTimer = ref; }}
         element={document}
         onIdle={this.onIdle}
-        timeout={settings.idleTimeout}
+        timeout={settings.idleTimeout || 999999999}
       >
         {this.props.children}
       </IdleTimer>
