@@ -6,13 +6,11 @@ import {
   Button,
   Confirm,
   Header,
-  Input,
   Message,
   Table,
-  Visibility
 } from 'semantic-ui-react';
 
-import { debounce, findIndex, sortBy } from 'lodash';
+import { findIndex, sortBy } from 'lodash';
 
 import ToolsModalDelegation from './Modal/Delegation';
 
