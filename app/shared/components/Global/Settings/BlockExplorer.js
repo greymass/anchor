@@ -33,7 +33,7 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
 
     return (
       <Dropdown
-        defaultValue={value}
+        defaultValue={value || blockExplorerOptions[0].value}
         name={name}
         onChange={this.onChange}
         options={blockExplorerOptions}
