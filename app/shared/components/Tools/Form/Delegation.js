@@ -7,6 +7,8 @@ import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 
+import ToolsFormDelegationConfirming from './Delegation/Confirming';
+
 class ToolsFormDelegation extends Component<Props> {
   constructor(props) {
     super(props);
@@ -25,7 +27,8 @@ class ToolsFormDelegation extends Component<Props> {
 
   componentWillMount() {
     const {
-      delegationToEdit
+      delegationToEdit,
+      delegationToRemove
     } = this.props;
 
     if (delegationToEdit) {
@@ -38,7 +41,18 @@ class ToolsFormDelegation extends Component<Props> {
       this.setState({
         accountName,
         cpuAmount,
-        netAmount,
+        netAmount
+      });
+    } else if (delegationToRemove) {
+      const {
+        accountName
+      } = delegationToEdit;
+
+      this.setState({
+        accountName,
+        confirming: true,
+        cpuAmount: 0,
+        netAmount: 0
       });
     }
   }
@@ -106,42 +120,26 @@ class ToolsFormDelegation extends Component<Props> {
   onSubmit = () => {
     const {
       actions,
-      contactToEdit,
       contacts,
-      deleteContact,
       onSuccess
     } = this.props;
 
     const {
       accountName,
-      defaultMemo,
-      label
+      cpuAmount,
+      netAmount
     } = this.state;
 
-    if (contactToEdit) {
-      deleteContact(contactToEdit);
-    }
+    const {
+      setStake
+    } = actions;
 
-    actions.setSetting(
-      'contacts',
-      contacts.concat({
-        accountName,
-        defaultMemo,
-        label
-      })
-    );
-
-    this.setState({
-      accountName: null,
-      defaultMemo: null,
-      label: null
-    }, () => {
-      onSuccess((contactToEdit) ? 'tools_contacts_success_edit' : null);
-    });
+    setStake(accountName, netAmount, cpuAmount);
   }
 
   render() {
     const {
+      skipForm,
       contacts,
       onClose,
       t
@@ -150,56 +148,68 @@ class ToolsFormDelegation extends Component<Props> {
     const {
       accountName,
       cpuAmount,
+      confirming,
       netAmount,
       formError,
       submitDisabled
     } = this.state;
 
     return (
-      <Form
-        onKeyPress={this.onKeyPress}
-        onSubmit={this.onSubmit}
-      >
-        <GlobalFormFieldAccount
-          contacts={contacts}
-          label={t('tools_form_contact_account_name')}
-          name="accountName"
-          onChange={this.onChange}
-          value={accountName || ''}
-        />
-        <GlobalFormFieldToken
-          value={cpuAmount || ''}
-          label={t('tools_form_contact_label')}
-          name="label"
-          onChange={this.onChange}
-        />
-        <GlobalFormFieldToken
-          value={netAmount || ''}
-          label={t('tools_form_contact_label')}
-          name="label"
-          onChange={this.onChange}
-        />
+      <div>
+        {(confirming)
+          ? (
+            <ToolsFormDelegationConfirming
+              accountName={accountName}
+              cpuAmount={cpuAmount}
+              netAmount={netAmount}
+            />
+          ) : (
+            <Form
+              onKeyPress={this.onKeyPress}
+              onSubmit={this.onSubmit}
+            >
+              <GlobalFormFieldAccount
+                contacts={contacts}
+                label={t('tools_form_contact_account_name')}
+                name="accountName"
+                onChange={this.onChange}
+                value={accountName || ''}
+              />
+              <GlobalFormFieldToken
+                value={cpuAmount || ''}
+                label={t('tools_form_contact_label')}
+                name="label"
+                onChange={this.onChange}
+              />
+              <GlobalFormFieldToken
+                value={netAmount || ''}
+                label={t('tools_form_contact_label')}
+                name="label"
+                onChange={this.onChange}
+              />
 
-        <GlobalFormMessageError
-          error={formError}
-          icon="warning sign"
-        />
+              <GlobalFormMessageError
+                error={formError}
+                icon="warning sign"
+              />
 
-        <Segment basic clearing>
-          <Button
-            content={t('tools_form_contact_submit')}
-            color="green"
-            disabled={submitDisabled}
-            floated="right"
-            primary
-          />
-          <Button
-            onClick={onClose}
-          >
-            <Icon name="x" /> {t('tools_form_contact_cancel')}
-          </Button>
-        </Segment>
-      </Form>
+              <Segment basic clearing>
+                <Button
+                  content={t('tools_form_contact_submit')}
+                  color="green"
+                  disabled={submitDisabled}
+                  floated="right"
+                  primary
+                />
+                <Button
+                  onClick={onClose}
+                >
+                  <Icon name="x" /> {t('tools_form_contact_cancel')}
+                </Button>
+              </Segment>
+            </Form>
+          )}
+      </div>
     );
   }
 }

@@ -1,4 +1,5 @@
 import { Decimal } from 'decimal.js';
+import { findIndex } from 'lodash';
 
 import * as types from './types';
 
@@ -6,12 +7,14 @@ import { delegatebwParams } from './system/delegatebw';
 import { undelegatebwParams } from './system/undelegatebw';
 
 import * as AccountActions from './accounts';
+import * as DelegationActions from './delegations';
 import eos from './helpers/eos';
 
 export function setStake(account, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      connection,
+      settings
     } = getState();
 
     const {
@@ -44,7 +47,11 @@ export function setStake(account, netAmount, cpuAmount) {
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
-        dispatch(AccountActions.getAccount(account.account_name));
+        if (account.account_name === settings.account) {
+          dispatch(AccountActions.getAccount(account.account_name));
+        } else {
+          dispatch(DelegationActions.getDelegations());
+        }
       }, 500);
       return dispatch({
         payload: { tx },
@@ -68,10 +75,19 @@ export function resetStakeForm() {
 }
 
 function getStakeChanges(account, nextNetAmount, nextCpuAmount) {
+  let accountResources;
+  if (Array.isArray(account.total_resources)) {
+    accountResources = account.total_resources;
+  } else {
+    const index = findIndex(account.total_resources, { owner: account });
+
+    accountResources = account.total_resources[index];
+  }
+
   const {
     cpu_weight,
     net_weight
-  } = account.self_delegated_bandwidth;
+  } = accountResources;
 
   const currentCpuAmount = new Decimal(cpu_weight.split(' ')[0]);
   const currentNetAmount = new Decimal(net_weight.split(' ')[0]);
