@@ -2,21 +2,21 @@
 import React, { Component } from 'react';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
-import { findIndex } from 'lodash';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
-import GlobalFormFieldGeneric from '../../Global/Form/Field/Generic';
-import GlobalFormFieldMemo from '../../Global/Form/Field/Memo';
+import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 
-class ToolsFormContact extends Component<Props> {
+class ToolsFormDelegation extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       accountName: null,
       accountNameValid: true,
-      defaultMemo: null,
-      defaultMemoValid: true,
+      cpuAmount: null,
+      cpuAmountValid: true,
+      netAmount: null,
+      netAmountValid: true,
       formError: false,
       label: null,
       submitDisabled: true
@@ -25,20 +25,20 @@ class ToolsFormContact extends Component<Props> {
 
   componentWillMount() {
     const {
-      contactToEdit
+      delegationToEdit
     } = this.props;
 
-    if (contactToEdit) {
+    if (delegationToEdit) {
       const {
         accountName,
-        defaultMemo,
-        label
-      } = contactToEdit;
+        cpuAmount,
+        netAmount
+      } = delegationToEdit;
 
       this.setState({
         accountName,
-        defaultMemo,
-        label,
+        cpuAmount,
+        netAmount,
       });
     }
   }
@@ -68,19 +68,13 @@ class ToolsFormContact extends Component<Props> {
 
   errorInForm = () => {
     const {
-      contacts,
-      contactToEdit,
-    } = this.props;
-
-    const {
       accountName,
       accountNameValid,
-      defaultMemoValid
+      cpuAmount,
+      cpuAmountValid,
+      netAmount,
+      netAmountValid
     } = this.state;
-
-    if (!defaultMemoValid) {
-      return 'invalid_memo';
-    }
 
     if (!accountName || accountName.length === 0) {
       return true;
@@ -90,11 +84,20 @@ class ToolsFormContact extends Component<Props> {
       return 'invalid_accountName';
     }
 
-    const accountNameHasChanged = !contactToEdit || contactToEdit.accountName !== accountName;
-    const accountNameIsInList = findIndex(contacts, { accountName }) > -1;
+    if (!cpuAmount) {
+      return true;
+    }
 
-    if (accountNameHasChanged && accountNameIsInList) {
-      return 'accountName_not_unique_in_contacts';
+    if (!cpuAmountValid) {
+      return 'invalid_cpuAmount';
+    }
+
+    if (!netAmount) {
+      return true;
+    }
+
+    if (!netAmountValid) {
+      return 'invalid_accountName';
     }
 
     return false;
@@ -146,9 +149,9 @@ class ToolsFormContact extends Component<Props> {
 
     const {
       accountName,
-      defaultMemo,
+      cpuAmount,
+      netAmount,
       formError,
-      label,
       submitDisabled
     } = this.state;
 
@@ -164,16 +167,16 @@ class ToolsFormContact extends Component<Props> {
           onChange={this.onChange}
           value={accountName || ''}
         />
-        <GlobalFormFieldGeneric
-          value={label || ''}
+        <GlobalFormFieldToken
+          value={cpuAmount || ''}
           label={t('tools_form_contact_label')}
           name="label"
           onChange={this.onChange}
         />
-        <GlobalFormFieldMemo
-          value={defaultMemo || ''}
-          label={t('tools_form_contact_default_memo')}
-          name="defaultMemo"
+        <GlobalFormFieldToken
+          value={netAmount || ''}
+          label={t('tools_form_contact_label')}
+          name="label"
           onChange={this.onChange}
         />
 
@@ -201,4 +204,4 @@ class ToolsFormContact extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsFormContact);
+export default translate('tools')(ToolsFormDelegation);
