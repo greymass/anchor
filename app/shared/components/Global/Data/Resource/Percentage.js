@@ -20,7 +20,7 @@ export default class GlobalDataResourcePercentage extends Component<Props> {
         color={color}
         label={(
           <div className="label">
-            {percentageToDisplay.toFixed(3)}%
+            {(percentageToDisplay || 0).toFixed(3)}%
             {' '}
             <Responsive as="span" minWidth={800} />
           </div>
