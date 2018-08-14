@@ -21,7 +21,7 @@ class WalletStatusActionsTable extends Component<Props> {
     if (!loading) {
       let fullResults = actionHistory.list.slice(0, amount);
 
-      if (settings.filterSpamTransfers) {
+      if (settings.filterSpamTransfersUnder !== 0.0000) {
         fullResults = fullResults.filter(action => {
           const {
             act
@@ -36,7 +36,7 @@ class WalletStatusActionsTable extends Component<Props> {
             quantity
           } = act.data;
 
-          if (Number(quantity) > 0.0005 || from === settings.account) {
+          if (Number(quantity) > settings.filterSpamTransfersUnder || from === settings.account) {
             return true;
           }
 
