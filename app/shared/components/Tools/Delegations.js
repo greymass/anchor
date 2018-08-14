@@ -46,28 +46,6 @@ class ToolsDelegations extends Component<Props> {
 
   onCloseModal = () => this.setState({ openModal: false });
 
-  deleteDelegation = (contact) => {
-    const {
-      actions,
-      settings
-    } = this.props;
-    const {
-      contacts
-    } = settings;
-    const {
-      delegationToDelete
-    } = this.state;
-
-    const position = findIndex(contacts, { accountName: (contact || delegationToDelete).accountName });
-
-    contacts.splice(position, 1);
-
-    actions.setSetting(
-      'contacts',
-      contacts
-    );
-  }
-
   onSuccess = (message) => {
     this.setState({
       openModal: false,
@@ -78,6 +56,7 @@ class ToolsDelegations extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       delegations,
       t
     } = this.props;
@@ -85,6 +64,7 @@ class ToolsDelegations extends Component<Props> {
     const {
       confirmDelete,
       delegationToEdit,
+      delegationToRemove,
       openModal,
       successMessage
     } = this.state;
@@ -99,10 +79,10 @@ class ToolsDelegations extends Component<Props> {
         <ToolsModalDelegation
           open={openModal}
           actions={actions}
+          blockExplorers={blockExplorers}
           delegationToEdit={delegationToEdit}
-          deleteDelegation={this.deleteDelegation}
+          delegationToRemove={delegationToRemove}
           onClose={this.onCloseModal}
-          onSuccess={this.onSuccess}
           trigger={
             <Button
               color="blue"
@@ -174,7 +154,10 @@ class ToolsDelegations extends Component<Props> {
                           fluid
                           icon="minus circle"
                           onClick={() => {
-                            this.setState({ confirmDelete: true, delegationToDelete: delegation });
+                            this.setState({
+                              confirmDelete: true,
+                              delegationToConfirmForDeletion: delegation
+                            });
                           }}
                           size="mini"
                         />
@@ -190,9 +173,12 @@ class ToolsDelegations extends Component<Props> {
                   this.setState({ confirmDelete: false });
                 }}
                 onConfirm={() => {
-                  this.deleteContact();
-                  this.setState({ confirmDelete: false }, () => {
-                    this.onSuccess('tools_delegations_success_delete');
+                  const {
+                    delegationToConfirmForDeletion
+                  } = this.state;
+
+                  actions.setState({
+                    delegationToDelete: delegationToConfirmForDeletion
                   });
                 }}
               />
