@@ -9,38 +9,35 @@ class ToolsModalDelegation extends Component<Props> {
   render() {
     const {
       actions,
-      contacts,
-      contactToEdit,
-      deleteContact,
+      blockExplorers,
+      delegationToEdit,
+      delegationToRemove,
       onClose,
-      onSuccess,
       open,
-      t,
-      trigger
+      t
     } = this.props;
 
     return (
       <GlobalTransactionModal
-        actionName="REGPROXY"
+        actionName="STAKE"
         actions={actions}
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
           content: t('tools_proxy_button_register'),
+          fluid: true,
           icon: 'share square'
         }}
         content={(
           <ToolsFormDelegation
-            account={account}
             actions={actions}
-            key="RegisterProxyForm"
-            system={system}
+            delegationToEdit={delegationToEdit}
+            delegationToRemove={delegationToRemove}
+            key="DelegationForm"
           />
         )}
         icon="share square"
         title={t('tools_proxy_header_register')}
-        settings={settings}
-        system={system}
         onClose={onClose}
         open={open}
       />
