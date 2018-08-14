@@ -27,6 +27,7 @@ class ProducersVotingPreview extends Component<Props> {
         button={{
           color: 'green',
           content: t('producer_voter_save_changes'),
+          fluid: true,
           icon: ''
         }}
         content={(

@@ -31,6 +31,7 @@ class ProducersButtonProxy extends Component<Props> {
         button={{
           color: 'blue',
           content: buttonText,
+          fluid: true,
           icon: 'share square'
         }}
         content={(
