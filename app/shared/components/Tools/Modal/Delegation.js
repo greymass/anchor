@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Header, Modal } from 'semantic-ui-react';
 
-import ToolsFormContact from '../Form/Contact';
+import GlobalTransactionModal from '../../Global/Transaction/Modal';
+import ToolsFormDelegation from '../Form/Delegation';
 
-class ToolsModalContact extends Component<Props> {
+class ToolsModalDelegation extends Component<Props> {
   render() {
     const {
       actions,
@@ -20,27 +20,32 @@ class ToolsModalContact extends Component<Props> {
     } = this.props;
 
     return (
-      <Modal
-        centered={false}
-        trigger={trigger}
+      <GlobalTransactionModal
+        actionName="REGPROXY"
+        actions={actions}
+        blockExplorers={blockExplorers}
+        button={{
+          color: 'blue',
+          content: t('tools_proxy_button_register'),
+          icon: 'share square'
+        }}
+        content={(
+          <ToolsFormDelegation
+            account={account}
+            actions={actions}
+            key="RegisterProxyForm"
+            system={system}
+          />
+        )}
+        icon="share square"
+        title={t('tools_proxy_header_register')}
+        settings={settings}
+        system={system}
         onClose={onClose}
         open={open}
-        size="tiny"
-      >
-        <Header icon="address book" content={t('tools_modal_contact_header_text')} />
-        <Modal.Content>
-          <ToolsFormContact
-            actions={actions}
-            contactToEdit={contactToEdit}
-            contacts={contacts}
-            deleteContact={deleteContact}
-            onClose={onClose}
-            onSuccess={onSuccess}
-          />
-        </Modal.Content>
-      </Modal>
+      />
     );
   }
 }
 
-export default translate('tools')(ToolsModalContact);
+export default translate('tools')(ToolsModalDelegation);
