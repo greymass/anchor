@@ -27,6 +27,23 @@ class ToolsDelegations extends Component<Props> {
     };
   }
 
+  componentDidMount() {
+    this.tick();
+    this.interval = setInterval(this.tick.bind(this), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  tick() {
+    const {
+      actions
+    } = this.props;
+
+    actions.getDelegations();
+  }
+
   onOpenModal = (delegation) => this.setState({ openModal: true, delegationToEdit: delegation });
 
   onCloseModal = () => this.setState({ openModal: false });
