@@ -35,7 +35,7 @@ class GlobalSettingsLanguage extends Component<Props> {
         options={languages}
         placeholder={t('global_select_language')}
         selection={selection}
-        value={setLanguage}
+        value={setLanguage || 'en-US'}
       />
     );
   }
