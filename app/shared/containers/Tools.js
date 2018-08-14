@@ -14,6 +14,7 @@ import Tools from '../components/Tools';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
+import ToolsDelegations from '../components/Tools/Delegations';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsKeysValidator from '../components/Tools/Keys/Validator';
 import ToolsStateChain from '../components/Tools/State/Chain';
@@ -68,6 +69,11 @@ const paneMapping = [
     element: ContractInterface,
     modes: ['hot', 'watch', 'skip'],
     name: 'contracts',
+  },
+  {
+    element: ToolsDelegations,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'delegations'
   },
   {
     header: true,
@@ -129,7 +135,7 @@ const paneMapping = [
     modes: ['cold', 'hot', 'skip', 'watch'],
     name: 'reset',
   },
-]
+];
 
 class ToolsContainer extends Component<Props> {
   getPanes() {
@@ -168,7 +174,9 @@ class ToolsContainer extends Component<Props> {
       settings,
       t
     } = this.props;
+
     const panes = this.getPanes();
+
     return (
       <Tab
         menu={{
@@ -193,6 +201,7 @@ function mapStateToProps(state) {
     chain: state.chain,
     contracts: state.contracts,
     customtokens: state.customtokens,
+    delegations: state.delegations,
     globals: state.globals,
     keys: state.keys,
     settings: state.settings,
