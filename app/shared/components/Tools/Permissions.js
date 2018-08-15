@@ -60,8 +60,6 @@ class ToolsPermissions extends Component<Props> {
     const { pubkey } = keys;
     const authorization = this.getAuthorization(account, pubkey);
 
-    // console.table(keys)
-
     return (
       <Segment basic>
         <Container>
