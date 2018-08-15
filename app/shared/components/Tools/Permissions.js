@@ -83,12 +83,25 @@ class ToolsPermissions extends Component<Props> {
         <Segment
           color="blue"
         >
-          <Header
-            content={t('tools_permissions_current_wallet_header', { pubkey })}
-            icon="key"
-            size="small"
-            subheader={t('tools_permissions_current_wallet_subheader')}
-          />
+          {(settings.walletMode === 'watch')
+            ? (
+              <Header
+                color="orange"
+                content={t('tools_permissions_current_wallet_watch_header')}
+                icon="eye"
+                size="small"
+                subheader={t('tools_permissions_current_wallet_watch_subheader')}
+              />
+            )
+            : (
+              <Header
+                content={t('tools_permissions_current_wallet_header', { pubkey })}
+                icon="key"
+                size="small"
+                subheader={t('tools_permissions_current_wallet_subheader')}
+              />
+            )
+          }
         </Segment>
 
         {(account.permissions.map((data) => (
