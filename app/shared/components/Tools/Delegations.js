@@ -10,7 +10,7 @@ import {
   Table,
 } from 'semantic-ui-react';
 
-import { findIndex, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 
 import ToolsModalDelegation from './Modal/Delegation';
 
@@ -83,15 +83,6 @@ class ToolsDelegations extends Component<Props> {
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
           onClose={this.onCloseModal}
-          trigger={
-            <Button
-              color="blue"
-              content={t('tools_contact_button_add')}
-              icon="plus circle"
-              style={{ float: 'right' }}
-              onClick={() => this.onOpenModal()}
-            />
-          }
         />
 
         {(successMessage)
@@ -141,7 +132,7 @@ class ToolsDelegations extends Component<Props> {
                       </Table.Cell>
                       <Table.Cell width="2">
                         <Button
-                          content={t('tools_contact_button_edit')}
+                          content={t('tools_delegation_button_edit')}
                           icon="address book"
                           fluid
                           onClick={() => this.onOpenModal(delegation)}
