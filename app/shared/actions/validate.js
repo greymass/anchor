@@ -111,9 +111,10 @@ export function validateNode(node) {
 }
 
 export function validateKey(key) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_KEY_PENDING });
     const {
+      accounts,
       connection,
       settings
     } = getState();
@@ -123,44 +124,42 @@ export function validateKey(key) {
       });
     }
     try {
-      // Establish EOS connection
-      eos(connection).getAccount(settings.account).then((account) => {
-        // Keys must resolve to one of these types of permissions
-        const permissions = ['active', 'owner'];
-        try {
-          // Derive the public key from the private key provided
-          const expect = ecc.privateToPublic(key);
-          // Filter the account's permissions to find any valid matches
-          const validPermissions = account.permissions.filter((perm) => {
-            // Get the threshold a key needs to perform operations
-            const { threshold } = perm.required_auth;
-            // ensure the proper type of permission is provided by the auth
-            if (permissions.indexOf(perm.perm_name) !== -1) {
-              // finally determine if any keys match
-              const matches = perm.required_auth.keys.filter((auth) =>
-                (auth.key === expect) && (auth.weight >= threshold));
-              // this is a valid permission should any of the keys and thresholds match
-              return (matches.length > 0);
-            }
-            return false;
-          });
-          // If the key matches any valid permission it's good
-          if (validPermissions.length > 0) {
-            dispatch({ type: types.VALIDATE_KEY_SUCCESS });
-            return true;
+      let account = accounts[settings.account];
+      if (!account) {
+        account = eos(connection).getAccount(settings.account);
+      }
+      // Keys must resolve to one of these types of permissions
+      const permissions = ['active', 'owner'];
+      try {
+        // Derive the public key from the private key provided
+        const expect = ecc.privateToPublic(key);
+        // Filter the account's permissions to find any valid matches
+        const validPermissions = account.permissions.filter((perm) => {
+          // Get the threshold a key needs to perform operations
+          const { threshold } = perm.required_auth;
+          // ensure the proper type of permission is provided by the auth
+          if (permissions.indexOf(perm.perm_name) !== -1) {
+            // finally determine if any keys match
+            const matches = perm.required_auth.keys.filter((auth) =>
+              (auth.key === expect) && (auth.weight >= threshold));
+            // this is a valid permission should any of the keys and thresholds match
+            return (matches.length > 0);
           }
-        } catch (err) {
-          // key is likely invalid, an exception was thrown
-          return dispatch({
-            payload: { err },
-            type: types.VALIDATE_KEY_FAILURE
-          });
+          return false;
+        });
+        // If the key matches any valid permission it's good
+        if (validPermissions.length > 0) {
+          dispatch({ type: types.VALIDATE_KEY_SUCCESS });
+          return true;
         }
-        return dispatch({ type: types.VALIDATE_KEY_FAILURE });
-      }).catch((err) => dispatch({
-        payload: { err },
-        type: types.VALIDATE_KEY_FAILURE
-      }));
+      } catch (err) {
+        // key is likely invalid, an exception was thrown
+        return dispatch({
+          payload: { err },
+          type: types.VALIDATE_KEY_FAILURE
+        });
+      }
+      return dispatch({ type: types.VALIDATE_KEY_FAILURE });
     } catch (err) {
       return dispatch({
         payload: { err },
