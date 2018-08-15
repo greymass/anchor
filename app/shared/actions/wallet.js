@@ -1,5 +1,6 @@
 import * as types from './types';
 import { setSetting } from './settings';
+import eos from './helpers/eos';
 
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
@@ -106,13 +107,21 @@ export function validateWalletPassword(password, useWallet = false) {
 }
 
 export function unlockWallet(password, useWallet = false) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const state = getState();
-    const { accounts } = state;
+    const {
+      accounts,
+      connection,
+      settings
+    } = state;
     let { wallet } = state;
     // If a wallet was passed to be used, use that instead of state.
     if (useWallet && useWallet.data) {
       wallet = useWallet;
+    }
+    let account = accounts[wallet.account];
+    if (settings.walletMode === 'hot' && !account) {
+      account = await eos(connection).getAccount(wallet.account);
     }
     dispatch({
       type: types.VALIDATE_WALLET_PASSWORD_PENDING
@@ -124,7 +133,11 @@ export function unlockWallet(password, useWallet = false) {
           const pubkey = ecc.privateToPublic(key);
           // Set the active wallet
           dispatch({
-            payload: { ...wallet, pubkey },
+            payload: {
+              ...wallet,
+              accountData: account,
+              pubkey
+            },
             type: types.SET_WALLET_ACTIVE
           });
           // Obfuscate key for in-memory storage
@@ -134,7 +147,7 @@ export function unlockWallet(password, useWallet = false) {
           dispatch({
             payload: {
               account: wallet.account,
-              accountData: accounts[wallet.account],
+              accountData: account,
               hash,
               key,
               pubkey
