@@ -24,7 +24,7 @@ class ToolsModalDelegation extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
-          content: t('tools_proxy_button_register'),
+          content: t('tools_modal_delegation_add'),
           fluid: true,
           icon: 'share square'
         }}
