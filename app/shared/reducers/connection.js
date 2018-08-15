@@ -33,6 +33,7 @@ export default function connection(state = initialState, action) {
     // Remove key from connection if the wallet is locked/removed
     case types.WALLET_LOCK: {
       return Object.assign({}, state, {
+        authorization: undefined,
         keyProvider: [],
         keyProviderObfuscated: {}
       });
