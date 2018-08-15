@@ -110,12 +110,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
       <Form
         onSubmit={this.onSubmit}
       >
-        <Message
-          content={t('tools_permissions_warning_content')}
-          header={t('tools_permissions_warning_header')}
-          icon="info circle"
-          info
-        />
+        <p>{t('tools_form_permissions_auth_instructions')}</p>
         {(settings.advancedPermissions || newAuth)
           ? (
             <Form.Input
@@ -183,6 +178,12 @@ class ToolsFormPermissionsAuth extends Component<Props> {
           )
           : false
         }
+        <Message
+          content={t('tools_permissions_warning_content')}
+          header={t('tools_permissions_warning_header')}
+          icon="warning sign"
+          color="orange"
+        />
         <Container textAlign="right">
           <Button
             content={t('tools_form_permissions_auth_submit')}
