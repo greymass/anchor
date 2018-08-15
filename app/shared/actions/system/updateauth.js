@@ -3,20 +3,25 @@ import * as types from '../types';
 import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
-export function updateauth(permission, parent, auth) {
+export function updateauth(permission, parent, auth, authorizationOverride = false) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const { account } = settings;
     dispatch({
       type: types.SYSTEM_UPDATEAUTH_PENDING
     });
+    let authorization;
+    // Setting of the authorization based on either an override or the global connection setting
+    if (authorizationOverride || connection.authorization) {
+      authorization = [authorizationOverride || connection.authorization];
+    }
     return eos(connection, true).updateauth({
       account,
       permission,
       parent,
       auth
     }, {
-      authorization: [connection.authorization],
+      authorization,
       forceActionDataHex: false,
     }).then((tx) => {
       // Refresh the account
