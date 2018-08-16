@@ -36,12 +36,11 @@ class WalletPanelFormTransferSend extends Component<Props> {
       from,
       memo,
       quantity,
-      symbol,
+      asset,
       to
     } = this.state;
-
     this.setState({ confirming: false }, () => {
-      this.props.actions.transfer(from, to, quantity, memo, symbol);
+      this.props.actions.transfer(from, to, quantity, memo, asset);
     });
   }
 
@@ -191,6 +190,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
+    console.table(this.state)
 
     let exchangeWarning;
 
