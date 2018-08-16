@@ -14,6 +14,7 @@ class ToolsModalDelegation extends Component<Props> {
       delegationToRemove,
       onClose,
       open,
+      system,
       t
     } = this.props;
 
@@ -37,9 +38,10 @@ class ToolsModalDelegation extends Component<Props> {
           />
         )}
         icon="share square"
-        title={t('tools_proxy_header_register')}
+        title={t('tools_modal_delegation_header')}
         onClose={onClose}
         open={open}
+        system={system}
       />
     );
   }
