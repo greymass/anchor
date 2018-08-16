@@ -58,8 +58,12 @@ class ToolsDelegations extends Component<Props> {
       actions,
       blockExplorers,
       delegations,
+      keys,
+      settings,
       system,
-      t
+      t,
+      validate,
+      wallet
     } = this.props;
 
     const {
@@ -78,13 +82,17 @@ class ToolsDelegations extends Component<Props> {
           {t('tools_delegation_header_text')}
         </Header>
         <ToolsModalDelegation
-          open={openModal}
           actions={actions}
           blockExplorers={blockExplorers}
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
+          keys={keys}
           onClose={this.onCloseModal}
+          open={openModal}
+          settings={settings}
           system={system}
+          validate={validate}
+          wallet={wallet}
         />
 
         {(successMessage)
