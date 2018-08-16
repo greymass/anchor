@@ -1,7 +1,7 @@
 import * as types from './types';
 import eos from './helpers/eos';
 
-export function getDelegations() {
+export function getDelegations(accountName) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_DELEGATIONS_REQUEST
@@ -17,7 +17,7 @@ export function getDelegations() {
     const query = {
       json: true,
       code: 'delegations',
-      scope: 'delegations',
+      scope: accountName,
       table: 'delegations',
       limit: 1000,
     };
