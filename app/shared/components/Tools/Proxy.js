@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
+import { Header, Segment, Divider } from 'semantic-ui-react';
 
 import ToolsButtonProxyRegister from './Button/Register';
 import ToolsButtonProxyUnregister from './Button/Unregister';
