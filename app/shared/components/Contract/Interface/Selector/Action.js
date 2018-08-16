@@ -37,6 +37,7 @@ class ContractInterfaceSelectorAction extends Component<Props> {
               placeholder={t('interface_actions_header')}
               onChange={onChange}
               options={actionOptions}
+              search
               selection
             />
           </Form>
