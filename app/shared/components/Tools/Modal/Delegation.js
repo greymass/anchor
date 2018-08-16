@@ -12,10 +12,14 @@ class ToolsModalDelegation extends Component<Props> {
       blockExplorers,
       delegationToEdit,
       delegationToRemove,
+      keys,
       onClose,
       open,
+      settings,
       system,
-      t
+      t,
+      validate,
+      wallet
     } = this.props;
 
     return (
@@ -35,14 +39,19 @@ class ToolsModalDelegation extends Component<Props> {
             delegationToEdit={delegationToEdit}
             delegationToRemove={delegationToRemove}
             key="DelegationForm"
+            keys={keys}
+            settings={settings}
             system={system}
+            validate={validate}
+            wallet={wallet}
           />
         )}
         icon="share square"
-        title={t('tools_modal_delegation_header')}
         onClose={onClose}
         open={open}
+        settings={settings}
         system={system}
+        title={t('tools_modal_delegation_header')}
       />
     );
   }

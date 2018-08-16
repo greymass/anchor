@@ -15,6 +15,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
     const {
       accounts,
       connection,
+      delegations,
       settings
     } = getState();
 
@@ -56,11 +57,13 @@ export function setStake(accountName, netAmount, cpuAmount) {
           dispatch(DelegationActions.getDelegations());
         }
       }, 500);
+      debugger;
       return dispatch({
         payload: { tx },
         type: types.SYSTEM_STAKE_SUCCESS
       });
     }).catch((err) => {
+      debugger;
       dispatch({
         payload: { err },
         type: types.SYSTEM_STAKE_FAILURE
@@ -80,11 +83,11 @@ export function resetStakeForm() {
 function getStakeChanges(currentAccount, accountName, nextNetAmount, nextCpuAmount) {
   let accountResources;
 
-  if (!Array.isArray(currentAccount.total_resources)) {
+  if (accountName !== currentAccount.account_name) {
     const index = findIndex(currentAccount.total_resources, { owner: accountName });
 
-    if (index !== -1) {
-      accountResources = { cpu_weight: 0, net_weight: 0 };
+    if (index === -1) {
+      accountResources = { cpu_weight: '0 EOS', net_weight: '0 EOS' };
     } else {
       accountResources = currentAccount.total_resources[index];
     }

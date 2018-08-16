@@ -2,12 +2,14 @@
 import React, { Component } from 'react';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { Decimal } from 'decimal.js';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 
 import ToolsFormDelegationConfirming from './Delegation/Confirming';
+import WalletPanelLocked from '../../Wallet/Panel/Locked';
 
 class ToolsFormDelegation extends Component<Props> {
   constructor(props) {
@@ -20,7 +22,6 @@ class ToolsFormDelegation extends Component<Props> {
       netAmount: null,
       netAmountValid: true,
       formError: false,
-      label: null,
       submitDisabled: true
     };
   }
@@ -136,7 +137,11 @@ class ToolsFormDelegation extends Component<Props> {
     this.setState({
       confirming: false
     }, () => {
-      setStake(accountName, netAmount, cpuAmount);
+      setStake(
+        accountName,
+        Decimal(netAmount.split(' ')[0]),
+        Decimal(cpuAmount.split(' ')[0])
+      );
     });
   }
 
@@ -154,10 +159,15 @@ class ToolsFormDelegation extends Component<Props> {
 
   render() {
     const {
+      actions,
       contacts,
+      keys,
       onClose,
+      settings,
       system,
-      t
+      t,
+      validate,
+      wallet
     } = this.props;
 
     const {
@@ -169,67 +179,75 @@ class ToolsFormDelegation extends Component<Props> {
       submitDisabled
     } = this.state;
 
-    return (
-      <Segment
-        loading={system.STAKE === 'PENDING'}
-      >
-        {(confirming)
-          ? (
-            <ToolsFormDelegationConfirming
-              accountName={accountName}
-              cpuAmount={cpuAmount}
-              netAmount={netAmount}
-              onConfirm={this.onConfirm}
-              onBack={this.onBack}
-            />
-          ) : (
-            <Form
-              onKeyPress={this.onKeyPress}
-              onSubmit={this.onSubmit}
-            >
-              <GlobalFormFieldAccount
-                contacts={contacts}
-                label={t('tools_form_delegation_account_name')}
-                name="accountName"
-                onChange={this.onChange}
-                value={accountName || ''}
+    return ((keys && keys.key) || settings.walletMode === 'watch')
+      ? (
+        <Segment
+          loading={system.STAKE === 'PENDING'}
+        >
+          {(confirming)
+            ? (
+              <ToolsFormDelegationConfirming
+                accountName={accountName}
+                cpuAmount={cpuAmount}
+                netAmount={netAmount}
+                onConfirm={this.onConfirm}
+                onBack={this.onBack}
               />
-              <GlobalFormFieldToken
-                defaultValue={(cpuAmount && cpuAmount.split(' ')[0]) || ''}
-                label={t('tools_form_delegation_cpu_amount')}
-                name="cpuAmount"
-                onChange={this.onChange}
-              />
-              <GlobalFormFieldToken
-                defaultValue={(netAmount && netAmount.split(' ')[0]) || ''}
-                label={t('tools_form_contact_net_amount')}
-                name="netAmount"
-                onChange={this.onChange}
-              />
-
-              <GlobalFormMessageError
-                error={formError}
-                icon="warning sign"
-              />
-
-              <Segment basic clearing>
-                <Button
-                  content={t('tools_form_delegation_submit')}
-                  color="green"
-                  disabled={submitDisabled}
-                  floated="right"
-                  primary
+            ) : (
+              <Form
+                onKeyPress={this.onKeyPress}
+                onSubmit={this.onSubmit}
+              >
+                <GlobalFormFieldAccount
+                  contacts={contacts}
+                  label={t('tools_form_delegation_account_name')}
+                  name="accountName"
+                  onChange={this.onChange}
+                  value={accountName || ''}
                 />
-                <Button
-                  onClick={onClose}
-                >
-                  <Icon name="x" /> {t('tools_form_delegation_cancel')}
-                </Button>
-              </Segment>
-            </Form>
-          )}
-      </Segment>
-    );
+                <GlobalFormFieldToken
+                  defaultValue={(cpuAmount && cpuAmount.split(' ')[0]) || ''}
+                  label={t('tools_form_delegation_cpu_amount')}
+                  name="cpuAmount"
+                  onChange={this.onChange}
+                />
+                <GlobalFormFieldToken
+                  defaultValue={(netAmount && netAmount.split(' ')[0]) || ''}
+                  label={t('tools_form_contact_net_amount')}
+                  name="netAmount"
+                  onChange={this.onChange}
+                />
+
+                <GlobalFormMessageError
+                  error={formError}
+                  icon="warning sign"
+                />
+
+                <Segment basic clearing>
+                  <Button
+                    content={t('tools_form_delegation_submit')}
+                    color="green"
+                    disabled={submitDisabled}
+                    floated="right"
+                    primary
+                  />
+                  <Button
+                    onClick={onClose}
+                  >
+                    <Icon name="x" /> {t('tools_form_delegation_cancel')}
+                  </Button>
+                </Segment>
+              </Form>
+            )}
+        </Segment>
+      ) : (
+        <WalletPanelLocked
+          actions={actions}
+          settings={settings}
+          validate={validate}
+          wallet={wallet}
+        />
+      );
   }
 }
 
