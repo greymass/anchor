@@ -170,21 +170,21 @@ class ToolsFormDelegation extends Component<Props> {
             >
               <GlobalFormFieldAccount
                 contacts={contacts}
-                label={t('tools_form_contact_account_name')}
+                label={t('tools_form_delegation_account_name')}
                 name="accountName"
                 onChange={this.onChange}
                 value={accountName || ''}
               />
               <GlobalFormFieldToken
                 value={cpuAmount || ''}
-                label={t('tools_form_contact_label')}
-                name="label"
+                label={t('tools_form_delegation_cpu_amount')}
+                name="cpuAmount"
                 onChange={this.onChange}
               />
               <GlobalFormFieldToken
                 value={netAmount || ''}
-                label={t('tools_form_contact_label')}
-                name="label"
+                label={t('tools_form_contact_net_amount')}
+                name="netAmount"
                 onChange={this.onChange}
               />
 

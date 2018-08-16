@@ -58,6 +58,7 @@ class ToolsDelegations extends Component<Props> {
       actions,
       blockExplorers,
       delegations,
+      system,
       t
     } = this.props;
 
@@ -83,6 +84,7 @@ class ToolsDelegations extends Component<Props> {
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
           onClose={this.onCloseModal}
+          system={system}
         />
 
         {(successMessage)
