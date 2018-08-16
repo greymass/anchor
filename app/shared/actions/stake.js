@@ -24,7 +24,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
     const {
       increaseInStake,
       decreaseInStake
-    } = getStakeChanges(currentAccount, accountName, netAmount, cpuAmount);
+    } = getStakeChanges(currentAccount, accountName, delegations, netAmount, cpuAmount);
 
     dispatch({ type: types.SYSTEM_STAKE_PENDING });
 
@@ -54,16 +54,16 @@ export function setStake(accountName, netAmount, cpuAmount) {
         if (accountName === settings.account) {
           dispatch(AccountActions.getAccount(accountName));
         } else {
-          dispatch(DelegationActions.getDelegations());
+          dispatch(DelegationActions.getDelegations(settings.account));
         }
       }, 500);
-      debugger;
+
       return dispatch({
         payload: { tx },
         type: types.SYSTEM_STAKE_SUCCESS
       });
     }).catch((err) => {
-      debugger;
+
       dispatch({
         payload: { err },
         type: types.SYSTEM_STAKE_FAILURE
@@ -80,11 +80,11 @@ export function resetStakeForm() {
   };
 }
 
-function getStakeChanges(currentAccount, accountName, nextNetAmount, nextCpuAmount) {
+function getStakeChanges(currentAccount, accountName, delegations, nextNetAmount, nextCpuAmount) {
   let accountResources;
 
   if (accountName !== currentAccount.account_name) {
-    const index = findIndex(currentAccount.total_resources, { owner: accountName });
+    const index = findIndex(delegations, { owner: accountName });
 
     if (index === -1) {
       accountResources = { cpu_weight: '0 EOS', net_weight: '0 EOS' };
