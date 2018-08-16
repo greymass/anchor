@@ -10,33 +10,36 @@ import * as AccountActions from './accounts';
 import * as DelegationActions from './delegations';
 import eos from './helpers/eos';
 
-export function setStake(account, netAmount, cpuAmount) {
+export function setStake(accountName, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
+      accounts,
       connection,
       settings
     } = getState();
 
+    const currentAccount = accounts[settings.account];
+
     const {
       increaseInStake,
       decreaseInStake
-    } = getStakeChanges(account, netAmount, cpuAmount);
+    } = getStakeChanges(currentAccount, accountName, netAmount, cpuAmount);
 
     dispatch({ type: types.SYSTEM_STAKE_PENDING });
 
     return eos(connection, true).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
         tr.delegatebw(delegatebwParams(
-          account.account_name,
-          account.account_name,
+          currentAccount.account_name,
+          accountName,
           increaseInStake.netAmount,
           increaseInStake.cpuAmount
         ));
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
         tr.undelegatebw(undelegatebwParams(
-          account.account_name,
-          account.account_name,
+          currentAccount.account_name,
+          accountName,
           decreaseInStake.netAmount,
           decreaseInStake.cpuAmount
         ));
@@ -47,8 +50,8 @@ export function setStake(account, netAmount, cpuAmount) {
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
-        if (account.account_name === settings.account) {
-          dispatch(AccountActions.getAccount(account.account_name));
+        if (accountName === settings.account) {
+          dispatch(AccountActions.getAccount(accountName));
         } else {
           dispatch(DelegationActions.getDelegations());
         }
@@ -74,20 +77,23 @@ export function resetStakeForm() {
   };
 }
 
-function getStakeChanges(account, nextNetAmount, nextCpuAmount) {
+function getStakeChanges(currentAccount, accountName, nextNetAmount, nextCpuAmount) {
   let accountResources;
-  if (Array.isArray(account.total_resources)) {
-    accountResources = account.total_resources;
-  } else {
-    const index = findIndex(account.total_resources, { owner: account });
 
-    accountResources = account.total_resources[index];
+  if (!Array.isArray(currentAccount.total_resources)) {
+    const index = findIndex(currentAccount.total_resources, { owner: accountName });
+
+    if (index !== -1) {
+      accountResources = { cpu_weight: 0, net_weight: 0 };
+    } else {
+      accountResources = currentAccount.total_resources[index];
+    }
   }
 
   const {
     cpu_weight,
     net_weight
-  } = accountResources;
+  } = accountResources || currentAccount.self_delegated_bandwidth;
 
   const currentCpuAmount = new Decimal(cpu_weight.split(' ')[0]);
   const currentNetAmount = new Decimal(net_weight.split(' ')[0]);

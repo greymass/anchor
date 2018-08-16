@@ -33,6 +33,7 @@ import * as DelegationsActions from '../actions/delegations';
 import * as GlobalsActions from '../actions/globals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as SettingsActions from '../actions/settings';
+import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
 import * as TransactionActions from '../actions/transaction';
 import * as UpdateAuthActions from '../actions/system/updateauth';
@@ -225,6 +226,7 @@ function mapDispatchToProps(dispatch) {
       ...GlobalsActions,
       ...RegProxyActions,
       ...SettingsActions,
+      ...StakeActions,
       ...SystemStateActions,
       ...TransactionActions,
       ...UpdateAuthActions,
