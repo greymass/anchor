@@ -35,6 +35,7 @@ class ToolsModalDelegation extends Component<Props> {
             delegationToEdit={delegationToEdit}
             delegationToRemove={delegationToRemove}
             key="DelegationForm"
+            system={system}
           />
         )}
         icon="share square"

@@ -28,7 +28,8 @@ class ToolsFormDelegation extends Component<Props> {
   componentWillMount() {
     const {
       delegationToEdit,
-      delegationToRemove
+      delegationToRemove,
+      skipForm
     } = this.props;
 
     if (delegationToEdit) {
@@ -50,7 +51,7 @@ class ToolsFormDelegation extends Component<Props> {
 
       this.setState({
         accountName,
-        confirming: true,
+        confirming: skipForm || false,
         cpuAmount: 0,
         netAmount: 0
       });
@@ -117,11 +118,9 @@ class ToolsFormDelegation extends Component<Props> {
     return false;
   }
 
-  onSubmit = () => {
+  onConfirm = () => {
     const {
-      actions,
-      contacts,
-      onSuccess
+      actions
     } = this.props;
 
     const {
@@ -134,14 +133,30 @@ class ToolsFormDelegation extends Component<Props> {
       setStake
     } = actions;
 
-    setStake(accountName, netAmount, cpuAmount);
+    this.setState({
+      confirming: false
+    }, () => {
+      setStake(accountName, netAmount, cpuAmount);
+    });
+  }
+
+  onSubmit = () => {
+    this.setState({
+      confirming: true
+    });
+  }
+
+  onBack = () => {
+    this.setState({
+      confirming: false
+    });
   }
 
   render() {
     const {
-      skipForm,
       contacts,
       onClose,
+      system,
       t
     } = this.props;
 
@@ -155,13 +170,17 @@ class ToolsFormDelegation extends Component<Props> {
     } = this.state;
 
     return (
-      <div>
+      <Segment
+        loading={system.STAKE === 'PENDING'}
+      >
         {(confirming)
           ? (
             <ToolsFormDelegationConfirming
               accountName={accountName}
               cpuAmount={cpuAmount}
               netAmount={netAmount}
+              onConfirm={this.onConfirm}
+              onBack={this.onBack}
             />
           ) : (
             <Form
@@ -176,13 +195,13 @@ class ToolsFormDelegation extends Component<Props> {
                 value={accountName || ''}
               />
               <GlobalFormFieldToken
-                value={cpuAmount || ''}
+                defaultValue={(cpuAmount && cpuAmount.split(' ')[0]) || ''}
                 label={t('tools_form_delegation_cpu_amount')}
                 name="cpuAmount"
                 onChange={this.onChange}
               />
               <GlobalFormFieldToken
-                value={netAmount || ''}
+                defaultValue={(netAmount && netAmount.split(' ')[0]) || ''}
                 label={t('tools_form_contact_net_amount')}
                 name="netAmount"
                 onChange={this.onChange}
@@ -195,7 +214,7 @@ class ToolsFormDelegation extends Component<Props> {
 
               <Segment basic clearing>
                 <Button
-                  content={t('tools_form_contact_submit')}
+                  content={t('tools_form_delegation_submit')}
                   color="green"
                   disabled={submitDisabled}
                   floated="right"
@@ -204,12 +223,12 @@ class ToolsFormDelegation extends Component<Props> {
                 <Button
                   onClick={onClose}
                 >
-                  <Icon name="x" /> {t('tools_form_contact_cancel')}
+                  <Icon name="x" /> {t('tools_form_delegation_cancel')}
                 </Button>
               </Segment>
             </Form>
           )}
-      </div>
+      </Segment>
     );
   }
 }
