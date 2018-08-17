@@ -49,14 +49,14 @@ class ToolsFormDelegation extends Component<Props> {
       });
     } else if (delegationToRemove) {
       const {
-        accountName
-      } = delegationToEdit;
+        to: accountName
+      } = delegationToRemove;
 
       this.setState({
         accountName,
-        confirming: skipForm || false,
-        cpuAmount: 0,
-        netAmount: 0
+        confirming: true,
+        cpuAmount: '0.0000 EOS',
+        netAmount: '0.0000 EOS'
       });
     }
   }
