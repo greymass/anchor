@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
+import { Button, Header, Divider, Icon, Segment, Message, Table } from 'semantic-ui-react';
 
 import StatsFetcher from '../../../../../utils/StatsFetcher';
 
@@ -17,6 +17,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
   render() {
     const {
+      account,
       accountName,
       balance,
       cpuOriginal,
@@ -44,7 +45,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
     const unstakingWhenAmountBeingUnstaked = refundDate && unstaking;
 
-    return (accountName === settings.account)
+    return (accountName !== account.account_name)
       ? (
         <Segment padding="true" basic>
           <Header textAlign="center">
@@ -65,7 +66,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
                   {t('tools_form_delegation_cpu_amount')}
                 </Table.Cell>
                 <Table.Cell width={8}>
-                  {cpuAmount}
+                  {cpuAmount.toFixed(4)} EOS
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
@@ -73,7 +74,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
                   {t('tools_form_delegation_net_amount')}
                 </Table.Cell>
                 <Table.Cell width={8}>
-                  {netAmount}
+                  {netAmount.toFixed(4)} EOS
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
@@ -180,8 +181,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Icon name="check" /> {t('confirm_stake')}
           </Button>
         </Segment>
-      )
-    );
+      );
   }
 }
 
