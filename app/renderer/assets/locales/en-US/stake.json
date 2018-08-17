@@ -13,7 +13,7 @@
   "net_staked": "EOS staked in Bandwidth",
   "stake_account_name": "Account Name",
   "stake_button_cta": "Update Staked EOS",
-  "stake_confirming_header_one": "About to change delegation to:",
+  "stake_confirming_header_one": "About to change delegation of: ",
   "stake_cpu_amount": "CPU Amount",
   "stake_modal_delegation_header": "Stake",
   "stake_modal_title":"Update Staked EOS Amounts",
