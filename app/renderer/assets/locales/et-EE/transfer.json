@@ -15,5 +15,8 @@
   "transfer_label_memo": "Ülekande Teade",
   "transfer_receive_modal_header": "Võta Vastu Osakuid",
   "transfer_receive_body_text": "Osakute vastuvõtmiseks pead lihtsalt andma saatjale järgmise kontonime.",
-  "transfer_close": "Sulge"
+  "transfer_close": "Sulge",
+  "transfer_header_available": "available to transfer.",
+  "transfer_send_exchange_in_memo_one": "Are you trying to transfer to an exchange? If so put",
+  "transfer_send_exchange_in_memo_two": "as the Account Name and put the memo code given in the memo field."
 }
