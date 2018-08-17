@@ -29,12 +29,12 @@ import * as AccountsActions from '../actions/accounts';
 import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
-import * as DelegationsActions from '../actions/delegations';
 import * as GlobalsActions from '../actions/globals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as SettingsActions from '../actions/settings';
 import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
+import * as TableActions from '../actions/table';
 import * as TransactionActions from '../actions/transaction';
 import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as UnregProxyActions from '../actions/system/unregproxy';
@@ -203,7 +203,7 @@ function mapStateToProps(state) {
     chain: state.chain,
     contracts: state.contracts,
     customtokens: state.customtokens,
-    delegations: state.delegations,
+    tables: state.tables,
     globals: state.globals,
     keys: state.keys,
     settings: state.settings,
@@ -222,12 +222,12 @@ function mapDispatchToProps(dispatch) {
       ...ContractsActions,
       ...CreateAccountActions,
       ...CustomTokensActions,
-      ...DelegationsActions,
       ...GlobalsActions,
       ...RegProxyActions,
       ...SettingsActions,
       ...StakeActions,
       ...SystemStateActions,
+      ...TableActions,
       ...TransactionActions,
       ...UpdateAuthActions,
       ...UnregProxyActions,
