@@ -32,6 +32,7 @@ class WalletPanelFormStake extends Component<Props> {
     const parsedNetWeight = net_weight.split(' ')[0];
 
     this.state = {
+      accountName: account.account_name,
       EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
       decimalCpuAmount: Decimal(parsedCpuWeight),
       cpuOriginal: Decimal(parsedCpuWeight),
@@ -41,6 +42,26 @@ class WalletPanelFormStake extends Component<Props> {
       formError: null,
       submitDisabled: true
     };
+  }
+
+  componentWillMount() {
+    const {
+      accountName,
+      confirming,
+      cpuAmount,
+      cpuOriginal,
+      netAmount,
+      netOriginal
+    } = this.props;
+
+    this.setState({
+      accountName,
+      confirming,
+      cpuOriginal,
+      decimalCpuAmount: cpuAmount,
+      decimalNetAmount: netAmount,
+      netOriginal
+    });
   }
 
   onSubmit = (e) => {
@@ -136,11 +157,11 @@ class WalletPanelFormStake extends Component<Props> {
 
   onConfirm = () => {
     const {
-      account,
       actions
     } = this.props;
 
     const {
+      accountName,
       decimalCpuAmount,
       decimalNetAmount
     } = this.state;
@@ -153,7 +174,7 @@ class WalletPanelFormStake extends Component<Props> {
       confirming: false
     });
 
-    setStake(account, decimalNetAmount, decimalCpuAmount);
+    setStake(accountName, decimalNetAmount, decimalCpuAmount);
   }
 
   render() {
@@ -162,12 +183,14 @@ class WalletPanelFormStake extends Component<Props> {
       balance,
       onClose,
       system,
+      settings,
       t
     } = this.props;
 
     const {
-      decimalCpuAmount,
+      accountName,
       cpuOriginal,
+      decimalCpuAmount,
       decimalNetAmount,
       netOriginal,
       submitDisabled
@@ -241,7 +264,7 @@ class WalletPanelFormStake extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <WalletPanelFormStakeConfirming
-              account={account}
+              accountName={accountName}
               balance={balance}
               decimalCpuAmount={decimalCpuAmount}
               cpuOriginal={cpuOriginal}
@@ -250,6 +273,7 @@ class WalletPanelFormStake extends Component<Props> {
               netOriginal={netOriginal}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
+              settings={settings}
             />
           ) : ''}
       </Segment>
