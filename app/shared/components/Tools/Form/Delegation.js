@@ -10,6 +10,7 @@ import GlobalFormMessageError from '../../Global/Form/Message/Error';
 
 import ToolsFormDelegationConfirming from './Delegation/Confirming';
 import WalletPanelLocked from '../../Wallet/Panel/Locked';
+import WalletPanelFormStake from '../../Wallet/Panel/Form/Stake';
 
 class ToolsFormDelegation extends Component<Props> {
   constructor(props) {
@@ -196,6 +197,13 @@ class ToolsFormDelegation extends Component<Props> {
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
+        <WalletPanelFormStake
+          accountName={accountName}
+          cpuAmount={cpuAmount}
+          netAmount={netAmount}
+          onConfirm={this.onConfirm}
+          onBack={this.onBack}
+        />
         <Segment
           loading={system.STAKE === 'PENDING'}
         >
