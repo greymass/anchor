@@ -30,6 +30,9 @@ class GlobalTransactionModal extends Component<Props> {
   handleOpen = () => this.setState({ open: true });
 
   onClose = () => this.setState({ open: false }, () => {
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
     this.props.actions.clearSystemState();
   });
 
@@ -55,6 +58,7 @@ class GlobalTransactionModal extends Component<Props> {
     } = this.props;
     let {
       contract,
+      openModal,
       transaction
     } = this.props;
     const {
@@ -89,7 +93,7 @@ class GlobalTransactionModal extends Component<Props> {
             />
           ) : false
         }
-        open={open}
+        open={openModal || open}
         onOpen={this.onOpen}
         onClose={this.onClose}
         size={size || 'small'}
