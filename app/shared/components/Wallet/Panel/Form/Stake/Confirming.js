@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Header, Divider, Icon, Segment, Message, Table } from 'semantic-ui-react';
+import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
 import StatsFetcher from '../../../../../utils/StatsFetcher';
 
@@ -25,7 +25,6 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
       decimalNetAmount,
       netOriginal,
       onBack,
-      settings,
       t
     } = this.props;
 
@@ -45,55 +44,15 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
     const unstakingWhenAmountBeingUnstaked = refundDate && unstaking;
 
-    return (accountName !== account.account_name)
-      ? (
-        <Segment padding="true" basic>
+    return (
+      <div>
+        {(accountName !== account.account_name)
+        ? (
           <Header textAlign="center">
-            <p>{t('stake_confirming_header_one')}</p>
+            <p>{t('stake_confirming_header_one')} {accountName}</p>
           </Header>
-          <Table size="small" celled>
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell width={8}>
-                  {t('stake_account_name')}
-                </Table.Cell>
-                <Table.Cell width={8}>
-                  {accountName}
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell width={8}>
-                  {t('stake_cpu_amount')}
-                </Table.Cell>
-                <Table.Cell width={8}>
-                  {cpuAmount.toFixed(4)} EOS
-                </Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell width={8}>
-                  {t('stake_net_amount')}
-                </Table.Cell>
-                <Table.Cell width={8}>
-                  {netAmount.toFixed(4)} EOS
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table>
-          <Divider />
-          <Button
-            onClick={onBack}
-          >
-            <Icon name="arrow left" /> {t('back')}
-          </Button>
-          <Button
-            color="blue"
-            floated="right"
-            onClick={this.onConfirm}
-          >
-            <Icon name="check" /> {t('confirm_stake')}
-          </Button>
-        </Segment>
-      ) : (
+        ) : ''}
+
         <Segment padding="true" basic>
           {(unstaking) ? (
             <Header textAlign="center">
@@ -108,7 +67,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
                     <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} EOS
                   </font>
                   <Header.Subheader>
-                    ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                    ({t('will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
                   </Header.Subheader>
                 </Header>
               </Segment>
@@ -121,7 +80,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
                     <Icon name="wifi" />{t('about_to_unstake_from_net')} {(-netDifference).toFixed(4)} EOS
                   </font>
                   <Header.Subheader>
-                    ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                    ({t('will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
                   </Header.Subheader>
                 </Header>
               </Segment>
@@ -134,7 +93,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
                     <Icon name="microchip" />{t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} EOS</b>
                   </font>
                   <Header.Subheader>
-                    ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
+                    ({t('will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
                   </Header.Subheader>
                 </Header>
               </Segment>
@@ -147,14 +106,14 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
                     <Icon name="microchip" />{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} EOS</b>
                   </font>
                   <Header.Subheader>
-                    ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
+                    ({t('will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
                   </Header.Subheader>
                 </Header>
               </Segment>
             ) : ''}
           </Segment.Group>
 
-          {(lessThanOneEosStaked) ? (
+          {(accountName === account.account_name && lessThanOneEosStaked) ? (
             <Message warning="true">{t('will_have_less_than_one_eos_staked')}</Message>
           ) : ''}
 
@@ -181,7 +140,8 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Icon name="check" /> {t('confirm_stake')}
           </Button>
         </Segment>
-      );
+      </div>
+    );
   }
 }
 
