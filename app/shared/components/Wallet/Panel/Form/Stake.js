@@ -35,6 +35,7 @@ class WalletPanelFormStake extends Component<Props> {
 
     this.state = {
       accountName: account.account_name,
+      accountNameValid: true,
       EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
       decimalCpuAmount: Decimal(parsedCpuWeight),
       cpuOriginal: Decimal(parsedCpuWeight),

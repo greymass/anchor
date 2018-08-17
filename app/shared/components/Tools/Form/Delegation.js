@@ -77,6 +77,7 @@ class ToolsFormDelegation extends Component<Props> {
         <WalletPanelFormStake
           account={account}
           accountName={accountName}
+          actions={actions}
           balance={balance}
           confirming={confirming}
           cpuAmount={cpuAmount}
