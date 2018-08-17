@@ -56,6 +56,7 @@ class ToolsDelegations extends Component<Props> {
 
   render() {
     const {
+      accounts,
       actions,
       balances,
       blockExplorers,
@@ -88,6 +89,7 @@ class ToolsDelegations extends Component<Props> {
           {t('tools_delegation_header_text')}
         </Header>
         <ToolsModalDelegation
+          account={accounts[settings.account]}
           actions={actions}
           balance={balances[settings.account]}
           blockExplorers={blockExplorers}

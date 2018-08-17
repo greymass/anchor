@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
+import { Segment, Form, Divider, Message, Button, Header } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeInput from './Stake/Input';
 import WalletPanelFormStakeConfirming from './Stake/Confirming';
 import FormMessageError from '../../../Global/Form/Message/Error';
+
+import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
 
 type Props = {
   actions: {},
@@ -55,11 +57,11 @@ class WalletPanelFormStake extends Component<Props> {
     } = this.props;
 
     this.setState({
-      accountName,
+      accountName: accountName || '',
       confirming,
       cpuOriginal,
-      decimalCpuAmount: cpuAmount,
-      decimalNetAmount: netAmount,
+      decimalCpuAmount: cpuAmount || Decimal(0),
+      decimalNetAmount: netAmount || Decimal(0),
       netOriginal
     });
   }
@@ -96,13 +98,20 @@ class WalletPanelFormStake extends Component<Props> {
     });
   }
 
-  onChange = (name, value) => {
-    const decimalFieldName = `decimal${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-    this.setState({
-      submitDisabled: false,
+  onChange = (name, value, valid) => {
+    const newState = {
+      [name]: value,
       formError: null,
-      [decimalFieldName]: Decimal(value)
-    }, () => {
+      submitDisabled: false
+    };
+    if (name === 'accountName') {
+      newState.accountNameValid = valid;
+    } else {
+      const decimalFieldName = `decimal${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+      newState[decimalFieldName] = Decimal(value);
+    }
+
+    this.setState(newState, () => {
       const error = this.errorsInForm();
       if (error) {
         this.onError(error);
@@ -112,12 +121,22 @@ class WalletPanelFormStake extends Component<Props> {
 
   errorsInForm = () => {
     const {
+      account
+    } = this.props;
+
+    const {
+      accountName,
+      accountNameValid,
       cpuOriginal,
       decimalCpuAmount,
       decimalNetAmount,
       EOSbalance,
       netOriginal
     } = this.state;
+
+    if (!accountNameValid) {
+      return 'not_valid_account_name';
+    }
 
     let cpuAmount = decimalCpuAmount;
     let netAmount = decimalNetAmount;
@@ -135,7 +154,7 @@ class WalletPanelFormStake extends Component<Props> {
       return true;
     }
 
-    if (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0)) {
+    if (account.account_name === accountName && (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0))) {
       return 'no_stake_left';
     }
 
@@ -208,6 +227,14 @@ class WalletPanelFormStake extends Component<Props> {
         {(shouldShowForm)
           ? (
             <div>
+              {(this.props.accountName && this.props.accountName !== account.account_name)
+                ?
+                (
+                  <Header>
+                    {t('update_stake_for_other_header')}
+                    <u>{this.props.accountName}</u>
+                  </Header>
+                ) : ''}
               <WalletPanelFormStakeStats
                 cpuOriginal={cpuOriginal}
                 EOSbalance={EOSbalance}
@@ -217,6 +244,18 @@ class WalletPanelFormStake extends Component<Props> {
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
+                {(!this.props.accountName)
+                  ? (
+                    <Form.Group widths="equal">
+                      <GlobalFormFieldAccount
+                        defaultValue={accountName}
+                        label={t('update_staked_account_name')}
+                        name="accountName"
+                        onChange={(e, { name, value, valid }) => this.onChange(name, value, valid)}
+                        onError={this.onError}
+                      />
+                    </Form.Group>
+                  ) : ''}
                 <Form.Group widths="equal">
                   <WalletPanelFormStakeInput
                     defaultValue={decimalCpuAmount}
@@ -264,6 +303,7 @@ class WalletPanelFormStake extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <WalletPanelFormStakeConfirming
+              account={account}
               accountName={accountName}
               balance={balance}
               decimalCpuAmount={decimalCpuAmount}

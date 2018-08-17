@@ -8,6 +8,7 @@ import ToolsFormDelegation from '../Form/Delegation';
 class ToolsModalDelegation extends Component<Props> {
   render() {
     const {
+      account,
       actions,
       balance,
       blockExplorers,
@@ -36,6 +37,7 @@ class ToolsModalDelegation extends Component<Props> {
         }}
         content={(
           <ToolsFormDelegation
+            account={account}
             actions={actions}
             balance={balance}
             delegationToEdit={delegationToEdit}
