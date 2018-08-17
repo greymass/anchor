@@ -36,10 +36,11 @@ class ToolsDelegations extends Component<Props> {
 
   tick() {
     const {
-      actions
+      actions,
+      settings
     } = this.props;
 
-    actions.getDelegations();
+    actions.getTable('eosio', settings.account, 'delband');
   }
 
   onOpenModal = (delegation) => this.setState({ openModal: true, delegationToEdit: delegation });
@@ -57,7 +58,7 @@ class ToolsDelegations extends Component<Props> {
     const {
       actions,
       blockExplorers,
-      delegations,
+      tables,
       keys,
       settings,
       system,
@@ -73,6 +74,10 @@ class ToolsDelegations extends Component<Props> {
       openModal,
       successMessage
     } = this.state;
+
+    const delegations = tables &&
+                        tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband.rows;
 
     const delegationsToDisplay = sortBy(delegations, 'accountName');
 
@@ -119,10 +124,10 @@ class ToolsDelegations extends Component<Props> {
                       {t('tools_contacts_contact_account_name')}
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      {t('tools_contacts_contact_label')}
+                      {t('tools_contacts_contact_cpu_amount')}
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      {t('tools_contacts_contact_default_memo')}
+                      {t('tools_contacts_contact_net_amount')}
                     </Table.HeaderCell>
                     <Table.HeaderCell />
                     <Table.HeaderCell />
@@ -132,13 +137,13 @@ class ToolsDelegations extends Component<Props> {
                   {delegationsToDisplay.map((delegation) => (
                     <Table.Row>
                       <Table.Cell>
-                        {delegation.accountName}
+                        {delegation.to}
                       </Table.Cell>
                       <Table.Cell>
-                        {delegation.label}
+                        {delegation.cpu_weight}
                       </Table.Cell>
                       <Table.Cell>
-                        {delegation.defaultMemo}
+                        {delegation.net_weight}
                       </Table.Cell>
                       <Table.Cell width="2">
                         <Button
