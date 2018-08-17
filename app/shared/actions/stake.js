@@ -50,8 +50,6 @@ export function setStake(accountName, netAmount, cpuAmount) {
           decreaseInStake.cpuAmount
         ));
       }
-
-      debugger
     }, {
       broadcast: connection.broadcast,
       expireInSeconds: connection.expireInSeconds,
@@ -71,7 +69,6 @@ export function setStake(accountName, netAmount, cpuAmount) {
       });
     }).catch((err) => {
 
-      debugger
       dispatch({
         payload: { err },
         type: types.SYSTEM_STAKE_FAILURE
