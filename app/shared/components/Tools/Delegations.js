@@ -163,7 +163,8 @@ class ToolsDelegations extends Component<Props> {
                           icon="minus circle"
                           onClick={() => {
                             this.setState({
-                              delegationToRemove: delegation
+                              delegationToRemove: delegation,
+                              openModal: true
                             });
                           }}
                           size="mini"
