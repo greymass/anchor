@@ -57,6 +57,7 @@ class ToolsDelegations extends Component<Props> {
   render() {
     const {
       actions,
+      balances,
       blockExplorers,
       tables,
       keys,
@@ -68,7 +69,6 @@ class ToolsDelegations extends Component<Props> {
     } = this.props;
 
     const {
-      confirmDelete,
       delegationToEdit,
       delegationToRemove,
       openModal,
@@ -76,6 +76,7 @@ class ToolsDelegations extends Component<Props> {
     } = this.state;
 
     const delegations = tables &&
+                        tables.eosio &&
                         tables.eosio[settings.account] &&
                         tables.eosio[settings.account].delband.rows;
 
@@ -88,12 +89,13 @@ class ToolsDelegations extends Component<Props> {
         </Header>
         <ToolsModalDelegation
           actions={actions}
+          balance={balances[settings.account]}
           blockExplorers={blockExplorers}
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
           keys={keys}
           onClose={this.onCloseModal}
-          open={openModal}
+          openModal={openModal}
           settings={settings}
           system={system}
           validate={validate}
@@ -121,13 +123,13 @@ class ToolsDelegations extends Component<Props> {
                 <Table.Header>
                   <Table.Row key="tools_contacts_headers">
                     <Table.HeaderCell width="3">
-                      {t('tools_contacts_contact_account_name')}
+                      {t('tools_delegations_account_name')}
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      {t('tools_contacts_contact_cpu_amount')}
+                      {t('tools_delegations_cpu_amount')}
                     </Table.HeaderCell>
                     <Table.HeaderCell>
-                      {t('tools_contacts_contact_net_amount')}
+                      {t('tools_delegations_net_amount')}
                     </Table.HeaderCell>
                     <Table.HeaderCell />
                     <Table.HeaderCell />
@@ -161,8 +163,7 @@ class ToolsDelegations extends Component<Props> {
                           icon="minus circle"
                           onClick={() => {
                             this.setState({
-                              confirmDelete: true,
-                              delegationToConfirmForDeletion: delegation
+                              delegationToRemove: delegation
                             });
                           }}
                           size="mini"
@@ -172,22 +173,6 @@ class ToolsDelegations extends Component<Props> {
                   ))}
                 </Table.Body>
               </Table>
-              <Confirm
-                content={t('tools_delegations_confirm_delete_text')}
-                open={confirmDelete}
-                onCancel={() => {
-                  this.setState({ confirmDelete: false });
-                }}
-                onConfirm={() => {
-                  const {
-                    delegationToConfirmForDeletion
-                  } = this.state;
-
-                  actions.setState({
-                    delegationToDelete: delegationToConfirmForDeletion
-                  });
-                }}
-              />
             </div>
           )}
       </React.Fragment>

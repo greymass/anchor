@@ -19,9 +19,11 @@ class ToolsFormDelegation extends Component<Props> {
       accountNameValid: true,
       cpuAmount: null,
       cpuAmountValid: true,
+      cpuOriginal: Decimal(this.props.cpuAmount || 0),
+      formError: false,
       netAmount: null,
       netAmountValid: true,
-      formError: false,
+      netOriginal: Decimal(this.props.netAmount || 0),
       submitDisabled: true
     };
   }
@@ -35,9 +37,9 @@ class ToolsFormDelegation extends Component<Props> {
 
     if (delegationToEdit) {
       const {
-        accountName,
-        cpuAmount,
-        netAmount
+        to: accountName,
+        cpu_weight: cpuAmount,
+        net_weight: netAmount
       } = delegationToEdit;
 
       this.setState({
@@ -84,12 +86,18 @@ class ToolsFormDelegation extends Component<Props> {
 
   errorInForm = () => {
     const {
+      balance
+    } = this.props;
+
+    const {
       accountName,
       accountNameValid,
       cpuAmount,
       cpuAmountValid,
+      cpuOriginal,
       netAmount,
-      netAmountValid
+      netAmountValid,
+      netOriginal
     } = this.state;
 
     if (!accountName || accountName.length === 0) {
@@ -114,6 +122,13 @@ class ToolsFormDelegation extends Component<Props> {
 
     if (!netAmountValid) {
       return 'invalid_accountName';
+    }
+
+    const cpuChange = Decimal(cpuAmount.split(' ')[0]).minus(cpuOriginal);
+    const netChange = Decimal(netAmount.split(' ')[0]).minus(netOriginal);
+
+    if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(balance.EOS)) {
+      return 'not_enough_balance';
     }
 
     return false;
