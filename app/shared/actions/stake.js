@@ -68,7 +68,6 @@ export function setStake(accountName, netAmount, cpuAmount) {
         type: types.SYSTEM_STAKE_SUCCESS
       });
     }).catch((err) => {
-
       dispatch({
         payload: { err },
         type: types.SYSTEM_STAKE_FAILURE

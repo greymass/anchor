@@ -52,18 +52,16 @@ class WalletPanelFormStake extends Component<Props> {
       accountName,
       confirming,
       cpuAmount,
-      cpuOriginal,
-      netAmount,
-      netOriginal
+      netAmount
     } = this.props;
 
     this.setState({
       accountName: accountName || '',
       confirming,
-      cpuOriginal,
+      cpuOriginal: cpuAmount || Decimal(0),
       decimalCpuAmount: cpuAmount || Decimal(0),
       decimalNetAmount: netAmount || Decimal(0),
-      netOriginal
+      netOriginal: netAmount || Decimal(0)
     });
   }
 
@@ -249,7 +247,7 @@ class WalletPanelFormStake extends Component<Props> {
                   ? (
                     <Form.Group widths="equal">
                       <GlobalFormFieldAccount
-                        defaultValue={accountName}
+                        value={accountName}
                         label={t('update_staked_account_name')}
                         name="accountName"
                         onChange={(e, { name, value, valid }) => this.onChange(name, value, valid)}

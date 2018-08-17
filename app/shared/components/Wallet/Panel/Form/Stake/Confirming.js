@@ -49,13 +49,13 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
       ? (
         <Segment padding="true" basic>
           <Header textAlign="center">
-            <p>{t('tools_form_delegation_confirming_header_one')}</p>
+            <p>{t('stake_confirming_header_one')}</p>
           </Header>
           <Table size="small" celled>
             <Table.Body>
               <Table.Row>
                 <Table.Cell width={8}>
-                  {t('tools_form_delegation_account_name')}
+                  {t('stake_account_name')}
                 </Table.Cell>
                 <Table.Cell width={8}>
                   {accountName}
@@ -63,7 +63,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
               </Table.Row>
               <Table.Row>
                 <Table.Cell width={8}>
-                  {t('tools_form_delegation_cpu_amount')}
+                  {t('stake_cpu_amount')}
                 </Table.Cell>
                 <Table.Cell width={8}>
                   {cpuAmount.toFixed(4)} EOS
@@ -71,7 +71,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
               </Table.Row>
               <Table.Row>
                 <Table.Cell width={8}>
-                  {t('tools_form_delegation_net_amount')}
+                  {t('stake_net_amount')}
                 </Table.Cell>
                 <Table.Cell width={8}>
                   {netAmount.toFixed(4)} EOS
@@ -83,14 +83,14 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
           <Button
             onClick={onBack}
           >
-            <Icon name="arrow left" /> {t('tools_form_delegation_back')}
+            <Icon name="arrow left" /> {t('back')}
           </Button>
           <Button
             color="blue"
             floated="right"
             onClick={this.onConfirm}
           >
-            <Icon name="check" /> {t('tools_form_delegation_confirm')}
+            <Icon name="check" /> {t('confirm_stake')}
           </Button>
         </Segment>
       ) : (
