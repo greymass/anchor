@@ -7,7 +7,7 @@ import { delegatebwParams } from './system/delegatebw';
 import { undelegatebwParams } from './system/undelegatebw';
 
 import * as AccountActions from './accounts';
-import * as DelegationActions from './delegations';
+import * as TableActions from './table';
 import eos from './helpers/eos';
 
 export function setStake(accountName, netAmount, cpuAmount) {
@@ -15,11 +15,16 @@ export function setStake(accountName, netAmount, cpuAmount) {
     const {
       accounts,
       connection,
-      delegations,
+      tables,
       settings
     } = getState();
 
     const currentAccount = accounts[settings.account];
+
+    const delegations = tables &&
+                        tables.eosio &&
+                        tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband.rows;
 
     const {
       increaseInStake,
@@ -45,6 +50,8 @@ export function setStake(accountName, netAmount, cpuAmount) {
           decreaseInStake.cpuAmount
         ));
       }
+
+      debugger
     }, {
       broadcast: connection.broadcast,
       expireInSeconds: connection.expireInSeconds,
@@ -54,7 +61,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
         if (accountName === settings.account) {
           dispatch(AccountActions.getAccount(accountName));
         } else {
-          dispatch(DelegationActions.getDelegations(settings.account));
+          dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
         }
       }, 500);
 
@@ -64,6 +71,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
       });
     }).catch((err) => {
 
+      debugger
       dispatch({
         payload: { err },
         type: types.SYSTEM_STAKE_FAILURE
@@ -84,12 +92,12 @@ function getStakeChanges(currentAccount, accountName, delegations, nextNetAmount
   let accountResources;
 
   if (accountName !== currentAccount.account_name) {
-    const index = findIndex(delegations, { owner: accountName });
+    const index = findIndex(delegations, { to: accountName });
 
     if (index === -1) {
       accountResources = { cpu_weight: '0 EOS', net_weight: '0 EOS' };
     } else {
-      accountResources = currentAccount.total_resources[index];
+      accountResources = delegations[index];
     }
   }
 
