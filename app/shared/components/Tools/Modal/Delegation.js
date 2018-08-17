@@ -31,9 +31,9 @@ class ToolsModalDelegation extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
-          content: t('tools_modal_delegation_add'),
+          content: t('tools_delegation_modal_button_add'),
           fluid: true,
-          icon: 'share square'
+          icon: 'plus'
         }}
         content={(
           <ToolsFormDelegation
@@ -56,7 +56,7 @@ class ToolsModalDelegation extends Component<Props> {
         openModal={openModal}
         settings={settings}
         system={system}
-        title={t('tools_modal_delegation_header')}
+        title={t('stake_modal_delegation_header')}
       />
     );
   }
