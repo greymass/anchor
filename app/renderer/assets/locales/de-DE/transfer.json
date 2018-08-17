@@ -15,5 +15,8 @@
   "transfer_label_memo": "Transfer Memo",
   "transfer_receive_modal_header": "Receive Tokens",
   "transfer_receive_body_text": "To receive tokens simply give the following account name to the sender.",
-  "transfer_close": "Close"
+  "transfer_close": "Close",
+  "transfer_header_available": "available to transfer.",
+  "transfer_send_exchange_in_memo_one": "Are you trying to transfer to an exchange? If so put",
+  "transfer_send_exchange_in_memo_two": "as the Account Name and put the memo code given in the memo field."
 }
