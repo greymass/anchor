@@ -44,8 +44,8 @@ class ToolsFormDelegation extends Component<Props> {
       this.setState({
         accountName,
         confirming: true,
-        cpuAmount: '0.0000 EOS',
-        netAmount: '0.0000 EOS'
+        cpuAmount: Decimal(0),
+        netAmount: Decimal(0)
       });
     }
   }
@@ -67,9 +67,7 @@ class ToolsFormDelegation extends Component<Props> {
       accountName,
       cpuAmount,
       confirming,
-      cpuOriginal,
       netAmount,
-      netOriginal
     } = this.state;
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
@@ -81,9 +79,7 @@ class ToolsFormDelegation extends Component<Props> {
           balance={balance}
           confirming={confirming}
           cpuAmount={cpuAmount}
-          cpuOriginal={cpuOriginal}
           netAmount={netAmount}
-          netOriginal={netOriginal}
           onBack={this.onBack}
           onClose={onClose}
           onConfirm={this.onConfirm}

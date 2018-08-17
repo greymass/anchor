@@ -45,12 +45,11 @@ class ToolsDelegations extends Component<Props> {
 
   onOpenModal = (delegation) => this.setState({ openModal: true, delegationToEdit: delegation });
 
-  onCloseModal = () => this.setState({ openModal: false });
-
-  onSuccess = (message) => {
+  onCloseModal = () => {
     this.setState({
-      openModal: false,
-      successMessage: message || 'tools_contacts_success_add'
+      delegationToEdit: null,
+      delegationToRemove: null,
+      openModal: false
     });
   }
 
@@ -152,25 +151,28 @@ class ToolsDelegations extends Component<Props> {
                       <Table.Cell width="2">
                         <Button
                           content={t('tools_delegation_button_edit')}
-                          icon="address book"
+                          icon="microchip"
                           fluid
                           onClick={() => this.onOpenModal(delegation)}
                           size="mini"
                         />
                       </Table.Cell>
                       <Table.Cell>
-                        <Button
-                          color="red"
-                          fluid
-                          icon="minus circle"
-                          onClick={() => {
-                            this.setState({
-                              delegationToRemove: delegation,
-                              openModal: true
-                            });
-                          }}
-                          size="mini"
-                        />
+                        {(delegation.to !== settings.account)
+                          ? (
+                            <Button
+                              color="red"
+                              fluid
+                              icon="minus circle"
+                              onClick={() => {
+                                this.setState({
+                                  delegationToRemove: delegation,
+                                  openModal: true
+                                });
+                              }}
+                              size="mini"
+                            />
+                          ) : ''}
                       </Table.Cell>
                     </Table.Row>
                   ))}
