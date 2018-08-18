@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Decimal } from 'decimal.js';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import WalletPanelFormStake from '../Form/Stake';
@@ -33,6 +34,13 @@ class WalletPanelButtonStake extends Component<Props> {
       t
     } = this.props;
 
+    const account = accounts[settings.account];
+
+    const {
+      cpu_weight,
+      net_weight
+    } = account.self_delegated_bandwidth;
+
     return (
       <GlobalTransactionModal
         actionName="STAKE"
@@ -46,14 +54,17 @@ class WalletPanelButtonStake extends Component<Props> {
         }}
         content={(
           <WalletPanelFormStake
-            account={accounts[settings.account]}
-            key="StakeForm"
-            settings={settings}
+            account={account}
+            accountName={settings.account}
             actions={actions}
-            onClose={this.onClose}
-            validate={validate}
             balance={balances[settings.account]}
+            cpuAmount={Decimal(cpu_weight.split(' ')[0])}
+            key="StakeForm"
+            netAmount={Decimal(net_weight.split(' ')[0])}
+            onClose={this.onClose}
+            settings={settings}
             system={system}
+            validate={validate}
           />
         )}
         icon="microchip"

@@ -28,11 +28,11 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
       t
     } = this.props;
 
-    const cpuAmount = parseFloat(decimalCpuAmount);
-    const netAmount = parseFloat(decimalNetAmount);
+    const cpuAmount = decimalCpuAmount.toNumber();
+    const netAmount = decimalNetAmount.toNumber();
 
-    const cpuDifference = cpuAmount - cpuOriginal;
-    const netDifference = netAmount - netOriginal;
+    const cpuDifference = cpuAmount - cpuOriginal.toNumber();
+    const netDifference = netAmount - netOriginal.toNumber();
 
     const lessThanOneEosStaked = (decimalNetAmount < 1 || decimalCpuAmount < 1);
 
