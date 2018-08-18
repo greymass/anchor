@@ -51,7 +51,7 @@ class ToolsModalDelegation extends Component<Props> {
             wallet={wallet}
           />
         )}
-        icon="share square"
+        icon="microchip"
         onClose={onClose}
         openModal={openModal}
         settings={settings}
