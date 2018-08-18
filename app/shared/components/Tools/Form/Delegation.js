@@ -34,7 +34,9 @@ class ToolsFormDelegation extends Component<Props> {
       this.setState({
         accountName,
         cpuAmount: Decimal(cpu_weight.split(' ')[0]),
-        netAmount: Decimal(net_weight.split(' ')[0])
+        cpuOriginal: Decimal(cpu_weight.split(' ')[0]),
+        netAmount: Decimal(net_weight.split(' ')[0]),
+        netOriginal: Decimal(net_weight.split(' ')[0])
       });
     } else if (delegationToRemove) {
       const {

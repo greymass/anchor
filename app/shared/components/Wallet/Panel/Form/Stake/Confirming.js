@@ -34,7 +34,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
     const cpuDifference = cpuAmount - cpuOriginal.toNumber();
     const netDifference = netAmount - netOriginal.toNumber();
 
-    const lessThanOneEosStaked = (decimalNetAmount < 1 || decimalCpuAmount < 1);
+    const lessThanOneEosStaked = (cpuAmount < 1 || netAmount < 1);
 
     const statsFetcher = new StatsFetcher(account, balance);
 
