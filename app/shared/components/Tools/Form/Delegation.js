@@ -38,14 +38,18 @@ class ToolsFormDelegation extends Component<Props> {
       });
     } else if (delegationToRemove) {
       const {
-        to: accountName
+        to: accountName,
+        cpu_weight,
+        net_weight
       } = delegationToRemove;
 
       this.setState({
         accountName,
         confirming: true,
         cpuAmount: Decimal(0),
-        netAmount: Decimal(0)
+        cpuOriginal: Decimal(cpu_weight.split(' ')[0]),
+        netAmount: Decimal(0),
+        netOriginal: Decimal(net_weight.split(' ')[0])
       });
     }
   }
@@ -66,8 +70,10 @@ class ToolsFormDelegation extends Component<Props> {
     const {
       accountName,
       cpuAmount,
+      cpuOriginal,
       confirming,
       netAmount,
+      netOriginal
     } = this.state;
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
@@ -79,7 +85,9 @@ class ToolsFormDelegation extends Component<Props> {
           balance={balance}
           confirming={confirming}
           cpuAmount={cpuAmount}
+          cpuOriginal={cpuOriginal}
           netAmount={netAmount}
+          netOriginal={netOriginal}
           onBack={this.onBack}
           onClose={onClose}
           onConfirm={this.onConfirm}
