@@ -109,6 +109,7 @@
   "tools_menu_wallet_header": "Wallet Tools",
   "tools_menu_wallets": "Manage Wallets",
   "tools_modal_contact_header_text": "Contact",
+  "tools_modal_delegation_header": "Delegate",
   "tools_modal_permissions_auth_create_button": "New Permission",
   "tools_modal_permissions_auth_edit_button": "Modify",
   "tools_modal_permissions_auth_header": "Update Permission",

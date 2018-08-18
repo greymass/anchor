@@ -56,7 +56,7 @@ class ToolsModalDelegation extends Component<Props> {
         openModal={openModal}
         settings={settings}
         system={system}
-        title={t('stake_modal_delegation_header')}
+        title={t('tools_modal_delegation_header')}
       />
     );
   }

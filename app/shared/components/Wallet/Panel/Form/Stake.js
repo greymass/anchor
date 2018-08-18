@@ -52,16 +52,18 @@ class WalletPanelFormStake extends Component<Props> {
       accountName,
       confirming,
       cpuAmount,
-      netAmount
+      cpuOriginal,
+      netAmount,
+      netOriginal
     } = this.props;
 
     this.setState({
       accountName: accountName || '',
       confirming,
-      cpuOriginal: cpuAmount || Decimal(0),
+      cpuOriginal: cpuOriginal || cpuAmount || Decimal(0),
       decimalCpuAmount: cpuAmount || Decimal(0),
       decimalNetAmount: netAmount || Decimal(0),
-      netOriginal: netAmount || Decimal(0)
+      netOriginal: netOriginal || netAmount || Decimal(0)
     });
   }
 
