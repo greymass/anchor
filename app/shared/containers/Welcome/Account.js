@@ -78,7 +78,7 @@ class WelcomeAccountContainer extends Component<Props> {
   }
 
   onLookup = () => {
-    const {
+    var {
       account
     } = this.state;
     const {
@@ -97,7 +97,10 @@ class WelcomeAccountContainer extends Component<Props> {
         break;
       }
       default: {
-        if (ecc.isValidPublic(account) === true) {
+        // TODO: need to update eccjs.isValidPublic to support variable prefixes
+        var tmpKey = account.replace(/^TLOS/,'EOS');
+
+        if (ecc.isValidPublic(tmpKey) === true) {
           const { getAccountByKey } = actions;
           getAccountByKey(account);
         } else {

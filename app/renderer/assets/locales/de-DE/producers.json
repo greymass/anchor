@@ -38,7 +38,7 @@
   "producer_voter_preview_transaction_successful_message": "This action has been recorded to the blockchain. Transaction information can be found below.",
   "producer_voter_preview_close": "Close",
   "producer_voter_proxying_vote": "Currently selected proxy votes",
-  "producer_welcome_header": "Welcome to eos-voter",
+  "producer_welcome_header": "Welcome to Sqrl",
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",

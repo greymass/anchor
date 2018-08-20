@@ -13,16 +13,16 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
       data
     } = action.action_trace.act;
 
-    const stakeToCpuDescription = (data.stake_cpu_quantity !== '0.0000 EOS') ? (
+    const stakeToCpuDescription = (data.stake_cpu_quantity !== '0.0000 TLOS') ? (
       `${data.stake_cpu_quantity} ${t('actions_table_row_delegatebw_text_two')}`
     ) : '';
 
-    const stakeToNetDescription = (data.stake_net_quantity !== '0.0000 EOS') ? (
+    const stakeToNetDescription = (data.stake_net_quantity !== '0.0000 TLOS') ? (
       `${data.stake_net_quantity} ${t('actions_table_row_delegatebw_text_three')}`
     ) : '';
 
     const stakeConnector =
-      (data.stake_cpu_quantity !== '0.0000 EOS' && data.stake_net_quantity !== '0.0000 EOS') ? (
+      (data.stake_cpu_quantity !== '0.0000 TLOS' && data.stake_net_quantity !== '0.0000 TLOS') ? (
         ` ${t('actions_table_row_text_and')} `
       ) : '';
 

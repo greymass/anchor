@@ -1,13 +1,13 @@
 {
-  "name": "eos-voter",
-  "productName": "eos-voter",
+  "name": "Sqrl",
+  "productName": "Sqrl",
   "version": "0.5.0",
   "description": "",
   "main": "./main.prod.js",
   "author": {
-    "name": "Greymass",
-    "email": "hello@greymass.com",
-    "url": "https://github.com/greymass"
+    "name": "Telos Foundation",
+    "email": "hello@telosfoundation.io",
+    "url": "https://github.com/Telos-Foundation"
   },
   "scripts": {
     "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",

@@ -38,7 +38,7 @@
   "producer_voter_preview_transaction_successful_message": "ブロックチェーンに記録されました。トランザクション情報は以下で確認できます。",
   "producer_voter_preview_close": "閉じる",
   "producer_voter_proxying_vote": "現在選択されているプロキシ投票",
-  "producer_welcome_header": "eos-voterへようこそ",
+  "producer_welcome_header": "Sqrlへようこそ",
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",

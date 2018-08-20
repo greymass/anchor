@@ -56,22 +56,22 @@ export function getProducers(previous = false) {
       let tokensToProducersForVotes = false;
       const { contract } = globals;
       if (contract && contract['eosio.token']) {
-        const supply = parseFloat(contract['eosio.token'].EOS.supply);
+        const supply = parseFloat(contract['eosio.token'].TLOS.supply);
         // yearly inflation
-        const inflation = 0.04879;
+        const inflation = 0.025;
         // Tokens per year
         const tokensPerYear = supply * inflation;
         // Tokens per day
         const tokensPerDay = tokensPerYear / 365;
-        // 1/5th of inflation
-        const tokensToProducers = tokensPerDay * 0.2;
+        // 1% of inflation
+        const tokensToProducers = tokensPerDay * 0.1;
         // 75% rewards based on votes
         tokensToProducersForVotes = tokensToProducers * 0.75;
         // Percentage required to earn 100 tokens/day (break point for backups)
         backupMinimumPercent = 100 / tokensToProducersForVotes;
       }
       const data = rows
-        .filter((p) => (p.producer_key !== 'EOS1111111111111111111111111111111114T1Anm'))
+        .filter((p) => (p.producer_key !== 'TLOS1111111111111111111111111111111114T1Anm'))
         .map((producer) => {
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / current.total_producer_vote_weight;
@@ -108,7 +108,7 @@ export function getProducersInfo(previous = false) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') return;
+    if (connection.chain !== 'telosss-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',
@@ -154,7 +154,7 @@ export function getProducerInfo(producer) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') return;
+    if (connection.chain !== 'telosss-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',

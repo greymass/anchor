@@ -38,7 +38,7 @@
   "producer_voter_preview_transaction_successful_message": "Toiming on salvestatud plokiahelasse. Tehingu teavet võid leida allpoolt.",
   "producer_voter_preview_close": "Sulge",
   "producer_voter_proxying_vote": "Praegu valitud volitatud hääled",
-  "producer_welcome_header": "Tere tulemast eos-voter rakendusse",
+  "producer_welcome_header": "Tere tulemast Sqrl rakendusse",
   "producer_welcome_subheader": "",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",

@@ -12,7 +12,7 @@
   "welcome_connect_server": "サーバーに接続する",
   "welcome_created_by": "作成者",
   "welcome_enter_account": "アカウントを確認",
-  "welcome_instructions_1": "始めるにはeos-voterをEOSのAPIノードに接続する必要があります。",
+  "welcome_instructions_1": "始めるにはSqrlをTELOSのAPIノードに接続する必要があります。",
   "welcome_instructions_2": "接続したいノードのを入力してください。",
   "welcome_instructions_3": "公開鍵またはアカウント名を入力して下さい。",
   "welcome_instructions_3_cold": "使用するアカウント名を入力して下さい。",

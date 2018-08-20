@@ -34,8 +34,8 @@ export function delegatebwParams(delegator, receiver, netAmount, cpuAmount, tran
   return {
     from: delegator,
     receiver,
-    stake_net_quantity: `${stakeNetAmount.toFixed(4)} EOS`,
-    stake_cpu_quantity: `${stakeCpuAmount.toFixed(4)} EOS`,
+    stake_net_quantity: `${stakeNetAmount.toFixed(4)} TLOS`,
+    stake_cpu_quantity: `${stakeCpuAmount.toFixed(4)} TLOS`,
     transfer: transferTokens ? 1 : 0
   };
 }

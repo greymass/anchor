@@ -19,7 +19,7 @@ class ToolsKeys extends Component<Props> {
     const keys = this.state.keys.slice(0);
     PrivateKey.randomKey().then(privateKey => {
       const wif = privateKey.toWif();
-      const publicKey = privateKey.toPublic().toString();
+      const publicKey = privateKey.toPublic().toString('TLOS');
       keys.push([publicKey, wif]);
       this.setState({ keys })
       return keys;

@@ -35,7 +35,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       confirming: false,
       delegatedBw,
       delegatedCpu,
-      EOSbalance: (balance && balance.EOS) ? balance.EOS : 0,
+      EOSbalance: (balance && balance.TLOS) ? balance.TLOS : 0,
       formErrors: {},
       ownerKey,
       ramAmount,
@@ -385,7 +385,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 {(ramPrice && !formErrors.ramAmount) ? (
                   <h4 style={{ margin: '30px' }}>
-                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
+                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} TLOS.`}
                   </h4>
                 ) : ''}
                 <FormMessageError

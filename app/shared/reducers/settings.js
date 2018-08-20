@@ -3,7 +3,7 @@ import { get } from 'dot-prop-immutable';
 import * as types from '../actions/types';
 
 const initialState = {
-  // If the active session has accepted the EOS constitution
+  // If the active session has accepted the TELOS Network Operating Agreement
   acceptedConstitution: false,
   // If the wallet has ackknowledged understanding the smart contract tool
   acceptedContractInterface: false,
@@ -17,8 +17,8 @@ const initialState = {
   contacts: [],
   // Custom tokens the wallet should be tracking
   customTokens: [
-    // Always track the EOS token
-    'eosio.token:EOS'
+    // Always track the TLOS token
+    'eosio.token:TLOS'
   ],
   // Defaults to displaying resources remaining
   displayResourcesAvailable: false,

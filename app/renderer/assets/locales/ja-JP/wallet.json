@@ -39,7 +39,7 @@
   "wallet_mode_explain_undefined": "このウォレットは旧バージョンのものでタイプは不明です。これにより問題が生じることはないはずですが、一度他のウォレットへ移行してから戻すと、正しくアップグレードされます。",
   "wallet_mode_explain_watch": "このウォレットは秘密鍵を保存せず、トランザクションに署名できない「ウォッチ」ウォレットとして実行されています。署名はコールドウォレットで実行する必要があります。",
   "wallet_panel_form_account": "アカウント名",
-  "wallet_panel_form_create_wallet_body": "eos-voterを使用するには、アカウント名と秘密鍵を入力してください。",
+  "wallet_panel_form_create_wallet_body": "Sqrlを使用するには、アカウント名と秘密鍵を入力してください。",
   "wallet_panel_form_create_wallet_header": "アカウントをインポートする",
   "wallet_panel_form_encrypt_wallet": "パスワードでローカルウォレットを暗号化し保存しますか？",
   "wallet_panel_form_key": "WIF/秘密鍵",

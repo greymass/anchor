@@ -197,7 +197,7 @@ class WalletPanelFormRamSell extends Component<Props> {
             <div>
               <Menu tabular>
                 <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
-                <Menu.Item name="byEOSAmount" active={activeTab === 'byEOSAmount'} onClick={this.handleTabClick} />
+                <Menu.Item name="byTLOSAmount" active={activeTab === 'byTLOSAmount'} onClick={this.handleTabClick} />
               </Menu>
               <Form
                 onKeyPress={this.onKeyPress}
@@ -227,7 +227,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                   </Grid.Column>
                   <Grid.Column width={8}>
                     <WalletPanelFormRamStats
-                      EOSbalance={balances[settings.account].EOS}
+                      EOSbalance={balances[settings.account].TLOS}
                       ramQuota={ramQuota}
                       ramUsage={ramUsage}
                     />

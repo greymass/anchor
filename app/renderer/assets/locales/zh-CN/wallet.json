@@ -39,7 +39,7 @@
   "wallet_mode_explain_undefined": "This wallet is from a legacy version and it's type is unknown. This should not cause any problems, and once you swap to another wallet and back, it should upgrade properly.",
   "wallet_mode_explain_watch": "This wallet is running as a 'Watch' wallet, meaning it will not store private keys and cannot sign transactions. Signing must be done via a cold wallet.",
   "wallet_panel_form_account": "帐户名称",
-  "wallet_panel_form_create_wallet_body": "要使用eos-voter进行投票,请填写您的账户名称和私钥。",
+  "wallet_panel_form_create_wallet_body": "要使用Sqrl进行投票,请填写您的账户名称和私钥。",
   "wallet_panel_form_create_wallet_header": "导入您的帐户",
   "wallet_panel_form_encrypt_wallet": "用密码保存/加密本地钱包？",
   "wallet_panel_form_key": "WIF /私钥",

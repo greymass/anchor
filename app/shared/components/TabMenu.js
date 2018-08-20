@@ -7,7 +7,7 @@ import GlobalAccountDropdown from '../containers/Global/Account/Dropdown';
 import WalletLanguage from './Wallet/Language';
 import WalletLockState from './Wallet/LockState';
 import WalletMode from './Wallet/Mode';
-import logo from '../../renderer/assets/images/greymass.png';
+import logo from '../../renderer/assets/images/sqrl.png';
 
 class TabMenu extends Component<Props> {
   render() {
@@ -86,7 +86,7 @@ class TabMenu extends Component<Props> {
             active={activeItem === 'about'}
             onClick={handleItemClick}
           >
-            <img alt="Greymass" src={logo} />
+            <img alt="Telos Sqrl" src={logo} />
           </Menu.Item>
         </Menu.Menu>
       </Menu>

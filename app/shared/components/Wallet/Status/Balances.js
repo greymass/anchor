@@ -36,10 +36,10 @@ class WalletStatusBalances extends Component<Props> {
     const watchedTokens = (settings.customTokens) ? settings.customTokens.map((token) => token.split(':')[1]) : [];
     const rows = [
       (
-        <Table.Row key="EOS">
+        <Table.Row key="TLOS">
           <Table.Cell width={2}>
             <Header>
-              EOS
+            TLOS
               <Header.Subheader>
                 eosio.token
               </Header.Subheader>
@@ -50,11 +50,11 @@ class WalletStatusBalances extends Component<Props> {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell width={4}>{t('wallet_status_liquid')}</Table.Cell>
-                  <Table.Cell>{(tokens.EOS) ? tokens.EOS.toFixed(4) : '0.0000'} EOS</Table.Cell>
+                  <Table.Cell>{(tokens.TLOS) ? tokens.TLOS.toFixed(4) : '0.0000'} TLOS</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_resources_staked')}</Table.Cell>
-                  <Table.Cell>{totalStaked.toFixed(4)} EOS </Table.Cell>
+                  <Table.Cell>{totalStaked.toFixed(4)} TLOS </Table.Cell>
                 </Table.Row>
                 {(refundDate)
                   ? (
@@ -73,7 +73,7 @@ class WalletStatusBalances extends Component<Props> {
                           )
                           : false
                         }
-                        {totalBeingUnstaked.toFixed(4)} EOS (<TimeAgo date={refundDate} />)
+                        {totalBeingUnstaked.toFixed(4)} TLOS (<TimeAgo date={refundDate} />)
                       </Table.Cell>
                     </Table.Row>
                   )
@@ -81,7 +81,7 @@ class WalletStatusBalances extends Component<Props> {
                 }
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_total_balance')}</Table.Cell>
-                  <Table.Cell>{totalTokens.toFixed(4)} EOS</Table.Cell>
+                  <Table.Cell>{totalTokens.toFixed(4)} TLOS</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_ram_amount')}</Table.Cell>
@@ -100,7 +100,7 @@ class WalletStatusBalances extends Component<Props> {
     ];
     // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
-      if (token === 'EOS' || watchedTokens.indexOf(token) === -1) return;
+      if (token === 'TLOS' || watchedTokens.indexOf(token) === -1) return;
       let contract = 'unknown';
       let precision = {
         [token]: 4

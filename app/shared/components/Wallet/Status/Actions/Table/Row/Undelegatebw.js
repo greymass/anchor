@@ -13,16 +13,16 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
       data
     } = action.action_trace.act;
 
-    const unstakeToCpuDescription = (data.unstake_cpu_quantity !== '0.0000 EOS') ? (
+    const unstakeToCpuDescription = (data.unstake_cpu_quantity !== '0.0000 TLOS') ? (
       `${data.unstake_cpu_quantity} ${t('actions_table_row_undelegatebw_text_two')}`
     ) : '';
 
-    const unstakeToNetDescription = (data.unstake_net_quantity !== '0.0000 EOS') ? (
+    const unstakeToNetDescription = (data.unstake_net_quantity !== '0.0000 TLOS') ? (
       `${data.unstake_net_quantity} ${t('actions_table_row_undelegatebw_text_three')}`
     ) : '';
 
     const unstakeConnector =
-      (data.unstake_cpu_quantity !== '0.0000 EOS' && data.unstake_net_quantity !== '0.0000 EOS') ? (
+      (data.unstake_cpu_quantity !== '0.0000 TLOS' && data.unstake_net_quantity !== '0.0000 TLOS') ? (
         ` ${t('actions_table_row_text_and')} `
       ) : '';
 

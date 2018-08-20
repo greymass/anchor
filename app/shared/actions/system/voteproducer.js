@@ -13,7 +13,7 @@ export function voteproducers(producers = [], proxy = '') {
       type: types.SYSTEM_VOTEPRODUCER_PENDING
     });
     const { account } = settings;
-    // sort (required by EOS)
+    // sort (required by TLOS)
     producers.sort();
     return eos(connection, true).voteproducer(account, proxy, producers)
       .then((tx) => {

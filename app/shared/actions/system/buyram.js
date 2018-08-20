@@ -19,7 +19,7 @@ export function buyram(amount) {
     return eos(connection, true).buyram({
       payer: account,
       receiver: account,
-      quant: `${amount.toFixed(4)} EOS`
+      quant: `${amount.toFixed(4)} TLOS`
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
 

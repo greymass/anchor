@@ -44,13 +44,13 @@ const migrations = {
       !newSettings.customTokens
       || !newSettings.customTokens.length
     ) {
-      newSettings.customTokens = ['eosio.token:EOS'];
+      newSettings.customTokens = ['eosio.token:TLOS'];
     }
     if (
       newSettings.customTokens
-      && newSettings.customTokens.indexOf('eosio.token:EOS') === -1
+      && newSettings.customTokens.indexOf('eosio.token:TLOS') === -1
     ) {
-      newSettings.customTokens.push('eosio.token:EOS');
+      newSettings.customTokens.push('eosio.token:TLOS');
     }
     return Object.assign({}, state, {
       settings: newSettings
@@ -129,7 +129,7 @@ const migrations = {
 };
 
 const persistConfig = {
-  key: 'eos-voter-config',
+  key: 'Sqrl-config',
   version: 6,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),

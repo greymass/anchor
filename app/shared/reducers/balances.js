@@ -2,7 +2,7 @@ import * as types from '../actions/types';
 
 const initialState = {
   __contracts: {
-    EOS: 'eosio.token'
+    TLOS: 'eosio.token'
   }
 };
 

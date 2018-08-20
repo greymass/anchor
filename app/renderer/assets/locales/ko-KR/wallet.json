@@ -39,7 +39,7 @@
   "wallet_mode_explain_undefined": "이 지갑은 기존 버전에서 가져온 것으로, 유형은 알 수 없습니다. 이렇게 해도 문제가 발생하지 않습니다. 다른 지갑으로 변경한 후에 제대로 업그레이드 될 것입니다.",
   "wallet_mode_explain_watch": "이 지갑은 현재 관찰지갑 으로 진행 중이오니 거래 서명과 개인 키 저장을 못 합니다. 서명은 콜드지갑에서 하세요.",
   "wallet_panel_form_account": "계정 이름",
-  "wallet_panel_form_create_wallet_body": "eos-voter를 사용하여 투표하시려면 계정 이름과 개인 키를 입력하세요.",
+  "wallet_panel_form_create_wallet_body": "Sqrl를 사용하여 투표하시려면 계정 이름과 개인 키를 입력하세요.",
   "wallet_panel_form_create_wallet_header": "계정 불러오기",
   "wallet_panel_form_encrypt_wallet": "비밀번호로 로컬 지갑을 저장/암호화 하시겠습니까?",
   "wallet_panel_form_key": "WIF/개인 키",

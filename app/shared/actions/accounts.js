@@ -107,8 +107,8 @@ export function getAccount(account = '') {
         const modified = Object.assign({}, results);
         if (!modified.self_delegated_bandwidth) {
           modified.self_delegated_bandwidth = {
-            cpu_weight: '0.0000 EOS',
-            net_weight: '0.0000 EOS'
+            cpu_weight: '0.0000 TLOS',
+            net_weight: '0.0000 TLOS'
           };
         }
         // If a proxy voter is set, cache it's data for vote referencing
@@ -215,7 +215,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
       const { customTokens } = settings;
-      let selectedTokens = ['eosio.token:EOS'];
+      let selectedTokens = ['eosio.token:TLOS'];
       if (customTokens && customTokens.length > 0) {
         selectedTokens = [...customTokens, ...selectedTokens];
       }

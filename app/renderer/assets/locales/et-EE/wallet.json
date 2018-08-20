@@ -39,7 +39,7 @@
   "wallet_mode_explain_undefined": "See rahakott on aegunud versioonist ja selle liik ei ole teada. See ei tohiks tekitada probleeme ning peale lülitamist teiseks rahakotiks ja tagasi, see peaks uuendama korralikult.",
   "wallet_mode_explain_watch": "See rahakott töötab vaatamisrahakotina, mis tähendab, et see ei salvesta privaatvõtmeid ja sellega ei saa allkirjastada tehinguid. Allkirjastamist tuleb teha külma rahakoti kaudu.",
   "wallet_panel_form_account": "Konto Nimi",
-  "wallet_panel_form_create_wallet_body": "Eos-voter'it hääletamiseks kasutamiseks, sisesta enda kontonimi ja privaatvõti.",
+  "wallet_panel_form_create_wallet_body": "Sqrl'it hääletamiseks kasutamiseks, sisesta enda kontonimi ja privaatvõti.",
   "wallet_panel_form_create_wallet_header": "Impordi oma Konto",
   "wallet_panel_form_encrypt_wallet": "Salvesta/Krüpteeri kohalik rahakott parooliga?",
   "wallet_panel_form_key": "WIF/Privaatvõti",

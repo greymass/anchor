@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Button, Container, Grid, Image, Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import eos from '../../renderer/assets/images/eos.png';
+import eos from '../../renderer/assets/images/sqrl.png';
 
 import WelcomeAccount from './Welcome/Account';
 import WelcomeBreadcrumb from './Welcome/Breadcrumb';

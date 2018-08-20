@@ -20,7 +20,7 @@ class WalletPanelFormRamStats extends Component<Props> {
               {t('ram_stats_title_one')}
             </Table.Cell>
             <Table.Cell width={8}>
-              {`${EOSbalance} EOS`}
+              {`${EOSbalance} TLOS`}
             </Table.Cell>
           </Table.Row>
           <Table.Row>

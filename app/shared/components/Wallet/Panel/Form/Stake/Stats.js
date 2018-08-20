@@ -17,7 +17,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
       <Segment.Group horizontal>
         <Segment>
           <Header textAlign="center">
-            {(EOSbalance).toFixed(4)} EOS
+            {(EOSbalance).toFixed(4)} TLOS
             <Header.Subheader>
               {t('amount_not_staked')}
             </Header.Subheader>
@@ -25,7 +25,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
         </Segment>
         <Segment>
           <Header textAlign="center">
-            {cpuOriginal.toFixed(4)} EOS
+            {cpuOriginal.toFixed(4)} TLOS
             <Header.Subheader>
               {t('cpu_staked')}
             </Header.Subheader>
@@ -33,7 +33,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
         </Segment>
         <Segment>
           <Header textAlign="center">
-            {netOriginal.toFixed(4)} EOS
+            {netOriginal.toFixed(4)} TLOS
             <Header.Subheader>
               {t('net_staked')}
             </Header.Subheader>

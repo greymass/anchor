@@ -13,7 +13,7 @@ export function getCustomTokens(previous = false) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') {
+    if (connection.chain !== 'telosss-mainnet') {
       return dispatch({
         type: types.SYSTEM_CUSTOMTOKENS_FAILURE
       });

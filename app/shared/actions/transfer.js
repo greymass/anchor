@@ -3,7 +3,7 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
 
-export function transfer(from, to, quantity, memo, symbol = 'EOS') {
+export function transfer(from, to, quantity, memo, symbol = 'TLOS') {
   return (dispatch: () => void, getState) => {
     const {
       balances,

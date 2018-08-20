@@ -55,7 +55,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="green">
-                  <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} EOS
+                  <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} TLOS
                 </font>
                 <Header.Subheader>
                   ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
@@ -68,7 +68,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="red">
-                  <Icon name="wifi" />{t('about_to_unstake_from_net')} {(-netDifference).toFixed(4)} EOS
+                  <Icon name="wifi" />{t('about_to_unstake_from_net')} {(-netDifference).toFixed(4)} TLOS
                 </font>
                 <Header.Subheader>
                   ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
@@ -81,7 +81,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="green">
-                  <Icon name="microchip" />{t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} EOS</b>
+                  <Icon name="microchip" />{t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} TLOS</b>
                 </font>
                 <Header.Subheader>
                   ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
@@ -94,7 +94,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="red">
-                  <Icon name="microchip" />{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} EOS</b>
+                  <Icon name="microchip" />{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} TLOS</b>
                 </font>
                 <Header.Subheader>
                   ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
@@ -113,7 +113,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             icon="warning sign"
             warning="true"
           >
-            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked().toFixed(4)} EOS {t('unstaking_will_be_reset')}
+            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked().toFixed(4)} TLOS {t('unstaking_will_be_reset')}
           </Message>
         ) : ''}
 

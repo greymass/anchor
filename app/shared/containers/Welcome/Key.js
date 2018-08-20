@@ -131,7 +131,7 @@ class WelcomeKeyContainer extends Component<Props> {
     } = this.state;
     let currentPublic;
     try {
-      currentPublic = ecc.privateToPublic(keys.key);
+      currentPublic = ecc.privateToPublic(keys.key,'TLOS');
     } catch (e) {
       // invalid key
     }

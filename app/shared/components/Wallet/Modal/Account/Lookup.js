@@ -13,9 +13,12 @@ export default class WalletModalAccountLookup extends Component<Props> {
   }
 
   onChange = (e, { value }) => {
+    // TODO: need to update eccjs.isValidPublic to support variable prefixes
+    var tmpKey = value.replace(/^TLOS/,'EOS');
+
     this.setState({
       key: value,
-      valid: (ecc.isValidPublic(value) === true)
+      valid: (ecc.isValidPublic(tmpKey) === true)
     }, () => {
       const { key, valid } = this.state;
       if (valid) {

@@ -50,7 +50,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
             </font>
 
 
-            {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} EOS.`}
+            {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} TLOS.`}
           </Header>
           <Header>
             {t('ram_confirming_message_will_have')}
