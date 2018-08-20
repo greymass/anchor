@@ -9,7 +9,7 @@
 
 `Sqrl` is a limited-functionality release of a light wallet being designed for the TELOS blockchain. This application can be used to connect to a remote TELOS API endpoint to perform producer voting actions and a few basic wallet commands.
 
-[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)
+[![Sqrl screenshot](https://raw.githubusercontent.com/marlonwilliams/eos-voter/master/Sqrl.png)](https://raw.githubusercontent.com/marlonwilliams/eos-voter/master/Sqrl.png)
 
 ### Features
 
