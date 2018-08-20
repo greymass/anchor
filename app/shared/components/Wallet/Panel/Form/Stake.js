@@ -6,11 +6,11 @@ import { Decimal } from 'decimal.js';
 import { Segment, Form, Divider, Message, Button, Header } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
-import WalletPanelFormStakeInput from './Stake/Input';
 import WalletPanelFormStakeConfirming from './Stake/Confirming';
 import FormMessageError from '../../../Global/Form/Message/Error';
 
 import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
+import GlobalFormFieldToken from '../../../Global/Form/Field/Token';
 
 type Props = {
   actions: {},
@@ -36,13 +36,15 @@ class WalletPanelFormStake extends Component<Props> {
     this.state = {
       accountName: account.account_name,
       accountNameValid: true,
-      EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
-      decimalCpuAmount: Decimal(parsedCpuWeight),
-      cpuOriginal: Decimal(parsedCpuWeight),
-      decimalNetAmount: Decimal(parsedNetWeight),
-      netOriginal: Decimal(parsedNetWeight),
       confirming: false,
+      cpuAmountValid: true,
+      cpuOriginal: Decimal(parsedCpuWeight),
+      decimalCpuAmount: Decimal(parsedCpuWeight),
+      decimalNetAmount: Decimal(parsedNetWeight),
+      EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
       formError: null,
+      netAmountValid: true,
+      netOriginal: Decimal(parsedNetWeight),
       submitDisabled: true
     };
   }
@@ -99,18 +101,19 @@ class WalletPanelFormStake extends Component<Props> {
     });
   }
 
-  onChange = (name, value, valid) => {
+  onChange = (e, { name, value, valid }) => {
     const newState = {
       [name]: value,
       formError: null,
       submitDisabled: false
     };
-    if (name === 'accountName') {
-      newState.accountNameValid = valid;
-    } else {
+
+    if (name !== 'accountName') {
       const decimalFieldName = `decimal${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-      newState[decimalFieldName] = Decimal(value);
+      newState[decimalFieldName] = Decimal(value.split(' ')[0]);
     }
+
+    newState[`${name}Valid`] = valid;
 
     this.setState(newState, () => {
       const error = this.errorsInForm();
@@ -128,10 +131,12 @@ class WalletPanelFormStake extends Component<Props> {
     const {
       accountName,
       accountNameValid,
+      cpuAmountValid,
       cpuOriginal,
       decimalCpuAmount,
       decimalNetAmount,
       EOSbalance,
+      netAmountValid,
       netOriginal
     } = this.state;
 
@@ -139,28 +144,25 @@ class WalletPanelFormStake extends Component<Props> {
       return 'not_valid_account_name';
     }
 
-    let cpuAmount = decimalCpuAmount;
-    let netAmount = decimalNetAmount;
-
-    const decimalRegex = /^\d+(\.\d{1,4})?$/;
-
-    if (!decimalRegex.test(cpuAmount) || !decimalRegex.test(netAmount)) {
+    if (!cpuAmountValid || !netAmountValid) {
       return 'not_valid_stake_amount';
     }
 
-    cpuAmount = Decimal(cpuAmount);
-    netAmount = Decimal(netAmount);
+    if (!accountNameValid) {
+      return 'not_valid_account_name';
+    }
 
-    if (cpuOriginal.equals(cpuAmount) && netOriginal.equals(netAmount)) {
+    if (cpuOriginal.equals(decimalCpuAmount) && netOriginal.equals(decimalNetAmount)) {
       return true;
     }
 
-    if (account.account_name === accountName && (!cpuAmount.greaterThan(0) || !netAmount.greaterThan(0))) {
+    if (account.account_name === accountName &&
+       (!decimalCpuAmount.greaterThan(0) || !decimalNetAmount.greaterThan(0))) {
       return 'no_stake_left';
     }
 
-    const cpuChange = cpuAmount.minus(cpuOriginal);
-    const netChange = netAmount.minus(netOriginal);
+    const cpuChange = decimalCpuAmount.minus(cpuOriginal);
+    const netChange = decimalNetAmount.minus(netOriginal);
 
     if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(EOSbalance)) {
       return 'not_enough_balance';
@@ -252,27 +254,27 @@ class WalletPanelFormStake extends Component<Props> {
                         value={accountName}
                         label={t('update_staked_account_name')}
                         name="accountName"
-                        onChange={(e, { name, value, valid }) => this.onChange(name, value, valid)}
-                        onError={this.onError}
+                        onChange={this.onChange}
                       />
                     </Form.Group>
                   ) : ''}
                 <Form.Group widths="equal">
-                  <WalletPanelFormStakeInput
-                    defaultValue={decimalCpuAmount}
+                  <GlobalFormFieldToken
+                    autoFocus
                     icon="microchip"
                     label={t('update_staked_cpu_amount')}
                     name="cpuAmount"
                     onChange={this.onChange}
-                    onError={this.onError}
+                    defaultValue={decimalCpuAmount.toFixed(4)}
                   />
-                  <WalletPanelFormStakeInput
-                    defaultValue={decimalNetAmount}
+
+                  <GlobalFormFieldToken
+                    autoFocus
                     icon="wifi"
                     label={t('update_staked_net_amount')}
                     name="netAmount"
                     onChange={this.onChange}
-                    onError={this.onError}
+                    defaultValue={decimalNetAmount.toFixed(4)}
                   />
                 </Form.Group>
                 <FormMessageError
