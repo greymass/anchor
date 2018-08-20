@@ -21,7 +21,7 @@ const initialState = {
     'eosio.token:EOS'
   ],
   // Defaults to displaying resources remaining
-  displayResourcesAvailable: false,
+  displayResourcesAvailable: true,
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
   // Default Idle Timeout
