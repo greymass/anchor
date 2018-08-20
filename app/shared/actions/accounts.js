@@ -87,6 +87,29 @@ export function checkAccountAvailability(account = '') {
   };
 }
 
+export function checkAccountExists(account = '') {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_ACCOUNT_EXISTS_PENDING,
+      payload: { account_name: account }
+    });
+    const {
+      connection,
+      settings
+    } = getState();
+
+    if (account && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getAccount(account).then(() => dispatch({
+        type: types.SYSTEM_ACCOUNT_EXISTS_SUCCESS,
+        payload: { account_name: account }
+      })).catch((err) => dispatch({
+        type: types.SYSTEM_ACCOUNT_EXISTS_FAILURE,
+        payload: { err }
+      }));
+    }
+  };
+}
+
 export function getAccount(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -310,6 +333,7 @@ export function clearAccountByKey() {
 
 export default {
   checkAccountAvailability,
+  checkAccountExists,
   clearAccountByKey,
   clearAccountCache,
   getAccount,
