@@ -102,13 +102,23 @@ class WalletPanelFormStake extends Component<Props> {
   }
 
   onChange = (e, { name, value, valid }) => {
+    const {
+      actions
+    } = this.props;
+
+    const {
+      checkAccountExists
+    } = actions;
+
     const newState = {
       [name]: value,
       formError: null,
       submitDisabled: false
     };
 
-    if (name !== 'accountName') {
+    if (name === 'accountName') {
+      checkAccountExists(value);
+    } else {
       const decimalFieldName = `decimal${name.charAt(0).toUpperCase()}${name.slice(1)}`;
       newState[decimalFieldName] = Decimal(value.split(' ')[0]);
     }
@@ -223,6 +233,15 @@ class WalletPanelFormStake extends Component<Props> {
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
 
+    let {
+      formError
+    } = this.state;
+
+    if (system.ACCOUNT_EXISTS === 'FAILURE' &&
+        system.ACCOUNT_EXISTS_LAST_ACCOUNT === accountName) {
+      formError = formError || 'account_does_not_exist';
+    }
+
     return (
       <Segment
         loading={system.STAKE === 'PENDING'}
@@ -278,7 +297,7 @@ class WalletPanelFormStake extends Component<Props> {
                   />
                 </Form.Group>
                 <FormMessageError
-                  error={this.state.formError}
+                  error={formError}
                 />
                 <Divider />
                 <Message
