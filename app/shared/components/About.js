@@ -48,11 +48,10 @@ export default class About extends Component<Props> {
                     <p>{t('about_license_body_1')}</p>
                     <p>{t('about_license_body_2')}</p>
                     <p>{t('about_license_body_3')}</p>
-                    <p>{t('about_license_body_4')}</p>
                   </Segment>
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <Segment>
+                  <Segment basic>
                     <Image src={logo} alt="Telos Sqrl" />
                     <Segment basic padded>
                       <p>{t('about_greymass_message_1')}</p>
@@ -67,6 +66,9 @@ export default class About extends Component<Props> {
                         </a>.
                       </p>
                     </Segment>
+                  </Segment>
+                  <Segment secondary>
+                    <p>{t('about_license_body_4')}</p>
                   </Segment>
                 </Grid.Column>
               </Grid.Row>

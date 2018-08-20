@@ -7,9 +7,9 @@
   "wallet_account_lookup_failure_header": "Не удаётся выполнить поиск учётной записи",
   "wallet_account_lookup_modal_accounts_found": "Учётные записи с совпадающим ключом...",
   "wallet_account_lookup_modal_accounts_found_none": "Учётных записей с совпадающим ключом не найдено",
-  "wallet_account_lookup_modal_description": "Введите свой открытый ключ (начинается с EOS...) для поиска связанных с ним учётных записей.",
-  "wallet_account_lookup_modal_field_label": "Открытый ключ (EOSxxxxx)",
-  "wallet_account_lookup_modal_key_invalid": "Введенный ключ не является действительным открытым ключом EOS",
+  "wallet_account_lookup_modal_description": "Введите свой открытый ключ (начинается с TLOS...) для поиска связанных с ним учётных записей.",
+  "wallet_account_lookup_modal_field_label": "Открытый ключ (TLOSxxxxx)",
+  "wallet_account_lookup_modal_key_invalid": "Введенный ключ не является действительным открытым ключом TLOS",
   "wallet_account_lookup_modal_title": "Поиск имени учётной записи используя отрытый ключ",
   "wallet_account_lookup_modal_trigger": "Искать имя учётной записи?",
   "wallet_account_request_backup_header": "Backup your new account",
@@ -91,7 +91,7 @@
   "wallet_status_resources_usage": "Использование ресурсов",
   "wallet_status_tab_account_data": "Data",
   "wallet_status_tab_account_history": "History",
-  "wallet_status_tab_staked": "Закреплённые EOS",
+  "wallet_status_tab_staked": "Закреплённые TLOS",
   "wallet_status_tab_token_balances": "Balances",
   "wallet_status_total_balance": "Total"
 }

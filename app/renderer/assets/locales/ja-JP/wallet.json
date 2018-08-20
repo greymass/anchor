@@ -7,9 +7,9 @@
   "wallet_account_lookup_failure_header": "アカウントの検索を実行できません",
   "wallet_account_lookup_modal_accounts_found": "キーに一致するアカウント...",
   "wallet_account_lookup_modal_accounts_found_none": "キーに一致するアカウントがありません",
-  "wallet_account_lookup_modal_description": "公開鍵 (EOS...で始まる) を入力し、関連付けられたアカウントを検索します。",
-  "wallet_account_lookup_modal_field_label": "公開鍵 (EOSxxxxx)",
-  "wallet_account_lookup_modal_key_invalid": "入力されたキーは有効なEOSの公開鍵ではありません。",
+  "wallet_account_lookup_modal_description": "公開鍵 (TLOS...で始まる) を入力し、関連付けられたアカウントを検索します。",
+  "wallet_account_lookup_modal_field_label": "公開鍵 (TLOSxxxxx)",
+  "wallet_account_lookup_modal_key_invalid": "入力されたキーは有効なTLOSの公開鍵ではありません。",
   "wallet_account_lookup_modal_title": "公開鍵でアカウント名を検索します",
   "wallet_account_lookup_modal_trigger": "あなたのアカウント名を検索しますか？",
   "wallet_account_request_backup_header": "新しいアカウントをバックアップ",
@@ -91,7 +91,7 @@
   "wallet_status_resources_usage": "使用量",
   "wallet_status_tab_account_data": "データ",
   "wallet_status_tab_account_history": "履歴",
-  "wallet_status_tab_staked": "ステーク中のEOS",
+  "wallet_status_tab_staked": "ステーク中のTLOS",
   "wallet_status_tab_token_balances": "残高",
   "wallet_status_total_balance": "合計"
 }

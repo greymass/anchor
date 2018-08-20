@@ -84,4 +84,4 @@ yarn dev
 
 ### Credits
 
-The development of this application is being led by members of the [Greymass](https://greymass.com) team, and customized by EOS Miami for the [Telos Foundation](https://telosfoundation.io) in an effort to let stakeholders participate in TELOS’ governance.
+The development of this application is being led by members of the [Greymass](https://greymass.com) team, and customized by EOS Miami for the [Telos Foundation](https://telosfoundation.io) in an effort to let stakeholders securely manage their TLOS tokens and participate in TELOS’ governance.

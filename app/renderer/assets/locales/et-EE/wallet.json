@@ -7,9 +7,9 @@
   "wallet_account_lookup_failure_header": "Ei suutnud teostada konto otsingut",
   "wallet_account_lookup_modal_accounts_found": "Võtmega sobisid järgnevad kontod...",
   "wallet_account_lookup_modal_accounts_found_none": "Võtmega sobivaid kontosid ei leitud",
-  "wallet_account_lookup_modal_description": "Sisesta enda avalik võti (algab EOS...) et leida kontosid, mis on sellega seotud.",
-  "wallet_account_lookup_modal_field_label": "Avalik võti (EOSxxxxx)",
-  "wallet_account_lookup_modal_key_invalid": "Sisestatud võti ei ole kehtiv EOS avalik võti.",
+  "wallet_account_lookup_modal_description": "Sisesta enda avalik võti (algab TLOS...) et leida kontosid, mis on sellega seotud.",
+  "wallet_account_lookup_modal_field_label": "Avalik võti (TLOSxxxxx)",
+  "wallet_account_lookup_modal_key_invalid": "Sisestatud võti ei ole kehtiv TLOS avalik võti.",
   "wallet_account_lookup_modal_title": "Otsi kontosid avaliku võtme järgi",
   "wallet_account_lookup_modal_trigger": "Otsi oma kontonime?",
   "wallet_account_request_backup_header": "Tee oma uuest kontost varukoopia",
@@ -91,7 +91,7 @@
   "wallet_status_resources_usage": "Kasutus",
   "wallet_status_tab_account_data": "Andmed",
   "wallet_status_tab_account_history": "Ajalugu",
-  "wallet_status_tab_staked": "Panustatud EOS",
+  "wallet_status_tab_staked": "Panustatud TLOS",
   "wallet_status_tab_token_balances": "Saldod",
   "wallet_status_total_balance": "Total"
 }

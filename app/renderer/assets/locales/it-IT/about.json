@@ -2,7 +2,7 @@
   "about_opensource_title": "Questa applicazione è open source",
   "about_opensource_message": "I contributi a questa applicazione sono benvenuti. Se sei interessato, visita il nostro account github",
   "about_opensource_link": "https://github.com/Telos-Foundation/Sqrl",
-  "about_message_1": "eos-vote è una applicazione a sé stante che si connette direttamente con la blockchain di TELOS attraverso l'endpoint API di tua scelta.",
+  "about_message_1": "Sqrl è una applicazione a sé stante che si connette direttamente con la blockchain di TELOS attraverso l'endpoint API di tua scelta.",
   "about_message_2": "Le tue key non escono mai dall'applicazione e sono conservate sempre e soltantostored in forma criptata, dando così il più alto livello di sicurezza che un wallet possa offrire.",
   "about_more": "Visita  https://telosfoundation.io per saperne di più.",
   "about_issues": "Se hai avuto problemi con l'applicazione, apri per favore una istanza su github:",

@@ -25,7 +25,7 @@
   "welcome_key_coldwallet": "개인 키 가져오기",
   "welcome_key_coldwallet_content": "콜드지갑은 입력한 개인 키가 계정과 일치하는지 확인할 수 없습니다.",
   "welcome_key_coldwallet_title": "콜드지갑 - 키 가져오기",
-  "welcome_key_compare_content": "모든 EOS 키는 숫자 5로 시작하며 51 자입니다.",
+  "welcome_key_compare_content": "모든 TLOS 키는 숫자 5로 시작하며 51 자입니다.",
   "welcome_key_compare_expecting_match_to": "아래 키 중 하나와 일치하는 개인 키가 필요합니다.",
   "welcome_key_compare_fail_invalid_content": "입력 한 개인 키를 공개 키로 변환 할 수 없습니다.",
   "welcome_key_compare_fail_invalid_title": "개인 키 유효하지 않습니다.",
