@@ -1,6 +1,6 @@
 ## API Node Recommendations
 
-`Sqrl` is a light wallet, which means it relies on an external API node connected to the TELOS blockchain network in order to function.
+`Sqrl` is a fully functional wallet, which means it relies on an external API node connected to the TELOS blockchain network in order to function.
 
 The list below contains TELOS API nodes run by members of the TELOS community that you can choose from.
 
@@ -15,8 +15,8 @@ If you are concerned about revealing this information to any of these 3rd party 
 
 # TELOS Nodes
 
-- http://testnet.telosfoundation.io - operated by [Telos Foundation](https://telosfoundation.io)
-- https://api.eos.miami - operated by [EOS Miami](https://eos.miami/)
+- http://testnet.telosfoundation.io:8888 - operated by [Telos Foundation](https://telosfoundation.io)
+- https://api.eos.miami:17441 - operated by [EOS Miami](https://eos.miami/)
 
 ### Additions
 
