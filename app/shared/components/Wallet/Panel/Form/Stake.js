@@ -166,8 +166,13 @@ class WalletPanelFormStake extends Component<Props> {
       return true;
     }
 
+    const cpuDifference = cpuOriginal.minus(decimalCpuAmount);
+    const netDifference = netOriginal.minus(decimalNetAmount);
+    const cpuWeightDecimal = Decimal(account.cpu_weight / 10000);
+    const netWeightDecimal = Decimal(account.net_weight / 10000);
+
     if (account.account_name === accountName &&
-       (!decimalCpuAmount.greaterThan(0) || !decimalNetAmount.greaterThan(0))) {
+      (cpuWeightDecimal.equals(cpuDifference) || netWeightDecimal.equals(netDifference))) {
       return 'no_stake_left';
     }
 
