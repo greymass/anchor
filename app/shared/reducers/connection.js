@@ -4,8 +4,8 @@ import * as types from '../actions/types';
 
 const initialState = {
   authorization: undefined,
-  chain: 'eos-mainnet',
-  chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  chain: 'telos-testnet',
+  chainId: '9e46127b78e0a7f6906f549bba3d23b264c70ee6ec781aed9d4f1b72732f34fc',
   broadcast: true,
   expireInSeconds: 120,
   forceActionDataHex: false,
@@ -13,7 +13,8 @@ const initialState = {
 };
 
 const blockchains = {
-  aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'eos-mainnet'
+  '9e46127b78e0a7f6906f549bba3d23b264c70ee6ec781aed9d4f1b72732f34fc': 'telos-testnet',
+  '' : 'telos-mainnet'
 };
 
 export default function connection(state = initialState, action) {

@@ -108,7 +108,7 @@ export function getProducersInfo(previous = false) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'telosss-mainnet') return;
+    if (connection.chain !== 'telos-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',
@@ -154,7 +154,7 @@ export function getProducerInfo(producer) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'telosss-mainnet') return;
+    if (connection.chain !== 'telos-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',

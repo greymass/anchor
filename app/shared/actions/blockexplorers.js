@@ -10,7 +10,7 @@ export function getBlockExplorers() {
     });
     // const { connection } = getState();
     // // Don't retrieve if we're not on mainnet
-    // if (connection.chain !== 'eos-mainnet') {
+    // if (connection.chain !== 'telos-mainnet') {
     //   return dispatch({
     //     type: types.SYSTEM_BLOCKEXPLORERS_FAILURE
     //   });
