@@ -18,7 +18,6 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://eos.greymass.com - operated by [greymass](https://greymass.com)
 - https://mainnet.eoscalgary.io - operated by [EOS Cafe](https://eoscafecalgary.com/)
 - https://api.eosnewyork.io - operated by [EOS New York](https://www.eosnewyork.io/)
-- https://mainnet.eosimpera.com - operated by [EOS IMPERA](https://www.eosimpera.io/)
 - https://api.eosdetroit.io - operated by [EOS Detroit](http://eosdetroit.io/)
 - http://api.hkeos.com - operated by [HK EOS](https://www.hkeos.com/)
 - https://bp.cryptolions.io - operated by [CryptoLions](http://CryptoLions.io/)
@@ -33,6 +32,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://api.eos.bitspace.no - operated by [Bitspace](https://eos.bitspace.no/)
 - https://node.eosflare.io - operated by [EOS Flare](https://eosflare.io/)
 - https://api-eos.blckchnd.com - operated by [BLCKCHND](https://eos.blckchnd.com/)
+- https://mainnet.eosimpera.com - operated by [EOS IMPERA](https://www.eosimpera.io/)
 
 ### Additions
 
