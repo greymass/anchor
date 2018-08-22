@@ -5,7 +5,7 @@
 
 [English](https://github.com/Telos-Foundation/Sqrl/blob/master/README.md)
 
-[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/app/renderer/assets/images/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/app/renderer/assets/images/sqrl.png)
+[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/app/renderer/assets/images/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/app/renderer/assets/images/sqrl.png)
 
 # Sqrl - TELOS Block Producer Voting & Wallet
 
