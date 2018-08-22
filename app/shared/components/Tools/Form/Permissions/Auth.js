@@ -147,6 +147,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
         {auth.keys.map((keyAuths, index) => (
           <ToolsFormPermissionsAuthWeightedKey
             auth={auth}
+            key={JSON.stringify(keyAuths)}
             keyAuths={keyAuths}
             index={index}
             onNumberChange={this.onNumberChange}
