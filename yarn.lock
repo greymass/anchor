@@ -1563,7 +1563,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -3666,16 +3666,16 @@ enzyme@^3.3.0:
     raf "^3.4.0"
     rst-selector-parser "^2.2.3"
 
-eosjs-api@6.3.2:
-  version "6.3.2"
-  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-6.3.2.tgz#1f71e871ad1fe213ca6f9eaa6529cc162a679584"
+eosjs-api@7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-7.0.3.tgz#c274604a126fb53d0ed7aca9443e3436836517ff"
   dependencies:
     camel-case "^3.0.0"
     isomorphic-fetch "^2.2.1"
 
-eosjs-ecc@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/eosjs-ecc/-/eosjs-ecc-4.0.2.tgz#89b2fc019b2632ef294b94d4f34dbd540da9763c"
+eosjs-ecc@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/eosjs-ecc/-/eosjs-ecc-4.0.3.tgz#034608e1b9f802b624c16d4a93bacc51dc17e8b3"
   dependencies:
     bigi "^1.4.2"
     browserify-aes "^1.0.6"
@@ -3686,16 +3686,16 @@ eosjs-ecc@4.0.2:
     ecurve "^1.0.5"
     randombytes "^2.0.5"
 
-eosjs@15.0.6:
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-15.0.6.tgz#4180fa8baa5b2e838941cc47d37fa4f1a36e80c3"
+eosjs@16.0.5:
+  version "16.0.5"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-16.0.5.tgz#182aaec0347ed520a2390ce5bc7679dd9516fc48"
   dependencies:
-    babel-runtime "^6.26.0"
+    babel-runtime "6.26.0"
     binaryen "^37.0.0"
     create-hash "^1.1.3"
-    eosjs-api "6.3.2"
-    eosjs-ecc "4.0.2"
-    fcbuffer "2.2.0"
+    eosjs-api "7.0.3"
+    eosjs-ecc "4.0.3"
+    fcbuffer "^2.2.1"
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
@@ -4322,9 +4322,9 @@ fbjs@^0.8.0, fbjs@^0.8.16, fbjs@^0.8.4:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fcbuffer@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/fcbuffer/-/fcbuffer-2.2.0.tgz#c85d01485f74bb917d87689a55890dba70fc1de3"
+fcbuffer@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/fcbuffer/-/fcbuffer-2.2.1.tgz#183efde2b2c8382e58ca34929d39bf147e9402e0"
   dependencies:
     bn.js "^4.11.8"
     bytebuffer "^5.0.1"
