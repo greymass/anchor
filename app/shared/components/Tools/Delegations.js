@@ -4,9 +4,9 @@ import { translate } from 'react-i18next';
 
 import {
   Button,
-  Confirm,
   Header,
   Message,
+  Segment,
   Table,
 } from 'semantic-ui-react';
 
@@ -83,10 +83,7 @@ class ToolsDelegations extends Component<Props> {
     const delegationsToDisplay = sortBy(delegations, 'accountName');
 
     return (
-      <React.Fragment>
-        <Header>
-          {t('tools_delegation_header_text')}
-        </Header>
+      <Segment basic>
         <ToolsModalDelegation
           account={accounts[settings.account]}
           actions={actions}
@@ -102,14 +99,24 @@ class ToolsDelegations extends Component<Props> {
           validate={validate}
           wallet={wallet}
         />
-
+        <Header
+          content={t('tools_delegation_header_text')}
+          floated="left"
+          subheader={t('tools_delegation_subheader_text')}
+        />
+        <Message
+          content={t('tools_delegation_info_content')}
+          header={t('tools_delegation_info_header')}
+          icon="circle question"
+          info
+        />
         {(successMessage)
           ? (
             <Message
               content={t(successMessage)}
               success
             />
-          ) : <br />}
+          ) : false }
 
         {(!delegations || delegations.length === 0)
           ? (
@@ -118,69 +125,61 @@ class ToolsDelegations extends Component<Props> {
               warning
             />
           ) : (
-            <div>
-              <br />
-              <Table>
-                <Table.Header>
-                  <Table.Row key="tools_contacts_headers">
-                    <Table.HeaderCell width="3">
-                      {t('tools_delegations_account_name')}
-                    </Table.HeaderCell>
-                    <Table.HeaderCell>
-                      {t('tools_delegations_cpu_amount')}
-                    </Table.HeaderCell>
-                    <Table.HeaderCell>
-                      {t('tools_delegations_net_amount')}
-                    </Table.HeaderCell>
-                    <Table.HeaderCell />
-                    <Table.HeaderCell />
+            <Table definition>
+              <Table.Header>
+                <Table.Row key="tools_contacts_headers">
+                  <Table.HeaderCell width="3">
+                    {t('tools_delegations_account_name')}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="right">
+                    {t('tools_delegations_cpu_amount')}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell textAlign="right">
+                    {t('tools_delegations_net_amount')}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {delegationsToDisplay.map((delegation) => (
+                  <Table.Row>
+                    <Table.Cell>
+                      {delegation.to}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      {delegation.cpu_weight}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      {delegation.net_weight}
+                    </Table.Cell>
+                    <Table.Cell textAlign="right">
+                      <Button
+                        content={t('tools_delegation_button_edit')}
+                        icon="microchip"
+                        onClick={() => this.onOpenModal(delegation)}
+                        size="mini"
+                      />
+                      {(delegation.to !== settings.account)
+                        ? (
+                          <Button
+                            color="red"
+                            icon="minus circle"
+                            onClick={() => {
+                              this.setState({
+                                delegationToRemove: delegation,
+                                openModal: true
+                              });
+                            }}
+                            size="mini"
+                          />
+                        ) : ''}
+                    </Table.Cell>
                   </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  {delegationsToDisplay.map((delegation) => (
-                    <Table.Row>
-                      <Table.Cell>
-                        {delegation.to}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {delegation.cpu_weight}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {delegation.net_weight}
-                      </Table.Cell>
-                      <Table.Cell width="2">
-                        <Button
-                          content={t('tools_delegation_button_edit')}
-                          icon="microchip"
-                          fluid
-                          onClick={() => this.onOpenModal(delegation)}
-                          size="mini"
-                        />
-                      </Table.Cell>
-                      <Table.Cell>
-                        {(delegation.to !== settings.account)
-                          ? (
-                            <Button
-                              color="red"
-                              fluid
-                              icon="minus circle"
-                              onClick={() => {
-                                this.setState({
-                                  delegationToRemove: delegation,
-                                  openModal: true
-                                });
-                              }}
-                              size="mini"
-                            />
-                          ) : ''}
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table>
-            </div>
+                ))}
+              </Table.Body>
+            </Table>
           )}
-      </React.Fragment>
+      </Segment>
     );
   }
 }
