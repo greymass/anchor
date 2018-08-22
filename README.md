@@ -11,8 +11,8 @@
 
 `Sqrl` is a fully functional release of a light wallet being designed for the TELOS blockchain. This application can be used to connect to a remote TELOS API endpoint to perform producer voting actions and common wallet commands.
 
-[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)
- 
+[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)
+
 ### Features
 
 - **New TLOS Key Generation**: You can use Sqrl to generate new TLOS public and private key pairs.
@@ -30,12 +30,11 @@
 
 ### Releases
 
-Current 0.5.0 release downloads:
+Current 0.5.1 release downloads:
 
-- [Windows Installer](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.0/win-Sqrl-0.5.0.exe)
-- [macOS Package](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.0/mac-Sqrl-0.5.0.dmg)
-- [Linux (deb)](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.0/linux-Sqrl-0.5.0-amd64.deb)
-- [Linux (snap)](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.0/linux-Sqrl-0.5.0-amd64.snap)
+- [Windows Installer](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.1/win-Sqrl-0.5.1.exe)
+- [macOS Package](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.1/mac-Sqrl-0.5.1.dmg)
+- [Linux (src)](https://github.com/Telos-Foundation/Sqrl/archive/v0.5.1.tar.gz)
 
 The latest release will always be available on the releases page of this repository:
 
@@ -43,9 +42,9 @@ The latest release will always be available on the releases page of this reposit
 
 To determine which file you need, if you are a...
 
-- **MacOS User**: Download either the DMG (`Sqrl-***.dmg`) or ZIP (`Sqrl-***-mac.zip`) file.
+- **MacOS User**: Download the DMG (`Sqrl-***.dmg`) file.
 - **Windows User**: Download the EXE (`Sqrl-***.exe`) file.
-- **Linux User**: Download either the SNAP (`Sqrl-***-_amd64.snap`) or DEB (`Sqrl-***-_amd64.deb`) file
+- **Linux User**: Download the Source (`***-.tar.gz`) file.
 
 ### Security: Private Keys
 
