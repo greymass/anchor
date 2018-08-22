@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/LICENSE)
 ![downloads](https://img.shields.io/github/downloads/Telos-Foundation/Sqrl/total.svg)
 
-[English](https://github.com/Telos-Foundation/Sqrl/blob/master/README.md) - [한글](https://github.com/Telos-Foundation/Sqrl/blob/master/README.kr.md) - [中文](https://github.com/Telos-Foundation/Sqrl/blob/master/README.zh.md) - [日本語](https://github.com/Telos-Foundation/Sqrl/blob/master/README.ja.md) - [Русский](https://github.com/Telos-Foundation/Sqrl/blob/master/README.ru.md)
+[English](https://github.com/Telos-Foundation/Sqrl/blob/master/README.md)
 
 [![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/app/renderer/assets/images/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/app/renderer/assets/images/sqrl.png)
 
