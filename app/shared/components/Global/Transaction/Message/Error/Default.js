@@ -21,15 +21,17 @@ class GlobalTransactionMessageErrorDefault extends Component<Props> {
       <div>
         <p key={error}>{t(errorMessage || error.message)}</p>
 
-        <ReactJson
-          collapsed={2}
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name={null}
-          src={error}
-          style={{ padding: '1em' }}
-        />
+        {(typeof error === 'object') ? (
+          <ReactJson
+            collapsed={2}
+            displayDataTypes={false}
+            displayObjectSize={false}
+            iconStyle="square"
+            name={null}
+            src={error}
+            style={{ padding: '1em' }}
+          />
+        ) : ''}
       </div>
     );
   }
