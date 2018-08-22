@@ -18,5 +18,13 @@ export default function eos(connection, signing = false) {
       }
     }
   }
+  // Remove edgecase where authorization is improperly set
+  // TODO: Resolve why they are getting unset in certain edge cases
+  if (
+    decrypted.authorization
+    && (decrypted.authorization === [null] || decrypted.authorization === [undefined])
+  ) {
+    delete decrypted.authorization;
+  }
   return Eos(decrypted);
 }
