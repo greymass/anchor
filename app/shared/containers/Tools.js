@@ -58,6 +58,11 @@ const paneMapping = [
     name: 'customtokens',
   },
   {
+    element: ToolsDelegations,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'delegations'
+  },
+  {
     element: ToolsWallets,
     modes: ['cold', 'hot', 'watch'],
     name: 'wallets',
@@ -71,11 +76,6 @@ const paneMapping = [
     element: ContractInterface,
     modes: ['hot', 'watch', 'skip'],
     name: 'contracts',
-  },
-  {
-    element: ToolsDelegations,
-    modes: ['hot', 'watch', 'skip'],
-    name: 'delegations'
   },
   {
     header: true,
@@ -113,9 +113,9 @@ const paneMapping = [
     name: 'state',
   },
   {
-    element: ToolsStateWallet,
-    modes: ['cold', 'hot', 'skip', 'watch'],
-    name: 'state',
+    element: ToolsStateChain,
+    modes: ['hot', 'watch'],
+    name: 'state_chain',
   },
   {
     element: ToolsStateGlobals,
@@ -123,9 +123,9 @@ const paneMapping = [
     name: 'state_globals',
   },
   {
-    element: ToolsStateChain,
-    modes: ['hot', 'watch'],
-    name: 'state_chain',
+    element: ToolsStateWallet,
+    modes: ['cold', 'hot', 'skip', 'watch'],
+    name: 'state',
   },
   {
     header: true,

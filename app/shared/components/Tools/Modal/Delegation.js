@@ -32,7 +32,7 @@ class ToolsModalDelegation extends Component<Props> {
         button={{
           color: 'blue',
           content: t('tools_delegation_modal_button_add'),
-          fluid: true,
+          floated: 'right',
           icon: 'plus'
         }}
         content={(
