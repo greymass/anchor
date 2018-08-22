@@ -12,7 +12,7 @@
 `Sqrl` is a fully functional release of a light wallet being designed for the TELOS blockchain. This application can be used to connect to a remote TELOS API endpoint to perform producer voting actions and common wallet commands.
 
 [![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)
-
+ 
 ### Features
 
 - **New TLOS Key Generation**: You can use Sqrl to generate new TLOS public and private key pairs.
