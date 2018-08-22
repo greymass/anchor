@@ -1,0 +1,9 @@
+{
+  "broadcast_transaction_broadcast": "Broadcast Transaction",
+  "broadcast_transaction_confirm_details_content": "Review the details of this transaction, and if the details look correct, click the button below to sign and broadcast the transaction.",
+  "broadcast_transaction_confirm_details_title": "Review Transaction",
+  "broadcast_transaction_no_details_content": "Selecte a signed transaction file to begin",
+  "broadcast_transaction_no_details_title": "No transaction loaded",
+  "broadcast_transaction_not_signed": "Cannot broadcast an unsigned transaction.",
+  "broadcast_transaction_signbroadcast": "Sign + Broadcast Transaction"
+}
