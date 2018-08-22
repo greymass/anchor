@@ -95,10 +95,7 @@ function getAuthorization(account, pubkey) {
       find(perm.required_auth.keys, (key) => key.key === pubkey));
     if (permission) {
       // Return an authorization for this key
-      return {
-        actor: account.account_name,
-        permission: permission.perm_name
-      };
+      return `${account.account_name}@${permission.perm_name}`;
     }
   }
   return undefined;
