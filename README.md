@@ -5,11 +5,13 @@
 
 [English](https://github.com/Telos-Foundation/Sqrl/blob/master/README.md) - [한글](https://github.com/Telos-Foundation/Sqrl/blob/master/README.kr.md) - [中文](https://github.com/Telos-Foundation/Sqrl/blob/master/README.zh.md) - [日本語](https://github.com/Telos-Foundation/Sqrl/blob/master/README.ja.md) - [Русский](https://github.com/Telos-Foundation/Sqrl/blob/master/README.ru.md)
 
+[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/app/renderer/assets/images/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/app/renderer/assets/images/sqrl.png)
+
 # Sqrl - TELOS Block Producer Voting & Wallet
 
 `Sqrl` is a fully functional release of a light wallet being designed for the TELOS blockchain. This application can be used to connect to a remote TELOS API endpoint to perform producer voting actions and common wallet commands.
 
-[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)
+[![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/sqrl.png)
 
 ### Features
 

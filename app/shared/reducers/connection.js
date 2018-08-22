@@ -7,9 +7,11 @@ const initialState = {
   chain: 'telos-testnet',
   chainId: '9e46127b78e0a7f6906f549bba3d23b264c70ee6ec781aed9d4f1b72732f34fc',
   broadcast: true,
+  verbose: true,
   expireInSeconds: 120,
   forceActionDataHex: false,
-  httpEndpoint: null
+  httpEndpoint: null,
+  keyPrefix: 'TLOS'
 };
 
 const blockchains = {
