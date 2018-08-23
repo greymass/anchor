@@ -3,8 +3,12 @@ import { find, map, pick } from 'lodash';
 const Eos = require('eosjs');
 
 export const typeMap = {
+  int64: 'int',
   uint64: 'int',
+  int32: 'int',
   uint32: 'int',
+  int16: 'int',
+  uint16: 'int',
   bool: 'bool'
 };
 
@@ -13,6 +17,13 @@ export default class EOSContract {
     this.account = account;
     this.abi = abi;
     this.typeMap = typeMap;
+
+    for (var key in abi.types) {
+        var t = abi.types[key];
+        if(t.type in this.typeMap) {
+            this.typeMap[t.new_type_name] = this.typeMap[t.type];
+        }
+    }
   }
 
   tx(actionName, account, data) {
