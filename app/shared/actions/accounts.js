@@ -280,7 +280,11 @@ function formatPrecisions(balances) {
   for (let i = 0; i < balances.length; i += 1) {
     const [amount, symbol] = balances[i].split(' ');
     const [, suffix] = amount.split('.');
-    precision[symbol] = suffix.length;
+    var suffixLen = 0;
+    if(suffix !== undefined) {
+        suffixLen = suffix.length;
+    }
+    precision[symbol] = suffixLen;
   }
   return precision;
 }
