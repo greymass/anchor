@@ -2,7 +2,7 @@
   "account_registered_as_a_proxy_is_not_allowed_to_use_a_proxy": "このアカウントは現在プロキシとして登録されており、先にプロキシの登録解除をしなければ他のプロキシを設定できません。このアカウントの登録を解除するには、ツールページの投票プロキシの登録タブを使用して下さい。",
   "account_that_uses_a_proxy_is_not_allowed_to_become_a_proxy": "このアカウントは現在他のプロキシに投票権を設定しており、自身をプロキシとして登録することはできません。プロキシ設定を解除するには、プロデューサ投票ページの投票プロキシを変更ボタンをクリックして下さい。",
   "error": "エラー",
-  "error_account_does_not_exist": "This account name does not exist.",
+  "error_account_does_not_exist": "このアカウント名は存在しません。",
   "error_account_name_not_available": "このアカウント名は既に使用されています。",
   "error_accountName_not_unique_in_contacts": "このアカウント名は既に連絡先リストにあります。",
   "error_cannot_transfer_to_self": "受信者が不正です。自分自身に資金を送ることはできません。",
@@ -99,8 +99,8 @@
   "global_transaction_message_error_authorization_list_item_one": "「オーナー」秘密鍵がインポートされました。オーナー秘密鍵は現在「updateauth」コマンドの発行にのみ使用できます。",
   "global_transaction_message_error_authorization_list_item_three": "このアカウントのアクセス権限は現在インポートされているキーと一致しません。",
   "global_transaction_message_error_authorization_list_item_two": "現在の秘密鍵は選択した操作を実行するために十分な権限を保有しています。",
-  "global_transaction_message_error_authorization_note": "The private key can be changed by either removing the currently wallet and reimporting the private key, or by completely resetting the wallet and rerunning the import process.",
-  "global_transaction_message_error_authorization_paragraph": "The private key used in this wallet cannot perform the selected action.",
+  "global_transaction_message_error_authorization_note": "秘密鍵は現在のウォレットを削除して秘密鍵をインポートし直す、または完全にウォレットをリセットしてインポートプロセスをやり直すことで変更することができます。",
+  "global_transaction_message_error_authorization_paragraph": "このウォレットで使用されている秘密鍵は選択した操作を実行できません。",
   "global_transaction_unsigned_message": "このウォッチモードのウォレットで未署名のトランザクションを作成しました。コールドウォレットで署名できるように、下のボタンでファイルに保存して下さい。",
   "global_transaction_unsigned_raw_tx": "トランザクション原データの詳細",
   "global_transaction_unsigned_save_file": "ディスクに未署名トランザクションを保存",
@@ -114,5 +114,5 @@
   "global_transaction_view_is_signed": "署名済みトランザクション",
   "global_transaction_view_is_unsigned": "未署名トランザクション",
   "global_transaction_view_status": "トランザクションの状態",
-  "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter."
+  "invalid_proxy_specified": "指定されたプロキシアカウントは存在しません。それが有効なアカウントである場合は、プロキシ投票者として登録されていることを確認して下さい。"
 }
