@@ -97,7 +97,7 @@
   "global_transaction_full_details_content": "このトランザクションの全データが以下に表示されます。",
   "global_transaction_full_details_title": "フルトランザクション",
   "global_transaction_message_error_authorization_list_item_one": "「オーナー」秘密鍵がインポートされました。オーナー秘密鍵は現在「updateauth」コマンドの発行にのみ使用できます。",
-  "global_transaction_message_error_authorization_list_item_three": "このアカウントのアクセス権限は現在インポートされているキーと一致しません。",
+  "global_transaction_message_error_authorization_list_item_three": "このアカウントのアクセス権は現在インポートされているキーと一致しません。",
   "global_transaction_message_error_authorization_list_item_two": "現在の秘密鍵は選択した操作を実行するために十分な権限を保有しています。",
   "global_transaction_message_error_authorization_note": "秘密鍵は現在のウォレットを削除して秘密鍵をインポートし直す、または完全にウォレットをリセットしてインポートプロセスをやり直すことで変更することができます。",
   "global_transaction_message_error_authorization_paragraph": "このウォレットで使用されている秘密鍵は選択した操作を実行できません。",
