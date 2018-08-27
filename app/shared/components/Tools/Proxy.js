@@ -7,6 +7,7 @@ import { Header, Segment, Divider } from 'semantic-ui-react';
 import ToolsButtonProxyRegister from './Button/Register';
 import ToolsButtonProxyUnregister from './Button/Unregister';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
+import ToolsFormProxyInfo from './Form/ProxyInfo';
 
 class ToolsProxy extends Component<Props> {
   render() {
@@ -63,6 +64,18 @@ class ToolsProxy extends Component<Props> {
               settings={settings}
               system={system}
             />
+
+            {(true)
+              ? (
+                <ToolsFormProxyInfo
+                  account={account}
+                  actions={actions}
+                  blockExplorers={blockExplorers}
+                  settings={settings}
+                  system={system}
+                />
+              ) : ''}
+
           </Segment>
         </React.Fragment>
       )
