@@ -15,6 +15,7 @@ import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
 import ToolsDelegations from '../components/Tools/Delegations';
+import ToolsGovernanceProposals from '../components/Tools/Governance/Proposals';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsKeysValidator from '../components/Tools/Keys/Validator';
 import ToolsStateChain from '../components/Tools/State/Chain';
@@ -51,6 +52,16 @@ const paneMapping = [
   },
   {
     header: true,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'governance',
+  },
+  {
+    element: ToolsGovernanceProposals,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'governance_proposals'
+  },
+  {
+    header: true,
     modes: ['cold', 'hot', 'watch', 'skip'],
     name: 'wallet',
   },
@@ -78,15 +89,6 @@ const paneMapping = [
     element: ContractInterface,
     modes: ['hot', 'watch', 'skip'],
     name: 'contracts',
-  },
-  {
-    header: true,
-    modes: ['hot', 'watch', 'skip'],
-    name: 'governance',
-  },
-  {
-    element: ToolsGovernanceProposals,
-    modes: ['hot', 'watch', 'skip']
   },
   {
     header: true,
