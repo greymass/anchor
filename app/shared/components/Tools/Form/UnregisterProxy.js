@@ -4,9 +4,7 @@ import { translate } from 'react-i18next';
 
 import { Segment, Form, Divider, Message, Button } from 'semantic-ui-react';
 
-class ToolsFormRegister extends Component<Props> {
-  props: Props;
-
+class ToolsFormUnregisterProxy extends Component<Props> {
   onSubmit = () => {
     const {
       account,
@@ -14,10 +12,16 @@ class ToolsFormRegister extends Component<Props> {
     } = this.props;
 
     const {
-      regproxy
+      unregproxy
     } = actions;
 
-    regproxy(account);
+    unregproxy(account);
+
+    actions.buildTransaction(
+      'regproxyinfo',
+      'set',
+      account.account_name
+    );
   }
 
   render() {
@@ -29,14 +33,14 @@ class ToolsFormRegister extends Component<Props> {
 
     return (
       <Segment
-        loading={system.REGPROXY === 'PENDING'}
+        loading={system.UNREGPROXY === 'PENDING'}
         style={{ minHeight: '80px' }}
       >
         <div>
           <Message
             icon="info circle"
             info
-            content={t('tools_proxy_form_message_about_to_register')}
+            content={t('tools_proxy_form_message_about_to_unregister_from_proxy')}
           />
           <Divider />
           <Form
@@ -48,10 +52,9 @@ class ToolsFormRegister extends Component<Props> {
               onClick={onClose}
             />
             <Button
-              content={t('tools_proxy_form_button_register')}
-              color="green"
+              content={t('tools_proxy_form_button_unregister')}
+              color="red"
               floated="right"
-              primary
             />
           </Form>
         </div>
@@ -61,4 +64,4 @@ class ToolsFormRegister extends Component<Props> {
 }
 
 
-export default translate('tools')(ToolsFormRegister);
+export default translate('tools')(ToolsFormUnregisterProxy);

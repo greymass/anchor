@@ -137,7 +137,7 @@
   "tools_proxy_form_button_register": "Confirm Registration",
   "tools_proxy_form_button_unregister": "Confirm Unregistration",
   "tools_proxy_form_message_about_to_register": "You are about to register this account as a proxy voter. After registration other accounts will be able to set this account as a proxy.",
-  "tools_proxy_form_message_about_to_unregister": "You are about to unregister this account as a proxy voter. After unregistering no accounts will be allowed to set this account as a proxy.",
+  "tools_proxy_form_message_about_to_unregister_from_proxy": "You are about to unregister this account as a proxy voter. After unregistering no accounts will be allowed to set this account as a proxy. Your account will also be removed from the `regproxyinfo` contract table.",
   "tools_proxy_header": "Register as a Proxy Voter",
   "tools_proxy_header_register": "Register as a Proxy Voter",
   "tools_proxy_header_registration": "Proxy Voter Registration",
