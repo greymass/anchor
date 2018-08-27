@@ -9,8 +9,10 @@ class ProducersProxy extends Component<Props> {
   render() {
     const {
       account,
+      accounts,
       actions,
       blockExplorers,
+      contracts,
       isProxying,
       isValidUser,
       settings,
@@ -23,8 +25,10 @@ class ProducersProxy extends Component<Props> {
         {(isValidUser)
           ? (
             <ProducersButtonProxy
+              accounts={accounts}
               actions={actions}
               blockExplorers={blockExplorers}
+              contracts={contracts}
               isProxying={isProxying}
               proxyAccount={proxyAccount}
               settings={settings}
