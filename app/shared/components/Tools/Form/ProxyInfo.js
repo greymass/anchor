@@ -141,32 +141,15 @@ class ToolsFormProxyInfo extends Component<Props> {
       confirming: false
     });
 
-    const {
-      actions
-    } = this.props;
+    const formValues = formAttributes.map((formAttribute) => {
+      this.state[formAttribute]
+    });
 
-    const {
-      createAccount
-    } = actions;
-
-    const {
-      accountName,
-      activeKey,
-      delegatedBw,
-      delegatedCpu,
-      ownerKey,
-      ramAmount,
-      transferTokens
-    } = this.state;
-
-    createAccount(
-      accountName,
-      activeKey,
-      delegatedBw,
-      delegatedCpu,
-      ownerKey,
-      ramAmount,
-      transferTokens
+    actions.buildTransaction(
+      'regproxyinfo',
+      'set',
+      settings.account,
+      formValues
     );
   }
 
