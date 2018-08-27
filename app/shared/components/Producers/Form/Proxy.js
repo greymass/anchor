@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Icon, Segment, Header } from 'semantic-ui-react';
+import { Button, Divider, Form, Icon, Segment, Header, Dropdown } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
@@ -11,6 +11,7 @@ class ProducersFormProxy extends Component<Props> {
     super(props);
 
     this.state = {
+      browsingProxies: false,
       confirming: false,
       proxyAccount: '',
       submitDisabled: true
@@ -19,10 +20,22 @@ class ProducersFormProxy extends Component<Props> {
 
   state = {};
 
+  componentDidMount = () => {
+    const { actions } = this.props;
+
+    actions.getAbi('regproxyinfo');
+  }
+
   onChange = (e, { value, valid }) => {
+    const {
+      actions
+    } = this.props;
+
     this.setState({
       submitDisabled: !valid,
       proxyAccount: value
+    }, () => {
+      actions.getAccount(value);
     });
   }
 
@@ -68,8 +81,19 @@ class ProducersFormProxy extends Component<Props> {
     return false;
   }
 
+  onSwitchFormMode = (e) => {
+    this.setState({
+      browsingProxies: !this.state.browsingProxies
+    });
+
+    e.preventDefault();
+    return false;
+  }
+
   render() {
     const {
+      accounts,
+      contracts,
       currentProxyAccount,
       onClose,
       isProxying,
@@ -79,10 +103,20 @@ class ProducersFormProxy extends Component<Props> {
     } = this.props;
 
     const {
+      browsingProxies,
       confirming,
       proxyAccount,
       submitDisabled
     } = this.state;
+
+    const proxyOptions =  contracts.map((contract) => {
+      return {
+        key: contract.account,
+        text: contract.name,
+        value: contract.account
+      }
+    })
+
     return (
       <Form
         loading={system.VOTEPRODUCER === 'PENDING'}
@@ -111,14 +145,53 @@ class ProducersFormProxy extends Component<Props> {
                   </Header.Content>
                 </Header>
               ) : ''}
-              <GlobalFormFieldAccount
-                autoFocus
-                contacts={settings.contacts}
-                label={`${t('producers_form_proxy_label')}:`}
-                name="account"
-                onChange={this.onChange}
-                value={proxyAccount}
-              />
+
+              <Button
+                onClick={switchFormMode}
+                content={
+                  browsingProxies
+                  ? (
+                      t('producers_form_browsing_button')
+                    ) : (
+                      t('producers_form_by_account_button')
+                  )
+                }
+              >
+              {(browsingProxies)
+                ? (
+                  <Dropdown
+                    defaultValue={proxyOptions[0]}
+                    name="proxy"
+                    onChange={this.onChange}
+                    options={proxyOptions}
+                    search
+                    selection
+                  />
+                ) : (
+                  <GlobalFormFieldAccount
+                    autoFocus
+                    contacts={settings.contacts}
+                    label={`${t('producers_form_proxy_label')}:`}
+                    name="account"
+                    onChange={this.onChange}
+                    value={proxyAccount}
+                  />
+                )}
+
+
+              {(proxyAccount)
+                ? (
+                  <div>
+                    <Divider />
+                    <p>
+                      {t('producers_form_proxy_summary_one')}
+                      {proxyAccount}
+                      {t('producers_form_proxy_summary_two')}
+                      {accounts[proxyAccount] && accounts[proxyAccount].voter_info.producers.join(', ')}
+                    </p>
+                  </div>
+                ) : ''}
+
               <Divider />
               <Button
                 onClick={onClose}

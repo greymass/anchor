@@ -235,6 +235,7 @@ class Producers extends Component<Props> {
         <React.Fragment>
           <ProducersProxy
             account={account}
+            accounts={accounts}
             actions={actions}
             blockExplorers={blockExplorers}
             keys={keys}
