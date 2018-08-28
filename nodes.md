@@ -18,6 +18,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - http://testnet.telosfoundation.io:8888 - operated by [Telos Foundation](https://telosfoundation.io)
 - https://api.eos.miami:17441 - operated by [EOS Miami](https://eos.miami/)
 - http://blindblocart.io:8888 - operated by [BlindBlocArt](http://blindblocart.io/)
+- http://telos.caleos.io:9888 - operated by [CalEOS] (http://caleos.io)
 
 ### Additions
 
