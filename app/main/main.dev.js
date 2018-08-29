@@ -2,13 +2,17 @@
 
 import { app, crashReporter } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
-import { createInterface } from './basic';
+import { createInterface } from './wallet';
+import { createTray } from './tray';
+import { createTrayIcon } from './tray/icon';
 
 const log = require('electron-log');
 const path = require('path');
 
 let resourcePath = __dirname;
 let ui = null;
+let menu = null;
+let tray = null;
 
 if (process.mainModule.filename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
@@ -75,12 +79,12 @@ app.on('ready', async () => {
     await installExtensions();
   }
   // If this is the first run, walk through the welcome
-  if (!store.getState().settings.configured) {
-    log.info('new installation detected');
-    ui = initManager('/', true);
-  } else {
-    // initMenu();
-  }
+  // if (!store.getState().settings.configured) {
+  //   log.info('new installation detected');
+  //   ui = initManager('/', true);
+  // } else {
+    initMenu();
+  // }
 });
 
 // debug event logging
@@ -98,6 +102,11 @@ const initManager = (route = '/', closable = true) => {
   ui.on('close', () => {
     ui = null;
   });
+};
+
+const initMenu = () => {
+  menu = createTray(resourcePath); // Initialize the menu
+  tray = createTrayIcon(resourcePath, menu); // Initialize the tray
 };
 
 const showManager = () => {
