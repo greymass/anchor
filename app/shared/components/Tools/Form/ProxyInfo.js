@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
-import GlobalFormFieldGeneric from '../../Global/Form/Field/Generic';
+import GlobalFormFieldString from '../../Global/Form/Field/String';
 import FormMessageError from '../../Global/Form/Message/Error';
 import ToolsFormProxyInfoConfirming from './ProxyInfo/Confirming';
 
@@ -121,7 +121,7 @@ class ToolsFormProxyInfo extends Component<Props> {
 
     let validFormat = true;
 
-    formAttributes.splice(0, 1).forEach((attribute) => {
+    formAttributes.forEach((attribute) => {
       if (!this.state[attribute] || formErrors[attribute] === `invalid_${attribute}`) {
         validFormat = false;
       }
@@ -198,7 +198,7 @@ class ToolsFormProxyInfo extends Component<Props> {
                 />
                 {formAttributes.map((formAttribute) => {
                   return (
-                    <GlobalFormFieldGeneric
+                    <GlobalFormFieldString
                       defaultValue={this.state[formAttribute] || ''}
                       label={t(`tools_form_proxy_info_${formAttribute}`)}
                       name={formAttribute}
