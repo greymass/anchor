@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce';
 import { setSetting } from '../../shared/actions/settings';
 
-function windowStateKeeper(store) {
+export function windowStateKeeper(store) {
   let window;
   let windowState;
 
@@ -39,7 +39,6 @@ function windowStateKeeper(store) {
   }
 
   setBounds();
-
   return ({
     x: windowState.x,
     y: windowState.y,
@@ -50,4 +49,6 @@ function windowStateKeeper(store) {
   });
 }
 
-module.exports = { windowStateKeeper };
+export default {
+  windowStateKeeper
+};
