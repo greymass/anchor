@@ -1,12 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Decimal } from 'decimal.js';
 import debounce from 'lodash/debounce';
-
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 
-import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldString from '../../Global/Form/Field/String';
 import FormMessageError from '../../Global/Form/Message/Error';
 import ToolsFormProxyInfoConfirming from './ProxyInfo/Confirming';
@@ -19,33 +16,15 @@ class ToolsFormProxyInfo extends Component<Props> {
   constructor(props) {
     super(props);
     const {
-      accountName,
-      activeKey,
-      balance,
-      delegatedBw,
-      delegatedCpu,
-      ownerKey,
-      ramAmount
+      settings
     } = props;
 
     this.state = {
-      accountName,
-      activeKey,
       confirming: false,
-      delegatedBw,
-      delegatedCpu,
-      EOSbalance: (balance && balance.EOS) ? balance.EOS : 0,
       formErrors: {},
-      ownerKey,
-      ramAmount,
+      proxy: settings.account,
       submitDisabled: true
     };
-  }
-
-  componentDidMount = () => {
-    const { actions } = this.props;
-
-    actions.getAbi('regproxyinfo');
   }
 
   onSubmit = (e) => {
@@ -54,6 +33,7 @@ class ToolsFormProxyInfo extends Component<Props> {
         confirming: true
       });
     }
+
     e.preventDefault();
     return false;
   }
@@ -122,7 +102,13 @@ class ToolsFormProxyInfo extends Component<Props> {
     let validFormat = true;
 
     formAttributes.forEach((attribute) => {
-      if (!this.state[attribute] || formErrors[attribute] === `invalid_${attribute}`) {
+      if (formErrors[attribute] === `invalid_${attribute}`) {
+        validFormat = false;
+      }
+    });
+
+    ['proxy', 'name'].forEach((attribute) => {
+      if (!this.state[attribute]) {
         validFormat = false;
       }
     });
@@ -141,19 +127,17 @@ class ToolsFormProxyInfo extends Component<Props> {
       confirming: false
     });
 
-    const formValues = formAttributes.map((formAttribute) => this.state[formAttribute]);
+    const formValues = {};
+
+    formAttributes.forEach((formAttribute) => {
+      formValues[formAttribute] = this.state[formAttribute] || '';
+    });
 
     const {
-      actions,
-      settings
+      actions
     } = this.props;
 
-    actions.buildTransaction(
-      'regproxyinfo',
-      'set',
-      settings.account,
-      formValues
-    );
+    actions.setregproxyinfo(formValues);
   }
 
   render() {
@@ -164,7 +148,6 @@ class ToolsFormProxyInfo extends Component<Props> {
 
     const {
       formErrors,
-      proxy,
       submitDisabled
     } = this.state;
 
@@ -175,13 +158,12 @@ class ToolsFormProxyInfo extends Component<Props> {
 
     return (
       <Segment
-        loading={system.CREATEACCOUNT === 'PENDING'}
+        loading={system.SET_REGPROXYINFO === 'PENDING'}
         textAlign="left"
       >
         {(shouldShowForm)
           ? (
             <div>
-
               <Message
                 content={t('tools_form_proxy_info_message')}
                 warning
@@ -190,13 +172,7 @@ class ToolsFormProxyInfo extends Component<Props> {
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
-                <GlobalFormFieldAccount
-                  defaultValue={proxy || ''}
-                  label={t('tools_form_proxy_info_proxy')}
-                  name="ownerKey"
-                  onChange={this.onChange}
-                />
-                {formAttributes.map((formAttribute) => {
+                {formAttributes.filter((formAttribute) => formAttribute !== 'proxy').map((formAttribute) => {
                   return (
                     <GlobalFormFieldString
                       defaultValue={this.state[formAttribute] || ''}
