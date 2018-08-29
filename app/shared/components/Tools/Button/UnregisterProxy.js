@@ -3,11 +3,9 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import ToolsFormRegister from '../Form/Register';
+import ToolsFormUnregister from '../Form/UnregisterProxy';
 
-class ToolsButtonRegister extends Component<Props> {
-  props: Props;
-
+class ToolsButtonUnregisterProxy extends Component<Props> {
   render() {
     const {
       account,
@@ -20,24 +18,24 @@ class ToolsButtonRegister extends Component<Props> {
 
     return (
       <GlobalTransactionModal
-        actionName="REGPROXY"
+        actionName="UNREGPROXY"
         actions={actions}
         blockExplorers={blockExplorers}
         button={{
-          color: 'blue',
-          content: t('tools_proxy_button_register'),
+          color: 'red',
+          content: t('tools_proxy_button_unregister'),
           icon: 'share square'
         }}
         content={(
-          <ToolsFormRegister
+          <ToolsFormUnregister
             account={account}
             actions={actions}
-            key="RegisterProxyForm"
+            key="UnregisterProxyForm"
             system={system}
           />
         )}
         icon="share square"
-        title={t('tools_proxy_header_register')}
+        title={t('tools_proxy_header_unregister')}
         settings={settings}
         system={system}
       />
@@ -45,4 +43,4 @@ class ToolsButtonRegister extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsButtonRegister);
+export default translate('tools')(ToolsButtonUnregisterProxy);

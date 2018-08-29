@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Divider, Icon, Segment, Table, Header, Message } from 'semantic-ui-react';
+import { Button, Divider, Icon, Segment, Table, Header } from 'semantic-ui-react';
 
 class ToolsFormCreateAccountConfirming extends Component<Props> {
   onConfirm = () => {
@@ -38,7 +38,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                     {t(`tools_form_proxy_info_${formAttribute}`)}
                   </Table.Cell>
                   <Table.Cell width={8}>
-                    {this.props[formAttribute]}
+                    {this.props.formValues[formAttribute]}
                   </Table.Cell>
                 </Table.Row>
               );
