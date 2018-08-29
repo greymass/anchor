@@ -16,6 +16,10 @@ type Props = {
 };
 
 export default class GlobalTransactionHandler extends Component<Props> {
+  componentWillUnmount = () => {
+    this.props.actions.clearSystemState();
+  }
+
   render() {
     const {
       actionName,
