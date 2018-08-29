@@ -17,17 +17,12 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
       formAttributes,
       onBack,
       t,
-      totalCost,
-      totalDelegated
     } = this.props;
 
     return (
       <Segment padding="true" basic>
         <Header textAlign="center">
-          <p>{`${t('tools_form_create_account_confirming_header_one')} ${totalCost.toFixed(4)} EOS.`}</p>
-          <p>
-            {`${t('tools_form_create_account_confirming_header_two')} ${totalDelegated.toFixed(4)} EOS ${t('tools_form_create_account_confirming_header_three')}`}
-          </p>
+          {t('tools_form_proxy_info_confirming_header')}
         </Header>
         <Table size="small" celled>
           <Table.Body>
@@ -49,14 +44,14 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
         <Button
           onClick={onBack}
         >
-          <Icon name="arrow left" /> {t('tools_form_create_account_back')}
+          <Icon name="arrow left" /> {t('tools_form_proxy_info_confirming_back')}
         </Button>
         <Button
           color="blue"
           floated="right"
           onClick={this.onConfirm}
         >
-          <Icon name="check" /> {t('tools_form_create_account_button')}
+          <Icon name="check" /> {t('tools_form_proxy_info_confirming_button')}
         </Button>
       </Segment>
     );
