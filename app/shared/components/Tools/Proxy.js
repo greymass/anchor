@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { findIndex } from 'lodash'
 
 import { Header, Segment, Divider } from 'semantic-ui-react';
 
-import ToolsButtonProxyRegister from './Button/Register';
-import ToolsButtonProxyUnregister from './Button/Unregister';
+import ToolsButtonRegisterProxy from './Button/RegisterProxy';
+import ToolsButtonUnregisterProxy from './Button/UnregisterProxy';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
 import ToolsFormProxyInfo from './Form/ProxyInfo';
 
@@ -15,6 +16,7 @@ class ToolsProxy extends Component<Props> {
       accounts,
       actions,
       blockExplorers,
+      contracts,
       keys,
       settings,
       system,
@@ -40,7 +42,7 @@ class ToolsProxy extends Component<Props> {
               {t('tools_proxy_text_not_registered')}
             </p>
             <Divider />
-            <ToolsButtonProxyRegister
+            <ToolsButtonRegisterProxy
               account={account}
               actions={actions}
               blockExplorers={blockExplorers}
@@ -57,7 +59,7 @@ class ToolsProxy extends Component<Props> {
               {settings.account}
             </p>
             <Divider />
-            <ToolsButtonProxyUnregister
+            <ToolsButtonUnregisterProxy
               account={account}
               actions={actions}
               blockExplorers={blockExplorers}
@@ -65,7 +67,7 @@ class ToolsProxy extends Component<Props> {
               system={system}
             />
 
-            {(true)
+            {(isProxy && findIndex(contracts, { account: settings.account }) === -1)
               ? (
                 <ToolsFormProxyInfo
                   account={account}

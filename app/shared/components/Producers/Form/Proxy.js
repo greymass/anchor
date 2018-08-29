@@ -109,13 +109,13 @@ class ProducersFormProxy extends Component<Props> {
       submitDisabled
     } = this.state;
 
-    const proxyOptions =  contracts.map((contract) => {
+    const proxyOptions = contracts.map((contract) => {
       return {
         key: contract.account,
         text: contract.name,
         value: contract.account
-      }
-    })
+      };
+    });
 
     return (
       <Form
@@ -156,7 +156,7 @@ class ProducersFormProxy extends Component<Props> {
                       t('producers_form_by_account_button')
                   )
                 }
-              >
+              />
               {(browsingProxies)
                 ? (
                   <Dropdown

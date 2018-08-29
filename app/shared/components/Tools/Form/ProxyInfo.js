@@ -42,6 +42,12 @@ class ToolsFormProxyInfo extends Component<Props> {
     };
   }
 
+  componentDidMount = () => {
+    const { actions } = this.props;
+
+    actions.getAbi('regproxyinfo');
+  }
+
   onSubmit = (e) => {
     if (!this.state.submitDisabled) {
       this.setState({
@@ -66,18 +72,13 @@ class ToolsFormProxyInfo extends Component<Props> {
       submitDisabled: false,
       [name]: value
     }, () => {
-      let {
-        formErrors,
-        ramPrice
+      const {
+        accountName,
+        formErrors
       } = this.state;
 
       const {
-        accountName
-      } = this.state;
-
-      const {
-        actions,
-        globals
+        actions
       } = this.props;
 
       const {
@@ -102,7 +103,6 @@ class ToolsFormProxyInfo extends Component<Props> {
 
       this.setState({
         formErrors,
-        ramPrice,
         submitDisabled
       });
     });
@@ -141,9 +141,12 @@ class ToolsFormProxyInfo extends Component<Props> {
       confirming: false
     });
 
-    const formValues = formAttributes.map((formAttribute) => {
-      this.state[formAttribute]
-    });
+    const formValues = formAttributes.map((formAttribute) => this.state[formAttribute]);
+
+    const {
+      actions,
+      settings
+    } = this.props;
 
     actions.buildTransaction(
       'regproxyinfo',
@@ -155,99 +158,53 @@ class ToolsFormProxyInfo extends Component<Props> {
 
   render() {
     const {
-      hideCancel,
-      onClose,
       system,
       t
     } = this.props;
 
     const {
-      accountName,
-      activeKey,
-      contacts,
-      delegatedBw,
-      delegatedCpu,
       formErrors,
-      ownerKey,
-      ramAmount,
-      ramPrice,
-      transferTokens
-    } = this.state;
-
-    let {
+      proxy,
       submitDisabled
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
 
-    if (accountName &&
-        accountName.length !== 0 &&
-        system.ACCOUNT_AVAILABLE === 'FAILURE' &&
-        system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === accountName) {
-      formErrors.accountName = 'account_name_not_available';
-      submitDisabled = true;
-    }
-
-    if (system.ACCOUNT_AVAILABLE === 'FAILURE') {
-      submitDisabled = true;
-    }
-
     const formErrorKeys = Object.keys(formErrors);
-
-    const decimalDelegatedBw = delegatedBw && Decimal(delegatedBw.split(' ')[0]);
-    const decimalDelegatedCpu = delegatedCpu && Decimal(delegatedCpu.split(' ')[0]);
-
-    let totalDelegated;
-
-    if (decimalDelegatedBw && decimalDelegatedCpu) {
-      totalDelegated = decimalDelegatedBw.plus(decimalDelegatedCpu);
-    }
-
-    const shouldShowAccountNameWarning = accountName && accountName.length !== 12;
-
-    const shouldShowPublicKeysWarning = activeKey && activeKey === ownerKey;
-
-    const shouldShowDelegatedResourceWarning =
-      (decimalDelegatedBw &&
-        decimalDelegatedBw.lessThan(1) &&
-        decimalDelegatedBw.greaterThan(0)) ||
-      (decimalDelegatedCpu &&
-        decimalDelegatedCpu.lessThan(1) &&
-        decimalDelegatedCpu.greaterThan(0));
-
-    const shouldShowtransferTokensWarning = transferTokens;
-
-    const hasWarnings = shouldShowAccountNameWarning ||
-                        shouldShowPublicKeysWarning ||
-                        shouldShowDelegatedResourceWarning ||
-                        shouldShowtransferTokensWarning;
 
     return (
       <Segment
         loading={system.CREATEACCOUNT === 'PENDING'}
+        textAlign="left"
       >
         {(shouldShowForm)
           ? (
             <div>
+
+              <Message
+                content={t('tools_form_proxy_info_message')}
+                warning
+              />
               <Form
-                warning={hasWarnings}
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
                 <GlobalFormFieldAccount
                   defaultValue={proxy || ''}
-                  label={t('tools_form_create_account_owner_key')}
+                  label={t('tools_form_proxy_info_proxy')}
                   name="ownerKey"
                   onChange={this.onChange}
                 />
-                {formAttributes.map((formAttribute) => {}
-                  <GlobalFormFieldGeneric
-                    defaultValue={this.state[formAttribute] || ''}
-                    label={t('tools_form_create_account_owner_key')}
-                    name={formAttribute}
-                    onChange={this.onChange}
-                  />
+                {formAttributes.map((formAttribute) => {
+                  return (
+                    <GlobalFormFieldGeneric
+                      defaultValue={this.state[formAttribute] || ''}
+                      label={t(`tools_form_proxy_info_${formAttribute}`)}
+                      name={formAttribute}
+                      onChange={this.onChange}
+                    />
+                  );
                 })}
                 <FormMessageError
                   errors={
@@ -261,52 +218,9 @@ class ToolsFormProxyInfo extends Component<Props> {
                   }
                   icon="warning sign"
                 />
-                {(shouldShowtransferTokensWarning)
-                  ? (
-                    <Message
-                      content={t('tools_form_create_account_transfer_tokens_warning')}
-                      icon="info circle"
-                      warning
-                    />
-                  ) : ''}
-                {(shouldShowAccountNameWarning)
-                  ? (
-                    <Message
-                      content={t('tools_form_create_account_account_name_warning')}
-                      icon="info circle"
-                      warning
-                    />
-                  ) : ''}
-
-                {(shouldShowDelegatedResourceWarning)
-                  ? (
-                    <Message
-                      content={t('tools_form_create_account_delegated_resources_warning')}
-                      icon="info circle"
-                      warning
-                    />
-                  ) : ''}
-
-                {(shouldShowPublicKeysWarning)
-                  ? (
-                    <Message
-                      content={t('tools_form_create_account_public_keys_warning')}
-                      icon="info circle"
-                      warning
-                    />
-                  ) : ''}
                 <Segment basic clearing>
-                  {(!hideCancel)
-                    ? (
-                      <Button
-                        content={t('tools_form_create_account_cancel')}
-                        color="grey"
-                        onClick={onClose}
-                      />
-                    ) : ''}
-
                   <Button
-                    content={t('tools_form_create_account_button')}
+                    content={t('tools_form_proxy_info_button')}
                     color="green"
                     disabled={submitDisabled}
                     floated="right"
@@ -320,17 +234,10 @@ class ToolsFormProxyInfo extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <ToolsFormProxyInfoConfirming
-              accountName={accountName}
-              activeKey={activeKey}
-              delegatedBw={delegatedBw}
-              delegatedCpu={delegatedCpu}
+              formAttributes={formAttributes}
+              formValues={this.state}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
-              ownerKey={ownerKey}
-              ramAmount={ramAmount}
-              transferTokens={transferTokens}
-              totalCost={ramPrice}
-              totalDelegated={totalDelegated}
             />
           ) : ''}
       </Segment>
