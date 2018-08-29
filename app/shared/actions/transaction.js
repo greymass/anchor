@@ -32,6 +32,7 @@ export function buildTransaction(contract, action, account, data) {
         }
       ]
     };
+
     eos(modified)
       .transaction(op, {
         broadcast: false,

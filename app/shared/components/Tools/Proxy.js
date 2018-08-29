@@ -1,16 +1,23 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { findIndex } from 'lodash'
+import { findIndex } from 'lodash';
 
-import { Header, Segment, Divider } from 'semantic-ui-react';
+import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
 
 import ToolsButtonRegisterProxy from './Button/RegisterProxy';
 import ToolsButtonUnregisterProxy from './Button/UnregisterProxy';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
 import ToolsFormProxyInfo from './Form/ProxyInfo';
+import GlobalTransactionHandler from '../Global/Transaction/Handler';
 
 class ToolsProxy extends Component<Props> {
+  componentDidMount = () => {
+    const { actions } = this.props;
+
+    actions.getTable('regproxyinfo', 'regproxyinfo', 'proxies');
+  }
+
   render() {
     const {
       accounts,
@@ -22,7 +29,8 @@ class ToolsProxy extends Component<Props> {
       system,
       validate,
       wallet,
-      t
+      t,
+      tables
     } = this.props;
 
     const account = accounts[settings.account];
@@ -30,6 +38,13 @@ class ToolsProxy extends Component<Props> {
     if (account && account.voter_info && account.voter_info.is_proxy) {
       isProxy = account.voter_info.is_proxy;
     }
+
+    const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
+
+    const displayProxyInfoForm =
+      isProxy &&
+      tables.regproxyinfo &&
+      findIndex(tables.regproxyinfo.regproxyinfo.proxies.rows, { owner: settings.account }) === -1;
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
@@ -67,15 +82,32 @@ class ToolsProxy extends Component<Props> {
               system={system}
             />
 
-            {(isProxy && findIndex(contracts, { account: settings.account }) === -1)
+            {displayProxyInfoForm
               ? (
-                <ToolsFormProxyInfo
-                  account={account}
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  settings={settings}
-                  system={system}
-                />
+                <Grid centered padded>
+                  <Grid.Column width={10}>
+                    <GlobalTransactionHandler
+                      actionName="SET_REGPROXYINFO"
+                      actions={actions}
+                      blockExplorers={blockExplorers}
+                      content={(
+                        <ToolsFormProxyInfo
+                          account={account}
+                          actions={actions}
+                          blockExplorers={blockExplorers}
+                          contracts={contracts}
+                          settings={settings}
+                          system={system}
+                          transaction={transaction}
+                        />
+                      )}
+                      onClose={this.onClose}
+                      settings={settings}
+                      system={system}
+                      transaction={transaction}
+                    />
+                  </Grid.Column>
+                </Grid>
               ) : ''}
 
           </Segment>

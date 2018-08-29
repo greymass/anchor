@@ -31,6 +31,7 @@ import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
 import * as RegProxyActions from '../actions/system/regproxy';
+import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
 import * as SettingsActions from '../actions/settings';
 import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
@@ -227,6 +228,7 @@ function mapDispatchToProps(dispatch) {
       ...SettingsActions,
       ...StakeActions,
       ...SystemStateActions,
+      ...RegproxyinfoActions,
       ...TableActions,
       ...TransactionActions,
       ...UpdateAuthActions,
