@@ -12,12 +12,12 @@ class ProducersProxy extends Component<Props> {
       accounts,
       actions,
       blockExplorers,
-      contracts,
       isProxying,
       isValidUser,
       settings,
       system,
-      t
+      t,
+      tables
     } = this.props;
     const proxyAccount = (account && account.voter_info) ? account.voter_info.proxy : '';
     return (
@@ -28,11 +28,11 @@ class ProducersProxy extends Component<Props> {
               accounts={accounts}
               actions={actions}
               blockExplorers={blockExplorers}
-              contracts={contracts}
               isProxying={isProxying}
               proxyAccount={proxyAccount}
               settings={settings}
               system={system}
+              tables={tables}
             />
           )
           : ''

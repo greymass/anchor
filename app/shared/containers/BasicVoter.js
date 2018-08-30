@@ -25,6 +25,7 @@ import * as ProducersActions from '../actions/producers';
 import * as SellRamActions from '../actions/system/sellram';
 import * as SettingsActions from '../actions/settings';
 import * as StakeActions from '../actions/stake';
+import * as TableActions from '../actions/table';
 import * as TransactionActions from '../actions/transaction';
 import * as TransferActions from '../actions/transfer';
 import * as ValidateActions from '../actions/validate';
@@ -187,6 +188,7 @@ function mapStateToProps(state) {
     producers: state.producers,
     settings: state.settings,
     system: state.system,
+    tables: state.tables,
     transaction: state.transaction,
     validate: state.validate,
     wallet: state.wallet
@@ -208,6 +210,7 @@ function mapDispatchToProps(dispatch) {
       ...SettingsActions,
       ...StakeActions,
       ...SystemStateActions,
+      ...TableActions,
       ...TransactionActions,
       ...TransferActions,
       ...ValidateActions,
