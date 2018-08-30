@@ -29,7 +29,9 @@ export function setregproxyinfo(data) {
         }
       ]
     }).then((tx) => {
-      setTimeout(dispatch(getTable('regproxyinfo', 'regproxyinfo', 'proxies')), 10000);
+      setTimeout(() => {
+        dispatch(getTable('regproxyinfo', 'regproxyinfo', 'proxies'));
+      }, 5000);
 
       return dispatch({
         payload: { tx },
@@ -37,15 +39,16 @@ export function setregproxyinfo(data) {
       });
     }).catch((err) => dispatch({
       payload: { err },
-      type: types.SYSTEM_SET_REGPROXYINFO_SUCCESS
+      type: types.SYSTEM_SET_REGPROXYINFO_FAILURE
     }));
   };
 }
 
-export function unsetregproxyinfo() {
+export function removeregproxyinfo() {
   return (dispatch: () => void, getState) => {
     const {
-      settings
+      settings,
+      connection
     } = getState();
 
     dispatch({
@@ -54,22 +57,24 @@ export function unsetregproxyinfo() {
 
     const { account } = settings;
 
-    return eos.transaction({
+    return eos(connection, true).transaction({
       actions: [
         {
           account: 'regproxyinfo',
-          name: 'unset',
+          name: 'remove',
           authorization: [{
             actor: account,
             permission: 'active'
           }],
           data: {
-            owner: account
+            proxy: account
           }
         }
       ]
     }).then((tx) => {
-      setTimeout(dispatch(getTable('regproxyinfo', 'regproxyinfo', 'proxies')), 10000);
+      setTimeout(() => {
+        dispatch(getTable('regproxyinfo', 'regproxyinfo', 'proxies'));
+      }, 5000);
 
       return dispatch({
         payload: { tx },
@@ -77,12 +82,12 @@ export function unsetregproxyinfo() {
       });
     }).catch((err) => dispatch({
       payload: { err },
-      type: types.SYSTEM_UNSET_REGPROXYINFO_SUCCESS
+      type: types.SYSTEM_UNSET_REGPROXYINFO_FAILURE
     }));
   };
 }
 
 export default {
-  setregproxyinfo,
-  unsetregproxyinfo
+  removeregproxyinfo,
+  setregproxyinfo
 };
