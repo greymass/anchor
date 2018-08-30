@@ -101,6 +101,7 @@ class ToolsProxy extends Component<Props> {
                           transaction={transaction}
                         />
                       )}
+                      hideClose
                       onClose={this.onClose}
                       settings={settings}
                       system={system}

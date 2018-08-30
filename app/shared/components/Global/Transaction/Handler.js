@@ -26,6 +26,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
       actions,
       blockExplorers,
       contract,
+      hideClose,
       onClose,
       settings,
       system,
@@ -43,6 +44,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
         <GlobalTransactionMessageSuccess
           blockExplorers={blockExplorers}
           settings={settings}
+          hideClose={hideClose}
         />
       );
     } else if (hasError) {
