@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Icon, Segment, Header, Dropdown } from 'semantic-ui-react';
+import { Button, Divider, Form, Icon, Segment, Header, Dropdown, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
@@ -23,7 +23,7 @@ class ProducersFormProxy extends Component<Props> {
   componentDidMount = () => {
     const { actions } = this.props;
 
-    actions.getAbi('regproxyinfo');
+    actions.getTable('regproxyinfo', 'regproxyinfo', 'proxies');
   }
 
   onChange = (e, { value, valid }) => {
@@ -81,7 +81,7 @@ class ProducersFormProxy extends Component<Props> {
     return false;
   }
 
-  onSwitchFormMode = (e) => {
+  switchFormMode = (e) => {
     this.setState({
       browsingProxies: !this.state.browsingProxies
     });
@@ -93,13 +93,13 @@ class ProducersFormProxy extends Component<Props> {
   render() {
     const {
       accounts,
-      contracts,
       currentProxyAccount,
       onClose,
       isProxying,
       settings,
       system,
-      t
+      t,
+      tables
     } = this.props;
 
     const {
@@ -109,16 +109,18 @@ class ProducersFormProxy extends Component<Props> {
       submitDisabled
     } = this.state;
 
-    const proxyOptions = contracts.map((contract) => {
-      return {
-        key: contract.account,
-        text: contract.name,
-        value: contract.account
-      };
-    });
+    const proxyOptions = tables.regproxyinfo &&
+      tables.regproxyinfo.regproxyinfo.proxies.rows.map((contract) => {
+        return {
+          key: contract.account,
+          text: contract.name,
+          value: contract.account
+        };
+      });
 
     return (
       <Form
+        warning
         loading={system.VOTEPRODUCER === 'PENDING'}
         onKeyPress={this.onKeyPress}
         onSubmit={this.onSubmit}
@@ -146,8 +148,13 @@ class ProducersFormProxy extends Component<Props> {
                 </Header>
               ) : ''}
 
+              <Message
+                content={t('producers_form_message')}
+                warning
+              />
+
               <Button
-                onClick={switchFormMode}
+                onClick={this.switchFormMode}
                 content={
                   browsingProxies
                   ? (

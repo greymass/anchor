@@ -31,6 +31,7 @@ type Props = {
   settings: {},
   system: {},
   t: () => void,
+  tables: {},
   validate: {},
   wallet: {}
 };
@@ -196,6 +197,7 @@ class Producers extends Component<Props> {
       settings,
       system,
       t,
+      tables,
       transaction,
       validate,
       wallet
@@ -243,6 +245,7 @@ class Producers extends Component<Props> {
             isValidUser={isValidUser}
             settings={settings}
             system={system}
+            tables={tables}
           />
 
           <Divider hidden />
