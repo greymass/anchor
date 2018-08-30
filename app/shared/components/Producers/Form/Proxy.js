@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Icon, Segment, Header, Dropdown, Message } from 'semantic-ui-react';
+import { Button, Divider, Form, Icon, Segment, Header, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { findIndex } from 'lodash';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import ProducersFormProxyConfirming from './Proxy/Confirming';
@@ -28,14 +29,18 @@ class ProducersFormProxy extends Component<Props> {
 
   onChange = (e, { value, valid }) => {
     const {
-      actions
+      actions,
+      tables
     } = this.props;
+
+    if (tables.regproxyinfo &&
+        findIndex(tables.regproxyinfo.regproxyinfo.proxies.rows, { owner: value }) !== -1) {
+      actions.getAccount(value);
+    }
 
     this.setState({
       submitDisabled: !valid,
       proxyAccount: value
-    }, () => {
-      actions.getAccount(value);
     });
   }
 
@@ -112,9 +117,9 @@ class ProducersFormProxy extends Component<Props> {
     const proxyOptions = tables.regproxyinfo &&
       tables.regproxyinfo.regproxyinfo.proxies.rows.map((contract) => {
         return {
-          key: contract.account,
+          key: contract.owner,
           text: contract.name,
-          value: contract.account
+          value: contract.owner
         };
       });
 
@@ -149,30 +154,34 @@ class ProducersFormProxy extends Component<Props> {
               ) : ''}
 
               <Message
-                content={t('producers_form_message')}
+                content={t('producers_form_proxy_message')}
                 warning
               />
 
               <Button
-                onClick={this.switchFormMode}
                 content={
                   browsingProxies
                   ? (
-                      t('producers_form_browsing_button')
+                      t('producers_form_proxy_by_account_button')
                     ) : (
-                      t('producers_form_by_account_button')
+                      t('producers_form_proxy_browsing_button')
                   )
                 }
+                onClick={this.switchFormMode}
+                primary
+                style={{ marginBottom: '10px' }}
               />
               {(browsingProxies)
                 ? (
-                  <Dropdown
-                    defaultValue={proxyOptions[0]}
+                  <Form.Dropdown
+                    defaultValue={proxyAccount}
                     name="proxy"
-                    onChange={this.onChange}
+                    onChange={(e, { value }) => this.onChange(e, { value, valid: true })}
                     options={proxyOptions}
+                    placeholder={t('producers_form_proxy_dropdown_placeholder')}
                     search
                     selection
+                    padded
                   />
                 ) : (
                   <GlobalFormFieldAccount
@@ -186,15 +195,24 @@ class ProducersFormProxy extends Component<Props> {
                 )}
 
 
-              {(proxyAccount)
+              {(proxyAccount && accounts[proxyAccount])
                 ? (
                   <div>
                     <Divider />
                     <p>
                       {t('producers_form_proxy_summary_one')}
-                      {proxyAccount}
+                      <b><u>{proxyAccount}</u></b>
                       {t('producers_form_proxy_summary_two')}
-                      {accounts[proxyAccount] && accounts[proxyAccount].voter_info.producers.join(', ')}
+                      <b>
+                        <u>
+                          {(accounts[proxyAccount].voter_info.producers.length !== 0)
+                            ? (
+                              accounts[proxyAccount].voter_info.producers.join(', ')
+                            ) : (
+                              t('producers_form_proxy_summary_no_one')
+                            )}.
+                        </u>
+                      </b>
                     </p>
                   </div>
                 ) : ''}
