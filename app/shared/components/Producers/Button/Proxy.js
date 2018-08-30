@@ -8,6 +8,7 @@ import ProducersFormProxy from '../Form/Proxy';
 class ProducersButtonProxy extends Component<Props> {
   render() {
     const {
+      accounts,
       actions,
       blockExplorers,
       isProxying,
@@ -37,6 +38,7 @@ class ProducersButtonProxy extends Component<Props> {
         }}
         content={(
           <ProducersFormProxy
+            accounts={accounts}
             actions={actions}
             currentProxyAccount={proxyAccount}
             isProxying={isProxying}
