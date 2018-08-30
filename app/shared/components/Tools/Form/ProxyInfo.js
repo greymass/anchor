@@ -4,13 +4,16 @@ import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 
-import GlobalFormFieldString from '../../Global/Form/Field/String';
 import FormMessageError from '../../Global/Form/Message/Error';
+import GlobalFormFieldString from '../../Global/Form/Field/String';
+import GlobalFormFieldUrl from '../../Global/Form/Field/Url';
 import ToolsFormProxyInfoConfirming from './ProxyInfo/Confirming';
 
 const formAttributes = [
   'proxy', 'name', 'slogan', 'philosophy', 'background', 'website', 'logo_256', 'telegram', 'steemit', 'twitter', 'wechat'
 ];
+
+const urlFields = ['logo_256', 'website'];
 
 class ToolsFormProxyInfo extends Component<Props> {
   constructor(props) {
@@ -173,8 +176,10 @@ class ToolsFormProxyInfo extends Component<Props> {
                 onSubmit={this.onSubmit}
               >
                 {formAttributes.filter((formAttribute) => formAttribute !== 'proxy').map((formAttribute) => {
+                  const FieldComponentType = (urlFields.includes(formAttribute)) ? GlobalFormFieldUrl : GlobalFormFieldString;
+
                   return (
-                    <GlobalFormFieldString
+                    <FieldComponentType
                       defaultValue={this.state[formAttribute] || ''}
                       label={t(`tools_form_proxy_info_${formAttribute}`)}
                       name={formAttribute}
