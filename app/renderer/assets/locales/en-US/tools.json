@@ -83,7 +83,7 @@
   "tools_form_proxy_info_logo_256": "Logo (256X256)",
   "tools_form_proxy_info_confirming_back": "Back",
   "tools_form_proxy_info_confirming_button": "Confirm",
-  "tools_form_proxy_info_message": "You are registered as a proxy voter, but do not seem to have an entry in the regproxyinfo smart contract, submit the following form and increase your visibility as a voter proxy. Please not that adding an entry in the smart-contract will use some of your ram, however this RAM can be cleared at any time.",
+  "tools_form_proxy_info_message": "You are registered as a proxy voter, but do not seem to have an entry in the regproxyinfo smart contract, submit the following form and increase your visibility as a voter proxy. Please not that adding an entry in the smart-contract will use some of your RAM.",
   "tools_form_proxy_info_name": "Name",
   "tools_form_proxy_info_philosophy": "Philosophy",
   "tools_form_proxy_info_proxy": "Proxy Account",
