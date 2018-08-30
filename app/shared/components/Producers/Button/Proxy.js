@@ -14,7 +14,8 @@ class ProducersButtonProxy extends Component<Props> {
       proxyAccount,
       settings,
       system,
-      t
+      t,
+      tables
     } = this.props;
 
     let buttonText = t('producers_button_proxy_setup_text');
@@ -42,6 +43,7 @@ class ProducersButtonProxy extends Component<Props> {
             key="UnregisterProxyForm"
             settings={settings}
             system={system}
+            tables={tables}
           />
         )}
         icon="share square"
