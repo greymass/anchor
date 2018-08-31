@@ -1,9 +1,10 @@
 import { Decimal } from 'decimal.js';
 
 export default class StatsFetcher {
-  constructor(account, balance) {
+  constructor(account, balance, delbandRows) {
     this.account = account;
     this.balance = balance;
+    this.delband = delbandRows;
   }
 
   fetchAll() {
@@ -11,12 +12,13 @@ export default class StatsFetcher {
       refundDate: this.refundDate(),
       tokens: this.tokens(),
       totalBeingUnstaked: this.totalBeingUnstaked(),
-      totalStaked: this.totalStaked(),
+      totalStakedToSelf: this.totalStakedToSelf(),
+      totalStakedToOthers: this.totalStakedToOthers(),
       totalTokens: this.totalTokens()
     };
   }
 
-  totalStaked() {
+  totalStakedToSelf() {
     const {
       self_delegated_bandwidth
     } = this.account;
@@ -27,6 +29,17 @@ export default class StatsFetcher {
     const net_amount = Decimal(self_delegated_bandwidth.net_weight.split(' ')[0]);
 
     return cpu_amount.plus(net_amount);
+  }
+
+  totalStakedToOthers() {
+    debugger
+
+    if (!this.delbandRows) return Decimal(0);
+
+    const cpuStakedToOthers = Math.sum(this.delbandRows.map((row) => row.cpu_weight.split(' ')[0]));
+    const netStakedToOthers = Math.sum(this.delbandRows.map((row) => row.net_weight.split(' ')[0]));
+
+    return Decimal(cpuStakedToOthers).plus(Decimal(netStakedToOthers));
   }
 
 
