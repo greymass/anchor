@@ -72,6 +72,8 @@
   "wallet_status_add_custom_token_header": "Token Balances",
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_status_balances": "Wallet Balances",
+  "wallet_status_balances_staked_to_self": "Staked to Self",
+  "wallet_status_balances_staked_to_others": "Staked to Others",
   "wallet_status_balances_none": "This wallet has no token balances.",
   "wallet_status_liquid": "Liquid",
   "wallet_status_ram_amount": "RAM Amount",
