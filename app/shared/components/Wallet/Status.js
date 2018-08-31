@@ -18,6 +18,15 @@ class WalletStatus extends Component<Props> {
     activeItem: 'balances',
   };
 
+  componentDidMount = () => {
+    const {
+      actions,
+      settings
+    } = this.props;
+
+    actions.getTable('eosio', settings.account, 'delband');
+  }
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
@@ -31,6 +40,7 @@ class WalletStatus extends Component<Props> {
       globals,
       settings,
       t,
+      tables,
       validate
     } = this.props;
 
@@ -45,7 +55,12 @@ class WalletStatus extends Component<Props> {
     const account = accounts[settings.account] || {};
     const balance = balances[settings.account] || {};
 
-    const statsFetcher = new StatsFetcher(account, balance);
+    const delegations = tables &&
+                        tables.eosio &&
+                        tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband.rows;
+
+    const statsFetcher = new StatsFetcher(account, balance, delegations);
 
     let activeTab = (
       <Segment stacked>

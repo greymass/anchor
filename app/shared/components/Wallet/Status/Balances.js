@@ -18,14 +18,11 @@ class WalletStatusBalances extends Component<Props> {
   render() {
     const {
       account,
-      actions,
       balances,
       settings,
       statsFetcher,
       t
     } = this.props;
-
-    actions.getTable('eosio', settings.account, 'delband');
 
     const {
       refundDate,
@@ -57,11 +54,11 @@ class WalletStatusBalances extends Component<Props> {
                   <Table.Cell>{(tokens.EOS) ? tokens.EOS.toFixed(4) : '0.0000'} EOS</Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.Cell>{t('wallet_status_resources_staked')}</Table.Cell>
-                  <Table.Cell>{totalStaked.toFixed(4)} EOS </Table.Cell>
+                  <Table.Cell>{t('wallet_status_balances_staked_to_self')}</Table.Cell>
+                  <Table.Cell>{totalStakedToSelf.toFixed(4)} EOS </Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.Cell>{t('wallet_status_resources_staked_to_others')}</Table.Cell>
+                  <Table.Cell>{t('wallet_status_balances_staked_to_others')}</Table.Cell>
                   <Table.Cell>{totalStakedToOthers.toFixed(4)} EOS </Table.Cell>
                 </Table.Row>
                 {(refundDate)
