@@ -1,10 +1,10 @@
 import { Decimal } from 'decimal.js';
 
 export default class StatsFetcher {
-  constructor(account, balance, delbandRows) {
+  constructor(account, balance, delegations) {
     this.account = account;
     this.balance = balance;
-    this.delband = delbandRows;
+    this.delegations = delegations;
   }
 
   fetchAll() {
@@ -32,14 +32,14 @@ export default class StatsFetcher {
   }
 
   totalStakedToOthers() {
-    debugger
+    if (!this.delegations) return Decimal(0);
 
-    if (!this.delbandRows) return Decimal(0);
+    const cpuWeightsStakedToOthers = this.delegations.map((delegation) => Number(delegation.cpu_weight.split(' ')[0]));
+    const netWeightsStakedToOthers = this.delegations.map((delegation) => Number(delegation.net_weight.split(' ')[0]));
+    const allWeightsStakedToOthers = cpuWeightsStakedToOthers.concat(netWeightsStakedToOthers);
+    const totalStaked = Decimal(allWeightsStakedToOthers.reduce((sum, value) => sum + value));
 
-    const cpuStakedToOthers = Math.sum(this.delbandRows.map((row) => row.cpu_weight.split(' ')[0]));
-    const netStakedToOthers = Math.sum(this.delbandRows.map((row) => row.net_weight.split(' ')[0]));
-
-    return Decimal(cpuStakedToOthers).plus(Decimal(netStakedToOthers));
+    return totalStaked.minus(this.totalStakedToSelf());
   }
 
 
@@ -80,7 +80,7 @@ export default class StatsFetcher {
   }
 
   totalTokens() {
-    const totalStaked = this.totalStaked();
+    const totalStaked = this.totalStakedToSelf().plus(this.totalStakedToOthers());
     const totalBeingUnstaked = this.totalBeingUnstaked();
     const totalTokens = this.tokens().EOS || new Decimal(0);
 
