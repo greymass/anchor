@@ -65,7 +65,7 @@ class ToolsProxy extends Component<Props> {
               system={system}
             />
           </Segment>
-          <Segment textAlign="center" style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
+          <Segment style={(!isProxy) ? ({ display: 'none' }) : {}} basic>
             <p>
               {t('tools_proxy_text_registered')}
             </p>
@@ -84,31 +84,27 @@ class ToolsProxy extends Component<Props> {
 
             {displayProxyInfoForm
               ? (
-                <Grid centered padded>
-                  <Grid.Column width={10}>
-                    <GlobalTransactionHandler
-                      actionName="SET_REGPROXYINFO"
+                <GlobalTransactionHandler
+                  actionName="SET_REGPROXYINFO"
+                  actions={actions}
+                  blockExplorers={blockExplorers}
+                  content={(
+                    <ToolsFormProxyInfo
+                      account={account}
                       actions={actions}
                       blockExplorers={blockExplorers}
-                      content={(
-                        <ToolsFormProxyInfo
-                          account={account}
-                          actions={actions}
-                          blockExplorers={blockExplorers}
-                          contracts={contracts}
-                          settings={settings}
-                          system={system}
-                          transaction={transaction}
-                        />
-                      )}
-                      hideClose
-                      onClose={this.onClose}
+                      contracts={contracts}
                       settings={settings}
                       system={system}
                       transaction={transaction}
                     />
-                  </Grid.Column>
-                </Grid>
+                  )}
+                  hideClose
+                  onClose={this.onClose}
+                  settings={settings}
+                  system={system}
+                  transaction={transaction}
+                />
               ) : ''}
 
           </Segment>
