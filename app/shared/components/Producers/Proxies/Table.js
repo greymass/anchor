@@ -9,7 +9,7 @@ import ProducersModalInfo from './Modal/Info.js';
 import ProducersTableRow from './Table/Row';
 import ProducersVoteWeight from './Vote/Weight';
 
-class ProducersTable extends Component<Props> {
+class ProxiesTable extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,7 +84,7 @@ class ProducersTable extends Component<Props> {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
             const hasInfo = !!(get(producers.producersInfo, producer.owner));
             return (
-              <ProducersTableRow
+              <ProxiesTableRow
                 addProducer={this.props.addProducer}
                 getProducerInfo={this.getProducerInfo}
                 hasInfo={hasInfo}
