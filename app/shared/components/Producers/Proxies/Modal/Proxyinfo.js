@@ -1,26 +1,23 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Modal, Tab } from 'semantic-ui-react';
-import { findIndex } from 'lodash';
+import { Modal, Divider, Table } from 'semantic-ui-react';
 
 class ProducersModalProxyInfo extends Component<Props> {
   componentWillMount = () => {
     const {
       actions,
-      tables
+      currentProxy
     } = this.props;
 
-    if (tables.regproxyinfo &&
-        findIndex(tables.regproxyinfo.regproxyinfo.proxies.rows, { owner: value }) !== -1) {
-      actions.getAccount(value);
-    }
+    actions.getAccount(currentProxy.owner);
   }
   render() {
     const {
+      accounts,
+      currentProxy,
       onClose,
-      producerInfo,
-      settings,
+      proxyAccount,
       t,
       viewing
     } = this.props;
