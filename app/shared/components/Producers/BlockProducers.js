@@ -9,7 +9,7 @@ import WalletPanel from '../Wallet/Panel';
 import ProducersSelector from './BlockProducers/Selector';
 import ProducersTable from './BlockProducers/Table';
 import ProducersVotingPreview from './BlockProducers/Modal/Preview';
-import ProducersProxy from './BlockProducers/Proxy';
+import ProducersProxy from './Proxy';
 
 type Props = {
   actions: {

@@ -5,6 +5,7 @@ import { translate } from 'react-i18next';
 
 import SidebarAccount from '../../containers/Sidebar/Account';
 import WalletPanel from '../Wallet/Panel';
+import ProducersProxy from './Proxy'
 import ProxiesTable from './Proxies/Table';
 
 type Props = {

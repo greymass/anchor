@@ -21,23 +21,20 @@ class ProducersFormProxy extends Component<Props> {
 
   state = {};
 
-  componentDidMount = () => {
-    const { actions } = this.props;
+  componentWillMount = () => {
+    const {
+      proxyAccount
+    } = this.state;
 
-    actions.getTable('regproxyinfo', 'regproxyinfo', 'proxies');
+    if (proxyAccount) {
+      this.setState({
+        confirming: true,
+        proxyAccount
+      });
+    }
   }
 
   onChange = (e, { value, valid }) => {
-    const {
-      actions,
-      tables
-    } = this.props;
-
-    if (tables.regproxyinfo &&
-        findIndex(tables.regproxyinfo.regproxyinfo.proxies.rows, { owner: value }) !== -1) {
-      actions.getAccount(value);
-    }
-
     this.setState({
       submitDisabled: !valid,
       proxyAccount: value
@@ -114,19 +111,6 @@ class ProducersFormProxy extends Component<Props> {
       submitDisabled
     } = this.state;
 
-    const proxyRows = tables.regproxyinfo && tables.regproxyinfo.regproxyinfo.proxies.rows;
-
-    const proxyOptions = proxyRows && proxyRows.map((contract) => {
-      return {
-        key: contract.owner,
-        text: contract.name,
-        value: contract.owner
-      };
-    });
-
-    const currentProxy = proxyRows && proxyRows[findIndex(proxyRows, { owner: proxyAccount })];
-    const currentProxyKeys = currentProxy && Object.keys(currentProxy).filter((key) => currentProxy[key]);
-
     return (
       <Form
         warning
@@ -197,42 +181,6 @@ class ProducersFormProxy extends Component<Props> {
                     value={proxyAccount}
                   />
                 )}
-
-
-              {(proxyAccount && currentProxy && accounts[proxyAccount])
-                ? (
-                  <div>
-                    <Divider />
-                    <h3>{t('producers_form_proxy_info_header')}</h3>
-                    <Table>
-                      {currentProxyKeys.map((key) => {
-                        return (
-                          <Table.Row>
-                            <Table.Cell>
-                              {t(`producers_form_proxy_${key}`)}
-                            </Table.Cell>
-                            <Table.Cell>
-                              {currentProxy[key]}
-                            </Table.Cell>
-                          </Table.Row>
-                        );
-                      })}
-                      <Table.Row>
-                        <Table.Cell>
-                          {t('producers_form_proxy_current_votes')}
-                        </Table.Cell>
-                        <Table.Cell>
-                          {(accounts[proxyAccount].voter_info.producers.length !== 0)
-                            ? (
-                              accounts[proxyAccount].voter_info.producers.join(', ')
-                            ) : (
-                              t('producers_form_proxy_summary_no_one')
-                            )}
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table>
-                  </div>
-                ) : ''}
 
               <Divider />
               <Button
