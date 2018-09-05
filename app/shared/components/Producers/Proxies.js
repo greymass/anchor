@@ -40,14 +40,7 @@ class Proxies extends Component<Props> {
     super(props);
     this.state = {
       amount: 40,
-      lastError: false,
-      lastTransaction: {},
-      previewing: false,
-      querying: false,
-      selected: [],
-      selected_account: false,
-      selected_loaded: false,
-      submitting: false,
+      querying: false
     };
   }
 
@@ -79,6 +72,14 @@ class Proxies extends Component<Props> {
     }
   }
 
+  addProxy() {
+    return
+  }
+
+  removeProxy() {
+    return
+  }
+
   submitProxy = () => {
     const {
       clearSystemState,
@@ -98,31 +99,23 @@ class Proxies extends Component<Props> {
 
   render() {
     const {
-      actions,
       accounts,
+      actions,
       balances,
       blockExplorers,
-      connection,
       globals,
       history,
       keys,
-      producers,
       settings,
       system,
       t,
       tables,
-      transaction,
       validate,
       wallet
     } = this.props;
     const {
       amount,
-      lastError,
-      lastTransaction,
-      previewing,
-      querying,
-      selected,
-      submitting
+      querying
     } = this.state;
     let sidebar = [(
       <WalletPanel
@@ -132,19 +125,16 @@ class Proxies extends Component<Props> {
         blockExplorers={blockExplorers}
         globals={globals}
         key="WalletPanel"
-        keys={keys}
         settings={settings}
         system={system}
-        transaction={transaction}
         validate={validate}
         wallet={wallet}
       />
     )];
     const account = accounts[settings.account];
-    const isMainnet = (connection && connection.chain === 'eos-mainnet');
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
+    const proxies = (tables.regproxyinfo && tables.regproxyinfo.regproxyinfo.proxies.rows) || [];
     const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
-    const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     if (isValidUser && settings.walletMode !== 'wait') {
       sidebar = (
         <React.Fragment>
@@ -153,7 +143,6 @@ class Proxies extends Component<Props> {
             accounts={accounts}
             actions={actions}
             blockExplorers={blockExplorers}
-            keys={keys}
             isProxying={isProxying}
             isValidUser={isValidUser}
             settings={settings}
@@ -176,11 +165,11 @@ class Proxies extends Component<Props> {
               {sidebar}
             </Grid.Column>
             <Grid.Column width={10}>
-              {(producers.list.length > 0)
+              {(proxies.length > 0)
                ? [(
                  <Visibility
                    continuous
-                   key="ProducersTable"
+                   key="ProxiesTable"
                    fireOnMount
                    onBottomVisible={this.loadMore}
                    once={false}
@@ -188,21 +177,19 @@ class Proxies extends Component<Props> {
                    <ProxiesTable
                      account={accounts[settings.account]}
                      actions={actions}
-                     setAsProxy={this.addProxy.bind(this)}
+                     addProxy={this.addProxy.bind(this)}
                      attached="top"
                      globals={globals}
                      isProxying={isProxying}
                      isQuerying={this.isQuerying}
-                     keys={keys}
-                     producers={producers}
+                     proxies={proxies}
                      removeProxy={this.removeProxy.bind(this)}
                      settings={settings}
                      system={system}
-                     isValidUser={isValidUser}
                    />
                  </Visibility>
                ), (
-                 (!querying && amount < producers.list.length)
+                 (!querying && amount < proxies.length)
                  ? (
                    <Segment key="ProxiesTableLoading" clearing padded vertical>
                      <Loader active />
