@@ -5,11 +5,7 @@ import { translate } from 'react-i18next';
 
 import SidebarAccount from '../../containers/Sidebar/Account';
 import WalletPanel from '../Wallet/Panel';
-
-import ProducersSelector from './BlockProducers/Selector';
-import ProducersTable from './BlockProducers/Table';
-import ProducersVotingPreview from './BlockProducers/Modal/Preview';
-import ProducersProxy from './BlockProducers/Proxy';
+import ProxiesTable from './Proxies/Table';
 
 type Props = {
   actions: {
@@ -59,61 +55,6 @@ class Proxies extends Component<Props> {
     this.interval = setInterval(this.tick.bind(this), 60000);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
-    const { settings, system } = nextProps;
-    const nextValidate = nextProps.validate;
-    // On a new node connection, update props + producers
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.props.actions.getGlobals();
-      this.tick();
-    }
-    // Update state when the transaction has gone through
-    if (
-      this.state.submitting
-      && (
-        this.state.lastTransaction !== system.VOTEPRODUCER_LAST_TRANSACTION
-        || this.state.lastError !== system.VOTEPRODUCER_LAST_ERROR
-      )
-    ) {
-      this.setState({
-        lastError: system.VOTEPRODUCER_LAST_ERROR,
-        lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
-        submitting: false
-      });
-    }
-    // If no selected are loaded, attempt to retrieve them from the props
-    if (
-      !this.state.selected_loaded
-      || this.state.selected_account !== settings.account
-      || (nextProps.producers.proxy && nextProps.producers.proxy !== this.state.selected_account)
-    ) {
-      const { accounts } = nextProps;
-      // If an account is loaded, attempt to load it's votes
-      if (settings.account && accounts[settings.account]) {
-        const account = accounts[settings.account];
-        if (account.voter_info) {
-          const selected_account = account.voter_info.proxy || account.account_name;
-          let selected = account.voter_info.producers
-          if (selected_account !== settings.account && accounts[selected_account]) {
-            selected = accounts[selected_account].voter_info.producers;
-          }
-          // If the voter_info entry exists, load those votes into state
-          this.setState({
-            selected,
-            selected_account,
-            selected_loaded: true
-          });
-        } else {
-          // otherwise notify users that they must stake before allowed voting
-        }
-      }
-    }
-  }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
@@ -129,44 +70,15 @@ class Proxies extends Component<Props> {
       validate
     } = this.props;
     const {
-      getProducers,
-      getProducersInfo
+      getTable
     } = actions;
+
     if (validate.NODE) {
-      getProducers();
-      getProducersInfo();
+      getTable('regproxyinfo', 'regproxyinfo', 'proxies');
     }
   }
 
-  addProducer = (producer) => {
-    const producers = [...this.state.selected];
-    if (producers.indexOf(producer) === -1) {
-      producers.push(producer);
-      producers.sort();
-      this.setState({
-        selected: producers
-      });
-    }
-  }
-
-  removeProducer = (producer) => {
-    const producers = [...this.state.selected];
-    const index = producers.indexOf(producer);
-    if (index !== -1) {
-      producers.splice(index, 1);
-    }
-    this.setState({
-      selected: producers
-    });
-  }
-
-  previewProducerVotes = (previewing) => this.setState({
-    previewing,
-    lastError: false, // Reset the last error
-    lastTransaction: {} // Reset the last transaction
-  });
-
-  submitProducerVotes = () => {
+  submitProxy = () => {
     const {
       clearSystemState,
       voteproducers
@@ -247,35 +159,6 @@ class Proxies extends Component<Props> {
             system={system}
             tables={tables}
           />
-
-          <Divider hidden />
-
-          {(!isProxying) ? (
-            <ProducersVotingPreview
-              actions={actions}
-              blockExplorers={blockExplorers}
-              lastError={lastError}
-              lastTransaction={lastTransaction}
-              open={previewing}
-              onClose={() => this.previewProducerVotes(false)}
-              onConfirm={this.submitProducerVotes.bind(this)}
-              onOpen={() => this.previewProducerVotes(true)}
-              selected={selected}
-              settings={settings}
-              submitting={submitting}
-              system={system}
-            />
-          ) : ''}
-
-          <ProducersSelector
-            account={accounts[settings.account]}
-            isProxying={isProxying}
-            modified={modified}
-            removeProducer={this.removeProducer.bind(this)}
-            selected={selected}
-            submitProducerVotes={() => this.previewProducerVotes(true)}
-            submitting={submitting}
-          />
         </React.Fragment>
       );
     }
@@ -301,21 +184,17 @@ class Proxies extends Component<Props> {
                    onBottomVisible={this.loadMore}
                    once={false}
                  >
-                   <ProducersTable
+                   <ProxiesTable
                      account={accounts[settings.account]}
                      actions={actions}
-                     addProducer={this.addProducer.bind(this)}
-                     amount={amount}
+                     setAsProxy={this.addProxy.bind(this)}
                      attached="top"
                      globals={globals}
-                     isMainnet={isMainnet}
                      isProxying={isProxying}
                      isQuerying={this.isQuerying}
                      keys={keys}
                      producers={producers}
-                     removeProducer={this.removeProducer.bind(this)}
-                     resetDisplayAmount={this.resetDisplayAmount}
-                     selected={selected}
+                     removeProxy={this.removeProxy.bind(this)}
                      settings={settings}
                      system={system}
                      isValidUser={isValidUser}
@@ -324,7 +203,7 @@ class Proxies extends Component<Props> {
                ), (
                  (!querying && amount < producers.list.length)
                  ? (
-                   <Segment key="ProducersTableLoading" clearing padded vertical>
+                   <Segment key="ProxiesTableLoading" clearing padded vertical>
                      <Loader active />
                    </Segment>
                  ) : false
@@ -332,7 +211,7 @@ class Proxies extends Component<Props> {
                : (
                  <Segment attached="bottom" stacked>
                    <Header textAlign="center">
-                     {t('producer_none_loaded')}
+                     {t('proxies_none_loaded')}
                    </Header>
                  </Segment>
                )
