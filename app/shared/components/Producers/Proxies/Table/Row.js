@@ -37,8 +37,8 @@ class ProducersTableRow extends Component<Props> {
           />
 
           <Popup
-            content={t('proxies_proxy_content')}
-            header={t('proxies_proxy_header', { proxy: proxy.owner })}
+            content={t('producers_proxies_popup_content', { proxy: proxy.owner })}
+            header={t('producers_proxies_popup_header')}
             hoverable
             position="right center"
             trigger={(
