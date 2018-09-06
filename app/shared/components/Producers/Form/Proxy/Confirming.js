@@ -19,6 +19,7 @@ class ProducersFormProxyConfirming extends Component<Props> {
       currentProxyAccount,
       onBack,
       proxyAccount,
+      showBackButton,
       t
     } = this.props;
 
@@ -46,12 +47,15 @@ class ProducersFormProxyConfirming extends Component<Props> {
           onClick={this.onConfirm}
           content={t('producers_form_proxy_confirm')}
         />
-        <Button
-          onClick={onBack}
-          floated="left"
-        >
-          <Icon name="arrow left" /> {t('producers_form_proxy_cancel')}
-        </Button>
+        {(showBackButton)
+          ? (
+            <Button
+              onClick={onBack}
+              floated="left"
+            >
+              <Icon name="arrow left" /> {t('producers_form_proxy_cancel')}
+            </Button>
+          ) : ''}
       </Segment>
     );
   }
