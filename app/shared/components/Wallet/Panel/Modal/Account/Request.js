@@ -44,7 +44,6 @@ class WalletPanelModalAccountRequest extends Component<Props> {
         const { actions } = this.props;
         actions.checkAccountAvailability(value);
       }
-      console.table(this.state);
     });
   }
   onConfirm = () => this.setState({ confirming: true });
