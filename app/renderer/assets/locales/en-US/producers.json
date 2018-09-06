@@ -70,7 +70,7 @@
   "producers_form_proxy_message": "If you do not have the time to research Block Producers on a regular basis, proxying your votes to a trustworthy proxy voter can be a very good way to use your voting power efficiently. Simply enter an account name or browse through the list of registered proxy voters to proxy your votes. This can be revoked at any time.",
   "producers_form_proxy_name": "Name",
   "producers_form_proxy_owner": "Account",
-  "producers_form_proxy_philosophy": "Account",
+  "producers_form_proxy_philosophy": "Philosophy",
   "producers_form_proxy_remove": "Remove Voting Proxy",
   "producers_form_proxy_slogan": "Slogan",
   "producers_form_proxy_steemit": "Steemit",
