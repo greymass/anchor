@@ -52,7 +52,7 @@ export function removeregproxyinfo() {
     } = getState();
 
     dispatch({
-      type: types.SYSTEM_UNSET_REGPROXYINFO_PENDING
+      type: types.SYSTEM_REMOVE_REGPROXYINFO_PENDING
     });
 
     const { account } = settings;
@@ -71,18 +71,12 @@ export function removeregproxyinfo() {
           }
         }
       ]
-    }).then((tx) => {
-      setTimeout(() => {
-        dispatch(getTable('regproxyinfo', 'regproxyinfo', 'proxies'));
-      }, 5000);
-
-      return dispatch({
-        payload: { tx },
-        type: types.SYSTEM_UNSET_REGPROXYINFO_SUCCESS
-      });
-    }).catch((err) => dispatch({
+    }).then((tx) => dispatch({
+      payload: { tx },
+      type: types.SYSTEM_REMOVE_REGPROXYINFO_SUCCESS
+    })).catch((err) => dispatch({
       payload: { err },
-      type: types.SYSTEM_UNSET_REGPROXYINFO_FAILURE
+      type: types.SYSTEM_REMOVE_REGPROXYINFO_FAILURE
     }));
   };
 }

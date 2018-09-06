@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
+import { findIndex } from 'lodash';
 
 import FormMessageError from '../../Global/Form/Message/Error';
 import GlobalFormFieldString from '../../Global/Form/Field/String';
@@ -145,8 +146,11 @@ class ToolsFormProxyInfo extends Component<Props> {
 
   render() {
     const {
+      account,
+      isProxy,
       system,
-      t
+      t,
+      tables
     } = this.props;
 
     const {
@@ -159,70 +163,77 @@ class ToolsFormProxyInfo extends Component<Props> {
 
     const formErrorKeys = Object.keys(formErrors);
 
+    const displayProxyInfoForm =
+      isProxy &&
+      tables.regproxyinfo &&
+      findIndex(tables.regproxyinfo.regproxyinfo.proxies.rows, { owner: account.account_name }) === -1;
+
     return (
-      <Segment
-        loading={system.SET_REGPROXYINFO === 'PENDING'}
-        textAlign="left"
-      >
-        {(shouldShowForm)
-          ? (
-            <div>
-              <Message
-                content={t('tools_form_proxy_info_message')}
-                warning
-              />
-              <Form
-                onKeyPress={this.onKeyPress}
-                onSubmit={this.onSubmit}
-              >
-                {formAttributes.filter((formAttribute) => formAttribute !== 'proxy').map((formAttribute) => {
-                  const FieldComponentType = (urlFields.includes(formAttribute)) ? GlobalFormFieldUrl : GlobalFormFieldString;
-
-                  return (
-                    <FieldComponentType
-                      defaultValue={this.state[formAttribute] || ''}
-                      label={t(`tools_form_proxy_info_${formAttribute}`)}
-                      name={formAttribute}
-                      onChange={this.onChange}
-                    />
-                  );
-                })}
-                <FormMessageError
-                  errors={
-                    formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
-                      const error = this.state.formErrors[key];
-                      if (error) {
-                        errors.push(error);
-                      }
-                      return errors;
-                    }, [])
-                  }
-                  icon="warning sign"
-                />
-                <Segment basic clearing>
-                  <Button
-                    content={t('tools_form_proxy_info_button')}
-                    color="green"
-                    disabled={submitDisabled}
-                    floated="right"
-                    primary
+      (displayProxyInfoForm)
+        ? (
+          <Segment
+            loading={system.SET_REGPROXYINFO === 'PENDING'}
+            textAlign="left"
+          >
+            {(shouldShowForm)
+              ? (
+                <div>
+                  <Message
+                    content={t('tools_form_proxy_info_message')}
+                    warning
                   />
-                </Segment>
-              </Form>
-            </div>
-          ) : ''}
+                  <Form
+                    onKeyPress={this.onKeyPress}
+                    onSubmit={this.onSubmit}
+                  >
+                    {formAttributes.filter((formAttribute) => formAttribute !== 'proxy').map((formAttribute) => {
+                      const FieldComponentType = (urlFields.includes(formAttribute)) ? GlobalFormFieldUrl : GlobalFormFieldString;
 
-        {(shouldShowConfirm)
-          ? (
-            <ToolsFormProxyInfoConfirming
-              formAttributes={formAttributes}
-              formValues={this.state}
-              onBack={this.onBack}
-              onConfirm={this.onConfirm}
-            />
-          ) : ''}
-      </Segment>
-    );
+                      return (
+                        <FieldComponentType
+                          defaultValue={this.state[formAttribute] || ''}
+                          label={t(`tools_form_proxy_info_${formAttribute}`)}
+                          name={formAttribute}
+                          onChange={this.onChange}
+                        />
+                      );
+                    })}
+                    <FormMessageError
+                      errors={
+                        formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
+                          const error = this.state.formErrors[key];
+                          if (error) {
+                            errors.push(error);
+                          }
+                          return errors;
+                        }, [])
+                      }
+                      icon="warning sign"
+                    />
+                    <Segment basic clearing>
+                      <Button
+                        content={t('tools_form_proxy_info_button')}
+                        color="green"
+                        disabled={submitDisabled}
+                        floated="right"
+                        primary
+                      />
+                    </Segment>
+                  </Form>
+                </div>
+              ) : ''}
+
+            {(shouldShowConfirm)
+              ? (
+                <ToolsFormProxyInfoConfirming
+                  formAttributes={formAttributes}
+                  formValues={this.state}
+                  onBack={this.onBack}
+                  onConfirm={this.onConfirm}
+                />
+              ) : ''}
+          </Segment>
+        ) : '');
   }
 }
 
