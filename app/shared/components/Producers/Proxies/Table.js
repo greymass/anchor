@@ -72,7 +72,7 @@ class ProxiesTable extends Component<Props> {
       <Table.Body>
         <Table.Row>
           <Table.Cell colSpan={5}>
-            {t('producer_none_match')}
+            {t('producers_none_match')}
           </Table.Cell>
         </Table.Row>
       </Table.Body>
@@ -143,6 +143,11 @@ class ProxiesTable extends Component<Props> {
               viewingProxy={showProxyInfo}
             />
           ) : ''}
+        <Message
+          warning
+        >
+          {t('producers_form_proxy_message')}
+        </Message>
         <Grid>
           <Grid.Column width={8} />
           <Grid.Column width={8} key="ProxiesSearch" textAlign="right">
@@ -153,11 +158,6 @@ class ProxiesTable extends Component<Props> {
             />
           </Grid.Column>
         </Grid>
-        <Message
-          warning
-        >
-          {t('producers_proxies_table_header')}
-        </Message>
         <Table
           color="violet"
           size="small"
@@ -169,10 +169,10 @@ class ProxiesTable extends Component<Props> {
             <Table.Row>
               <Table.HeaderCell collapsing />
               <Table.HeaderCell>
-                {t('proxies_table_header_name')}
+                {t('producers_proxies_table_header_name')}
               </Table.HeaderCell>
               <Table.HeaderCell>
-                {t('proxies_table_header_account')}
+                {t('producers_proxies_table_header_account')}
               </Table.HeaderCell>
               <Table.HeaderCell collapsing />
             </Table.Row>

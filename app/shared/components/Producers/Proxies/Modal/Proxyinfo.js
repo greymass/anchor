@@ -38,7 +38,6 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
           {(proxyAccount && viewingProxy && accounts[proxyAccount])
             ? (
               <div>
-                <h3>{t('producers_form_proxy_info_header')}</h3>
                 <Table>
                   <Table.Body key="ProxyInfoBody">
                     {currentProxyKeys.map((key) => {

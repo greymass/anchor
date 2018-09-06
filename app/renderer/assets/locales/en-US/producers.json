@@ -48,6 +48,7 @@
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
   "producer_welcome_subheader": "",
+  "producers_block_producers": "Block Producers",
   "producers_button_proxy_change_text":"Change Voter Proxy",
   "producers_button_proxy_setup_text":"Set Voter Proxy",
   "producers_form_proxy_back": "Cancel",
@@ -101,5 +102,13 @@
   "producers_info_nodes_seeds": "Seed Nodes",
   "producers_info_social": "Social Media Links",
   "producers_info_website": "Official Website",
+  "producers_none_match": "Nothing matches this query..",
+  "producers_proxies": "Proxies",
+  "producers_proxies_info_header": "Info on selected proxy:",
+  "producers_proxies_none_loaded": "No proxies loaded..",
+  "producers_proxies_popup_content": "Click on this button to change your proxy voter to {{proxy}}.",
+  "producers_proxies_popup_header": "Select Proxy",
+  "producers_proxies_table_header_account": "Proxy Account",
+  "producers_proxies_table_header_name": "Proxy Name",
   "producers_table_votes_proxied": "Current producer voting proxy:"
 }
