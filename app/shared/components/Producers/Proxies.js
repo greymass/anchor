@@ -21,6 +21,7 @@ type Props = {
   blockExplorers: {},
   globals: {},
   history: {},
+  keys: {},
   producers: {
     lastTransaction: {},
     selected: []
@@ -72,11 +73,11 @@ class Proxies extends Component<Props> {
     }
   }
 
-  addProxy() {
+  addProxy = () => {
     return
   }
 
-  removeProxy() {
+  removeProxy = () => {
     return
   }
 
