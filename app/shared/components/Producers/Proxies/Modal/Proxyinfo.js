@@ -1,27 +1,29 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Modal, Divider, Table } from 'semantic-ui-react';
+import { Modal, Table } from 'semantic-ui-react';
 
-class ProducersModalProxyInfo extends Component<Props> {
+class ProducersProxiesModalProxyInfo extends Component<Props> {
   componentWillMount = () => {
     const {
       actions,
-      currentProxy
+      viewingProxy
     } = this.props;
 
-    actions.getAccount(currentProxy.owner);
+    actions.getAccount(viewingProxy.owner);
   }
   render() {
     const {
       accounts,
       onClose,
-      proxyAccount,
       t,
-      viewing
+      viewingProxy
     } = this.props;
 
-    const currentProxyKeys = currentProxy && Object.keys(currentProxy).filter((key) => currentProxy[key]);
+    const currentProxyKeys = viewingProxy &&
+      Object.keys(viewingProxy).filter((key) => viewingProxy[key]);
+
+    const proxyAccount = viewingProxy.owner;
 
     return (
       <Modal
@@ -30,48 +32,48 @@ class ProducersModalProxyInfo extends Component<Props> {
         open
       >
         <Modal.Header>
-          {t('producers_proxies_info_header', { proxy: viewing })}
+          {t('producers_proxies_info_header', { proxy: viewingProxy })}
         </Modal.Header>
         <Modal.Content>
-          {(proxyAccount && currentProxy && accounts[proxyAccount])
+          {(proxyAccount && viewingProxy && accounts[proxyAccount])
             ? (
               <div>
-                <Divider />
                 <h3>{t('producers_form_proxy_info_header')}</h3>
                 <Table>
-                  {currentProxyKeys.map((key) => {
-                    return (
-                      <Table.Row>
-                        <Table.Cell>
-                          {t(`producers_form_proxy_${key}`)}
-                        </Table.Cell>
-                        <Table.Cell>
-                          {currentProxy[key]}
-                        </Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
-                  <Table.Row>
-                    <Table.Cell>
-                      {t('producers_form_proxy_current_votes')}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {(accounts[proxyAccount].voter_info.producers.length !== 0)
-                        ? (
-                          accounts[proxyAccount].voter_info.producers.join(', ')
-                        ) : (
-                          t('producers_form_proxy_summary_no_one')
-                        )}
-                    </Table.Cell>
-                  </Table.Row>
+                  <Table.Body key="ProxyInfoBody">
+                    {currentProxyKeys.map((key) => {
+                      return (
+                        <Table.Row>
+                          <Table.Cell>
+                            {t(`producers_form_proxy_${key}`)}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {viewingProxy[key]}
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
+                    <Table.Row>
+                      <Table.Cell>
+                        {t('producers_form_proxy_current_votes')}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {(accounts[proxyAccount].voter_info.producers.length !== 0)
+                          ? (
+                            accounts[proxyAccount].voter_info.producers.join(', ')
+                          ) : (
+                            t('producers_form_proxy_summary_no_one')
+                          )}
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
                 </Table>
               </div>
             ) : ''}
-
         </Modal.Content>
       </Modal>
     );
   }
 }
 
-export default translate('producers')(ProducersModalProxyInfo);
+export default translate('producers')(ProducersProxiesModalProxyInfo);

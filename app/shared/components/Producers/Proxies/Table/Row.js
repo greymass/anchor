@@ -17,15 +17,14 @@ class ProducersTableRow extends Component<Props> {
       addProxy,
       getProxyInfo,
       isSelected,
-      proxy,
-      isProxying,
       isValidUser,
+      proxy,
       removeProxy,
       t
     } = this.props;
 
     return (
-      <Table.Row positive={isSelected} key={proxy.key}>
+      <Table.Row positive={isSelected} key={proxy.owner}>
         <Table.Cell
           singleLine
           textAlign="center"
@@ -38,15 +37,15 @@ class ProducersTableRow extends Component<Props> {
           />
 
           <Popup
-            content={t('producer_vote_content')}
-            header={t('producer_vote_header', { producer: proxy.owner })}
+            content={t('proxies_proxy_content')}
+            header={t('proxies_proxy_header', { proxy: proxy.owner })}
             hoverable
             position="right center"
             trigger={(
               <Button
                 color={isSelected ? 'blue' : 'grey'}
-                disabled={!isValidUser || isProxying}
-                icon={isSelected ? 'checkmark box' : 'minus square outline'}
+                icon={isSelected ? 'circle' : 'circle outline'}
+                disabled={!isValidUser}
                 onClick={
                   (isSelected)
                   ? () => removeProxy(proxy.owner)
@@ -67,6 +66,9 @@ class ProducersTableRow extends Component<Props> {
         >
           <b>{ proxy.owner }</b>
         </Table.Cell>
+        <Table.Cell
+          singleLine
+        />
       </Table.Row>
     );
   }
