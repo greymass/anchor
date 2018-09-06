@@ -15,7 +15,6 @@ class ProducersModalProxyInfo extends Component<Props> {
   render() {
     const {
       accounts,
-      currentProxy,
       onClose,
       proxyAccount,
       t,
@@ -28,10 +27,10 @@ class ProducersModalProxyInfo extends Component<Props> {
       <Modal
         closeIcon
         onClose={onClose}
-        open={!!(viewing)}
+        open
       >
         <Modal.Header>
-          {t('producers_info_header', { producer: viewing })}
+          {t('producers_proxies_info_header', { proxy: viewing })}
         </Modal.Header>
         <Modal.Content>
           {(proxyAccount && currentProxy && accounts[proxyAccount])
