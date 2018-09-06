@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { debounce, filter } from 'lodash';
-import { Grid, Header, Input, Segment, Transition, Table, Message } from 'semantic-ui-react';
+import { debounce, filter, findIndex } from 'lodash';
+import { Grid, Input, Segment, Transition, Table, Message } from 'semantic-ui-react';
 
 import ProducersModalProxyInfo from './Modal/ProxyInfo';
 import ProxiesTableRow from './Table/Row';
@@ -12,7 +12,7 @@ class ProxiesTable extends Component<Props> {
     super(props);
     this.state = {
       query: false,
-      viewing: false
+      showProxyInfo: false
     };
   }
 
@@ -32,31 +32,37 @@ class ProxiesTable extends Component<Props> {
     return (query && query.length > 0);
   }
 
-  clearProducerInfo = () => this.setState({ viewing: false });
-  getProducerInfo = (producer) => this.setState({ viewing: producer });
+  clearProxyInfo = () => this.setState({ showProxyInfo: false });
 
   getProxyInfo = (proxyAccount) => {
+    const {
+      proxies
+    } = this.props;
+
+    const index = findIndex(proxies, { owner: proxyAccount });
+
     this.setState({
-      showProxyInfo: proxyAccount
+      showProxyInfo: proxies[index]
     });
   }
 
   render() {
     const {
+      accounts,
       actions,
+      addProxy,
       amount,
-      getProxyInfo,
       isProxying,
       isValidUser,
       proxies,
+      removeProxy,
       settings,
       system,
       t
     } = this.props;
     const {
       query,
-      showProxyInfo,
-      viewing
+      showProxyInfo
     } = this.state;
 
     const loading = (proxies.length < 1);
@@ -80,14 +86,13 @@ class ProxiesTable extends Component<Props> {
 
             return (
               <ProxiesTableRow
-                addProducer={this.props.addProducer}
-                key={proxy.key}
-                isProxying={isProxying}
+                addProxy={addProxy}
+                key={proxy.owner}
                 isSelected={isSelected}
                 isValidUser={isValidUser}
                 getProxyInfo={this.getProxyInfo}
                 proxy={proxy}
-                removeProducer={this.props.removeProducer}
+                removeProxy={removeProxy}
                 system={system}
                 settings={settings}
               />
@@ -107,15 +112,15 @@ class ProxiesTable extends Component<Props> {
 
                 return (
                   <ProxiesTableRow
-                    addProducer={this.props.addProducer}
+                    addProxy={addProxy}
                     getProducerInfo={this.getProducerInfo}
                     key={proxy.owner}
                     isProxying={isProxying}
                     isSelected={isSelected}
                     isValidUser={isValidUser}
-                    getProxyInfo={getProxyInfo}
+                    getProxyInfo={this.getProxyInfo}
                     proxy={proxy}
-                    removeProducer={this.props.removeProducer}
+                    removeProxy={removeProxy}
                     system={system}
                     settings={settings}
                   />
@@ -131,10 +136,11 @@ class ProxiesTable extends Component<Props> {
         {(showProxyInfo)
           ? (
             <ProducersModalProxyInfo
+              accounts={accounts}
               actions={actions}
               onClose={this.clearProxyInfo}
               settings={settings}
-              viewing={showProxyInfo}
+              viewingProxy={showProxyInfo}
             />
           ) : ''}
         <Grid>

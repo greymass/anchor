@@ -73,28 +73,22 @@ class Proxies extends Component<Props> {
     }
   }
 
-  addProxy = () => {
-    return
+  addProxy = (proxyAccout) => {
+    this.setState({
+      addProxy: proxyAccout
+    });
   }
 
   removeProxy = () => {
-    return
+    this.setState({
+      removeProxy: true
+    });
   }
 
-  submitProxy = () => {
-    const {
-      clearSystemState,
-      voteproducers
-    } = this.props.actions;
-    const {
-      selected
-    } = this.state;
-    clearSystemState();
-    voteproducers(selected);
+  onClose = () => {
     this.setState({
-      lastError: false, // Reset the last error
-      lastTransaction: {}, // Reset the last transaction
-      submitting: true
+      addProxy: false,
+      removeProxy: false
     });
   }
 
@@ -115,8 +109,10 @@ class Proxies extends Component<Props> {
       wallet
     } = this.props;
     const {
+      addProxy,
       amount,
-      querying
+      querying,
+      removeProxy
     } = this.state;
     let sidebar = [(
       <WalletPanel
@@ -136,16 +132,20 @@ class Proxies extends Component<Props> {
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const proxies = (tables.regproxyinfo && tables.regproxyinfo.regproxyinfo.proxies.rows) || [];
     const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
+
     if (isValidUser && settings.walletMode !== 'wait') {
       sidebar = (
         <React.Fragment>
           <ProducersProxy
+            addProxy={addProxy}
             account={account}
             accounts={accounts}
             actions={actions}
             blockExplorers={blockExplorers}
+            onClose={this.onClose.bind(this)}
             isProxying={isProxying}
             isValidUser={isValidUser}
+            removeProxy={removeProxy}
             settings={settings}
             system={system}
             tables={tables}
@@ -176,13 +176,14 @@ class Proxies extends Component<Props> {
                    once={false}
                  >
                    <ProxiesTable
-                     account={accounts[settings.account]}
+                     accounts={accounts}
                      actions={actions}
                      addProxy={this.addProxy.bind(this)}
                      attached="top"
                      globals={globals}
                      isProxying={isProxying}
                      isQuerying={this.isQuerying}
+                     isValidUser={isValidUser}
                      proxies={proxies}
                      removeProxy={this.removeProxy.bind(this)}
                      settings={settings}
