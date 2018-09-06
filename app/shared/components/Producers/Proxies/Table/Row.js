@@ -24,7 +24,7 @@ class ProducersTableRow extends Component<Props> {
     } = this.props;
 
     return (
-      <Table.Row positive={isSelected} key={proxy.owner}>
+      <Table.Row key={proxy.owner}>
         <Table.Cell
           singleLine
           textAlign="center"
