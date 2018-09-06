@@ -11,15 +11,19 @@ class ProducersProxy extends Component<Props> {
       account,
       accounts,
       actions,
+      addProxy,
       blockExplorers,
       isProxying,
       isValidUser,
+      onClose,
+      removeProxy,
       settings,
       system,
       t,
       tables
     } = this.props;
     const proxyAccount = (account && account.voter_info) ? account.voter_info.proxy : '';
+
     return (
       <React.Fragment>
         {(isValidUser)
@@ -27,9 +31,12 @@ class ProducersProxy extends Component<Props> {
             <ProducersButtonProxy
               accounts={accounts}
               actions={actions}
+              addProxy={addProxy}
               blockExplorers={blockExplorers}
+              onClose={onClose}
               isProxying={isProxying}
               proxyAccount={proxyAccount}
+              removeProxy={removeProxy}
               settings={settings}
               system={system}
               tables={tables}

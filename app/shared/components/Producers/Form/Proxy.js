@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Icon, Segment, Header, Message, Table } from 'semantic-ui-react';
+import { Button, Divider, Form, Icon, Segment, Header, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
@@ -22,15 +22,14 @@ class ProducersFormProxy extends Component<Props> {
 
   componentWillMount = () => {
     const {
-      proxyAccount
-    } = this.state;
+      addProxy,
+      removeProxy
+    } = this.props;
 
-    if (proxyAccount) {
-      this.setState({
-        confirming: true,
-        proxyAccount
-      });
-    }
+    this.setState({
+      confirming: addProxy || removeProxy,
+      proxyAccount: addProxy
+    });
   }
 
   onChange = (e, { value, valid }) => {
@@ -93,18 +92,16 @@ class ProducersFormProxy extends Component<Props> {
 
   render() {
     const {
-      accounts,
-      currentProxyAccount,
-      onClose,
+      addProxy,
       isProxying,
+      onClose,
+      removeProxy,
       settings,
       system,
-      t,
-      tables
+      t
     } = this.props;
 
     const {
-      browsingProxies,
       confirming,
       proxyAccount,
       submitDisabled
@@ -113,14 +110,15 @@ class ProducersFormProxy extends Component<Props> {
     return (
       <Form
         warning
-        loading={system.VOTEPRODUCER === 'PENDING'}
+        loading={system.PROXY === 'PENDING'}
         onKeyPress={this.onKeyPress}
         onSubmit={this.onSubmit}
       >
         {(confirming)
           ? (
             <ProducersFormProxyConfirming
-              currentProxyAccount={currentProxyAccount}
+              currentProxyAccount={isProxying}
+              showBackButton={!addProxy && !removeProxy}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               proxyAccount={proxyAccount}
@@ -135,7 +133,7 @@ class ProducersFormProxy extends Component<Props> {
                     <Header.Subheader>
                       {t('producers_table_votes_proxied')}
                     </Header.Subheader>
-                    {currentProxyAccount}
+                    {isProxying}
                   </Header.Content>
                 </Header>
               ) : ''}
@@ -144,42 +142,6 @@ class ProducersFormProxy extends Component<Props> {
                 content={t('producers_form_proxy_message')}
                 warning
               />
-
-              <Button
-                content={
-                  browsingProxies
-                  ? (
-                      t('producers_form_proxy_by_account_button')
-                    ) : (
-                      t('producers_form_proxy_browsing_button')
-                  )
-                }
-                onClick={this.switchFormMode}
-                primary
-                style={{ marginBottom: '10px' }}
-              />
-              {(browsingProxies)
-                ? (
-                  <Form.Dropdown
-                    defaultValue={proxyAccount}
-                    name="proxy"
-                    onChange={(e, { value }) => this.onChange(e, { value, valid: true })}
-                    options={proxyOptions}
-                    placeholder={t('producers_form_proxy_dropdown_placeholder')}
-                    search
-                    selection
-                    padded
-                  />
-                ) : (
-                  <GlobalFormFieldAccount
-                    autoFocus
-                    contacts={settings.contacts}
-                    label={`${t('producers_form_proxy_label')}:`}
-                    name="account"
-                    onChange={this.onChange}
-                    value={proxyAccount}
-                  />
-                )}
 
               <Divider />
               <Button

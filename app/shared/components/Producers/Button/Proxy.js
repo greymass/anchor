@@ -10,9 +10,12 @@ class ProducersButtonProxy extends Component<Props> {
     const {
       accounts,
       actions,
+      addProxy,
       blockExplorers,
       isProxying,
+      onClose,
       proxyAccount,
+      removeProxy,
       settings,
       system,
       t,
@@ -40,19 +43,22 @@ class ProducersButtonProxy extends Component<Props> {
           <ProducersFormProxy
             accounts={accounts}
             actions={actions}
-            currentProxyAccount={proxyAccount}
+            addProxy={addProxy}
             isProxying={isProxying}
-            key="UnregisterProxyForm"
+            key="ProxyForm"
+            removeProxy={removeProxy}
             settings={settings}
             system={system}
             tables={tables}
           />
         )}
         icon="share square"
-        title={t('producers_form_proxy_header')}
+        onClose={onClose}
+        openModal={addProxy || removeProxy}
         settings={settings}
         size=""
         system={system}
+        title={t('producers_form_proxy_header')}
       />
     );
   }
