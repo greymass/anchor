@@ -52,6 +52,7 @@ class ProxiesTable extends Component<Props> {
       actions,
       addProxy,
       amount,
+      currentProxy,
       isProxying,
       isValidUser,
       proxies,
@@ -82,7 +83,7 @@ class ProxiesTable extends Component<Props> {
       baseTable = (
         <Table.Body key="FullResults">
           {fullResults.map((proxy) => {
-            const isSelected = (proxy.owner === isProxying);
+            const isSelected = (proxy.owner === currentProxy);
 
             return (
               <ProxiesTableRow
@@ -108,7 +109,7 @@ class ProxiesTable extends Component<Props> {
           searchTable = (
             <Table.Body key="PartResults">
               {partResults.map((proxy) => {
-                const isSelected = (proxy.owner === isProxying);
+                const isSelected = (proxy.owner === currentProxy);
 
                 return (
                   <ProxiesTableRow

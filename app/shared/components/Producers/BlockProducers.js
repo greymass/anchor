@@ -3,13 +3,7 @@ import React, { Component } from 'react';
 import { Divider, Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import SidebarAccount from '../../containers/Sidebar/Account';
-import WalletPanel from '../Wallet/Panel';
-
-import ProducersSelector from './BlockProducers/Selector';
 import ProducersTable from './BlockProducers/Table';
-import ProducersVotingPreview from './BlockProducers/Modal/Preview';
-import ProducersProxy from './Proxy';
 
 type Props = {
   actions: {
@@ -138,28 +132,6 @@ class BlockProducers extends Component<Props> {
     }
   }
 
-  addProducer = (producer) => {
-    const producers = [...this.state.selected];
-    if (producers.indexOf(producer) === -1) {
-      producers.push(producer);
-      producers.sort();
-      this.setState({
-        selected: producers
-      });
-    }
-  }
-
-  removeProducer = (producer) => {
-    const producers = [...this.state.selected];
-    const index = producers.indexOf(producer);
-    if (index !== -1) {
-      producers.splice(index, 1);
-    }
-    this.setState({
-      selected: producers
-    });
-  }
-
   previewProducerVotes = (previewing) => this.setState({
     previewing,
     lastError: false, // Reset the last error
@@ -187,160 +159,72 @@ class BlockProducers extends Component<Props> {
     const {
       actions,
       accounts,
-      balances,
-      blockExplorers,
+      addProducer,
       connection,
       globals,
-      history,
       keys,
       producers,
+      removeProducer,
       settings,
       system,
-      t,
-      tables,
-      transaction,
-      validate,
-      wallet
+      t
     } = this.props;
     const {
       amount,
-      lastError,
-      lastTransaction,
-      previewing,
       querying,
       selected,
-      submitting
     } = this.state;
-    let sidebar = [(
-      <WalletPanel
-        actions={actions}
-        accounts={accounts}
-        balances={balances}
-        blockExplorers={blockExplorers}
-        globals={globals}
-        key="WalletPanel"
-        keys={keys}
-        settings={settings}
-        system={system}
-        transaction={transaction}
-        validate={validate}
-        wallet={wallet}
-      />
-    )];
+
     const account = accounts[settings.account];
     const isMainnet = (connection && connection.chain === 'eos-mainnet');
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
-    const modified = (selected.sort().toString() !== producers.selected.sort().toString());
-    if (isValidUser && settings.walletMode !== 'wait') {
-      sidebar = (
-        <React.Fragment>
-          <ProducersProxy
-            account={account}
-            accounts={accounts}
-            actions={actions}
-            blockExplorers={blockExplorers}
-            keys={keys}
-            isProxying={isProxying}
-            isValidUser={isValidUser}
-            settings={settings}
-            system={system}
-            tables={tables}
-          />
 
-          <Divider hidden />
-
-          {(!isProxying) ? (
-            <ProducersVotingPreview
+    return (
+      (producers.list.length > 0)
+        ? [(
+          <Visibility
+            continuous
+            key="ProducersTable"
+            fireOnMount
+            onBottomVisible={this.loadMore}
+            once={false}
+          >
+            <ProducersTable
+              account={accounts[settings.account]}
               actions={actions}
-              blockExplorers={blockExplorers}
-              lastError={lastError}
-              lastTransaction={lastTransaction}
-              open={previewing}
-              onClose={() => this.previewProducerVotes(false)}
-              onConfirm={this.submitProducerVotes.bind(this)}
-              onOpen={() => this.previewProducerVotes(true)}
+              addProducer={addProducer}
+              amount={amount}
+              attached="top"
+              globals={globals}
+              isMainnet={isMainnet}
+              isProxying={isProxying}
+              isQuerying={this.isQuerying}
+              keys={keys}
+              producers={producers}
+              removeProducer={removeProducer}
+              resetDisplayAmount={this.resetDisplayAmount}
               selected={selected}
               settings={settings}
-              submitting={submitting}
               system={system}
+              isValidUser={isValidUser}
             />
-          ) : ''}
-
-          <ProducersSelector
-            account={accounts[settings.account]}
-            isProxying={isProxying}
-            modified={modified}
-            removeProducer={this.removeProducer.bind(this)}
-            selected={selected}
-            submitProducerVotes={() => this.previewProducerVotes(true)}
-            submitting={submitting}
-          />
-        </React.Fragment>
-      );
-    }
-    return (
-      <div ref={this.handleContextRef}>
-        <Grid divided>
-          <Grid.Row>
-            <Grid.Column width={6}>
-              <SidebarAccount
-                actions={actions}
-                history={history}
-                wallet={wallet}
-              />
-              {sidebar}
-            </Grid.Column>
-            <Grid.Column width={10}>
-              {(producers.list.length > 0)
-               ? [(
-                 <Visibility
-                   continuous
-                   key="ProducersTable"
-                   fireOnMount
-                   onBottomVisible={this.loadMore}
-                   once={false}
-                 >
-                   <ProducersTable
-                     account={accounts[settings.account]}
-                     actions={actions}
-                     addProducer={this.addProducer.bind(this)}
-                     amount={amount}
-                     attached="top"
-                     globals={globals}
-                     isMainnet={isMainnet}
-                     isProxying={isProxying}
-                     isQuerying={this.isQuerying}
-                     keys={keys}
-                     producers={producers}
-                     removeProducer={this.removeProducer.bind(this)}
-                     resetDisplayAmount={this.resetDisplayAmount}
-                     selected={selected}
-                     settings={settings}
-                     system={system}
-                     isValidUser={isValidUser}
-                   />
-                 </Visibility>
-               ), (
-                 (!querying && amount < producers.list.length)
-                 ? (
-                   <Segment key="ProducersTableLoading" clearing padded vertical>
-                     <Loader active />
-                   </Segment>
-                 ) : false
-               )]
-               : (
-                 <Segment attached="bottom" stacked>
-                   <Header textAlign="center">
-                     {t('producer_none_loaded')}
-                   </Header>
-                 </Segment>
-               )
-              }
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+          </Visibility>
+        ), (
+            (!querying && amount < producers.list.length)
+              ? (
+                <Segment key="ProducersTableLoading" clearing padded vertical>
+                  <Loader active />
+                </Segment>
+              ) : false
+          )]
+        : (
+          <Segment attached="bottom" stacked>
+            <Header textAlign="center">
+              {t('producer_none_loaded')}
+            </Header>
+          </Segment>
+        )
     );
   }
 }

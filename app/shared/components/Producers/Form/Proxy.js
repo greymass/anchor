@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Button, Divider, Form, Icon, Segment, Header, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import ProducersFormProxyConfirming from './Proxy/Confirming';
 
 class ProducersFormProxy extends Component<Props> {
@@ -110,7 +109,7 @@ class ProducersFormProxy extends Component<Props> {
     return (
       <Form
         warning
-        loading={system.PROXY === 'PENDING'}
+        loading={system.VOTEPRODUCER === 'PENDING'}
         onKeyPress={this.onKeyPress}
         onSubmit={this.onSubmit}
       >
