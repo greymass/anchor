@@ -201,7 +201,7 @@ class Proxies extends Component<Props> {
                : (
                  <Segment attached="bottom" stacked>
                    <Header textAlign="center">
-                     {t('proxies_none_loaded')}
+                     {t('producers_proxies_none_loaded')}
                    </Header>
                  </Segment>
                )
