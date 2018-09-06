@@ -1,9 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { findIndex } from 'lodash';
-
-import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
+import { Header, Segment, Divider } from 'semantic-ui-react';
 
 import ToolsButtonRegisterProxy from './Button/RegisterProxy';
 import ToolsButtonUnregisterProxy from './Button/UnregisterProxy';
@@ -41,11 +39,6 @@ class ToolsProxy extends Component<Props> {
 
     const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
 
-    const displayProxyInfoForm =
-      isProxy &&
-      tables.regproxyinfo &&
-      findIndex(tables.regproxyinfo.regproxyinfo.proxies.rows, { owner: settings.account }) === -1;
-
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
         <React.Fragment>
@@ -82,30 +75,29 @@ class ToolsProxy extends Component<Props> {
               system={system}
             />
 
-            {displayProxyInfoForm
-              ? (
-                <GlobalTransactionHandler
-                  actionName="SET_REGPROXYINFO"
+            <GlobalTransactionHandler
+              actionName="SET_REGPROXYINFO"
+              actions={actions}
+              blockExplorers={blockExplorers}
+              content={(
+                <ToolsFormProxyInfo
+                  account={account}
                   actions={actions}
                   blockExplorers={blockExplorers}
-                  content={(
-                    <ToolsFormProxyInfo
-                      account={account}
-                      actions={actions}
-                      blockExplorers={blockExplorers}
-                      contracts={contracts}
-                      settings={settings}
-                      system={system}
-                      transaction={transaction}
-                    />
-                  )}
-                  hideClose
-                  onClose={this.onClose}
+                  contracts={contracts}
+                  isProxy={isProxy}
                   settings={settings}
                   system={system}
+                  tables={tables}
                   transaction={transaction}
                 />
-              ) : ''}
+              )}
+              hideClose
+              onClose={this.onClose}
+              settings={settings}
+              system={system}
+              transaction={transaction}
+            />
 
           </Segment>
         </React.Fragment>
