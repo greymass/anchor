@@ -190,7 +190,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
-    console.table(this.state)
 
     let exchangeWarning;
 
