@@ -12,12 +12,12 @@ class ToolsFormUnregisterProxy extends Component<Props> {
     } = this.props;
 
     const {
+      removeregproxyinfo,
       unregproxy
     } = actions;
 
+    removeregproxyinfo();
     unregproxy(account);
-
-    actions.removeregproxyinfo();
   }
 
   render() {
