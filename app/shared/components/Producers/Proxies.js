@@ -5,29 +5,7 @@ import { translate } from 'react-i18next';
 
 import ProxiesTable from './Proxies/Table';
 
-type Props = {
-  actions: {
-    clearSystemState: () => void,
-    getAccount: () => void,
-    getGlobals: () => void,
-    getProducers: () => void,
-    voteproducers: () => void
-  },
-  accounts: {},
-  addProxy: () => void,
-  globals: {},
-  keys: {},
-  removeProxy: () => void,
-  settings: {},
-  system: {},
-  t: () => void,
-  tables: {},
-  validate: {}
-};
-
 class Proxies extends Component<Props> {
-  props: Props;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -109,6 +87,7 @@ class Proxies extends Component<Props> {
             isValidUser={isValidUser}
             proxies={proxies}
             removeProxy={removeProxy}
+            resetDisplayAmount={this.resetDisplayAmount}
             settings={settings}
             system={system}
           />
