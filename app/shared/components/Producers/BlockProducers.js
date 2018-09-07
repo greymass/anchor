@@ -10,74 +10,14 @@ class BlockProducers extends Component<Props> {
     super(props);
     this.state = {
       amount: 40,
-      lastError: false,
-      lastTransaction: {},
       querying: false,
-      selected: [],
-      selected_account: false,
-      selected_loaded: false,
-      submitting: false,
+      selected: []
     };
   }
 
   componentDidMount() {
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 60000);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
-    const { settings, system } = nextProps;
-    const nextValidate = nextProps.validate;
-    // On a new node connection, update props + producers
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.props.actions.getGlobals();
-      this.tick();
-    }
-    // Update state when the transaction has gone through
-    if (
-      this.state.submitting
-      && (
-        this.state.lastTransaction !== system.VOTEPRODUCER_LAST_TRANSACTION
-        || this.state.lastError !== system.VOTEPRODUCER_LAST_ERROR
-      )
-    ) {
-      this.setState({
-        lastError: system.VOTEPRODUCER_LAST_ERROR,
-        lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
-        submitting: false
-      });
-    }
-    // If no selected are loaded, attempt to retrieve them from the props
-    if (
-      !this.state.selected_loaded
-      || this.state.selected_account !== settings.account
-      || (nextProps.producers.proxy && nextProps.producers.proxy !== this.state.selected_account)
-    ) {
-      const { accounts } = nextProps;
-      // If an account is loaded, attempt to load it's votes
-      if (settings.account && accounts[settings.account]) {
-        const account = accounts[settings.account];
-        if (account.voter_info) {
-          const selected_account = account.voter_info.proxy || account.account_name;
-          let selected = account.voter_info.producers
-          if (selected_account !== settings.account && accounts[selected_account]) {
-            selected = accounts[selected_account].voter_info.producers;
-          }
-          // If the voter_info entry exists, load those votes into state
-          this.setState({
-            selected,
-            selected_account,
-            selected_loaded: true
-          });
-        } else {
-          // otherwise notify users that they must stake before allowed voting
-        }
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -103,12 +43,6 @@ class BlockProducers extends Component<Props> {
       getProducersInfo();
     }
   }
-
-  previewProducerVotes = (previewing) => this.setState({
-    previewing,
-    lastError: false, // Reset the last error
-    lastTransaction: {} // Reset the last transaction
-  });
 
   submitProducerVotes = () => {
     const {
