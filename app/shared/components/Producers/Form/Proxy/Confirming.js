@@ -16,7 +16,7 @@ class ProducersFormProxyConfirming extends Component<Props> {
 
   render() {
     const {
-      currentProxyAccount,
+      currentProxy,
       onBack,
       proxyAccount,
       showBackButton,
@@ -35,7 +35,7 @@ class ProducersFormProxyConfirming extends Component<Props> {
           ) : (
             <div>
               {t('producers_form_proxy_confirming_remove_text_one')}
-              &nbsp;<b><u>{currentProxyAccount}</u></b>&nbsp;
+              &nbsp;<b><u>{currentProxy}</u></b>&nbsp;
               {t('producers_form_proxy_confirming_remove_text_two')}
             </div>
           )

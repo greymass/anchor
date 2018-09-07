@@ -114,6 +114,8 @@ class Producers extends Component<Props> {
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
+    const currentProxy = (account && account.voter_info && account.voter_info.proxy);
+
     if (isValidUser && settings.walletMode !== 'wait') {
       sidebar = (
         <React.Fragment>
@@ -121,10 +123,14 @@ class Producers extends Component<Props> {
             account={account}
             accounts={accounts}
             actions={actions}
+            addProxy={addProxy}
             blockExplorers={blockExplorers}
+            currentProxy={currentProxy}
             keys={keys}
             isProxying={isProxying}
             isValidUser={isValidUser}
+            onClose={this.onClose}
+            removeProxy={removeProxy}
             settings={settings}
             system={system}
             tables={tables}
