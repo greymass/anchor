@@ -20,6 +20,7 @@ class ProducersTableRow extends Component<Props> {
       isValidUser,
       proxy,
       removeProxy,
+      settings,
       t
     } = this.props;
 
@@ -68,7 +69,16 @@ class ProducersTableRow extends Component<Props> {
         </Table.Cell>
         <Table.Cell
           singleLine
-        />
+        >
+          {(proxy.website)
+            ? (
+              <DangerLink
+                content={proxy.website.substring(0, 30).replace(/(^\w+:|^)\/\//, '')}
+                link={proxy.website}
+                settings={settings}
+              />
+            ) : ''}
+        </Table.Cell>
       </Table.Row>
     );
   }
