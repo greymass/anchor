@@ -58,12 +58,12 @@ class ProducersFormProxy extends Component<Props> {
   }
 
   onConfirm = () => {
-    const {
+    let {
       proxyAccount
     } = this.state;
 
     this.setState({ confirming: false }, () => {
-      this.props.actions.voteproducers([], proxyAccount);
+      this.props.actions.voteproducers([], proxyAccount || '');
     });
   }
 
