@@ -16,7 +16,7 @@ class Proxies extends Component<Props> {
 
   componentDidMount() {
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 60000);
+    this.interval = setInterval(this.tick.bind(this), 120000);
   }
 
   componentWillUnmount() {
@@ -25,7 +25,7 @@ class Proxies extends Component<Props> {
 
   loadMore = () => this.setState({ amount: this.state.amount + 20 });
 
-  resetDisplayAmount = () => this.setState({ amount: 40 });
+  resetDisplayAmount = () => this.setState({ amount: 20 });
   isQuerying = (querying) => this.setState({ querying });
 
   tick() {
