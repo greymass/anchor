@@ -12,6 +12,7 @@ class ProducersButtonProxy extends Component<Props> {
       actions,
       addProxy,
       blockExplorers,
+      currentProxy,
       isProxying,
       onClose,
       proxyAccount,
@@ -44,6 +45,7 @@ class ProducersButtonProxy extends Component<Props> {
             accounts={accounts}
             actions={actions}
             addProxy={addProxy}
+            currentProxy={currentProxy}
             isProxying={isProxying}
             key="ProxyForm"
             removeProxy={removeProxy}
