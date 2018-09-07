@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import GlobalTransactionModal from '../../Global/Transaction/Modal';
+import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import ProducersFormProxy from '../Form/Proxy';
 
 class ProducersButtonProxy extends Component<Props> {

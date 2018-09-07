@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Icon, Header } from 'semantic-ui-react';
 
-import ProducersButtonProxy from './Button/Proxy';
+import ProducersButtonProxy from './Proxy/Button/Proxy';
 
 class ProducersProxy extends Component<Props> {
   render() {
