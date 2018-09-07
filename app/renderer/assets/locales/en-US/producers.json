@@ -110,5 +110,6 @@
   "producers_proxies_popup_header": "Select Proxy",
   "producers_proxies_table_header_account": "Proxy Account",
   "producers_proxies_table_header_name": "Proxy Name",
+  "producers_proxies_table_header_website": "Website",
   "producers_table_votes_proxied": "Current producer voting proxy:"
 }
