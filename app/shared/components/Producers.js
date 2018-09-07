@@ -128,6 +128,23 @@ class Producers extends Component<Props> {
     lastTransaction: {} // Reset the last transaction
   });
 
+  submitProducerVotes = () => {
+    const {
+      clearSystemState,
+      voteproducers
+    } = this.props.actions;
+    const {
+      selected
+    } = this.state;
+    clearSystemState();
+    voteproducers(selected);
+    this.setState({
+      lastError: false, // Reset the last error
+      lastTransaction: {}, // Reset the last transaction
+      submitting: true
+    });
+  }
+
   render() {
     const {
       actions,
@@ -253,7 +270,8 @@ class Producers extends Component<Props> {
                             <BlockProducers
                               {...this.props}
                               addProducer={this.addProducer.bind(this)}
-                              removeProducer={this.removeProxy.bind(this)}
+                              removeProducer={this.removeProducer.bind(this)}
+                              selected={selected}
                             />
                           </Tab.Pane>
                         );
