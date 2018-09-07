@@ -1,45 +1,17 @@
 // @flow
 import React, { Component } from 'react';
-import { Divider, Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
+import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import ProducersTable from './BlockProducers/Table';
 
-type Props = {
-  actions: {
-    clearSystemState: () => void,
-    getAccount: () => void,
-    getGlobals: () => void,
-    getProducers: () => void,
-    voteproducers: () => void
-  },
-  accounts: {},
-  balances: {},
-  blockExplorers: {},
-  globals: {},
-  history: {},
-  producers: {
-    lastTransaction: {},
-    selected: []
-  },
-  settings: {},
-  system: {},
-  t: () => void,
-  tables: {},
-  validate: {},
-  wallet: {}
-};
-
 class BlockProducers extends Component<Props> {
-  props: Props;
-
   constructor(props) {
     super(props);
     this.state = {
       amount: 40,
       lastError: false,
       lastTransaction: {},
-      previewing: false,
       querying: false,
       selected: [],
       selected_account: false,

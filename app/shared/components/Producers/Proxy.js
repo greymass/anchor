@@ -13,6 +13,7 @@ class ProducersProxy extends Component<Props> {
       actions,
       addProxy,
       blockExplorers,
+      currentProxy,
       isProxying,
       isValidUser,
       onClose,
@@ -33,6 +34,7 @@ class ProducersProxy extends Component<Props> {
               actions={actions}
               addProxy={addProxy}
               blockExplorers={blockExplorers}
+              currentProxy={currentProxy}
               onClose={onClose}
               isProxying={isProxying}
               proxyAccount={proxyAccount}

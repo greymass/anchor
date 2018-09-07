@@ -92,6 +92,7 @@ class ProducersFormProxy extends Component<Props> {
   render() {
     const {
       addProxy,
+      currentProxy,
       isProxying,
       onClose,
       removeProxy,
@@ -116,7 +117,7 @@ class ProducersFormProxy extends Component<Props> {
         {(confirming)
           ? (
             <ProducersFormProxyConfirming
-              currentProxyAccount={isProxying}
+              currentProxy={currentProxy}
               showBackButton={!addProxy && !removeProxy}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
@@ -132,7 +133,7 @@ class ProducersFormProxy extends Component<Props> {
                     <Header.Subheader>
                       {t('producers_table_votes_proxied')}
                     </Header.Subheader>
-                    {isProxying}
+                    {currentProxy}
                   </Header.Content>
                 </Header>
               ) : ''}
