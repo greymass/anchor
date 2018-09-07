@@ -10,8 +10,7 @@ class BlockProducers extends Component<Props> {
     super(props);
     this.state = {
       amount: 40,
-      querying: false,
-      selected: []
+      querying: false
     };
   }
 
@@ -44,23 +43,6 @@ class BlockProducers extends Component<Props> {
     }
   }
 
-  submitProducerVotes = () => {
-    const {
-      clearSystemState,
-      voteproducers
-    } = this.props.actions;
-    const {
-      selected
-    } = this.state;
-    clearSystemState();
-    voteproducers(selected);
-    this.setState({
-      lastError: false, // Reset the last error
-      lastTransaction: {}, // Reset the last transaction
-      submitting: true
-    });
-  }
-
   render() {
     const {
       actions,
@@ -71,14 +53,14 @@ class BlockProducers extends Component<Props> {
       keys,
       producers,
       removeProducer,
+      selected,
       settings,
       system,
       t
     } = this.props;
     const {
       amount,
-      querying,
-      selected,
+      querying
     } = this.state;
 
     const account = accounts[settings.account];
