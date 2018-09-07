@@ -4,6 +4,7 @@ import { Button, Divider, Form, Icon, Segment, Header, Message } from 'semantic-
 import { translate } from 'react-i18next';
 
 import ProducersFormProxyConfirming from './Proxy/Confirming';
+import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
 
 class ProducersFormProxy extends Component<Props> {
   constructor(props) {
@@ -137,6 +138,15 @@ class ProducersFormProxy extends Component<Props> {
                   </Header.Content>
                 </Header>
               ) : ''}
+
+              <GlobalFormFieldAccount
+                autoFocus
+                contacts={settings.contacts}
+                label={`${t('producers_form_proxy_label')}:`}
+                name="account"
+                onChange={this.onChange}
+                value={proxyAccount}
+              />
 
               <Message
                 content={t('producers_form_proxy_message')}
