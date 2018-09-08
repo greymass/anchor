@@ -12,21 +12,22 @@ import ContractInterface from './Contract/Interface';
 import RecommendationInterface from './Recommendation/Interface';
 
 import Tools from '../components/Tools';
-import ToolsCreateAccount from '../components/Tools/CreateAccount';
+import ToolsBidName from '../components/Tools/BidName';
 import ToolsContacts from '../components/Tools/Contacts';
+import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
 import ToolsDelegations from '../components/Tools/Delegations';
 import ToolsGovernanceProposals from '../components/Tools/Governance/Proposals';
+import ToolsHardwareLedger from '../components/Tools/Hardware/Ledger';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsKeysValidator from '../components/Tools/Keys/Validator';
-import ToolsHardwareLedger from '../components/Tools/Hardware/Ledger';
+import ToolsPermissions from '../components/Tools/Permissions';
+import ToolsProxy from '../components/Tools/Proxy';
+import ToolsReset from '../components/Tools/Reset';
 import ToolsStateChain from '../components/Tools/State/Chain';
 import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
-import ToolsPermissions from '../components/Tools/Permissions';
-import ToolsProxy from '../components/Tools/Proxy';
 import ToolsWallets from '../components/Tools/Wallets';
-import ToolsReset from '../components/Tools/Reset';
 
 import * as AccountsActions from '../actions/accounts';
 import * as ContractsActions from '../actions/contracts';
@@ -114,6 +115,11 @@ const paneMapping = [
     header: true,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'utilities',
+  },
+  {
+    element: ToolsBidName,
+    modes: ['hot', 'watch'],
+    name: 'bid_name',
   },
   {
     element: ToolsContacts,
