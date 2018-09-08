@@ -182,8 +182,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors[attribute] = null;
     });
 
-    if (Number(ramAmount) < 4000) {
-      formErrors.ramAmount = 'ram_under_minimum_for_new_account';
+    if (Number(ramAmount) < 2600) {
+      formErrors.ramAmount = 'ram_under_minimum_of_2600_for_new_account';
       submitDisabled = true;
     }
 
