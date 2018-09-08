@@ -145,7 +145,7 @@ class ProducersFormProxy extends Component<Props> {
                 label={`${t('producers_form_proxy_label')}:`}
                 name="account"
                 onChange={this.onChange}
-                value={proxyAccount}
+                value={proxyAccount || ''}
               />
 
               <Message
