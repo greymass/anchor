@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Modal, Table } from 'semantic-ui-react';
+import { Modal, Table, Segment } from 'semantic-ui-react';
 
 class ProducersProxiesModalProxyInfo extends Component<Props> {
   componentWillMount = () => {
@@ -24,6 +24,7 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
       Object.keys(viewingProxy).filter((key) => viewingProxy[key]);
 
     const proxyAccount = viewingProxy.owner;
+    const proxyInfoLoaded = proxyAccount && viewingProxy && accounts[proxyAccount];
 
     return (
       <Modal
@@ -35,9 +36,9 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
           {t('producers_proxies_info_header', { proxy: viewingProxy })}
         </Modal.Header>
         <Modal.Content>
-          {(proxyAccount && viewingProxy && accounts[proxyAccount])
-            ? (
-              <div>
+          <Segment loading={!proxyInfoLoaded} style={{ minHeight: '200px' }}>
+            {(proxyInfoLoaded)
+              ? (
                 <Table>
                   <Table.Body key="ProxyInfoBody">
                     {currentProxyKeys.map((key) => {
@@ -67,8 +68,8 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
                     </Table.Row>
                   </Table.Body>
                 </Table>
-              </div>
-            ) : ''}
+              ) : ''}
+          </Segment>
         </Modal.Content>
       </Modal>
     );
