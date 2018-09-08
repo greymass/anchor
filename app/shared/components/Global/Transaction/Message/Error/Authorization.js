@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { List } from 'semantic-ui-react';
+import ReactJson from 'react-json-view';
 
 class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
   render() {
     const {
+      error,
       t
     } = this.props;
 
@@ -29,6 +31,17 @@ class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
         </List>
         <hr style={colorStyle} />
         <p style={colorStyle}>*&nbsp;{t('global_transaction_message_error_authorization_note')}</p>
+        {(typeof error === 'object') ? (
+          <ReactJson
+            collapsed={2}
+            displayDataTypes={false}
+            displayObjectSize={false}
+            iconStyle="square"
+            name={null}
+            src={error}
+            style={{ padding: '1em' }}
+          />
+        ) : ''}
       </div>
     );
   }
