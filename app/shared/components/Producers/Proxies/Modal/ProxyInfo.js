@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Modal, Table, Segment } from 'semantic-ui-react';
 
+import DangerLink from '../../../Global/Modal/DangerLink';
+
+const urlKeys = ['website', 'logo_256'];
+
 class ProducersProxiesModalProxyInfo extends Component<Props> {
   componentWillMount = () => {
     const {
@@ -16,6 +20,7 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
     const {
       accounts,
       onClose,
+      settings,
       t,
       viewingProxy
     } = this.props;
@@ -48,7 +53,16 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
                             {t(`producers_form_proxy_${key}`)}
                           </Table.Cell>
                           <Table.Cell>
-                            {viewingProxy[key]}
+                            {(urlKeys.includes(key))
+                              ? (
+                                <DangerLink
+                                  content={viewingProxy[key].substring(0, 30).replace(/(^\w+:|^)\/\//, '')}
+                                  link={viewingProxy[key]}
+                                  settings={settings}
+                                />
+                              ) : (
+                                <p>{viewingProxy[key]}</p>
+                              )}
                           </Table.Cell>
                         </Table.Row>
                       );
