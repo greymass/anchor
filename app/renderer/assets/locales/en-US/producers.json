@@ -64,7 +64,7 @@
   "producers_form_proxy_current_votes": "Current Votes",
   "producers_form_proxy_dropdown_placeholder": "Choose a proxy voter",
   "producers_form_proxy_header":"Configure Producer Voting Proxy",
-  "producers_form_proxy_info_header": "Info on selected proxy:",
+  "producers_form_proxy_info_header": "Info on selected proxy",
   "producers_form_proxy_label": "Enter the account name you wish to proxy your producer voting weight to",
   "producers_form_proxy_logo_256": "Logo",
   "producers_form_proxy_message": "If you do not have the time to research Block Producers on a regular basis, proxying your votes to a trustworthy proxy voter can be a very good way to use your voting power efficiently. Simply enter an account name or browse through the list of registered proxy voters to proxy your votes. This can be revoked at any time.",
