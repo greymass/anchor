@@ -5,9 +5,10 @@ import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 
 import FormMessageError from '../../Global/Form/Message/Error';
-import GlobalFormFieldString from '../../Global/Form/Field/String';
+//import GlobalFormFieldString from '../../Global/Form/Field/String';
 import GlobalFormFieldAmount from '../../Global/Form/Field/Token';
 import ToolsFormBidNameConfirming from './BidName/Confirming';
+import WalletPanelLocked from '../../Wallet/Panel/Locked';
 
 const formAttributes = ['bidder', 'newname', 'bid'];
 const tokenFields = ['bid'];
@@ -136,8 +137,13 @@ class ToolsFormBidName extends Component<Props> {
 
   render() {
     const {
+      actions,
+      keys,
+      settings,
       system,
-      t
+      t,
+      validate,
+      wallet
     } = this.props;
 
     const {
@@ -150,70 +156,78 @@ class ToolsFormBidName extends Component<Props> {
 
     const formErrorKeys = Object.keys(formErrors);
 
-    return (
-      <Segment
-        loading={system.SET_BIDNAME === 'PENDING'}
-        textAlign="left"
-      >
-        {(shouldShowForm)
-          ? (
-            <div>
-              <Message
-                content={t('tools_form_bid_name_message')}
-                warning
-              />
-              <Form
-                onKeyPress={this.onKeyPress}
-                onSubmit={this.onSubmit}
-              >
-                {formAttributes.filter((formAttribute) => formAttribute !== 'bidder').map((formAttribute) => {
-                  const FieldComponentType = (tokenFields.includes(formAttribute)) ? GlobalFormFieldAmount : GlobalFormFieldString;
-
-                  return (
-                    <FieldComponentType
-                      defaultValue={this.state[formAttribute] || ''}
-                      label={t(`tools_form_proxy_info_${formAttribute}`)}
-                      name={formAttribute}
-                      onChange={this.onChange}
-                    />
-                  );
-                })}
-                <FormMessageError
-                  errors={
-                    formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
-                      const error = this.state.formErrors[key];
-                      if (error) {
-                        errors.push(error);
-                      }
-                      return errors;
-                    }, [])
-                  }
-                  icon="warning sign"
+    return ((keys && keys.key) || settings.walletMode === 'watch')
+      ? (
+        <Segment
+          loading={system.SET_BIDNAME === 'PENDING'}
+          textAlign="left"
+        >
+          {(shouldShowForm)
+            ? (
+              <div>
+                <Message
+                  content={t('tools_form_bid_name_message')}
+                  warning
                 />
-                <Segment basic clearing>
-                  <Button
-                    content={t('tools_form_proxy_info_button')}
-                    color="green"
-                    disabled={submitDisabled}
-                    floated="right"
-                    primary
-                  />
-                </Segment>
-              </Form>
-            </div>
-          ) : ''}
+                <Form
+                  onKeyPress={this.onKeyPress}
+                  onSubmit={this.onSubmit}
+                >
+                  {formAttributes.filter((formAttribute) => formAttribute !== 'bidder').map((formAttribute) => {
+                    const FieldComponentType = (tokenFields.includes(formAttribute)) ? GlobalFormFieldAmount : GlobalFormFieldString;
 
-        {(shouldShowConfirm)
-          ? (
-            <ToolsFormBidNameConfirming
-              formAttributes={formAttributes}
-              formValues={this.state}
-              onBack={this.onBack}
-              onConfirm={this.onConfirm}
-            />
-          ) : ''}
-      </Segment>
-    );
+                    return (
+                      <FieldComponentType
+                        defaultValue={this.state[formAttribute] || ''}
+                        label={t(`tools_form_proxy_info_${formAttribute}`)}
+                        name={formAttribute}
+                        onChange={this.onChange}
+                      />
+                    );
+                  })}
+                  <FormMessageError
+                    errors={
+                      formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
+                        const error = this.state.formErrors[key];
+                        if (error) {
+                          errors.push(error);
+                        }
+                        return errors;
+                      }, [])
+                    }
+                    icon="warning sign"
+                  />
+                  <Segment basic clearing>
+                    <Button
+                      content={t('tools_form_proxy_info_button')}
+                      color="green"
+                      disabled={submitDisabled}
+                      floated="right"
+                      primary
+                    />
+                  </Segment>
+                </Form>
+              </div>
+            ) : ''}
+
+          {(shouldShowConfirm)
+            ? (
+              <ToolsFormBidNameConfirming
+                formAttributes={formAttributes}
+                formValues={this.state}
+                onBack={this.onBack}
+                onConfirm={this.onConfirm}
+              />
+            ) : ''}
+        </Segment>
+      ) : (
+        <WalletPanelLocked
+          actions={actions}
+          settings={settings}
+          validate={validate}
+          wallet={wallet}
+        />
+      );
   }
 }
 
