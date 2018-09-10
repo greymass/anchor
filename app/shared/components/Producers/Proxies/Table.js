@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { debounce, filter, findIndex } from 'lodash';
+import { debounce, filter, findIndex, sortBy } from 'lodash';
 import { Grid, Input, Segment, Transition, Table, Message } from 'semantic-ui-react';
 
 import ProducersModalProxyInfo from './Modal/ProxyInfo';
@@ -78,8 +78,9 @@ class ProxiesTable extends Component<Props> {
         </Table.Row>
       </Table.Body>
     );
+    const sortedProxies = sortBy(proxies, 'name');
     if (!loading) {
-      const fullResults = proxies.slice(0, amount);
+      const fullResults = sortedProxies.slice(0, amount);
       baseTable = (
         <Table.Body key="FullResults">
           {fullResults.map((proxy) => {
@@ -103,8 +104,11 @@ class ProxiesTable extends Component<Props> {
       );
 
       if (querying) {
-        const partResults = filter(proxies, (proxy) =>
-          proxy.owner.indexOf(query) > -1).slice(0, amount);
+        const partResults = filter(sortedProxies, (proxy) =>
+          proxy.owner.indexOf(query) > -1 ||
+          proxy.name.indexOf(query) > -1
+        ).slice(0, amount);
+
         if (partResults.length > 0) {
           searchTable = (
             <Table.Body key="PartResults">
