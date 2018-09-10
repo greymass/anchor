@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Popup, Table } from 'semantic-ui-react';
+import { Button, Popup, Table, Header } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
@@ -60,24 +60,23 @@ class ProducersTableRow extends Component<Props> {
         <Table.Cell
           singleLine
         >
-          <b>{ proxy.name }</b>
-        </Table.Cell>
-        <Table.Cell
-          singleLine
-        >
-          <b>{ proxy.owner }</b>
-        </Table.Cell>
-        <Table.Cell
-          singleLine
-        >
-          {(proxy.website)
-            ? (
+          <Header size="small">
+            <span styles={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
+              {proxy.name}
+            </span>
+            <Header.Subheader>
               <DangerLink
                 content={proxy.website.substring(0, 30).replace(/(^\w+:|^)\/\//, '')}
                 link={proxy.website}
                 settings={settings}
               />
-            ) : ''}
+            </Header.Subheader>
+          </Header>
+        </Table.Cell>
+        <Table.Cell
+          singleLine
+        >
+          <b>{ proxy.owner }</b>
         </Table.Cell>
       </Table.Row>
     );
