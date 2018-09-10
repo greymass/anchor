@@ -175,9 +175,6 @@ class ProxiesTable extends Component<Props> {
               <Table.HeaderCell>
                 {t('producers_proxies_table_header_account')}
               </Table.HeaderCell>
-              <Table.HeaderCell>
-                {t('producers_proxies_table_header_website')}
-              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Transition visible={querying} animation="slide down" duration={200}>
