@@ -36,7 +36,7 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
           {t('producers_proxies_info_header', { proxy: viewingProxy })}
         </Modal.Header>
         <Modal.Content>
-          <Segment loading={!proxyInfoLoaded} style={{ minHeight: '200px' }}>
+          <Segment basic loading={!proxyInfoLoaded} style={{ minHeight: '200px' }}>
             {(proxyInfoLoaded)
               ? (
                 <Table>
