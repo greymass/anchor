@@ -227,7 +227,7 @@ class Producers extends Component<Props> {
       />
     )];
     const account = accounts[settings.account];
-    const isMainnet = (connection && connection.chain === 'telos-mainnet');
+    const isMainnet = (connection && connection.chain && connection.chain.toLowerCase().indexOf('mainnet') !== -1);
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());

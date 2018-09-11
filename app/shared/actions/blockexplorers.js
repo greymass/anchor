@@ -8,20 +8,20 @@ export function getBlockExplorers() {
     dispatch({
       type: types.SYSTEM_BLOCKEXPLORERS_PENDING
     });
-    // const { connection } = getState();
-    // // Don't retrieve if we're not on mainnet
-    // if (connection.chain !== 'telos-mainnet') {
-    //   return dispatch({
-    //     type: types.SYSTEM_BLOCKEXPLORERS_FAILURE
-    //   });
-    // }
-    // const query = {
-    //   json: true,
-    //   code: 'blockexplorers',
-    //   scope: 'blockexplorers',
-    //   table: 'blockexplorers',
-    //   limit: 100,
-    // };
+    const { connection } = getState();
+    // Don't retrieve if we're not on mainnet
+    if (connection.chain && connection.chain.toLowerCase().indexOf('mainnet') === -1) {
+      return dispatch({
+        type: types.SYSTEM_BLOCKEXPLORERS_FAILURE
+      });
+    }
+    const query = {
+      json: true,
+      code: 'blockexplorers',
+      scope: 'blockexplorers',
+      table: 'blockexplorers',
+      limit: 100,
+    };
 
     const rows = [
       {

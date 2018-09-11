@@ -34,9 +34,9 @@
 
 Current 0.5.2 release downloads:
 
-- [Windows Installer](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.2/win-Sqrl-0.5.2.exe)
-- [macOS Package](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.2/mac-Sqrl-0.5.2.dmg)
-- [Linux (src)](https://github.com/Telos-Foundation/Sqrl/archive/v0.5.2.tar.gz)
+- [Windows Installer](https://github.com/Telos-Foundation/Sqrl/releases/download/0.5.2/win-Sqrl-0.5.2.exe)
+- [macOS Package](https://github.com/Telos-Foundation/Sqrl/releases/download/0.5.2/mac-Sqrl-0.5.2.dmg)
+- [Linux (src)](https://github.com/Telos-Foundation/Sqrl/archive/0.5.2.tar.gz)
 
 The latest release will always be available on the releases page of this repository:
 

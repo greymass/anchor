@@ -120,7 +120,7 @@ class ProducersTable extends Component<Props> {
                     getProducerInfo={this.getProducerInfo}
                     hasInfo={hasInfo}
                     key={producer.key}
-                    is={isMainnet}
+                    isMainnet={isMainnet}
                     isProxying={isProxying}
                     isSelected={isSelected}
                     isValidUser={isValidUser}
