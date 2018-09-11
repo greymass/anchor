@@ -89,6 +89,7 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
         <Form>
           <Container textAlign="center">
             <Form.Button
+              disabled={accountCreated}
               color="purple"
               content={t('wallet_account_request_form_create_account')}
               onClick={this.createAccount}
