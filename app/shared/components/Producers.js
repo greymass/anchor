@@ -223,6 +223,7 @@ class Producers extends Component<Props> {
         transaction={transaction}
         validate={validate}
         wallet={wallet}
+        connection={connection}
       />
     )];
     const account = accounts[settings.account];

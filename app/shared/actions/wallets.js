@@ -5,21 +5,22 @@ import { getAccount } from './accounts';
 import { setSettings } from './settings';
 import { encrypt, setWalletMode } from './wallet';
 
-export function importWallet(account, key = false, password = false, mode = 'hot') {
+export function importWallet(account, key = false, password = false, mode = 'hot', chainId) {
   const data = (key && password) ? encrypt(key, password) : false;
   return (dispatch: () => void) => dispatch({
     type: types.IMPORT_WALLET_KEY,
     payload: {
       account,
       data,
-      mode
+      mode,
+      chainId
     }
   });
 }
 
-export function importWallets(accounts, key = false, password = false, mode = 'hot') {
+export function importWallets(accounts, key = false, password = false, mode = 'hot', chainId) {
   return (dispatch: () => void) =>
-    forEach(accounts, (account) => dispatch(importWallet(account, key, password, mode)));
+    forEach(accounts, (account) => dispatch(importWallet(account, key, password, mode, chainId)));
 }
 
 export function removeWallet(account) {

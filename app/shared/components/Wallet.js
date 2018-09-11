@@ -40,9 +40,9 @@ export default class Wallet extends Component<Props> {
       system,
       transaction,
       validate,
-      wallet
+      wallet,
+      connection
     } = this.props;
-
     return (
       <Grid divided>
         <Grid.Row>
@@ -60,6 +60,7 @@ export default class Wallet extends Component<Props> {
               transaction={transaction}
               validate={validate}
               wallet={wallet}
+              connection={connection}
             />
           </Grid.Column>
           <Grid.Column width={10}>
@@ -75,6 +76,7 @@ export default class Wallet extends Component<Props> {
               settings={settings}
               validate={validate}
               wallet={wallet}
+              connection={connection}
             />
           </Grid.Column>
         </Grid.Row>

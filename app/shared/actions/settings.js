@@ -123,10 +123,66 @@ export function removeCustomToken(contract, symbol) {
   };
 }
 
+export function changeCoreTokenSymbol(symbol) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { customTokens } = settings;
+
+    const coreToken = ["eosio.token", symbol.toUpperCase()].join(':');
+
+    let tokens = [];
+    if (customTokens) {
+      tokens = customTokens.slice(0);
+    }
+
+    tokens[0] = coreToken;
+    tokens = new Set(tokens.filter((e) => e));
+    dispatch(setSetting('customTokens', Array.from(tokens)));
+  };
+}
+
+export function addBlockchain(blockchain, prefix, node, chainId) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { blockchains } = settings;
+
+    let chains = [];
+    if (blockchains) {
+      chains = blockchains.slice(0);
+    }
+
+    if (blockchain && blockchain.length > 0 && prefix && prefix.length > 0) {
+      chains.push({
+        blockchain: blockchain,
+        prefix: prefix,
+        node: node,
+        chainId: chainId
+      });
+      chains = new Set(chains.filter((e) => e));
+      dispatch(setSetting('blockchains', Array.from(chains)));
+    }
+  };
+}
+
+export function removeBlockchain(chainId) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { blockchains } = settings;
+
+    const newChains = blockchains.filter((c) => {return c.chainId !== chainId});
+    if (newChains) {
+      const chains = new Set(newChains.filter((e) => e));
+      dispatch(setSetting('blockchains', Array.from(chains)));
+    }
+  };
+}
+
 export default {
+  addBlockchain,
   addCustomToken,
   clearSettingsCache,
   clearSettingsInvalid,
+  removeBlockchain,
   removeCustomToken,
   setSetting,
   setSettings,

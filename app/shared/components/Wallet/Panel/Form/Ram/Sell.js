@@ -28,10 +28,11 @@ class WalletPanelFormRamSell extends Component<Props> {
 
   constructor(props) {
     super(props);
-    const { account } = props;
+    const { account, connection } = props;
 
     this.state = {
       activeTab: 'byRAMAmount',
+      ramTabName: 'by' + connection.keyPrefix + 'Amount',
       confirming: false,
       formError: null,
       ramQuota: Number(account.ram_quota),
@@ -171,7 +172,8 @@ class WalletPanelFormRamSell extends Component<Props> {
       onClose,
       settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
 
     const {
@@ -181,7 +183,8 @@ class WalletPanelFormRamSell extends Component<Props> {
       ramUsage,
       ramToSell,
       submitDisabled,
-      priceOfRam
+      priceOfRam,
+      ramTabName
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
@@ -197,7 +200,7 @@ class WalletPanelFormRamSell extends Component<Props> {
             <div>
               <Menu tabular>
                 <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
-                <Menu.Item name="byTLOSAmount" active={activeTab === 'byTLOSAmount'} onClick={this.handleTabClick} />
+                <Menu.Item name={ramTabName} active={activeTab === ramTabName} onClick={this.handleTabClick} />
               </Menu>
               <Form
                 onKeyPress={this.onKeyPress}
@@ -209,27 +212,33 @@ class WalletPanelFormRamSell extends Component<Props> {
                       ? (
                         <WalletPanelFormRamByAmount
                           amountOfRam={ramToSell}
+                          connection={connection}
                           formError={formError}
                           globals={globals}
                           onChange={this.onChange}
                           onError={this.onError}
+                          settings={settings}
                         />
                       ) : (
                         <WalletPanelFormRamByCost
+                          connection={connection}
                           formError={formError}
                           globals={globals}
                           onChange={this.onChange}
                           onError={this.onError}
                           priceOfRam={priceOfRam}
+                          settings={settings}
                         />
                       )
                     }
                   </Grid.Column>
                   <Grid.Column width={8}>
                     <WalletPanelFormRamStats
-                      EOSbalance={balances[settings.account].TLOS}
+                      connection={connection}
+                      EOSbalance={balances[settings.account][connection.keyPrefix]}
                       ramQuota={ramQuota}
                       ramUsage={ramUsage}
+                      settings={settings}
                     />
                   </Grid.Column>
                 </Grid>
@@ -263,6 +272,7 @@ class WalletPanelFormRamSell extends Component<Props> {
               onConfirm={this.onConfirm}
               settings={settings}
               newRamAmount={ramQuota - Number(ramToSell)}
+              connection={connection}
             />
           ) : ''}
       </Segment>

@@ -16,7 +16,8 @@ class ToolsModalPermissionAuth extends Component<Props> {
       pubkey,
       settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
     return (
       <GlobalTransactionModal
@@ -30,6 +31,7 @@ class ToolsModalPermissionAuth extends Component<Props> {
             auth={auth}
             pubkey={pubkey}
             settings={settings}
+            connection={connection}
           />
         )}
         icon="share square"

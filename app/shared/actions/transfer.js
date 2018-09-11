@@ -3,7 +3,7 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
 
-export function transfer(from, to, quantity, memo, symbol = 'TLOS') {
+export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
     const {
       balances,
@@ -13,6 +13,7 @@ export function transfer(from, to, quantity, memo, symbol = 'TLOS') {
       type: types.SYSTEM_TRANSFER_PENDING
     });
     try {
+      symbol = symbol ? symbol : connection.keyPrefix;
       const contracts = balances.__contracts;
       const account = contracts[symbol].contract;
       return eos(connection, true).transaction(account, contract => {

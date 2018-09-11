@@ -1,9 +1,7 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  __contracts: {
-    TLOS: 'eosio.token'
-  }
+  __contracts: {}
 };
 
 export default function balances(state = initialState, action) {

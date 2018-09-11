@@ -12,6 +12,7 @@ import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
+import * as types from '../../../shared/actions/types';
 
 const ecc = require('eosjs-ecc');
 
@@ -66,7 +67,7 @@ class WelcomeAccountContainer extends Component<Props> {
       setWalletMode
     } = actions;
     setWalletMode('hot');
-    onStageSelect(0);
+    onStageSelect(types.SETUP_STAGE_ACCOUNT_OPTIONS);
     e.preventDefault();
     return false;
   }
@@ -92,22 +93,19 @@ class WelcomeAccountContainer extends Component<Props> {
         const { setSetting } = actions;
         setSetting('account', account);
         if (onStageSelect) {
-          onStageSelect(3);
+          onStageSelect(types.SETUP_STAGE_KEY_CONFIG);
         }
         break;
       }
       default: {
-        // TODO: need to update eccjs.isValidPublic to support variable prefixes
-        var tmpKey = account.replace(/^TLOS/,'EOS');
-
-        if (ecc.isValidPublic(tmpKey) === true) {
+        if (ecc.isValidPublic(account, settings.blockchain.prefix) === true) {
           const { getAccountByKey } = actions;
           getAccountByKey(account);
         } else {
           const { setSettingWithValidation } = actions;
           setSettingWithValidation('account', String(account).toLowerCase());
           if (onStageSelect) {
-            onStageSelect(3);
+            onStageSelect(types.SETUP_STAGE_KEY_CONFIG);
           }
         }
         break;
@@ -239,7 +237,7 @@ class WelcomeAccountContainer extends Component<Props> {
                 <Button
                   content={t('back')}
                   icon="arrow left"
-                  onClick={() => onStageSelect(0)}
+                  onClick={() => onStageSelect(types.SETUP_STAGE_ACCOUNT_OPTIONS)}
                   size="small"
                   style={{ marginTop: '1em' }}
                 />

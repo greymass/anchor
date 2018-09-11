@@ -64,9 +64,11 @@ class WalletPanelModalAccountRequest extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       history,
       onClose,
       open,
+      settings,
       system,
       t,
       trigger
@@ -100,6 +102,7 @@ class WalletPanelModalAccountRequest extends Component<Props> {
         onChange={this.onChange}
         onSubmit={() => this.onStageSelect(2)}
         setPrivateKey={this.setPrivateKey}
+        settings={settings}
         shouldShowAccountNameWarning={shouldShowAccountNameWarning}
         values={values}
       />
@@ -123,22 +126,13 @@ class WalletPanelModalAccountRequest extends Component<Props> {
     if (stage === 3) {
       stageElement = (
         <WalletPanelModalAccountRequestCode
+          actions={actions}
+          connection={connection}
           keys={keys}
           onBack={() => this.onStageSelect(2)}
-          // onNext={() => this.onStageSelect(4)}
-          values={values}
-        />
-      );
-    }
-
-    if (stage === 4) {
-      stageElement = (
-        <WalletPanelModalAccountRequestImport
-          actions={actions}
-          history={history}
-          keys={keys}
-          onBack={() => this.onStageSelect(3)}
-          onClose={onClose}
+          onClose={() => this.onClose()}
+          settings={settings}
+          system={system}
           values={values}
         />
       );
@@ -156,7 +150,7 @@ class WalletPanelModalAccountRequest extends Component<Props> {
       >
         <Header icon="users" content={t('wallet_account_request_title')} />
         <Modal.Content>
-          <Grid unstackable>
+          <Grid unstackable="true">
             <Grid.Row>
               <Grid.Column width={8}>
                 <Step.Group fluid vertical>
@@ -181,13 +175,6 @@ class WalletPanelModalAccountRequest extends Component<Props> {
                       <Step.Description>{t('wallet_account_request_step_request_desc')}</Step.Description>
                     </Step.Content>
                   </Step>
-                  {/* <Step active={stage === 4}>
-                    <Icon name="disk" />
-                    <Step.Content>
-                      <Step.Title>{t('wallet_account_request_step_import')}</Step.Title>
-                      <Step.Description>{t('wallet_account_request_step_import_desc')}</Step.Description>
-                    </Step.Content>
-                  </Step> */}
                 </Step.Group>
               </Grid.Column>
               <Grid.Column width={8}>

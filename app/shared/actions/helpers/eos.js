@@ -11,6 +11,7 @@ export default function eos(connection, signing = false) {
       hash,
       key
     } = decrypted.keyProviderObfuscated;
+    
     if (hash && key) {
       const wif = decrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
       if (ecc.isValidPrivate(wif) === true) {

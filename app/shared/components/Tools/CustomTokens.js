@@ -52,6 +52,7 @@ class ToolsCustomTokens extends Component<Props> {
     const {
       tokens
     } = customtokens;
+    
     if (customTokens && customTokens.length) {
       customTokens.forEach((token) => {
         const [contract, symbol] = token.split(':');
@@ -107,7 +108,7 @@ class ToolsCustomTokens extends Component<Props> {
           </Table.Header>
           <Table.Body>
             {([].concat(tokens)
-                .filter((token) => (token.symbol !== 'TLOS'))
+                .filter((token) => (token.symbol !== settings.blockchain.prefix))
                 .map((token) => {
                   const name = `${token.contract}:${token.symbol}`;
                   const isSelected = !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);

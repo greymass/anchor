@@ -18,7 +18,9 @@ class WalletPanelButtonAccountRequest extends Component<Props> {
     const {
       accountName,
       actions,
+      connection,
       history,
+      settings,
       shouldShowAccountNameWarning,
       system,
       t,
@@ -31,15 +33,17 @@ class WalletPanelButtonAccountRequest extends Component<Props> {
     return (
       <WalletPanelModalAccountRequest
         actions={actions}
+        connection={connection}
         history={history}
         onClose={this.onClose}
         open={open}
+        settings={settings}
         system={system}
         trigger={(
           <Button
             color="blue"
             content={t('global_account_request_account')}
-            icon="users circle"
+            icon="users"
             onClick={this.onOpen}
           />
         )}

@@ -60,10 +60,11 @@ export function validateNode(node) {
     });
     // Ensure there's a value to test
     if (node || node.length !== 0) {
-      // Establish TELOS connection
+      // Establish EOSIO connection
       try {
         const {
-          connection
+          connection,
+          settings
         } = getState();
         let { host, protocol, pathname } = new URL(node);
         // If the protocol contains the original value with a colon,
@@ -88,7 +89,8 @@ export function validateNode(node) {
             dispatch({
               payload: {
                 node: httpEndpoint,
-                info: result
+                info: result,
+                settings: settings
               },
               type: types.VALIDATE_NODE_SUCCESS
             });
@@ -132,7 +134,7 @@ export function validateKey(key) {
       const permissions = ['active', 'owner'];
       try {
         // Derive the public key from the private key provided
-        const expect = ecc.privateToPublic(key,'TLOS');
+        const expect = ecc.privateToPublic(key,connection.keyPrefix);
         // Filter the account's permissions to find any valid matches
         const validPermissions = account.permissions.filter((perm) => {
           // Get the threshold a key needs to perform operations

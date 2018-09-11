@@ -24,6 +24,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
       decimalNetAmount,
       netOriginal,
       onBack,
+      settings,
       t
     } = this.props;
 
@@ -35,7 +36,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
     const lessThanOneEosStaked = (decimalNetAmount < 1 || decimalCpuAmount < 1);
 
-    const statsFetcher = new StatsFetcher(account, balance);
+    const statsFetcher = new StatsFetcher(account, balance, settings);
 
     const refundDate = statsFetcher.refundDate();
 
@@ -55,10 +56,10 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="green">
-                  <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} TLOS
+                  <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} {settings.blockchain.prefix}
                 </font>
                 <Header.Subheader>
-                  ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                  ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after', {tokenSymbol:settings.blockchain.prefix})})
                 </Header.Subheader>
               </Header>
             </Segment>
@@ -68,10 +69,10 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="red">
-                  <Icon name="wifi" />{t('about_to_unstake_from_net')} {(-netDifference).toFixed(4)} TLOS
+                  <Icon name="wifi" />{t('about_to_unstake_from_net')} {(-netDifference).toFixed(4)} {settings.blockchain.prefix}
                 </font>
                 <Header.Subheader>
-                  ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                  ({t('you_will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after', {tokenSymbol:settings.blockchain.prefix})})
                 </Header.Subheader>
               </Header>
             </Segment>
@@ -81,10 +82,10 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="green">
-                  <Icon name="microchip" />{t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} TLOS</b>
+                  <Icon name="microchip" />{t('about_to_stake_to_cpu')} <b>{cpuDifference.toFixed(4)} {settings.blockchain.prefix}</b>
                 </font>
                 <Header.Subheader>
-                  ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
+                  ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after', {tokenSymbol:settings.blockchain.prefix})})
                 </Header.Subheader>
               </Header>
             </Segment>
@@ -94,10 +95,10 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             <Segment>
               <Header textAlign="center">
                 <font color="red">
-                  <Icon name="microchip" />{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} TLOS</b>
+                  <Icon name="microchip" />{t('about_to_unstake_from_cpu')} <b>{(-cpuDifference).toFixed(4)} {settings.blockchain.prefix}</b>
                 </font>
                 <Header.Subheader>
-                  ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after')})
+                  ({t('you_will_have')} {cpuAmount.toFixed(4)} {t('eos_in_cpu_after', {tokenSymbol:settings.blockchain.prefix})})
                 </Header.Subheader>
               </Header>
             </Segment>
@@ -105,7 +106,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
         </Segment.Group>
 
         {(lessThanOneEosStaked) ? (
-          <Message warning="true">{t('will_have_less_than_one_eos_staked')}</Message>
+          <Message warning="true">{t('will_have_less_than_one_eos_staked', {tokenSymbol:settings.blockchain.prefix})}</Message>
         ) : ''}
 
         {(unstakingWhenAmountBeingUnstaked) ? (
@@ -113,7 +114,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             icon="warning sign"
             warning="true"
           >
-            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked().toFixed(4)} TLOS {t('unstaking_will_be_reset')}
+            {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked().toFixed(4)} {settings.blockchain.prefix} {t('unstaking_will_be_reset')}
           </Message>
         ) : ''}
 

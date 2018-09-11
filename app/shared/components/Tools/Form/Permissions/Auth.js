@@ -95,7 +95,8 @@ class ToolsFormPermissionsAuth extends Component<Props> {
     const {
       pubkey,
       settings,
-      t
+      t,
+      connection
     } = this.props;
     const {
       auth,
@@ -153,6 +154,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
             onKeyChange={this.onKeyChange}
             onRemoveKey={this.onRemoveKey}
             settings={settings}
+            connection={connection}
           />
         ))}
         {(settings.advancedPermissions)

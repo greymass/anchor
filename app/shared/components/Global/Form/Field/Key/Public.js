@@ -18,13 +18,15 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
   generate = (e) => {
     const {
       name,
-      setPrivateKey
+      setPrivateKey,
+      settings
     } = this.props;
+    
     e.preventDefault();
     ecc
       .randomKey()
       .then((key) => {
-        const publicKey = ecc.privateToPublic(key,'TLOS');
+        const publicKey = ecc.privateToPublic(key, settings.blockchain.prefix);
         // Set the value in the parent form with the provided name
         this.onChange(null, {
           name,
@@ -46,11 +48,9 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
     return false;
   }
   onChange = debounce((e, { name, value }) => {
+    const { settings } = this.props;
     var parsed = value.trim();
-    // TODO: need to update eccjs.isValidPublic to support variable prefixes
-    var tmpKey = parsed.replace(/^TLOS/,'EOS');
-    const valid = ecc.isValidPublic(tmpKey);
-    
+    const valid = ecc.isValidPublic(parsed, settings.blockchain.prefix);
     this.setState({
       value: parsed
     }, () => {

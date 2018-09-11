@@ -16,10 +16,11 @@ class ToolsKeys extends Component<Props> {
   }
 
   generateKeyPair = () => {
+    const { connection } = this.props;
     const keys = this.state.keys.slice(0);
     PrivateKey.randomKey().then(privateKey => {
       const wif = privateKey.toWif();
-      const publicKey = privateKey.toPublic().toString('TLOS');
+      const publicKey = privateKey.toPublic().toString(connection.keyPrefix);
       keys.push([publicKey, wif]);
       this.setState({ keys })
       return keys;

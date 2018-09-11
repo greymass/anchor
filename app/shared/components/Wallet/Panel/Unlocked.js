@@ -35,7 +35,8 @@ class WalletPanelUnlocked extends Component<Props> {
       settings,
       system,
       transaction,
-      t
+      t,
+      connection
     } = this.props;
     return (
       <div>
@@ -74,6 +75,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       validate={validate}
                       settings={settings}
                       system={system}
+                      connection={connection}
                     />
                   </Segment>
                   <Segment>
@@ -83,11 +85,13 @@ class WalletPanelUnlocked extends Component<Props> {
                       blockExplorers={blockExplorers}
                       settings={settings}
                       system={system}
+                      connection={connection}
                     />
                   </Segment>
                   <Segment>
                     <WalletPanelButtonTransferReceive
                       accountName={settings.account}
+                      connection={connection}
                     />
                   </Segment>
                   <Segment>
@@ -99,6 +103,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       globals={globals}
                       settings={settings}
                       system={system}
+                      connection={connection}
                     />
                   </Segment>
                   <Segment>
@@ -110,6 +115,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       globals={globals}
                       settings={settings}
                       system={system}
+                      connection={connection}
                     />
                   </Segment>
                   {(settings.walletMode === 'watch')
@@ -121,6 +127,7 @@ class WalletPanelUnlocked extends Component<Props> {
                           settings={settings}
                           system={system}
                           transaction={transaction}
+                          connection={connection}
                         />
                       </Segment>
                     )
@@ -148,6 +155,7 @@ class WalletPanelUnlocked extends Component<Props> {
                         settings={settings}
                         system={system}
                         transaction={transaction}
+                        connection={connection}
                       />
                     </Segment>
                   </Accordion.Content>

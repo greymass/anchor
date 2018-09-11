@@ -18,7 +18,7 @@ class GlobalFormFieldKeyPrivate extends Component<Props> {
       value: parsed
     }, () => {
       try {
-        const publicKey = ecc.privateToPublic(parsed,'TLOS');
+        const publicKey = ecc.privateToPublic(parsed, this.props.settings.blockchain.prefix);
         const valid = ecc.isValidPrivate(parsed);
         this.props.onChange(e, {
           name,

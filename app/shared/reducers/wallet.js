@@ -14,7 +14,8 @@ export default function wallet(state = initialState, action) {
       return Object.assign({}, state, {
         account: action.payload.account,
         data: action.payload.data,
-        mode: action.payload.mode
+        mode: action.payload.mode,
+        chainId: action.payload.chainId
       });
     }
     default: {

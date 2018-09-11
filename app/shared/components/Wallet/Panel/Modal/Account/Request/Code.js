@@ -2,80 +2,133 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Container, Divider, Form, Grid, Header, Icon, Input, Modal, Segment, Step, TextArea } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Message, Segment } from 'semantic-ui-react';
+import ReactJson from 'react-json-view';
 
 const { clipboard } = require('electron');
 
 class WalletPanelModalAccountRequestCode extends Component<Props> {
   constructor(props) {
     super(props);
-    const code = btoa(JSON.stringify({
-      n: props.values.accountName,
-      o: props.values.owner,
-      a: props.values.active,
-      t: new Date().getTime()
-    }));
     this.state = {
-      code,
-      copied: false
+      copied: false,
+      accountCreated: false
     };
   }
-  copy = () => {
-    const { code } = this.state;
-    clipboard.writeText(code);
-    this.setState({ copied: true });
+  componentWillReceiveProps(nextProps){
+    if (nextProps && nextProps.system.CREATEACCOUNT === 'SUCCESS'){
+      this.setState({accountCreated: true});
+    }
+  }
+  createAccount = () => {
+    const { 
+      actions,
+      connection,
+      settings,
+      values 
+    } = this.props;
+
+    // hash/key for 'freesqrlacct'
+    const hash = "95f3e6bb635fe2e3447d8f6b5086be9f4a0621a3ce608e70d3272c7d6bb720e5V11u/hhPO0HK57YkUY6RpXNFO7q07ACCxwKgVFU+dcG+Ff5VLj/KOjv4LWLFiAFGAK6OWmuuRAcSXF84ieb5sA==";
+    const key = "95c6bb575ab3d10745e670d34ebb6b676ec3d3feb8171cd8415589d0b277d9e2gz3mRhyPvxSQQN7u2aS5eNYHVBoLytS9eOrE3CaygDu/Ff67C5MFS8w+Ww8rvzLhr+nPH/NGtd7a5UQrhOY2MA==";
+    actions.setSetting('account', 'freesqrlacct');
+
+    connection.keyProviderObfuscated = Object.assign({}, {
+      hash: hash,
+      key: key
+    });
+    
+    if (settings.freeAccountCreated !== true){
+      actions.createAccount(values.accountName, 
+        values.active,
+        '1 ' + settings.blockchain.prefix, 
+        '1 ' + settings.blockchain.prefix, 
+        values.owner, 
+        4000, 0);
+    }
   }
   render() {
     const {
       keys,
       onBack,
-      onNext,
       t,
-      values,
+      settings,
+      system,
+      values
     } = this.props;
     const {
-      code,
-      copied
+      copied,
+      accountCreated
     } = this.state;
+    const confirmInfo = {
+      account:values.accountName, 
+      ownerKey:values.owner, 
+      activeKey: values.active
+    };
     return (
-      <Segment>
+      <Segment loading={system.CREATEACCOUNT === 'PENDING'}>
         <Header>
-          {t('wallet_account_request_code_header')}
+          {t('wallet_account_request_account_header')}
           <Header.Subheader>
-            {t('wallet_account_request_code_subheader')}
+            {t('wallet_account_request_account_subheader')}
           </Header.Subheader>
         </Header>
-        <Form>
-          <Form.TextArea
-            rows={6}
-            value={code}
+        
+        <Segment basic>
+          <ReactJson
+            displayDataTypes={false}
+            displayObjectSize={false}
+            iconStyle="square"
+            name={null}
+            src={confirmInfo}
+            style={{ padding: '1em' }}
+            theme="harmonic"
           />
+        </Segment>
+
+        <Form>
           <Container textAlign="center">
             <Form.Button
               color="purple"
-              content={t('copy_to_clipboard')}
-              onClick={this.copy}
+              content={t('wallet_account_request_form_create_account')}
+              onClick={this.createAccount}
             />
           </Container>
         </Form>
         <Divider hidden />
-        <Button
-          content={t('back')}
-          onClick={onBack}
-          size="small"
-        />
-        {(onNext)
+          {(system.CREATEACCOUNT === 'FAILURE')
           ? (
-            <Button
-              color="blue"
-              content={t('next')}
-              disabled={!copied}
-              onClick={onNext}
-              floated="right"
+            <Message
+              content={t('wallet_account_request_account_failed')}
+              icon="info circle"
+              warning
             />
-          )
-          : false
-        }
+          ) : ''}
+          {(system.CREATEACCOUNT === 'SUCCESS')
+          ? (
+            <Message
+              content={t('wallet_account_request_account_succeeded')}
+              icon="info circle"
+              warning
+            />
+          ) : ''}
+          {(accountCreated)
+          ? (
+            <Message
+              content={t('wallet_account_request_account_limit')}
+              icon="info circle"
+              warning
+            />
+          ) : ''}
+          {(system.CREATEACCOUNT !== 'SUCCESS')
+          ? (
+          <Button
+            content={t('back')}
+            onClick={onBack}
+            size="small"
+          />
+          ) : ''
+          }
       </Segment>
     );
   }

@@ -31,7 +31,8 @@ class WalletStatus extends Component<Props> {
       globals,
       settings,
       t,
-      validate
+      validate,
+      connection
     } = this.props;
 
     const {
@@ -45,7 +46,7 @@ class WalletStatus extends Component<Props> {
     const account = accounts[settings.account] || {};
     const balance = balances[settings.account] || {};
 
-    const statsFetcher = new StatsFetcher(account, balance);
+    const statsFetcher = new StatsFetcher(account, balance, settings);
 
     let activeTab = (
       <Segment stacked>
@@ -66,6 +67,7 @@ class WalletStatus extends Component<Props> {
               globals={globals}
               statsFetcher={statsFetcher}
               settings={settings}
+              connection={connection}
             />
           );
           break;
@@ -75,6 +77,7 @@ class WalletStatus extends Component<Props> {
             <WalletStatusStaked
               account={account}
               statsFetcher={statsFetcher}
+              connection={connection}
             />
           );
           break;
@@ -88,6 +91,7 @@ class WalletStatus extends Component<Props> {
               chain={chain}
               settings={settings}
               validate={validate}
+              connection={connection}
             />
           );
           break;
@@ -116,6 +120,7 @@ class WalletStatus extends Component<Props> {
         <WalletStatusResources
           displayResourcesAvailableSetting={settings.displayResourcesAvailable}
           statsFetcher={statsFetcher}
+          connection={connection}
         />
         <Segment>
           <Menu
@@ -133,7 +138,7 @@ class WalletStatus extends Component<Props> {
             <Menu.Item
               name="staked"
               icon="power cord"
-              content={t('wallet_status_tab_staked')}
+              content={t('wallet_status_tab_staked', {tokenSymbol:settings.blockchain.prefix})}
               active={activeItem === 'staked'}
               onClick={this.handleItemClick}
             />

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Breadcrumb } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
+import * as types from '../../../shared/actions/types';
+
 class WelcomeBreadcrumb extends Component<Props> {
   render() {
     const {
@@ -16,9 +18,10 @@ class WelcomeBreadcrumb extends Component<Props> {
         {(walletMode !== 'cold')
           ? [(
             <Breadcrumb.Section
-              active={(stage === 0)}
+              active={(stage === types.SETUP_STAGE_CONNECTION)}
               key="connection_stage"
-              onClick={(stage > 0) ? () => onStageSelect(0) : null}
+              onClick={(stage > types.SETUP_STAGE_CONNECTION) ? 
+                () => onStageSelect(types.SETUP_STAGE_CONNECTION) : null}
             >
               {t('welcome_stage_connection')}
             </Breadcrumb.Section>
@@ -36,8 +39,9 @@ class WelcomeBreadcrumb extends Component<Props> {
           )]
         }
         <Breadcrumb.Section
-          active={(stage === 1)}
-          onClick={(stage > 1) ? () => onStageSelect(1) : null}
+          active={(stage === types.SETUP_STAGE_ACCOUNT_LOOKUP)}
+          onClick={(stage > types.SETUP_STAGE_ACCOUNT_LOOKUP) ? 
+            () => onStageSelect(types.SETUP_STAGE_ACCOUNT_LOOKUP) : null}
         >
           {t('welcome_stage_account')}
         </Breadcrumb.Section>
@@ -46,14 +50,15 @@ class WelcomeBreadcrumb extends Component<Props> {
           ? (
             <React.Fragment>
               <Breadcrumb.Section
-                active={(stage === 3)}
-                onClick={(stage > 3) ? () => onStageSelect(3) : null}
+                active={(stage === types.SETUP_STAGE_KEY_CONFIG)}
+                onClick={(stage > types.SETUP_STAGE_KEY_CONFIG) ? 
+                  () => onStageSelect(types.SETUP_STAGE_KEY_CONFIG) : null}
               >
                 {t('welcome_stage_authorize')}
               </Breadcrumb.Section>
               <Breadcrumb.Divider icon="right angle" />
               <Breadcrumb.Section
-                active={(stage === 4)}
+                active={(stage === types.SETUP_STAGE_WALLET_CONFIG)}
               >
                 {t('welcome_stage_wallet')}
               </Breadcrumb.Section>
@@ -61,7 +66,7 @@ class WelcomeBreadcrumb extends Component<Props> {
           )
           : (
             <Breadcrumb.Section
-              active={(stage === 3)}
+              active={(stage === types.SETUP_STAGE_KEY_CONFIG)}
             >
               {t('welcome_stage_watchwallet')}
             </Breadcrumb.Section>

@@ -30,7 +30,8 @@ class WalletPanelButtonStake extends Component<Props> {
       settings,
       validate,
       system,
-      t
+      t,
+      connection
     } = this.props;
 
     return (
@@ -40,7 +41,7 @@ class WalletPanelButtonStake extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
-          content: t('stake_button_cta'),
+          content: t('stake_button_cta', {tokenSymbol:settings.blockchain.prefix}),
           fluid: true,
           icon: 'microchip'
         }}
@@ -54,6 +55,7 @@ class WalletPanelButtonStake extends Component<Props> {
             validate={validate}
             balance={balances[settings.account]}
             system={system}
+            connection={connection}
           />
         )}
         icon="microchip"

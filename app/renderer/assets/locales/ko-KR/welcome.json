@@ -12,7 +12,7 @@
   "welcome_connect_server": "서버에 연결",
   "welcome_created_by": "창작자",
   "welcome_enter_account": "계정 확인",
-  "welcome_instructions_1": "시작하려면 Sqrl를 TELOS API 노드에 연결해야 합니다.",
+  "welcome_instructions_1": "시작하려면 Sqrl를 EOSIO API 노드에 연결해야 합니다.",
   "welcome_instructions_2": "연결할 노드를 입력해 주세요.",
   "welcome_instructions_3": "계정 이름과 공개 키를 입력하세요.",
   "welcome_instructions_3_cold": "사용할 계정 이름을 입력 하세요.",
@@ -25,7 +25,7 @@
   "welcome_key_coldwallet": "개인 키 가져오기",
   "welcome_key_coldwallet_content": "콜드지갑은 입력한 개인 키가 계정과 일치하는지 확인할 수 없습니다.",
   "welcome_key_coldwallet_title": "콜드지갑 - 키 가져오기",
-  "welcome_key_compare_content": "모든 TLOS 키는 숫자 5로 시작하며 51 자입니다.",
+  "welcome_key_compare_content": "모든 {{tokenSymbol}} 키는 숫자 5로 시작하며 51 자입니다.",
   "welcome_key_compare_expecting_match_to": "아래 키 중 하나와 일치하는 개인 키가 필요합니다.",
   "welcome_key_compare_fail_invalid_content": "입력 한 개인 키를 공개 키로 변환 할 수 없습니다.",
   "welcome_key_compare_fail_invalid_title": "개인 키 유효하지 않습니다.",
@@ -44,8 +44,8 @@
   "welcome_lookup_account_skip": "가져 오기 건너 뛰기",
   "welcome_more_servers_1": "서버 선택에 도움이 필요하신가요?",
   "welcome_more_servers_2": "옵션 목록을 보려면 여기를 클릭하세요.",
-  "welcome_path_generate_keys_header": "계정 요청 만들기",
-  "welcome_path_generate_keys_subheader": "귀하를 위해 계정을 만들려는 다른 계정 소유자에게 보낼 수 있는 계정 생성 요청을 생성하세요.",
+  "welcome_path_generate_keys_header": "Create New Account",
+  "welcome_path_generate_keys_subheader": "Generate an account creation request and allow Sqrl to automatically try creating an account for you.",
   "welcome_path_have_account_button": "기존 계정 가져 오기",
   "welcome_path_have_account_header": "기존 계정 가져 오기",
   "welcome_path_have_account_subheader": "이미 계정 이름과 개인 키가 있습니까?",
@@ -62,5 +62,6 @@
   "welcome_stage_connection": "연결",
   "welcome_stage_wallet": "지갑",
   "welcome_stage_watchwallet": "관찰지갑",
-  "welcome_use_coldwallet": "콜드지갑 설정"
+  "welcome_use_coldwallet": "콜드지갑 설정",
+  "welcome_connect_network": "Connect to Network"
 }

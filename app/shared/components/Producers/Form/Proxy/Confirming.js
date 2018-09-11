@@ -19,6 +19,7 @@ class ProducersFormProxyConfirming extends Component<Props> {
       currentProxyAccount,
       onBack,
       proxyAccount,
+      settings,
       t
     } = this.props;
 
@@ -29,7 +30,7 @@ class ProducersFormProxyConfirming extends Component<Props> {
             <div>
               {t('producers_form_proxy_confirming_change_text_one')}
               &nbsp;<b><u>{proxyAccount}</u></b>.<br /><br />
-              {t('producers_form_proxy_confirming_change_text_two')}
+              {t('producers_form_proxy_confirming_change_text_two', {tokenSymbol:settings.blockchain.prefix})}
             </div>
           ) : (
             <div>

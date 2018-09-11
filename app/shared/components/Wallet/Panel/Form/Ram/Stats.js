@@ -9,6 +9,7 @@ class WalletPanelFormRamStats extends Component<Props> {
       EOSbalance,
       ramUsage,
       ramQuota,
+      settings,
       t
     } = this.props;
 
@@ -17,10 +18,10 @@ class WalletPanelFormRamStats extends Component<Props> {
         <Table.Body>
           <Table.Row>
             <Table.Cell width={8}>
-              {t('ram_stats_title_one')}
+              {t('ram_stats_title_one', {tokenSymbol:settings.blockchain.prefix})}
             </Table.Cell>
             <Table.Cell width={8}>
-              {`${EOSbalance} TLOS`}
+              {`${EOSbalance} ${settings.blockchain.prefix}`}
             </Table.Cell>
           </Table.Row>
           <Table.Row>

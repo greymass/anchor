@@ -7,7 +7,7 @@ const ecc = require('eosjs-ecc');
 
 export function setWalletKey(data, password, mode = 'hot', existingHash = false) {
   return (dispatch: () => void, getState) => {
-    const { accounts, settings } = getState();
+    const { accounts, settings, connection } = getState();
     let hash = existingHash;
     let key = data;
     let obfuscated = data;
@@ -17,7 +17,8 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
       hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
       obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     }
-    const pubkey = ecc.privateToPublic(key,'TLOS');
+    
+    const pubkey = ecc.privateToPublic(key,connection.keyPrefix);
     dispatch({
       type: types.SET_WALLET_KEYS_ACTIVE,
       payload: {
@@ -34,7 +35,8 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
         account: settings.account,
         data: encrypt(key, password),
         mode,
-        pubkey
+        pubkey,
+        chainId: settings.blockchain.chainId
       }
     });
   };
@@ -42,11 +44,12 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
 
 export function setTemporaryKey(key) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
-    const pubkey = (key) ? ecc.privateToPublic(key,'TLOS') : '';
+    const { settings,connection } = getState();
+    const pubkey = (key) ? ecc.privateToPublic(key,connection.keyPrefix) : '';
     // Obfuscate key for in-memory storage
     const hash = encrypt(key, key, 1).toString(CryptoJS.enc.Utf8);
     const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+    
     dispatch({
       type: types.SET_WALLET_KEYS_TEMPORARY,
       payload: {
@@ -123,6 +126,7 @@ export function unlockWallet(password, useWallet = false) {
     if (settings.walletMode === 'hot' && !account) {
       account = await eos(connection).getAccount(wallet.account);
     }
+    
     dispatch({
       type: types.VALIDATE_WALLET_PASSWORD_PENDING
     });
@@ -130,7 +134,7 @@ export function unlockWallet(password, useWallet = false) {
       try {
         let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(key) === true) {
-          const pubkey = ecc.privateToPublic(key,'TLOS');
+          const pubkey = ecc.privateToPublic(key,connection.keyPrefix);
           // Set the active wallet
           dispatch({
             payload: {

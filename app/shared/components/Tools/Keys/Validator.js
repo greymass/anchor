@@ -16,7 +16,7 @@ class ToolsKeysValidator extends Component<Props> {
   }
   onChange = (e, { publicKey, valid }) => this.setState({ publicKey, valid })
   render() {
-    const { t } = this.props;
+    const { t, connection, settings } = this.props;
     const { publicKey, valid } = this.state;
     return (
       <Segment basic>
@@ -36,6 +36,8 @@ class ToolsKeysValidator extends Component<Props> {
             name="key"
             placeholder={t('welcome:welcome_key_compare_placeholder')}
             onChange={this.onChange}
+            settings={settings}
+            connection={connection}
           />
         </Segment>
         <Segment>

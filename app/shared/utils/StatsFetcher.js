@@ -1,9 +1,10 @@
 import { Decimal } from 'decimal.js';
 
 export default class StatsFetcher {
-  constructor(account, balance) {
+  constructor(account, balance, settings) {
     this.account = account;
     this.balance = balance;
+    this.settings = settings;
   }
 
   fetchAll() {
@@ -63,13 +64,13 @@ export default class StatsFetcher {
   }
 
   tokens() {
-    return this.balance ? this.balance : { TLOS: 0 };
+    return this.balance ? this.balance : { [this.settings.blockchain.prefix]: 0 };
   }
 
   totalTokens() {
     const totalStaked = this.totalStaked();
     const totalBeingUnstaked = this.totalBeingUnstaked();
-    const totalTokens = this.tokens().TLOS || new Decimal(0);
+    const totalTokens = this.tokens()[this.settings.blockchain.prefix] || new Decimal(0);
 
     return totalStaked.plus(totalBeingUnstaked).plus(totalTokens);
   }
@@ -118,8 +119,8 @@ export default class StatsFetcher {
     const totalNetAmount = Decimal(total_resources.net_weight.split(' ')[0]);
 
     return {
-      cpuWeight: `${totalCpuAmount.minus(selfCpuAmount).toFixed(4)} TLOS`,
-      netWeight: `${totalNetAmount.minus(selfNetAmount).toFixed(4)} TLOS`,
+      cpuWeight: `${totalCpuAmount.minus(selfCpuAmount).toFixed(4)} ${this.settings.blockchain.prefix}`,
+      netWeight: `${totalNetAmount.minus(selfNetAmount).toFixed(4)} ${this.settings.blockchain.prefix}`,
       totalStaked: this.totalStaked()
     };
   }

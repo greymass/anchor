@@ -23,6 +23,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
       onBack,
       ownerKey,
       ramAmount,
+      settings,
       t,
       totalCost,
       totalDelegated,
@@ -32,9 +33,9 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
     return (
       <Segment padding="true" basic>
         <Header textAlign="center">
-          <p>{`${t('tools_form_create_account_confirming_header_one')} ${totalCost.toFixed(4)} TLOS.`}</p>
+          <p>{`${t('tools_form_create_account_confirming_header_one')} ${totalCost.toFixed(4)} ${settings.blockchain.prefix}.`}</p>
           <p>
-            {`${t('tools_form_create_account_confirming_header_two')} ${totalDelegated.toFixed(4)} TLOS ${t('tools_form_create_account_confirming_header_three')}`}
+            {`${t('tools_form_create_account_confirming_header_two')} ${totalDelegated.toFixed(4)} ${settings.blockchain.prefix} ${t('tools_form_create_account_confirming_header_three')}`}
           </p>
         </Header>
         <Table size="small" celled>
@@ -75,7 +76,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_delegated_bw')}
+                {t('tools_form_create_account_delegated_bw', {tokenSymbol:settings.blockchain.prefix})}
               </Table.Cell>
               <Table.Cell width={8}>
                 {delegatedBw}
@@ -83,7 +84,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_delegated_cpu')}
+                {t('tools_form_create_account_delegated_cpu', {tokenSymbol:settings.blockchain.prefix})}
               </Table.Cell>
               <Table.Cell width={8}>
                 {delegatedCpu}

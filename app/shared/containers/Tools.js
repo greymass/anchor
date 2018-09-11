@@ -11,6 +11,7 @@ import { Menu, Tab } from 'semantic-ui-react';
 import ContractInterface from './Contract/Interface';
 
 import Tools from '../components/Tools';
+import ToolsBlockchains from '../components/Tools/Blockchains';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
@@ -37,6 +38,7 @@ import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as UnregProxyActions from '../actions/system/unregproxy';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
+import * as ValidateActions from '../actions/validate';
 
 const paneMapping = [
   {
@@ -48,6 +50,11 @@ const paneMapping = [
     header: true,
     modes: ['cold', 'hot', 'watch', 'skip'],
     name: 'wallet',
+  },
+  {
+    element: ToolsBlockchains,
+    modes: ['hot', 'watch'],
+    name: 'blockchains',
   },
   {
     element: ToolsCustomTokens,
@@ -147,10 +154,10 @@ class ToolsContainer extends Component<Props> {
           || (skipImport && pane.modes.includes('skip'))
         );
       })
-      .map((pane) => {
+      .map((pane, paneIndex) => {
         if (pane.header) {
           return {
-            menuItem: <Menu.Header className="ui">{t(`tools_menu_${pane.name}_header`)}</Menu.Header>
+            menuItem: <Menu.Header key={paneIndex} className="ui">{t(`tools_menu_${pane.name}_header`)}</Menu.Header>
           };
         }
         return {
@@ -220,6 +227,7 @@ function mapDispatchToProps(dispatch) {
       ...UnregProxyActions,
       ...WalletActions,
       ...WalletsActions,
+      ...ValidateActions,
     }, dispatch)
   };
 }

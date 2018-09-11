@@ -10,6 +10,7 @@ export default class WalletPanelFormAccount extends Component<Props> {
       actions,
       accounts,
       onChange,
+      settings,
       validate,
       value
     } = this.props;
@@ -27,6 +28,7 @@ export default class WalletPanelFormAccount extends Component<Props> {
                     <WalletModalAccountLookup
                       actions={actions}
                       accounts={accounts}
+                      settings={settings}
                       validate={validate}
                     />
                   </span>

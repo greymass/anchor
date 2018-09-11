@@ -22,7 +22,7 @@ class WalletPanelFormStake extends Component<Props> {
 
   constructor(props) {
     super(props);
-    const { account } = props;
+    const { account, settings } = props;
     const {
       cpu_weight,
       net_weight
@@ -32,7 +32,8 @@ class WalletPanelFormStake extends Component<Props> {
     const parsedNetWeight = net_weight.split(' ')[0];
 
     this.state = {
-      EOSbalance: (props.balance && props.balance.TLOS) ? props.balance.TLOS : 0,
+      EOSbalance: (props.balance && props.balance[settings.blockchain.prefix]) 
+        ? props.balance[settings.blockchain.prefix] : 0,
       decimalCpuAmount: Decimal(parsedCpuWeight),
       cpuOriginal: Decimal(parsedCpuWeight),
       decimalNetAmount: Decimal(parsedNetWeight),
@@ -161,8 +162,10 @@ class WalletPanelFormStake extends Component<Props> {
       account,
       balance,
       onClose,
+      settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
 
     const {
@@ -173,7 +176,7 @@ class WalletPanelFormStake extends Component<Props> {
       submitDisabled
     } = this.state;
 
-    const EOSbalance = balance.TLOS || 0;
+    const EOSbalance = balance[settings.blockchain.prefix] || 0;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
@@ -186,9 +189,11 @@ class WalletPanelFormStake extends Component<Props> {
           ? (
             <div>
               <WalletPanelFormStakeStats
+                connection={connection}
                 cpuOriginal={cpuOriginal}
                 EOSbalance={EOSbalance}
                 netOriginal={netOriginal}
+                settings={settings}
               />
               <Form
                 onKeyPress={this.onKeyPress}
@@ -198,18 +203,22 @@ class WalletPanelFormStake extends Component<Props> {
                   <WalletPanelFormStakeInput
                     defaultValue={decimalCpuAmount}
                     icon="microchip"
-                    label={t('update_staked_cpu_amount')}
+                    label={t('update_staked_cpu_amount', {tokenSymbol:settings.blockchain.prefix})}
                     name="cpuAmount"
                     onChange={this.onChange}
                     onError={this.onError}
+                    connection={connection}
+                    settings={settings}
                   />
                   <WalletPanelFormStakeInput
                     defaultValue={decimalNetAmount}
                     icon="wifi"
-                    label={t('update_staked_net_amount')}
+                    label={t('update_staked_net_amount', {tokenSymbol:settings.blockchain.prefix})}
                     name="netAmount"
                     onChange={this.onChange}
                     onError={this.onError}
+                    connection={connection}
+                    settings={settings}
                   />
                 </Form.Group>
                 <FormMessageError
@@ -219,7 +228,7 @@ class WalletPanelFormStake extends Component<Props> {
                 <Message
                   icon="info circle"
                   info
-                  content={t('undelegate_explanation')}
+                  content={t('undelegate_explanation', {tokenSymbol:settings.blockchain.prefix})}
                 />
                 <Divider />
                 <Button
@@ -250,6 +259,8 @@ class WalletPanelFormStake extends Component<Props> {
               netOriginal={netOriginal}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
+              connection={connection}
+              settings={settings}
             />
           ) : ''}
       </Segment>

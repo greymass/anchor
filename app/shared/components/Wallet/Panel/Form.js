@@ -98,6 +98,7 @@ export default class WalletPanelForm extends Component<Props> {
     const {
       actions,
       accounts,
+      settings,
       validate
     } = this.props;
     const {
@@ -143,6 +144,7 @@ export default class WalletPanelForm extends Component<Props> {
                   actions={actions}
                   accounts={accounts}
                   onChange={this.onChange}
+                  settings={settings}
                   validate={validate}
                   value={account}
                 />

@@ -29,9 +29,10 @@ class GlobalModalAccountImportHot extends Component<Props> {
       value
     } = this.state;
     const {
-      actions
+      actions,
+      settings
     } = this.props;
-    actions.importWallets(selected, value, password);
+    actions.importWallets(selected, value, password, 'hot', settings.blockchain.chainId);
     this.props.onClose();
   }
   onChange = (e, data) => {
@@ -107,6 +108,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
             name="key"
             placeholder={t('welcome:welcome_key_compare_placeholder')}
             onChange={this.onChange}
+            settings={settings}
             value={value}
           />
           {(value && matches.length > 0)

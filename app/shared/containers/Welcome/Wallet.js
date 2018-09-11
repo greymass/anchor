@@ -12,6 +12,7 @@ import WalletPanelFormModalConfirm from '../../components/Wallet/Panel/Form/Moda
 
 import * as SettingsActions from '../../actions/settings';
 import * as WalletActions from '../../actions/wallet';
+import * as types from '../../../shared/actions/types';
 
 type Props = {
   actions: {
@@ -51,6 +52,7 @@ class WelcomeWalletContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      connection,
       history,
       keys,
       settings
@@ -62,9 +64,18 @@ class WelcomeWalletContainer extends Component<Props> {
     const {
       decrypt,
       setSetting,
-      setTemporaryKey,
+      setSettingWithValidation,
       setWalletKey
     } = actions;
+    // if we aren't using a defined chain, search for one by matching chain id and switch to 
+    // that if found. user can subsequently use 'manage blockchains' to add new chains 
+    const blockchain = settings.blockchain ? 
+      settings.blockchains.filter( (c) => { return c.chainId === connection.chainId})[0] : null;
+
+    if (blockchain){
+      setSetting('blockchain', blockchain);
+      setSettingWithValidation('node', blockchain.node);
+    }
     if (encryptWallet) {
       setSetting('walletInit', true);
       setWalletKey(key, password, settings.walletMode, hash);
@@ -74,6 +85,7 @@ class WelcomeWalletContainer extends Component<Props> {
     this.setState({
       confirming: false
     });
+
     if (settings.walletMode === 'cold') {
       history.push('/coldwallet');
     } else {
@@ -132,7 +144,7 @@ class WelcomeWalletContainer extends Component<Props> {
               <Button
                 content={t('back')}
                 icon="arrow left"
-                onClick={() => onStageSelect(3)}
+                onClick={() => onStageSelect(types.SETUP_STAGE_KEY_CONFIG)}
                 size="small"
               />
             </Container>
@@ -152,7 +164,7 @@ class WelcomeWalletContainer extends Component<Props> {
             <Button
               content={t('back')}
               icon="arrow left"
-              onClick={() => onStageSelect(3)}
+              onClick={() => onStageSelect(types.SETUP_STAGE_KEY_CONFIG)}
               size="small"
             />
           </Container>

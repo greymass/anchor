@@ -3,7 +3,7 @@ import { get } from 'dot-prop-immutable';
 import * as types from '../actions/types';
 
 const initialState = {
-  // If the active session has accepted the TELOS Network Operating Agreement
+  // If the active session has accepted the EOSIO Constitution/Network Operating Agreement
   acceptedConstitution: false,
   // If the wallet has ackknowledged understanding the smart contract tool
   acceptedContractInterface: false,
@@ -17,8 +17,30 @@ const initialState = {
   contacts: [],
   // Custom tokens the wallet should be tracking
   customTokens: [
-    // Always track the TLOS token
-    'eosio.token:TLOS'
+    // Always track the contract for the core system token
+    // actual token symbol changes based on current chain
+    'eosio.token:'
+  ],
+  // Support multiple chains
+  blockchains: [
+    {
+      blockchain:'Telos Testnet', 
+      prefix:'TLOS',
+      node:'https://api.eos.miami:17441',
+      chainId: '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207'
+    },
+    {
+      blockchain:'EOS Mainnet', 
+      prefix:'EOS',
+      node:'https://eos.greymass.com',
+      chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+    },
+    {
+      blockchain:'Jungle Testnet',
+      prefix:'EOS',
+      node:'http://jungle.cryptolions.io:18888',
+      chainId:'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca'
+    }
   ],
   // Defaults to displaying resources remaining
   displayResourcesAvailable: false,
@@ -30,6 +52,8 @@ const initialState = {
   lang: '',
   // The node to connect to
   node: '',
+  // The current blockchain
+  blockchain: {},
   // Recent contracts the wallet has used
   recentContracts: [],
   // Recent referendum scopes the wallet has used

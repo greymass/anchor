@@ -1,7 +1,7 @@
 {
   "name": "Sqrl",
   "productName": "Sqrl",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Simple light wallet and block producer voting tool for the TELOS blockchain",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -242,7 +242,7 @@
     "electron-context-menu": "^0.10.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^2.21.10",
-    "eosjs": "16.0.2",
+    "eosjs": "^16.0.6",
     "history": "^4.7.2",
     "i": "^0.3.6",
     "i18next": "^11.3.2",

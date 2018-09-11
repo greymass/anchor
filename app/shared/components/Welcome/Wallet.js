@@ -7,6 +7,7 @@ import WelcomeWalletContainer from '../../containers/Welcome/Wallet';
 class WelcomeWallet extends Component<Props> {
   render() {
     const {
+      connection,
       onStageSelect,
       t
     } = this.props;
@@ -22,6 +23,7 @@ class WelcomeWallet extends Component<Props> {
         <WelcomeWalletContainer
           editing
           onStageSelect={onStageSelect}
+          connection={connection}
         />
       </Segment>
     );

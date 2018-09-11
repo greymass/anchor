@@ -55,7 +55,8 @@ class WalletPanelFormRamByAmount extends Component<Props> {
   render() {
     const {
       formError,
-      t
+      t,
+      connection
     } = this.props;
 
     const {
@@ -73,10 +74,11 @@ class WalletPanelFormRamByAmount extends Component<Props> {
           name="ram_to_buy"
           onChange={this.onChange}
           defaultValue={amountOfRam}
+          connection={connection}
         />
         {(priceOfRam && !formError) ? (
           <h4 style={{ textAlign: 'center', margin: '30px' }}>
-            {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} TLOS.`}
+            {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} ${connection.keyPrefix}.`}
           </h4>
         ) : ''}
       </div>

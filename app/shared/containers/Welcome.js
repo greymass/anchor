@@ -12,6 +12,7 @@ import * as WalletActions from '../actions/wallet';
 
 type Props = {
   actions: {},
+  connection: {},
   history: {},
   keys: {},
   settings: {},
@@ -20,6 +21,7 @@ type Props = {
 
 class WelcomeContainer extends Component<Props> {
   props: Props;
+
   componentDidMount() {
     const {
       actions,
@@ -72,14 +74,17 @@ class WelcomeContainer extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       history,
       keys,
       settings,
       validate
     } = this.props;
+    
     return (
       <Welcome
         actions={actions}
+        connection={connection}
         history={history}
         keys={keys}
         settings={settings}
@@ -91,6 +96,7 @@ class WelcomeContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    connection: state.connection,
     keys: state.keys,
     settings: state.settings,
     validate: state.validate,

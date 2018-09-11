@@ -2,40 +2,37 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Form, Header, Input } from 'semantic-ui-react';
+import { Button, Form, Header, Segment, Message } from 'semantic-ui-react';
+import ReactJson from 'react-json-view';
 
 import WalletPanelFormModalConfirm from '../../../../../Wallet/Panel/Form/Modal/Confirm';
+import GlobalFormFieldKeyPrivate from '../../../../../Global/Form/Field/Key/Private';
+import GlobalFormFieldKeyPublic from '../../../../../Global/Form/Field/Key/Public';
 
 import { encrypt } from '../../../../../../actions/wallet';
 
-const { ipcRenderer } = require('electron');
+const { clipboard } = require('electron');
 
 class WalletPanelModalAccountRequestBackup extends Component<Props> {
-  state = { visible: false };
-  onToggleVisible = () => this.setState({ visible: !this.state.visible });
-  promptSave = () => {
+  state = { keysCopied: false };
+  promptContinue = () => {
     const {
-      keys,
-      onSubmit,
-      values
+      onSubmit
     } = this.props;
-    const { password } = values;
-    const data = JSON.stringify(Object.values(keys), null, 2);
-    const encrypted = encrypt(data, password);
-    ipcRenderer.send('saveFile', encrypted, 'backup');
     if (onSubmit) onSubmit();
+  }
+  copyToClipboard = () => {
+    clipboard.writeText(JSON.stringify(this.props.keys));
+    this.setState({keysCopied: true});
   }
   render() {
     const {
-      confirming,
+      keys,
       onBack,
-      onCancel,
-      onChange,
-      onConfirm,
-      t,
-      values
+      t
     } = this.props;
-    const { visible } = this.state;
+    
+    const { keysCopied } = this.state;
     return (
       <Form>
         <Header>
@@ -47,37 +44,31 @@ class WalletPanelModalAccountRequestBackup extends Component<Props> {
         <p>
           {t('wallet_account_request_backup_instructions')}
         </p>
-        <Form.Field
-          autoFocus
-          control={Input}
-          fluid
-          icon="lock"
-          label={t('wallet_account_request_encrypt_password')}
-          name="password"
-          onChange={onChange}
-          type={(visible) ? 'text' : 'password'}
+        <Button
+          color="blue"
+          content={t('wallet_account_request_copy_clipboard')}
+          icon="clipboard"
+          onClick={this.copyToClipboard}
         />
-        <Form.Checkbox
-          label={t('wallet_account_request_encrypt_password_visible')}
-          onChange={this.onToggleVisible}
-          checked={visible}
-        />
-        <WalletPanelFormModalConfirm
-          button={(
-            <Button
-              color="purple"
-              content={t('wallet_account_request_encrypt_backup')}
-              disabled={!values.password}
-              floated="right"
-              onClick={onConfirm}
-              size="small"
-            />
-          )}
-          open={confirming}
-          onCancel={onCancel}
-          onConfirm={onConfirm}
-          onSubmit={this.promptSave}
-          password={values.password}
+        <Segment basic>
+          <ReactJson
+            displayDataTypes={false}
+            displayObjectSize={false}
+            iconStyle="square"
+            name={null}
+            src={keys}
+            style={{ padding: '1em', fontSize: '8px' }}
+            theme="harmonic"
+          />
+        </Segment>
+        
+        <Button
+          color="purple"
+          content={t('wallet_account_request_keys_backup')}
+          disabled={!keysCopied}
+          floated="right"
+          onClick={this.promptContinue}
+          size="small"
         />
         <Button
           content={t('back')}

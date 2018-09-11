@@ -13,6 +13,7 @@ import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
 import * as WalletsActions from '../../actions/wallets';
+import * as types from '../../../shared/actions/types';
 
 const ecc = require('eosjs-ecc');
 
@@ -67,13 +68,13 @@ class WelcomeKeyContainer extends Component<Props> {
     switch (settings.walletMode) {
       case 'cold': {
         if (ecc.isValidPrivate(key) && onStageSelect) {
-          onStageSelect(4);
+          onStageSelect(types.SETUP_STAGE_WALLET_CONFIG);
         }
         break;
       }
       case 'watch': {
         // Import the watch wallet
-        importWallet(settings.account, false, false, 'watch');
+        importWallet(settings.account, false, false, 'watch', settings.blockchain.chainId);
         // Set this wallet as the used wallet
         useWallet(settings.account);
         // Initialize the wallet setting
@@ -86,7 +87,7 @@ class WelcomeKeyContainer extends Component<Props> {
         // Validate against account
         validateKey(key, settings);
         if (onStageSelect) {
-          onStageSelect(4);
+          onStageSelect(types.SETUP_STAGE_WALLET_CONFIG);
         }
         break;
       }
@@ -131,7 +132,7 @@ class WelcomeKeyContainer extends Component<Props> {
     } = this.state;
     let currentPublic;
     try {
-      currentPublic = ecc.privateToPublic(keys.key,'TLOS');
+      currentPublic = ecc.privateToPublic(keys.key,settings.blockchain.prefix);
     } catch (e) {
       // invalid key
     }
@@ -300,7 +301,7 @@ class WelcomeKeyContainer extends Component<Props> {
           <Button
             content={t('back')}
             icon="arrow left"
-            onClick={() => onStageSelect(2)}
+            onClick={() => onStageSelect(types.SETUP_STAGE_ACCOUNT_LOOKUP)}
             size="small"
             style={{ marginTop: '1em' }}
           />

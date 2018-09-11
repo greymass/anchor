@@ -2,21 +2,18 @@ import { find } from 'lodash';
 
 import * as types from '../actions/types';
 
+const DEFAULT_PUB_KEY_PREFIX = 'TLOS';
+
 const initialState = {
   authorization: undefined,
-  chain: 'telos-testnet',
-  chainId: '9e46127b78e0a7f6906f549bba3d23b264c70ee6ec781aed9d4f1b72732f34fc',
+  chain: null,
+  chainId: null,
   broadcast: true,
-  verbose: true,
+  verbose: false,
   expireInSeconds: 120,
   forceActionDataHex: false,
   httpEndpoint: null,
-  keyPrefix: 'TLOS'
-};
-
-const blockchains = {
-  '9e46127b78e0a7f6906f549bba3d23b264c70ee6ec781aed9d4f1b72732f34fc': 'telos-testnet',
-  '' : 'telos-mainnet'
+  keyPrefix: DEFAULT_PUB_KEY_PREFIX
 };
 
 export default function connection(state = initialState, action) {
@@ -27,9 +24,11 @@ export default function connection(state = initialState, action) {
     }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
+      const chain = action.payload.settings.blockchains.filter( (c) => {return c.chainId===action.payload.info.chain_id})[0];
       return Object.assign({}, state, {
-        chain: blockchains[action.payload.info.chain_id] || 'unknown',
+        chain: chain ? chain.blockchain : 'unknown',
         chainId: action.payload.info.chain_id,
+        keyPrefix: chain ? chain.prefix : DEFAULT_PUB_KEY_PREFIX,
         httpEndpoint: action.payload.node
       });
     }
@@ -72,7 +71,7 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_KEYS_ACTIVE:
     case types.SET_WALLET_KEYS_TEMPORARY: {
       return Object.assign({}, state, {
-        authorization: getAuthorization(action.payload.accountData, action.payload.pubkey),
+        authorization: undefined, // getAuthorization(action.payload.accountData, action.payload.pubkey),
         keyProviderObfuscated: {
           hash: action.payload.hash,
           key: action.payload.key
@@ -81,8 +80,10 @@ export default function connection(state = initialState, action) {
     }
     // Update chainId on successful chain info request
     case types.GET_CHAIN_INFO_SUCCESS: {
+      const chain = action.payload.settings.blockchains.filter( (c) => {return c.chainId===action.payload.chain.chain_id})[0];
       return Object.assign({}, state, {
-        chainId: action.payload.chain.chain_id
+        chainId: action.payload.chain.chain_id,
+        keyPrefix: chain ? chain.prefix : DEFAULT_PUB_KEY_PREFIX
       });
     }
     default: {

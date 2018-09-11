@@ -12,7 +12,7 @@
   "welcome_connect_server": "サーバーに接続する",
   "welcome_created_by": "作成者",
   "welcome_enter_account": "アカウントを確認",
-  "welcome_instructions_1": "始めるにはSqrlをTELOSのAPIノードに接続する必要があります。",
+  "welcome_instructions_1": "始めるにはSqrlをEOSIOのAPIノードに接続する必要があります。",
   "welcome_instructions_2": "接続したいノードのを入力してください。",
   "welcome_instructions_3": "公開鍵またはアカウント名を入力して下さい。",
   "welcome_instructions_3_cold": "使用するアカウント名を入力して下さい。",
@@ -44,8 +44,8 @@
   "welcome_lookup_account_skip": "インポートをスキップ",
   "welcome_more_servers_1": "どのサーバーを使用すればよいのかわかりませんか？",
   "welcome_more_servers_2": "一覧を見るにはこちらをクリックしてください。",
-  "welcome_path_generate_keys_header": "アカウントリクエストを作成",
-  "welcome_path_generate_keys_subheader": "あなたのアカウントを作成する他のアカウント保有者に送信するアカウント作成リクエストを生成します。",
+  "welcome_path_generate_keys_header": "Create New Account",
+  "welcome_path_generate_keys_subheader": "Generate an account creation request and allow Sqrl to automatically try creating an account for you.",
   "welcome_path_have_account_button": "既存のアカウントをインポート",
   "welcome_path_have_account_header": "既存のアカウントをインポート",
   "welcome_path_have_account_subheader": "既にアカウント名または秘密鍵を持っていますか？",
@@ -62,5 +62,6 @@
   "welcome_stage_connection": "接続",
   "welcome_stage_wallet": "ウォレット",
   "welcome_stage_watchwallet": "ウォッチウォレット",
-  "welcome_use_coldwallet": "コールドウォレットの設定"
+  "welcome_use_coldwallet": "コールドウォレットの設定",
+  "welcome_connect_network": "Connect to Network"
 }

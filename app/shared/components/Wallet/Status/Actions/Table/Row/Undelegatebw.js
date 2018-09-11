@@ -7,22 +7,25 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
   render() {
     const {
       action,
-      t
+      t,
+      connection
     } = this.props;
     const {
       data
     } = action.action_trace.act;
+    
+    const zeroBalance = '0.0000 ' + connection.keyPrefix;
 
-    const unstakeToCpuDescription = (data.unstake_cpu_quantity !== '0.0000 TLOS') ? (
+    const unstakeToCpuDescription = (data.unstake_cpu_quantity !== zeroBalance) ? (
       `${data.unstake_cpu_quantity} ${t('actions_table_row_undelegatebw_text_two')}`
     ) : '';
 
-    const unstakeToNetDescription = (data.unstake_net_quantity !== '0.0000 TLOS') ? (
+    const unstakeToNetDescription = (data.unstake_net_quantity !== zeroBalance) ? (
       `${data.unstake_net_quantity} ${t('actions_table_row_undelegatebw_text_three')}`
     ) : '';
 
     const unstakeConnector =
-      (data.unstake_cpu_quantity !== '0.0000 TLOS' && data.unstake_net_quantity !== '0.0000 TLOS') ? (
+      (data.unstake_cpu_quantity !== zeroBalance && data.unstake_net_quantity !== zeroBalance) ? (
         ` ${t('actions_table_row_text_and')} `
       ) : '';
 

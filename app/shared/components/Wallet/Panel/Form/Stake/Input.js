@@ -20,7 +20,8 @@ class WalletPanelFormStakeInput extends Component<Props> {
       defaultValue,
       label,
       icon,
-      name
+      name,
+      connection
     } = this.props;
 
     return (
@@ -32,6 +33,7 @@ class WalletPanelFormStakeInput extends Component<Props> {
         name={name}
         onChange={this.onChange}
         defaultValue={defaultValue.toFixed(4)}
+        connection={connection}
       />
     );
   }

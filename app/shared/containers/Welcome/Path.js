@@ -8,10 +8,12 @@ import { translate } from 'react-i18next';
 import { Button, Container, Divider, Header, Segment } from 'semantic-ui-react';
 
 import * as AccountsActions from '../../actions/accounts';
+import * as CreateAccountActions from '../../actions/createaccount';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
 import * as WalletsActions from '../../actions/wallets';
+import * as types from '../../../shared/actions/types';
 
 import WalletPanelButtonAccountRequest from '../../components/Wallet/Panel/Button/Account/Request';
 
@@ -19,8 +21,10 @@ class WelcomePathContainer extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       history,
       onStageSelect,
+      settings,
       system,
       t
     } = this.props;
@@ -37,7 +41,7 @@ class WelcomePathContainer extends Component<Props> {
             <Button
               content={t('welcome_path_have_account_button')}
               color="blue"
-              onClick={() => onStageSelect(2)}
+              onClick={() => onStageSelect(types.SETUP_STAGE_ACCOUNT_LOOKUP)}
             />
           </Container>
           <Divider />
@@ -50,7 +54,9 @@ class WelcomePathContainer extends Component<Props> {
           <Container textAlign="center">
             <WalletPanelButtonAccountRequest
               actions={actions}
+              connection={connection}
               history={history}
+              settings={settings}
               system={system}
             />
           </Container>
@@ -58,7 +64,7 @@ class WelcomePathContainer extends Component<Props> {
         <Button
           content={t('back')}
           icon="arrow left"
-          onClick={() => onStageSelect(0)}
+          onClick={() => onStageSelect(types.SETUP_STAGE_CONNECTION)}
           size="small"
         />
       </React.Fragment>
@@ -80,6 +86,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...CreateAccountActions,
       ...SettingsActions,
       ...ValidateActions,
       ...WalletActions,

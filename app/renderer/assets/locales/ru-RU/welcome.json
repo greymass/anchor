@@ -12,7 +12,7 @@
   "welcome_connect_server": "Подключение к серверу",
   "welcome_created_by": "Создано",
   "welcome_enter_account": "Confirm Account",
-  "welcome_instructions_1": "Для начала, приложение должно подключиться к одному из узлов сети TELOS",
+  "welcome_instructions_1": "Для начала, приложение должно подключиться к одному из узлов сети EOSIO",
   "welcome_instructions_2": "Введите узел сети, к которому вы хотите подключиться.",
   "welcome_instructions_3": "Введите открытый ключ или имя учетной записи.",
   "welcome_instructions_3_cold": "Enter the account name to use.",
@@ -25,7 +25,7 @@
   "welcome_key_coldwallet": "Import Private Key",
   "welcome_key_coldwallet_content": "A cold wallet cannot verify if the private key provided is matching the account.",
   "welcome_key_coldwallet_title": "Cold Wallet - Key Import",
-  "welcome_key_compare_content": "Все ключи TELOS начинаются с номера 5 и имеют длину 51 символ.",
+  "welcome_key_compare_content": "Все ключи EOSIO начинаются с номера 5 и имеют длину 51 символ.",
   "welcome_key_compare_expecting_match_to": "Ожидается закрытый ключ, который соответствует одному из следующих открытых ключей.",
   "welcome_key_compare_fail_invalid_content": "Введённый закрытый ключ не может быть преобразован в открытый ключ.",
   "welcome_key_compare_fail_invalid_title": "Закрытый ключ недействителен",
@@ -44,8 +44,8 @@
   "welcome_lookup_account_skip": "Пропустить импорт",
   "welcome_more_servers_1": "Не знаете, какой узел использовать?",
   "welcome_more_servers_2": "Нажмите здесь, чтобы просмотреть список вариантов.",
-  "welcome_path_generate_keys_header": "Create Account Request",
-  "welcome_path_generate_keys_subheader": "Generate an account creation request that can be sent to another account holder willing to create an account for you.",
+  "welcome_path_generate_keys_header": "Create New Account",
+  "welcome_path_generate_keys_subheader": "Generate an account creation request and allow Sqrl to automatically try creating an account for you.",
   "welcome_path_have_account_button": "Import Existing Account",
   "welcome_path_have_account_header": "Import Existing Account",
   "welcome_path_have_account_subheader": "Already have an account name and private key?",
@@ -62,5 +62,6 @@
   "welcome_stage_connection": "Подключение",
   "welcome_stage_wallet": "Кошелёк",
   "welcome_stage_watchwallet": "Watch Wallet",
-  "welcome_use_coldwallet": "Setup Cold Wallet"
+  "welcome_use_coldwallet": "Setup Cold Wallet",
+  "welcome_connect_network": "Connect to Network"
 }

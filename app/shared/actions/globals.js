@@ -21,14 +21,15 @@ export function getGlobals() {
   };
 }
 
-export function getCurrencyStats(contractName = "eosio.token", symbolName = "TLOS") {
-  const account = contractName.toLowerCase();
-  const symbol = symbolName.toUpperCase();
+export function getCurrencyStats(contractName = "eosio.token", symbolName) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_CURRENCYSTATS_REQUEST
     });
     const { connection } = getState();
+    const account = contractName.toLowerCase();
+    const symbol = symbolName ? symbolName.toUpperCase() : connection.keyPrefix.toUpperCase();
+    
     eos(connection).getCurrencyStats(account, symbol).then((results) => {
       if (isEmpty(results)) {
         return dispatch({

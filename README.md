@@ -9,12 +9,14 @@
 
 # Sqrl - TELOS Block Producer Voting & Wallet
 
-`Sqrl` is a fully functional release of a light wallet being designed for the TELOS blockchain. This application can be used to connect to a remote TELOS API endpoint to perform producer voting actions and common wallet commands.
+`Sqrl` is a fully functional release of a light wallet being designed for the TELOS blockchain, and supports any EOSIO blockchain. This application can be used to connect to a remote EOSIO API endpoint to perform producer voting actions and common wallet commands.
 
 [![Sqrl screenshot](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)](https://raw.githubusercontent.com/Telos-Foundation/Sqrl/master/Sqrl.png)
 
 ### Features
 
+- **New User Account Creation**: Sqrl provides a simple wizard that allows new users to create their first TELOS account on their own.
+- **Works Across Chains**: Sqrl is the only wallet that can be used to manage any EOSIO blockchain in a single interface, such as TELOS or EOS Mainnet.
 - **New TLOS Key Generation**: You can use Sqrl to generate new TLOS public and private key pairs.
 - **Block Producer/Proxy Voting**: Select which block producers to support and cast your vote. You can also register/unregister your account as a Proxy. Please note that the block producer voting UI is not a research tool; it is a simple interface that provides a secure way to vote.
 - **Token Transfers**: Transfer TLOS or any other token you may have a balance for to another user or exchanges.
@@ -30,11 +32,11 @@
 
 ### Releases
 
-Current 0.5.1 release downloads:
+Current 0.5.2 release downloads:
 
-- [Windows Installer](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.1/win-Sqrl-0.5.1.exe)
-- [macOS Package](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.1/mac-Sqrl-0.5.1.dmg)
-- [Linux (src)](https://github.com/Telos-Foundation/Sqrl/archive/v0.5.1.tar.gz)
+- [Windows Installer](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.2/win-Sqrl-0.5.2.exe)
+- [macOS Package](https://github.com/Telos-Foundation/Sqrl/releases/download/v0.5.2/mac-Sqrl-0.5.2.dmg)
+- [Linux (src)](https://github.com/Telos-Foundation/Sqrl/archive/v0.5.2.tar.gz)
 
 The latest release will always be available on the releases page of this repository:
 

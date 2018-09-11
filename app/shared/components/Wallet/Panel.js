@@ -32,9 +32,9 @@ export default class WalletPanel extends Component<Props> {
       system,
       transaction,
       validate,
-      wallet
+      wallet,
+      connection
     } = this.props;
-
     let panel = false;
 
     if (settings.walletMode === 'wait') {
@@ -51,6 +51,7 @@ export default class WalletPanel extends Component<Props> {
           settings={settings}
           validate={validate}
           wallet={wallet}
+          connection={connection}
         />
       );
     }
@@ -66,6 +67,7 @@ export default class WalletPanel extends Component<Props> {
           system={system}
           transaction={transaction}
           validate={validate}
+          connection={connection}
         />
       );
     }

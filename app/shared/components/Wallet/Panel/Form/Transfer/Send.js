@@ -15,8 +15,10 @@ import exchangeAccounts from '../../../../../constants/exchangeAccounts';
 class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
     super(props);
+    
+    const { connection } = props;
     this.state = {
-      asset: 'TLOS',
+      asset: connection.keyPrefix,
       confirming: false,
       formError: false,
       from: props.settings.account,
@@ -173,7 +175,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
       onClose,
       settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
     const {
       asset,
@@ -228,6 +231,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               to={to}
               waiting={waiting}
               waitingStarted={waitingStarted}
+              connection={connection}
             />
           ) : (
             <Segment basic clearing>
@@ -252,6 +256,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 onChange={this.onChange}
                 settings={settings}
                 value={quantity}
+                connection={connection}
+                
               />
               <p>
                 {`${balance[asset].toFixed(4)} ${asset} ${t('transfer_header_available')}`}

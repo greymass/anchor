@@ -20,14 +20,15 @@ export function setStake(account, netAmount, cpuAmount) {
     } = getStakeChanges(account, netAmount, cpuAmount);
 
     dispatch({ type: types.SYSTEM_STAKE_PENDING });
-
     return eos(connection, true).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
         tr.delegatebw(delegatebwParams(
           account.account_name,
           account.account_name,
           increaseInStake.netAmount,
-          increaseInStake.cpuAmount
+          increaseInStake.cpuAmount,
+          0,
+          connection
         ));
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
@@ -35,7 +36,8 @@ export function setStake(account, netAmount, cpuAmount) {
           account.account_name,
           account.account_name,
           decreaseInStake.netAmount,
-          decreaseInStake.cpuAmount
+          decreaseInStake.cpuAmount,
+          connection
         ));
       }
     }, {

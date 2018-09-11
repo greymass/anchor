@@ -26,7 +26,8 @@ class WalletPanelButtonTransfer extends Component<Props> {
       balances,
       settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
     return (
       <GlobalTransactionModal
@@ -45,6 +46,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
             balances={balances}
             settings={settings}
             system={system}
+            connection={connection}
           />
         )}
         icon="arrow circle up"

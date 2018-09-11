@@ -12,7 +12,7 @@
   "welcome_connect_server": "Conectar al servidor",
   "welcome_created_by": "Creada por",
   "welcome_enter_account": "Confirmar cuenta",
-  "welcome_instructions_1": "Para comenzar, Sqrl necesita conectarse a un nodo TELOS API.",
+  "welcome_instructions_1": "Para comenzar, Sqrl necesita conectarse a un nodo EOSIO API.",
   "welcome_instructions_2": "Entre al nodo al que desea conectarse.",
   "welcome_instructions_3": "Escriba el nombre de cuenta o clave pública.",
   "welcome_instructions_3_cold": "Escriba el nombre de la cuenta a utilizar.",
@@ -25,7 +25,7 @@
   "welcome_key_coldwallet": "Importar Clave Privada",
   "welcome_key_coldwallet_content": "Un Monedero Frío no puede verificar si la clave privada coincide con la cuenta.",
   "welcome_key_coldwallet_title": "Monedero Frío - Importación de clave",
-  "welcome_key_compare_content": "Todas las claves TELOS comienzan con el número 5 y son de 51 caracteres.",
+  "welcome_key_compare_content": "Todas las claves EOSIO comienzan con el número 5 y son de 51 caracteres.",
   "welcome_key_compare_expecting_match_to": "Esperando una clave privada que coincida con una de las claves de debajo.",
   "welcome_key_compare_fail_invalid_content": "La clave privada introducida no puede convertirse en una clave pública.",
   "welcome_key_compare_fail_invalid_title": "Clave privada no válida",
@@ -44,8 +44,8 @@
   "welcome_lookup_account_skip": "Saltar Importe",
   "welcome_more_servers_1": "¿No está seguro de qué servidor usar?",
   "welcome_more_servers_2": "Haga clic aquí para ver una lista de opciones.",
-  "welcome_path_generate_keys_header": "Create Account Request",
-  "welcome_path_generate_keys_subheader": "Generate an account creation request that can be sent to another account holder willing to create an account for you.",
+  "welcome_path_generate_keys_header": "Create New Account",
+  "welcome_path_generate_keys_subheader": "Generate an account creation request and allow Sqrl to automatically try creating an account for you.",
   "welcome_path_have_account_button": "Import Existing Account",
   "welcome_path_have_account_header": "Import Existing Account",
   "welcome_path_have_account_subheader": "Already have an account name and private key?",
@@ -62,5 +62,6 @@
   "welcome_stage_connection": "Conexión",
   "welcome_stage_wallet": "Monedero",
   "welcome_stage_watchwallet": "Ver Monedero",
-  "welcome_use_coldwallet": "Configurar Monedero Frío"
+  "welcome_use_coldwallet": "Configurar Monedero Frío",
+  "welcome_connect_network": "Connect to Network"
 }

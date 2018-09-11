@@ -12,6 +12,8 @@ import WelcomePath from './Welcome/Path';
 import WelcomeKey from './Welcome/Key';
 import WelcomeWallet from './Welcome/Wallet';
 
+import * as types from '../../shared/actions/types';
+
 import GlobalSettingsLanguage from './Global/Settings/Language';
 
 const { shell } = require('electron');
@@ -47,6 +49,7 @@ class Welcome extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       i18n,
       keys,
       settings,
@@ -56,32 +59,32 @@ class Welcome extends Component<Props> {
     const {
       stageSelect
     } = this.state;
-    let stage = 0;
+    let stage = types.SETUP_STAGE_CONNECTION;
     if (
       (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS')
       || (settings.walletMode === 'cold' && settings.account && keys.key)
     ) {
-      stage = 4;
+      stage = types.SETUP_STAGE_WALLET_CONFIG;
     } else if (
       (validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS')
       || (settings.walletMode === 'cold' && settings.account)
     ) {
-      stage = 3;
+      stage = types.SETUP_STAGE_KEY_CONFIG;
     } else if (validate.NODE === 'SUCCESS' || settings.walletMode === 'cold') {
-      stage = 2;
+      stage = types.SETUP_STAGE_ACCOUNT_OPTIONS;
     }
     if (stageSelect !== false) {
       stage = stageSelect;
     }
-    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} stage={stage} />;
-    if (stage >= 1) {
-      // stageElement = <WelcomePath onStageSelect={this.onStageSelect} stage={stage} />;;
-      if (stage >= 2 && (settings.walletMode === 'cold' || validate.NODE === 'SUCCESS')) {
-        stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} stage={stage} />;
-        if (stage >= 3 && (settings.walletMode === 'cold' || validate.ACCOUNT === 'SUCCESS')) {
-          stageElement = <WelcomeKey onStageSelect={this.onStageSelect} stage={stage} />;
-          if (stage === 4 && (settings.walletMode === 'cold' || validate.KEY === 'SUCCESS')) {
-            stageElement = <WelcomeWallet onStageSelect={this.onStageSelect} stage={stage} />;
+    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} />;
+    if (stage >= types.SETUP_STAGE_ACCOUNT_OPTIONS) {
+      stageElement = <WelcomePath onStageSelect={this.onStageSelect} connection={connection} />;
+      if (stage >= types.SETUP_STAGE_ACCOUNT_LOOKUP && (settings.walletMode === 'cold' || validate.NODE === 'SUCCESS')) {
+        stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} />;
+        if (stage >= types.SETUP_STAGE_KEY_CONFIG && (settings.walletMode === 'cold' || validate.ACCOUNT === 'SUCCESS')) {
+          stageElement = <WelcomeKey onStageSelect={this.onStageSelect} />;
+          if (stage === types.SETUP_STAGE_WALLET_CONFIG && (settings.walletMode === 'cold' || validate.KEY === 'SUCCESS')) {
+            stageElement = <WelcomeWallet onStageSelect={this.onStageSelect} connection={connection} />;
           }
         }
       }
@@ -118,7 +121,7 @@ class Welcome extends Component<Props> {
                 </Header.Subheader>
               </Header.Content>
             </Header>
-            {(stage >= 0)
+            {(stage >= types.SETUP_STAGE_CONNECTION)
               ? (
                 <Container textAlign="center">
                   <WelcomeBreadcrumb
@@ -140,7 +143,8 @@ class Welcome extends Component<Props> {
                 selection
               />
               {(
-                (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
+                (stage === types.SETUP_STAGE_ACCOUNT_OPTIONS
+                  || (stage === types.SETUP_STAGE_ACCOUNT_LOOKUP && validate.ACCOUNT !== 'SUCCESS'))
                 && !settings.walletInit
                 && settings.walletMode !== 'cold'
               )

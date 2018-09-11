@@ -13,12 +13,9 @@ export default class WalletModalAccountLookup extends Component<Props> {
   }
 
   onChange = (e, { value }) => {
-    // TODO: need to update eccjs.isValidPublic to support variable prefixes
-    var tmpKey = value.replace(/^TLOS/,'EOS');
-
     this.setState({
       key: value,
-      valid: (ecc.isValidPublic(tmpKey) === true)
+      valid: (ecc.isValidPublic(value, this.props.settings.blockchain.prefix) === true)
     }, () => {
       const { key, valid } = this.state;
       if (valid) {
@@ -43,6 +40,7 @@ export default class WalletModalAccountLookup extends Component<Props> {
   render() {
     const {
       accounts,
+      settings,
       validate
     } = this.props;
     const {
@@ -72,12 +70,12 @@ export default class WalletModalAccountLookup extends Component<Props> {
             >
               <Header icon="unlock" content={t('wallet_account_lookup_modal_title')} />
               <Modal.Content>
-                <h3>{t('wallet_account_lookup_modal_description')}</h3>
+                <h3>{t('wallet_account_lookup_modal_description', {tokenSymbol:settings.blockchain.prefix})}</h3>
                 <Form.Field
                   autoFocus
                   control={Input}
                   fluid
-                  label={t('wallet_account_lookup_modal_field_label')}
+                  label={t('wallet_account_lookup_modal_field_label', {tokenSymbol:settings.blockchain.prefix})}
                   onChange={this.onChange}
                   onKeyPress={this.onKeyPress}
                 />

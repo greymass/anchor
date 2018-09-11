@@ -33,6 +33,7 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      actions,
       settings,
       t,
       validate,
@@ -42,8 +43,10 @@ class GlobalAccountDropdown extends Component<Props> {
     if (!wallets || wallets.length === 0) {
       return false;
     }
+    
     const options = wallets
       .filter(w => w.account !== settings.account)
+      .filter(w => w.chainId == settings.blockchain.chainId) // limit to current chain accounts
       .sort((a, b) => a.account > b.account)
       .map((w) => {
         let icon = {
@@ -112,6 +115,11 @@ class GlobalAccountDropdown extends Component<Props> {
           color: 'orange',
           name: 'eye'
         };
+        if (options.length > 0) { // switch to first wallet
+          setTimeout(() => {
+            actions.useWallet(options[0].w.account);
+          }, 1000);
+        }
         break;
       }
       default: {

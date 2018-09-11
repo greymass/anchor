@@ -17,7 +17,8 @@ class ToolsButtonCreateAccount extends Component<Props> {
       globals,
       settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
 
     return (
@@ -38,7 +39,9 @@ class ToolsButtonCreateAccount extends Component<Props> {
             contacts={settings.contacts}
             globals={globals}
             key="CreateAccountForm"
+            settings={settings}
             system={system}
+            connection={connection}
           />
         )}
         icon="share square"

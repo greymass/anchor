@@ -15,7 +15,8 @@ class ToolsFormPermissionsAuthWeightedKey extends Component<Props> {
       onKeyChange,
       onRemoveKey,
       settings,
-      t
+      t,
+      connection
     } = this.props;
     const showWeight = (auth.keys.length > 1 || settings.advancedPermissions);
     return (
@@ -37,7 +38,9 @@ class ToolsFormPermissionsAuthWeightedKey extends Component<Props> {
           label={(!index) ? t('tools_form_permissions_auth_key') : false}
           name={`keys.${index}.key`}
           onChange={onKeyChange}
+          settings={settings}
           width={(showWeight) ? 14 : 16}
+          connection={connection}
         />
         {(settings.advancedPermissions)
           ? (

@@ -31,9 +31,10 @@ class GlobalModalAccountImportWatch extends Component<Props> {
       selected
     } = this.state;
     const {
-      actions
+      actions,
+      settings
     } = this.props;
-    actions.importWallets(selected, false, false, 'watch');
+    actions.importWallets(selected, false, false, 'watch', settings.blockchain.chainId);
     this.props.onClose();
   }
   isValid = (accounts) => {

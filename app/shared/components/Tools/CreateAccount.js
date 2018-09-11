@@ -25,7 +25,8 @@ class ToolsCreateAccount extends Component<Props> {
       system,
       validate,
       wallet,
-      t
+      t,
+      connection
     } = this.props;
 
     const account = accounts[settings.account];
@@ -50,12 +51,15 @@ class ToolsCreateAccount extends Component<Props> {
               content={(
                 <ToolsFormCreateAccount
                   account={account}
+                  actions={actions}
                   balance={balances[settings.account]}
                   contacts={settings.contacts}
                   globals={globals}
                   hideCancel
                   key="CreateAccountForm"
+                  settings={settings}
                   system={system}
+                  connection={connection}
                 />
               )}
               onClose={this.onClose}

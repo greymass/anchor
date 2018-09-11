@@ -56,7 +56,8 @@ export function getProducers(previous = false) {
       let tokensToProducersForVotes = false;
       const { contract } = globals;
       if (contract && contract['eosio.token']) {
-        const supply = parseFloat(contract['eosio.token'].TLOS.supply);
+        const coreSymbol = connection.keyPrefix;
+        const supply = parseFloat(contract['eosio.token'][coreSymbol].supply);
         // yearly inflation
         const inflation = 0.025;
         // Tokens per year
@@ -70,8 +71,9 @@ export function getProducers(previous = false) {
         // Percentage required to earn 100 tokens/day (break point for backups)
         backupMinimumPercent = 100 / tokensToProducersForVotes;
       }
+      const defaultPubKey = connection.keyPrefix + '1111111111111111111111111111111114T1Anm';
       const data = rows
-        .filter((p) => (p.producer_key !== 'TLOS1111111111111111111111111111111114T1Anm'))
+        .filter((p) => (p.producer_key !== defaultPubKey))
         .map((producer) => {
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / current.total_producer_vote_weight;
@@ -108,7 +110,7 @@ export function getProducersInfo(previous = false) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'telos-mainnet') return;
+    //if (connection.chain !== 'telos-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',
@@ -154,7 +156,7 @@ export function getProducerInfo(producer) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'telos-mainnet') return;
+    //if (connection.chain !== 'telos-mainnet') return;
     const query = {
       json: true,
       code: 'producerjson',

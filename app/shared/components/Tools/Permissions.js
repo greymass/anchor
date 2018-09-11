@@ -36,7 +36,8 @@ class ToolsPermissions extends Component<Props> {
       t,
       validate,
       wallet,
-      wallets
+      wallets,
+      connection
     } = this.props;
 
     if (!wallets || !wallets.length) {
@@ -50,6 +51,7 @@ class ToolsPermissions extends Component<Props> {
           settings={settings}
           validate={validate}
           wallet={wallet}
+          connection={connection}
         />
       );
     }
@@ -80,6 +82,7 @@ class ToolsPermissions extends Component<Props> {
                 open
                 settings={settings}
                 system={system}
+                connection={connection}
               />
             )
             : false
@@ -147,6 +150,7 @@ class ToolsPermissions extends Component<Props> {
                   pubkey={pubkey}
                   settings={settings}
                   system={system}
+                  connection={connection}
                 />
               )
               : false

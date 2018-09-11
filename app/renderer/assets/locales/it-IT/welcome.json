@@ -12,7 +12,7 @@
   "welcome_connect_server": "Connect to Server",
   "welcome_created_by": "Creato da",
   "welcome_enter_account": "Confirm Account",
-  "welcome_instructions_1": "Per iniziare, Sqrl deve connettersi a un nodo API TELOS. ",
+  "welcome_instructions_1": "Per iniziare, Sqrl deve connettersi a un nodo API EOSIO. ",
   "welcome_instructions_2": "Inserisci il nodo a cui desideri connetterti. ",
   "welcome_instructions_3": "Enter the public key or account name.",
   "welcome_instructions_3_cold": "Enter the account name to use.",
@@ -25,7 +25,7 @@
   "welcome_key_coldwallet": "Import Private Key",
   "welcome_key_coldwallet_content": "A cold wallet cannot verify if the private key provided is matching the account.",
   "welcome_key_coldwallet_title": "Cold Wallet - Key Import",
-  "welcome_key_compare_content": "All TELOS keys start with the number 5 and are 51 characters long.",
+  "welcome_key_compare_content": "All EOSIO keys start with the number 5 and are 51 characters long.",
   "welcome_key_compare_expecting_match_to": "Expecting a private key that matches one of the below keys.",
   "welcome_key_compare_fail_invalid_content": "The private key you entered cannot be converted to a public key.",
   "welcome_key_compare_fail_invalid_title": "Private key invalid",
@@ -44,8 +44,8 @@
   "welcome_lookup_account_skip": "Skip Import",
   "welcome_more_servers_1": "Non sai quale server usare? ",
   "welcome_more_servers_2": "Clicca qui per visualizzare un elenco di opzioni. ",
-  "welcome_path_generate_keys_header": "Create Account Request",
-  "welcome_path_generate_keys_subheader": "Generate an account creation request that can be sent to another account holder willing to create an account for you.",
+  "welcome_path_generate_keys_header": "Create New Account",
+  "welcome_path_generate_keys_subheader": "Generate an account creation request and allow Sqrl to automatically try creating an account for you.",
   "welcome_path_have_account_button": "Import Existing Account",
   "welcome_path_have_account_header": "Import Existing Account",
   "welcome_path_have_account_subheader": "Already have an account name and private key?",
@@ -62,5 +62,6 @@
   "welcome_stage_connection": "Connection",
   "welcome_stage_wallet": "Wallet",
   "welcome_stage_watchwallet": "Watch Wallet",
-  "welcome_use_coldwallet": "Setup Cold Wallet"
+  "welcome_use_coldwallet": "Setup Cold Wallet",
+  "welcome_connect_network": "Connect to Network"
 }

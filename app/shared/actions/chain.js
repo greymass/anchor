@@ -7,10 +7,10 @@ export function getInfo() {
     dispatch({
       type: types.GET_CHAIN_INFO_REQUEST
     });
-    const { connection } = getState();
+    const { connection, settings } = getState();
     eos(connection).getInfo(true).then((chain) => dispatch({
       type: types.GET_CHAIN_INFO_SUCCESS,
-      payload: { chain }
+      payload: { chain, settings }
     })).catch((err) => dispatch({
       type: types.GET_CHAIN_INFO_FAILURE,
       payload: { err },

@@ -30,7 +30,8 @@ class WalletPanelButtonRamSell extends Component<Props> {
       globals,
       settings,
       system,
-      t
+      t,
+      connection
     } = this.props;
     return (
       <GlobalTransactionModal
@@ -51,6 +52,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
             globals={globals}
             settings={settings}
             system={system}
+            connection={connection}
           />
         )}
         icon="database"

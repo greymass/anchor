@@ -7,6 +7,7 @@ import WelcomePathContainer from '../../containers/Welcome/Path';
 class WelcomePath extends Component<Props> {
   render() {
     const {
+      connection,
       onStageSelect,
       stage,
       t
@@ -18,6 +19,7 @@ class WelcomePath extends Component<Props> {
       >
         <p>{t('welcome_instructions_7')}</p>
         <WelcomePathContainer
+          connection={connection}
           onStageSelect={onStageSelect}
           stage={stage}
         />
