@@ -33,11 +33,10 @@ class ToolsProxy extends Component<Props> {
 
   tick() {
     const {
-      actions,
-      settings
+      actions
     } = this.props;
 
-    actions.getTable('eosio', settings.account, 'namebids');
+    actions.getTable('eosio', 'eosio', 'namebids');
   }
 
   onOpenModal = (nameBidToRemove) => this.setState({ openModal: true, nameBidToRemove });
@@ -72,10 +71,11 @@ class ToolsProxy extends Component<Props> {
 
     const nameBids = tables &&
                      tables.eosio &&
-                     tables.eosio[settings.account] &&
-                     tables.eosio[settings.account].namebids.rows;
+                     tables.eosio.eosio.namebids.rows;
 
-    const nameBidsToDisplay = sortBy(nameBids, 'newName');
+    const filteredNameBids = nameBids && nameBids.filter((nameBid) => (nameBid.high_bidder === settings.account));
+
+    const nameBidsToDisplay = filteredNameBids && sortBy(filteredNameBids, 'newName');
 
     return (
       <Segment basic>
@@ -94,13 +94,13 @@ class ToolsProxy extends Component<Props> {
           wallet={wallet}
         />
         <Header
-          content={t('tools_delegation_header_text')}
+          content={t('tools_bid_name_header_text')}
           floated="left"
-          subheader={t('tools_delegation_subheader_text')}
+          subheader={t('tools_bid_name_subheader_text')}
         />
         <Message
-          content={t('tools_delegation_info_content')}
-          header={t('tools_delegation_info_header')}
+          content={t('tools_bid_name_info_content')}
+          header={t('tools_bid_name_info_header')}
           icon="circle question"
           info
         />
@@ -115,7 +115,7 @@ class ToolsProxy extends Component<Props> {
         {(!nameBidsToDisplay || nameBidsToDisplay.length === 0)
           ? (
             <Message
-              content={t('tools_delegations_none')}
+              content={t('tools_bid_name_none')}
               warning
             />
           ) : (
