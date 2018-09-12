@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 
 import FormMessageError from '../../Global/Form/Message/Error';
-//import GlobalFormFieldString from '../../Global/Form/Field/String';
+import GlobalFormFieldString from '../../Global/Form/Field/String';
 import GlobalFormFieldAmount from '../../Global/Form/Field/Token';
 import ToolsFormBidNameConfirming from './BidName/Confirming';
 import WalletPanelLocked from '../../Wallet/Panel/Locked';
@@ -159,7 +159,7 @@ class ToolsFormBidName extends Component<Props> {
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
         <Segment
-          loading={system.SET_BIDNAME === 'PENDING'}
+          loading={system.BIDNAME === 'PENDING'}
           textAlign="left"
         >
           {(shouldShowForm)
