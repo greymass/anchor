@@ -59,21 +59,29 @@ class ToolsFormBidName extends Component<Props> {
       } = this.state;
 
       const {
-        actions
+        actions,
+        balance
       } = this.props;
 
       const {
-        checkAccountExists
+        checkAccountAvailability
       } = actions;
 
       if (name === 'newname' && newname.length !== 0) {
-        checkAccountExists(newname);
+        checkAccountAvailability(newname);
       }
 
       let submitDisabled = false;
 
       if (!valid) {
         formErrors[name] = `invalid_${name}`;
+        submitDisabled = true;
+      } else if (name === 'bid' && Number(value.split(' ')[0]) > balance.EOS) {
+        formErrors[name] = 'not_enough_balance';
+        submitDisabled = true;
+      } else if (name === 'newname' && value.length > 11) {
+        formErrors[name] = 'newname_too_long';
+        submitDisabled = true;
       } else {
         formErrors[name] = null;
       }
@@ -103,7 +111,7 @@ class ToolsFormBidName extends Component<Props> {
     let validFormat = true;
 
     formAttributes.forEach((attribute) => {
-      if (formErrors[attribute] === `invalid_${attribute}` && !this.state[attribute]) {
+      if (formErrors[attribute] === `invalid_${attribute}` || !this.state[attribute]) {
         validFormat = false;
       }
     });
@@ -148,6 +156,10 @@ class ToolsFormBidName extends Component<Props> {
 
     const {
       formErrors,
+      newname
+    } = this.state;
+
+    let {
       submitDisabled
     } = this.state;
 
@@ -155,6 +167,16 @@ class ToolsFormBidName extends Component<Props> {
     const shouldShowForm = !shouldShowConfirm;
 
     const formErrorKeys = Object.keys(formErrors);
+
+    if (newname &&
+        newname.length !== 0 &&
+        system.ACCOUNT_AVAILABLE === 'FAILURE' &&
+        system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === newname) {
+      formErrors.accountName = 'account_name_not_available';
+      submitDisabled = true;
+    } else if (formErrors.accountName === 'account_name_not_available') {
+      formErrors.accountName = null;
+    }
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
@@ -174,12 +196,21 @@ class ToolsFormBidName extends Component<Props> {
                   onSubmit={this.onSubmit}
                 >
                   {formAttributes.filter((formAttribute) => formAttribute !== 'bidder').map((formAttribute) => {
-                    const FieldComponentType = (tokenFields.includes(formAttribute)) ? GlobalFormFieldAmount : GlobalFormFieldString;
+                    let FieldComponentType;
+                    let defaultValue;
+
+                    if (tokenFields.includes(formAttribute)) {
+                      FieldComponentType = GlobalFormFieldAmount;
+                      defaultValue = this.state[formAttribute] && this.state[formAttribute].split(' ')[0];
+                    } else {
+                      FieldComponentType = GlobalFormFieldString;
+                      defaultValue = this.state[formAttribute];
+                    }
 
                     return (
                       <FieldComponentType
-                        defaultValue={this.state[formAttribute] || ''}
-                        label={t(`tools_form_proxy_info_${formAttribute}`)}
+                        defaultValue={defaultValue || ''}
+                        label={t(`tools_form_bid_name_${formAttribute}`)}
                         name={formAttribute}
                         onChange={this.onChange}
                       />
