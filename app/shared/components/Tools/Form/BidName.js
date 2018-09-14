@@ -64,11 +64,13 @@ class ToolsFormBidName extends Component<Props> {
       } = this.props;
 
       const {
-        checkAccountAvailability
+        checkAccountAvailability,
+        getBidForName
       } = actions;
 
       if (name === 'newname' && newname.length !== 0) {
         checkAccountAvailability(newname);
+        getBidForName(newname);
       }
 
       let submitDisabled = false;
@@ -155,6 +157,7 @@ class ToolsFormBidName extends Component<Props> {
     } = this.props;
 
     const {
+      bid,
       formErrors,
       newname
     } = this.state;
@@ -174,8 +177,23 @@ class ToolsFormBidName extends Component<Props> {
         system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === newname) {
       formErrors.accountName = 'account_name_not_available';
       submitDisabled = true;
-    } else if (formErrors.accountName === 'account_name_not_available') {
+    } else if (newname &&
+               newname.length !== 0 &&
+               system.NAMEBID_LAST_BID.newname === newname &&
+               system.NAMEBID_LAST_BID.owner === settings.account) {
+      formErrors.accountName = 'account_name_already_bid';
+      submitDisabled = true;
+    } else if (['account_name_not_available', 'account_name_already_bid'].include(formErrors.accountName)) {
       formErrors.accountName = null;
+    }
+
+    if (bid && newname &&
+        system.NAMEBID_LAST_BID.newname === newname &&
+        system.NAMEBID_LAST_BID.bid > bid) {
+      formErrors.accountName = 'bid_too_low';
+      submitDisabled = true;
+    } else if (formErrors.bid === 'bid_too_low') {
+      formErrors.bid = null;
     }
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
