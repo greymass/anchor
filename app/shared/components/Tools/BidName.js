@@ -22,24 +22,6 @@ class ToolsProxy extends Component<Props> {
     };
   }
 
-  componentDidMount() {
-    this.tick();
-    this.interval = setInterval(this.tick.bind(this), 30000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  tick() {
-    const {
-      actions
-    } = this.props;
-
-    //actions.getTable('eosio', 'eosio', 'namebids');
-    actions.getBidForName("me");
-  }
-
   onOpenModal = (nameBidToRemove) => this.setState({ openModal: true, nameBidToRemove });
 
   onCloseModal = () => {
