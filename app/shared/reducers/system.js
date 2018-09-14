@@ -18,6 +18,7 @@ export default function system(state = {}, action) {
   const [, requestName, requestState] = matches;
 
   const accountField = `${requestName}_LAST_ACCOUNT`;
+  const nameBidField = `${requestName}_LAST_NAMEBID`;
   const contractField = `${requestName}_LAST_CONTRACT`;
   const errField = `${requestName}_LAST_ERROR`;
   const txField = `${requestName}_LAST_TRANSACTION`;
@@ -34,6 +35,10 @@ export default function system(state = {}, action) {
     // Attach the account name associated to request when given
     if (action.payload.account_name) {
       newState[accountField] = action.payload.account_name;
+    }
+    // Attach the namebid associated to request when given
+    if (action.payload.account_name) {
+      newState[nameBidField] = action.payload.name_bid;
     }
     // Attempt to process any errors returned
     if (action.payload.err) {
