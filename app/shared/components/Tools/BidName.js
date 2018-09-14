@@ -36,7 +36,8 @@ class ToolsProxy extends Component<Props> {
       actions
     } = this.props;
 
-    actions.getTable('eosio', 'eosio', 'namebids');
+    //actions.getTable('eosio', 'eosio', 'namebids');
+    actions.getBidForName("me");
   }
 
   onOpenModal = (nameBidToRemove) => this.setState({ openModal: true, nameBidToRemove });

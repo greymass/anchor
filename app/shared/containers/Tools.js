@@ -35,8 +35,9 @@ import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
-import * as ProposalsActions from '../actions/governance/proposals';
 import * as HardwareLedgerActions from '../actions/hardware/ledger';
+import * as NameBidsActions from '../actions/namebids';
+import * as ProposalsActions from '../actions/governance/proposals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
 import * as SettingsActions from '../actions/settings';
@@ -44,8 +45,8 @@ import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
 import * as TableActions from '../actions/table';
 import * as TransactionActions from '../actions/transaction';
-import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as UnregProxyActions from '../actions/system/unregproxy';
+import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
 
@@ -281,17 +282,18 @@ function mapDispatchToProps(dispatch) {
       ...CustomTokensActions,
       ...GlobalsActions,
       ...HardwareLedgerActions,
+      ...NameBidsActions,
       ...ProposalsActions,
       ...RegProxyActions,
+      ...RegproxyinfoActions,
       ...SettingsActions,
       ...StakeActions,
       ...SystemStateActions,
-      ...RegproxyinfoActions,
       ...TableActions,
       ...ToolsHardwareLedger,
       ...TransactionActions,
-      ...UpdateAuthActions,
       ...UnregProxyActions,
+      ...UpdateAuthActions,
       ...WalletActions,
       ...WalletsActions,
     }, dispatch)
