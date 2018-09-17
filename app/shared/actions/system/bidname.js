@@ -27,7 +27,7 @@ export function bidname(data) {
         }
       ]
     }).then((tx) => {
-      const recentBids = settings.recentBids.concat({ newname: data.newname });
+      const recentBids = settings.recentBids.concat({ newname: data.newname, bid: data.bid });
       setSetting({ recentBids });
 
       return dispatch({
