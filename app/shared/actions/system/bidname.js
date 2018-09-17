@@ -27,8 +27,11 @@ export function bidname(data) {
         }
       ]
     }).then((tx) => {
+      const recentBids = settings.recentBids.concat({ newname: data.newname });
+      setSetting({ recentBids });
+
       return dispatch({
-        payload: { tx },
+        payload: { tx, recentBids },
         type: types.SYSTEM_BIDNAME_SUCCESS
       });
     }).catch((err) => dispatch({
