@@ -17,16 +17,14 @@ class ToolsProxy extends Component<Props> {
     super(props);
 
     this.state = {
-      nameBidToRemove: null,
       openModal: false
     };
   }
 
-  onOpenModal = (nameBidToRemove) => this.setState({ openModal: true, nameBidToRemove });
+  onOpenModal = () => this.setState({ openModal: true });
 
   onCloseModal = () => {
     this.setState({
-      nameBidToRemove: null,
       openModal: false
     });
   }
@@ -40,7 +38,6 @@ class ToolsProxy extends Component<Props> {
       keys,
       settings,
       system,
-      tables,
       validate,
       wallet,
       t
@@ -52,13 +49,7 @@ class ToolsProxy extends Component<Props> {
       successMessage
     } = this.state;
 
-    const nameBids = tables &&
-                     tables.eosio &&
-                     tables.eosio.eosio.namebids.rows;
-
-    const filteredNameBids = nameBids && nameBids.filter((nameBid) => (nameBid.high_bidder === settings.account));
-
-    const nameBidsToDisplay = filteredNameBids && sortBy(filteredNameBids, 'newName');
+    const nameBids = settings.recentBids;
 
     return (
       <Segment basic>
@@ -95,7 +86,7 @@ class ToolsProxy extends Component<Props> {
             />
           ) : false }
 
-        {(!nameBidsToDisplay || nameBidsToDisplay.length === 0)
+        {(!nameBids || nameBids.length === 0)
           ? (
             <Message
               content={t('tools_bid_name_none')}
@@ -105,39 +96,22 @@ class ToolsProxy extends Component<Props> {
             <Table definition>
               <Table.Header>
                 <Table.Row key="tools_contacts_headers">
-                  <Table.HeaderCell width="3">
-                    {t('tools_bid_name_account_name')}
-                  </Table.HeaderCell>
                   <Table.HeaderCell textAlign="right">
                     {t('tools_bid_name_new_name')}
                   </Table.HeaderCell>
                   <Table.HeaderCell textAlign="right">
                     {t('tools_bid_name_amount')}
                   </Table.HeaderCell>
-                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {nameBidsToDisplay.map((nameBid) => (
+                {nameBids.map((nameBid) => (
                   <Table.Row>
                     <Table.Cell textAlign="right">
-                      {nameBid.name}
+                      {nameBid.newname}
                     </Table.Cell>
                     <Table.Cell textAlign="right">
-                      {nameBid.amount}
-                    </Table.Cell>
-                    <Table.Cell textAlign="right">
-                      <Button
-                        color="red"
-                        icon="minus circle"
-                        onClick={() => {
-                          this.setState({
-                            nameBidToRemove: nameBid,
-                            openModal: true
-                          });
-                        }}
-                        size="mini"
-                      />
+                      {nameBid.bid}
                     </Table.Cell>
                   </Table.Row>
                 ))}
