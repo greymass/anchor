@@ -14,7 +14,6 @@ import customtokens from './customtokens';
 import globals from './globals';
 import keys from './keys';
 import ledger from './hardware/ledger';
-import namebids from './namebids';
 import producers from './producers';
 import proposals from './proposals';
 import settings from './settings';
@@ -38,7 +37,6 @@ const rootReducer = combineReducers({
   globals,
   keys,
   ledger,
-  namebids,
   producers,
   proposals,
   router,

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
-import { Segment, Form, Button, Message } from 'semantic-ui-react';
+import { Segment, Form, Button, Message, Table } from 'semantic-ui-react';
 
 import FormMessageError from '../../Global/Form/Message/Error';
 import GlobalFormFieldString from '../../Global/Form/Field/String';
@@ -168,6 +168,7 @@ class ToolsFormBidName extends Component<Props> {
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
+    const shouldShowBidInfo = system.NAMEBID_LAST_BID;
 
     const formErrorKeys = Object.keys(formErrors);
 
@@ -179,11 +180,12 @@ class ToolsFormBidName extends Component<Props> {
       submitDisabled = true;
     } else if (newname &&
                newname.length !== 0 &&
+               system.NAMEBID_LAST_BID &&
                system.NAMEBID_LAST_BID.newname === newname &&
                system.NAMEBID_LAST_BID.owner === settings.account) {
       formErrors.accountName = 'account_name_already_bid';
       submitDisabled = true;
-    } else if (['account_name_not_available', 'account_name_already_bid'].include(formErrors.accountName)) {
+    } else if (['account_name_not_available', 'account_name_already_bid'].includes(formErrors.accountName)) {
       formErrors.accountName = null;
     }
 
@@ -246,6 +248,31 @@ class ToolsFormBidName extends Component<Props> {
                     }
                     icon="warning sign"
                   />
+                  {(shouldShowBidInfo)
+                  ? (
+                    <Message
+                      info
+                    >
+                      <Table size="small">
+                        <Table.Row>
+                          <Table.Cell>
+                            {t('tools_form_bid_name_bid_info_last_bid')}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {system.NAMEBID_LAST_BID.high_bid}
+                          </Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                          <Table.Cell>
+                            {t('tools_form_bid_name_bid_info_last_bidder')}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {system.NAMEBID_LAST_BID.high_bidder}
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table>
+                    </Message>
+                  ) : ''}
                   <Segment basic clearing>
                     <Button
                       content={t('tools_form_proxy_info_button')}
