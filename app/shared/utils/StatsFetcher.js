@@ -32,7 +32,7 @@ export default class StatsFetcher {
   }
 
   totalStakedToOthers() {
-    if (!this.delegations) return Decimal(0);
+    if (!this.delegations || this.delegations.length === 0) return Decimal(0);
 
     const cpuWeightsStakedToOthers = this.delegations.map((delegation) => Number(delegation.cpu_weight.split(' ')[0]));
     const netWeightsStakedToOthers = this.delegations.map((delegation) => Number(delegation.net_weight.split(' ')[0]));
