@@ -133,7 +133,7 @@ export default class StatsFetcher {
     return {
       cpuWeight: `${totalCpuAmount.minus(selfCpuAmount).toFixed(4)} EOS`,
       netWeight: `${totalNetAmount.minus(selfNetAmount).toFixed(4)} EOS`,
-      totalStaked: this.totalStaked()
+      totalStaked: this.totalStakedToSelf() + this.totalStakedToOthers()
     };
   }
 }
