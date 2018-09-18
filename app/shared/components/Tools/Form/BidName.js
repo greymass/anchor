@@ -145,7 +145,7 @@ class ToolsFormBidName extends Component<Props> {
     actions.bidname(formValues);
   }
 
-  addToFormErrorsOnRender() {
+  formErrorsOnRender() {
     const {
       settings,
       system
@@ -166,27 +166,26 @@ class ToolsFormBidName extends Component<Props> {
                                    system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === newname;
     const currentAccountLastBid = newname && system.NAMEBID_LAST_BID && system.NAMEBID_LAST_BID.newname === newname &&
                                   system.NAMEBID_LAST_BID.high_bidder === settings.account;
-    const newnameFieldHasError = ['account_name_not_available', 'account_name_already_bid'].includes(formErrors.accountName);
+    const newnameFieldHasError = ['newname_not_available', 'newname_already_bid'].includes(formErrors.accountName);
 
     if (accountNameUnavailable) {
-      formErrors.newname = 'account_name_not_available';
+      formErrors.newname = 'newname_not_available';
       submitDisabled = true;
     } else if (currentAccountLastBid) {
-      formErrors.newname = 'account_name_already_bid';
+      formErrors.newname = 'newname_already_bid';
       submitDisabled = true;
     } else if (newnameFieldHasError) {
       formErrors.newname = null;
     }
 
-    const bidAmount = bid && bid.split(' ')[0];
+    const bidAmount = bid && Number(bid.split(' ')[0]);
     const bidTooLow = bid && newname &&
                       system.NAMEBID_LAST_BID.newname === newname &&
                       (system.NAMEBID_LAST_BID.high_bid / 10000) > bidAmount;
     const bidFieldHasError = formErrors.bid === 'bid_too_low';
 
-    debugger
     if (bidTooLow) {
-      formErrors.accountName = 'bid_too_low';
+      formErrors.bid = 'bid_too_low';
       submitDisabled = true;
     } else if (bidFieldHasError) {
       formErrors.bid = null;
@@ -206,11 +205,15 @@ class ToolsFormBidName extends Component<Props> {
       wallet
     } = this.props;
 
+    const {
+      newname
+    } = this.state;
+
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
-    const shouldShowBidInfo = system.NAMEBID_LAST_BID;
+    const shouldShowBidInfo = system.NAMEBID_LAST_BID && system.NAMEBID_LAST_BID.newname === newname;
 
-    const { formErrors, submitDisabled } = this.addToFormErrorsOnRender();
+    const { formErrors, submitDisabled } = this.formErrorsOnRender();
 
     const formErrorKeys = Object.keys(formErrors);
 
@@ -275,6 +278,7 @@ class ToolsFormBidName extends Component<Props> {
                         <Table.Row>
                           <Table.HeaderCell>
                             {t('tools_form_bid_name_bid_info_header')}
+                            <u>{newname}</u>
                           </Table.HeaderCell>
                           <Table.HeaderCell />
                         </Table.Row>

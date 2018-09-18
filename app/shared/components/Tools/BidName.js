@@ -49,7 +49,7 @@ class ToolsProxy extends Component<Props> {
       successMessage
     } = this.state;
 
-    const nameBids = settings.recentBids;
+    const nameBids = settings.recentBids && settings.recentBids[settings.account];
 
     return (
       <Segment basic>

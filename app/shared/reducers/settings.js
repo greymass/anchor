@@ -36,6 +36,8 @@ const initialState = {
   lang: '',
   // The node to connect to
   node: '',
+  // Recent names that the wallet has bid on.
+  recentBids: {},
   // Recent contracts the wallet has used
   recentContracts: [],
   // Recent referendum scopes the wallet has used
