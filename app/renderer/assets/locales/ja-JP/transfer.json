@@ -16,7 +16,7 @@
   "transfer_receive_modal_header": "トークンを受け取る",
   "transfer_receive_body_text": "トークンを受け取るには、単に以下のアカウント名を送信者に教えて下さい。",
   "transfer_close": "閉じる",
-  "transfer_header_available": "available to transfer.",
-  "transfer_send_exchange_in_memo_one": "Are you trying to transfer to an exchange? If so put",
-  "transfer_send_exchange_in_memo_two": "as the Account Name and put the memo code given in the memo field."
+  "transfer_header_available": "転送可能。",
+  "transfer_send_exchange_in_memo_one": "取引所へ転送しようとしていますか？その場合は、",
+  "transfer_send_exchange_in_memo_two": "をアカウント名へ入力し、与えられたメモコードをメモ欄へ入力して下さい。"
 }
