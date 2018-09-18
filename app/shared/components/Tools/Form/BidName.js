@@ -181,7 +181,7 @@ class ToolsFormBidName extends Component<Props> {
     const bidAmount = bid && Number(bid.split(' ')[0]);
     const bidTooLow = bid && newname &&
                       system.NAMEBID_LAST_BID.newname === newname &&
-                      (system.NAMEBID_LAST_BID.high_bid / 10000) > bidAmount;
+                      (system.NAMEBID_LAST_BID.high_bid / 10000) >= bidAmount;
     const bidFieldHasError = formErrors.bid === 'bid_too_low';
 
     if (bidTooLow) {
