@@ -178,7 +178,7 @@ class ToolsFormBidName extends Component<Props> {
       formErrors.newname = null;
     }
 
-    const bidAmount = bid.split(' ')[0];
+    const bidAmount = bid && bid.split(' ')[0];
     const bidTooLow = bid && newname &&
                       system.NAMEBID_LAST_BID.newname === newname &&
                       (system.NAMEBID_LAST_BID.high_bid / 10000) > bidAmount;
