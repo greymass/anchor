@@ -1,6 +1,8 @@
 {
-  "tools_bid_name_bid": "Bid Amount",
+  "tools_bid_highest_bid": "highest bid",
+  "tools_bid_name_bid": "Your Bid Amount",
   "tools_bid_name_header_text": "Bid Name",
+  "tools_bid_name_highest_bid": "Highest Bid",
   "tools_bid_name_info_content": "Name bidding allows you to place a bid on any 1-11 character name.",
   "tools_bid_name_info_header": "Name Bidding",
   "tools_bid_name_modal_button_add": "Add Bid",
@@ -8,6 +10,7 @@
   "tools_bid_name_none": "No recent bid names",
   "tools_bid_name_subheader_text": "Bidding on a name gives you a chance to own it",
   "tools_bid_name_table_header": "Recent Bids",
+  "tools_bid_not_highest_bid": "bid was beaten",
   "tools_button_create_account": "Create Account Now",
   "tools_change_block_explorer": "Change Block Explorer",
   "tools_change_block_explorer2": "Default Block Explorer",
