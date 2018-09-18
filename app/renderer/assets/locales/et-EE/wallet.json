@@ -72,6 +72,8 @@
   "wallet_status_add_custom_token_header": "Osakute Saldod",
   "wallet_status_add_custom_token_subheader": "Selle konto kõikide jälgitavate lepingute osakute saldod (vaikimisi ainult 'eosio.token').",
   "wallet_status_balances": "Rahakoti Saldod",
+  "wallet_status_balances_staked_to_self": "Staked to Self",
+  "wallet_status_balances_staked_to_others": "Staked to Others",
   "wallet_status_balances_none": "Sellel rahakotil puuduvad osakute saldod.",
   "wallet_status_liquid": "Kasutatav",
   "wallet_status_ram_amount": "Mälu Kogus",
