@@ -145,15 +145,10 @@ class ToolsFormBidName extends Component<Props> {
     actions.bidname(formValues);
   }
 
-  render() {
+  addToFormErrorsOnRender() {
     const {
-      actions,
-      keys,
       settings,
-      system,
-      t,
-      validate,
-      wallet
+      system
     } = this.props;
 
     const {
@@ -166,37 +161,59 @@ class ToolsFormBidName extends Component<Props> {
       submitDisabled
     } = this.state;
 
+    const accountNameUnavailable = newname &&
+                                   system.ACCOUNT_AVAILABLE === 'FAILURE' &&
+                                   system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === newname;
+    const currentAccountLastBid = newname && system.NAMEBID_LAST_BID && system.NAMEBID_LAST_BID.newname === newname &&
+                                  system.NAMEBID_LAST_BID.high_bidder === settings.account;
+    const newnameFieldHasError = ['account_name_not_available', 'account_name_already_bid'].includes(formErrors.accountName);
+
+    if (accountNameUnavailable) {
+      formErrors.newname = 'account_name_not_available';
+      submitDisabled = true;
+    } else if (currentAccountLastBid) {
+      formErrors.newname = 'account_name_already_bid';
+      submitDisabled = true;
+    } else if (newnameFieldHasError) {
+      formErrors.newname = null;
+    }
+
+    const bidAmount = bid.split(' ')[0];
+    const bidTooLow = bid && newname &&
+                      system.NAMEBID_LAST_BID.newname === newname &&
+                      (system.NAMEBID_LAST_BID.high_bid / 10000) > bidAmount;
+    const bidFieldHasError = formErrors.bid === 'bid_too_low';
+
+    debugger
+    if (bidTooLow) {
+      formErrors.accountName = 'bid_too_low';
+      submitDisabled = true;
+    } else if (bidFieldHasError) {
+      formErrors.bid = null;
+    }
+
+    return { formErrors, submitDisabled };
+  }
+
+  render() {
+    const {
+      actions,
+      keys,
+      settings,
+      system,
+      t,
+      validate,
+      wallet
+    } = this.props;
+
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
     const shouldShowBidInfo = system.NAMEBID_LAST_BID;
 
+    const { formErrors, submitDisabled } = this.addToFormErrorsOnRender();
+
     const formErrorKeys = Object.keys(formErrors);
 
-    if (newname &&
-        newname.length !== 0 &&
-        system.ACCOUNT_AVAILABLE === 'FAILURE' &&
-        system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === newname) {
-      formErrors.accountName = 'account_name_not_available';
-      submitDisabled = true;
-    } else if (newname &&
-               newname.length !== 0 &&
-               system.NAMEBID_LAST_BID &&
-               system.NAMEBID_LAST_BID.newname === newname &&
-               system.NAMEBID_LAST_BID.owner === settings.account) {
-      formErrors.accountName = 'account_name_already_bid';
-      submitDisabled = true;
-    } else if (['account_name_not_available', 'account_name_already_bid'].includes(formErrors.accountName)) {
-      formErrors.accountName = null;
-    }
-
-    if (bid && newname &&
-        system.NAMEBID_LAST_BID.newname === newname &&
-        system.NAMEBID_LAST_BID.bid > bid) {
-      formErrors.accountName = 'bid_too_low';
-      submitDisabled = true;
-    } else if (formErrors.bid === 'bid_too_low') {
-      formErrors.bid = null;
-    }
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
@@ -250,16 +267,25 @@ class ToolsFormBidName extends Component<Props> {
                   />
                   {(shouldShowBidInfo)
                   ? (
-                    <Message
-                      info
+                    <Table
+                      size="small"
+                      basic
                     >
-                      <Table size="small">
+                      <Table.Header>
+                        <Table.Row>
+                          <Table.HeaderCell>
+                            {t('tools_form_bid_name_bid_info_header')}
+                          </Table.HeaderCell>
+                          <Table.HeaderCell />
+                        </Table.Row>
+                      </Table.Header>
+                      <Table.Body>
                         <Table.Row>
                           <Table.Cell>
                             {t('tools_form_bid_name_bid_info_last_bid')}
                           </Table.Cell>
                           <Table.Cell>
-                            {system.NAMEBID_LAST_BID.high_bid}
+                            {system.NAMEBID_LAST_BID.high_bid / 10000} EOS
                           </Table.Cell>
                         </Table.Row>
                         <Table.Row>
@@ -270,8 +296,8 @@ class ToolsFormBidName extends Component<Props> {
                             {system.NAMEBID_LAST_BID.high_bidder}
                           </Table.Cell>
                         </Table.Row>
-                      </Table>
-                    </Message>
+                      </Table.Body>
+                    </Table>
                   ) : ''}
                   <Segment basic clearing>
                     <Button

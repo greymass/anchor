@@ -85,6 +85,9 @@ class ToolsProxy extends Component<Props> {
               success
             />
           ) : false }
+        <h2>
+          {t('tools_bid_name_table_header')}
+        </h2>
 
         {(!nameBids || nameBids.length === 0)
           ? (
