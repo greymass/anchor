@@ -52,7 +52,7 @@
   "tools_delegations_none": "No delegations exist or existing delegations are still loading.",
   "tools_description": "A set of common tools useful in managing accounts.",
   "tools_form_bid_name_bid": "Bid Amount (In EOS)",
-  "tools_form_bid_name_bid_info_header": "Info on Name Bid",
+  "tools_form_bid_name_bid_info_header": "Bid Info on ",
   "tools_form_bid_name_bid_info_last_bid": "Last Bid",
   "tools_form_bid_name_bid_info_last_bidder": "Last Bidder",
   "tools_form_bid_name_bidder": "Bidder Name",

@@ -26,6 +26,7 @@
   "error_invalid_telegram": "Invalid Telegram group, must be less than 256 Bytes.",
   "error_invalid_website": "Invalid website, must start with 'http://' or 'https://'.",
   "error_invalid_wechat": "Invalid Wechat username, must be less than 256 Bytes.",
+  "error_newname_already_bid": "You already bid on this name.",
   "error_newname_too_long": "Can only bid on an account name of 11 characters or less.",
   "error_no_stake_left": "Unable to set staked amount to 0. Doing so would prevent you from performing any transactions on the network.",
   "error_not_enough_balance": "Insufficient available EOS balance to complete transaction.",

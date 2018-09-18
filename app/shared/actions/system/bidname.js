@@ -1,5 +1,6 @@
 import * as types from '../types';
 import eos from '../helpers/eos';
+import { setSetting } from '../settings';
 
 export function bidname(data) {
   return (dispatch: () => void, getState) => {
@@ -27,11 +28,14 @@ export function bidname(data) {
         }
       ]
     }).then((tx) => {
-      const recentBids = settings.recentBids.concat({ newname: data.newname, bid: data.bid });
-      setSetting({ recentBids });
+      const recentBids = (settings.recentBids && settings.recentBids) || {};
+
+      recentBids[settings.account] =
+        (recentBids[settings.account] || []).concat({ newname: data.newname, bid: data.bid });
+      dispatch(setSetting('recentBids', recentBids));
 
       return dispatch({
-        payload: { tx, recentBids },
+        payload: { tx },
         type: types.SYSTEM_BIDNAME_SUCCESS
       });
     }).catch((err) => dispatch({
