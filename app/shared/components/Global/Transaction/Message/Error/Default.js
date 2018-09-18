@@ -21,7 +21,7 @@ class GlobalTransactionMessageErrorDefault extends Component<Props> {
       <div>
         <p key={error}>{t(errorMessage || error.message)}</p>
 
-        {(typeof error === 'object') ? (
+        {(typeof error === 'object' && !(error instanceof Error)) ? (
           <ReactJson
             collapsed={2}
             displayDataTypes={false}
