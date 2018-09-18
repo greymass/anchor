@@ -2,13 +2,12 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import {
-  Button,
   Header,
+  Label,
   Message,
   Segment,
   Table
 } from 'semantic-ui-react';
-import { sortBy } from 'lodash';
 
 import ToolsModalBidName from './Modal/BidName';
 
@@ -19,6 +18,30 @@ class ToolsProxy extends Component<Props> {
     this.state = {
       openModal: false
     };
+  }
+
+  componentDidMount() {
+    this.tick();
+    this.interval = setInterval(this.tick.bind(this), 30000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  tick() {
+    const {
+      actions,
+      settings
+    } = this.props;
+
+    const {
+      getBidForName
+    } = actions;
+
+    (settings.recentBids[settings.account] || []).forEach((bid) => {
+      getBidForName(bid.newname);
+    });
   }
 
   onOpenModal = () => this.setState({ openModal: true });
@@ -105,6 +128,10 @@ class ToolsProxy extends Component<Props> {
                   <Table.HeaderCell>
                     {t('tools_bid_name_bid')}
                   </Table.HeaderCell>
+                  <Table.HeaderCell>
+                    {t('tools_bid_name_highest_bid')}
+                  </Table.HeaderCell>
+                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -115,6 +142,14 @@ class ToolsProxy extends Component<Props> {
                     </Table.Cell>
                     <Table.Cell>
                       {nameBid.bid}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {nameBid.highest_bid || nameBid.bid}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Label color={nameBid.highest_bid === nameBid.bid ? 'green' : 'red'}>
+                        {nameBid.isHighestBid === nameBid.bid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
+                      </Label>
                     </Table.Cell>
                   </Table.Row>
                 ))}
