@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dropdown, Input } from 'semantic-ui-react';
-
-import debounce from 'lodash/debounce';
+import { debounce, find } from 'lodash';
 
 export default class GlobalFormFieldMultiToken extends Component<Props> {
   constructor(props) {
@@ -40,19 +39,23 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const { customTokens } = settings;
     // Determine which tokens are being tracked
     const trackedTokens = (customTokens) ? customTokens.map((tokenName) => {
-      const [, symbol] = tokenName.split(':');
-      return symbol;
-    }) : ['EOS'];
+      const [contract, symbol] = tokenName.split(':');
+      return { contract, symbol };
+    }) : [{
+      contract: 'eosio',
+      symbol: 'EOS'
+    }];
     const options = [];
     // Iterate assets and build the options list based on tracked tokens
     assets.forEach((asset) => {
+      const { contract, symbol } = find(trackedTokens, { symbol: asset });
       if (
-        trackedTokens.indexOf(asset) !== -1
+        (contract && symbol)
         && (balances[settings.account] && balances[settings.account][asset] > 0)
       ) {
         options.push({
           key: asset,
-          text: asset,
+          text: `${symbol} (${contract})`,
           value: asset
         });
       }
