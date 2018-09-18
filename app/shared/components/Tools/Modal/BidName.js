@@ -49,7 +49,7 @@ class ToolsModalDelegation extends Component<Props> {
             wallet={wallet}
           />
         )}
-        icon="auction"
+        icon="sticky note outline"
         onClose={onClose}
         openModal={openModal}
         settings={settings}

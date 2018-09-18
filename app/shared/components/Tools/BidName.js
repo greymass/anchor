@@ -96,24 +96,24 @@ class ToolsProxy extends Component<Props> {
               warning
             />
           ) : (
-            <Table definition>
+            <Table>
               <Table.Header>
                 <Table.Row key="tools_contacts_headers">
-                  <Table.HeaderCell textAlign="right">
-                    {t('tools_bid_name_new_name')}
+                  <Table.HeaderCell>
+                    {t('tools_bid_name_newname')}
                   </Table.HeaderCell>
-                  <Table.HeaderCell textAlign="right">
-                    {t('tools_bid_name_amount')}
+                  <Table.HeaderCell>
+                    {t('tools_bid_name_bid')}
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
                 {nameBids.map((nameBid) => (
                   <Table.Row>
-                    <Table.Cell textAlign="right">
+                    <Table.Cell>
                       {nameBid.newname}
                     </Table.Cell>
-                    <Table.Cell textAlign="right">
+                    <Table.Cell>
                       {nameBid.bid}
                     </Table.Cell>
                   </Table.Row>
