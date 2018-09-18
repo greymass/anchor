@@ -72,6 +72,8 @@
   "wallet_status_add_custom_token_header": "토큰 잔액",
   "wallet_status_add_custom_token_subheader": "이 계정의 추적 중인 계약에 토큰 잔액들 (기본적으로 'eosio.token').",
   "wallet_status_balances": "지갑 잔액",
+  "wallet_status_balances_staked_to_self": "Staked to Self",
+  "wallet_status_balances_staked_to_others": "Staked to Others",
   "wallet_status_balances_none": "이 지갑에는 토큰 잔액이 없습니다.",
   "wallet_status_liquid": "거래에 사용할 수있는 잔액",
   "wallet_status_ram_amount": "RAM 용량",
