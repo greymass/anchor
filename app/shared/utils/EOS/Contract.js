@@ -1,15 +1,21 @@
-import { find, map, pick } from 'lodash';
+import { forOwn, find, map, pick } from 'lodash';
 
 const Eos = require('eosjs');
 
 export const typeMap = {
-  int64: 'int',
-  uint64: 'int',
-  int32: 'int',
-  uint32: 'int',
+  bool: 'bool',
+  int8: 'int',
   int16: 'int',
+  int32: 'int',
+  int64: 'int',
+  int128: 'int',
+  int256: 'int',
+  uint8: 'int',
   uint16: 'int',
-  bool: 'bool'
+  uint32: 'int',
+  uint64: 'int',
+  uint128: 'int',
+  uint256: 'int',
 };
 
 export default class EOSContract {
@@ -18,12 +24,11 @@ export default class EOSContract {
     this.abi = abi;
     this.typeMap = typeMap;
 
-    for (var key in abi.types) {
-        var t = abi.types[key];
-        if(t.type in this.typeMap) {
-            this.typeMap[t.new_type_name] = this.typeMap[t.type];
-        }
-    }
+    forOwn(abi.types, (type) => {
+      if (type.type in this.typeMap) {
+        this.typeMap[type.new_type_name] = this.typeMap[type.type];
+      }
+    });
   }
 
   tx(actionName, account, data) {
