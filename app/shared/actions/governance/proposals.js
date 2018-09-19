@@ -4,6 +4,8 @@ import sortBy from 'lodash/sortBy';
 import * as types from '../types';
 import eos from '../helpers/eos';
 
+const defaultContract = 'cancancan345';
+
 export function getProposals(scope = 'eosforumdapp', previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -12,7 +14,7 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
     const { connection, settings } = getState();
     const query = {
       json: true,
-      code: 'cancancan123',
+      code: defaultContract,
       scope,
       table: 'proposal',
       limit: 1000,
@@ -33,6 +35,8 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
       if (results.more) {
         return dispatch(getReferendums(rows));
       }
+      dispatch(getVoteInfo(scope, settings.account));
+      // dispatch(getVoteInfo(scope, settings.account));
       const data = rows
         .map((proposal) => {
           const {
@@ -47,7 +51,6 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
           } catch (err) {
             valid = false;
           }
-          dispatch(getVoteInfo(scope, proposal.proposal_name, settings.account))
           return {
             json,
             proposal_json,
@@ -71,76 +74,69 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
   };
 }
 
-export function getVoteInfo(scope, proposal, voter) {
+function formatBounds(string, prefix = '0') {
+  let formatted = new Array(33).join(prefix);
+  formatted += string;
+  formatted = formatted.substring(string.length);
+  formatted = formatted.toUpperCase();
+  return `0x${formatted}`;
+}
+
+export function getVoteInfo(scope, account) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GOVERNANCE_GET_PROPOSALVOTES_PENDING
     });
     const { connection } = getState();
-    const formatted = eos(connection).modules.format.encodeNameHex(voter, true)
-    const lower_bound = ('0x' + ('00000000000000000000000000000000' + formatted).substring(formatted.length).toUpperCase())
-    const upper_bound = ('0x' + ('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF' + formatted).substring(formatted.length).toUpperCase())
-    console.log(scope)
-    console.log(proposal)
-    console.log(lower_bound)
-    console.log(upper_bound)
+    const formatted = eos(connection).modules.format.encodeNameHex(account, true)
+    const lower_bound = formatBounds(formatted);
+    const upper_bound = formatBounds(formatted, 'F');
     const query = {
       json: true,
-      code: 'cancancan123',
+      code: defaultContract,
       scope,
       table: 'vote',
       limit: 1000,
-      index_position: 2,
+      index_position: 3,
       key_type: 'i128',
       lower_bound,
       upper_bound
     };
-    // if (previous) {
-    //   query.lower_bound = previous[previous.length - 1].proposal_name;
-    // }
     eos(connection).getTableRows(query).then((results) => {
-      console.log(results)
       let { rows } = results;
-      // If previous rows were returned
-      // if (previous) {
-      //   // slice last element to avoid dupes
-      //   previous.pop();
-      //   // merge arrays
-      //   rows = concat(previous, rows);
-      // }
-      // // if there are missing results
-      // if (results.more) {
-      //   return dispatch(getReferendums(rows));
-      // }
-      const data = rows
-        .map((vote) => {
-          // const {
-          //   proposal_json,
-          //   proposal_name,
-          //   title
-          // } = proposal;
-          // let json = false;
-          // let valid = true;
-          // try {
-          //   json = JSON.parse(proposal_json);
-          // } catch (err) {
-          //   valid = false;
-          // }
-          console.log(vote)
+      const votes = rows
+        .map((data) => {
+          const {
+            id,
+            proposal_name,
+            updated_at,
+            vote,
+            vote_json,
+            voter
+          } = data;
+          let json = false;
+          let valid = true;
+          try {
+            json = JSON.parse(proposal_json);
+          } catch (err) {
+            valid = false;
+          }
           return {
-            // json,
-            // proposal_json,
-            // proposal_name,
-            // title,
-            // valid
+            id,
+            json,
+            proposal_name,
+            updated_at,
+            vote,
+            vote_json,
+            voter
           };
         });
-      const proposals = sortBy(data, 'proposal_name');
       return dispatch({
         type: types.SYSTEM_GOVERNANCE_GET_PROPOSALVOTES_SUCCESS,
         payload: {
-          proposals,
-          scope
+          account,
+          scope,
+          votes,
         }
       });
     }).catch((err) => dispatch({
@@ -150,18 +146,84 @@ export function getVoteInfo(scope, proposal, voter) {
   }
 };
 
-
-export function vote(voter, proposer, proposal_name, proposal_json, vote, vote_json) {
+export function unvoteProposal(scope, voter, proposal_name) {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.SYSTEM_GOVERNANCE_GET_PROPOSALS_PENDING
+      type: types.SYSTEM_GOVERNANCE_UNVOTE_PROPOSAL_PENDING
     });
-    const { connection } = getState();
-    // eos(connection).getTableRows(query).then((results) => {
+    const { connection, settings } = getState();
+    const { account } = settings;
+    return eos(connection, true).transaction({
+      actions: [
+        {
+          account: defaultContract,
+          name: 'unvote',
+          authorization: [{
+            actor: account,
+            permission: 'active'
+          }],
+          data: {
+            voter,
+            proposal_name
+          }
+        }
+      ]
+    }).then((tx) => {
+      setTimeout(() => {
+        dispatch(getVoteInfo(scope, account));
+      }, 500);
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_GOVERNANCE_UNVOTE_PROPOSAL_SUCCESS
+      });
+    }).catch((err) => dispatch({
+      payload: { err },
+      type: types.SYSTEM_GOVERNANCE_UNVOTE_PROPOSAL_FAILURE
+    }));
+  };
+}
+
+export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_GOVERNANCE_VOTE_PROPOSAL_PENDING
+    });
+    const { connection, settings } = getState();
+    const { account } = settings;
+    return eos(connection, true).transaction({
+      actions: [
+        {
+          account: defaultContract,
+          name: 'vote',
+          authorization: [{
+            actor: account,
+            permission: 'active'
+          }],
+          data: {
+            voter,
+            proposal_name,
+            vote,
+            vote_json
+          }
+        }
+      ]
+    }).then((tx) => {
+      setTimeout(() => {
+        dispatch(getVoteInfo(scope, account));
+      }, 500);
+      return dispatch({
+        payload: { tx },
+        type: types.SYSTEM_GOVERNANCE_VOTE_PROPOSAL_SUCCESS
+      });
+    }).catch((err) => dispatch({
+      payload: { err },
+      type: types.SYSTEM_GOVERNANCE_VOTE_PROPOSAL_FAILURE
+    }));
   };
 }
 
 export default {
   getProposals,
-  vote
+  unvoteProposal,
+  voteProposal
 };

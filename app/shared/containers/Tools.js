@@ -201,7 +201,7 @@ class ToolsContainer extends Component<Props> {
           secondary: true
         }}
         panes={panes}
-        defaultActiveIndex={0}
+        defaultActiveIndex={2}
       />
     );
   }

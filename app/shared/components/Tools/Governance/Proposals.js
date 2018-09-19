@@ -4,9 +4,11 @@ import { translate } from 'react-i18next';
 
 import { Dropdown, Container, Header, Segment } from 'semantic-ui-react';
 
+import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
+
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
-    scope: 'eoscanadacom'
+    scope: 'cancancan345'
   }
   componentDidMount() {
     this.sync();
@@ -26,6 +28,7 @@ class ToolsGovernanceProposals extends Component<Props> {
   }
   render() {
     const {
+      actions,
       proposals,
       settings,
       t
@@ -34,7 +37,8 @@ class ToolsGovernanceProposals extends Component<Props> {
       scope
     } = this.state;
     const {
-      list
+      list,
+      votes
     } = proposals;
     let recentOptions = [];
     if (settings && settings.recentProposalsScopes) {
@@ -86,27 +90,15 @@ class ToolsGovernanceProposals extends Component<Props> {
         }
         {([].concat(list)
           .filter((proposal) => !!proposal.valid)
-          .map((proposal) => {
-            const {
-              json,
-              proposal_name,
-              title
-            } = proposal;
-            return (
-              <React.Fragment>
-                <Header
-                  attached="top"
-                  block
-                  size="huge"
-                >
-                  {title}
-                  <Header.Subheader>
-                    {proposal_name} - {json.type}
-                  </Header.Subheader>
-                </Header>
-              </React.Fragment>
-            );
-          })
+          .map((proposal) => (
+            <ToolsGovernanceProposalsProposal
+              actions={actions}
+              proposal={proposal}
+              scope={scope}
+              settings={settings}
+              votes={votes}
+            />
+          ))
         )}
       </Segment>
     );
