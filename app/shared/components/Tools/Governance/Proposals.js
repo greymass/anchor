@@ -8,7 +8,7 @@ import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
-    scope: 'cancancan345'
+    scope: 'eosforumrcpp'
   }
   componentDidMount() {
     this.sync();
