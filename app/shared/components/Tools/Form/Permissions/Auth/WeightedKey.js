@@ -9,6 +9,7 @@ class ToolsFormPermissionsAuthWeightedKey extends Component<Props> {
   render() {
     const {
       auth,
+      defaultValue,
       keyAuths,
       index,
       onNumberChange,
@@ -33,7 +34,7 @@ class ToolsFormPermissionsAuthWeightedKey extends Component<Props> {
           : false
         }
         <GlobalFormFieldKeyPublic
-          defaultValue={keyAuths.key || ''}
+          defaultValue={defaultValue || keyAuths.key || ''}
           label={(!index) ? t('tools_form_permissions_auth_key') : false}
           name={`keys.${index}.key`}
           onChange={onKeyChange}

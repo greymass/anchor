@@ -14,5 +14,8 @@
     "postinstall": "npm run electron-rebuild"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@ledgerhq/hw-transport-node-hid": "^4.13.0",
+    "babel-runtime": "^6.26.0"
+  }
 }
