@@ -44,6 +44,14 @@ class ToolsFormPermissionsAuth extends Component<Props> {
       validForm: false
     });
   }
+  componentDidMount() {
+    if (this.props.defaultValue) {
+      this.setState({
+        auth: set(this.state.auth, 'keys.0.key', this.props.defaultValue),
+      })
+    }
+    this.validateFields();
+  }
   addKey = () => this.setState({
     auth: set(this.state.auth, `keys.${this.state.auth.keys.length}`, { key: '', weight: 1 }),
     validFields: Object.assign({}, this.state.validFields, {
@@ -51,15 +59,19 @@ class ToolsFormPermissionsAuth extends Component<Props> {
     })
   })
   onKeyChange = (e, { name, valid, value }) => {
+    console.log(name, value)
     this.setState({
       auth: set(this.state.auth, name, value),
       validFields: Object.assign({}, this.state.validFields, { [name]: valid })
     }, () => {
-      const { validFields } = this.state;
-      const eachFieldValid = values(validFields);
-      this.setState({
-        validForm: eachFieldValid.every((isValid) => isValid === true)
-      });
+      this.validateFields();
+    });
+  }
+  validateFields = () => {
+    const { validFields } = this.state;
+    const eachFieldValid = values(validFields);
+    this.setState({
+      validForm: eachFieldValid.every((isValid) => isValid === true)
     });
   }
   onStringChange = (e, { name, value }) => {
@@ -93,6 +105,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
   }
   render() {
     const {
+      defaultValue,
       pubkey,
       settings,
       t
@@ -147,6 +160,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
         {auth.keys.map((keyAuths, index) => (
           <ToolsFormPermissionsAuthWeightedKey
             auth={auth}
+            defaultValue={defaultValue}
             key={JSON.stringify(keyAuths)}
             keyAuths={keyAuths}
             index={index}
