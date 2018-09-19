@@ -4,7 +4,7 @@ import sortBy from 'lodash/sortBy';
 import * as types from '../types';
 import eos from '../helpers/eos';
 
-const defaultContract = 'cancancan345';
+const defaultContract = 'eosforumrcpp';
 
 export function getProposals(scope = 'eosforumdapp', previous = false) {
   return (dispatch: () => void, getState) => {
