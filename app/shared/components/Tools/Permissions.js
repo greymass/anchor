@@ -35,13 +35,8 @@ class ToolsPermissions extends Component<Props> {
       system,
       t,
       validate,
-      wallet,
-      wallets
+      wallet
     } = this.props;
-
-    if (!wallets || !wallets.length) {
-      return false;
-    }
 
     if (settings.walletMode !== 'watch' && !(keys && keys.key)) {
       return (
