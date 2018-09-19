@@ -1,0 +1,20 @@
+{
+  "ledger_status_application_error_header": "Unknown Error",
+  "ledger_status_application_error_subheader": "An unknown error has occurred while communicating with the Ledger Wallet.",
+  "ledger_status_awaiting_allow_header": "Allow Management",
+  "ledger_status_awaiting_allow_subheader": "On your Ledger Wallet device, please confirm to allow management to this application.",
+  "ledger_status_awaiting_application_header": "Start EOS",
+  "ledger_status_awaiting_application_subheader": "On your Ledger Wallet device, navigate to the EOS application and launch it.",
+  "ledger_status_reinitializing_header": "Reinitializing",
+  "ledger_status_reinitializing_subheader": "Establishing connection, please wait...",
+  "ledger_status_awaiting_connection_header": "Connect and unlock your Ledger",
+  "ledger_status_awaiting_connection_subheader": "Connect your Ledger device to this computer and then unlock the device.",
+  "ledger_unavailable_header": "Ledger Wallet - Connection",
+  "ledger_unavailable_list_1": "Use a Ledger Wallet Device with this application.",
+  "ledger_unavailable_list_2": "Unlock the device using the PIN code.",
+  "ledger_unavailable_list_3": "Ensure the EOS application is installed on the device (using Ledger Live).",
+  "ledger_unavailable_list_4": "Allow the Ledger Manager on the device.",
+  "ledger_unavailable_list_5": "Ensure the EOS application is currently running on the device (using the device itself).",
+  "ledger_unavailable_subheader": "Please connect the Ledger device via USB.",
+  "ledger_unavailable_text_1": "To get started using a Ledger Wallet, the following actions must be completed:"
+}

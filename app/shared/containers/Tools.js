@@ -18,6 +18,7 @@ import ToolsDelegations from '../components/Tools/Delegations';
 import ToolsGovernanceProposals from '../components/Tools/Governance/Proposals';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsKeysValidator from '../components/Tools/Keys/Validator';
+import ToolsHardwareLedger from '../components/Tools/Hardware/Ledger';
 import ToolsStateChain from '../components/Tools/State/Chain';
 import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
@@ -31,7 +32,11 @@ import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
+<<<<<<< HEAD
 import * as ProposalsActions from '../actions/governance/proposals';
+=======
+import * as HardwareLedgerActions from '../actions/hardware/ledger';
+>>>>>>> initial ledger work
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
 import * as SettingsActions from '../actions/settings';
@@ -99,6 +104,11 @@ const paneMapping = [
     element: ToolsContacts,
     modes: ['hot', 'watch'],
     name: 'contacts',
+  },
+  {
+    element: ToolsHardwareLedger,
+    modes: ['hot', 'watch'],
+    name: 'hardware_ledger',
   },
   {
     element: ToolsCreateAccount,
@@ -191,7 +201,6 @@ class ToolsContainer extends Component<Props> {
     } = this.props;
 
     const panes = this.getPanes();
-
     return (
       <Tab
         menu={{
@@ -201,7 +210,7 @@ class ToolsContainer extends Component<Props> {
           secondary: true
         }}
         panes={panes}
-        defaultActiveIndex={0}
+        defaultActiveIndex={9}
       />
     );
   }

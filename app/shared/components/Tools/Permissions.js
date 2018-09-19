@@ -7,24 +7,9 @@ import { Button, Container, Icon, Header, Message, Popup, Segment, Table } from 
 
 import ToolsModalPermissionAuth from './Modal/Permissions/Auth';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
+import EOSAccount from '../../utils/EOS/Account';
 
 class ToolsPermissions extends Component<Props> {
-  getAuthorization(account, pubkey) {
-    if (account) {
-      // Find the matching permission
-      const permission = find(account.permissions, (perm) =>
-        find(perm.required_auth.keys, (key) => key.key === pubkey));
-      if (permission) {
-        // Return an authorization for this key
-        return {
-          actor: account.account_name,
-          permission: permission.perm_name
-        };
-      }
-    }
-    return undefined;
-  }
-
   render() {
     const {
       accounts,
@@ -53,7 +38,7 @@ class ToolsPermissions extends Component<Props> {
     if (!account) return false;
 
     const { pubkey } = keys;
-    const authorization = this.getAuthorization(account, pubkey);
+    const authorization = new EOSAccount(account).getAuthorization(pubkey);
 
     return (
       <Segment basic>
@@ -114,7 +99,6 @@ class ToolsPermissions extends Component<Props> {
             )
           }
         </Segment>
-
         {(account.permissions.map((data) => (
           <Segment
             color="purple"
@@ -122,7 +106,7 @@ class ToolsPermissions extends Component<Props> {
           >
             {(
               !authorization
-              || (data.perm_name === 'owner' && authorization.permission === 'owner')
+              || (data.perm_name === 'owner' && authorization.permission !== 'owner')
               || (data.perm_name !== 'owner')
             )
               ? (

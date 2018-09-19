@@ -25,6 +25,15 @@ class ToolsStateWallet extends Component<Props> {
             displayObjectSize={false}
             iconStyle="square"
             name={null}
+            src={this.props.wallets}
+            style={{ padding: '1em' }}
+            theme="harmonic"
+          />
+          <ReactJson
+            displayDataTypes={false}
+            displayObjectSize={false}
+            iconStyle="square"
+            name={null}
             src={settings}
             style={{ padding: '1em' }}
             theme="harmonic"
