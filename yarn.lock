@@ -652,6 +652,10 @@ asap@~2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
 
+asn1-ber@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/asn1-ber/-/asn1-ber-1.0.9.tgz#0f48f709d9f9a953e18cfe2b8a62a6c926c5451a"
+
 asn1.js@^4.0.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-4.10.1.tgz#b9c2bf5805f1e64aadeed6df3a2bfafb5a73f5a0"
@@ -1701,6 +1705,10 @@ binary@~0.3.0:
 binaryen@^37.0.0:
   version "37.0.0"
   resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-37.0.0.tgz#c392bc784b6d46da8fc918b1a4ed8257a0cd8b08"
+
+bip32-path@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/bip32-path/-/bip32-path-0.4.2.tgz#5db0416ad6822712f077836e2557b8697c0c7c99"
 
 bl@^1.0.0:
   version "1.2.2"
@@ -10937,6 +10945,10 @@ webpack-merge@^4.1.2:
   resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.1.4.tgz#0fde38eabf2d5fd85251c24a5a8c48f8a3f4eb7b"
   dependencies:
     lodash "^4.17.5"
+
+webpack-node-externals@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.7.2.tgz#6e1ee79ac67c070402ba700ef033a9b8d52ac4e3"
 
 webpack-sources@^1.0.1, webpack-sources@^1.1.0:
   version "1.1.0"

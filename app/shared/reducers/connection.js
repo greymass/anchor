@@ -1,6 +1,5 @@
-import { find } from 'lodash';
-
 import * as types from '../actions/types';
+import EOSAccount from '../utils/EOS/Account';
 
 const initialState = {
   authorization: undefined,
@@ -68,8 +67,9 @@ export default function connection(state = initialState, action) {
     // Add key to connection if wallet is set or unlocked
     case types.SET_WALLET_KEYS_ACTIVE:
     case types.SET_WALLET_KEYS_TEMPORARY: {
+      const account = new EOSAccount(action.payload.accountData);
       return Object.assign({}, state, {
-        authorization: getAuthorization(action.payload.accountData, action.payload.pubkey),
+        authorization: account.getAuthorization(action.payload.pubkey),
         keyProviderObfuscated: {
           hash: action.payload.hash,
           key: action.payload.key
@@ -86,17 +86,4 @@ export default function connection(state = initialState, action) {
       return state;
     }
   }
-}
-
-function getAuthorization(account, pubkey) {
-  if (account) {
-    // Find the matching permission
-    const permission = find(account.permissions, (perm) =>
-      find(perm.required_auth.keys, (key) => key.key === pubkey));
-    if (permission) {
-      // Return an authorization for this key
-      return `${account.account_name}@${permission.perm_name}`;
-    }
-  }
-  return undefined;
 }

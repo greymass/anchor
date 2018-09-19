@@ -2,17 +2,17 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import GlobalTransactionModal from '../../../Global/Transaction/Modal';
-import ToolsFormPermissionsAuth from '../../Form/Permissions/Auth';
+import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
+import ToolsFormPermissionsAuthSet from '../../../Form/Permissions/Auth/Set';
 
-class ToolsModalPermissionAuth extends Component<Props> {
+class ToolsModalPermissionAuthSet extends Component<Props> {
   render() {
     const {
       actions,
       auth,
       blockExplorers,
       button,
-      defaultValue,
+      newkey,
       open,
       pubkey,
       settings,
@@ -26,10 +26,10 @@ class ToolsModalPermissionAuth extends Component<Props> {
         blockExplorers={blockExplorers}
         button={button}
         content={(
-          <ToolsFormPermissionsAuth
+          <ToolsFormPermissionsAuthSet
             actions={actions}
             auth={auth}
-            defaultValue={defaultValue}
+            newkey={newkey}
             pubkey={pubkey}
             settings={settings}
           />
@@ -45,4 +45,4 @@ class ToolsModalPermissionAuth extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalPermissionAuth);
+export default translate('tools')(ToolsModalPermissionAuthSet);

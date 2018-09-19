@@ -33,6 +33,7 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      authorization,
       settings,
       t,
       validate,
@@ -124,7 +125,9 @@ class GlobalAccountDropdown extends Component<Props> {
         labeled
         trigger={(
           <span>
-            <Icon color={icon.color} name={icon.name} /> {wallet.account}
+            <Icon color={icon.color} name={icon.name} />
+            {' '}
+            {authorization || wallet.account}
           </span>
         )}
       >
@@ -175,6 +178,7 @@ class GlobalAccountDropdown extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    authorization: state.connection.authorization,
     settings: state.settings,
     validate: state.validate,
     wallet: state.wallet,
