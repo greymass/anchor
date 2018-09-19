@@ -36,12 +36,18 @@ class ToolsProxy extends Component<Props> {
     } = this.props;
 
     const {
+      openModal
+    } = this.state;
+
+    const {
       getBidForName
     } = actions;
 
-    (settings.recentBids[settings.account] || []).forEach((bid) => {
-      getBidForName(bid.newname);
-    });
+    if (!openModal) {
+      (settings.recentBids[settings.account] || []).forEach((bid) => {
+        getBidForName(bid.newname);
+      });
+    }
   }
 
   onOpenModal = () => this.setState({ openModal: true });
@@ -49,6 +55,12 @@ class ToolsProxy extends Component<Props> {
   onCloseModal = () => {
     this.setState({
       openModal: false
+    });
+  }
+
+  onOpenModal = () => {
+    this.setState({
+      openModal: true
     });
   }
 
@@ -81,9 +93,10 @@ class ToolsProxy extends Component<Props> {
           actions={actions}
           balance={balances[settings.account]}
           blockExplorers={blockExplorers}
-          nameBidToRemove={nameBidToRemove}
           keys={keys}
+          nameBidToRemove={nameBidToRemove}
           onClose={this.onCloseModal}
+          onOpen={this.onOpenModal}
           openModal={openModal}
           settings={settings}
           system={system}
@@ -136,7 +149,7 @@ class ToolsProxy extends Component<Props> {
               </Table.Header>
               <Table.Body>
                 {nameBids.map((nameBid) => (
-                  <Table.Row>
+                  <Table.Row key={nameBid.newname}>
                     <Table.Cell>
                       {nameBid.newname}
                     </Table.Cell>
@@ -144,11 +157,11 @@ class ToolsProxy extends Component<Props> {
                       {nameBid.bid}
                     </Table.Cell>
                     <Table.Cell>
-                      {nameBid.highest_bid || nameBid.bid}
+                      {nameBid.highestBid || nameBid.bid}
                     </Table.Cell>
                     <Table.Cell>
-                      <Label color={nameBid.highest_bid === nameBid.bid ? 'green' : 'red'}>
-                        {nameBid.isHighestBid === nameBid.bid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
+                      <Label color={nameBid.highestBid === nameBid.bid ? 'green' : 'red'}>
+                        {nameBid.highestBid === nameBid.bid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
                       </Label>
                     </Table.Cell>
                   </Table.Row>
