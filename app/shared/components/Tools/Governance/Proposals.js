@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import ReactMarkdown from 'react-markdown';
 
 import { Dropdown, Container, Header, Segment } from 'semantic-ui-react';
 
@@ -105,19 +104,6 @@ class ToolsGovernanceProposals extends Component<Props> {
                     {proposal_name} - {json.type}
                   </Header.Subheader>
                 </Header>
-                <Segment
-                  attached="bottom"
-                  color="blue"
-                  size="large"
-                  stacked
-                >
-                  <ReactMarkdown
-                    allowedTypes={['root', 'text', 'break', 'paragraph', 'emphasis', 'strong', 'thematicBreak', 'blockquote', 'list', 'listItem', 'definition', 'heading']}
-                    source={json.content}
-                    unwrapDisallowed
-                  />
-                </Segment>
-
               </React.Fragment>
             );
           })
