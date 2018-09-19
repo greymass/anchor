@@ -1,7 +1,8 @@
+import { findIndex } from 'lodash';
+
 import * as types from './types';
 import eos from './helpers/eos';
 import { setSetting } from './settings';
-import { findIndex } from 'lodash';
 
 export function getBidForName(name) {
   return (dispatch: () => void, getState) => {
@@ -35,7 +36,11 @@ export function getBidForName(name) {
 
       if (bidIndex > -1) {
         recentBids[settings.account][bidIndex] =
-          { newname: namebid.newname, bid: recentBids[settings.account][bidIndex].bid, highestBid: namebid.highest_bid };
+          {
+            newname: namebid.newname,
+            bid: recentBids[settings.account][bidIndex].bid,
+            highestBid: `${namebid.high_bid / 10000} EOS`
+          };
 
         dispatch(setSetting('recentBids', recentBids));
       }

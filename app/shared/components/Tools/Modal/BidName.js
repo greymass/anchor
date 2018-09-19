@@ -15,6 +15,7 @@ class ToolsModalDelegation extends Component<Props> {
       bidNameToRemove,
       keys,
       onClose,
+      onOpen,
       openModal,
       settings,
       system,
@@ -51,6 +52,7 @@ class ToolsModalDelegation extends Component<Props> {
         )}
         icon="sticky note outline"
         onClose={onClose}
+        onOpen={onOpen}
         openModal={openModal}
         settings={settings}
         system={system}
