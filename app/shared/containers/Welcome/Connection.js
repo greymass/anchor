@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import { find } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
@@ -12,12 +13,15 @@ import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
 
+import blockchains from '../../constants/blockchains';
+
 const { shell } = require('electron');
 
 type Props = {
   actions: {
     setSettingWithValidation: () => void
   },
+  connection: {},
   onStageSelect: () => void,
   settings: {},
   t: () => void,
@@ -103,6 +107,7 @@ class WelcomeConnectionContainer extends Component<Props> {
   render() {
     const {
       t,
+      connection,
       settings,
       validate
     } = this.props;
@@ -187,6 +192,10 @@ class WelcomeConnectionContainer extends Component<Props> {
     }
     // safeish true and ssl or non-ssl confirmed
     const disabled = !(this.isSafeish(node) && (sslConfirm || sslEnabled));
+    // check which blockchain is being connected to
+    const blockchain = find(blockchains, { key: connection.key })
+    const blockChainName = blockchain && blockchain.name;
+
     return (
       <Form>
         <Form.Field
@@ -227,6 +236,14 @@ class WelcomeConnectionContainer extends Component<Props> {
             )
             : false
           }
+          {(blockChainName)
+            ? (
+              <Message
+                info
+              >
+                {t('wallet_welcome_connection_blockchain_message', { blockChainName })}
+              </Message>
+            ) : ''}
         </Container>
       </Form>
     );
@@ -235,6 +252,7 @@ class WelcomeConnectionContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    connection: state.connection,
     settings: state.settings,
     validate: state.validate
   };
