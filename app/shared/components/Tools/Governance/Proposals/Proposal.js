@@ -90,7 +90,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             : false
           }
           <p>
-            For more information on this proposal, please view the full details on eosvotes.io.
+            For more information on this proposal, please visit (not available yet)
           </p>
           <p>
             If you would like to modify your vote, use the buttons below.
