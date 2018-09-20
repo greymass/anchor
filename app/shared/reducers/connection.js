@@ -1,4 +1,5 @@
 import * as types from '../actions/types';
+import blockchains from '../constants/blockchains';
 
 const initialState = {
   authorization: undefined,
@@ -11,10 +12,6 @@ const initialState = {
   signPath: false,
 };
 
-const blockchains = {
-  aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'eos-mainnet'
-};
-
 export default function connection(state = initialState, action) {
   switch (action.type) {
     case types.WALLET_REMOVE:
@@ -23,8 +20,10 @@ export default function connection(state = initialState, action) {
     }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
+      const blockchain = find(blockchains, { chainId: action.payload.info.chain_id });
+
       return Object.assign({}, state, {
-        chain: blockchains[action.payload.info.chain_id] || 'unknown',
+        chain: (blockchain && blockchain.name) || 'unknown',
         chainId: action.payload.info.chain_id,
         httpEndpoint: action.payload.node
       });
