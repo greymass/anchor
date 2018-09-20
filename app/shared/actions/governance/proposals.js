@@ -168,6 +168,10 @@ export function unvoteProposal(scope, voter, proposal_name) {
           }
         }
       ]
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
         dispatch(getVoteInfo(scope, account));
@@ -207,6 +211,10 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
           }
         }
       ]
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
         dispatch(getVoteInfo(scope, account));
