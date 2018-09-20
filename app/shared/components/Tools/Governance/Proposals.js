@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Dropdown, Container, Header, Segment } from 'semantic-ui-react';
+import { Dropdown, Container, Header, Message, Segment } from 'semantic-ui-react';
 
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
@@ -29,8 +29,10 @@ class ToolsGovernanceProposals extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       proposals,
       settings,
+      system,
       t
     } = this.props;
     const {
@@ -50,12 +52,39 @@ class ToolsGovernanceProposals extends Component<Props> {
     return (
       <Segment basic>
         <Header>
-          {t('tools_proposals_header')}
+          Referendum::Proposals (TEST)
           <Header.Subheader>
-            {t('tools_proposals_subheader')}
+            This feature is a preview release of the upcoming Referendum system being implemented into the EOS ecosystem.
           </Header.Subheader>
         </Header>
+        <Message
+          content={(
+            <React.Fragment>
+              <p>
+                The Referendum system is a smart contract that allows EOS stakeholders to directly be involved in the governance of the EOS blockchain. When a proposal is entered into the referendum contract, there will be a period of time where all accounts staking EOS will be allowed to vote in yes/no on the matters presented in a stake weighted system.
+              </p>
+              <p>
+                External links to learn more about this system will be integrated as the system evolves and as more official releases are made available.
+              </p>
+            </React.Fragment>
+          )}
+          info
+        />
         <Container>
+          {(list && list.length)
+            ? (
+              <Message>
+                Proposal Scope:
+                {' '}
+                {scope}
+              </Message>
+            )
+            : (
+              <Message>
+                No proposals found in the scope named "{scope}".
+              </Message>
+            )
+          }
           <Dropdown
             additionLabel=""
             allowAdditions
@@ -72,30 +101,16 @@ class ToolsGovernanceProposals extends Component<Props> {
             selectOnNavigation={false}
           />
         </Container>
-        {(list && list.length)
-          ? (
-            <Header size="large">
-              {t('tools_proposals_scope_selected')}:
-              {' '}
-              {scope}
-            </Header>
-          )
-          : (
-            <Header size="large">
-              {t('tools_proposals_no_proposals_in_scope')}:
-              {' '}
-              {scope}
-            </Header>
-          )
-        }
         {([].concat(list)
           .filter((proposal) => !!proposal.valid)
           .map((proposal) => (
             <ToolsGovernanceProposalsProposal
               actions={actions}
+              blockExplorers={blockExplorers}
               proposal={proposal}
               scope={scope}
               settings={settings}
+              system={system}
               votes={votes}
             />
           ))
