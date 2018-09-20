@@ -58,7 +58,7 @@ const paneMapping = [
   {
     element: ToolsGovernanceProposals,
     modes: ['hot', 'watch', 'skip'],
-    name: 'governance_proposals'
+    name: 'governance_proposals_test'
   },
   {
     header: true,
@@ -201,7 +201,7 @@ class ToolsContainer extends Component<Props> {
           secondary: true
         }}
         panes={panes}
-        defaultActiveIndex={2}
+        defaultActiveIndex={0}
       />
     );
   }

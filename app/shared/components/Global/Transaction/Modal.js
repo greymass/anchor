@@ -85,6 +85,7 @@ class GlobalTransactionModal extends Component<Props> {
             <Button
               color={button.color}
               content={button.content}
+              disabled={button.disabled}
               fluid={button.fluid}
               floated={button.floated}
               icon={button.icon}

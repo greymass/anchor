@@ -53,7 +53,7 @@ class BasicVoterContainer extends Component<Props> {
   props: Props;
 
   state = {
-    activeItem: 'tools'
+    activeItem: 'producers'
   };
 
   componentDidMount() {
