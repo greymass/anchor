@@ -156,7 +156,7 @@
   "tools_proxy_form_button_register": "登録の確認",
   "tools_proxy_form_button_unregister": "登録解除の確認",
   "tools_proxy_form_message_about_to_register": "このアカウントをプロキシ投票者として登録しようとしています。登録後、他のアカウントがこのアカウントをプロキシとして設定できるようになります。",
-  "tools_proxy_form_message_about_to_unregister_from_proxy": "You are about to unregister this account as a proxy voter. After unregistering no accounts will be allowed to set this account as a proxy. Your account will also be removed from the `regproxyinfo` contract table.",
+  "tools_proxy_form_message_about_to_unregister_from_proxy": "このアカウントのプロキシ投票者登録を解除しようとしています。解除後は、誰もこのアカウントをプロキシとして設定できません。また、あなたのアカウントは`regproxyinfo`コントラクトテーブルから削除されます。",
   "tools_proxy_header": "プロキシ投票者として登録",
   "tools_proxy_header_register": "プロキシ投票者として登録",
   "tools_proxy_header_registration": "プロキシ投票者登録",
