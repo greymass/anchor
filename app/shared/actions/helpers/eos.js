@@ -22,7 +22,11 @@ export default function eos(connection, signing = false) {
   // TODO: Resolve why they are getting unset in certain edge cases
   if (
     decrypted.authorization
-    && (decrypted.authorization === [null] || decrypted.authorization === [undefined])
+    && (
+      decrypted.authorization === []
+      || decrypted.authorization === [null]
+      || decrypted.authorization === [undefined]
+    )
   ) {
     delete decrypted.authorization;
   }
