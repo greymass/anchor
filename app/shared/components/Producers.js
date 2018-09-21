@@ -14,11 +14,9 @@ class Producers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 40,
       lastError: false,
       lastTransaction: {},
       previewing: false,
-      querying: false,
       selected: [],
       selected_account: false,
       selected_loaded: false,
@@ -27,17 +25,8 @@ class Producers extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
     const { settings, system } = nextProps;
-    const nextValidate = nextProps.validate;
-    // On a new node connection, update props + producers
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.props.actions.getGlobals();
-      this.tick();
-    }
+
     // Update state when the transaction has gone through
     if (
       this.state.submitting

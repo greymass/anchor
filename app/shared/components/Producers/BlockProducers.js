@@ -19,6 +19,19 @@ class BlockProducers extends Component<Props> {
     this.interval = setInterval(this.tick.bind(this), 60000);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { validate } = this.props;
+    const nextValidate = nextProps.validate;
+    // On a new node connection, update props + producers
+    if (
+      validate.NODE === 'PENDING'
+      && nextValidate.NODE === 'SUCCESS'
+    ) {
+      this.props.actions.getGlobals();
+      this.tick();
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
