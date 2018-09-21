@@ -5,6 +5,8 @@ const initialState = {
   authorization: undefined,
   chain: 'eos-mainnet',
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+  chainKey: 'eos-mainnet',
+  chainSymbol: 'EOS',
   broadcast: true,
   expireInSeconds: 120,
   httpEndpoint: null,
@@ -26,7 +28,7 @@ export default function connection(state = initialState, action) {
         chain: (blockchain && blockchain.name) || 'unknown',
         chainId: action.payload.info.chain_id,
         chainKey: (blockchain && blockchain.key) || 'unknown',
-        chainPrefix: (blockchain && blockchain.prefix) || 'EOS',
+        chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         httpEndpoint: action.payload.node
       });
     }
