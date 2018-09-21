@@ -25,6 +25,8 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         chain: (blockchain && blockchain.name) || 'unknown',
         chainId: action.payload.info.chain_id,
+        chainKey: (blockchain && blockchain.key) || 'unknown',
+        chainPrefix: (blockchain && blockchain.prefix) || 'EOS',
         httpEndpoint: action.payload.node
       });
     }
