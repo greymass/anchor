@@ -29,7 +29,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
     const {
       increaseInStake,
       decreaseInStake
-    } = getStakeChanges(currentAccount, accountName, delegations, netAmount, cpuAmount);
+    } = getStakeChanges(connection.chainSymbol || 'EOS', currentAccount, accountName, delegations, netAmount, cpuAmount);
 
     dispatch({
       payload: { connection },
@@ -93,14 +93,14 @@ export function resetStakeForm() {
   };
 }
 
-function getStakeChanges(currentAccount, accountName, delegations, nextNetAmount, nextCpuAmount) {
+function getStakeChanges(chainSymbol, currentAccount, accountName, delegations, nextNetAmount, nextCpuAmount) {
   let accountResources;
 
   if (accountName !== currentAccount.account_name) {
     const index = findIndex(delegations, { to: accountName });
 
     if (index === -1) {
-      accountResources = { cpu_weight: '0 EOS', net_weight: '0 EOS' };
+      accountResources = { cpu_weight: `0 ${chainSymbol}`, net_weight: `0 ${chainSymbol}` };
     } else {
       accountResources = delegations[index];
     }
