@@ -130,8 +130,8 @@ export function getAccount(account = '') {
         const modified = Object.assign({}, results);
         if (!modified.self_delegated_bandwidth) {
           modified.self_delegated_bandwidth = {
-            cpu_weight: '0.0000 EOS',
-            net_weight: '0.0000 EOS'
+            cpu_weight: `0.0000 ${connection.chainSymbol || 'EOS'}`,
+            net_weight: `0.0000 ${connection.chainSymbol || 'EOS'}`
           };
         }
         // If a proxy voter is set, cache it's data for vote referencing
