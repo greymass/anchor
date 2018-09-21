@@ -56,7 +56,7 @@ export function getProducers(previous = false) {
       let tokensToProducersForVotes = false;
       const { contract } = globals;
       if (contract && contract['eosio.token']) {
-        const supply = parseFloat(contract['eosio.token'].EOS.supply);
+        const supply = parseFloat(contract['eosio.token'][connection.chainSymbol].supply);
         // yearly inflation
         const inflation = 0.04879;
         // Tokens per year
@@ -108,7 +108,7 @@ export function getProducersInfo(previous = false) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') return;
+    if (connection.chainKey && connection.chainKey.toLowerCase().indexOf('mainnet') === -1) return;
     const query = {
       json: true,
       code: 'producerjson',
@@ -154,7 +154,7 @@ export function getProducerInfo(producer) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') return;
+    if (connection.chainKey && connection.chainKey.toLowerCase().indexOf('mainnet') === -1) return;
     const query = {
       json: true,
       code: 'producerjson',
