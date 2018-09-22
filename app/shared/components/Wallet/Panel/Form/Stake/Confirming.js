@@ -20,6 +20,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
       account,
       accountName,
       balance,
+      connection,
       cpuOriginal,
       decimalCpuAmount,
       decimalNetAmount,
@@ -34,7 +35,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
     const cpuDifference = cpuAmount - cpuOriginal.toNumber();
     const netDifference = netAmount - netOriginal.toNumber();
 
-    const lessThanOneEosStaked = (cpuAmount < 1 || netAmount < 1);
+    const lessThanOneUnitStaked = (cpuAmount < 1 || netAmount < 1);
 
     const statsFetcher = new StatsFetcher(account, balance);
 
@@ -64,10 +65,10 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
               <Segment>
                 <Header textAlign="center">
                   <font color="green">
-                    <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} EOS
+                    <Icon name="wifi" />{t('about_to_stake_to_net')} {netDifference.toFixed(4)} {connection.chainSymbol || 'EOS'}
                   </font>
                   <Header.Subheader>
-                    ({t('will_have')} {netAmount.toFixed(4)} {t('eos_in_net_after')})
+                    ({t('will_have')} {netAmount.toFixed(4)} {t('units_in_net_after', { chainSymbol: connection.chainSymbol })})
                   </Header.Subheader>
                 </Header>
               </Segment>
@@ -113,8 +114,8 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
             ) : ''}
           </Segment.Group>
 
-          {(accountName === account.account_name && lessThanOneEosStaked) ? (
-            <Message warning="true">{t('will_have_less_than_one_eos_staked')}</Message>
+          {(accountName === account.account_name && lessThanOneUnitStaked) ? (
+            <Message warning="true">{t('will_have_less_than_one_unit_staked', { chainSymbol: connection.chainSymbol })}</Message>
           ) : ''}
 
           {(unstakingWhenAmountBeingUnstaked) ? (
