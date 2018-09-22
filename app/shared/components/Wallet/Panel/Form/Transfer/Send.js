@@ -16,7 +16,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      asset: 'EOS',
+      asset: props.connection.chainSymbol || 'EOS',
       confirming: false,
       formError: false,
       from: props.settings.account,

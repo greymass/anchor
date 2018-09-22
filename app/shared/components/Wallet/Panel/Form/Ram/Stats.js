@@ -6,7 +6,8 @@ import { Table } from 'semantic-ui-react';
 class WalletPanelFormRamStats extends Component<Props> {
   render() {
     const {
-      EOSbalance,
+      chainSymbolBalance,
+      connection,
       ramUsage,
       ramQuota,
       t
@@ -20,7 +21,7 @@ class WalletPanelFormRamStats extends Component<Props> {
               {t('ram_stats_title_one')}
             </Table.Cell>
             <Table.Cell width={8}>
-              {`${EOSbalance} EOS`}
+              {`${chainSymbolBalance} ${connection.chainSymbol}`}
             </Table.Cell>
           </Table.Row>
           <Table.Row>

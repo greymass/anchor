@@ -41,7 +41,7 @@ class WalletPanelFormStake extends Component<Props> {
       cpuOriginal: Decimal(parsedCpuWeight),
       decimalCpuAmount: Decimal(parsedCpuWeight),
       decimalNetAmount: Decimal(parsedNetWeight),
-      EOSbalance: (props.balance && props.balance.EOS) ? props.balance.EOS : 0,
+      chainSymbolBalance: (props.balance && props.balance[props.connection.chainSymbol || 'EOS']) ||  0,
       formError: null,
       netAmountValid: true,
       netOriginal: Decimal(parsedNetWeight),
@@ -145,7 +145,7 @@ class WalletPanelFormStake extends Component<Props> {
       cpuOriginal,
       decimalCpuAmount,
       decimalNetAmount,
-      EOSbalance,
+      chainSymbolBalance,
       netAmountValid,
       netOriginal
     } = this.state;
@@ -179,7 +179,7 @@ class WalletPanelFormStake extends Component<Props> {
     const cpuChange = decimalCpuAmount.minus(cpuOriginal);
     const netChange = decimalNetAmount.minus(netOriginal);
 
-    if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(EOSbalance)) {
+    if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(chainSymbolBalance)) {
       return 'not_enough_balance';
     }
 
@@ -226,14 +226,13 @@ class WalletPanelFormStake extends Component<Props> {
 
     const {
       accountName,
+      chainSymbolBalance,
       cpuOriginal,
       decimalCpuAmount,
       decimalNetAmount,
       netOriginal,
       submitDisabled
     } = this.state;
-
-    const EOSbalance = balance.EOS || 0;
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
@@ -264,7 +263,7 @@ class WalletPanelFormStake extends Component<Props> {
                 ) : ''}
               <WalletPanelFormStakeStats
                 cpuOriginal={cpuOriginal}
-                EOSbalance={EOSbalance}
+                chainSymbolBalance={chainSymbolBalance}
                 netOriginal={netOriginal}
               />
               <Form
@@ -335,7 +334,7 @@ class WalletPanelFormStake extends Component<Props> {
               balance={balance}
               decimalCpuAmount={decimalCpuAmount}
               cpuOriginal={cpuOriginal}
-              EOSbalance={EOSbalance}
+              chainSymbolBalance={chainSymbolBalance}
               decimalNetAmount={decimalNetAmount}
               netOriginal={netOriginal}
               onBack={this.onBack}

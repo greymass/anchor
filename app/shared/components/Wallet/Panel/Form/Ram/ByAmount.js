@@ -54,6 +54,7 @@ class WalletPanelFormRamByAmount extends Component<Props> {
 
   render() {
     const {
+      connection,
       formError,
       t
     } = this.props;
@@ -76,7 +77,7 @@ class WalletPanelFormRamByAmount extends Component<Props> {
         />
         {(priceOfRam && !formError) ? (
           <h4 style={{ textAlign: 'center', margin: '30px' }}>
-            {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} EOS.`}
+            {`${t('ram_form_text_estimate')} ${priceOfRam.toFixed(4)} ${connection.chainSymbol || 'EOS'}.`}
           </h4>
         ) : ''}
       </div>
