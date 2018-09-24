@@ -26,6 +26,7 @@ export default class WalletPanel extends Component<Props> {
       actions,
       balances,
       blockExplorers,
+      connection,
       globals,
       keys,
       settings,
@@ -61,6 +62,7 @@ export default class WalletPanel extends Component<Props> {
           actions={actions}
           balances={balances}
           blockExplorers={blockExplorers}
+          connection={connection}
           globals={globals}
           settings={settings}
           system={system}

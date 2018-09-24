@@ -27,6 +27,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
       actions,
       balances,
       blockExplorers,
+      connection,
       globals,
       settings,
       system,
@@ -48,6 +49,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
             account={account}
             actions={actions}
             balance={balances[settings.account]}
+            connection={connection}
             globals={globals}
             settings={settings}
             system={system}
