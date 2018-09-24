@@ -35,6 +35,7 @@ export default class Wallet extends Component<Props> {
       balances,
       blockExplorers,
       chain,
+      connection,
       globals,
       keys,
       settings,
