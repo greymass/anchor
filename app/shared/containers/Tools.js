@@ -228,6 +228,7 @@ function mapStateToProps(state) {
     balances: state.balances,
     blockExplorers: state.blockexplorers,
     chain: state.chain,
+    connection: state.connection,
     contracts: state.contracts,
     customtokens: state.customtokens,
     globals: state.globals,

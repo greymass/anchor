@@ -24,6 +24,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
       actions,
       blockExplorers,
       balances,
+      connection,
       settings,
       system,
       t
@@ -43,6 +44,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
           <WalletPanelFormTransfer
             actions={actions}
             balances={balances}
+            connection={connection}
             settings={settings}
             system={system}
           />
