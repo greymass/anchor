@@ -23,6 +23,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       accountName,
       activeKey,
       balance,
+      connection,
       delegatedBw,
       delegatedCpu,
       ownerKey,
@@ -35,7 +36,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       confirming: false,
       delegatedBw,
       delegatedCpu,
-      EOSbalance: (balance && balance.EOS) ? balance.EOS : 0,
+      chainSymbolBalance: balance && balance[connection.chainSymbol] || 0,
       formErrors: {},
       ownerKey,
       ramAmount,
@@ -170,7 +171,7 @@ class ToolsFormCreateAccount extends Component<Props> {
     const {
       delegatedBw,
       delegatedCpu,
-      EOSbalance,
+      chainSymbolBalance,
       ramAmount,
       ramPrice
     } = this.state;
@@ -197,7 +198,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       submitDisabled = true;
     }
 
-    const decimalBalance = Decimal(EOSbalance);
+    const decimalBalance = Decimal(chainSymbolBalance);
     const decimalDelegatedBw = Decimal(delegatedBw.split(' ')[0]);
     const decimalDelegatedCpu = Decimal(delegatedCpu.split(' ')[0]);
 
@@ -260,6 +261,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
   render() {
     const {
+      connection,
       hideCancel,
       onClose,
       system,
@@ -385,7 +387,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 {(ramPrice && !formErrors.ramAmount) ? (
                   <h4 style={{ margin: '30px' }}>
-                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} EOS.`}
+                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} ${connection.chainSymbol}.`}
                   </h4>
                 ) : ''}
                 <FormMessageError
