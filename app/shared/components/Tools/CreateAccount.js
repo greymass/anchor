@@ -19,6 +19,7 @@ class ToolsCreateAccount extends Component<Props> {
       actions,
       balances,
       blockExplorers,
+      connection,
       globals,
       keys,
       settings,
@@ -63,6 +64,7 @@ class ToolsCreateAccount extends Component<Props> {
                 <ToolsFormCreateAccount
                   account={account}
                   balance={balances[settings.account]}
+                  connection={connection}
                   contacts={settings.contacts}
                   globals={globals}
                   hideCancel
