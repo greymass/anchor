@@ -218,6 +218,7 @@ class WalletPanelFormStake extends Component<Props> {
     const {
       account,
       balance,
+      connection,
       onClose,
       system,
       settings,
@@ -245,7 +246,6 @@ class WalletPanelFormStake extends Component<Props> {
         system.ACCOUNT_EXISTS_LAST_ACCOUNT === accountName) {
       formError = formError || 'account_does_not_exist';
     }
-
     return (
       <Segment
         loading={system.STAKE === 'PENDING'}
@@ -262,6 +262,7 @@ class WalletPanelFormStake extends Component<Props> {
                   </Header>
                 ) : ''}
               <WalletPanelFormStakeStats
+                connection={connection}
                 cpuOriginal={cpuOriginal}
                 chainSymbolBalance={chainSymbolBalance}
                 netOriginal={netOriginal}
@@ -332,6 +333,7 @@ class WalletPanelFormStake extends Component<Props> {
               account={account}
               accountName={accountName}
               balance={balance}
+              connection={connection}
               decimalCpuAmount={decimalCpuAmount}
               cpuOriginal={cpuOriginal}
               chainSymbolBalance={chainSymbolBalance}

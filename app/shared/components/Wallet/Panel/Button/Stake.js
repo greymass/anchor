@@ -28,6 +28,7 @@ class WalletPanelButtonStake extends Component<Props> {
       accounts,
       balances,
       blockExplorers,
+      connection,
       settings,
       validate,
       system,
@@ -61,6 +62,7 @@ class WalletPanelButtonStake extends Component<Props> {
             accountName={settings.account}
             actions={actions}
             balance={balances[settings.account]}
+            connection={connection}
             cpuAmount={Decimal(cpu_weight.split(' ')[0])}
             key="StakeForm"
             netAmount={Decimal(net_weight.split(' ')[0])}

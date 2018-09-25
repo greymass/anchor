@@ -9,7 +9,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
     const {
       connection,
       cpuOriginal,
-      chainSymbolbalance,
+      chainSymbolBalance,
       netOriginal,
       t
     } = this.props;
@@ -18,7 +18,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
       <Segment.Group horizontal>
         <Segment>
           <Header textAlign="center">
-            {(chainSymbolbalance).toFixed(4)} {connection.chainSymbol || 'EOS'}
+            {(chainSymbolBalance).toFixed(4)} {connection.chainSymbol || 'EOS'}
             <Header.Subheader>
               {t('amount_not_staked')}
             </Header.Subheader>
