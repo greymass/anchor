@@ -56,6 +56,7 @@ export default class Wallet extends Component<Props> {
               accounts={accounts}
               balances={balances}
               blockExplorers={blockExplorers}
+              connection={connection}
               globals={globals}
               keys={keys}
               settings={settings}
@@ -73,6 +74,7 @@ export default class Wallet extends Component<Props> {
               balances={balances}
               blockExplorers={blockExplorers}
               chain={chain}
+              connection={connection}
               globals={globals}
               keys={keys}
               settings={settings}

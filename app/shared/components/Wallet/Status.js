@@ -37,6 +37,7 @@ class WalletStatus extends Component<Props> {
       balances,
       blockExplorers,
       chain,
+      connection,
       globals,
       settings,
       t,
@@ -78,6 +79,7 @@ class WalletStatus extends Component<Props> {
               account={account}
               actions={actions}
               balances={balances}
+              connection={connection}
               globals={globals}
               statsFetcher={statsFetcher}
               settings={settings}

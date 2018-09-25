@@ -30,6 +30,7 @@ class WalletPanelUnlocked extends Component<Props> {
       accounts,
       balances,
       blockExplorers,
+      connection,
       globals,
       validate,
       settings,
@@ -71,6 +72,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       accounts={accounts}
                       balances={balances}
                       blockExplorers={blockExplorers}
+                      connection={connection}
                       validate={validate}
                       settings={settings}
                       system={system}
@@ -81,6 +83,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       actions={actions}
                       balances={balances}
                       blockExplorers={blockExplorers}
+                      connection={connection}
                       settings={settings}
                       system={system}
                     />
@@ -96,6 +99,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       actions={actions}
                       balances={balances}
                       blockExplorers={blockExplorers}
+                      connection={connection}
                       globals={globals}
                       settings={settings}
                       system={system}
@@ -107,6 +111,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       actions={actions}
                       balances={balances}
                       blockExplorers={blockExplorers}
+                      connection={connection}
                       globals={globals}
                       settings={settings}
                       system={system}
