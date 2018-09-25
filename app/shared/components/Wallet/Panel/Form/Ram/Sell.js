@@ -210,6 +210,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                       ? (
                         <WalletPanelFormRamByAmount
                           amountOfRam={ramToSell}
+                          connection={connection}
                           formError={formError}
                           globals={globals}
                           onChange={this.onChange}
@@ -217,6 +218,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                         />
                       ) : (
                         <WalletPanelFormRamByCost
+                          connection={connection}
                           formError={formError}
                           globals={globals}
                           onChange={this.onChange}
@@ -229,6 +231,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                   <Grid.Column width={8}>
                     <WalletPanelFormRamStats
                       chainSymbolBalance={balances[settings.account][connection.chainSymbol || 'EOS']}
+                      connection={connection}
                       ramQuota={ramQuota}
                       ramUsage={ramUsage}
                     />
@@ -258,6 +261,7 @@ class WalletPanelFormRamSell extends Component<Props> {
         {(shouldShowConfirm)
           ? (
             <WalletPanelFormRamConfirming
+              connection={connection}
               ramAmount={ramToSell}
               priceOfRam={priceOfRam}
               onBack={this.onBack}
