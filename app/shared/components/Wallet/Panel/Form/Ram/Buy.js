@@ -115,9 +115,9 @@ class WalletPanelFormRamBuy extends Component<Props> {
       return 'ram_has_to_be_over_minimum_amount';
     }
 
-    const chainSymbolBalance = !balance[connection.chainSymbol || 'EOS'];
+    const chainSymbolBalance = balance[connection.chainSymbol || 'EOS'];
 
-    if (chainSymbolBalance || Decimal(chainSymbolBalance).lessThan(priceOfRam)) {
+    if (!chainSymbolBalance || Decimal(chainSymbolBalance).lessThan(priceOfRam)) {
       return 'not_enough_balance';
     }
 
@@ -218,6 +218,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                       ? (
                         <WalletPanelFormRamByAmount
                           amountOfRam={ramToBuy}
+                          connection={connection}
                           formError={formError}
                           globals={globals}
                           onChange={this.onChange}
@@ -225,6 +226,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                         />
                       ) : (
                         <WalletPanelFormRamByCost
+                          connection={connection}
                           formError={formError}
                           globals={globals}
                           onChange={this.onChange}
@@ -237,6 +239,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                   <Grid.Column width={8}>
                     <WalletPanelFormRamStats
                       chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
+                      connection={connection}
                       ramQuota={ramQuota}
                       ramUsage={ramUsage}
                     />
@@ -268,6 +271,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
           ? (
             <WalletPanelFormRamConfirming
               buying
+              connection={connection}
               ramAmount={ramToBuy}
               newRamAmount={ramQuota + Number(ramToBuy)}
               chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
