@@ -1,10 +1,11 @@
 import { Decimal } from 'decimal.js';
 
 export default class StatsFetcher {
-  constructor(account, balance, delegations) {
+  constructor(account, balance, delegations, chainSymbol) {
     this.account = account;
     this.balance = balance;
     this.delegations = delegations;
+    this.chainSymbol = chainSymbol;
   }
 
   fetchAll() {
@@ -76,13 +77,13 @@ export default class StatsFetcher {
   }
 
   tokens() {
-    return this.balance ? this.balance : { EOS: 0 };
+    return this.balance ? this.balance : { [this.chainSymbol]: 0 };
   }
 
   totalTokens() {
     const totalStaked = this.totalStakedToSelf().plus(this.totalStakedToOthers());
     const totalBeingUnstaked = this.totalBeingUnstaked();
-    const totalTokens = this.tokens().EOS || new Decimal(0);
+    const totalTokens = this.tokens()[this.chainSymbol] || new Decimal(0);
 
     return totalStaked.plus(totalBeingUnstaked).plus(totalTokens);
   }
@@ -131,8 +132,8 @@ export default class StatsFetcher {
     const totalNetAmount = Decimal(total_resources.net_weight.split(' ')[0]);
 
     return {
-      cpuWeight: `${totalCpuAmount.minus(selfCpuAmount).toFixed(4)} EOS`,
-      netWeight: `${totalNetAmount.minus(selfNetAmount).toFixed(4)} EOS`,
+      cpuWeight: `${totalCpuAmount.minus(selfCpuAmount).toFixed(4)} ${this.chainSymbol}`,
+      netWeight: `${totalNetAmount.minus(selfNetAmount).toFixed(4)} ${this.chainSymbol}`,
       totalStaked: this.totalStakedToSelf() + this.totalStakedToOthers()
     };
   }
