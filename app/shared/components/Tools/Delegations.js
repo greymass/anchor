@@ -59,11 +59,12 @@ class ToolsDelegations extends Component<Props> {
       actions,
       balances,
       blockExplorers,
-      tables,
+      connection,
       keys,
       settings,
       system,
       t,
+      tables,
       validate,
       wallet
     } = this.props;
@@ -89,6 +90,7 @@ class ToolsDelegations extends Component<Props> {
           actions={actions}
           balance={balances[settings.account]}
           blockExplorers={blockExplorers}
+          connection={connection}
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
           keys={keys}
