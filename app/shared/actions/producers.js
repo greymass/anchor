@@ -55,7 +55,7 @@ export function getProducers(previous = false) {
       let backupMinimumPercent = false;
       let tokensToProducersForVotes = false;
       const { contract } = globals;
-      if (contract && contract['eosio.token']) {
+      if (contract && contract['eosio.token'] && contract['eosio.token'][connection.chainSymbol]) {
         const supply = parseFloat(contract['eosio.token'][connection.chainSymbol].supply);
         // yearly inflation
         const inflation = 0.04879;
