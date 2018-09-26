@@ -54,6 +54,7 @@ class WalletStatusBalances extends Component<Props> {
                   <Table.Cell width={4}>{t('wallet_status_liquid')}</Table.Cell>
                   <Table.Cell>
                     {tokens[connection.chainSymbol] && tokens[connection.chainSymbol].toFixed(4) || '0.0000'}
+                    &nbsp;
                     {connection.chainSymbol}
                   </Table.Cell>
                 </Table.Row>
