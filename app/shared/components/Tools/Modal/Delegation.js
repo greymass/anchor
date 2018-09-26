@@ -12,6 +12,7 @@ class ToolsModalDelegation extends Component<Props> {
       actions,
       balance,
       blockExplorers,
+      connection,
       delegationToEdit,
       delegationToRemove,
       keys,
@@ -40,6 +41,7 @@ class ToolsModalDelegation extends Component<Props> {
             account={account}
             actions={actions}
             balance={balance}
+            connection={connection}
             delegationToEdit={delegationToEdit}
             delegationToRemove={delegationToRemove}
             key="DelegationForm"

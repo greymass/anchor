@@ -61,6 +61,7 @@ class ToolsFormDelegation extends Component<Props> {
       account,
       actions,
       balance,
+      connection,
       keys,
       onClose,
       settings,
@@ -86,6 +87,7 @@ class ToolsFormDelegation extends Component<Props> {
           actions={actions}
           balance={balance}
           confirming={confirming}
+          connection={connection}
           cpuAmount={cpuAmount}
           cpuOriginal={cpuOriginal}
           netAmount={netAmount}
