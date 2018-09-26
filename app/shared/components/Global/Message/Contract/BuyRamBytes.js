@@ -10,8 +10,8 @@ class WalletMessageContractBuyRamBytes extends Component<Props> {
     return (
       <WalletMessageContractBase>
         <p>{t('system_buyrambytes_1', data)}</p>
-        <p>{t('system_buyrambytes_2', data)}</p>
-        <p>{t('system_buyrambytes_3', data)}</p>
+        <p>{t('system_buyrambytes_two', data)}</p>
+        <p>{t('system_buyrambytes_three', data)}</p>
       </WalletMessageContractBase>
     );
   }

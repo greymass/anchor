@@ -75,6 +75,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
               data={{
                 buyer: settings.account,
                 bytes: `${ramAmount} B`,
+                chainSymbol: connection.chainSymbol
               }}
             />
           ) : ''}
