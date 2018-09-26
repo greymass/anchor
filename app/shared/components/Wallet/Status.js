@@ -61,7 +61,7 @@ class WalletStatus extends Component<Props> {
                         tables.eosio[settings.account] &&
                         tables.eosio[settings.account].delband.rows;
 
-    const statsFetcher = new StatsFetcher(account, balance, delegations);
+    const statsFetcher = new StatsFetcher(account, balance, delegations, connection.chainSymbol);
 
     let activeTab = (
       <Segment stacked>
