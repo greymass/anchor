@@ -109,5 +109,5 @@
   "wallet_upgrade_popup": "This wallet requires an upgrade to enable the newest features.",
   "wallet_upgrade_watch_authorization_description": "If you are using in conjunction with a cold wallet, please select the type of key you have imported into the cold wallet. If the account is just being watched, the selected authority doesn't matter.",
   "wallet_upgrade_watch_authorization_header": "Select an authority for this wallet.",
-  "wallet_welcome_connection_blockchain_message": "You are connected to {{blockChainName}}."
+  "wallet_welcome_connection_blockchain_message": "You are connected to the {{blockChainName}}."
 }
