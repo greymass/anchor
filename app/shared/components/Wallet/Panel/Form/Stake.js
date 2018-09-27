@@ -180,7 +180,7 @@ class WalletPanelFormStake extends Component<Props> {
     const netChange = decimalNetAmount.minus(netOriginal);
 
     if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(chainSymbolBalance)) {
-      return 'not_enough_balance';
+      return 'insufficient_balance';
     }
 
     return false;
@@ -286,7 +286,7 @@ class WalletPanelFormStake extends Component<Props> {
                   <GlobalFormFieldToken
                     autoFocus
                     icon="microchip"
-                    label={t('update_staked_cpu_amount')}
+                    label={t('update_staked_cpu_amount_label', { chainSymbol: connection.chainSymbol })}
                     name="cpuAmount"
                     onChange={this.onChange}
                     defaultValue={decimalCpuAmount.toFixed(4)}
@@ -295,7 +295,7 @@ class WalletPanelFormStake extends Component<Props> {
                   <GlobalFormFieldToken
                     autoFocus
                     icon="wifi"
-                    label={t('update_staked_net_amount')}
+                    label={t('update_staked_net_amount_label', { chainSymbol: connection.chainSymbol })}
                     name="netAmount"
                     onChange={this.onChange}
                     defaultValue={decimalNetAmount.toFixed(4)}
@@ -303,6 +303,7 @@ class WalletPanelFormStake extends Component<Props> {
                 </Form.Group>
                 <FormMessageError
                   error={formError}
+                  chainSymbol={connection.chainSymbol}
                 />
                 <Divider />
                 <Message
