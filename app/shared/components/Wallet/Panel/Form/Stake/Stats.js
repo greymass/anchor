@@ -20,7 +20,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
           <Header textAlign="center">
             {(chainSymbolBalance).toFixed(4)} {connection.chainSymbol || 'EOS'}
             <Header.Subheader>
-              {t('amount_not_staked')}
+              {t('amount_unstaked')}
             </Header.Subheader>
           </Header>
         </Segment>
@@ -28,7 +28,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
           <Header textAlign="center">
             {cpuOriginal.toFixed(4)} {connection.chainSymbol || 'EOS'}
             <Header.Subheader>
-              {t('cpu_staked')}
+              {t('cpu_that_is_staked')}
             </Header.Subheader>
           </Header>
         </Segment>
@@ -36,7 +36,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
           <Header textAlign="center">
             {netOriginal.toFixed(4)} {connection.chainSymbol || 'EOS'}
             <Header.Subheader>
-              {t('net_staked')}
+              {t('net_that_is_staked')}
             </Header.Subheader>
           </Header>
         </Segment>
