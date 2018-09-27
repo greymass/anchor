@@ -309,7 +309,7 @@ class WalletPanelFormStake extends Component<Props> {
                 <Message
                   icon="info circle"
                   info
-                  content={t('undelegate_explanation')}
+                  content={t('undelegate_explanation_message', { chainSymbol: connection.chainSymbol })}
                 />
                 <Divider />
                 <Button

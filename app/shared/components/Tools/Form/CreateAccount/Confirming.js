@@ -18,6 +18,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
     const {
       accountName,
       activeKeyValue,
+      connection,
       delegatedBw,
       delegatedCpu,
       onBack,
@@ -75,7 +76,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_delegated_bw')}
+                {t('tools_form_create_account_delegated_bw_label', { chainSymbol: connection.chainSymbol })}
               </Table.Cell>
               <Table.Cell width={8}>
                 {delegatedBw}
@@ -83,7 +84,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
             </Table.Row>
             <Table.Row>
               <Table.Cell width={8}>
-                {t('tools_form_create_account_delegated_cpu')}
+                {t('tools_form_create_account_delegated_cpu_label', { chainSymbol: connection.chainSymbol })}
               </Table.Cell>
               <Table.Cell width={8}>
                 {delegatedCpu}
