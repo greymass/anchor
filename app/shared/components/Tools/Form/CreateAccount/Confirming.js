@@ -17,11 +17,11 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
   render() {
     const {
       accountName,
-      activeKey,
+      activeKeyValue,
       delegatedBw,
       delegatedCpu,
       onBack,
-      ownerKey,
+      ownerKeyValue,
       ramAmount,
       t,
       totalCost,
@@ -44,7 +44,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_form_create_account_owner_key')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {ownerKey}
+                {ownerKeyValue}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -52,7 +52,7 @@ class ToolsFormCreateAccountConfirming extends Component<Props> {
                 {t('tools_form_create_account_active_key')}
               </Table.Cell>
               <Table.Cell width={8}>
-                {activeKey}
+                {activeKeyValue}
               </Table.Cell>
             </Table.Row>
             <Table.Row>
