@@ -150,7 +150,7 @@ class WalletStatus extends Component<Props> {
             <Menu.Item
               name="staked"
               icon="power cord"
-              content={t('wallet_status_tab_staked')}
+              content={t('wallet_status_tab_staked_amount', { chainSymbol: connection.chainSymbol })}
               active={activeItem === 'staked'}
               onClick={this.handleItemClick}
             />

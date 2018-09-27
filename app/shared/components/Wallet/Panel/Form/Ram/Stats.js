@@ -18,7 +18,7 @@ class WalletPanelFormRamStats extends Component<Props> {
         <Table.Body>
           <Table.Row>
             <Table.Cell width={8}>
-              {t('ram_stats_title_one')}
+              {t('ram_stats_title_1', { chainSymbol: connection.chainSymbol })}
             </Table.Cell>
             <Table.Cell width={8}>
               {`${chainSymbolBalance} ${connection.chainSymbol}`}
