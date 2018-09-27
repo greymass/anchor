@@ -253,7 +253,11 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 value={quantity}
               />
               <p>
-                {`${balance[asset].toFixed(4)} ${asset} ${t('transfer_header_available')}`}
+                {(balance[asset] && balance[asset].toFixed(4)) || '0.0000'}
+                &nbsp;
+                {asset}
+                &nbsp;
+                {t('transfer_header_available')}
               </p>
               <GlobalFormFieldMemo
                 icon="x"
