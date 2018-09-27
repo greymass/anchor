@@ -6,6 +6,7 @@ import { Button, Message, Header } from 'semantic-ui-react';
 class FormMessageError extends Component<Props> {
   render() {
     const {
+      chainSymbol,
       error,
       errors,
       onClose,
@@ -24,7 +25,7 @@ class FormMessageError extends Component<Props> {
         <div style={style}>
           <Message negative>
             <Header>{t('error')}</Header>
-            { errorMessages.map((err) => <p key={err}>{t(`error_${err}`)}</p>) }
+            { errorMessages.map((err) => <p key={err}>{t(`error_${err}`, { chainSymbol })}</p>) }
           </Message>
 
           {(onClose) ? (

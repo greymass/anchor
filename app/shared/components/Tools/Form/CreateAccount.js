@@ -14,31 +14,31 @@ import FormMessageError from '../../Global/Form/Message/Error';
 import ToolsFormCreateAccountConfirming from './CreateAccount/Confirming';
 import calculatePriceOfRam from '../../helpers/calculatePriceOfRam';
 
-const formAttributes = ['accountName', 'activeKey', 'ownerKey', 'delegatedBw', 'delegatedCpu', 'ramAmount'];
+const formAttributes = ['accountName', 'activeKeyValue', 'ownerKeyValue', 'delegatedBw', 'delegatedCpu', 'ramAmount'];
 
 class ToolsFormCreateAccount extends Component<Props> {
   constructor(props) {
     super(props);
     const {
       accountName,
-      activeKey,
+      activeKeyValue,
       balance,
       connection,
       delegatedBw,
       delegatedCpu,
-      ownerKey,
+      ownerKeyValue,
       ramAmount
     } = props;
 
     this.state = {
       accountName,
-      activeKey,
+      activeKeyValue,
       confirming: false,
       delegatedBw,
       delegatedCpu,
       chainSymbolBalance: balance && balance[connection.chainSymbol] || 0,
       formErrors: {},
-      ownerKey,
+      ownerKeyValue,
       ramAmount,
       submitDisabled: true
     };
@@ -240,20 +240,20 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
-      activeKey,
+      activeKeyValue,
       delegatedBw,
       delegatedCpu,
-      ownerKey,
+      ownerKeyValue,
       ramAmount,
       transferTokens
     } = this.state;
 
     createAccount(
       accountName,
-      activeKey,
+      activeKeyValue,
       delegatedBw,
       delegatedCpu,
-      ownerKey,
+      ownerKeyValue,
       ramAmount,
       transferTokens
     );
@@ -270,12 +270,12 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const {
       accountName,
-      activeKey,
+      activeKeyValue,
       contacts,
       delegatedBw,
       delegatedCpu,
       formErrors,
-      ownerKey,
+      ownerKeyValue,
       ramAmount,
       ramPrice,
       transferTokens
@@ -313,7 +313,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const shouldShowAccountNameWarning = accountName && accountName.length !== 12;
 
-    const shouldShowPublicKeysWarning = activeKey && activeKey === ownerKey;
+    const shouldShowPublicKeysWarning = activeKeyValue && activeKeyValue === ownerKeyValue;
 
     const shouldShowDelegatedResourceWarning =
       (decimalDelegatedBw &&
@@ -343,15 +343,15 @@ class ToolsFormCreateAccount extends Component<Props> {
                 onSubmit={this.onSubmit}
               >
                 <GlobalFormFieldKeyPublic
-                  defaultValue={ownerKey || ''}
+                  defaultValue={ownerKeyValue || ''}
                   label={t('tools_form_create_account_owner_key')}
-                  name="ownerKey"
+                  name="ownerKeyValue"
                   onChange={this.onChange}
                 />
                 <GlobalFormFieldKeyPublic
-                  defaultValue={activeKey || ''}
+                  defaultValue={activeKeyValue || ''}
                   label={t('tools_form_create_account_active_key')}
-                  name="activeKey"
+                  name="activeKeyValue"
                   onChange={this.onChange}
                 />
                 <GlobalFormFieldAccount
@@ -391,6 +391,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                   </h4>
                 ) : ''}
                 <FormMessageError
+                  chainSymbol={connection.chainSymbol}
                   errors={
                     formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
                       const error = this.state.formErrors[key];
@@ -462,12 +463,12 @@ class ToolsFormCreateAccount extends Component<Props> {
           ? (
             <ToolsFormCreateAccountConfirming
               accountName={accountName}
-              activeKey={activeKey}
+              activeKeyValue={activeKeyValue}
               delegatedBw={delegatedBw}
               delegatedCpu={delegatedCpu}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
-              ownerKey={ownerKey}
+              ownerKeyValue={ownerKeyValue}
               ramAmount={ramAmount}
               transferTokens={transferTokens}
               totalCost={ramPrice}
