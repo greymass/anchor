@@ -369,13 +369,13 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 <GlobalFormFieldToken
                   defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
-                  label={t('tools_form_create_account_delegated_bw')}
+                  label={t('tools_form_create_account_delegated_bw_label', { chainSymbol: connection.chainSymbol })}
                   name="delegatedBw"
                   onChange={this.onChange}
                 />
                 <GlobalFormFieldToken
                   defaultValue={delegatedCpu && delegatedCpu.split(' ')[0]}
-                  label={t('tools_form_create_account_delegated_cpu')}
+                  label={t('tools_form_create_account_delegated_cpu_label', { chainSymbol: connection.chainSymbol })}
                   name="delegatedCpu"
                   onChange={this.onChange}
                 />
@@ -464,6 +464,7 @@ class ToolsFormCreateAccount extends Component<Props> {
             <ToolsFormCreateAccountConfirming
               accountName={accountName}
               activeKeyValue={activeKeyValue}
+              connection={connection}
               delegatedBw={delegatedBw}
               delegatedCpu={delegatedCpu}
               onBack={this.onBack}
