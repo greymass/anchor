@@ -14,7 +14,7 @@ Even though your keys never leave the `Sqrl` applications, the API node you conn
 If you are concerned about revealing this information to any of these 3rd party API nodes, it is recommended you run your own API Node and connect to that.
 
 # TELOS Nodes
-
+## Note: You may click on the URL of a node to verify it's working prior to use
 - [http://testnet.telosfoundation.io:8888](http://testnet.telosfoundation.io:8888/v1/chain/get_info) - operated by [Telos Foundation](https://telosfoundation.io)
 - [https://api.eos.miami:17441](https://api.eos.miami:17441/v1/chain/get_info) - operated by [EOS Miami](https://eos.miami/)
 - [http://blindblocart.io:8888](http://blindblocart.io:8888/v1/chain/get_info) - operated by [BlindBlocArt](http://blindblocart.io/)
