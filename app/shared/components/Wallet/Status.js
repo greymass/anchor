@@ -103,6 +103,7 @@ class WalletStatus extends Component<Props> {
               actions={actions}
               blockExplorers={blockExplorers}
               chain={chain}
+              connection={connection}
               settings={settings}
               validate={validate}
             />

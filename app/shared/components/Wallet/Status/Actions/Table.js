@@ -13,6 +13,7 @@ class WalletStatusActionsTable extends Component<Props> {
       actionHistory,
       blockExplorers,
       chain,
+      connection,
       settings,
       t
     } = this.props;
@@ -53,6 +54,7 @@ class WalletStatusActionsTable extends Component<Props> {
               action={action}
               blockExplorers={blockExplorers}
               chain={chain}
+              connection={connection}
               key={action.account_action_seq}
               settings={settings}
             />

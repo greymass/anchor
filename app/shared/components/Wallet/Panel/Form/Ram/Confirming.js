@@ -63,7 +63,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
         </Segment>
 
         <Message warning>
-          {t('ram_confirming_message_price_includes_fee')}
+          {t('ram_confirming_message_price_includes_chain_fee', { chainSymbol: connection.chainSymbol })}
         </Message>
 
         <Divider />
