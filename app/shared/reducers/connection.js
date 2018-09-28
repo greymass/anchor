@@ -9,9 +9,11 @@ const initialState = {
   chainSymbol: 'EOS',
   broadcast: true,
   expireInSeconds: 120,
+  forceActionDataHex: false,
   httpEndpoint: null,
   signMethod: false,
   signPath: false,
+  supportedContracts: []
 };
 
 export default function connection(state = initialState, action) {
@@ -29,7 +31,8 @@ export default function connection(state = initialState, action) {
         chainId: action.payload.info.chain_id,
         chainKey: (blockchain && blockchain.key) || 'unknown',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
-        httpEndpoint: action.payload.node
+        httpEndpoint: action.payload.node,
+        supportedContracts: blockchain.supportedContracts
       });
     }
     // Remove key from connection if the wallet is locked/removed
