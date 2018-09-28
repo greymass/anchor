@@ -60,7 +60,8 @@ const paneMapping = [
   {
     element: ToolsGovernanceProposals,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
-    name: 'governance_proposals_test'
+    name: 'governance_proposals_test',
+    requiredContract: 'proposals'
   },
   {
     header: true,
@@ -169,12 +170,15 @@ class ToolsContainer extends Component<Props> {
     const { t } = this.props;
     return paneMapping
       .filter((pane) => {
-        const { settings } = this.props;
+        const { connection, settings } = this.props;
         const {
           skipImport,
           walletMode,
           walletTemp
         } = settings;
+        if (pane.requiredContract && !connection.supportedContracts.includes(pane.requiredContract)) {
+          return false;
+        }
         return (
           !walletMode
           || (walletTemp && pane.modes.includes('temp'))
