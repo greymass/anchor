@@ -57,6 +57,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
       action,
       blockExplorers,
       chain,
+      connection,
       settings
     } = this.props;
     const {
@@ -93,6 +94,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
             action={action}
             blockExplorers={blockExplorers}
             chain={chain}
+            connection={connection}
             settings={settings}
           />
         </Table.Cell>

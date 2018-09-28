@@ -102,6 +102,7 @@ class WalletStatusActions extends Component<Props> {
       actionHistory,
       blockExplorers,
       chain,
+      connection,
       settings,
       t,
     } = this.props;
@@ -130,6 +131,7 @@ class WalletStatusActions extends Component<Props> {
                      attached="top"
                      blockExplorers={blockExplorers}
                      chain={chain}
+                     connection={connection}
                      settings={settings}
                    />
                  </Visibility>
