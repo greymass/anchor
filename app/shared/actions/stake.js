@@ -39,6 +39,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
     return eos(connection, true).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
         tr.delegatebw(delegatebwParams(
+          connection.chainSymbol,
           currentAccount.account_name,
           accountName,
           increaseInStake.netAmount,
@@ -47,6 +48,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
         tr.undelegatebw(undelegatebwParams(
+          connection.chainSymbol,
           currentAccount.account_name,
           accountName,
           decreaseInStake.netAmount,
