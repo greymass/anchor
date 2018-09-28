@@ -89,7 +89,7 @@ class Tools extends Component<Props> {
               />
             </Form.Field>
             <Form.Field>
-              <label>{t('tools_change_spam_transfer_filter')}</label>
+              <label>{t('tools_change_transfer_spam_filter')}</label>
               <GlobalSettingsFilterSpamTransfers
                 actions={actions}
                 defaultValue={settings.filterSpamTransfersUnder}
