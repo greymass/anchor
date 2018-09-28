@@ -15,10 +15,10 @@ If you are concerned about revealing this information to any of these 3rd party 
 
 # TELOS Nodes
 
-- http://testnet.telosfoundation.io:8888(http://testnet.telosfoundation.io:8888/v1/chain/get_info) - operated by [Telos Foundation](https://telosfoundation.io)
-- https://api.eos.miami:17441(https://api.eos.miami:17441/v1/chain/get_info) - operated by [EOS Miami](https://eos.miami/)
-- http://blindblocart.io:8888(http://blindblocart.io:8888/v1/chain/get_info) - operated by [BlindBlocArt](http://blindblocart.io/)
-- http://telos.caleos.io:9888(http://telos.caleos.io:9888/v1/chain/get_info) - operated by [CalEOS](http://caleos.io)
+- [http://testnet.telosfoundation.io:8888](http://testnet.telosfoundation.io:8888/v1/chain/get_info) - operated by [Telos Foundation](https://telosfoundation.io)
+- [https://api.eos.miami:17441](https://api.eos.miami:17441/v1/chain/get_info) - operated by [EOS Miami](https://eos.miami/)
+- [http://blindblocart.io:8888](http://blindblocart.io:8888/v1/chain/get_info) - operated by [BlindBlocArt](http://blindblocart.io/)
+- [http://telos.caleos.io:9888](http://telos.caleos.io:9888/v1/chain/get_info) - operated by [CalEOS](http://caleos.io)
 - http://apitest1.kainosbp.com:8888 - operated by Kainos BP
 - http://api.telosvancouver.io:8888 - operated by Telos Vancouver 
 - http://telos.eosbcn.com - operated by EOS BCN
