@@ -139,6 +139,7 @@ class Producers extends Component<Props> {
       accounts,
       balances,
       blockExplorers,
+      connection,
       globals,
       history,
       keys,
@@ -234,6 +235,41 @@ class Producers extends Component<Props> {
       );
     }
 
+    const tabPanes = [
+      {
+        menuItem: t('producers_block_producers'),
+        render: () => {
+          return (
+            <Tab.Pane>
+              <BlockProducers
+                {...this.props}
+                addProducer={this.addProducer.bind(this)}
+                removeProducer={this.removeProducer.bind(this)}
+                selected={selected}
+              />
+            </Tab.Pane>
+          );
+        }
+      }
+    ];
+
+    if (connection.supportedContracts.includes('regproxyinfo')) {
+      tabPanes.push({
+        menuItem: t('producers_proxies'),
+        render: () => {
+          return (
+            <Tab.Pane>
+              <Proxies
+                {...this.props}
+                addProxy={this.addProxy.bind(this)}
+                removeProxy={this.removeProxy.bind(this)}
+              />
+            </Tab.Pane>
+          );
+        }
+      });
+    }
+
     return (
       <div ref={this.handleContextRef}>
         <Grid divided>
@@ -248,35 +284,7 @@ class Producers extends Component<Props> {
             </Grid.Column>
             <Grid.Column width={10}>
               <Tab
-                panes={
-                  [
-                    {
-                      menuItem: t('producers_block_producers'),
-                      render: () => (
-                        <Tab.Pane>
-                          <BlockProducers
-                            {...this.props}
-                            addProducer={this.addProducer.bind(this)}
-                            removeProducer={this.removeProducer.bind(this)}
-                            selected={selected}
-                          />
-                        </Tab.Pane>
-                      )
-                    },
-                    {
-                      menuItem: t('producers_proxies'),
-                      render: () => (
-                        <Tab.Pane>
-                          <Proxies
-                            {...this.props}
-                            addProxy={this.addProxy.bind(this)}
-                            removeProxy={this.removeProxy.bind(this)}
-                          />
-                        </Tab.Pane>
-                      )
-                    }
-                  ]
-                }
+                panes={tabPanes}
               />
             </Grid.Column>
           </Grid.Row>
