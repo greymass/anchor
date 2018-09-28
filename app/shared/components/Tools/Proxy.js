@@ -21,6 +21,7 @@ class ToolsProxy extends Component<Props> {
       accounts,
       actions,
       blockExplorers,
+      connection,
       contracts,
       keys,
       settings,
@@ -75,30 +76,31 @@ class ToolsProxy extends Component<Props> {
               system={system}
             />
 
-            <GlobalTransactionHandler
-              actionName="SET_REGPROXYINFO"
-              actions={actions}
-              blockExplorers={blockExplorers}
-              content={(
-                <ToolsFormProxyInfo
-                  account={account}
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  contracts={contracts}
-                  isProxy={isProxy}
-                  settings={settings}
-                  system={system}
-                  tables={tables}
-                  transaction={transaction}
-                />
-              )}
-              hideClose
-              onClose={this.onClose}
-              settings={settings}
-              system={system}
-              transaction={transaction}
-            />
-
+            {(connection.supportedContracts.includes('regproxyinfo')) && (
+              <GlobalTransactionHandler
+                actionName="SET_REGPROXYINFO"
+                actions={actions}
+                blockExplorers={blockExplorers}
+                content={(
+                  <ToolsFormProxyInfo
+                    account={account}
+                    actions={actions}
+                    blockExplorers={blockExplorers}
+                    contracts={contracts}
+                    isProxy={isProxy}
+                    settings={settings}
+                    system={system}
+                    tables={tables}
+                    transaction={transaction}
+                  />
+                )}
+                hideClose
+                onClose={this.onClose}
+                settings={settings}
+                system={system}
+                transaction={transaction}
+              />
+            )}
           </Segment>
         </React.Fragment>
       )
