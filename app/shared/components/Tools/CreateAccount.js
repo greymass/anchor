@@ -53,7 +53,7 @@ class ToolsCreateAccount extends Component<Props> {
             <Header>
               {t('tools_create_account_header')}
               <Header.Subheader>
-                {t('tools_create_account_text')}
+                {t('tools_create_account_description', { chainSymbol: connection.chainSymbol })}
               </Header.Subheader>
             </Header>
             <GlobalTransactionHandler
