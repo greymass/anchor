@@ -3,10 +3,18 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const { ipcRenderer } = require('electron');
 
 class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      copiedTransaction: false
+    };
+  }
   promptSave = () => {
     const { contract, transaction } = this.props;
     const data = JSON.stringify({
@@ -15,12 +23,20 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
     }, null, 2);
     ipcRenderer.send('saveFile', data);
   }
+  onCopy = () => {
+    this.setState({ copiedTransaction: true }, () => {
+      setTimeout(() => { this.setState({ copiedTransaction: false }); }, 5000);
+    });
+  }
   render() {
     const {
       onClose,
       t,
       transaction
     } = this.props;
+    const {
+      copiedTransaction
+    } = this.state;
     return (
       <Segment basic>
         <Header
@@ -44,13 +60,31 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
               style={{ padding: '1em' }}
               theme="harmonic"
             />
-            <Segment basic padded textAlign="center">
+            <Segment basic textAlign="center">
               <Button
                 color="blue"
                 content={t('global_transaction_unsigned_save_file')}
                 icon="download"
                 onClick={this.promptSave}
               />
+            </Segment>
+            <Segment basic textAlign="center">
+              <CopyToClipboard
+                onCopy={this.onCopy}
+                text={JSON.stringify(transaction)}
+              >
+                <Button
+                  color="orange"
+                  content={t('global_transaction_unsigned_copy_to_clipboard')}
+                  icon="clipboard"
+                />
+              </CopyToClipboard>
+              {(copiedTransaction) && (
+                <Icon
+                  color="green"
+                  name="check"
+                />
+              )}
             </Segment>
           </Segment>
           <Message
