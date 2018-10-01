@@ -30,7 +30,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - [http://testnode.telosvoyager.io:4888](http://testnode.telosvoyager.io:4888/v1/chain/get_info) - operated by Telos Voyager
 - [http://api2.csx.io:443](http://api2.csx.io:443/v1/chain/get_info) - operated by CSX
 - [http://telos.ikuwara.com:8888](http://telos.ikuwara.com:8888/v1/chain/get_info) - operated by iKuwara
-
+- [https://testnet.telos.blockgenesys.com](https://testnet.telos.blockgenesys.com/v1/chain/get_info) - operated by [Block Genesys](https://www.blockgenesys.com/)
 ### Additions
 
 We will update this list as the community finds more reliable 3rd party nodes for usage with this tool.
