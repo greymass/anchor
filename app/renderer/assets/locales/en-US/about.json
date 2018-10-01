@@ -7,7 +7,7 @@
   "about_more": "Please visit us at https://telosfoundation.io if you would like to learn more.",
   "about_issues": "If you have encounter problems with the application itself, please file an issue on github below:",
   "about_issues_link": "https://github.com/Telos-Foundation/Sqrl/issues",
-  "about_greymass_message_1": "This application is an initiative spearheaded by Greymass and customized by EOS Miami for the TELOS EOSIO blockchain.",
+  "about_greymass_message_1": "Sqrl is a Greymass fork designed to work with all EOSIO-based blockchains. It was created by EOS Miami for the TELOS EOSIO blockchain.",
   "about_greymass_message_2": "If you would like to learn more about our team and the other projects we have planned for TELOS, we invite you to visit us at",
   "about_license_type": "The MIT License (MIT)",
   "about_license_body_1": "Copyright (c) 2018-present Greymass",

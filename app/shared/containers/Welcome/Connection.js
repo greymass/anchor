@@ -39,7 +39,7 @@ class WelcomeConnectionContainer extends Component<Props> {
   componentDidMount() {
     const { actions, settings } = this.props;
     if (settings.skipImport) {
-      if (settings.blockchain.node){
+      if (settings.blockchainSelected){
         actions.validateNode(settings.blockchain.node);
       }
       else{
@@ -92,7 +92,7 @@ class WelcomeConnectionContainer extends Component<Props> {
       setSettingWithValidation,
       setWalletMode
     } = actions;
-    if (settings.blockchain.node){
+    if (settings.blockchainSelected){
       setSettingWithValidation('node', settings.blockchain.node);
     }
     else{

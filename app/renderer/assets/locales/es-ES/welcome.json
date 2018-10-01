@@ -20,7 +20,7 @@
   "welcome_instructions_5": "Introduzca la clave privada (wif) para esta cuenta.",
   "welcome_instructions_5a": "Enter the private ACTIVE key (wif) for this account (OWNER key not accepted).",
   "welcome_instructions_6": "Elija si desea encriptar y guardar una carpeta local o continuar usando el acceso temporal.",
-  "welcome_instructions_7": "Do you already have an account or need ot create one?",
+  "welcome_instructions_7": "Do you already have an account or need to create one?",
   "welcome_instructions_sign_tx": "Usar este monedero para firmar transacciones?",
   "welcome_key_coldwallet": "Importar Clave Privada",
   "welcome_key_coldwallet_content": "Un Monedero Frío no puede verificar si la clave privada coincide con la cuenta.",

@@ -49,7 +49,7 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
   }
   render() {
     const {
-      keys,
+      actions,
       onBack,
       t,
       settings,
@@ -57,7 +57,6 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
       values
     } = this.props;
     const {
-      copied,
       accountCreated
     } = this.state;
     const confirmInfo = {
@@ -65,6 +64,9 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
       ownerKey:values.owner, 
       activeKey: values.active
     };
+    if (system.CREATEACCOUNT === 'SUCCESS' && settings.account !== values.accountName){
+      actions.setSetting('account', values.accountName); // this will pre-pop field when user goes to 'Lookup account' section
+    }
     return (
       <Segment loading={system.CREATEACCOUNT === 'PENDING'}>
         <Header>

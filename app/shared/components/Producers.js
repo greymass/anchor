@@ -108,6 +108,32 @@ class Producers extends Component<Props> {
           });
         } else {
           // otherwise notify users that they must stake before allowed voting
+          // and suggest several BPs as defaults
+          let suggestedBPs = [
+            'amplifiedtls',
+            'blindblocart',
+            'bpeosindexio',
+            'caleosblocks',
+            'eosbarcelona',
+            'eosiomiamibp',
+            'eosmetaliobp',
+            'eosukblocpro',
+            'goodblockio1',
+            'infinitybloc',
+            'kainostechtx',
+            'ketenioketen',
+            'swedencornet',
+            'telosgreenbp',
+            'telosmiamibp',
+            'telosnewyork',
+            'telosvoyager',
+            'tlsvancouver',
+            'tlsvenezuela',
+            'telosmadrid1',
+            'telosdacbp11'];
+          this.setState({
+            selected:suggestedBPs
+          });
         }
       }
     }
@@ -268,6 +294,7 @@ class Producers extends Component<Props> {
             account={accounts[settings.account]}
             isProxying={isProxying}
             modified={modified}
+            producers={producers}
             removeProducer={this.removeProducer.bind(this)}
             selected={selected}
             submitProducerVotes={() => this.previewProducerVotes(true)}

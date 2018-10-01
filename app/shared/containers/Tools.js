@@ -52,14 +52,14 @@ const paneMapping = [
     name: 'wallet',
   },
   {
-    element: ToolsBlockchains,
-    modes: ['hot', 'watch'],
-    name: 'blockchains',
-  },
-  {
     element: ToolsCustomTokens,
     modes: ['hot', 'watch'],
     name: 'customtokens',
+  },
+  {
+    element: ToolsBlockchains,
+    modes: ['hot', 'watch'],
+    name: 'blockchains',
   },
   {
     element: ToolsWallets,

@@ -86,7 +86,7 @@ class ModalConstitution extends Component<Props> {
           <Header size="small">{t(`${settings.blockchain.prefix}_constitution_article_20_title`)}</Header>
           <p>{t(`${settings.blockchain.prefix}_constitution_article_20_body`)}</p>
           { 
-            settings.blockchain.prefix != 'EOS' ?
+            settings.blockchain.prefix == 'TLOS' ?
             <div>
               <Header size="small">{t(`${settings.blockchain.prefix}_constitution_article_21_title`)}</Header>
               <p>{t(`${settings.blockchain.prefix}_constitution_article_21_body`)}</p>

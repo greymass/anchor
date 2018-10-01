@@ -20,7 +20,7 @@
   "welcome_instructions_5": "Введите закрытый ключ (wif) для этой учетной записи.",
   "welcome_instructions_5a": "Enter the private ACTIVE key (wif) for this account (OWNER key not accepted).",
   "welcome_instructions_6": "Выберите, следует ли шифровать и сохранять локальный кошелек или продолжать использовать временный доступ.",
-  "welcome_instructions_7": "Do you already have an account or need ot create one?",
+  "welcome_instructions_7": "Do you already have an account or need to create one?",
   "welcome_instructions_sign_tx": "Use this wallet to sign transactions?",
   "welcome_key_coldwallet": "Import Private Key",
   "welcome_key_coldwallet_content": "A cold wallet cannot verify if the private key provided is matching the account.",

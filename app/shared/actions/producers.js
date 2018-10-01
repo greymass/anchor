@@ -56,17 +56,21 @@ export function getProducers(previous = false) {
       let tokensToProducersForVotes = false;
       const { contract } = globals;
       if (contract && contract['eosio.token']) {
+        // fixed values for EOS and TELOS chains until there's a
+        // better way to find these dynamically via EOSIO
         const coreSymbol = connection.keyPrefix;
-        const supply = parseFloat(contract['eosio.token'][coreSymbol].supply);
+        const isEOSChain = (coreSymbol === 'EOS');
+        const coreToken = contract['eosio.token'][coreSymbol];
+        const supply = coreToken.supply ? parseFloat(coreToken.supply) : 0;
         // yearly inflation
-        const inflation = 0.025;
+        const inflation = isEOSChain ? 0.04879 : 0.025;
         // Tokens per year
         const tokensPerYear = supply * inflation;
         // Tokens per day
         const tokensPerDay = tokensPerYear / 365;
-        // 1% of inflation
-        const tokensToProducers = tokensPerDay * 0.1;
-        // 75% rewards based on votes
+        // % of inflation
+        const tokensToProducers = isEOSChain ? (tokensPerDay * 0.2) : (tokensPerDay * 0.1);
+        // % rewards based on votes
         tokensToProducersForVotes = tokensToProducers * 0.75;
         // Percentage required to earn 100 tokens/day (break point for backups)
         backupMinimumPercent = 100 / tokensToProducersForVotes;
@@ -156,7 +160,7 @@ export function getProducerInfo(producer) {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'mainnet') return;
+    if (connection.chain && connection.chain.toLowerCase().indexOf('mainnet') === -1) return;
     const query = {
       json: true,
       code: 'producerjson',

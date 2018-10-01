@@ -12,8 +12,13 @@ export default class ProducersSelector extends Component<Props> {
       account,
       isProxying,
       modified,
+      producers,
       selected
     } = this.props;
+    // Filter selected to only producers in our chain
+    const selectedForChain = producers.list
+      .filter((p) => {return selected.indexOf(p.owner) !== -1})
+      .map((s) => {return s.owner});
     return (
       <I18n ns="producers">
         {
@@ -28,12 +33,12 @@ export default class ProducersSelector extends Component<Props> {
                   <Header color="blue" textAlign="center">
                     {(isProxying) ? t('producer_voter_proxying_vote') : false}
                     <Header.Subheader>
-                      {selected.length}/30 {t('producer_voter_votes_used')}
+                      {selectedForChain.length}/30 {t('producer_voter_votes_used')}
                     </Header.Subheader>
                   </Header>
                 </List.Item>
-                {(selected.length)
-                  ? selected.map((producer) => (
+                {(selectedForChain.length)
+                  ? selectedForChain.map((producer) => (
                     <ProducersSelectorItem
                       isProxying={isProxying}
                       key={`${isProxying}-${producer}`}
