@@ -33,6 +33,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - https://node.eosflare.io - operated by [EOS Flare](https://eosflare.io/)
 - https://api-eos.blckchnd.com - operated by [BLCKCHND](https://eos.blckchnd.com/)
 - https://mainnet.eosimpera.com - operated by [EOS IMPERA](https://www.eosimpera.io/)
+- https://api.franceos.fr - operated by [franceos](https://www.franceos.fr/)
 
 ### Additions
 
