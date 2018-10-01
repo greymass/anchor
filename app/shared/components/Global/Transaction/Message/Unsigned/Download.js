@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-const { ipcRenderer } = require('electron');
+const { clipboard, ipcRenderer } = require('electron');
 
 class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   constructor(props) {
@@ -24,7 +23,13 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
     ipcRenderer.send('saveFile', data);
   }
   onCopy = () => {
+    const {
+      transaction
+    } = this.props;
+
     this.setState({ copiedTransaction: true }, () => {
+      clipboard.writeText(JSON.stringify(transaction));
+
       setTimeout(() => { this.setState({ copiedTransaction: false }); }, 5000);
     });
   }
@@ -69,16 +74,12 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
               />
             </Segment>
             <Segment basic textAlign="center">
-              <CopyToClipboard
-                onCopy={this.onCopy}
-                text={JSON.stringify(transaction)}
-              >
-                <Button
-                  color="orange"
-                  content={t('global_transaction_unsigned_copy_to_clipboard')}
-                  icon="clipboard"
-                />
-              </CopyToClipboard>
+              <Button
+                color="orange"
+                content={t('global_transaction_unsigned_copy_to_clipboard')}
+                icon="clipboard"
+                onClick={this.onCopy}
+              />
               {(copiedTransaction) && (
                 <Icon
                   color="green"
