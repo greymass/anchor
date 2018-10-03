@@ -1,13 +1,26 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Container, Divider, Header, Message, Segment } from 'semantic-ui-react';
+import { Button, Container, Divider, Header, Message, Segment, TextArea } from 'semantic-ui-react';
 
 import GlobalTransactionViewActions from '../../../Global/Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../../Global/Transaction/View/Detail';
 import GlobalTransactionViewFull from '../../../Global/Transaction/View/Full';
 
+const { ipcRenderer } = require('electron');
+
 class WalletModalContentBroadcast extends Component<Props> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      importedTransaction: false
+    };
+  }
+
+  importFile = () => {
+    ipcRenderer.send('openFile');
+  }
   broadcast = () => {
     const {
       actions,
@@ -18,6 +31,22 @@ class WalletModalContentBroadcast extends Component<Props> {
     } = actions;
     broadcastTransaction(transaction.data);
   }
+  onTextAreaChange = (e, { value }) => {
+    this.setState({
+      importedTransaction: value
+    });
+  }
+
+  handleImport() {
+    const {
+      importedTransaction
+    } = this.state;
+
+    if (importedTransaction) {
+      ipcRenderer.send('saveFile', importedTransaction);
+    }
+  }
+
   render() {
     const {
       onClose,
@@ -49,6 +78,25 @@ class WalletModalContentBroadcast extends Component<Props> {
                 transaction={transaction}
               />
               <Container textAlign="center">
+                <Button
+                  color="green"
+                  content={t('broadcast_transaction_import_file')}
+                  onClick={this.importFile}
+                  size="large"
+                />
+                <hr />
+                <TextArea
+                  placeholder={t('broadcast_transaction_import_label')}
+                  onChange={this.onTextAreaChange}
+                />
+                <Button
+                  color="green"
+                  content={t('broadcast_transaction_import')}
+                  icon="arrow-down"
+                  onClick={this.handleImport}
+                  size="large"
+                />
+                <hr />
                 {(!signed)
                   ? (
                     <Message error>

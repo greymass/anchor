@@ -5,12 +5,7 @@ import { translate } from 'react-i18next';
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import WalletModalContentBroadcast from '../../Modal/Content/Broadcast';
 
-const { ipcRenderer } = require('electron');
-
 class WalletPanelButtonBroadcast extends Component<Props> {
-  broadcast = () => {
-    ipcRenderer.send('openFile');
-  }
   render() {
     const {
       actions,
@@ -37,7 +32,6 @@ class WalletPanelButtonBroadcast extends Component<Props> {
           />
         )}
         icon="wifi"
-        onOpen={this.broadcast}
         title={t('wallet_panel_wallet_broadcast')}
         settings={settings}
         system={system}
