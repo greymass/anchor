@@ -7,15 +7,9 @@ export const typeMap = {
   int8: 'int',
   int16: 'int',
   int32: 'int',
-  int64: 'int',
-  int128: 'int',
-  int256: 'int',
   uint8: 'int',
   uint16: 'int',
   uint32: 'int',
-  uint64: 'int',
-  uint128: 'int',
-  uint256: 'int',
 };
 
 export default class EOSContract {
