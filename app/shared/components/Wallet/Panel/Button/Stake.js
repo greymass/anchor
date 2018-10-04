@@ -35,6 +35,9 @@ class WalletPanelButtonStake extends Component<Props> {
     } = this.props;
 
     const account = accounts[settings.account];
+    if(!account) {
+      return (null);
+    }
 
     const {
       cpu_weight,
