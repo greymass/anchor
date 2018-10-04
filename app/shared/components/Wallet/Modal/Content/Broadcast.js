@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Container, Divider, Header, Message, Segment, TextArea } from 'semantic-ui-react';
+import { Button, Container, Divider, Header, Message, Segment, Form } from 'semantic-ui-react';
 
 import GlobalTransactionViewActions from '../../../Global/Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../../Global/Transaction/View/Detail';
@@ -37,13 +37,19 @@ class WalletModalContentBroadcast extends Component<Props> {
     });
   }
 
-  handleImport() {
+  handleImport = () => {
+    const {
+      actions
+    } = this.props;
+    const {
+      setTransaction
+    } = actions;
     const {
       importedTransaction
     } = this.state;
 
     if (importedTransaction) {
-      ipcRenderer.send('saveFile', importedTransaction);
+      setTransaction(importedTransaction);
     }
   }
 
@@ -78,25 +84,6 @@ class WalletModalContentBroadcast extends Component<Props> {
                 transaction={transaction}
               />
               <Container textAlign="center">
-                <Button
-                  color="green"
-                  content={t('broadcast_transaction_import_file')}
-                  onClick={this.importFile}
-                  size="large"
-                />
-                <hr />
-                <TextArea
-                  placeholder={t('broadcast_transaction_import_label')}
-                  onChange={this.onTextAreaChange}
-                />
-                <Button
-                  color="green"
-                  content={t('broadcast_transaction_import')}
-                  icon="arrow-down"
-                  onClick={this.handleImport}
-                  size="large"
-                />
-                <hr />
                 {(!signed)
                   ? (
                     <Message error>
@@ -133,12 +120,41 @@ class WalletModalContentBroadcast extends Component<Props> {
             </React.Fragment>
           )
           : (
-            <Header>
-              {t('broadcast_transaction_no_details_title')}
-              <Header.Subheader>
-                {t('broadcast_transaction_no_details_content')}
-              </Header.Subheader>
-            </Header>
+            <Segment textAlign="center">
+              <Header>
+                {t('broadcast_transaction_import_file_title')}
+                <Header.Subheader>
+                  {t('broadcast_transaction_import_file_content')}
+                </Header.Subheader>
+              </Header>
+              <Button
+                color="green"
+                content={t('broadcast_transaction_import_file')}
+                icon="upload"
+                onClick={this.importFile}
+                size="large"
+              />
+              <Divider padded />
+              <Header>
+                {t('broadcast_transaction_paste_json_title')}
+              </Header>
+              <Form>
+                <Form.TextArea
+                  onChange={this.onTextAreaChange}
+                  placeholder={t('broadcast_transaction_import_json_label')}
+                />
+                <Button
+                  color="blue"
+                  content={t('broadcast_transaction_import_json')}
+                  onClick={this.handleImport}
+                  size="large"
+                />
+              </Form>
+              <Divider padded />
+              <p>
+                {t('broadcast_transaction_note')}
+              </p>
+            </Segment>
           )
         }
       </Segment>
