@@ -98,6 +98,7 @@ class BlockProducers extends Component<Props> {
               addProducer={addProducer}
               amount={amount}
               attached="top"
+              connection={connection}
               globals={globals}
               isMainnet={isMainnet}
               isProxying={isProxying}
