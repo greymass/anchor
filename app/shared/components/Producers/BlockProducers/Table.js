@@ -40,6 +40,7 @@ class ProducersTable extends Component<Props> {
   render() {
     const {
       amount,
+      connection,
       globals,
       isMainnet,
       isProxying,
@@ -64,7 +65,7 @@ class ProducersTable extends Component<Props> {
     const totalVoteWeight = (current.total_producer_vote_weight)
       ? current.total_producer_vote_weight
       : 0;
-    const loading = (producers.list.length < 1 || totalVoteWeight < 1);
+    const loading = (producers.list.length < 1);
     const querying = this.querying();
     let baseTable = <Table.Body />;
     let searchTable = (
@@ -148,7 +149,7 @@ class ProducersTable extends Component<Props> {
         <Grid>
           <Grid.Column width={8}>
             <Header size="small">
-              {activatedStake.toLocaleString()} {t('block_producer_eos_staked')} ({activatedStakePercent}%)
+              {activatedStake.toLocaleString()} {t('block_producer_chain_symbol_staked', { connection: connection.chainSymbol })} ({activatedStakePercent}%)
               <Header.Subheader>
                 <ProducersVoteWeight
                   weight={totalVoteWeight}
