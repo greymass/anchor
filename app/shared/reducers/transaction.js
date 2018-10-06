@@ -23,6 +23,11 @@ export default function transaction(state = initialState, action) {
         signed: (action.payload.transaction.transaction.signatures.length > 0)
       });
     }
+    case types.SET_TRANSACTION_FAILURE: {
+      return Object.assign({}, state, {
+        error: action.payload.err
+      });
+    }
     default: {
       return state;
     }
