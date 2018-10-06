@@ -121,6 +121,12 @@ class WalletModalContentBroadcast extends Component<Props> {
           )
           : (
             <Segment textAlign="center">
+              {(transaction.error) && (
+                <Message
+                  content={t('broadcast_transaction_invalid_error')}
+                  error
+                />
+              )}
               <Header>
                 {t('broadcast_transaction_import_file_title')}
                 <Header.Subheader>
@@ -151,9 +157,11 @@ class WalletModalContentBroadcast extends Component<Props> {
                 />
               </Form>
               <Divider padded />
-              <p>
-                {t('broadcast_transaction_note')}
-              </p>
+              <Message
+                content={t('broadcast_transaction_note')}
+                icon="info circle"
+                warning
+              />
             </Segment>
           )
         }
