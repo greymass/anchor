@@ -54,5 +54,6 @@ export default function eos(connection, signing = false) {
   } else {
     decrypted.signProvider = undefined;
   }
+
   return Eos(decrypted);
 }
