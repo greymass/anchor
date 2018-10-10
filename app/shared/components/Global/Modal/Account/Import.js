@@ -11,6 +11,7 @@ import GlobalModalAccountImportWatch from '../../../../containers/Global/Account
 class GlobalModalAccountImport extends Component<Props> {
   getPanes = () => {
     const {
+      connection,
       onClose,
       settings,
       t
@@ -23,7 +24,7 @@ class GlobalModalAccountImport extends Component<Props> {
     };
     const hotWallet = {
       menuItem: t('global_modal_account_import_hot_wallet'),
-      render: () => <GlobalModalAccountImportHot onClose={onClose} />
+      render: () => <GlobalModalAccountImportHot connection={connection} onClose={onClose} />
     };
     const watchWallet = {
       menuItem: t('global_modal_account_import_watch_wallet'),
