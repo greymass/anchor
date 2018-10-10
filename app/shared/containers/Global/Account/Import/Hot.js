@@ -72,6 +72,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
     const {
       accounts,
       actions,
+      connection,
       onClose,
       settings,
       system,
@@ -136,6 +137,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
           </p>
           <GlobalFormFieldKeyPrivate
             autoFocus
+            connection={connection}
             label={t('global_account_import_private_key')}
             name="key"
             placeholder={t('welcome:welcome_key_compare_placeholder')}
