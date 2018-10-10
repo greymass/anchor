@@ -17,6 +17,7 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
   }
   generate = (e) => {
     const {
+      connection,
       name,
       setPrivateKey
     } = this.props;
@@ -24,7 +25,8 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
     ecc
       .randomKey()
       .then((key) => {
-        const publicKey = ecc.privateToPublic(key);
+        let publicKey = ecc.privateToPublic(key);
+        publicKey = publicKey.replace('EOS', connection.chainSymbol);
         // Set the value in the parent form with the provided name
         this.onChange(null, {
           name,

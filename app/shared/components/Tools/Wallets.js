@@ -11,6 +11,7 @@ class ToolsWallets extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       settings,
       status,
       t,
@@ -25,6 +26,7 @@ class ToolsWallets extends Component<Props> {
       <Segment basic>
         <Button.Group floated="right">
           <GlobalButtonAccountImport
+            connection={connection}
             settings={settings}
           />
         </Button.Group>
