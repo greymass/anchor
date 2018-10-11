@@ -26,8 +26,8 @@ export default class StatsFetcher {
 
     if (!self_delegated_bandwidth || !self_delegated_bandwidth.cpu_weight) return Decimal(0);
 
-    const cpu_amount = Decimal(self_delegated_bandwidth.cpu_weight.split(' ')[0]);
-    const net_amount = Decimal(self_delegated_bandwidth.net_weight.split(' ')[0]);
+    const cpu_amount = Decimal(String(self_delegated_bandwidth.cpu_weight).split(' ')[0]);
+    const net_amount = Decimal(String(self_delegated_bandwidth.net_weight).split(' ')[0]);
 
     return cpu_amount.plus(net_amount);
   }
@@ -35,8 +35,8 @@ export default class StatsFetcher {
   totalStakedToOthers() {
     if (!this.delegations || this.delegations.length === 0) return Decimal(0);
 
-    const cpuWeightsStakedToOthers = this.delegations.map((delegation) => Number(delegation.cpu_weight.split(' ')[0]));
-    const netWeightsStakedToOthers = this.delegations.map((delegation) => Number(delegation.net_weight.split(' ')[0]));
+    const cpuWeightsStakedToOthers = this.delegations.map((delegation) => Number(String(delegation.cpu_weight).split(' ')[0]));
+    const netWeightsStakedToOthers = this.delegations.map((delegation) => Number(String(delegation.net_weight).split(' ')[0]));
     const allWeightsStakedToOthers = cpuWeightsStakedToOthers.concat(netWeightsStakedToOthers);
     const totalStaked = Decimal(allWeightsStakedToOthers.reduce((sum, value) => sum + value));
 
@@ -125,11 +125,11 @@ export default class StatsFetcher {
       self_delegated_bandwidth
     } = this.account;
 
-    const selfCpuAmount = Decimal(self_delegated_bandwidth.cpu_weight.split(' ')[0]);
-    const selfNetAmount = Decimal(self_delegated_bandwidth.net_weight.split(' ')[0]);
+    const selfCpuAmount = Decimal(String(self_delegated_bandwidth.cpu_weight).split(' ')[0]);
+    const selfNetAmount = Decimal(String(self_delegated_bandwidth.net_weight).split(' ')[0]);
 
-    const totalCpuAmount = Decimal(total_resources.cpu_weight.split(' ')[0]);
-    const totalNetAmount = Decimal(total_resources.net_weight.split(' ')[0]);
+    const totalCpuAmount = Decimal(String(total_resources.cpu_weight).split(' ')[0]);
+    const totalNetAmount = Decimal(String(total_resources.net_weight).split(' ')[0]);
 
     return {
       cpuWeight: `${totalCpuAmount.minus(selfCpuAmount).toFixed(4)} ${this.chainSymbol}`,
