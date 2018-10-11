@@ -28,6 +28,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
   render() {
     const {
       balances,
+      connection,
       autoFocus,
       label,
       loading,
@@ -38,13 +39,18 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const assets = Object.keys(balances[settings.account]);
     const { customTokens } = settings;
     // Determine which tokens are being tracked
-    const trackedTokens = (customTokens) ? customTokens.map((tokenName) => {
-      const [contract, symbol] = tokenName.split(':');
-      return { contract, symbol };
-    }) : [{
-      contract: 'eosio',
-      symbol: 'EOS'
-    }];
+
+    const trackedTokens = (connection.supportedContracts.includes('customtokens') && customTokens) ?
+      (
+        customTokens.map((tokenName) => {
+          const [contract, symbol] = tokenName.split(':');
+          return { contract, symbol };
+        })
+      ) : [{
+        contract: 'eosio',
+        symbol: connection.chainSymbol || 'EOS'
+      }];
+
     const options = [];
     // Iterate assets and build the options list based on tracked tokens
     assets.forEach((asset) => {
