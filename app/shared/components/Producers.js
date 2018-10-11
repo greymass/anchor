@@ -166,7 +166,7 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
-        blockExplorers={allBlockExplorers[connection.chain]}
+        blockExplorers={allBlockExplorers[connection.chainKey]}
         globals={globals}
         key="WalletPanel"
         keys={keys}
@@ -191,7 +191,7 @@ class Producers extends Component<Props> {
             accounts={accounts}
             actions={actions}
             addProxy={addProxy}
-            blockExplorers={allBlockExplorers[connection.chain]}
+            blockExplorers={allBlockExplorers[connection.chainKey]}
             currentProxy={currentProxy}
             keys={keys}
             isProxying={isProxying}
@@ -208,7 +208,7 @@ class Producers extends Component<Props> {
           {(!isProxying) ? (
             <ProducersVotingPreview
               actions={actions}
-              blockExplorers={blockExplorers}
+              blockExplorers={allBlockExplorers[connection.chainKey]}
               lastError={lastError}
               lastTransaction={lastTransaction}
               open={previewing}

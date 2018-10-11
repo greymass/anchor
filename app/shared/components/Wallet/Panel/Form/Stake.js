@@ -30,8 +30,8 @@ class WalletPanelFormStake extends Component<Props> {
       net_weight
     } = account.self_delegated_bandwidth;
 
-    const parsedCpuWeight = cpu_weight.split(' ')[0];
-    const parsedNetWeight = net_weight.split(' ')[0];
+    const parsedCpuWeight = String(cpu_weight).split(' ')[0];
+    const parsedNetWeight = String(net_weight).split(' ')[0];
 
     this.state = {
       accountName: account.account_name,

@@ -49,7 +49,7 @@ class Tools extends Component<Props> {
                   <label>{t('tools_change_block_explorer2')}</label>
                   <GlobalSettingsBlockExplorer
                     actions={actions}
-                    blockExplorers={allBlockExplorers[connection.chain]}
+                    blockExplorers={allBlockExplorers[connection.chainKey]}
                     defaultValue={settings.blockExplorer}
                     selection
                   />

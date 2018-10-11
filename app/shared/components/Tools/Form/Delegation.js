@@ -33,10 +33,10 @@ class ToolsFormDelegation extends Component<Props> {
 
       this.setState({
         accountName,
-        cpuAmount: Decimal(cpu_weight.split(' ')[0]),
-        cpuOriginal: Decimal(cpu_weight.split(' ')[0]),
-        netAmount: Decimal(net_weight.split(' ')[0]),
-        netOriginal: Decimal(net_weight.split(' ')[0])
+        cpuAmount: Decimal(String(cpu_weight).split(' ')[0]),
+        cpuOriginal: Decimal(String(cpu_weight).split(' ')[0]),
+        netAmount: Decimal(String(net_weight).split(' ')[0]),
+        netOriginal: Decimal(String(net_weight).split(' ')[0])
       });
     } else if (delegationToRemove) {
       const {
@@ -49,9 +49,9 @@ class ToolsFormDelegation extends Component<Props> {
         accountName,
         confirming: true,
         cpuAmount: Decimal(0),
-        cpuOriginal: Decimal(cpu_weight.split(' ')[0]),
+        cpuOriginal: Decimal(String(cpu_weight).split(' ')[0]),
         netAmount: Decimal(0),
-        netOriginal: Decimal(net_weight.split(' ')[0])
+        netOriginal: Decimal(String(net_weight).split(' ')[0])
       });
     }
   }
