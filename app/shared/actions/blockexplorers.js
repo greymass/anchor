@@ -23,7 +23,7 @@ export function getBlockExplorers() {
     //   limit: 100,
     // };
 
-    const rows = {
+    const blockExplorerLists = {
       'eos-mainnet': [
         {
           name: 'bloks.io',
@@ -76,12 +76,13 @@ export function getBlockExplorers() {
     // eos(connection).getTableRows(query).then((results) => {
     //   const { rows } = results;
 
-    const sortedList = sortBy(rows, 'name');
-
     const blockExplorers = {};
 
-    sortedList.forEach((bE) => {
-      blockExplorers[bE.name] = bE.patterns;
+    Object.keys(blockExplorerLists).forEach((blockchainKey) => {
+      sortBy(blockExplorerLists[blockchainKey], 'name').forEach((blockExplorer) => {
+        blockExplorers[blockchainKey] = blockExplorers[blockchainKey] || {};
+        blockExplorers[blockchainKey][blockExplorer.name] = blockExplorer.patterns;
+      });
     });
 
     return dispatch({

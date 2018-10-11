@@ -113,8 +113,8 @@ function getStakeChanges(chainSymbol, currentAccount, accountName, delegations, 
     net_weight
   } = accountResources || currentAccount.self_delegated_bandwidth;
 
-  const currentCpuAmount = new Decimal(cpu_weight.split(' ')[0]);
-  const currentNetAmount = new Decimal(net_weight.split(' ')[0]);
+  const currentCpuAmount = new Decimal(String(cpu_weight).split(' ')[0]);
+  const currentNetAmount = new Decimal(String(net_weight).split(' ')[0]);
 
   const increaseInStake = {
     netAmount: Math.max(0, (nextNetAmount - currentNetAmount)),
