@@ -57,7 +57,7 @@ export default class Wallet extends Component<Props> {
               actions={actions}
               accounts={accounts}
               balances={balances}
-              blockExplorers={allBlockExplorers[connection.chain]}
+              blockExplorers={allBlockExplorers[connection.chainKey]}
               connection={connection}
               globals={globals}
               keys={keys}
@@ -74,7 +74,7 @@ export default class Wallet extends Component<Props> {
               actionHistories={actionHistories}
               accounts={accounts}
               balances={balances}
-              blockExplorers={allBlockExplorers[connection.chain]}
+              blockExplorers={allBlockExplorers[connection.chainKey]}
               chain={chain}
               connection={connection}
               globals={globals}

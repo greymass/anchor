@@ -63,9 +63,9 @@ class WalletPanelButtonStake extends Component<Props> {
             actions={actions}
             balance={balances[settings.account]}
             connection={connection}
-            cpuAmount={Decimal(cpu_weight.split(' ')[0])}
+            cpuAmount={Decimal(String(cpu_weight).split(' ')[0])}
             key="StakeForm"
-            netAmount={Decimal(net_weight.split(' ')[0])}
+            netAmount={Decimal(String(net_weight).split(' ')[0])}
             onClose={this.onClose}
             settings={settings}
             system={system}
