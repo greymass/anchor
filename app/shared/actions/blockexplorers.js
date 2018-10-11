@@ -23,43 +23,55 @@ export function getBlockExplorers() {
     //   limit: 100,
     // };
 
-    const rows = [
-      {
-        name: 'bloks.io',
-        patterns: {
-          account: 'https://www.bloks.io/account/{account}',
-          txid: 'https://www.bloks.io/transaction/{txid}'
+    const rows = {
+      'eos-mainnet': [
+        {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://www.bloks.io/account/{account}',
+            txid: 'https://www.bloks.io/transaction/{txid}'
+          }
+        },
+        {
+          name: 'eosflare.io',
+          patterns: {
+            account: 'https://eosflare.io/account/{account}',
+            txid: 'https://eosflare.io/tx/{txid}'
+          }
+        },
+        {
+          name: 'eosmonitor.io',
+          patterns: {
+            account: 'https://eosmonitor.io/account/{account}',
+            txid: 'https://eosmonitor.io/txn/{txid}'
+          }
+        },
+        {
+          name: 'eospark.com',
+          patterns: {
+            account: 'https://eospark.com/MainNet/account/{account}',
+            txid: 'https://eospark.com/MainNet/tx/{txid}'
+          }
+        },
+        {
+          name: 'eosweb.net',
+          patterns: {
+            account: 'https://eosweb.net/account/{account}',
+            txid: 'https://eosweb.net/transaction/{txid}'
+          }
         }
-      },
-      {
-        name: 'eosflare.io',
-        patterns: {
-          account: 'https://eosflare.io/account/{account}',
-          txid: 'https://eosflare.io/tx/{txid}'
+      ],
+      'telos-testnet': [
+        {
+          name: 'telosfoundation.net',
+          patterns: {
+            account: 'http://testnet.telosfoundation.net/account/{account}',
+            txid: 'http://testnet.telosfoundation.net/transaction/{txid}'
+          }
         }
-      },
-      {
-        name: 'eosmonitor.io',
-        patterns: {
-          account: 'https://eosmonitor.io/account/{account}',
-          txid: 'https://eosmonitor.io/txn/{txid}'
-        }
-      },
-      {
-        name: 'eospark.com',
-        patterns: {
-          account: 'https://eospark.com/MainNet/account/{account}',
-          txid: 'https://eospark.com/MainNet/tx/{txid}'
-        }
-      },
-      {
-        name: 'eosweb.net',
-        patterns: {
-          account: 'https://eosweb.net/account/{account}',
-          txid: 'https://eosweb.net/transaction/{txid}'
-        }
-      }
-    ];
+      ]
+    };
+
 
     // eos(connection).getTableRows(query).then((results) => {
     //   const { rows } = results;

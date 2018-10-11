@@ -135,10 +135,10 @@ class Producers extends Component<Props> {
 
   render() {
     const {
-      actions,
       accounts,
+      actions,
+      allBlockExplorers,
       balances,
-      blockExplorers,
       connection,
       globals,
       history,
@@ -166,7 +166,7 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
-        blockExplorers={blockExplorers}
+        blockExplorers={allBlockExplorers[connection.chain]}
         globals={globals}
         key="WalletPanel"
         keys={keys}
@@ -191,7 +191,7 @@ class Producers extends Component<Props> {
             accounts={accounts}
             actions={actions}
             addProxy={addProxy}
-            blockExplorers={blockExplorers}
+            blockExplorers={allBlockExplorers[connection.chain]}
             currentProxy={currentProxy}
             keys={keys}
             isProxying={isProxying}
