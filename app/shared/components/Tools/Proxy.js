@@ -20,7 +20,7 @@ class ToolsProxy extends Component<Props> {
     const {
       accounts,
       actions,
-      blockExplorers,
+      allBlockExplorers,
       connection,
       contracts,
       keys,
@@ -54,7 +54,7 @@ class ToolsProxy extends Component<Props> {
             <ToolsButtonRegisterProxy
               account={account}
               actions={actions}
-              blockExplorers={blockExplorers}
+              blockExplorers={allBlockExplorers[connection.chainKey]}
               settings={settings}
               system={system}
             />
@@ -71,7 +71,7 @@ class ToolsProxy extends Component<Props> {
             <ToolsButtonUnregisterProxy
               account={account}
               actions={actions}
-              blockExplorers={blockExplorers}
+              blockExplorers={allBlockExplorers[connection.chainKey]}
               settings={settings}
               system={system}
             />
@@ -80,12 +80,12 @@ class ToolsProxy extends Component<Props> {
               <GlobalTransactionHandler
                 actionName="SET_REGPROXYINFO"
                 actions={actions}
-                blockExplorers={blockExplorers}
+                blockExplorers={allBlockExplorers[connection.chainKey]}
                 content={(
                   <ToolsFormProxyInfo
                     account={account}
                     actions={actions}
-                    blockExplorers={blockExplorers}
+                    blockExplorers={allBlockExplorers[connection.chainKey]}
                     contracts={contracts}
                     isProxy={isProxy}
                     settings={settings}
