@@ -17,8 +17,8 @@ class ToolsCreateAccount extends Component<Props> {
     const {
       accounts,
       actions,
+      allBlockExplorers,
       balances,
-      blockExplorers,
       connection,
       globals,
       keys,
@@ -59,7 +59,7 @@ class ToolsCreateAccount extends Component<Props> {
             <GlobalTransactionHandler
               actionName="CREATEACCOUNT"
               actions={actions}
-              blockExplorers={blockExplorers}
+              blockExplorers={allBlockExplorers[connection.chainKey]}
               content={(
                 <ToolsFormCreateAccount
                   account={account}
