@@ -13,7 +13,7 @@ export default class GlobalFormFieldToken extends Component<Props> {
     };
   }
   onChange = debounce((e, { name, value }) => {
-    const asset = 'EOS';
+    const asset = (this.props.connection && this.props.connection.chainSymbol) || 'EOS';
     const valid = !!(value.match(/^\d+(\.\d{1,4})?$/g));
     const parsed = (value > 0) ? `${new Decimal(value).toFixed(4)} ${asset}` : `0.0000 ${asset}`;
 

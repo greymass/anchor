@@ -32,8 +32,8 @@ export function createAccount(
       tr.newaccount({
         creator: currentAccount,
         name: accountName,
-        owner: ownerKey,
-        active: activeKey
+        owner: ownerKey.replace(connection.chainSymbol, 'EOS'),
+        active: activeKey.replace(connection.chainSymbol, 'EOS')
       });
 
       tr.buyrambytes({
@@ -43,6 +43,7 @@ export function createAccount(
       });
 
       tr.delegatebw(delegatebwParams(
+        connection.chainSymbol,
         currentAccount,
         accountName,
         delegatedBw.split(' ')[0],

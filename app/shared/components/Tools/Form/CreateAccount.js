@@ -343,12 +343,14 @@ class ToolsFormCreateAccount extends Component<Props> {
                 onSubmit={this.onSubmit}
               >
                 <GlobalFormFieldKeyPublic
+                  connection={connection}
                   defaultValue={ownerKeyValue || ''}
                   label={t('tools_form_create_account_owner_key')}
                   name="ownerKeyValue"
                   onChange={this.onChange}
                 />
                 <GlobalFormFieldKeyPublic
+                  connection={connection}
                   defaultValue={activeKeyValue || ''}
                   label={t('tools_form_create_account_active_key')}
                   name="activeKeyValue"
@@ -368,12 +370,14 @@ class ToolsFormCreateAccount extends Component<Props> {
                   onChange={this.onChange}
                 />
                 <GlobalFormFieldToken
+                  connection={connection}
                   defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
                   label={t('tools_form_create_account_delegated_bw_label', { chainSymbol: connection.chainSymbol })}
                   name="delegatedBw"
                   onChange={this.onChange}
                 />
                 <GlobalFormFieldToken
+                  connection={connection}
                   defaultValue={delegatedCpu && delegatedCpu.split(' ')[0]}
                   label={t('tools_form_create_account_delegated_cpu_label', { chainSymbol: connection.chainSymbol })}
                   name="delegatedCpu"
