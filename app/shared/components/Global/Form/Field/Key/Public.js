@@ -49,7 +49,7 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
   }
   onChange = debounce((e, { name, value }) => {
     const parsed = value.trim();
-    const valid = ecc.isValidPublic(parsed);
+    const valid = ecc.isValidPublic(parsed.replace(this.props.connection.chainSymbol, 'EOS'));
     this.setState({
       value: parsed
     }, () => {
