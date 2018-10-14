@@ -132,7 +132,7 @@ export function validateKey(key) {
       const permissions = ['active', 'owner'];
       try {
         // Derive the public key from the private key provided
-        const expect = ecc.privateToPublic(key);
+        const expect = ecc.privateToPublic(key, connection.keyPrefix);
         // Filter the account's permissions to find any valid matches
         const validPermissions = account.permissions.filter((perm) => {
           // Get the threshold a key needs to perform operations
