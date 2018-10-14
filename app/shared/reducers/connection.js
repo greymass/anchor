@@ -4,13 +4,14 @@ import blockchains from '../constants/blockchains';
 const initialState = {
   authorization: undefined,
   chain: 'eos-mainnet',
+  broadcast: true,
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   chainKey: 'eos-mainnet',
   chainSymbol: 'EOS',
-  broadcast: true,
   expireInSeconds: 120,
   forceActionDataHex: false,
   httpEndpoint: null,
+  keyPrefix: 'EOS',
   signMethod: false,
   signPath: false,
   supportedContracts: []
@@ -32,6 +33,7 @@ export default function connection(state = initialState, action) {
         chainKey: (blockchain && blockchain.key) || 'unknown',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         httpEndpoint: action.payload.node,
+        keyPrefix: (blockchain && blockchain.symbol) || 'EOS',
         supportedContracts: blockchain.supportedContracts
       });
     }
