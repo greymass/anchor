@@ -8,7 +8,7 @@ const ecc = require('eosjs-ecc');
 
 export function setWalletKey(data, password, mode = 'hot', existingHash = false) {
   return (dispatch: () => void, getState) => {
-    const { accounts, settings } = getState();
+    const { accounts, connection, settings } = getState();
     let hash = existingHash;
     let key = data;
     let obfuscated = data;
@@ -18,7 +18,7 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
       hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
       obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     }
-    const pubkey = ecc.privateToPublic(key);
+    const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
     const accountData = accounts[settings.account];
     let authorization;
     if (accountData) {
@@ -65,8 +65,8 @@ export function setWalletHash(password) {
 
 export function setTemporaryKey(key) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
-    const pubkey = (key) ? ecc.privateToPublic(key) : '';
+    const { connection, settings } = getState();
+    const pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : '';
     // Obfuscate key for in-memory storage
     const hash = encrypt(key, key, 1).toString(CryptoJS.enc.Utf8);
     const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
@@ -172,7 +172,7 @@ export function unlockWallet(password, useWallet = false) {
       try {
         let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(key) === true) {
-          const pubkey = ecc.privateToPublic(key);
+          const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
           // Obfuscate key for in-memory storage
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
           key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);

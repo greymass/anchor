@@ -15,7 +15,7 @@ export default class WalletModalAccountLookup extends Component<Props> {
   onChange = (e, { value }) => {
     this.setState({
       key: value,
-      valid: (ecc.isValidPublic(value) === true)
+      valid: (ecc.isValidPublic(value, this.props.connection.keyPrefix) === true)
     }, () => {
       const { key, valid } = this.state;
       if (valid) {

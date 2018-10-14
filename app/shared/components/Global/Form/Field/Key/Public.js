@@ -25,8 +25,7 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
     ecc
       .randomKey()
       .then((key) => {
-        let publicKey = ecc.privateToPublic(key);
-        publicKey = publicKey.replace('EOS', connection.chainSymbol);
+        const publicKey = ecc.privateToPublic(key, connection.keyPrefix);
         // Set the value in the parent form with the provided name
         this.onChange(null, {
           name,
@@ -49,7 +48,8 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
   }
   onChange = debounce((e, { name, value }) => {
     const parsed = value.trim();
-    const valid = ecc.isValidPublic(parsed.replace(this.props.connection.chainSymbol, 'EOS'));
+    const valid = ecc.isValidPublic(parsed, this.props.connection.keyPrefix);
+
     this.setState({
       value: parsed
     }, () => {
