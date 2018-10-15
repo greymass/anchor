@@ -1,5 +1,6 @@
 {
   "producer_voting": "Producer Voting",
-  "wallet": "Wallet",
-  "tools": "Tools"
+  "tab_menu_blockchain_message": "Connected to",
+  "tools": "Tools",
+  "wallet": "Wallet"
 }
