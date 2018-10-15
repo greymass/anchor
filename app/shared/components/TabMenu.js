@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Label,Menu } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import GlobalAccountDropdown from '../containers/Global/Account/Dropdown';
@@ -67,6 +67,18 @@ class TabMenu extends Component<Props> {
           : false
         }
         <Menu.Menu position="right">
+          {(connection && connection.chain)
+            ? (
+              <Menu.Item
+                name="blockchain"
+              >
+                <Label
+                  size="medium"
+                  color="grey"
+                  content={connection.chain}
+                />
+              </Menu.Item>
+            ) : ''}
           <WalletLanguage
             actions={actions}
             key="language"
