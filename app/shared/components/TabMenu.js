@@ -15,6 +15,7 @@ class TabMenu extends Component<Props> {
     const {
       actions,
       activeItem,
+      connection,
       handleItemClick,
       locked,
       settings,
@@ -82,6 +83,22 @@ class TabMenu extends Component<Props> {
             wallet={wallet}
           />
           <GlobalHardwareLedgerStatus />
+          {(connection && connection.chain)
+            ? (
+              <Menu.Item
+                name="about"
+                position="right"
+                active={activeItem === 'about'}
+                onClick={handleItemClick}
+              >
+                <span>
+                  {t('tab_menu_blockchain_message')}
+                </span>
+                <span>
+                  {connection.chain}
+                </span>
+              </Menu.Item>
+            ) : ''}
           <Menu.Item
             name="about"
             position="right"
