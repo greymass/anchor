@@ -192,8 +192,6 @@ class WelcomeConnectionContainer extends Component<Props> {
     }
     // safeish true and ssl or non-ssl confirmed
     const disabled = !(this.isSafeish(node) && (sslConfirm || sslEnabled));
-    // check which blockchain is being connected to
-    const blockChainName = connection.chain;
 
     return (
       <Form>
@@ -235,14 +233,6 @@ class WelcomeConnectionContainer extends Component<Props> {
             )
             : false
           }
-          {(blockChainName)
-            ? (
-              <Message
-                info
-              >
-                {t('wallet_welcome_connection_blockchain_message', { blockChainName })}
-              </Message>
-            ) : ''}
         </Container>
       </Form>
     );
