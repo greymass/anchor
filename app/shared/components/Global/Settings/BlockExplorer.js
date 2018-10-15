@@ -23,13 +23,17 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
       selection
     } = this.props;
 
-    const {
+    let {
       value
     } = this.state;
 
     const blockExplorerOptions = Object.keys(blockExplorers).map((blockExplorer) => {
       return { value: blockExplorer, text: blockExplorer };
     });
+
+    if (!Object.keys(blockExplorers).includes(value)) {
+      value = null;
+    }
 
     return (
       <Dropdown
