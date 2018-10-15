@@ -6,7 +6,7 @@ import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 const { clipboard } = require('electron');
-const { PrivateKey } = require('eosjs-ecc');
+const ecc = require('eosjs-ecc');
 
 class ToolsKeys extends Component<Props> {
   state = { keys: [] }
@@ -16,16 +16,18 @@ class ToolsKeys extends Component<Props> {
   }
 
   generateKeyPair = () => {
+    const { connection } = this.props;
+    const { keyPrefix } = connection;
     const keys = this.state.keys.slice(0);
-    PrivateKey.randomKey().then(privateKey => {
-      const wif = privateKey.toWif();
-      const publicKey = privateKey.toPublic().toString();
-      keys.push([publicKey, wif]);
-      this.setState({ keys })
+    ecc.randomKey().then(privateKey => {
+      const publicKey = ecc.privateToPublic(privateKey, keyPrefix);
+      keys.push([publicKey, privateKey]);
+      this.setState({ keys });
       return keys;
+    }).catch((e) => {
+      console.log('error', e);
     });
   }
-
 
   render() {
     const { t } = this.props;
