@@ -127,6 +127,7 @@ class BasicVoterContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      connection,
       keys,
       settings,
       validate,
@@ -160,6 +161,7 @@ class BasicVoterContainer extends Component<Props> {
         <TabMenu
           actions={actions}
           activeItem={activeItem}
+          connection={connection}
           handleItemClick={this.handleItemClick}
           locked={(!keys.key)}
           settings={settings}
