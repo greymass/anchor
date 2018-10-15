@@ -134,31 +134,35 @@ class WalletStatusBalances extends Component<Props> {
         </Table.Row>
       ));
     });
+    const supportsCustomTokens = connection.supportedContracts.includes('customtokens');
     return (
       <Segment vertical basic loading={!tokens}>
         <Header>
-          <Popup
-            content={(
-              <Header size="small">
-                <Icon name="info circle" />
-                <Header.Content>
-                  {t('wallet_status_add_custom_token_header')}
-                  <Header.Subheader>
-                    {t('wallet_status_add_custom_token_action_subheader')}
-                  </Header.Subheader>
-                </Header.Content>
-              </Header>
-            )}
-            inverted
-            trigger={(
-              <Button
-                color="blue"
-                content={t('wallet_status_add_custom_token_action')}
-                floated="right"
-                size="small"
+          {(supportsCustomTokens)
+            && (
+              <Popup
+                content={(
+                  <Header size="small">
+                    <Icon name="info circle" />
+                    <Header.Content>
+                      {t('wallet_status_add_custom_token_header')}
+                      <Header.Subheader>
+                        {t('wallet_status_add_custom_token_action_subheader')}
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                )}
+                inverted
+                trigger={(
+                  <Button
+                    color="blue"
+                    content={t('wallet_status_add_custom_token_action')}
+                    floated="right"
+                    size="small"
+                  />
+                )}
               />
             )}
-          />
           {t('wallet_status_add_custom_token_header')}
           <Header.Subheader>
             {t('wallet_status_add_custom_token_subheader')}
