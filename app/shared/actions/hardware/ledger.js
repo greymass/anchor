@@ -5,11 +5,11 @@ const Api = require('../helpers/hardware/ledger').default;
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
 function handleComplete() {
-  console.log("complete fired");
+  console.log('complete fired');
 }
 
 function handleError(error) {
-  console.log("handleError", error)
+  console.log('handleError', error);
 }
 
 function getAppConfiguration() {
@@ -20,16 +20,20 @@ function getAppConfiguration() {
       .getAppConfiguration()
       .then((result) => {
         dispatch({
-          application: result,
-          transport,
+          payload: {
+            application: result,
+            transport,
+          },
           type: types.HARDWARE_LEDGER_APP_SUCCESS,
         });
         return result;
       })
       .catch((error) => {
         dispatch({
-          error,
-          transport,
+          payload: {
+            error,
+            transport,
+          },
           type: types.HARDWARE_LEDGER_APP_FAILURE,
         });
         setTimeout(() => {
@@ -50,17 +54,21 @@ function handleEvent(event) {
         const isConnected = (getState().ledger.devicePath !== null);
         const isCurrentDevice = (getState().ledger.devicePath === event.device.path);
         const isAppRunning = (getState().ledger.application !== null);
+        const signPath = (getState().wallet.path);
         if (!isConnected) {
           if (!isCurrentDevice || !isAppRunning) {
             Transport
               .open(event.device.path)
               .then((transport) => {
-                // if (process.env.NODE_ENV === 'development') {
-                //   transport.setDebugMode(true);
-                // }
+                if (process.env.NODE_ENV === 'development') {
+                  transport.setDebugMode(true);
+                }
                 dispatch({
-                  devicePath: event.device.path,
-                  transport,
+                  payload: {
+                    devicePath: event.device.path,
+                    transport,
+                    signPath
+                  },
                   type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
                 });
                 dispatch(getAppConfiguration());
@@ -71,8 +79,10 @@ function handleEvent(event) {
                   dispatch(ledgerStartListen());
                 }, 1000);
                 dispatch({
+                  payload: {
+                    error
+                  },
                   type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
-                  error
                 });
               });
           }
@@ -80,7 +90,9 @@ function handleEvent(event) {
         break;
       }
       case 'remove': {
-        return dispatch({ type: types.HARDWARE_LEDGER_DEVICE_DISCONNECTED });
+        return dispatch({
+          type: types.HARDWARE_LEDGER_DEVICE_DISCONNECTED
+        });
       }
       default: {
         console.log('unhandled event', event, getState());
@@ -99,9 +111,9 @@ export function ledgerStartListen() {
       type: types.HARDWARE_LEDGER_LISTEN_INIT
     });
 
-    // if (process.env.NODE_ENV === 'development') {
-    //   Transport.setListenDevicesDebug(true);
-    // }
+    if (process.env.NODE_ENV === 'development') {
+      Transport.setListenDevicesDebug(true);
+    }
 
     const subscriber = Transport.listen({
       complete: () => dispatch(handleComplete()),
@@ -110,8 +122,10 @@ export function ledgerStartListen() {
     });
 
     dispatch({
+      payload: {
+        subscriber
+      },
       type: types.HARDWARE_LEDGER_LISTEN_START,
-      subscriber
     });
   };
 }
@@ -138,39 +152,102 @@ export function ledgerStopListen() {
   };
 }
 
-export function ledgerGetPublicKey(display = false) {
+export function ledgerGetPublicKey(index = 0, display = false) {
   return (dispatch: () => void, getState) => {
     const { ledger } = getState();
-
+    dispatch({
+      type: (display)
+        ? types.SYSTEM_LEDGER_DISPLAY_PUBLIC_KEY_PENDING
+        : types.SYSTEM_LEDGER_GET_PUBLIC_KEY_PENDING
+    });
     const api = new Api(ledger.transport);
-    if (display) {
-      dispatch({
-        type: types.PUBLIC_KEY_DISPLAY_REQUEST
-      });
-    }
-
+    const pathParts = ledger.bip44Path.split('/');
+    pathParts[4] = index;
+    const path = pathParts.join('/');
     api
-      .getPublicKey(ledger.bip44Path, display)
+      .getPublicKey(path, display)
       .then(result => {
         const type = display
-          ? types.PUBLIC_KEY_DISPLAY_SUCCESS
-          : types.GET_PUBLIC_KEY_SUCCESS;
-        return dispatch({ type, publicKey: result });
+          ? types.SYSTEM_LEDGER_DISPLAY_PUBLIC_KEY_SUCCESS
+          : types.SYSTEM_LEDGER_GET_PUBLIC_KEY_SUCCESS;
+        return dispatch({
+          payload: {
+            path,
+            publicKey: result,
+          },
+          type,
+        });
       })
       .catch(err => {
         const type = display
-          ? types.PUBLIC_KEY_DISPLAY_FAILURE
-          : types.GET_PUBLIC_KEY_FAILURE;
+          ? types.SYSTEM_LEDGER_DISPLAY_PUBLIC_KEY_FAILURE
+          : types.SYSTEM_LEDGER_GET_PUBLIC_KEY_FAILURE;
         dispatch({ type, err });
         setTimeout(() => {
-          dispatch(ledgerGetPublicKey(display));
+          dispatch(ledgerGetPublicKey(index, display));
         }, 1000);
       });
   };
 }
 
+export function ledgerResetPublicKey() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.RESET_PUBLIC_KEY_SUCCESS
+    });
+  };
+}
+
+export function ledgerGetStatus(state) {
+  let status = false;
+  // If the wallet is looking for a Ledger
+  if (state.listening) {
+    status = 'awaiting_connection';
+    // If the wallet is connected
+    if (state.devicePath && state.application && state.application.version) {
+      status = 'connected';
+    }
+  }
+  // If a transport error occurred
+  if (state.transportError && state.transportError.message) {
+    const { message } = state.transportError;
+    // If the transport is not yet allowed
+    if (message.startsWith('cannot open device with path')) {
+      status = 'awaiting_allow';
+    }
+  }
+  // If an application error occurred
+  if (state.applicationError && state.applicationError.message) {
+    const { statusCode } = state.applicationError;
+    switch (statusCode) {
+      // If the application is not running on the device
+      case 28160: {
+        status = 'awaiting_application';
+        break;
+      }
+      // Unknown errors
+      default: {
+        if (state.applicationError && state.applicationError.message) {
+          const { message } = state.applicationError;
+          // If the transport is not yet allowed
+          if (message.startsWith('Cannot write to HID device')) {
+            status = 'reinitializing';
+          }
+        }
+        if (!status) {
+          console.log('unknown application error code', statusCode, state.applicationError);
+          status = 'application_error';
+        }
+      }
+    }
+  }
+  return status;
+}
+
 export default {
   ledgerGetPublicKey,
+  ledgerGetStatus,
+  ledgerResetPublicKey,
   ledgerStartListen,
   ledgerStopListen,
 };

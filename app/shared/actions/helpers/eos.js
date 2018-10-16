@@ -1,10 +1,14 @@
 import { decrypt } from '../wallet';
 
+import serialize from './ledger/serialize';
+
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');
 
-export default function eos(connection, signing = false) {
+const Api = require('./hardware/ledger').default;
+
+export default function eos(connection, signing = false, ledger = false) {
   const decrypted = Object.assign({}, connection);
   if (signing && decrypted.keyProviderObfuscated) {
     const {
@@ -29,6 +33,22 @@ export default function eos(connection, signing = false) {
     )
   ) {
     delete decrypted.authorization;
+  }
+  // Ledger Interception
+  if (decrypted.signMethod === 'ledger') {
+    const signProvider = async ({ transaction }) => {
+      const { fc } = Eos(connection);
+      const buffer = serialize(fc.types.config.chainId, transaction, fc.types);
+      const api = new Api(decrypted.signTransport);
+      const result = await api.signTransaction(
+        decrypted.signPath,
+        buffer.toString('hex')
+      );
+      const rawSig = result.v + result.r + result.s;
+      return rawSig;
+    };
+    const promiseSigner = args => Promise.resolve(signProvider(args));
+    decrypted.signProvider = promiseSigner;
   }
   return Eos(decrypted);
 }
