@@ -50,6 +50,32 @@ export function claimUnstaked(owner) {
   };
 }
 
+export function getContractHash(accountName) {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_PENDING,
+      payload: { account_name: accountName }
+    });
+    const {
+      connection,
+      settings
+    } = getState();
+
+    if (accountName && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getCodeHash(accountName).then((response) => dispatch({
+        type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_SUCCESS,
+        payload: {
+          account_name: accountName,
+          contract_hash: response.hash
+        }
+      })).catch((err) => dispatch({
+        type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_FAILURE,
+        payload: { err },
+      }));
+    }
+  };
+}
+
 export function checkAccountAvailability(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({

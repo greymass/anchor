@@ -23,6 +23,8 @@ export default function system(state = {}, action) {
   const txField = `${requestName}_LAST_TRANSACTION`;
   const awaitingDeviceField = `${requestName}_AWAITING_DEVICE`;
 
+  const contractHashField = `${requestName}_LAST_CONTRACT_HASH`;
+
   const newState = {
     ...state,
     [requestName]: requestState,
@@ -57,6 +59,10 @@ export default function system(state = {}, action) {
     if (action.payload.contract) {
       const { abi, account_name } = action.payload.contract;
       newState[contractField] = new EOSContract(abi, account_name);
+    }
+
+    if (action.payload.contractHash) {
+      newState[contractHashField] = action.payload.contractHash);
     }
   }
 
