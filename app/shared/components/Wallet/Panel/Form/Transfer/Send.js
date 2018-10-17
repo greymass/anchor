@@ -74,6 +74,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
   onChange = (e, { name, value, valid }) => {
     if (name === 'to') {
       const {
+        actions,
         settings
       } = this.props;
       const {
@@ -85,6 +86,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
       if (position > -1) {
         this.onChange(e, { name: 'memo', value: contacts[position].defaultMemo || '', valid: true });
       }
+
+      actions.getContractHash(name);
     }
 
 
@@ -206,6 +209,10 @@ class WalletPanelFormTransferSend extends Component<Props> {
     }
 
     const hasWarnings = exchangeWarning;
+    const shouldDisplayTransferingToContractMessage =
+      to &&
+      system.LAST_ACCOUNT === to &&
+      system.LAST_CONTRACT_HASH !== '0000000000000000000000000000000000000000000000000000000000000000';
 
     return (
       <Form
@@ -241,6 +248,11 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 onChange={this.onChange}
                 value={to}
               />
+              {(shouldDisplayTransferingToContractMessage) && (
+                <Message
+                  content={t('transfer_destination_account_is_contract')}
+                />
+              )}
               <FormFieldMultiToken
                 balances={balances}
                 connection={connection}
