@@ -61,8 +61,10 @@ export default function system(state = {}, action) {
       newState[contractField] = new EOSContract(abi, account_name);
     }
 
-    if (action.payload.contractHash) {
-      newState[contractHashField] = action.payload.contractHash);
+    if (action.payload.contract_hash) {
+      newState[contractHashField] = action.payload.contract_hash;
+    } else if (requestName === 'ACCOUNT_HAS_CONTRACT') {
+      newState[contractHashField] = null;
     }
   }
 
