@@ -66,7 +66,7 @@ export function getContractHash(accountName) {
         type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_SUCCESS,
         payload: {
           account_name: accountName,
-          contract_hash: response.hash
+          contract_hash: response.code_hash
         }
       })).catch((err) => dispatch({
         type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_FAILURE,
