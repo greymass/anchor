@@ -17,7 +17,7 @@
   "transfer_receive_modal_header": "Receive Tokens",
   "transfer_send_button_cta": "Send Tokens",
   "transfer_send_exchange_in_memo_one": "Are you trying to transfer to an exchange? If so put",
-  "transfer_send_exchange_in_memo_two": "as the Account Name and put the memo code given in the memo field."
+  "transfer_send_exchange_in_memo_two": "as the Account Name and put the memo code given in the memo field.",
   "transfer_warning_irreversible_body": "Once this transaction is submitted it cannot be reversed.",
-  "transfer_warning_irreversible_title": "Transactions are irreversible",
+  "transfer_warning_irreversible_title": "Transactions are irreversible"
 }
