@@ -4,6 +4,7 @@ import { Button, Divider, Form, Message, Icon, Segment } from 'semantic-ui-react
 import { translate } from 'react-i18next';
 import { findIndex } from 'lodash';
 
+import debounce from 'lodash/debounce';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
@@ -71,6 +72,12 @@ class WalletPanelFormTransferSend extends Component<Props> {
     return false;
   }
 
+  getContractHash = debounce((value) => {
+    const { actions } = this.props;
+
+    actions.getContractHash(value);
+  }, 400)
+
   onChange = (e, { name, value, valid }) => {
     if (name === 'to') {
       const {
@@ -87,7 +94,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
         this.onChange(e, { name: 'memo', value: contacts[position].defaultMemo || '', valid: true });
       }
 
-      actions.getContractHash(name);
+      this.getContractHash(value);
     }
 
 
@@ -208,11 +215,13 @@ class WalletPanelFormTransferSend extends Component<Props> {
       });
     }
 
-    const hasWarnings = exchangeWarning;
     const shouldDisplayTransferingToContractMessage =
       to &&
-      system.LAST_ACCOUNT === to &&
-      system.LAST_CONTRACT_HASH !== '0000000000000000000000000000000000000000000000000000000000000000';
+      system.ACCOUNT_HAS_CONTRACT_LAST_ACCOUNT === to &&
+      system.ACCOUNT_HAS_CONTRACT_LAST_CONTRACT_HASH &&
+      system.ACCOUNT_HAS_CONTRACT_LAST_CONTRACT_HASH !== '0000000000000000000000000000000000000000000000000000000000000000';
+
+    const hasWarnings = exchangeWarning || shouldDisplayTransferingToContractMessage;
 
     return (
       <Form
@@ -251,6 +260,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
               {(shouldDisplayTransferingToContractMessage) && (
                 <Message
                   content={t('transfer_destination_account_is_contract')}
+                  icon="warning sign"
+                  warning
                 />
               )}
               <FormFieldMultiToken
