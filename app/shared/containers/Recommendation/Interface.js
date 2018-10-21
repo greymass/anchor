@@ -21,35 +21,6 @@ type Props = {
 
 class RecommendationsInterfaceContainer extends Component<Props> {
   props: Props;
-  componentDidMount() {
-    const {
-      actions,
-      history,
-      settings,
-      validate,
-      wallet
-    } = this.props;
-    const {
-      setWalletMode
-    } = actions;
-    setWalletMode(settings.walletMode);
-
-    switch (settings.walletMode) {
-      case 'cold': {
-        if (settings.walletInit && wallet.data) {
-          history.push('/coldwallet');
-        }
-        break;
-      }
-      default: {
-        if (validate.NODE !== 'SUCCESS' && settings.node) {
-          const { validateNode } = actions;
-          validateNode(settings.node);
-        }
-        break;
-      }
-    }
-  }
 
   render() {
     const {
@@ -90,4 +61,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecommendationsInterfaceContainer));
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RecommendationsInterfaceContainer));
