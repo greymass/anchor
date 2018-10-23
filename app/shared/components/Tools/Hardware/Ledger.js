@@ -108,8 +108,8 @@ class ToolsHardwareLedger extends Component<Props> {
               </Table.Cell>
               <Table.Cell>
                 {(settings.hardwareLedgerSupport)
-                  ? <Label color="green" content="enabled" horizontal />
-                  : <Label color="yellow" content="disabled" horizontal />
+                  ? <Label basic color="green" content="enabled" horizontal />
+                  : <Label basic color="yellow" content="disabled" horizontal />
                 }
               </Table.Cell>
             </Table.Row>
@@ -119,8 +119,8 @@ class ToolsHardwareLedger extends Component<Props> {
               </Table.Cell>
               <Table.Cell>
                 {(ledger.listening)
-                  ? <Label color="green" content="waiting" horizontal />
-                  : <Label color="yellow" content="disabled" horizontal />
+                  ? <Label basic color="green" content="waiting" horizontal />
+                  : <Label basic color="yellow" content="disabled" horizontal />
                 }
               </Table.Cell>
             </Table.Row>
@@ -130,8 +130,8 @@ class ToolsHardwareLedger extends Component<Props> {
               </Table.Cell>
               <Table.Cell>
                 {(transport)
-                  ? <Label color="green" content={t('ledger_row_connected_true')} horizontal />
-                  : <Label color="yellow" content={t('ledger_row_connected_false')} horizontal />
+                  ? <Label basic color="green" content={t('ledger_row_connected_true')} horizontal />
+                  : <Label basic color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
               </Table.Cell>
             </Table.Row>
@@ -142,14 +142,14 @@ class ToolsHardwareLedger extends Component<Props> {
               <Table.Cell>
                 {(transport)
                   ? false
-                  : <Label color="yellow" content={t('ledger_row_connected_false')} horizontal />
+                  : <Label basic color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
                 {(transport && ledger.application && ledger.application.version)
                   ? ledger.application.version
                   : false
                 }
                 {(transport && (!ledger.application || !ledger.application.version))
-                  ? <Label color="orange" content={t('ledger_status_awaiting_application_subheader')} horizontal />
+                  ? <Label basic color="orange" content={t('ledger_status_awaiting_application_subheader')} horizontal />
                   : false
                 }
               </Table.Cell>
@@ -161,7 +161,7 @@ class ToolsHardwareLedger extends Component<Props> {
               <Table.Cell>
                 {(transport)
                   ? false
-                  : <Label color="yellow" content={t('ledger_row_connected_false')} horizontal />
+                  : <Label basic color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
                 {(transport && ledger.publicKey)
                   ? (
