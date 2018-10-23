@@ -14,7 +14,7 @@ class ToolsFormPermissionsAuthSet extends Component<Props> {
       actions,
       auth,
       newkey,
-      onSubmit,
+      onFormSubmit,
       path,
     } = this.props;
     const {
@@ -24,9 +24,9 @@ class ToolsFormPermissionsAuthSet extends Component<Props> {
     } = auth;
     const newAuth = set(required_auth, 'keys.0.key', newkey);
     actions.updateauth(perm_name, parent, newAuth, `${account}@${authorization}`);
-    // If a callback was supplied for onSubmit, call it
-    if (onSubmit) {
-      onSubmit(account, authorization, newkey, path);
+    // If a callback was supplied for onFormSubmit, call it
+    if (onFormSubmit) {
+      onFormSubmit(account, authorization, newkey, path);
     }
   }
   render() {

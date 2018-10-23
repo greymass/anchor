@@ -17,7 +17,7 @@ class ToolsModalPermissionAuthSet extends Component<Props> {
       newkey,
       open,
       onClose,
-      onSubmit,
+      onFormSubmit,
       path,
       pubkey,
       settings,
@@ -37,7 +37,7 @@ class ToolsModalPermissionAuthSet extends Component<Props> {
             authorization={authorization}
             auth={auth}
             newkey={newkey}
-            onSubmit={onSubmit}
+            onFormSubmit={onFormSubmit}
             path={path}
             pubkey={pubkey}
             settings={settings}

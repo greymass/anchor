@@ -63,7 +63,7 @@ class GlobalAccountConvertLedger extends Component<Props> {
     this.reset();
     this.props.onClose();
   }
-  onSubmit = () => {
+  onFormSubmit = () => {
     const {
       account,
       actions,
@@ -461,7 +461,7 @@ class GlobalAccountConvertLedger extends Component<Props> {
                         size: 'small'
                       }}
                       newkey={newkey}
-                      onSubmit={this.onSubmit}
+                      onFormSubmit={this.onFormSubmit}
                       path={path}
                       pubkey={pubkey}
                       settings={settings}
