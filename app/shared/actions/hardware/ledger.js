@@ -1,8 +1,11 @@
 // @flow
 import * as types from '../types';
+import HardwareLedger from '../../utils/Hardware/Ledger';
 
 const Api = require('../helpers/hardware/ledger').default;
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
+
+let hardwareLedger = new HardwareLedger();
 
 function handleComplete() {
   console.log('complete fired');
@@ -13,8 +16,8 @@ function handleError(error) {
 }
 
 function getAppConfiguration() {
-  return (dispatch: () => void, getState) => {
-    const { transport } = getState().ledger;
+  return (dispatch: () => void) => {
+    const { transport } = hardwareLedger;
     const api = new Api(transport);
     return api
       .getAppConfiguration()
@@ -63,10 +66,12 @@ function handleEvent(event) {
                 if (process.env.NODE_ENV === 'development') {
                   transport.setDebugMode(true);
                 }
+                hardwareLedger.destroy();
+                hardwareLedger = new HardwareLedger(transport);
                 dispatch({
                   payload: {
                     devicePath: event.device.path,
-                    transport,
+                    // transport,
                     signPath
                   },
                   type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
@@ -90,6 +95,7 @@ function handleEvent(event) {
         break;
       }
       case 'remove': {
+        const ledger = new HardwareLedger().destroy();
         return dispatch({
           type: types.HARDWARE_LEDGER_DEVICE_DISCONNECTED
         });
@@ -103,6 +109,7 @@ function handleEvent(event) {
 
 export function ledgerStartListen() {
   return (dispatch: () => void, getState) => {
+    hardwareLedger.destroy();
     if (getState().ledger.subscriber !== null) {
       return;
     }
@@ -134,10 +141,9 @@ export function ledgerStopListen() {
   return (dispatch: () => void, getState) => {
     const { ledger } = getState();
     const {
-      subscriber,
-      transport,
+      subscriber
     } = ledger;
-
+    const { transport } = hardwareLedger;
     if (transport && transport.close) {
       transport.close();
     }
@@ -145,6 +151,8 @@ export function ledgerStopListen() {
     if (subscriber && subscriber.unsubscribe) {
       ledger.subscriber.unsubscribe();
     }
+
+    hardwareLedger.destroy();
 
     dispatch({
       type: types.HARDWARE_LEDGER_LISTEN_STOP
@@ -160,9 +168,10 @@ export function ledgerGetPublicKey(index = 0, display = false) {
         ? types.SYSTEM_LEDGER_DISPLAY_PUBLIC_KEY_PENDING
         : types.SYSTEM_LEDGER_GET_PUBLIC_KEY_PENDING
     });
-    const api = new Api(ledger.transport);
+    const { transport } = hardwareLedger;
+    const api = new Api(transport);
     const pathParts = ledger.bip44Path.split('/');
-    pathParts[4] = index;
+    pathParts[4] = parseInt(index, 10);
     const path = pathParts.join('/');
     api
       .getPublicKey(path, display)
@@ -183,9 +192,6 @@ export function ledgerGetPublicKey(index = 0, display = false) {
           ? types.SYSTEM_LEDGER_DISPLAY_PUBLIC_KEY_FAILURE
           : types.SYSTEM_LEDGER_GET_PUBLIC_KEY_FAILURE;
         dispatch({ type, err });
-        setTimeout(() => {
-          dispatch(ledgerGetPublicKey(index, display));
-        }, 1000);
       });
   };
 }
@@ -204,6 +210,7 @@ export function ledgerGetStatus(state) {
   if (state.listening) {
     status = 'awaiting_connection';
     // If the wallet is connected
+    const { transport } = new HardwareLedger();
     if (state.devicePath && state.application && state.application.version) {
       status = 'connected';
     }

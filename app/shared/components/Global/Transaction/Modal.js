@@ -4,22 +4,7 @@ import { Button, Header, Modal } from 'semantic-ui-react';
 
 import GlobalTransactionHandler from './Handler';
 
-type Props = {
-  actionName: string,
-  actions: {
-    clearSystemState: () => void
-  },
-  button: {},
-  content: {},
-  icon: string,
-  title: string,
-  settings: {},
-  system: {}
-};
-
 class GlobalTransactionModal extends Component<Props> {
-  props: Props;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -43,6 +28,13 @@ class GlobalTransactionModal extends Component<Props> {
     }
   }
 
+  onSubmit = () => {
+    const { onSubmit } = this.props;
+    if (onSubmit) {
+      onSubmit();
+    }
+  }
+
   render() {
     const {
       actionName,
@@ -51,6 +43,7 @@ class GlobalTransactionModal extends Component<Props> {
       button,
       content,
       icon,
+      openModal,
       title,
       settings,
       size,
@@ -58,7 +51,6 @@ class GlobalTransactionModal extends Component<Props> {
     } = this.props;
     let {
       contract,
-      openModal,
       transaction
     } = this.props;
     const {
@@ -111,6 +103,7 @@ class GlobalTransactionModal extends Component<Props> {
             content={content}
             contract={contract}
             onClose={this.onClose}
+            onSubmit={this.onSubmit}
             settings={settings}
             system={system}
             transaction={transaction}

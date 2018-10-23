@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { find } from 'lodash';
 
 import { Button, Container, Icon, Header, Message, Popup, Segment, Table } from 'semantic-ui-react';
 
@@ -22,6 +21,18 @@ class ToolsPermissions extends Component<Props> {
       validate,
       wallet
     } = this.props;
+
+    if (settings.walletMode === 'ledger') {
+      return (
+        <Segment>
+          <Header
+            content={t('tools_permissions_ledger_permissions_unavailable_header')}
+            icon="warning sign"
+            subheader={t('tools_permissions_ledger_permissions_unavailable_subheader')}
+          />
+        </Segment>
+      );
+    }
 
     if (settings.walletMode !== 'watch' && !(keys && keys.key)) {
       return (

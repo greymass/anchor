@@ -23,6 +23,7 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
   render() {
     const {
       button,
+      buttonText,
       disabled,
       open,
       onCancel,
@@ -42,7 +43,7 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
                 (
                   <Button
                     color="blue"
-                    content={button || t('wallet_panel_password_confirm_button')}
+                    content={buttonText || t('wallet_panel_password_confirm_button')}
                     floated="right"
                     disabled={disabled}
                     onClick={onConfirm}
@@ -81,7 +82,7 @@ export default class WalletPanelFormModalConfirm extends Component<Props> {
                   disabled={!matches}
                   onClick={onSubmit}
                 >
-                  <Icon name="checkmark" /> {t('wallet_panel_wallet_save')}
+                  <Icon name="checkmark" /> {buttonText || t('wallet_panel_wallet_save')}
                 </Button>
               </Modal.Actions>
             </Modal>

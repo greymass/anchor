@@ -44,15 +44,17 @@ class GlobalButtonElevate extends Component<Props> {
   onSubmit = () => {
     const {
       actions,
+      settings,
       wallet
     } = this.props;
     const {
-      validateWalletPassword
-    } = actions;
-    const {
       password
     } = this.state;
-    validateWalletPassword(password, wallet);
+    if (settings.walletHash) {
+      actions.validateHashPassword(password);
+    } else {
+      actions.validateWalletPassword(password, wallet);
+    }
   }
 
   render() {

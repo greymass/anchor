@@ -78,7 +78,7 @@ class ToolsFormDelegation extends Component<Props> {
       netOriginal
     } = this.state;
 
-    return ((keys && keys.key) || settings.walletMode === 'watch')
+    return ((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
       ? (
         <WalletPanelFormStake
           account={account}
