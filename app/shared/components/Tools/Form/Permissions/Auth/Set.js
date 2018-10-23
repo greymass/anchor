@@ -1,18 +1,21 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { delete as del, set } from 'dot-prop-immutable';
-import { map, values } from 'lodash';
+import { set } from 'dot-prop-immutable';
+import { map } from 'lodash';
 
 import { Button, Container, Form, Message, Table } from 'semantic-ui-react';
 
 class ToolsFormPermissionsAuthSet extends Component<Props> {
   onSubmit = () => {
     const {
+      account,
+      authorization,
       actions,
       auth,
       newkey,
-      settings
+      onSubmit,
+      path,
     } = this.props;
     const {
       parent,
@@ -20,29 +23,18 @@ class ToolsFormPermissionsAuthSet extends Component<Props> {
       required_auth
     } = auth;
     const newAuth = set(required_auth, 'keys.0.key', newkey);
-    console.log(newAuth)
-    // const {
-    //   auth,
-    //   parent,
-    //   permission
-    // } = this.state;
-    let authorization;
-    if (perm_name === 'owner') {
-      authorization = `${settings.account}@owner`;
+    actions.updateauth(perm_name, parent, newAuth, `${account}@${authorization}`);
+    // If a callback was supplied for onSubmit, call it
+    if (onSubmit) {
+      onSubmit(account, authorization, newkey, path);
     }
-    actions.updateauth(perm_name, parent, newAuth, authorization);
   }
   render() {
     const {
       pubkey,
       newkey,
-      settings,
       t
     } = this.props;
-    // const {
-    //   original,
-    //   validForm
-    // } = this.state;
     const original = Object.assign({}, this.props.auth);
     const isCurrentKey = map(original.keys, 'key').includes(pubkey);
     return (
@@ -62,7 +54,6 @@ class ToolsFormPermissionsAuthSet extends Component<Props> {
             </Table.Row>
           </Table.Body>
         </Table>
-
         {(isCurrentKey)
           ? (
             <Message

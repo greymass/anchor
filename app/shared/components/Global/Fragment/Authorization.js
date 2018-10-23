@@ -1,32 +1,42 @@
 // @flow
 import React, { Component } from 'react';
+import { Popup } from 'semantic-ui-react';
 
 class GlobalFragmentAuthorization extends Component<Props> {
   render() {
     const {
       account,
-      authorization
+      authorization,
+      pubkey
     } = this.props;
+    let element = (
+      <span>
+        {account}
+      </span>
+    );
     if (authorization) {
-      const [accountName, permission] = authorization.split('@');
-      return (
-        <React.Fragment>
+      element = (
+        <span>
           <span>
-            {accountName}
+            {account}
           </span>
           <span style={{ opacity: 0.4 }}>
-            @{permission}
+            @{authorization}
           </span>
-        </React.Fragment>
+        </span>
       );
     }
-    return (
-      <React.Fragment>
-        <span>
-          {account}
-        </span>
-      </React.Fragment>
-    );
+    if (pubkey) {
+      return (
+        <Popup
+          content={pubkey}
+          hoverable
+          inverted
+          trigger={element}
+        />
+      );
+    }
+    return element;
   }
 }
 

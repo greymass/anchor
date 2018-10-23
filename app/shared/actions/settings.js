@@ -1,7 +1,8 @@
 import * as types from './types';
 import { clearAccountCache, refreshAccountBalances } from './accounts';
 import * as validate from './validate';
-import { removeWallet, setWalletMode } from './wallet';
+import { setWalletMode } from './wallet';
+import { removeWallet } from './wallets';
 
 const { remote } = require('electron');
 

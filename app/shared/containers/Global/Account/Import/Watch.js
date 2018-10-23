@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { intersection, isEqual } from 'lodash';
-import { Button, Checkbox, Divider, Form, Header, Icon, Label, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Form, Header, Icon, Label, List, Modal, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldAccount from '../../../../components/Global/Form/Field/Account';
+import GlobalFragmentAuthorization from '../../../../components/Global/Fragment/Authorization';
 
+import EOSAccount from '../../../../utils/EOS/Account';
 import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
 import * as WalletsActions from '../../../../actions/wallets';
@@ -17,6 +19,7 @@ import * as WalletsActions from '../../../../actions/wallets';
 class GlobalModalAccountImportWatch extends Component<Props> {
   state = {
     allValid: false,
+    loaded: [],
     selected: [],
     valid: false,
     validated: [],
@@ -33,54 +36,71 @@ class GlobalModalAccountImportWatch extends Component<Props> {
     const {
       actions
     } = this.props;
-    actions.importWallets(selected, false, false, 'watch');
+    selected.forEach((auth) => {
+      const [account, authorization, pubkey] = auth.split('@');
+      actions.importWallet(account, authorization, false, false, 'watch', pubkey);
+    });
     this.props.onClose();
   }
   isValid = (accounts) => {
-    const { selected } = this.state;
-    const matches = intersection(accounts, selected);
+    const { loaded } = this.state;
+    const matches = intersection(accounts, loaded);
     this.setState({
-      allValid: (matches.length > 0 && isEqual(matches.sort(), selected.sort())),
+      allValid: (matches.length > 0 && isEqual(matches.sort(), loaded.sort())),
       validated: matches
     });
   }
   onChange = (e, data) => this.setState(data);
   onSelect = () => {
     const { value } = this.state;
-    const selected = [...this.state.selected];
-    const existing = selected.indexOf(value);
+    const loaded = [...this.state.loaded];
+    const existing = loaded.indexOf(value);
     const input = this.input.getWrappedInstance();
     if (existing < 0) {
-      selected.push(value);
+      loaded.push(value);
     }
     if (input) {
       input.reset();
     }
-    this.props.actions.getAccounts(selected);
+    this.props.actions.getAccounts(loaded);
     this.setState({
-      selected,
+      loaded,
       valid: false,
       value: ''
     });
   }
-  onRemoveSelected = (e, { name }) => {
+  onToggleSelected = (e, { checked, name }) => {
     const selected = [...this.state.selected];
     const existing = selected.indexOf(name);
-    if (existing >= 0) {
+    if (checked) {
+      if (existing === -1) {
+        selected.push(name);
+      }
+    } else if (existing >= 0) {
       selected.splice(existing, 1);
     }
-    this.setState({ selected }, () => {
+    this.setState({ selected });
+  }
+  onRemoveSelected = (e, { name }) => {
+    const loaded = [...this.state.loaded];
+    const existing = loaded.indexOf(name);
+    if (existing >= 0) {
+      loaded.splice(existing, 1);
+    }
+    this.setState({ loaded }, () => {
       const accounts = Object.keys(this.props.accounts);
       this.isValid(accounts);
     });
   }
   render() {
     const {
+      accounts,
       onClose,
       t,
     } = this.props;
     const {
       allValid,
+      loaded,
       selected,
       valid,
       validated,
@@ -106,7 +126,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
               />
               <Form.Button
                 color="blue"
-                content={t('add')}
+                content={t('find')}
                 disabled={!valid}
                 fluid
                 onClick={this.onSelect}
@@ -116,30 +136,63 @@ class GlobalModalAccountImportWatch extends Component<Props> {
               />
             </Form.Group>
           </Form>
-          {(selected.length > 0)
+          {(loaded.length > 0)
             ? (
               <Segment stacked color="blue">
-                {(selected.map((account) => (
-                  <div key={account}>
-                    <Checkbox
-                      checked
-                      label={account}
-                      name={account}
-                      onClick={this.onRemoveSelected}
-                    />
-                    {(validated.indexOf(account) >= 0)
-                      ? false
-                      : (
-                        <Label
-                          color="red"
-                          content={t('global_account_import_watch_account_not_found')}
-                          size="tiny"
-                          style={{ marginLeft: '1em' }}
-                        />
-                      )
+                <p>
+                  Select which account and permission type to watch.
+                </p>
+                <List divided relaxed>
+                  {(loaded.map((account) => {
+                    const accountData = accounts[account];
+                    if (accountData) {
+                      const model = new EOSAccount(accountData);
+                      const options = model.getAuthorizationOptions();
+                      return options.map(({type, pubkey}) => {
+                        const isSelected = (selected.indexOf(`${account}@${type}@${pubkey}`) >= 0);
+                        return (
+                          <List.Item key={`${account}-${type}-${isSelected}`}>
+                            <Checkbox
+                              checked={isSelected}
+                              label={(
+                                <Header
+                                  style={{ cursor: 'pointer' }}
+                                >
+                                  <Icon
+                                    color={(isSelected) ? 'green' : 'grey'}
+                                    name={(isSelected) ? 'check square outline' : 'square outline'}
+                                  />
+                                  <Header.Content>
+                                    <GlobalFragmentAuthorization
+                                      account={account}
+                                      authorization={type}
+                                      pubkey={pubkey}
+                                    />
+                                  </Header.Content>
+                                </Header>
+                              )}
+                              name={`${account}@${type}@${pubkey}`}
+                              onClick={this.onToggleSelected}
+                              value={pubkey}
+                            />
+                            {(validated.indexOf(account) >= 0)
+                              ? false
+                              : (
+                                <Label
+                                  color="red"
+                                  content={t('global_account_import_watch_account_not_found')}
+                                  size="tiny"
+                                  style={{ marginLeft: '1em' }}
+                                />
+                              )
+                            }
+                          </List.Item>
+                        );
+                      })
                     }
-                  </div>
-                )))}
+                    return false;
+                  }))}
+                </List>
               </Segment>
             )
             : false
@@ -156,7 +209,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
           <Button
             color="green"
             content={t('global_button_account_import_action')}
-            disabled={!allValid}
+            disabled={selected.length === 0}
             floated="right"
             icon="circle plus"
             onClick={this.importAccounts}

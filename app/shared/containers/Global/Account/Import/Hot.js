@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Form, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
@@ -57,9 +57,6 @@ class GlobalModalAccountImportHot extends Component<Props> {
         actions.clearAccountByKey();
       }
     });
-  }
-  submitHash = (e, data) => {
-    console.log(data)
   }
   toggleAccount = (e, { checked, name }) => {
     const selected = [...this.state.selected];
@@ -154,7 +151,6 @@ class GlobalModalAccountImportHot extends Component<Props> {
                   const data = accounts[account];
                   if (data) {
                     const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
-                    console.log(publicKey,authorizations);
                     return authorizations.map((authorization) => {
                       const auth = `${account}@${authorization.perm_name}`;
                       return (
