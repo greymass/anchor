@@ -29,8 +29,10 @@ class GlobalModalAccountImportLedger extends Component<Props> {
     value: ''
   }
   componentWillMount() {
-    const { actions } = this.props;
-    actions.ledgerGetPublicKey(this.state.index);
+    const { actions, status } = this.props;
+    if (status === 'connected') {
+      actions.ledgerGetPublicKey(this.state.index);
+    }
   }
   componentWillReceiveProps(nextProps) {
     const accounts = Object.keys(nextProps.accounts);
@@ -243,12 +245,14 @@ class GlobalModalAccountImportLedger extends Component<Props> {
       <React.Fragment>
         {(status !== 'connected')
           ? (
-            <Message
-              content={t('global_account_import_ledger_not_connected_content')}
-              icon="usb"
-              header={t('global_account_import_ledger_not_connected_header')}
-              warning
-            />
+            <Segment basic>
+              <Message
+                content={t('global_account_import_ledger_not_connected_content')}
+                icon="usb"
+                header={t('global_account_import_ledger_not_connected_header')}
+                warning
+              />
+            </Segment>
           )
           : false
         }
