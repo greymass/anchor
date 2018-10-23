@@ -13,10 +13,12 @@ class RecommendationInterfaceListActiveAndOwnerSame extends Component<Props> {
 
   render() {
     const {
+      account,
       t
     } = this.props;
 
-    const shouldDisplay = true;
+    const model = EOSAccount(account);
+    const shouldDisplay = model.getKeysForAuthorization('owner') === model.getKeysForAuthorization('active');
 
     return (shouldDisplay)
       ? (
