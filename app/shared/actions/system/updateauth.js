@@ -23,7 +23,7 @@ export function updateauth(permission, parent, auth, authorizationOverride = fal
       auth
     }, {
       authorization,
-      forceActionDataHex: false,
+      broadcast: connection.broadcast
     }).then((tx) => {
       // Refresh the account
       setTimeout(dispatch(getAccount(account)), 500);
