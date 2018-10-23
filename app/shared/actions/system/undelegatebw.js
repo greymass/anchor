@@ -9,6 +9,7 @@ export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
     } = getState();
 
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_UNDELEGATEBW_PENDING
     });
 
@@ -17,11 +18,17 @@ export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
     }).then((tx) => {
       dispatch(AccountActions.getAccount(delegator));
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_UNDELEGATEBW_SUCCESS
       });
     }).catch((err) => dispatch({
-      payload: { err },
+      payload: {
+        connection,
+        err
+      },
       type: types.SYSTEM_UNDELEGATEBW_FAILURE
     }));
   };

@@ -11,6 +11,7 @@ export function sellram(amount) {
     } = getState();
 
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_SELLRAM_PENDING
     });
 
@@ -21,13 +22,18 @@ export function sellram(amount) {
       bytes: Number(amount)
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
-
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_SELLRAM_SUCCESS
       });
     }).catch((err) => dispatch({
-      payload: { err },
+      payload: {
+        connection,
+        err
+      },
       type: types.SYSTEM_SELLRAM_FAILURE
     }));
   };
