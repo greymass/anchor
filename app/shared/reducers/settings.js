@@ -42,6 +42,8 @@ const initialState = {
   skipLinkModal: false,
   // Window State Management
   setupData: {},
+  // Wallet Password Validity Hash
+  walletHash: false,
   // Wallet Status
   walletInit: false,
   // Wallet Mode (hot/cold/watch)
@@ -62,6 +64,12 @@ export default function settings(state = initialState, action) {
         account: '',
         walletInit: false,
         walletMode: 'hot'
+      });
+    }
+    case types.SET_WALLET_HASH: {
+      console.log(action.payload)
+      return Object.assign({}, state, {
+        walletHash: action.payload.hash
       });
     }
     case types.SYSTEM_GOVERNANCE_GET_PROPOSALS_SUCCESS: {
