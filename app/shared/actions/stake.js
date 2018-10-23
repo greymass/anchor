@@ -31,7 +31,10 @@ export function setStake(accountName, netAmount, cpuAmount) {
       decreaseInStake
     } = getStakeChanges(currentAccount, accountName, delegations, netAmount, cpuAmount);
 
-    dispatch({ type: types.SYSTEM_STAKE_PENDING });
+    dispatch({
+      payload: { connection },
+      type: types.SYSTEM_STAKE_PENDING
+    });
 
     return eos(connection, true).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
@@ -64,12 +67,18 @@ export function setStake(accountName, netAmount, cpuAmount) {
       }, 500);
 
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_STAKE_SUCCESS
       });
     }).catch((err) => {
       dispatch({
-        payload: { err },
+        payload: {
+          connection,
+          err
+        },
         type: types.SYSTEM_STAKE_FAILURE
       });
     });

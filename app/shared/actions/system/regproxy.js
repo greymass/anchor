@@ -13,6 +13,7 @@ export function regproxy() {
     const { account } = settings;
 
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_REGPROXY_PENDING
     });
 
@@ -23,11 +24,17 @@ export function regproxy() {
       // Refresh the account
       setTimeout(dispatch(getAccount(account)), 500);
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_REGPROXY_SUCCESS
       });
     }).catch((err) => dispatch({
-      payload: { err },
+      payload: {
+        connection,
+        err
+      },
       type: types.SYSTEM_REGPROXY_FAILURE
     }));
   };

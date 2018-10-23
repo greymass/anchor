@@ -10,8 +10,8 @@ export function transfer(from, to, quantity, memo, symbol = 'EOS') {
       connection
     } = getState();
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_TRANSFER_PENDING,
-      payload: { connection }
     });
     try {
       const contracts = balances.__contracts;
@@ -42,16 +42,25 @@ export function transfer(from, to, quantity, memo, symbol = 'EOS') {
         }
         dispatch(getCurrencyBalance(from));
         return dispatch({
-          payload: { connection, tx },
+          payload: {
+            connection,
+            tx
+          },
           type: types.SYSTEM_TRANSFER_SUCCESS
         });
       }).catch((err) => dispatch({
-        payload: { connection, err },
+        payload: {
+          connection,
+          err
+        },
         type: types.SYSTEM_TRANSFER_FAILURE
       }));
     } catch (err) {
       return dispatch({
-        payload: { connection, err },
+        payload: {
+          connection,
+          err
+        },
         type: types.SYSTEM_TRANSFER_FAILURE
       });
     }
