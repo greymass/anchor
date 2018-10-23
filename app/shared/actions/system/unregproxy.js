@@ -12,6 +12,7 @@ export function unregproxy() {
     const { account } = settings;
 
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_UNREGPROXY_PENDING
     });
     return eos(connection, true).regproxy({
@@ -21,11 +22,17 @@ export function unregproxy() {
       // Refresh the account
       setTimeout(dispatch(getAccount(account)), 500);
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_UNREGPROXY_SUCCESS
       });
     }).catch((err) => dispatch({
-      payload: { err },
+      payload: {
+        connection,
+        err
+      },
       type: types.SYSTEM_UNREGPROXY_FAILURE
     }));
   };
