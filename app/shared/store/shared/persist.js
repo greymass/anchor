@@ -1,5 +1,8 @@
+import { find } from 'lodash';
 import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
+
+import EOSAccount from '../../utils/EOS/Account';
 
 const migrations = {
   /*
@@ -126,11 +129,75 @@ const migrations = {
       settings: newSettings
     });
   },
+  /*
+  7 - Wallet Authorizations
+
+    -
+
+  */
+  7: (state) => {
+    const {
+      wallet,
+      wallets
+    } = state;
+    // Convert loaded wallet to new format
+    const modifiedWallet = Object.assign({}, wallet);
+    modifiedWallet.version = 3;
+    modifiedWallet.authorization = false;
+    // Update from the wallet the wallets collection
+    if (!wallet.accountData) {
+      const found = find(wallets, {
+        account: wallet.account
+      });
+      if (found) {
+        modifiedWallet.accountData = found.accountData;
+        modifiedWallet.pubkey = found.pubkey;
+      }
+    }
+    // If we have the pubkey and data, set the authorization
+    if (modifiedWallet.pubkey && modifiedWallet.accountData) {
+      const auth =
+        new EOSAccount(modifiedWallet.accountData)
+          .getAuthorization(modifiedWallet.pubkey);
+      if (auth) {
+        const [, authorization] = auth.split('@');
+        if (authorization) {
+          modifiedWallet.authorization = authorization;
+        }
+      }
+    }
+    // Remove temporary account data
+    delete modifiedWallet.accountData;
+    // Convert all wallets to new format
+    const modifiedWallets = [];
+    wallets.forEach((currentWallets) => {
+      const currentWallet = Object.assign({}, currentWallets);
+      currentWallet.version = 3;
+      currentWallet.authorization = false;
+      // If we have the pubkey and data, set the authorization
+      if (currentWallets.pubkey && currentWallets.accountData) {
+        const auth =
+          new EOSAccount(currentWallets.accountData)
+            .getAuthorization(currentWallets.pubkey);
+        if (auth) {
+          const [, authorization] = auth.split('@');
+          if (authorization) {
+            currentWallet.authorization = authorization;
+          }
+        }
+      }
+      modifiedWallets.push(currentWallet);
+    });
+    return Object.assign({}, state, {
+      wallet: modifiedWallet,
+      wallets: modifiedWallets
+    });
+  },
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 6,
+  version: 7,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
