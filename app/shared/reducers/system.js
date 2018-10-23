@@ -21,6 +21,7 @@ export default function system(state = {}, action) {
   const contractField = `${requestName}_LAST_CONTRACT`;
   const errField = `${requestName}_LAST_ERROR`;
   const txField = `${requestName}_LAST_TRANSACTION`;
+  const awaitingDeviceField = `${requestName}_AWAITING_DEVICE`;
 
   const newState = {
     ...state,
@@ -40,6 +41,12 @@ export default function system(state = {}, action) {
         newState[errField] = JSON.parse(action.payload.err);
       } catch (e) {
         newState[errField] = action.payload.err;
+      }
+    }
+    if (action.payload.connection) {
+      const { connection } = action.payload;
+      if (connection.signMethod === 'ledger') {
+        newState[awaitingDeviceField] = (requestState === 'PENDING');
       }
     }
     // Attach any returned transactions
