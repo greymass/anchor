@@ -44,11 +44,11 @@ class ToolsFormPermissionsAuth extends Component<Props> {
       validForm: false
     });
   }
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.defaultValue) {
       this.setState({
         auth: set(this.state.auth, 'keys.0.key', this.props.defaultValue),
-      })
+      });
     }
     this.validateFields();
   }
@@ -59,7 +59,6 @@ class ToolsFormPermissionsAuth extends Component<Props> {
     })
   })
   onKeyChange = (e, { name, valid, value }) => {
-    console.log(name, value)
     this.setState({
       auth: set(this.state.auth, name, value),
       validFields: Object.assign({}, this.state.validFields, { [name]: valid })
@@ -97,7 +96,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
       settings
     } = this.props;
     const { auth, parent, permission } = this.state;
-    let authorization;
+    let authorization = `${settings.account}@${settings.authorization}`;
     if (permission === 'owner') {
       authorization = `${settings.account}@owner`;
     }

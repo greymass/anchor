@@ -1,6 +1,7 @@
 import { decrypt } from '../wallet';
 
 import serialize from './ledger/serialize';
+import HardwareLedger from '../../utils/Hardware/Ledger';
 
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
@@ -8,7 +9,7 @@ const Eos = require('eosjs');
 
 const Api = require('./hardware/ledger').default;
 
-export default function eos(connection, signing = false, ledger = false) {
+export default function eos(connection, signing = false) {
   const decrypted = Object.assign({}, connection);
   if (signing && decrypted.keyProviderObfuscated) {
     const {
@@ -39,7 +40,8 @@ export default function eos(connection, signing = false, ledger = false) {
     const signProvider = async ({ transaction }) => {
       const { fc } = Eos(connection);
       const buffer = serialize(fc.types.config.chainId, transaction, fc.types);
-      const api = new Api(decrypted.signTransport);
+      const { transport } = new HardwareLedger();
+      const api = new Api(transport);
       const result = await api.signTransaction(
         decrypted.signPath,
         buffer.toString('hex')

@@ -9,17 +9,9 @@ import Welcome from '../components/Welcome';
 import * as SettingsActions from '../actions/settings';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
-
-type Props = {
-  actions: {},
-  history: {},
-  keys: {},
-  settings: {},
-  validate: {}
-};
+import * as WalletsActions from '../actions/wallets';
 
 class WelcomeContainer extends Component<Props> {
-  props: Props;
   componentDidMount() {
     const {
       actions,
@@ -74,7 +66,9 @@ class WelcomeContainer extends Component<Props> {
       actions,
       history,
       keys,
+      ledger,
       settings,
+      status,
       validate
     } = this.props;
     return (
@@ -82,7 +76,9 @@ class WelcomeContainer extends Component<Props> {
         actions={actions}
         history={history}
         keys={keys}
+        ledger={ledger}
         settings={settings}
+        status={status}
         validate={validate}
       />
     );
@@ -103,7 +99,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...SettingsActions,
       ...ValidateActions,
-      ...WalletActions
+      ...WalletActions,
+      ...WalletsActions
     }, dispatch)
   };
 }

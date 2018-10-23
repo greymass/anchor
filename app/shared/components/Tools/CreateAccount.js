@@ -34,8 +34,8 @@ class ToolsCreateAccount extends Component<Props> {
 
     return (
       <div>
-        {((keys && keys.key) || settings.walletMode === 'watch') ?
-        (
+        {((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+        ? (
           <Segment basic>
             <Header>
               {t('tools_create_account_header')}

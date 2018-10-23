@@ -5,12 +5,7 @@ import ReactJson from 'react-json-view';
 
 import { Header } from 'semantic-ui-react';
 
-type Props = {
-  transaction: {}
-};
-
 class GlobalTransactionViewFull extends Component<Props> {
-  props: Props;
   render() {
     const {
       t,
