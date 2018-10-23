@@ -28,6 +28,18 @@ class ToolsCreateAccount extends Component<Props> {
       t
     } = this.props;
 
+    if (settings.walletMode === 'ledger') {
+      return (
+        <Segment>
+          <Header
+            content={t('tools_create_account_unavailable_header')}
+            icon="warning sign"
+            subheader={t('tools_create_account_unavailable_subheader')}
+          />
+        </Segment>
+      );
+    }
+
     const account = accounts[settings.account];
 
     const transaction = system && system.CREATEACCOUNT_LAST_TRANSACTION;
