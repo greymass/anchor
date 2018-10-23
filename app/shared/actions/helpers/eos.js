@@ -51,6 +51,8 @@ export default function eos(connection, signing = false) {
     };
     const promiseSigner = args => Promise.resolve(signProvider(args));
     decrypted.signProvider = promiseSigner;
+  } else {
+    decrypted.signProvider = undefined;
   }
   return Eos(decrypted);
 }
