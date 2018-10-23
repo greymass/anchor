@@ -1,16 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Message, Segment } from 'semantic-ui-react';
 
-import {
-  Button,
-  Header,
-  Message,
-  Segment,
-  Table,
-} from 'semantic-ui-react';
+import ActiveAndOwnerSame from './List/ActiveAndOwnerSame';
+import ResourcesLow from './List/ResourcesLow';
 
-import { sortBy } from 'lodash';
 
 const listItemsMapping = {
   active_and_owner_same: ActiveAndOwnerSame,
