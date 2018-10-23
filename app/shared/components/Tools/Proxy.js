@@ -39,7 +39,7 @@ class ToolsProxy extends Component<Props> {
 
     const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
 
-    return ((keys && keys.key) || settings.walletMode === 'watch')
+    return ((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
       ? (
         <React.Fragment>
           <Header>

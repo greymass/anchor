@@ -34,7 +34,7 @@ export default function producers(state = initialState, action) {
         list: action.payload.list
       });
     }
-    case types.SET_WALLET_ACTIVE: {
+    case types.SET_CURRENT_WALLET: {
       return Object.assign({}, state, {
         selected: []
       });

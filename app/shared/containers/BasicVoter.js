@@ -8,13 +8,16 @@ import { forEach } from 'lodash';
 import { Segment } from 'semantic-ui-react';
 
 import About from '../components/About';
+import DevTest from '../components/Dev/Test';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
 import Tools from './Tools';
 import Wallet from '../components/Wallet';
+import WalletUpgrade from '../components/Wallet/Upgrade';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
+import * as AppActions from '../actions/app';
 import * as BlockExplorersActions from '../actions/blockexplorers';
 import * as BuyRamBytesActions from '../actions/system/buyrambytes';
 import * as BuyRamActions from '../actions/system/buyram';
@@ -139,6 +142,10 @@ class BasicVoterContainer extends Component<Props> {
         activeTab = <About {...this.props} />;
         break;
       }
+      case 'test': {
+        activeTab = <DevTest {...this.props} />;
+        break;
+      }
       case 'tools': {
         activeTab = <Tools {...this.props} />;
         break;
@@ -156,6 +163,10 @@ class BasicVoterContainer extends Component<Props> {
           locked={(!keys.key)}
           settings={settings}
           validate={validate}
+          wallet={wallet}
+        />
+        <WalletUpgrade
+          settings={settings}
           wallet={wallet}
         />
         <Segment
@@ -178,6 +189,7 @@ class BasicVoterContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    app: state.app,
     actionHistories: state.actions,
     balances: state.balances,
     blockExplorers: state.blockexplorers,
@@ -185,6 +197,7 @@ function mapStateToProps(state) {
     connection: state.connection,
     globals: state.globals,
     keys: state.keys,
+    ledger: state.ledger,
     producers: state.producers,
     settings: state.settings,
     system: state.system,
@@ -199,6 +212,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...AppActions,
       ...BlockExplorersActions,
       ...BuyRamActions,
       ...BuyRamBytesActions,

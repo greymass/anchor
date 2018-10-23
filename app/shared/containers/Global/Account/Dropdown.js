@@ -21,19 +21,15 @@ class GlobalAccountDropdown extends Component<Props> {
   onToggle = () => {
     this.setState({ open: !this.state.open });
   }
-  onSearchChange = (e, { searchQuery }) => {
-    // console.log(searchQuery);
-  }
-  swapAccount = (account, password = false) => {
+  swapAccount = (account, authorization, password = false) => {
     const { actions } = this.props;
-    actions.useWallet(account);
+    actions.useWallet(account, authorization);
     if (password) {
       actions.unlockWallet(password);
     }
   }
   render() {
     const {
-      authorization,
       settings,
       t,
       validate,
@@ -44,7 +40,7 @@ class GlobalAccountDropdown extends Component<Props> {
       return false;
     }
     const options = wallets
-      .filter(w => w.account !== settings.account)
+      .filter(w => (w.account !== wallet.account || w.authorization !== wallet.authorization))
       .sort((a, b) => a.account > b.account)
       .map((w) => {
         let icon = {
@@ -56,6 +52,13 @@ class GlobalAccountDropdown extends Component<Props> {
             icon = {
               color: 'blue',
               name: 'snowflake'
+            };
+            break;
+          }
+          case 'ledger': {
+            icon = {
+              color: 'green',
+              name: 'usb'
             };
             break;
           }
@@ -79,12 +82,13 @@ class GlobalAccountDropdown extends Component<Props> {
         }
         return {
           props: {
+            key: (w.authorization) ? `${w.account}@${w.authorization}` : w.account,
             icon,
             onClick: () => {
-              return (w.mode === 'watch') ? this.swapAccount(w.account) : false;
+              return (w.mode === 'watch' || w.mode === 'ledger') ? this.swapAccount(w.account, w.authorization) : false;
             },
-            text: w.account,
-            value: w.account,
+            text: (w.authorization) ? `${w.account}@${w.authorization}` : `${w.account} (${t('global_accounts_dropdown_upgrade_required')})`,
+            value: `${w.account}@${w.authorization}`,
           },
           w
         };
@@ -98,6 +102,13 @@ class GlobalAccountDropdown extends Component<Props> {
         icon = {
           color: 'blue',
           name: 'snowflake'
+        };
+        break;
+      }
+      case 'ledger': {
+        icon = {
+          color: 'green',
+          name: 'usb'
         };
         break;
       }
@@ -127,26 +138,34 @@ class GlobalAccountDropdown extends Component<Props> {
           <span>
             <Icon color={icon.color} name={icon.name} />
             {' '}
-            {authorization || wallet.account}
+            {(wallet.authorization)
+              ? (
+                `${wallet.account}@${wallet.authorization}`
+              )
+              : (
+                `${wallet.account}`
+              )
+            }
           </span>
         )}
       >
-        <Dropdown.Menu>
-          <Dropdown.Menu scrolling>
+        <Dropdown.Menu key="parent">
+          <Dropdown.Menu key="menu" scrolling>
             {(options.length > 0)
               ? options.map(option => {
                 const {
                   props,
                   w
                 } = option;
-                if (w.mode === 'watch') {
-                  return <Dropdown.Item key={option.value} {...props} />;
+                if (w.mode === 'watch' || w.mode === 'ledger') {
+                  return <Dropdown.Item {...props} />;
                 }
                 return (
                   <GlobalButtonElevate
-                    onSuccess={(password) => this.swapAccount(w.account, password)}
+                    key={props.key}
+                    onSuccess={(password) => this.swapAccount(w.account, w.authorization, password)}
                     settings={settings}
-                    trigger={<Dropdown.Item key={props.value} {...props} />}
+                    trigger={<Dropdown.Item {...props} />}
                     validate={validate}
                     wallet={w}
                   />
@@ -178,7 +197,6 @@ class GlobalAccountDropdown extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    authorization: state.connection.authorization,
     settings: state.settings,
     validate: state.validate,
     wallet: state.wallet,

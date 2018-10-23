@@ -4,21 +4,16 @@ import { translate } from 'react-i18next';
 import { Label, Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
-type Props = {
-  transaction: {}
-};
-
 class GlobalTransactionViewDetail extends Component<Props> {
-  props: Props;
   render() {
     const {
       expired,
+      signed,
       t,
       transaction
     } = this.props;
     const {
       data,
-      signed
     } = transaction;
     return (
       <Table definition size="small">
@@ -83,7 +78,7 @@ class GlobalTransactionViewDetail extends Component<Props> {
                   <Label
                     basic
                     color="green"
-                    content={t('global_transaction_view_is_signed') }
+                    content={t('global_transaction_view_is_signed')}
                     size="large"
                   />
                 )

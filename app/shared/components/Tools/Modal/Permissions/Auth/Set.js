@@ -8,12 +8,17 @@ import ToolsFormPermissionsAuthSet from '../../../Form/Permissions/Auth/Set';
 class ToolsModalPermissionAuthSet extends Component<Props> {
   render() {
     const {
+      account,
       actions,
+      authorization,
       auth,
       blockExplorers,
       button,
       newkey,
       open,
+      onClose,
+      onSubmit,
+      path,
       pubkey,
       settings,
       system,
@@ -27,15 +32,20 @@ class ToolsModalPermissionAuthSet extends Component<Props> {
         button={button}
         content={(
           <ToolsFormPermissionsAuthSet
+            account={account}
             actions={actions}
+            authorization={authorization}
             auth={auth}
             newkey={newkey}
+            onSubmit={onSubmit}
+            path={path}
             pubkey={pubkey}
             settings={settings}
           />
         )}
         icon="share square"
         open={open}
+        onClose={onClose}
         pubkey={pubkey}
         settings={settings}
         system={system}
