@@ -26,8 +26,8 @@ export default function system(state = {}, action) {
   const newState = {
     ...state,
     [requestName]: requestState,
-    errField: '',
-    txField: ''
+    errField: undefined,
+    txField: undefined
   };
 
   if (action.payload) {
@@ -59,6 +59,9 @@ export default function system(state = {}, action) {
       newState[contractField] = new EOSContract(abi, account_name);
     }
   }
+
+  if (requestState === 'SUCCESS' || requestState === 'PENDING') delete newState[errField];
+  if (requestState === 'FAILURE') delete newState[txField];
 
   return newState;
 }
