@@ -7,6 +7,11 @@ export default function balances(state = {}, action) {
         download: action.payload
       });
     }
+    case types.SYSTEM_GETCONSTANTS_SUCCESS: {
+      return Object.assign({}, state, {
+        constants: action.payload.data
+      });
+    }
     default: {
       return state;
     }
