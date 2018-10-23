@@ -104,7 +104,7 @@ class ToolsHardwareLedger extends Component<Props> {
           <Table.Body>
             <Table.Row>
               <Table.Cell width={6}>
-                {t('ledger_automatic_detection')}
+                {t('ledger_row_automatic_detection')}
               </Table.Cell>
               <Table.Cell>
                 {(settings.hardwareLedgerSupport)
