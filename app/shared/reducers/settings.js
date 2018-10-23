@@ -11,6 +11,8 @@ const initialState = {
   advancedPermissions: false,
   // The loaded account
   account: '',
+  // The loaded authorization
+  authorization: undefined,
   // The block explorer used
   blockExplorer: 'bloks.io',
   // List of contacts
