@@ -59,7 +59,7 @@ export default function connection(state = initialState, action) {
     // Ledger Wallet: increase expiration to 1hr, disable broadcast/sign
     case types.SET_WALLET_LEDGER: {
       return Object.assign({}, state, {
-        broadcast: false,
+        broadcast: true,
         expireInSeconds: 3600,
         sign: true,
         signMethod: 'ledger',
