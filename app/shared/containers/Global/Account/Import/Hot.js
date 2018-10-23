@@ -4,13 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Form, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
+import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 
+import EOSAccount from '../../../../utils/EOS/Account';
 import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
+import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
 
 class GlobalModalAccountImportHot extends Component<Props> {
@@ -31,7 +34,10 @@ class GlobalModalAccountImportHot extends Component<Props> {
     const {
       actions
     } = this.props;
-    actions.importWallets(selected, value, password);
+    selected.forEach((auth) => {
+      const [account, authorization] = auth.split('@');
+      actions.importWallet(account, authorization, value, password);
+    });
     this.props.onClose();
   }
   onChange = (e, data) => {
@@ -52,6 +58,9 @@ class GlobalModalAccountImportHot extends Component<Props> {
       }
     });
   }
+  submitHash = (e, data) => {
+    console.log(data)
+  }
   toggleAccount = (e, { checked, name }) => {
     const selected = [...this.state.selected];
     const existing = selected.indexOf(name);
@@ -65,35 +74,62 @@ class GlobalModalAccountImportHot extends Component<Props> {
   render() {
     const {
       accounts,
+      actions,
       onClose,
       settings,
       system,
       t,
-      validate
+      validate,
+      wallets
     } = this.props;
     const {
+      publicKey,
       selected,
       valid,
       value
     } = this.state;
     const matches = accounts.__lookups;
     const disabled = (!selected.length || !valid);
-    if (settings.walletMode === 'watch') {
+    if (settings.walletMode === 'watch' && !settings.walletHash) {
+      // If a hot wallet already exists and a wallet hash does not, inform them to swap first
+      const hotWalletExists = wallets.some(o => o.mode === 'hot');
+      if (hotWalletExists) {
+        return (
+          <Tab.Pane>
+            <Segment basic padded>
+              <Header icon textAlign="center">
+                <Icon name="warning sign" />
+                <Header.Content>
+                  {t('global_account_import_private_swap_first_header')}
+                </Header.Content>
+                <Header.Subheader>
+                  {t('global_account_import_private_swap_first_subheader')}
+                </Header.Subheader>
+              </Header>
+            </Segment>
+          </Tab.Pane>
+        );
+      }
       return (
         <Tab.Pane>
           <Segment basic padded>
             <Header icon textAlign="center">
               <Icon name="warning sign" />
               <Header.Content>
-                {t('global_account_import_private_requires_hot_header')}
+                {t('global_account_import_private_requires_hash_header')}
               </Header.Content>
               <Header.Subheader>
-                {t('global_account_import_private_requires_hot_subheader')}
+                {t('global_account_import_private_requires_hash_subheader')}
               </Header.Subheader>
             </Header>
+            <Segment basic>
+              <WalletPanelFormHash
+                actions={actions}
+              />
+            </Segment>
           </Segment>
         </Tab.Pane>
-      )
+      );
     }
     return (
       <Tab.Pane>
@@ -114,13 +150,26 @@ class GlobalModalAccountImportHot extends Component<Props> {
               <Segment stacked color="blue">
                 {t('global_account_import_select_accounts')}
                 <Divider />
-                {(matches.map((account) => (
-                  <Checkbox
-                    label={account}
-                    name={account}
-                    onClick={this.toggleAccount}
-                  />
-                )))}
+                {(matches.map((account) => {
+                  const data = accounts[account];
+                  if (data) {
+                    const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
+                    console.log(publicKey,authorizations);
+                    return authorizations.map((authorization) => {
+                      const auth = `${account}@${authorization.perm_name}`;
+                      return (
+                        <p>
+                          <Checkbox
+                            label={auth}
+                            name={auth}
+                            onClick={this.toggleAccount}
+                          />
+                        </p>
+                      );
+                    });
+                  }
+                  return false;
+                }))}
               </Segment>
             )
             : false
@@ -169,13 +218,13 @@ class GlobalModalAccountImportHot extends Component<Props> {
   }
 }
 
-
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
     settings: state.settings,
     system: state.system,
-    validate: state.validate
+    validate: state.validate,
+    wallets: state.wallets
   };
 }
 
@@ -184,6 +233,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...SettingsActions,
+      ...WalletActions,
       ...WalletsActions
     }, dispatch)
   };
