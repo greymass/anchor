@@ -68,6 +68,7 @@ export default function producers(state = initialState, action) {
       });
     }
     case types.SYSTEM_VOTEPRODUCER_SUCCESS: {
+      if (!action.payload.proxy && !action.payload.producers) return state;
       return Object.assign({}, state, {
         proxy: action.payload.proxy,
         selected: action.payload.producers
