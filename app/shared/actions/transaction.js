@@ -55,7 +55,7 @@ export function buildTransaction(contract, action, account, data) {
   };
 }
 
-export function broadcastTransaction(tx, actionName = false) {
+export function broadcastTransaction(tx, actionName = false, actionPayload = {}) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -64,7 +64,7 @@ export function broadcastTransaction(tx, actionName = false) {
       .pushTransaction(tx.transaction).then((response) => {
         if (actionName) {
           dispatch({
-            payload: { tx: response },
+            payload: Object.assign({}, actionPayload, { tx: response }),
             type: types[`SYSTEM_${actionName}_SUCCESS`]
           });
         }
