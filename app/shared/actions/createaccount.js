@@ -23,7 +23,10 @@ export function createAccount(
 
     const currentAccount = settings.account;
 
-    dispatch({ type: types.SYSTEM_CREATEACCOUNT_PENDING });
+    dispatch({
+      payload: { connection },
+      type: types.SYSTEM_CREATEACCOUNT_PENDING
+    });
 
     return eos(connection, true).transaction(tr => {
       tr.newaccount({
@@ -55,12 +58,18 @@ export function createAccount(
         dispatch(AccountActions.getAccount(currentAccount));
       }, 500);
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_CREATEACCOUNT_SUCCESS
       });
     }).catch((err) => {
       dispatch({
-        payload: { err },
+        payload: {
+          connection,
+          err
+        },
         type: types.SYSTEM_CREATEACCOUNT_FAILURE
       });
     });

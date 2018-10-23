@@ -10,6 +10,7 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
     } = getState();
     const { account } = settings;
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_REGPRODUCER_PENDING
     });
     return eos(connection, true).regproducer({
@@ -18,10 +19,16 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
       url: producerUrl,
       location: 0
     }).then((tx) => dispatch({
-      payload: { tx, producers },
+      payload: {
+        connection,
+        tx
+      },
       type: types.SYSTEM_REGPRODUCER_SUCCESS
     })).catch((err) => dispatch({
-      payload: { err },
+      payload: {
+        connection,
+        err
+      },
       type: types.SYSTEM_REGPRODUCER_FAILURE
     }));
   };
