@@ -10,7 +10,8 @@ export function voteproducers(producers = [], proxy = '') {
       settings
     } = getState();
     dispatch({
-      type: types.SYSTEM_VOTEPRODUCER_PENDING
+      type: types.SYSTEM_VOTEPRODUCER_PENDING,
+      payload: { connection }
     });
     const { account } = settings;
     // sort (required by EOS)
@@ -27,12 +28,22 @@ export function voteproducers(producers = [], proxy = '') {
           dispatch(getAccounts([account, proxy]));
         }, 500);
         return dispatch({
-          payload: { tx, producers, proxy },
+          payload: {
+            connection,
+            producers,
+            proxy,
+            tx,
+          },
           type: types.SYSTEM_VOTEPRODUCER_SUCCESS
         });
       })
       .catch((err) => dispatch({
-        payload: { err, producers, proxy },
+        payload: {
+          connection,
+          err,
+          producers,
+          proxy
+        },
         type: types.SYSTEM_VOTEPRODUCER_FAILURE
       }));
   };

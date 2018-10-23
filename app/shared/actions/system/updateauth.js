@@ -8,6 +8,7 @@ export function updateauth(permission, parent, auth, authorizationOverride = fal
     const { connection, settings } = getState();
     const { account } = settings;
     dispatch({
+      payload: { connection },
       type: types.SYSTEM_UPDATEAUTH_PENDING
     });
     let authorization;
@@ -27,11 +28,17 @@ export function updateauth(permission, parent, auth, authorizationOverride = fal
       // Refresh the account
       setTimeout(dispatch(getAccount(account)), 500);
       return dispatch({
-        payload: { tx },
+        payload: {
+          connection,
+          tx
+        },
         type: types.SYSTEM_UPDATEAUTH_SUCCESS
       });
     }).catch((err) => dispatch({
-      payload: { err },
+      payload: {
+        connection,
+        err
+      },
       type: types.SYSTEM_UPDATEAUTH_FAILURE
     }));
   };
