@@ -18,8 +18,55 @@ class Producers extends Component<Props> {
       lastTransaction: {},
       previewing: false,
       selected: [],
+      selected_account: false,
+      selected_loaded: false,
       submitting: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { settings, system } = nextProps;
+    // Update state when the transaction has gone through
+    if (
+      this.state.submitting
+      && (
+        this.state.lastTransaction !== system.VOTEPRODUCER_LAST_TRANSACTION
+        || this.state.lastError !== system.VOTEPRODUCER_LAST_ERROR
+      )
+    ) {
+      this.setState({
+        lastError: system.VOTEPRODUCER_LAST_ERROR,
+        lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
+        submitting: false
+      });
+    }
+    // If no selected are loaded, attempt to retrieve them from the props
+    if (
+      !this.state.selected_loaded
+      || this.state.selected_account !== settings.account
+      || (nextProps.producers.proxy && nextProps.producers.proxy !== this.state.selected_account)
+    ) {
+      const { accounts } = nextProps;
+      // If an account is loaded, attempt to load it's votes
+      if (settings.account && accounts[settings.account]) {
+        const account = accounts[settings.account];
+        if (account.voter_info) {
+          const selected_account = account.voter_info.proxy || account.account_name;
+          let selected = account.voter_info.producers
+          if (selected_account !== settings.account && accounts[selected_account]) {
+            selected = accounts[selected_account].voter_info.producers;
+          }
+          // If the voter_info entry exists, load those votes into state
+          this.setState({
+            selected,
+            selected_account,
+            selected_loaded: true
+          });
+        } else {
+          // otherwise notify users that they must stake before allowed voting
+        }
+      }
+    }
   }
 
   addProxy = (proxyAccout) => {
