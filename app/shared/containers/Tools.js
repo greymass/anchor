@@ -32,11 +32,8 @@ import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
-<<<<<<< HEAD
 import * as ProposalsActions from '../actions/governance/proposals';
-=======
 import * as HardwareLedgerActions from '../actions/hardware/ledger';
->>>>>>> initial ledger work
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
 import * as SettingsActions from '../actions/settings';
@@ -52,112 +49,117 @@ import * as WalletsActions from '../actions/wallets';
 const paneMapping = [
   {
     element: Tools,
-    modes: ['cold', 'hot', 'watch', 'skip'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'index',
   },
   {
     header: true,
-    modes: ['hot', 'watch', 'skip'],
+    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'governance',
   },
   {
     element: ToolsGovernanceProposals,
-    modes: ['hot', 'watch', 'skip'],
+    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'governance_proposals_test'
   },
   {
     header: true,
-    modes: ['cold', 'hot', 'watch', 'skip'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'wallet',
   },
   {
     element: ToolsCustomTokens,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'customtokens',
   },
   {
     element: ToolsDelegations,
-    modes: ['hot', 'watch', 'skip'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'delegations'
   },
   {
     element: ToolsWallets,
-    modes: ['cold', 'hot', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'watch'],
     name: 'wallets',
   },
   {
     element: ToolsPermissions,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'permissions',
   },
   {
     element: ContractInterface,
-    modes: ['hot', 'watch', 'skip'],
+    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'contracts',
   },
   {
     header: true,
-    modes: ['cold', 'hot', 'watch', 'skip'],
+    modes: ['hot', 'ledger', 'watch'],
+    name: 'hardware'
+  },
+  {
+    element: ToolsHardwareLedger,
+    modes: ['hot', 'ledger', 'watch'],
+    name: 'hardware_ledger',
+  },
+  {
+    header: true,
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'utilities',
   },
   {
     element: ToolsContacts,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch'],
     name: 'contacts',
   },
   {
-    element: ToolsHardwareLedger,
-    modes: ['hot', 'watch'],
-    name: 'hardware_ledger',
-  },
-  {
     element: ToolsCreateAccount,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'create_account',
   },
   {
     element: ToolsKeys,
-    modes: ['cold', 'hot', 'skip', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'keygenerator',
   },
   {
     element: ToolsKeysValidator,
-    modes: ['cold', 'hot', 'skip', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'keyvalidator',
   },
   {
     element: ToolsProxy,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'proxy',
   },
   {
     header: true,
-    modes: ['cold', 'hot', 'watch', 'skip'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'state',
   },
   {
     element: ToolsStateChain,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'state_chain',
   },
   {
     element: ToolsStateGlobals,
-    modes: ['hot', 'watch'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'state_globals',
   },
   {
     element: ToolsStateWallet,
-    modes: ['cold', 'hot', 'skip', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'state',
   },
   {
     header: true,
-    modes: ['cold', 'hot', 'watch', 'skip'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'advanced',
   },
   {
     element: ToolsReset,
-    modes: ['cold', 'hot', 'skip', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'reset',
   },
 ];
@@ -170,18 +172,26 @@ class ToolsContainer extends Component<Props> {
         const { settings } = this.props;
         const {
           skipImport,
-          walletMode
+          walletMode,
+          walletTemp
         } = settings;
         return (
           !walletMode
-          || (!skipImport && pane.modes.includes(walletMode))
+          || (walletTemp && pane.modes.includes('temp'))
+          || (!skipImport && !walletTemp && pane.modes.includes(walletMode))
           || (skipImport && pane.modes.includes('skip'))
         );
       })
       .map((pane) => {
         if (pane.header) {
           return {
-            menuItem: <Menu.Header className="ui">{t(`tools_menu_${pane.name}_header`)}</Menu.Header>
+            menuItem: (
+              <Menu.Header
+                className="ui"
+                content={t(`tools_menu_${pane.name}_header`)}
+                key={pane.name}
+              />
+            )
           };
         }
         return {
@@ -195,11 +205,6 @@ class ToolsContainer extends Component<Props> {
       });
   }
   render() {
-    const {
-      settings,
-      t
-    } = this.props;
-
     const panes = this.getPanes();
     return (
       <Tab
@@ -225,12 +230,14 @@ function mapStateToProps(state) {
     chain: state.chain,
     contracts: state.contracts,
     customtokens: state.customtokens,
-    tables: state.tables,
     globals: state.globals,
     keys: state.keys,
+    ledger: state.ledger,
     proposals: state.proposals,
     settings: state.settings,
+    status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
     system: state.system,
+    tables: state.tables,
     transaction: state.transaction,
     validate: state.validate,
     wallet: state.wallet,
@@ -246,6 +253,7 @@ function mapDispatchToProps(dispatch) {
       ...CreateAccountActions,
       ...CustomTokensActions,
       ...GlobalsActions,
+      ...HardwareLedgerActions,
       ...ProposalsActions,
       ...RegProxyActions,
       ...SettingsActions,
@@ -253,6 +261,7 @@ function mapDispatchToProps(dispatch) {
       ...SystemStateActions,
       ...RegproxyinfoActions,
       ...TableActions,
+      ...ToolsHardwareLedger,
       ...TransactionActions,
       ...UpdateAuthActions,
       ...UnregProxyActions,

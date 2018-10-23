@@ -14,14 +14,10 @@ class Producers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 40,
       lastError: false,
       lastTransaction: {},
       previewing: false,
-      querying: false,
       selected: [],
-      selected_account: false,
-      selected_loaded: false,
       submitting: false,
     };
   }
@@ -135,7 +131,7 @@ class Producers extends Component<Props> {
     )];
     const account = accounts[settings.account];
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
+    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || ['watch', 'ledger'].includes(settings.walletMode));
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     const currentProxy = (account && account.voter_info && account.voter_info.proxy);
 
@@ -209,32 +205,28 @@ class Producers extends Component<Props> {
                   [
                     {
                       menuItem: t('producers_block_producers'),
-                      render: () => {
-                        return (
-                          <Tab.Pane>
-                            <BlockProducers
-                              {...this.props}
-                              addProducer={this.addProducer.bind(this)}
-                              removeProducer={this.removeProducer.bind(this)}
-                              selected={selected}
-                            />
-                          </Tab.Pane>
-                        );
-                      }
+                      render: () => (
+                        <Tab.Pane>
+                          <BlockProducers
+                            {...this.props}
+                            addProducer={this.addProducer.bind(this)}
+                            removeProducer={this.removeProducer.bind(this)}
+                            selected={selected}
+                          />
+                        </Tab.Pane>
+                      )
                     },
                     {
                       menuItem: t('producers_proxies'),
-                      render: () => {
-                        return (
-                          <Tab.Pane>
-                            <Proxies
-                              {...this.props}
-                              addProxy={this.addProxy.bind(this)}
-                              removeProxy={this.removeProxy.bind(this)}
-                            />
-                          </Tab.Pane>
-                        );
-                      }
+                      render: () => (
+                        <Tab.Pane>
+                          <Proxies
+                            {...this.props}
+                            addProxy={this.addProxy.bind(this)}
+                            removeProxy={this.removeProxy.bind(this)}
+                          />
+                        </Tab.Pane>
+                      )
                     }
                   ]
                 }

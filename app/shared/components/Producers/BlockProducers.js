@@ -121,7 +121,7 @@ class BlockProducers extends Component<Props> {
     const account = accounts[settings.account];
     const isMainnet = (connection && connection.chain === 'eos-mainnet');
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
+    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || ['watch','ledger'].includes(settings.walletMode));
 
     return (
       (producers.list.length > 0)

@@ -24,6 +24,8 @@ const initialState = {
   displayResourcesAvailable: true,
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
+  // Default to Ledger import process
+  hardwareLedgerImport: false,
   // Enable hardware support for Ledger devices
   hardwareLedgerSupport: false,
   // Default Idle Timeout
@@ -49,7 +51,7 @@ const initialState = {
   // Wallet Mode (hot/cold/watch)
   walletMode: 'hot',
   // Wallet is Temporary
-  walletTemp: false
+  walletTemp: false,
 };
 
 const validSettings = Object.keys(initialState);
@@ -67,7 +69,6 @@ export default function settings(state = initialState, action) {
       });
     }
     case types.SET_WALLET_HASH: {
-      console.log(action.payload)
       return Object.assign({}, state, {
         walletHash: action.payload.hash
       });

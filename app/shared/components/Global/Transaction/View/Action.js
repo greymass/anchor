@@ -3,15 +3,10 @@ import React, { Component } from 'react';
 import { Icon, Label } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
-type Props = {
-  action: {}
-};
-
 export default class GlobalTransactionViewAction extends Component<Props> {
-  props: Props;
   render() {
     const {
-      action
+      action,
     } = this.props;
     return (
       <React.Fragment>

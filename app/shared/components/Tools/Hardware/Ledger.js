@@ -1,201 +1,174 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import ReactJson from 'react-json-view';
+
+import { Button, Icon, Header, Label, List, Segment, Table } from 'semantic-ui-react';
 
 import ToolsHardwareLedgerStatus from './Ledger/Status';
-import ToolsHardwareLedgerStatusUnavailable from './Ledger/Status/Unavailable';
-import ToolsModalPermissionAuthSet from '../Modal/Permissions/Auth/Set';
-import EOSAccount from '../../../utils/EOS/Account';
-
-import { Button, Checkbox, Container, Icon, Header, Label, List, Message, Popup, Segment, Table } from 'semantic-ui-react';
+import HardwareLedger from '../../../utils/Hardware/Ledger';
 
 class ToolsHardwareLedger extends Component<Props> {
   displayPublicKey = () => {
-    this.props.actions.ledgerGetPublicKey(true)
+    this.props.actions.ledgerGetPublicKey(0, true);
   }
   getPublicKey = () => {
-    this.props.actions.ledgerGetPublicKey()
-  }
-  start = () => {
-    this.props.actions.ledgerStartListen()
-  }
-  stop = () => {
-    this.props.actions.ledgerStopListen()
-  }
-  componentDidMount() {
-    const { settings } = this.props;
-    if (settings.hardwareLedgerSupport) {
-      this.start();
-    }
-  }
-  toggleDetection = (e, { checked }) => {
-    this.props.actions.setSetting('hardwareLedgerSupport', checked)
+    this.props.actions.ledgerGetPublicKey(0);
   }
   render() {
     const {
       accounts,
       actions,
-      blockExplorers,
-      keys,
       ledger,
       settings,
-      system,
+      status,
       t,
     } = this.props;
     const account = accounts[settings.account];
-
+    const { transport } = new HardwareLedger();
     if (!account) return false;
-    const currentKeys = {};
-    account.permissions.map((data) => {
-      data.required_auth.keys.map((permission) => currentKeys[data.perm_name] = permission.key);
-    })
-    const { pubkey } = keys;
-    const authorization = new EOSAccount(account).getAuthorization(pubkey);
-    const deviceAwaitingAuthorization = !!(
-      ledger.transportError
-      && ledger.transportError.message
-      && ledger.transportError.message.startsWith('cannot open device with path')
-    );
-    // console.log(ledger)
-    // console.log(deviceAwaitingAuthorization)
     return (
       <Segment basic>
         <ToolsHardwareLedgerStatus
+          actions={actions}
           ledger={ledger}
+          settings={settings}
+          status={status}
         />
-        <Segment attached padded size="large">
-          <p>{t('ledger_unavailable_text_1')}</p>
-          <List>
-            <List.Item>
-              <Icon name="right triangle" />
-              <List.Content>
-                <List.Description>
-                  {t('ledger_unavailable_list_1')}
-                </List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <Icon name="right triangle" />
-              <List.Content>
-                <List.Description>
-                  {t('ledger_unavailable_list_2')}
-                </List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <Icon name="right triangle" />
-              <List.Content>
-                <List.Description>
-                  {t('ledger_unavailable_list_3')}
-                </List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <Icon name="right triangle" />
-              <List.Content>
-                <List.Description>
-                  {t('ledger_unavailable_list_4')}
-                </List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <Icon name="right triangle" />
-              <List.Content>
-                <List.Description>
-                  {t('ledger_unavailable_list_5')}
-                </List.Description>
-              </List.Content>
-            </List.Item>
-          </List>
-        </Segment>
+        {(status !== 'connected')
+          ? (
+            <Segment padded size="large">
+              <Header>
+                {t('ledger_unavailable_text_header')}
+              </Header>
+              <p>{t('ledger_unavailable_text_1')}</p>
+              <List>
+                <List.Item>
+                  <Icon name="right triangle" />
+                  <List.Content>
+                    <List.Description>
+                      {t('ledger_unavailable_list_1')}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <Icon name="right triangle" />
+                  <List.Content>
+                    <List.Description>
+                      {t('ledger_unavailable_list_2')}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <Icon name="right triangle" />
+                  <List.Content>
+                    <List.Description>
+                      {t('ledger_unavailable_list_3')}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <Icon name="right triangle" />
+                  <List.Content>
+                    <List.Description>
+                      {t('ledger_unavailable_list_4')}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <Icon name="right triangle" />
+                  <List.Content>
+                    <List.Description>
+                      {t('ledger_unavailable_list_5')}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Segment>
+          )
+          : (
+            <Segment padded size="large">
+              <Header>
+                {t('ledger_available_text_header')}
+              </Header>
+              <p>{t('ledger_available_text_1')}</p>
+              <p>{t('ledger_available_text_2')}</p>
+            </Segment>
+          )
+        }
         <Table definition>
+          <Table.Header>
+            <Table.HeaderCell colSpan="16">
+              {t('ledger_status_table')}
+            </Table.HeaderCell>
+          </Table.Header>
           <Table.Body>
             <Table.Row>
               <Table.Cell width={6}>
-                Wallet - Automatic Ledger Detection
+                {t('ledger_automatic_detection')}
               </Table.Cell>
               <Table.Cell>
-                <Checkbox
-                  defaultChecked={settings.hardwareLedgerSupport}
-                  onChange={this.toggleDetection}
-                />
+                {(settings.hardwareLedgerSupport)
+                  ? <Label color="green" content="enabled" horizontal />
+                  : <Label color="yellow" content="disabled" horizontal />
+                }
               </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
-                Wallet - Waiting for Device
+                {t('ledger_row_waiting_device')}
               </Table.Cell>
               <Table.Cell>
-                <p>
-                  {(ledger.listening)
-                    ? <Label color="green" content="waiting" horizontal />
-                    : <Label color="yellow" content="disabled" horizontal />
-                  }
-                </p>
                 {(ledger.listening)
-                  ? (
-                    <Button
-                      content="stop listening"
-                      onClick={this.stop}
-                      primary
-                    />
-                  )
-                  : (
-                    <Button
-                      content="start listening"
-                      onClick={this.start}
-                      primary
-                    />
-                  )
+                  ? <Label color="green" content="waiting" horizontal />
+                  : <Label color="yellow" content="disabled" horizontal />
                 }
               </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
-                Ledger - Connected & Unlocked
+                {t('ledger_row_connected')}
               </Table.Cell>
               <Table.Cell>
-                {(ledger.transport)
-                  ? <Label color="green" content="connected & unlocked" horizontal />
-                  : <Label color="yellow" content="not connected or locked" horizontal />
+                {(transport)
+                  ? <Label color="green" content={t('ledger_row_connected_true')} horizontal />
+                  : <Label color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
               </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
-                Ledger - Software Version
+                {t('ledger_row_software_version')}
               </Table.Cell>
               <Table.Cell>
-                {(ledger.transport)
+                {(transport)
                   ? false
-                  : <Label color="yellow" content="not connected" horizontal />
+                  : <Label color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
-                {(ledger.transport && ledger.application && ledger.application.version)
+                {(transport && ledger.application && ledger.application.version)
                   ? ledger.application.version
                   : false
                 }
-                {(ledger.transport && (!ledger.application || !ledger.application.version))
-                  ? <Label color="orange" content="Start EOS App on Ledger" horizontal />
+                {(transport && (!ledger.application || !ledger.application.version))
+                  ? <Label color="orange" content={t('ledger_status_awaiting_application_subheader')} horizontal />
                   : false
                 }
               </Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
-                Ledger- Public Key
+                {t('ledger_row_public_key')}
               </Table.Cell>
               <Table.Cell>
-                {(ledger.transport)
+                {(transport)
                   ? false
-                  : <Label color="yellow" content="not connected" horizontal />
+                  : <Label color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
-                {(ledger.transport && ledger.publicKey)
+                {(transport && ledger.publicKey)
                   ? (
                     <React.Fragment>
                       <p>{ledger.publicKey.wif}</p>
                       <Button
-                        content="confirm public key on device"
+                        content={t('ledger_confirm_public_key')}
                         onClick={this.displayPublicKey}
                         primary
                       />
@@ -203,11 +176,11 @@ class ToolsHardwareLedger extends Component<Props> {
                   )
                   : false
                 }
-                {(ledger.transport && !ledger.publicKey)
+                {(transport && !ledger.publicKey)
                   ? (
                     <React.Fragment>
                       <Button
-                        content="retrieve public key"
+                        content={t('ledger_retrieve_public_key')}
                         onClick={this.getPublicKey}
                         primary
                       />
@@ -219,91 +192,6 @@ class ToolsHardwareLedger extends Component<Props> {
             </Table.Row>
           </Table.Body>
         </Table>
-        {(ledger.devicePath && ledger.application)
-          ? (
-            <Table definition>
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell>
-                    Account
-                  </Table.Cell>
-                  <Table.Cell>
-                    {settings.account}
-                  </Table.Cell>
-                </Table.Row>
-                {(account.permissions.map((data) => (
-                  <React.Fragment>
-                    {data.required_auth.keys.map((permission) => (
-                      <Table.Row key={`${data.perm_name}-${permission.key}`}>
-                        <Table.Cell collapsing textAlign="right">{data.perm_name}</Table.Cell>
-                        <Table.Cell>
-                          {(ledger.publicKey && permission.key === ledger.publicKey.wif)
-                            ? "Uses Ledger"
-                            : "No"
-                          }
-                        </Table.Cell>
-                        <Table.Cell verticalAlign="middle">
-                          {permission.key}
-                        </Table.Cell>
-                        <Table.Cell>
-                          {(!ledger.publicKey || permission.key === ledger.publicKey.wif)
-                            ? false
-                            : (
-                              <React.Fragment>
-                                {(
-                                  !authorization
-                                  || (data.perm_name === 'owner' && authorization.permission === 'owner')
-                                  || (data.perm_name !== 'owner')
-                                )
-                                  ? (
-                                    <ToolsModalPermissionAuthSet
-                                      actions={actions}
-                                      auth={data}
-                                      blockExplorers={blockExplorers}
-                                      button={{
-                                        color: 'purple',
-                                        content: t('tools_modal_permissions_auth_use_ledger_button'),
-                                        fluid: false,
-                                        icon: 'lock',
-                                        size: 'small'
-                                      }}
-                                      onClose={this.onClose}
-                                      newkey={ledger.publicKey.wif}
-                                      pubkey={pubkey}
-                                      settings={settings}
-                                      system={system}
-                                    />
-                                  )
-                                  : (
-                                    <Popup
-                                      content={t('tools_modal_permissions_auth_edit_button_disabled')}
-                                      inverted
-                                      position="top center"
-                                      trigger={(
-                                        <Button
-                                          content={t('tools_modal_permissions_auth_edit_button')}
-                                          floated="right"
-                                          icon="pencil"
-                                          size="small"
-                                        />
-                                      )}
-                                    />
-                                  )
-                                }
-                              </React.Fragment>
-                            )
-                          }
-                        </Table.Cell>
-                      </Table.Row>
-                    ))}
-                  </React.Fragment>
-                )))}
-              </Table.Body>
-            </Table>
-          )
-          : false
-        }
-
       </Segment>
     );
   }

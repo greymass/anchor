@@ -32,7 +32,6 @@ export function buildTransaction(contract, action, account, data) {
         }
       ]
     };
-
     eos(modified)
       .transaction(op, {
         broadcast: false,
@@ -56,17 +55,24 @@ export function buildTransaction(contract, action, account, data) {
   };
 }
 
-export function broadcastTransaction(tx) {
+export function broadcastTransaction(tx, actionName = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
     eos(connection)
-      .pushTransaction(tx.transaction).then((response) =>
-        dispatch({
+      .pushTransaction(tx.transaction).then((response) => {
+        if (actionName) {
+          dispatch({
+            payload: { tx: response },
+            type: types[`SYSTEM_${actionName}_SUCCESS`]
+          });
+        }
+        return dispatch({
           payload: { tx: response },
           type: types.SYSTEM_TRANSACTION_BROADCAST_SUCCESS
-        }))
+        });
+      })
       .catch((err) => dispatch({
         payload: { err, tx },
         type: types.SYSTEM_TRANSACTION_BROADCAST_FAILURE

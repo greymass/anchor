@@ -1,6 +1,7 @@
 import * as types from './types';
 import { setSetting } from './settings';
 import eos from './helpers/eos';
+import EOSAccount from '../utils/EOS/Account';
 
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
@@ -18,24 +19,46 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
       obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     }
     const pubkey = ecc.privateToPublic(key);
+    const accountData = accounts[settings.account];
+    let authorization;
+    if (accountData) {
+      const auth = new EOSAccount(accountData).getAuthorization(pubkey);
+      if (auth) {
+        [, authorization] = auth.split('@');
+      }
+    }
     dispatch({
-      type: types.SET_WALLET_KEYS_ACTIVE,
+      type: types.SET_CURRENT_KEY,
       payload: {
         account: settings.account,
-        accountData: accounts[settings.account],
+        accountData,
+        authorization,
         hash,
         key: obfuscated,
         pubkey
       }
     });
     return dispatch({
-      type: types.SET_WALLET_ACTIVE,
+      type: types.SET_CURRENT_WALLET,
       payload: {
         account: settings.account,
+        accountData: accounts[settings.account],
+        authorization,
         data: encrypt(key, password),
         mode,
+        path: undefined,
         pubkey
       }
+    });
+  };
+}
+
+export function setWalletHash(password) {
+  return (dispatch: () => void) => {
+    const hash = encrypt('VALID', password).toString(CryptoJS.enc.Utf8);
+    dispatch({
+      payload: { hash },
+      type: types.SET_WALLET_HASH
     });
   };
 }
@@ -48,7 +71,7 @@ export function setTemporaryKey(key) {
     const hash = encrypt(key, key, 1).toString(CryptoJS.enc.Utf8);
     const obfuscated = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
     dispatch({
-      type: types.SET_WALLET_KEYS_TEMPORARY,
+      type: types.SET_CURRENT_KEY_TEMPORARY,
       payload: {
         account: settings.account,
         hash,
@@ -67,11 +90,30 @@ export function lockWallet() {
   };
 }
 
-export function removeWallet() {
-  return (dispatch: () => void) => {
+export function validateHashPassword(password) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
     dispatch({
-      type: types.WALLET_REMOVE
+      type: types.VALIDATE_WALLET_PASSWORD_PENDING
     });
+    setTimeout(() => {
+      try {
+        const decrypted = decrypt(settings.walletHash, password).toString(CryptoJS.enc.Utf8);
+        if (decrypted === 'VALID') {
+          return dispatch({
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+          });
+        }
+      } catch (err) {
+        return dispatch({
+          err,
+          type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+        });
+      }
+      return dispatch({
+        type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+      });
+    }, 10);
   };
 }
 
@@ -131,6 +173,9 @@ export function unlockWallet(password, useWallet = false) {
         let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(key) === true) {
           const pubkey = ecc.privateToPublic(key);
+          // Obfuscate key for in-memory storage
+          const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the active wallet
           dispatch({
             payload: {
@@ -138,22 +183,24 @@ export function unlockWallet(password, useWallet = false) {
               accountData: account,
               pubkey
             },
-            type: types.SET_WALLET_ACTIVE
+            type: types.SET_CURRENT_WALLET
           });
-          // Obfuscate key for in-memory storage
-          const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
-          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the keys for use
           dispatch({
             payload: {
               account: wallet.account,
               accountData: account,
+              authorization: wallet.authorization,
               hash,
               key,
               pubkey
             },
-            type: types.SET_WALLET_KEYS_ACTIVE
+            type: types.SET_CURRENT_KEY
           });
+          // If the wallet hash hasn't been established, create it
+          if (!settings.walletHash) {
+            dispatch(setWalletHash(password));
+          }
           return dispatch({
             type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
           });
@@ -186,6 +233,11 @@ export function setWalletMode(walletMode) {
       case 'watch': {
         return dispatch({
           type: types.SET_WALLET_WATCH
+        });
+      }
+      case 'ledger': {
+        return dispatch({
+          type: types.SET_WALLET_LEDGER
         });
       }
       default: {
@@ -235,7 +287,6 @@ export default {
   encrypt,
   lockWallet,
   unlockWallet,
-  removeWallet,
   setTemporaryKey,
   setWalletKey,
   validateWalletPassword
