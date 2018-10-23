@@ -181,6 +181,8 @@
   "tools_wallet_state_subheader": "An overview of the local wallet state. This information can be used to help debug the application.",
   "tools_wallets_account": "Accounts",
   "tools_wallets_controls": "Wallet Controls",
+  "tools_create_account_unavailable_header": "Unable to Create Accounts",
+  "tools_create_account_unavailable_subheader": "Currently the EOS Application that runs on the Ledger is unable to bundle transactions, which prevents it from being able to create accounts.",
   "tools_wallets_header": "Manage Wallets",
   "tools_wallets_mode": "Wallet Mode",
   "tools_wallets_remove": "Remove Wallet",
