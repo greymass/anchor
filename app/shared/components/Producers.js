@@ -253,7 +253,7 @@ class Producers extends Component<Props> {
       }
     ];
 
-    if (connection.supportedContracts.includes('regproxyinfo')) {
+    if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
       tabPanes.push({
         menuItem: t('producers_proxies'),
         render: () => {
