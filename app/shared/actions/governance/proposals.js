@@ -40,6 +40,8 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
       const data = rows
         .map((proposal) => {
           const {
+            created_at,
+            expires_at,
             proposal_json,
             proposal_name,
             title
@@ -52,6 +54,8 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
             valid = false;
           }
           return {
+            created_at,
+            expires_at,
             json,
             proposal_json,
             proposal_name,
