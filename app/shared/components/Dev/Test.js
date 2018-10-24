@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 
 import {
   Button,
+  Checkbox,
   Grid,
   Header,
+  List,
   Segment,
 } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
@@ -14,6 +16,14 @@ import GlobalTransactionHandler from '../Global/Transaction/Handler';
 class DevTest extends Component<Props> {
   state = {
     actionName: false
+  }
+  toggleBroadcast = (e, { checked }) => {
+    const { actions } = this.props;
+    actions.setConnectionBroadcast(checked);
+  }
+  toggleSign = (e, { checked }) => {
+    const { actions } = this.props;
+    actions.setConnectionSign(checked);
   }
   testTransfer = () => {
     const { actions, wallet } = this.props;
@@ -38,6 +48,7 @@ class DevTest extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      connection,
       settings,
       system,
     } = this.props;
@@ -50,6 +61,22 @@ class DevTest extends Component<Props> {
         </Header>
         <Grid>
           <Grid.Column width={4}>
+            <List>
+              <List.Item>
+                <Checkbox
+                  checked={connection.broadcast}
+                  label="Broadcast Transaction"
+                  onChange={this.toggleBroadcast}
+                />
+              </List.Item>
+              <List.Item>
+                <Checkbox
+                  checked={connection.sign}
+                  label="Sign Transaction"
+                  onChange={this.toggleSign}
+                />
+              </List.Item>
+            </List>
             <Button.Group vertical>
               <Button
                 content="get constants"
@@ -74,26 +101,36 @@ class DevTest extends Component<Props> {
             </Button.Group>
           </Grid.Column>
           <Grid.Column width={12}>
-            <GlobalTransactionHandler
-              actionName={actionName}
-              actions={actions}
-              blockExplorers={blockExplorers}
-              contract={transaction.contract}
-              content={<span />}
-              settings={settings}
-              system={system}
-              transaction={transaction}
-            />
-            <ReactJson
-              collapsed={1}
-              displayDataTypes={false}
-              displayObjectSize={false}
-              iconStyle="square"
-              name={null}
-              src={this.props.app}
-              style={{ padding: '1em' }}
-              theme="harmonic"
-            />
+            <Segment basic>
+              <Header>
+                Transaction Handler
+              </Header>
+              <GlobalTransactionHandler
+                actionName={actionName}
+                actions={actions}
+                blockExplorers={blockExplorers}
+                contract={transaction.contract}
+                content={<span />}
+                settings={settings}
+                system={system}
+                transaction={transaction}
+              />
+            </Segment>
+            <Segment basic>
+              <Header>
+                System State
+              </Header>
+              <ReactJson
+                collapsed={1}
+                displayDataTypes={false}
+                displayObjectSize={false}
+                iconStyle="square"
+                name={null}
+                src={this.props.app}
+                style={{ padding: '1em' }}
+                theme="harmonic"
+              />
+            </Segment>
           </Grid.Column>
         </Grid>
       </Segment>
