@@ -95,18 +95,6 @@ class TabMenu extends Component<Props> {
             wallet={wallet}
           />
           <GlobalHardwareLedgerStatus />
-          {(connection && connection.chain)
-            ? (
-              <Menu.Item
-                name="blockchain"
-              >
-                <Label
-                  size="medium"
-                  color="grey"
-                  content={connection.chain}
-                />
-              </Menu.Item>
-            ) : ''}
           <Menu.Item
             name="about"
             position="right"
