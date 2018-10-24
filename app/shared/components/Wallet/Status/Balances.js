@@ -134,7 +134,8 @@ class WalletStatusBalances extends Component<Props> {
         </Table.Row>
       ));
     });
-    const supportsCustomTokens = connection.supportedContracts.includes('customtokens');
+    const supportsCustomTokens = connection.supportedContracts &&
+                                 connection.supportedContracts.includes('customtokens');
     return (
       <Segment vertical basic loading={!tokens}>
         <Header>

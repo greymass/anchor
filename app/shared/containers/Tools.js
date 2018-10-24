@@ -177,7 +177,9 @@ class ToolsContainer extends Component<Props> {
           walletMode,
           walletTemp
         } = settings;
-        if (pane.requiredContract && !connection.supportedContracts.includes(pane.requiredContract)) {
+        if (pane.requiredContract &&
+            connection.supportedContracts &&
+            connection.supportedContracts.includes(pane.requiredContract)) {
           return false;
         }
         return (
