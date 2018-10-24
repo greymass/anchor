@@ -74,7 +74,6 @@ class BlockProducers extends Component<Props> {
         }
       }
     }
->>>>>>> removing duplicated componentWillReceiveProps in BlockProducers
   }
 
   componentWillUnmount() {
