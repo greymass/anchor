@@ -34,7 +34,13 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
           icon="warning"
           warning
         />
-      ) : null;
+      ) : (
+        <Message
+          content={t('recommendations_success_resources_sufficient')}
+          icon="thumbs up"
+          success
+        />
+      );
   }
 }
 
