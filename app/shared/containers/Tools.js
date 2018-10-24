@@ -9,6 +9,7 @@ import compose from 'lodash/fp/compose';
 import { Menu, Tab } from 'semantic-ui-react';
 
 import ContractInterface from './Contract/Interface';
+import RecommendationInterface from './Recommendation/Interface';
 
 import Tools from '../components/Tools';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
@@ -91,6 +92,11 @@ const paneMapping = [
     element: ContractInterface,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'contracts',
+  },
+  {
+    element: RecommendationInterface,
+    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'recommendation',
   },
   {
     header: true,
