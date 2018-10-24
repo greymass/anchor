@@ -98,17 +98,13 @@ class TabMenu extends Component<Props> {
           {(connection && connection.chain)
             ? (
               <Menu.Item
-                name="about"
-                position="right"
-                active={activeItem === 'about'}
-                onClick={handleItemClick}
+                name="blockchain"
               >
-                <span>
-                  {t('tab_menu_blockchain_message')}
-                </span>
-                <span>
-                  {connection.chain}
-                </span>
+                <Label
+                  size="medium"
+                  color="grey"
+                  content={connection.chain}
+                />
               </Menu.Item>
             ) : ''}
           <Menu.Item
