@@ -42,6 +42,16 @@ export default function connection(state = initialState, action) {
         signPath: action.payload.signPath,
       });
     }
+    case types.SET_CONNECTION_BROADCAST: {
+      return Object.assign({}, state, {
+        broadcast: action.payload.enable
+      });
+    }
+    case types.SET_CONNECTION_SIGN: {
+      return Object.assign({}, state, {
+        sign: action.payload.enable
+      });
+    }
     case types.HARDWARE_LEDGER_TRANSPORT_FAILURE: {
       return Object.assign({}, state, {
         signPath: null,
