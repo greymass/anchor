@@ -21,8 +21,9 @@ import * as AppActions from '../actions/app';
 import * as BlockExplorersActions from '../actions/blockexplorers';
 import * as BuyRamBytesActions from '../actions/system/buyrambytes';
 import * as BuyRamActions from '../actions/system/buyram';
-import * as CreateAccountActions from '../actions/createaccount';
 import * as ChainActions from '../actions/chain';
+import * as ConnectionActions from '../actions/connection';
+import * as CreateAccountActions from '../actions/createaccount';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';
 import * as SellRamActions from '../actions/system/sellram';
@@ -217,6 +218,7 @@ function mapDispatchToProps(dispatch) {
       ...BuyRamActions,
       ...BuyRamBytesActions,
       ...ChainActions,
+      ...ConnectionActions,
       ...CreateAccountActions,
       ...GlobalsActions,
       ...ProducersActions,
