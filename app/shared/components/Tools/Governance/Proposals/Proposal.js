@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { find } from 'lodash';
 
+import TimeAgo from 'react-timeago';
 import { Button, Header, Message, Segment } from 'semantic-ui-react';
 
 import ToolsGovernanceProposalsProposalVote from './Proposal/Vote';
@@ -41,6 +42,8 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
       votes
     } = this.props;
     const {
+      created_at,
+      expires_at,
       json,
       proposal_name,
       title
@@ -52,6 +55,10 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const isVotePending = !!(system.GOVERNANCE_VOTE_PROPOSAL === 'PENDING' || system.GOVERNANCE_UNVOTE_PROPOSAL === 'PENDING')
     const isSupporting = (voted && approved);
     const isAgainst = (voted && !approved);
+    const isExpired = (new Date().getTime() > Date.parse(expires_at));
+    if (isExpired) {
+      return false;
+    }
     return (
       <React.Fragment>
         <Header
@@ -63,7 +70,8 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
         >
           {title}
           <Header.Subheader>
-            ID: {proposal_name}
+            ID: {proposal_name} / Expires: <TimeAgo date={`${expires_at}z`} />
+
           </Header.Subheader>
         </Header>
         <Segment attached>
