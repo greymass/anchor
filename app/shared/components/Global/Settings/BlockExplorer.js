@@ -27,17 +27,19 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
       value
     } = this.state;
 
-    const blockExplorerOptions = Object.keys(blockExplorers).map((blockExplorer) => {
+    const blockExplorerKeys = Object.keys(blockExplorers || {});
+
+    const blockExplorerOptions = blockExplorerKeys.map((blockExplorer) => {
       return { value: blockExplorer, text: blockExplorer };
     });
 
-    if (!Object.keys(blockExplorers).includes(value)) {
+    if (!blockExplorerKeys.includes(value)) {
       value = null;
     }
 
     return (
       <Dropdown
-        defaultValue={value || blockExplorerOptions[0].value}
+        defaultValue={value || (blockExplorerOptions[0] && blockExplorerOptions[0].value)}
         name={name}
         onChange={this.onChange}
         options={blockExplorerOptions}

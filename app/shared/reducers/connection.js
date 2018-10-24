@@ -1,3 +1,5 @@
+import { find } from 'lodash';
+
 import * as types from '../actions/types';
 import blockchains from '../constants/blockchains';
 
