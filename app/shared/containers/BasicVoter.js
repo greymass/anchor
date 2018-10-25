@@ -13,7 +13,7 @@ import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
 import Tools from './Tools';
 import Wallet from '../components/Wallet';
-import WalletUpgrade from '../components/Wallet/Upgrade';
+import Notifications from '../components/Notifications';
 import ModalConstitution from '../components/Global/Modal/Constitution';
 
 import * as AccountsActions from '../actions/accounts';
@@ -127,6 +127,7 @@ class BasicVoterContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      app,
       connection,
       keys,
       settings,
@@ -168,7 +169,9 @@ class BasicVoterContainer extends Component<Props> {
           validate={validate}
           wallet={wallet}
         />
-        <WalletUpgrade
+        <Notifications
+          actions={actions}
+          app={app}
           settings={settings}
           wallet={wallet}
         />
