@@ -40,6 +40,8 @@
   "error_ram_under_minimum_for_new_account": "A minimum of 4000 Bytes of RAM is required to create a new account.",
   "error_ram_under_minimum_of_2600_for_new_account": "A minimum of 2600 Bytes of RAM is required to create a new account.",
   "error_ram_usage_exceeded": "RAM usage exceeded. You will need to buy more ram to carry out this action.",
+  "global_app_requires_upgrade_header": "An application upgrade ({{new}}) is available.",
+  "global_app_requires_upgrade_subheader": "Choose to either Upgrade, View the Update Details, or Skip this Update.",
   "error_ram_using_more_than_usage": "Insufficient available RAM balance to complete transaction.",
   "error_transferring_to_exchange_without_memo": "Cannot transfer funds to an exchange without passing the memo that was given.",
   "global_account_import_ledger_account_lookup_content": "Loading all accounts that match the Public Key provided by the Ledger",

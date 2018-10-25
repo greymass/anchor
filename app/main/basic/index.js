@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import MenuBuilder from '../menu';
 import packageJson from '../../package.json';
 
+import { checkForUpdates } from '../shared/updater';
 import { windowStateKeeper } from '../shared/windowStateKeeper';
 
 const { dialog } = require('electron');
@@ -11,6 +12,8 @@ const path = require('path');
 
 require('electron-context-menu')();
 
+let ui;
+
 const createInterface = (resourcePath, route = '/', closable = true, store) => {
   log.info('ui: creating');
 
@@ -18,7 +21,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
   const { name, version } = packageJson;
   const title = `${name} - ${version}`;
 
-  const ui = new BrowserWindow({
+  ui = new BrowserWindow({
     closable,
     x: uiStateKeeper.x,
     y: uiStateKeeper.y,
@@ -105,6 +108,10 @@ ipcMain.on('saveFile', (event, data, prefix = 'tx') => {
   if (!fileName) return;
 
   fs.writeFileSync(fileName, data);
+});
+
+ipcMain.on('checkForUpdates', () => {
+  checkForUpdates({}, ui);
 });
 
 export default { createInterface };
