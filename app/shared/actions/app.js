@@ -32,8 +32,18 @@ export function getConstants() {
     };
     eos(connection).getTableRows(query).then((results) => {
       const { rows } = results;
-      const data = rows.reduce((map, { key, value }) =>
-        ({ ...map, [key]: value }), {});
+      const data = rows.reduce((map, { key, value }) => {
+        let parsed = value;
+        try {
+          parsed = JSON.parse(value);
+        } catch (e) {
+          // no catch
+        }
+        return {
+          ...map,
+          [key]: parsed
+        };
+      }, {});
       return dispatch({
         type: types.SYSTEM_GETCONSTANTS_SUCCESS,
         payload: { data }
