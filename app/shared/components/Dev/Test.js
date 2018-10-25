@@ -13,6 +13,8 @@ import ReactJson from 'react-json-view';
 
 import GlobalTransactionHandler from '../Global/Transaction/Handler';
 
+import DevStateTabs from './State/Tabs';
+
 class DevTest extends Component<Props> {
   state = {
     actionName: false
@@ -117,19 +119,7 @@ class DevTest extends Component<Props> {
               />
             </Segment>
             <Segment basic>
-              <Header>
-                System State
-              </Header>
-              <ReactJson
-                collapsed={1}
-                displayDataTypes={false}
-                displayObjectSize={false}
-                iconStyle="square"
-                name={null}
-                src={this.props.app}
-                style={{ padding: '1em' }}
-                theme="harmonic"
-              />
+              <DevStateTabs {...this.props} />
             </Segment>
           </Grid.Column>
         </Grid>
