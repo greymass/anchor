@@ -4,5 +4,5 @@
   "recommendations_success_active_and_owner_different": "It appears that your active and owner keys are different which is what is recommended.",
   "recommendations_success_resources_sufficient": "You appear to have sufficiently staked your tokens which will allow to use the network efficiently.",
   "recommendations_warning_active_and_owner_same": "It appears that your active and owner keys are different. This is not recommended as it increases the risk of someone stealing your account. To change your either your owner or active keys, go to the permissions tab of the Wallet Tools section.",
-  "recommendations_warning_low_resources": "It appears that your CPU and/or Bandwidth resources are very low, we recommend having at least 1 EOS staked to both in order to ensure that most of your transactions will be processed by the network. To increase your staked tokens, go to the 'Update Staked' button of your wallet page"
+  "recommendations_warning_resources_low": "It appears that your CPU and/or Bandwidth resources are very low, we recommend having at least 1 EOS staked to both in order to ensure that most of your transactions will be processed by the network. To increase your staked tokens, go to the 'Update Staked' button of your wallet page"
 }
