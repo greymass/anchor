@@ -16,7 +16,7 @@ class ToolsKeysValidator extends Component<Props> {
   }
   onChange = (e, { publicKey, valid }) => this.setState({ publicKey, valid })
   render() {
-    const { t } = this.props;
+    const { connection, t } = this.props;
     const { publicKey, valid } = this.state;
     return (
       <Segment basic>
@@ -32,10 +32,11 @@ class ToolsKeysValidator extends Component<Props> {
             info
           />
           <GlobalFormFieldKeyPrivate
+            connection={connection}
             label={t('tools_keys_key_validator_private_key')}
             name="key"
-            placeholder={t('welcome:welcome_key_compare_placeholder')}
             onChange={this.onChange}
+            placeholder={t('welcome:welcome_key_compare_placeholder')}
           />
         </Segment>
         <Segment>
