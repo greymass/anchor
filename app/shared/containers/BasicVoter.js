@@ -106,6 +106,7 @@ class BasicVoterContainer extends Component<Props> {
     } = this.props;
     const {
       getAccount,
+      getConstants,
       getGlobals,
       getInfo
     } = actions;
@@ -114,6 +115,7 @@ class BasicVoterContainer extends Component<Props> {
       if (settings.account) {
         getAccount(settings.account);
       }
+      getConstants();
       getGlobals();
       getInfo();
     }
