@@ -17,26 +17,22 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
       t
     } = this.props;
 
-    const netAmount = account.total_resources &&
-      account.total_resources.net_weight &&
-      Number(account.total_resources.net_weight.split(' ')[0]);
-
-    const cpuAmount = account.total_resources &&
+    const cpuStaked = account.total_resources &&
       account.total_resources.net_weight &&
       Number(account.total_resources.cpu_weight.split(' ')[0]);
 
-    const shouldDisplay = netAmount < 1 || cpuAmount < 1;
+    const shouldDisplayWarning = cpuStaked < 1;
 
-    return (shouldDisplay)
+    return (shouldDisplayWarning)
       ? (
         <Message
-          content={t('recommendations_warning_resources_low')}
+          content={t('recommendations_warning_cpu_staked_low')}
           icon="warning"
           warning
         />
       ) : (
         <Message
-          content={t('recommendations_success_resources_sufficient')}
+          content={t('recommendations_success_cpu_staked_sufficient')}
           icon="thumbs up"
           success
         />
