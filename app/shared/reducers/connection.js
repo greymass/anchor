@@ -14,6 +14,7 @@ const initialState = {
   forceActionDataHex: false,
   httpEndpoint: null,
   keyPrefix: 'EOS',
+  sign: false,
   signMethod: false,
   signPath: false,
   supportedContracts: []
@@ -99,7 +100,6 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         broadcast: true,
         expireInSeconds: 120,
-        sign: true,
         signMethod: false
       });
     }
@@ -121,6 +121,7 @@ export default function connection(state = initialState, action) {
           action.payload.account,
           action.payload.authorization || 'active',
         ].join('@'),
+        sign: true,
         keyProviderObfuscated: {
           hash: action.payload.hash,
           key: action.payload.key
