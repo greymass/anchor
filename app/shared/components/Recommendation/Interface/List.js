@@ -4,12 +4,18 @@ import { translate } from 'react-i18next';
 import { Divider, Header, Segment } from 'semantic-ui-react';
 
 import ActiveAndOwnerSame from './List/ActiveAndOwnerSame';
-import ResourcesLow from './List/ResourcesLow';
+import CpuStakedLow from './List/CpuStakedLow';
+import CpuAvailableLow from './List/CpuAvailableLow';
+import BandwidthStakedLow from './List/BandwidthStakedLow';
+import BandwidthAvailableLow from './List/BandwidthAvailableLow';
 
 
 const listItemsMapping = [
   ActiveAndOwnerSame,
-  ResourcesLow
+  BandwidthAvailableLow,
+  BandwidthStakedLow,
+  CpuAvailableLow,
+  CpuStakedLow
 ];
 
 class RecommendationInterfaceList extends Component<Props> {
