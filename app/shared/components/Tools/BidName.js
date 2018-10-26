@@ -44,7 +44,7 @@ class ToolsProxy extends Component<Props> {
     } = actions;
 
     if (!openModal) {
-      (settings.recentBids[settings.account] || []).forEach((bid) => {
+      ((settings.recentBids && settings.recentBids[settings.account]) || []).forEach((bid) => {
         getBidForName(bid.newname);
       });
     }
