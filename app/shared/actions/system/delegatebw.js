@@ -15,6 +15,10 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
 
     return eos(connection, true).transaction(tr => {
       tr.delegatebw(delegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount));
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       dispatch(AccountActions.getAccount(delegator));
       return dispatch({
