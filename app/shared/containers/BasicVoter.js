@@ -8,9 +8,9 @@ import { forEach } from 'lodash';
 import { Segment } from 'semantic-ui-react';
 
 import About from '../components/About';
-import DevTest from '../components/Dev/Test';
 import Producers from '../components/Producers';
 import TabMenu from '../components/TabMenu';
+import Test from './Test';
 import Tools from './Tools';
 import Wallet from '../components/Wallet';
 import Notifications from '../components/Notifications';
@@ -146,7 +146,7 @@ class BasicVoterContainer extends Component<Props> {
         break;
       }
       case 'test': {
-        activeTab = <DevTest {...this.props} />;
+        activeTab = <Test />;
         break;
       }
       case 'tools': {
