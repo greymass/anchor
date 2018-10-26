@@ -22,6 +22,8 @@ const initialState = {
     // Always track the EOS token
     'eosio.token:EOS'
   ],
+  // State to view by default in DevTest
+  devTestDefaultState: false,
   // Defaults to displaying resources remaining
   displayResourcesAvailable: true,
   // Default filter spam transfers to false

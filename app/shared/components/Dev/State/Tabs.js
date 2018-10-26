@@ -5,19 +5,26 @@ import { map } from 'lodash';
 import {
   Dropdown,
   Header,
+  Segment,
   Tab,
 } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 class DevStateTabs extends Component<Props> {
-  state = {
-    activeIndex: 0
-  }
-  onChange = (e, { value }) => this.setState({ activeIndex: value })
-  render() {
-    const panes = map(this.props, (state, name) => ({
+  panes: []
+  constructor(props) {
+    super(props);
+    let index = -1;
+    this.options = map(this.props, (state, name) => {
+      index += 1;
+      return {
+        text: name,
+        value: index
+      };
+    });
+    this.panes = map(this.props, (state, name) => ({
       pane: (
-        <Tab.Pane key={name}>
+        <Tab.Pane basic key={name}>
           <ReactJson
             displayDataTypes={false}
             displayObjectSize={false}
@@ -30,30 +37,38 @@ class DevStateTabs extends Component<Props> {
         </Tab.Pane>
       )
     }));
-    let index = -1;
-    const options = map(this.props, (state, name) => {
-      index += 1;
-      return {
-        text: name,
-        value: index
-      };
-    });
-    const { activeIndex } = this.state;
+  }
+  onChange = (e, { value }) => {
+    const { actions } = this.props;
+    actions.setSetting('devTestDefaultState', value);
+  }
+  render() {
+    const { settings } = this.props;
+    const { options, panes } = this;
     return (
       <React.Fragment>
-        <Dropdown
-          autoFocus
-          onChange={this.onChange}
-          options={options}
-          search
-          selection
+        <Header
+          attached="top"
+          content="Application State"
+          inverted
         />
-        <Tab
-          activeIndex={activeIndex}
-          onTabChange={this.onTabChange}
-          panes={panes}
-          renderActiveOnly={false}
-        />
+        <Segment attached="bottom">
+          <Dropdown
+            autoFocus
+            defaultValue={settings.devTestDefaultState}
+            onChange={this.onChange}
+            options={options}
+            search
+            selection
+          />
+          <Tab
+            activeIndex={settings.devTestDefaultState}
+            defaultActiveIndex={settings.devTestDefaultState}
+            onTabChange={this.onTabChange}
+            panes={panes}
+            renderActiveOnly={false}
+          />
+        </Segment>
       </React.Fragment>
     );
   }
