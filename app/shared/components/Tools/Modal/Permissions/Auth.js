@@ -34,6 +34,7 @@ class ToolsModalPermissionAuth extends Component<Props> {
             defaultValue={defaultValue}
             pubkey={pubkey}
             settings={settings}
+            system={system}
           />
         )}
         icon="share square"
