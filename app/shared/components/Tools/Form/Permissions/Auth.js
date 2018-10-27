@@ -108,6 +108,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
       defaultValue,
       pubkey,
       settings,
+      system,
       t
     } = this.props;
     const {
@@ -118,9 +119,11 @@ class ToolsFormPermissionsAuth extends Component<Props> {
       permission,
       validForm
     } = this.state;
+    const isPending = !!(system.UPDATEAUTH === 'PENDING');
     const isCurrentKey = map(original.keys, 'key').includes(pubkey);
     return (
       <Form
+        loading={isPending}
         onSubmit={this.onSubmit}
       >
         <p>{t('tools_form_permissions_auth_instructions')}</p>
@@ -176,8 +179,9 @@ class ToolsFormPermissionsAuth extends Component<Props> {
             <Button
               content={t('tools_form_permissions_auth_add_key')}
               color="green"
-              icon="circle plus"
               floated="right"
+              icon="circle plus"
+              loading={isPending}
               onClick={this.addKey}
             />
           )
