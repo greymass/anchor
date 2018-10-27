@@ -116,7 +116,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             }}
             confirm={(
               <Button
-                color={(isSupporting) ? 'green' : 'grey'}
+                color="blue"
                 content={t('confirm')}
                 floated="right"
                 icon="checkmark"
@@ -124,6 +124,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
                 onClick={() => this.approve(proposal_name)}
               />
             )}
+            content={t('tools_governance_proposal_confirm_vote_yes')}
             settings={settings}
             system={system}
           />
@@ -139,7 +140,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             }}
             confirm={(
               <Button
-                color={(isAgainst) ? 'orange' : 'grey'}
+                color="blue"
                 content={t('confirm')}
                 disabled={isLocked || isAgainst}
                 floated="right"
@@ -148,6 +149,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
                 onClick={() => this.oppose(proposal_name)}
               />
             )}
+            content={t('tools_governance_proposal_confirm_vote_no')}
             settings={settings}
             system={system}
           />
@@ -163,7 +165,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             }}
             confirm={(
               <Button
-                color="grey"
+                color="blue"
                 content={t('confirm')}
                 disabled={(isLocked || !voted)}
                 floated="right"
@@ -172,6 +174,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
                 onClick={() => this.unvote(proposal_name)}
               />
             )}
+            content={t('tools_governance_proposal_confirm_unvote')}
             settings={settings}
             system={system}
           />
