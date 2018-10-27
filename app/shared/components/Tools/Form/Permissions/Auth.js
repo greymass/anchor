@@ -104,6 +104,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
   }
   render() {
     const {
+      connection,
       defaultValue,
       pubkey,
       settings,
@@ -159,6 +160,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
         {auth.keys.map((keyAuths, index) => (
           <ToolsFormPermissionsAuthWeightedKey
             auth={auth}
+            connection={connection}
             defaultValue={defaultValue}
             key={JSON.stringify(keyAuths)}
             keyAuths={keyAuths}
