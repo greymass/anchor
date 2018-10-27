@@ -13,7 +13,8 @@ class ToolsPermissions extends Component<Props> {
     const {
       accounts,
       actions,
-      blockExplorers,
+      allBlockExplorers,
+      connection,
       keys,
       settings,
       system,
@@ -21,6 +22,7 @@ class ToolsPermissions extends Component<Props> {
       validate,
       wallet
     } = this.props;
+    const blockExplorers = allBlockExplorers[connection.chainKey];
 
     if (settings.walletMode === 'ledger') {
       return (
@@ -67,6 +69,7 @@ class ToolsPermissions extends Component<Props> {
                   icon: 'circle plus',
                   size: 'small'
                 }}
+                connection={connection}
                 onClose={this.onClose}
                 open
                 settings={settings}
@@ -133,6 +136,7 @@ class ToolsPermissions extends Component<Props> {
                     icon: 'pencil',
                     size: 'small'
                   }}
+                  connection={connection}
                   onClose={this.onClose}
                   pubkey={pubkey}
                   settings={settings}

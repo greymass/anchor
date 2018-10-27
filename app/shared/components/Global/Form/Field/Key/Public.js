@@ -47,8 +47,9 @@ class GlobalFormFieldKeyPublic extends Component<Props> {
     return false;
   }
   onChange = debounce((e, { name, value }) => {
+    const { connection } = this.props;
     const parsed = value.trim();
-    const valid = ecc.isValidPublic(parsed, this.props.connection.keyPrefix);
+    const valid = ecc.isValidPublic(parsed, connection.keyPrefix);
 
     this.setState({
       value: parsed
