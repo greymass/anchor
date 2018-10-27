@@ -35,6 +35,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      isLocked,
       settings,
       proposal,
       system,
@@ -110,7 +111,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             button={{
               color: 'grey',
               content: t('yes'),
-              disabled: isSupporting,
+              disabled: isLocked || isSupporting,
               icon: 'checkmark'
             }}
             confirm={(
@@ -133,14 +134,14 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             button={{
               color: 'grey',
               content: t('no'),
-              disabled: isAgainst,
+              disabled: isLocked || isAgainst,
               icon: 'x'
             }}
             confirm={(
               <Button
                 color={(isAgainst) ? 'orange' : 'grey'}
                 content={t('confirm')}
-                disabled={isAgainst}
+                disabled={isLocked || isAgainst}
                 floated="right"
                 icon="checkmark"
                 loading={isVotePending}
@@ -157,14 +158,14 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             button={{
               color: 'grey',
               content: t('unvote'),
-              disabled: !voted,
+              disabled: isLocked || !voted,
               icon: 'trash'
             }}
             confirm={(
               <Button
                 color="grey"
                 content={t('confirm')}
-                disabled={(!voted)}
+                disabled={(isLocked || !voted)}
                 floated="right"
                 icon="checkmark"
                 loading={isVotePending}
