@@ -182,10 +182,16 @@ const paneMapping = [
 
 class ToolsContainer extends Component<Props> {
   getPanes() {
-    const { t } = this.props;
+    const {
+      allBlockExplorers,
+      connection,
+      t
+    } = this.props;
     return paneMapping
       .filter((pane) => {
-        const { connection, settings } = this.props;
+        const {
+          settings
+        } = this.props;
         const {
           skipImport,
           walletMode,
@@ -224,7 +230,10 @@ class ToolsContainer extends Component<Props> {
           menuItem: t(`tools_menu_${pane.name}`),
           render: () => (
             <Tab.Pane>
-              {React.createElement(pane.element, { ...this.props })}
+              {React.createElement(pane.element, {
+                blockExplorers: allBlockExplorers[connection.chainKey],
+                ...this.props
+              })}
             </Tab.Pane>
           )
         };
