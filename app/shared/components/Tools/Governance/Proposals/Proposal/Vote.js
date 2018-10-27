@@ -14,6 +14,7 @@ class ToolsGovernanceProposalsProposalVote extends Component<Props> {
       blockExplorers,
       button,
       confirm,
+      content,
       open,
       pubkey,
       settings,
@@ -29,7 +30,7 @@ class ToolsGovernanceProposalsProposalVote extends Component<Props> {
         content={(
           <Segment basic clearing>
             <p>
-              Please confirm your action.
+              {content}
             </p>
             {confirm}
           </Segment>
@@ -39,7 +40,7 @@ class ToolsGovernanceProposalsProposalVote extends Component<Props> {
         pubkey={pubkey}
         settings={settings}
         system={system}
-        title="Update Proposal Vote"
+        title={t('tools_governance_proposal_confirm')}
       />
     );
   }
