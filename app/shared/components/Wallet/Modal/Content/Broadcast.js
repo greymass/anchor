@@ -1,7 +1,16 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Container, Divider, Header, Message, Segment, Form } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Divider,
+  Form,
+  Header,
+  Message,
+  Segment,
+  Tab
+} from 'semantic-ui-react';
 
 import GlobalTransactionViewActions from '../../../Global/Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../../Global/Transaction/View/Detail';
@@ -120,43 +129,70 @@ class WalletModalContentBroadcast extends Component<Props> {
             </React.Fragment>
           )
           : (
-            <Segment textAlign="center">
+            <Segment basic textAlign="center">
               {(transaction.error) && (
                 <Message
                   content={t('broadcast_transaction_invalid_error')}
                   error
                 />
               )}
-              <Header>
-                {t('broadcast_transaction_import_file_title')}
-                <Header.Subheader>
-                  {t('broadcast_transaction_import_file_content')}
-                </Header.Subheader>
-              </Header>
-              <Button
-                color="green"
-                content={t('broadcast_transaction_import_file')}
-                icon="upload"
-                onClick={this.importFile}
-                size="large"
+              <Tab
+                defaultActiveIndex={0}
+                renderActiveOnly={false}
+                panes={[
+                  {
+                    menuItem: {
+                      key: 'import_file',
+                      icon: 'upload',
+                      content: t('broadcast_transaction_import_file_title')
+                    },
+                    pane: {
+                      key: 'import_file',
+                      content: (
+                        <Segment basic>
+                          <Header>
+                            <Header.Subheader>
+                              {t('broadcast_transaction_import_file_content')}
+                            </Header.Subheader>
+                          </Header>
+                          <Button
+                            color="green"
+                            content={t('broadcast_transaction_import_file')}
+                            icon="upload"
+                            onClick={this.importFile}
+                            size="large"
+                          />
+                        </Segment>
+                      )
+                    }
+                  },
+                  {
+                    menuItem: {
+                      key: 'paste',
+                      icon: 'paste',
+                      content: t('broadcast_transaction_paste_json_title')
+                    },
+                    pane: {
+                      key: 'paste',
+                      content: (
+                        <Form>
+                          <Form.TextArea
+                            onChange={this.onTextAreaChange}
+                            placeholder={t('broadcast_transaction_import_json_label')}
+                          />
+                          <Button
+                            color="blue"
+                            content={t('broadcast_transaction_import_json')}
+                            icon="paste"
+                            onClick={this.handleImport}
+                            size="large"
+                          />
+                        </Form>
+                      )
+                    }
+                  }
+                ]}
               />
-              <Divider padded />
-              <Header>
-                {t('broadcast_transaction_paste_json_title')}
-              </Header>
-              <Form>
-                <Form.TextArea
-                  onChange={this.onTextAreaChange}
-                  placeholder={t('broadcast_transaction_import_json_label')}
-                />
-                <Button
-                  color="blue"
-                  content={t('broadcast_transaction_import_json')}
-                  onClick={this.handleImport}
-                  size="large"
-                />
-              </Form>
-              <Divider padded />
               <Message
                 content={t('broadcast_transaction_note')}
                 icon="info circle"
