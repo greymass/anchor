@@ -51,8 +51,12 @@ class ToolsPermissions extends Component<Props> {
     if (!account) return false;
 
     const { pubkey } = keys;
-    const authorization = new EOSAccount(account).getAuthorization(pubkey);
-
+    let authorization = new EOSAccount(account).getAuthorization(pubkey, true);
+    if (settings.walletMode === 'watch') {
+      authorization = {
+        perm_name: settings.authorization
+      };
+    }
     return (
       <Segment basic>
         <Container>
@@ -120,10 +124,25 @@ class ToolsPermissions extends Component<Props> {
           >
             {(
               !authorization
-              || (data.perm_name === 'owner' && authorization.permission !== 'owner')
-              || (data.perm_name !== 'owner')
+              || (data.perm_name === 'owner' && authorization.perm_name !== 'owner')
+              || (data.perm_name === 'active' && !(['active', 'owner'].includes(authorization.perm_name)))
             )
               ? (
+                <Popup
+                  content={t('tools_modal_permissions_auth_edit_button_disabled')}
+                  inverted
+                  position="top center"
+                  trigger={(
+                    <Button
+                      content={t('tools_modal_permissions_auth_edit_button')}
+                      floated="right"
+                      icon="pencil"
+                      size="small"
+                    />
+                  )}
+                />
+              )
+              : (
                 <ToolsModalPermissionAuth
                   actions={actions}
                   auth={data}
@@ -141,21 +160,6 @@ class ToolsPermissions extends Component<Props> {
                   pubkey={pubkey}
                   settings={settings}
                   system={system}
-                />
-              )
-              : (
-                <Popup
-                  content={t('tools_modal_permissions_auth_edit_button_disabled')}
-                  inverted
-                  position="top center"
-                  trigger={(
-                    <Button
-                      content={t('tools_modal_permissions_auth_edit_button')}
-                      floated="right"
-                      icon="pencil"
-                      size="small"
-                    />
-                  )}
                 />
               )
             }
