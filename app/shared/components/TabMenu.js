@@ -5,7 +5,6 @@ import { translate } from 'react-i18next';
 
 import GlobalAccountDropdown from '../containers/Global/Account/Dropdown';
 import GlobalHardwareLedgerStatus from '../containers/Global/Hardware/Ledger/Status';
-import WalletLanguage from './Wallet/Language';
 import WalletLockState from './Wallet/LockState';
 import WalletMode from './Wallet/Mode';
 import logo from '../../renderer/assets/images/greymass.png';
@@ -79,11 +78,6 @@ class TabMenu extends Component<Props> {
                 />
               </Menu.Item>
             ) : ''}
-          <WalletLanguage
-            actions={actions}
-            key="language"
-            settings={settings}
-          />
           <WalletMode
             settings={settings}
           />
