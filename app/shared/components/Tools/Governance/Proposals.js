@@ -30,6 +30,7 @@ class ToolsGovernanceProposals extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      keys,
       proposals,
       settings,
       system,
@@ -42,6 +43,7 @@ class ToolsGovernanceProposals extends Component<Props> {
       list,
       votes
     } = proposals;
+    const isLocked = (settings.walletMode !== 'watch' && !keys.key);
     let recentOptions = [];
     if (settings && settings.recentProposalsScopes) {
       recentOptions = settings.recentProposalsScopes.map((recentProposalsScope) => ({
@@ -52,7 +54,7 @@ class ToolsGovernanceProposals extends Component<Props> {
     return (
       <Segment basic>
         <Header>
-          Referendum::Proposals (TEST)
+          Referendum::Proposals (BETA)
           <Header.Subheader>
             This feature is a preview release of the upcoming Referendum system being implemented into the EOS ecosystem.
           </Header.Subheader>
@@ -70,7 +72,7 @@ class ToolsGovernanceProposals extends Component<Props> {
           )}
           info
         />
-        <Container>
+        <Container style={{ display: 'none' }}>
           {(list && list.length)
             ? (
               <Message>
@@ -107,6 +109,7 @@ class ToolsGovernanceProposals extends Component<Props> {
             <ToolsGovernanceProposalsProposal
               actions={actions}
               blockExplorers={blockExplorers}
+              isLocked={isLocked}
               proposal={proposal}
               scope={scope}
               settings={settings}

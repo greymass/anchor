@@ -140,7 +140,7 @@
   "tools_menu_delegations": "Delegations",
   "tools_menu_governance_header": "Governance Tools",
   "tools_menu_governance_proposals": "Proposals",
-  "tools_menu_governance_proposals_test": "Proposals (TEST)",
+  "tools_menu_governance_proposals_beta": "Proposals (BETA)",
   "tools_menu_hardware_header": "Hardware Wallet Support",
   "tools_menu_hardware_ledger": "Ledger",
   "tools_menu_index": "Home",
