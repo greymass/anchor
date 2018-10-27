@@ -13,7 +13,7 @@ class ToolsPermissions extends Component<Props> {
     const {
       accounts,
       actions,
-      allBlockExplorers,
+      blockExplorers,
       connection,
       keys,
       settings,
@@ -22,7 +22,6 @@ class ToolsPermissions extends Component<Props> {
       validate,
       wallet
     } = this.props;
-    const blockExplorers = allBlockExplorers[connection.chainKey];
 
     if (settings.walletMode === 'ledger') {
       return (
