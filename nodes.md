@@ -20,7 +20,7 @@ If you are concerned about revealing this information to any of these 3rd party 
 - [http://blindblocart.io:8888](http://blindblocart.io:8888/v1/chain/get_info) - operated by [BlindBlocArt](http://blindblocart.io/)
 - [http://telos.caleos.io:9888](http://telos.caleos.io:9888/v1/chain/get_info) - operated by [CalEOS](http://caleos.io)
 - [http://apitest1.kainosbp.com:8888](http://apitest1.kainosbp.com:8888/v1/chain/get_info) - operated by Kainos BP
-- [http://api.telosvancouver.io:8888](http://api.telosvancouver.io:8888/v1/chain/get_info) - operated by Telos Vancouver 
+- [http://api.telosvancouver.io:8888](http://api.telosvancouver.io:8888/v1/chain/get_info) - operated by [Telos Vancouver](https://www.telosvancouver.io/) 
 - [http://telos.eosbcn.com](http://telos.eosbcn.com/v1/chain/get_info) - operated by EOS BCN
 - [http://api.testnet.telos.eosindex.io](http://api.testnet.telos.eosindex.io/v1/chain/get_info) - operated by EOS Index
 - [http://api.telosmadrid.io](http://api.telosmadrid.io/v1/chain/get_info) - operated by Telos Madrid
