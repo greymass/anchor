@@ -79,7 +79,7 @@ class ToolsFormBidName extends Component<Props> {
         formErrors[name] = `invalid_${name}`;
         submitDisabled = true;
       } else if (name === 'bid' && Number(value.split(' ')[0]) > balance.EOS) {
-        formErrors[name] = 'not_enough_balance';
+        formErrors[name] = 'error_insufficient_balance';
         submitDisabled = true;
       } else if (name === 'newname' && value.length > 11) {
         formErrors[name] = 'newname_too_long';
