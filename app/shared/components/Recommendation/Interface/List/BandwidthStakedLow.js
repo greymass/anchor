@@ -23,6 +23,8 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
 
     const shouldDisplayWarning = netStaked < 1;
 
+    debugger
+
     return (shouldDisplayWarning)
       ? (
         <Message

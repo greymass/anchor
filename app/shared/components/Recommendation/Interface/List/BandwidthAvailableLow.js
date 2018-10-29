@@ -18,7 +18,7 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
     } = this.props;
 
     const shouldDisplayWarning = account.net_limit &&
-      Number(account.net_limit.available) < 10000;
+      Number(account.net_limit.available) < 3000;
 
     return (shouldDisplayWarning)
       ? (
