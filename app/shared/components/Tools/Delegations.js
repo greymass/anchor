@@ -144,7 +144,7 @@ class ToolsDelegations extends Component<Props> {
               </Table.Header>
               <Table.Body>
                 {delegationsToDisplay.map((delegation) => (
-                  <Table.Row>
+                  <Table.Row key={delegation.to}>
                     <Table.Cell>
                       {delegation.to}
                     </Table.Cell>

@@ -28,7 +28,7 @@ class ToolsFormBidNameConfirming extends Component<Props> {
           <Table.Body>
             {formAttributes.map((formAttribute) => {
               return (
-                <Table.Row>
+                <Table.Row key={formAttribute}>
                   <Table.Cell width={8}>
                     {t(`tools_form_bid_name_${formAttribute}`)}
                   </Table.Cell>
