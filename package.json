@@ -17,12 +17,12 @@
     "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "package": "npm run build && build --publish never",
-    "package-all": "npm run build && build -mwl --publish never",
+    "package-all": "npm run build && build -m --linux --win --x64 --publish never",
     "package-linux": "npm run build && build --linux --publish never",
     "package-win": "npm run build && build --win --x64 --publish never",
     "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && npm run build-dll && electron-builder install-app-deps && node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "prestart": "npm run build",
-    "release": "npm run build && build -mwl",
+    "release": "npm run build && build -m --linux --win --x64",
     "start": "cross-env NODE_ENV=production electron ./app/",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main/main.dev",
     "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js"
@@ -69,8 +69,7 @@
         {
           "target": "nsis",
           "arch": [
-            "x64",
-            "ia32"
+            "x64"
           ]
         }
       ]
@@ -103,8 +102,7 @@
           "arch": [
             "armv7l",
             "arm64",
-            "x64",
-            "ia32"
+            "x64"
           ]
         },
         "AppImage",
