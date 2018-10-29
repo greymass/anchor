@@ -118,11 +118,11 @@ const paneMapping = [
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'utilities',
   },
-  {
-    element: ToolsBidName,
-    modes: ['hot', 'watch'],
-    name: 'bid_name',
-  },
+  // {
+  //   element: ToolsBidName,
+  //   modes: ['hot', 'watch'],
+  //   name: 'bid_name',
+  // },
   {
     element: ToolsContacts,
     modes: ['hot', 'ledger', 'watch'],
