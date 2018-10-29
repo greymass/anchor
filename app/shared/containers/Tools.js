@@ -64,7 +64,7 @@ const paneMapping = [
   {
     element: ToolsGovernanceProposals,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
-    name: 'governance_proposals_test',
+    name: 'governance_proposals_beta',
     requiredContract: 'proposals'
   },
   {
