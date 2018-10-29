@@ -18,10 +18,11 @@ class RecommendationsInterfaceContainer extends Component<Props> {
       accounts,
       settings
     } = this.props;
-
+    const account = accounts[settings.account];
+    if (!account) return false;
     return (
       <RecommendationInterfaceList
-        account={accounts[settings.account]}
+        account={account}
       />
     );
   }
