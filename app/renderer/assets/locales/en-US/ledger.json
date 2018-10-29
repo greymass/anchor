@@ -1,7 +1,7 @@
 {
   "ledger_account_convert_ledger_change_path_button": "Change Index",
   "ledger_account_convert_ledger_complete_button": "Modify Account Permissions",
-  "ledger_account_convert_ledger_confirm_content": "The Public Key below has been retrieved from the Ledger with the specified path. Use the 'Verify on Ledger' button to confirm this key with your device, and then click 'Change Key' to alter this account to use the Ledger.",
+  "ledger_account_convert_ledger_confirm_content": "The Public Key below has been retrieved from the Ledger with the specified path. Use the 'Verify on Ledger' button to confirm this key with your device, and then click 'Modify Account Permissions' to alter this account to use the Ledger.",
   "ledger_account_convert_ledger_confirm_header": "Confirm the Public Key with the Ledger",
   "ledger_account_convert_ledger_converting_complete": "Complete Conversion",
   "ledger_account_convert_ledger_converting_force_update": "Update Account",
