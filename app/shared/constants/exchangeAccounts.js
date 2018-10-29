@@ -1,7 +1,9 @@
 const exchangeAccounts = [
   'binancecleos',
   'bitfinexdep1',
-  'krakenkraken'
+  'chainrifteos',
+  'krakenkraken',
+  'ramtokendapp'
 ];
 
 export default exchangeAccounts;
