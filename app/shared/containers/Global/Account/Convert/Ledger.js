@@ -12,10 +12,12 @@ import * as AccountActions from '../../../../actions/accounts';
 import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
 import * as SettingsActions from '../../../../actions/settings';
 import * as SystemStateActions from '../../../../actions/system/systemstate';
+import * as TransactionActions from '../../../../actions/transaction';
 import * as UpdateAuthActions from '../../../../actions/system/updateauth';
 import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
 
+import WalletPanelButtonBroadcast from '../../../../components/Wallet/Panel/Button/Broadcast';
 import ToolsModalPermissionAuthSet from '../../../../components/Tools/Modal/Permissions/Auth/Set';
 
 import EOSAccount from '../../../../utils/EOS/Account';
@@ -119,6 +121,7 @@ class GlobalAccountConvertLedger extends Component<Props> {
       settings,
       system,
       t,
+      transaction,
       wallets
     } = this.props;
     const {
@@ -340,26 +343,66 @@ class GlobalAccountConvertLedger extends Component<Props> {
                         floated="left"
                         onClick={this.updateAccount}
                       />
-                      {/* {(wallet.mode !== 'hot')
-                        ? ( */}
+                      {(wallet.mode !== 'hot')
+                        ? (
                           <Button
                             content={t('ledger_account_convert_ledger_converting_reset')}
                             floated="left"
                             onClick={this.stopPrepare}
                           />
-                        {/* )
+                        )
                         : false
-                      } */}
+                      }
                     </React.Fragment>
                   )
                   : false
                 }
-                <Button
-                  content={t('ledger_account_convert_ledger_converting_complete')}
-                  disabled={!keysMatch}
-                  onClick={this.completePrepare}
-                  primary
-                />
+                {(isValid && !keysMatch && ['FAILURE', 'PENDING', 'SUCCESS'].includes(system.UPDATEAUTH))
+                  ? (
+                    <ToolsModalPermissionAuthSet
+                      account={account}
+                      actions={actions}
+                      authorization={authorization}
+                      auth={data}
+                      blockExplorers={blockExplorers}
+                      newkey={newkey}
+                      onFormSubmit={this.onFormSubmit}
+                      open
+                      path={path}
+                      pubkey={pubkey}
+                      settings={settings}
+                      system={system}
+                    />
+                  )
+                  : false
+                }
+                {(isValid && !keysMatch && settings.walletMode === 'watch')
+                  ? (
+                    <WalletPanelButtonBroadcast
+                      actions={actions}
+                      blockExplorers={blockExplorers}
+                      button={{
+                        color: 'purple',
+                        content: t('wallet:wallet_panel_wallet_broadcast'),
+                        icon: 'wifi'
+                      }}
+                      settings={settings}
+                      system={system}
+                      transaction={transaction}
+                    />
+                  )
+                  : false
+                }
+                {(keysMatch)
+                  ? (
+                    <Button
+                      content={t('ledger_account_convert_ledger_converting_complete')}
+                      onClick={this.completePrepare}
+                      primary
+                    />
+                  )
+                  : false
+                }
               </Modal.Actions>
             </React.Fragment>
           )
@@ -498,6 +541,7 @@ function mapStateToProps(state) {
     settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
     system: state.system,
+    transaction: state.transaction,
     wallet: state.wallet,
     wallets: state.wallets
   };
@@ -510,6 +554,7 @@ function mapDispatchToProps(dispatch) {
       ...HardwareLedgerActions,
       ...SettingsActions,
       ...SystemStateActions,
+      ...TransactionActions,
       ...UpdateAuthActions,
       ...WalletActions,
       ...WalletsActions,
