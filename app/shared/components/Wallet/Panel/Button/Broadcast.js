@@ -15,17 +15,23 @@ class WalletPanelButtonBroadcast extends Component<Props> {
       t,
       transaction
     } = this.props;
+    let {
+      button
+    } = this.props;
+    if (!button) {
+      button = {
+        color: 'purple',
+        content: t('wallet_panel_wallet_broadcast'),
+        fluid: true,
+        icon: 'wifi'
+      };
+    }
     return (
       <GlobalTransactionModal
         actionName="TRANSACTION_BROADCAST"
         actions={actions}
         blockExplorers={blockExplorers}
-        button={{
-          color: 'purple',
-          content: t('wallet_panel_wallet_broadcast'),
-          fluid: true,
-          icon: 'wifi'
-        }}
+        button={button}
         content={(
           <WalletModalContentBroadcast
             actions={actions}
