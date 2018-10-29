@@ -10,12 +10,6 @@ export function getBidForName(name) {
       type: types.SYSTEM_NAMEBID_PENDING
     });
     const { connection, settings } = getState();
-    // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') {
-      return dispatch({
-        type: types.SYSTEM_NAMEBID_FAILURE
-      });
-    }
 
     const query = {
       code: 'eosio',
