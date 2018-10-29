@@ -206,11 +206,11 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
       if (delegatedBw > 1) {
-        formErrors.delegatedBw = 'not_enough_balance';
+        formErrors.delegatedBw = 'error_insufficient_balance';
       } else if (delegatedCpu > 1) {
-        formErrors.delegatedCpu = 'not_enough_balance';
+        formErrors.delegatedCpu = 'error_insufficient_balance';
       } else {
-        formErrors.ramAmount = 'not_enough_balance';
+        formErrors.ramAmount = 'error_insufficient_balance';
       }
 
       submitDisabled = true;
@@ -427,7 +427,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                 {(shouldShowDelegatedResourceWarning)
                   ? (
                     <Message
-                      content={t('tools_form_create_account_delegated_resources_warning')}
+                      content={t('tools_form_create_account_delegated_resources_warning_message')}
                       icon="info circle"
                       warning
                     />
