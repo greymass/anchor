@@ -55,6 +55,7 @@ class ToolsWallets extends Component<Props> {
                   <ToolsTableRowWallet
                     actions={actions}
                     current={wallet}
+                    key={JSON.stringify(wallet)}
                     settings={settings}
                     status={status}
                     wallet={w}
