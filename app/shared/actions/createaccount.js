@@ -1,4 +1,4 @@
-import { Decimal } from 'decimal.js';
+import { get, set } from 'dot-prop-immutable';
 
 import * as types from './types';
 import * as AccountActions from './accounts';
@@ -55,13 +55,32 @@ export function createAccount(
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     }).then((tx) => {
+      // Hack for account creation - able to remove with eosjs v20 upgrade
+      let transaction = Object.assign({}, tx);
+      const firstAction = get(tx, 'transaction.transaction.actions.0.name', 'newaccount');
+      const ownerAccounts = get(tx, 'transaction.transaction.actions.0.data.owner.accounts');
+      const activeAccounts = get(tx, 'transaction.transaction.actions.0.data.active.accounts');
+      if (firstAction === 'newaccount') {
+        if (ownerAccounts && ownerAccounts.length > 0) {
+          if (ownerAccounts[0].permission.actor === '' && ownerAccounts[0].permission.permission === '') {
+            transaction = set(transaction, 'transaction.transaction.actions.0.data.owner.accounts', []);
+            transaction = set(transaction, 'transaction.transaction.actions.0.data.owner.waits', []);
+          }
+        }
+        if (activeAccounts && activeAccounts.length > 0) {
+          if (activeAccounts[0].permission.actor === '' && activeAccounts[0].permission.permission === '') {
+            transaction = set(transaction, 'transaction.transaction.actions.0.data.active.accounts', []);
+            transaction = set(transaction, 'transaction.transaction.actions.0.data.active.waits', []);
+          }
+        }
+      }
       setTimeout(() => {
         dispatch(AccountActions.getAccount(currentAccount));
       }, 500);
       return dispatch({
         payload: {
           connection,
-          tx
+          tx: transaction
         },
         type: types.SYSTEM_CREATEACCOUNT_SUCCESS
       });
