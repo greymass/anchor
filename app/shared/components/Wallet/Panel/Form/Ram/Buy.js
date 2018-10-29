@@ -118,7 +118,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const chainSymbolBalance = balance[connection.chainSymbol || 'EOS'];
 
     if (!chainSymbolBalance || Decimal(chainSymbolBalance).lessThan(priceOfRam)) {
-      return 'not_enough_balance';
+      return 'error_insufficient_balance';
     }
 
     return false;
