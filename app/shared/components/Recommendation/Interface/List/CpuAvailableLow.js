@@ -18,7 +18,8 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
     } = this.props;
 
     const shouldDisplayWarning = account.cpu_limit &&
-      Number(account.cpu_limit.available) < 10000;
+      Number(account.cpu_limit.available) < 3000;
+      debugger
 
     return (shouldDisplayWarning)
       ? (
