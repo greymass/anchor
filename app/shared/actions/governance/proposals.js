@@ -223,6 +223,17 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
       setTimeout(() => {
         dispatch(getVoteInfo(scope, account));
       }, 500);
+      // If this is an offline transaction, also store the ABI
+      if (!connection.sign) {
+        return eos(connection).getAbi(defaultContract).then((contract) =>
+          dispatch({
+            payload: {
+              contract,
+              tx
+            },
+            type: types.SYSTEM_GOVERNANCE_VOTE_PROPOSAL_SUCCESS
+          }));
+      }
       return dispatch({
         payload: { tx },
         type: types.SYSTEM_GOVERNANCE_VOTE_PROPOSAL_SUCCESS
