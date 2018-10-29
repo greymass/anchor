@@ -25,8 +25,8 @@ class RecommendationInterfaceList extends Component<Props> {
       t
     } = this.props;
 
-    const recommendations = listItemsMapping.map((RecommendationComponent) => {
-      return <RecommendationComponent account={account} />;
+    const recommendations = listItemsMapping.map((RecommendationComponent, idx) => {
+      return <RecommendationComponent key={idx} account={account} />;
     });
 
     return (
@@ -35,7 +35,6 @@ class RecommendationInterfaceList extends Component<Props> {
           content={t('recommendations_header_text')}
           floated="left"
           subheader={t('recommendations_subheader_text')}
-          padded
         />
         <Divider style={{ marginTop: '60px', marginBottom: '20px' }} />
         {recommendations}
