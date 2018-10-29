@@ -57,14 +57,14 @@ class GlobalAccountDropdown extends Component<Props> {
           }
           case 'ledger': {
             icon = {
-              color: 'green',
+              color: 'purple',
               name: 'usb'
             };
             break;
           }
           case 'watch': {
             icon = {
-              color: 'orange',
+              color: 'grey',
               name: 'eye'
             };
             break;
@@ -107,7 +107,7 @@ class GlobalAccountDropdown extends Component<Props> {
       }
       case 'ledger': {
         icon = {
-          color: 'green',
+          color: 'purple',
           name: 'usb'
         };
         break;
@@ -121,7 +121,7 @@ class GlobalAccountDropdown extends Component<Props> {
       }
       case 'watch': {
         icon = {
-          color: 'orange',
+          color: 'grey',
           name: 'eye'
         };
         break;
