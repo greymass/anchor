@@ -110,6 +110,7 @@ class ToolsGovernanceProposals extends Component<Props> {
               actions={actions}
               blockExplorers={blockExplorers}
               isLocked={isLocked}
+              key={proposal.proposal_name}
               proposal={proposal}
               scope={scope}
               settings={settings}
