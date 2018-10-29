@@ -104,11 +104,26 @@ class ToolsTableRowWallet extends Component<Props> {
         />
       ));
     }
+    let icon = 'disk';
     // Create delete button based on wallet
     switch (mode) {
-      case 'ledger':
+      case 'ledger': {
+        color = 'purple';
+        icon = 'usb';
+        items.push((
+          <Dropdown.Item
+            content={t('wallet:wallet_remove')}
+            disabled={isCurrentWallet}
+            icon="trash"
+            key="delete"
+            onClick={() => this.removeWallet(account, authorization)}
+          />
+        ));
+        break;
+      }
       case 'watch': {
-        color = 'orange';
+        color = 'grey';
+        icon = 'eye';
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
@@ -122,6 +137,7 @@ class ToolsTableRowWallet extends Component<Props> {
       }
       default: {
         color = 'green';
+        icon = 'id card';
         items.push((
           <GlobalButtonElevate
             onSuccess={() => this.removeWallet(account, authorization)}
@@ -169,7 +185,7 @@ class ToolsTableRowWallet extends Component<Props> {
                 basic
                 color={color}
                 content={t(`global:global_modal_account_import_${mode}_wallet`)}
-                icon={(mode === 'wait') ? 'loading sync' : 'disk'}
+                icon={icon}
                 position="left center"
               />
             )}
