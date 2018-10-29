@@ -57,6 +57,11 @@ const paneMapping = [
     name: 'index',
   },
   {
+    element: ToolsWallets,
+    modes: ['cold', 'hot', 'ledger', 'watch'],
+    name: 'wallets',
+  },
+  {
     header: true,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'governance',
@@ -84,24 +89,19 @@ const paneMapping = [
     name: 'delegations'
   },
   {
-    element: ToolsWallets,
-    modes: ['cold', 'hot', 'ledger', 'watch'],
-    name: 'wallets',
-  },
-  {
     element: ToolsPermissions,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'permissions',
   },
   {
-    element: ContractInterface,
-    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
-    name: 'contracts',
-  },
-  {
     element: RecommendationInterface,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'recommendation',
+  },
+  {
+    element: ContractInterface,
+    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'contracts',
   },
   {
     header: true,
