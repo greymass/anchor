@@ -98,7 +98,7 @@ class WelcomeAccountContainer extends Component<Props> {
         break;
       }
       default: {
-        if (ecc.isValidPublic(account, settings.blockchain.prefix) === true) {
+        if (ecc.isValidPublic(account) === true) {
           const { getAccountByKey } = actions;
           getAccountByKey(account);
         } else {

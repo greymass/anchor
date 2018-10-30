@@ -8,13 +8,13 @@ class WalletStatusActionsTableRowUndelegatebw extends Component<Props> {
     const {
       action,
       t,
-      connection
+      settings
     } = this.props;
     const {
       data
     } = action.action_trace.act;
     
-    const zeroBalance = '0.0000 ' + connection.keyPrefix;
+    const zeroBalance = '0.0000 ' + settings.blockchain.tokenSymbol;
 
     const unstakeToCpuDescription = (data.unstake_cpu_quantity !== zeroBalance) ? (
       `${data.unstake_cpu_quantity} ${t('actions_table_row_undelegatebw_text_two')}`

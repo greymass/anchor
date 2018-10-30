@@ -141,7 +141,7 @@ export function changeCoreTokenSymbol(symbol) {
   };
 }
 
-export function addBlockchain(blockchain, prefix, node, chainId) {
+export function addBlockchain(blockchain, tokenSymbol, node, chainId) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const { blockchains } = settings;
@@ -151,10 +151,10 @@ export function addBlockchain(blockchain, prefix, node, chainId) {
       chains = blockchains.slice(0);
     }
 
-    if (blockchain && blockchain.length > 0 && prefix && prefix.length > 0) {
+    if (blockchain && blockchain.length > 0 && tokenSymbol && tokenSymbol.length > 0) {
       chains.push({
         blockchain: blockchain,
-        prefix: prefix,
+        tokenSymbol: tokenSymbol,
         node: node,
         chainId: chainId
       });

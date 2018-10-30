@@ -44,12 +44,48 @@ class WalletPanelModalAccountRequest extends Component<Props> {
         const { actions } = this.props;
         actions.checkAccountAvailability(value);
       }
-      console.table(this.state);
+      
     });
+  }
+  onBeforeClose = ()=> {
+    const {onClose, system} = this.props;
+    this.setState({
+      confirming: false,
+      keys: {
+        active: '',
+        owner: ''
+      },
+      stage: 1,
+      values: {
+        accountName: '',
+        active: '',
+        password: '',
+        owner: ''
+      },
+      validated: {
+        accountName: false,
+        active: false,
+        owner: false,
+        keyBackup: false
+      },
+    });
+    system.CREATEACCOUNT = null;
+    system.CREATEACCOUNT_LAST_ERROR = null;
+    onClose();
   }
   onConfirm = () => this.setState({ confirming: true });
   onCancel = () => this.setState({ confirming: false });
-  onStageSelect = (stage) => this.setState({ confirming: false, stage });
+  onStageSelect = (stage) => {
+    const {
+      system
+    } = this.props;
+    this.setState({ confirming: false, stage })
+    
+    if (stage < 3){
+      system.CREATEACCOUNT = null;
+      system.CREATEACCOUNT_LAST_ERROR = null;
+    };
+  }
   setPrivateKey = (type, publicKey, privateKey) => {
     const keys = { ...this.state.keys };
     keys[type] = {
@@ -65,8 +101,6 @@ class WalletPanelModalAccountRequest extends Component<Props> {
     const {
       actions,
       connection,
-      history,
-      onClose,
       open,
       settings,
       system,
@@ -144,7 +178,7 @@ class WalletPanelModalAccountRequest extends Component<Props> {
         closeIcon={false}
         closeOnDimmerClick={false}
         trigger={trigger}
-        onClose={onClose}
+        onClose={this.onBeforeClose}
         open={open}
         size="fullscreen"
       >
@@ -188,7 +222,7 @@ class WalletPanelModalAccountRequest extends Component<Props> {
         <Modal.Actions>
           <Container textAlign="center">
             <Button
-              onClick={onClose}
+              onClick={this.onBeforeClose}
             >
               <Icon name="x" /> {t('close')}
             </Button>

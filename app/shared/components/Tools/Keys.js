@@ -20,7 +20,7 @@ class ToolsKeys extends Component<Props> {
     const keys = this.state.keys.slice(0);
     PrivateKey.randomKey().then(privateKey => {
       const wif = privateKey.toWif();
-      const publicKey = privateKey.toPublic().toString(connection.keyPrefix);
+      const publicKey = privateKey.toPublic().toString();
       keys.push([publicKey, wif]);
       this.setState({ keys })
       return keys;

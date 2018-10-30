@@ -17,13 +17,12 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
   const uiStateKeeper = windowStateKeeper(store);
   const { name, version } = packageJson;
   const title = `${name} - ${version}`;
-
   const ui = new BrowserWindow({
     closable,
     x: uiStateKeeper.x,
     y: uiStateKeeper.y,
-    width: uiStateKeeper.width,
-    height: uiStateKeeper.height,
+    width: uiStateKeeper.width|| 930,
+    height: uiStateKeeper.height|| 775,
     title,
     show: true,
     resizable: true,

@@ -8,61 +8,59 @@ export function getBlockExplorers() {
     dispatch({
       type: types.SYSTEM_BLOCKEXPLORERS_PENDING
     });
-    const { connection } = getState();
-    // Don't retrieve if we're not on mainnet
-    if (connection.chain && connection.chain.toLowerCase().indexOf('mainnet') === -1) {
-      return dispatch({
-        type: types.SYSTEM_BLOCKEXPLORERS_FAILURE
-      });
-    }
-    const query = {
-      json: true,
-      code: 'blockexplorers',
-      scope: 'blockexplorers',
-      table: 'blockexplorers',
-      limit: 100,
-    };
-
     const rows = [
       {
+        name: 'telosfoundation.io',
+        patterns: {
+          account: 'https://monitor.telosfoundation.io/account/{account}',
+          txid: 'https://monitor.telosfoundation.io/transaction/{txid}',
+          tokenSymbol: 'TLOS'
+        }
+      },
+      {
         name: 'bloks.io',
+        tokenSymbol: 'EOS',
         patterns: {
           account: 'https://www.bloks.io/account/{account}',
-          txid: 'https://www.bloks.io/transaction/{txid}'
+          txid: 'https://www.bloks.io/transaction/{txid}',
+          tokenSymbol: 'EOS'
         }
       },
       {
         name: 'eosflare.io',
+        tokenSymbol: 'EOS',
         patterns: {
           account: 'https://eosflare.io/account/{account}',
-          txid: 'https://eosflare.io/tx/{txid}'
+          txid: 'https://eosflare.io/tx/{txid}',
+          tokenSymbol: 'EOS'
         }
       },
       {
         name: 'eosmonitor.io',
+        tokenSymbol: 'EOS',
         patterns: {
           account: 'https://eosmonitor.io/account/{account}',
-          txid: 'https://eosmonitor.io/txn/{txid}'
+          txid: 'https://eosmonitor.io/txn/{txid}',
+          tokenSymbol: 'EOS'
         }
       },
       {
         name: 'eospark.com',
         patterns: {
           account: 'https://eospark.com/MainNet/account/{account}',
-          txid: 'https://eospark.com/MainNet/tx/{txid}'
+          txid: 'https://eospark.com/MainNet/tx/{txid}',
+          tokenSymbol: 'EOS'
         }
       },
       {
         name: 'eosweb.net',
         patterns: {
           account: 'https://eosweb.net/account/{account}',
-          txid: 'https://eosweb.net/transaction/{txid}'
+          txid: 'https://eosweb.net/transaction/{txid}',
+          tokenSymbol: 'EOS'
         }
       }
     ];
-
-    // eos(connection).getTableRows(query).then((results) => {
-    //   const { rows } = results;
 
     const sortedList = sortBy(rows, 'name');
 
@@ -78,10 +76,6 @@ export function getBlockExplorers() {
         blockExplorers
       }
     });
-    // }).catch((err) => dispatch({
-    //   type: types.SYSTEM_BLOCKEXPLORERS_FAILURE,
-    //   payload: { err },
-    // }));
   };
 }
 

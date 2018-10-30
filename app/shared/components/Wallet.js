@@ -12,15 +12,16 @@ type Props = {
   actionHistories: {},
   actions: {},
   balances: {},
+  balances: {},
   blockExplorers: {},
   globals: {},
   keys: {},
   settings: {},
+  system: {},
+  tables: {},
+  transaction: {},
   validate: {},
   wallet: {},
-  balances: {},
-  system: {},
-  transaction: {}
 };
 
 export default class Wallet extends Component<Props> {
@@ -34,14 +35,15 @@ export default class Wallet extends Component<Props> {
       balances,
       blockExplorers,
       chain,
+      connection,
       globals,
       keys,
       settings,
       system,
+      tables,
       transaction,
       validate,
-      wallet,
-      connection
+      wallet
     } = this.props;
     return (
       <Grid divided>
@@ -71,12 +73,13 @@ export default class Wallet extends Component<Props> {
               balances={balances}
               blockExplorers={blockExplorers}
               chain={chain}
+              connection={connection}
               globals={globals}
               keys={keys}
               settings={settings}
+              tables={tables}
               validate={validate}
               wallet={wallet}
-              connection={connection}
             />
           </Grid.Column>
         </Grid.Row>

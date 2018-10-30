@@ -22,11 +22,13 @@ class GlobalBlockchainDropdown extends Component<Props> {
     this.setState({ open: !this.state.open });
   }
   swapChain = (blockchain) => {
-    const { actions } = this.props;
+    const { actions, blockExplorers } = this.props;
     actions.setSetting('blockchain', blockchain);
     actions.setSettingWithValidation('node', blockchain.node);
-    actions.changeCoreTokenSymbol(blockchain.prefix);
+    actions.changeCoreTokenSymbol(blockchain.tokenSymbol);
     actions.setSetting('blockchainSelected', true);
+    if (this.props.onChange)
+      this.props.onChange('node', blockchain.node);
   }
   clearChain = () => {
     const { actions } = this.props;
@@ -37,8 +39,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
   render() {
     const {
       settings,
-      isWelcomePage,
-      actions
+      isWelcomePage
     } = this.props;
     if (!settings.blockchains || settings.blockchains.length === 0) {
       return false;

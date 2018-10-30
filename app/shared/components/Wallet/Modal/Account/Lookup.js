@@ -15,7 +15,7 @@ export default class WalletModalAccountLookup extends Component<Props> {
   onChange = (e, { value }) => {
     this.setState({
       key: value,
-      valid: (ecc.isValidPublic(value, this.props.settings.blockchain.prefix) === true)
+      valid: (ecc.isValidPublic(value) === true)
     }, () => {
       const { key, valid } = this.state;
       if (valid) {
@@ -70,12 +70,12 @@ export default class WalletModalAccountLookup extends Component<Props> {
             >
               <Header icon="unlock" content={t('wallet_account_lookup_modal_title')} />
               <Modal.Content>
-                <h3>{t('wallet_account_lookup_modal_description', {tokenSymbol:settings.blockchain.prefix})}</h3>
+                <h3>{t('wallet_account_lookup_modal_description', {tokenSymbol:settings.blockchain.tokenSymbol})}</h3>
                 <Form.Field
                   autoFocus
                   control={Input}
                   fluid
-                  label={t('wallet_account_lookup_modal_field_label', {tokenSymbol:settings.blockchain.prefix})}
+                  label={t('wallet_account_lookup_modal_field_label', {tokenSymbol:settings.blockchain.tokenSymbol})}
                   onChange={this.onChange}
                   onKeyPress={this.onKeyPress}
                 />

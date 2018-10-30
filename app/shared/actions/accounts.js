@@ -87,6 +87,29 @@ export function checkAccountAvailability(account = '') {
   };
 }
 
+export function checkAccountExists(account = '') {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_ACCOUNT_EXISTS_PENDING,
+      payload: { account_name: account }
+    });
+    const {
+      connection,
+      settings
+    } = getState();
+     if (account && (settings.node || settings.node.length !== 0)) {
+      eos(connection).getAccount(account).then(() => dispatch({
+        type: types.SYSTEM_ACCOUNT_EXISTS_SUCCESS,
+        payload: { account_name: account }
+      })).catch((err) => dispatch({
+        type: types.SYSTEM_ACCOUNT_EXISTS_FAILURE,
+        payload: { err }
+      }));
+    }
+  };
+}
+
+
 export function getAccount(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -107,8 +130,8 @@ export function getAccount(account = '') {
         const modified = Object.assign({}, results);
         if (!modified.self_delegated_bandwidth) {
           modified.self_delegated_bandwidth = {
-            cpu_weight: '0.0000 ' + connection.keyPrefix,
-            net_weight: '0.0000 ' + connection.keyPrefix
+            cpu_weight: '0.0000 ' + settings.blockchain.tokenSymbol,
+            net_weight: '0.0000 ' + settings.blockchain.tokenSymbol
           };
         }
         // If a proxy voter is set, cache it's data for vote referencing
@@ -215,7 +238,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
       const { customTokens } = settings;
-      let selectedTokens = ['eosio.token:' + settings.blockchain.prefix];
+      let selectedTokens = ['eosio.token:' + settings.blockchain.tokenSymbol];
       if (customTokens && customTokens.length > 0) {
         selectedTokens = [...customTokens, ...selectedTokens];
       }
@@ -257,7 +280,11 @@ function formatPrecisions(balances) {
   for (let i = 0; i < balances.length; i += 1) {
     const [amount, symbol] = balances[i].split(' ');
     const [, suffix] = amount.split('.');
-    precision[symbol] = suffix.length;
+    var suffixLen = 0;
+    if(suffix !== undefined) {
+        suffixLen = suffix.length;
+    }
+    precision[symbol] = suffixLen;
   }
   return precision;
 }
@@ -310,6 +337,7 @@ export function clearAccountByKey() {
 
 export default {
   checkAccountAvailability,
+  checkAccountExists,
   clearAccountByKey,
   clearAccountCache,
   getAccount,

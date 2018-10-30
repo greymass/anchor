@@ -1,4 +1,5 @@
 import { Decimal } from 'decimal.js';
+import { findIndex } from 'lodash';
 
 import * as types from './types';
 
@@ -6,25 +7,35 @@ import { delegatebwParams } from './system/delegatebw';
 import { undelegatebwParams } from './system/undelegatebw';
 
 import * as AccountActions from './accounts';
+import * as TableActions from './table';
 import eos from './helpers/eos';
 
-export function setStake(account, netAmount, cpuAmount) {
+export function setStake(accountName, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      accounts,
+      connection,
+      tables,
+      settings
     } = getState();
+
+    const currentAccount = accounts[settings.account];
+     const delegations = tables &&
+                        tables.eosio &&
+                        tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband.rows;
 
     const {
       increaseInStake,
       decreaseInStake
-    } = getStakeChanges(account, netAmount, cpuAmount);
+    } = getStakeChanges(currentAccount, accountName, delegations, netAmount, cpuAmount, settings);
 
     dispatch({ type: types.SYSTEM_STAKE_PENDING });
     return eos(connection, true).transaction(tr => {
       if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
         tr.delegatebw(delegatebwParams(
-          account.account_name,
-          account.account_name,
+          currentAccount.account_name,
+          accountName,
           increaseInStake.netAmount,
           increaseInStake.cpuAmount,
           0,
@@ -33,8 +44,8 @@ export function setStake(account, netAmount, cpuAmount) {
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
         tr.undelegatebw(undelegatebwParams(
-          account.account_name,
-          account.account_name,
+          currentAccount.account_name,
+          accountName,
           decreaseInStake.netAmount,
           decreaseInStake.cpuAmount,
           connection
@@ -46,7 +57,11 @@ export function setStake(account, netAmount, cpuAmount) {
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
-        dispatch(AccountActions.getAccount(account.account_name));
+        if (accountName === settings.account) {
+          dispatch(AccountActions.getAccount(accountName));
+        } else {
+          dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
+        }
       }, 500);
       return dispatch({
         payload: { tx },
@@ -69,11 +84,24 @@ export function resetStakeForm() {
   };
 }
 
-function getStakeChanges(account, nextNetAmount, nextCpuAmount) {
+function getStakeChanges(currentAccount, accountName, delegations, nextNetAmount, nextCpuAmount, settings) {
+  let accountResources;
+   if (accountName !== currentAccount.account_name) {
+    const index = findIndex(delegations, { to: accountName });
+     if (index === -1) {
+      accountResources = { 
+        cpu_weight: '0 ' + settings.blockchain.tokenSymbol, 
+        net_weight: '0 ' + settings.blockchain.tokenSymbol 
+      };
+    } else {
+      accountResources = delegations[index];
+    }
+  }
+
   const {
     cpu_weight,
     net_weight
-  } = account.self_delegated_bandwidth;
+  } = accountResources || currentAccount.self_delegated_bandwidth;
 
   const currentCpuAmount = new Decimal(cpu_weight.split(' ')[0]);
   const currentNetAmount = new Decimal(net_weight.split(' ')[0]);

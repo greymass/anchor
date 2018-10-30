@@ -28,7 +28,8 @@ class WalletStatusBalances extends Component<Props> {
       refundDate,
       tokens,
       totalBeingUnstaked,
-      totalStaked,
+      totalStakedToSelf,
+      totalStakedToOthers,
       totalTokens
     } = statsFetcher.fetchAll();
     const contracts = balances.__contracts;
@@ -36,10 +37,10 @@ class WalletStatusBalances extends Component<Props> {
     const watchedTokens = (settings.customTokens) ? settings.customTokens.map((token) => token.split(':')[1]) : [];
     const rows = [
       (
-        <Table.Row key={settings.blockchain.prefix}>
+        <Table.Row key={settings.blockchain.tokenSymbol}>
           <Table.Cell width={2}>
             <Header>
-            {settings.blockchain.prefix}
+            {settings.blockchain.tokenSymbol}
               <Header.Subheader>
                 eosio.token
               </Header.Subheader>
@@ -50,11 +51,15 @@ class WalletStatusBalances extends Component<Props> {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell width={4}>{t('wallet_status_liquid')}</Table.Cell>
-                  <Table.Cell>{(tokens[settings.blockchain.prefix]) ? tokens[settings.blockchain.prefix].toFixed(4) : '0.0000'} {settings.blockchain.prefix}</Table.Cell>
+                  <Table.Cell>{(tokens[settings.blockchain.tokenSymbol]) ? tokens[settings.blockchain.tokenSymbol].toFixed(4) : '0.0000'} {settings.blockchain.tokenSymbol}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
-                  <Table.Cell>{t('wallet_status_resources_staked')}</Table.Cell>
-                  <Table.Cell>{totalStaked.toFixed(4)} {settings.blockchain.prefix} </Table.Cell>
+                  <Table.Cell>{t('wallet_status_balances_staked_to_self')}</Table.Cell>
+                  <Table.Cell>{totalStakedToSelf.toFixed(4)} {settings.blockchain.tokenSymbol} </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>{t('wallet_status_balances_staked_to_others')}</Table.Cell>
+                  <Table.Cell>{totalStakedToOthers.toFixed(4)} {settings.blockchain.tokenSymbol} </Table.Cell>
                 </Table.Row>
                 {(refundDate)
                   ? (
@@ -73,7 +78,7 @@ class WalletStatusBalances extends Component<Props> {
                           )
                           : false
                         }
-                        {totalBeingUnstaked.toFixed(4)} {settings.blockchain.prefix} (<TimeAgo date={refundDate} />)
+                        {totalBeingUnstaked.toFixed(4)} {settings.blockchain.tokenSymbol} (<TimeAgo date={refundDate} />)
                       </Table.Cell>
                     </Table.Row>
                   )
@@ -81,7 +86,7 @@ class WalletStatusBalances extends Component<Props> {
                 }
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_total_balance')}</Table.Cell>
-                  <Table.Cell>{totalTokens.toFixed(4)} {settings.blockchain.prefix}</Table.Cell>
+                  <Table.Cell>{totalTokens.toFixed(4)} {settings.blockchain.tokenSymbol}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>{t('wallet_status_ram_amount')}</Table.Cell>
@@ -100,7 +105,7 @@ class WalletStatusBalances extends Component<Props> {
     ];
     // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
-      if (token === settings.blockchain.prefix || watchedTokens.indexOf(token) === -1) return;
+      if (token === settings.blockchain.tokenSymbol || watchedTokens.indexOf(token) === -1) return;
       let contract = 'unknown';
       let precision = {
         [token]: 4

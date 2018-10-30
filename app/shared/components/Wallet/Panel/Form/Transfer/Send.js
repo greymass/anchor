@@ -16,12 +16,12 @@ class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
     super(props);
     
-    const { connection } = props;
+    const { settings } = props;
     this.state = {
-      asset: connection.keyPrefix,
+      asset: settings.blockchain.tokenSymbol,
       confirming: false,
       formError: false,
-      from: props.settings.account,
+      from: settings.account,
       memo: '',
       memoValid: true,
       quantity: '',
@@ -85,7 +85,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       const position = findIndex(contacts, { accountName: value });
 
       if (position > -1) {
-        this.onChange(e, { name: 'memo', value: contacts[position].defaultMemo, valid: true });
+        this.onChange(e, { name: 'memo', value: contacts[position].defaultMemo || '', valid: true });
       }
     }
 
@@ -193,7 +193,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
-    console.table(this.state)
+    
 
     let exchangeWarning;
 

@@ -135,6 +135,13 @@ class Welcome extends Component<Props> {
             }
             {stageElement}
             <Container textAlign="center">
+            <Button
+                content="Generate Key Pair"
+                icon="plus"
+                size="small"
+                primary
+                style={{ marginTop: '1em', marginRight: '1em' }}
+              />
               <GlobalSettingsLanguage
                 actions={actions}
                 setLanguage={settings.lang}

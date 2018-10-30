@@ -45,6 +45,7 @@ class GlobalFormFieldAccount extends Component<Props> {
     const {
       autoFocus,
       contacts,
+      defaultValue,
       disabled,
       enableContacts,
       enableExchanges,
@@ -92,6 +93,7 @@ class GlobalFormFieldAccount extends Component<Props> {
       <Form.Field
         autoFocus={autoFocus}
         control={Input}
+        defaultValue={defaultValue}
         disabled={disabled}
         fluid={fluid}
         icon={icon}

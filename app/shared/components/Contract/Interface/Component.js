@@ -151,10 +151,10 @@ class ContractInterfaceComponent extends Component<Props> {
                       </Header.Content>
                     </Header>
                     <p>
-                      {t('interface_instructions_body_1', {tokenSymbol:settings.blockchain.prefix})}
+                      {t('interface_instructions_body_1', {tokenSymbol:settings.blockchain.tokenSymbol})}
                     </p>
                     <p>
-                      {t('interface_instructions_body_2', {tokenSymbol:settings.blockchain.prefix})}
+                      {t('interface_instructions_body_2', {tokenSymbol:settings.blockchain.tokenSymbol})}
                     </p>
                     <p>
                       {t('interface_instructions_body_3')}

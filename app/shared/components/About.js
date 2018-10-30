@@ -63,6 +63,11 @@ export default class About extends Component<Props> {
                           role="button"
                         >
                           https://telosfoundation.io
+                        </a> or <a
+                          onClick={() => this.openLink('https://eos.miami')}
+                          role="button"
+                        >
+                          https://eos.miami
                         </a>.
                       </p>
                     </Segment>

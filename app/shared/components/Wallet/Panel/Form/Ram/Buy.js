@@ -25,11 +25,11 @@ class WalletPanelFormRamBuy extends Component<Props> {
 
   constructor(props) {
     super(props);
-    const { account, connection } = props;
+    const { account, connection, settings } = props;
 
     this.state = {
       activeTab: 'byRAMAmount',
-      ramTabName: 'by' + connection.keyPrefix + 'Amount',
+      ramTabName: 'by' + settings.blockchain.tokenSymbol + 'Amount',
       ramUsage: account.ram_usage,
       ramQuota: account.ram_quota,
       ramToBuy: null,
@@ -97,7 +97,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
   errorsInForm = () => {
     const {
       balance,
-      connection
+      connection,
+      settings
     } = this.props;
 
     const {
@@ -115,7 +116,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
       return 'ram_has_to_be_over_minimum_amount';
     }
 
-    if (!balance[connection.keyPrefix] || Decimal(balance[connection.keyPrefix]).lessThan(priceOfRam)) {
+    if (!balance[settings.blockchain.tokenSymbol] || 
+      Decimal(balance[settings.blockchain.tokenSymbol]).lessThan(priceOfRam)) {
       return 'not_enough_balance';
     }
 
@@ -240,7 +242,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                   <Grid.Column width={8}>
                     <WalletPanelFormRamStats
                       connection={connection}
-                      EOSbalance={balance[connection.keyPrefix]}
+                      EOSbalance={balance[settings.blockchain.tokenSymbol]}
                       ramQuota={ramQuota}
                       ramUsage={ramUsage}
                       settings={settings}
@@ -275,7 +277,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
               buying
               ramAmount={ramToBuy}
               newRamAmount={ramQuota + Number(ramToBuy)}
-              EOSbalance={balance[connection.keyPrefix]}
+              EOSbalance={balance[settings.blockchain.tokenSymbol]}
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               priceOfRam={priceOfRam}

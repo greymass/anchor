@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { find } from 'lodash';
 
-import { Container, Icon, Header, Message, Segment, Table } from 'semantic-ui-react';
+import { Button, Container, Icon, Header, Message, Popup, Segment, Table } from 'semantic-ui-react';
 
 import ToolsModalPermissionAuth from './Modal/Permissions/Auth';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
@@ -139,7 +139,7 @@ class ToolsPermissions extends Component<Props> {
                   auth={data}
                   blockExplorers={blockExplorers}
                   button={{
-                    color: 'grey',
+                    color: 'purple',
                     content: t('tools_modal_permissions_auth_edit_button'),
                     fluid: false,
                     floated: 'right',
@@ -153,7 +153,21 @@ class ToolsPermissions extends Component<Props> {
                   connection={connection}
                 />
               )
-              : false
+              : (
+                <Popup
+                  content={t('tools_modal_permissions_auth_edit_button_disabled')}
+                  inverted
+                  position="top center"
+                  trigger={(
+                    <Button
+                      content={t('tools_modal_permissions_auth_edit_button')}
+                      floated="right"
+                      icon="pencil"
+                      size="small"
+                    />
+                  )}
+                />
+              )
             }
             <Header floated="left" size="medium">
               <Icon name="lock" />

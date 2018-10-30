@@ -51,7 +51,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
             </font>
 
 
-            {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} ${connection.keyPrefix}.`}
+            {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} ${settings.blockchain.tokenSymbol}.`}
           </Header>
           <Header>
             {t('ram_confirming_message_will_have')}
@@ -75,7 +75,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
               data={{
                 buyer: settings.account,
                 bytes: `${ramAmount} B`,
-                tokenSymbol: settings.blockchain.prefix
+                tokenSymbol: settings.blockchain.tokenSymbol
               }}
             />
           ) : ''}

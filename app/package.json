@@ -1,7 +1,7 @@
 {
   "name": "Sqrl",
   "productName": "Sqrl",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "",
   "main": "./main.prod.js",
   "author": {
@@ -14,5 +14,7 @@
     "postinstall": "npm run electron-rebuild"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "ipfs-api": "^25.0.0"
+  }
 }

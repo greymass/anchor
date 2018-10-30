@@ -8,13 +8,13 @@ class WalletStatusActionsTableRowDelegatebw extends Component<Props> {
     const {
       action,
       t,
-      connection
+      settings
     } = this.props;
     const {
       data
     } = action.action_trace.act;
 
-    const zeroBalance = '0.0000 ' + connection.keyPrefix;
+    const zeroBalance = '0.0000 ' + settings.blockchain.tokenSymbol;
 
     const stakeToCpuDescription = (data.stake_cpu_quantity !== zeroBalance) ? (
       `${data.stake_cpu_quantity} ${t('actions_table_row_delegatebw_text_two')}`

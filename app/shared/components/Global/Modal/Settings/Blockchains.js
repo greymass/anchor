@@ -9,7 +9,7 @@ import GlobalModalSettingsBlockchainForm from './Blockchains/Form';
 const initialState = {
   blockchainInfo: {
     blockchain: '',
-    prefix: '',
+    tokenSymbol: '',
     node: '',
     chainId:''
   },
@@ -27,7 +27,7 @@ class GlobalModalSettingsBlockchains extends Component<Props> {
 
     if (validate.NODE !== 'SUCCESS' && nextProps.validate.NODE === 'SUCCESS') {
       const { blockchainInfo, loading } = this.state;
-      blockchainInfo.prefix = blockchainInfo.prefix.toUpperCase();
+      blockchainInfo.tokenSymbol = blockchainInfo.tokenSymbol.toUpperCase();
       
       if (loading) {
         const {
@@ -70,13 +70,13 @@ class GlobalModalSettingsBlockchains extends Component<Props> {
     const { blockchainInfo } = this.state;
     actions.addBlockchain(
       blockchainInfo.blockchain, 
-      blockchainInfo.prefix, 
+      blockchainInfo.tokenSymbol, 
       blockchainInfo.node,
       blockchainInfo.chainId);
     this.setState({ 
       blockchainInfo: {
         blockchain: '', 
-        prefix: '',
+        tokenSymbol: '',
         node: '',
         chainId: ''
       }}, () => {

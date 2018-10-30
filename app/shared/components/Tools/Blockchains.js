@@ -84,7 +84,7 @@ class ToolsBlockchains extends Component<Props> {
                     <Table.Row key={`${blockchain.chainId}`}>
                       <Table.Cell>
                         <Header>
-                          {blockchain.blockchain} ({blockchain.prefix})
+                          {blockchain.blockchain} ({blockchain.tokenSymbol})
                         </Header>
                       </Table.Cell>
                       <Table.Cell>

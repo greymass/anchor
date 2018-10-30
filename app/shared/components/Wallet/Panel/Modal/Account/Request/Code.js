@@ -41,8 +41,8 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
     if (settings.freeAccountCreated !== true){
       actions.createAccount(values.accountName, 
         values.active,
-        '1 ' + settings.blockchain.prefix, 
-        '1 ' + settings.blockchain.prefix, 
+        '1 ' + settings.blockchain.tokenSymbol, 
+        '1 ' + settings.blockchain.tokenSymbol, 
         values.owner, 
         4000, 0);
     }
@@ -67,6 +67,12 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
     if (system.CREATEACCOUNT === 'SUCCESS' && settings.account !== values.accountName){
       actions.setSetting('account', values.accountName); // this will pre-pop field when user goes to 'Lookup account' section
     }
+
+    let lastErrorMessage = '';
+    if (system.CREATEACCOUNT === 'FAILURE' && system[`CREATEACCOUNT_LAST_ERROR`].error) {
+      lastErrorMessage = system.CREATEACCOUNT_LAST_ERROR.error.code + ':' + system.CREATEACCOUNT_LAST_ERROR.error.what;
+    }
+
     return (
       <Segment loading={system.CREATEACCOUNT === 'PENDING'}>
         <Header>
@@ -83,7 +89,7 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
             iconStyle="square"
             name={null}
             src={confirmInfo}
-            style={{ padding: '1em' }}
+            style={{ padding: '1em', fontSize: '8px' }}
             theme="harmonic"
           />
         </Segment>
@@ -107,18 +113,18 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
               warning
             />
           ) : ''}
+          {(lastErrorMessage.length > 0)
+          ? (
+            <Message
+              content={lastErrorMessage}
+              icon="info circle"
+              error
+            />
+          ) : ''}
           {(system.CREATEACCOUNT === 'SUCCESS')
           ? (
             <Message
               content={t('wallet_account_request_account_succeeded')}
-              icon="info circle"
-              warning
-            />
-          ) : ''}
-          {(accountCreated)
-          ? (
-            <Message
-              content={t('wallet_account_request_account_limit')}
               icon="info circle"
               warning
             />

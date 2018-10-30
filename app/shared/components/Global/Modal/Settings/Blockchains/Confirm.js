@@ -27,7 +27,7 @@ class GlobalModalSettingsBlockchainsConfirm extends Component<Props> {
                 {t('global_modal_settings_blockchain_confirm_prefix')}
               </Table.Cell>
               <Table.Cell>
-                {blockchain.prefix}
+                {blockchain.tokenSymbol}
               </Table.Cell>
             </Table.Row>
             <Table.Row>

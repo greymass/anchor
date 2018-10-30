@@ -29,7 +29,7 @@ class GlobalSettingsResourceDisplayFormat extends Component<Props> {
         onChange={this.onChange}
         options={options}
         selection={selection}
-        value={defaultValue || false}
+        value={defaultValue || true}
       />
     );
   }

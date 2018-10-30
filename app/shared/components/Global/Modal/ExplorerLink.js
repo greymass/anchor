@@ -1,6 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import GlobalModalDangerLink from './DangerLink';
+import blockexplorers from '../../../actions/blockexplorers';
+import { type } from 'os';
 
 export default class GlobalModalExplorerLink extends Component<Props> {
   render() {
@@ -12,14 +14,23 @@ export default class GlobalModalExplorerLink extends Component<Props> {
       settings
     } = this.props;
 
-    const { blockExplorer: selected } = settings;
-    const blockExplorer = (selected in blockExplorers)
-      ? blockExplorers[selected]
-      : blockExplorers[Object.keys(blockExplorers)[0]];
+    // look for compatible block explorer based on token, else use first
+    const blockExplorerKeys = Object.keys(blockExplorers);
+    let blockExplorer = blockExplorers[blockExplorerKeys[0]];
+    blockExplorerKeys.forEach( (blockExplorerKey) => {
+      const explorer = blockExplorers[blockExplorerKey];
+      if (explorer.tokenSymbol == settings.blockchain.tokenSymbol){
+        blockExplorer = Object.assign({name: blockExplorerKey}, explorer);
+        return;
+      }
+    });
 
-    const urlPartsWithoutVariable = blockExplorer[linkType].split(`{${linkType}}`);
-
-    const generatedLink = `${urlPartsWithoutVariable[0]}${linkData}${urlPartsWithoutVariable[1]}`;
+    let urlPartsWithoutVariable;
+    let generatedLink;
+    if (blockExplorer && blockExplorer[linkType]){
+      urlPartsWithoutVariable = blockExplorer[linkType].split(`{${linkType}}`);
+      generatedLink = `${urlPartsWithoutVariable[0]}${linkData}${urlPartsWithoutVariable[1]}`;
+    }
 
     return (
       <GlobalModalDangerLink

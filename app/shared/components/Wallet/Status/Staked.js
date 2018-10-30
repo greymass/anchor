@@ -11,6 +11,7 @@ class WalletStatusStaked extends Component<Props> {
     const {
       account,
       statsFetcher,
+      settings,
       t
     } = this.props;
 
@@ -18,11 +19,16 @@ class WalletStatusStaked extends Component<Props> {
       cpu_limit,
       net_limit,
       ram_quota,
-      ram_usage,
-      self_delegated_bandwidth,
-      total_resources
+      ram_usage
     } = account;
-
+    const no_delegation = {
+      cpu_weight: '0.0000 ' + settings.blockchain.tokenSymbol,
+      net_weight: '0.0000 ' + settings.blockchain.tokenSymbol
+    };
+    const self_delegated_bandwidth = account.self_delegated_bandwidth ? 
+      account.self_delegated_bandwidth : no_delegation;
+    const total_resources = account.total_resources ? 
+      account.total_resources : no_delegation;
     const {
       cpuWeight,
       netWeight

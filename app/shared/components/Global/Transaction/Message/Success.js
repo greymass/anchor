@@ -9,6 +9,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
   render() {
     const {
       blockExplorers,
+      hideClose,
       onClose,
       settings,
       t,
@@ -72,11 +73,14 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
           </Message>
         </Modal.Content>
         <Modal.Actions>
-          <Segment basic clearing>
-            <Button color="green" floated="right" onClick={onClose}>
-              <Icon name="checkmark" /> {t('close')}
-            </Button>
-          </Segment>
+          {(!hideClose)
+          ? (
+            <Segment basic clearing>
+              <Button color="green" floated="right" onClick={onClose}>
+                <Icon name="checkmark" /> {t('close')}
+              </Button>
+            </Segment>
+          ) : ''}
         </Modal.Actions>
       </Segment>
 

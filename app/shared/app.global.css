@@ -1,8 +1,10 @@
 @import url("semantic-ui/semantic.min.css");
 
 body {
-  background: #f1f0ee;
+  background: #F6F1E1;
 }
+
+a {     -webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;-ms-transition: all 0.3s ease;transition: all 0.3s ease; }
 
 .table tbody.visible.transition {
   display: table-row-group !important;
@@ -17,7 +19,7 @@ body {
 }
 
 .ui.grey.button {
-  background-color: #e0e1e2;
+  background-color: #DFDDD6;
   color: rgba(0,0,0,.6);
 }
 

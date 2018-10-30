@@ -14,7 +14,7 @@ class GlobalModalSettingsBlockchainsForm extends Component<Props> {
     } = this.props;
     const {
       blockchain,
-      prefix,
+      tokenSymbol,
       node
     } = values;
 
@@ -30,7 +30,7 @@ class GlobalModalSettingsBlockchainsForm extends Component<Props> {
           label={t('global_modal_settings_blockchain_form_blockchain_label')}
           name="blockchain"
           onChange={onChange}
-          placeholder={t('global_modal_settings_blockchain_form_blockchain_placeholder', {tokenSymbol:prefix})}
+          placeholder={t('global_modal_settings_blockchain_form_blockchain_placeholder', {tokenSymbol:tokenSymbol})}
           type="text"
           value={blockchain}
         />
@@ -38,11 +38,11 @@ class GlobalModalSettingsBlockchainsForm extends Component<Props> {
           control={Input}
           fluid
           label={t('global_modal_settings_blockchain_form_prefix_label')}
-          name="prefix"
+          name="tokenSymbol"
           onChange={onChange}
-          placeholder={t('global_modal_settings_blockchain_form_prefix_placeholder', {tokenSymbol:prefix})}
+          placeholder={t('global_modal_settings_blockchain_form_prefix_placeholder', {tokenSymbol:tokenSymbol})}
           type="text"
-          value={prefix}
+          value={tokenSymbol}
         />
         <Form.Field
           control={Input}

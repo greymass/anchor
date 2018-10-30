@@ -28,11 +28,11 @@ class WalletPanelFormRamSell extends Component<Props> {
 
   constructor(props) {
     super(props);
-    const { account, connection } = props;
+    const { account, settings } = props;
 
     this.state = {
       activeTab: 'byRAMAmount',
-      ramTabName: 'by' + connection.keyPrefix + 'Amount',
+      ramTabName: 'by' + settings.blockchain.tokenSymbol + 'Amount',
       confirming: false,
       formError: null,
       ramQuota: Number(account.ram_quota),
@@ -235,7 +235,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                   <Grid.Column width={8}>
                     <WalletPanelFormRamStats
                       connection={connection}
-                      EOSbalance={balances[settings.account][connection.keyPrefix]}
+                      EOSbalance={balances[settings.account][settings.blockchain.tokenSymbol]}
                       ramQuota={ramQuota}
                       ramUsage={ramUsage}
                       settings={settings}

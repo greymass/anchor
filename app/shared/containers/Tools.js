@@ -15,6 +15,8 @@ import ToolsBlockchains from '../components/Tools/Blockchains';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
+import ToolsDelegations from '../components/Tools/Delegations';
+//import ToolsGovernanceProposals from '../components/Tools/Governance/Proposals';
 import ToolsKeys from '../components/Tools/Keys';
 import ToolsKeysValidator from '../components/Tools/Keys/Validator';
 import ToolsStateChain from '../components/Tools/State/Chain';
@@ -30,9 +32,13 @@ import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
+//import * as ProposalsActions from '../actions/governance/proposals';
 import * as RegProxyActions from '../actions/system/regproxy';
+import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
 import * as SettingsActions from '../actions/settings';
+import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
+import * as TableActions from '../actions/table';
 import * as TransactionActions from '../actions/transaction';
 import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as UnregProxyActions from '../actions/system/unregproxy';
@@ -48,6 +54,16 @@ const paneMapping = [
   },
   {
     header: true,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'governance',
+  },
+  /*{
+    element: ToolsGovernanceProposals,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'governance_proposals_test'
+  },*/
+  {
+    header: true,
     modes: ['cold', 'hot', 'watch', 'skip'],
     name: 'wallet',
   },
@@ -60,6 +76,11 @@ const paneMapping = [
     element: ToolsBlockchains,
     modes: ['hot', 'watch'],
     name: 'blockchains',
+  },
+  {
+    element: ToolsDelegations,
+    modes: ['hot', 'watch', 'skip'],
+    name: 'delegations'
   },
   {
     element: ToolsWallets,
@@ -112,9 +133,9 @@ const paneMapping = [
     name: 'state',
   },
   {
-    element: ToolsStateWallet,
-    modes: ['cold', 'hot', 'skip', 'watch'],
-    name: 'state',
+    element: ToolsStateChain,
+    modes: ['hot', 'watch'],
+    name: 'state_chain',
   },
   {
     element: ToolsStateGlobals,
@@ -122,9 +143,9 @@ const paneMapping = [
     name: 'state_globals',
   },
   {
-    element: ToolsStateChain,
-    modes: ['hot', 'watch'],
-    name: 'state_chain',
+    element: ToolsStateWallet,
+    modes: ['cold', 'hot', 'skip', 'watch'],
+    name: 'state',
   },
   {
     header: true,
@@ -136,7 +157,7 @@ const paneMapping = [
     modes: ['cold', 'hot', 'skip', 'watch'],
     name: 'reset',
   },
-]
+];
 
 class ToolsContainer extends Component<Props> {
   getPanes() {
@@ -200,8 +221,10 @@ function mapStateToProps(state) {
     chain: state.chain,
     contracts: state.contracts,
     customtokens: state.customtokens,
+    tables: state.tables,
     globals: state.globals,
     keys: state.keys,
+    //proposals: state.proposals,
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
@@ -219,9 +242,13 @@ function mapDispatchToProps(dispatch) {
       ...CreateAccountActions,
       ...CustomTokensActions,
       ...GlobalsActions,
+      //...ProposalsActions,
       ...RegProxyActions,
       ...SettingsActions,
+      ...StakeActions,
       ...SystemStateActions,
+      ...RegproxyinfoActions,
+      ...TableActions,
       ...TransactionActions,
       ...UpdateAuthActions,
       ...UnregProxyActions,

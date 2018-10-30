@@ -89,7 +89,7 @@ class Tools extends Component<Props> {
               />
             </Form.Field>
             <Form.Field>
-              <label>{t('tools_change_spam_transfer_filter', {tokenSymbol:settings.blockchain.prefix})}</label>
+              <label>{t('tools_change_spam_transfer_filter', {tokenSymbol:settings.blockchain.tokenSymbol})}</label>
               <GlobalSettingsFilterSpamTransfers
                 actions={actions}
                 defaultValue={settings.filterSpamTransfersUnder}

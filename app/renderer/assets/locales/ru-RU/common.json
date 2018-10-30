@@ -1,6 +1,6 @@
 {
   "application_name": "Настольное приложение для блокцепи EOSIO (Sqrl)",
-  "application_version": "v0.5.2",
+  "application_version": "v0.5.3",
   "back": "Back",
   "block_height": "Номер Блока",
   "cancel": "Отменить",

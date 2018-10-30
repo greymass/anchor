@@ -17,6 +17,15 @@ class WalletStatus extends Component<Props> {
   state = {
     activeItem: 'balances',
   };
+  
+  componentDidMount = () => {
+    const {
+      actions,
+      settings
+    } = this.props;
+
+    actions.getTable('eosio', settings.account, 'delband');
+  }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
@@ -28,11 +37,12 @@ class WalletStatus extends Component<Props> {
       balances,
       blockExplorers,
       chain,
+      connection,
       globals,
       settings,
       t,
-      validate,
-      connection
+      tables,
+      validate
     } = this.props;
 
     const {
@@ -46,7 +56,12 @@ class WalletStatus extends Component<Props> {
     const account = accounts[settings.account] || {};
     const balance = balances[settings.account] || {};
 
-    const statsFetcher = new StatsFetcher(account, balance, settings);
+    const delegations = tables &&
+                        tables.eosio &&
+                        tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband.rows;
+
+    const statsFetcher = new StatsFetcher(account, balance, settings, delegations);
 
     let activeTab = (
       <Segment stacked>
@@ -78,6 +93,7 @@ class WalletStatus extends Component<Props> {
               account={account}
               statsFetcher={statsFetcher}
               connection={connection}
+              settings={settings}
             />
           );
           break;
@@ -138,7 +154,7 @@ class WalletStatus extends Component<Props> {
             <Menu.Item
               name="staked"
               icon="power cord"
-              content={t('wallet_status_tab_staked', {tokenSymbol:settings.blockchain.prefix})}
+              content={t('wallet_status_tab_staked', {tokenSymbol:settings.blockchain.tokenSymbol})}
               active={activeItem === 'staked'}
               onClick={this.handleItemClick}
             />

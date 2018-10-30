@@ -7,13 +7,14 @@ export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
     const {
       balances,
-      connection
+      connection,
+      settings
     } = getState();
     dispatch({
       type: types.SYSTEM_TRANSFER_PENDING
     });
     try {
-      symbol = symbol ? symbol : connection.keyPrefix;
+      symbol = symbol ? symbol : settings.blockchain.tokenSymbol;
       const contracts = balances.__contracts;
       const account = contracts[symbol].contract;
       return eos(connection, true).transaction(account, contract => {

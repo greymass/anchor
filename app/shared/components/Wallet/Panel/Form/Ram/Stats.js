@@ -18,10 +18,10 @@ class WalletPanelFormRamStats extends Component<Props> {
         <Table.Body>
           <Table.Row>
             <Table.Cell width={8}>
-              {t('ram_stats_title_one', {tokenSymbol:settings.blockchain.prefix})}
+              {t('ram_stats_title_one', {tokenSymbol:settings.blockchain.tokenSymbol})}
             </Table.Cell>
             <Table.Cell width={8}>
-              {`${EOSbalance} ${settings.blockchain.prefix}`}
+              {`${EOSbalance} ${settings.blockchain.tokenSymbol}`}
             </Table.Cell>
           </Table.Row>
           <Table.Row>

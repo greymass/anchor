@@ -50,7 +50,11 @@ class WalletStatusActionsTableRowGeneric extends Component<Props> {
           iconStyle="square"
           name={null}
           src={act.data}
-          style={{ padding: '1em' }}
+          style={{
+            padding: '1em',
+            maxWidth: '800px',
+            overflow: 'hidden'
+          }}
           theme="harmonic"
         />
       </React.Fragment>

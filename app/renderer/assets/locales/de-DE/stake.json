@@ -10,7 +10,9 @@
   "eos_in_net_after": "{{tokenSymbol}} in Bandwidth after",
   "net_staked": "{{tokenSymbol}} staked in Bandwidth",
   "stake_button_cta": "Update Staked {{tokenSymbol}}",
+  "stake_cpu_amount": "CPU Amount",
   "stake_modal_title": "Update Staked {{tokenSymbol}} Amounts",
+  "stake_net_amount": "Bandwidth Amount",
   "stake_success": "You have successfully staked additional {{tokenSymbol}}.",
   "stake_updated": "Your stake was updated successfully.",
   "staked_balances": "Staked Balances",
@@ -24,6 +26,9 @@
   "will_have_less_than_one_eos_staked": "You will have less than 1 {{tokenSymbol}} staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",
   "you_will_have": "You will have",
   "about_to_unstake_tokens": "You are about to unstake some tokens, please note that all tokens that were unstaked will have to be claimed in 72 hours.",
+  "stake_confirming_header_one": "About to change delegation of: ",
   "have_already_unstaked": "You are currently unstaking ",
+  "update_stake_for_other_header": "Delegating to ",
+  "update_staked_account_name": "Account Delegated To",
   "unstaking_will_be_reset": ". If you proceed to unstake to this new value, it will replace this previous request, and reset the 72 hour count down."
 }

@@ -1,16 +1,15 @@
 // @flow
 import React, { Component } from 'react';
 import { Dropdown, Input } from 'semantic-ui-react';
-
-import debounce from 'lodash/debounce';
+import { debounce, find } from 'lodash';
 
 export default class GlobalFormFieldMultiToken extends Component<Props> {
   constructor(props) {
     super(props);
     const [quantity, asset] = props.value.split(' ');
-    const { connection } = this.props;
+    const { connection, settings } = this.props;
     this.state = {
-      asset: asset || connection.keyPrefix,
+      asset: asset || settings.blockchain.tokenSymbol,
       quantity
     };
   }
@@ -41,21 +40,28 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const { customTokens } = settings;
     // Determine which tokens are being tracked
     const trackedTokens = (customTokens) ? customTokens.map((tokenName) => {
-      const [, symbol] = tokenName.split(':');
-      return symbol;
-    }) : [settings.blockchain.prefix];
+      const [contract, symbol] = tokenName.split(':');
+      return { contract, symbol };
+    }) : [{
+      contract: 'eosio',
+      symbol: settings.blockchain.tokenSymbol
+    }];
     const options = [];
     // Iterate assets and build the options list based on tracked tokens
     assets.forEach((asset) => {
-      if (
-        trackedTokens.indexOf(asset) !== -1
-        && (balances[settings.account] && balances[settings.account][asset] > 0)
-      ) {
-        options.push({
-          key: asset,
-          text: asset,
-          value: asset
-        });
+      const assetDetails = find(trackedTokens, { symbol: asset });
+      if (assetDetails) {
+        const { contract, symbol } = find(trackedTokens, { symbol: asset });
+        if (
+          (contract && symbol)
+          && (balances[settings.account] && balances[settings.account][asset] > 0)
+        ) {
+          options.push({
+            key: asset,
+            text: `${symbol} (${contract})`,
+            value: asset
+          });
+        }
       }
     });
     return (
@@ -74,7 +80,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
           style={style}
         >
           <Dropdown
-            defaultValue={this.state.asset || settings.blockchain.prefix}
+            defaultValue={this.state.asset || settings.blockchain.tokenSymbol}
             name="asset"
             onChange={this.onChange}
             options={options}

@@ -62,15 +62,15 @@ class WelcomeWalletContainer extends Component<Props> {
       key
     } = keys;
     const {
-      decrypt,
       setSetting,
       setSettingWithValidation,
       setWalletKey
     } = actions;
     // if we aren't using a defined chain, search for one by matching chain id and switch to 
     // that if found. user can subsequently use 'manage blockchains' to add new chains 
-    const blockchain = settings.blockchain ? 
-      settings.blockchains.filter( (c) => { return c.chainId === connection.chainId})[0] : null;
+    const blockchain = settings.blockchain && settings.blockchain.chainId ? 
+      settings.blockchains.filter( (c) => { return c.chainId === connection.chainId})[0] : 
+      settings.blockchains[0];
 
     if (blockchain){
       setSetting('blockchain', blockchain);

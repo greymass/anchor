@@ -50,7 +50,7 @@ export function getProducers(previous = false) {
         // recurse
         return dispatch(getProducers(rows));
       }
-      const { globals } = getState();
+      const { globals, settings } = getState();
       const { current } = globals;
       let backupMinimumPercent = false;
       let tokensToProducersForVotes = false;
@@ -58,7 +58,7 @@ export function getProducers(previous = false) {
       if (contract && contract['eosio.token']) {
         // fixed values for EOS and TELOS chains until there's a
         // better way to find these dynamically via EOSIO
-        const coreSymbol = connection.keyPrefix;
+        const coreSymbol = settings.blockchain.tokenSymbol;
         const isEOSChain = (coreSymbol === 'EOS');
         const coreToken = contract['eosio.token'][coreSymbol];
         const supply = coreToken.supply ? parseFloat(coreToken.supply) : 0;
@@ -75,7 +75,7 @@ export function getProducers(previous = false) {
         // Percentage required to earn 100 tokens/day (break point for backups)
         backupMinimumPercent = 100 / tokensToProducersForVotes;
       }
-      const defaultPubKey = connection.keyPrefix + '1111111111111111111111111111111114T1Anm';
+      const defaultPubKey = 'EOS1111111111111111111111111111111114T1Anm';
       const data = rows
         .filter((p) => (p.producer_key !== defaultPubKey))
         .map((producer) => {

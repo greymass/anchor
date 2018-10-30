@@ -16,12 +16,17 @@ type Props = {
 };
 
 export default class GlobalTransactionHandler extends Component<Props> {
+  componentWillUnmount = () => {
+    this.props.actions.clearSystemState();
+  }
+
   render() {
     const {
       actionName,
       actions,
       blockExplorers,
       contract,
+      hideClose,
       onClose,
       settings,
       system,
@@ -39,6 +44,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
         <GlobalTransactionMessageSuccess
           blockExplorers={blockExplorers}
           settings={settings}
+          hideClose={hideClose}
         />
       );
     } else if (hasError) {

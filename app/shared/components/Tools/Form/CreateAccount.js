@@ -36,7 +36,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       confirming: false,
       delegatedBw,
       delegatedCpu,
-      EOSbalance: (balance && balance[settings.blockchain.prefix]) ? balance[settings.blockchain.prefix] : 0,
+      EOSbalance: (balance && balance[settings.blockchain.tokenSymbol]) ? balance[settings.blockchain.tokenSymbol] : 0,
       formErrors: {},
       ownerKey,
       ramAmount,
@@ -183,8 +183,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors[attribute] = null;
     });
 
-    if (Number(ramAmount) < 4000) {
-      formErrors.ramAmount = 'ram_under_minimum_for_new_account';
+    if (Number(ramAmount) < 2600) {
+      formErrors.ramAmount = 'error_ram_under_minimum_of_2600_for_new_account';
       submitDisabled = true;
     }
 
@@ -374,14 +374,14 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 <GlobalFormFieldToken
                   defaultValue={delegatedBw && delegatedBw.split(' ')[0]}
-                  label={t('tools_form_create_account_delegated_bw', {tokenSymbol:settings.blockchain.prefix})}
+                  label={t('tools_form_create_account_delegated_bw', {tokenSymbol:settings.blockchain.tokenSymbol})}
                   name="delegatedBw"
                   onChange={this.onChange}
                   connection={connection}
                 />
                 <GlobalFormFieldToken
                   defaultValue={delegatedCpu && delegatedCpu.split(' ')[0]}
-                  label={t('tools_form_create_account_delegated_cpu', {tokenSymbol:settings.blockchain.prefix})}
+                  label={t('tools_form_create_account_delegated_cpu', {tokenSymbol:settings.blockchain.tokenSymbol})}
                   name="delegatedCpu"
                   onChange={this.onChange}
                   connection={connection}
@@ -394,7 +394,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                 />
                 {(ramPrice && !formErrors.ramAmount) ? (
                   <h4 style={{ margin: '30px' }}>
-                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} ${settings.blockchain.prefix}.`}
+                    {`${t('tools_form_create_account_ram_price_estimate')} ${ramPrice.toFixed(4)} ${settings.blockchain.tokenSymbol}.`}
                   </h4>
                 ) : ''}
                 <FormMessageError
@@ -429,7 +429,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                 {(shouldShowDelegatedResourceWarning)
                   ? (
                     <Message
-                      content={t('tools_form_create_account_delegated_resources_warning', {tokenSymbol:settings.blockchain.prefix})}
+                      content={t('tools_form_create_account_delegated_resources_warning', {tokenSymbol:settings.blockchain.tokenSymbol})}
                       icon="info circle"
                       warning
                     />

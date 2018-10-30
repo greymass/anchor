@@ -5,7 +5,7 @@ import { Form, Input } from 'semantic-ui-react';
 export default class GlobalFormFieldMemo extends Component<Props> {
   onChange = (e, { name, value }) => {
     const parsed = value;
-    let valid = !parsed.match(/.*?5[a-zA-Z0-9.]{50}.*?/g);
+    let valid = !parsed.match(/(\b)5[a-zA-Z0-9.]{50}(?![a-zA-Z0-9.])/g);
 
     if (valid) {
       valid = (new TextEncoder('utf-8').encode(parsed)).length <= 256;

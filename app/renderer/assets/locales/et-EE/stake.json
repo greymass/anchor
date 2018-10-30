@@ -10,6 +10,8 @@
   "eos_in_net_after": "{{tokenSymbol}} Ribalaiusel pärast",
   "net_staked": "{{tokenSymbol}} panustatud Ribalaiusele",
   "stake_button_cta": "Uuenda Panustatud {{tokenSymbol}}",
+  "stake_cpu_amount": "CPU Amount",
+  "stake_net_amount": "Bandwidth Amount",
   "stake_modal_title": "Uuenda Panustatud {{tokenSymbol}} Koguseid",
   "stake_success": "Oled edukalt panustanud täiendavad {{tokenSymbol}} osakud.",
   "stake_updated": "Panus edukalt uuendatud.",
@@ -24,6 +26,9 @@
   "will_have_less_than_one_eos_staked": "Teil jääb vähem kui 1 {{tokenSymbol}} panustatud ribalaiusele ja/või protsessorile. See võib takistada tehingute tegemist, kui võrk on hõivatud.",
   "you_will_have": "Teil saab olema",
   "about_to_unstake_tokens": "Oled panusest eemaldamas osakuid. Pane tähele, et osakuid, mis on panusest eemaldatud saab kasutada 72 tunni pärast.",
+  "stake_confirming_header_one": "About to change delegation of: ",
   "have_already_unstaked": "Oled hetkel panusest eemaldamas ",
+  "update_stake_for_other_header": "Delegating to ",
+  "update_staked_account_name": "Account Delegated To",
   "unstaking_will_be_reset": ". Kui jätkad panuse eemaldamist uuele väärtusele, asendab see eelmise taotluse ja alustab uuesti 72 tunni arvestust."
 }

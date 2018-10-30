@@ -1,25 +1,34 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Header, Segment, Divider } from 'semantic-ui-react';
 
-import { Header, Segment, Divider, Grid } from 'semantic-ui-react';
+import ToolsButtonRegisterProxy from './Button/RegisterProxy';
+ import ToolsButtonUnregisterProxy from './Button/UnregisterProxy';
 
-import ToolsButtonProxyRegister from './Button/Register';
-import ToolsButtonProxyUnregister from './Button/Unregister';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
+import ToolsFormProxyInfo from './Form/ProxyInfo';
+import GlobalTransactionHandler from '../Global/Transaction/Handler';
 
 class ToolsProxy extends Component<Props> {
+  componentDidMount = () => {
+    const { actions } = this.props;
+     actions.getTable('regproxyinfo', 'regproxyinfo', 'proxies');
+  }
+
   render() {
     const {
       accounts,
       actions,
       blockExplorers,
+      contracts,
       keys,
       settings,
       system,
       validate,
       wallet,
-      t
+      t,
+      tables
     } = this.props;
 
     const account = accounts[settings.account];
@@ -27,6 +36,8 @@ class ToolsProxy extends Component<Props> {
     if (account && account.voter_info && account.voter_info.is_proxy) {
       isProxy = account.voter_info.is_proxy;
     }
+
+    const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
@@ -39,7 +50,7 @@ class ToolsProxy extends Component<Props> {
               {t('tools_proxy_text_not_registered')}
             </p>
             <Divider />
-            <ToolsButtonProxyRegister
+            <ToolsButtonRegisterProxy
               account={account}
               actions={actions}
               blockExplorers={blockExplorers}
@@ -56,12 +67,36 @@ class ToolsProxy extends Component<Props> {
               {settings.account}
             </p>
             <Divider />
-            <ToolsButtonProxyUnregister
+            <ToolsButtonUnregisterProxy
               account={account}
               actions={actions}
               blockExplorers={blockExplorers}
               settings={settings}
               system={system}
+            />
+
+            <GlobalTransactionHandler
+              actionName="SET_REGPROXYINFO"
+              actions={actions}
+              blockExplorers={blockExplorers}
+              content={(
+                <ToolsFormProxyInfo
+                  account={account}
+                  actions={actions}
+                  blockExplorers={blockExplorers}
+                  contracts={contracts}
+                  isProxy={isProxy}
+                  settings={settings}
+                  system={system}
+                  tables={tables}
+                  transaction={transaction}
+                />
+              )}
+              hideClose
+              onClose={this.onClose}
+              settings={settings}
+              system={system}
+              transaction={transaction}
             />
           </Segment>
         </React.Fragment>

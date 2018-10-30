@@ -26,9 +26,9 @@ export function getCurrencyStats(contractName = "eosio.token", symbolName) {
     dispatch({
       type: types.GET_CURRENCYSTATS_REQUEST
     });
-    const { connection } = getState();
+    const { connection, settings } = getState();
     const account = contractName.toLowerCase();
-    const symbol = symbolName ? symbolName.toUpperCase() : connection.keyPrefix.toUpperCase();
+    const symbol = symbolName ? symbolName.toUpperCase() : settings.blockchain.tokenSymbol;
     
     eos(connection).getCurrencyStats(account, symbol).then((results) => {
       if (isEmpty(results)) {

@@ -12,8 +12,7 @@ const initialState = {
   verbose: false,
   expireInSeconds: 120,
   forceActionDataHex: false,
-  httpEndpoint: null,
-  keyPrefix: DEFAULT_PUB_KEY_PREFIX
+  httpEndpoint: null
 };
 
 export default function connection(state = initialState, action) {
@@ -28,7 +27,6 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         chain: chain ? chain.blockchain : 'unknown',
         chainId: action.payload.info.chain_id,
-        keyPrefix: chain ? chain.prefix : DEFAULT_PUB_KEY_PREFIX,
         httpEndpoint: action.payload.node
       });
     }
@@ -82,8 +80,7 @@ export default function connection(state = initialState, action) {
     case types.GET_CHAIN_INFO_SUCCESS: {
       const chain = action.payload.settings.blockchains.filter( (c) => {return c.chainId===action.payload.chain.chain_id})[0];
       return Object.assign({}, state, {
-        chainId: action.payload.chain.chain_id,
-        keyPrefix: chain ? chain.prefix : DEFAULT_PUB_KEY_PREFIX
+        chainId: action.payload.chain.chain_id
       });
     }
     default: {
@@ -99,10 +96,7 @@ function getAuthorization(account, pubkey) {
       find(perm.required_auth.keys, (key) => key.key === pubkey));
     if (permission) {
       // Return an authorization for this key
-      return {
-        actor: account.account_name,
-        permission: permission.perm_name
-      };
+      return `${account.account_name}@${permission.perm_name}`;
     }
   }
   return undefined;

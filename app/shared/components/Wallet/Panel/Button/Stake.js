@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Decimal } from 'decimal.js';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import WalletPanelFormStake from '../Form/Stake';
@@ -34,6 +35,16 @@ class WalletPanelButtonStake extends Component<Props> {
       connection
     } = this.props;
 
+    let account = accounts[settings.account];
+    if (!account) account = {};
+    const {
+      cpu_weight,
+      net_weight
+    } = account.self_delegated_bandwidth || {
+      cpu_weight: '0.0000 ' + settings.blockchain.tokenSymbol,
+      net_weight: '0.0000 ' + settings.blockchain.tokenSymbol
+    };
+
     return (
       <GlobalTransactionModal
         actionName="STAKE"
@@ -41,21 +52,24 @@ class WalletPanelButtonStake extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
-          content: t('stake_button_cta', {tokenSymbol:settings.blockchain.prefix}),
+          content: t('stake_button_cta', {tokenSymbol:settings.blockchain.tokenSymbol}),
           fluid: true,
           icon: 'microchip'
         }}
         content={(
           <WalletPanelFormStake
-            account={accounts[settings.account]}
-            key="StakeForm"
-            settings={settings}
+            account={account}
+            accountName={settings.account}
             actions={actions}
-            onClose={this.onClose}
-            validate={validate}
             balance={balances[settings.account]}
-            system={system}
             connection={connection}
+            cpuAmount={Decimal(cpu_weight.split(' ')[0])}
+            key="StakeForm"
+            netAmount={Decimal(net_weight.split(' ')[0])}
+            onClose={this.onClose}
+            settings={settings}
+            system={system}
+            validate={validate}
           />
         )}
         icon="microchip"

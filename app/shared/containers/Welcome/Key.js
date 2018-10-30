@@ -132,7 +132,7 @@ class WelcomeKeyContainer extends Component<Props> {
     } = this.state;
     let currentPublic;
     try {
-      currentPublic = ecc.privateToPublic(keys.key,settings.blockchain.prefix);
+      currentPublic = ecc.privateToPublic(keys.key);
     } catch (e) {
       // invalid key
     }

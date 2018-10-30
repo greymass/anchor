@@ -18,25 +18,25 @@ class WalletPanelFormStakeStats extends Component<Props> {
       <Segment.Group horizontal>
         <Segment>
           <Header textAlign="center">
-            {(EOSbalance).toFixed(4)} {settings.blockchain.prefix}
+            {(EOSbalance).toFixed(4)} {settings.blockchain.tokenSymbol}
             <Header.Subheader>
-              {t('amount_not_staked', {tokenSymbol:settings.blockchain.prefix})}
+              {t('amount_not_staked', {tokenSymbol:settings.blockchain.tokenSymbol})}
             </Header.Subheader>
           </Header>
         </Segment>
         <Segment>
           <Header textAlign="center">
-            {cpuOriginal.toFixed(4)} {settings.blockchain.prefix}
+            {cpuOriginal.toFixed(4)} {settings.blockchain.tokenSymbol}
             <Header.Subheader>
-              {t('cpu_staked', {tokenSymbol:settings.blockchain.prefix})}
+              {t('cpu_staked', {tokenSymbol:settings.blockchain.tokenSymbol})}
             </Header.Subheader>
           </Header>
         </Segment>
         <Segment>
           <Header textAlign="center">
-            {netOriginal.toFixed(4)} {settings.blockchain.prefix}
+            {netOriginal.toFixed(4)} {settings.blockchain.tokenSymbol}
             <Header.Subheader>
-              {t('net_staked', {tokenSymbol:settings.blockchain.prefix})}
+              {t('net_staked', {tokenSymbol:settings.blockchain.tokenSymbol})}
             </Header.Subheader>
           </Header>
         </Segment>
