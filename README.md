@@ -104,42 +104,43 @@ To verify the integrity of the releases you download from GitHub, below are the 
 
 Signed by [eosmiami on keybase](https://keybase.io/eosmiami)
 
------BEGIN PGP SIGNED MESSAGE-----
+```-----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-shasum -b -a 512 linux-Sqrl-0.5.2-amd64.deb
-e52c0e67e13d2d8bf683df978bb2852e2568605bc6d449efd4510293f36f69071c3a3102763926b71941b7078e03f5b3d0fa9ac94bd48378351819a18d565f9b *linux-Sqrl-0.5.2-amd64.deb
-shasum -b -a 512 linux-Sqrl-0.5.2-amd64.snap
-de215785c4bd10707d8f32a4af15062e14c2490c66e16471ca4fbdcdd615ec696ba6e1d41241c6fcf85fa27b8b5b98dabbe24cab50ab22990d7f7abef20cd593 *linux-Sqrl-0.5.2-amd64.snap
-shasum -b -a 512 linux-Sqrl-0.5.2-arm64.deb
-b175d098178056ce60002d421bf6268ad3294444580306bb60fc8fffb2c64b6ae1825f5a847dbff74b700424255cf298c997bc2c4129980577b07185f9079266 *linux-Sqrl-0.5.2-arm64.deb
-shasum -b -a 512 linux-Sqrl-0.5.2-armv7l.deb
-560d4e1d3fcbf050fdcaf039c3df6ff4db0d24a7f1abfd9d54016a19a154168b333ff6882bd9a2e65fdd3b9eb03e8161d439a3d7185f48574accd7227e9dd44d *linux-Sqrl-0.5.2-armv7l.deb
-shasum -b -a 512 linux-Sqrl-0.5.2-i386.deb
-28f5c285f326d8c346cb247412d2e3b0149755b791eff0c616e9e6d923a17502ca44b0e14ef9b243c8f0cce72d76bfb0894b9c4b65f893632d0fa71beb518c49 *linux-Sqrl-0.5.2-i386.deb
-shasum -b -a 512 linux-Sqrl-0.5.2-x86_64.AppImage
-1bf31254974893d3a66e4f93dce9e005e789c0f4c318129071695a659e27c54704924059f34262d866d98dd0e1b65c3f4349be07af14a3b15a8742463b1adc16 *linux-Sqrl-0.5.2-x86_64.AppImage
-shasum -b -a 512 mac-Sqrl-0.5.2.dmg
-6d51a65e4784ad6951f58940038f56b65f4116c0efecbb6ba37df6158e2d24340dd5ddb46a0f726a21d5080d34ffca56e5084680d7d41b3ddf1473ec8815bd64 *mac-Sqrl-0.5.2.dmg
-shasum -b -a 512 mac-Sqrl-0.5.2.zip
-a78c26eebc5fa87517deb6282e4aefc0ba181c86af84253944b7a00c767098f5411dfb2a2bde42098d6aaf58aa0fb5fa9c88377555cef3fb86faa98f6518d242 *mac-Sqrl-0.5.2.zip
-shasum -b -a 512 win-Sqrl-0.5.2.exe
-6f32aeed2867230abc51d328ca22c8b56465268d21db43c5f5f09084fd0f93648bea8cf22d1140f6c2292b937a284088a9f56cbeda0d4e1db34a7c8897d3b7bd *win-Sqrl-0.5.2.exe
+shasum -b -a 512 linux-Sqrl-0.5.3-amd64.deb
+shasum: linux-Sqrl-0.5.3-amd64.deb: 
+shasum -b -a 512 linux-Sqrl-0.5.3-amd64.snap
+shasum: linux-Sqrl-0.5.3-amd64.snap: 
+shasum -b -a 512 linux-Sqrl-0.5.3-arm64.deb
+shasum: linux-Sqrl-0.5.3-arm64.deb: 
+shasum -b -a 512 linux-Sqrl-0.5.3-armv7l.deb
+shasum: linux-Sqrl-0.5.3-armv7l.deb: 
+shasum -b -a 512 linux-Sqrl-0.5.3-i386.deb
+shasum: linux-Sqrl-0.5.3-i386.deb: 
+shasum -b -a 512 linux-Sqrl-0.5.3-x86_64.AppImage
+shasum: linux-Sqrl-0.5.3-x86_64.AppImage: 
+shasum -b -a 512 mac-Sqrl-0.5.3.dmg
+4fdbd9542da85351378b3b03cc7266315d151440e2acb3c321e8e9c467a4f1e0e7653fb6be92dd795c78a7f2c31ec5de85a55555d1f35ec19c8f4379d6361cf5 *mac-Sqrl-0.5.3.dmg
+shasum -b -a 512 mac-Sqrl-0.5.3.zip
+8f1a06de6807c0616e1dd9abdcede2deb5862548c0a2ade4aa9023bde8d0e6667634a85ecf36e2a5cafa8a255665e5350f1d27abec708d5aa3c857b37ca03864 *mac-Sqrl-0.5.3.zip
+shasum -b -a 512 win-Sqrl-0.5.3.exe
+585dec9c69d7cae1c3fe14c23e49ff2be1b13c9b73bb83af4f6e74e33d4246231c1c55be88c28e0c12ac2a0944a81166a6891150f076d4b1718c5ca9ce9754e0 *win-Sqrl-0.5.3.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.0.80
 Comment: https://keybase.io/crypto
 
-wsFcBAABCgAGBQJbx7mMAAoJEDT4ke1a0TzTLnQQAKwE69CKlVj8I4N4ZYXBpYVF
-qPzxuHqdf7WjrPNFnpDCf0jv7UUttgtrsIH+8g02H84PCd0e/ex1DthHRQV1WORb
-rNWOuhaIrpreHl1fQlWqlEDE/sWr6BjT5yMoFH0QazYWMd7YqoURqmfqX7CibIpn
-u8KHUdk+aqukAiB9jdkx7J4/eKbUbkHXqIYRCy0i3BYDUovqkG6mk8//Ci8BrdPX
-Xy00s8HTpEUKiWCYqpfnijH00Lts8PWb6SVtDZUy91e54K/bAFDYH3lSdDUuh9//
-Fiz83yJ1QY40+7cng/hU/u7ttjlS9e/RuFSnkQWeIMCvtfCJh19UK5Xy1VdSLYP3
-kPrs2Lnie123SHL+FkqEorCAIK2BQoAimN5ACWiIomY/cElA/OOZHL/2rSIekJlG
-1ziPIwu3935lUEpkJ469W+9sLYztLm6IZnrIS2LOi9quhoP8AaL3pAnZwg4rMUic
-G+LprMfrKKNrl8ZL/5rz79DdAiwjaLwAYEa0Nn4E9v0muhyv7kWIOBGlXxOiaFTU
-DXLITLERf/ZvyH73RYaYpw6KLeC4gecWW1Yo/z3mTnQ9UTtOOnEoPCTrNjuKSqye
-s7g1TR6JxoHrlj9CVnCuJS7YKRKrJG42MVT9xDLWPPbIX/z0tpDajn5Lh+RwiR53
-f2LqkSWbrEvXtMK0fHv9
-=P8i7
+wsFcBAABCgAGBQJb2Ls9AAoJEDT4ke1a0TzT+wcQAJa+Vs+5nAryZZTNzCORQKLE
+icXErjGoQhJBZqhFgJcKH/aGoQg5KUfKqT92cgwmkVJHTgtp+boFwxOJXog1iHFS
+JNM19wSfZ7kKCltMYmWrv4uQXs3Vpya6je/5KJ+mItMToZNjpVXKzRfz8J6rjx2J
+Mu2M3qo71pilUcYQbKUsArcyP+G6Qj01ETuUwl151TKqm9bJcS8cWkFx7M681a+3
+I3f4zzAkgas8+7oaGJ7JIhPR47X7obOr1kEBvzuZ9EkiBqYt4iSjb/3+ZZrX9L5P
+BxvdW1Q6auYge1Shd7galZwIKJP8uc7zwkgj3VzFCAVZLPSX3NjafYVUYK0w7k8q
+YVDyk5KFrEc/2luJ3LvjFviRmDHWqboLyjwWzx9T2P2QbZh7/5SlOD9St8/borFC
+GCFgvNNtzC8OAburGVLkT5+Tao3BFNzpX3bFyOgTtxCmk1XitKoakAWO1i2fVpXz
+B2wIBvLymMvjFnIG4MowAss5ZpSJnPmiWsf61tecoNV8ulgbF3dx2SGx01Idb2XX
+vv8A/5fWw/OYhIMK7tcHu8RIpTg2kNuIrtWwhdNfHsny+gZS4M7872HQinhOTnW+
+h/M1MGJaJ67pDYMtsBEtXf1hjBwUKukRttDGuKi1sNxhaXgHPnAD9qqBSajGgOVW
+5MlGMrNCim9lWpEQkEps
+=cpzZ
 -----END PGP SIGNATURE-----
+```
