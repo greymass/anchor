@@ -219,6 +219,7 @@ class ToolsContainer extends Component<Props> {
           return {
             menuItem: (
               <Menu.Header
+                active='false'
                 className="ui"
                 content={t(`tools_menu_${pane.name}_header`)}
                 key={pane.name}
