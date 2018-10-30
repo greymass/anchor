@@ -1,8 +1,10 @@
 {
+  "account_authority": "Account/Authority",
   "application_name": "eos-voter",
   "application_version": "v0.6.0",
   "back": "戻る",
   "block_height": "ブロック高",
+  "blockchain": "Blockchain",
   "cancel": "キャンセル",
   "close": "閉じる",
   "confirm": "確認",
@@ -11,10 +13,13 @@
   "error": "エラー",
   "loading": "ロードしました",
   "next": "次へ",
+  "private_key": "Private Key",
   "property": "プロパティ",
+  "public_key": "Public Key",
   "remove": "削除",
   "reset_application": "デバッグ: アプリケーションをリセット",
   "search": "検索...",
+  "upgrade": "Upgrade",
   "value": "値",
   "waiting": "待機中..."
 }
