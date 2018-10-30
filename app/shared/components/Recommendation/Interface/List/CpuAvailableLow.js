@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 
 import { Message } from 'semantic-ui-react';
 
-class RecommendationInterfaceListResourcesLow extends Component<Props> {
+class RecommendationInterfaceCpuAvailableLow extends Component<Props> {
   constructor(props) {
     super(props);
 
@@ -19,7 +19,6 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
 
     const shouldDisplayWarning = account.cpu_limit &&
       Number(account.cpu_limit.available) < 3000;
-      debugger
 
     return (shouldDisplayWarning)
       ? (
@@ -32,4 +31,4 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
   }
 }
 
-export default translate('recommendations')(RecommendationInterfaceListResourcesLow);
+export default translate('recommendations')(RecommendationInterfaceCpuAvailableLow);
