@@ -37,7 +37,6 @@ export function getConstants() {
         try {
           parsed = JSON.parse(value);
         } catch (e) {
-          console.log(e)
           // no catch
         }
         return {
