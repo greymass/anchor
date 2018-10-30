@@ -17,7 +17,7 @@ export function getConstants() {
     });
     const { connection } = getState();
     // Don't retrieve if we're not on mainnet
-    if (connection.chain !== 'eos-mainnet') {
+    if (connection.chainKey !== 'eos-mainnet') {
       return dispatch({
         type: types.SYSTEM_GETCONSTANTS_FAILURE
       });
@@ -37,6 +37,7 @@ export function getConstants() {
         try {
           parsed = JSON.parse(value);
         } catch (e) {
+          console.log(e)
           // no catch
         }
         return {
