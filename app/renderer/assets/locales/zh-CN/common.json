@@ -1,8 +1,10 @@
 {
+  "account_authority": "Account/Authority",
   "application_name": "eos-voter",
   "application_version": "v0.6.0",
   "back": "Back",
   "block_height": "区块高度",
+  "blockchain": "Blockchain",
   "cancel": "取消",
   "close": "关闭",
   "confirm": "确认",
@@ -11,10 +13,13 @@
   "error": "Error",
   "loading": "上传完毕",
   "next": "Next",
+  "private_key": "Private Key",
   "property": "Property",
+  "public_key": "Public Key",
   "remove": "Remove",
   "reset_application": "DEBUG: 重启程序",
   "search": "搜索...",
+  "upgrade": "Upgrade",
   "value": "Value",
   "waiting": "等待中..."
 }
