@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 
 import { Message } from 'semantic-ui-react';
 
-class RecommendationInterfaceListResourcesLow extends Component<Props> {
+class RecommendationInterfaceListCpuStakedLow extends Component<Props> {
   constructor(props) {
     super(props);
 
@@ -40,4 +40,4 @@ class RecommendationInterfaceListResourcesLow extends Component<Props> {
   }
 }
 
-export default translate('recommendations')(RecommendationInterfaceListResourcesLow);
+export default translate('recommendations')(RecommendationInterfaceListCpuStakedLow);
