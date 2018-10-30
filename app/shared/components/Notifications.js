@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 
-import AppUpgrade from './Global/Message/App/Upgrade';
+import GlobalMessageAppUpgradeModal from './Global/Message/App/Upgrade/Modal';
 import WalletUpgrade from './Wallet/Upgrade';
 
 const name = require('electron').remote.app.getName();
@@ -48,7 +48,7 @@ class Notifications extends Component<Props> {
       <React.Fragment>
         {(upgradeAvailable)
           ? (
-            <AppUpgrade
+            <GlobalMessageAppUpgradeModal
               actions={actions}
               constants={constants}
               name={name}
