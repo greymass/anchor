@@ -2,8 +2,14 @@
   "broadcast_transaction_broadcast": "トランザクションをブロードキャストします",
   "broadcast_transaction_confirm_details_content": "このトランザクションの詳細をレビューし、間違いがないようであれば、以下のボタンをクリックしてトランザクションの署名とブロードキャストをして下さい。",
   "broadcast_transaction_confirm_details_title": "トランザクションをレビュー",
-  "broadcast_transaction_no_details_content": "始めるには署名済みトランザクションファイルを選択して下さい",
-  "broadcast_transaction_no_details_title": "読み込まれたトランザクションがありません",
+  "broadcast_transaction_import_file": "Import Transaction File",
+  "broadcast_transaction_import_file_content": "Select a signed transaction file to begin",
+  "broadcast_transaction_import_file_title": "Import a Transaction File",
+  "broadcast_transaction_import_json": "Import Transaction String",
+  "broadcast_transaction_import_json_label": "Paste the transaction JSON object here..",
+  "broadcast_transaction_invalid_error": "The file or string that was uploaded is invalid.",
   "broadcast_transaction_not_signed": "署名されていないトランザクションはブロードキャストできません。",
+  "broadcast_transaction_note": "Please note that the transaction must be signed in order for it to be broadcasted.",
+  "broadcast_transaction_paste_json_title": "Paste a Transaction String",
   "broadcast_transaction_signbroadcast": "トランザクションに署名 + ブロードキャスト"
 }
