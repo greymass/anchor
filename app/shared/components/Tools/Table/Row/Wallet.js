@@ -157,7 +157,7 @@ class ToolsTableRowWallet extends Component<Props> {
       }
     }
     return (
-      <Table.Row key={`${account}-${pubkey}`}>
+      <Table.Row key={`${account}-${authorization}`}>
         <Table.Cell collapsing>
           {modal}
           <Header>
