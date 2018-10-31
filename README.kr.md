@@ -53,15 +53,18 @@
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
+npm install
+cd app
+npm install
+cd ..
 ```
+
 
 다음 아래 중 선택하십시오 :
 
-- MacOS: `yarn package`
-- Linux: `yarn package-linux`
-- Windows: `yarn package-win`
-- All: `yarn package-all`
+- MacOS: `npm run package-mac`
+- Linux: `npm run package-linux`
+- Windows: `npm run package-win`
 
 빌드 된 파일은 루트 프로젝트 폴더 내의 `releases` 폴더에 있습니다.
 
@@ -70,8 +73,8 @@ yarn install
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
 ### 협찬
