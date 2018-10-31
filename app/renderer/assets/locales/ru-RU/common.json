@@ -1,8 +1,10 @@
 {
+  "account_authority": "Account/Authority",
   "application_name": "Настольное приложение для блокцепи EOS (eos-voter)",
   "application_version": "v0.6.0",
   "back": "Back",
   "block_height": "Номер Блока",
+  "blockchain": "Blockchain",
   "cancel": "Отменить",
   "close": "Закрыть",
   "confirm": "Подтвердить",
@@ -11,10 +13,13 @@
   "error": "Error",
   "loading": "Загрузка",
   "next": "Next",
+  "private_key": "Private Key",
   "property": "Property",
+  "public_key": "Public Key",
   "remove": "Remove",
   "reset_application": "Перезагрузить Приложение",
   "search": "Поиск...",
+  "upgrade": "Upgrade",
   "value": "Value",
   "waiting": "Ожидание..."
 }

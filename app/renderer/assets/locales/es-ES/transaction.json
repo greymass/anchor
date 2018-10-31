@@ -2,8 +2,14 @@
   "broadcast_transaction_broadcast": "Transmitir Transacción",
   "broadcast_transaction_confirm_details_content": "Revise los detalles de esta transacción, y si son correctos, haga clic en el botón que hay debajo para firmar y emitir la transacción.",
   "broadcast_transaction_confirm_details_title": "Revisar transacción",
-  "broadcast_transaction_no_details_content": "Selecte un archivo de transacción firmado para comenzar",
-  "broadcast_transaction_no_details_title": "No hay transacciones cargadas",
+  "broadcast_transaction_import_file": "Import Transaction File",
+  "broadcast_transaction_import_file_content": "Select a signed transaction file to begin",
+  "broadcast_transaction_import_file_title": "Import a Transaction File",
+  "broadcast_transaction_import_json": "Import Transaction String",
+  "broadcast_transaction_import_json_label": "Paste the transaction JSON object here..",
+  "broadcast_transaction_invalid_error": "The file or string that was uploaded is invalid.",
   "broadcast_transaction_not_signed": "No puede emitir una transacción sin firmar.",
+  "broadcast_transaction_note": "Please note that the transaction must be signed in order for it to be broadcasted.",
+  "broadcast_transaction_paste_json_title": "Paste a Transaction String",
   "broadcast_transaction_signbroadcast": "Firmar + Transmitir Transacción"
 }

@@ -1,8 +1,10 @@
 {
+  "account_authority": "Account/Authority",
   "application_name": "eos-voter",
   "application_version": "v0.6.0",
   "back": "뒤로",
   "block_height": "블록 높이",
+  "blockchain": "Blockchain",
   "cancel": "취소",
   "close": "닫기",
   "confirm": "확인",
@@ -11,10 +13,13 @@
   "error": "에러",
   "loading": "로드",
   "next": "다음",
+  "private_key": "Private Key",
   "property": "설정",
+  "public_key": "Public Key",
   "remove": "제거",
   "reset_application": "디버그: 프로그램 초기화",
   "search": "찾는 중...",
+  "upgrade": "Upgrade",
   "value": "값",
   "waiting": "잠시만 기다려 주세요..."
 }

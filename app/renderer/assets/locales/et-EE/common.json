@@ -1,8 +1,10 @@
 {
+  "account_authority": "Account/Authority",
   "application_name": "eos-voter",
   "application_version": "v0.6.0",
   "back": "Tagasi",
   "block_height": "Ploki kõrgus",
+  "blockchain": "Blockchain",
   "cancel": "Loobu",
   "close": "Sulge",
   "confirm": "Kinnita",
@@ -11,10 +13,13 @@
   "error": "Tõrge",
   "loading": "Laaditud",
   "next": "Edasi",
+  "private_key": "Private Key",
   "property": "Vara",
+  "public_key": "Public Key",
   "remove": "Eemalda",
   "reset_application": "DEBUG: Taaskäivita rakendus",
   "search": "Otsi...",
+  "upgrade": "Upgrade",
   "value": "Väärtus",
   "waiting": "Ootan..."
 }
