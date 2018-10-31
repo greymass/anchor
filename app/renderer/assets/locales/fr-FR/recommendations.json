@@ -1,0 +1,12 @@
+{
+  "recommendations_header_text": "Recommendations",
+  "recommendations_subheader_text": "You will find here recommendations tailored to your account. Following these will enhance your experience with any EOSIO blockchains.",
+  "recommendations_success_active_and_owner_different": "It appears that your active and owner keys are different which is what is recommended.",
+  "recommendations_success_cpu_staked_sufficient": "You appear to have staked a sufficient number of tokens to CPU which will allow you to use the network efficiently.",
+  "recommendations_success_net_staked_sufficient": "You appear to have staked a sufficient number of tokens to Bandwidth which will allow you to use the network efficiently.",
+  "recommendations_warning_active_and_owner_same": "It appears that your active and owner keys are different. This is not recommended as it increases the risk of someone stealing your account. To change your either your owner or active keys, go to the permissions tab of the Wallet Tools section.",
+  "recommendations_warning_cpu_available_low": "It appears that you have used most of you CPU resources, those will replenish over time, but you can increase your staked tokens by going to the 'Update Staked' button of your wallet page.",
+  "recommendations_warning_cpu_staked_low": "It appears that the amount of tokens staked to CPU is very low, we recommend having at least 1 EOS staked to CPU to ensure that most of your transactions will be processed by the network. To increase your staked tokens, go to the 'Update Staked' button of your wallet page.",
+  "recommendations_warning_net_available_low": "It appears that you have used most of you Bandwidth resources, those will replenish over time, but you can increase your staked tokens by going to the 'Update Staked' button of your wallet page.",
+  "recommendations_warning_net_staked_low": "It appears that the amount of tokens staked to Bandwidth is very low, we recommend having at least 1 EOS staked to Bandwidth to ensure that most of your transactions will be processed by the network. To increase your staked tokens, go to the 'Update Staked' button of your wallet page."
+}

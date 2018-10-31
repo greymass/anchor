@@ -2,8 +2,14 @@
   "broadcast_transaction_broadcast": "거래 방송(브로드캐스트) 하기",
   "broadcast_transaction_confirm_details_content": "이 거래의 세부 정보를 검토하고 아래 버튼을 클릭하여 거래를 서명하고 방송(브로드캐스트) 하세요.",
   "broadcast_transaction_confirm_details_title": "거래 검토",
-  "broadcast_transaction_no_details_content": "서명된 거래를 선택하세요.",
-  "broadcast_transaction_no_details_title": "가져온 거래 없음.",
+  "broadcast_transaction_import_file": "Import Transaction File",
+  "broadcast_transaction_import_file_content": "Select a signed transaction file to begin",
+  "broadcast_transaction_import_file_title": "Import a Transaction File",
+  "broadcast_transaction_import_json": "Import Transaction String",
+  "broadcast_transaction_import_json_label": "Paste the transaction JSON object here..",
+  "broadcast_transaction_invalid_error": "The file or string that was uploaded is invalid.",
   "broadcast_transaction_not_signed": "서명 되지 않은 거래를 방송(브로드캐스트) 할수 없습니다.",
+  "broadcast_transaction_note": "Please note that the transaction must be signed in order for it to be broadcasted.",
+  "broadcast_transaction_paste_json_title": "Paste a Transaction String",
   "broadcast_transaction_signbroadcast": "거래 서명 + 방송(브로드캐스트) 하기"
 }

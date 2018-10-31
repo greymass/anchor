@@ -1,8 +1,10 @@
 {
+  "account_authority": "Account/Authority",
   "application_name": "eos-voter",
   "application_version": "v0.6.0",
   "back": "Back",
   "block_height": "Hauteur du Bloc",
+  "blockchain": "Blockchain",
   "cancel": "Annuler",
   "close": "Fermer",
   "confirm": "Confirmer",
@@ -11,10 +13,13 @@
   "error": "Error",
   "loading": "Chargement",
   "next": "Next",
+  "private_key": "Private Key",
   "property": "Property",
+  "public_key": "Public Key",
   "remove": "Remove",
   "reset_application": "DÉBOGUER: Réinitialiser l'application",
   "search": "Rechercher...",
+  "upgrade": "Upgrade",
   "value": "Value",
   "waiting": "Patientez..."
 }
