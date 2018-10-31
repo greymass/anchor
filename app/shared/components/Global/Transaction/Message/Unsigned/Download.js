@@ -81,6 +81,7 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
               />
               {(copiedTransaction) && (
                 <Message
+                  color="teal"
                   content={t('global_transaction_unsigned_copied')}
                   icon="check"
                 />
