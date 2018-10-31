@@ -29,7 +29,7 @@ export default class EOSContract {
     const eos = Eos({
       broadcast: false,
       expireInSeconds: 3600,
-      forceActionDataHex: false,
+      // forceActionDataHex: false,
       httpEndpoint: null,
       sign: false
     });

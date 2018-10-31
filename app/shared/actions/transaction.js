@@ -35,7 +35,7 @@ export function buildTransaction(contract, action, account, data) {
     eos(modified)
       .transaction(op, {
         broadcast: false,
-        forceActionDataHex: false,
+        // forceActionDataHex: false,
         sign: false
       })
       .then((tx) => {

@@ -31,7 +31,8 @@ function filterDepWithoutEntryPoints(dep: string): boolean {
 export default {
   externals: [
     ...Object.keys(externals || {}),
-    ...Object.keys(possibleExternals || {}).filter(filterDepWithoutEntryPoints)
+    ...Object.keys(possibleExternals || {}).filter(filterDepWithoutEntryPoints),
+    ...['commonjs node-hid']
   ],
 
   module: {

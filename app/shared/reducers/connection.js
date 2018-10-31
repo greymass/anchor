@@ -11,7 +11,7 @@ const initialState = {
   chainKey: 'eos-mainnet',
   chainSymbol: 'EOS',
   expireInSeconds: 120,
-  forceActionDataHex: false,
+  // forceActionDataHex: false,
   httpEndpoint: null,
   keyPrefix: 'EOS',
   sign: false,
