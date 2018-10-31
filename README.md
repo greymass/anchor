@@ -61,15 +61,19 @@ If you'd rather build the application yourself, please ensure you have nodejs/np
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
+npm install
+cd app
+npm install
+cd ..
 ```
 
-Then either:
+Then, depending on what OS you use, either:
 
-- MacOS: `yarn package`
-- Linux: `yarn package-linux`
-- Windows: `yarn package-win`
-- All: `yarn package-all`
+- MacOS: `npm run package-mac`
+- Linux: `npm run package-linux`
+- Windows: `npm run package-win`
+
+If you are building a binary, it must be compiled from the target OS. Windows builds need to be built on Windows, etc.
 
 The files built will be located in the `releases` folder within the root project folder.
 
@@ -78,8 +82,11 @@ The files built will be located in the `releases` folder within the root project
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
-yarn dev
+npm install
+cd app
+npm install
+cd ..
+npm run dev
 ```
 
 ### Credits
