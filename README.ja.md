@@ -61,15 +61,17 @@
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
+npm install
+cd app
+npm install
+cd ..
 ```
 
 次に、いずれかを実行してください:
 
-- MacOS: `yarn package`
-- Linux: `yarn package-linux`
-- Windows: `yarn package-win`
-- All: `yarn package-all`
+- MacOS: `npm run package-mac`
+- Linux: `npm run package-linux`
+- Windows: `npm run package-win`
 
 プロジェクトのルートフォルダ内の`releases`にビルドしたファイルがあります。
 
@@ -78,8 +80,8 @@ yarn install
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
 ### クレジット

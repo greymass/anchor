@@ -61,15 +61,17 @@
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
+npm install
+cd app
+npm install
+cd ..
 ```
 
 然后:
 
-- MacOS: `yarn package`
+- MacOS: `yarn package-mac`
 - Linux: `yarn package-linux`
 - Windows: `yarn package-win`
-- All: `yarn package-all`
 
 编译的文件将在根项目目录下的`releases`文件夹中。
 
@@ -78,8 +80,8 @@ yarn install
 ```
 git clone https://github.com/greymass/eos-voter.git eos-voter
 cd eos-voter
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
 ### 声明
