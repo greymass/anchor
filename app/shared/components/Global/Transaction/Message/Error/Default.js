@@ -13,7 +13,15 @@ class GlobalTransactionMessageErrorDefault extends Component<Props> {
 
     if (errorMessage) {
       const errorMessageArray = errorMessage.split('assertion failure with message:');
-      errorMessage = errorMessageArray[1] && errorMessageArray[1].trim().split(' ').join('_');
+      errorMessage = errorMessageArray[1] &&
+        errorMessageArray[1]
+          .trim()
+          .split(' ')
+          .slice(0, 8)
+          .join('_');
+      // The above line will basically take the first 8 words
+      // of message and turn it into a locale key.
+      errorMessage = errorMessage && errorMessage.replace(/\(|\)|%/g, '');
       errorMessage = errorMessage || errorMessageArray[0];
     }
 
