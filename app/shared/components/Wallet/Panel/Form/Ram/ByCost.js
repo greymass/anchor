@@ -38,17 +38,20 @@ class WalletPanelFormRamBuyByCost extends Component<Props> {
 
     const decPrice = Decimal(value.split(' ')[0]);
 
-    const decBaseBal = Decimal(globals.ram.base_balance);
-    const decQuoteBal = Decimal(globals.ram.quote_balance);
+    let amountOfRam;
 
-    let amountOfRam = 0;
+    if (globals.ram) {
+      const decBaseBal = Decimal(globals.ram.base_balance);
+      const decQuoteBal = Decimal(globals.ram.quote_balance);
 
-    if (decPrice.greaterThan(0)) {
-      const decAmount = calculateAmountOfRam(decBaseBal, decQuoteBal, decPrice);
-      amountOfRam = decAmount.floor();
+      if (decPrice.greaterThan(0)) {
+        const decAmount = calculateAmountOfRam(decBaseBal, decQuoteBal, decPrice);
+
+        amountOfRam = decAmount.floor();
+      }
     }
 
-    onChange(amountOfRam, decPrice);
+    onChange(amountOfRam || 0, decPrice);
 
     this.setState({
       amountOfRam,
