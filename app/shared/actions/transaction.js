@@ -1,15 +1,16 @@
-import { set } from 'dot-prop-immutable';
+import { get, set } from 'dot-prop-immutable';
 
 import * as types from './types';
 import eos from './helpers/eos';
+import EOSContract from '../utils/EOS/Contract';
+
+const Eos = require('eosjs');
 
 export function buildTransaction(contract, action, account, data) {
   return (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
-    // Modify forceActionDataHex to allow for viewing of the action data
-    const modified = set(connection, 'forceActionDataHex', false);
     // Reset system state to clear any previous transactions
     dispatch({
       type: types.RESET_SYSTEM_STATES
@@ -19,39 +20,34 @@ export function buildTransaction(contract, action, account, data) {
       type: types.SYSTEM_TRANSACTION_BUILD_PENDING
     });
     // Build the operation to perform
-    const op = {
-      actions: [
-        {
-          account: contract.account,
-          name: action,
-          authorization: [{
-            actor: account,
-            permission: 'active'
-          }],
-          data
-        }
-      ]
-    };
-    eos(modified)
-      .transaction(op, {
+    eos(connection, true)
+      // Specify Contract
+      .contract(contract.account)
+      // Perform specified action w/ data
+      .then((c) => c[action](data, {
         broadcast: false,
-        // forceActionDataHex: false,
-        sign: false
+        sign: connection.sign
       })
-      .then((tx) => {
-        dispatch(setTransaction(JSON.stringify({
-          contract,
-          transaction: tx
-        })));
-        return dispatch({
-          payload: { tx },
-          type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
-        });
-      })
+        .then((tx) => {
+          // Dispatch transaction
+          dispatch(setTransaction(JSON.stringify({
+            contract,
+            transaction: tx
+          })));
+          return dispatch({
+            payload: { tx },
+            type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
+          });
+        })
+        .catch((err) => dispatch({
+          payload: { err },
+          type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
+        })))
       .catch((err) => dispatch({
         payload: { err },
         type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
       }));
+
   };
 }
 
