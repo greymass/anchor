@@ -30,7 +30,7 @@ function mapStateToProps(state) {
   const contracts = mapValues(state.contracts, (contract) =>
     new EOSContract(contract.abi, contract.account_name));
   return {
-    blockExplorers: state.blockexplorers,
+    blockExplorers: state.blockexplorers[state.connection.chainKey],
     contracts,
     keys: state.keys,
     settings: state.settings,
