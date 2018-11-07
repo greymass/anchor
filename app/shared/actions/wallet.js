@@ -63,7 +63,7 @@ export function setWalletHash(password) {
   };
 }
 
-export function setTemporaryKey(key) {
+export function setTemporaryKey(key, authorization = 'active') {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : '';
@@ -74,6 +74,7 @@ export function setTemporaryKey(key) {
       type: types.SET_CURRENT_KEY_TEMPORARY,
       payload: {
         account: settings.account,
+        authorization,
         hash,
         key: obfuscated,
         pubkey
