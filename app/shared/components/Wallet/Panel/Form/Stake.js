@@ -11,6 +11,7 @@ import FormMessageError from '../../../Global/Form/Message/Error';
 
 import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
 import GlobalFormFieldToken from '../../../Global/Form/Field/Token';
+import StatsFetcher from '../../../../utils/StatsFetcher';
 
 type Props = {
   actions: {},
@@ -24,7 +25,7 @@ class WalletPanelFormStake extends Component<Props> {
 
   constructor(props) {
     super(props);
-    const { account } = props;
+    const { account, balance } = props;
     const {
       cpu_weight,
       net_weight
@@ -32,6 +33,10 @@ class WalletPanelFormStake extends Component<Props> {
 
     const parsedCpuWeight = String(cpu_weight).split(' ')[0];
     const parsedNetWeight = String(net_weight).split(' ')[0];
+
+    const statsFetcher = new StatsFetcher(account, balance);
+    const { totalBeingUnstaked } = statsFetcher.fetchAll();
+    // This is a temporary solution until I refactor everything to use the new EOS/Account class instead of StatsFetcher.
 
     this.state = {
       accountName: account.account_name,
@@ -45,7 +50,8 @@ class WalletPanelFormStake extends Component<Props> {
       formError: null,
       netAmountValid: true,
       netOriginal: Decimal(parsedNetWeight),
-      submitDisabled: true
+      submitDisabled: true,
+      totalBeingUnstaked
     };
   }
 
@@ -147,7 +153,8 @@ class WalletPanelFormStake extends Component<Props> {
       decimalNetAmount,
       chainSymbolBalance,
       netAmountValid,
-      netOriginal
+      netOriginal,
+      totalBeingUnstaked
     } = this.state;
 
     if (!accountNameValid) {
@@ -179,7 +186,9 @@ class WalletPanelFormStake extends Component<Props> {
     const cpuChange = decimalCpuAmount.minus(cpuOriginal);
     const netChange = decimalNetAmount.minus(netOriginal);
 
-    if (Decimal.max(0, cpuChange).plus(Decimal.max(0, netChange)).greaterThan(chainSymbolBalance)) {
+    if (Decimal.max(0, cpuChange)
+      .plus(Decimal.max(0, netChange))
+      .greaterThan(Decimal(chainSymbolBalance).plus(totalBeingUnstaked))) {
       return 'insufficient_balance';
     }
 

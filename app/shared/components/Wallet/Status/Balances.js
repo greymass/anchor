@@ -6,22 +6,19 @@ import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
 
 import GlobalDataBytes from '../../Global/Data/Bytes';
+import ClaimUnstakedButton from './Button/ClaimUnstaked';
 
 class WalletStatusBalances extends Component<Props> {
-  claimUnstaked = () => {
-    const {
-      actions,
-      settings
-    } = this.props;
-    actions.claimUnstaked(settings.account);
-  }
   render() {
     const {
       account,
+      actions,
       balances,
+      blockExplorers,
       connection,
       settings,
       statsFetcher,
+      system,
       t
     } = this.props;
 
@@ -73,12 +70,13 @@ class WalletStatusBalances extends Component<Props> {
                       <Table.Cell>
                         {(claimable)
                           ? (
-                            <Button
-                              color="blue"
-                              content={t('wallet_status_resources_claim_unstaked')}
-                              floated="right"
-                              onClick={this.claimUnstaked}
-                              size="small"
+                            <ClaimUnstakedButton
+                              actions={actions}
+                              blockExplorers={blockExplorers}
+                              connection={connection}
+                              settings={settings}
+                              system={system}
+                              totalBeingUnstaked={totalBeingUnstaked}
                             />
                           )
                           : false

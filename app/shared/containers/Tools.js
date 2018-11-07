@@ -58,7 +58,7 @@ const paneMapping = [
   },
   {
     element: ToolsWallets,
-    modes: ['cold', 'hot', 'ledger', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip'],
     name: 'wallets',
   },
   {
@@ -69,7 +69,7 @@ const paneMapping = [
   {
     element: ToolsGovernanceProposals,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
-    name: 'governance_proposals_beta',
+    name: 'governance_referendum_beta',
     requiredContract: 'proposals'
   },
   {

@@ -150,7 +150,7 @@ export function validateKey(key) {
         // If the key matches any valid permission it's good
         if (validPermissions.length > 0) {
           dispatch({ type: types.VALIDATE_KEY_SUCCESS });
-          return true;
+          return validPermissions[0].perm_name;
         }
       } catch (err) {
         // key is likely invalid, an exception was thrown

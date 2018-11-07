@@ -116,7 +116,7 @@ class ToolsFormCreateAccount extends Component<Props> {
         checkAccountAvailability(accountName);
       }
 
-      if (name === 'ramAmount') {
+      if (name === 'ramAmount' && globals.ram) {
         const decBaseBal = Decimal(globals.ram.base_balance);
         const decQuoteBal = Decimal(globals.ram.quote_balance);
 

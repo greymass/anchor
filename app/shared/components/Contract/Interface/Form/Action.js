@@ -96,7 +96,7 @@ class ContractInterfaceFormAction extends Component<Props> {
       t,
       transaction
     } = this.props;
-
+    const signing = !!(system.TRANSACTION_BUILD === 'PENDING');
     const fields = contract.getFields(contractAction);
 
     const formFields = [];
@@ -233,6 +233,8 @@ class ContractInterfaceFormAction extends Component<Props> {
         {errors}
         <Button
           content={t('interface_form_action_button')}
+          disabled={signing}
+          loading={signing}
           primary
         />
       </Form>
