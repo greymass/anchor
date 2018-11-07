@@ -12,7 +12,11 @@ class WalletPanelButtonBroadcast extends Component<Props> {
       settings
     } = this.props;
 
-    actions.claimUnstaked(settings.account);
+    const {
+      claimUnstaked
+    } = actions;
+
+    claimUnstaked(settings.account);
   }
 
   render() {
@@ -44,7 +48,7 @@ class WalletPanelButtonBroadcast extends Component<Props> {
 
     return (
       <GlobalTransactionModal
-        actionName="TRANSACTION_BROADCAST"
+        actionName="REFUND"
         actions={actions}
         blockExplorers={blockExplorers}
         button={button}
@@ -53,6 +57,7 @@ class WalletPanelButtonBroadcast extends Component<Props> {
             basic
             style={{ height: '150px' }}
             textAlign="center"
+            loading={system.REFUND === 'PENDING'}
           >
             <Header
               content={t('wallet_status_resources_to_unstake', { totalBeingUnstaked, chainSymbol })}
