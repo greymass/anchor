@@ -58,7 +58,7 @@ const paneMapping = [
   },
   {
     element: ToolsWallets,
-    modes: ['cold', 'hot', 'ledger', 'watch'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip'],
     name: 'wallets',
   },
   {
