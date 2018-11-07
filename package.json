@@ -108,16 +108,19 @@
           "arch": [
             "armv7l",
             "arm64",
-            "x64",
-            "ia32"
+            "x64"
           ]
         },
-        "AppImage",
-        "snap"
+        "AppImage"
       ]
     },
     "snap": {
-      "synopsis": "Simple light wallet and block producer voting tool for the EOS blockchain"
+      "synopsis": "Simple light wallet and block producer voting tool for the EOS blockchain",
+      "confinement": "devmode",
+      "grade": "devel",
+      "buildPackages": ["gcc", "libusb-1.0-0-dev"],
+      "stagePackages": ["default", "libusb-1.0-0"],
+      "plugs": ["default", "hardware-observe", "raw-usb"]
     },
     "directories": {
       "buildResources": "resources",
