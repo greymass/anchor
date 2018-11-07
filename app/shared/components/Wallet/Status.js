@@ -40,6 +40,7 @@ class WalletStatus extends Component<Props> {
       connection,
       globals,
       settings,
+      system,
       t,
       tables,
       validate
@@ -79,10 +80,12 @@ class WalletStatus extends Component<Props> {
               account={account}
               actions={actions}
               balances={balances}
+              blockExplorers={blockExplorers}
               connection={connection}
               globals={globals}
               statsFetcher={statsFetcher}
               settings={settings}
+              system={system}
             />
           );
           break;
