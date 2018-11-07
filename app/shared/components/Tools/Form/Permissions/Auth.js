@@ -27,7 +27,7 @@ class ToolsFormPermissionsAuth extends Component<Props> {
     super(props);
     let { auth } = props;
     const newAuth = !(auth);
-    if (!auth) {
+    if (!auth || auth.required_auth.keys.length === 0) {
       auth = Object.assign({}, defaultAuth);
     }
     this.state = Object.assign({}, {
