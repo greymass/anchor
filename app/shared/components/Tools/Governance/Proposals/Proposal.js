@@ -6,6 +6,7 @@ import { find } from 'lodash';
 import TimeAgo from 'react-timeago';
 import { Button, Header, Message, Segment } from 'semantic-ui-react';
 
+import GlobalModalDangerLink from '../../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposalVote from './Proposal/Vote';
 
 class ToolsGovernanceProposalsProposal extends Component<Props> {
@@ -99,7 +100,15 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             : false
           }
           <p>
-            For more information on this proposal, please visit (not available yet)
+            To view the full details of this proposal, please view it on an external block explorer:
+          </p>
+          <p>
+            <GlobalModalDangerLink
+              content={`https://bloks.io/vote/referendums/${proposal_name}`}
+              link={`https://bloks.io/vote/referendums/${proposal_name}`}
+              settings={settings}
+            />
+
           </p>
           <p>
             If you would like to modify your vote, use the buttons below.
