@@ -157,6 +157,7 @@ export function unvoteProposal(scope, voter, proposal_name) {
     });
     const { connection, settings } = getState();
     const { account } = settings;
+    const [, authorization] = connection.authorization.split('@');
     return eos(connection, true).transaction({
       actions: [
         {
@@ -164,7 +165,7 @@ export function unvoteProposal(scope, voter, proposal_name) {
           name: 'unvote',
           authorization: [{
             actor: account,
-            permission: 'active'
+            permission: authorization
           }],
           data: {
             voter,
@@ -198,6 +199,7 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
     });
     const { connection, settings } = getState();
     const { account } = settings;
+    const [, authorization] = connection.authorization.split('@');
     return eos(connection, true).transaction({
       actions: [
         {
@@ -205,7 +207,7 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
           name: 'vote',
           authorization: [{
             actor: account,
-            permission: 'active'
+            permission: authorization
           }],
           data: {
             voter,
