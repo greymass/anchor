@@ -29,6 +29,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
     } = this.props;
 
     const awaitingDevice = !!(system[`${actionName}_AWAITING_DEVICE`]);
+    const hasSignature = !!(transaction && transaction.transaction.signatures.length > 0);
     const hasTransaction = !!(transaction && transaction.transaction_id);
     const broadcastTransaction = !!(hasTransaction && ((transaction.broadcast) || (transaction.processed && transaction.processed.receipt.status === 'executed')));
     const hasError = (system[`${actionName}_LAST_ERROR`]);
@@ -48,7 +49,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
           error={system[`${actionName}_LAST_ERROR`]}
         />
       );
-    } else if (hasTransaction && !includes(['watch', 'ledger'], settings.walletMode)) {
+    } else if (hasTransaction && !hasSignature && !includes(['watch', 'ledger'], settings.walletMode)) {
       content = (
         <GlobalTransactionMessageUnsignedSign />
       );
@@ -60,7 +61,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
       content = (
         <GlobalTransactionMessageHardwareLedger />
       );
-    } else if (hasTransaction && !broadcastTransaction && !awaitingDevice) {
+    } else if (hasTransaction && hasSignature && !broadcastTransaction && !awaitingDevice) {
       content = (
         <GlobalTransactionMessageSignedBroadcast />
       );
