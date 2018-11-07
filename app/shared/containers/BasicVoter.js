@@ -23,6 +23,7 @@ import * as BuyRamBytesActions from '../actions/system/buyrambytes';
 import * as BuyRamActions from '../actions/system/buyram';
 import * as ChainActions from '../actions/chain';
 import * as ConnectionActions from '../actions/connection';
+import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';
@@ -203,6 +204,7 @@ function mapStateToProps(state) {
     allBlockExplorers: state.blockexplorers,
     chain: state.chain,
     connection: state.connection,
+    contracts: state.contracts,
     globals: state.globals,
     keys: state.keys,
     ledger: state.ledger,
@@ -226,6 +228,7 @@ function mapDispatchToProps(dispatch) {
       ...BuyRamBytesActions,
       ...ChainActions,
       ...ConnectionActions,
+      ...ContractsActions,
       ...CreateAccountActions,
       ...GlobalsActions,
       ...ProducersActions,
