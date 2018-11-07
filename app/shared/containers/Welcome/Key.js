@@ -87,10 +87,12 @@ class WelcomeKeyContainer extends Component<Props> {
       }
       default: {
         // Validate against account
-        validateKey(key, settings);
-        if (onStageSelect) {
-          onStageSelect(4);
-        }
+        validateKey(key, settings).then((authorization) => {
+          setTemporaryKey(key, authorization);
+          if (onStageSelect) {
+            onStageSelect(4);
+          }
+        });
         break;
       }
     }
