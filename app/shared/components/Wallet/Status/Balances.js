@@ -63,7 +63,7 @@ class WalletStatusBalances extends Component<Props> {
                   <Table.Cell>{t('wallet_status_balances_staked_to_others')}</Table.Cell>
                   <Table.Cell>{totalStakedToOthers.toFixed(4)} {connection.chainSymbol} </Table.Cell>
                 </Table.Row>
-                {(!refundDate)
+                {(refundDate)
                   ? (
                     <Table.Row>
                       <Table.Cell>{t('wallet_status_resources_being_unstaked')} </Table.Cell>
