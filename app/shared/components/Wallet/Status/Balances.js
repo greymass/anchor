@@ -31,7 +31,7 @@ class WalletStatusBalances extends Component<Props> {
       totalTokens
     } = statsFetcher.fetchAll();
     const contracts = balances.__contracts;
-    const claimable = (new Date() > refundDate);
+    const claimable = (new Date(new Date().toUTCString()) > refundDate);
     const watchedTokens = (settings.customTokens) ? settings.customTokens.map((token) => token.split(':')[1]) : [];
     const rows = [
       (
