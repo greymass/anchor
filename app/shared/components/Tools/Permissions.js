@@ -37,7 +37,12 @@ class ToolsPermissions extends Component<Props> {
     const account = accounts[settings.account];
     if (!account) return false;
 
-    const { pubkey } = wallet;
+    let { pubkey } = wallet;
+    if (!pubkey) {
+      if (keys && keys.pubkey) {
+        ({ pubkey } = keys);
+      }
+    }
     let authorization = new EOSAccount(account).getAuthorization(pubkey, true);
     if (settings.walletMode === 'watch') {
       authorization = {
