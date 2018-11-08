@@ -79,6 +79,7 @@ class WelcomeKeyContainer extends Component<Props> {
         importWallet(settings.account, authorization, false, false, 'watch');
         // Set this wallet as the used wallet
         useWallet(settings.account, 'active');
+        setSetting('authorization', authorization);
         // Initialize the wallet setting
         setSetting('walletInit', true);
         // Move on to the voter
@@ -88,6 +89,7 @@ class WelcomeKeyContainer extends Component<Props> {
       default: {
         // Validate against account
         validateKey(key, settings).then((authorization) => {
+          setSetting('authorization', authorization);
           setTemporaryKey(key, authorization);
           if (onStageSelect) {
             onStageSelect(4);
