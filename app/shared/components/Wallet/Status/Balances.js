@@ -81,7 +81,7 @@ class WalletStatusBalances extends Component<Props> {
                           )
                           : false
                         }
-                        {totalBeingUnstaked.toFixed(4)} {connection.chainSymbol} (<TimeAgo date={refundDate} />)
+                        {totalBeingUnstaked.toFixed(4)} {connection.chainSymbol} (<TimeAgo date={`${refundDate}z`} />)
                       </Table.Cell>
                     </Table.Row>
                   )
