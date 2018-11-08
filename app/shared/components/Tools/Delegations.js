@@ -30,6 +30,14 @@ class ToolsDelegations extends Component<Props> {
     this.interval = setInterval(this.tick.bind(this), 30000);
   }
 
+  componentDidUpdate(prevProps) {
+    const { settings } = this.props;
+
+    if (settings.account !== prevProps.settings.account) {
+      this.tick();
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
