@@ -23,19 +23,7 @@ class ToolsPermissions extends Component<Props> {
       wallet
     } = this.props;
 
-    if (settings.walletMode === 'ledger') {
-      return (
-        <Segment>
-          <Header
-            content={t('tools_permissions_ledger_permissions_unavailable_header')}
-            icon="warning sign"
-            subheader={t('tools_permissions_ledger_permissions_unavailable_subheader')}
-          />
-        </Segment>
-      );
-    }
-
-    if (settings.walletMode !== 'watch' && !(keys && keys.key)) {
+    if (!['watch', 'ledger'].includes(settings.walletMode) && !(keys && keys.key)) {
       return (
         <WalletPanelLocked
           actions={actions}
@@ -49,7 +37,7 @@ class ToolsPermissions extends Component<Props> {
     const account = accounts[settings.account];
     if (!account) return false;
 
-    const { pubkey } = keys;
+    const { pubkey } = wallet;
     let authorization = new EOSAccount(account).getAuthorization(pubkey, true);
     if (settings.walletMode === 'watch') {
       authorization = {
