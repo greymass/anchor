@@ -29,7 +29,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
     } = this.props;
 
     const awaitingDevice = !!(system[`${actionName}_AWAITING_DEVICE`]);
-    const hasSignature = !!(transaction && transaction.transaction.signatures.length > 0);
+    const hasSignature = !!(transaction && transaction.transaction && transaction.transaction.signatures.length > 0);
     const hasTransaction = !!(transaction && transaction.transaction_id);
     const broadcastTransaction = !!(hasTransaction && ((transaction.broadcast) || (transaction.processed && transaction.processed.receipt.status === 'executed')));
     const hasError = (system[`${actionName}_LAST_ERROR`]);
