@@ -5,6 +5,7 @@ const blockchains = [
     key: 'eos-mainnet',
     name: 'EOS Mainnet',
     symbol: 'EOS',
+    keyPrefix: 'EOS',
     supportedContracts: ['customtokens', 'producerinfo', 'proposals', 'regproxyinfo']
   },
   {
@@ -13,6 +14,7 @@ const blockchains = [
     key: 'jungle-testnet',
     name: 'Jungle Testnet',
     symbol: 'EOS',
+    keyPrefix: 'EOS',
     supportedContracts: []
   },
   {
@@ -21,6 +23,7 @@ const blockchains = [
     key: 'telos-testnet',
     name: 'Telos Testnet',
     symbol: 'TLOS',
+    keyPrefix: 'EOS',
     supportedContracts: []
   },
   {
@@ -29,6 +32,7 @@ const blockchains = [
     key: 'insight-testnet',
     name: 'Insight Testnet',
     symbol: 'INSTAR',
+    keyPrefix: 'INSTAR',
     supportedContracts: []
   }
 ];
