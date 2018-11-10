@@ -22,6 +22,14 @@ const blockchains = [
     name: 'Telos Testnet',
     symbol: 'TLOS',
     supportedContracts: []
+  },
+  {
+    chainId: 'f954e87e8fe791d27b018513a6f67165c0227eadc2d729196e827ee007128677',
+    defaultNode: 'https://shannon.insights.network',
+    key: 'insight-testnet',
+    name: 'Insight Testnet',
+    symbol: 'INSTAR',
+    supportedContracts: []
   }
 ];
 
