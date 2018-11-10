@@ -36,7 +36,7 @@ export default function connection(state = initialState, action) {
         chainKey: (blockchain && blockchain.key) || 'unknown',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         httpEndpoint: action.payload.node,
-        keyPrefix: (blockchain && blockchain.symbol) || 'EOS',
+        keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
         supportedContracts: blockchain.supportedContracts
       });
     }
