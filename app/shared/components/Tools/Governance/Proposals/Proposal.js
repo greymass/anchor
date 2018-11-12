@@ -108,7 +108,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               link={`https://bloks.io/vote/referendums/${proposal_name}`}
               settings={settings}
             />
-
           </p>
           <p>
             If you would like to modify your vote, use the buttons below.
