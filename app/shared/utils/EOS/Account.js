@@ -1,9 +1,69 @@
 import { filter, find, flatten } from 'lodash';
 
+import EOSAccountStats from './Account/Stats';
+
 export default class EOSAccount {
-  constructor(account = undefined) {
+  constructor(
+    account = undefined,
+    balance = undefined,
+    delegations = undefined,
+    chainSymbol = undefined
+  ) {
     this.account = account;
+    this.balance = balance;
+    this.delegations = delegations;
+    this.chainSymbol = chainSymbol;
+
     return this;
+  }
+
+  fetchStats() {
+    if (!this.stats) {
+      this.stats = new EOSAccountStats(
+        this.account,
+        this.balance,
+        this.delegations,
+        this.chainSymbol
+      );
+    }
+
+    return this.stats;
+  }
+
+  getAllStats() {
+    return this.fetchStats().fetchAll();
+  }
+
+  getTotalStakedToSelf() {
+    return this.fetchStats().totalStakedToSelf();
+  }
+
+  getTotalStakedToOthers() {
+    return this.fetchStats().totalStakedToOthers();
+  }
+
+  getRefundDate() {
+    return this.fetchStats().refundDate();
+  }
+
+  getTotalBeingUnstaked() {
+    return this.fetchStats().totalBeingUnstaked();
+  }
+
+  getTokens() {
+    return this.fetchStats().tokens();
+  }
+
+  getTotalTokens() {
+    return this.fetchStats().totalTokens();
+  }
+
+  getResourceUsage() {
+    return this.fetchStats().resourceUsage();
+  }
+
+  getDelegatedStats() {
+    return this.fetchStats().delegatedStats();
   }
 
   getPermission(name) {

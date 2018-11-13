@@ -9,7 +9,7 @@ class WalletStatusResources extends Component<Props> {
   render() {
     const {
       displayResourcesAvailableSetting,
-      statsFetcher,
+      eosAccount,
       t
     } = this.props;
 
@@ -17,7 +17,7 @@ class WalletStatusResources extends Component<Props> {
       cpuUsage,
       netUsage,
       ramUsage
-    } = statsFetcher.resourceUsage();
+    } = eosAccount.getResourceUsage();
 
     return (
       <Segment stacked>
