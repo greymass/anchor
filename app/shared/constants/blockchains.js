@@ -16,6 +16,14 @@ const blockchains = [
     supportedContracts: []
   },
   {
+    chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
+    defaultNode: 'https://kylin.eoscanada.com:443',
+    key: 'cryptokylin-testnet',
+    name: 'CryptoKylin Testnet',
+    symbol: 'EOS',
+    supportedContracts: []
+  },
+  {
     chainId: '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207',
     defaultNode: 'https://api.eos.miami:17441',
     key: 'telos-testnet',
