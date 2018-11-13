@@ -32,7 +32,7 @@ const blockchains = [
     key: 'insight-testnet',
     name: 'Insight Testnet',
     symbol: 'INSTAR',
-    keyPrefix: 'INSTAR',
+    keyPrefix: 'EOS',
     supportedContracts: []
   }
 ];
