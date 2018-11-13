@@ -10,7 +10,7 @@ class WalletStatusStaked extends Component<Props> {
   render() {
     const {
       account,
-      statsFetcher,
+      eosAccount,
       t
     } = this.props;
 
@@ -26,7 +26,7 @@ class WalletStatusStaked extends Component<Props> {
     const {
       cpuWeight,
       netWeight
-    } = statsFetcher.delegatedStats();
+    } = eosAccount.getDelegatedStats();
 
     return (
       <Segment vertical basic>

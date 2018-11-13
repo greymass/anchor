@@ -1,6 +1,6 @@
 import { Decimal } from 'decimal.js';
 
-export default class StatsFetcher {
+export default class EOSAccountStats {
   constructor(account, balance, delegations, chainSymbol) {
     this.account = account;
     this.balance = balance;
@@ -53,6 +53,7 @@ export default class StatsFetcher {
 
     if (refund_request) {
       refundDate = new Date(`${refund_request.request_time}z`);
+      const gethours = refundDate.getHours();
       refundDate.setHours(refundDate.getHours() + 72);
     }
 

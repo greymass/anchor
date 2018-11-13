@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
-import StatsFetcher from '../../../../../utils/StatsFetcher';
+import EOSAccount from '../../../../../utils/EOS/Account';
 
 class WalletPanelFormStakeConfirming extends Component<Props> {
   onConfirm = () => {
@@ -37,9 +37,9 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
 
     const lessThanOneUnitStaked = (cpuAmount < 1 || netAmount < 1);
 
-    const statsFetcher = new StatsFetcher(account, balance);
+    const eosAccount = new EOSAccount(account, balance);
 
-    const refundDate = statsFetcher.refundDate();
+    const refundDate = eosAccount.getRefundDate();
 
     const unstaking = (cpuDifference < 0 || netDifference < 0);
 
@@ -123,7 +123,7 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
               icon="warning sign"
               warning="true"
             >
-              {t('have_already_unstaked')} {statsFetcher.totalBeingUnstaked().toFixed(4)} EOS {t('unstaking_will_be_reset')}
+              {t('have_already_unstaked')} {eosAccount.getTotalBeingUnstaked().toFixed(4)} EOS {t('unstaking_will_be_reset')}
             </Message>
           ) : ''}
 
