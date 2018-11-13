@@ -16,8 +16,8 @@ class WalletStatusBalances extends Component<Props> {
       balances,
       blockExplorers,
       connection,
+      eosAccount,
       settings,
-      statsFetcher,
       system,
       t
     } = this.props;
@@ -29,9 +29,10 @@ class WalletStatusBalances extends Component<Props> {
       totalStakedToSelf,
       totalStakedToOthers,
       totalTokens
-    } = statsFetcher.fetchAll();
+    } = eosAccount.getAllStats();
+
     const contracts = balances.__contracts;
-    const claimable = (new Date(new Date().toUTCString()) > refundDate);
+    const claimable = (new Date() > refundDate);
     const watchedTokens = (settings.customTokens) ? settings.customTokens.map((token) => token.split(':')[1]) : [];
     const rows = [
       (
@@ -81,7 +82,7 @@ class WalletStatusBalances extends Component<Props> {
                           )
                           : false
                         }
-                        {totalBeingUnstaked.toFixed(4)} {connection.chainSymbol} (<TimeAgo date={`${refundDate}z`} />)
+                        {totalBeingUnstaked.toFixed(4)} {connection.chainSymbol} (<TimeAgo date={refundDate} />)
                       </Table.Cell>
                     </Table.Row>
                   )

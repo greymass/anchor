@@ -11,7 +11,7 @@ import FormMessageError from '../../../Global/Form/Message/Error';
 
 import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
 import GlobalFormFieldToken from '../../../Global/Form/Field/Token';
-import StatsFetcher from '../../../../utils/StatsFetcher';
+import EOSAccount from '../../../../utils/EOS/Account';
 
 type Props = {
   actions: {},
@@ -34,9 +34,8 @@ class WalletPanelFormStake extends Component<Props> {
     const parsedCpuWeight = String(cpu_weight).split(' ')[0];
     const parsedNetWeight = String(net_weight).split(' ')[0];
 
-    const statsFetcher = new StatsFetcher(account, balance);
-    const { totalBeingUnstaked } = statsFetcher.fetchAll();
-    // This is a temporary solution until I refactor everything to use the new EOS/Account class instead of StatsFetcher.
+    const eosAccount = new EOSAccount(account, balance);
+    const { totalBeingUnstaked } = eosAccount.getAllStats();
 
     this.state = {
       accountName: account.account_name,
