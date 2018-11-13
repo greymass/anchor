@@ -11,7 +11,7 @@ import WalletStatusStaked from './Status/Staked';
 import WalletStatusActions from './Status/Actions';
 import WalletStatusWaiting from './Status/Waiting';
 
-import StatsFetcher from '../../utils/StatsFetcher';
+import EOSAccount from '../../utils/EOS/Account';
 
 class WalletStatus extends Component<Props> {
   state = {
@@ -62,7 +62,7 @@ class WalletStatus extends Component<Props> {
                         tables.eosio[settings.account] &&
                         tables.eosio[settings.account].delband.rows;
 
-    const statsFetcher = new StatsFetcher(account, balance, delegations, connection.chainSymbol);
+    const eosAccount = new EOSAccount(account, balance, delegations, connection.chainSymbol);
 
     let activeTab = (
       <Segment stacked>
@@ -83,7 +83,7 @@ class WalletStatus extends Component<Props> {
               blockExplorers={blockExplorers}
               connection={connection}
               globals={globals}
-              statsFetcher={statsFetcher}
+              eosAccount={eosAccount}
               settings={settings}
               system={system}
             />
@@ -94,7 +94,7 @@ class WalletStatus extends Component<Props> {
           activeTab = (
             <WalletStatusStaked
               account={account}
-              statsFetcher={statsFetcher}
+              eosAccount={eosAccount}
             />
           );
           break;
@@ -136,7 +136,7 @@ class WalletStatus extends Component<Props> {
       <div>
         <WalletStatusResources
           displayResourcesAvailableSetting={settings.displayResourcesAvailable}
-          statsFetcher={statsFetcher}
+          eosAccount={eosAccount}
         />
         <Segment>
           <Menu
