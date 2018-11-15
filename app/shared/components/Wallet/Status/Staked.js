@@ -4,6 +4,8 @@ import { translate } from 'react-i18next';
 
 import { Segment, Table } from 'semantic-ui-react';
 
+import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
+
 const prettyBytes = require('pretty-bytes');
 
 class WalletStatusStaked extends Component<Props> {
@@ -11,6 +13,7 @@ class WalletStatusStaked extends Component<Props> {
     const {
       account,
       eosAccount,
+      settings,
       t
     } = this.props;
 
@@ -71,6 +74,19 @@ class WalletStatusStaked extends Component<Props> {
                       </Table.Cell>
                       <Table.Cell>
                         {(cpu_limit.used / 1000000).toFixed(4)} sec / {(cpu_limit.max / 1000000).toFixed(4)} sec
+                        {((cpu_limit.used / cpu_limit.max) > 0.95) && (
+                          <span>
+                            &nbsp;(&nbsp;
+                            {t('wallet_status_cpu_low')}
+                            &nbsp; - &nbsp;
+                            <GlobalModalDangerLink
+                              content={t('wallet_status_cpu_emergency_link')}
+                              link={`https://cpuemergency.com/?account=${settings.account}`}
+                              settings={settings}
+                            />
+                            &nbsp;)
+                          </span>
+                        )}
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>

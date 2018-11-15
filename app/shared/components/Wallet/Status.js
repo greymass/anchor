@@ -95,6 +95,7 @@ class WalletStatus extends Component<Props> {
             <WalletStatusStaked
               account={account}
               eosAccount={eosAccount}
+              settings={settings}
             />
           );
           break;
