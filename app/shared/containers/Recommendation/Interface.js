@@ -23,6 +23,7 @@ class RecommendationsInterfaceContainer extends Component<Props> {
     return (
       <RecommendationInterfaceList
         account={account}
+        settings={settings}
       />
     );
   }
