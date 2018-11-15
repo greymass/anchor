@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import { Message } from 'semantic-ui-react';
+import GlobalModalDangerLink from '../../../Global/Modal/DangerLink';
 
 class RecommendationInterfaceCpuAvailableLow extends Component<Props> {
   constructor(props) {
@@ -14,6 +15,7 @@ class RecommendationInterfaceCpuAvailableLow extends Component<Props> {
   render() {
     const {
       account,
+      settings,
       t
     } = this.props;
 
@@ -23,10 +25,19 @@ class RecommendationInterfaceCpuAvailableLow extends Component<Props> {
     return (shouldDisplayWarning)
       ? (
         <Message
-          content={t('recommendations_warning_cpu_available_low')}
           icon="warning"
           warning
-        />
+        >
+          <p>
+            {t('recommendations_warning_cpu_available_low')}
+            &nbsp;-&nbsp;
+            <GlobalModalDangerLink
+              content={t('recommendations_warning_cpu_emergency_link')}
+              link={`https://cpuemergency.com/?account=${settings.account}`}
+              settings={settings}
+            />
+          </p>
+        </Message>
       ) : '';
   }
 }

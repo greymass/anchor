@@ -22,17 +22,18 @@ class RecommendationInterfaceList extends Component<Props> {
   render() {
     const {
       account,
+      settings,
       t
     } = this.props;
 
     const recommendations = listItemsMapping.map((RecommendationComponent, idx) => {
-      return <RecommendationComponent key={idx} account={account} />;
+      return <RecommendationComponent key={idx} account={account} settings={settings} />;
     });
 
     return (
       <Segment basic>
         <Header
-          content={t('recommendations_header_text')}
+          content={t('recommendations_header_title')}
           floated="left"
           subheader={t('recommendations_subheader_text')}
         />
