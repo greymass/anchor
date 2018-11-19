@@ -53,7 +53,6 @@ export default class EOSAccountStats {
 
     if (refund_request) {
       refundDate = new Date(`${refund_request.request_time}z`);
-      const gethours = refundDate.getHours();
       refundDate.setHours(refundDate.getHours() + 72);
     }
 
