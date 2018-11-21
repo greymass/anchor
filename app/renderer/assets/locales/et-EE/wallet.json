@@ -82,6 +82,8 @@
   "wallet_status_balances_none": "Sellel rahakotil puuduvad osakute saldod.",
   "wallet_status_balances_staked_to_others": "Staked to Others",
   "wallet_status_balances_staked_to_self": "Staked to Self",
+  "wallet_status_cpu_emergency_link": "get some emergency CPU",
+  "wallet_status_cpu_low": "your cpu availability is low",
   "wallet_status_liquid": "Kasutatav",
   "wallet_status_ram_amount": "Mälu Kogus",
   "wallet_status_resources_being_unstaked": "Panusest eemaldamisel",
