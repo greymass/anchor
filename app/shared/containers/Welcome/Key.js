@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Container, Form, Input, Message, Radio, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Dropdown, Form, Input, Message, Radio, Segment } from 'semantic-ui-react';
 
 import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
@@ -35,6 +35,7 @@ class WelcomeKeyContainer extends Component<Props> {
     super(props);
     const { keys } = props;
     this.state = {
+      authorization: 'active',
       key: (keys) ? keys.key : '',
       visible: false
     };
@@ -48,6 +49,7 @@ class WelcomeKeyContainer extends Component<Props> {
 
   onCompare = () => {
     const {
+      authorization,
       key
     } = this.state;
     const {
@@ -64,7 +66,8 @@ class WelcomeKeyContainer extends Component<Props> {
       validateKey
     } = actions;
     // Set for temporary usage
-    setTemporaryKey(key);
+    setTemporaryKey(key, authorization);
+    setSetting('authorization', authorization);
     switch (settings.walletMode) {
       case 'cold': {
         if (ecc.isValidPrivate(key) && onStageSelect) {
@@ -73,13 +76,10 @@ class WelcomeKeyContainer extends Component<Props> {
         break;
       }
       case 'watch': {
-        // TODO - allow setting
-        const authorization = 'active';
         // Import the watch wallet
         importWallet(settings.account, authorization, false, false, 'watch');
         // Set this wallet as the used wallet
         useWallet(settings.account, 'active');
-        setSetting('authorization', authorization);
         // Initialize the wallet setting
         setSetting('walletInit', true);
         // Move on to the voter
@@ -89,7 +89,6 @@ class WelcomeKeyContainer extends Component<Props> {
       default: {
         // Validate against account
         validateKey(key, settings).then((authorization) => {
-          setSetting('authorization', authorization);
           setTemporaryKey(key, authorization);
           if (onStageSelect) {
             onStageSelect(4);
@@ -120,6 +119,12 @@ class WelcomeKeyContainer extends Component<Props> {
     }
   }
 
+  setAuthorization = (e, { value }) => {
+    this.setState({
+      authorization: value
+    });
+  }
+
   render() {
     const {
       accounts,
@@ -134,6 +139,7 @@ class WelcomeKeyContainer extends Component<Props> {
       account
     } = settings;
     const {
+      authorization,
       key,
       visible
     } = this.state;
@@ -150,6 +156,13 @@ class WelcomeKeyContainer extends Component<Props> {
         .filter((perm) => perm.required_auth.keys.length > 0)
         .map((perm) => perm.required_auth.keys[0].key));
     }
+    const options = ['active', 'owner'].map((authority) => (
+      {
+        key: authority,
+        text: authority,
+        value: authority
+      }
+    ));
     let buttonColor = 'blue';
     let buttonIcon = 'search';
     let buttonText = t('welcome_compare_key');
@@ -271,7 +284,7 @@ class WelcomeKeyContainer extends Component<Props> {
         {(settings.walletMode !== 'watch')
           ? (
             <React.Fragment>
-              <p>{t('welcome_instructions_5a')}</p>
+              <p>{t('welcome_instructions_5')}</p>
               <Form.Field
                 autoFocus
                 control={Input}
@@ -288,6 +301,21 @@ class WelcomeKeyContainer extends Component<Props> {
                 onChange={this.onToggleKey}
                 checked={visible}
               />
+              {(settings.walletMode === 'cold')
+                ? (
+                  <React.Fragment>
+                    <p>{t('tools:tools_form_permissions_auth_permission')}</p>
+                    <Dropdown
+                      defaultValue={authorization}
+                      fluid
+                      onChange={this.setAuthorization}
+                      options={options}
+                      selection
+                    />
+                  </React.Fragment>
+                )
+                : false
+              }
             </React.Fragment>
           )
           : false
