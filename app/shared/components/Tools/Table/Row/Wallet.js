@@ -135,6 +135,20 @@ class ToolsTableRowWallet extends Component<Props> {
         ));
         break;
       }
+      case 'cold': {
+        color = 'blue';
+        icon = 'snowflake';
+        items.push((
+          <Dropdown.Item
+            content={t('wallet:wallet_remove')}
+            disabled={isCurrentWallet}
+            icon="trash"
+            key="delete"
+            onClick={() => this.removeWallet(account, authorization)}
+          />
+        ));
+        break;
+      }
       default: {
         color = 'green';
         icon = 'id card';

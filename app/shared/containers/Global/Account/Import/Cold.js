@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Dropdown, Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldAccount from '../../../../components/Global/Form/Field/Account';
@@ -18,6 +18,7 @@ class GlobalModalAccountImportCold extends Component<Props> {
   state = {
     account: '',
     accountValid: false,
+    authorization: 'active',
     key: '',
     keyValid: false
   }
@@ -27,18 +28,24 @@ class GlobalModalAccountImportCold extends Component<Props> {
   importAccounts = (password) => {
     const {
       account,
+      authorization,
       key
     } = this.state;
     const {
       actions
     } = this.props;
-    actions.importWallet(account, undefined, key, password, 'cold');
+    actions.importWallet(account, authorization, key, password, 'cold');
     this.props.onClose();
   }
   onChange = (e, { name, valid, value }) => {
     this.setState({
       [name]: value,
       [`${name}Valid`]: valid
+    });
+  }
+  setAuthorization = (e, { value }) => {
+    this.setState({
+      authorization: value
     });
   }
   render() {
@@ -53,16 +60,21 @@ class GlobalModalAccountImportCold extends Component<Props> {
     const {
       account,
       accountValid,
+      authorization,
       key,
       keyValid
     } = this.state;
     const disabled = (!accountValid || !keyValid);
+    const options = ['active', 'owner'].map((authority) => (
+      {
+        key: authority,
+        text: authority,
+        value: authority
+      }
+    ));
     return (
       <Tab.Pane>
         <Segment basic>
-          <p>
-            {t('global_account_import_cold_description')}
-          </p>
           <Segment attached="top">
             <GlobalFormFieldAccount
               autoFocus
@@ -75,13 +87,23 @@ class GlobalModalAccountImportCold extends Component<Props> {
               value={account}
             />
           </Segment>
-          <Segment attached="bottom">
+          <Segment attached>
             <GlobalFormFieldKeyPrivate
               label={t('global_account_import_private_key')}
               name="key"
               placeholder={t('welcome:welcome_key_compare_placeholder')}
               onChange={this.onChange}
               value={key}
+            />
+          </Segment>
+          <Segment attached="bottom">
+            <p>{t('tools:tools_form_permissions_auth_permission')}</p>
+            <Dropdown
+              defaultValue={authorization}
+              fluid
+              onChange={this.setAuthorization}
+              options={options}
+              selection
             />
           </Segment>
         </Segment>

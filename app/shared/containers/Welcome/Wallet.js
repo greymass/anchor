@@ -67,7 +67,7 @@ class WelcomeWalletContainer extends Component<Props> {
     if (encryptWallet) {
       setWalletHash(password);
       setSetting('walletInit', true);
-      setWalletKey(key, password, settings.walletMode, hash);
+      setWalletKey(key, password, settings.walletMode, hash, settings.authorization);
     } else {
       setSetting('walletTemp', true);
     }

@@ -6,7 +6,7 @@ import EOSAccount from '../utils/EOS/Account';
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 
-export function setWalletKey(data, password, mode = 'hot', existingHash = false) {
+export function setWalletKey(data, password, mode = 'hot', existingHash = false, auth = false) {
   return (dispatch: () => void, getState) => {
     const { accounts, connection, settings } = getState();
     let hash = existingHash;
@@ -21,6 +21,9 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false)
     const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
     const accountData = accounts[settings.account];
     let authorization;
+    if (auth) {
+      authorization = auth;
+    }
     if (accountData) {
       const auth = new EOSAccount(accountData).getAuthorization(pubkey);
       if (auth) {
