@@ -82,6 +82,8 @@
   "wallet_status_balances_none": "このウォレットにはトークン残高がありません。",
   "wallet_status_balances_staked_to_others": "他者へステーク中",
   "wallet_status_balances_staked_to_self": "自身へステーク中",
+  "wallet_status_cpu_emergency_link": "get some emergency CPU",
+  "wallet_status_cpu_low": "your cpu availability is low",
   "wallet_status_liquid": "移動可能",
   "wallet_status_ram_amount": "RAM量",
   "wallet_status_resources_being_unstaked": "ステーク解除中",
