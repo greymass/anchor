@@ -82,6 +82,8 @@
   "wallet_status_balances_none": "이 지갑에는 토큰 잔액이 없습니다.",
   "wallet_status_balances_staked_to_others": "Staked to Others",
   "wallet_status_balances_staked_to_self": "Staked to Self",
+  "wallet_status_cpu_emergency_link": "get some emergency CPU",
+  "wallet_status_cpu_low": "your cpu availability is low",
   "wallet_status_liquid": "거래에 사용할 수있는 잔액",
   "wallet_status_ram_amount": "RAM 용량",
   "wallet_status_resources_being_unstaked": "현재 스테이킹 푸는중",
