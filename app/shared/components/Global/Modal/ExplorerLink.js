@@ -18,6 +18,10 @@ export default class GlobalModalExplorerLink extends Component<Props> {
       ? blockExplorers[selected]
       : blockExplorers[Object.keys(blockExplorers)[0]];
 
+    if (!blockExplorer[linkType]) {
+      return false;
+    }
+
     const urlPartsWithoutVariable = blockExplorer[linkType].split(`{${linkType}}`);
 
     const generatedLink = `${urlPartsWithoutVariable[0]}${linkData}${urlPartsWithoutVariable[1]}`;
