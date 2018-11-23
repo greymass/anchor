@@ -127,14 +127,14 @@ const paneMapping = [
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'ping',
   },
-  // {
-  //   element: ToolsBidName,
-  //   modes: ['hot', 'watch'],
-  //   name: 'bid_name',
-  // },
+  {
+    element: ToolsBidName,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'bid_name',
+  },
   {
     element: ToolsContacts,
-    modes: ['hot', 'ledger', 'watch'],
+    modes: ['hot', 'watch', 'ledger'],
     name: 'contacts',
   },
   {
