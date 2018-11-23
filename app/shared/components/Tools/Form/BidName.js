@@ -24,6 +24,7 @@ class ToolsFormBidName extends Component<Props> {
       confirming: false,
       formErrors: {},
       bidder: settings.account,
+      step: 1,
       submitDisabled: true
     };
   }
@@ -48,6 +49,21 @@ class ToolsFormBidName extends Component<Props> {
     }
   }
 
+  handleNextStep = () => {
+    const {
+      actions
+    } = this.props;
+    const {
+      getBidForName
+    } = actions;
+    const {
+      newname
+    } = this.state;
+    this.setState({ step: 2 }, () => {
+      getBidForName(newname);
+    });
+  }
+
   onChange = debounce((e, { name, value, valid }) => {
     this.setState({
       submitDisabled: false,
@@ -65,12 +81,10 @@ class ToolsFormBidName extends Component<Props> {
 
       const {
         checkAccountAvailability,
-        getBidForName
       } = actions;
 
       if (name === 'newname' && newname.length !== 0) {
         checkAccountAvailability(newname);
-        getBidForName(newname);
       }
 
       let submitDisabled = false;
@@ -207,7 +221,9 @@ class ToolsFormBidName extends Component<Props> {
     } = this.props;
 
     const {
-      newname
+      newname,
+      bid,
+      step
     } = this.state;
 
     const shouldShowConfirm = this.state.confirming;
@@ -230,33 +246,31 @@ class ToolsFormBidName extends Component<Props> {
               <div>
                 <Message
                   content={t('tools_form_bid_name_message')}
+                  info
+                />
+                <Message
+                  content={t('tools_form_bid_name_warning')}
                   warning
                 />
                 <Form
                   onKeyPress={this.onKeyPress}
                   onSubmit={this.onSubmit}
                 >
-                  {formAttributes.filter((formAttribute) => formAttribute !== 'bidder').map((formAttribute) => {
-                    let FieldComponentType;
-                    let defaultValue;
-
-                    if (tokenFields.includes(formAttribute)) {
-                      FieldComponentType = GlobalFormFieldAmount;
-                      defaultValue = this.state[formAttribute] && this.state[formAttribute].split(' ')[0];
-                    } else {
-                      FieldComponentType = GlobalFormFieldString;
-                      defaultValue = this.state[formAttribute];
-                    }
-
-                    return (
-                      <FieldComponentType
-                        defaultValue={defaultValue || ''}
-                        label={t(`tools_form_bid_name_${formAttribute}`)}
-                        name={formAttribute}
-                        onChange={this.onChange}
-                      />
-                    );
-                  })}
+                  {(step === 1) ? (
+                    <GlobalFormFieldString
+                      defaultValue={newname || ''}
+                      label={t('tools_form_bid_name_newname')}
+                      name="newname"
+                      onChange={this.onChange}
+                    />
+                  ) : (
+                    <GlobalFormFieldAmount
+                      defaultValue={bid || ''}
+                      label={t('tools_form_bid_name_bid')}
+                      name="bid"
+                      onChange={this.onChange}
+                    />
+                  )}
                   <FormMessageError
                     errors={
                       formErrorKeys.length > 0 && formErrorKeys.reduce((errors, key) => {
@@ -305,13 +319,30 @@ class ToolsFormBidName extends Component<Props> {
                     </Table>
                   ) : ''}
                   <Segment basic clearing>
-                    <Button
-                      content={t('tools_form_proxy_info_button')}
-                      color="green"
-                      disabled={submitDisabled}
-                      floated="right"
-                      primary
-                    />
+                    {(step === 1)
+                    ? (
+                      <Button
+                        content={t('tools_form_proxy_info_button')}
+                        color="green"
+                        floated="right"
+                        onClick={this.handleNextStep}
+                        primary
+                      />
+                    ) : (
+                      <div>
+                        <Button
+                          content={t('tools_form_proxy_info_back')}
+                          onClick={() => this.setState({ step: 1 })}
+                        />
+                        <Button
+                          content={t('tools_form_proxy_info_button')}
+                          color="green"
+                          disabled={submitDisabled}
+                          floated="right"
+                          primary
+                        />
+                      </div>
+                    )}
                   </Segment>
                 </Form>
               </div>

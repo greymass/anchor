@@ -1,7 +1,15 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Divider, Icon, Segment, Table, Header } from 'semantic-ui-react';
+import {
+  Button,
+  Divider,
+  Header,
+  Icon,
+  Message,
+  Segment,
+  Table
+} from 'semantic-ui-react';
 
 class ToolsFormBidNameConfirming extends Component<Props> {
   onConfirm = () => {
@@ -40,6 +48,11 @@ class ToolsFormBidNameConfirming extends Component<Props> {
             })}
           </Table.Body>
         </Table>
+        <Divider />
+        <Message
+          content={t('tools_form_bid_name_warning')}
+          warning
+        />
         <Divider />
         <Button
           onClick={onBack}
