@@ -135,14 +135,14 @@ const paneMapping = [
     name: 'ping',
     requiredContract: 'producerinfo'
   },
-  // {
-  //   element: ToolsBidName,
-  //   modes: ['hot', 'watch'],
-  //   name: 'bid_name',
-  // },
+  {
+    element: ToolsBidName,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'bid_name',
+  },
   {
     element: ToolsContacts,
-    modes: ['hot', 'ledger', 'watch'],
+    modes: ['hot', 'watch', 'ledger'],
     name: 'contacts',
   },
   {
