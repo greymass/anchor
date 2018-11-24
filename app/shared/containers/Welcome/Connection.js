@@ -13,8 +13,6 @@ import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
 
-import blockchains from '../../constants/blockchains';
-
 const { shell } = require('electron');
 
 type Props = {
@@ -190,6 +188,14 @@ class WelcomeConnectionContainer extends Component<Props> {
         </p>
       );
     }
+    const historyPluginMessage = !connection.historyPluginEnabled && (
+      <Message
+        color="red"
+        content={t('welcome:welcome_history_plugin_warning_content')}
+        header={t('welcome:welcome_history_plugin_warning_title')}
+        icon="warning"
+      />
+    );
     // safeish true and ssl or non-ssl confirmed
     const disabled = !(this.isSafeish(node) && (sslConfirm || sslEnabled));
 
@@ -208,6 +214,7 @@ class WelcomeConnectionContainer extends Component<Props> {
           defaultValue={node}
         />
         {message}
+        {historyPluginMessage}
         {checkbox}
         <Container>
           <Button
