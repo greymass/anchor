@@ -12,6 +12,7 @@ const initialState = {
   chainSymbol: 'EOS',
   expireInSeconds: 120,
   // forceActionDataHex: false,
+  historyPluginEnabled: false,
   httpEndpoint: null,
   keyPrefix: 'EOS',
   sign: false,
@@ -66,6 +67,11 @@ export default function connection(state = initialState, action) {
     case types.SET_CONNECTION_SIGN: {
       return Object.assign({}, state, {
         sign: action.payload.enable
+      });
+    }
+    case types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED: {
+      return Object.assign({}, state, {
+        historyPluginEnabled: action.payload.enabled
       });
     }
     case types.HARDWARE_LEDGER_TRANSPORT_FAILURE: {
