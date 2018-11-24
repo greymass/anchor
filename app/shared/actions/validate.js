@@ -63,6 +63,7 @@ export function validateNode(node) {
       // Establish EOS connection
       try {
         const {
+          actions,
           connection,
           settings
         } = getState();
@@ -94,6 +95,8 @@ export function validateNode(node) {
               },
               type: types.VALIDATE_NODE_SUCCESS
             });
+            // Check if the new node supports the History Plugin
+            dispatch(actions.historyPluginCheck());
             // Refresh our connection properties with new chain info
             return dispatch(chain.getInfo());
           }
