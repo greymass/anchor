@@ -30,7 +30,8 @@ export default class GlobalFormFieldToken extends Component<Props> {
       icon,
       label,
       loading,
-      name
+      name,
+      placeholder
     } = this.props;
     const {
       value
@@ -45,7 +46,7 @@ export default class GlobalFormFieldToken extends Component<Props> {
         loading={loading}
         name={name}
         onChange={this.onChange}
-        placeholder="0.0000"
+        placeholder={placeholder || '0.0000'}
       />
     );
   }
