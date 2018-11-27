@@ -1,6 +1,7 @@
 import { getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
+import { historyPluginCheck } from './connection';
 import eos from './helpers/eos';
 
 const ecc = require('eosjs-ecc');
@@ -96,7 +97,7 @@ export function validateNode(node) {
               type: types.VALIDATE_NODE_SUCCESS
             });
             // Check if the new node supports the History Plugin
-            dispatch(actions.historyPluginCheck());
+            dispatch(historyPluginCheck());
             // Refresh our connection properties with new chain info
             return dispatch(chain.getInfo());
           }
