@@ -29,9 +29,10 @@ class SidebarAccount extends Component<Props> {
   render() {
     const {
       chain,
+      connection,
       t,
       settings,
-      wallet
+      validate
     } = this.props;
     const {
       editing
@@ -43,6 +44,9 @@ class SidebarAccount extends Component<Props> {
     } catch (e) {
       // console.log('url error', e);
     }
+
+    const unacceptableNode = connection && (!connection.historyPluginEnabled || validate.NODE === 'FAILURE');
+
     let controls = [(
       <Button
         icon="settings"
@@ -63,7 +67,7 @@ class SidebarAccount extends Component<Props> {
         </Header.Subheader>
       </Header>
       )];
-    if (editing) {
+    if (editing || unacceptableNode) {
       controls = (
         <WelcomeConnectionContainer
           onStageSelect={this.onToggle}
@@ -98,8 +102,10 @@ class SidebarAccount extends Component<Props> {
 function mapStateToProps(state) {
   return {
     chain: state.chain,
+    connection: state.connection,
     keys: state.keys,
     settings: state.settings,
+    validate: state.validate,
     wallet: state.wallet
   };
 }
