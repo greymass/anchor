@@ -51,6 +51,7 @@ class ToolsFormBidNameConfirming extends Component<Props> {
         <Divider />
         <Message
           content={t('tools_form_bid_name_warning')}
+          icon="warning sign"
           warning
         />
         <Divider />

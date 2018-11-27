@@ -11,7 +11,6 @@ import ToolsFormBidNameConfirming from './BidName/Confirming';
 import WalletPanelLocked from '../../Wallet/Panel/Locked';
 
 const formAttributes = ['bidder', 'newname', 'bid'];
-const tokenFields = ['bid'];
 
 class ToolsFormBidName extends Component<Props> {
   constructor(props) {
@@ -245,11 +244,8 @@ class ToolsFormBidName extends Component<Props> {
             ? (
               <div>
                 <Message
-                  content={t('tools_form_bid_name_message')}
-                  info
-                />
-                <Message
                   content={t('tools_form_bid_name_warning')}
+                  icon="warning sign"
                   warning
                 />
                 <Form
@@ -259,14 +255,14 @@ class ToolsFormBidName extends Component<Props> {
                   {(step === 1) ? (
                     <GlobalFormFieldString
                       defaultValue={newname || ''}
-                      label={t('tools_form_bid_name_newname')}
+                      label={t('tools_form_bid_name_choose_name')}
                       name="newname"
                       onChange={this.onChange}
                     />
                   ) : (
                     <GlobalFormFieldAmount
-                      defaultValue={bid || ''}
-                      label={t('tools_form_bid_name_bid')}
+                      defaultValue={bid && bid.split(' ')[0] || ''}
+                      label={t('tools_form_bid_name_choose_bid_amount')}
                       name="bid"
                       onChange={this.onChange}
                     />
@@ -283,8 +279,7 @@ class ToolsFormBidName extends Component<Props> {
                     }
                     icon="warning sign"
                   />
-                  {(shouldShowBidInfo)
-                  ? (
+                  {(shouldShowBidInfo) && (
                     <Table
                       size="small"
                       basic
@@ -317,12 +312,18 @@ class ToolsFormBidName extends Component<Props> {
                         </Table.Row>
                       </Table.Body>
                     </Table>
-                  ) : ''}
+                  )}
+
+                  {(!shouldShowBidInfo && step === 2) && (
+                    <Message
+                      content={t('tools_form_bid_name_first_bid')}
+                    />
+                  )}
                   <Segment basic clearing>
                     {(step === 1)
                     ? (
                       <Button
-                        content={t('tools_form_proxy_info_button')}
+                        content={t('tools_form_proxy_info_next')}
                         color="green"
                         floated="right"
                         onClick={this.handleNextStep}
@@ -335,7 +336,7 @@ class ToolsFormBidName extends Component<Props> {
                           onClick={() => this.setState({ step: 1 })}
                         />
                         <Button
-                          content={t('tools_form_proxy_info_button')}
+                          content={t('tools_form_proxy_info_next')}
                           color="green"
                           disabled={submitDisabled}
                           floated="right"
