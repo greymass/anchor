@@ -25,6 +25,7 @@ export default class GlobalFormFieldString extends Component<Props> {
       icon,
       label,
       loading,
+      placeholder,
       name
     } = this.props;
     const {
@@ -38,6 +39,7 @@ export default class GlobalFormFieldString extends Component<Props> {
         defaultValue={value}
         icon={icon}
         label={label}
+        placeholder={placeholder}
         loading={loading}
         name={name}
         onChange={this.onChange}

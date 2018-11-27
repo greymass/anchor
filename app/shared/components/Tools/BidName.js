@@ -104,13 +104,13 @@ class ToolsProxy extends Component<Props> {
           wallet={wallet}
         />
         <Header
-          content={t('tools_bid_name_header_text')}
+          content={t('tools_bid_name_info_header')}
           floated="left"
-          subheader={t('tools_bid_name_subheader_text')}
+          subheader={t('tools_bid_name_info_content')}
         />
         <Message
-          content={t('tools_bid_name_info_content')}
-          header={t('tools_bid_name_info_header')}
+          content={t('tools_bid_name_message_content')}
+          header={t('tools_bid_name_message_header')}
           icon="circle question"
           info
         />

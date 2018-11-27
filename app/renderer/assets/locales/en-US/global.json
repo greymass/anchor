@@ -31,6 +31,7 @@
   "error_invalid_website": "Invalid website, must start with 'http://' or 'https://'.",
   "error_invalid_wechat": "Invalid Wechat username, must be less than 256 Bytes.",
   "error_newname_already_bid": "You already bid on this name.",
+  "error_newname_not_available": "This account name is already taken.",
   "error_newname_too_long": "Can only bid on an account name of 11 characters or less.",
   "error_no_stake_left": "Unable to set staked amount to 0. Doing so would prevent you from performing any transactions on the network.",
   "error_not_enough_delegated_bw_for_new_account": "You need to delegate some Bandwidth resources to the new account.",
