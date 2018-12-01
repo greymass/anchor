@@ -63,7 +63,8 @@ export function validateNode(node) {
       // Establish EOS connection
       try {
         const {
-          connection
+          connection,
+          settings
         } = getState();
         let { host, protocol, pathname } = new URL(node);
         // If the protocol contains the original value with a colon,
@@ -87,8 +88,9 @@ export function validateNode(node) {
             // Dispatch success
             dispatch({
               payload: {
+                info: result,
                 node: httpEndpoint,
-                info: result
+                settings,
               },
               type: types.VALIDATE_NODE_SUCCESS
             });
