@@ -29,8 +29,13 @@ export default function connection(state = initialState, action) {
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
       const blockchain = find(blockchains, { chainId: action.payload.info.chain_id });
+      const { account, authorization } = action.payload.settings;
 
       return Object.assign({}, state, {
+        authorization: [
+          account,
+          authorization || 'active',
+        ].join('@'),
         chain: (blockchain && blockchain.name) || 'unknown',
         chainId: action.payload.info.chain_id,
         chainKey: (blockchain && blockchain.key) || 'unknown',
