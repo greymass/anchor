@@ -79,6 +79,8 @@
   "tools_form_bid_name_bid_info_header": "Bid Info on ",
   "tools_form_bid_name_bid_info_last_bid": "Last Bid",
   "tools_form_bid_name_bid_info_last_bidder": "Last Bidder",
+  "tools_form_bid_name_bid_info_bid_name": "Name",
+  "tools_form_bid_name_bid_info_bid_info": "Bid info",
   "tools_form_bid_name_bidder": "Bidder Name",
   "tools_form_bid_name_choose_bid_amount": "Second, the Bid Amount (in EOS) that will be made",
   "tools_form_bid_name_choose_name": "First, the name that the bid will be placed on",
