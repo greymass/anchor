@@ -87,7 +87,7 @@ export function importWallet(
   path = undefined,
 ) {
   return (dispatch: () => void, getState) => {
-    const { accounts } = getState();
+    const { accounts, settings } = getState();
     const data = (key && password) ? encrypt(key, password) : undefined;
     const accountData = accounts[account];
     let pubkey = (key) ? ecc.privateToPublic(key) : publicKey;
@@ -96,6 +96,15 @@ export function importWallet(
       if (auths.length > 0) {
         ([{ pubkey }] = auths);
       }
+    }
+    // Detect if the current account/authorization is being reimported/replaced, and set mode
+    if (
+      settings.account === account
+      && settings.authorization === authorization
+    ) {
+      dispatch(setSettings(Object.assign({}, settings, {
+        walletMode: mode
+      })));
     }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
