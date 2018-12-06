@@ -18,6 +18,7 @@ import producers from './producers';
 import proposals from './proposals';
 import settings from './settings';
 import system from './system';
+import systemlog from './system/log';
 import tables from './tables';
 import transaction from './transaction';
 import validate from './validate';
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   router,
   settings,
   system,
+  systemlog,
   tables,
   transaction,
   validate,

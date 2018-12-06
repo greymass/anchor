@@ -27,6 +27,7 @@ import ToolsReset from '../components/Tools/Reset';
 import ToolsStateChain from '../components/Tools/State/Chain';
 import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
+import ToolsSystemLog from '../components/Tools/System/Log';
 import ToolsWallets from '../components/Tools/Wallets';
 
 import * as AccountsActions from '../actions/accounts';
@@ -154,6 +155,11 @@ const paneMapping = [
     name: 'state',
   },
   {
+    element: ToolsSystemLog,
+    modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
+    name: 'system_log'
+  },
+  {
     element: ToolsStateChain,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'state_chain',
@@ -274,6 +280,7 @@ function mapStateToProps(state) {
     settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
     system: state.system,
+    systemlog: state.systemlog,
     tables: state.tables,
     transaction: state.transaction,
     validate: state.validate,
