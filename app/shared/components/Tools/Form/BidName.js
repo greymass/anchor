@@ -23,19 +23,21 @@ class ToolsFormBidName extends Component<Props> {
       confirming: false,
       formErrors: {},
       bidder: settings.account,
+      secondStepDisabled: true,
       step: 1,
-      submitDisabled: true
+      submitDisabled: true,
     };
   }
 
   onSubmit = (e) => {
-    if (!this.state.submitDisabled) {
+    e.preventDefault();
+
+    if (this.state.bid && !this.state.submitDisabled) {
       this.setState({
         confirming: true
       });
     }
 
-    e.preventDefault();
     return false;
   }
 
@@ -87,18 +89,25 @@ class ToolsFormBidName extends Component<Props> {
       }
 
       let submitDisabled = false;
+      let secondStepDisabled = false;
 
       if (!valid) {
         formErrors[name] = `invalid_${name}`;
+        secondStepDisabled = true;
         submitDisabled = true;
       } else if (name === 'bid' && Number(value.split(' ')[0]) > balance.EOS) {
-        formErrors[name] = 'error_insufficient_balance';
+        formErrors[name] = 'insufficient_balance';
         submitDisabled = true;
       } else if (name === 'newname' && value.length > 11) {
         formErrors[name] = 'newname_too_long';
+        secondStepDisabled = true;
         submitDisabled = true;
       } else {
         formErrors[name] = null;
+      }
+
+      if (!newname || newname.length === 0) {
+        secondStepDisabled =  true;
       }
 
       if (!this.allFieldsHaveValidFormat()) {
@@ -106,6 +115,7 @@ class ToolsFormBidName extends Component<Props> {
       }
 
       this.setState({
+        secondStepDisabled,
         formErrors,
         submitDisabled
       });
@@ -171,6 +181,7 @@ class ToolsFormBidName extends Component<Props> {
     } = this.state;
 
     let {
+      secondStepDisabled,
       submitDisabled
     } = this.state;
 
@@ -184,9 +195,11 @@ class ToolsFormBidName extends Component<Props> {
     if (accountNameUnavailable) {
       formErrors.newname = 'newname_not_available';
       submitDisabled = true;
+      secondStepDisabled = true;
     } else if (currentAccountLastBid) {
       formErrors.newname = 'newname_already_bid';
       submitDisabled = true;
+      secondStepDisabled =  true;
     } else if (newnameFieldHasError) {
       formErrors.newname = null;
     }
@@ -205,7 +218,7 @@ class ToolsFormBidName extends Component<Props> {
       formErrors.bid = null;
     }
 
-    return { formErrors, submitDisabled };
+    return { formErrors, submitDisabled, secondStepDisabled };
   }
 
   render() {
@@ -229,10 +242,9 @@ class ToolsFormBidName extends Component<Props> {
     const shouldShowForm = !shouldShowConfirm;
     const shouldShowBidInfo = system.NAMEBID_LAST_BID && system.NAMEBID_LAST_BID.newname === newname;
 
-    const { formErrors, submitDisabled } = this.formErrorsOnRender();
+    const { formErrors, submitDisabled, secondStepDisabled } = this.formErrorsOnRender();
 
     const formErrorKeys = Object.keys(formErrors);
-
 
     return ((keys && keys.key) || settings.walletMode === 'watch')
       ? (
@@ -287,8 +299,7 @@ class ToolsFormBidName extends Component<Props> {
                       <Table.Header>
                         <Table.Row>
                           <Table.HeaderCell>
-                            {t('tools_form_bid_name_bid_info_header')}
-                            <u>{newname}</u>
+                            {t('tools_form_bid_name_bid_info_bid_info')}
                           </Table.HeaderCell>
                           <Table.HeaderCell />
                         </Table.Row>
@@ -296,10 +307,18 @@ class ToolsFormBidName extends Component<Props> {
                       <Table.Body>
                         <Table.Row>
                           <Table.Cell>
+                            {t('tools_form_bid_name_bid_info_bid_name')}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {newname}
+                          </Table.Cell>
+                        </Table.Row>
+                        <Table.Row>
+                          <Table.Cell>
                             {t('tools_form_bid_name_bid_info_last_bid')}
                           </Table.Cell>
                           <Table.Cell>
-                            {system.NAMEBID_LAST_BID.high_bid / 10000} EOS
+                            {Math.abs(system.NAMEBID_LAST_BID.high_bid) / 10000} EOS
                           </Table.Cell>
                         </Table.Row>
                         <Table.Row>
@@ -325,6 +344,7 @@ class ToolsFormBidName extends Component<Props> {
                       <Button
                         content={t('tools_form_proxy_info_next')}
                         color="green"
+                        disabled={secondStepDisabled}
                         floated="right"
                         onClick={this.handleNextStep}
                         primary
@@ -333,7 +353,7 @@ class ToolsFormBidName extends Component<Props> {
                       <div>
                         <Button
                           content={t('tools_form_proxy_info_back')}
-                          onClick={() => this.setState({ step: 1 })}
+                          onClick={() => this.setState({ step: 1, bid: undefined })}
                         />
                         <Button
                           content={t('tools_form_proxy_info_next')}
