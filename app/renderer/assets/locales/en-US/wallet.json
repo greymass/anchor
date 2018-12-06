@@ -1,8 +1,10 @@
 {
+  "edit": "Edit Wallet",
   "key_validation_account_not_found": "The account specified could not be found.",
   "key_validation_invalid_key": "The private key entered could not be resolved to a public key. Please ensure it has been entered correctly.",
   "key_validation_no_permission": "The specified private key does not have permission to perform actions as the specified account",
   "no_account_data": "No account data loaded",
+  "view": "View Wallet",
   "wallet_account_lookup_failure_content": "",
   "wallet_account_lookup_failure_header": "Unable to perform account lookup",
   "wallet_account_lookup_modal_accounts_found": "Accounts found with matching key...",
