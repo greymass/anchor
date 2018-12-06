@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 
 import { Button, Dropdown, Header, Label, Popup, Table } from 'semantic-ui-react';
 
+import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
 import GlobalFragmentAuthorization from '../../../Global/Fragment/Authorization';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
@@ -16,13 +17,25 @@ const initialLedgerState = {
   convertToLedgerKey: undefined,
 };
 
+const initialEditState = {
+  editAccount: undefined,
+  editAuthorization: undefined,
+};
+
 class ToolsTableRowWallet extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = Object.assign(
       {},
-      initialLedgerState
+      initialEditState,
+      initialLedgerState,
     );
+  }
+  editWallet = (account, authorization) => {
+    this.setState({
+      editAccount: account,
+      editAuthorization: authorization
+    });
   }
   removeWallet = (account, authorization) => {
     const { actions } = this.props;
@@ -43,6 +56,10 @@ class ToolsTableRowWallet extends Component<Props> {
   resetLedgerConversion = () => this.setState(Object.assign(
     this.state,
     initialLedgerState
+  ));
+  resetEditWallet = () => this.setState(Object.assign(
+    this.state,
+    initialEditState
   ));
   render() {
     const {
@@ -67,6 +84,8 @@ class ToolsTableRowWallet extends Component<Props> {
       convertToLedgerAccount,
       convertToLedgerAuthorization,
       convertToLedgerKey,
+      editAccount,
+      editAuthorization,
     } = this.state;
     let modal;
     let color = 'grey';
@@ -81,9 +100,27 @@ class ToolsTableRowWallet extends Component<Props> {
         />
       );
     }
+    if (editAccount && editAuthorization) {
+      modal = (
+        <GlobalAccountEdit
+          account={editAccount}
+          authorization={editAuthorization}
+          data={wallet}
+          onClose={this.resetEditWallet}
+        />
+      )
+    }
     const items = [
       (
         <Dropdown.Header icon="warning sign" content={t('wallet:wallet_advanced_header')} />
+      ),
+      (
+        <Dropdown.Item
+          content={t('wallet:view')}
+          icon="edit"
+          key="edit"
+          onClick={() => this.editWallet(account, authorization)}
+        />
       )
     ];
     // Is this the current wallet? Account + Authorization must match
