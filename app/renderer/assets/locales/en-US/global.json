@@ -65,6 +65,8 @@
   "global_account_import_select_accounts": "Select one or more accounts to import with this private key",
   "global_account_import_watch_account": "Account Name",
   "global_account_import_watch_account_not_found": "Account not found!",
+  "global_account_edit_modal_header": "Wallet/Account Details",
+  "global_account_edit_modal_subheader": "The internal details used in this application for this Wallet/Account.",
   "global_account_import_watch_description": "Import an account as a Watch Wallet, which can monitor the account and create unsigned transactions.",
   "global_account_request_account": "Create Account Request Code",
   "global_accounts_dropdown_no_accounts": "No additional wallets created. To get started go to 'Tools', then 'Manage Wallets'.",
