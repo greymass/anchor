@@ -59,7 +59,7 @@
   "welcome_ssl_warning_content": "Using a non-HTTPS API may risk your privacy.",
   "welcome_ssl_warning_title": "Non-HTTPS API",
   "welcome_history_plugin_warning_title": "This node only allows partial use of this wallet",
-  "welcome_history_plugin_warning_content": "This node appears to not have the history plugin enabled, please note that some of the features of this wallet won't work with this node. You can use 'https://eos.greymass.com','eosnewyork.io' or ... if you want to take full advantage of this wallet.",
+  "welcome_history_plugin_warning_content": "This node appears to not have the history plugin enabled, please note that some of the features of this wallet won't work with this node. You can use 'https://eos.greymass.com', 'http://api.eossweden.se' or 'http://eu.eosdac.io' if you want to take full advantage of this wallet.",
   "welcome_stage": "Stage",
   "welcome_stage_account": "Account",
   "welcome_stage_account_ledger": "Account (from Ledger)",
