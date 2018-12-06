@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Container, Form, Input, Message } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semantic-ui-react';
 
 import * as AccountsActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
@@ -189,11 +189,15 @@ class WelcomeConnectionContainer extends Component<Props> {
       );
     }
     const historyPluginMessage = !connection.historyPluginEnabled && (
-      <Message
-        color="red"
+      <Popup
         content={t('welcome:welcome_history_plugin_warning_content')}
-        header={t('welcome:welcome_history_plugin_warning_title')}
-        icon="warning"
+        trigger={
+         <Message
+          color="red"
+          content={t('welcome:welcome_history_plugin_warning_title')}
+          icon="warning"
+        />
+        }
       />
     );
     // safeish true and ssl or non-ssl confirmed

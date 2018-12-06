@@ -26,9 +26,9 @@ export function historyPluginCheck() {
       settings
     } = getState();
 
-    return eos(connection).getKeyAccounts(settings).then(() => dispatch({
+    return eos(connection).getActions('teamgreymass').then((result) => dispatch({
       type: types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED,
-      payload: { enabled: true }
+      payload: { enabled: (result.actions && result.actions.length !== 0) }
     })).catch(() => dispatch({
       type: types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED,
       payload: { enabled: false }
