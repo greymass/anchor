@@ -35,10 +35,10 @@ const blockchains = [
     supportedContracts: []
   },
   {
-    chainId: 'f954e87e8fe791d27b018513a6f67165c0227eadc2d729196e827ee007128677',
-    defaultNode: 'https://shannon.insights.network',
-    key: 'insight-testnet',
-    name: 'Insight Testnet',
+    chainId: 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664',
+    defaultNode: 'https://ireland-history.insights.network',
+    key: 'insights-mainnet',
+    name: 'Insights Mainnet',
     symbol: 'INSTAR',
     keyPrefix: 'EOS',
     supportedContracts: []
