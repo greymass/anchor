@@ -69,6 +69,15 @@ export function getBlockExplorers() {
             txid: 'http://testnet.telosfoundation.net/transaction/{txid}'
           }
         }
+      ],
+      'insights-mainnet': [
+        {
+          name: 'blockchain-tracker.insights.network',
+          patterns: {
+            account: 'https://blockchain-tracker.insights.network/account/{account}',
+            txid: 'https://blockchain-tracker.insights.network/transaction/{txid}'
+          }
+        }
       ]
     };
 
