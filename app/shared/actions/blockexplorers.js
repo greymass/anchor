@@ -74,8 +74,8 @@ export function getBlockExplorers() {
         {
           name: 'blockchain-tracker.insights.network',
           patterns: {
-            account: 'https://blockchain-tracker.insights.network/account/{account}',
-            txid: 'https://blockchain-tracker.insights.network/transaction/{txid}'
+            account: 'https://blockchain-tracker.insights.network/accounts/{account}',
+            txid: 'https://blockchain-tracker.insights.network/transactions/{txid}'
           }
         }
       ]
