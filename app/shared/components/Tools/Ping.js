@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import debounceRender from 'react-debounce-render';
 import { translate } from 'react-i18next';
-import { defer, find, isEmpty, map, orderBy, remove, sum } from 'lodash';
+import { defer, filter, isEmpty, map, orderBy, remove, sum, uniqBy } from 'lodash';
 
 import ToolsPingControls from './Ping/Controls';
 import ToolsPingHeader from './Ping/Header';
@@ -78,24 +78,26 @@ class ToolsPing extends Component<Props> {
       Object.keys(producersInfo).forEach((key) => {
         const producer = producersInfo[key];
         if (producer.nodes && producer.nodes.length) {
-          const node = find(producer.nodes, {
+          const nodes = filter(producer.nodes, {
             node_type: 'full'
           });
-          if (node && node.ssl_endpoint) {
-            endpoints.push({
-              host: node.ssl_endpoint,
-              producer: producer.producer_account_name
-            });
-          } else if (node && node.api_endpoint) {
-            endpoints.push({
-              host: node.api_endpoint,
-              producer: producer.producer_account_name
-            });
-          }
+          nodes.forEach((node) => {
+            if (node && node.ssl_endpoint) {
+              endpoints.push({
+                host: node.ssl_endpoint,
+                producer: producer.producer_account_name
+              });
+            } else if (node && node.api_endpoint) {
+              endpoints.push({
+                host: node.api_endpoint,
+                producer: producer.producer_account_name
+              });
+            }
+          });
         }
       });
       this.setState({
-        endpoints,
+        endpoints: uniqBy(endpoints, 'host'),
         total: endpoints.length
       });
     }
