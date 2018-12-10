@@ -130,7 +130,7 @@ const paneMapping = [
   {
     element: ToolsBidName,
     modes: ['hot', 'watch', 'ledger'],
-    name: 'bid_name',
+    name: 'name_bidding',
   },
   {
     element: ToolsContacts,
