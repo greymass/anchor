@@ -114,7 +114,7 @@ class ToolsPing extends Component<Props> {
   ping = (endpoint) => {
     const { settings } = this.props;
     this.props.actions.pingNode(endpoint, {
-      account_name: settings.account,
+      account_name: settings.account || 'teamgreymass',
       offset: -1,
       pos: -1
     });
@@ -129,7 +129,7 @@ class ToolsPing extends Component<Props> {
     }, () => {
       this.props.actions.pingSetEstimatedRequests(estimatedRequests);
       this.props.actions.pingNodes(endpoints, {
-        account_name: settings.account,
+        account_name: settings.account || 'teamgreymass',
         offset: -1,
         pos: -1
       });
