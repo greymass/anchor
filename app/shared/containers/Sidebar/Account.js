@@ -31,6 +31,7 @@ class SidebarAccount extends Component<Props> {
       chain,
       t,
       settings,
+      validate,
       wallet
     } = this.props;
     const {
@@ -43,6 +44,7 @@ class SidebarAccount extends Component<Props> {
     } catch (e) {
       // console.log('url error', e);
     }
+    const unacceptableNode = (validate.NODE === 'FAILURE');
     let controls = [(
       <Button
         icon="settings"
@@ -63,7 +65,7 @@ class SidebarAccount extends Component<Props> {
         </Header.Subheader>
       </Header>
       )];
-    if (editing) {
+    if (editing || unacceptableNode) {
       controls = (
         <WelcomeConnectionContainer
           onStageSelect={this.onToggle}
@@ -100,6 +102,7 @@ function mapStateToProps(state) {
     chain: state.chain,
     keys: state.keys,
     settings: state.settings,
+    validate: state.validate,
     wallet: state.wallet
   };
 }
