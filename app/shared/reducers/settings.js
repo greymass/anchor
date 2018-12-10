@@ -7,6 +7,8 @@ const initialState = {
   acceptedConstitution: false,
   // If the wallet has ackknowledged understanding the smart contract tool
   acceptedContractInterface: false,
+  // If the wallet has ackknowledged understanding privacy concerns of the ping tool
+  acceptedPingInterface: false,
   // Enable advanced permissions management
   advancedPermissions: false,
   // The loaded account
