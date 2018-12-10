@@ -9,6 +9,7 @@ import compose from 'lodash/fp/compose';
 import { Menu, Tab } from 'semantic-ui-react';
 
 import ContractInterface from './Contract/Interface';
+import GlobalUtilsPingContainer from './Global/Utils/Ping';
 import RecommendationInterface from './Recommendation/Interface';
 
 import Tools from '../components/Tools';
@@ -38,6 +39,7 @@ import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
 import * as HardwareLedgerActions from '../actions/hardware/ledger';
 import * as NameBidsActions from '../actions/namebids';
+import * as ProducersActions from '../actions/producers';
 import * as ProposalsActions from '../actions/governance/proposals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
@@ -118,6 +120,12 @@ const paneMapping = [
     header: true,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'utilities',
+  },
+  {
+    container: true,
+    element: GlobalUtilsPingContainer,
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'ping',
   },
   // {
   //   element: ToolsBidName,
@@ -235,14 +243,23 @@ class ToolsContainer extends Component<Props> {
         }
         return {
           menuItem: t(`tools_menu_${pane.name}`),
-          render: () => (
-            <Tab.Pane>
-              {React.createElement(pane.element, {
-                blockExplorers: allBlockExplorers[connection.chainKey],
-                ...this.props
-              })}
-            </Tab.Pane>
-          )
+          render: () => {
+            if (pane.container) {
+              return (
+                <Tab.Pane>
+                  {React.createElement(pane.element)}
+                </Tab.Pane>
+              );
+            }
+            return (
+              <Tab.Pane>
+                {React.createElement(pane.element, {
+                  blockExplorers: allBlockExplorers[connection.chainKey],
+                  ...this.props
+                })}
+              </Tab.Pane>
+            );
+          }
         };
       });
   }
@@ -300,6 +317,7 @@ function mapDispatchToProps(dispatch) {
       ...GlobalsActions,
       ...HardwareLedgerActions,
       ...NameBidsActions,
+      ...ProducersActions,
       ...ProposalsActions,
       ...RegProxyActions,
       ...RegproxyinfoActions,
