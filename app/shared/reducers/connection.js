@@ -11,7 +11,7 @@ const initialState = {
   chainSymbol: 'EOS',
   expireInSeconds: 120,
   // forceActionDataHex: false,
-  historyPluginEnabled: true,
+   historyPluginEnabled: true,
   httpEndpoint: null,
   keyPrefix: 'EOS',
   sign: false,

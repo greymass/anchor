@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message, Table } from 'semantic-ui-react';
+import { Decimal } from 'decimal.js';
 
 import FormMessageError from '../../Global/Form/Message/Error';
 import GlobalFormFieldString from '../../Global/Form/Field/String';
@@ -208,11 +209,13 @@ class ToolsFormBidName extends Component<Props> {
     const bidTooLow = bid && newname &&
                       system.NAMEBID_LAST_BID &&
                       system.NAMEBID_LAST_BID.newname === newname &&
-                      (system.NAMEBID_LAST_BID.high_bid / 10000) >= bidAmount;
-    const bidFieldHasError = formErrors.bid === 'bid_too_low';
+                      Decimal(Math.abs(system.NAMEBID_LAST_BID.high_bid)).dividedBy(Decimal(10000))
+                                                                         .times(Decimal(1.1))
+                                                                         .greaterThan(Decimal(bidAmount))
+    const bidFieldHasError = formErrors.bid === 'bid_is_too_low';
 
     if (bidTooLow) {
-      formErrors.bid = 'bid_too_low';
+      formErrors.bid = 'bid_is_too_low';
       submitDisabled = true;
     } else if (bidFieldHasError) {
       formErrors.bid = null;
@@ -240,7 +243,7 @@ class ToolsFormBidName extends Component<Props> {
 
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
-    const shouldShowBidInfo = system.NAMEBID_LAST_BID && system.NAMEBID_LAST_BID.newname === newname;
+    const shouldShowBidInfo = system.NAMEBID_LAST_BID && system.NAMEBID_LAST_BID.newname === newname && step === 2;
 
     const { formErrors, submitDisabled, secondStepDisabled } = this.formErrorsOnRender();
 
@@ -353,7 +356,7 @@ class ToolsFormBidName extends Component<Props> {
                       <div>
                         <Button
                           content={t('tools_form_proxy_info_back')}
-                          onClick={() => this.setState({ step: 1, bid: undefined })}
+                          onClick={() => this.setState({ step: 1, bid: undefined, formErrors: {}, secondStepDisabled: false })}
                         />
                         <Button
                           content={t('tools_form_proxy_info_next')}
