@@ -15,6 +15,7 @@ export function bidname(data) {
     });
 
     const { account } = settings;
+    const [, authorization] = connection.authorization.split('@');
 
     return eos(connection, true).transaction({
       actions: [
@@ -23,11 +24,15 @@ export function bidname(data) {
           name: 'bidname',
           authorization: [{
             actor: account,
-            permission: 'active'
+            permission: authorization
           }],
           data
         }
       ]
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       const recentBids = (settings.recentBids && settings.recentBids) || {};
 
