@@ -23,7 +23,7 @@
   "loader_progress_text": "{{complete}} of {{total}} requests",
   "loader_validating": "Validating",
   "main_header": "API Recommender",
-  "main_subheader": "Run a performance test directly from your wallet to determine which EOS APIs are the fastest for you!",
+  "main_subheader": "Run a performance test directly from your computer to determine which EOS APIs are the fastest for you!",
   "new_test_body_1": "The tests that will be run focus around compatibility with this application and the speed at which each server returns data to your computer. Once the test has been completed, all compatible servers will be ranked based on their speed as well as how complete of a history they maintain.",
   "new_test_body_2": "The list of servers that will be tested against is pulled from the blockchain and contains servers that have been provided by all block producers (via the producerjson smart contract). A simple account history request (which contains the currently loaded account name) will be made to each of these servers multiple times.",
   "new_test_body_3": "Once the initial tests are completed, results will be displayed and background testing will continue to be performed until you stop the testing. This continous testing helps further test performance and error rates. After the tests have been stopped, you can easily swap this application to use (by default) any of the servers within the list.",
