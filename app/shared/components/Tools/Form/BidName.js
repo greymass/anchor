@@ -249,7 +249,7 @@ class ToolsFormBidName extends Component<Props> {
 
     const formErrorKeys = Object.keys(formErrors);
 
-    return ((keys && keys.key) || settings.walletMode === 'watch')
+    return ((keys && keys.key) || settings.walletMode === 'watch' || settings.walletMode === 'ledger')
       ? (
         <Segment
           loading={system.BIDNAME === 'PENDING'}
