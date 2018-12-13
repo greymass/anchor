@@ -14,6 +14,7 @@ import RecommendationInterface from './Recommendation/Interface';
 
 import Tools from '../components/Tools';
 import ToolsBidName from '../components/Tools/BidName';
+import ToolsBlockchains from '../components/Tools/Blockchains';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
@@ -54,6 +55,11 @@ import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
 
 const paneMapping = [
+  {
+    element: ToolsBlockchains,
+    modes: ['hot', 'ledger', 'watch', 'skip'],
+    name: 'networks',
+  },
   {
     element: Tools,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
@@ -283,9 +289,10 @@ class ToolsContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    allBlockExplorers: state.blockexplorers,
     app: state.app,
     balances: state.balances,
-    allBlockExplorers: state.blockexplorers,
+    blockchains: state.blockchains,
     chain: state.chain,
     connection: state.connection,
     contracts: state.contracts,

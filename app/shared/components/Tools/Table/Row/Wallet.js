@@ -1,12 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { find } from 'lodash';
 
 import { Button, Dropdown, Header, Label, Popup, Table } from 'semantic-ui-react';
 
 import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
 import GlobalFragmentAuthorization from '../../../Global/Fragment/Authorization';
+import GlobalFragmentBlockchain from '../../../Global/Fragment/Blockchain';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
 import GlobalAccountConvertLedger from '../../../../containers/Global/Account/Convert/Ledger';
 import EOSAccount from '../../../../utils/EOS/Account';
@@ -64,6 +66,7 @@ class ToolsTableRowWallet extends Component<Props> {
   render() {
     const {
       current,
+      blockchains,
       settings,
       status,
       t,
@@ -73,12 +76,14 @@ class ToolsTableRowWallet extends Component<Props> {
     const {
       account,
       authorization,
+      chainId,
       mode,
       pubkey
     } = wallet;
     const {
       accountData
     } = current;
+    const blockchain = find(blockchains, { chainId });
     const data = new EOSAccount(accountData).getPermission(authorization);
     const {
       convertToLedgerAccount,
@@ -217,15 +222,17 @@ class ToolsTableRowWallet extends Component<Props> {
               authorization={authorization}
               pubkey={pubkey}
             />
-            {(wallet.blockchain)
-              ? (
-                <Header.Subheader>
-                  {t('blockchain')}: {wallet.blockchain}
-                </Header.Subheader>
-              )
-              : false
-            }
           </Header>
+        </Table.Cell>
+        <Table.Cell collapsing>
+          {(blockchain)
+            ? (
+              <GlobalFragmentBlockchain
+                blockchain={blockchain}
+              />
+            )
+            : false
+          }
         </Table.Cell>
         <Table.Cell>
           <Popup

@@ -27,6 +27,7 @@ export default function keys(state = initialState, action) {
     case types.SET_CURRENT_KEY: {
       return Object.assign({}, state, {
         account: action.payload.account,
+        chainId: action.payload.chainId || false,
         hash: action.payload.hash,
         key: action.payload.key,
         pubkey: action.payload.pubkey,
