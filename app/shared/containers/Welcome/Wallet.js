@@ -49,6 +49,7 @@ class WelcomeWalletContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      connection,
       history,
       keys,
       settings
@@ -64,12 +65,18 @@ class WelcomeWalletContainer extends Component<Props> {
       setWalletHash,
       setWalletKey,
     } = actions;
+    setSetting('walletInit', encryptWallet);
+    setSetting('walletTemp', !encryptWallet);
     if (encryptWallet) {
       setWalletHash(password);
-      setSetting('walletInit', true);
-      setWalletKey(key, password, settings.walletMode, hash, settings.authorization);
-    } else {
-      setSetting('walletTemp', true);
+      setWalletKey(
+        key,
+        password,
+        settings.walletMode,
+        hash,
+        settings.authorization,
+        connection.chainId
+      );
     }
     this.setState({
       confirming: false
@@ -168,6 +175,7 @@ class WelcomeWalletContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    connection: state.connection,
     keys: state.keys,
     settings: state.settings
   };

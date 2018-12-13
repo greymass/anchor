@@ -193,14 +193,39 @@ const migrations = {
       wallets: modifiedWallets
     });
   },
+  /*
+  8 - Networks
+
+    - Force all existing wallets to EOS Mainnet
+
+  */
+  8: (state) => {
+    const {
+      wallet,
+      wallets
+    } = state;
+    const modifiedWallet = Object.assign({}, wallet);
+    modifiedWallet.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+    const modifiedWallets = [];
+    wallets.forEach((current) => {
+      const newWallet = Object.assign({}, current);
+      newWallet.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+      modifiedWallets.push(newWallet);
+    });
+    return Object.assign({}, state, {
+      wallet: modifiedWallet,
+      wallets: modifiedWallets
+    });
+  }
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 7,
+  version: 8,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
+    'blockchains',
     'settings',
     'wallet',
     'wallets'
