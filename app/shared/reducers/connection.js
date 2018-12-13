@@ -121,6 +121,7 @@ export default function connection(state = initialState, action) {
           action.payload.account,
           action.payload.authorization || 'active',
         ].join('@'),
+        chainId: action.payload.chainId || state.chainId,
         signPath: action.payload.path
       });
     }
@@ -132,6 +133,7 @@ export default function connection(state = initialState, action) {
           action.payload.account,
           action.payload.authorization || 'active',
         ].join('@'),
+        chainId: action.payload.chainId || state.chainId,
         sign: true,
         keyProviderObfuscated: {
           hash: action.payload.hash,

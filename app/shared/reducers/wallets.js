@@ -13,7 +13,8 @@ export default function wallets(state = initialState, action) {
     case types.IMPORT_WALLET_KEY: {
       const [, other] = partition(state, {
         account: action.payload.account,
-        authorization: action.payload.authorization
+        authorization: action.payload.authorization,
+        chainId: action.payload.chainId || false,
       });
       return [
         action.payload,
