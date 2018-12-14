@@ -37,16 +37,16 @@ class ToolsTableRowWallet extends Component<Props> {
   editWallet = (account, authorization) => {
     this.setState({
       editAccount: account,
-      editAuthorization: authorization
+      editAuthorization: authorization,
     });
   }
   removeWallet = (account, authorization) => {
-    const { actions } = this.props;
-    actions.removeWallet(account, authorization);
+    const { actions, settings } = this.props;
+    actions.removeWallet(settings.chainId, account, authorization);
   }
   swapWallet = (account, authorization, password = false) => {
-    const { actions } = this.props;
-    actions.useWallet(account, authorization);
+    const { actions, settings } = this.props;
+    actions.useWallet(settings.chainId, account, authorization);
     if (password) {
       actions.unlockWallet(password);
     }
