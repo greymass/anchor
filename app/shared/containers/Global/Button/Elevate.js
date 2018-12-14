@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
+import { find } from  'lodash';
 import { Button, Form, Header, Icon, Input, Message, Modal, Segment } from 'semantic-ui-react';
 
 import * as WalletActions from '../../../actions/wallet';
@@ -45,7 +46,8 @@ class GlobalButtonElevate extends Component<Props> {
     const {
       actions,
       settings,
-      wallet
+      wallet,
+      wallets
     } = this.props;
     const {
       password
@@ -53,7 +55,13 @@ class GlobalButtonElevate extends Component<Props> {
     if (settings.walletHash) {
       actions.validateHashPassword(password);
     } else {
-      actions.validateWalletPassword(password, wallet);
+      if (wallet && wallet.data) {
+        actions.validateWalletPassword(password, wallet);
+      } else {
+        // if no wallet is specified, user the first with a password
+        const firstFound = find(wallets, { mode: 'hot' });
+        actions.validateWalletPassword(password, firstFound, wallets);
+      }
     }
   }
 
@@ -126,6 +134,7 @@ class GlobalButtonElevate extends Component<Props> {
 function mapStateToProps(state) {
   return {
     settings: state.settings,
+    wallets: state.wallets,
     validate: state.validate
   };
 }
