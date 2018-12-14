@@ -224,6 +224,14 @@ export function unlockWallet(password, useWallet = false) {
   };
 }
 
+export function clearWallet() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.WALLET_REMOVE
+    });
+  }
+}
+
 export function setWalletMode(walletMode) {
   return (dispatch: () => void) => {
     // Set the wallet mode
@@ -289,6 +297,7 @@ export function decrypt(data, pass, iterations = 4500) {
 }
 
 export default {
+  clearWallet,
   decrypt,
   encrypt,
   lockWallet,
