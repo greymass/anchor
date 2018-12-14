@@ -76,6 +76,13 @@ class GlobalAccountSelectWallet extends Component<Props> {
             </Menu.Menu>
           </Menu>
           <Table attached="bottom" size="small" verticalAlign="middle">
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>{t('tools:tools_wallets_account')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('tools:tools_wallets_mode')}</Table.HeaderCell>
+                <Table.HeaderCell textAlign="right">{t('tools:tools_wallets_controls')}</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
             <Table.Body>
               {(options.length > 0)
                 ? options.map(w => {
@@ -128,7 +135,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
                 })
                 : (
                   <Table.Row>
-                    <Table.Cell>
+                    <Table.Cell colSpan="3">
                       <Header>
                         {t('global_account_select_wallet_no_wallets', { name: blockchain.name })}
                       </Header>
@@ -166,6 +173,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global'),
+  translate(['global', 'tools']),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalAccountSelectWallet);
