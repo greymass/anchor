@@ -19,7 +19,7 @@ class WelcomeConnection extends Component<Props> {
         <Header>
           {t('welcome_stage')} #1: {t('welcome_stage_connection')}
         </Header>
-        <p>{t('welcome_instructions_1')}</p>
+        <p>{t('welcome_instructions_one')}</p>
         <WelcomeConnectionContainer
           editing
           onStageSelect={onStageSelect}
