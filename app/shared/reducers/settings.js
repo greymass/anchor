@@ -30,6 +30,8 @@ const initialState = {
   devTestDefaultState: false,
   // Defaults to displaying resources remaining
   displayResourcesAvailable: true,
+  // Whether or not to display known testnets for the various networks
+  displayTestNetworks: false,
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
   // Default to Ledger import process

@@ -49,7 +49,7 @@ const initialState = [
     "supportedContracts": [
     ],
     "symbol": "INSTAR",
-    "testnet": true
+    "testnet": false
   },
   {
     "_id": "telos-mainnet",
