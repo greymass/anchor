@@ -201,6 +201,7 @@ const migrations = {
   */
   8: (state) => {
     const {
+      settings,
       wallet,
       wallets
     } = state;
@@ -212,7 +213,10 @@ const migrations = {
       newWallet.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
       modifiedWallets.push(newWallet);
     });
+    const modifiedSettings = Object.assign({}, settings);
+    modifiedSettings.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
     return Object.assign({}, state, {
+      settings: modifiedSettings,
       wallet: modifiedWallet,
       wallets: modifiedWallets
     });
