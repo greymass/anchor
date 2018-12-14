@@ -39,15 +39,22 @@ class GlobalBlockchainDropdown extends Component<Props> {
     const { chainId } = settings;
     const blockchain = find(blockchains, { chainId });
     if (!blockchains || !blockchain) return false;
+    const { displayTestNetworks } = settings;
     const options = blockchains
-      .filter(b => (!b.testnet && b.chainId !== blockchain.chainId))
+      .filter(b => (
+        (
+          (displayTestNetworks && b.testnet)
+          || !b.testnet
+        )
+        && b.chainId !== blockchain.chainId
+      ))
       .sort((a, b) => a.name > b.name)
       .map((b) => {
         return {
           props: {
             key: b.chainId,
             onClick: () => this.swapBlockchain(b.chainId),
-            text: b.name,
+            text: `${b.name} ${(b.testnet ? '(TESTNET)' : '')}`,
             value: b.chainId,
           },
           b
