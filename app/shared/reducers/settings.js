@@ -17,6 +17,8 @@ const initialState = {
   authorization: undefined,
   // The block explorer used
   blockExplorer: 'bloks.io',
+  // Current chain_id
+  chainId: false,
   // List of contacts
   contacts: [],
   // Custom tokens the wallet should be tracking
@@ -68,13 +70,6 @@ export default function settings(state = initialState, action) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
-    }
-    case types.WALLET_REMOVE: {
-      return Object.assign({}, state, {
-        account: '',
-        walletInit: false,
-        walletMode: 'hot'
-      });
     }
     case types.SET_WALLET_HASH: {
       return Object.assign({}, state, {

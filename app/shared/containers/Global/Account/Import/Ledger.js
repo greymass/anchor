@@ -49,11 +49,15 @@ class GlobalModalAccountImportLedger extends Component<Props> {
       selected
     } = this.state;
     const {
-      actions
+      actions,
+      settings,
     } = this.props;
+    const {
+      chainId
+    } = settings;
     selected.forEach((auth) => {
       const [account, authorization, pubkey, path] = auth.split('@');
-      actions.importWallet(account, authorization, false, false, 'ledger', pubkey, path);
+      actions.importWallet(chainId, account, authorization, false, false, 'ledger', pubkey, path);
     });
     if (this.props.onComplete) {
       // Callback with the first account
@@ -315,6 +319,7 @@ class GlobalModalAccountImportLedger extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    connection: state.connection,
     ledger: state.ledger,
     settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),

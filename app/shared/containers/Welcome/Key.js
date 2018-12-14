@@ -54,6 +54,7 @@ class WelcomeKeyContainer extends Component<Props> {
     } = this.state;
     const {
       actions,
+      connection,
       history,
       onStageSelect,
       settings
@@ -79,7 +80,7 @@ class WelcomeKeyContainer extends Component<Props> {
         // Import the watch wallet
         importWallet(settings.account, authorization, false, false, 'watch');
         // Set this wallet as the used wallet
-        useWallet(settings.account, 'active');
+        useWallet(connection.chainId, settings.account, 'active');
         // Initialize the wallet setting
         setSetting('walletInit', true);
         // Move on to the voter
