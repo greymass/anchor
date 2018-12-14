@@ -1,7 +1,6 @@
 import { find } from 'lodash';
 
 import * as types from '../actions/types';
-import blockchains from '../constants/blockchains';
 
 const initialState = {
   authorization: undefined,
@@ -29,7 +28,7 @@ export default function connection(state = initialState, action) {
     }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
-      const blockchain = find(blockchains, { chainId: action.payload.info.chain_id });
+      const blockchain = action.payload.blockchain;
       const { account, authorization } = action.payload.settings;
 
       return Object.assign({}, state, {
