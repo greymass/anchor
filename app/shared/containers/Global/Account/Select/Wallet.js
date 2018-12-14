@@ -75,8 +75,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
               </Menu.Item>
             </Menu.Menu>
           </Menu>
-          <Segment attached="bottom">
-          <Table size="small" verticalAlign="middle">
+          <Table attached="bottom" size="small" verticalAlign="middle">
             <Table.Body>
               {(options.length > 0)
                 ? options.map(w => {
@@ -139,7 +138,6 @@ class GlobalAccountSelectWallet extends Component<Props> {
               }
             </Table.Body>
           </Table>
-          </Segment>
         </Modal.Content>
       </Modal>
     );
