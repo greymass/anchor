@@ -56,11 +56,6 @@ import * as WalletsActions from '../actions/wallets';
 
 const paneMapping = [
   {
-    element: ToolsBlockchains,
-    modes: ['hot', 'ledger', 'watch', 'skip'],
-    name: 'networks',
-  },
-  {
     element: Tools,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'index',
@@ -69,6 +64,11 @@ const paneMapping = [
     element: ToolsWallets,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip'],
     name: 'wallets',
+  },
+  {
+    element: ToolsBlockchains,
+    modes: ['hot', 'ledger', 'watch', 'skip'],
+    name: 'blockchains',
   },
   {
     header: true,
