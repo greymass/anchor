@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import WelcomeConnectionContainer from '../containers/Welcome/Connection';
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
@@ -99,16 +98,6 @@ class Tools extends Component<Props> {
             </Form.Field>
           </Form>
         </Segment>
-        {(settings.walletMode !== 'cold')
-          ? (
-            <Segment attached="bottom" padded="very" secondary stacked>
-              <WelcomeConnectionContainer
-                autoFocus={false}
-                onStageSelect={() => undefined}
-              />
-            </Segment>
-          ) : false
-        }
       </React.Fragment>
     );
   }
