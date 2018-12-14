@@ -250,6 +250,7 @@ export function upgradeWatchWallet(account, authorization, swap = false) {
     const [current] = partition(wallets, {
       account,
       authorization: false,
+      chainId: connection.chainId,
       mode: 'watch'
     });
     if (current.length > 0) {
