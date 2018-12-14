@@ -1,3 +1,5 @@
+import { partition } from 'lodash';
+
 import * as types from '../actions/types';
 
 const initialState = [
@@ -77,6 +79,25 @@ export default function blockchains(state = initialState, action) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
       return [...initialState];
+    }
+    case types.SYSTEM_BLOCKCHAINS_ENSURE: {
+      const [existing, others] = partition(state, {
+        chainId: action.payload.chainId,
+      });
+      // If this blockchain doesn't exist in state, add it as an unknown entry that can be edited later
+      if (!existing.length) {
+        return [{
+          _id: `unknown-${action.payload.chainId}`,
+          chainId: action.payload.chainId,
+          keyPrefix: 'EOS',
+          name: `Unknown (${action.payload.chainId.substr(0, 5)})`,
+          node: action.payload.node,
+          supportedContracts: [],
+          symbol: 'EOS',
+          testnet: false
+        }, ...others];
+      }
+      return state;
     }
     default: {
       return state;
