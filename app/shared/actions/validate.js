@@ -4,6 +4,7 @@ import * as chain from './chain';
 import { getGlobals } from './globals';
 import { historyPluginCheck } from './connection';
 import eos from './helpers/eos';
+import { find } from 'lodash';
 
 const ecc = require('eosjs-ecc');
 
@@ -66,6 +67,7 @@ export function validateNode(node) {
       try {
         const {
           actions,
+          blockchains,
           connection,
           settings
         } = getState();
@@ -88,9 +90,11 @@ export function validateNode(node) {
         eos(modified).getInfo({}).then(result => {
           // If we received a valid height, confirm this server can be connected to
           if (result.head_block_num > 1) {
+            const blockchain = find(blockchains, { chainId: settings.chain_id });
             // Dispatch success
             dispatch({
               payload: {
+                blockchain,
                 info: result,
                 node: httpEndpoint,
                 settings,
