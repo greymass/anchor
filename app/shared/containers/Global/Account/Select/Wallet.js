@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Dropdown, Header, Icon, Input, List, Menu, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Dropdown, Header, Icon, Input, List, Menu, Modal, Segment, Table } from 'semantic-ui-react';
 
 import GlobalButtonAccountImport from '../../../../components/Global/Button/Account/Import';
 import GlobalButtonElevate from '../../Button/Elevate';
@@ -47,7 +47,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
         centered={false}
         open
         scrolling
-        size="tiny"
+        size="small"
       >
         <Modal.Header>
           {t('global_account_select_wallet')}
@@ -76,63 +76,69 @@ class GlobalAccountSelectWallet extends Component<Props> {
             </Menu.Menu>
           </Menu>
           <Segment attached="bottom">
-          <List divided relaxed="very" size="small" verticalAlign="middle">
-            {(options.length > 0)
-              ? options.map(w => {
-                const { mode } = w;
-                return (
-                  <List.Item>
-                    <List.Content floated="left">
-                    <Header
-                      content={`${w.account}@${w.authorization}`}
-                    />
-
-                    </List.Content>
-                    <List.Content floated="right">
-                      {(mode === 'hot' || mode === 'cold')
-                        ? (
-                          <GlobalButtonElevate
-                            onSuccess={(password) => this.swapAccount(chainId, w.account, w.authorization, password)}
-                            settings={settings}
-                            trigger={(
-                              <Button
-                                color="green"
-                                content={t('tools:tools_wallets_swap')}
-                                icon="random"
-                              />
-                            )}
-                            validate={validate}
-                            wallet={w}
-                          />
-                        )
-                        : false
-                      }
-                      {(mode === 'watch' || mode === 'ledger')
-                        ? (
-                          <Button
-                            color="green"
-                            content={t('tools:tools_wallets_swap')}
-                            icon="random"
-                            onClick={() => this.swapAccount(chainId, w.account, w.authorization)}
-                          />
-                        )
-                        : false
-                      }
-                    </List.Content>
-                    <List.Content>
-                      <GlobalFragmentWalletType
-                        mode={w.mode}
-                      />
-                    </List.Content>
-                  </List.Item>
-                );
-              })
-              : (
-                <span>{t('global_account_select_wallet_no_wallets', { name: blockchain.name })}</span>
-              )
-            }
-
-          </List>
+          <Table size="small" verticalAlign="middle">
+            <Table.Body>
+              {(options.length > 0)
+                ? options.map(w => {
+                  const { mode } = w;
+                  return (
+                    <Table.Row>
+                      <Table.Cell>
+                        <Header
+                          content={`${w.account}@${w.authorization}`}
+                        />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <GlobalFragmentWalletType
+                          mode={w.mode}
+                        />
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">
+                        {(mode === 'hot' || mode === 'cold')
+                          ? (
+                            <GlobalButtonElevate
+                              onSuccess={(password) => this.swapAccount(chainId, w.account, w.authorization, password)}
+                              settings={settings}
+                              trigger={(
+                                <Button
+                                  color="green"
+                                  content={t('tools:tools_wallets_swap')}
+                                  icon="random"
+                                />
+                              )}
+                              validate={validate}
+                              wallet={w}
+                            />
+                          )
+                          : false
+                        }
+                        {(mode === 'watch' || mode === 'ledger')
+                          ? (
+                            <Button
+                              color="green"
+                              content={t('tools:tools_wallets_swap')}
+                              icon="random"
+                              onClick={() => this.swapAccount(chainId, w.account, w.authorization)}
+                            />
+                          )
+                          : false
+                        }
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })
+                : (
+                  <Table.Row>
+                    <Table.Cell>
+                      <Header>
+                        {t('global_account_select_wallet_no_wallets', { name: blockchain.name })}
+                      </Header>
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              }
+            </Table.Body>
+          </Table>
           </Segment>
         </Modal.Content>
       </Modal>
