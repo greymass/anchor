@@ -65,6 +65,7 @@ class WelcomeWalletContainer extends Component<Props> {
       setWalletHash,
       setWalletKey,
     } = actions;
+    setSetting('chainId', connection.chainId);
     setSetting('walletInit', encryptWallet);
     setSetting('walletTemp', !encryptWallet);
     if (encryptWallet) {

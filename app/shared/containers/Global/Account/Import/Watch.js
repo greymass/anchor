@@ -34,11 +34,15 @@ class GlobalModalAccountImportWatch extends Component<Props> {
       selected
     } = this.state;
     const {
-      actions
+      actions,
+      settings,
     } = this.props;
+    const {
+      chainId
+    } = settings;
     selected.forEach((auth) => {
       const [account, authorization, pubkey] = auth.split('@');
-      actions.importWallet(account, authorization, false, false, 'watch', pubkey);
+      actions.importWallet(chainId, account, authorization, false, false, 'watch', pubkey);
     });
     this.props.onClose();
   }
