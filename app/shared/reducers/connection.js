@@ -39,11 +39,11 @@ export default function connection(state = initialState, action) {
         ].join('@'),
         chain: (blockchain && blockchain.name) || 'EOS Mainnet',
         chainId: action.payload.info.chain_id,
-        chainKey: (blockchain && blockchain.key) || 'eos-mainnet',
+        chainKey: (blockchain && blockchain._id) || 'eos-mainnet',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
-        supportedContracts: blockchain.supportedContracts
+        supportedContracts: (blockchain) ? blockchain.supportedContracts : []
       });
     }
     // Remove key from connection if the wallet is locked/removed

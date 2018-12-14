@@ -62,7 +62,7 @@ const paneMapping = [
   },
   {
     element: ToolsWallets,
-    modes: ['cold', 'hot', 'ledger', 'watch', 'skip'],
+    modes: ['cold', 'hot', 'ledger', 'watch'],
     name: 'wallets',
   },
   {
@@ -105,7 +105,7 @@ const paneMapping = [
   },
   {
     element: RecommendationInterface,
-    modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
+    modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'recommendation',
   },
   {
