@@ -31,6 +31,13 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false,
       }
     }
     dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_ENSURE,
+      payload: {
+        chainId,
+        node: settings.node,
+      }
+    });
+    dispatch({
       type: types.SET_CURRENT_KEY,
       payload: {
         account: settings.account,
