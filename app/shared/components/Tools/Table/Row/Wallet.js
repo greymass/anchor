@@ -9,6 +9,7 @@ import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
 import GlobalFragmentAuthorization from '../../../Global/Fragment/Authorization';
 import GlobalFragmentBlockchain from '../../../Global/Fragment/Blockchain';
+import GlobalFragmentWalletType from '../../../Global/Fragment/WalletType';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
 import GlobalAccountConvertLedger from '../../../../containers/Global/Account/Convert/Ledger';
 import EOSAccount from '../../../../utils/EOS/Account';
@@ -235,18 +236,8 @@ class ToolsTableRowWallet extends Component<Props> {
           }
         </Table.Cell>
         <Table.Cell>
-          <Popup
-            content={t(`wallet:wallet_mode_explain_${mode}`)}
-            inverted
-            trigger={(
-              <Label
-                basic
-                color={color}
-                content={t(`global:global_modal_account_import_${mode}_wallet`)}
-                icon={icon}
-                position="left center"
-              />
-            )}
+          <GlobalFragmentWalletType
+            mode={mode}
           />
         </Table.Cell>
         <Table.Cell collapsing textAlign="right">
