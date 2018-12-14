@@ -61,6 +61,15 @@ export function getBlockExplorers() {
           }
         }
       ],
+      'telos-mainnet': [
+        {
+          name: 'eosx.io',
+          patterns: {
+            account: 'https://telos.eosx.io/account/{account}',
+            txid: 'https://telos.eosx.io/tx/{txid}'
+          }
+        }
+      ],
       'telos-testnet': [
         {
           name: 'telosfoundation.net',
