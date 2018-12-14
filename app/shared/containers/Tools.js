@@ -74,6 +74,7 @@ const paneMapping = [
     header: true,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'governance',
+    requiredContract: 'proposals'
   },
   {
     element: ToolsGovernanceProposals,
@@ -132,6 +133,7 @@ const paneMapping = [
     element: GlobalUtilsPingContainer,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'ping',
+    requiredContract: 'producerinfo'
   },
   // {
   //   element: ToolsBidName,
