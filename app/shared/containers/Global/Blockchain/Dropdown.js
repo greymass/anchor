@@ -24,7 +24,6 @@ class GlobalBlockchainDropdown extends Component<Props> {
     this.setState({ open: !this.state.open });
   }
   swapBlockchain = (chainId) => {
-    console.log("swap to chain", chainId)
     const { actions } = this.props;
     actions.swapBlockchain(chainId);
     // if (password) {
