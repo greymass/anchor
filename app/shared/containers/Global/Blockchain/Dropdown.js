@@ -39,7 +39,6 @@ class GlobalBlockchainDropdown extends Component<Props> {
     } = this.props;
     const { chainId } = settings;
     const blockchain = find(blockchains, { chainId });
-    console.log(blockchains, blockchain, chainId)
     if (!blockchains || !blockchain) return false;
     const options = blockchains
       .filter(b => (!b.testnet && b.chainId !== blockchain.chainId))
