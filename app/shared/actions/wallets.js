@@ -78,6 +78,7 @@ export function prepareConvertToLedgerAbort(
 }
 
 export function importWallet(
+  chainId,
   account,
   authorization = false,
   key = false,
@@ -112,6 +113,7 @@ export function importWallet(
         account,
         accountData,
         authorization,
+        chainId,
         data,
         mode,
         path,
@@ -122,6 +124,7 @@ export function importWallet(
 }
 
 export function importWallets(
+  chainId,
   accounts,
   authorization = false,
   key = false,
@@ -130,7 +133,7 @@ export function importWallets(
 ) {
   return (dispatch: () => void) =>
     forEach(accounts, (account) =>
-      dispatch(importWallet(account, authorization, key, password, mode)));
+      dispatch(importWallet(chainId, account, authorization, key, password, mode)));
 }
 
 export function removeWallet(account, authorization) {
@@ -145,15 +148,11 @@ export function removeWallet(account, authorization) {
   };
 }
 
-export function useWallet(account, authorization) {
+export function useWallet(chainId, account, authorization) {
   return (dispatch: () => void, getState) => {
     const { wallet, wallets } = getState();
     // Find the wallet by account name + authorization
-    let newWallet = find(wallets, { account, authorization });
-    // If the wallet doesn't match both, try just account name
-    if (!newWallet) {
-      newWallet = find(wallets, { account });
-    }
+    const newWallet = find(wallets, { account, authorization, chainId });
     // Lock the wallet to remove old account keys
     dispatch({
       type: types.WALLET_LOCK
@@ -208,7 +207,7 @@ export function upgradeWallet(account, authorization, password = false, swap = f
           }
         });
         if (swap === true) {
-          dispatch(useWallet(account, auth));
+          dispatch(useWallet(current.chainId, account, auth));
         }
         return false;
       }).catch((err) => dispatch({
@@ -248,7 +247,7 @@ export function upgradeWatchWallet(account, authorization, swap = false) {
             }
           });
           if (swap === true) {
-            dispatch(useWallet(account, authorization));
+            dispatch(useWallet(current.chainId, account, authorization));
           }
         }
         return false;
