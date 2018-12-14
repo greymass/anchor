@@ -120,6 +120,13 @@ export function importWallet(
         walletMode: mode
       })));
     }
+    dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_ENSURE,
+      payload: {
+        chainId,
+        node: settings.node,
+      }
+    });
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
