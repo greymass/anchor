@@ -32,11 +32,15 @@ class GlobalModalAccountImportHot extends Component<Props> {
       value
     } = this.state;
     const {
-      actions
+      actions,
+      settings
     } = this.props;
+    const {
+      chainId
+    } = settings;
     selected.forEach((auth) => {
       const [account, authorization] = auth.split('@');
-      actions.importWallet(account, authorization, value, password);
+      actions.importWallet(chainId, account, authorization, value, password);
     });
     this.props.onClose();
   }
@@ -91,43 +95,28 @@ class GlobalModalAccountImportHot extends Component<Props> {
     if (settings.walletMode === 'watch' && !settings.walletHash) {
       // If a hot wallet already exists and a wallet hash does not, inform them to swap first
       const hotWalletExists = wallets.some(o => o.mode === 'hot');
-      if (hotWalletExists) {
+      if (!hotWalletExists) {
         return (
           <Tab.Pane>
             <Segment basic padded>
               <Header icon textAlign="center">
                 <Icon name="warning sign" />
                 <Header.Content>
-                  {t('global_account_import_private_swap_first_header')}
+                  {t('global_account_import_private_requires_hash_header')}
                 </Header.Content>
                 <Header.Subheader>
-                  {t('global_account_import_private_swap_first_subheader')}
+                  {t('global_account_import_private_requires_hash_subheader')}
                 </Header.Subheader>
               </Header>
+              <Segment basic>
+                <WalletPanelFormHash
+                  actions={actions}
+                />
+              </Segment>
             </Segment>
           </Tab.Pane>
         );
       }
-      return (
-        <Tab.Pane>
-          <Segment basic padded>
-            <Header icon textAlign="center">
-              <Icon name="warning sign" />
-              <Header.Content>
-                {t('global_account_import_private_requires_hash_header')}
-              </Header.Content>
-              <Header.Subheader>
-                {t('global_account_import_private_requires_hash_subheader')}
-              </Header.Subheader>
-            </Header>
-            <Segment basic>
-              <WalletPanelFormHash
-                actions={actions}
-              />
-            </Segment>
-          </Segment>
-        </Tab.Pane>
-      );
     }
     return (
       <Tab.Pane>
@@ -219,6 +208,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    connection: state.connection,
     settings: state.settings,
     system: state.system,
     validate: state.validate,

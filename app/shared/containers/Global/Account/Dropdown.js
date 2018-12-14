@@ -22,8 +22,8 @@ class GlobalAccountDropdown extends Component<Props> {
     this.setState({ open: !this.state.open });
   }
   swapAccount = (account, authorization, password = false) => {
-    const { actions } = this.props;
-    actions.useWallet(account, authorization);
+    const { actions, settings } = this.props;
+    actions.useWallet(settings.chainId, account, authorization);
     if (password) {
       actions.unlockWallet(password);
     }
