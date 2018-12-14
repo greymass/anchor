@@ -24,7 +24,7 @@ class GlobalModalAccountImport extends Component<Props> {
     };
     const hotWallet = {
       menuItem: t('global_modal_account_import_hot_wallet'),
-      render: () => <GlobalModalAccountImportHot connection={connection} onClose={onClose} />
+      render: () => <GlobalModalAccountImportHot onClose={onClose} />
     };
     const watchWallet = {
       menuItem: t('global_modal_account_import_watch_wallet'),
