@@ -8,6 +8,8 @@ import compose from 'lodash/fp/compose';
 import { translate } from 'react-i18next';
 import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semantic-ui-react';
 
+import GlobalBlockchainDropdown from '../Global/Blockchain/Dropdown';
+
 import * as AccountsActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
@@ -39,6 +41,12 @@ class WelcomeConnectionContainer extends Component<Props> {
     const { actions, settings } = this.props;
     if (settings.skipImport) {
       actions.validateNode(settings.node);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.settings.node !== this.state.node) {
+      this.setState({ node: nextProps.settings.node });
     }
   }
 
@@ -214,9 +222,15 @@ class WelcomeConnectionContainer extends Component<Props> {
           loading={(validate.NODE === 'PENDING')}
           name="node"
           onChange={this.onChange}
-          placeholder="https://..."
-          defaultValue={node}
+          placeholder={`https://...`}
+          value={node}
         />
+        <Form.Field>
+          <label>{t('welcome:welcome_network_config')}</label>
+          <GlobalBlockchainDropdown
+            selection
+          />
+        </Form.Field>
         {message}
         {historyPluginMessage}
         {checkbox}
