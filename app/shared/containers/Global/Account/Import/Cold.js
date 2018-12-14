@@ -34,7 +34,7 @@ class GlobalModalAccountImportCold extends Component<Props> {
     const {
       actions
     } = this.props;
-    actions.importWallet(account, authorization, key, password, 'cold');
+    actions.importWallet(null, account, authorization, key, password, 'cold');
     this.props.onClose();
   }
   onChange = (e, { name, valid, value }) => {

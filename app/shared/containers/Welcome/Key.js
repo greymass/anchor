@@ -78,11 +78,12 @@ class WelcomeKeyContainer extends Component<Props> {
       }
       case 'watch': {
         // Import the watch wallet
-        importWallet(settings.account, authorization, false, false, 'watch');
+        importWallet(connection.chainId, settings.account, authorization, false, false, 'watch');
         // Set this wallet as the used wallet
         useWallet(connection.chainId, settings.account, 'active');
         // Initialize the wallet setting
         setSetting('walletInit', true);
+        setSetting('chainId', connection.chainId)
         // Move on to the voter
         history.push('/voter');
         break;

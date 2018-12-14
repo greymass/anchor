@@ -41,7 +41,7 @@ class TabMenu extends Component<Props> {
           )
           : false
         }
-        {(settings.account && settings.walletMode !== 'cold')
+        {(settings.walletMode !== 'cold')
           ? (
             <Menu.Item
               name="producers"
