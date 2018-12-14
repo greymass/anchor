@@ -33,12 +33,16 @@ class GlobalBlockchainDropdown extends Component<Props> {
   render() {
     const {
       blockchains,
+      selection,
       settings,
       t,
     } = this.props;
     const { chainId } = settings;
-    const blockchain = find(blockchains, { chainId });
-    if (!blockchains || !blockchain) return false;
+    if (!blockchains) return false;
+    let blockchain = find(blockchains, { chainId });
+    if (!blockchain) {
+      blockchain = {};
+    }
     const { displayTestNetworks } = settings;
     const options = blockchains
       .filter(b => (
@@ -68,9 +72,10 @@ class GlobalBlockchainDropdown extends Component<Props> {
       <Dropdown
         item
         labeled
+        selection={selection}
         trigger={(
           <span>
-            {blockchain.name}
+            {(blockchain.name) ? blockchain.name : t('global_account_select_blockchain_default')}
           </span>
         )}
       >
