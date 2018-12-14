@@ -2,8 +2,10 @@
 import React, { Component } from 'react';
 import { Label,Menu } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { find } from 'lodash';
 
 import GlobalAccountDropdown from '../containers/Global/Account/Dropdown';
+import GlobalBlockchainDropdown from '../containers/Global/Blockchain/Dropdown';
 import GlobalHardwareLedgerStatus from '../containers/Global/Hardware/Ledger/Status';
 import WalletLockState from './Wallet/LockState';
 import WalletMode from './Wallet/Mode';
@@ -14,6 +16,7 @@ class TabMenu extends Component<Props> {
     const {
       actions,
       activeItem,
+      blockchains,
       connection,
       handleItemClick,
       locked,
@@ -22,14 +25,23 @@ class TabMenu extends Component<Props> {
       wallet,
       t
     } = this.props;
+    const blockchain = find(blockchains, { chainId: settings.chainId });
     return (
       <Menu
         attached
         inverted
         size="large"
       >
-        <GlobalAccountDropdown />
-        {(settings.walletMode !== 'cold')
+        {(settings.walletInit)
+          ? (
+            <React.Fragment>
+              <GlobalBlockchainDropdown />
+              <GlobalAccountDropdown />
+            </React.Fragment>
+          )
+          : false
+        }
+        {(settings.account && settings.walletMode !== 'cold')
           ? (
             <Menu.Item
               name="producers"
@@ -66,18 +78,6 @@ class TabMenu extends Component<Props> {
           : false
         }
         <Menu.Menu position="right">
-          {(connection && connection.chain)
-            ? (
-              <Menu.Item
-                name="blockchain"
-              >
-                <Label
-                  size="medium"
-                  color="grey"
-                  content={connection.chain || 'EOS Mainnet'}
-                />
-              </Menu.Item>
-            ) : ''}
           <WalletMode
             settings={settings}
           />

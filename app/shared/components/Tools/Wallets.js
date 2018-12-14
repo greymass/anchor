@@ -48,6 +48,7 @@ class ToolsWallets extends Component<Props> {
           </Table.Header>
           <Table.Body>
             {([].concat(wallets)
+                .filter((w) => (w.chainId === settings.chainId))
                 .sort((a, b) => {
                   const k1 = `${a.account}@${a.authorization}`;
                   const k2 = `${b.account}@${b.authorization}`;
