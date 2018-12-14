@@ -28,6 +28,7 @@ function splitResultsByHost(host, results) {
       history: [],
       host,
       ms: 999999,
+      response: false,
       seq: 0,
       success: 0,
     };
@@ -94,12 +95,25 @@ export default function ping(state = initialState, action) {
       values.sort((a, b) => a - b);
       current.median = parseInt((values[(values.length - 1) >> 1] + values[values.length >> 1]) / 2, 10);
       // Determine if it's a compatible response
-      if (
-        !response.data
-        || !response.data.actions
-        || !response.data.actions.length > 0
-        || response.data.actions[0].account_action_seq <= 0
-      ) {
+      let validResponse = false;
+      switch (path) {
+        case '/v1/history/get_actions': {
+          validResponse = !!(
+            response.data
+            && response.data.actions
+            && response.data.actions.length > 0
+            && !response.data.actions[0].account_action_seq <= 0
+          );
+          break;
+        }
+        default: {
+          console.log(response.status === 200)
+          validResponse = (response.status === 200);
+          break;
+        }
+      }
+      console.log("valid", path, response, validResponse);
+      if (!validResponse) {
         // Response failed to meet criteria to be compatible
         current.failure += 1;
         // Determine if this node qualifies as "failing"
@@ -110,12 +124,15 @@ export default function ping(state = initialState, action) {
       } else {
         // Inc the success rate
         current.success += 1;
+        current.response = response.data;
         // Is this node available and ready?
         if (current.success >= 4) {
           current.available = true;
         }
         // Set the sequence number for this latest action
-        current.seq = response.data.actions[0].account_action_seq;
+        if (response.data.actions) {
+          current.seq = response.data.actions[0].account_action_seq;
+        }
         // Determine if this number is a new higher sequence number from what's known
         if (current.seq > newMaxSequence) {
           newMaxSequence = current.seq;
