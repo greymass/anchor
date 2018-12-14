@@ -53,8 +53,15 @@ class GlobalAccountSelectWallet extends Component<Props> {
           {t('global_account_select_wallet')}
         </Modal.Header>
         <Modal.Content>
-          <Menu
+          <Header
             attached="top"
+            block
+            content={t('global_account_select_wallet_connected_to_header', { name: blockchain.name })}
+            size="huge"
+            subheader={t('global_account_select_wallet_connected_to_subheader', { node: blockchain.node })}
+          />
+          <Menu
+            attached
             inverted
             size="large"
           >
@@ -68,12 +75,6 @@ class GlobalAccountSelectWallet extends Component<Props> {
               </Menu.Item>
             </Menu.Menu>
           </Menu>
-          <Header
-            attached
-            block
-            content={t('global_account_select_wallet_connected_to_header', { name: blockchain.name })}
-            subheader={t('global_account_select_wallet_connected_to_subheader', { node: blockchain.node })}
-          />
           <Segment attached="bottom">
           <List divided relaxed="very" size="small" verticalAlign="middle">
             {(options.length > 0)
