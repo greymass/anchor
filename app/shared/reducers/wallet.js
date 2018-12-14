@@ -12,6 +12,7 @@ export default function wallet(state = initialState, action) {
       if (
         action.payload.account === state.account
         && action.payload.authorization === state.authorization
+        && action.payload.chainId === state.chainId
       ) {
         return Object.assign({}, state, {
           convertParameters: action.payload
@@ -23,6 +24,7 @@ export default function wallet(state = initialState, action) {
       if (
         action.payload.account === state.account
         && action.payload.authorization === state.authorization
+        && action.payload.chainId === state.chainId
       ) {
         return Object.assign({}, state, {
           convertParameters: undefined,
@@ -36,6 +38,7 @@ export default function wallet(state = initialState, action) {
       if (
         action.payload.account === state.account
         && action.payload.authorization === state.authorization
+        && action.payload.chainId === state.chainId
       ) {
         return Object.assign({}, state, {
           convertParameters: undefined

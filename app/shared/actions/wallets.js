@@ -17,12 +17,16 @@ export function completeConvertToLedger(
   publicKey,
   path,
 ) {
-  return (dispatch: () => void) => {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { chainId } = settings;
     dispatch(removeWallet(
+      chainId,
       account,
-      authorization
+      authorization,
     ));
     dispatch(importWallet(
+      chainId,
       account,
       authorization,
       false,
@@ -37,6 +41,7 @@ export function completeConvertToLedger(
       payload: {
         account,
         authorization,
+        chainId,
         mode: 'ledger',
       }
     });
@@ -49,32 +54,40 @@ export function prepareConvertToLedger(
   path,
   publicKey,
 ) {
-  return (dispatch: () => void) =>
-    dispatch({
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { chainId } = settings;
+    return dispatch({
       type: types.PREPARE_WALLET_CONVERT_LEDGER,
       payload: {
         account,
         authorization,
+        chainId,
         mode: 'ledger',
         path,
         publicKey
       }
     });
+  };
 }
 
 export function prepareConvertToLedgerAbort(
   account,
   authorization
 ) {
-  return (dispatch: () => void) =>
-    dispatch({
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { chainId } = settings;
+    return dispatch({
       type: types.PREPARE_WALLET_CONVERT_LEDGER_ABORT,
       payload: {
         account,
         authorization,
+        chainId,
         mode: 'ledger'
       }
     });
+  };
 }
 
 export function importWallet(
@@ -136,13 +149,14 @@ export function importWallets(
       dispatch(importWallet(chainId, account, authorization, key, password, mode)));
 }
 
-export function removeWallet(account, authorization) {
+export function removeWallet(chainId, account, authorization) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.REMOVE_WALLET,
       payload: {
         account,
-        authorization
+        authorization,
+        chainId,
       }
     });
   };
@@ -202,6 +216,7 @@ export function upgradeWallet(account, authorization, password = false, swap = f
             account,
             accountData,
             authorization: auth,
+            chainId: connection.chainId,
             oldAuthorization: wallet.authorization,
             pubkey,
           }
@@ -242,6 +257,7 @@ export function upgradeWatchWallet(account, authorization, swap = false) {
               account,
               accountData,
               authorization,
+              chainId: connection.chainId,
               oldAuthorization: false,
               pubkey,
             }
