@@ -16,6 +16,7 @@ class ProducersTableRow extends Component<Props> {
   render() {
     const {
       addProducer,
+      connection,
       getProducerInfo,
       hasInfo,
       isMainnet,
@@ -43,38 +44,43 @@ class ProducersTableRow extends Component<Props> {
         />
       )
       : 'None';
+    const shouldDisplayInfoButton = connection.supportedContracts.includes('producerinfo');
     return (
       <Table.Row positive={isActive} key={producer.key}>
         <Table.Cell
           singleLine
           textAlign="center"
-        >
-          {(hasInfo)
-            ? (
-              <Button
-                color="purple"
-                icon="magnify"
-                onClick={() => getProducerInfo(producer.owner)}
-                size="small"
-              />
-            )
-            : (
-              <Popup
-                content={t('producer_json_unavailable_content')}
-                header={t('producer_json_unavailable_header')}
-                hoverable
-                inverted
-                position="left center"
-                trigger={
-                  (isMainnet)
-                  ? <Button icon="magnify" size="small" />
-                  : false
-                }
-              />
-            )
-          }
+        > 
+          {(shouldDisplayInfoButton) && (
+            <span>
+              {(hasInfo)
+                ? (
+                  <Button
+                    color="purple"
+                    icon="magnify"
+                    onClick={() => getProducerInfo(producer.owner)}
+                    size="small"
+                  />
+                ) : (
+                  <Popup
+                    content={t('producer_json_unavailable_content')}
+                    header={t('producer_json_unavailable_header')}
+                    hoverable
+                    inverted
+                    position="left center"
+                    trigger={
+                      (isMainnet)
+                      ? <Button icon="magnify" size="small" />
+                      : false
+                    }
+                  />
+                )
+              }
+            </span>
+          )}
+          
           <Popup
-            content={t('producer_vote_content')}
+            content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
             header={t('producer_vote_header', { producer: producer.owner })}
             hoverable
             position="right center"
