@@ -19,14 +19,11 @@ export default function actions(state = {}, action) {
 
       return newState;
     }
-
-    case types.CLEAR_ACTIONS_CACHE: {
+    case types.CLEAR_ACCOUNT_ACTIONS_CACHE: {
       const newState = state;
 
       Object.keys(state).forEach((account) => {
-        newState[account] = Object.assign({}, newState[account], {
-          list: []
-        });
+        newState[account] = Object.assign({}, newState[account], initialStatePerAccount);
       });
 
       return newState;
