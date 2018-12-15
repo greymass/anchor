@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { get } from 'dot-prop-immutable';
 
 import ProducersTable from './BlockProducers/Table';
 
@@ -97,7 +98,10 @@ class BlockProducers extends Component<Props> {
     } = actions;
     if (validate.NODE) {
       getProducers();
-      if (connection.supportedContracts.includes('producerinfo')) {
+
+      const contracts = get(connection, 'supportedContracts', []);
+
+      if (contracts.includes('producerinfo')) {
         getProducersInfo();
       }
     }
