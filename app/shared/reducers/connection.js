@@ -28,7 +28,7 @@ export default function connection(state = initialState, action) {
     }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
-      const blockchain = action.payload.blockchain;
+      const { blockchain } = action.payload;
       const { account, authorization } = action.payload.settings;
 
       return Object.assign({}, state, {
