@@ -22,6 +22,11 @@ export function getProposals(scope = 'eosforumdapp', previous = false) {
     if (previous) {
       query.lower_bound = previous[previous.length - 1].proposal_name;
     }
+
+    if (!connection.httpEndpoint) {
+      return;
+    }
+
     eos(connection).getTableRows(query).then((results) => {
       let { rows } = results;
       // If previous rows were returned
