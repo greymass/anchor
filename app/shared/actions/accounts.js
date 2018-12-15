@@ -11,6 +11,14 @@ export function clearAccountCache() {
   };
 }
 
+export function clearActionsCache() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.CLEAR_ACTIONS_CACHE
+    });
+  };
+}
+
 export function clearBalanceCache() {
   return (dispatch: () => void) => {
     dispatch({
