@@ -1,8 +1,8 @@
 {
-  "contract_terms": "By completing this transaction, I agree to the following terms (click to expand)...",
-  "system_transfer_title": "Transfer Terms & Conditions",
-  "system_transfer_1": "I, {{from}}, certify the following to be true to the best of my knowledge:",
-  "system_transfer_2": "1. I certify that {{quantity}} is not the proceeds of fraudulent or violent activities.",
+  "contract_terms": "Dengan melengkapi transaksi ini, saya setuju dengan butir-butir persyaratan (klik untuk memperjelas)...",
+  "system_transfer_title": "Ketentuan & Syarat Transfer",
+  "system_transfer_1": "Saya, {{dari}}, menyatakan bahwa hal berikut ini menjadi benar untuk yang terbaik bagi pengetahuan saya:",
+  "system_transfer_2": "1. Saya menyatakan bahwa {{jumlah}} bukanlah hasil dari aktifitas penipuan dan kejahatan.",
   "system_transfer_3": "2. I certify that, to the best of my knowledge, {{to}} is not supporting initiation of violence against others.",
   "system_transfer_4": "3. I have disclosed any contractual terms & conditions with respect to {{quantity}} to {{to}}.",
   "system_transfer_5": "I understand that funds transfers are not reversible after the {{transaction.delay}} seconds or other delay as configured by {{from}}'s permissions.",
