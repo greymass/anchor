@@ -59,6 +59,13 @@ export function getBlockExplorers() {
             account: 'https://eosweb.net/account/{account}',
             txid: 'https://eosweb.net/transaction/{txid}'
           }
+        },
+        {
+          name: 'eosx.io',
+          patterns: {
+            account: 'https://www.eosx.io/account/{account}',
+            txid: 'https://www.eosx.io/tx/{txid}'
+          }
         }
       ],
       'telos-mainnet': [
@@ -76,6 +83,13 @@ export function getBlockExplorers() {
           patterns: {
             account: 'http://testnet.telosfoundation.net/account/{account}',
             txid: 'http://testnet.telosfoundation.net/transaction/{txid}'
+          }
+        },
+        {
+          name: 'eosx.io',
+          patterns: {
+            account: 'https://telos-test.eosx.io/account/{account}',
+            txid: 'https://telos-test.eosx.io/tx/{txid}'
           }
         }
       ],
