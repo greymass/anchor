@@ -14,7 +14,7 @@ export function clearAccountCache() {
 export function clearActionsCache() {
   return (dispatch: () => void) => {
     dispatch({
-      type: types.CLEAR_ACTIONS_CACHE
+      type: types.CLEAR_ACCOUNT_ACTIONS_CACHE
     });
   };
 }
@@ -377,6 +377,7 @@ export default {
   checkAccountExists,
   clearAccountByKey,
   clearAccountCache,
+  clearActionsCache,
   getAccount,
   getAccountByKey,
   getActions,
