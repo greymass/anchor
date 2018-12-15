@@ -88,6 +88,7 @@ class BlockProducers extends Component<Props> {
   tick() {
     const {
       actions,
+      connection,
       validate
     } = this.props;
     const {
@@ -96,7 +97,9 @@ class BlockProducers extends Component<Props> {
     } = actions;
     if (validate.NODE) {
       getProducers();
-      getProducersInfo();
+      if (connection.supportedContracts.includes('producerinfo')) {
+        getProducersInfo();
+      }
     }
   }
 
