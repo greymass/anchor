@@ -85,7 +85,6 @@ class ToolsProxy extends Component<Props> {
     } = this.state;
 
     const nameBids = settings.recentBids && settings.recentBids[settings.account];
-
     return (
       <Segment basic>
         <ToolsModalBidName
@@ -148,24 +147,28 @@ class ToolsProxy extends Component<Props> {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {nameBids.map((nameBid) => (
-                  <Table.Row key={nameBid.newname}>
-                    <Table.Cell>
-                      {nameBid.newname}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {nameBid.bid}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {nameBid.highestBid || nameBid.bid}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Label color={nameBid.highestBid === nameBid.bid ? 'green' : 'red'}>
-                        {nameBid.highestBid === nameBid.bid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
-                      </Label>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
+                {nameBids.map((nameBid) => {
+                  const highestBid = Number(nameBid.highestBid.split(' ')[0]) === Number(nameBid.bid.split(' ')[0]);
+
+                  return (
+                    <Table.Row key={nameBid.newname}>
+                      <Table.Cell>
+                        {nameBid.newname}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {nameBid.bid}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {nameBid.highestBid || nameBid.bid}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Label color={highestBid ? 'green' : 'red'}>
+                          {highestBid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
+                        </Label>
+                      </Table.Cell>
+                    </Table.Row>
+                  )
+                })}
               </Table.Body>
             </Table>
           )}
