@@ -136,11 +136,6 @@ const paneMapping = [
     requiredContract: 'producerinfo'
   },
   {
-    element: ToolsBidName,
-    modes: ['hot', 'watch', 'ledger'],
-    name: 'name_bidding',
-  },
-  {
     element: ToolsContacts,
     modes: ['hot', 'watch', 'ledger'],
     name: 'contacts',
@@ -159,6 +154,11 @@ const paneMapping = [
     element: ToolsKeysValidator,
     modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'keyvalidator',
+  },
+  {
+    element: ToolsBidName,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'name_bidding',
   },
   {
     element: ToolsProxy,
