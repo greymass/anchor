@@ -67,7 +67,7 @@ const paneMapping = [
   },
   {
     element: ToolsBlockchains,
-    modes: ['hot', 'ledger', 'watch', 'skip'],
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip'],
     name: 'blockchains',
   },
   {
