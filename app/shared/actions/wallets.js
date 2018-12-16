@@ -120,13 +120,16 @@ export function importWallet(
         walletMode: mode
       })));
     }
-    dispatch({
-      type: types.SYSTEM_BLOCKCHAINS_ENSURE,
-      payload: {
-        chainId,
-        node: settings.node,
-      }
-    });
+    // as long as this isn't an offline wallet, ensure the blockchain exists
+    if (settings.walletMode !== 'cold') {
+      dispatch({
+        type: types.SYSTEM_BLOCKCHAINS_ENSURE,
+        payload: {
+          chainId,
+          node: settings.node,
+        }
+      });
+    }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {

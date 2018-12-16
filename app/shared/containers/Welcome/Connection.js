@@ -68,7 +68,7 @@ class WelcomeConnectionContainer extends Component<Props> {
 
   openLink = (link) => shell.openExternal(link);
 
-  isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
+  isSafeish = (url) => url && (url.startsWith('http:') || url.startsWith('https:'))
 
   onChange =  (e, { name, value }) => {
     this.setState({
