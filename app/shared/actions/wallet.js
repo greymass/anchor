@@ -30,13 +30,16 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false,
         [, authorization] = auth.split('@');
       }
     }
-    dispatch({
-      type: types.SYSTEM_BLOCKCHAINS_ENSURE,
-      payload: {
-        chainId,
-        node: settings.node,
-      }
-    });
+    // as long as this isn't an offline wallet, ensure the blockchain exists
+    if (settings.walletMode !== 'cold') {
+      dispatch({
+        type: types.SYSTEM_BLOCKCHAINS_ENSURE,
+        payload: {
+          chainId,
+          node: settings.node,
+        }
+      });
+    }
     dispatch({
       type: types.SET_CURRENT_KEY,
       payload: {
