@@ -8,6 +8,7 @@ import {
   Segment,
   Table
 } from 'semantic-ui-react';
+import { get } from 'dot-prop-immutable';
 
 import ToolsModalBidName from './Modal/BidName';
 
@@ -44,7 +45,7 @@ class ToolsProxy extends Component<Props> {
     } = actions;
 
     if (!openModal) {
-      ((settings.recentBids && settings.recentBids[settings.account]) || []).forEach((bid) => {
+      get(settings, `${settings.chainId}.${settings.account}`, []).forEach((bid) => {
         getBidForName(bid.newname);
       });
     }
@@ -84,7 +85,7 @@ class ToolsProxy extends Component<Props> {
       successMessage
     } = this.state;
 
-    const nameBids = settings.recentBids && settings.recentBids[settings.account];
+    const nameBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []);
     return (
       <Segment basic>
         <ToolsModalBidName
@@ -148,7 +149,7 @@ class ToolsProxy extends Component<Props> {
               </Table.Header>
               <Table.Body>
                 {nameBids.map((nameBid) => {
-                  const highestBid = Number(nameBid.highestBid.split(' ')[0]) === Number(nameBid.bid.split(' ')[0]);
+                  const isHighestBid = (nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0])) === Number(nameBid.bid.split(' ')[0]);
 
                   return (
                     <Table.Row key={nameBid.newname}>
@@ -162,8 +163,8 @@ class ToolsProxy extends Component<Props> {
                         {nameBid.highestBid || nameBid.bid}
                       </Table.Cell>
                       <Table.Cell>
-                        <Label color={highestBid ? 'green' : 'red'}>
-                          {highestBid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
+                        <Label color={isHighestBid ? 'green' : 'red'}>
+                          {isHighestBid ? t('tools_bid_highest_bid') : t('tools_bid_not_highest_bid')}
                         </Label>
                       </Table.Cell>
                     </Table.Row>
