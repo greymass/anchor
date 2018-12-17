@@ -37,7 +37,7 @@ export function bidname(data) {
       sign: connection.sign
     }).then((tx) => {
 
-      const currentRecentBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []);
+      const currentRecentBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []) || [];
 
       currentRecentBids.push({ newname: data.newname, bid: data.bid });
 

@@ -1,4 +1,5 @@
 import { findIndex } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
 import * as types from './types';
 import eos from './helpers/eos';
@@ -23,16 +24,15 @@ export function getBidForName(name) {
     eos(connection).getTableRows(query).then((results) => {
       const { rows } = results;
       const namebid = rows[0];
+      const recentBids = settings.recentBids;
 
-      const recentBids = (settings.recentBids && settings.recentBids) || {};
-
-      const bidIndex = findIndex(recentBids[settings.account] || [], { newname: namebid.newname });
+      const bidIndex = findIndex(get(recentBids, `${settings.chainId}.${settings.account}`) || [], { newname: namebid.newname });
 
       if (bidIndex > -1) {
-        recentBids[settings.account][bidIndex] =
+        recentBids[settings.chainId][settings.account][bidIndex] =
           {
             newname: namebid.newname,
-            bid: recentBids[settings.account][bidIndex].bid,
+            bid: recentBids[settings.chainId][settings.account][bidIndex].bid,
             highestBid: `${namebid.high_bid / 10000} EOS`
           };
 

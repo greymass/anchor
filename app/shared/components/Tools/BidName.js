@@ -45,7 +45,7 @@ class ToolsProxy extends Component<Props> {
     } = actions;
 
     if (!openModal) {
-      get(settings, `${settings.chainId}.${settings.account}`, []).forEach((bid) => {
+      (get(settings, `recentBids.${settings.chainId}.${settings.account}`) || []).forEach((bid) => {
         getBidForName(bid.newname);
       });
     }
@@ -85,7 +85,11 @@ class ToolsProxy extends Component<Props> {
       successMessage
     } = this.state;
 
-    const nameBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []);
+    const nameBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []) || [];
+    const relevantNameBids = nameBids.filter(nameBid => 
+      !!nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0]) >= Number(nameBid.bid.split(' ')[0])
+    )
+
     return (
       <Segment basic>
         <ToolsModalBidName
@@ -125,7 +129,7 @@ class ToolsProxy extends Component<Props> {
           {t('tools_bid_name_table_header')}
         </h2>
 
-        {(!nameBids || nameBids.length === 0)
+        {(relevantNameBids.length === 0)
           ? (
             <Message
               content={t('tools_bid_name_none')}
@@ -148,7 +152,7 @@ class ToolsProxy extends Component<Props> {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {nameBids.map((nameBid) => {
+                {relevantNameBids.map((nameBid) => {
                   const isHighestBid = (nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0])) === Number(nameBid.bid.split(' ')[0]);
 
                   return (
@@ -160,7 +164,7 @@ class ToolsProxy extends Component<Props> {
                         {nameBid.bid}
                       </Table.Cell>
                       <Table.Cell>
-                        {nameBid.highestBid || nameBid.bid}
+                        {nameBid.highestBid}
                       </Table.Cell>
                       <Table.Cell>
                         <Label color={isHighestBid ? 'green' : 'red'}>
