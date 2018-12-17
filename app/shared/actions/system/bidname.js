@@ -1,3 +1,5 @@
+import { get, set } from 'dot-prop-immutable';
+
 import * as types from '../types';
 import eos from '../helpers/eos';
 import { setSetting } from '../settings';
@@ -34,11 +36,14 @@ export function bidname(data) {
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     }).then((tx) => {
-      const recentBids = (settings.recentBids && settings.recentBids) || {};
 
-      recentBids[settings.account] =
-        (recentBids[settings.account] || []).concat({ newname: data.newname, bid: data.bid });
-      dispatch(setSetting('recentBids', recentBids));
+      const currentRecentBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []);
+
+      currentRecentBids.push({ newname: data.newname, bid: data.bid });
+
+      const newRecentBidsState = set(settings.recentBids, `${settings.chainId}.${settings.account}`, currentRecentBids);
+
+      dispatch(setSetting('recentBids', newRecentBidsState));
       dispatch(getBidForName(data.newname));
 
       return dispatch({
