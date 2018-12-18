@@ -56,16 +56,19 @@ import * as WalletsActions from '../actions/wallets';
 
 const paneMapping = [
   {
+    alwaysAvailable: true,
     element: Tools,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'index',
   },
   {
+    alwaysAvailable: true,
     element: ToolsWallets,
     modes: ['cold', 'hot', 'ledger', 'watch'],
     name: 'wallets',
   },
   {
+    alwaysAvailable: true,
     element: ToolsBlockchains,
     modes: ['hot', 'ledger', 'watch', 'skip'],
     name: 'blockchains',
@@ -222,11 +225,17 @@ class ToolsContainer extends Component<Props> {
 
         const blockchainUnknownAndRestricted =
           !connection.supportedContracts && pane.requiredContract;
-        const blockchainKnownAndFeatureNotSupported =
+        const blockchainKnownAndContractNotSupported =
           pane.requiredContract &&
           !connection.supportedContracts.includes(pane.requiredContract);
+        const blockchainKnownAndFeatureNotSupported =
+          !pane.header &&
+          !pane.alwaysAvailable &&
+          connection.supportedFeatures &&
+          !connection.supportedFeatures.includes('all') &&
+          !connection.supportedFeatures.includes(pane.name);
 
-        if (blockchainUnknownAndRestricted || blockchainKnownAndFeatureNotSupported) {
+        if (blockchainUnknownAndRestricted || blockchainKnownAndContractNotSupported || blockchainKnownAndFeatureNotSupported) {
           return false;
         }
         return (

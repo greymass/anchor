@@ -15,6 +15,9 @@ const initialState = [
       "proposals",
       "regproxyinfo"
     ],
+    "supportedFeatures": [
+      'all'
+    ],
     "symbol": "EOS",
     "testnet": false
   },
@@ -25,6 +28,9 @@ const initialState = [
     "name": "Jungle (EOS)",
     "node": "http://jungle.cryptolions.io:18888",
     "supportedContracts": [
+    ],
+    "supportedFeatures": [
+      'all'
     ],
     "symbol": "EOS",
     "testnet": true
@@ -37,6 +43,9 @@ const initialState = [
     "node": "https://kylin.eoscanada.com:443",
     "supportedContracts": [
     ],
+    "supportedFeatures": [
+      'all'
+    ],
     "symbol": "EOS",
     "testnet": true
   },
@@ -47,6 +56,9 @@ const initialState = [
     "name": "Insights",
     "node": "https://ireland-history.insights.network",
     "supportedContracts": [
+    ],
+    "supportedFeatures": [
+      'all'
     ],
     "symbol": "INSTAR",
     "testnet": false
@@ -59,6 +71,9 @@ const initialState = [
     "node": "https://telos.greymass.com",
     "supportedContracts": [
     ],
+    "supportedFeatures": [
+      'all'
+    ],
     "symbol": "TLOS",
     "testnet": false
   },
@@ -69,6 +84,9 @@ const initialState = [
     "name": "Telos",
     "node": "https://api.eos.miami:17441",
     "supportedContracts": [
+    ],
+    "supportedFeatures": [
+      'all'
     ],
     "symbol": "TLOS",
     "testnet": true
