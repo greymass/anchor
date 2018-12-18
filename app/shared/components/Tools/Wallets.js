@@ -41,11 +41,16 @@ class ToolsWallets extends Component<Props> {
       'wallet'
     );
   }
+
+  duplicateWallet = (account, authorization) => {
+    this.setState({ duplicatingAccount: account });
+  }
   render() {
     const {
       actions,
       blockchains,
       connection,
+      duplicatingAccount,
       settings,
       status,
       t,
@@ -69,6 +74,11 @@ class ToolsWallets extends Component<Props> {
               </Header>
             </Grid.Column>
             <Grid.Column textAlign="right">
+              {(duplicatingAccount) && (
+                <ToolsModalDuplicatingAccount
+                  account={duplicatingAccount}
+                />
+              )}
               <GlobalButtonAccountImport
                 connection={connection}
                 settings={settings}
@@ -82,6 +92,7 @@ class ToolsWallets extends Component<Props> {
             </Grid.Column>
           </Grid.Row>
         </Grid>
+
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>
@@ -104,6 +115,7 @@ class ToolsWallets extends Component<Props> {
                     actions={actions}
                     blockchains={blockchains}
                     current={wallet}
+                    duplicateWallet={this.duplicateWallet}
                     key={`${w.account}@${w.authorization}`}
                     settings={settings}
                     status={status}
