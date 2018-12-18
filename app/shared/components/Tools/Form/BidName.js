@@ -7,11 +7,12 @@ import { Decimal } from 'decimal.js';
 
 import FormMessageError from '../../Global/Form/Message/Error';
 import GlobalFormFieldString from '../../Global/Form/Field/String';
-import GlobalFormFieldAmount from '../../Global/Form/Field/Token';
+import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import ToolsFormBidNameConfirming from './BidName/Confirming';
 import WalletPanelLocked from '../../Wallet/Panel/Locked';
 
 const formAttributes = ['bidder', 'newname', 'bid'];
+const specialCharactersRegex = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
 class ToolsFormBidName extends Component<Props> {
   constructor(props) {
@@ -78,7 +79,8 @@ class ToolsFormBidName extends Component<Props> {
 
       const {
         actions,
-        balance
+        balance,
+        connection
       } = this.props;
 
       const {
@@ -96,11 +98,15 @@ class ToolsFormBidName extends Component<Props> {
         formErrors[name] = `invalid_${name}`;
         secondStepDisabled = true;
         submitDisabled = true;
-      } else if (name === 'bid' && Number(value.split(' ')[0]) > balance.EOS) {
+      } else if (name === 'bid' && Number(value.split(' ')[0]) > balance[connection.chainSymbol]) {
         formErrors[name] = 'insufficient_balance';
         submitDisabled = true;
       } else if (name === 'newname' && value.length > 11) {
         formErrors[name] = 'newname_too_long';
+        secondStepDisabled = true;
+        submitDisabled = true;
+      } else if (name === 'newname' && specialCharactersRegex.test(value)) {
+        formErrors[name] = 'invalid_characters';
         secondStepDisabled = true;
         submitDisabled = true;
       } else {
@@ -227,6 +233,7 @@ class ToolsFormBidName extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       keys,
       settings,
       system,
@@ -275,9 +282,10 @@ class ToolsFormBidName extends Component<Props> {
                       onChange={this.onChange}
                     />
                   ) : (
-                    <GlobalFormFieldAmount
+                    <GlobalFormFieldToken
+                      connection={connection}
                       defaultValue={bid && bid.split(' ')[0] || ''}
-                      label={t('tools_form_bid_name_choose_bid_amount')}
+                      label={t('tools_form_bid_name_choose_bid_amount', { chainSymbol: connection.chainSymbol })}
                       name="bid"
                       onChange={this.onChange}
                     />
@@ -321,7 +329,7 @@ class ToolsFormBidName extends Component<Props> {
                             {t('tools_form_bid_name_bid_info_last_bid')}
                           </Table.Cell>
                           <Table.Cell>
-                            {Math.abs(system.NAMEBID_LAST_BID.high_bid) / 10000} EOS
+                            {Math.abs(system.NAMEBID_LAST_BID.high_bid) / 10000} {connection.chainSymbol}
                           </Table.Cell>
                         </Table.Row>
                         <Table.Row>
