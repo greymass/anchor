@@ -8,11 +8,15 @@ import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
 
 class ToolsWallets extends Component<Props> {
+  duplicateWallet = (account, authorization) => {
+    this.setState({ duplicatingAccount: account });
+  }
   render() {
     const {
       actions,
       blockchains,
       connection,
+      duplicatingAccount,
       settings,
       status,
       t,
@@ -25,6 +29,11 @@ class ToolsWallets extends Component<Props> {
     }
     return (
       <Segment basic>
+        {(duplicatingAccount) && (
+          <ToolsModalDuplicatingAccount
+            account={duplicatingAccount}
+          />
+        )}
         <Button.Group floated="right">
           <GlobalButtonAccountImport
             connection={connection}
@@ -59,6 +68,7 @@ class ToolsWallets extends Component<Props> {
                     actions={actions}
                     blockchains={blockchains}
                     current={wallet}
+                    duplicateWallet={this.duplicateWallet}
                     key={`${w.account}@${w.authorization}`}
                     settings={settings}
                     status={status}
