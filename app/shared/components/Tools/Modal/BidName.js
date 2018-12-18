@@ -13,6 +13,7 @@ class ToolsModalDelegation extends Component<Props> {
       balance,
       blockExplorers,
       bidNameToRemove,
+      connection,
       keys,
       onClose,
       onOpen,
@@ -41,6 +42,7 @@ class ToolsModalDelegation extends Component<Props> {
             actions={actions}
             balance={balance}
             bidNameToRemove={bidNameToRemove}
+            connection={connection}
             key="BidNameForm"
             keys={keys}
             onClose={onClose}

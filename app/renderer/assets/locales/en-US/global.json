@@ -16,6 +16,7 @@
   "error_invalid_amount": "Invalid Amount, eg. '12.1212'.",
   "error_invalid_background": "Invalid Background value, must be less than 256 Bytes.",
   "error_invalid_bid": "Invalid Bid Amount, eg. '12.1212'.",
+  "error_invalid_characters": "Invalid name, should not include any special characters.",
   "error_invalid_delegatedBw": "Invalid DelegatedBandwidth Amount, eg. '12.121'.",
   "error_invalid_delegatedCpu": "Invalid CPU Amount, eg. '12.121'.",
   "error_invalid_logo_256": "Invalid Logo url, must begin with 'http://' or 'https://'.",
