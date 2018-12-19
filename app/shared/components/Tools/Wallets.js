@@ -13,6 +13,7 @@ import EOSWallet from '../../utils/Anchor/Wallet';
 const { ipcRenderer } = require('electron');
 
 class ToolsWallets extends Component<Props> {
+  state = {};
   backup = () => {
     const {
       connection,
@@ -42,12 +43,8 @@ class ToolsWallets extends Component<Props> {
       'wallet'
     );
   }
-=======
-  state = {};
->>>>>>> d21e50ca... feature: opening  the swap account modal on blockchain select
-
   duplicateWallet = (account, authorization) => {
-    this.setState({ duplicatingAccount: account });
+    this.setState({ duplicatingAccount: account, duplicatingAuthorization: authorization });
   }
   render() {
     const {
@@ -84,6 +81,7 @@ class ToolsWallets extends Component<Props> {
                 <ToolsModalDuplicatingAccount
                   account={duplicatingAccount}
                   actions={actions}
+                  authorization={duplicatingAuthorization}
                   blockchains={blockchains}
                   onClose={()=> this.setState({duplicatingAccount: null})}
                   settings={settings}
