@@ -4,54 +4,68 @@ import { translate } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ToolsFormDelegation from '../Form/Delegation';
+import { Dropdown, Header, Modal } from 'semantic-ui-react';
 
-class ToolsModalDelegation extends Component<Props> {
+class ToolsModalDuplicatingAccount extends Component<Props> {
   render() {
     const {
       account,
       actions,
-      balance,
-      blockExplorers,
+      blockchains,
       connection,
-      delegationToEdit,
-      delegationToRemove,
-      keys,
       onClose,
-      openModal,
       settings,
-      system,
-      t,
-      validate,
-      wallet
+      t
     } = this.props;
+
+    const {
+      chainId,
+      displayTestNetworks
+    } = settings;
+
+    const options = blockchains
+      .filter(b => (
+        (
+          (displayTestNetworks && b.testnet)
+          || !b.testnet
+        )
+        && b.chainId !== settings.chainId
+      ))
+      .sort((a, b) => a.name > b.name)
+      .map((b) => {
+        console.log({b})
+        return {
+          key: b.chainId,
+          onClick: () => actions.swapBlockchain(b.chainId, account),
+          text: `${b.name} ${(b.testnet ? '(TESTNET)' : '')}`,
+          value: b.chainId
+        };
+      });
 
     return (
       <Modal
-        actionName="STAKE"
-        actions={actions}
-        blockExplorers={blockExplorers}
-        button={{
-          color: 'blue',
-          content: t('tools_delegation_modal_button_add'),
-          floated: 'right',
-          icon: 'plus'
-        }}
-        content={(
-          <div>
-            <Select onSelect={() => actions.swapBlockchain(chainId)}>
-              Select Blockchain
-            </Select>
-          </div>
-        )}
-        icon="microchip"
+        centered
         onClose={onClose}
-        openModal={openModal}
-        settings={settings}
-        system={system}
-        title={t('tools_modal_delegation_header')}
-      />
+        open
+        size="small"
+      >
+        <Modal.Header>
+          {t('tools_modal_duplicate_account')}
+        </Modal.Header>
+        <Modal.Content style={{minHeight: 150}}>
+          <Header
+            content={t('tools_modal_duplicate_account_header_content')}
+          />
+          <Dropdown
+            placeholder={t('tools_modal_duplicate_account_select_blockchain')}
+            fluid
+            selection
+            options={options}
+          />
+        </Modal.Content>         
+      </Modal>
     );
   }
 }
 
-export default translate('tools')(ToolsModalDelegation);
+export default translate('tools')(ToolsModalDuplicatingAccount);
