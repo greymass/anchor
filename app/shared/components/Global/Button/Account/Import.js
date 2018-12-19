@@ -10,15 +10,6 @@ class GlobalButtonAccountImport extends Component<Props> {
     open: false
   }
 
-  componentDidMount = () => {
-    const { duplicatingAccount } = this.props;
-
-    this.setState({
-      open: !!duplicatingAccount,
-      duplicatingAccount
-    });
-  }
-
   onOpen = () => this.setState({ open: true });
   onClose = () => this.setState({ open: false });
 
@@ -34,7 +25,6 @@ class GlobalButtonAccountImport extends Component<Props> {
     return (
       <GlobalModalAccountImport
         connection={connection}
-        duplicatingAccount={duplicatingAccount}
         onClose={this.onClose}
         open={open}
         settings={settings}
