@@ -61,7 +61,6 @@ class GlobalBlockchainDropdown extends Component<Props> {
             text: `${b.name} ${(b.testnet ? '(TESTNET)' : '')}`,
             value: b.chainId,
           },
-          b
         };
       });
     let icon = {

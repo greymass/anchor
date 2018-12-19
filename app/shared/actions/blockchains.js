@@ -10,6 +10,7 @@ function swapBlockchain(chainId) {
   return (dispatch: () => void, getState) => {
     const { blockchains } = getState();
     const blockchain = find(blockchains, { chainId });
+    dispatch({ type: types.SYSTEM_GETABI_FAILURE })
     dispatch(clearWallet());
     dispatch(setSettingWithValidation('node', blockchain.node));
     dispatch(clearActionsCache());
