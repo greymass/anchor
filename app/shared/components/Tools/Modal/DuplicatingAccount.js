@@ -11,6 +11,7 @@ class ToolsModalDuplicatingAccount extends Component<Props> {
     const {
       account,
       actions,
+      authorization,
       blockchains,
       connection,
       onClose,
@@ -36,7 +37,7 @@ class ToolsModalDuplicatingAccount extends Component<Props> {
         console.log({b})
         return {
           key: b.chainId,
-          onClick: () => actions.swapBlockchain(b.chainId, account),
+          onClick: () => actions.swapBlockchain(b.chainId, account, authorization),
           text: `${b.name} ${(b.testnet ? '(TESTNET)' : '')}`,
           value: b.chainId
         };

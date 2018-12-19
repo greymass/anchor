@@ -70,6 +70,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
               <Menu.Item>
                 <GlobalButtonAccountImport
                   connection={connection}
+                  duplicatingAccount={system.DUPLICATING_ACCOUNT}
                   settings={settings}
                 />
               </Menu.Item>
