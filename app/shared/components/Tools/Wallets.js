@@ -6,6 +6,7 @@ import { Button, Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
+import ToolsModalDuplicatingAccount from './Modal/DuplicatingAccount'
 
 import EOSWallet from '../../utils/Anchor/Wallet';
 
@@ -41,6 +42,9 @@ class ToolsWallets extends Component<Props> {
       'wallet'
     );
   }
+=======
+  state = {};
+>>>>>>> d21e50ca... feature: opening  the swap account modal on blockchain select
 
   duplicateWallet = (account, authorization) => {
     this.setState({ duplicatingAccount: account });
@@ -50,7 +54,6 @@ class ToolsWallets extends Component<Props> {
       actions,
       blockchains,
       connection,
-      duplicatingAccount,
       settings,
       status,
       t,
@@ -58,6 +61,9 @@ class ToolsWallets extends Component<Props> {
       wallet,
       wallets
     } = this.props;
+    const {
+      duplicatingAccount
+    } = this.state;
     if (!wallets || !wallets.length) {
       return false;
     }
@@ -77,6 +83,10 @@ class ToolsWallets extends Component<Props> {
               {(duplicatingAccount) && (
                 <ToolsModalDuplicatingAccount
                   account={duplicatingAccount}
+                  actions={actions}
+                  blockchains={blockchains}
+                  onClose={()=> this.setState({duplicatingAccount: null})}
+                  settings={settings}
                 />
               )}
               <GlobalButtonAccountImport
@@ -92,7 +102,6 @@ class ToolsWallets extends Component<Props> {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>

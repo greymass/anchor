@@ -131,7 +131,7 @@ class ToolsTableRowWallet extends Component<Props> {
       (
         <Dropdown.Item
           content={t('wallet:duplicate')}
-          icon="edit"
+          icon="copy"
           key="edit"
           onClick={() => this.props.duplicateWallet(account, authorization)}
         />
