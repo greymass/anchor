@@ -12,7 +12,7 @@ class ToolsWallets extends Component<Props> {
   state = {};
 
   duplicateWallet = (account, authorization) => {
-    this.setState({ duplicatingAccount: account, duplicatingAuthorization: authorization });
+    this.setState({ duplicatingAccount: { account, authorization } });
   }
   render() {
     const {
@@ -38,7 +38,6 @@ class ToolsWallets extends Component<Props> {
           <ToolsModalDuplicatingAccount
             account={duplicatingAccount}
             actions={actions}
-            authorization={duplicatingAuthorization}
             blockchains={blockchains}
             onClose={()=> this.setState({duplicatingAccount: null})}
             settings={settings}
