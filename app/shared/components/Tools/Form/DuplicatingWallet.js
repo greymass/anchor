@@ -15,10 +15,10 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
     formError: false,
   };
   
-  onClick = (chainId) => {
+  onClick = (chainDuplicatingTo) => {
     const { duplicatingWallet, actions } = this.props;
 
-    this.setState({chainId, submitDisabled: false, formError: false}, () => {
+    this.setState({chainDuplicatingTo, submitDisabled: false, formError: false}, () => {
       if (this.walletAlreadyExists()) {
         this.setState({ formError: 'wallet_already_exists', submitDisabled: true })
       }
@@ -28,21 +28,27 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
   walletAlreadyExists = () => {
     const { duplicatingWallet, wallets } = this.props;
     const { account, authorization } = duplicatingWallet;
-    const { chainId } = this.state;
+    const { chainDuplicatingTo } = this.state;
 
-    const index = findIndex(wallets, { account, authorization, chainId })
+    const index = findIndex(wallets, { account, authorization, chainId: chainDuplicatingTo })
 
     return index >= 0;
   }
 
   onSubmit = () => {
-    const { duplicatingWallet } = this.props;
-    const { chainId, submitDisabled } = this.state;
+    const { actions, duplicatingWallet, settings } = this.props;
+    const { chainDuplicatingTo, submitDisabled } = this.state;
+
+    const { authorization, account } = duplicatingWallet;
+    const { chainId:chainDuplicatingFrom } = settings;
 
     if (submitDisabled) {
       return;
     }
-    actions.duplicateWallet(duplicatingWallet, chainId)
+
+    actions.duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom, () => {
+      this.setState({success: true, chainDuplicatingTo: null})
+    })
   }
 
   render() {
@@ -54,7 +60,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
     } = this.props;
 
     const {
-      chainId,
+      chainDuplicatingTo,
       formError,
       submitDisabled
     } = this.state;
@@ -86,7 +92,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
           fluid
           selection
           options={options}
-          value={chainId}
+          value={chainDuplicatingTo}
           style={{marginBottom: 10}}
         />
 
