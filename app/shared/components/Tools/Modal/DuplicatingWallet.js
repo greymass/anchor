@@ -27,7 +27,7 @@ class ToolsModalDuplicatingWallet extends Component<Props> {
         size="small"
       >
         <Modal.Header>
-          {t('tools_modal_duplicate_account')}
+          {t('tools_modal_duplicate_wallet')}
         </Modal.Header>
         <Modal.Content style={{minHeight: 150}}>
           <ToolsFormDuplicatingWalletForm
