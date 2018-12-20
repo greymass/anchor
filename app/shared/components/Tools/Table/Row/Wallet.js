@@ -130,7 +130,7 @@ class ToolsTableRowWallet extends Component<Props> {
       ),
       (
         <Dropdown.Item
-          content={t('wallet:duplicate')}
+          content={t('tools_form_duplicate_duplicate')}
           icon="copy"
           key="edit"
           onClick={() => this.props.duplicateWallet(account, authorization)}
