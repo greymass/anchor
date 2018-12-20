@@ -15,6 +15,7 @@ class ToolsModalDuplicatingWallet extends Component<Props> {
       duplicatingWallet,
       onClose,
       settings,
+      system,
       t,
       wallets
     } = this.props;
@@ -36,6 +37,7 @@ class ToolsModalDuplicatingWallet extends Component<Props> {
             duplicatingWallet={duplicatingWallet}
             onClose={onClose}
             settings={settings}
+            system={system}
             wallets={wallets}
           />
         </Modal.Content>         
