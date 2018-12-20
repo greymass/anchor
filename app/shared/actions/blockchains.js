@@ -5,7 +5,7 @@ import { setSettings, setSettingWithValidation } from './settings';
 import { clearActionsCache } from './accounts';
 import { clearProducerInfo } from './producers';
 
-function swapBlockchain(chainId, account, authorization) {
+function swapBlockchain(chainId) {
   return (dispatch: () => void, getState) => {
     const { blockchains, settings } = getState();
     const blockchain = find(blockchains, { chainId });
