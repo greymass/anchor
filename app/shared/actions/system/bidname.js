@@ -44,7 +44,9 @@ export function bidname(data) {
       const newRecentBidsState = set(settings.recentBids, `${settings.chainId}.${settings.account}`, currentRecentBids);
 
       dispatch(setSetting('recentBids', newRecentBidsState));
-      dispatch(getBidForName(data.newname));
+      setTimeout(() => {
+        dispatch(getBidForName(data.newname));
+      }, 500);
 
       return dispatch({
         payload: { tx },
