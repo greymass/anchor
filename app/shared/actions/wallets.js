@@ -48,6 +48,21 @@ export function completeConvertToLedger(
   };
 }
 
+export function duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom, successCallback) {
+  return (dispatch: () => void, getState) => {
+    const { wallets } = getState();
+    const currentWallet = find(wallets, { chainId: chainDuplicatingFrom, authorization, account });
+    const newWallet = Object.assign({}, currentWallet, { chainId: chainDuplicatingTo });
+
+
+    successCallback();
+    return dispatch({
+      type: types.ADD_WALLET,
+      payload: newWallet
+    })
+  }
+}
+
 export function prepareConvertToLedger(
   account,
   authorization,
