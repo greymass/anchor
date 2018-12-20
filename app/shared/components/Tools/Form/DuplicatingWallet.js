@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Segment, Form, Button, Icon, Dropdown } from 'semantic-ui-react';
+import { Segment, Form, Button, Icon, Dropdown, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
-import { findIndex } from 'lodash';
+import { find, findIndex } from 'lodash';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldGeneric from '../../Global/Form/Field/Generic';
@@ -11,14 +11,30 @@ import GlobalFormMessageError from '../../Global/Form/Message/Error';
 
 class ToolsFormDuplicatingWallet extends Component<Props> {
   state = {
-    submitDisabled: true,
     formError: false,
+    submitDisabled: true,
+    success: false
   };
+
+  componentDidUpdate = (prevProps) => {
+    const { blockchains, wallets } = this.props;
+    const { wallets:previousWallets } = prevProps;
+    const { chainDuplicatingTo } = this.state;
+
+    if (wallets.length > previousWallets.length) {
+      const blockchain = chainDuplicatingTo && find(blockchains, { chainId: chainDuplicatingTo });
+      debugger
+      this.setState({
+        chainDuplicatingTo: null,
+        succesfullyDuplicated: blockchain && blockchain.name
+      })
+    }
+  }
   
   onClick = (chainDuplicatingTo) => {
     const { duplicatingWallet, actions } = this.props;
 
-    this.setState({chainDuplicatingTo, submitDisabled: false, formError: false}, () => {
+    this.setState({ chainDuplicatingTo, submitDisabled: false, formError: false, success: false }, () => {
       if (this.walletAlreadyExists()) {
         this.setState({ formError: 'wallet_already_exists', submitDisabled: true })
       }
@@ -46,14 +62,13 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
       return;
     }
 
-    actions.duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom, () => {
-      this.setState({success: true, chainDuplicatingTo: null})
-    })
+    actions.duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom)
   }
 
   render() {
     const {
       blockchains,
+      duplicatingWallet,
       onClose,
       settings,
       t
@@ -62,7 +77,8 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
     const {
       chainDuplicatingTo,
       formError,
-      submitDisabled
+      submitDisabled,
+      succesfullyDuplicated
     } = this.state;
 
     const options = blockchains
@@ -83,39 +99,59 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
       });
 
     return (
-      <Form
-        onKeyPress={this.onKeyPress}
-        onSubmit={this.onSubmit}
-      >
-        <Dropdown
-          placeholder={t('tools_modal_duplicate_account_select_blockchain')}
-          fluid
-          selection
-          options={options}
-          value={chainDuplicatingTo}
-          style={{marginBottom: 10}}
+      <React.Fragment>
+        <Message
+          warning
+          content={
+            t('tools_modal_duplicate_warning', { account: duplicatingWallet.account, authorization: duplicatingWallet.authorization })
+          }
         />
-
-        <GlobalFormMessageError
-          error={formError}
-          icon="warning sign"
-        />
-
-        <Segment basic clearing>
-          <Button
-            content={t('tools_form_duplicate_duplicate')}
-            color="green"
-            disabled={submitDisabled}
-            floated="right"
-            primary
+        {succesfullyDuplicated && (
+          <Message
+            success
+            content={
+              t('tools_modal_duplicate_success', {
+                account: duplicatingWallet.account,
+                authorization: duplicatingWallet.authorization,
+                blockchainName: succesfullyDuplicated
+              })
+            }
           />
-          <Button
-            onClick={onClose}
-          >
-            <Icon name="x" /> {t('tools_form_duplicate_cancel')}
-          </Button>
-        </Segment>
-      </Form>
+        )}
+        <Form
+          onKeyPress={this.onKeyPress}
+          onSubmit={this.onSubmit}
+        > 
+          <Dropdown
+            placeholder={t('tools_modal_duplicate_wallet_select_blockchain')}
+            fluid
+            selection
+            options={options}
+            value={chainDuplicatingTo}
+            style={{marginBottom: 10}}
+          />
+
+          <GlobalFormMessageError
+            error={formError}
+            icon="warning sign"
+          />
+
+          <Segment basic clearing>
+            <Button
+              content={t('tools_form_duplicate_duplicate')}
+              color="green"
+              disabled={submitDisabled}
+              floated="right"
+              primary
+            />
+            <Button
+              onClick={onClose}
+            >
+              <Icon name="x" /> {t('tools_form_duplicate_cancel')}
+            </Button>
+          </Segment>
+        </Form>
+      </React.Fragment>
     );
   }
 }
