@@ -17,7 +17,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
   };
 
   componentDidUpdate = (prevProps) => {
-    const { blockchains, wallets } = this.props;
+    const { actions, blockchains, wallets } = this.props;
     const { wallets:previousWallets } = prevProps;
     const { chainDuplicatingTo } = this.state;
 
@@ -27,17 +27,29 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
       this.setState({
         chainDuplicatingTo: null,
         succesfullyDuplicated: blockchain && blockchain.name
+      }, () => {
+        actions.clearSystemState();
       })
     }
   }
+
+  componentWillUnmount = () => {
+    const { actions } = this.props;
+
+    actions.clearSystemState();
+  }
   
   onClick = (chainDuplicatingTo) => {
-    const { duplicatingWallet, actions } = this.props;
+    const { blockchains, duplicatingWallet, actions } = this.props;
 
     this.setState({ chainDuplicatingTo, submitDisabled: false, formError: false, success: false }, () => {
       if (this.walletAlreadyExists()) {
         this.setState({ formError: 'wallet_already_exists', submitDisabled: true })
       }
+
+      const blockchain = chainDuplicatingTo && find(blockchains, { chainId: chainDuplicatingTo });
+
+      blockchain && actions.checkAccountExists(duplicatingWallet.account, blockchain.node)
     });
   }
 
@@ -71,6 +83,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
       duplicatingWallet,
       onClose,
       settings,
+      system,
       t
     } = this.props;
 
@@ -97,6 +110,14 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
           value: b.chainId
         };
       });
+
+    let error = formError;
+    let disabled = submitDisabled;
+
+    if (system.ACCOUNT_EXISTS_LAST_ACCOUNT === duplicatingWallet.account && system.ACCOUNT_EXISTS === 'FAILURE' ) {
+      error = 'account_does_not_exist_on_chain';
+      disabled = true;
+    }
 
     return (
       <React.Fragment>
@@ -132,7 +153,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
           />
 
           <GlobalFormMessageError
-            error={formError}
+            error={error}
             icon="warning sign"
           />
 
@@ -140,7 +161,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
             <Button
               content={t('tools_form_duplicate_duplicate')}
               color="green"
-              disabled={submitDisabled}
+              disabled={disabled}
               floated="right"
               primary
             />
