@@ -23,7 +23,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
 
     if (wallets.length > previousWallets.length) {
       const blockchain = chainDuplicatingTo && find(blockchains, { chainId: chainDuplicatingTo });
-      debugger
+
       this.setState({
         chainDuplicatingTo: null,
         succesfullyDuplicated: blockchain && blockchain.name
