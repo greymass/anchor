@@ -42,7 +42,8 @@ export default function connection(state = initialState, action) {
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
-        supportedContracts: (blockchain) ? blockchain.supportedContracts : []
+        supportedContracts: (blockchain) ? blockchain.supportedContracts : null,
+        supportedFeatures: (blockchain) ? blockchain.supportedFeatures : null
       });
     }
     // Remove key from connection if the wallet is locked/removed

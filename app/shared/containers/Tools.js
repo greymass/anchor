@@ -57,19 +57,16 @@ import * as WalletsActions from '../actions/wallets';
 
 const paneMapping = [
   {
-    alwaysAvailable: true,
     element: Tools,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'index',
   },
   {
-    alwaysAvailable: true,
     element: ToolsWallets,
     modes: ['cold', 'hot', 'ledger', 'watch'],
     name: 'wallets',
   },
   {
-    alwaysAvailable: true,
     element: ToolsBlockchains,
     modes: ['hot', 'ledger', 'watch', 'skip'],
     name: 'blockchains',
@@ -78,13 +75,15 @@ const paneMapping = [
     header: true,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'governance',
-    requiredContract: 'proposals'
+    requiredContract: 'proposals',
+    requiresFeature: 'governance'
   },
   {
     element: ToolsGovernanceProposals,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'governance_referendum_beta',
-    requiredContract: 'proposals'
+    requiredContract: 'proposals',
+    requiresFeature: 'proposals'
   },
   {
     header: true,
@@ -95,37 +94,44 @@ const paneMapping = [
     element: ToolsCustomTokens,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'customtokens',
-    requiredContract: 'customtokens'
+    requiredContract: 'customtokens',
+    requiresFeature: 'customtokens'
   },
   {
     element: ToolsDelegations,
     modes: ['hot', 'ledger', 'watch', 'temp'],
-    name: 'delegations'
+    name: 'delegations',
+    requiresFeature: 'delegations'
   },
   {
     element: ToolsPermissions,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'permissions',
+    requiresFeature: 'permissions'
   },
   {
     element: RecommendationInterface,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'recommendation',
+    requiresFeature: 'recommendation'
   },
   {
     element: ContractInterface,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'contracts',
+    requiresFeature: 'contracts'
   },
   {
     header: true,
     modes: ['hot', 'ledger', 'watch'],
-    name: 'hardware'
+    name: 'hardware',
+    requiresFeature: 'hardware'
   },
   {
     element: ToolsHardwareLedger,
     modes: ['hot', 'ledger', 'watch'],
     name: 'hardware_ledger',
+    requiresFeature: 'hardware_ledger'
   },
   {
     header: true,
@@ -137,37 +143,44 @@ const paneMapping = [
     element: GlobalUtilsPingContainer,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'ping',
-    requiredContract: 'producerinfo'
+    requiredContract: 'producerinfo',
+    requiresFeature: 'ping'
   },
   // {
   //   element: ToolsBidName,
   //   modes: ['hot', 'watch'],
   //   name: 'bid_name',
+  //   requiresFeature: 'bid_name'
   // },
   {
     element: ToolsContacts,
     modes: ['hot', 'ledger', 'watch'],
     name: 'contacts',
+    requiresFeature: 'contacts'
   },
   {
     element: ToolsCreateAccount,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'create_account',
+    requiresFeature: 'create_account'
   },
   {
     element: ToolsKeys,
     modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'keygenerator',
+    requiresFeature: 'keygenerator'
   },
   {
     element: ToolsKeysValidator,
     modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'keyvalidator',
+    requiresFeature: 'keyvalidator'
   },
   {
     element: ToolsProxy,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'proxy',
+    requiresFeature: 'proxy'
   },
   {
     header: true,
@@ -177,27 +190,32 @@ const paneMapping = [
   {
     element: ToolsSystemLog,
     modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
-    name: 'system_log'
+    name: 'system_log',
+    requiresFeature: 'system_log'
   },
   {
     element: ToolsStateChain,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'state_chain',
+    requiresFeature: 'state_chain'
   },
   {
     element: ToolsStateGlobals,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'state_globals',
+    requiresFeature: 'state_globals'
   },
   {
     element: ToolsStateWallet,
     modes: ['cold', 'hot', 'ledger', 'skip', 'watch', 'temp'],
     name: 'state',
+    requiresFeature: 'state'
   },
   {
     header: true,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'advanced',
+    requiresFeature: 'advanced'
   },
   {
     element: ToolsReset,
@@ -211,30 +229,30 @@ class ToolsContainer extends Component<Props> {
     const {
       allBlockExplorers,
       connection,
+      settings,
       t
     } = this.props;
+    const {
+      skipImport,
+      walletMode,
+      walletTemp
+    } = settings;
+
     return paneMapping
       .filter((pane) => {
-        const {
-          settings
-        } = this.props;
-        const {
-          skipImport,
-          walletMode,
-          walletTemp
-        } = settings;
 
         const blockchainUnknownAndRestricted =
           !connection.supportedContracts && pane.requiredContract;
+
         const blockchainKnownAndContractNotSupported =
           pane.requiredContract &&
+          connection.supportedContracts &&
           !connection.supportedContracts.includes(pane.requiredContract);
+
         const blockchainKnownAndFeatureNotSupported =
-          !pane.header &&
-          !pane.alwaysAvailable &&
+          pane.requiresFeature &&
           connection.supportedFeatures &&
-          !connection.supportedFeatures.includes('all') &&
-          !connection.supportedFeatures.includes(pane.name);
+          !connection.supportedFeatures.includes(pane.requiresFeature);
 
         if (blockchainUnknownAndRestricted || blockchainKnownAndContractNotSupported || blockchainKnownAndFeatureNotSupported) {
           return false;
