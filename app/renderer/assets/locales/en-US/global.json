@@ -43,6 +43,7 @@
   "error_ram_usage_exceeded": "RAM usage exceeded. You will need to buy more ram to carry out this action.",
   "error_ram_using_more_than_usage": "Insufficient available RAM balance to complete transaction.",
   "error_transferring_to_exchange_without_memo": "Cannot transfer funds to an exchange without passing the memo that was given.",
+  "error_wallet_already_exists": "The wallet already exists on the selected chain.",
   "global_account_edit_modal_header": "Wallet/Account Details",
   "global_account_edit_modal_subheader": "The internal details used in this application for this Wallet/Account.",
   "global_account_import_ledger_account_lookup_content": "Loading all accounts that match the Public Key provided by the Ledger",

@@ -6,7 +6,7 @@ import { Button, Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
-import ToolsModalDuplicatingAccount from './Modal/DuplicatingAccount'
+import ToolsModalDuplicatingWallet from './Modal/DuplicatingWallet'
 
 import EOSWallet from '../../utils/Anchor/Wallet';
 
@@ -44,7 +44,7 @@ class ToolsWallets extends Component<Props> {
     );
   }
   duplicateWallet = (account, authorization) => {
-    this.setState({ duplicatingAccount: { account, authorization } });
+    this.setState({ duplicatingWallet: { account, authorization } });
   }
   render() {
     const {
@@ -59,7 +59,7 @@ class ToolsWallets extends Component<Props> {
       wallets
     } = this.props;
     const {
-      duplicatingAccount
+      duplicatingWallet
     } = this.state;
     if (!wallets || !wallets.length) {
       return false;
@@ -77,13 +77,14 @@ class ToolsWallets extends Component<Props> {
               </Header>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              {(duplicatingAccount) && (
-                <ToolsModalDuplicatingAccount
-                  account={duplicatingAccount}
+              {(duplicatingWallet) && (
+                <ToolsModalDuplicatingWallet
                   actions={actions}
                   blockchains={blockchains}
-                  onClose={()=> this.setState({duplicatingAccount: null})}
+                  duplicatingWallet={duplicatingWallet}
+                  onClose={()=> this.setState({duplicatingWallet: null})}
                   settings={settings}
+                  wallets={wallets}
                 />
               )}
               <GlobalButtonAccountImport
