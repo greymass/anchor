@@ -6,11 +6,10 @@ import { setSettings, setSettingWithValidation } from './settings';
 import { clearActionsCache } from './accounts';
 import { clearProducerInfo } from './producers'
 
-function swapBlockchain(chainId, account, authorization) {
+function swapBlockchain(chainId) {
   return (dispatch: () => void, getState) => {
     const { blockchains } = getState();
     const blockchain = find(blockchains, { chainId });
-    dispatch({ type: types.SYSTEM_DUPLICATING_ACCOUNT_PENDING, payload: { account, authorization } });
     dispatch(clearWallet());
     dispatch(setSettingWithValidation('node', blockchain.node));
     dispatch(clearActionsCache());
