@@ -10,7 +10,7 @@ import ProducersSelector from './Producers/BlockProducers/Selector';
 import SidebarAccount from '../containers/Sidebar/Account';
 import WalletPanel from './Wallet/Panel';
 
-class Producers extends Component<Props> {  
+class Producers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
