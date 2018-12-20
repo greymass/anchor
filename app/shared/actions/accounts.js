@@ -121,7 +121,7 @@ export function checkAccountAvailability(account = '') {
   };
 }
 
-export function checkAccountExists(account = '') {
+export function checkAccountExists(account = '', node) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_EXISTS_PENDING,
@@ -133,6 +133,11 @@ export function checkAccountExists(account = '') {
     } = getState();
 
     if (account && (settings.node || settings.node.length !== 0)) {
+      if (node) {
+        connection.node = node;
+        connection.httpEndpoint = node;
+      }
+
       eos(connection).getAccount(account).then(() => dispatch({
         type: types.SYSTEM_ACCOUNT_EXISTS_SUCCESS,
         payload: { account_name: account }

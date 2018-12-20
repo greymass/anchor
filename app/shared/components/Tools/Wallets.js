@@ -53,6 +53,7 @@ class ToolsWallets extends Component<Props> {
       connection,
       settings,
       status,
+      system,
       t,
       validate,
       wallet,
@@ -84,6 +85,7 @@ class ToolsWallets extends Component<Props> {
                   duplicatingWallet={duplicatingWallet}
                   onClose={()=> this.setState({duplicatingWallet: null})}
                   settings={settings}
+                  system={system}
                   wallets={wallets}
                 />
               )}
