@@ -36,19 +36,6 @@ function swapBlockchain(chainId) {
 
 function importBlockchainFromBackup(blockchain) {
 
-    dispatch({ type: types.SYSTEM_GETABI_FAILURE })
-    dispatch(clearWallet());
-    dispatch(setSettingWithValidation('node', blockchain.node));
-    dispatch(clearActionsCache());
-    dispatch(clearProducerInfo());
-    return dispatch(setSettings({
-      account: undefined,
-      authorization: undefined,
-      chainId,
-      walletHash: undefined,
-      walletMode: undefined,
-    }));
-  }
 }
 
 export default {
