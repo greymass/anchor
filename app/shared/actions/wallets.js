@@ -90,6 +90,30 @@ export function prepareConvertToLedgerAbort(
   };
 }
 
+export function importWalletFromBackup(wallet) {
+  return (dispatch: () => void) => {
+    let mode = 'watch';
+    if (wallet.type === 'key' && wallet.data) {
+      mode = 'hot';
+    }
+    if (wallet.type === 'ledger' && wallet.path) {
+      mode = 'ledger';
+    }
+    return dispatch({
+      type: types.IMPORT_WALLET_KEY,
+      payload: {
+        account: wallet.account,
+        authorization: wallet.authority,
+        chainId: wallet.chainId,
+        data: wallet.data,
+        mode,
+        path: wallet.path,
+        pubkey: wallet.pubkey
+      }
+    });
+  };
+}
+
 export function importWallet(
   chainId,
   account,
@@ -294,6 +318,7 @@ export function upgradeWatchWallet(account, authorization, swap = false) {
 export default {
   completeConvertToLedger,
   importWallet,
+  importWalletFromBackup,
   importWallets,
   prepareConvertToLedger,
   prepareConvertToLedgerAbort,

@@ -151,6 +151,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           content={(
             <WalletModalContentBroadcast
               actions={actions}
+              settings={settings}
             />
           )}
           contract={transaction.contract}
@@ -176,6 +177,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           content={(
             <WalletModalContentBroadcast
               actions={actions}
+              settings={settings}
             />
           )}
           contract={transaction.contract}
@@ -201,6 +203,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           content={(
             <WalletModalContentBroadcast
               actions={actions}
+              settings={settings}
             />
           )}
           contract={transaction.contract}

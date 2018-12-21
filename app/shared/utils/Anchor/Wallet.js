@@ -5,21 +5,23 @@ export default class EOSWallet {
 
   importProps(wallet, chainId = undefined) {
     this.wallet = {
-      schema: 'anchor.v1',
-      account: wallet.account,
-      authority: wallet.authorization,
-      chainId: wallet.chainId || chainId,
-      data: wallet.data || undefined,
-      path: wallet.path || undefined,
-      pubkey: wallet.pubkey,
-      type: (wallet.path) ? 'ledger' : 'key',
+      schema: 'anchor.v1.wallet',
+      data: {
+        account: wallet.account,
+        authority: wallet.authorization,
+        chainId: wallet.chainId || chainId,
+        data: wallet.data || undefined,
+        path: wallet.path || undefined,
+        pubkey: wallet.pubkey,
+        type: (wallet.path) ? 'ledger' : 'key',
+      }
     };
   }
 
   exportProps(mode = 'hot') {
     const { wallet } = this;
     switch (wallet.schema) {
-      case 'anchor.v1': {
+      case 'anchor.v1.wallet': {
         return {
           account: wallet.account,
           authorization: wallet.authority,

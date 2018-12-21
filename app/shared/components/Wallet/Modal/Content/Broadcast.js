@@ -28,8 +28,12 @@ class WalletModalContentBroadcast extends Component<Props> {
   }
 
   importFile = () => {
-    ipcRenderer.send('openFile');
+    const { settings } = this.props;
+    ipcRenderer.send('openFile', settings.lastFilePath);
+    ipcRenderer.once('openFileData', (event, data) =>
+      this.props.actions.setTransaction(data));
   }
+
   broadcast = () => {
     const {
       actions,
@@ -90,6 +94,7 @@ class WalletModalContentBroadcast extends Component<Props> {
               </Header>
               <GlobalTransactionViewDetail
                 broadcastable={broadcastable}
+                signed={signed}
                 transaction={transaction}
               />
               <Container textAlign="center">

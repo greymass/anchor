@@ -14,9 +14,9 @@ class ToolsSystemLog extends Component<Props> {
   }
   toggleErrors = () => this.setState({ errorsOnly: !this.state.errorsOnly })
   promptSave = () => {
-    const { systemlog } = this.props;
+    const { settings, systemlog } = this.props;
     const data = JSON.stringify(systemlog, null, 2);
-    ipcRenderer.send('saveFile', data, 'log');
+    ipcRenderer.send('saveFile', settings.lastFilePath, data, 'log');
   }
   render() {
     const {
