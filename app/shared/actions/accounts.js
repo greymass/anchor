@@ -134,8 +134,10 @@ export function checkAccountExists(account = '', node) {
 
     if (account && (settings.node || settings.node.length !== 0)) {
       if (node) {
-        connection.node = node;
-        connection.httpEndpoint = node;
+        connection = Object.assign({}, connection, {
+          node,
+          httpEndpoint: node
+        });
       }
 
       eos(connection).getAccount(account).then(() => dispatch({
