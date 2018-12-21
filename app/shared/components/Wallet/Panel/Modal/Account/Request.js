@@ -66,6 +66,7 @@ class WalletPanelModalAccountRequest extends Component<Props> {
       history,
       onClose,
       open,
+      settings,
       system,
       t,
       trigger
@@ -114,6 +115,7 @@ class WalletPanelModalAccountRequest extends Component<Props> {
           onChange={this.onChange}
           onConfirm={this.onConfirm}
           onSubmit={() => this.onStageSelect(3)}
+          settings={settings}
           values={values}
         />
       );

@@ -35,6 +35,7 @@ class WalletPanelButtonBroadcast extends Component<Props> {
         content={(
           <WalletModalContentBroadcast
             actions={actions}
+            settings={settings}
           />
         )}
         icon="wifi"

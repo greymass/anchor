@@ -233,7 +233,8 @@ function mapStateToProps(state) {
     tables: state.tables,
     transaction: state.transaction,
     validate: state.validate,
-    wallet: state.wallet
+    wallet: state.wallet,
+    wallets: state.wallets,
   };
 }
 
