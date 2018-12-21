@@ -26,6 +26,11 @@ export default function connection(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
+    case types.SET_CHAIN_ID: {
+      return Object.assign({}, state, {
+        chainId: action.payload.chainId
+      });
+    }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
       const { blockchain } = action.payload;

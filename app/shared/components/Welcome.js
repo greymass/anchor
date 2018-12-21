@@ -59,8 +59,19 @@ class Welcome extends Component<Props> {
     this.setState({ hardwareLedgerImport: true });
   }
 
-  cancelAdvanced = () => this.setState({ advancedSetup: false })
-  setupAdvanced = () => this.setState({ advancedSetup: true })
+  cancelAdvanced = () => this.setState({ advancedSetup: false }, () => this.props.actions.setSettings({
+    account: undefined,
+    authorization: undefined,
+    chainId: undefined,
+    node: undefined,
+  }))
+
+  setupAdvanced = () => this.setState({ advancedSetup: true }, () => this.props.actions.setSettings({
+    account: undefined,
+    authorization: undefined,
+    chainId: undefined,
+    node: undefined,
+  }))
 
   skipImport = () => {
     const {
@@ -106,16 +117,17 @@ class Welcome extends Component<Props> {
       || (settings.walletMode === 'cold' && settings.account)
     ) {
       stage = 3;
-    } else if (validate.NODE === 'SUCCESS' || settings.walletMode === 'cold') {
+    } else if (validate.NODE === 'SUCCESS') {
       stage = 2;
     }
     if (stageSelect !== false) {
       stage = stageSelect;
     }
-    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} stage={stage} />;
+    let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} settings={settings} stage={stage} />;
+    console.log(validate, stage)
     if (stage >= 1) {
       // stageElement = <WelcomePath onStageSelect={this.onStageSelect} stage={stage} />;;
-      if (stage >= 2 && (settings.walletMode === 'cold' || validate.NODE === 'SUCCESS')) {
+      if (stage >= 2 && (settings.chainId || validate.NODE === 'SUCCESS')) {
         stageElement = (
           <WelcomeAccount
             hardwareLedgerImport={this.hardwareLedgerImport}

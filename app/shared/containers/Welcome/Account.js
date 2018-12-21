@@ -57,20 +57,6 @@ class WelcomeAccountContainer extends Component<Props> {
     }
   }
 
-  cancelColdWallet = (e) => {
-    const {
-      actions,
-      onStageSelect
-    } = this.props;
-    const {
-      setWalletMode
-    } = actions;
-    setWalletMode('hot');
-    onStageSelect(0);
-    e.preventDefault();
-    return false;
-  }
-
   onChange = (e, { name, value }) => {
     this.setState({
       [name]: value,
@@ -224,26 +210,13 @@ class WelcomeAccountContainer extends Component<Props> {
               size="small"
               style={{ marginTop: '1em' }}
             />
-            {(settings.walletMode === 'cold')
-              ? (
-                <Button
-                  content={t('welcome_cancel_coldwallet')}
-                  icon="x"
-                  onClick={this.cancelColdWallet}
-                  size="small"
-                  style={{ marginTop: '1em' }}
-                />
-              )
-              : (
-                <Button
-                  content={t('back')}
-                  icon="arrow left"
-                  onClick={() => onStageSelect(0)}
-                  size="small"
-                  style={{ marginTop: '1em' }}
-                />
-              )
-            }
+            <Button
+              content={t('back')}
+              icon="arrow left"
+              onClick={() => onStageSelect(0)}
+              size="small"
+              style={{ marginTop: '1em' }}
+            />
           </Container>
           {((stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
             && settings.walletMode !== 'cold')
