@@ -66,7 +66,7 @@ class DevStateTabs extends Component<Props> {
             defaultActiveIndex={settings.devTestDefaultState}
             onTabChange={this.onTabChange}
             panes={panes}
-            renderActiveOnly={false}
+            renderActiveOnly={true}
           />
         </Segment>
       </React.Fragment>
