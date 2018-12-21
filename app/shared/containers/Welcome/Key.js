@@ -405,6 +405,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('welcome'),
+  translate(['welcome','tools']),
   connect(mapStateToProps, mapDispatchToProps)
 )(WelcomeKeyContainer);
