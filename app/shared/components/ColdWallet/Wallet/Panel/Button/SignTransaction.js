@@ -8,6 +8,8 @@ const { ipcRenderer } = require('electron');
 class ColdWalletPanelButtonSignTransaction extends Component<Props> {
   handleClick = () => {
     ipcRenderer.send('openFile');
+    ipcRenderer.once('openFileData', (event, data) =>
+      this.props.actions.setTransaction(data));
   }
   render() {
     const {

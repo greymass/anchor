@@ -34,8 +34,13 @@ function swapBlockchain(chainId) {
   };
 }
 
+function importBlockchainFromBackup(blockchain) {
+
+}
+
 export default {
   // addBlockchain,
   // setNode,
+  importBlockchainFromBackup,
   swapBlockchain,
 };

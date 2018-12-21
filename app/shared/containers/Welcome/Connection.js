@@ -234,30 +234,17 @@ class WelcomeConnectionContainer extends Component<Props> {
         {message}
         {historyPluginMessage}
         {checkbox}
-        <Container>
+        <Container textAlign="center">
           <Button
             content={t('welcome:welcome_connect_server')}
             disabled={disabled}
             icon="exchange"
-            floated={(!settings.walletInit) ? 'right' : null}
             fluid={(settings.walletInit)}
             onClick={this.onConnect}
             primary
             size="small"
             style={{ marginTop: '1em' }}
           />
-          {(!settings.walletInit)
-            ? (
-              <Button
-                content={t('welcome:welcome_use_coldwallet')}
-                icon="snowflake"
-                onClick={this.useColdWallet}
-                size="small"
-                style={{ marginTop: '1em' }}
-              />
-            )
-            : false
-          }
         </Container>
       </Form>
     );

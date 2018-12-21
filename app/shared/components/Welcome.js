@@ -6,6 +6,7 @@ import { translate } from 'react-i18next';
 import eos from '../../renderer/assets/images/eos.png';
 
 import WelcomeAccount from './Welcome/Account';
+import WelcomeAdvanced from './Welcome/Advanced';
 import WelcomeBreadcrumb from './Welcome/Breadcrumb';
 import WelcomeConnection from './Welcome/Connection';
 import WelcomeHardwareLedger from './Welcome/Hardware/Ledger';
@@ -19,6 +20,7 @@ const { shell } = require('electron');
 
 class Welcome extends Component<Props> {
   state = {
+    advancedSetup: false,
     hardwareLedgerImport: false,
     stageSelect: false
   };
@@ -57,6 +59,9 @@ class Welcome extends Component<Props> {
     this.setState({ hardwareLedgerImport: true });
   }
 
+  cancelAdvanced = () => this.setState({ advancedSetup: false })
+  setupAdvanced = () => this.setState({ advancedSetup: true })
+
   skipImport = () => {
     const {
       actions,
@@ -86,6 +91,7 @@ class Welcome extends Component<Props> {
       validate
     } = this.props;
     const {
+      advancedSetup,
       hardwareLedgerImport,
       stageSelect
     } = this.state;
@@ -110,7 +116,13 @@ class Welcome extends Component<Props> {
     if (stage >= 1) {
       // stageElement = <WelcomePath onStageSelect={this.onStageSelect} stage={stage} />;;
       if (stage >= 2 && (settings.walletMode === 'cold' || validate.NODE === 'SUCCESS')) {
-        stageElement = <WelcomeAccount onStageSelect={this.onStageSelect} stage={stage} />;
+        stageElement = (
+          <WelcomeAccount
+            hardwareLedgerImport={this.hardwareLedgerImport}
+            onStageSelect={this.onStageSelect}
+            stage={stage}
+          />
+        );
         if (stage >= 3 && (settings.walletMode === 'cold' || validate.ACCOUNT === 'SUCCESS')) {
           stageElement = <WelcomeKey onStageSelect={this.onStageSelect} stage={stage} />;
           if (stage === 4 && (settings.walletMode === 'cold' || validate.KEY === 'SUCCESS')) {
@@ -122,12 +134,21 @@ class Welcome extends Component<Props> {
     if (validate.NODE === 'SUCCESS' && hardwareLedgerImport) {
       stageElement = (
         <WelcomeHardwareLedger
-          onStageSelect={this.onStageSelect}
           onClose={this.cancelLedgerImport}
           onComplete={this.completeLedgerImport}
+          onStageSelect={this.onStageSelect}
           stage={stage}
         />
       );
+    }
+    if (advancedSetup) {
+      stageElement = (
+        <WelcomeAdvanced
+          onClose={this.cancelAdvanced}
+          onStageSelect={this.onStageSelect}
+          stage={stage}
+        />
+      )
     }
     return (
       <div className="welcome">
@@ -182,18 +203,15 @@ class Welcome extends Component<Props> {
                 settings
                 selection
               />
-              {(!hardwareLedgerImport
-                && (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
-                && !settings.walletInit
-                && settings.walletMode !== 'cold')
+              {(stage === 0 && !advancedSetup)
                 ? (
                   <p>
                     <Button
+                      content={t('welcome:welcome_advanced_setup')}
                       color="purple"
-                      content={t('welcome:welcome_lookup_account_ledger')}
-                      icon="usb"
-                      onClick={this.hardwareLedgerImport}
-                      size="small"
+                      icon="lab"
+                      onClick={this.setupAdvanced}
+                      size="tiny"
                       style={{ marginTop: '1em' }}
                     />
                   </p>

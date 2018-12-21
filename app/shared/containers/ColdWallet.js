@@ -66,7 +66,6 @@ class ColdWalletContainer extends Component<Props> {
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   render() {
-    console.log(this.props);
     const {
       actions,
       keys,
