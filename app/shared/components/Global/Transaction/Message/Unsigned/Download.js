@@ -15,12 +15,12 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
     };
   }
   promptSave = () => {
-    const { contract, transaction } = this.props;
+    const { contract, settings, transaction } = this.props;
     const data = JSON.stringify({
       contract,
       transaction
     }, null, 2);
-    ipcRenderer.send('saveFile', data);
+    ipcRenderer.send('saveFile', settings.lastFilePath, data);
   }
   onCopy = () => {
     const {
