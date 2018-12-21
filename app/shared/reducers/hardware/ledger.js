@@ -32,6 +32,9 @@ const initialState = {
 
 export default function ledger(state = initialState, action) {
   switch (action.type) {
+    case types.RESET_ALL_STATES: {
+      return Object.assign({}, initialState);
+    }
     case types.HARDWARE_LEDGER_LISTEN_START: {
       return Object.assign({}, state, {
         subscriber: action.payload.subscriber
