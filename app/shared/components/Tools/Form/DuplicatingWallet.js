@@ -168,7 +168,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
             <Button
               onClick={onClose}
             >
-              <Icon name="x" /> {t('tools_form_duplicate_cancel')}
+              <Icon name="x" /> {t('tools_form_duplicate_close')}
             </Button>
           </Segment>
         </Form>
