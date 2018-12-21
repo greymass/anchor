@@ -115,11 +115,16 @@ class ColdWalletContainer extends Component<Props> {
             )
           }
         </Segment>
-        <ModalConstitution
-          actions={actions}
-          isUser={(keys.account)}
-          settings={settings}
-        />
+        {(settings.chainId === 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906')
+          ? (
+            <ModalConstitution
+              actions={actions}
+              isUser={(keys.account)}
+              settings={settings}
+            />
+          )
+          : false
+        }
       </React.Fragment>
     );
   }
