@@ -124,7 +124,6 @@ class Welcome extends Component<Props> {
       stage = stageSelect;
     }
     let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} settings={settings} stage={stage} />;
-    console.log(validate, stage)
     if (stage >= 1) {
       // stageElement = <WelcomePath onStageSelect={this.onStageSelect} stage={stage} />;;
       if (stage >= 2 && (settings.chainId || validate.NODE === 'SUCCESS')) {
