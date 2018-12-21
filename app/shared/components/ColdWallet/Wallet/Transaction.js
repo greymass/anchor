@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { get, set } from 'dot-prop-immutable';
 
 import { Button, Container, Header, Message, Segment } from 'semantic-ui-react';
 
@@ -18,9 +19,14 @@ class ColdWalletTransaction extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     const { transaction } = this.props;
     if (!transaction.signed && nextProps.transaction.signed) {
-      const data = new EOSTransaction(nextProps.transaction);
-      ipcRenderer.send('saveFile', data.json(), 'signed');
+      this.saveFile(nextProps.transaction);
     }
+  }
+
+  saveFile = (tx = false) => {
+    const { settings, transaction } = this.props;
+    const data = new EOSTransaction(tx || transaction);
+    ipcRenderer.send('saveFile', settings.lastFilePath, data.json(), 'signed');
   }
 
   clearTransaction = () => {
@@ -36,6 +42,7 @@ class ColdWalletTransaction extends Component<Props> {
 
   render() {
     const {
+      settings,
       t,
       transaction
     } = this.props;
@@ -44,6 +51,12 @@ class ColdWalletTransaction extends Component<Props> {
       signed
     } = transaction;
     const { expiration } = data.transaction.transaction;
+    const { account, authorization } = settings;
+    const auth = get(data, 'transaction.transaction.actions.0.authorization.0', {
+      actor: 'undefined',
+      permission: 'undefined',
+    });
+    const matchingAuthorization = (account === auth.actor && authorization === auth.permission)
     const expires = new Date(`${expiration}z`);
     const now = new Date();
     const expired = (now > expires);
@@ -59,17 +72,10 @@ class ColdWalletTransaction extends Component<Props> {
           </Header>
           <GlobalTransactionViewDetail
             expired={expired}
+            signed={signed}
             transaction={transaction}
           />
           <Container textAlign="center">
-            {(signed)
-              ? (
-                <Message error>
-                  {t('coldwallet_transaction_invalid_signed')}
-                </Message>
-              )
-              : false
-            }
             {(expired)
               ? (
                 <Message error>
@@ -78,14 +84,39 @@ class ColdWalletTransaction extends Component<Props> {
               )
               : false
             }
-            <Button
-              color="orange"
-              content={t('collwallet_transaction_sign_confirm')}
-              disabled={disabled}
-              icon="signup"
-              onClick={this.signTransaction}
-              size="large"
-            />
+            {(!matchingAuthorization)
+              ? (
+                <Message error>
+                  {t('coldwallet_transaction_invalid_authorization', auth)}
+                </Message>
+              )
+              : false
+            }
+            {(!signed && matchingAuthorization)
+              ? (
+                <Button
+                  color="orange"
+                  content={t('collwallet_transaction_sign_confirm')}
+                  disabled={disabled}
+                  icon="signup"
+                  onClick={this.signTransaction}
+                  size="large"
+                />
+              )
+              : false
+            }
+            {(signed)
+              ? (
+                <Button
+                  color="green"
+                  content={t('collwallet_transaction_sign_save_again')}
+                  icon="save"
+                  onClick={() => this.saveFile(transaction)}
+                  size="large"
+                />
+              )
+              : false
+            }
             <Button
               color="grey"
               content={t('close')}

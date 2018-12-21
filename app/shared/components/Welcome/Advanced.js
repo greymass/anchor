@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
-import WelcomeAccountContainer from '../../containers/Welcome/Account';
+import WelcomeAdvancedContainer from '../../containers/Welcome/Advanced';
 
-class WelcomeAccount extends Component<Props> {
+class WelcomeAdvanced extends Component<Props> {
   render() {
     const {
-      hardwareLedgerImport,
+      onClose,
       onStageSelect,
       stage,
       t
@@ -17,11 +17,12 @@ class WelcomeAccount extends Component<Props> {
         size="small"
         stacked
       >
-        <Header>
-          {t('welcome_stage')} #2: {t('welcome_stage_account')}
-        </Header>
-        <WelcomeAccountContainer
-          hardwareLedgerImport={hardwareLedgerImport}
+        <Header
+          content={t('welcome_stage_advanced')}
+        />
+        <WelcomeAdvancedContainer
+          editing
+          onClose={onClose}
           onStageSelect={onStageSelect}
           stage={stage}
         />
@@ -30,4 +31,4 @@ class WelcomeAccount extends Component<Props> {
   }
 }
 
-export default translate('welcome')(WelcomeAccount);
+export default translate('welcome')(WelcomeAdvanced);

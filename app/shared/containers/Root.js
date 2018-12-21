@@ -11,6 +11,10 @@ import IdleContainer from './Root/Idle';
 import UpdaterContainer from './Root/Updater';
 
 import {
+  setSetting
+} from '../actions/settings';
+
+import {
   cancelTransaction,
   setTransaction
 } from '../actions/transaction';
@@ -18,7 +22,6 @@ import {
 import '../app.global.css';
 
 const { ipcRenderer } = require('electron');
-
 const { store } = configureStore();
 
 export default class Root extends Component<Props> {
@@ -40,14 +43,17 @@ export default class Root extends Component<Props> {
   }
 }
 
-ipcRenderer.on('fileOpenCancel', () => {
-  store.dispatch(cancelTransaction());
-});
+ipcRenderer.on('openFileCancel', () =>
+  store.dispatch(cancelTransaction()));
 
-ipcRenderer.on('fileOpenData', (event, data) => {
-  store.dispatch(setTransaction(data));
-});
+ipcRenderer.on('downloadProgress', (event, data) =>
+  store.dispatch(downloadProgress(data)));
 
-ipcRenderer.on('downloadProgress', (event, data) => {
-  store.dispatch(downloadProgress(data));
+// Each time a file is successfully saved/opened, save that last file path
+ipcRenderer.on('lastFileSuccess', (event, file) => {
+  try {
+    store.dispatch(setSetting('lastFilePath', file.substring(0, file.lastIndexOf("/"))));
+  } catch(e) {
+    // no cache
+  }
 });

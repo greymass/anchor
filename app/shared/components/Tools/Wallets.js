@@ -2,12 +2,45 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Header, Segment, Table } from 'semantic-ui-react';
+import { Button, Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
 
+import EOSWallet from '../../utils/Anchor/Wallet';
+
+const { ipcRenderer } = require('electron');
+
 class ToolsWallets extends Component<Props> {
+  backup = () => {
+    const {
+      connection,
+      blockchains,
+      settings,
+      wallets
+    } = this.props;
+    const backup = {
+      networks: blockchains.map((blockchain) => ({
+        schema: "anchor.v1.network",
+        data: Object.assign({}, blockchain)
+      })),
+      settings: {
+        schema: "anchor.v1.settings",
+        data: Object.assign({}, settings),
+      },
+      wallets: wallets.map((wallet) => {
+        const model = new EOSWallet();
+        model.importProps(wallet, connection.chainId);
+        return model.wallet;
+      })
+    }
+    ipcRenderer.send(
+      'saveFile',
+      settings.lastFilePath,
+      JSON.stringify(backup),
+      'wallet'
+    );
+  }
   render() {
     const {
       actions,
@@ -25,18 +58,30 @@ class ToolsWallets extends Component<Props> {
     }
     return (
       <Segment basic>
-        <Button.Group floated="right">
-          <GlobalButtonAccountImport
-            connection={connection}
-            settings={settings}
-          />
-        </Button.Group>
-        <Header floated="left">
-          {t('tools_wallets_header')}
-          <Header.Subheader>
-            {t('tools_wallets_subheader')}
-          </Header.Subheader>
-        </Header>
+        <Grid>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <Header>
+                {t('tools_wallets_header')}
+                <Header.Subheader>
+                  {t('tools_wallets_subheader')}
+                </Header.Subheader>
+              </Header>
+            </Grid.Column>
+            <Grid.Column textAlign="right">
+              <GlobalButtonAccountImport
+                connection={connection}
+                settings={settings}
+              />
+              <Button
+                color="purple"
+                content={t('tools_wallets_backup_button')}
+                icon="save"
+                onClick={this.backup}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>

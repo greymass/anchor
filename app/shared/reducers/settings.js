@@ -42,6 +42,8 @@ const initialState = {
   idleTimeout: 999999999,
   // Default language
   lang: '',
+  // Last location a file was opened/saved from
+  lastFilePath: '',
   // The node to connect to
   node: '',
   // Recent names that the wallet has bid on.

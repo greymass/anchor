@@ -47,6 +47,7 @@ export default class ColdWallet extends Component<Props> {
                 <ColdWalletTransaction
                   actions={actions}
                   keys={keys}
+                  settings={settings}
                   transaction={transaction}
                 />
               )
