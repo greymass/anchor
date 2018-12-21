@@ -19,22 +19,18 @@ class GlobalModalAccountImport extends Component<Props> {
     const panes = [];
 
     const ledgerWallet = {
-      type: 'ledger',
       menuItem: t('global_modal_account_import_ledger_wallet'),
       render: () => <GlobalModalAccountImportLedger onClose={onClose} />
     };
     const hotWallet = {
-      type: 'hot',
       menuItem: t('global_modal_account_import_hot_wallet'),
       render: () => <GlobalModalAccountImportHot onClose={onClose} />
     };
     const watchWallet = {
-      type: 'watch',
       menuItem: t('global_modal_account_import_watch_wallet'),
       render: () => <GlobalModalAccountImportWatch onClose={onClose} />
     };
     const coldWallet = {
-      type: 'cold',
       menuItem: t('global_modal_account_import_cold_wallet'),
       render: () => <GlobalModalAccountImportCold onClose={onClose} />
     };
@@ -54,7 +50,6 @@ class GlobalModalAccountImport extends Component<Props> {
 
   render() {
     const {
-      duplicatedAccount,
       onClose,
       open,
       t,
@@ -85,7 +80,7 @@ class GlobalModalAccountImport extends Component<Props> {
             }
           }}
           panes={panes}
-          defaultActiveIndex={(duplicatedAccount && findIndex(panes, { type: duplicatedAccount.type })) || 0}
+          defaultActiveIndex={0}
         />
       </Modal>
     );
