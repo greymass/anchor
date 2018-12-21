@@ -36,8 +36,18 @@ export function historyPluginCheck() {
   };
 }
 
+export function setChainId(chainId) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.SET_CHAIN_ID,
+      payload: { chainId }
+    });
+  };
+}
+
 export default {
   historyPluginCheck,
+  setChainId,
   setConnectionBroadcast,
   setConnectionSign,
 };

@@ -11,6 +11,7 @@ import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semant
 import GlobalBlockchainDropdown from '../Global/Blockchain/Dropdown';
 
 import * as AccountsActions from '../../actions/accounts';
+import * as ConnectionActions from '../../actions/connection';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
@@ -48,22 +49,6 @@ class WelcomeConnectionContainer extends Component<Props> {
     if (nextProps.settings.node !== this.state.node) {
       this.setState({ node: nextProps.settings.node });
     }
-  }
-
-  useColdWallet = (e) => {
-    const {
-      actions,
-      onStageSelect
-    } = this.props;
-    const {
-      setWalletMode
-    } = actions;
-    // Immediately set the wallet into cold storage mode
-    setWalletMode('cold');
-    // Move to account stage
-    onStageSelect(2);
-    e.preventDefault();
-    return false;
   }
 
   openLink = (link) => shell.openExternal(link);
@@ -108,6 +93,32 @@ class WelcomeConnectionContainer extends Component<Props> {
     }
   }
 
+  selectChain = () => {
+    const {
+      actions,
+      onStageSelect,
+      settings,
+    } = this.props;
+    actions.setChainId(settings.chainId);
+    if (onStageSelect) {
+      onStageSelect(2);
+    }
+  }
+
+  cancelColdWallet = (e) => {
+    const {
+      actions,
+      onStageSelect
+    } = this.props;
+    const {
+      setWalletMode
+    } = actions;
+    setWalletMode('hot');
+    onStageSelect(0);
+    e.preventDefault();
+    return false;
+  }
+
   onToggle = () => this.setState({ editing: !this.state.editing });
 
   render() {
@@ -117,6 +128,9 @@ class WelcomeConnectionContainer extends Component<Props> {
       settings,
       validate
     } = this.props;
+    const {
+      walletMode
+    } = settings;
     let {
       autoFocus
     } = this.props;
@@ -209,43 +223,84 @@ class WelcomeConnectionContainer extends Component<Props> {
       />
     );
     // safeish true and ssl or non-ssl confirmed
-    const disabled = !(this.isSafeish(node) && (sslConfirm || sslEnabled));
-
+    const disabled = !(
+      (this.isSafeish(node) && (sslConfirm || sslEnabled))
+      || (walletMode === 'cold' && settings.chainId)
+    );
     return (
       <Form>
-        <Form.Field
-          autoFocus={autoFocus}
-          control={Input}
-          fluid
-          icon={(validate.NODE === 'SUCCESS') ? 'checkmark' : 'x'}
-          label={t('wallet_panel_form_node')}
-          loading={(validate.NODE === 'PENDING')}
-          name="node"
-          onChange={this.onChange}
-          placeholder={`https://...`}
-          value={node}
-        />
+        {(walletMode !== 'cold')
+          ? (
+            <Form.Field
+              autoFocus={autoFocus}
+              control={Input}
+              fluid
+              icon={(validate.NODE === 'SUCCESS') ? 'checkmark' : 'x'}
+              label={t('wallet:wallet_panel_form_node')}
+              loading={(validate.NODE === 'PENDING')}
+              name="node"
+              onChange={this.onChange}
+              placeholder={`https://...`}
+              value={node}
+            />
+          )
+          : false
+        }
         <Form.Field>
-          <label>{t('welcome:welcome_network_config')}</label>
+          <label>
+            {(settings.walletMode === 'cold')
+              ? t('welcome:welcome_network_config_cold')
+              : t('welcome:welcome_network_config')
+            }
+          </label>
           <GlobalBlockchainDropdown
             selection
           />
         </Form.Field>
-        {message}
-        {historyPluginMessage}
-        {checkbox}
-        <Container textAlign="center">
-          <Button
-            content={t('welcome:welcome_connect_server')}
-            disabled={disabled}
-            icon="exchange"
-            fluid={(settings.walletInit)}
-            onClick={this.onConnect}
-            primary
-            size="small"
-            style={{ marginTop: '1em' }}
-          />
-        </Container>
+        {(walletMode !== 'cold')
+          ? (
+            <React.Fragment>
+              {message}
+              {historyPluginMessage}
+              {checkbox}
+              <Container textAlign="center">
+                <Button
+                  content={t('welcome:welcome_connect_server')}
+                  disabled={disabled}
+                  icon="exchange"
+                  fluid={(settings.walletInit)}
+                  onClick={this.onConnect}
+                  primary
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+              </Container>
+            </React.Fragment>
+          )
+          : (
+            <React.Fragment>
+              <Container>
+                <Button
+                  content={t('welcome:welcome_cancel_coldwallet')}
+                  icon="x"
+                  onClick={this.cancelColdWallet}
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+                <Button
+                  content={t('welcome:welcome_choose_blockchain')}
+                  disabled={disabled}
+                  floated="right"
+                  icon="cube"
+                  onClick={this.selectChain}
+                  primary
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
+              </Container>
+            </React.Fragment>
+          )
+        }
       </Form>
     );
   }
@@ -263,6 +318,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...ConnectionActions,
       ...SettingsActions,
       ...ValidateActions,
       ...WalletActions
@@ -272,6 +328,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('wallet'),
+  translate(['tools', 'wallet']),
   connect(mapStateToProps, mapDispatchToProps)
 )(WelcomeConnectionContainer);

@@ -8,6 +8,7 @@ class WelcomeConnection extends Component<Props> {
   render() {
     const {
       onStageSelect,
+      settings,
       stage,
       t
     } = this.props;
@@ -17,9 +18,18 @@ class WelcomeConnection extends Component<Props> {
         stacked
       >
         <Header>
-          {t('welcome_stage')} #1: {t('welcome_stage_connection')}
+          {t('welcome_stage')} #1: {' '}
+          {(settings.walletMode === 'cold')
+            ? t('welcome_stage_blockchain')
+            : t('welcome_stage_connection')
+          }
         </Header>
-        <p>{t('welcome_instructions_one')}</p>
+        <p>
+          {(settings.walletMode === 'cold')
+            ? t('welcome_instructions_one_cold')
+            : t('welcome_instructions_one')
+          }
+        </p>
         <WelcomeConnectionContainer
           editing
           onStageSelect={onStageSelect}
