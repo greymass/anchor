@@ -133,14 +133,16 @@ export function checkAccountExists(account = '', node) {
     } = getState();
 
     if (account && (settings.node || settings.node.length !== 0)) {
+      let newConnection;
+
       if (node) {
-        connection = Object.assign({}, connection, {
+        newConnection = Object.assign({}, connection, {
           node,
           httpEndpoint: node
         });
       }
 
-      eos(connection).getAccount(account).then(() => dispatch({
+      eos(newConnection || connection).getAccount(account).then(() => dispatch({
         type: types.SYSTEM_ACCOUNT_EXISTS_SUCCESS,
         payload: { account_name: account }
       })).catch((err) => dispatch({
