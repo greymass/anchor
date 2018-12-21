@@ -41,7 +41,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
         w.chainId === settings.chainId
       ))
       .sort((a, b) => a.account > b.account);
-
+    if (!blockchain) return false;
     return (
       <Modal
         centered={false}

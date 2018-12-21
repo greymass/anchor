@@ -1,14 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { find } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Container, Divider, Form, Header, Input, Message, Popup, Segment } from 'semantic-ui-react';
+import { Button, Container, Form, Header, Segment } from 'semantic-ui-react';
 
-import GlobalBlockchainDropdown from '../Global/Blockchain/Dropdown';
 import WelcomeImportContainer from './Import';
 
 import * as AccountsActions from '../../actions/accounts';
@@ -21,15 +19,16 @@ class WelcomeAdvancedContainer extends Component<Props> {
     const {
       actions,
       onClose,
-      onStageSelect
     } = this.props;
     const {
+      clearValidationState,
       setWalletMode
     } = actions;
     // Immediately set the wallet into cold storage mode
     setWalletMode('cold');
+    // Clear all the validation states that may have been triggered
+    clearValidationState();
     // Move to account stage
-    onStageSelect(2);
     onClose();
     e.preventDefault();
     return false;

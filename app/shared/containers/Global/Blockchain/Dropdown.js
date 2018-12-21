@@ -37,6 +37,10 @@ class GlobalBlockchainDropdown extends Component<Props> {
       settings,
       t,
     } = this.props;
+    let defaultLocString = 'global_account_select_blockchain_default';
+    if (settings.walletMode === 'cold') {
+      defaultLocString = 'global_account_select_blockchain_default_cold';
+    }
     const { chainId } = settings;
     if (!blockchains) return false;
     let blockchain = find(blockchains, { chainId });
@@ -75,7 +79,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
         selection={selection}
         trigger={(
           <span>
-            {(blockchain.name) ? blockchain.name : t('global_account_select_blockchain_default')}
+            {(blockchain && blockchain.name) ? blockchain.name : t(defaultLocString)}
           </span>
         )}
       >
