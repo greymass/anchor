@@ -40,6 +40,17 @@ const initialState = [
     "symbol": "EOS",
     "testnet": true
   },
+  // {
+  //   "_id": "eosforce-mainnet",
+  //   "chainId": "bd61ae3a031e8ef2f97ee3b0e62776d6d30d4833c8f7c1645c657b149151004b",
+  //   "keyPrefix": "EOS",
+  //   "name": "EOSForce",
+  //   "node": "https://w1.eosforce.cn",
+  //   "supportedContracts": [
+  //   ],
+  //   "symbol": "EOS",
+  //   "testnet": false
+  // },
   {
     "_id": "insights-mainnet",
     "chainId": "b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664",
@@ -72,6 +83,17 @@ const initialState = [
     ],
     "symbol": "TLOS",
     "testnet": true
+  },
+  {
+    "_id": "worbli-mainnet",
+    "chainId": "73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f",
+    "keyPrefix": "EOS",
+    "name": "Worbli",
+    "node": "https://api.worbli-mainnet.eoscalgary.io",
+    "supportedContracts": [
+    ],
+    "symbol": "WBI",
+    "testnet": false
   }
 ];
 
