@@ -15,7 +15,7 @@ import GlobalTransactionHandler from '../Global/Transaction/Handler';
 
 import DevStateTabs from './State/Tabs';
 
-import EOSWallet from '../../utils/EOS/Wallet';
+import EOSWallet from '../../utils/Anchor/Wallet';
 
 class DevTest extends Component<Props> {
   state = {
