@@ -1,6 +1,13 @@
 {
   "welcome_account_coldwallet_content": "A cold wallet cannot verify the validity of the account name used. Please ensure it is correct or transactions may not be able to be signed.",
   "welcome_account_coldwallet_title": "Cold Wallet - Account Import",
+  "welcome_stage_advanced": "Advanced Setup Options",
+  "welcome_import_wallets": "Restore Backup from File",
+  "welcome_cold_wallet_header": "Use as a Cold Wallet",
+  "welcome_advanced_setup": "Advanced Setup Options",
+  "welcome_cold_wallet_subheader": "Setup this application to act as an offline transaction signer in conjunction with a Watch Wallet. Designed for use on a dedicated offline secure machine.",
+  "welcome_restore_wallet_header": "Restore Wallet Backup",
+  "welcome_restore_wallet_subheader": "Restore this wallet to a previous state using a wallet backup file. All settings, networks, and wallets will be recreated.",
   "welcome_account_lookup_content": "If you enter a public key, a lookup will be performed to find associated accounts.",
   "welcome_account_lookup_fail_content": "The account name or public key could not be found.",
   "welcome_account_lookup_fail_title": "Failed to locate an account",
