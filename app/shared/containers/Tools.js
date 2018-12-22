@@ -219,13 +219,14 @@ class ToolsContainer extends Component<Props> {
           walletMode,
           walletTemp
         } = settings;
-
-        const blockchainUnknownAndRestricted =
-          !connection.supportedContracts && pane.requiredContract;
-        const blockchainKnownAndFeatureNotSupported =
-          pane.requiredContract &&
-          !connection.supportedContracts.includes(pane.requiredContract);
-
+        const blockchainUnknownAndRestricted = (
+          !connection.supportedContracts
+          && pane.requiredContract
+        );
+        const blockchainKnownAndFeatureNotSupported = (
+          pane.requiredContract
+          && !connection.supportedContracts.includes(pane.requiredContract)
+        );
         if (blockchainUnknownAndRestricted || blockchainKnownAndFeatureNotSupported) {
           return false;
         }
