@@ -13,12 +13,12 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
   state = {
     formError: false,
     submitDisabled: true,
-    success: false
+    successfullyDuplicated: false
   };
 
   componentDidUpdate = (prevProps) => {
     const { actions, blockchains, wallets } = this.props;
-    const { wallets:previousWallets } = prevProps;
+    const { wallets: previousWallets } = prevProps;
     const { chainDuplicatingTo } = this.state;
 
     if (wallets.length > previousWallets.length) {
@@ -26,32 +26,37 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
 
       this.setState({
         chainDuplicatingTo: null,
-        succesfullyDuplicated: blockchain && blockchain.name
+        successfullyDuplicated: blockchain && blockchain.name
       }, () => {
         actions.clearSystemState();
-      })
+      });
     }
-  }
+  };
 
   componentWillUnmount = () => {
     const { actions } = this.props;
 
     actions.clearSystemState();
-  }
-  
+  };
+
   onClick = (chainDuplicatingTo) => {
     const { blockchains, duplicatingWallet, actions } = this.props;
 
-    this.setState({ chainDuplicatingTo, submitDisabled: false, formError: false, success: false }, () => {
+    this.setState({
+      chainDuplicatingTo,
+      submitDisabled: false,
+      formError: false,
+      successfullyDuplicated: false
+    }, () => {
       if (this.walletAlreadyExists()) {
-        this.setState({ formError: 'wallet_already_exists', submitDisabled: true })
+        this.setState({ formError: 'wallet_already_exists', submitDisabled: true });
       }
 
       const blockchain = chainDuplicatingTo && find(blockchains, { chainId: chainDuplicatingTo });
 
-      blockchain && actions.checkAccountExists(duplicatingWallet.account, blockchain.node)
+      blockchain && actions.checkAccountExists(duplicatingWallet.account, blockchain.node);
     });
-  }
+  };
 
   walletAlreadyExists = () => {
     const { duplicatingWallet, wallets } = this.props;
@@ -61,21 +66,21 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
     const index = findIndex(wallets, { account, authorization, chainId: chainDuplicatingTo })
 
     return index >= 0;
-  }
+  };
 
   onSubmit = () => {
     const { actions, duplicatingWallet, settings } = this.props;
     const { chainDuplicatingTo, submitDisabled } = this.state;
 
     const { authorization, account } = duplicatingWallet;
-    const { chainId:chainDuplicatingFrom } = settings;
+    const { chainId: chainDuplicatingFrom } = settings;
 
     if (submitDisabled) {
       return;
     }
 
-    actions.duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom)
-  }
+    actions.duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom);
+  };
 
   render() {
     const {
@@ -91,7 +96,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
       chainDuplicatingTo,
       formError,
       submitDisabled,
-      succesfullyDuplicated
+      successfullyDuplicated
     } = this.state;
 
     const options = blockchains
@@ -117,6 +122,8 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
     if (system.ACCOUNT_EXISTS_LAST_ACCOUNT === duplicatingWallet.account && system.ACCOUNT_EXISTS === 'FAILURE' ) {
       error = 'account_does_not_exist_on_chain';
       disabled = true;
+    } else if (system.ACCOUNT_EXISTS === 'PENDING') {
+      disabled = true;
     }
 
     return (
@@ -127,14 +134,14 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
             t('tools_modal_duplicate_warning', { account: duplicatingWallet.account, authorization: duplicatingWallet.authorization })
           }
         />
-        {succesfullyDuplicated && (
+        {successfullyDuplicated && (
           <Message
             success
             content={
               t('tools_modal_duplicate_success', {
                 account: duplicatingWallet.account,
                 authorization: duplicatingWallet.authorization,
-                blockchainName: succesfullyDuplicated
+                blockchainName: successfullyDuplicated
               })
             }
           />
@@ -142,7 +149,7 @@ class ToolsFormDuplicatingWallet extends Component<Props> {
         <Form
           onKeyPress={this.onKeyPress}
           onSubmit={this.onSubmit}
-        > 
+        >
           <Dropdown
             placeholder={t('tools_modal_duplicate_wallet_select_blockchain')}
             fluid
