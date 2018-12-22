@@ -231,8 +231,7 @@ class ToolsContainer extends Component<Props> {
           return false;
         }
         return (
-          !walletMode
-          || (walletTemp && pane.modes.includes('temp'))
+          (walletTemp && pane.modes.includes('temp'))
           || (!skipImport && !walletTemp && pane.modes.includes(walletMode))
           || (skipImport && pane.modes.includes('skip'))
         );
