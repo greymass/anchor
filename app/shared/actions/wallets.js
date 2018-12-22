@@ -43,6 +43,7 @@ export function completeConvertToLedger(
         authorization,
         chainId,
         mode: 'ledger',
+        pubkey: publicKey,
       }
     });
   };
