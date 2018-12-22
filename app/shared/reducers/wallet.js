@@ -29,7 +29,8 @@ export default function wallet(state = initialState, action) {
         return Object.assign({}, state, {
           convertParameters: undefined,
           data: undefined,
-          mode: 'ledger'
+          mode: 'ledger',
+          pubkey: action.payload.pubkey
         });
       }
       return state;
