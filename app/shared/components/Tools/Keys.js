@@ -30,14 +30,14 @@ class ToolsKeys extends Component<Props> {
   }
 
   render() {
-    const { t } = this.props;
+    const { connection, t } = this.props;
     const { keys } = this.state;
     return (
       <Segment basic>
         <Header>
           {t('tools_keys_key_generation_header')}
           <Header.Subheader>
-            {t('tools_keys_key_generation_subheader')}
+            {t('tools_keys_key_generation_subheader_message', { chainSymbol: connection.chainSymbol })}
           </Header.Subheader>
         </Header>
         <Message
