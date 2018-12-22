@@ -1,7 +1,9 @@
 {
   "collwallet_load_transaction": "Laadi Allkirjastamata Tehing",
   "coldwallet_transaction_invalid_signed": "Tehing on juba allkirjastatud.",
+  "collwallet_transaction_sign_save_again": "Save File Again",
   "coldwallet_transaction_invalid_expired": "Tehing on aegunud.",
+  "coldwallet_transaction_invalid_authorization": "The unsigned transaction loaded does not match the current wallet. Either switch to the proper wallet or import the keys for {{actor}}@{{permission}}.",
   "coldwallet_transaction_invalid_contract": "Külma rahakoti allkirjastamise funktsioon toetab ainult eosio, eosio.token ja eosio.msig tehinguid.",
   "coldwallet_transaction_signature_request_title": "Allkirja taotlus",
   "coldwallet_transaction_signature_request_content": "Allpool on kuvatud kõik lepingud/tegevused, mis on kirjeldatud selles toimingus. Kontolli tegevusi ja seejärel allkirjasta tehing vajutades allpool olevale nupule.",
