@@ -63,6 +63,7 @@ class WelcomeKeyContainer extends Component<Props> {
       importWallet,
       setSetting,
       setTemporaryKey,
+      setWalletMode,
       useWallet,
       validateKey
     } = actions;
@@ -109,6 +110,7 @@ class WelcomeKeyContainer extends Component<Props> {
       default: {
         // Validate against account
         validateKey(key, settings).then((authorization) => {
+          setWalletMode('hot');
           setTemporaryKey(key, authorization);
           if (onStageSelect) {
             onStageSelect(4);
