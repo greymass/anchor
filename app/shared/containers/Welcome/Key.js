@@ -101,8 +101,9 @@ class WelcomeKeyContainer extends Component<Props> {
         // Set this wallet as the used wallet
         useWallet(connection.chainId, settings.account, authorization);
         // Initialize the wallet setting
-        setSetting('walletInit', true);
+        setSetting('authorization', authorization);
         setSetting('chainId', connection.chainId);
+        setSetting('walletInit', true);
         // Move on to the voter
         history.push('/voter');
         break;
@@ -110,6 +111,7 @@ class WelcomeKeyContainer extends Component<Props> {
       default: {
         // Validate against account
         validateKey(key, settings).then((authorization) => {
+          setSetting('authorization', authorization);
           setWalletMode('hot');
           setTemporaryKey(key, authorization);
           if (onStageSelect) {
