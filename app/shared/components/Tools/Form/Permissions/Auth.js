@@ -97,9 +97,6 @@ class ToolsFormPermissionsAuth extends Component<Props> {
     } = this.props;
     const { auth, parent, permission } = this.state;
     let authorization = `${settings.account}@${settings.authorization}`;
-    if (permission === 'owner') {
-      authorization = `${settings.account}@owner`;
-    }
     actions.updateauth(permission, parent, auth, authorization);
   }
   render() {
