@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow } from 'electron';
 import MenuBuilder from '../menu';
 import packageJson from '../../package.json';
 
