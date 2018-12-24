@@ -97,6 +97,8 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         broadcast: true,
         expireInSeconds: 3600,
+        keyProvider: [],
+        keyProviderObfuscated: {},
         sign: true,
         signMethod: 'ledger',
       });
