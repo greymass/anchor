@@ -23,10 +23,9 @@ export function setWalletKey(data, password, mode = 'hot', existingHash = false,
     let authorization;
     if (auth) {
       authorization = auth;
-    }
-    if (accountData) {
-      const auth = new EOSAccount(accountData).getAuthorization(pubkey);
-      if (auth) {
+    } else if (accountData) {
+      const detectedAuth = new EOSAccount(accountData).getAuthorization(pubkey);
+      if (detectedAuth) {
         [, authorization] = auth.split('@');
       }
     }
