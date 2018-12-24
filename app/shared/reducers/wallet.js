@@ -30,6 +30,7 @@ export default function wallet(state = initialState, action) {
           convertParameters: undefined,
           data: undefined,
           mode: 'ledger',
+          path: action.payload.path,
           pubkey: action.payload.pubkey
         });
       }
