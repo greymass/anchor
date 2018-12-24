@@ -146,6 +146,25 @@ export function getProducersInfo(previous = false) {
   };
 }
 
+export function setUnregisteredProducers() {
+  return (dispatch: () => void, getState) => {
+    const { producers } = getState();
+    const { list, selected } = producers;
+    const unregisteredProducers = [];
+
+    selected.forEach((producer) => {
+      if (!list.includes(producer)) {
+        unregisteredProducers.push(producer);
+      }
+    });
+
+    dispatch({
+      type: types.SET_UNREGISTERED_PRODUCERS,
+      payload: { unregisteredProducers }
+    });
+  };
+}
+
 export function getProducerInfo(producer) {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -190,5 +209,6 @@ export default {
   clearProducerInfo,
   getProducerInfo,
   getProducers,
-  getProducersInfo
+  getProducersInfo,
+  setUnregisteredProducers
 };
