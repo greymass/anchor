@@ -126,7 +126,6 @@ class BasicVoterContainer extends Component<Props> {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    console.log(this.props)
     const {
       actions,
       app,
