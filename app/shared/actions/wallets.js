@@ -36,6 +36,7 @@ export function completeConvertToLedger(
       path
     ));
     dispatch(setWalletMode('ledger'));
+    dispatch(useWallet(chainId, account, authorization));
     return dispatch({
       type: types.PREPARE_WALLET_CONVERT_LEDGER_COMPLETE,
       payload: {
@@ -43,6 +44,7 @@ export function completeConvertToLedger(
         authorization,
         chainId,
         mode: 'ledger',
+        path,
         pubkey: publicKey,
       }
     });
@@ -231,6 +233,12 @@ export function useWallet(chainId, account, authorization) {
       account,
       authorization
     }));
+    if (newWallet.path) {
+      dispatch({
+        type: types.SET_CURRENT_WALLET,
+        payload: newWallet
+      });
+    }
     if (newWallet.mode !== 'cold') {
       // Update the account in local state
       dispatch(getAccount(account));
