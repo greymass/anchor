@@ -517,7 +517,7 @@ class GlobalAccountConvertLedger extends Component<Props> {
                   ? (
                     <Button
                       content={t('ledger_account_convert_ledger_convert_wallet')}
-                      onClick={this.onSubmit}
+                      onClick={this.completePrepare}
                       primary
                     />
                   )
