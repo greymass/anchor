@@ -218,8 +218,7 @@ class WelcomeAccountContainer extends Component<Props> {
               style={{ marginTop: '1em' }}
             />
           </Container>
-          {((stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
-            && settings.walletMode !== 'cold')
+          {(settings.walletMode !== 'cold')
             ? (
               <React.Fragment>
                 <Divider horizontal>or</Divider>
