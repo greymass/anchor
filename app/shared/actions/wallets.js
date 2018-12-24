@@ -246,7 +246,7 @@ export function useWallet(chainId, account, authorization) {
 }
 
 // Upgrades a legacy hot wallet to the newest version
-export function upgradeWallet(account, authorization, password = false, swap = false) {
+export function upgradeWallet(chainId, account, authorization, password = false, swap = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -254,7 +254,8 @@ export function upgradeWallet(account, authorization, password = false, swap = f
     } = getState();
     const [current] = partition(wallets, {
       account,
-      authorization
+      authorization,
+      chainId
     });
     if (current.length > 0) {
       eos(connection).getAccount(account).then((accountData) => {
@@ -269,7 +270,8 @@ export function upgradeWallet(account, authorization, password = false, swap = f
             account,
             accountData,
             authorization: auth,
-            chainId: connection.chainId,
+            chainId,
+            mode: wallet.mode || 'hot',
             oldAuthorization: wallet.authorization,
             pubkey,
           }
@@ -287,7 +289,7 @@ export function upgradeWallet(account, authorization, password = false, swap = f
 }
 
 // Upgrades a legacy watch wallet (with no authorization) to a watch wallet with set authorization
-export function upgradeWatchWallet(account, authorization, swap = false) {
+export function upgradeWatchWallet(chainId, account, authorization, swap = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -296,7 +298,7 @@ export function upgradeWatchWallet(account, authorization, swap = false) {
     const [current] = partition(wallets, {
       account,
       authorization: false,
-      chainId: connection.chainId,
+      chainId,
       mode: 'watch'
     });
     if (current.length > 0) {
@@ -312,6 +314,7 @@ export function upgradeWatchWallet(account, authorization, swap = false) {
               accountData,
               authorization,
               chainId: connection.chainId,
+              mode: 'watch',
               oldAuthorization: false,
               pubkey,
             }

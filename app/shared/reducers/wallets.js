@@ -120,6 +120,7 @@ export default function wallets(state = initialState, action) {
         modified.accountData = action.payload.accountData;
         modified.authorization = action.payload.authorization;
         modified.pubkey = action.payload.pubkey;
+        modified.mode = action.payload.mode;
         return [
           ...[modified],
           ...other

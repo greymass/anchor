@@ -35,13 +35,15 @@ class GlobalButtonWalletUpgrade extends Component<Props> {
       }
     });
   }
-  upgradeWallet = (account, authorization, password = false) => {
-    const { actions, useWallet } = this.props;
-    actions.upgradeWallet(account, authorization, password, useWallet);
+  upgradeWallet = (chainId, account, authorization, password = false) => {
+    const { actions, settings } = this.props;
+    const useWallet = (settings.account === account && settings.chainId === chainId);
+    actions.upgradeWallet(chainId, account, authorization, password, useWallet);
   }
-  upgradeWatchWallet = (account, authorization) => {
-    const { actions, useWallet } = this.props;
-    actions.upgradeWatchWallet(account, authorization, useWallet);
+  upgradeWatchWallet = (chainId, account, authorization) => {
+    const { actions, settings } = this.props;
+    const useWallet = (settings.account === account && settings.chainId === chainId);
+    actions.upgradeWatchWallet(chainId, account, authorization, useWallet);
   }
   render() {
     const {
@@ -55,6 +57,7 @@ class GlobalButtonWalletUpgrade extends Component<Props> {
     const {
       account,
       authorization,
+      chainId,
       mode,
       pubkey
     } = wallet;
@@ -97,7 +100,7 @@ class GlobalButtonWalletUpgrade extends Component<Props> {
                 disabled={!current.authorization}
                 floated="right"
                 icon="circle arrow up"
-                onClick={() => this.upgradeWatchWallet(current.account, current.authorization)}
+                onClick={() => this.upgradeWatchWallet(chainId, current.account, current.authorization)}
                 style={style}
               />
             </Segment>
@@ -135,7 +138,7 @@ class GlobalButtonWalletUpgrade extends Component<Props> {
               trigger={(
                 <GlobalButtonElevate
                   onSuccess={(password) =>
-                    this.upgradeWallet(account, authorization, password)
+                    this.upgradeWallet(chainId, account, authorization, password)
                   }
                   settings={settings}
                   trigger={(
