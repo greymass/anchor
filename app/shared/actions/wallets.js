@@ -216,10 +216,10 @@ export function useWallet(chainId, account, authorization) {
   return (dispatch: () => void, getState) => {
     const { wallet, wallets } = getState();
     // Find the wallet by account name + authorization when possible
-    const walletQuery = { account, chainId }
+    const walletQuery = { account, chainId };
     if (authorization) {
       // To be able to find legacy wallets, only add authorization to the query if defined
-      walletQuery.authorization = authorization
+      walletQuery.authorization = authorization;
     }
     const newWallet = find(wallets, walletQuery);
     // Lock the wallet to remove old account keys
