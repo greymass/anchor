@@ -120,6 +120,7 @@ class ProducersTable extends Component<Props> {
                 return (
                   <ProducersTableRow
                     addProducer={this.props.addProducer}
+                    connection={connection}
                     getProducerInfo={this.getProducerInfo}
                     hasInfo={hasInfo}
                     key={producer.key}
