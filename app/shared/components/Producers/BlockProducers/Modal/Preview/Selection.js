@@ -6,6 +6,7 @@ import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment, Table } f
 import { chunk, last, times } from 'lodash';
 
 import WalletMessageContractVoteProducer from '../../../../Global/Message/Contract/VoteProducer';
+import GlobalFormMessageError from '../../../../Global/Form/Message/Error';
 
 export default class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
@@ -33,7 +34,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
         ));
       });
     }
-    const confirmDisabled = unregisteredProducers.length !== 0;
+    const hasUnregisteredProducersSelected = unregisteredProducers.length !== 0;
 
     return (
       <I18n ns="producers">
@@ -89,6 +90,11 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                     voter: settings.account
                   }}
                 />
+                {(hasUnregisteredProducersSelected) && (
+                  <GlobalFormMessageError
+                    error={t('producers_unregistered')}
+                  />
+                )}
                 <Divider />
                 <Button
                   onClick={onClose}
@@ -97,7 +103,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 </Button>
                 <Button
                   color="green"
-                  disabled={confirmDisabled}
+                  disabled={hasUnregisteredProducersSelected}
                   floated="right"
                   onClick={onConfirm}
                 >
