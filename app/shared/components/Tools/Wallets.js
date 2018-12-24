@@ -6,7 +6,7 @@ import { Button, Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
-import ToolsModalDuplicatingWallet from './Modal/DuplicatingWallet'
+import ToolsModalDuplicatingWallet from './Modal/DuplicatingWallet';
 
 import EOSWallet from '../../utils/Anchor/Wallet';
 
@@ -23,11 +23,11 @@ class ToolsWallets extends Component<Props> {
     } = this.props;
     const backup = {
       networks: blockchains.map((blockchain) => ({
-        schema: "anchor.v1.network",
+        schema: 'anchor.v1.network',
         data: Object.assign({}, blockchain)
       })),
       settings: {
-        schema: "anchor.v1.settings",
+        schema: 'anchor.v1.settings',
         data: Object.assign({}, settings),
       },
       wallets: wallets.map((wallet) => {
@@ -35,7 +35,7 @@ class ToolsWallets extends Component<Props> {
         model.importProps(wallet, connection.chainId);
         return model.wallet;
       })
-    }
+    };
     ipcRenderer.send(
       'saveFile',
       settings.lastFilePath,
@@ -43,9 +43,8 @@ class ToolsWallets extends Component<Props> {
       'wallet'
     );
   }
-  duplicateWallet = (account, authorization) => {
-    this.setState({ duplicatingWallet: { account, authorization } });
-  }
+  duplicateWallet = (account, authorization) =>
+    this.setState({ duplicatingWallet: { account, authorization } })
   render() {
     const {
       actions,
@@ -83,7 +82,7 @@ class ToolsWallets extends Component<Props> {
                   actions={actions}
                   blockchains={blockchains}
                   duplicatingWallet={duplicatingWallet}
-                  onClose={()=> this.setState({duplicatingWallet: null})}
+                  onClose={() => this.setState({ duplicatingWallet: null })}
                   settings={settings}
                   system={system}
                   wallets={wallets}
