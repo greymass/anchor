@@ -15,7 +15,8 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
       onConfirm,
       selected,
       settings,
-      submitting
+      submitting,
+      unregisteredProducers
     } = this.props;
     // Generate and chunk the rows into groups of 4 cells
     const rows = chunk(times(selected.length, i => (
@@ -32,6 +33,8 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
         ));
       });
     }
+    const confirmDisabled = unregisteredProducers.length !== 0;
+
     return (
       <I18n ns="producers">
         {
@@ -94,6 +97,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 </Button>
                 <Button
                   color="green"
+                  disabled={confirmDisabled}
                   floated="right"
                   onClick={onConfirm}
                 >

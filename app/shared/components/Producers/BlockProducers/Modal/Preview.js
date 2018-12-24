@@ -6,6 +6,11 @@ import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import ProducersVotingPreviewSelection from './Preview/Selection';
 
 class ProducersVotingPreview extends Component<Props> {
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.setUnregisteredProducers();
+  }
   render() {
     const {
       actions,
@@ -16,7 +21,8 @@ class ProducersVotingPreview extends Component<Props> {
       settings,
       submitting,
       system,
-      t
+      t,
+      unregisteredProducers
     } = this.props;
 
     return (
@@ -37,6 +43,7 @@ class ProducersVotingPreview extends Component<Props> {
             selected={selected}
             settings={settings}
             submitting={submitting}
+            unregisteredProducers={unregisteredProducers}
           />
         )}
         icon="exchange"

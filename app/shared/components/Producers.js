@@ -167,6 +167,7 @@ class Producers extends Component<Props> {
       selected,
       submitting
     } = this.state;
+    const { unregisteredProducers } = producers;
     let sidebar = [(
       <WalletPanel
         actions={actions}
@@ -225,6 +226,7 @@ class Producers extends Component<Props> {
               settings={settings}
               submitting={submitting}
               system={system}
+              unregisteredProducers={unregisteredProducers}
             />
           ) : ''}
 
@@ -236,6 +238,7 @@ class Producers extends Component<Props> {
             selected={selected}
             submitProducerVotes={() => this.previewProducerVotes(true)}
             submitting={submitting}
+            unregisteredProducers={unregisteredProducers}
           />
         </React.Fragment>
       );
