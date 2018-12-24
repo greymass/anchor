@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tab, Grid, Divider } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { intersection } from 'lodash';
 
 import BlockProducers from './Producers/BlockProducers';
 import ProducersProxy from './Producers/Proxy';
@@ -118,6 +119,9 @@ class Producers extends Component<Props> {
 
   submitProducerVotes = () => {
     const {
+      producers
+    } = this.props;
+    const {
       clearSystemState,
       voteproducers
     } = this.props.actions;
@@ -125,7 +129,9 @@ class Producers extends Component<Props> {
       selected
     } = this.state;
     clearSystemState();
-    voteproducers(selected);
+    const availableProducers = producers.list.map((producer) => producer.owner);
+    const validSelected = intersection(availableProducers, selected);
+    voteproducers(validSelected);
     this.setState({
       lastError: false, // Reset the last error
       lastTransaction: {}, // Reset the last transaction
