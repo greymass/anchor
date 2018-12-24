@@ -102,7 +102,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
                       />
                     </Table.Cell>
                     <Table.Cell textAlign="right">
-                      {(mode === 'hot' || mode === 'cold')
+                      {(w.data)
                         ? (
                           <GlobalButtonElevate
                             onSuccess={(password) => this.swapAccount(chainId, w.account, w.authorization, password)}
@@ -120,7 +120,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
                         )
                         : false
                       }
-                      {(mode === 'watch' || mode === 'ledger')
+                      {(['ledger', 'watch'].includes(mode))
                         ? (
                           <Button
                             color="green"
