@@ -10,6 +10,7 @@ const initialState = {
   producersInfo: {},
   proxy: '',
   selected: [],
+  unregisteredProducers: [],
   updated: null
 };
 
@@ -37,6 +38,11 @@ export default function producers(state = initialState, action) {
     case types.SET_CURRENT_WALLET: {
       return Object.assign({}, state, {
         selected: []
+      });
+    }
+    case types.SET_UNREGISTERED_PRODUCERS: {
+      return Object.assign({}, state, {
+        unregisteredProducers: action.payload.unregisteredProducers
       });
     }
     case types.SYSTEM_PRODUCERJSON_CLEAR:
