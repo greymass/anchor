@@ -44,13 +44,13 @@ class ProducersTableRow extends Component<Props> {
         />
       )
       : 'None';
-    const shouldDisplayInfoButton = connection.supportedContracts.includes('producerinfo');
+    const shouldDisplayInfoButton = connection.supportedContracts && connection.supportedContracts.includes('producerinfo');
     return (
       <Table.Row positive={isActive} key={producer.key}>
         <Table.Cell
           singleLine
           textAlign="center"
-        > 
+        >
           {(shouldDisplayInfoButton) && (
             <span>
               {(hasInfo)
@@ -78,7 +78,7 @@ class ProducersTableRow extends Component<Props> {
               }
             </span>
           )}
-          
+
           <Popup
             content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
             header={t('producer_vote_header', { producer: producer.owner })}
