@@ -12,8 +12,57 @@ export default class ProducersSelector extends Component<Props> {
       account,
       isProxying,
       modified,
-      selected
+      selected,
+      t,
+      unregisteredProducers
     } = this.props;
+    const listItems = [(
+      <List.Item key="header">
+        <Header color="blue" textAlign="center">
+          {(isProxying) ? t('producer_voter_proxying_vote') : false}
+          <Header.Subheader>
+            {selected.length}/30 {t('producer_voter_votes_used')}
+          </Header.Subheader>
+        </Header>
+      </List.Item>
+    )];
+
+    const registeredProducersSelected = selected - unregisteredProducers;
+
+    if (registeredProducersSelected.length === 0) {
+      listItems.push(<ProducersSelectorItemEmpty
+        isProxying={isProxying}
+        key={`${isProxying}-empty`}
+        modified={modified}
+      />);
+    } else {
+      listItems.concat(selected.map((producer) => (
+        <ProducersSelectorItem
+          isProxying={isProxying}
+          key={`${isProxying}-${producer}`}
+          producer={producer}
+          removeProducer={this.props.removeProducer}
+        />
+      )));
+    }
+    if (unregisteredProducers.length !== 0) {
+      listItems.push(
+        <List.Item key="header">
+          <Header color="blue" textAlign="center">
+            {t('producer_voter_unregistered_block_producers')}
+          </Header>
+        </List.Item>
+      );
+      listItems.concat(unregisteredProducers.map((producer) => (
+        <ProducersSelectorItem
+          isProxying={isProxying}
+          key={`${isProxying}-${producer}`}
+          producer={producer}
+          removeProducer={this.props.removeProducer}
+        />
+      )));
+    }
+
     return (
       <I18n ns="producers">
         {
@@ -24,14 +73,7 @@ export default class ProducersSelector extends Component<Props> {
                 relaxed
                 size="small"
               >
-                <List.Item key="header">
-                  <Header color="blue" textAlign="center">
-                    {(isProxying) ? t('producer_voter_proxying_vote') : false}
-                    <Header.Subheader>
-                      {selected.length}/30 {t('producer_voter_votes_used')}
-                    </Header.Subheader>
-                  </Header>
-                </List.Item>
+                {listItems}
                 {(selected.length)
                   ? selected.map((producer) => (
                     <ProducersSelectorItem
