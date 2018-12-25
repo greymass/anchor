@@ -1,7 +1,9 @@
 {
   "collwallet_load_transaction": "未署名トランザクションをロード",
   "coldwallet_transaction_invalid_signed": "トランザクションは署名済みです。",
+  "collwallet_transaction_sign_save_again": "Save File Again",
   "coldwallet_transaction_invalid_expired": "トランザクションは期限切れです。",
+  "coldwallet_transaction_invalid_authorization": "The unsigned transaction loaded does not match the current wallet. Either switch to the proper wallet or import the keys for {{actor}}@{{permission}}.",
   "coldwallet_transaction_invalid_contract": "コールドウォレット署名は、eosio、eosio.token、eosio.msigのコントラクトだけをサポートします。",
   "coldwallet_transaction_signature_request_title": "署名リクエスト",
   "coldwallet_transaction_signature_request_content": "このトランザクションで指定されたすべてのコントラクト/操作が以下に表示されます。以下のトランザクションをよく見直し、トランザクションを確認したら、以下のボタンでトランザクションに署名してください。",
