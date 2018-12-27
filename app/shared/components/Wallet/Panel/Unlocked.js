@@ -13,6 +13,8 @@ import WalletPanelButtonTransferSend from './Button/Transfer/Send';
 import WalletPanelButtonRamSell from './Button/Ram/Sell';
 import WalletPanelButtonRamBuy from './Button/Ram/Buy';
 
+import WalletPanelButtonWithdraw from './Button/Withdraw';
+
 class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 }
 
@@ -29,6 +31,7 @@ class WalletPanelUnlocked extends Component<Props> {
       actions,
       accounts,
       balances,
+      blockchains,
       blockExplorers,
       connection,
       globals,
@@ -38,6 +41,7 @@ class WalletPanelUnlocked extends Component<Props> {
       transaction,
       t
     } = this.props;
+    console.log(connection);
     return (
       <div>
         <Segment vertical>
@@ -109,6 +113,21 @@ class WalletPanelUnlocked extends Component<Props> {
                       system={system}
                     />
                   </Segment>
+                  {(connection.supportedContracts.includes("withdraw"))
+                    && (
+                      <Segment>
+                        <WalletPanelButtonWithdraw 
+                          actions={actions}
+                          balances={balances}
+                          blockchains={blockchains}
+                          connection={connection}
+                          settings={settings}
+                          system={system}
+                          transaction={transaction}
+                        />
+                      </Segment>
+                    )
+                  }
                   {(settings.walletMode === 'watch')
                     ? (
                       <Segment>

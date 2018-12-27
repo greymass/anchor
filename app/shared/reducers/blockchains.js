@@ -19,14 +19,31 @@ const knownChains = [
     testnet: false
   },
   {
-    _id: 'eos-testnet-jungle',
-    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
-    keyPrefix: 'EOS',
-    name: 'Jungle (EOS)',
-    node: 'http://jungle.cryptolions.io:18888',
-    supportedContracts: [],
-    symbol: 'EOS',
-    testnet: true
+    "_id": "beos-testnet",
+    "chainId": "50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd",
+    "keyPrefix": "EOS",
+    "name": "BEOS",
+    "node": "http://188.165.220.61:8888",
+    "supportedContracts": [
+      "customtokens",
+      "producerinfo",
+      "proposals",
+      "regproxyinfo",
+      "withdraw"
+    ],
+    "symbol": "BEOS",
+    "testnet": false
+  },
+  {
+    "_id": "eos-testnet-jungle",
+    "chainId": "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",
+    "keyPrefix": "EOS",
+    "name": "Jungle (EOS)",
+    "node": "http://jungle.cryptolions.io:18888",
+    "supportedContracts": [
+    ],
+    "symbol": "EOS",
+    "testnet": true
   },
   {
     _id: 'eos-testnet-cryptokylin',

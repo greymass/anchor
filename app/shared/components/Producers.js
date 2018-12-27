@@ -145,6 +145,7 @@ class Producers extends Component<Props> {
       actions,
       allBlockExplorers,
       balances,
+      blockchains,
       connection,
       globals,
       history,
@@ -173,7 +174,9 @@ class Producers extends Component<Props> {
         actions={actions}
         accounts={accounts}
         balances={balances}
+        blockchains={blockchains}
         blockExplorers={allBlockExplorers[connection.chainKey]}
+        connection={connection}
         globals={globals}
         key="WalletPanel"
         keys={keys}
