@@ -29,34 +29,34 @@ export default function serialize(chainId, transaction, types) {
   assert(transaction.context_free_actions.length === 0);
   encode(writer, fcbuffer.toBuffer(types.unsigned_int(), 0));
 
-  assert(transaction.actions.length === 1);
-  encode(writer, fcbuffer.toBuffer(types.unsigned_int(), 1));
+  encode(writer, fcbuffer.toBuffer(types.unsigned_int(), transaction.actions.length));
 
-  const action = transaction.actions[0];
-
-  encode(writer, fcbuffer.toBuffer(types.account_name(), action.account));
-  encode(writer, fcbuffer.toBuffer(types.action_name(), action.name));
-
-  encode(
-    writer,
-    fcbuffer.toBuffer(types.unsigned_int(), action.authorization.length)
-  );
-  for (let i = 0; i < action.authorization.length; i += 1) {
-    const authorization = action.authorization[i];
+  for (let i = 0; i < transaction.actions.length; i += 1) {
+    const action = transaction.actions[i];
+    encode(writer, fcbuffer.toBuffer(types.account_name(), action.account));
+    encode(writer, fcbuffer.toBuffer(types.action_name(), action.name));
 
     encode(
       writer,
-      fcbuffer.toBuffer(types.account_name(), authorization.actor)
+      fcbuffer.toBuffer(types.unsigned_int(), action.authorization.length)
     );
-    encode(
-      writer,
-      fcbuffer.toBuffer(types.permission_name(), authorization.permission)
-    );
+    for (let i = 0; i < action.authorization.length; i += 1) {
+      const authorization = action.authorization[i];
+
+      encode(
+        writer,
+        fcbuffer.toBuffer(types.account_name(), authorization.actor)
+      );
+      encode(
+        writer,
+        fcbuffer.toBuffer(types.permission_name(), authorization.permission)
+      );
+    }
+
+    const data = Buffer.from(action.data, 'hex');
+    encode(writer, fcbuffer.toBuffer(types.unsigned_int(), data.length));
+    encode(writer, data);
   }
-
-  const data = Buffer.from(action.data, 'hex');
-  encode(writer, fcbuffer.toBuffer(types.unsigned_int(), data.length));
-  encode(writer, data);
 
   assert(writer, transaction.transaction_extensions.length === 0);
   encode(writer, fcbuffer.toBuffer(types.unsigned_int(), 0));
