@@ -109,7 +109,10 @@ class WalletStatusBalances extends Component<Props> {
     ];
     // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
-      if (token === connection.chainSymbol || watchedTokens.indexOf(token) === -1) return;
+      if (connection.chainSymbol !== 'BEOS') {
+        if (watchedTokens.indexOf(token) === -1) return;
+      } else if (token === 'EOS') return;
+      if (token === connection.chainSymbol) return;
       let contract = 'unknown';
       let precision = {
         [token]: 4
