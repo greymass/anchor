@@ -60,13 +60,13 @@ class BlockProducers extends Component<Props> {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const selected_account = account.voter_info.proxy || account.account_name;
-          let selected = account.voter_info.producers
+          let selected =  account.voter_info.producers
           if (selected_account !== settings.account && accounts[selected_account]) {
             selected = accounts[selected_account].voter_info.producers;
           }
           // If the voter_info entry exists, load those votes into state
           this.setState({
-            selected,
+            selected: ['teamgreymass', 'blablablabla'],
             selected_account,
             selected_loaded: true
           });
