@@ -8,7 +8,6 @@ import ProducersVotingPreviewSelection from './Preview/Selection';
 class ProducersVotingPreview extends Component<Props> {
   componentDidMount() {
     const { actions } = this.props;
-
     actions.setUnregisteredProducers();
   }
   render() {

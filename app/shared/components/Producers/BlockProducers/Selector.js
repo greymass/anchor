@@ -16,6 +16,7 @@ class ProducersSelector extends Component<Props> {
       t,
       unregisteredProducers
     } = this.props;
+    debugger
     const listItems = [(
       <List.Item key="selectedHeader">
         <Header color="blue" textAlign="center">
@@ -27,9 +28,7 @@ class ProducersSelector extends Component<Props> {
       </List.Item>
     )];
 
-    const registeredProducersSelected = selected - unregisteredProducers;
-
-    if (registeredProducersSelected.length === 0) {
+    if (selected.length === 0) {
       listItems.push(<ProducersSelectorItemEmpty
         isProxying={isProxying}
         key={`${isProxying}-empty`}
@@ -44,6 +43,22 @@ class ProducersSelector extends Component<Props> {
           removeProducer={this.props.removeProducer}
         />
       )));
+    }
+    if (selected.length) {
+      listItems.concat(selected.map((producer) => (
+        <ProducersSelectorItem
+          isProxying={isProxying}
+          key={`${isProxying}-${producer}-selected`}
+          producer={producer}
+          removeProducer={this.props.removeProducer}
+        />
+      )));
+    } else {
+      listItems.push(<ProducersSelectorItemEmpty
+        isProxying={isProxying}
+        key={`${isProxying}-empty`}
+        modified={modified}
+      />);
     }
     if (unregisteredProducers.length !== 0) {
       listItems.push(
@@ -75,22 +90,7 @@ class ProducersSelector extends Component<Props> {
                 size="small"
               >
                 {listItems}
-                {(selected.length)
-                  ? selected.map((producer) => (
-                    <ProducersSelectorItem
-                      isProxying={isProxying}
-                      key={`${isProxying}-${producer}-selected`}
-                      producer={producer}
-                      removeProducer={this.props.removeProducer}
-                    />
-                  ))
-                  : (
-                    <ProducersSelectorItemEmpty
-                      isProxying={isProxying}
-                      key={`${isProxying}-empty`}
-                      modified={modified}
-                    />
-                  )
+                {
                 }
               </List>
             </Segment>
