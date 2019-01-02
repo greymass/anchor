@@ -3,6 +3,7 @@ import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
 import EOSAccount from '../../utils/EOS/Account';
+import { initialState as defaultBlockchains } from '../../reducers/blockchains';
 
 const migrations = {
   /*
@@ -220,12 +221,22 @@ const migrations = {
       wallet: modifiedWallet,
       wallets: modifiedWallets
     });
+  },
+  /*
+  9 - More blockchain options
+
+    - Update blockchains for bitshares-eos and worbli
+  */
+  9: (state) => {
+    return Object.assign({}, state, {
+      blockchains: defaultBlockchains
+    })
   }
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 8,
+  version: 9,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
