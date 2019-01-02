@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { I18n, translate } from 'react-i18next';
 import { Header, List, Segment } from 'semantic-ui-react';
+import { concat, intersection, sortBy } from 'lodash';
 
 import ProducersSelectorItem from './Selector/Item';
 import ProducersSelectorItemEmpty from './Selector/Item/Empty';
@@ -16,7 +17,7 @@ class ProducersSelector extends Component<Props> {
       t,
       unregisteredProducers
     } = this.props;
-    debugger
+    const unregisteredProducersSelected = intersection(unregisteredProducers, selected);
     const listItems = [(
       <List.Item key="selectedHeader">
         <Header color="blue" textAlign="center">
@@ -27,7 +28,6 @@ class ProducersSelector extends Component<Props> {
         </Header>
       </List.Item>
     )];
-
     if (selected.length === 0) {
       listItems.push(<ProducersSelectorItemEmpty
         isProxying={isProxying}
@@ -35,7 +35,7 @@ class ProducersSelector extends Component<Props> {
         modified={modified}
       />);
     } else {
-      listItems.concat(selected.map((producer) => (
+      listItems.push(selected.map((producer) => (
         <ProducersSelectorItem
           isProxying={isProxying}
           key={`${isProxying}-${producer}`}
@@ -44,23 +44,8 @@ class ProducersSelector extends Component<Props> {
         />
       )));
     }
-    if (selected.length) {
-      listItems.concat(selected.map((producer) => (
-        <ProducersSelectorItem
-          isProxying={isProxying}
-          key={`${isProxying}-${producer}-selected`}
-          producer={producer}
-          removeProducer={this.props.removeProducer}
-        />
-      )));
-    } else {
-      listItems.push(<ProducersSelectorItemEmpty
-        isProxying={isProxying}
-        key={`${isProxying}-empty`}
-        modified={modified}
-      />);
-    }
-    if (unregisteredProducers.length !== 0) {
+
+    if (unregisteredProducersSelected.length !== 0) {
       listItems.push(
         <List.Item key="unregisteredHeader">
           <Header textAlign="center">
@@ -70,7 +55,7 @@ class ProducersSelector extends Component<Props> {
           </Header>
         </List.Item>
       );
-      listItems.concat(unregisteredProducers.map((producer) => (
+      listItems.push(unregisteredProducers.map((producer) => (
         <ProducersSelectorItem
           isProxying={isProxying}
           key={`${isProxying}-${producer}-unregistered`}
@@ -90,8 +75,6 @@ class ProducersSelector extends Component<Props> {
                 size="small"
               >
                 {listItems}
-                {
-                }
               </List>
             </Segment>
           )

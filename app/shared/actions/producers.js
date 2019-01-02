@@ -1,5 +1,4 @@
-import sortBy from 'lodash/sortBy';
-import concat from 'lodash/concat';
+import { concat, intersection, sortBy } from 'lodash';
 
 import eos from './helpers/eos';
 import * as types from './types';
@@ -148,20 +147,23 @@ export function getProducersInfo(previous = false) {
 
 export function setUnregisteredProducers() {
   return (dispatch: () => void, getState) => {
-    console.log({getState})
     const { producers } = getState();
-    const { list, selected } = producers;
+    const { list } = producers;
     const unregisteredProducers = [];
-
+    const selected = ['teamgreymass', 'blablablabla']
+    console.log({selected})
+    const availableProducers = list.map((producer) => producer.owner);
+    const validSelected = intersection(availableProducers, selected);
+    console.log({validSelected})
     selected.forEach((producer) => {
-      if (!list.includes(producer)) {
+      if (!validSelected.includes(producer)) {
         unregisteredProducers.push(producer);
       }
     });
 
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
-      payload: { unregisteredProducers: ['blabla'] }
+      payload: { unregisteredProducers }
     });
   };
 }
