@@ -148,6 +148,7 @@ export function getProducersInfo(previous = false) {
 
 export function setUnregisteredProducers() {
   return (dispatch: () => void, getState) => {
+    console.log({getState})
     const { producers } = getState();
     const { list, selected } = producers;
     const unregisteredProducers = [];
@@ -160,7 +161,7 @@ export function setUnregisteredProducers() {
 
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
-      payload: { unregisteredProducers }
+      payload: { unregisteredProducers: ['blabla'] }
     });
   };
 }
