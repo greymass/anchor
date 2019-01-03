@@ -11,6 +11,7 @@ import {
   Table
 } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
+import { sortBy } from 'lodash';
 
 import ToolsModalBidName from './Modal/BidName';
 
@@ -25,11 +26,6 @@ class ToolsProxy extends Component<Props> {
 
   componentDidMount() {
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 30000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 
   tick() {
@@ -102,8 +98,10 @@ class ToolsProxy extends Component<Props> {
 
     const nameBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []) || [];
     const relevantNameBids = nameBids.filter(nameBid =>
-      !nameBid.bid || (!!nameBid.highestBid &&  Number(nameBid.highestBid.split(' ')[0]) >= Number(nameBid.bid.split(' ')[0]))
+      !nameBid.bid || (!!nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0]) >= Number(nameBid.bid.split(' ')[0]))
     );
+
+    const relevantNameBidsSorted = sortBy(relevantNameBids, 'newname');
 
     return (
       <Segment basic>
@@ -163,10 +161,10 @@ class ToolsProxy extends Component<Props> {
           </React.Fragment>
         )}
 
-        {(relevantNameBids.length === 0)
+        {(relevantNameBidsSorted.length === 0)
           ? (
             <Message
-              content={t('tools_bid_name_none')}
+              content={t('tools_bid_name_none_loaded')}
               warning
             />
           ) : (
@@ -186,7 +184,7 @@ class ToolsProxy extends Component<Props> {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {relevantNameBids.map((nameBid) => {
+                {relevantNameBidsSorted.map((nameBid) => {
                   const isHighestBid = !nameBid.bid || (nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0])) === Number(nameBid.bid.split(' ')[0]);
 
                   return (
