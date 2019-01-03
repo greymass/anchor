@@ -33,7 +33,7 @@ export function getBidForName(name) {
         const newRecentBids = set(recentBids, `${settings.chainId}.${settings.account}.${bidIndex}`, {
           newname: namebid.newname,
           bid: recentBids[settings.chainId][settings.account][bidIndex].bid,
-          highestBid: `${namebid.high_bid / 10000} EOS`
+          highestBid: `${(namebid.high_bid / 10000).toFixed(4)} EOS`
         });
         dispatch(setSetting('recentBids', newRecentBids));
       }
@@ -83,7 +83,7 @@ export function getBidsForAccount(previous = false) {
         if (bidIndex === -1 && namebid.high_bidder === settings.account) {
           recentBids = set(recentBids, `${settings.chainId}.${settings.account}`, currentBids.concat({
             newname: namebid.newname,
-            highestBid: `${namebid.high_bid / 10000} EOS`
+            highestBid: `${(namebid.high_bid / 10000).toFixed(4)} EOS`
           }));
         }
       });
@@ -93,7 +93,6 @@ export function getBidsForAccount(previous = false) {
       if (results.more) {
         // recurse
         const lastBid = rows[rows.length - 1];
-        console.log({lastBid})
         return dispatch(getBidsForAccount(lastBid && lastBid.newname ));
       } else {
         return dispatch({
