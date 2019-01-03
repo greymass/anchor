@@ -1,4 +1,5 @@
 import { concat, intersection, sortBy } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
 import eos from './helpers/eos';
 import * as types from './types';
@@ -149,8 +150,7 @@ export function setUnregisteredProducers() {
   return (dispatch: () => void, getState) => {
     const { accounts, producers, settings } = getState();
     const { list } = producers;
-    const { voter_info } = accounts[settings.account];
-    const { producers: selected } = voter_info;
+    const selected = get(accounts, `${settings.account}.voter_info.producers`) || [];
     const unregisteredProducers = [];
     const availableProducers = list.map((producer) => producer.owner);
     const validSelected = intersection(availableProducers, selected);
