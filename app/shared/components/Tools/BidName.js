@@ -6,6 +6,7 @@ import {
   Header,
   Label,
   Message,
+  Popup,
   Segment,
   Table
 } from 'semantic-ui-react';
@@ -101,8 +102,8 @@ class ToolsProxy extends Component<Props> {
 
     const nameBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []) || [];
     const relevantNameBids = nameBids.filter(nameBid =>
-      !!nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0]) >= Number(nameBid.bid.split(' ')[0])
-    )
+      !nameBid.bid || (!!nameBid.highestBid &&  Number(nameBid.highestBid.split(' ')[0]) >= Number(nameBid.bid.split(' ')[0]))
+    );
 
     return (
       <Segment basic>
@@ -143,11 +144,24 @@ class ToolsProxy extends Component<Props> {
         <h2>
           {t('tools_bid_name_table_header')}
         </h2>
-        <Button
-          onClick={this.onFetchRecentBids}
-        >
-          {t('tools_bidname_search_recent_bids')}
-        </Button>
+        <Popup
+          content={(t('tools_bidname_search_button_popup'))}
+          inverted
+          trigger={(
+            <span>
+              <Button
+                onClick={this.onFetchRecentBids}
+              >
+                {t('tools_bidname_search_recent_bids')}
+              </Button>
+            </span>
+          )}
+        />
+        {(system.NAMEBID === 'PENDING') && (
+          <React.Fragment>
+            {t('tools_bidname_fetching_recent_bids')}
+          </React.Fragment>
+        )}
 
         {(relevantNameBids.length === 0)
           ? (
@@ -173,7 +187,7 @@ class ToolsProxy extends Component<Props> {
               </Table.Header>
               <Table.Body>
                 {relevantNameBids.map((nameBid) => {
-                  const isHighestBid = (nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0])) === Number(nameBid.bid.split(' ')[0]);
+                  const isHighestBid = !nameBid.bid || (nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0])) === Number(nameBid.bid.split(' ')[0]);
 
                   return (
                     <Table.Row key={nameBid.newname}>
@@ -181,7 +195,7 @@ class ToolsProxy extends Component<Props> {
                         {nameBid.newname}
                       </Table.Cell>
                       <Table.Cell>
-                        {nameBid.bid}
+                        {nameBid.bid || nameBid.highestBid}
                       </Table.Cell>
                       <Table.Cell>
                         {nameBid.highestBid}

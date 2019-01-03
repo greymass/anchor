@@ -1,5 +1,5 @@
 import { findIndex } from 'lodash';
-import { get } from 'dot-prop-immutable';
+import { get, set } from 'dot-prop-immutable';
 
 import * as types from './types';
 import eos from './helpers/eos';
@@ -26,17 +26,16 @@ export function getBidForName(name) {
       const namebid = rows[0];
       const { recentBids } = settings;
 
-      const bidIndex = findIndex(get(recentBids, `${settings.chainId}.${settings.account}`) || [], { newname: namebid.newname });
+      const currentBids = get(recentBids, `${settings.chainId}.${settings.account}`) || [];
+      const bidIndex = findIndex(currentBids, { newname: namebid.newname });
 
       if (bidIndex > -1) {
-        recentBids[settings.chainId][settings.account][bidIndex] =
-          {
-            newname: namebid.newname,
-            bid: recentBids[settings.chainId][settings.account][bidIndex].bid,
-            highestBid: `${namebid.high_bid / 10000} EOS`
-          };
-
-        dispatch(setSetting('recentBids', recentBids));
+        const newRecentBids = set(recentBids, `${settings.chainId}.${settings.account}.${bidIndex}`, {
+          newname: namebid.newname,
+          bid: recentBids[settings.chainId][settings.account][bidIndex].bid,
+          highestBid: `${namebid.high_bid / 10000} EOS`
+        });
+        dispatch(setSetting('recentBids', newRecentBids));
       }
 
       return dispatch({
@@ -54,13 +53,8 @@ export function getBidForName(name) {
 
 export function getBidsForAccount(previous = false) {
   return (dispatch: () => void, getState) => {
-    dispatch({
-      type: types.SYSTEM_NAMEBID_PENDING
-    });
     const { connection, settings } = getState();
-    const { recentBids } = settings;
-
-    recentBids[settings.chainId][settings.account] = {};
+    let { recentBids } = settings;
 
     const query = {
       code: 'eosio',
@@ -71,28 +65,41 @@ export function getBidsForAccount(previous = false) {
     };
 
     if (previous) {
-      query.lower_bound = previous - 1;
+      console.log({previous})
+      query.lower_bound = previous;
+    } else {
+      dispatch({
+        type: types.SYSTEM_NAMEBID_PENDING
+      });
     }
 
     eos(connection).getTableRows(query).then((results) => {
       const { rows } = results;
+
       rows.forEach((namebid) => {
-        if (namebid.bidder === settings.account) {
-          recentBids[settings.chainId][settings.account].concat({
+        const currentBids = get(recentBids, `${settings.chainId}.${settings.account}`) || [];
+        const bidIndex = findIndex(currentBids, { newname: namebid.newname });
+
+        if (bidIndex === -1 && namebid.high_bidder === settings.account) {
+          recentBids = set(recentBids, `${settings.chainId}.${settings.account}`, currentBids.concat({
             newname: namebid.newname,
             highestBid: `${namebid.high_bid / 10000} EOS`
-          });
-
-          dispatch(setSetting('recentBids', recentBids));
+          }));
         }
       });
+
+      dispatch(setSetting('recentBids', recentBids));
+
       if (results.more) {
         // recurse
-        return dispatch(getBidsForAccount(previous ? previous + rows.length : rows.length ));
+        const lastBid = rows[rows.length - 1];
+        console.log({lastBid})
+        return dispatch(getBidsForAccount(lastBid && lastBid.newname ));
+      } else {
+        return dispatch({
+          type: types.SYSTEM_NAMEBID_SUCCESS
+        });
       }
-      return dispatch({
-        type: types.SYSTEM_NAMEBID_SUCCESS
-      });
     }).catch((err) => dispatch({
       type: types.SYSTEM_NAMEBID_FAILURE,
       payload: { err },
