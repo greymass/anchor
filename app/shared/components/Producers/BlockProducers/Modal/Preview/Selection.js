@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment, Table } from 'semantic-ui-react';
-import { chunk, last, times } from 'lodash';
+import { chunk, last, times, intersection } from 'lodash';
 
 import WalletMessageContractVoteProducer from '../../../../Global/Message/Contract/VoteProducer';
 import GlobalFormMessageError from '../../../../Global/Form/Message/Error';
@@ -34,7 +34,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
         ));
       });
     }
-    const hasUnregisteredProducersSelected = unregisteredProducers.length !== 0;
+    const hasUnregisteredProducersSelected = intersection(selected, unregisteredProducers).length !== 0;
 
     return (
       <I18n ns="producers">

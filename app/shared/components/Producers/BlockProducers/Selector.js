@@ -8,6 +8,10 @@ import ProducersSelectorItem from './Selector/Item';
 import ProducersSelectorItemEmpty from './Selector/Item/Empty';
 
 class ProducersSelector extends Component<Props> {
+  componentWillMount() {
+    const { actions } = this.props;
+    actions.setUnregisteredProducers();
+  }
   render() {
     const {
       account,

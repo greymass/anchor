@@ -59,7 +59,7 @@ class Producers extends Component<Props> {
           }
           // If the voter_info entry exists, load those votes into state
           this.setState({
-            selected: ['teamgreymass', 'blablablabla'],
+            selected: selected,
             selected_account,
             selected_loaded: true
           });
@@ -232,6 +232,7 @@ class Producers extends Component<Props> {
 
           <ProducersSelector
             account={accounts[settings.account]}
+            actions={actions}
             isProxying={isProxying}
             modified={modified}
             removeProducer={this.removeProducer.bind(this)}

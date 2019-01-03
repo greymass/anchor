@@ -147,14 +147,13 @@ export function getProducersInfo(previous = false) {
 
 export function setUnregisteredProducers() {
   return (dispatch: () => void, getState) => {
-    const { producers } = getState();
+    const { accounts, producers, settings } = getState();
     const { list } = producers;
+    const { voter_info } = accounts[settings.account];
+    const { producers: selected } = voter_info;
     const unregisteredProducers = [];
-    const selected = ['teamgreymass', 'blablablabla']
-    console.log({selected})
     const availableProducers = list.map((producer) => producer.owner);
     const validSelected = intersection(availableProducers, selected);
-    console.log({validSelected})
     selected.forEach((producer) => {
       if (!validSelected.includes(producer)) {
         unregisteredProducers.push(producer);
