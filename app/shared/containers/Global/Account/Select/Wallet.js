@@ -4,18 +4,26 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { find } from 'lodash';
-import { Button, Dropdown, Header, Icon, Input, List, Menu, Modal, Segment, Table } from 'semantic-ui-react';
+import { find, debounce } from 'lodash';
+import { Button, Dropdown, Header, Icon, Input, List, Menu, Modal, Segment, Table, Grid } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import GlobalButtonAccountImport from '../../../../components/Global/Button/Account/Import';
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalBlockchainDropdown from '../../Blockchain/Dropdown';
 import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
+import * as ValidateActions from '../../../../actions/validate';
+import * as SettingsActions from '../../../../actions/settings';
 
 import GlobalFragmentWalletType from '../../../../components/Global/Fragment/WalletType';
 
 class GlobalAccountSelectWallet extends Component<Props> {
+  state = {
+    isNodeAddressEditing: false,
+    editedNodeAddress: null,
+  }
+
   swapAccount = (chainId, account, authorization, password = false) => {
     const { actions } = this.props;
     actions.useWallet(chainId, account, authorization);
@@ -23,6 +31,29 @@ class GlobalAccountSelectWallet extends Component<Props> {
       actions.unlockWallet(password);
     }
   }
+
+  toggleNodeAddressEditing = () => {
+    this.setState(({ isNodeAddressEditing }) => ({ isNodeAddressEditing: !isNodeAddressEditing }));
+  }
+
+  onNodeAddressEdit = debounce((e, { name, value }) => {
+    this.setState({ editedNodeAddress: value })
+    this.props.actions.validateNode(value)
+  }, 250)
+
+  onSaveNodeAddress = () => {
+    const { editedNodeAddress } = this.state
+    const { settings: { node }, actions: { setSettingWithValidation }, validate } = this.props;
+    if (editedNodeAddress && node !== editedNodeAddress) {
+      if (validate.NODE === 'SUCCESS') {
+        setSettingWithValidation('node', editedNodeAddress);
+        this.toggleNodeAddressEditing();
+      }
+    } else {
+      this.toggleNodeAddressEditing();
+    }
+  }
+
   render() {
     const {
       blockchains,
@@ -68,10 +99,37 @@ class GlobalAccountSelectWallet extends Component<Props> {
           </Menu.Menu>
         </Menu>
         <Segment attached>
-          <Header
-            content={t('global_account_select_wallet_connected_to_header', { name: blockchain.name })}
-            subheader={t('global_account_select_wallet_connected_to_subheader', { node: blockchain.node })}
-          />
+          <Header>
+            <Header.Content>
+            {t('global_account_select_wallet_connected_to_header', { name: blockchain.name })}</Header.Content>
+            <Header.Subheader>
+              <label>
+                {t('global_account_select_wallet_connected_to_subheader')}
+                {!this.state.isNodeAddressEditing ? (
+                  <React.Fragment>
+                    { settings.node } <div style={{float: 'right'}}><a href="javascript:void(0)" onClick={this.toggleNodeAddressEditing}>Change Server <Icon name='pencil'/></a></div>
+                  </React.Fragment>
+                ) : (
+                  <Input
+                    fluid
+                    size="small"
+                    defaultValue={settings.node}
+                    action
+                    onChange={this.onNodeAddressEdit}>
+                    <input />
+                    <Button
+                      size="tiny"
+                      color={validate.NODE === 'SUCCESS' ? "green" : "red"}
+                      loading={validate.NODE === 'PENDING' && !!this.state.editedNodeAddress}
+                      icon={validate.NODE === 'SUCCESS' ? "check" : "close"}
+                      disabled={validate.NODE !== 'SUCCESS'}
+                      onClick={() => this.onSaveNodeAddress()}/>
+                    <Button loading={false} size="tiny" icon="close" onClick={this.toggleNodeAddressEditing}/>
+                </Input>
+              )}
+              </label>
+            </Header.Subheader>
+          </Header>
         </Segment>
         <Table
           attached="bottom"
@@ -169,6 +227,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...SettingsActions,
+      ...ValidateActions,
       ...WalletActions,
       ...WalletsActions,
     }, dispatch)
