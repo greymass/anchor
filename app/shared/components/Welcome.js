@@ -38,6 +38,7 @@ class Welcome extends Component<Props> {
   completeLedgerImport = (account, authorization) => {
     const {
       actions,
+      connection,
       history,
       settings
     } = this.props;
@@ -46,10 +47,11 @@ class Welcome extends Component<Props> {
     } = actions;
     setSetting('account', account);
     setSetting('authorization', authorization);
+    setSetting('chainId', connection.chainId);
     setSetting('walletInit', true);
     setSetting('walletTemp', false);
     // Set this wallet as the used wallet
-    actions.useWallet(settings.chainId, account, authorization);
+    actions.useWallet(connection.chainId, account, authorization);
     actions.clearValidationState();
     actions.validateNode(settings.node);
     history.push('/voter');

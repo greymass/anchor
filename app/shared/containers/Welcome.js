@@ -64,6 +64,7 @@ class WelcomeContainer extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       history,
       keys,
       ledger,
@@ -74,6 +75,7 @@ class WelcomeContainer extends Component<Props> {
     return (
       <Welcome
         actions={actions}
+        connection={connection}
         history={history}
         keys={keys}
         ledger={ledger}
@@ -87,6 +89,7 @@ class WelcomeContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    connection: state.connection,
     keys: state.keys,
     settings: state.settings,
     validate: state.validate,
