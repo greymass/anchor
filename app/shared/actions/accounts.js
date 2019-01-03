@@ -2,6 +2,7 @@ import { forEach } from 'lodash';
 
 import * as types from './types';
 import eos from './helpers/eos';
+import { addCustomTokenBeos } from './settings';
 
 export function clearAccountCache() {
   return (dispatch: () => void) => {
@@ -299,13 +300,14 @@ export function getCurrencyBalance(account, requestedTokens = false) {
 
       if (connection.chainSymbol === 'BEOS') {
         selectedTokens = [];
-        eos(connection).getCurrencyStats('eosio.token', '').then((allTokens) => {
-          const resultsProperties = Object.keys(allTokens);
-          resultsProperties.forEach((resultProperty) => {
-            selectedTokens.push(`eosio.token:${resultProperty}`);
+        eos(connection).getCurrencyStats('eosio.token', '').then((data) => {
+          const allTokens = Object.keys(data);
+          allTokens.forEach((token) => {
+            selectedTokens.push(`eosio.token:${token}`);
           });
           forEach(selectedTokens, (namespace) => {
             const [contract, symbol] = namespace.split(':');
+            dispatch(addCustomTokenBeos('eosio.token', symbol));
             eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
               dispatch({
                 type: types.GET_ACCOUNT_BALANCE_SUCCESS,

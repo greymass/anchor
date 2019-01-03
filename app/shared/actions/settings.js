@@ -102,6 +102,26 @@ export function addCustomToken(contract, symbol) {
   };
 }
 
+export function addCustomTokenBeos(contract, symbol) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const { customTokens } = settings;
+
+    const name = [contract.toLowerCase(), symbol.toUpperCase()].join(':');
+
+    let tokens = [];
+    if (customTokens) {
+      tokens = customTokens.slice(0);
+    }
+
+    if (name && name.length > 0) {
+      tokens.push(name);
+      tokens = new Set(tokens.filter((e) => e));
+      return dispatch(setSetting('customTokens', Array.from(tokens)));
+    }
+  };
+}
+
 export function removeCustomToken(contract, symbol) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();

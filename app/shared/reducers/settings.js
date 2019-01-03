@@ -32,6 +32,8 @@ const initialState = {
   displayResourcesAvailable: true,
   // Whether or not to display known testnets for the various networks
   displayTestNetworks: false,
+  // Default filter for components, functionalities
+  exclude: ['beos-testnet'],
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
   // Default to Ledger import process
