@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import {
+  Button,
   Header,
   Label,
   Message,
@@ -51,6 +52,18 @@ class ToolsProxy extends Component<Props> {
     }
   }
 
+  onFetchRecentBids = (e) => {
+    const  { actions } = this.props;
+
+    const {
+      getBidsForAccount
+    } = actions;
+
+    getBidsForAccount();
+
+    e.preventDefault();
+  }
+
   onOpenModal = () => this.setState({ openModal: true });
 
   onCloseModal = () => {
@@ -87,7 +100,7 @@ class ToolsProxy extends Component<Props> {
     } = this.state;
 
     const nameBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []) || [];
-    const relevantNameBids = nameBids.filter(nameBid => 
+    const relevantNameBids = nameBids.filter(nameBid =>
       !!nameBid.highestBid && Number(nameBid.highestBid.split(' ')[0]) >= Number(nameBid.bid.split(' ')[0])
     )
 
@@ -130,6 +143,11 @@ class ToolsProxy extends Component<Props> {
         <h2>
           {t('tools_bid_name_table_header')}
         </h2>
+        <Button
+          onClick={this.onFetchRecentBids}
+        >
+          {t('tools_bidname_search_recent_bids')}
+        </Button>
 
         {(relevantNameBids.length === 0)
           ? (
