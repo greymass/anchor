@@ -226,6 +226,8 @@ const migrations = {
   9 - More blockchain options
 
     - Update blockchains for bitshares-eos and worbli
+    - Provide exclude in settings
+    - Update default settings.customTokens
   */
   9: (state) => {
     const {
@@ -233,28 +235,17 @@ const migrations = {
     } = state;
     const newSettings = Object.assign({}, settings);
     newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
+    newSettings.exclude = ['beos-testnet'];
     return Object.assign({}, state, {
       blockchains: defaultBlockchains,
       settings: newSettings
     });
   },
-
-  10: (state) => {
-    const {
-      settings
-    } = state;
-    const newSettings = Object.assign({}, settings);
-    newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
-    return Object.assign({}, state, {
-      blockchains: defaultBlockchains,
-      settings: newSettings
-    });
-  }
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 10,
+  version: 9,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
