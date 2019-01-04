@@ -6,7 +6,6 @@ import {
 
 import EOSContract from "../utils/EOS/Contract";
 import eos from "./helpers/eos";
-import { getAbi } from "./contracts";
 import { getCurrencyBalance } from "./accounts";
 
 export function withdraw(from, to, quantity, storeName) {
@@ -19,31 +18,37 @@ export function withdraw(from, to, quantity, storeName) {
       dispatch({ type: SYSTEM_WITHDRAW_FAILURE });
     }
 
-    dispatch(getAbi(storeName));
     dispatch({ type: SYSTEM_WITHDRAW_PENDING });
 
-    const {
-      contracts: { [storeName]: c },
-      connection
-    } = getState();
-    const contract = new EOSContract(c.abi, c.account_name);
+    const { connection } = getState();
+    
 
-    eos(connection, true)
-      .contract(contract.account)
-      .then(({ withdraw }) => {
-        withdraw(
-          { from, bts_to: to, quantity },
-          {
-            broadcast: true,
-            sign: connection.sign
-          }
-        )
-          .then(trx => {
-            dispatch(getCurrencyBalance(from));
-            return dispatch({
-              payload: { trx },
-              type: SYSTEM_WITHDRAW_SUCCESS
-            });
+    eos(connection, true).getAbi(storeName)
+      .then((c) => {
+        const contract = new EOSContract(c.abi, c.account_name);
+        eos(connection, true)
+          .contract(contract.account)
+          .then(({ withdraw }) => {
+            withdraw(
+              { from, bts_to: to, quantity },
+              {
+                broadcast: true,
+                sign: connection.sign
+              }
+            )
+              .then(tx => {
+                dispatch(getCurrencyBalance(from));
+                return dispatch({
+                  payload: { tx, connection },
+                  type: SYSTEM_WITHDRAW_SUCCESS
+                });
+              })
+              .catch(err => {
+                dispatch({
+                  payload: { err },
+                  type: SYSTEM_WITHDRAW_FAILURE
+                });
+              });
           })
           .catch(err => {
             dispatch({
@@ -51,8 +56,7 @@ export function withdraw(from, to, quantity, storeName) {
               type: SYSTEM_WITHDRAW_FAILURE
             });
           });
-      })
-      .catch(err => {
+      }).catch(err => {
         dispatch({
           payload: { err },
           type: SYSTEM_WITHDRAW_FAILURE

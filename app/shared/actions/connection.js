@@ -25,8 +25,9 @@ export function historyPluginCheck() {
       connection,
       settings
     } = getState();
-
-    return eos(connection).getActions('teamgreymass').then((result) => dispatch({
+    let alpha = 'teamgreymass';
+    if (connection.chain === 'BEOS') { alpha = 'beos.gateway' }
+    return eos(connection).getActions(alpha).then((result) => dispatch({
       type: types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED,
       payload: { enabled: (result.actions && result.actions.length !== 0) }
     })).catch(() => dispatch({

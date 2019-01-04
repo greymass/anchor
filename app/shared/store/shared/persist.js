@@ -235,7 +235,7 @@ const migrations = {
     } = state;
     const newSettings = Object.assign({}, settings);
     newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
-    newSettings.exclude = ['beos-testnet'];
+    newSettings.excludeForChainKey = ['beos-testnet'];
     return Object.assign({}, state, {
       blockchains: defaultBlockchains,
       settings: newSettings

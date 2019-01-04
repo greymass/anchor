@@ -23,7 +23,7 @@ const knownChains = [
     "chainId": "50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd",
     "keyPrefix": "EOS",
     "name": "BEOS",
-    "node": "http://beos.world:8888/",
+    "node": "https://api.beos.world",
     "supportedContracts": [
       "customtokens",
       "producerinfo",
