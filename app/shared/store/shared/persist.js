@@ -228,15 +228,33 @@ const migrations = {
     - Update blockchains for bitshares-eos and worbli
   */
   9: (state) => {
+    const {
+      settings
+    } = state;
+    const newSettings = Object.assign({}, settings);
+    newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
     return Object.assign({}, state, {
-      blockchains: defaultBlockchains
-    })
+      blockchains: defaultBlockchains,
+      settings: newSettings
+    });
+  },
+
+  10: (state) => {
+    const {
+      settings
+    } = state;
+    const newSettings = Object.assign({}, settings);
+    newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
+    return Object.assign({}, state, {
+      blockchains: defaultBlockchains,
+      settings: newSettings
+    });
   }
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 9,
+  version: 10,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [

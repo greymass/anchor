@@ -33,7 +33,8 @@ class WalletStatusBalances extends Component<Props> {
 
     const contracts = balances.__contracts;
     const claimable = (new Date() > refundDate);
-    const watchedTokens = (settings.customTokens) ? settings.customTokens.map((token) => token.split(':')[1]) : [];
+    let watchedTokens = (settings.customTokens) ? settings.customTokens.filter((token) => connection.chainKey === token.split(':')[0]) : [];
+    watchedTokens = watchedTokens.map((token) => token.split(':')[2]);
     const rows = [
       (
         <Table.Row key="ChainSymbol">
@@ -109,10 +110,7 @@ class WalletStatusBalances extends Component<Props> {
     ];
     // Add rows for remaining tokens
     forEach(tokens, (amount, token) => {
-      if (connection.chainSymbol !== 'BEOS') {
-        if (watchedTokens.indexOf(token) === -1) return;
-      } else if (token === 'EOS') return;
-      if (token === connection.chainSymbol) return;
+      if (token === connection.chainSymbol || watchedTokens.indexOf(token) === -1) return;
       let contract = 'unknown';
       let precision = {
         [token]: 4

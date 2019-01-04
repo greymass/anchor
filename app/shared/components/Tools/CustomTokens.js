@@ -21,13 +21,18 @@ class ToolsCustomTokens extends Component<Props> {
     actions.getCustomTokens();
   }
   scan = () => {
-    const { actions, customtokens, settings } = this.props;
+    const {
+      actions,
+      customtokens,
+      settings
+    } = this.props;
+
     const tokens = customtokens.tokens.map((token) => `${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
     actions.getCurrencyBalance(settings.account, tokens);
   }
   toggleCustomToken = (e, { checked, name }) => {
     const { actions } = this.props;
-    const [contract, symbol] = name.split(':');
+    const [chainKey, contract, symbol] = name.split(':');
     if (checked) {
       actions.addCustomToken(contract, symbol);
     } else {
@@ -38,6 +43,7 @@ class ToolsCustomTokens extends Component<Props> {
     const {
       actions,
       balances,
+      connection,
       customtokens,
       globals,
       settings,
@@ -54,7 +60,7 @@ class ToolsCustomTokens extends Component<Props> {
     } = customtokens;
     if (customTokens && customTokens.length) {
       customTokens.forEach((token) => {
-        const [contract, symbol] = token.split(':');
+        const [chainKey, contract, symbol] = token.split(':');
         if (findIndex(customtokens.tokens, { symbol, contract }) === -1) {
           tokens.unshift({
             contract,
@@ -109,14 +115,14 @@ class ToolsCustomTokens extends Component<Props> {
             {([].concat(tokens)
                 .filter((token) => (token.symbol !== 'EOS'))
                 .map((token) => {
-                  const name = `${token.contract}:${token.symbol}`;
+                  const name = `${connection.chainKey}:${token.contract}:${token.symbol}`;
                   const isSelected = !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);
                   let balance = false;
                   if (balances && settings.account && balances[settings.account]) {
                     balance = balances[settings.account][token.symbol];
                   }
                   return (
-                    <Table.Row key={`${token.contract}-${token.symbol}`}>
+                    <Table.Row key={`${connection.chainKey}-${token.contract}-${token.symbol}`}>
                       <Table.Cell>
                         <Header size="small">
                           {token.contract}

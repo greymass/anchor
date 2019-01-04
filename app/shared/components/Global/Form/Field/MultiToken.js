@@ -43,7 +43,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const trackedTokens = (connection.supportedContracts && connection.supportedContracts.includes('customtokens') && customTokens) ?
       (
         customTokens.map((tokenName) => {
-          const [contract, symbol] = tokenName.split(':');
+          const [chainKey, contract, symbol] = tokenName.split(':');
           return { contract, symbol };
         })
       ) : [{

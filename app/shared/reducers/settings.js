@@ -24,7 +24,7 @@ const initialState = {
   // Custom tokens the wallet should be tracking
   customTokens: [
     // Always track the EOS token
-    'eosio.token:EOS'
+    'eos-mainnet:eosio.token:EOS'
   ],
   // State to view by default in DevTest
   devTestDefaultState: false,
@@ -33,7 +33,7 @@ const initialState = {
   // Whether or not to display known testnets for the various networks
   displayTestNetworks: false,
   // Default filter for components, functionalities
-  exclude: ['beos-testnet'],
+  excludeForChainKey: ['beos-testnet'],
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
   // Default to Ledger import process

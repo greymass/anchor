@@ -83,10 +83,10 @@ export function setSettingWithValidation(key, value) {
 
 export function addCustomToken(contract, symbol) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+    const { connection, settings } = getState();
     const { customTokens } = settings;
 
-    const name = [contract.toLowerCase(), symbol.toUpperCase()].join(':');
+    const name = [connection.chainKey, contract.toLowerCase(), symbol.toUpperCase()].join(':');
 
     let tokens = [];
     if (customTokens) {
@@ -104,10 +104,10 @@ export function addCustomToken(contract, symbol) {
 
 export function addCustomTokenBeos(contract, symbol) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+    const { connection, settings } = getState();
     const { customTokens } = settings;
 
-    const name = [contract.toLowerCase(), symbol.toUpperCase()].join(':');
+    const name = [connection.chainKey, contract.toLowerCase(), symbol.toUpperCase()].join(':');
 
     let tokens = [];
     if (customTokens) {
@@ -124,10 +124,10 @@ export function addCustomTokenBeos(contract, symbol) {
 
 export function removeCustomToken(contract, symbol) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+    const { connection, settings } = getState();
     const { customTokens } = settings;
 
-    const name = [contract.toLowerCase(), symbol.toUpperCase()].join(':');
+    const name = [connection.chainKey, contract.toLowerCase(), symbol.toUpperCase()].join(':');
 
     let tokens = [];
     if (customTokens) {
