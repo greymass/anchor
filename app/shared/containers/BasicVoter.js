@@ -55,6 +55,12 @@ type Props = {
   system: {}
 };
 
+const  componentsToEagerLoad = {
+  producers: Producers,
+  tools: Tools,
+  wallet: Wallet
+};
+
 class BasicVoterContainer extends Component<Props> {
   props: Props;
 
@@ -123,7 +129,7 @@ class BasicVoterContainer extends Component<Props> {
     }
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
     const {
@@ -140,7 +146,7 @@ class BasicVoterContainer extends Component<Props> {
       activeItem
     } = this.state;
 
-    let activeTab = <Producers {...this.props} />;
+    let activeTab;
     switch (activeItem) {
       case 'wallet': {
         activeTab = <Wallet {...this.props} />;
@@ -166,6 +172,8 @@ class BasicVoterContainer extends Component<Props> {
     if (['producers', 'wallet', 'tools'].includes(activeItem) && settings.walletInit && !settings.account) {
       activeTab = <GlobalAccountSelect />;
     }
+
+    const eagerLoaded = Object.keys(componentsToEagerLoad).includes(activeItem);
 
     return (
       <div>
@@ -196,7 +204,16 @@ class BasicVoterContainer extends Component<Props> {
           basic
           style={{ borderBottom: 'none' }}
         >
-          {activeTab}
+          {Object.keys(componentsToEagerLoad).map((tabName) => {
+            const EagerLoadedComponent = componentsToEagerLoad[tabName];
+            return (
+              <div style={{ display: (activeItem === tabName ? 'block' : 'none') }}>
+                <EagerLoadedComponent {...this.props} />
+              </div>
+            );
+          })}
+
+          {!eagerLoaded && activeTab}
         </Segment>
         {(settings.chainId === 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906')
           ? (
