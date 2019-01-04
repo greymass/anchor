@@ -113,6 +113,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
                   blockExplorers={blockExplorers}
                   content={`${trx_id.substr(0, 4)}...${trx_id.substr(-4)}`}
                   linkData={action.action_trace.trx_id}
+                  linkBlockId={action.action_trace.block_num}
                   linkType="txid"
                   settings={settings}
                 />

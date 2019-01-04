@@ -32,6 +32,7 @@ class WalletStatusActionsTableRowGeneric extends Component<Props> {
               blockExplorers={blockExplorers}
               content={t('actions_link_content')}
               linkData={action.trx_id}
+              linkBlockId={action.block_num}
               linkType="txid"
               settings={settings}
             />

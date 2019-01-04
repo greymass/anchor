@@ -24,6 +24,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
         blockExplorers={blockExplorers}
         content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
         linkData={transaction.transaction_id}
+        linkBlockId={transaction.processed.block_num}
         linkType="txid"
         settings={settings}
       />);
@@ -34,6 +35,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
           blockExplorers={blockExplorers}
           content={`${tx.transaction_id.substr(0, 8)}...${tx.transaction_id.substr(-8)}`}
           linkData={tx.transaction_id}
+          linkBlockId={tx.processed.block_num}
           linkType="txid"
           settings={settings}
         />));

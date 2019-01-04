@@ -68,6 +68,15 @@ export function getBlockExplorers() {
           }
         }
       ],
+      'beos-testnet': [
+        {
+          name: 'explore.beos.world',
+          patterns: {
+            account: 'https://explore.beos.world/account/{account}',
+            txid: 'https://explore.beos.world/transactions/{txid}'
+          }
+        }
+      ],
       'telos-mainnet': [
         {
           name: 'eosx.io',
