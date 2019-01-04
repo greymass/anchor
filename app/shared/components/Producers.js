@@ -59,7 +59,7 @@ class Producers extends Component<Props> {
           }
           // If the voter_info entry exists, load those votes into state
           this.setState({
-            selected: selected,
+            selected,
             selected_account,
             selected_loaded: true
           });
