@@ -72,7 +72,7 @@ export function getBlockExplorers() {
         {
           name: 'explore.beos.world',
           patterns: {
-            account: 'https://explore.beos.world/account/{account}',
+            account: 'https://explore.beos.world/accounts/{account}',
             txid: 'https://explore.beos.world/transactions/{txid}'
           }
         }
