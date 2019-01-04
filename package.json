@@ -67,9 +67,7 @@
       "icon": "app/renderer/assets/icons/mac/icon.icns"
     },
     "win": {
-      "certificateFile": "aaroncox.p12",
       "icon": "app/renderer/assets/icons/win/icon.ico",
-      "publisherName": "Aaron Cox",
       "target": [
         {
           "target": "nsis",
