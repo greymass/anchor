@@ -44,6 +44,10 @@ class WalletPanelFormWithdraw extends Component<Props> {
     const { from, to, quantity, storeName } = this.state;
     this.setState({ confirming: false }, () => {
       this.props.actions.withdraw(from, to, quantity, storeName);
+      this.setState({
+        to: "",
+        quantity: ""
+      })
     });
   };
 
