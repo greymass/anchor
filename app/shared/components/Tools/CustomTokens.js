@@ -70,6 +70,8 @@ class ToolsCustomTokens extends Component<Props> {
         }
       });
     }
+    let filterTokens = customTokens.filter((token) => (connection.chainKey !== token.split(':')[0]));
+    filterTokens = filterTokens.map((token) => (token.split(':')[2]));
     return (
       <Segment basic>
         <Header>
@@ -114,6 +116,7 @@ class ToolsCustomTokens extends Component<Props> {
           <Table.Body>
             {([].concat(tokens)
                 .filter((token) => (token.symbol !== 'EOS'))
+                .filter((token) => (filterTokens.indexOf(token.symbol) === -1))
                 .map((token) => {
                   const name = `${connection.chainKey}:${token.contract}:${token.symbol}`;
                   const isSelected = !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);

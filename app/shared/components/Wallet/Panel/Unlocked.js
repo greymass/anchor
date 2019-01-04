@@ -62,7 +62,7 @@ class WalletPanelUnlocked extends Component<Props> {
                 active={activeIndex === 0}
               >
                 <Segment.Group>
-                  {(settings.excludeForChainKey.includes(connection.chainKey))
+                  {(settings.exclude.includes(connection.chainKey))
                     ? false
                     : (
                       <Segment>
@@ -94,7 +94,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       accountName={settings.account}
                     />
                   </Segment>
-                  {(settings.excludeForChainKey.includes(connection.chainKey))
+                  {(settings.exclude.includes(connection.chainKey))
                     ? false
                     : (
                       <Segment>
@@ -111,7 +111,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(settings.excludeForChainKey.includes(connection.chainKey))
+                  {(settings.exclude.includes(connection.chainKey))
                     ? false
                     : (
                       <Segment>
