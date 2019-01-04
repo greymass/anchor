@@ -16,8 +16,6 @@ class TabMenu extends Component<Props> {
     const {
       actions,
       activeItem,
-      blockchains,
-      connection,
       handleItemClick,
       locked,
       settings,
@@ -25,7 +23,6 @@ class TabMenu extends Component<Props> {
       wallet,
       t
     } = this.props;
-    const blockchain = find(blockchains, { chainId: settings.chainId });
     return (
       <Menu
         attached
