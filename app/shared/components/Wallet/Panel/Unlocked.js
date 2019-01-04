@@ -135,6 +135,7 @@ class WalletPanelUnlocked extends Component<Props> {
                           actions={actions}
                           balances={balances}
                           blockchains={blockchains}
+                          blockExplorers={blockExplorers}
                           connection={connection}
                           settings={settings}
                           system={system}

@@ -11,6 +11,7 @@ type Props = {
   },
   connection: {},
   balances: {},
+  blockExplorers: {},
   blockchains: {},
   settings: {},
   system: {},
@@ -24,6 +25,7 @@ class WalletPanelButtonWithdraw extends Component<Props> {
     const {
       actions,
       blockchains,
+      blockExplorers,
       connection,
       balances,
       settings,
@@ -35,6 +37,7 @@ class WalletPanelButtonWithdraw extends Component<Props> {
       <GlobalTransactionModal
         actionName="WITHDRAW"
         actions={actions}
+        blockExplorers={blockExplorers}
         button={{
           color: "blue",
           content: t("withdraw_send_button_cta"),

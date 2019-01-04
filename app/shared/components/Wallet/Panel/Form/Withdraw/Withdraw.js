@@ -160,12 +160,14 @@ class WalletPanelFormWithdraw extends Component<Props> {
 
   isSubmitDisabled = () => {
     const { asset, formError, isValidAccount, quantity, to } = this.state;
-
-    const [value] = quantity.split(" ");
+    const { balances, settings: { account } } = this.props;
+    const [value, symbol] = quantity.split(" ");
+    const balance = balances[account];
 
     return !quantity ||
       !value ||
       !parseFloat(value) ||
+      value > balance[symbol] ||
       !asset ||
       !to ||
       !!formError ||
