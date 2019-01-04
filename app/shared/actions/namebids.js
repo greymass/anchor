@@ -65,7 +65,6 @@ export function getBidsForAccount(previous = false) {
     };
 
     if (previous) {
-      console.log({previous})
       query.lower_bound = previous;
     } else {
       dispatch({
