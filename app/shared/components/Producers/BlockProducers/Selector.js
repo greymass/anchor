@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { I18n, translate } from 'react-i18next';
 import { Header, List, Segment } from 'semantic-ui-react';
-import { concat, intersection, sortBy } from 'lodash';
+import { intersection } from 'lodash';
 
 import ProducersSelectorItem from './Selector/Item';
 import ProducersSelectorItemEmpty from './Selector/Item/Empty';
@@ -22,12 +22,13 @@ class ProducersSelector extends Component<Props> {
       unregisteredProducers
     } = this.props;
     const unregisteredProducersSelected = intersection(unregisteredProducers, selected);
+    const validSelected = selected.filter((producer) => !unregisteredProducers.includes(producer));
     const listItems = [(
       <List.Item key="selectedHeader">
         <Header color="blue" textAlign="center">
           {(isProxying) ? t('producer_voter_proxying_vote') : false}
           <Header.Subheader>
-            {selected.length}/30 {t('producer_voter_votes_used')}
+            {validSelected.length}/30 {t('producer_voter_votes_used')}
           </Header.Subheader>
         </Header>
       </List.Item>
@@ -51,7 +52,7 @@ class ProducersSelector extends Component<Props> {
         />
       )));
     }
-    if (selected.length === 0) {
+    if (validSelected.length === 0) {
       listItems.push(<ProducersSelectorItemEmpty
         isProxying={isProxying}
         key={`${isProxying}-empty`}
