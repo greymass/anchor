@@ -95,7 +95,7 @@ class WalletPanelUnlocked extends Component<Props> {
                   </Segment>
                   <Segment>
                     <WalletPanelButtonRamBuy
-                      account={accounts[settings.account]}
+                      account={accounts[settings.account] || {}}
                       actions={actions}
                       balances={balances}
                       blockExplorers={blockExplorers}
@@ -107,7 +107,7 @@ class WalletPanelUnlocked extends Component<Props> {
                   </Segment>
                   <Segment>
                     <WalletPanelButtonRamSell
-                      account={accounts[settings.account]}
+                      account={accounts[settings.account] || {}}
                       actions={actions}
                       balances={balances}
                       blockExplorers={blockExplorers}

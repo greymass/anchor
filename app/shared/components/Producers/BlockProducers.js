@@ -10,7 +10,7 @@ class BlockProducers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 40,
+      amount: 10,
       querying: false
     };
   }

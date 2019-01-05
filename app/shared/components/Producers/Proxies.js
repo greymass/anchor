@@ -9,7 +9,7 @@ class Proxies extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 40,
+      amount: 10,
       querying: false
     };
   }
@@ -23,9 +23,9 @@ class Proxies extends Component<Props> {
     clearInterval(this.interval);
   }
 
-  loadMore = () => this.setState({ amount: this.state.amount + 20 });
+  loadMore = () => this.setState({ amount: this.state.amount + 10 });
 
-  resetDisplayAmount = () => this.setState({ amount: 20 });
+  resetDisplayAmount = () => this.setState({ amount: 10 });
   isQuerying = (querying) => this.setState({ querying });
 
   tick() {
@@ -79,6 +79,7 @@ class Proxies extends Component<Props> {
             accounts={accounts}
             actions={actions}
             addProxy={addProxy}
+            amount={amount}
             attached="top"
             currentProxy={currentProxy}
             globals={globals}
