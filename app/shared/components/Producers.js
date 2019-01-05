@@ -243,36 +243,34 @@ class Producers extends Component<Props> {
 
     const tabPanes = [
       {
+        key: 'producers-tab',
         menuItem: t('producers_block_producers'),
-        render: () => {
-          return (
-            <Tab.Pane>
-              <BlockProducers
-                {...this.props}
-                addProducer={this.addProducer.bind(this)}
-                removeProducer={this.removeProducer.bind(this)}
-                selected={selected}
-              />
-            </Tab.Pane>
-          );
-        }
+        pane: (
+          <Tab.Pane>
+            <BlockProducers
+              {...this.props}
+              addProducer={this.addProducer.bind(this)}
+              removeProducer={this.removeProducer.bind(this)}
+              selected={selected}
+            />
+          </Tab.Pane>
+        )
       }
     ];
 
     if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
       tabPanes.push({
+        key: 'proxies-tab',
         menuItem: t('producers_proxies'),
-        render: () => {
-          return (
-            <Tab.Pane>
-              <Proxies
-                {...this.props}
-                addProxy={this.addProxy.bind(this)}
-                removeProxy={this.removeProxy.bind(this)}
-              />
-            </Tab.Pane>
-          );
-        }
+        pane: (
+          <Tab.Pane>
+            <Proxies
+              {...this.props}
+              addProxy={this.addProxy.bind(this)}
+              removeProxy={this.removeProxy.bind(this)}
+            />
+          </Tab.Pane>
+        )
       });
     }
 
@@ -291,6 +289,7 @@ class Producers extends Component<Props> {
             <Grid.Column width={10}>
               <Tab
                 panes={tabPanes}
+                renderActiveOnly={false}
               />
             </Grid.Column>
           </Grid.Row>
