@@ -107,7 +107,6 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 </Button>
                 <Button
                   color="green"
-                  disabled={hasUnregisteredProducersSelected}
                   floated="right"
                   onClick={onConfirm}
                 >
