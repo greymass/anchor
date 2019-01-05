@@ -32,23 +32,6 @@ class ProducersSelector extends Component<Props> {
         </Header>
       </List.Item>
     )];
-    if (selected.length === 0) {
-      listItems.push(<ProducersSelectorItemEmpty
-        isProxying={isProxying}
-        key={`${isProxying}-empty`}
-        modified={modified}
-      />);
-    } else {
-      listItems.push(selected.map((producer) => (
-        <ProducersSelectorItem
-          isProxying={isProxying}
-          key={`${isProxying}-${producer}`}
-          producer={producer}
-          removeProducer={this.props.removeProducer}
-        />
-      )));
-    }
-
     if (unregisteredProducersSelected.length !== 0) {
       listItems.push(
         <List.Item key="unregisteredHeader">
@@ -63,6 +46,22 @@ class ProducersSelector extends Component<Props> {
         <ProducersSelectorItem
           isProxying={isProxying}
           key={`${isProxying}-${producer}-unregistered`}
+          producer={producer}
+          removeProducer={this.props.removeProducer}
+        />
+      )));
+    }
+    if (selected.length === 0) {
+      listItems.push(<ProducersSelectorItemEmpty
+        isProxying={isProxying}
+        key={`${isProxying}-empty`}
+        modified={modified}
+      />);
+    } else {
+      listItems.push(selected.map((producer) => (
+        <ProducersSelectorItem
+          isProxying={isProxying}
+          key={`${isProxying}-${producer}`}
           producer={producer}
           removeProducer={this.props.removeProducer}
         />
