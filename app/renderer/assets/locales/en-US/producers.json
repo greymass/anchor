@@ -113,5 +113,6 @@
   "producers_proxies_table_header_account": "Proxy Account",
   "producers_proxies_table_header_name": "Proxy Name",
   "producers_proxies_table_header_website": "Website",
-  "producers_table_votes_proxied": "Current producer voting proxy:"
+  "producers_table_votes_proxied": "Current producer voting proxy:",
+  "producers_warning_have_unregistered": "{{unregisteredBps}} are now unregistered and will be automatically removed from your selection. ."
 }

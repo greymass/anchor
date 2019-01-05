@@ -6,7 +6,6 @@ import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment, Table } f
 import { chunk, last, times, intersection } from 'lodash';
 
 import WalletMessageContractVoteProducer from '../../../../Global/Message/Contract/VoteProducer';
-import GlobalFormMessageError from '../../../../Global/Form/Message/Error';
 
 export default class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
@@ -34,7 +33,7 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
         ));
       });
     }
-    const hasUnregisteredProducersSelected = intersection(selected, unregisteredProducers).length !== 0;
+    const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
 
     return (
       <I18n ns="producers">
@@ -90,9 +89,10 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                     voter: settings.account
                   }}
                 />
-                {(hasUnregisteredProducersSelected) && (
-                  <GlobalFormMessageError
-                    error={t('producers_unregistered')}
+                {(unregisteredProducersSelected.length !== 0) && (
+                  <Message
+                    content={t('producers_warning_have_unregistered', { unregisteredBps: unregisteredProducersSelected })}
+                    warning
                   />
                 )}
                 <Divider />
