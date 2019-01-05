@@ -91,7 +91,11 @@ export default class ProducersVotingPreviewSelection extends Component<Props> {
                 />
                 {(unregisteredProducersSelected.length !== 0) && (
                   <Message
-                    content={t('producers_warning_have_unregistered', { unregisteredBps: unregisteredProducersSelected })}
+                    content={
+                      (unregisteredProducersSelected.length === 1) ?
+                        t('producers_warning_have_unregistered_single', { unregisteredBp: unregisteredProducersSelected[0] }) :
+                        t('producers_warning_have_unregistered_multiple', { unregisteredBps: unregisteredProducersSelected.join(', ') })
+                    }
                     warning
                   />
                 )}
