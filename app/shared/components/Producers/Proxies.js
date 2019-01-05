@@ -16,7 +16,7 @@ class Proxies extends Component<Props> {
 
   componentDidMount() {
     this.tick();
-    //this.interval = setInterval(this.tick.bind(this), 120000);
+    this.interval = setInterval(this.tick.bind(this), 120000);
   }
 
   componentWillUnmount() {
