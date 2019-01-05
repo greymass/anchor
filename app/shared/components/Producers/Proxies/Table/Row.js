@@ -6,7 +6,7 @@ import { isEqual } from 'lodash';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
 
-class ProducersTableRow extends Component<Props> {
+class ProxiesTableRow extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
     !isEqual(this.props.proxy.owner, nextProps.proxy.owner)
     || !isEqual(this.props.isValidUser, nextProps.isValidUser)
@@ -83,4 +83,4 @@ class ProducersTableRow extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersTableRow);
+export default translate('producers')(ProxiesTableRow);
