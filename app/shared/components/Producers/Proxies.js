@@ -23,7 +23,7 @@ class Proxies extends Component<Props> {
     clearInterval(this.interval);
   }
 
-  loadMore = () => this.setState({ amount: this.state.amount + 20 });
+  loadMore = () => this.setState({ amount: this.state.amount + 10 });
 
   resetDisplayAmount = () => this.setState({ amount: 10 });
   isQuerying = (querying) => this.setState({ querying });
