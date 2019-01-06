@@ -214,6 +214,7 @@ class Producers extends Component<Props> {
 
           {(!isProxying) ? (
             <ProducersVotingPreview
+              account={account}
               actions={actions}
               blockExplorers={allBlockExplorers[connection.chainKey]}
               lastError={lastError}
