@@ -5,6 +5,8 @@ import { setSettings, setSettingWithValidation } from './settings';
 import { clearActionsCache } from './accounts';
 import { clearProducerInfo } from './producers';
 
+import * as types from './types';
+
 function swapBlockchain(chainId) {
   return (dispatch: () => void, getState) => {
     const { blockchains, settings } = getState();
@@ -34,6 +36,13 @@ function swapBlockchain(chainId) {
   };
 }
 
+function updateBlockchain(payload) {
+  return (dispatch: () => void) => dispatch({
+    type: types.SYSTEM_BLOCKCHAINS_UPDATE,
+    payload
+  });
+}
+
 function importBlockchainFromBackup(blockchain) {
 
 }
@@ -43,4 +52,5 @@ export default {
   // setNode,
   importBlockchainFromBackup,
   swapBlockchain,
+  updateBlockchain,
 };
