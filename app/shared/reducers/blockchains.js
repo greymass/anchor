@@ -4,17 +4,16 @@ import * as types from "../actions/types";
 
 const knownChains = [
   {
-    _id: "eos-mainnet",
-    chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-    keyPrefix: "EOS",
-    name: "EOS",
-    node: "https://eos.greymass.com",
+    _id: 'test',
+    chainId: 'ada376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    keyPrefix: 'EOS',
+    name: 'EOS',
+    node: 'https://eos.greymass.com',
     supportedContracts: [
-      "customtokens",
-      "producerinfo",
-      "proposals",
-      "regproxyinfo",
-      "crosschaintransfer"
+      'customtokens',
+      'producerinfo',
+      'proposals',
+      'regproxyinfo'
     ],
     symbol: 'EOS',
     testnet: false
@@ -36,13 +35,28 @@ const knownChains = [
     testnet: false
   },
   {
-    _id: "eos-testnet-jungle",
-    chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",
-    keyPrefix: "EOS",
-    name: "Jungle (EOS)",
-    node: "http://jungle.cryptolions.io:18888",
+    _id: 'eos-mainnet',
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    keyPrefix: 'EOS',
+    name: 'EOS',
+    node: 'https://eos.greymass.com',
+    supportedContracts: [
+      'customtokens',
+      'producerinfo',
+      'proposals',
+      'regproxyinfo'
+    ],
+    symbol: 'EOS',
+    testnet: false
+  },
+  {
+    _id: 'eos-testnet-jungle',
+    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    keyPrefix: 'EOS',
+    name: 'Jungle (EOS)',
+    node: 'http://jungle.cryptolions.io:18888',
     supportedContracts: [],
-    symbol: "EOS",
+    symbol: 'EOS',
     testnet: true
   },
   {
