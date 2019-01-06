@@ -8,6 +8,7 @@ import ProducersVotingPreviewSelection from './Preview/Selection';
 class ProducersVotingPreview extends Component<Props> {
   render() {
     const {
+      account,
       actions,
       blockExplorers,
       lastError,
@@ -33,6 +34,7 @@ class ProducersVotingPreview extends Component<Props> {
         }}
         content={(
           <ProducersVotingPreviewSelection
+            account={account}
             lastError={lastError}
             onConfirm={onConfirm}
             selected={selected}

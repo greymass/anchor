@@ -1,122 +1,105 @@
 
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
-import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment, Table } from 'semantic-ui-react';
-import { chunk, last, times, intersection } from 'lodash';
+import { translate } from 'react-i18next';
+import { Button, Divider, Icon, Message, Segment } from 'semantic-ui-react';
+import { intersection } from 'lodash';
 
 import WalletMessageContractVoteProducer from '../../../../Global/Message/Contract/VoteProducer';
+import ProducersTable from './Selection/ProducersTable';
 
-export default class ProducersVotingPreviewSelection extends Component<Props> {
+class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
     const {
+      account,
       lastError,
       onClose,
       onConfirm,
       selected,
       settings,
-      submitting,
+      t,
       unregisteredProducers
     } = this.props;
-    // Generate and chunk the rows into groups of 4 cells
-    const rows = chunk(times(selected.length, i => (
-      <Table.Cell key={i}>
-        {selected[i]}
-      </Table.Cell>
-    )), 4);
-    // Fill in any empty cells for the layout to render properly
-    const lastRow = last(rows);
-    if (lastRow && lastRow.length < 4) {
-      times((4 - lastRow.length), i => {
-        lastRow.push((
-          <Table.Cell width={4} key={`blank-${i}`} />
-        ));
-      });
-    }
     const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
+    const removedProducers =
+      account.voter_info.producers.filter((producer) => !selected.includes(producer));
 
     return (
-      <I18n ns="producers">
-        {
-          (t) => (
-            <Segment loading={submitting}>
-              <Header icon="alarm" content={t('producer_voter_preview_confirm_changes_title')} />
-              <Modal.Content>
-                <h3>
-                  {t('producer_voter_preview_confirm_changes_message')}
-                </h3>
-                <Segment basic padded>
-                  <Table celled>
-                    <Table.Body>
-                      {(selected.length > 0)
-                        ? rows.map((row, i) => (
-                          <Table.Row key={i}>{row}</Table.Row>
-                        ))
-                        : <Grid.Column textAlign="center" width={12}>{t('producer_voter_preview_confirm_none')}</Grid.Column>
-                      }
-                    </Table.Body>
-                  </Table>
-                </Segment>
-                {(lastError)
-                  ? (
-                    <Message negative>
-                      {(lastError.code)
-                        ? (
-                          <div>
-                            <Message.Header>
-                              {lastError.error.code}: {lastError.error.name}
-                            </Message.Header>
-                            <code>{lastError.error.what}</code>
-                          </div>
-                        )
-                        : (
-                          <div>
-                            <Message.Header>
-                              {t(['producer_voter_preview_error_title'])}
-                            </Message.Header>
-                            <code>{new String(lastError)}</code>
-                          </div>
-                        )
-                      }
-                    </Message>
-                  )
-                  : ''
-                }
-                <WalletMessageContractVoteProducer
-                  data={{
-                    signer: settings.account,
-                    producers: selected.join(', '),
-                    voter: settings.account
-                  }}
-                />
-                {(unregisteredProducersSelected.length !== 0) && (
-                  <Message
-                    content={
-                      (unregisteredProducersSelected.length === 1) ?
-                        t('producers_warning_have_unregistered_single', { unregisteredBp: unregisteredProducersSelected[0] }) :
-                        t('producers_warning_have_unregistered_multiple', { unregisteredBps: unregisteredProducersSelected.join(', ') })
-                    }
-                    warning
-                  />
-                )}
-                <Divider />
-                <Button
-                  onClick={onClose}
-                >
-                  <Icon name="x" /> {t('cancel')}
-                </Button>
-                <Button
-                  color="green"
-                  floated="right"
-                  onClick={onConfirm}
-                >
-                  <Icon name="checkmark" /> {t('producer_voter_preview_submit')}
-                </Button>
-              </Modal.Content>
+      <React.Fragment>
+        <Segment>
+          <ProducersTable
+            items={selected}
+          />
+        </Segment>
+        {removedProducers.length !== 0 && (
+          <React.Fragment>
+            <h3>
+              {t('producer_voter_preview_confirm_unselected')}
+            </h3>
+            <Segment basic padded>
+              <ProducersTable
+                items={removedProducers}
+              />
             </Segment>
+          </React.Fragment>
+        )}
+        {(lastError)
+          ? (
+            <Message negative>
+              {(lastError.code)
+                ? (
+                  <div>
+                    <Message.Header>
+                      {lastError.error.code}: {lastError.error.name}
+                    </Message.Header>
+                    <code>{lastError.error.what}</code>
+                  </div>
+                )
+                : (
+                  <div>
+                    <Message.Header>
+                      {t(['producer_voter_preview_error_title'])}
+                    </Message.Header>
+                    <code>{new String(lastError)}</code>
+                  </div>
+                )
+              }
+            </Message>
           )
+          : ''
         }
-      </I18n>
+        <WalletMessageContractVoteProducer
+          data={{
+            signer: settings.account,
+            producers: selected.join(', '),
+            voter: settings.account
+          }}
+        />
+        {(unregisteredProducersSelected.length !== 0) && (
+          <Message
+            content={
+              (unregisteredProducersSelected.length === 1) ?
+                t('producers_warning_have_unregistered_single', { unregisteredBp: unregisteredProducersSelected[0] }) :
+                t('producers_warning_have_unregistered_multiple', { unregisteredBps: unregisteredProducersSelected.join(', ') })
+            }
+            warning
+          />
+        )}
+        <Divider />
+        <Button
+          onClick={onClose}
+        >
+          <Icon name="x" /> {t('cancel')}
+        </Button>
+        <Button
+          color="green"
+          floated="right"
+          onClick={onConfirm}
+        >
+          <Icon name="checkmark" /> {t('producer_voter_preview_submit')}
+        </Button>
+      </React.Fragment>
     );
   }
 }
+export default translate('producers')(ProducersVotingPreviewSelection);
