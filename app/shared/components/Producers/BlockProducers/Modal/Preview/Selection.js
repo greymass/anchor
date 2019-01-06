@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Divider, Icon, Message, Segment, Modal, Header } from 'semantic-ui-react';
 import { intersection } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
 import WalletMessageContractVoteProducer from '../../../../Global/Message/Contract/VoteProducer';
 import ProducersTable from './Selection/ProducersTable';
@@ -23,7 +24,7 @@ class ProducersVotingPreviewSelection extends Component<Props> {
     } = this.props;
     const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
     const removedProducers =
-      account.voter_info.producers.filter((producer) => !selected.includes(producer));
+      (get(account, 'voter_info.producers') || []).filter((producer) => !selected.includes(producer));
 
     return (
       <Segment loading={submitting}>
