@@ -117,6 +117,12 @@ export default function blockchains(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return [...initialState];
     }
+    case types.SYSTEM_BLOCKCHAINS_UPDATE: {
+      const [, others] = partition(state, {
+        chainId: action.payload.chainId,
+      });
+      return [action.payload, ...others];
+    }
     case types.SYSTEM_BLOCKCHAINS_ENSURE: {
       const [existing, others] = partition(state, {
         chainId: action.payload.chainId,
