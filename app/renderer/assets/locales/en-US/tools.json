@@ -82,7 +82,6 @@
   "tools_form_account_edit_mode": "Wallet Mode",
   "tools_form_account_edit_nosave": "This screen is purely for informational reference, no information here can be edited in this version.",
   "tools_form_account_edit_pubkey": "Public Key",
-  "tools_form_bid_name_bid": "Bid Amount (In {{assetSymbol}})",
   "tools_form_bid_name_bid": "Bid Amount",
   "tools_form_bid_name_bid_info_bid_info": "Bid info",
   "tools_form_bid_name_bid_info_bid_name": "Name",
