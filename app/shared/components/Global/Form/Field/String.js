@@ -22,6 +22,7 @@ export default class GlobalFormFieldString extends Component<Props> {
   render() {
     const {
       autoFocus,
+      disabled,
       icon,
       label,
       loading,
@@ -37,6 +38,7 @@ export default class GlobalFormFieldString extends Component<Props> {
         autoFocus={autoFocus}
         control={Input}
         defaultValue={value}
+        disabled={disabled}
         icon={icon}
         label={label}
         placeholder={placeholder}
