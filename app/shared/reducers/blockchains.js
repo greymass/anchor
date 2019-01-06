@@ -4,34 +4,19 @@ import * as types from "../actions/types";
 
 const knownChains = [
   {
-    _id: 'test',
-    chainId: 'ada376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    _id: 'beos-testnet',
+    chainId: '50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd',
     keyPrefix: 'EOS',
-    name: 'EOS',
-    node: 'https://eos.greymass.com',
+    name: 'BEOS',
+    node: 'https://api.beos.world',
     supportedContracts: [
       'customtokens',
       'producerinfo',
       'proposals',
-      'regproxyinfo'
+      'regproxyinfo',
+      'withdraw'
     ],
-    symbol: 'EOS',
-    testnet: false
-  },
-  {
-    _id: "beos-testnet",
-    chainId: "50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd",
-    keyPrefix: "EOS",
-    name: "BEOS",
-    node: "https://api.beos.world",
-    supportedContracts: [
-      "customtokens",
-      "producerinfo",
-      "proposals",
-      "regproxyinfo",
-      "withdraw"
-    ],
-    symbol: "BEOS",
+    symbol: 'BEOS',
     testnet: false
   },
   {
