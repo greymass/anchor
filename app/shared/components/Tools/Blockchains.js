@@ -14,8 +14,14 @@ import {
 } from 'semantic-ui-react';
 
 import GlobalButtonBlockchainImport from '../Global/Button/Blockchain/Import';
+import ToolsModalBlockchain from './Modal/Blockchain';
 
 class ToolsBlockchains extends PureComponent<Props> {
+  state = {
+    editing: false
+  }
+  edit = (chainId) => this.setState({ editing: chainId })
+  cancel = (chainId) => this.setState({ editing: false })
   render() {
     const {
       actions,
@@ -25,21 +31,26 @@ class ToolsBlockchains extends PureComponent<Props> {
       t,
       wallets
     } = this.props;
+    const {
+      editing
+    } = this.state;
     const items = [
       (
         <Dropdown.Header icon="warning sign" content={t('wallet:wallet_advanced_header')} />
-      ),
-      (
-        <Dropdown.Item
-          content={t('wallet:view')}
-          icon="edit"
-          key="edit"
-          onClick={() => this.editWallet(account, authorization)}
-        />
       )
     ];
     return (
       <Segment basic>
+        {(editing)
+          ? (
+            <ToolsModalBlockchain
+              blockchain={editing}
+              onClose={this.cancel}
+              open
+            />
+          )
+          : false
+        }
         <Button.Group floated="right">
           <GlobalButtonBlockchainImport
             connection={connection}
@@ -66,16 +77,25 @@ class ToolsBlockchains extends PureComponent<Props> {
             {([].concat(blockchains)
                 .filter((b) => (!b.testnet))
                 .sort((a, b) => {
-                  const v1 = `${a.testnet}@${a.symbol}`;
-                  const v2 = `${b.testnet}@${b.symbol}`;
+                  const v1 = `${a.testnet}@${a.symbol}@${a.chainId}`;
+                  const v2 = `${b.testnet}@${b.symbol}@${b.chainId}`;
                   return v1 > v2;
                 })
                 .map((b) => {
-                  // const wallets =
                   const count = sumBy(
                     wallets,
                     (w) => (w.chainId === b.chainId) ? 1 : 0
                   );
+                  const currenItems = [...items,
+                    (
+                      <Dropdown.Item
+                        content={t('tools_blockchains_edit')}
+                        icon="edit"
+                        key="edit"
+                        onClick={() => this.edit(b.chainId)}
+                      />
+                    )
+                  ];
                   return (
                     <Table.Row>
                       <Table.Cell>
@@ -130,14 +150,20 @@ class ToolsBlockchains extends PureComponent<Props> {
                         textAlign="center"
                       />
                       <Table.Cell>
-                        <Popup
-                          content={b.chainId}
-                          inverted
-                          hoverable
-                          trigger={(<span>{b.chainId.substr(0, 5)}...{b.chainId.substr(-5)}</span>)}
+                        <Header
+                          content={(
+                            <Popup
+                              content={b.chainId}
+                              inverted
+                              hoverable
+                              trigger={(<span>{b.chainId.substr(0, 8)}...{b.chainId.substr(-8)}</span>)}
+                            />
+                          )}
+                          size="tiny"
+                          subheader={b.node}
                         />
                       </Table.Cell>
-                      <Table.Cell style={{ display: 'none' }}>
+                      <Table.Cell>
                         <Dropdown
                           direction="left"
                           floating
@@ -146,7 +172,7 @@ class ToolsBlockchains extends PureComponent<Props> {
                           icon="ellipsis vertical"
                         >
                           <Dropdown.Menu>
-                            {items}
+                            {currenItems}
                           </Dropdown.Menu>
                         </Dropdown>
                       </Table.Cell>
