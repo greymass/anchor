@@ -1,4 +1,4 @@
-import { partition } from 'lodash';
+import { partition, unionBy } from 'lodash';
 
 import * as types from '../actions/types';
 
@@ -99,6 +99,10 @@ const initialState = [
 
 export default function blockchains(state = initialState, action) {
   switch (action.type) {
+    case types.APP_INIT: {
+      // When the app initializes, merge any unknown _ids (new chains) into state
+      return unionBy(state, initialState, '_id');
+    }
     case types.RESET_ALL_STATES: {
       return [...initialState];
     }
@@ -106,7 +110,8 @@ export default function blockchains(state = initialState, action) {
       const [existing, others] = partition(state, {
         chainId: action.payload.chainId,
       });
-      // If this blockchain doesn't exist in state, add it as an unknown entry that can be edited later
+      // If this blockchain doesn't exist in state,
+      // add it as an unknown entry that can be edited later
       if (!existing.length) {
         return [{
           _id: `unknown-${action.payload.chainId}`,
