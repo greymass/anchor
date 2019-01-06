@@ -11,8 +11,7 @@ export default class GlobalFormFieldUrl extends Component<Props> {
     };
   }
   onChange = debounce((e, { name, value }) => {
-    const valid = value.match(/^(http|https):\/\//);
-
+    const valid = !!value.match(/^(http|https):\/\//);
     this.setState({
       value
     }, () => {
