@@ -37,7 +37,7 @@ class ProducersVotingPreviewSelection extends Component<Props> {
           {removedProducers.length !== 0 && (
             <React.Fragment>
               <h3>
-                {t('producer_voter_preview_confirm_unselected')}
+                {t('producers_voter_preview_confirm_unselected')}
               </h3>
               <Segment basic padded>
                 <ProducersTable

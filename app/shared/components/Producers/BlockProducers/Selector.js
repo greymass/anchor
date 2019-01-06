@@ -23,16 +23,7 @@ class ProducersSelector extends Component<Props> {
     } = this.props;
     const unregisteredProducersSelected = intersection(unregisteredProducers, selected);
     const validSelected = selected.filter((producer) => !unregisteredProducers.includes(producer));
-    const listItems = [(
-      <List.Item key="selectedHeader">
-        <Header color="blue" textAlign="center">
-          {(isProxying) ? t('producer_voter_proxying_vote') : false}
-          <Header.Subheader>
-            {validSelected.length}/30 {t('producer_voter_votes_used')}
-          </Header.Subheader>
-        </Header>
-      </List.Item>
-    )];
+    const listItems = [];
     if (unregisteredProducersSelected.length !== 0) {
       listItems.push(
         <List.Item key="unregisteredHeader">
@@ -52,6 +43,16 @@ class ProducersSelector extends Component<Props> {
         />
       )));
     }
+    listItems.push(
+      <List.Item key="selectedHeader">
+        <Header color="blue" textAlign="center">
+          {(isProxying) ? t('producer_voter_proxying_vote') : false}
+          <Header.Subheader>
+            {validSelected.length}/30 {t('producer_voter_votes_used')}
+          </Header.Subheader>
+        </Header>
+      </List.Item>
+    );
     if (validSelected.length === 0) {
       listItems.push(<ProducersSelectorItemEmpty
         isProxying={isProxying}
@@ -59,7 +60,7 @@ class ProducersSelector extends Component<Props> {
         modified={modified}
       />);
     } else {
-      listItems.push(selected.map((producer) => (
+      listItems.push(validSelected.map((producer) => (
         <ProducersSelectorItem
           isProxying={isProxying}
           key={`${isProxying}-${producer}`}
