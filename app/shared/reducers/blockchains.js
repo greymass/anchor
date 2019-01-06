@@ -4,21 +4,6 @@ import * as types from '../actions/types';
 
 const knownChains = [
   {
-    _id: 'test',
-    chainId: 'ada376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    keyPrefix: 'EOS',
-    name: 'EOS',
-    node: 'https://eos.greymass.com',
-    supportedContracts: [
-      'customtokens',
-      'producerinfo',
-      'proposals',
-      'regproxyinfo'
-    ],
-    symbol: 'EOS',
-    testnet: false
-  },
-  {
     _id: 'eos-mainnet',
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
     keyPrefix: 'EOS',
