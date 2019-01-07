@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Dropdown, Container, Header, List, Message, Segment } from 'semantic-ui-react';
+import { Dropdown, Container, Header, List, Message, Segment, Button } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
+import { Table } from '../../../containers/Global/Account/Import/Ledger';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
@@ -38,7 +39,8 @@ class ToolsGovernanceProposals extends Component<Props> {
       t
     } = this.props;
     const {
-      scope
+      scope,
+      selectedProposal
     } = this.state;
     const {
       list,
@@ -137,22 +139,59 @@ class ToolsGovernanceProposals extends Component<Props> {
             selectOnNavigation={false}
           />
         </Container>
-        {([].concat(list)
-          .filter((proposal) => !!proposal.valid)
-          .map((proposal) => (
-            <ToolsGovernanceProposalsProposal
-              actions={actions}
-              blockExplorers={blockExplorers}
-              isLocked={isLocked}
-              key={proposal.proposal_name}
-              proposal={proposal}
-              scope={scope}
-              settings={settings}
-              system={system}
-              votes={votes}
-            />
-          ))
-        )}
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              {fields.map((field) => (
+                <Table.HeaderCell>
+                  {t('governance_proposals_title')}
+                </Table.HeaderCell>
+                <Table.HeaderCell>
+                {t('governance_proposals_id')}
+                </Table.HeaderCell>
+                <Table.HeaderCell />
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {([].concat(list)
+              .filter((proposal) => !!proposal.valid)
+              .map((proposal) => (
+                <Table.Row>
+                  {selectedProposal === proposal.proposal_name ?
+                    (
+                      <React.Fragment>
+                        <Table.Cell>
+                          {proposal.proposal_name}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {proposal._id}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Button
+                            onClick={() => this.setState({ selectedProposal: proposal.proposal_name })}
+                            title={t('proposals_select_button')}
+                          />
+                        </Table.Cell>
+                      </React.Fragment>
+                    ) : (
+                      <ToolsGovernanceProposalsProposal
+                        actions={actions}
+                        blockExplorers={blockExplorers}
+                        isLocked={isLocked}
+                        key={proposal.proposal_name}
+                        proposal={proposal}
+                        scope={scope}
+                        settings={settings}
+                        system={system}
+                        votes={votes}
+                      />
+                    )}
+                </Table.Row>
+              ))
+            )}
+          </Table.Body>
+        </Table>
       </Segment>
     );
   }
