@@ -282,9 +282,11 @@ export function getCurrencyBalance(account, requestedTokens = false) {
     } = getState();
     if (account && (settings.node || settings.node.length !== 0)) {
       const { customTokens } = settings;
+      let newCustomTokens = customTokens;
+      newCustomTokens = newCustomTokens.filter((token) => (connection.chainKey === token.split(':')[0]));
       let selectedTokens = [`${connection.chainKey}:eosio.token:${connection.chainSymbol || 'EOS'}`];
-      if (customTokens && customTokens.length > 0) {
-        selectedTokens = [...customTokens, ...selectedTokens];
+      if (newCustomTokens && newCustomTokens.length > 0) {
+        selectedTokens = [...newCustomTokens, ...selectedTokens];
       }
       // if specific tokens are requested, use them
       if (requestedTokens) {
