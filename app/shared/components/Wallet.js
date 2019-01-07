@@ -52,7 +52,6 @@ export default class Wallet extends Component<Props> {
       <Grid divided>
         <Grid.Row>
           <Grid.Column width={6}>
-            <SidebarAccount />
             <WalletPanel
               actions={actions}
               accounts={accounts}
