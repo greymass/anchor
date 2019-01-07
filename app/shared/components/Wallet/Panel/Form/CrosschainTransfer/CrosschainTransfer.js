@@ -13,27 +13,25 @@ import { debounce, findIndex, includes } from "lodash";
 
 import GlobalFormFieldAccount from "../../../../Global/Form/Field/Account";
 import FormFieldMultiToken from "../../../../Global/Form/Field/MultiToken";
+import GlobalFormFieldMemo from "../../../../Global/Form/Field/Memo";
 import FormMessageError from "../../../../Global/Form/Message/Error";
 import EOSContract from "../../../../../utils/EOS/Contract";
-import WalletPanelFormWithdrawConfirming from "./Confirming";
+import WalletPanelCrosschainTransferConfirming from "./Confirming";
 
-class WalletPanelFormWithdraw extends Component<Props> {
+class WalletPanelCrosschainTransfer extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      asset: "PXBTS",
+      asset: "EOS",
       confirming: false,
       formError: false,
       from: props.settings.account,
-      quantity: " PXBTS",
+      quantity: " EOS",
       to: "",
+      memo: "",
+      destinationAsset: "BEOS",
       waiting: false,
       waitingStarted: 0,
-      assetAccountTypes: {
-        PXBTS: "Bitshares",
-        PXBRNP: "Bitshares",
-        PXEOS: "Eos"
-      },
       storeName: "beos.gateway",
       isValidAccount: false,
       submitDisabled: true
@@ -41,9 +39,10 @@ class WalletPanelFormWithdraw extends Component<Props> {
   }
 
   onConfirm = () => {
-    const { from, to, quantity, storeName } = this.state;
+    const { from, to, quantity, storeName, asset, memo } = this.state;
     this.setState({ confirming: false }, () => {
-      this.props.actions.withdraw(from, to, quantity, storeName);
+      const newMemo = `pxeos:${to}:${memo}:`
+      this.props.actions.transfer(from, 'beos.gateway', quantity, newMemo, asset);
       this.setState({
         to: "",
         quantity: ""
@@ -89,56 +88,25 @@ class WalletPanelFormWithdraw extends Component<Props> {
       return;
     }
 
-    if (includes(["PXBTS", "PXBRNP"], asset)) {
-      const url = "https://blocktrades.syncad.com/api/v2";
-      const validationUrl = `${url}/wallets/bitshares2/address-validator?address=${value}`;
-      try {
-        const response = await fetch(validationUrl);
-        const { isValid } = await response.json();
-        if (isValid) {
-          this.setState({ isValidAccount: true, formError: null });
-        } else {
-          this.setState({
-            isValidAccount: false,
-            formError: "invalid_withdraw_account"
-          });
-        }
-      } catch (e) {
+    const url = "https://blocktrades.syncad.com/api/v2";
+    const validationUrl = `${url}/wallets/beos/address-validator?address=${value}`;
+    try {
+      const response = await fetch(validationUrl);
+      const { isValid } = await response.json();
+      if (isValid) {
+        this.setState({ isValidAccount: true, formError: null });
+      } else {
         this.setState({
           isValidAccount: false,
-          formError: "withdraw_account_validation_failed"
+        formError: "account_does_not_exist"
         });
-        throw e;
       }
-    } else if (asset === "PXEOS") {
-      const { blockchains } = this.props;
-      const nodeUrl = blockchains
-        .filter(({ _id }) => _id === "eos-mainnet")
-        .map(({ node }) => node)[0];
-      const url = `${nodeUrl}/v1/chain/get_account`;
-      try {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        const { ok } = await fetch(url, {
-          method: "POST",
-          body: JSON.stringify({ account_name: value }),
-          headers
-        });
-        if (ok) {
-          this.setState({ isValidAccount: true, formError: null });
-        } else {
-          this.setState({
-            isValidAccount: false,
-            formError: "invalid_withdraw_account"
-          });
-        }
-      } catch (e) {
-        this.setState({
-          isValidAccount: false,
-          formError: "withdraw_account_validation_failed"
-        });
-        throw e;
-      }
+    } catch (e) {
+      this.setState({
+        isValidAccount: false,
+        formError: "crosschain_transfer_account_validation_failed"
+      });
+      throw e;
     }
   }, 150);
 
@@ -185,10 +153,11 @@ class WalletPanelFormWithdraw extends Component<Props> {
   render() {
     const {
       asset,
-      assetAccountTypes,
       confirming,
+      destinationAsset,
       from,
       to,
+      memo,
       quantity,
       formError,
       submitDisabled,
@@ -203,16 +172,16 @@ class WalletPanelFormWithdraw extends Component<Props> {
 
     return (
       <Form
-        loading={system.WITHDRAW === "PENDING"}
+        loading={system.TRANSFER === "PENDING"}
         onSubmit={this.onSubmit}
         warning={hasWarnings}
       >
         {confirming ? (
-          <WalletPanelFormWithdrawConfirming
+          <WalletPanelCrosschainTransferConfirming
             asset={asset}
             balances={balances}
             to={to}
-            withdrawAssetType={assetAccountTypes[asset]}
+            memo={memo}
             from={from}
             onBack={this.onBack}
             onConfirm={this.onConfirm}
@@ -226,8 +195,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
               autoFocus
               contacts={settings.contacts}
               fluid
-              label={t("withdraw_label_to", {
-                type: assetAccountTypes[asset]
+              label={t("crosschain_transfer_label_to", {
+                type: destinationAsset
               })}
               name="to"
               onChange={this.onChange}
@@ -237,7 +206,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               balances={balances}
               connection={connection}
               icon="x"
-              label={t("withdraw_label_token_and_quantity")}
+              label={t("crosschain_transfer_label_token_and_quantity")}
               loading={false}
               maximum={balance[asset]}
               name="quantity"
@@ -251,12 +220,20 @@ class WalletPanelFormWithdraw extends Component<Props> {
                 &nbsp;
                 {asset}
                 &nbsp;
-                {t("withdraw_header_available")}
+                {t("crosschain_transfer_header_available")}
               </p>
             )}
+            <GlobalFormFieldMemo
+                icon="x"
+                label={t('crosschain_transfer_label_memo')}
+                loading={false}
+                name="memo"
+                onChange={this.onChange}
+                value={memo}
+              />
             <FormMessageError
               error={formError}
-              chainSymbol={assetAccountTypes[asset]}
+              chainSymbol={asset}
             />
             <Divider />
             <Button
@@ -276,4 +253,4 @@ class WalletPanelFormWithdraw extends Component<Props> {
   }
 }
 
-export default translate("withdraw")(WalletPanelFormWithdraw);
+export default translate("crosschaintransfer")(WalletPanelCrosschainTransfer);

@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import { translate } from "react-i18next";
 
-class WalletPanelFormWithdrawConfirming extends Component<Props> {
+class WalletPanelCrosschainTransferConfirming extends Component<Props> {
   onConfirm = e => {
     const { onConfirm } = this.props;
 
@@ -24,13 +24,14 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
       balances,
       to,
       from,
+      memo,
       onBack,
       quantity,
       asset,
+      destinationAsset,
       t,
       waiting,
-      waitingStarted,
-      withdrawAssetType
+      waitingStarted
     } = this.props;
 
     const contract = balances.__contracts[asset.toUpperCase()].contract;
@@ -40,28 +41,32 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
     return (
       <Segment basic clearing vertical>
         <Header size="small">
-          {t("withdraw_confirming_title")}
+          {t("crosschain_transfer_confirming_title")}
           <Header.Subheader>
-            {t("withdraw_confirming_body_quantity")}
+            {t("crosschain_transfer_confirming_body_quantity")}
           </Header.Subheader>
           <Header.Subheader className="beos-validation-error">
             <p className="beos-validation-error">{`${t(
-              "withdraw_confirming_bitshares_network_fee"
+              "crosschain_transfer_confirming_eos_network_fee"
             )}`}</p>
           </Header.Subheader>
         </Header>
         <Table compact definition striped>
           <Table.Body>
             <Table.Row>
-              <Table.Cell width={4}>{t("withdraw_label_from")}</Table.Cell>
+              <Table.Cell width={4}>{t("crosschain_transfer_label_from")}</Table.Cell>
               <Table.Cell>{from}</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell>{t("withdraw_label_to", { type: withdrawAssetType })}</Table.Cell>
+              <Table.Cell>{t("crosschain_transfer_label_to", { type: destinationAsset })}</Table.Cell>
               <Table.Cell>{to}</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell>{t("withdraw_label_quantity")}</Table.Cell>
+              <Table.Cell>{t("crosschain_transfer_label_memo")}</Table.Cell>
+              <Table.Cell>{memo}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>{t("crosschain_transfer_label_quantity")}</Table.Cell>
               <Table.Cell>
                 {quantity} ({contract})
               </Table.Cell>
@@ -86,6 +91,6 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
   }
 }
 
-export default translate("withdraw")(
-  WalletPanelFormWithdrawConfirming
+export default translate("crosschaintransfer")(
+  WalletPanelCrosschainTransferConfirming
 );
