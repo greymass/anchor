@@ -69,7 +69,7 @@ class GlobalBlockchainForm extends Component<Props> {
   onChange = (e, { name, valid, value }) => this.setState({
     values: set(this.state.values, name, value),
     valids: set(this.state.valids, name, valid),
-  }, () => this.props.actions.validateNode(value, this.state.values.chainId))
+  }, () => this.props.actions.validateNode(value, this.state.values.chainId, false))
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.onSubmit(e);
