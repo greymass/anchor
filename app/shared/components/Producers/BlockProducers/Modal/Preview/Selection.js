@@ -23,8 +23,9 @@ class ProducersVotingPreviewSelection extends Component<Props> {
       unregisteredProducers
     } = this.props;
     const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
+    const selectedProducers = selected.filter((producer) => !unregisteredProducersSelected.includes(producer))
     const removedProducers =
-      (get(account, 'voter_info.producers') || []).filter((producer) => !selected.includes(producer));
+      (get(account, 'voter_info.producers') || []).filter((producer) => !selectedProducers.includes(producer));
 
     return (
       <Segment loading={submitting}>
@@ -32,7 +33,7 @@ class ProducersVotingPreviewSelection extends Component<Props> {
         <Modal.Content>
           <Segment basic padded>
             <ProducersTable
-              items={selected}
+              items={selectedProducers}
             />
           </Segment>
           {removedProducers.length !== 0 && (
@@ -72,6 +73,18 @@ class ProducersVotingPreviewSelection extends Component<Props> {
             )
             : ''
           }
+          {(unregisteredProducersSelected.length !== 0) && (
+            <Message
+              header={t('producers_warning_unregistered_producers_header')}
+              content={
+                (unregisteredProducersSelected.length === 1) ?
+                  t('producers_warning_have_unregistered_single', { unregisteredBp: unregisteredProducersSelected[0] }) :
+                  t('producers_warning_have_unregistered_multiple', { unregisteredBps: unregisteredProducersSelected.join(', ') })
+              }
+              icon="warning sign"
+              warning
+            />
+          )}
           <WalletMessageContractVoteProducer
             data={{
               signer: settings.account,
@@ -79,16 +92,6 @@ class ProducersVotingPreviewSelection extends Component<Props> {
               voter: settings.account
             }}
           />
-          {(unregisteredProducersSelected.length !== 0) && (
-            <Message
-              content={
-                (unregisteredProducersSelected.length === 1) ?
-                  t('producers_warning_have_unregistered_single', { unregisteredBp: unregisteredProducersSelected[0] }) :
-                  t('producers_warning_have_unregistered_multiple', { unregisteredBps: unregisteredProducersSelected.join(', ') })
-              }
-              warning
-            />
-          )}
           <Divider />
           <Button
             onClick={onClose}
