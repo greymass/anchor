@@ -281,11 +281,6 @@ class Producers extends Component<Props> {
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={6}>
-              <SidebarAccount
-                actions={actions}
-                history={history}
-                wallet={wallet}
-              />
               {sidebar}
             </Grid.Column>
             <Grid.Column width={10}>

@@ -40,14 +40,6 @@ class WalletPanelUnlocked extends Component<Props> {
     } = this.props;
     return (
       <div>
-        {(settings.walletMode !== 'watch' && settings.walletMode !== 'ledger' && !settings.walletTemp)
-          ? (
-            <WalletPanelButtonLock
-              lockWallet={actions.lockWallet}
-            />
-          )
-          : ''
-        }
         <Segment vertical>
 
           <Accordion
