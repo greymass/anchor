@@ -55,7 +55,7 @@ export function validateAccount(account) {
   };
 }
 
-export function validateNode(node, expectedChainId = false) {
+export function validateNode(node, expectedChainId = false, saveAsDefault = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       node,
@@ -105,6 +105,7 @@ export function validateNode(node, expectedChainId = false) {
                 blockchain,
                 info: result,
                 node: httpEndpoint,
+                saveAsDefault,
                 settings,
               },
               type: types.VALIDATE_NODE_SUCCESS
