@@ -75,10 +75,10 @@ class ToolsBlockchains extends PureComponent<Props> {
           </Table.Header>
           <Table.Body>
             {([].concat(blockchains)
-                .filter((b) => (!b.testnet))
+                .filter((b) => (!b.testnet || (b.testnet && settings.displayTestNetworks)))
                 .sort((a, b) => {
-                  const v1 = `${a.testnet}@${a.symbol}@${a.chainId}`;
-                  const v2 = `${b.testnet}@${b.symbol}@${b.chainId}`;
+                  const v1 = `${a.symbol}@${a.testnet}@${a.chainId}`;
+                  const v2 = `${b.symbol}@${b.testnet}@${b.chainId}`;
                   return v1 > v2;
                 })
                 .map((b) => {
