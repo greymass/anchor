@@ -148,6 +148,8 @@ class ToolsProxy extends Component<Props> {
           trigger={(
             <span>
               <Button
+                disabled={system.NAMEBID === 'PENDING'}
+                loading={system.NAMEBID === 'PENDING'}
                 onClick={this.onFetchRecentBids}
               >
                 {t('tools_bidname_search_recent_bids')}
