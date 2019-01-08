@@ -250,7 +250,7 @@ const migrations = {
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 10,
+  version: 9,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
