@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Dropdown, Header, Icon, Image, Input, Segment, Tab } from 'semantic-ui-react';
+import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../Button/Elevate';
+import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
 import * as BlockchainsActions from '../../../actions/blockchains';
 import * as WalletActions from '../../../actions/wallet';
 import * as WalletsActions from '../../../actions/wallets';
@@ -73,7 +74,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
       ))
       .sort((a, b) => a.name > b.name)
       .map((b) => {
-        const image = (logos[b.chainId]) ? { avatar: true, src: logos[b.chainId] } : undefined;
+        const image = (logos[b.chainId]) ? ( <GlobalFragmentChainLogo avatar chainId={b.chainId} /> ) : undefined;
         return {
           props: {
             image,
@@ -98,7 +99,13 @@ class GlobalBlockchainDropdown extends Component<Props> {
           <span>
             {(logos[blockchain.chainId])
               ? (
-                <Image avatar src={logos[blockchain.chainId]} style={{ marginRight: '0.5em' }}/>
+                <GlobalFragmentChainLogo
+                  avatar
+                  chainId={blockchain.chainId}
+                  style={{
+                    marginRight: '0.5em'
+                  }}
+                />
               )
               : false
             }

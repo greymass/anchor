@@ -105,7 +105,7 @@ class ToolsWallets extends Component<Props> {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>{t('tools_wallets_account')}</Table.HeaderCell>
-              <Table.HeaderCell>{t('tools_wallets_blockchain')}</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell>{t('tools_wallets_mode')}</Table.HeaderCell>
               <Table.HeaderCell textAlign="right">{t('tools_wallets_controls')}</Table.HeaderCell>
             </Table.Row>

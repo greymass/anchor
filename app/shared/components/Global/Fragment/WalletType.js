@@ -1,10 +1,10 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Label, Popup } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 
-class GlobalFragmentWalletType extends Component<Props> {
+class GlobalFragmentWalletType extends PureComponent<Props> {
   render() {
     const {
       mode,
@@ -35,7 +35,8 @@ class GlobalFragmentWalletType extends Component<Props> {
     }
     return (
       <Popup
-        content={t(`wallet:wallet_mode_explain_${mode}`)}
+        content={t(`wallet:wallet_mode_explain_${mode}_2`)}
+        header={t('tools:tools_wallets_mode')}
         inverted
         trigger={(
           <Label

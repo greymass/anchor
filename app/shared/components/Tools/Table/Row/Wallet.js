@@ -9,6 +9,7 @@ import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
 import GlobalFragmentAuthorization from '../../../Global/Fragment/Authorization';
 import GlobalFragmentBlockchain from '../../../Global/Fragment/Blockchain';
+import GlobalFragmentChainLogo from '../../../Global/Fragment/ChainLogo';
 import GlobalFragmentWalletType from '../../../Global/Fragment/WalletType';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
 import GlobalAccountConvertLedger from '../../../../containers/Global/Account/Convert/Ledger';
@@ -221,6 +222,7 @@ class ToolsTableRowWallet extends Component<Props> {
         ));
       }
     }
+    console.log(account, authorization)
     return (
       <Table.Row key={`${account}-${authorization}`}>
         <Table.Cell collapsing>
@@ -234,14 +236,11 @@ class ToolsTableRowWallet extends Component<Props> {
           </Header>
         </Table.Cell>
         <Table.Cell collapsing>
-          {(blockchain)
-            ? (
-              <GlobalFragmentBlockchain
-                blockchain={blockchain}
-              />
-            )
-            : false
-          }
+         <GlobalFragmentChainLogo
+           avatar
+           chainId={blockchain.chainId}
+           name={blockchain.name}
+          />
         </Table.Cell>
         <Table.Cell>
           <GlobalFragmentWalletType

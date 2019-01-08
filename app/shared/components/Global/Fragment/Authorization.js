@@ -1,13 +1,15 @@
 // @flow
 import React, { Component } from 'react';
 import { Popup } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 
 class GlobalFragmentAuthorization extends Component<Props> {
   render() {
     const {
       account,
       authorization,
-      pubkey
+      pubkey,
+      t
     } = this.props;
     let element = (
       <span>
@@ -30,6 +32,7 @@ class GlobalFragmentAuthorization extends Component<Props> {
       return (
         <Popup
           content={pubkey}
+          header={t('public_key')}
           hoverable
           inverted
           trigger={element}
@@ -40,4 +43,4 @@ class GlobalFragmentAuthorization extends Component<Props> {
   }
 }
 
-export default GlobalFragmentAuthorization;
+export default translate('global')(GlobalFragmentAuthorization);
