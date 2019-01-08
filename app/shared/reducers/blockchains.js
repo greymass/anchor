@@ -1,15 +1,15 @@
 import { partition, unionBy } from 'lodash';
 
-import * as types from '../actions/types';
+import * as types from "../actions/types";
 
 const knownChains = [
   {
-    "_id": "eos-mainnet",
-    "chainId": "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-    "keyPrefix": "EOS",
-    "name": "EOS",
-    "node": "https://eos.greymass.com",
-    "supportedContracts": [
+    _id: "eos-mainnet",
+    chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+    keyPrefix: "EOS",
+    name: "EOS",
+    node: "https://eos.greymass.com",
+    supportedContracts: [
       "customtokens",
       "producerinfo",
       "proposals",
@@ -20,31 +20,30 @@ const knownChains = [
     testnet: false
   },
   {
-    "_id": "beos-testnet",
-    "chainId": "50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd",
-    "keyPrefix": "EOS",
-    "name": "BEOS",
-    "node": "https://api.beos.world",
-    "supportedContracts": [
+    _id: "beos-testnet",
+    chainId: "50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd",
+    keyPrefix: "EOS",
+    name: "BEOS",
+    node: "https://api.beos.world",
+    supportedContracts: [
       "customtokens",
       "producerinfo",
       "proposals",
       "regproxyinfo",
       "withdraw"
     ],
-    "symbol": "BEOS",
-    "testnet": false
+    symbol: "BEOS",
+    testnet: false
   },
   {
-    "_id": "eos-testnet-jungle",
-    "chainId": "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",
-    "keyPrefix": "EOS",
-    "name": "Jungle (EOS)",
-    "node": "http://jungle.cryptolions.io:18888",
-    "supportedContracts": [
-    ],
-    "symbol": "EOS",
-    "testnet": true
+    _id: "eos-testnet-jungle",
+    chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",
+    keyPrefix: "EOS",
+    name: "Jungle (EOS)",
+    node: "http://jungle.cryptolions.io:18888",
+    supportedContracts: [],
+    symbol: "EOS",
+    testnet: true
   },
   {
     _id: 'eos-testnet-cryptokylin',
@@ -128,23 +127,56 @@ export default function blockchains(state = initialState, action) {
     }
     case types.SYSTEM_BLOCKCHAINS_ENSURE: {
       const [existing, others] = partition(state, {
-        chainId: action.payload.chainId,
+        chainId: action.payload.chainId
       });
       // If this blockchain doesn't exist in state,
       // add it as an unknown entry that can be edited later
       if (!existing.length) {
-        return [{
-          _id: `unknown-${action.payload.chainId}`,
-          chainId: action.payload.chainId,
-          keyPrefix: 'EOS',
-          name: `Unknown (${action.payload.chainId.substr(0, 5)})`,
-          node: action.payload.node,
-          supportedContracts: [],
-          symbol: 'EOS',
-          testnet: false
-        }, ...others];
+        return [
+          {
+            _id: `unknown-${action.payload.chainId}`,
+            chainId: action.payload.chainId,
+            keyPrefix: "EOS",
+            name: `Unknown (${action.payload.chainId.substr(0, 5)})`,
+            node: action.payload.node,
+            supportedContracts: [],
+            symbol: "EOS",
+            testnet: false
+          },
+          ...others
+        ];
       }
       return state;
+    }
+    // Upon node validation for a given chain, check if it should be set as the default
+    case types.VALIDATE_NODE_SUCCESS: {
+      const { info, node, saveAsDefault } = action.payload;
+      // If saveAsDefault is false, ignore update
+      if (!saveAsDefault) {
+        return state;
+      }
+      const [existing, others] = partition(state, {
+        chainId: info.chain_id
+      });
+      let modified;
+      if (existing.length) {
+        // If an existing entry for this chain exists, edit it
+        modified = Object.assign({}, existing[0]);
+        modified.node = node;
+      } else {
+        // Otherwise create a new entry for it
+        modified = {
+          _id: `unknown-${info.chain_id}`,
+          chainId: info.chain_id,
+          keyPrefix: "EOS",
+          name: `Unknown (${info.chain_id.substr(0, 5)})`,
+          node,
+          supportedContracts: [],
+          symbol: "EOS",
+          testnet: false
+        };
+      }
+      return [modified, ...others];
     }
     // Upon node validation for a given chain, check if it should be set as the default
     case types.VALIDATE_NODE_SUCCESS: {

@@ -3,7 +3,7 @@ import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
 import EOSAccount from '../../utils/EOS/Account';
-import { initialState as defaultBlockchains } from '../../reducers/blockchains';
+import { knownChains } from '../../reducers/blockchains';
 
 const migrations = {
   /*
@@ -237,7 +237,7 @@ const migrations = {
     newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
     newSettings.excludeForChainKey = ['beos-testnet'];
     return Object.assign({}, state, {
-      blockchains: defaultBlockchains,
+      blockchains: knownChains,
       settings: newSettings
     });
   },

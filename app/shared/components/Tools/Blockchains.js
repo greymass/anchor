@@ -1,7 +1,7 @@
 // @flow
-import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
-import { sumBy } from 'lodash';
+import React, { PureComponent } from "react";
+import { translate } from "react-i18next";
+import { sumBy } from "lodash";
 
 import {
   Button,
@@ -11,7 +11,7 @@ import {
   Popup,
   Segment,
   Table
-} from 'semantic-ui-react';
+} from "semantic-ui-react";
 
 import GlobalButtonBlockchainImport from '../Global/Button/Blockchain/Import';
 import ToolsModalBlockchain from './Modal/Blockchain';
@@ -58,18 +58,24 @@ class ToolsBlockchains extends PureComponent<Props> {
           />
         </Button.Group>
         <Header floated="left">
-          {t('tools_blockchains_header')}
+          {t("tools_blockchains_header")}
           <Header.Subheader>
-            {t('tools_blockchains_subheader')}
+            {t("tools_blockchains_subheader")}
           </Header.Subheader>
         </Header>
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell collapsing />
-              <Table.HeaderCell>{t('tools_blockchains_blockchain')}</Table.HeaderCell>
-              <Table.HeaderCell collapsing>{t('tools_blockchains_wallets')}</Table.HeaderCell>
-              <Table.HeaderCell>{t('tools_blockchains_chainid')}</Table.HeaderCell>
+              <Table.HeaderCell>
+                {t("tools_blockchains_blockchain")}
+              </Table.HeaderCell>
+              <Table.HeaderCell collapsing>
+                {t("tools_blockchains_wallets")}
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                {t("tools_blockchains_chainid")}
+              </Table.HeaderCell>
               <Table.HeaderCell collapsing />
             </Table.Row>
           </Table.Header>
@@ -135,14 +141,8 @@ class ToolsBlockchains extends PureComponent<Props> {
                               )}
                               wide
                             />
-                          )
-                        }
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Header
-                          content={b.name}
-                          size="small"
-                          subheader={b.symbol}
+                          }
+                          wide
                         />
                       </Table.Cell>
                       <Table.Cell
@@ -186,4 +186,4 @@ class ToolsBlockchains extends PureComponent<Props> {
   }
 }
 
-export default translate('tools')(ToolsBlockchains);
+export default translate("tools")(ToolsBlockchains);
