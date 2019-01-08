@@ -241,11 +241,26 @@ const migrations = {
       settings: newSettings
     });
   },
+  /*
+  10 - Customtokens in state changes
+
+    - Update customtokens in state
+  */
+  10: (state) => {
+    const {
+      customtokens
+    } = state;
+    const newCustomtokens = Object.assign({}, customtokens);
+    newCustomtokens.tokens = {};
+    return Object.assign({}, state, {
+      customtokens: newCustomtokens
+    });
+  },
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 9,
+  version: 10,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [

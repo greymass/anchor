@@ -1,7 +1,7 @@
 import * as types from '../actions/types';
 
 const initialState = {
-  tokens: [],
+  tokens: {},
 };
 
 export default function customtokens(state = initialState, action) {
@@ -11,7 +11,9 @@ export default function customtokens(state = initialState, action) {
     }
     case types.SYSTEM_CUSTOMTOKENS_SUCCESS: {
       return Object.assign({}, state, {
-        tokens: action.payload.tokens
+        tokens: {
+          [action.payload.chainKey]: action.payload.tokens
+        }
       });
     }
     default: {

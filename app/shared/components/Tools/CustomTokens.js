@@ -23,11 +23,22 @@ class ToolsCustomTokens extends Component<Props> {
   scan = () => {
     const {
       actions,
+      connection,
       customtokens,
       settings
     } = this.props;
 
-    const tokens = customtokens.tokens.map((token) => `${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
+    let {
+      tokens
+    } = customtokens;
+
+    if (tokens && tokens[connection.chainKey]) {
+      tokens = tokens[connection.chainKey];
+    } else {
+      tokens = [];
+    }
+
+    tokens = tokens.map((token) => `${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
     actions.getCurrencyBalance(settings.account, tokens);
   }
   toggleCustomToken = (e, { checked, name }) => {
@@ -55,13 +66,18 @@ class ToolsCustomTokens extends Component<Props> {
     const {
       addingToken
     } = this.state;
-    const {
+    let {
       tokens
     } = customtokens;
+    if (tokens && tokens[connection.chainKey]) {
+      tokens = tokens[connection.chainKey];
+    } else {
+      tokens = [];
+    }
     if (customTokens && customTokens.length) {
       customTokens.forEach((token) => {
         const [chainKey, contract, symbol] = token.split(':');
-        if (findIndex(customtokens.tokens, { symbol, contract }) === -1) {
+        if (findIndex(tokens, { symbol, contract }) === -1) {
           tokens.unshift({
             contract,
             custom: true,
