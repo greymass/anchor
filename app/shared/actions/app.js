@@ -63,8 +63,6 @@ export function getConstants() {
   };
 }
 
-
-
 export default {
   downloadProgress,
   initApp

@@ -1,5 +1,4 @@
 import { isEmpty } from 'lodash';
-import { Decimal } from 'decimal.js';
 
 import * as types from './types';
 
@@ -21,7 +20,7 @@ export function getGlobals() {
   };
 }
 
-export function getCurrencyStats(contractName = "eosio.token", symbolName = "EOS") {
+export function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS') {
   const account = contractName.toLowerCase();
   const symbol = symbolName.toUpperCase();
   return (dispatch: () => void, getState) => {

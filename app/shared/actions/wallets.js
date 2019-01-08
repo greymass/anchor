@@ -60,8 +60,8 @@ export function duplicateWallet(account, authorization, chainDuplicatingTo, chai
     return dispatch({
       type: types.ADD_WALLET,
       payload: newWallet
-    })
-  }
+    });
+  };
 }
 
 export function prepareConvertToLedger(

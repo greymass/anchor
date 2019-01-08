@@ -397,7 +397,7 @@ export function getAccountByKey(key) {
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
           payload: { accounts }
-        })
+        });
       }).catch((err) => dispatch({
         type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
         payload: { err, key }

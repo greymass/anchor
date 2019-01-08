@@ -110,10 +110,7 @@ class GlobalBlockchainForm extends Component<Props> {
     } = this.state;
     const {
       chainId,
-      keyPrefix,
-      name,
       node,
-      symbol,
     } = values;
     const hasErrors = (Object.keys(errors).length > 0);
 

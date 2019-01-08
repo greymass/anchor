@@ -238,7 +238,7 @@ export function clearWallet() {
     dispatch({
       type: types.WALLET_REMOVE
     });
-  }
+  };
 }
 
 export function setWalletMode(walletMode) {

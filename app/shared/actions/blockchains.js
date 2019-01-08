@@ -43,14 +43,22 @@ function updateBlockchain(payload) {
   });
 }
 
-function importBlockchainFromBackup(blockchain) {
+function updateBlockchainSetting(chainId, key, value) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_SET_SETTING,
+      payload: { chainId, key, value }
+    });
+  };
+}
 
+function importBlockchainFromBackup(blockchain) {
+  console.log('import', blockchain);
 }
 
 export default {
-  // addBlockchain,
-  // setNode,
   importBlockchainFromBackup,
   swapBlockchain,
   updateBlockchain,
+  updateBlockchainSetting,
 };

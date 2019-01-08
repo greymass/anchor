@@ -1,10 +1,12 @@
+import { find } from 'lodash';
+
 import { getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
 import { getGlobals } from './globals';
 import { historyPluginCheck } from './connection';
+
 import eos from './helpers/eos';
-import { find } from 'lodash';
 
 const ecc = require('eosjs-ecc');
 
@@ -66,7 +68,6 @@ export function validateNode(node, expectedChainId = false, saveAsDefault = fals
       // Establish EOS connection
       try {
         const {
-          actions,
           blockchains,
           connection,
           settings
