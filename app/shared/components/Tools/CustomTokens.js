@@ -28,24 +28,24 @@ class ToolsCustomTokens extends Component<Props> {
       settings
     } = this.props;
     const {
-      chainKey
+      chainId
     } = connection;
     let {
       tokens
     } = customtokens;
 
-    if (tokens && tokens[chainKey]) {
-      tokens = tokens[chainKey];
+    if (tokens && tokens[chainId]) {
+      tokens = tokens[chainId];
     } else {
       tokens = [];
     }
 
-    tokens = tokens.map((token) => `${chainKey}:${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
+    tokens = tokens.map((token) => `${chainId}:${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
     actions.getCurrencyBalance(settings.account, tokens);
   }
   toggleCustomToken = (e, { checked, name }) => {
     const { actions } = this.props;
-    const [chainKey, contract, symbol] = name.split(':');
+    const [chainId, contract, symbol] = name.split(':');
     if (checked) {
       actions.addCustomToken(contract, symbol);
     } else {
@@ -71,14 +71,14 @@ class ToolsCustomTokens extends Component<Props> {
     let {
       tokens
     } = customtokens;
-    if (tokens && tokens[connection.chainKey]) {
-      tokens = tokens[connection.chainKey];
+    if (tokens && tokens[connection.chainId]) {
+      tokens = tokens[connection.chainId];
     } else {
       tokens = [];
     }
     if (customTokens && customTokens.length) {
       customTokens.forEach((token) => {
-        const [chainKey, contract, symbol] = token.split(':');
+        const [chainId, contract, symbol] = token.split(':');
         if (findIndex(tokens, { symbol, contract }) === -1) {
           tokens.unshift({
             contract,
@@ -88,7 +88,7 @@ class ToolsCustomTokens extends Component<Props> {
         }
       });
     }
-    let filterTokens = customTokens.filter((token) => (connection.chainKey !== token.split(':')[0]));
+    let filterTokens = customTokens.filter((token) => (connection.chainId !== token.split(':')[0]));
     filterTokens = filterTokens.map((token) => (token.split(':')[2]));
     return (
       <Segment basic>
@@ -136,14 +136,14 @@ class ToolsCustomTokens extends Component<Props> {
                 .filter((token) => (token.symbol !== 'EOS'))
                 .filter((token) => (filterTokens.indexOf(token.symbol) === -1))
                 .map((token) => {
-                  const name = `${connection.chainKey}:${token.contract}:${token.symbol}`;
+                  const name = `${connection.chainId}:${token.contract}:${token.symbol}`;
                   const isSelected = !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);
                   let balance = false;
                   if (balances && settings.account && balances[settings.account]) {
                     balance = balances[settings.account][token.symbol];
                   }
                   return (
-                    <Table.Row key={`${connection.chainKey}-${token.contract}-${token.symbol}`}>
+                    <Table.Row key={`${connection.chainId}-${token.contract}-${token.symbol}`}>
                       <Table.Cell>
                         <Header size="small">
                           {token.contract}

@@ -5,6 +5,8 @@ import createElectronStorage from 'redux-persist-electron-storage';
 import EOSAccount from '../../utils/EOS/Account';
 import { knownChains } from '../../reducers/blockchains';
 
+const defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+
 const migrations = {
   /*
     2 - Wallet Migration
@@ -207,15 +209,15 @@ const migrations = {
       wallets
     } = state;
     const modifiedWallet = Object.assign({}, wallet);
-    modifiedWallet.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+    modifiedWallet.chainId = defaultChainId;
     const modifiedWallets = [];
     wallets.forEach((current) => {
       const newWallet = Object.assign({}, current);
-      newWallet.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+      newWallet.chainId = defaultChainId;
       modifiedWallets.push(newWallet);
     });
     const modifiedSettings = Object.assign({}, settings);
-    modifiedSettings.chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
+    modifiedSettings.chainId = defaultChainId;
     return Object.assign({}, state, {
       settings: modifiedSettings,
       wallet: modifiedWallet,
@@ -233,31 +235,15 @@ const migrations = {
       settings
     } = state;
     const newSettings = Object.assign({}, settings);
-    const customTokens = ['eos-mainnet:eosio.token:EOS'];
+    const customTokens = [`${defaultChainId}:eosio.token:EOS`];
     settings.customTokens.forEach((token) => {
-      customTokens.push(`eos-mainnet:${token}`);
+      customTokens.push(`${defaultChainId}:${token}`);
     });
     newSettings.customTokens = uniq(customTokens);
     newSettings.excludeForChainKey = ['beos-testnet'];
-    // console.log(newSettings, settings)
     return Object.assign({}, state, {
       blockchains: knownChains,
       settings: newSettings
-    });
-  },
-  /*
-  10 - Customtokens in state changes
-
-    - Update customtokens in state
-  */
-  10: (state) => {
-    const {
-      customtokens
-    } = state;
-    const newCustomtokens = Object.assign({}, customtokens);
-    newCustomtokens.tokens = {};
-    return Object.assign({}, state, {
-      customtokens: newCustomtokens
     });
   },
 };

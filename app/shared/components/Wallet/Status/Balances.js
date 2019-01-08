@@ -33,7 +33,7 @@ class WalletStatusBalances extends Component<Props> {
 
     const contracts = balances.__contracts;
     const claimable = (new Date() > refundDate);
-    let watchedTokens = (settings.customTokens) ? settings.customTokens.filter((token) => connection.chainKey === token.split(':')[0]) : [];
+    let watchedTokens = (settings.customTokens) ? settings.customTokens.filter((token) => connection.chainId === token.split(':')[0]) : [];
     watchedTokens = watchedTokens.map((token) => token.split(':')[2]);
     const rows = [
       (

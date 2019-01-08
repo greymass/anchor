@@ -86,7 +86,7 @@ export function addCustomToken(contract, symbol) {
     const { connection, settings } = getState();
     const { customTokens } = settings;
 
-    const name = [connection.chainKey, contract.toLowerCase(), symbol.toUpperCase()].join(':');
+    const name = [connection.chainId, contract.toLowerCase(), symbol.toUpperCase()].join(':');
 
     let tokens = [];
     if (customTokens) {
@@ -107,7 +107,7 @@ export function addCustomTokenBeos(contract, symbol) {
     const { connection, settings } = getState();
     const { customTokens } = settings;
 
-    const name = [connection.chainKey, contract.toLowerCase(), symbol.toUpperCase()].join(':');
+    const name = [connection.chainId, contract.toLowerCase(), symbol.toUpperCase()].join(':');
 
     let tokens = [];
     if (customTokens) {
@@ -127,7 +127,7 @@ export function removeCustomToken(contract, symbol) {
     const { connection, settings } = getState();
     const { customTokens } = settings;
 
-    const name = [connection.chainKey, contract.toLowerCase(), symbol.toUpperCase()].join(':');
+    const name = [connection.chainId, contract.toLowerCase(), symbol.toUpperCase()].join(':');
 
     let tokens = [];
     if (customTokens) {

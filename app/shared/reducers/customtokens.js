@@ -12,7 +12,7 @@ export default function customtokens(state = initialState, action) {
     case types.SYSTEM_CUSTOMTOKENS_SUCCESS: {
       return Object.assign({}, state, {
         tokens: {
-          [action.payload.chainKey]: action.payload.tokens
+          [action.payload.chainId]: action.payload.tokens
         }
       });
     }
