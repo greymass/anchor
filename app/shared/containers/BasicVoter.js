@@ -90,7 +90,7 @@ class BasicVoterContainer extends Component<Props> {
           getCurrencyStats();
           getBlockExplorers();
           forEach(settings.customTokens, (token) => {
-            const [chainKey, contract, symbol] = token.split(':');
+            const [chainId, contract, symbol] = token.split(':');
             getCurrencyStats(contract, symbol.toUpperCase());
           });
         }
