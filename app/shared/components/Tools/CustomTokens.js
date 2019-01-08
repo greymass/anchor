@@ -27,18 +27,20 @@ class ToolsCustomTokens extends Component<Props> {
       customtokens,
       settings
     } = this.props;
-
+    const {
+      chainKey
+    } = connection;
     let {
       tokens
     } = customtokens;
 
-    if (tokens && tokens[connection.chainKey]) {
-      tokens = tokens[connection.chainKey];
+    if (tokens && tokens[chainKey]) {
+      tokens = tokens[chainKey];
     } else {
       tokens = [];
     }
 
-    tokens = tokens.map((token) => `${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
+    tokens = tokens.map((token) => `${chainKey}:${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
     actions.getCurrencyBalance(settings.account, tokens);
   }
   toggleCustomToken = (e, { checked, name }) => {
