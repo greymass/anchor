@@ -4,9 +4,10 @@ import { Image, Popup } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 import eosLogo from '../../../../renderer/assets/images/eos.png';
+import insightsLogo from '../../../../renderer/assets/images/insights.svg';
+import placeholder from '../../../../renderer/assets/images/placeholder.png';
 import telosLogo from '../../../../renderer/assets/images/telos.png';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
-import insightsLogo from '../../../../renderer/assets/images/insights.svg';
 
 const logos = {
   'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906': eosLogo, // mainnet (eos)
@@ -29,8 +30,10 @@ class GlobalFragmentChainLogo extends PureComponent<Props> {
       style,
       t,
     } = this.props;
-    const src = logos[chainId];
-    if (!src) return false;
+    let src = logos[chainId];
+    if (!logos[chainId]) {
+      src = placeholder;
+    }
     return (
       <Popup
         content={t('tools:tools_wallets_blockchain')}
