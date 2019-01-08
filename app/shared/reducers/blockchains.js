@@ -17,7 +17,7 @@ const knownChains = [
       'withdraw'
     ],
     symbol: 'BEOS',
-    testnet: false
+    testnet: true
   },
   {
     _id: 'eos-mainnet',
