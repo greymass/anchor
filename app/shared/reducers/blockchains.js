@@ -14,7 +14,7 @@ const knownChains = [
       "producerinfo",
       "proposals",
       "regproxyinfo",
-      "crosschain"
+      "crosschaintransfer"
     ],
     symbol: 'EOS',
     testnet: false
