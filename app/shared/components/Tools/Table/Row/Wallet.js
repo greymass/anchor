@@ -222,7 +222,6 @@ class ToolsTableRowWallet extends Component<Props> {
         ));
       }
     }
-    console.log(account, authorization)
     return (
       <Table.Row key={`${account}-${authorization}`}>
         <Table.Cell collapsing>

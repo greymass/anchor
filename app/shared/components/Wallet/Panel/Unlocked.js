@@ -42,7 +42,6 @@ class WalletPanelUnlocked extends Component<Props> {
       transaction,
       t
     } = this.props;
-    console.log(connection);
     return (
       <div>
         <Segment vertical>
