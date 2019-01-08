@@ -141,9 +141,7 @@ class ToolsBlockchains extends PureComponent<Props> {
                               )}
                               wide
                             />
-                          }
-                          wide
-                        />
+                          )}
                       </Table.Cell>
                       <Table.Cell
                         content={count}
