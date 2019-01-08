@@ -1,4 +1,4 @@
-import { find } from 'lodash';
+import { find, uniq } from 'lodash';
 import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
@@ -225,7 +225,6 @@ const migrations = {
   /*
   9 - More blockchain options
 
-    - Update blockchains for bitshares-eos and worbli
     - Provide exclude in settings
     - Update default settings.customTokens
   */
@@ -234,8 +233,13 @@ const migrations = {
       settings
     } = state;
     const newSettings = Object.assign({}, settings);
-    newSettings.customTokens = ['eos-mainnet:eosio.token:EOS'];
+    const customTokens = ['eos-mainnet:eosio.token:EOS'];
+    settings.customTokens.forEach((token) => {
+      customTokens.push(`eos-mainnet:${token}`);
+    });
+    newSettings.customTokens = uniq(customTokens);
     newSettings.excludeForChainKey = ['beos-testnet'];
+    // console.log(newSettings, settings)
     return Object.assign({}, state, {
       blockchains: knownChains,
       settings: newSettings
