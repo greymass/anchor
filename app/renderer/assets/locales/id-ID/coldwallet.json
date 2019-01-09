@@ -1,7 +1,9 @@
 {
   "collwallet_load_transaction": "Load Unsigned Transaction",
   "coldwallet_transaction_invalid_signed": "Transaction is already signed.",
+  "collwallet_transaction_sign_save_again": "Save File Again",
   "coldwallet_transaction_invalid_expired": "Transaction has expired.",
+  "coldwallet_transaction_invalid_authorization": "The unsigned transaction loaded does not match the current wallet. Either switch to the proper wallet or import the keys for {{actor}}@{{permission}}.",
   "coldwallet_transaction_invalid_contract": "The cold wallet signer only supports the eosio, eosio.token, and eosio.msig contracts.",
   "coldwallet_transaction_signature_request_title": "Signature request",
   "coldwallet_transaction_signature_request_content": "Listed below are all the contracts/actions specified in this transaction. Review the below transaction and once the transaction is verified, sign the transaction using the button below.",

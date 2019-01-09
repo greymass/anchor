@@ -18,7 +18,7 @@
   "public_key": "Public Key",
   "remove": "Hapus",
   "reset_application": "DEBUG: Atur Ulang Aplikasi",
-  "save": "Save",
+  "feature_not_supported_blockchain": "This feature is not yet available on this blockchain.",
   "search": "Cari...",
   "upgrade": "Upgrade",
   "value": "Nilai",
