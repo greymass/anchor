@@ -2,15 +2,19 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Dropdown, Container, Header, List, Message, Segment, Button, TextField, Table } from 'semantic-ui-react';
+import { find } from 'lodash';
+
+import { Dropdown, Container, Header, List, Message, Segment, Button, Input, Table } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
-    scope: 'eosio.forum'
-  }
+    scope: 'eosio.forum',
+    queryString: '',
+    onlyVoted: false
+  };
   componentDidMount() {
     this.sync();
   }
@@ -55,24 +59,34 @@ class ToolsGovernanceProposals extends Component<Props> {
         value: recentProposalsScope,
       }));
     }
-    const featuredList = list.filter((proposal) => proposal.proposal_name.includes(queryString));
-    const sortedList = featuredList.filter((proposal) => !onlyVote || proposal.voted );
+    const validList = list.filter((proposal) => !!proposal.valid)
+    const filteredList =
+      validList.filter((proposal) => queryString.length === 0 ||
+        proposal.proposal_name.includes(queryString));
+    const sortedList = filteredList.filter((proposal) => {
+      if (!onlyVoted) {
+        return true;
+      }
+      return !!(find(votes, { proposal_name: proposal.proposal_name }));
+    });
     return (
       <Segment basic>
         <Header>
-          Referendum::Proposals
+          {t('governance_proposals_header')} Referendum::Proposals
           <Header.Subheader>
-            This is an early release of the interface in eos-voter to interact with the LIVE EOS Referendum System. Expect a major revamp of this tool in the near future.
+            {t('governance_proposals_subheader')} This is an early release of the interface in eos-voter to interact with the LIVE EOS Referendum System. Expect a major revamp of this tool in the near future.
           </Header.Subheader>
         </Header>
         <Message
           content={(
             <React.Fragment>
               <p>
+                {t('governance_proposals_explanation_one')}
                 The Referendum system is a smart contract that allows EOS stakeholders to directly be involved in the governance of the EOS blockchain.
                 Each proposal created by the community is entered into this interface, which will allow a set period of time where all accounts (which stake EOS) will be allowed to vote in yes/no on the matters presented in a stake weighted system.
               </p>
               <p>
+                {t('governance_proposals_explanation_two')}
                 This is a voting interface - and not a research tool. Use the external links provided with each proposal to view the status and full details of each proposal. Proposals can also be browsed using the following sites:
               </p>
               <List divided relaxed>
@@ -142,11 +156,13 @@ class ToolsGovernanceProposals extends Component<Props> {
             selectOnNavigation={false}
           />
         </Container>
-        <TextField
+        <Input
           placeholder={t('tools_proposals_search_placeholder')}
           onChange={(e) => this.setState({ queryString: e.target.value }) }
         />
         <Button
+          content={onlyVoted ? t('tools_proposal_sort_by_vote') : t('tools_proposal_remove_filter')}
+          color="grey"
           onClick={() => this.setState({ onlyVoted: !onlyVoted })}
         />
         <Table>
@@ -156,50 +172,51 @@ class ToolsGovernanceProposals extends Component<Props> {
                 {t('governance_proposals_title')}
               </Table.HeaderCell>
               <Table.HeaderCell>
-                {t('governance_proposals_id')}
+                {t('governance_proposals_name')}
               </Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {([].concat(list)
-              .filter((proposal) => !!proposal.valid)
-              .map((proposal) => (
-                <Table.Row>
-                  {selectedProposal === proposal.proposal_name ?
+            {([].concat(sortedList)
+                .map((proposal) => (
+                <React.Fragment>
+                  <Table.Row>
+                    <Table.Cell>
+                      {proposal.title}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {proposal.proposal_name}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        onClick={() => {
+                          this.setState({ selectedProposal: proposal.proposal_name })
+                        }}
+                        content={t('proposals_select_button')}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                  {selectedProposal === proposal.proposal_name &&
                     (
-                      <React.Fragment>
-                        <Table.Cell>
-                          {proposal.proposal_name}
-                        </Table.Cell>
-                        <Table.Cell>
-                          {proposal._id}
-                        </Table.Cell>
-                        <Table.Cell>
-                          <Button
-                            onClick={() => {
-                              this.setState({ selectedProposal: proposal.proposal_name })
-                            }}
-                            title={t('proposals_select_button')}
+                      <Table.Row>
+                        <Table.Cell colSpan='3'>
+                          <ToolsGovernanceProposalsProposal
+                            actions={actions}
+                            blockExplorers={blockExplorers}
+                            isLocked={isLocked}
+                            key={proposal.proposal_name}
+                            proposal={proposal}
+                            scope={scope}
+                            settings={settings}
+                            system={system}
+                            votes={votes}
                           />
                         </Table.Cell>
-                      </React.Fragment>
-                    ) : (
-                      <ToolsGovernanceProposalsProposal
-                        actions={actions}
-                        blockExplorers={blockExplorers}
-                        isLocked={isLocked}
-                        key={proposal.proposal_name}
-                        proposal={proposal}
-                        scope={scope}
-                        settings={settings}
-                        system={system}
-                        votes={votes}
-                      />
-                    )}
-                </Table.Row>
-              ))
-            )}
+                      </Table.Row>
+                  )}
+                </React.Fragment>
+              )))}
           </Table.Body>
         </Table>
       </Segment>
