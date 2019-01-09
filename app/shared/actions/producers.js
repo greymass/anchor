@@ -150,7 +150,14 @@ export function setUnregisteredProducers() {
   return (dispatch: () => void, getState) => {
     const { accounts, producers, settings } = getState();
     const { list } = producers;
-    const selected = get(accounts, `${settings.account}.voter_info.producers`) || [];
+    const voterInfo = get(accounts, `${settings.account}.voter_info`);
+    if (!voterInfo) {
+      return dispatch({
+        type: types.SET_UNREGISTERED_PRODUCERS,
+        payload: { unregisteredProducers: [] }
+      });
+    }
+    const selected = get(voterInfo, 'producers', []);
     const unregisteredProducers = [];
     const availableProducers = list.map((producer) => producer.owner);
     const validSelected = intersection(availableProducers, selected);
@@ -160,7 +167,7 @@ export function setUnregisteredProducers() {
       }
     });
 
-    dispatch({
+    return dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
       payload: { unregisteredProducers }
     });
