@@ -23,6 +23,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
     this.state = {
       asset: "PXBTS",
       confirming: false,
+      feeBitshares: 0.1042,
       formError: false,
       from: props.settings.account,
       quantity: " PXBTS",
@@ -143,7 +144,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
   }, 150);
 
   onChange = (e, { name, value, valid }) => {
-    const { asset, formError } = this.state;
+    const { asset, feeBitshares, formError } = this.state;
     const { balances, settings: { account } } = this.props;
     const newState = { [name]: value };
 
@@ -156,6 +157,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
       newState.asset = asset;
       if (parseFloat(value) > balances[account][asset]) {
         this.setState({ formError: 'insufficient_balance' });
+      } else if (((asset === 'PXBTS') || (asset === 'PXBRNP')) && (parseFloat(value) <= feeBitshares)) {
+        this.setState({ formError: 'bitshares_error' });
       } else {
         this.setState({ formError: null });
       }
@@ -165,7 +168,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
   };
 
   isSubmitDisabled = () => {
-    const { asset, formError, isValidAccount, quantity, to } = this.state;
+    const { asset, feeBitshares, formError, isValidAccount, quantity, to } = this.state;
     const { balances, settings: { account } } = this.props;
     const [value, symbol] = quantity.split(" ");
     const balance = balances[account];
@@ -177,7 +180,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
       !asset ||
       !to ||
       !!formError ||
-      !isValidAccount
+      !isValidAccount ||
+      (((asset === 'PXBTS') || (asset === 'PXBRNP')) && (parseFloat(value) <= feeBitshares))
       ? true
       : false;
   };
