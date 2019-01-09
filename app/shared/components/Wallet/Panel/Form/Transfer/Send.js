@@ -147,6 +147,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const {
+      connection: { chainId },
       settings
     } = this.props;
 
@@ -170,7 +171,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       return 'cannot_transfer_to_self';
     }
 
-    if (exchangeAccounts.includes(to) && (!memo || memo.length === 0)) {
+    if (exchangeAccounts(chainId).includes(to) && (!memo || memo.length === 0)) {
       return 'transferring_to_exchange_without_memo';
     }
 
@@ -204,7 +205,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     let exchangeWarning;
 
     if (memo && memo !== '') {
-      exchangeAccounts.forEach((exchangeAccount) => {
+      exchangeAccounts(connection.chainId).forEach((exchangeAccount) => {
         if (memo.match(`.*?${exchangeAccount}.*?`)) {
           exchangeWarning = (
             <Message warning>
@@ -222,7 +223,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
       system.ACCOUNT_HAS_CONTRACT_LAST_CONTRACT_HASH !== '0000000000000000000000000000000000000000000000000000000000000000';
 
     const hasWarnings = exchangeWarning || shouldDisplayTransferingToContractMessage;
-
     return (
       <Form
         loading={system.TRANSFER === 'PENDING'}
@@ -251,6 +251,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 contacts={settings.contacts}
                 enableContacts
                 enableExchanges
+                chainId={connection.chainId}
                 fluid
                 label={t('transfer_label_to')}
                 name="to"

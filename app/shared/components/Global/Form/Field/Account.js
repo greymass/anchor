@@ -44,6 +44,7 @@ class GlobalFormFieldAccount extends Component<Props> {
   render() {
     const {
       autoFocus,
+      chainId,
       contacts,
       disabled,
       enableContacts,
@@ -70,7 +71,8 @@ class GlobalFormFieldAccount extends Component<Props> {
         text: `${contact.accountName} ${contact.label ? (`(${contact.label})`) : ''}`
       }));
     } else if (fieldOption === 'exchanges') {
-      dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => ({
+      const exchanges = exchangeAccounts(chainId);
+      dropdownOptions = sortBy(exchanges).map((exchangeAccount) => ({
         value: exchangeAccount,
         text: exchangeAccount
       }));
