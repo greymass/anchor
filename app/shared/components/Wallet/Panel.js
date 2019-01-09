@@ -5,22 +5,6 @@ import WalletPanelLocked from './Panel/Locked';
 import WalletPanelUnlocked from './Panel/Unlocked';
 import WalletPanelWaiting from './Panel/Waiting';
 
-type Props = {
-  actions: {},
-  accounts: {},
-  balances: {},
-  blockchains: {},
-  blockExplorers: {},
-  connection: {},
-  globals: {},
-  settings: {},
-  system: {},
-  transaction: {},
-  validate: {},
-  keys: {},
-  wallet: {}
-};
-
 export default class WalletPanel extends Component<Props> {
   render() {
     const {
@@ -46,7 +30,6 @@ export default class WalletPanel extends Component<Props> {
         <WalletPanelWaiting />
       );
     }
-
 
     if (wallet.data) {
       panel = (
