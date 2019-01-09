@@ -91,7 +91,6 @@ const paneMapping = [
     element: ToolsCustomTokens,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'customtokens',
-    requiredContract: 'customtokens'
   },
   {
     element: ToolsDelegations,

@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { findIndex } from 'lodash';
+import { find, findIndex } from 'lodash';
 
-import { Button, Checkbox, Container, Header, Segment, Table } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Header, Popup, Segment, Table } from 'semantic-ui-react';
 
 import GlobalModalSettingsCustomToken from '../Global/Modal/Settings/CustomTokens';
 
@@ -56,6 +56,7 @@ class ToolsCustomTokens extends Component<Props> {
     const {
       actions,
       balances,
+      blockchains,
       connection,
       customtokens,
       globals,
@@ -90,6 +91,7 @@ class ToolsCustomTokens extends Component<Props> {
     }
     let filterTokens = customTokens.filter((token) => (connection.chainId !== token.split(':')[0]));
     filterTokens = filterTokens.map((token) => (token.split(':')[2]));
+    const blockchain = find(blockchains, { chainId: connection.chainId });
     return (
       <Segment basic>
         <Header>
@@ -99,13 +101,31 @@ class ToolsCustomTokens extends Component<Props> {
           </Header.Subheader>
         </Header>
         <Container>
-          <Button
-            color="green"
-            content={t('tools_customtokens_scan')}
-            icon="search"
-            onClick={this.scan}
-            size="small"
-          />
+          {(blockchain.supportedContracts.includes('customtokens'))
+            ? (
+              <Button
+                color="green"
+                content={t('tools_customtokens_scan')}
+                icon="search"
+                onClick={this.scan}
+                size="small"
+              />
+            )
+            : (
+              <Popup
+                content={t('feature_not_supported_blockchain')}
+                inverted
+                trigger={(
+                  <Button
+                    color="grey"
+                    content={t('tools_customtokens_scan')}
+                    icon="search"
+                    size="small"
+                  />
+                )}
+              />
+            )
+          }
           <Button
             color="blue"
             content={t('wallet:wallet_status_add_custom_token_action')}
