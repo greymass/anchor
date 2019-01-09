@@ -1,7 +1,9 @@
 {
   "collwallet_load_transaction": "서명 되지 않은 거래 가져오기",
   "coldwallet_transaction_invalid_signed": "거래는 이미 서명 되었습니다.",
+  "collwallet_transaction_sign_save_again": "Save File Again",
   "coldwallet_transaction_invalid_expired": "거래가 만료되었습니다.",
+  "coldwallet_transaction_invalid_authorization": "The unsigned transaction loaded does not match the current wallet. Either switch to the proper wallet or import the keys for {{actor}}@{{permission}}.",
   "coldwallet_transaction_invalid_contract": "콜드 지갑 서명자는 eosio, eosio.token, 및 eosio.msig 계약 만 지원합니다.",
   "coldwallet_transaction_signature_request_title": "서명 요청",
   "coldwallet_transaction_signature_request_content": "다음은 이 거래에 지정된 모든 계약 / 동작 들입니다. 아래 거래를 확인하시고 아래 버튼을 사용하여 거래를 서명하세요.",
