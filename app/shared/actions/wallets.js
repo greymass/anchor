@@ -226,6 +226,11 @@ export function useWallet(chainId, account, authorization) {
     dispatch({
       type: types.WALLET_LOCK
     });
+    //  Reset the unregistered producers
+    dispatch({
+      type: types.SET_UNREGISTERED_PRODUCERS,
+      payload: { unregisteredProducers: [] }
+    });
     // Set the wallet mode configuration
     dispatch(setWalletMode(newWallet.mode));
     // Update the settings for the current account
