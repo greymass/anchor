@@ -221,7 +221,7 @@ class ToolsContainer extends Component<Props> {
         } = settings;
         const paneRequiresContract = !!pane.requiredContract;
         if (paneRequiresContract) {
-          if (connection.supportedContracts && connection.supportedContracts.length > 0) {
+          if (connection.supportedContracts && connection.supportedContracts.constructor === Array) {
             const blockchainHasContract = connection.supportedContracts.includes(pane.requiredContract);
             if (!blockchainHasContract) {
               return false
