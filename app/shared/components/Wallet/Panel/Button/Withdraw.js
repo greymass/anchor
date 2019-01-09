@@ -63,4 +63,4 @@ class WalletPanelButtonWithdraw extends Component<Props> {
   }
 }
 
-export default translate("withdraw")(WalletPanelButtonWithdraw);
+export default translate("beos_withdraw")(WalletPanelButtonWithdraw);

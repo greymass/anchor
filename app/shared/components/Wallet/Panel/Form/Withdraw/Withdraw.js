@@ -276,4 +276,4 @@ class WalletPanelFormWithdraw extends Component<Props> {
   }
 }
 
-export default translate("withdraw")(WalletPanelFormWithdraw);
+export default translate("beos_withdraw")(WalletPanelFormWithdraw);

@@ -86,6 +86,6 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
   }
 }
 
-export default translate("withdraw")(
+export default translate("beos_withdraw")(
   WalletPanelFormWithdrawConfirming
 );
