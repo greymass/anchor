@@ -55,6 +55,7 @@ class ToolsSystemLog extends Component<Props> {
         <Table>
           <Table.Body>
             {(log
+              .slice(0, 50)
               .filter((e) => (!errorsOnly || (e.payload && e.payload.err)))
               .map((entry, idx) => {
                 const isError = !!(entry.payload && entry.payload.err);
