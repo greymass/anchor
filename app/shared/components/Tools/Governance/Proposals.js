@@ -39,6 +39,8 @@ class ToolsGovernanceProposals extends Component<Props> {
       t
     } = this.props;
     const {
+      onlyVote,
+      queryString,
       scope,
       selectedProposal
     } = this.state;
@@ -54,6 +56,8 @@ class ToolsGovernanceProposals extends Component<Props> {
         value: recentProposalsScope,
       }));
     }
+    const featuredList = list.filter((proposal) => proposal.proposal_name.includes(queryString));
+    const sortedList = featuredList.filter((proposal) => !onlyVote || proposal.voted );
     return (
       <Segment basic>
         <Header>
@@ -109,7 +113,7 @@ class ToolsGovernanceProposals extends Component<Props> {
           info
         />
         <Container style={{ display: 'none' }}>
-          {(list && list.length)
+          {(sortedList && sortedList.length)
             ? (
               <Message>
                 Proposal Scope:
@@ -139,6 +143,13 @@ class ToolsGovernanceProposals extends Component<Props> {
             selectOnNavigation={false}
           />
         </Container>
+        <TextField
+          placeholder={t('tools_proposals_search_placeholder')}
+          onChange={(e) => this.setState({ queryString: e.target.value }) }
+        />
+        <Button
+          onClick={() => this.setState({ onlyVoted: !onlyVoted })}
+        />
         <Table>
           <Table.Header>
             <Table.Row>
