@@ -1,0 +1,14 @@
+{
+  "withdraw_bitshares_account_validation": "Please wait, Bitshares account is validating...",
+  "withdraw_confirming_bitshares_network_fee": "Fee for withdrawal is the same as for the transfer in the Bitshares network.",
+  "withdraw_confirming_body_quantity": "Please ensure the quantity for this withdrawal is valid.",
+  "withdraw_confirming_title": "Review your Transaction",
+  "withdraw_header_available": "available to withdraw.",
+  "withdraw_modal_title": "Withdraw tokens",
+  "withdraw_send_button_cta": "Withdraw tokens",
+  "withdraw_label_to": "{{type}} account",
+  "withdraw_label_from": "Origin Account",
+  "withdraw_label_quantity": "Quantity",
+  "withdraw_label_token_and_quantity": "Token Selection + Quantity",
+  "withdraw_account_validation_error": "Bitshares account validation under maintenance"
+}
