@@ -156,6 +156,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       confirming,
       destinationAsset,
       from,
+      isValidAccount,
       to,
       memo,
       quantity,
@@ -201,6 +202,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
               name="to"
               onChange={this.onChange}
               value={to}
+              showErrorOnInput={!isValidAccount && to.length}
             />
             <FormFieldMultiToken
               balances={balances}

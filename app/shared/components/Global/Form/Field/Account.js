@@ -49,6 +49,7 @@ class GlobalFormFieldAccount extends Component<Props> {
       disabled,
       enableContacts,
       enableExchanges,
+      showErrorOnInput = false,
       fluid,
       icon,
       label,
@@ -104,6 +105,7 @@ class GlobalFormFieldAccount extends Component<Props> {
         ref={ref => { this.input = ref; }}
         value={value}
         width={width}
+        error={showErrorOnInput}
       />
     );
 
