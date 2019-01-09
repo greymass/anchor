@@ -192,6 +192,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
       assetAccountTypes,
       confirming,
       from,
+      isValidAccount,
       to,
       quantity,
       formError,
@@ -236,6 +237,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               name="to"
               onChange={this.onChange}
               value={to}
+              showErrorOnInput={!isValidAccount && to.length}
             />
             <FormFieldMultiToken
               balances={balances}
