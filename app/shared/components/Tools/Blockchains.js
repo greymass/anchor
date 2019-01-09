@@ -103,7 +103,7 @@ class ToolsBlockchains extends PureComponent<Props> {
                     )
                   ];
                   return (
-                    <Table.Row>
+                    <Table.Row key={b.chainId}>
                       <Table.Cell>
                         {(b.testnet)
                           ? (

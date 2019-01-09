@@ -119,7 +119,7 @@ class ToolsTableRowWallet extends Component<Props> {
     }
     const items = [
       (
-        <Dropdown.Header icon="warning sign" content={t('wallet:wallet_advanced_header')} />
+        <Dropdown.Header key="advanced-header" icon="warning sign" content={t('wallet:wallet_advanced_header')} />
       ),
       (
         <Dropdown.Item
