@@ -1,9 +1,10 @@
-import { find, uniq } from 'lodash';
+import { find } from 'lodash';
 import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
 import EOSAccount from '../../utils/EOS/Account';
-import { knownChains } from '../../reducers/blockchains';
+
+import { update as update009 } from './migrations/009-updateSettings';
 
 const defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
 
@@ -230,22 +231,7 @@ const migrations = {
     - Provide exclude in settings
     - Update default settings.customTokens
   */
-  9: (state) => {
-    const {
-      settings
-    } = state;
-    const newSettings = Object.assign({}, settings);
-    const customTokens = [`${defaultChainId}:eosio.token:EOS`];
-    settings.customTokens.forEach((token) => {
-      customTokens.push(`${defaultChainId}:${token}`);
-    });
-    newSettings.customTokens = uniq(customTokens);
-    newSettings.excludeForChainKey = ['beos-testnet'];
-    return Object.assign({}, state, {
-      blockchains: knownChains,
-      settings: newSettings
-    });
-  },
+  9: (state) => Object.assign({}, state, { settings: update009(state.settings, defaultChainId) }),
 };
 
 const persistConfig = {
