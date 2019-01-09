@@ -42,10 +42,10 @@ class WalletPanelUnlocked extends Component<Props> {
       transaction,
       t
     } = this.props;
+    if (!settings.account) return false;
     return (
       <div>
         <Segment vertical>
-
           <Accordion
             as={Menu}
             fluid
