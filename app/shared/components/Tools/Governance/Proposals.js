@@ -2,11 +2,10 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Dropdown, Container, Header, List, Message, Segment, Button } from 'semantic-ui-react';
+import { Dropdown, Container, Header, List, Message, Segment, Button, TextField, Table } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
-import { Table } from '../../../containers/Global/Account/Import/Ledger';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
@@ -39,7 +38,7 @@ class ToolsGovernanceProposals extends Component<Props> {
       t
     } = this.props;
     const {
-      onlyVote,
+      onlyVoted,
       queryString,
       scope,
       selectedProposal
@@ -153,15 +152,13 @@ class ToolsGovernanceProposals extends Component<Props> {
         <Table>
           <Table.Header>
             <Table.Row>
-              {fields.map((field) => (
-                <Table.HeaderCell>
-                  {t('governance_proposals_title')}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
+              <Table.HeaderCell>
+                {t('governance_proposals_title')}
+              </Table.HeaderCell>
+              <Table.HeaderCell>
                 {t('governance_proposals_id')}
-                </Table.HeaderCell>
-                <Table.HeaderCell />
-              ))}
+              </Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -180,7 +177,9 @@ class ToolsGovernanceProposals extends Component<Props> {
                         </Table.Cell>
                         <Table.Cell>
                           <Button
-                            onClick={() => this.setState({ selectedProposal: proposal.proposal_name })}
+                            onClick={() => {
+                              this.setState({ selectedProposal: proposal.proposal_name })
+                            }}
                             title={t('proposals_select_button')}
                           />
                         </Table.Cell>
