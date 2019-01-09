@@ -18,6 +18,7 @@
   "public_key": "Public Key",
   "remove": "제거",
   "reset_application": "디버그: 프로그램 초기화",
+  "feature_not_supported_blockchain": "This feature is not yet available on this blockchain.",
   "search": "찾는 중...",
   "upgrade": "Upgrade",
   "value": "값",
