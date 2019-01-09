@@ -206,6 +206,7 @@ class ToolsTableRowWallet extends Component<Props> {
         icon = 'id card';
         items.push((
           <GlobalButtonElevate
+            key='remove'
             onSuccess={() => this.removeWallet(account, authorization)}
             settings={settings}
             trigger={(
