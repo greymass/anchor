@@ -5,6 +5,7 @@ import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from './wallet';
 import { createTray } from './tray';
 import { createTrayIcon } from './tray/icon';
+import { createProtocolHandlers } from './protocol/handlers';
 
 const log = require('electron-log');
 const path = require('path');
@@ -13,6 +14,7 @@ let resourcePath = __dirname;
 let ui = null;
 let menu = null;
 let tray = null;
+let pHandler = null;
 
 if (process.mainModule.filename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
@@ -78,6 +80,8 @@ app.on('ready', async () => {
     log.info('development mode enabled');
     await installExtensions();
   }
+
+  initProtocolHandler();
   // If this is the first run, walk through the welcome
   // if (!store.getState().settings.configured) {
   //   log.info('new installation detected');
@@ -107,6 +111,10 @@ const initManager = (route = '/', closable = true) => {
 const initMenu = () => {
   menu = createTray(resourcePath); // Initialize the menu
   tray = createTrayIcon(resourcePath, menu); // Initialize the tray
+};
+
+const initProtocolHandler = (request = false) => {
+  pHandler = createProtocolHandlers(resourcePath, store, request);
 };
 
 const showManager = () => {
