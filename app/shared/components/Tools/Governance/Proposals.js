@@ -8,9 +8,11 @@ import { Dropdown, Container, Header, List, Message, Segment, Button, Input, Tab
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
+import { Visibility } from '../../Producers/Proxies';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
+    amount: 10,
     scope: 'eosio.forum',
     queryString: '',
     onlyVoted: false
@@ -25,12 +27,15 @@ class ToolsGovernanceProposals extends Component<Props> {
         this.sync();
       }
     });
-  }
+  };
   sync = () => {
     const { actions } = this.props;
     const { scope } = this.state;
     actions.getProposals(scope);
-  }
+  };
+  loadMore = () => {
+    this.setState({ amount: this.state.amount + 10 })
+  };
   render() {
     const {
       actions,
@@ -42,10 +47,10 @@ class ToolsGovernanceProposals extends Component<Props> {
       t
     } = this.props;
     const {
+      amount,
       onlyVoted,
       queryString,
-      scope,
-      selectedProposal
+      scope
     } = this.state;
     const {
       list,
@@ -69,6 +74,7 @@ class ToolsGovernanceProposals extends Component<Props> {
       }
       return !!(find(votes, { proposal_name: proposal.proposal_name }));
     });
+    const paginatedList = sortedList.splice(0, amount);
     return (
       <Segment basic>
         <Header>
@@ -165,60 +171,21 @@ class ToolsGovernanceProposals extends Component<Props> {
           color="grey"
           onClick={() => this.setState({ onlyVoted: !onlyVoted })}
         />
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>
-                {t('governance_proposals_title')}
-              </Table.HeaderCell>
-              <Table.HeaderCell>
-                {t('governance_proposals_name')}
-              </Table.HeaderCell>
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {([].concat(sortedList)
-                .map((proposal) => (
-                <React.Fragment>
-                  <Table.Row>
-                    <Table.Cell>
-                      {proposal.title}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {proposal.proposal_name}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Button
-                        onClick={() => {
-                          this.setState({ selectedProposal: proposal.proposal_name })
-                        }}
-                        content={t('proposals_select_button')}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                  {selectedProposal === proposal.proposal_name &&
-                    (
-                      <Table.Row>
-                        <Table.Cell colSpan='3'>
-                          <ToolsGovernanceProposalsProposal
-                            actions={actions}
-                            blockExplorers={blockExplorers}
-                            isLocked={isLocked}
-                            key={proposal.proposal_name}
-                            proposal={proposal}
-                            scope={scope}
-                            settings={settings}
-                            system={system}
-                            votes={votes}
-                          />
-                        </Table.Cell>
-                      </Table.Row>
-                  )}
-                </React.Fragment>
-              )))}
-          </Table.Body>
-        </Table>
+        <Visibility
+          continuous
+          key="ProxiesTable"
+          fireOnMount
+          onBottomVisible={this.loadMore}
+          once={false}
+        >
+          <ProposalsTable
+            actions={actions}
+            blockExplorers={blockExplorers}
+            isLocked={isLocked}
+            settings={settings}
+            system={system}
+          />
+        </Visibility>
       </Segment>
     );
   }
