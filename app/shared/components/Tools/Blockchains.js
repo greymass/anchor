@@ -52,9 +52,10 @@ class ToolsBlockchains extends PureComponent<Props> {
           : false
         }
         <Button.Group floated="right">
-          <GlobalButtonBlockchainImport
-            connection={connection}
-            settings={settings}
+          <Button
+            icon="circle plus"
+            key="new"
+            onClick={() => this.edit('new')}
           />
         </Button.Group>
         <Header floated="left">

@@ -87,6 +87,7 @@
   "global_app_requires_upgrade_header": "An upgrade ({{new}}) is available.",
   "global_app_requires_upgrade_subheader": "Choose to either Upgrade, View the Update Details, or Skip this Update.",
   "global_button_account_import_action": "Import Account(s)",
+  "global_button_blockchain_import_action": "New",
   "global_button_elevate": "Authorize",
   "global_button_elevate_failure_content": "Invalid Password",
   "global_button_elevate_failure_header": "The password entered does not match that of the wallet currently selected.",

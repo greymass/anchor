@@ -21,8 +21,10 @@ class GlobalBlockchainForm extends Component<Props> {
     this.state = {
       errors: {},
       loading: {},
+      newChain: !!(props.chainId === 'new'),
       values: Object.assign({}, props.blockchain),
       valids: {
+        chainId: false,
         endpoint: false
       },
     };
@@ -69,6 +71,10 @@ class GlobalBlockchainForm extends Component<Props> {
   onChange = (e, { name, valid, value }) => this.setState({
     values: set(this.state.values, name, value),
     valids: set(this.state.valids, name, valid),
+  })
+  onNodeChange = (e, { name, valid, value }) => this.setState({
+    values: set(this.state.values, name, value),
+    valids: set(this.state.valids, name, valid),
   }, () => this.props.actions.validateNode(value, this.state.values.chainId, false))
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -106,7 +112,9 @@ class GlobalBlockchainForm extends Component<Props> {
     const {
       errors,
       loading,
+      newChain,
       values,
+      valids,
     } = this.state;
     const {
       chainId,
@@ -121,19 +129,21 @@ class GlobalBlockchainForm extends Component<Props> {
         onSubmit={this.onSubmit}
       >
         <GlobalFormFieldString
+          autoFocus={newChain}
           defaultValue={chainId || ''}
-          disabled
+          disabled={!newChain}
           label={t('tools_form_blockchain_chainid_label')}
           name="chainId"
           onChange={this.onChange}
         />
         <GlobalFormFieldServer
-          autoFocus
+          autoFocus={!newChain}
           defaultValue={node || ''}
+          disabled={!valids.chainId}
           label={t('tools_form_blockchain_node_label')}
           loading={loading.endpoint}
           name="node"
-          onChange={this.onChange}
+          onChange={this.onNodeChange}
         />
         {(hasErrors)
           ? (
@@ -163,6 +173,7 @@ class GlobalBlockchainForm extends Component<Props> {
 function mapStateToProps(state, ownProps) {
   return {
     blockchain: find(state.blockchains, { chainId: ownProps.blockchain }),
+    chainId: ownProps.blockchain,
     settings: state.settings,
     validate: state.validate
   };
