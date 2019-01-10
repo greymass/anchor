@@ -22,7 +22,6 @@ class GlobalButtonBlockchainImport extends Component<Props> {
     const {
       open
     } = this.state;
-    return false;
     return (
       <GlobalModalBlockchainImport
         connection={connection}
