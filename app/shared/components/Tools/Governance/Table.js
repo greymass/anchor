@@ -1,4 +1,6 @@
-import { Button, Table } from './Proposals';
+import React, { Component } from 'react';
+import { translate } from 'react-i18next';
+import {  Button, Table } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals';
 
 class ProposalsTable extends Component<Props> {
@@ -72,8 +74,8 @@ class ProposalsTable extends Component<Props> {
             )))}
         </Table.Body>
       </Table>
-    )
+    );
   }
 }
 
-export default ProposalsTable;
+export default translate(ProposalsTable);
