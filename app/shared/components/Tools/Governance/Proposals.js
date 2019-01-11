@@ -1,14 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-
 import { find } from 'lodash';
 
-import { Dropdown, Container, Header, List, Message, Segment, Button, Input, Table } from 'semantic-ui-react';
+import { Dropdown, Container, Header, List, Message, Segment, Button, Input, Visibility, Icon } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
 import ProposalsTable from './Table';
-import { Visibility } from '../../Producers/Proxies';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
@@ -77,19 +75,19 @@ class ToolsGovernanceProposals extends Component<Props> {
     return (
       <Segment basic>
         <Header>
-          {t('governance_proposals_header')}
+          {t('tools_proposals_header')}
           <Header.Subheader>
-            {t('governance_proposals_subheader')}
+            {t('tools_proposals_subheader')}
           </Header.Subheader>
         </Header>
         <Message
           content={(
             <React.Fragment>
               <p>
-                {t('governance_proposals_explanation_one')}
+                {t('tools_proposals_explanation_one')}
               </p>
               <p>
-                {t('governance_proposals_explanation_two')}
+                {t('tools_proposals_explanation_two')}
               </p>
               <List divided relaxed>
                 <List.Item>
@@ -131,14 +129,15 @@ class ToolsGovernanceProposals extends Component<Props> {
           {(sortedList && sortedList.length)
             ? (
               <Message>
-                Proposal Scope:
-                {' '}
+
+                {t('tools_governance_proposals_container_message')}
+                {''}
                 {scope}
               </Message>
             )
             : (
               <Message>
-                No proposals found in the scope named "{scope}".
+                {t('tools_proposals_container_message_none', { scope })}
               </Message>
             )
           }
@@ -160,13 +159,18 @@ class ToolsGovernanceProposals extends Component<Props> {
         </Container>
         <Input
           placeholder={t('tools_proposals_search_placeholder')}
-          onChange={(e) => this.setState({ queryString: e.target.value }) }
+          onChange={(e) => this.setState({ queryString: e.target.value })}
         />
         <Button
-          content={onlyVoted ? t('tools_proposal_sort_by_vote') : t('tools_proposal_remove_filter')}
-          color="grey"
+          color={onlyVoted ? 'blue' : 'grey'}
           onClick={() => this.setState({ onlyVoted: !onlyVoted })}
-        />
+          style={{ marginLeft: 20 }}
+        >
+          {onlyVoted && (
+            <Icon name="check" />
+          )}
+          {t('tools_proposal_sort_by_vote')}
+        </Button>
         <Visibility
           continuous
           key="ProxiesTable"
@@ -178,7 +182,7 @@ class ToolsGovernanceProposals extends Component<Props> {
             actions={actions}
             blockExplorers={blockExplorers}
             isLocked={isLocked}
-            list={sortedList.splice(0, amount);}
+            list={sortedList.splice(0, amount)}
             settings={settings}
             system={system}
           />

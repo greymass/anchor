@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import {  Button, Table } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals';
 
 class ProposalsTable extends Component<Props> {
@@ -10,6 +10,7 @@ class ProposalsTable extends Component<Props> {
       actions,
       blockExplorers,
       isLocked,
+      list,
       scope,
       settings,
       system,
@@ -19,6 +20,7 @@ class ProposalsTable extends Component<Props> {
     const {
       selectedProposal
     } = this.state;
+    debugger
     return (
       <Table>
         <Table.Header>
@@ -33,7 +35,7 @@ class ProposalsTable extends Component<Props> {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {([].concat(sortedList)
+          {([].concat(list)
             .map((proposal) => (
               <React.Fragment>
                 <Table.Row>
