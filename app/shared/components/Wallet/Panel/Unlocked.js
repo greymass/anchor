@@ -128,7 +128,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(connection.supportedContracts.includes("withdraw"))
+                  {(connection.supportedContracts.includes("beosexchange"))
                     && (
                       <Segment>
                         <WalletPanelButtonWithdraw

@@ -14,7 +14,7 @@ const contractBasedFeatures = [
   // Used in retrieval of EOS Proxies information
   // https://github.com/AlohaEOS/eos-proxyinfo
   'regproxyinfo',
-  // BEOS feature for exchanging BTS <-> BEOS
+  // BEOS features for exchanging BTS <-> BEOS
   'beosexchange'
 ];
 

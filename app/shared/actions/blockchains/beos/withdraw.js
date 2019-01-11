@@ -1,27 +1,26 @@
 import {
-  SYSTEM_WITHDRAW_PENDING,
-  SYSTEM_WITHDRAW_SUCCESS,
-  SYSTEM_WITHDRAW_FAILURE
-} from "./types";
+  SYSTEM_BEOSWITHDRAW_PENDING,
+  SYSTEM_BEOSWITHDRAW_SUCCESS,
+  SYSTEM_BEOSWITHDRAW_FAILURE
+} from '../../types';
 
-import EOSContract from "../utils/EOS/Contract";
-import eos from "./helpers/eos";
-import { getCurrencyBalance } from "./accounts";
+import EOSContract from '../../../utils/EOS/Contract';
+import eos from '../../helpers/eos';
+import { getCurrencyBalance } from '../../accounts';
 
-export function withdraw(from, to, quantity, storeName) {
+export function beoswithdraw(from, to, quantity, storeName) {
   return (dispatch: () => void, getState) => {
     const {
       connection: { supportedContracts }
     } = getState();
 
-    if (!supportedContracts || !supportedContracts.includes("withdraw")) {
-      dispatch({ type: SYSTEM_WITHDRAW_FAILURE });
+    if (!supportedContracts || !supportedContracts.includes('beosexchange')) {
+      dispatch({ type: SYSTEM_BEOSWITHDRAW_FAILURE });
     }
 
-    dispatch({ type: SYSTEM_WITHDRAW_PENDING });
+    dispatch({ type: SYSTEM_BEOSWITHDRAW_PENDING });
 
     const { connection } = getState();
-    
 
     eos(connection, true).getAbi(storeName)
       .then((c) => {
@@ -40,29 +39,29 @@ export function withdraw(from, to, quantity, storeName) {
                 dispatch(getCurrencyBalance(from));
                 return dispatch({
                   payload: { tx, connection },
-                  type: SYSTEM_WITHDRAW_SUCCESS
+                  type: SYSTEM_BEOSWITHDRAW_SUCCESS
                 });
               })
               .catch(err => {
                 dispatch({
                   payload: { err },
-                  type: SYSTEM_WITHDRAW_FAILURE
+                  type: SYSTEM_BEOSWITHDRAW_FAILURE
                 });
               });
           })
           .catch(err => {
             dispatch({
               payload: { err },
-              type: SYSTEM_WITHDRAW_FAILURE
+              type: SYSTEM_BEOSWITHDRAW_FAILURE
             });
           });
       }).catch(err => {
         dispatch({
           payload: { err },
-          type: SYSTEM_WITHDRAW_FAILURE
+          type: SYSTEM_BEOSWITHDRAW_FAILURE
         });
       });
   };
 }
 
-export default { withdraw };
+export default { beoswithdraw };
