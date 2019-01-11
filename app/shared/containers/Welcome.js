@@ -35,7 +35,7 @@ class WelcomeContainer extends Component<Props> {
       default: {
         if (validate.NODE !== 'SUCCESS' && settings.node) {
           const { validateNode } = actions;
-          validateNode(settings.node);
+          validateNode(settings.node, settings.chainId, false, true);
         }
         break;
       }

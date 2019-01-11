@@ -248,7 +248,7 @@ export function setWalletMode(walletMode) {
     switch (walletMode) {
       case 'cold': {
         // Remove any connection string we had
-        dispatch(setSetting('node', null));
+        dispatch(setSetting('node', null, false, true));
         return dispatch({
           type: types.SET_WALLET_COLD
         });

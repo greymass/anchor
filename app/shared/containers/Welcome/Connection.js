@@ -41,7 +41,7 @@ class WelcomeConnectionContainer extends Component<Props> {
   componentDidMount() {
     const { actions, settings } = this.props;
     if (settings.skipImport) {
-      actions.validateNode(settings.node);
+      actions.validateNode(settings.node, settings.chainId, false, true);
     }
   }
 

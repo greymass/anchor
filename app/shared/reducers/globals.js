@@ -9,6 +9,10 @@ export default function globals(state = initialState, action) {
   switch (action.type) {
     case types.VALIDATE_NODE_SUCCESS:
     case types.RESET_ALL_STATES: {
+      // Prevent reset if this was just a validation call
+      if (!action.payload.useImmediately) {
+        return state;
+      }
       return Object.assign({}, initialState);
     }
     // SYSTEM_GET_GLOBALS_REQUEST
