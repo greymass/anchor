@@ -7,7 +7,7 @@ import { find } from 'lodash';
 import { Dropdown, Container, Header, List, Message, Segment, Button, Input, Table } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
-import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
+import ProposalsTable from './Table';
 import { Visibility } from '../../Producers/Proxies';
 
 class ToolsGovernanceProposals extends Component<Props> {
@@ -74,13 +74,12 @@ class ToolsGovernanceProposals extends Component<Props> {
       }
       return !!(find(votes, { proposal_name: proposal.proposal_name }));
     });
-    const paginatedList = sortedList.splice(0, amount);
     return (
       <Segment basic>
         <Header>
-          {t('governance_proposals_header')} Referendum::Proposals
+          {t('governance_proposals_header')}
           <Header.Subheader>
-            {t('governance_proposals_subheader')} This is an early release of the interface in eos-voter to interact with the LIVE EOS Referendum System. Expect a major revamp of this tool in the near future.
+            {t('governance_proposals_subheader')}
           </Header.Subheader>
         </Header>
         <Message
@@ -88,12 +87,9 @@ class ToolsGovernanceProposals extends Component<Props> {
             <React.Fragment>
               <p>
                 {t('governance_proposals_explanation_one')}
-                The Referendum system is a smart contract that allows EOS stakeholders to directly be involved in the governance of the EOS blockchain.
-                Each proposal created by the community is entered into this interface, which will allow a set period of time where all accounts (which stake EOS) will be allowed to vote in yes/no on the matters presented in a stake weighted system.
               </p>
               <p>
                 {t('governance_proposals_explanation_two')}
-                This is a voting interface - and not a research tool. Use the external links provided with each proposal to view the status and full details of each proposal. Proposals can also be browsed using the following sites:
               </p>
               <List divided relaxed>
                 <List.Item>
@@ -182,6 +178,7 @@ class ToolsGovernanceProposals extends Component<Props> {
             actions={actions}
             blockExplorers={blockExplorers}
             isLocked={isLocked}
+            list={sortedList.splice(0, amount);}
             settings={settings}
             system={system}
           />
