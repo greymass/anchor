@@ -65,7 +65,7 @@ class WelcomeImportContainer extends Component<Props> {
       });
       if (settings && settings.schema === 'anchor.v1.settings') {
         const newSettings = update009(settings.data, defaultChainId);
-        actions.validateNode(newSettings.node);
+        actions.validateNode(newSettings.node, newSettings.chainId, true, true);
         actions.setSettings(newSettings);
       } else {
         // unable to import settings

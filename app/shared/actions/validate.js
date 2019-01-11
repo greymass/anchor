@@ -57,7 +57,12 @@ export function validateAccount(account) {
   };
 }
 
-export function validateNode(node, expectedChainId = false, saveAsDefault = false) {
+export function validateNode(
+  node,
+  expectedChainId = false,
+  saveAsDefault = false,
+  useImmediately = false,
+) {
   return (dispatch: () => void, getState) => {
     dispatch({
       node,
@@ -108,6 +113,7 @@ export function validateNode(node, expectedChainId = false, saveAsDefault = fals
                 node: httpEndpoint,
                 saveAsDefault,
                 settings,
+                useImmediately,
               },
               type: types.VALIDATE_NODE_SUCCESS
             });
