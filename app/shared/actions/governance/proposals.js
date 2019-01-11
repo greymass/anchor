@@ -4,9 +4,9 @@ import sortBy from 'lodash/sortBy';
 import * as types from '../types';
 import eos from '../helpers/eos';
 
-const defaultContract = 'eosforumrcpp';
+const defaultContract = 'eosio.forum';
 
-export function getProposals(scope = 'eosforumdapp', previous = false) {
+export function getProposals(scope = 'eosio.forum', previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GOVERNANCE_GET_PROPOSALS_PENDING
