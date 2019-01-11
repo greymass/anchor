@@ -10,11 +10,11 @@ const knownChains = [
     name: 'BEOS',
     node: 'https://api.beos.world',
     supportedContracts: [
+      'beosexchange',
       'customtokens',
       'producerinfo',
       'proposals',
       'regproxyinfo',
-      'withdraw'
     ],
     symbol: 'BEOS',
     testnet: true

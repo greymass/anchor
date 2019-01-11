@@ -43,7 +43,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
   onConfirm = () => {
     const { from, to, quantity, storeName } = this.state;
     this.setState({ confirming: false }, () => {
-      this.props.actions.withdraw(from, to, quantity, storeName);
+      this.props.actions.beoswithdraw(from, to, quantity, storeName);
       this.setState({
         to: "",
         quantity: ""
@@ -203,7 +203,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
 
     return (
       <Form
-        loading={system.WITHDRAW === "PENDING"}
+        loading={system.BEOSWITHDRAW === "PENDING"}
         onSubmit={this.onSubmit}
         warning={hasWarnings}
       >

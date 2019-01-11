@@ -38,7 +38,7 @@ import * as ValidateActions from '../actions/validate';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 import * as WalletActions from '../actions/wallet';
 import * as SystemStateActions from '../actions/system/systemstate';
-import * as WithdrawActions from '../actions/withdraw';
+import * as BEOSWithdrawActions from '../actions/blockchains/beos/withdraw';
 
 type Props = {
   actions: {
@@ -249,6 +249,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...AppActions,
+      ...BEOSWithdrawActions,
       ...BlockExplorersActions,
       ...BuyRamActions,
       ...BuyRamBytesActions,
@@ -268,7 +269,6 @@ function mapDispatchToProps(dispatch) {
       ...ValidateActions,
       ...VoteProducerActions,
       ...WalletActions,
-      ...WithdrawActions
     }, dispatch)
   };
 }

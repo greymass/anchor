@@ -35,7 +35,7 @@ class WalletPanelButtonWithdraw extends Component<Props> {
 
     return (
       <GlobalTransactionModal
-        actionName="WITHDRAW"
+        actionName="BEOSWITHDRAW"
         actions={actions}
         blockExplorers={blockExplorers}
         button={{
