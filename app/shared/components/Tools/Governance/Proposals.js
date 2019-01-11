@@ -3,7 +3,19 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { find } from 'lodash';
 
-import { Dropdown, Container, Header, List, Message, Segment, Button, Input, Visibility, Icon } from 'semantic-ui-react';
+import {
+  Button,
+  Container,
+  Dropdown,
+  Header,
+  Icon,
+  Input,
+  List,
+  Loader,
+  Message,
+  Segment,
+  Visibility
+} from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../Global/Modal/DangerLink';
 import ProposalsTable from './Table';
@@ -65,13 +77,14 @@ class ToolsGovernanceProposals extends Component<Props> {
     const validList = list.filter((proposal) => !!proposal.valid)
     const filteredList =
       validList.filter((proposal) => queryString.length === 0 ||
-        proposal.proposal_name.includes(queryString));
+        proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase()));
     const sortedList = filteredList.filter((proposal) => {
       if (!onlyVoted) {
         return true;
       }
       return !!(find(votes, { proposal_name: proposal.proposal_name }));
     });
+    console.log({sortedList})
     return (
       <Segment basic>
         <Header>
@@ -129,8 +142,7 @@ class ToolsGovernanceProposals extends Component<Props> {
           {(sortedList && sortedList.length)
             ? (
               <Message>
-
-                {t('tools_governance_proposals_container_message')}
+                {t('tools_proposals_container_message')}
                 {''}
                 {scope}
               </Message>
@@ -187,6 +199,11 @@ class ToolsGovernanceProposals extends Component<Props> {
             system={system}
           />
         </Visibility>
+        {(!queryString && !onlyVoted && amount < sortedList.length) && (
+          <Segment key="ProposalsTableLoading" clearing padded vertical>
+            <Loader active />
+          </Segment>
+        )}
       </Segment>
     );
   }
