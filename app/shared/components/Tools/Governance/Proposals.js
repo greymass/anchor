@@ -9,7 +9,7 @@ import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
 class ToolsGovernanceProposals extends Component<Props> {
   state = {
-    scope: 'eosforumrcpp'
+    scope: 'eosio.forum'
   }
   componentDidMount() {
     this.sync();
