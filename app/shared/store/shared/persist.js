@@ -5,6 +5,7 @@ import createElectronStorage from 'redux-persist-electron-storage';
 import EOSAccount from '../../utils/EOS/Account';
 
 import { update as update009 } from './migrations/009-updateSettings';
+import { update as update010 } from './migrations/010-updateBlockchains';
 
 const defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
 
@@ -226,17 +227,25 @@ const migrations = {
     });
   },
   /*
-  9 - More blockchain options
+    9 - More blockchain options
 
     - Provide exclude in settings
     - Update default settings.customTokens
   */
-  9: (state) => Object.assign({}, state, { settings: update009(state.settings, defaultChainId) }),
+  9: (state) => Object.assign({}, state, {
+    settings: update009(state.settings, defaultChainId)
+  }),
+  /*
+    10 - Added excludeFeatures to all chains
+  */
+  10: (state) => Object.assign({}, state, {
+    blockchains: update010(state.blockchains),
+  }),
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 9,
+  version: 10,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   whitelist: [
