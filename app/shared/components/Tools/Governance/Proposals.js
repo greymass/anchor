@@ -55,21 +55,22 @@ class ToolsGovernanceProposals extends Component<Props> {
     return (
       <Segment basic>
         <Header>
-          Referendum::Proposals (BETA)
+          Referendum::Proposals
           <Header.Subheader>
-            This feature is a preview release of the upcoming Referendum system being implemented into the EOS ecosystem.
+            This is an early release of the interface in eos-voter to interact with the LIVE EOS Referendum System. Expect a major revamp of this tool in the near future.
           </Header.Subheader>
         </Header>
         <Message
           content={(
             <React.Fragment>
               <p>
-                The Referendum system is a smart contract that allows EOS stakeholders to directly be involved in the governance of the EOS blockchain. When a proposal is entered into the referendum contract, there will be a period of time where all accounts staking EOS will be allowed to vote in yes/no on the matters presented in a stake weighted system.
+                The Referendum system is a smart contract that allows EOS stakeholders to directly be involved in the governance of the EOS blockchain.
+                Each proposal created by the community is entered into this interface, which will allow a set period of time where all accounts (which stake EOS) will be allowed to vote in yes/no on the matters presented in a stake weighted system.
               </p>
               <p>
-                Use the external links provided with each proposal to view the status and full details of each proposal. Proposals can also be browsed using the following sites:
+                This is a voting interface - and not a research tool. Use the external links provided with each proposal to view the status and full details of each proposal. Proposals can also be browsed using the following sites:
               </p>
-              <List divided>
+              <List divided relaxed>
                 <List.Item>
                   <GlobalModalDangerLink
                     content={`https://eosvotes.io`}
@@ -84,6 +85,22 @@ class ToolsGovernanceProposals extends Component<Props> {
                     settings={settings}
                   />
                 </List.Item>
+                <List.Item>
+                  <GlobalModalDangerLink
+                    content={`https://www.eosx.io/tools/referendums/proposals`}
+                    link={`https://www.eosx.io/tools/referendums/proposals`}
+                    settings={settings}
+                  />
+                </List.Item>
+                <List.Item>
+                  <GlobalModalDangerLink
+                    content={`https://eosauthority.com/polls?&lnc=en`}
+                    link={`https://eosauthority.com/polls?&lnc=en`}
+                    settings={settings}
+                  />
+                </List.Item>
+
+
               </List>
             </React.Fragment>
           )}
