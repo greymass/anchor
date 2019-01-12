@@ -79,7 +79,7 @@ const paneMapping = [
   {
     element: ToolsGovernanceProposals,
     modes: ['hot', 'ledger', 'watch', 'skip', 'temp'],
-    name: 'governance_referendum_beta',
+    name: 'governance_referendum',
     requiredContract: 'proposals'
   },
   {
