@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Accordion, Menu, Segment } from 'semantic-ui-react';
+import { find } from 'lodash';
 
 import WalletPanelButtonBroadcast from './Button/Broadcast';
 import WalletPanelButtonLock from './Button/Lock';
@@ -42,6 +43,7 @@ class WalletPanelUnlocked extends Component<Props> {
       transaction,
       t
     } = this.props;
+    const blockchain = find(blockchains, { chainId: connection.chainId });
     if (!settings.account) return false;
     return (
       <div>
@@ -62,7 +64,7 @@ class WalletPanelUnlocked extends Component<Props> {
                 active={activeIndex === 0}
               >
                 <Segment.Group>
-                  {(settings.excludeForChainKey.includes(connection.chainKey))
+                  {(blockchain && blockchain.excludeFeatures.includes('tokenstaking'))
                     ? false
                     : (
                       <Segment>
@@ -94,7 +96,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       accountName={settings.account}
                     />
                   </Segment>
-                  {(settings.excludeForChainKey.includes(connection.chainKey))
+                  {(blockchain && blockchain.excludeFeatures.includes('rambuy'))
                     ? false
                     : (
                       <Segment>
@@ -111,7 +113,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(settings.excludeForChainKey.includes(connection.chainKey))
+                  {(blockchain && blockchain.excludeFeatures.includes('ramsell'))
                     ? false
                     : (
                       <Segment>
@@ -144,7 +146,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(connection.supportedContracts.includes("crosschaintransfer") || connection.chainSymbol === "EOS")
+                  {(connection.supportedContracts.includes("crosschaintransfer"))
                     && (
                       <Segment>
                         <WalletPanelButtonCrosschainTransfer
