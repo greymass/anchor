@@ -48,7 +48,7 @@ class ProposalsTable extends Component<Props> {
                   <Table.Row>
                     <Table.Cell>
                       <Popup
-                        content={t('tools_proposals_voted_message')}
+                        content={t(proposal.voted ? 'tools_proposals_voted_message' : 'tools_proposals_not_voted_message')}
                         inverted
                         position="top center"
                         style={{ textAlign: 'center' }}
