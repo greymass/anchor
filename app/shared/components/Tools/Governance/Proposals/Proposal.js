@@ -72,7 +72,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
         >
           {title}
           <Header.Subheader>
-            ID: {proposal_name} / Expires: <TimeAgo date={`${expires_at}z`} />
+            {t('tools_proposals_id')}: {proposal_name} / {t('tools_proposals_expires')} : <TimeAgo date={`${expires_at}z`} />
 
           </Header.Subheader>
         </Header>
@@ -81,8 +81,8 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             ? (
               <Message
                 color="green"
-                header="This account has approved this proposal."
-                content="The stake weighted value of this account has been recorded as approving this proposal."
+                header={t('tools_proposal_approved_message_header')}
+                content={t('tools_proposal_approved_message_content')}
                 icon="checkmark"
               />
             )
@@ -92,15 +92,15 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             ? (
               <Message
                 color="red"
-                header="This account has opposed this proposal."
-                content="The stake weighted value of this account has been recorded as opposing this proposal."
+                header={t('tools_proposal_rejected_message_header')}
+                content={t('tools_proposal_rejected_message_content')}
                 icon="x"
               />
             )
             : false
           }
           <p>
-            To view the full details of this proposal, please view it on an external block explorer:
+            {t('tools_proposal_view_on_block_explorer')}
           </p>
           <p>
             <GlobalModalDangerLink
@@ -110,7 +110,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             />
           </p>
           <p>
-            If you would like to modify your vote, use the buttons below.
+            {t('tools_proposal_modify_vote')}
           </p>
           <ToolsGovernanceProposalsProposalVote
             actionName="GOVERNANCE_VOTE_PROPOSAL"

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Table, Icon } from 'semantic-ui-react';
+import { Button, Table, Icon, Popup } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
 class ProposalsTable extends Component<Props> {
@@ -42,12 +42,21 @@ class ProposalsTable extends Component<Props> {
             .map((proposal) => {
               const selected = selectedProposal === proposal.proposal_name;
               return (
-                <React.Fragment>
+                <React.Fragment key={proposal.proposal_name}>
                   <Table.Row>
                     <Table.Cell>
-                      <Icon
-                        color={proposal.voted ? 'green' : 'grey'}
-                        name={proposal.voted ? 'check square outline' : 'square outline'}
+                      <Popup
+                        content={t('tools_proposals_voted_message')}
+                        inverted
+                        position="top center"
+                        style={{ textAlign: 'center' }}
+                        trigger={(
+                          <Icon
+                            size="large"
+                            color={proposal.voted ? 'green' : 'grey'}
+                            name={proposal.voted ? 'check square outline' : 'square outline'}
+                          />
+                        )}
                       />
                     </Table.Cell>
                     <Table.Cell style={{ maxWidth: 300 }}>
