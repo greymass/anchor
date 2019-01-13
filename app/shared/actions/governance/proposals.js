@@ -38,7 +38,7 @@ export function getProposals(scope = 'eosio.forum', previous = false) {
       }
       // if there are missing results
       if (results.more) {
-        return dispatch(getReferendums(rows));
+        return dispatch(getProposals(rows));
       }
       dispatch(getVoteInfo(scope, settings.account));
       // dispatch(getVoteInfo(scope, settings.account));

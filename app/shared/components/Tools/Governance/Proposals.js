@@ -77,14 +77,13 @@ class ToolsGovernanceProposals extends Component<Props> {
     const validList = list.filter((proposal) => !!proposal.valid)
     const filteredList =
       validList.filter((proposal) => queryString.length === 0 ||
-        proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase()));
+        (proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase())));
     const sortedList = filteredList.filter((proposal) => {
       if (!onlyVoted) {
         return true;
       }
       return !!(find(votes, { proposal_name: proposal.proposal_name }));
     });
-    console.log({sortedList})
     return (
       <Segment basic>
         <Header>
@@ -105,8 +104,8 @@ class ToolsGovernanceProposals extends Component<Props> {
               <List divided relaxed>
                 <List.Item>
                   <GlobalModalDangerLink
-                    content={`https://eosvotes.io`}
-                    link={`https://eosvotes.io`}
+                    content="https://eosvotes.io"
+                    link="https://eosvotes.io"
                     settings={settings}
                   />
                 </List.Item>
@@ -197,6 +196,7 @@ class ToolsGovernanceProposals extends Component<Props> {
             list={sortedList.splice(0, amount)}
             settings={settings}
             system={system}
+            votes={votes}
           />
         </Visibility>
         {(!queryString && !onlyVoted && amount < sortedList.length) && (
