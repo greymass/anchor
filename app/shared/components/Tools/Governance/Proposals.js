@@ -75,15 +75,21 @@ class ToolsGovernanceProposals extends Component<Props> {
       }));
     }
     const validList = list.filter((proposal) => !!proposal.valid)
+      .map((proposal) => {
+        const voted = !!find(votes, { proposal_name: proposal.proposal_name });
+        const proposalAttributes = proposal;
+        proposalAttributes.voted = voted;
+
+        return proposalAttributes;
+      });
     const filteredList =
-      validList.filter((proposal) => queryString.length === 0 ||
-        (proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase())));
-    const sortedList = filteredList.filter((proposal) => {
-      if (!onlyVoted) {
-        return true;
-      }
-      return !!(find(votes, { proposal_name: proposal.proposal_name }));
-    });
+      validList.filter((proposal) => {
+        return (queryString.length === 0 ||
+          (proposal.proposal_name &&
+            proposal.proposal_name.toLowerCase().includes(queryString.toLowerCase())) ||
+          (proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase())));
+      });
+    const sortedList = filteredList.filter((proposal) => !onlyVoted || proposal.voted);
     return (
       <Segment basic>
         <Header>
@@ -111,8 +117,8 @@ class ToolsGovernanceProposals extends Component<Props> {
                 </List.Item>
                 <List.Item>
                   <GlobalModalDangerLink
-                    content={`https://bloks.io/vote/referendums`}
-                    link={`https://bloks.io/vote/referendums`}
+                    content="https://bloks.io/vote/referendums"
+                    link="https://bloks.io/vote/referendums"
                     settings={settings}
                   />
                 </List.Item>
@@ -130,8 +136,6 @@ class ToolsGovernanceProposals extends Component<Props> {
                     settings={settings}
                   />
                 </List.Item>
-
-
               </List>
             </React.Fragment>
           )}
