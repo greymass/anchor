@@ -54,7 +54,9 @@ class ToolsGovernanceProposals extends Component<Props> {
       proposals,
       settings,
       system,
-      t
+      t,
+      validate,
+      wallet
     } = this.props;
     const {
       amount,
@@ -199,7 +201,9 @@ class ToolsGovernanceProposals extends Component<Props> {
             scope={scope}
             settings={settings}
             system={system}
+            validate={validate}
             votes={votes}
+            wallet={wallet}
           />
         </Visibility>
         {((!queryString && !onlyVoted && amount < sortedList.length) ||

@@ -17,7 +17,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const vote = 1;
     const json = JSON.stringify({});
     actions.voteProposal(scope, voter, proposal, vote, json);
-  }
+  };
   oppose = (proposal) => {
     const { actions, settings } = this.props;
     const { scope } = this.props;
@@ -25,35 +25,35 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const vote = 0;
     const json = JSON.stringify({});
     actions.voteProposal(scope, voter, proposal, vote, json);
-  }
+  };
   unvote = (proposal) => {
     const { actions, settings } = this.props;
     const { scope } = this.props;
     const voter = settings.account;
     actions.unvoteProposal(scope, voter, proposal);
-  }
+  };
   render() {
     const {
       actions,
       blockExplorers,
       isLocked,
+      voteDisabled,
       settings,
       proposal,
       system,
       t,
-      votes
+      votes,
+      validate,
+      wallet
     } = this.props;
     const {
-      created_at,
       expires_at,
-      json,
       proposal_name,
       title
     } = proposal;
     const vote = find(votes, ['proposal_name', proposal_name]);
     const voted = !!(vote);
     const approved = (voted) ? !!(vote.vote) : false;
-    const status = (voted) ? ((approved) ? 'tools_proposals_vote_status_approved' : 'tools_proposals_vote_status_opposed') : 'tools_proposals_vote_status_novote';
     const isVotePending = !!(system.GOVERNANCE_VOTE_PROPOSAL === 'PENDING' || system.GOVERNANCE_UNVOTE_PROPOSAL === 'PENDING')
     const isSupporting = (voted && approved);
     const isAgainst = (voted && !approved);
@@ -61,6 +61,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     if (isExpired) {
       return false;
     }
+    console.log({voteDisabled})
     return (
       <React.Fragment>
         <Header
@@ -73,7 +74,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
           {title}
           <Header.Subheader>
             {t('tools_proposals_id')}: {proposal_name} / {t('tools_proposals_expires')} : <TimeAgo date={`${expires_at}z`} />
-
           </Header.Subheader>
         </Header>
         <Segment attached>
@@ -119,13 +119,14 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             button={{
               color: 'grey',
               content: t('yes'),
-              disabled: isLocked || isSupporting,
+              disabled: isSupporting,
               icon: 'checkmark'
             }}
             confirm={(
               <Button
                 color="blue"
                 content={t('confirm')}
+                disabled={isSupporting}
                 floated="right"
                 icon="checkmark"
                 loading={isVotePending}
@@ -133,8 +134,11 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               />
             )}
             content={t('tools_governance_proposal_confirm_vote_yes')}
+            isLocked={isLocked}
             settings={settings}
             system={system}
+            validate={validate}
+            wallet={wallet}
           />
           <ToolsGovernanceProposalsProposalVote
             actionName="GOVERNANCE_VOTE_PROPOSAL"
@@ -143,14 +147,14 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             button={{
               color: 'grey',
               content: t('no'),
-              disabled: isLocked || isAgainst,
+              disabled: isAgainst,
               icon: 'x'
             }}
             confirm={(
               <Button
                 color="blue"
                 content={t('confirm')}
-                disabled={isLocked || isAgainst}
+                disabled={isAgainst}
                 floated="right"
                 icon="checkmark"
                 loading={isVotePending}
@@ -158,8 +162,11 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               />
             )}
             content={t('tools_governance_proposal_confirm_vote_no')}
+            isLocked={isLocked}
             settings={settings}
             system={system}
+            validate={validate}
+            wallet={wallet}
           />
           <ToolsGovernanceProposalsProposalVote
             actionName="GOVERNANCE_UNVOTE_PROPOSAL"
@@ -168,14 +175,14 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             button={{
               color: 'grey',
               content: t('unvote'),
-              disabled: isLocked || !voted,
+              disabled: !voted,
               icon: 'trash'
             }}
             confirm={(
               <Button
                 color="blue"
                 content={t('confirm')}
-                disabled={(isLocked || !voted)}
+                disabled={!voted}
                 floated="right"
                 icon="checkmark"
                 loading={isVotePending}
@@ -183,8 +190,11 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               />
             )}
             content={t('tools_governance_proposal_confirm_unvote')}
+            isLocked={isLocked}
             settings={settings}
             system={system}
+            validate={validate}
+            wallet={wallet}
           />
         </Segment>
       </React.Fragment>
