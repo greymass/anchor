@@ -15,7 +15,9 @@ class ProposalsTable extends Component<Props> {
       settings,
       system,
       t,
-      votes
+      validate,
+      votes,
+      wallet
     } = this.props;
     const {
       selectedProposal
@@ -94,7 +96,9 @@ class ProposalsTable extends Component<Props> {
                             scope={scope}
                             settings={settings}
                             system={system}
+                            validate={validate}
                             votes={votes}
+                            wallet={wallet}
                           />
                         </Table.Cell>
                       </Table.Row>
