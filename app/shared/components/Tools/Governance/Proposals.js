@@ -83,12 +83,10 @@ class ToolsGovernanceProposals extends Component<Props> {
         return proposalAttributes;
       });
     const filteredList =
-      validList.filter((proposal) => {
-        return (queryString.length === 0 ||
+      validList.filter((proposal) => (queryString.length === 0 ||
           (proposal.proposal_name &&
             proposal.proposal_name.toLowerCase().includes(queryString.toLowerCase())) ||
-          (proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase())));
-      });
+          (proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase()))));
     const sortedList = filteredList.filter((proposal) => !onlyVoted || proposal.voted);
     return (
       <Segment basic>
@@ -198,12 +196,14 @@ class ToolsGovernanceProposals extends Component<Props> {
             blockExplorers={blockExplorers}
             isLocked={isLocked}
             list={sortedList.splice(0, amount)}
+            scope={scope}
             settings={settings}
             system={system}
             votes={votes}
           />
         </Visibility>
-        {(!queryString && !onlyVoted && amount < sortedList.length) && (
+        {((!queryString && !onlyVoted && amount < sortedList.length) ||
+          (system.GOVERNANCE_GET_PROPOSALS === 'PENDING')) && (
           <Segment key="ProposalsTableLoading" clearing padded vertical>
             <Loader active />
           </Segment>
