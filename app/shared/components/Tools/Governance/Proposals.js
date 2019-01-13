@@ -30,6 +30,13 @@ class ToolsGovernanceProposals extends Component<Props> {
   componentDidMount() {
     this.sync();
   }
+  componentWillReceiveProps(prevProps) {
+    const { settings } = this.props;
+    const { settings: prevSettings } = prevProps;
+    if (settings.account !== prevSettings.account || settings.chainId !== prevSettings.chainId) {
+      this.sync();
+    }
+  };
   onChange = (e, { name, selection, value }) => {
     this.setState({ [name]: value }, () => {
       // If this is the dropdown, fire the submit
@@ -44,7 +51,7 @@ class ToolsGovernanceProposals extends Component<Props> {
     actions.getProposals(scope);
   };
   loadMore = () => {
-    this.setState({ amount: this.state.amount + 10 })
+    this.setState({ amount: this.state.amount + 10 });
   };
   render() {
     const {
