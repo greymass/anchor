@@ -27,13 +27,10 @@ import * as ValidateActions from '../actions/validate';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 import * as WalletActions from '../actions/wallet';
 import * as SystemStateActions from '../actions/system/systemstate';
-import * as GovernanceProposalsActions from '../actions/governance/proposals';
-
-import Proposals from '../components/Tools/Governance/Proposals';
 
 class TestContainer extends Component<Props> {
   render() {
-    return <Proposals {...this.props} />;
+    return <DevTest {...this.props} />;
   }
 }
 
@@ -64,8 +61,7 @@ function mapDispatchToProps(dispatch) {
       ...TransferActions,
       ...ValidateActions,
       ...VoteProducerActions,
-      ...WalletActions,
-      ...GovernanceProposalsActions
+      ...WalletActions
     }, dispatch)
   };
 }
