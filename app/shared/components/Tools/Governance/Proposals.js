@@ -193,26 +193,33 @@ class ToolsGovernanceProposals extends Component<Props> {
           )}
           {t('tools_proposal_sort_by_vote')}
         </Button>
-        <Visibility
-          continuous
-          key="ProxiesTable"
-          fireOnMount
-          onBottomVisible={this.loadMore}
-          once={false}
-        >
-          <ProposalsTable
-            actions={actions}
-            blockExplorers={blockExplorers}
-            isLocked={isLocked}
-            list={sortedList.splice(0, amount)}
-            scope={scope}
-            settings={settings}
-            system={system}
-            validate={validate}
-            votes={votes}
-            wallet={wallet}
+        {(sortedList.length > 0) ? (
+          <Visibility
+            continuous
+            key="ProxiesTable"
+            fireOnMount
+            onBottomVisible={this.loadMore}
+            once={false}
+          >
+            <ProposalsTable
+              actions={actions}
+              blockExplorers={blockExplorers}
+              isLocked={isLocked}
+              list={sortedList.splice(0, amount)}
+              scope={scope}
+              settings={settings}
+              system={system}
+              validate={validate}
+              votes={votes}
+              wallet={wallet}
+            />
+          </Visibility>
+        ) : (
+          <Message
+            content={t('tools_proposals_message_no_proposals')}
+            warning
           />
-        </Visibility>
+        )}
         {((!queryString && !onlyVoted && amount < sortedList.length) ||
           (system.GOVERNANCE_GET_PROPOSALS === 'PENDING')) && (
           <Segment key="ProposalsTableLoading" clearing padded vertical>
