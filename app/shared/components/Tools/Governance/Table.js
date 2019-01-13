@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Table } from 'semantic-ui-react';
+import { Button, Table, Icon } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
 class ProposalsTable extends Component<Props> {
@@ -24,8 +24,12 @@ class ProposalsTable extends Component<Props> {
       <Table style={{ marginTop: 20 }}>
         <Table.Header>
           <Table.Row>
+            <Table.HeaderCell />
             <Table.HeaderCell>
               {t('tools_proposals_title')}
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              {t('tools_proposals_id')}
             </Table.HeaderCell>
             <Table.HeaderCell>
               {t('tools_proposals_expires')}
@@ -41,26 +45,37 @@ class ProposalsTable extends Component<Props> {
                 <React.Fragment>
                   <Table.Row>
                     <Table.Cell>
+                      <Icon
+                        color={proposal.voted ? 'green' : 'grey'}
+                        name={proposal.voted ? 'check square outline' : 'square outline'}
+                      />
+                    </Table.Cell>
+                    <Table.Cell style={{ maxWidth: 300 }}>
                       {proposal.title}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {proposal.proposal_name}
                     </Table.Cell>
                     <Table.Cell>
                       {(new Date(proposal.expires_at)).toLocaleDateString('en-US')}
                     </Table.Cell>
                     <Table.Cell>
                       <Button
+                        icon="bars"
                         onClick={() => {
                           this.setState({
                             selectedProposal: selected ? null : proposal.proposal_name
                           });
                         }}
-                        content={selected ? t('tools_proposals_hide_button') : t('tools_proposals_select_button')}
+                        color={selected ? 'grey' : 'blue'}
+                        content={t('tools_proposals_select_button')}
                       />
                     </Table.Cell>
                   </Table.Row>
                   {selected &&
                     (
                       <Table.Row>
-                        <Table.Cell colSpan="3">
+                        <Table.Cell colSpan="5">
                           <ToolsGovernanceProposalsProposal
                             actions={actions}
                             blockExplorers={blockExplorers}
