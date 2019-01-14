@@ -185,14 +185,11 @@ class ToolsGovernanceProposals extends Component<Props> {
         />
         <Button
           color={onlyVoted ? 'blue' : 'grey'}
+          content={t('tools_proposal_sort_by_vote')}
+          floated="right"
+          icon={onlyVoted ? 'check square outline' : 'square outline'}
           onClick={() => this.setState({ onlyVoted: !onlyVoted })}
-          style={{ marginLeft: 20 }}
-        >
-          {onlyVoted && (
-            <Icon name="check" />
-          )}
-          {t('tools_proposal_sort_by_vote')}
-        </Button>
+        />
         {(sortedList.length > 0) ? (
           <Visibility
             continuous
