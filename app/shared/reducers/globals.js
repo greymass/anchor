@@ -10,7 +10,7 @@ export default function globals(state = initialState, action) {
     case types.VALIDATE_NODE_SUCCESS:
     case types.RESET_ALL_STATES: {
       // Prevent reset if this was just a validation call
-      if (!action.payload.useImmediately) {
+      if (action.payload && !action.payload.useImmediately) {
         return state;
       }
       return Object.assign({}, initialState);
