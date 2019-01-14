@@ -23,12 +23,12 @@
 
 ### リリース
 
-現在の 0.6.8 リリースのダウンロード：
+現在の 0.7.0 リリースのダウンロード：
 
-- [Windowsインストーラ](https://github.com/greymass/eos-voter/releases/download/v0.6.8/win-eos-voter-0.6.8.exe)
-- [macOSパッケージ](https://github.com/greymass/eos-voter/releases/download/v0.6.8/mac-eos-voter-0.6.8.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.6.8/linux-eos-voter-0.6.8-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.6.8/linux-eos-voter-0.6.8-amd64.snap)
+- [Windowsインストーラ](https://github.com/greymass/eos-voter/releases/download/v0.7.0/win-eos-voter-0.7.0.exe)
+- [macOSパッケージ](https://github.com/greymass/eos-voter/releases/download/v0.7.0/mac-eos-voter-0.7.0.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.0/linux-eos-voter-0.7.0-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.0/linux-eos-voter-0.7.0-amd64.snap)
 
 最新のリリースはこのリポジトリのリリースページでいつでも利用可能です:
 
@@ -98,20 +98,20 @@ Signed by [jesta on keybase](https://keybase.io/jesta)
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-shasum -b -a 512 linux-eos-voter-0.6.8-amd64.deb
-7cec380eadf243789c209c13c5abb75c6056118d6b2e566245a4e7e33dba1572feab6ee4255e0ae353c2b49b85b9dbcb7a95525d4524380bd707497c949c12b5 *linux-eos-voter-0.6.8-amd64.deb
-shasum -b -a 512 linux-eos-voter-0.6.8-arm64.deb
-8737c70289e9779e662f069505b2ac05c41df3bd0a5891b3859a530461a6eae016a3419498d60b3e1d56728535106f7c6a8d19283a1f572c5fc34a927857e040 *linux-eos-voter-0.6.8-arm64.deb
-shasum -b -a 512 linux-eos-voter-0.6.8-armv7l.deb
-9280b6b880c8b1133f0a7905d9ab9e38ff1a7db4f69bc143a88d17738d33f545568dda6f9b6d31d5beddd62ec248eb787e002050f568d246862311c785356e2b *linux-eos-voter-0.6.8-armv7l.deb
-shasum -b -a 512 linux-eos-voter-0.6.8-x86_64.AppImage
-66666a5b9e9fe0970af50c866e7e065177b27e866a448bfefab73b27cece82a0081279c934bc2ab91b630091fdc7aededd39de7cbca8f578ef5c2332c55b6370 *linux-eos-voter-0.6.8-x86_64.AppImage
-shasum -b -a 512 mac-eos-voter-0.6.8.dmg
-38469b173548ca7f33ca250812aae74127edc93e45f4411e2230a3967320b409356107ec79be39342505d34eef9eeff9caa30e60d3c9f578e4aa7d936a7ede37 *mac-eos-voter-0.6.8.dmg
-shasum -b -a 512 mac-eos-voter-0.6.8.zip
-904b4463667cb873f7b89fe2cb606c95a7f39e1a76e1ddede0320f9bba4165bfb1a647c6f2707d34bdf32783c2c61b84711d8240a055c4b97eb1302efb785330 *mac-eos-voter-0.6.8.zip
-shasum -b -a 512 win-eos-voter-0.6.8.exe
-36b5fe426bd450f7f0d1c57cbe86f80ee47508fd4db483e3abb728a6e51eb6e24652ee4f857845418dac2efde5dbb20892a2ec36507b2d77de7931dbd53ff30e *win-eos-voter-0.6.8.exe
+shasum -b -a 512 linux-eos-voter-0.7.0-amd64.deb
+7cec380eadf243789c209c13c5abb75c6056118d6b2e566245a4e7e33dba1572feab6ee4255e0ae353c2b49b85b9dbcb7a95525d4524380bd707497c949c12b5 *linux-eos-voter-0.7.0-amd64.deb
+shasum -b -a 512 linux-eos-voter-0.7.0-arm64.deb
+8737c70289e9779e662f069505b2ac05c41df3bd0a5891b3859a530461a6eae016a3419498d60b3e1d56728535106f7c6a8d19283a1f572c5fc34a927857e040 *linux-eos-voter-0.7.0-arm64.deb
+shasum -b -a 512 linux-eos-voter-0.7.0-armv7l.deb
+9280b6b880c8b1133f0a7905d9ab9e38ff1a7db4f69bc143a88d17738d33f545568dda6f9b6d31d5beddd62ec248eb787e002050f568d246862311c785356e2b *linux-eos-voter-0.7.0-armv7l.deb
+shasum -b -a 512 linux-eos-voter-0.7.0-x86_64.AppImage
+66666a5b9e9fe0970af50c866e7e065177b27e866a448bfefab73b27cece82a0081279c934bc2ab91b630091fdc7aededd39de7cbca8f578ef5c2332c55b6370 *linux-eos-voter-0.7.0-x86_64.AppImage
+shasum -b -a 512 mac-eos-voter-0.7.0.dmg
+38469b173548ca7f33ca250812aae74127edc93e45f4411e2230a3967320b409356107ec79be39342505d34eef9eeff9caa30e60d3c9f578e4aa7d936a7ede37 *mac-eos-voter-0.7.0.dmg
+shasum -b -a 512 mac-eos-voter-0.7.0.zip
+904b4463667cb873f7b89fe2cb606c95a7f39e1a76e1ddede0320f9bba4165bfb1a647c6f2707d34bdf32783c2c61b84711d8240a055c4b97eb1302efb785330 *mac-eos-voter-0.7.0.zip
+shasum -b -a 512 win-eos-voter-0.7.0.exe
+36b5fe426bd450f7f0d1c57cbe86f80ee47508fd4db483e3abb728a6e51eb6e24652ee4f857845418dac2efde5dbb20892a2ec36507b2d77de7931dbd53ff30e *win-eos-voter-0.7.0.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.0.80
 Comment: https://keybase.io/crypto
