@@ -24,7 +24,17 @@ export function historyPluginCheck() {
     const {
       connection,
     } = getState();
-    const historyAccount = connection.chain === 'BEOS' ? 'beos.gateway' : 'teamgreymass';
+    let historyAccount;
+    switch (connection.chainId) {
+      case '50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd': {
+        historyAccount = 'beos.gateway';
+        break;
+      }
+      default: {
+        historyAccount = 'teamgreymass';
+        break;
+      }
+    }
     return eos(connection).getActions(historyAccount).then((result) => dispatch({
       type: types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED,
       payload: { enabled: (result.actions && result.actions.length !== 0) }
