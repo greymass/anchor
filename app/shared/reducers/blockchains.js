@@ -17,7 +17,7 @@ const knownChains = [
       'regproxyinfo',
     ],
     symbol: 'BEOS',
-    testnet: true
+    testnet: false
   },
   {
     _id: 'eos-mainnet',
