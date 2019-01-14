@@ -24,12 +24,12 @@
 
 ### Релизы
 
-Текущая версия 0.7.0:
+Текущая версия 0.7.1:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.7.0/win-eos-voter-0.7.0.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.7.0/mac-eos-voter-0.7.0.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.0/linux-eos-voter-0.7.0-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.0/linux-eos-voter-0.7.0-amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.7.1/win-eos-voter-0.7.1.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.7.1/mac-eos-voter-0.7.1.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.1/linux-eos-voter-0.7.1-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.1/linux-eos-voter-0.7.1-amd64.snap)
 
 Последняя версия всегда будет доступна на странице выпусков этого репозитория:
 
@@ -99,20 +99,20 @@ Signed by [jesta on keybase](https://keybase.io/jesta)
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-shasum -b -a 512 linux-eos-voter-0.7.0-amd64.deb
-45dedca9809ee0a280cf173785a1e828d70d031fb490dfe15143d724c000d90c5a616e6210d1fe73d9a5a2eb182da90dcb50d687fff8828e606552799738ea5e *linux-eos-voter-0.7.0-amd64.deb
-shasum -b -a 512 linux-eos-voter-0.7.0-arm64.deb
-b0c870363b2872d1aada4a087c7b116491c299bd4fea96f05e0d3e81f68e932e9b604dbb6e0073cd511f9c0b7aae03bf9ca281ac4b7a2858c8e64ef386d25dce *linux-eos-voter-0.7.0-arm64.deb
-shasum -b -a 512 linux-eos-voter-0.7.0-armv7l.deb
-89ed394b7e4f97c834eb883d4c96ee98516fd3f534973872c1c0ad48e380e2bb2157fbb4081cd9c1ff90cd0eb89f64367ba1091e0a078de8db41f89666aaf39d *linux-eos-voter-0.7.0-armv7l.deb
-shasum -b -a 512 linux-eos-voter-0.7.0-x86_64.AppImage
-ec87d40caac53555643fb615de9674b8edefa8ef71b93c577a26c8b3c83f6273abd88809785c47217d10d96a37695a092d067c420b831c7ab13bb4adcdc001dd *linux-eos-voter-0.7.0-x86_64.AppImage
-shasum -b -a 512 mac-eos-voter-0.7.0.dmg
-0004b2c1f7f3e4f123ebccc12012b21259d26d01a0a67be9b03216ab2846cb9d885bc0fb1ddc589f153d355290859349a3f181e3796bc069f6f36c42302a9ef0 *mac-eos-voter-0.7.0.dmg
-shasum -b -a 512 mac-eos-voter-0.7.0.zip
-3ffb82e66029af626f6cd099d4883b3be416fa21c824cb446cf80f58871e4b441b400446da0840462876cb2373c49de16750be07dd1c81c369b3d0070d989eca *mac-eos-voter-0.7.0.zip
-shasum -b -a 512 win-eos-voter-0.7.0.exe
-463f99128424622665111b9e7d9dbf09c871f3067df31d44343444771e9a9949a06536f46ee9079b46127bb8084a6f80ea2f953ca162012526e22662c2d65353 *win-eos-voter-0.7.0.exe
+shasum -b -a 512 linux-eos-voter-0.7.1-amd64.deb
+45dedca9809ee0a280cf173785a1e828d70d031fb490dfe15143d724c000d90c5a616e6210d1fe73d9a5a2eb182da90dcb50d687fff8828e606552799738ea5e *linux-eos-voter-0.7.1-amd64.deb
+shasum -b -a 512 linux-eos-voter-0.7.1-arm64.deb
+b0c870363b2872d1aada4a087c7b116491c299bd4fea96f05e0d3e81f68e932e9b604dbb6e0073cd511f9c0b7aae03bf9ca281ac4b7a2858c8e64ef386d25dce *linux-eos-voter-0.7.1-arm64.deb
+shasum -b -a 512 linux-eos-voter-0.7.1-armv7l.deb
+89ed394b7e4f97c834eb883d4c96ee98516fd3f534973872c1c0ad48e380e2bb2157fbb4081cd9c1ff90cd0eb89f64367ba1091e0a078de8db41f89666aaf39d *linux-eos-voter-0.7.1-armv7l.deb
+shasum -b -a 512 linux-eos-voter-0.7.1-x86_64.AppImage
+ec87d40caac53555643fb615de9674b8edefa8ef71b93c577a26c8b3c83f6273abd88809785c47217d10d96a37695a092d067c420b831c7ab13bb4adcdc001dd *linux-eos-voter-0.7.1-x86_64.AppImage
+shasum -b -a 512 mac-eos-voter-0.7.1.dmg
+0004b2c1f7f3e4f123ebccc12012b21259d26d01a0a67be9b03216ab2846cb9d885bc0fb1ddc589f153d355290859349a3f181e3796bc069f6f36c42302a9ef0 *mac-eos-voter-0.7.1.dmg
+shasum -b -a 512 mac-eos-voter-0.7.1.zip
+3ffb82e66029af626f6cd099d4883b3be416fa21c824cb446cf80f58871e4b441b400446da0840462876cb2373c49de16750be07dd1c81c369b3d0070d989eca *mac-eos-voter-0.7.1.zip
+shasum -b -a 512 win-eos-voter-0.7.1.exe
+463f99128424622665111b9e7d9dbf09c871f3067df31d44343444771e9a9949a06536f46ee9079b46127bb8084a6f80ea2f953ca162012526e22662c2d65353 *win-eos-voter-0.7.1.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.0.80
 Comment: https://keybase.io/crypto
