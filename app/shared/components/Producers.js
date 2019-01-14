@@ -9,6 +9,7 @@ import ProducersVotingPreview from './Producers/BlockProducers/Modal/Preview';
 import Proxies from './Producers/Proxies';
 import ProducersSelector from './Producers/BlockProducers/Selector';
 import SidebarAccount from '../containers/Sidebar/Account';
+import ToolsGovernanceProposals from './Tools/Governance/Proposals';
 import WalletPanel from './Wallet/Panel';
 
 class Producers extends Component<Props> {
@@ -146,11 +147,13 @@ class Producers extends Component<Props> {
       allBlockExplorers,
       balances,
       blockchains,
+      blockExplorers,
       connection,
       globals,
       history,
       keys,
       producers,
+      proposals,
       settings,
       system,
       t,
@@ -266,6 +269,28 @@ class Producers extends Component<Props> {
         }
       }
     ];
+
+    if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
+      tabPanes.push({
+        menuItem: t('tools:tools_menu_governance_proposals'),
+        render: () => {
+          return (
+            <Tab.Pane>
+              <ToolsGovernanceProposals
+                actions={actions}
+                blockExplorers={blockExplorers}
+                keys={keys}
+                proposals={proposals}
+                settings={settings}
+                system={system}
+                validate={validate}
+                wallet={wallet}
+              />
+            </Tab.Pane>
+          );
+        }
+      });
+    }
 
     if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
       tabPanes.push({
