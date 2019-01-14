@@ -64,7 +64,9 @@ class WalletPanelUnlocked extends Component<Props> {
                 active={activeIndex === 0}
               >
                 <Segment.Group>
-                  {(blockchain && blockchain.excludeFeatures.includes('tokenstaking'))
+                  {(blockchain
+                    && blockchain.excludeFeatures
+                    && blockchain.excludeFeatures.includes('tokenstaking'))
                     ? false
                     : (
                       <Segment>
@@ -96,7 +98,9 @@ class WalletPanelUnlocked extends Component<Props> {
                       accountName={settings.account}
                     />
                   </Segment>
-                  {(blockchain && blockchain.excludeFeatures.includes('rambuy'))
+                  {(blockchain
+                    && blockchain.excludeFeatures
+                    && blockchain.excludeFeatures.includes('rambuy'))
                     ? false
                     : (
                       <Segment>
@@ -113,7 +117,9 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(blockchain && blockchain.excludeFeatures.includes('ramsell'))
+                  {(blockchain
+                    && blockchain.excludeFeatures
+                    && blockchain.excludeFeatures.includes('ramsell'))
                     ? false
                     : (
                       <Segment>
@@ -130,8 +136,10 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(connection.supportedContracts.includes("beosexchange"))
-                    && (
+                  {(blockchain
+                    && blockchain.supportedContracts
+                    && blockchain.supportedContracts.includes("beosexchange"))
+                    ? (
                       <Segment>
                         <WalletPanelButtonWithdraw
                           actions={actions}
@@ -145,6 +153,7 @@ class WalletPanelUnlocked extends Component<Props> {
                         />
                       </Segment>
                     )
+                    : false
                   }
                   {(connection.supportedContracts.includes("crosschaintransfer"))
                     && (
