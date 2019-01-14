@@ -235,6 +235,7 @@ function mapStateToProps(state) {
     keys: state.keys,
     ledger: state.ledger,
     producers: state.producers,
+    proposals: state.proposals,
     settings: state.settings,
     system: state.system,
     tables: state.tables,
