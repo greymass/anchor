@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { find } from 'lodash';
 
 import TimeAgo from 'react-timeago';
-import { Button, Header, Message, Segment } from 'semantic-ui-react';
+import { Button, Divider, List, Header, Message, Segment } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposalVote from './Proposal/Vote';
@@ -61,7 +61,12 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     if (isExpired) {
       return false;
     }
-    console.log({voteDisabled})
+    let datePosted = false;
+    try {
+      datePosted = proposal.created_at.split("T")[0].split("-").join('');
+    } catch(err) {
+      // no catch
+    }
     return (
       <React.Fragment>
         <Header
@@ -102,13 +107,35 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
           <p>
             {t('tools_proposal_view_on_block_explorer')}
           </p>
-          <p>
-            <GlobalModalDangerLink
-              content={`https://bloks.io/vote/referendums/${proposal_name}`}
-              link={`https://bloks.io/vote/referendums/${proposal_name}`}
-              settings={settings}
-            />
-          </p>
+          <List horizontal>
+            <List.Item as="a">
+              <GlobalModalDangerLink
+                content={`bloks.io`}
+                link={`https://bloks.io/vote/referendums/${proposal_name}`}
+                settings={settings}
+              />
+            </List.Item>
+            {(datePosted)
+              ? (
+                <List.Item as="a">
+                  <GlobalModalDangerLink
+                    content={`eosauthority.com`}
+                    link={`https://eosauthority.com/polls_details?proposal=${proposal_name}_${datePosted}&lnc=en`}
+                    settings={settings}
+                  />
+                </List.Item>
+              )
+              : false
+            }
+            <List.Item as="a">
+              <GlobalModalDangerLink
+                content={`eosx.io`}
+                link={`https://www.eosx.io/tools/referendums/proposals/${proposal_name}`}
+                settings={settings}
+              />
+            </List.Item>
+          </List>
+          <Divider />
           <p>
             {t('tools_proposal_modify_vote')}
           </p>
