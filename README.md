@@ -104,35 +104,35 @@ Signed by [jesta on keybase](https://keybase.io/jesta)
 Hash: SHA512
 
 shasum -b -a 512 linux-eos-voter-0.7.1-amd64.deb
-45dedca9809ee0a280cf173785a1e828d70d031fb490dfe15143d724c000d90c5a616e6210d1fe73d9a5a2eb182da90dcb50d687fff8828e606552799738ea5e *linux-eos-voter-0.7.1-amd64.deb
+15861e901a0165256c6c5465f00a50c86f098d0d62b54b6e71d681cea61fb9c3f1823acc534761f330d0b63592af2a900c5f541301e6fe52a407219bffde6e4f *linux-eos-voter-0.7.1-amd64.deb
 shasum -b -a 512 linux-eos-voter-0.7.1-arm64.deb
-b0c870363b2872d1aada4a087c7b116491c299bd4fea96f05e0d3e81f68e932e9b604dbb6e0073cd511f9c0b7aae03bf9ca281ac4b7a2858c8e64ef386d25dce *linux-eos-voter-0.7.1-arm64.deb
+180aacf9a3d14149e845be2c757b08ac4aabebe20146e0795afb57b996f16da53cd147c5780e3569b67190b7daf9b5d28070c039f89220ab17178d6cbe7123f1 *linux-eos-voter-0.7.1-arm64.deb
 shasum -b -a 512 linux-eos-voter-0.7.1-armv7l.deb
-89ed394b7e4f97c834eb883d4c96ee98516fd3f534973872c1c0ad48e380e2bb2157fbb4081cd9c1ff90cd0eb89f64367ba1091e0a078de8db41f89666aaf39d *linux-eos-voter-0.7.1-armv7l.deb
+98eca71ffec54a25482ff761735bb459c7c86937922080c3cb3da211b22f21a3ede3bfc5cdbbc3c311c57a5e4e42d2a7fa47dc63a95e4f66022a9b78484fdb92 *linux-eos-voter-0.7.1-armv7l.deb
 shasum -b -a 512 linux-eos-voter-0.7.1-x86_64.AppImage
-ec87d40caac53555643fb615de9674b8edefa8ef71b93c577a26c8b3c83f6273abd88809785c47217d10d96a37695a092d067c420b831c7ab13bb4adcdc001dd *linux-eos-voter-0.7.1-x86_64.AppImage
+95a869d47d0f9da9fc6c38a865023b8f390e9b2dd0b845196ad07d2d393f97b3cc2aeee84e837fe5a8114a5bc48b580768dc0d2a00b6f6773c04290660f0e939 *linux-eos-voter-0.7.1-x86_64.AppImage
 shasum -b -a 512 mac-eos-voter-0.7.1.dmg
-0004b2c1f7f3e4f123ebccc12012b21259d26d01a0a67be9b03216ab2846cb9d885bc0fb1ddc589f153d355290859349a3f181e3796bc069f6f36c42302a9ef0 *mac-eos-voter-0.7.1.dmg
+4a15a343d1c48e967ef885ed132698adce416648138ab02a697d97c15ea242d652280d0c7d9605ff0c8da62a9878dac6b2b11cd61b04e26642a6560c42c83017 *mac-eos-voter-0.7.1.dmg
 shasum -b -a 512 mac-eos-voter-0.7.1.zip
-3ffb82e66029af626f6cd099d4883b3be416fa21c824cb446cf80f58871e4b441b400446da0840462876cb2373c49de16750be07dd1c81c369b3d0070d989eca *mac-eos-voter-0.7.1.zip
+fc39b8bc81300010f724f492def4b662fa4b19a53835eb54ae794d87e5243b8b29e8419617809744e537c3cd350e71e978e27c9bf6afc6a56739f6169b68cbe2 *mac-eos-voter-0.7.1.zip
 shasum -b -a 512 win-eos-voter-0.7.1.exe
-463f99128424622665111b9e7d9dbf09c871f3067df31d44343444771e9a9949a06536f46ee9079b46127bb8084a6f80ea2f953ca162012526e22662c2d65353 *win-eos-voter-0.7.1.exe
+a51861b9c346c8b27f7d1ff30b19713bcb1e03e839c013c76bf4e2c16d4c0ef96f377a848f0fb896f5f34b9ceee4ca3f5011628b2880a8a6f0e29a2e609edc45 *win-eos-voter-0.7.1.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.0.80
 Comment: https://keybase.io/crypto
 
-wsFcBAABCgAGBQJcO/J6AAoJECyLxnO05hN9IyUP/1I+N45d+/71Olmqf4o86c4H
-F4MaZgc7rmaFMPemq/6vaGGvHRV1CYLEmE1Y5lFXNtVKR78X3SoEA49Uxi+ArYbN
-g6YHwel1PtwksC46nDwicxtFf9XJxab7j0Qt9VkVPzWZDYMIu0SQeWHwDhKHpWyk
-b/SfusjR+aubdeYbMw0r7cPMMKuhdy+u7oAhxJMUCcS7eTJZ7D3a7QK6awaJ5X7+
-3y7Xy6XcmTULcctA3xjwMq5M/CcxLnTHfI3wNwJnKJb2u5WZFgsj6To1A9QAlcxJ
-gklkJ5dvJxdHnHs2ed75oFVzsM7uzNzhJQgbQQpdskKmbJnMHkg6g+1RTIXDps4A
-6VnQdib/34SwL2u51WX1T4tFCCWWe9MN54fj78li2iKbK2mQZ6DazJD8TEZ7QxCS
-x/umbevTAryTvEzODLecN/PgUsjdSoctpTR8XQsIwR+0i6fNjEj3JN3DovwNzWuS
-Lx1n6+Vf+el9DAABdL0ov73ONtc4ojdbXWtfaJJoXusAXOD9md0hwAMkk9c/VeuU
-xtT2Rk2pwVKaXf31sxE7lwHI1nfATiMGuAPLUafrH0nmE+HfhnhzHEXqXCjkWgm+
-AfJoi0lrOFUegvQN6HI0tnKsulExK0GMTutBVcfHEljTITENmaKAXwLcJciffWTy
-r2qlPmomqiwimaxACafo
-=XUHV
+wsFcBAABCgAGBQJcPRQqAAoJECyLxnO05hN939EP/jApAWSxQ4uU8itZYzp7AcoZ
+47Rxy/PSexOX+xYSzI88yiKBtbja8nL4zeDMg20mHNzg/oPTpci6BGqrHC8EP6kj
+NC6L5/JZ8fO+27J+6/gsjYyFboRFjeklj1lHCjAtZkDp5oRLQNamUoNgWEV63eDM
+8UfERE1Lax+tqPCkSxqXY5QENY+SgKox19JYSoBkR7pDC35du9Dn7t/CTQnYItwa
+4c2pC5WLI+17WPfUmhn7kopcp7vmpSqy7gCgiHEAa2k3rOwuE9UXoM+EXiNNNNx+
+vY0k4+r8KVmnhKlWxHVAysS0UYRe0bo7WcveIhT8nJ0ltyFZsdwboWDdnxJm85Rd
+cdlOIxpHY+awXYQEM/sX21nhAckg3v6KDsfkDJlIzjYuAL5qjxrEZ1OsRtROjCA3
+Lksy63RAcuzVeJQYg6RrDcHfx2X/JzNEbon1yp1n7DYt5FljC7qfYz4rgi/Jfjbb
+/W04y4zt4rZ2e1qd1CARYfc3A/mkK4iiUf5xbR3p5HuY00mm335FLSo/JAoAyODf
+OtyORVfRhkA/VZtSSDfbkFFa+lycs57eUoHXu9QReVxTZPQ0j++o1PT4CFx0Jote
+TUkHxD8y9+z/QBra5iTnqozv83bGh3+HK3RFysRv0EE9Q1blQg2PZ04Q4JFBTi46
+MsudY7AswJPMk7QFO4LM
+=UzbA
 -----END PGP SIGNATURE-----
 ```
