@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Table, Icon, Popup } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
+import TimeAgo from 'react-timeago';
 
 class ProposalsTable extends Component<Props> {
   state= { selectedProposal: null };
@@ -30,12 +31,6 @@ class ProposalsTable extends Component<Props> {
             <Table.HeaderCell>
               {t('tools_proposals_title')}
             </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t('tools_proposals_id')}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t('tools_proposals_expires')}
-            </Table.HeaderCell>
             <Table.HeaderCell />
           </Table.Row>
         </Table.Header>
@@ -54,32 +49,31 @@ class ProposalsTable extends Component<Props> {
                         style={{ textAlign: 'center' }}
                         trigger={(
                           <Icon
+                            disabled={!proposal.voted}
                             size="large"
-                            color={proposal.voted ? 'green' : 'grey'}
-                            name={proposal.voted ? 'check square outline' : 'square outline'}
+                            color={proposal.voted ? 'purple' : 'grey'}
+                            name="balance scale"
                           />
                         )}
                       />
                     </Table.Cell>
-                    <Table.Cell style={{ maxWidth: 300 }}>
+                    <Table.Cell>
                       {proposal.title}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {proposal.proposal_name}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {(new Date(proposal.expires_at)).toLocaleDateString('en-US')}
+                      <p>
+                        <small>
+                          {t('tools_proposals_id')}: {proposal.proposal_name}
+                        </small>
+                      </p>
                     </Table.Cell>
                     <Table.Cell>
                       <Button
-                        icon="bars"
+                        icon={selected ? 'x' : 'bars'}
                         onClick={() => {
                           this.setState({
                             selectedProposal: selected ? null : proposal.proposal_name
                           });
                         }}
                         color={selected ? 'grey' : 'blue'}
-                        content={t('tools_proposals_select_button')}
                       />
                     </Table.Cell>
                   </Table.Row>
