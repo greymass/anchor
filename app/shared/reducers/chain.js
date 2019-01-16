@@ -10,6 +10,14 @@ export default function chain(state = initialState, action) {
     case types.GET_CHAIN_INFO_SUCCESS: {
       return Object.assign({}, state, action.payload.chain);
     }
+    case types.GET_DISTRIBUTION_PERIOD_INFO: {
+      return Object.assign({}, state, { ...action.payload })
+    }
+    case types.REMOVE_DISTRIBUTION_PERIOD_INFO: {
+      const newState = Object.assign({}, state);
+      delete newState.distributionPeriodInfo;
+      return newState;
+    }
     default: {
       return state;
     }

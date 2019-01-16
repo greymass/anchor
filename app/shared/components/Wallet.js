@@ -58,6 +58,7 @@ export default class Wallet extends Component<Props> {
               balances={balances}
               blockchains={blockchains}
               blockExplorers={allBlockExplorers[connection.chainKey]}
+              chain={chain}
               connection={connection}
               globals={globals}
               keys={keys}
