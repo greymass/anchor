@@ -26,6 +26,7 @@ const knownChains = [
     name: 'EOS',
     node: 'https://eos.greymass.com',
     supportedContracts: [
+      'crosschaintransfer',
       'customtokens',
       'producerinfo',
       'proposals',

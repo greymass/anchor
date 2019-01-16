@@ -35,6 +35,7 @@ class WalletPanelUnlocked extends Component<Props> {
       balances,
       blockchains,
       blockExplorers,
+      chain,
       connection,
       globals,
       validate,
@@ -64,10 +65,10 @@ class WalletPanelUnlocked extends Component<Props> {
                 active={activeIndex === 0}
               >
                 <Segment.Group>
-                  {(blockchain
-                    && blockchain.excludeFeatures
-                    && blockchain.excludeFeatures.includes('tokenstaking'))
-                    ? false
+                  {(chain
+                    && chain.hasOwnProperty('distributionPeriodInfo')
+                    && chain.distributionPeriodInfo.beosDistribution) ?
+                    false
                     : (
                       <Segment>
                         <WalletPanelButtonStake
@@ -98,10 +99,10 @@ class WalletPanelUnlocked extends Component<Props> {
                       accountName={settings.account}
                     />
                   </Segment>
-                  {(blockchain
-                    && blockchain.excludeFeatures
-                    && blockchain.excludeFeatures.includes('rambuy'))
-                    ? false
+                  {(chain
+                    && chain.hasOwnProperty('distributionPeriodInfo')
+                    && chain.distributionPeriodInfo.ramDistribution) ?
+                    false
                     : (
                       <Segment>
                         <WalletPanelButtonRamBuy
@@ -117,10 +118,10 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(blockchain
-                    && blockchain.excludeFeatures
-                    && blockchain.excludeFeatures.includes('ramsell'))
-                    ? false
+                  {(chain
+                    && chain.hasOwnProperty('distributionPeriodInfo')
+                    && chain.distributionPeriodInfo.ramDistribution) ?
+                    false
                     : (
                       <Segment>
                         <WalletPanelButtonRamSell

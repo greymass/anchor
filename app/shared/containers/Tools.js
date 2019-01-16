@@ -209,15 +209,23 @@ class ToolsContainer extends Component<Props> {
       t
     } = this.props;
     return paneMapping
-      .filter((pane) => {
-        const {
-          settings
+    .filter((pane) => {
+      const {
+        chain,
+        settings
         } = this.props;
         const {
           skipImport,
           walletMode,
           walletTemp
         } = settings;
+        /* Hide delegations pane in BEOS distrubition period */
+        if (pane.name === 'delegations' &&
+          chain.hasOwnProperty('distributionPeriodInfo') &&
+          chain.distributionPeriodInfo.beosDistribution) {
+          return false;
+        }
+
         const paneRequiresContract = !!pane.requiredContract;
         if (paneRequiresContract) {
           if (connection.supportedContracts &&
