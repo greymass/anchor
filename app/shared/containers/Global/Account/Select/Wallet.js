@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import GlobalButtonAccountImport from '../../../../components/Global/Button/Account/Import';
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalBlockchainDropdown from '../../Blockchain/Dropdown';
+import * as ChainActions from '../../../../actions/chain';
 import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
 import * as ValidateActions from '../../../../actions/validate';
@@ -26,6 +27,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
 
   swapAccount = (chainId, account, authorization, password = false) => {
     const { actions } = this.props;
+    actions.getInfo();
     actions.useWallet(chainId, account, authorization);
     if (password) {
       actions.unlockWallet(password);
@@ -227,6 +229,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...ChainActions,
       ...SettingsActions,
       ...ValidateActions,
       ...WalletActions,
