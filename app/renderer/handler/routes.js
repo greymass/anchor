@@ -11,7 +11,7 @@ import Prompt from '../../modules/handler/containers/Prompt';
 export default () => (
   <HashRouter>
     <Switch>
-      <Route exact path="/" component={Prompt} />
+      <Route path="/" component={Prompt} />
     </Switch>
   </HashRouter>
 );
