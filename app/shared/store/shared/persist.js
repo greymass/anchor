@@ -255,6 +255,7 @@ const persistConfig = {
   version: 11,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
+  timeout: 0, // The code base checks for falsy, so 0 disables
   whitelist: [
     'blockchains',
     'settings',
