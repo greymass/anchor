@@ -38,6 +38,16 @@ class TabMenu extends Component<Props> {
           )
           : false
         }
+        {(!settings.walletInit && settings.account)
+          ? (
+            <Menu.Item
+              name="account"
+              icon="id card"
+              content={settings.account}
+            />
+          )
+          : false
+        }
         {(settings.walletMode !== 'cold')
           ? (
             <Menu.Item
