@@ -8,6 +8,7 @@ export default function system(state = {}, action) {
   if (
     action.type === types.RESET_ALL_STATES
     || action.type === types.RESET_SYSTEM_STATES
+    || action.type === types.SYSTEM_EOSIOURI_TEMPLATEURI_PENDING
   ) {
     return {};
   }
