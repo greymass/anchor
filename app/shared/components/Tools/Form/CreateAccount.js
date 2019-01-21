@@ -37,7 +37,7 @@ class ToolsFormCreateAccount extends Component<Props> {
     let disableRamField = false;
     let disableDelegatedResourceWarning = false;
 
-    if (connection.chainKey === 'insights-mainnet') {
+    if (connection.chainId === 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664') {
       delegatedBw = '0.0001';
       delegatedCpu = '0.0001';
       ramAmount = 8192;
@@ -52,7 +52,7 @@ class ToolsFormCreateAccount extends Component<Props> {
       confirming: false,
       delegatedBw,
       delegatedCpu,
-      chainSymbolBalance: balance && balance[connection.chainSymbol] || 0,
+      chainSymbolBalance: (balance && balance[connection.chainSymbol]) || 0,
       formErrors: {},
       ownerKeyValue,
       ramAmount,
