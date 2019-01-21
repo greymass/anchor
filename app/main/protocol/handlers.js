@@ -27,7 +27,7 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     height: uiStateKeeper.height,
     title,
     skipTaskbar: true,
-    show: true,
+    show: false,
     resizable: true,
     backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
@@ -39,7 +39,6 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
 
   ui.webContents.on('did-finish-load', () => {
     log.info('protocol handler: loaded ui');
-    // ui.show();
     ui.focus();
     ui.setTitle(title);
     if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
@@ -47,12 +46,16 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     }
   });
 
-  configureIPC(ui);
+  // TODO: Needs proper hide/close logic independent of the primary ui
+  // ui.on('close', (e) => {
+  //   if (ui.isVisible()) {
+  //     ui.hide();
+  //     e.preventDefault();
+  //     return false;
+  //   }
+  // });
 
-  protocol.registerHttpProtocol('eosio', (req, cb) => {
-    log.info('protocol handler: show ui', cb);
-    ui.show();
-  });
+  configureIPC(ui);
 
   return ui;
 };

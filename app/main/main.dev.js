@@ -1,6 +1,6 @@
 /* eslint global-require: 0, flowtype-errors/show-errors: 0 */
 
-import { app, crashReporter } from 'electron';
+import { app, crashReporter, protocol } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from './wallet';
 import { createTray } from './tray';
@@ -44,6 +44,8 @@ console.log = (...args) => {
 };
 
 log.info('app: initializing');
+protocol.registerStandardSchemes(['eosio']);
+app.setAsDefaultProtocolClient('eosio');
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -81,14 +83,19 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
+  protocol.registerHttpProtocol('eosio', (req, cb) => {
+    console.log('protocol handler: register', req, cb);
+    // TODO: during protocol registration, the uri handler may need to be triggered
+  });
+
   initProtocolHandler();
   // If this is the first run, walk through the welcome
-  // if (!store.getState().settings.configured) {
-  //   log.info('new installation detected');
-  //   ui = initManager('/', true);
-  // } else {
+  if (!store.getState().settings.configured) {
+    log.info('new installation detected');
+    ui = initManager('/', true);
+  } else {
     initMenu();
-  // }
+  }
 });
 
 // debug event logging
@@ -96,8 +103,18 @@ app.on('window-all-closed', () => {
   log.info('app: window-all-closed');
   app.quit();
 });
-app.on('will-finish-launching', () => { log.info('app: will-finish-launching'); });
-app.on('before-quit', () => { log.info('app: before-quit'); });
+app.on('will-finish-launching', () => {
+  app.on('open-url', (req, url) => {
+    log.info('app: open-url', url);
+    pHandler.webContents.send('openUri', url);
+    pHandler.show();
+  });
+  log.info('app: will-finish-launching');
+});
+app.on('before-quit', () => {
+  log.info('app: before-quit');
+  pHandler.close();
+});
 app.on('will-quit', () => { log.info('app: will-quit'); });
 app.on('quit', () => { log.info('app: quit'); });
 
