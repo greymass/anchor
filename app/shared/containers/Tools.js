@@ -15,6 +15,7 @@ import RecommendationInterface from './Recommendation/Interface';
 import Tools from '../components/Tools';
 import ToolsBidName from '../components/Tools/BidName';
 import ToolsBlockchains from '../components/Tools/Blockchains';
+import ToolsBlockchainsBEOSCrosschainTransfer from '../components/Tools/Blockchains/BEOS/CrosschainTransfer';
 import ToolsContacts from '../components/Tools/Contacts';
 import ToolsCreateAccount from '../components/Tools/CreateAccount';
 import ToolsCustomTokens from '../components/Tools/CustomTokens';
@@ -91,6 +92,12 @@ const paneMapping = [
     element: ToolsCustomTokens,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'customtokens',
+  },
+  {
+    element: ToolsBlockchainsBEOSCrosschainTransfer,
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'beos_crosschaintransfer',
+    requiredContract: 'crosschaintransfer'
   },
   {
     element: ToolsDelegations,

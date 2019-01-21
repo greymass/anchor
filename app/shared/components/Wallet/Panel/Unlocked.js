@@ -15,7 +15,6 @@ import WalletPanelButtonRamSell from './Button/Ram/Sell';
 import WalletPanelButtonRamBuy from './Button/Ram/Buy';
 
 import WalletPanelButtonWithdraw from './Button/Withdraw';
-import WalletPanelButtonCrosschainTransfer from './Button/CrosschainTransfer';
 
 class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 }
@@ -155,22 +154,6 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                     : false
-                  }
-                  {(connection.supportedContracts.includes("crosschaintransfer"))
-                    && (
-                      <Segment>
-                        <WalletPanelButtonCrosschainTransfer
-                          actions={actions}
-                          balances={balances}
-                          blockchains={blockchains}
-                          blockExplorers={blockExplorers}
-                          connection={connection}
-                          settings={settings}
-                          system={system}
-                          transaction={transaction}
-                        />
-                      </Segment>
-                    )
                   }
                   {(settings.walletMode === 'watch')
                     ? (
