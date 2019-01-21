@@ -1,4 +1,5 @@
 {
+  "producer_account": "{{account}}",
   "producer_voting": "プロデューサ投票",
   "tools": "ツール",
   "wallet": "ウォレット"

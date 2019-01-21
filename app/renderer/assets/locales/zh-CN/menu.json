@@ -1,4 +1,5 @@
 {
+  "producer_account": "{{account}}",
   "producer_voting": "生产者投票",
   "tools": "Tools",
   "wallet": "钱包"

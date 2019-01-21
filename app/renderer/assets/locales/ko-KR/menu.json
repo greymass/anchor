@@ -1,4 +1,5 @@
 {
+  "producer_account": "{{account}}",
   "producer_voting": "블록 프로듀서 투표하기",
   "tools": "도구",
   "wallet": "지갑"

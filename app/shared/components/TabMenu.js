@@ -36,7 +36,13 @@ class TabMenu extends Component<Props> {
               <GlobalAccountDropdown />
             </React.Fragment>
           )
-          : false
+          : (
+            <Menu.Item
+              name="account"
+              icon="id card"
+              content={t('producer_account', { account: settings.account })}
+            />
+          )
         }
         {(settings.walletMode !== 'cold')
           ? (

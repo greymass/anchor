@@ -1,4 +1,5 @@
 {
+  "producer_account": "{{account}}",
   "producer_voting": "Vote de Producteur",
   "tools": "Tools",
   "wallet": "Portefeuille"
