@@ -9,6 +9,9 @@ import i18n from '../../../shared/i18n';
 
 import '../../../shared/app.global.css';
 
+const { ipcRenderer } = require('electron');
+import { setURI } from '../actions/uri';
+
 const { store } = configureStore();
 
 export default class Root extends Component<Props> {
@@ -25,3 +28,8 @@ export default class Root extends Component<Props> {
     );
   }
 }
+
+ipcRenderer.on('openUri', (event, data) => {
+  console.log(event, data)
+  store.dispatch(setURI(data));
+});
