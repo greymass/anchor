@@ -17,6 +17,7 @@ import keys from './keys';
 import ledger from './hardware/ledger';
 import ping from './utils/ping';
 import producers from './producers';
+import prompt from './utils/prompt';
 import proposals from './proposals';
 import settings from './settings';
 import system from './system';
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   ledger,
   ping,
   producers,
+  prompt,
   proposals,
   router,
   settings,

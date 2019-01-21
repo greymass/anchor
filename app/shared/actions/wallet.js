@@ -313,5 +313,6 @@ export default {
   unlockWallet,
   setTemporaryKey,
   setWalletKey,
+  setWalletMode,
   validateWalletPassword
 };
