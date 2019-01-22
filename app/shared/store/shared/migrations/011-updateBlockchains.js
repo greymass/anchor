@@ -4,6 +4,7 @@ const update = (blockchains) => {
     const chain = Object.assign({}, blockchain);
     // If this is the BEOS chain, change defaults.
     if (chain.chainId === '50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd') {
+      chain.node = 'https://api.beos.world';
       chain.supportedContracts = [];
       ['beosexchange', 'customtokens', 'producerinfo', 'proposals', 'regproxyinfo'].forEach((feature) => {
         chain.supportedContracts.push(feature);
