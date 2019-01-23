@@ -1,9 +1,9 @@
 import { BrowserWindow } from 'electron';
-import MenuBuilder from '../menu';
-import packageJson from '../../package.json';
+import MenuBuilder from '../../../shared/electron/menu';
+import packageJson from '../../../package.json';
 
-import { configureIPC } from '../shared/ipc';
-import { windowStateKeeper } from '../shared/windowStateKeeper';
+import { configureIPC } from '../../../shared/electron/ipc';
+import { windowStateKeeper } from '../../../shared/electron/windowStateKeeper';
 
 const log = require('electron-log');
 const path = require('path');
@@ -34,7 +34,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
 
   uiStateKeeper.track(ui);
 
-  ui.loadURL(`file://${path.join(resourcePath, 'renderer/wallet/index.html')}#${route}`);
+  ui.loadURL(`file://${path.join(resourcePath, 'renderer/main/index.html')}#${route}`);
 
   ui.on('page-title-updated', (e) => {
     e.preventDefault();
