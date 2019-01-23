@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { setSetting } from '../../shared/actions/settings';
+import { setSetting } from '../actions/settings';
 
 export function windowStateKeeper(store) {
   let window;

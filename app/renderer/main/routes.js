@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import ColdWallet from '../../shared/containers/ColdWallet';
-import Wallet from '../../modules/wallet/containers/Wallet';
+import Wallet from '../../modules/main/containers/Wallet';
 
 export default () => (
   <HashRouter>
