@@ -52,6 +52,12 @@ export default merge.smart(baseConfig, {
       'webpack/hot/only-dev-server',
       path.join(__dirname, 'app/renderer/handler/index'),
     ],
+    wallet: [
+      'react-hot-loader/patch',
+      `webpack-dev-server/client?http://localhost:${port}/`,
+      'webpack/hot/only-dev-server',
+      path.join(__dirname, 'app/renderer/wallet/index'),
+    ],
   },
 
   output: {
