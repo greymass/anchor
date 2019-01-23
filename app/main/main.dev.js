@@ -2,10 +2,10 @@
 
 import { app, crashReporter, protocol } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
-import { createInterface } from './wallet';
-import { createTray } from './tray';
-import { createTrayIcon } from './tray/icon';
-import { createProtocolHandlers } from './protocol/handlers';
+import { createInterface } from '../modules/main/electron';
+import { createTray } from '../modules/tray/electron';
+import { createTrayIcon } from '../modules/tray/electron/icon';
+import { createProtocolHandlers } from '../modules/handler/electron';
 
 const log = require('electron-log');
 const path = require('path');

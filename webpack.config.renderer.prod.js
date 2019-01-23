@@ -28,9 +28,9 @@ export default merge.smart(baseConfig, {
       'babel-polyfill',
       path.join(__dirname, 'app/renderer/handler/index'),
     ],
-    wallet: [
+    main: [
       'babel-polyfill',
-      path.join(__dirname, 'app/renderer/wallet/index'),
+      path.join(__dirname, 'app/renderer/main/index'),
     ],
   },
 
