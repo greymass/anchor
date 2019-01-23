@@ -36,6 +36,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
       blockchains,
       selection,
       settings,
+      style,
       t,
     } = this.props;
     let defaultLocString = 'global_account_select_blockchain_default';
@@ -80,6 +81,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
         item
         labeled
         selection={selection}
+        style={style}
         trigger={(
           <span>
             <GlobalFragmentChainLogo
