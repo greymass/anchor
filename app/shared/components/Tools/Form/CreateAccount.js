@@ -24,11 +24,25 @@ class ToolsFormCreateAccount extends Component<Props> {
       activeKeyValue,
       balance,
       connection,
+      ownerKeyValue
+    } = props;
+
+    let {
       delegatedBw,
       delegatedCpu,
-      ownerKeyValue,
       ramAmount
     } = props;
+
+    let disableStakingFields = false;
+    let disableRamField = false;
+
+    if (connection.chainId === 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664') {
+      delegatedBw = '0.0001';
+      delegatedCpu = '0.0001';
+      ramAmount = 8192;
+      disableStakingFields = true;
+      disableRamField = true;
+    }
 
     this.state = {
       accountName,
@@ -40,7 +54,9 @@ class ToolsFormCreateAccount extends Component<Props> {
       formErrors: {},
       ownerKeyValue,
       ramAmount,
-      submitDisabled: true
+      submitDisabled: true,
+      disableStakingFields,
+      disableRamField
     };
   }
 
@@ -278,7 +294,9 @@ class ToolsFormCreateAccount extends Component<Props> {
       ownerKeyValue,
       ramAmount,
       ramPrice,
-      transferTokens
+      transferTokens,
+      disableStakingFields,
+      disableRamField
     } = this.state;
 
     let {
@@ -368,6 +386,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                   label={t('tools_form_create_account_ram_amount')}
                   name="ramAmount"
                   onChange={this.onChange}
+                  readOnly={disableRamField}
                 />
                 <GlobalFormFieldToken
                   connection={connection}
@@ -375,6 +394,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                   label={t('tools_form_create_account_delegated_bw_label', { chainSymbol: connection.chainSymbol })}
                   name="delegatedBw"
                   onChange={this.onChange}
+                  readOnly={disableStakingFields}
                 />
                 <GlobalFormFieldToken
                   connection={connection}
@@ -382,6 +402,7 @@ class ToolsFormCreateAccount extends Component<Props> {
                   label={t('tools_form_create_account_delegated_cpu_label', { chainSymbol: connection.chainSymbol })}
                   name="delegatedCpu"
                   onChange={this.onChange}
+                  readOnly={disableStakingFields}
                 />
                 <Form.Checkbox
                   checked={transferTokens}

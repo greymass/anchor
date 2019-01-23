@@ -6,8 +6,14 @@ import debounce from 'lodash/debounce';
 export default class GlobalFormFieldRam extends Component<Props> {
   constructor(props) {
     super(props);
+
+    const {
+      readOnly
+    } = props;
+
     this.state = {
-      value: props.defaultValue
+      value: props.defaultValue,
+      readOnly
     };
   }
   onChange = debounce((e, { name, value }) => {
@@ -25,7 +31,8 @@ export default class GlobalFormFieldRam extends Component<Props> {
       icon,
       label,
       loading,
-      name
+      name,
+      readOnly
     } = this.props;
     const {
       value
@@ -42,6 +49,7 @@ export default class GlobalFormFieldRam extends Component<Props> {
         name={name}
         onChange={this.onChange}
         placeholder="0"
+        readOnly={readOnly}
       />
     );
   }

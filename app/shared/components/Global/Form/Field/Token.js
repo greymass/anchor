@@ -8,8 +8,14 @@ import debounce from 'lodash/debounce';
 export default class GlobalFormFieldToken extends Component<Props> {
   constructor(props) {
     super(props);
+
+    const {
+      readOnly
+    } = props;
+
     this.state = {
-      value: props.defaultValue
+      value: props.defaultValue,
+      readOnly
     };
   }
   onChange = debounce((e, { name, value }) => {
@@ -34,7 +40,8 @@ export default class GlobalFormFieldToken extends Component<Props> {
       placeholder
     } = this.props;
     const {
-      value
+      value,
+      readOnly
     } = this.state;
     return (
       <Form.Field
@@ -47,6 +54,7 @@ export default class GlobalFormFieldToken extends Component<Props> {
         name={name}
         onChange={this.onChange}
         placeholder={placeholder || '0.0000'}
+        readOnly={readOnly}
       />
     );
   }
