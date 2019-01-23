@@ -86,13 +86,12 @@ class GlobalBlockchainDropdown extends Component<Props> {
           <span>
             <GlobalFragmentChainLogo
               chainId={blockchain.chainId}
-              name={blockchain.name}
+              noPopup
               style={{
                 height: '2em',
                 width: '2em',
               }}
             />
-            {(blockchain && blockchain.name) ? blockchain.name : t(defaultLocString)}
           </span>
         )}
       >
