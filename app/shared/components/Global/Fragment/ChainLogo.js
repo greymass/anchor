@@ -33,6 +33,7 @@ class GlobalFragmentChainLogo extends PureComponent<Props> {
       className,
       chainId,
       name,
+      noPopup,
       size,
       style,
       t,
@@ -41,6 +42,17 @@ class GlobalFragmentChainLogo extends PureComponent<Props> {
     if (!logos[chainId]) {
       src = placeholder;
     }
+    const image = (
+      <Image
+        avatar={avatar}
+        centered
+        className={className}
+        size={size}
+        src={src}
+        style={style}
+      />
+    );
+    if (noPopup) return image;
     return (
       <Popup
         content={t('tools:tools_wallets_blockchain')}
@@ -48,16 +60,7 @@ class GlobalFragmentChainLogo extends PureComponent<Props> {
         inverted
         position="top center"
         style={{ textAlign: 'center' }}
-        trigger={(
-          <Image
-            avatar={avatar}
-            centered
-            className={className}
-            size={size}
-            src={src}
-            style={style}
-          />
-        )}
+        trigger={image}
       />
     );
   }
