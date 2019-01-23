@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 
-import Root from '../../shared/containers/Main';
+import Root from '../../modules/wallet/containers/Root';
 import Routes from './routes';
 
 
