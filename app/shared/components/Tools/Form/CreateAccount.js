@@ -35,13 +35,15 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     let disableStakingFields = false;
     let disableRamField = false;
+    let disableDelegatedResourceWarning = false;
 
-    if (connection.chainId === 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664') {
+    if (connection.chainKey === 'insights-mainnet') {
       delegatedBw = '0.0001';
       delegatedCpu = '0.0001';
       ramAmount = 8192;
       disableStakingFields = true;
       disableRamField = true;
+      disableDelegatedResourceWarning = true;
     }
 
     this.state = {
@@ -56,7 +58,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       ramAmount,
       submitDisabled: true,
       disableStakingFields,
-      disableRamField
+      disableRamField,
+      disableDelegatedResourceWarning
     };
   }
 
@@ -296,7 +299,8 @@ class ToolsFormCreateAccount extends Component<Props> {
       ramPrice,
       transferTokens,
       disableStakingFields,
-      disableRamField
+      disableRamField,
+      disableDelegatedResourceWarning
     } = this.state;
 
     let {
@@ -334,12 +338,13 @@ class ToolsFormCreateAccount extends Component<Props> {
     const shouldShowPublicKeysWarning = activeKeyValue && activeKeyValue === ownerKeyValue;
 
     const shouldShowDelegatedResourceWarning =
-      (decimalDelegatedBw &&
+      !disableDelegatedResourceWarning &&
+      ((decimalDelegatedBw &&
         decimalDelegatedBw.lessThan(1) &&
         decimalDelegatedBw.greaterThan(0)) ||
       (decimalDelegatedCpu &&
         decimalDelegatedCpu.lessThan(1) &&
-        decimalDelegatedCpu.greaterThan(0));
+        decimalDelegatedCpu.greaterThan(0)));
 
     const shouldShowtransferTokensWarning = transferTokens;
 
