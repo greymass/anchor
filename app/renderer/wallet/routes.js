@@ -6,16 +6,14 @@ import {
   Switch
 } from 'react-router-dom';
 
-import BasicVoter from '../../shared/containers/BasicVoter';
 import ColdWallet from '../../shared/containers/ColdWallet';
-import Welcome from '../../shared/containers/Welcome';
+import Wallet from '../../modules/wallet/containers/Wallet';
 
 export default () => (
   <HashRouter>
     <Switch>
-      <Route exact path="/" component={Welcome} />
+      <Route exact path="/" component={Wallet} />
       <Route exact path="/coldwallet" component={ColdWallet} />
-      <Route exact path="/voter" component={BasicVoter} />
     </Switch>
   </HashRouter>
 );

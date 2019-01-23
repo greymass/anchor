@@ -14,7 +14,7 @@
       }());
     </script>
   </head>
-  <body>
+  <body >
     <div id="root">loading</div>
     <script>
       {
@@ -30,8 +30,8 @@
         const port = process.env.PORT || 1212;
         scripts.push(
           (process.env.HOT)
-            ? 'http://localhost:' + port + '/dist/renderer.basic.dev.js'
-            : '../../dist/renderer.basic.prod.js'
+            ? 'http://localhost:' + port + '/dist/renderer.wallet.dev.js'
+            : '../../dist/renderer.wallet.prod.js'
         );
 
         document.write(
