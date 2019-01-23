@@ -1,6 +1,6 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
-import { checkForUpdates } from '../shared/updater';
+import { checkForUpdates } from '../updater';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
