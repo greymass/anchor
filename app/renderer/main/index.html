@@ -30,8 +30,8 @@
         const port = process.env.PORT || 1212;
         scripts.push(
           (process.env.HOT)
-            ? 'http://localhost:' + port + '/dist/renderer.wallet.dev.js'
-            : '../../dist/renderer.wallet.prod.js'
+            ? 'http://localhost:' + port + '/dist/renderer.main.dev.js'
+            : '../../dist/renderer.main.prod.js'
         );
 
         document.write(
