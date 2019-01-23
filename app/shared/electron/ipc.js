@@ -1,5 +1,5 @@
 import { app, ipcMain } from 'electron';
-import { checkForUpdates } from '../shared/updater';
+import { checkForUpdates } from './updater';
 
 const { dialog } = require('electron');
 const fs = require('fs');
@@ -58,6 +58,6 @@ const configureIPC = (ui) => {
   ipcMain.on('checkForUpdates', () => {
     checkForUpdates({}, ui);
   });
-}
+};
 
 module.exports = { configureIPC };
