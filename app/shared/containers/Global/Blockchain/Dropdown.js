@@ -85,11 +85,11 @@ class GlobalBlockchainDropdown extends Component<Props> {
         trigger={(
           <span>
             <GlobalFragmentChainLogo
-              avatar
               chainId={blockchain.chainId}
               name={blockchain.name}
               style={{
-                marginRight: '0.5em'
+                height: '2em',
+                width: '2em',
               }}
             />
             {(blockchain && blockchain.name) ? blockchain.name : t(defaultLocString)}
