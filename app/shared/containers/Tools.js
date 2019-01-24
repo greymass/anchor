@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
-import { Menu, Tab } from 'semantic-ui-react';
+import { Menu, Tab, Item } from 'semantic-ui-react';
 
 import ContractInterface from './Contract/Interface';
 import GlobalUtilsPingContainer from './Global/Utils/Ping';
@@ -218,7 +218,6 @@ class ToolsContainer extends Component<Props> {
     return paneMapping
     .filter((pane) => {
       const {
-        chain,
         settings
         } = this.props;
         const {
@@ -226,12 +225,6 @@ class ToolsContainer extends Component<Props> {
           walletMode,
           walletTemp
         } = settings;
-        /* Hide delegations pane in BEOS distrubition period */
-        if (pane.name === 'delegations' &&
-          chain.hasOwnProperty('distributionPeriodInfo') &&
-          chain.distributionPeriodInfo.beosDistribution) {
-          return false;
-        }
 
         const paneRequiresContract = !!pane.requiredContract;
         if (paneRequiresContract) {
@@ -252,6 +245,9 @@ class ToolsContainer extends Component<Props> {
         );
       })
       .map((pane) => {
+        const {
+          chain
+          } = this.props;
         if (pane.header) {
           return {
             menuItem: (
@@ -264,26 +260,45 @@ class ToolsContainer extends Component<Props> {
             )
           };
         }
-        return {
-          menuItem: t(`tools_menu_${pane.name}`),
-          render: () => {
-            if (pane.container) {
+        /* Disabled delegations pane in BEOS distrubition period */
+        if (pane.name === 'delegations' &&
+        chain.hasOwnProperty('distributionPeriodInfo') &&
+        chain.distributionPeriodInfo.beosDistribution) {
+          return {
+            menuItem: (
+              <div data-tooltip="Function will be enabled after distribution period">
+                <Item
+                  active='false'
+                  className="ui"
+                  content={t(`tools_menu_${pane.name}`)}
+                  key={pane.name}
+                  disabled={true}
+                />
+              </div>
+            )
+          };
+        } else {
+          return {
+            menuItem: t(`tools_menu_${pane.name}`),
+            render: () => {
+              if (pane.container) {
+                return (
+                  <Tab.Pane>
+                    {React.createElement(pane.element)}
+                  </Tab.Pane>
+                );
+              }
               return (
                 <Tab.Pane>
-                  {React.createElement(pane.element)}
+                  {React.createElement(pane.element, {
+                    blockExplorers: allBlockExplorers[connection.chainKey],
+                    ...this.props
+                  })}
                 </Tab.Pane>
               );
             }
-            return (
-              <Tab.Pane>
-                {React.createElement(pane.element, {
-                  blockExplorers: allBlockExplorers[connection.chainKey],
-                  ...this.props
-                })}
-              </Tab.Pane>
-            );
-          }
-        };
+          };
+        }
       });
   }
   render() {

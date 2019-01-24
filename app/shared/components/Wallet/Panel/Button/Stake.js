@@ -32,6 +32,7 @@ class WalletPanelButtonStake extends Component<Props> {
       settings,
       validate,
       system,
+      disabled,
       t
     } = this.props;
 
@@ -54,7 +55,8 @@ class WalletPanelButtonStake extends Component<Props> {
           color: 'blue',
           content: t('stake_button_text', { chainSymbol: connection.chainSymbol }),
           fluid: true,
-          icon: 'microchip'
+          icon: 'microchip',
+          disabled: disabled
         }}
         content={(
           <WalletPanelFormStake

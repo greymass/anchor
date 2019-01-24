@@ -31,6 +31,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
       globals,
       settings,
       system,
+      disabled,
       t
     } = this.props;
     return (
@@ -42,7 +43,8 @@ class WalletPanelButtonRamSell extends Component<Props> {
           color: 'blue',
           content: t('ram_sell_button_cta'),
           fluid: true,
-          icon: 'database'
+          icon: 'database',
+          disabled: disabled
         }}
         content={(
           <WalletPanelFormRamSell

@@ -31,6 +31,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
       globals,
       settings,
       system,
+      disabled,
       t
     } = this.props;
     return (
@@ -42,7 +43,8 @@ class WalletPanelButtonRamBuy extends Component<Props> {
           color: 'blue',
           content: t('ram_buy_button_cta'),
           fluid: true,
-          icon: 'database'
+          icon: 'database',
+          disabled: disabled
         }}
         content={(
           <WalletPanelFormRamBuy
