@@ -76,12 +76,14 @@ export function getProducers(previous = false) {
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
+          const tokenVotes = (votes / calcVoteWeight() / 10000).toFixed(0);
           return Object.assign({}, {
             isBackup,
             key: `${producer.owner}-${producer.total_votes}`,
             last_produced_block_time: producer.last_produced_block_time,
             owner: producer.owner,
             percent,
+            tokenVotes,
             producer_key: producer.producer_key,
             url: producer.url,
             votes
@@ -99,6 +101,13 @@ export function getProducers(previous = false) {
       payload: { err },
     }));
   };
+}
+
+function calcVoteWeight() {
+  const timestamp = 946684800000;
+  const dates = (Date.now() / 1000) - (timestamp / 1000);
+  const weight = Math.floor(dates / (86400 * 7)) / 52;
+  return 2 ** weight;
 }
 
 export function getProducersInfo(previous = false) {
