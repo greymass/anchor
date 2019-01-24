@@ -30,8 +30,11 @@ function windowStateKeeper(store) {
 
   function track(win) {
     window = win;
-    ['resize', 'move', 'close'].forEach(event => {
+    ['resize', 'move'].forEach(event => {
       win.on(event, debounce(saveState, 500));
+    });
+    ['close'].forEach(event => {
+      win.on(event, saveState);
     });
   }
 
