@@ -1,8 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
+import { Button, Dimmer, Grid, Header, Loader, Placeholder, Segment, Table, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
+import { times } from 'lodash';
 
 import ProducersTable from './BlockProducers/Table';
 
@@ -11,12 +12,14 @@ class BlockProducers extends Component<Props> {
     super(props);
     this.state = {
       amount: 10,
+      display: false,
       querying: false
     };
   }
 
   componentDidMount() {
-    this.tick();
+    setTimeout(() => this.setState({ display: true }), 250);
+    setTimeout(() => this.tick(), 500);
     this.interval = setInterval(this.tick.bind(this), 120000);
   }
 
@@ -119,11 +122,13 @@ class BlockProducers extends Component<Props> {
       removeProducer,
       selected,
       settings,
+      sidebar,
       system,
       t
     } = this.props;
     const {
       amount,
+      display,
       querying
     } = this.state;
 
@@ -131,53 +136,154 @@ class BlockProducers extends Component<Props> {
     const isMainnet = connection.chainKey && connection.chainKey.toLowerCase().indexOf('mainnet') !== -1;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || ['watch','ledger'].includes(settings.walletMode));
+    const isLoaded = !!(display && producers.list.length > 0);
 
     return (
-      (producers.list.length > 0)
-        ? [(
-          <Visibility
-            continuous
-            key="ProducersTable"
-            fireOnMount
-            onBottomVisible={this.loadMore}
-            once={false}
-          >
-            <ProducersTable
-              account={accounts[settings.account]}
-              actions={actions}
-              addProducer={addProducer}
-              amount={amount}
-              attached="top"
-              connection={connection}
-              globals={globals}
-              isMainnet={isMainnet}
-              isProxying={isProxying}
-              isQuerying={this.isQuerying}
-              keys={keys}
-              producers={producers}
-              removeProducer={removeProducer}
-              resetDisplayAmount={this.resetDisplayAmount}
-              selected={selected}
-              settings={settings}
-              system={system}
-              isValidUser={isValidUser}
-            />
-          </Visibility>
-        ), (
-            (!querying && amount < producers.list.length)
-              ? (
-                <Segment key="ProducersTableLoading" clearing padded vertical>
-                  <Loader active />
-                </Segment>
-              ) : false
-          )]
-        : (
-          <Segment attached="bottom" stacked>
-            <Header textAlign="center">
-              {t('producer_none_loaded')}
+      <Grid divided>
+        <Dimmer active={!isLoaded} inverted>
+          <Loader size="large" inverted>
+            <Header>
+              Loading Producers...
             </Header>
-          </Segment>
-        )
+          </Loader>
+        </Dimmer>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            {(isLoaded)
+              ? sidebar
+              : (
+                <Segment raised>
+                  <Placeholder>
+                    <Placeholder.Header image>
+                      <Placeholder.Line />
+                      <Placeholder.Line />
+                    </Placeholder.Header>
+                    <Placeholder.Paragraph>
+                      <Placeholder.Line length='medium' />
+                      <Placeholder.Line length='short' />
+                    </Placeholder.Paragraph>
+                  </Placeholder>
+                </Segment>
+              )
+            }
+          </Grid.Column>
+          <Grid.Column width={10}>
+            {(isLoaded)
+              ? [(
+                <Visibility
+                  continuous
+                  key="ProducersTable"
+                  fireOnMount
+                  onBottomVisible={this.loadMore}
+                  once={false}
+                >
+                  <ProducersTable
+                    account={accounts[settings.account]}
+                    actions={actions}
+                    addProducer={addProducer}
+                    amount={amount}
+                    attached="top"
+                    connection={connection}
+                    globals={globals}
+                    isMainnet={isMainnet}
+                    isProxying={isProxying}
+                    isQuerying={this.isQuerying}
+                    keys={keys}
+                    producers={producers}
+                    removeProducer={removeProducer}
+                    resetDisplayAmount={this.resetDisplayAmount}
+                    selected={selected}
+                    settings={settings}
+                    system={system}
+                    isValidUser={isValidUser}
+                  />
+                </Visibility>
+              ), (
+                  (!querying && amount < producers.list.length)
+                    ? (
+                      <Segment key="ProducersTableLoading" clearing padded vertical>
+                        <Loader active />
+                      </Segment>
+                    ) : false
+                )]
+              : (
+                <Table
+                  color="violet"
+                  size="small"
+                  striped
+                  style={{ borderRadius: 0 }}
+                  unstackable
+                >
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell collapsing />
+                      <Table.HeaderCell collapsing />
+                      <Table.HeaderCell>
+                        {t('block_producer')}
+                      </Table.HeaderCell>
+                      <Table.HeaderCell textAlign="center" width={5}>
+                        {t('block_producer_total_votes')}
+                      </Table.HeaderCell>
+                      <Table.HeaderCell collapsing />
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {times(10, i => (
+                      <Table.Row>
+                        <Table.Cell singleLine>
+                          <Button
+                            color="grey"
+                            disabled
+                            icon="magnify"
+                            size="small"
+                          />
+                          <Button
+                            color="grey"
+                            disabled
+                            icon="minus square outline"
+                            size="small"
+                          />
+                        </Table.Cell>
+                        <Table.Cell
+                          singleLine
+                        >
+                          <Placeholder>
+                            <Placeholder.Line />
+                          </Placeholder>
+                        </Table.Cell>
+                        <Table.Cell
+                          singleLine
+                        >
+                          <Placeholder>
+                            <Placeholder.Header>
+                              <Placeholder.Line />
+                              <Placeholder.Line />
+                            </Placeholder.Header>
+                          </Placeholder>
+                        </Table.Cell>
+                        <Table.Cell
+                          singleLine
+                          textAlign="center"
+                        >
+                          <Placeholder>
+                            <Placeholder.Header>
+                              <Placeholder.Line />
+                              <Placeholder.Line />
+                            </Placeholder.Header>
+                          </Placeholder>
+                        </Table.Cell>
+                        <Table.Cell
+                          singleLine
+                        >
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              )}
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
