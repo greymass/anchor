@@ -5,9 +5,11 @@ import * as types from '../actions/types';
 const initialState = {
   // If the active session has accepted the EOS constitution
   acceptedConstitution: false,
-  // If the wallet has ackknowledged understanding the smart contract tool
+  // If the wallet has acknowledged understanding the smart contract tool
   acceptedContractInterface: false,
-  // If the wallet has ackknowledged understanding privacy concerns of the ping tool
+  // If the wallet has acknowledged understanding the crosschain tool and it's 3rd party APIs
+  acceptedCrosschainTransfers: false,
+  // If the wallet has acknowledged understanding privacy concerns of the ping tool
   acceptedPingInterface: false,
   // Enable advanced permissions management
   advancedPermissions: false,
