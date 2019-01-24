@@ -94,12 +94,6 @@ const paneMapping = [
     name: 'customtokens',
   },
   {
-    element: ToolsBlockchainsBEOSCrosschainTransfer,
-    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
-    name: 'beos_crosschaintransfer',
-    requiredContract: 'crosschaintransfer'
-  },
-  {
     element: ToolsDelegations,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'delegations'
@@ -128,6 +122,17 @@ const paneMapping = [
     element: ToolsHardwareLedger,
     modes: ['hot', 'ledger', 'watch'],
     name: 'hardware_ledger',
+  },
+  {
+    header: true,
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'services',
+  },
+  {
+    element: ToolsBlockchainsBEOSCrosschainTransfer,
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'beos_crosschaintransfer',
+    requiredContract: 'crosschaintransfer'
   },
   {
     header: true,
