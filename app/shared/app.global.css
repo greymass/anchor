@@ -4,6 +4,23 @@ body {
   background: #f1f0ee;
 }
 
+.ui.labeled.icon.menu.nav-sidebar {
+  border: none;
+  border-right: 1px solid rgba(34,36,38,.15);
+  border-radius: 0;
+  height: 100vh;
+  z-index: 2;
+
+}
+.ui.labeled.icon.menu.nav-sidebar > .item {
+  border: none;
+  min-width: 4em;
+}
+
+.ui.labeled.icon.menu.nav-sidebar > .item img {
+  max-width: 4em;
+}
+
 .table tbody.visible.transition {
   display: table-row-group !important;
 }
