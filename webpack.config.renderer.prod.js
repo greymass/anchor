@@ -26,11 +26,11 @@ export default merge.smart(baseConfig, {
     ],
     handler: [
       'babel-polyfill',
-      path.join(__dirname, 'app/renderer/handler/index'),
+      path.join(__dirname, 'app/modules/handler/index'),
     ],
     main: [
       'babel-polyfill',
-      path.join(__dirname, 'app/renderer/main/index'),
+      path.join(__dirname, 'app/modules/main/index'),
     ],
   },
 
