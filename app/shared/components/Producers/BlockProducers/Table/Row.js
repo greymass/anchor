@@ -7,6 +7,8 @@ import { isEqual } from 'lodash';
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
 
+const nf = new Intl.NumberFormat();
+
 class ProducersTableRow extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
     !isEqual(this.props.producer.key, nextProps.producer.key)
@@ -34,9 +36,10 @@ class ProducersTableRow extends Component<Props> {
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
-    const votePercent = (producer.percent)
-      ? (producer.percent * 100).toFixed(2)
+    const votePercent = (totalVoteWeight)
+      ? ((parseInt(producer.votes, 10) / parseInt(totalVoteWeight, 10)) * 100).toFixed(3)
       : 0;
+
     const voteFormatted = (producer.votes > 0)
       ? (
         <ProducersVoteWeight
@@ -125,22 +128,15 @@ class ProducersTableRow extends Component<Props> {
         </Table.Cell>
         <Table.Cell
           singleLine
+          textAlign="center"
         >
           {(producersVotedIn) && (
-            <Progress
-              color="teal"
-              label={(
-                <div className="label">
-                  {votePercent}%
-                  <Responsive as="span" minWidth={800}>
-                    - {voteFormatted}
-                  </Responsive>
-                </div>
-              )}
-              percent={parseFloat(votePercent * 100) / 100}
-              size="tiny"
-              style={{ minWidth: 0 }}
-            />
+            <Header size="small">
+              {nf.format(producer.tokenVotes)} EOS
+              <Header.Subheader>
+                {votePercent}% - {voteFormatted}
+              </Header.Subheader>
+            </Header>
           )}
         </Table.Cell>
         <Table.Cell
