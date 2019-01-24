@@ -149,13 +149,11 @@ class Producers extends Component<Props> {
       allBlockExplorers,
       balances,
       blockchains,
-      blockExplorers,
       connection,
       contracts,
       globals,
       keys,
       producers,
-      proposals,
       settings,
       system,
       t,
@@ -268,7 +266,11 @@ class Producers extends Component<Props> {
 
     const tabPanes = [
       {
-        menuItem: t('producers_block_producers'),
+        menuItem: {
+          key: 'producers',
+          icon: 'gavel',
+          content: t('producers_block_producers'),
+        },
         render: () => {
           return (
             <Tab.Pane>
@@ -277,6 +279,7 @@ class Producers extends Component<Props> {
                 addProducer={this.addProducer.bind(this)}
                 removeProducer={this.removeProducer.bind(this)}
                 selected={selected}
+                sidebar={sidebar}
               />
             </Tab.Pane>
           );
@@ -286,7 +289,11 @@ class Producers extends Component<Props> {
 
     if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
       tabPanes.push({
-        menuItem: t('tools:tools_menu_governance_proposals'),
+        menuItem: {
+          key: 'proposals',
+          icon: 'balance scale',
+          content: t('tools:tools_menu_governance_proposals'),
+        },
         render: () => {
           return (
             <Tab.Pane>
@@ -309,33 +316,34 @@ class Producers extends Component<Props> {
 
     if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
       tabPanes.push({
-        menuItem: t('producers_proxies'),
-        render: () => (
-          <Tab.Pane>
-            <Proxies
-              {...this.props}
-              addProxy={this.addProxy.bind(this)}
-              removeProxy={this.removeProxy.bind(this)}
-            />
-          </Tab.Pane>
-        )
+        menuItem: {
+          key: 'proxies',
+          icon: 'users',
+          content: t('producers_proxies'),
+        },
+        render: () => {
+          return (
+            <Tab.Pane>
+              <Proxies
+                {...this.props}
+                addProxy={this.addProxy.bind(this)}
+                removeProxy={this.removeProxy.bind(this)}
+              />
+            </Tab.Pane>
+          );
+        }
       });
     }
 
     return (
       <div ref={this.handleContextRef}>
-        <Grid divided>
-          <Grid.Row>
-            <Grid.Column width={6}>
-              {sidebar}
-            </Grid.Column>
-            <Grid.Column width={10}>
-              <Tab
-                panes={tabPanes}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Tab
+          menu={{
+            pointing: true,
+            size: 'huge',
+          }}
+          panes={tabPanes}
+        />
       </div>
     );
   }
