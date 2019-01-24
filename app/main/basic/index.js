@@ -1,9 +1,9 @@
 import { BrowserWindow } from 'electron';
-import MenuBuilder from '../menu';
+import MenuBuilder from '../../shared/electron/menu';
 import packageJson from '../../package.json';
 
-import { configureIPC } from '../shared/ipc';
-import { windowStateKeeper } from '../shared/windowStateKeeper';
+import { configureIPC } from '../../shared/electron/ipc';
+import { windowStateKeeper } from '../../shared/electron/windowStateKeeper';
 
 const log = require('electron-log');
 const path = require('path');
