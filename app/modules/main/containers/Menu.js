@@ -143,58 +143,11 @@ class MenuContainer extends Component<Props> {
             paddingLeft: '1.5rem'
           }}
         />
-        <Dropdown
-          labeled
-          item
-          trigger={(
-            <React.Fragment>
-              <Header
-                size="tiny"
-                style={{
-                  margin: 0
-                }}
-              >
-                <Blockies
-                  className="ui image"
-                  seed="greymassvote@active"
-                />
-                <Header.Content>
-                  greymassvote
-                  <Header.Subheader>
-                    watch / active
-                  </Header.Subheader>
-                </Header.Content>
-              </Header>
-            </React.Fragment>
-          )}
-        >
-          <Dropdown.Menu>
-            {accounts.map(option => {
-              const [accountName, permission] = option.value.split('@');
-              return (
-                <Dropdown.Item key={option.value}>
-                  <Header
-                    size="tiny"
-                    style={{
-                      margin: 0
-                    }}
-                  >
-                    <Blockies
-                      className="ui image"
-                      seed={option.value}
-                    />
-                    <Header.Content>
-                      {accountName}
-                      <Header.Subheader>
-                        {permission} / watch
-                      </Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                </Dropdown.Item>
-              );
-            })}
-          </Dropdown.Menu>
-        </Dropdown>
+        <GlobalAccountDropdown
+          style={{
+            minWidth: '250px'
+          }}
+        />
         <Menu.Menu position="right">
           <WalletMode
             settings={settings}
@@ -215,13 +168,14 @@ class MenuContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    settings: state.settings,
     actions: state.actions,
     locked: state.locked,
+    navigation: state.navigation,
+    prompt: state.prompt,
+    settings: state.settings,
+    system: state.system,
     validate: state.validate,
     wallet: state.wallet,
-    prompt: state.prompt,
-    system: state.system,
   };
 }
 
@@ -233,6 +187,8 @@ function mapDispatchToProps(dispatch) {
       ...BlockExplorersActions,
       ...ChainActions,
       ...GlobalsActions,
+      ...NavigationActions,
+      ...WalletActions,
     }, dispatch)
   };
 }
