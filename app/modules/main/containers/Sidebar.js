@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Icon, Image, Menu } from 'semantic-ui-react';
-import { push } from 'react-router-redux'
-import Logo from '../../../renderer/assets/images/anchor-icon.png';
+import Logo from '../../../renderer/assets/images/anchor-icon-2.png';
 
 import NavigationActions from '../actions/navigation';
 
@@ -18,7 +17,6 @@ class SidebarContainer extends Component<Props> {
     const {
       module
     } = navigation;
-    console.log(this.props)
     return (
       <Menu
         animation="overlay"
@@ -49,9 +47,9 @@ class SidebarContainer extends Component<Props> {
         </Menu.Item>
         <Menu.Item
           as="a"
-          active={module === 'governance'}
+          active={module.startsWith('governance')}
           onClick={this.onClick}
-          name="governance"
+          name="governance/producers"
           color="purple"
         >
           <Icon name="balance" />
@@ -67,16 +65,6 @@ class SidebarContainer extends Component<Props> {
           <Icon name="wrench" />
           Tools
         </Menu.Item>
-        <Menu.Item
-          as="a"
-          active={module === 'settings'}
-          onClick={this.onClick}
-          name="settings"
-          color="pink"
-        >
-          <Icon name="settings" />
-          Settings
-        </Menu.Item>
       </Menu>
     );
   }
@@ -84,14 +72,7 @@ class SidebarContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    settings: state.settings,
-    actions: state.actions,
-    locked: state.locked,
     navigation: state.navigation,
-    validate: state.validate,
-    wallet: state.wallet,
-    prompt: state.prompt,
-    system: state.system,
   };
 }
 
