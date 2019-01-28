@@ -337,12 +337,12 @@ class Producers extends Component<Props> {
 
     return (
       <div ref={this.handleContextRef}>
-        <Tab
-          menu={{
-            pointing: true,
-            size: 'huge',
-          }}
-          panes={tabPanes}
+        <BlockProducers
+          {...this.props}
+          addProducer={this.addProducer.bind(this)}
+          removeProducer={this.removeProducer.bind(this)}
+          selected={selected}
+          sidebar={sidebar}
         />
       </div>
     );
