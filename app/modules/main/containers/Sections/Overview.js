@@ -11,7 +11,7 @@ class OverviewContainer extends Component<Props> {
     const {
       app
     } = this.props;
-    console.log(app)
+    console.log(this.props)
     return (
       <Segment>
         overview
