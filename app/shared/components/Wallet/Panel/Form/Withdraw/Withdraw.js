@@ -91,7 +91,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
     }
 
     if (includes(["PXBTS", "PXBRNP"], asset)) {
-      const url = "https://blocktrades.syncad.com/api/v2";
+      const url = "https://gateway.beos.world/api/v2";
       const validationUrl = `${url}/wallets/bitshares2/address-validator?address=${value}`;
       try {
         const response = await fetch(validationUrl);
