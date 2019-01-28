@@ -6,12 +6,12 @@ import { withRouter } from 'react-router-dom';
 import { Placeholder, Segment } from 'semantic-ui-react';
 import { times } from 'lodash';
 
+import Tools from '../../../../shared/containers/Tools';
+
 class ToolsContainer extends Component<Props> {
   render() {
     return (
-      <Segment>
-        tools
-      </Segment>
+      <Tools />
     );
   }
 }
