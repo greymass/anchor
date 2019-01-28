@@ -9,8 +9,6 @@ import i18n from '../../../shared/i18n';
 
 import '../../../shared/app.global.css';
 
-const { ipcRenderer } = require('electron');
-
 const { store } = configureStore();
 
 export default class Root extends Component<Props> {

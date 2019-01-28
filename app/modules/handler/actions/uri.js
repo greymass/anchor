@@ -14,7 +14,6 @@ export function setURI(uri) {
       type: types.SYSTEM_EOSIOURI_PENDING
     });
     const EOS = eos(connection);
-    console.log(EOS, connection)
     const opts = {
       zlib: {
         deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
@@ -55,6 +54,7 @@ export function templateURI() {
     const block = await EOS.getBlock(head);
     block.expire_seconds = 600;
     try {
+      console.log(prompt)
       const data = await prompt.request.getTransaction(authorization, block);
       return EOS.transaction(data, {
         broadcast: false,
