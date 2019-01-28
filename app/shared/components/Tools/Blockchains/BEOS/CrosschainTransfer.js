@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Checkbox, Header, Icon, Message, Segment, Divider } from 'semantic-ui-react';
+import { find } from 'lodash';
 
 import WalletPanelButtonCrosschainTransfer from '../../../Wallet/Panel/Button/CrosschainTransfer'; // TODO: Move to blockchain specific folder
+import WalletPanelButtonWithdraw from '../../../Wallet/Panel/Button/Withdraw'; // TODO: Move to blockchain specific folder
+
 import WalletPanelLocked from '../../../Wallet/Panel/Locked';
 
 class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
@@ -22,6 +25,8 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
       wallet,
       t,
     } = this.props;
+
+    const blockchain = find(blockchains, { chainId: connection.chainId });
 
     if (!settings.acceptedCrosschainTransfers) {
       return (
@@ -73,16 +78,44 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
               content={t('tools_blockchains_beos_crosschaintransfer_explain_content')}
             />
             <Divider />
-            <WalletPanelButtonCrosschainTransfer
-              actions={actions}
-              balances={balances}
-              blockchains={blockchains}
-              blockExplorers={blockExplorers}
-              connection={connection}
-              settings={settings}
-              system={system}
-              transaction={transaction}
-            />
+            {(blockchain
+              && blockchain.supportedContracts
+              && blockchain.supportedContracts.includes('beosexchange'))
+              ? (
+                <Segment>
+                  <WalletPanelButtonWithdraw
+                    actions={actions}
+                    balances={balances}
+                    blockchains={blockchains}
+                    blockExplorers={blockExplorers}
+                    connection={connection}
+                    settings={settings}
+                    system={system}
+                    transaction={transaction}
+                  />
+                </Segment>
+              )
+              : false
+            }
+            {(blockchain
+              && blockchain.supportedContracts
+              && blockchain.supportedContracts.includes('crosschaintransfer'))
+              ? (
+                <Segment>
+                  <WalletPanelButtonCrosschainTransfer
+                    actions={actions}
+                    balances={balances}
+                    blockchains={blockchains}
+                    blockExplorers={blockExplorers}
+                    connection={connection}
+                    settings={settings}
+                    system={system}
+                    transaction={transaction}
+                  />
+                </Segment>
+              )
+              : false
+            }
           </Segment>
         </React.Fragment>
       )
