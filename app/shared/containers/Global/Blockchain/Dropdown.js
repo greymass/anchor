@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
@@ -13,7 +13,7 @@ import * as BlockchainsActions from '../../../actions/blockchains';
 import * as WalletActions from '../../../actions/wallet';
 import * as WalletsActions from '../../../actions/wallets';
 
-class GlobalBlockchainDropdown extends Component<Props> {
+class GlobalBlockchainDropdown extends PureComponent<Props> {
   state = { open: false }
   onClose = () => {
     this.setState({ open: false });
