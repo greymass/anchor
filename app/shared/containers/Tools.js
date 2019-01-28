@@ -135,6 +135,12 @@ const paneMapping = [
     requiredContract: 'crosschaintransfer'
   },
   {
+    element: ToolsBlockchainsBEOSCrosschainTransfer,
+    modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
+    name: 'beos_crosschaintransfer',
+    requiredContract: 'beosexchange'
+  },
+  {
     header: true,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'utilities',
