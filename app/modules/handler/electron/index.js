@@ -47,13 +47,13 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
   });
 
   // TODO: Needs proper hide/close logic independent of the primary ui
-  // ui.on('close', (e) => {
-  //   if (ui.isVisible()) {
-  //     ui.hide();
-  //     e.preventDefault();
-  //     return false;
-  //   }
-  // });
+  ui.on('close', (e) => {
+    if (ui.isVisible()) {
+      ui.hide();
+      e.preventDefault();
+      return false;
+    }
+  });
 
   configureIPC(ui);
 
