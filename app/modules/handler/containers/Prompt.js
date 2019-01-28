@@ -2,11 +2,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Button, Dimmer, Header, Loader, Segment } from 'semantic-ui-react';
+import { Button, Dimmer, Loader, Menu, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
-
-const {ipcRenderer} = require('electron')
 
 import URIActions from '../actions/uri';
 import SettingsActions from '../../../shared/actions/settings';
@@ -24,10 +21,8 @@ class PromptContainer extends Component<Props> {
   componentDidMount() {
     const {
       actions,
-      history,
       settings,
       validate,
-      wallet
     } = this.props;
     const {
       setWalletMode
@@ -65,46 +60,67 @@ class PromptContainer extends Component<Props> {
     const error = system.EOSIOURI_TEMPLATEURI_LAST_ERROR;
     return (
       <Segment tertiary>
-        <Dimmer active={loading} inverted>
-          <Loader>Processing Incoming Request</Loader>
-        </Dimmer>
-        <Segment attached="top">
+        <Menu
+          fixed="top"
+          style={{
+            border: 'none',
+            borderBottom: '1px solid rgba(34,36,38,.15)',
+          }}
+        >
+          <Menu.Item header>
+            Signing Request
+          </Menu.Item>
           <GlobalAccountDropdown />
-        </Segment>
-        {(prompt.tx)
-          ? (
-            <Segment attached>
-              <GlobalTransactionHandler
-                actionName="TRANSACTION_SIGN"
-                actions={actions}
-                blockExplorers={{}}
-                contract={prompt.contract}
-                content={<span>No transaction currently loaded.</span>}
-                icon="wifi"
-                open={false}
-                settings={settings}
-                system={system}
-                transaction={prompt.tx}
-              />
-            </Segment>
-          )
-          : false
-        }
-        {(error)
-          ? (
-            <Segment attached>
-              <ErrorMessage
-                error={error}
-              />
-            </Segment>
-          )
-          : false
-        }
-        <Segment attached="bottom">
-          <Button
-            content="close"
+        </Menu>
+        <div style={{ marginTop: '61px' }}>
+          <Dimmer active={loading} inverted>
+            <Loader>Processing Incoming Request</Loader>
+          </Dimmer>
+          <ReactJson
+            collapsed={1}
+            displayDataTypes={false}
+            displayObjectSize={false}
+            iconStyle="square"
+            name={null}
+            src={this.props}
+            style={{ padding: '1em' }}
+            theme="harmonic"
           />
-        </Segment>
+          {(prompt && prompt.tx)
+            ? (
+              <Segment attached>
+                <GlobalTransactionHandler
+                  actionName="TRANSACTION_SIGN"
+                  actions={actions}
+                  blockExplorers={{}}
+                  contract={prompt.contract}
+                  content={<span>No transaction currently loaded.</span>}
+                  icon="wifi"
+                  open={false}
+                  settings={settings}
+                  system={system}
+                  transaction={prompt.tx}
+                />
+              </Segment>
+            )
+            : false
+          }
+          {(error)
+            ? (
+              <Segment attached>
+                <ErrorMessage
+                  error={error}
+                />
+              </Segment>
+            )
+            : false
+          }
+          <Segment attached="bottom">
+            <Button
+              content="close"
+            />
+          </Segment>
+        </div>
       </Segment>
     );
   }
@@ -131,4 +147,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PromptContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(PromptContainer);
