@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
+import ProducersProxy from './Proxy';
 import ProxiesTable from './Proxies/Table';
 
 class Proxies extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      addProxy: false,
       amount: 10,
-      querying: false
+      querying: false,
+      removeProxy: false,
     };
   }
 
@@ -21,6 +24,25 @@ class Proxies extends Component<Props> {
 
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+
+  addProxy = (proxyAccout) => {
+    this.setState({
+      addProxy: proxyAccout
+    });
+  }
+
+  removeProxy = () => {
+    this.setState({
+      removeProxy: true
+    });
+  }
+
+  onClose = () => {
+    this.setState({
+      addProxy: false,
+      removeProxy: false
+    });
   }
 
   loadMore = () => this.setState({ amount: this.state.amount + 10 });
@@ -46,18 +68,20 @@ class Proxies extends Component<Props> {
     const {
       accounts,
       actions,
-      addProxy,
+      allBlockExplorers,
+      connection,
       globals,
       keys,
-      removeProxy,
       settings,
       system,
       t,
       tables
     } = this.props;
     const {
+      addProxy,
       amount,
       querying,
+      removeProxy,
     } = this.state;
 
     const account = accounts[settings.account];
@@ -75,10 +99,26 @@ class Proxies extends Component<Props> {
           onBottomVisible={this.loadMore}
           once={false}
         >
-          <ProxiesTable
+          <ProducersProxy
+            account={account}
             accounts={accounts}
             actions={actions}
             addProxy={addProxy}
+            blockExplorers={allBlockExplorers[connection.chainKey]}
+            currentProxy={currentProxy}
+            keys={keys}
+            isProxying={isProxying}
+            isValidUser={isValidUser}
+            onClose={this.onClose}
+            removeProxy={removeProxy}
+            settings={settings}
+            system={system}
+            tables={tables}
+          />
+          <ProxiesTable
+            accounts={accounts}
+            actions={actions}
+            addProxy={this.addProxy}
             amount={amount}
             attached="top"
             currentProxy={currentProxy}
@@ -87,7 +127,7 @@ class Proxies extends Component<Props> {
             isQuerying={this.isQuerying}
             isValidUser={isValidUser}
             proxies={proxies}
-            removeProxy={removeProxy}
+            removeProxy={this.removeProxy}
             resetDisplayAmount={this.resetDisplayAmount}
             settings={settings}
             system={system}
