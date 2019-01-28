@@ -1,7 +1,7 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "eos-voter",
-  "application_version": "v0.7.1",
+  "application_version": "v0.7.2",
   "back": "Tagasi",
   "block_height": "Ploki kõrgus",
   "blockchain": "Blockchain",
