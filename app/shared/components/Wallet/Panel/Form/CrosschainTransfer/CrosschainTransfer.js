@@ -88,7 +88,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       return;
     }
 
-    const url = "https://blocktrades.syncad.com/api/v2";
+    const url = 'https://gateway.beos.world/api/v2';
     const validationUrl = `${url}/wallets/beos/address-validator?address=${value}`;
     try {
       const response = await fetch(validationUrl);
@@ -98,13 +98,13 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       } else {
         this.setState({
           isValidAccount: false,
-        formError: "account_does_not_exist"
+          formError: 'account_does_not_exist'
         });
       }
     } catch (e) {
       this.setState({
         isValidAccount: false,
-        formError: "crosschain_transfer_account_validation_failed"
+        formError: 'crosschain_transfer_account_validation_failed'
       });
       throw e;
     }
@@ -133,7 +133,13 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
   };
 
   isSubmitDisabled = () => {
-    const { asset, formError, isValidAccount, quantity, to } = this.state;
+    const {
+      asset,
+      formError,
+      isValidAccount,
+      quantity,
+      to
+    } = this.state;
     const { balances, settings: { account } } = this.props;
     const [value, symbol] = quantity.split(" ");
     const balance = balances[account];
