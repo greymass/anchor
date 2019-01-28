@@ -23,12 +23,12 @@
 
 ### 发布
 
-当前版本 0.7.1 可供下载:
+当前版本 0.7.2 可供下载:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.7.1/win-eos-voter-0.7.1.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.7.1/mac-eos-voter-0.7.1.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.1/linux-eos-voter-0.7.1-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.1/linux-eos-voter-0.7.1-amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.7.2/win-eos-voter-0.7.2.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.7.2/mac-eos-voter-0.7.2.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.2/linux-eos-voter-0.7.2-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.2/linux-eos-voter-0.7.2-amd64.snap)
 
 最新的版本将在此REPO的发布页面中找到：
 
@@ -98,20 +98,20 @@ Signed by [jesta on keybase](https://keybase.io/jesta)
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-shasum -b -a 512 linux-eos-voter-0.7.1-amd64.deb
-15861e901a0165256c6c5465f00a50c86f098d0d62b54b6e71d681cea61fb9c3f1823acc534761f330d0b63592af2a900c5f541301e6fe52a407219bffde6e4f *linux-eos-voter-0.7.1-amd64.deb
-shasum -b -a 512 linux-eos-voter-0.7.1-arm64.deb
-180aacf9a3d14149e845be2c757b08ac4aabebe20146e0795afb57b996f16da53cd147c5780e3569b67190b7daf9b5d28070c039f89220ab17178d6cbe7123f1 *linux-eos-voter-0.7.1-arm64.deb
-shasum -b -a 512 linux-eos-voter-0.7.1-armv7l.deb
-98eca71ffec54a25482ff761735bb459c7c86937922080c3cb3da211b22f21a3ede3bfc5cdbbc3c311c57a5e4e42d2a7fa47dc63a95e4f66022a9b78484fdb92 *linux-eos-voter-0.7.1-armv7l.deb
-shasum -b -a 512 linux-eos-voter-0.7.1-x86_64.AppImage
-95a869d47d0f9da9fc6c38a865023b8f390e9b2dd0b845196ad07d2d393f97b3cc2aeee84e837fe5a8114a5bc48b580768dc0d2a00b6f6773c04290660f0e939 *linux-eos-voter-0.7.1-x86_64.AppImage
-shasum -b -a 512 mac-eos-voter-0.7.1.dmg
-4a15a343d1c48e967ef885ed132698adce416648138ab02a697d97c15ea242d652280d0c7d9605ff0c8da62a9878dac6b2b11cd61b04e26642a6560c42c83017 *mac-eos-voter-0.7.1.dmg
-shasum -b -a 512 mac-eos-voter-0.7.1.zip
-fc39b8bc81300010f724f492def4b662fa4b19a53835eb54ae794d87e5243b8b29e8419617809744e537c3cd350e71e978e27c9bf6afc6a56739f6169b68cbe2 *mac-eos-voter-0.7.1.zip
-shasum -b -a 512 win-eos-voter-0.7.1.exe
-a51861b9c346c8b27f7d1ff30b19713bcb1e03e839c013c76bf4e2c16d4c0ef96f377a848f0fb896f5f34b9ceee4ca3f5011628b2880a8a6f0e29a2e609edc45 *win-eos-voter-0.7.1.exe
+shasum -b -a 512 linux-eos-voter-0.7.2-amd64.deb
+15861e901a0165256c6c5465f00a50c86f098d0d62b54b6e71d681cea61fb9c3f1823acc534761f330d0b63592af2a900c5f541301e6fe52a407219bffde6e4f *linux-eos-voter-0.7.2-amd64.deb
+shasum -b -a 512 linux-eos-voter-0.7.2-arm64.deb
+180aacf9a3d14149e845be2c757b08ac4aabebe20146e0795afb57b996f16da53cd147c5780e3569b67190b7daf9b5d28070c039f89220ab17178d6cbe7123f1 *linux-eos-voter-0.7.2-arm64.deb
+shasum -b -a 512 linux-eos-voter-0.7.2-armv7l.deb
+98eca71ffec54a25482ff761735bb459c7c86937922080c3cb3da211b22f21a3ede3bfc5cdbbc3c311c57a5e4e42d2a7fa47dc63a95e4f66022a9b78484fdb92 *linux-eos-voter-0.7.2-armv7l.deb
+shasum -b -a 512 linux-eos-voter-0.7.2-x86_64.AppImage
+95a869d47d0f9da9fc6c38a865023b8f390e9b2dd0b845196ad07d2d393f97b3cc2aeee84e837fe5a8114a5bc48b580768dc0d2a00b6f6773c04290660f0e939 *linux-eos-voter-0.7.2-x86_64.AppImage
+shasum -b -a 512 mac-eos-voter-0.7.2.dmg
+4a15a343d1c48e967ef885ed132698adce416648138ab02a697d97c15ea242d652280d0c7d9605ff0c8da62a9878dac6b2b11cd61b04e26642a6560c42c83017 *mac-eos-voter-0.7.2.dmg
+shasum -b -a 512 mac-eos-voter-0.7.2.zip
+fc39b8bc81300010f724f492def4b662fa4b19a53835eb54ae794d87e5243b8b29e8419617809744e537c3cd350e71e978e27c9bf6afc6a56739f6169b68cbe2 *mac-eos-voter-0.7.2.zip
+shasum -b -a 512 win-eos-voter-0.7.2.exe
+a51861b9c346c8b27f7d1ff30b19713bcb1e03e839c013c76bf4e2c16d4c0ef96f377a848f0fb896f5f34b9ceee4ca3f5011628b2880a8a6f0e29a2e609edc45 *win-eos-voter-0.7.2.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.0.80
 Comment: https://keybase.io/crypto
