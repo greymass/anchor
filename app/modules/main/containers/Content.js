@@ -19,7 +19,7 @@ class ContentContainer extends Component<Props> {
       <Switch>
         <Route exact path="/" component={OverviewContainer} />
         <Route exact path="/wallet" component={WalletContainer} />
-        <Route exact path="/governance" component={GovernanceContainer} />
+        <Route path="/governance" component={GovernanceContainer} />
         <Route exact path="/tools" component={ToolsContainer} />
         <Route exact path="/settings" component={SettingsContainer} />
       </Switch>
