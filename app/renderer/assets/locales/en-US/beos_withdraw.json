@@ -6,6 +6,7 @@
   "withdraw_header_available": "available to withdraw.",
   "withdraw_modal_title": "Withdraw tokens",
   "withdraw_send_button_cta": "Withdraw tokens",
+  "withdraw_send_button_cta_2": "Withdraw from BEOS to BTS",
   "withdraw_label_to": "{{type}} account",
   "withdraw_label_from": "Origin Account",
   "withdraw_label_quantity": "Quantity",
