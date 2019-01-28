@@ -1,8 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Accordion, Menu, Segment } from 'semantic-ui-react';
+import { Accordion, Menu, Popup, Segment } from 'semantic-ui-react';
 import { find } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
 import WalletPanelButtonBroadcast from './Button/Broadcast';
 import WalletPanelButtonLock from './Button/Lock';
@@ -32,7 +33,6 @@ class WalletPanelUnlocked extends Component<Props> {
       actions,
       accounts,
       balances,
-      blockchains,
       blockExplorers,
       chain,
       connection,
@@ -43,7 +43,7 @@ class WalletPanelUnlocked extends Component<Props> {
       transaction,
       t
     } = this.props;
-    const blockchain = find(blockchains, { chainId: connection.chainId });
+    const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
     if (!settings.account) return false;
     return (
       <div>
@@ -64,24 +64,29 @@ class WalletPanelUnlocked extends Component<Props> {
                 active={activeIndex === 0}
               >
                 <Segment.Group>
-                  {(chain
-                    && chain.hasOwnProperty('distributionPeriodInfo')
-                    && chain.distributionPeriodInfo.beosDistribution) ?
-                      <div data-tooltip="Function will be enabled after distribution period" data-position="bottom center">
-                        <Segment>
-                          <WalletPanelButtonStake
-                            actions={actions}
-                            accounts={accounts}
-                            balances={balances}
-                            blockExplorers={blockExplorers}
-                            connection={connection}
-                            validate={validate}
-                            settings={settings}
-                            system={system}
-                            disabled={true}
-                          />
-                        </Segment>
-                      </div>
+                  {(distributionPeriod)
+                    ? (
+                      <Popup
+                        content={t('beos_withdraw:disabled_for_distribution_period')}
+                        inverted
+                        position="right center"
+                        trigger={(
+                          <Segment>
+                            <WalletPanelButtonStake
+                              actions={actions}
+                              accounts={accounts}
+                              balances={balances}
+                              blockExplorers={blockExplorers}
+                              connection={connection}
+                              disabled
+                              validate={validate}
+                              settings={settings}
+                              system={system}
+                            />
+                          </Segment>
+                        )}
+                      />
+                    )
                     : (
                       <Segment>
                         <WalletPanelButtonStake
@@ -93,7 +98,6 @@ class WalletPanelUnlocked extends Component<Props> {
                           validate={validate}
                           settings={settings}
                           system={system}
-                          disabled={false}
                         />
                       </Segment>
                     )
@@ -113,24 +117,29 @@ class WalletPanelUnlocked extends Component<Props> {
                       accountName={settings.account}
                     />
                   </Segment>
-                  {(chain
-                    && chain.hasOwnProperty('distributionPeriodInfo')
-                    && chain.distributionPeriodInfo.ramDistribution) ?
-                      <div data-tooltip="Function will be enabled after distribution period" data-position="bottom center">
-                        <Segment>
-                          <WalletPanelButtonRamBuy
-                            account={accounts[settings.account]}
-                            actions={actions}
-                            balances={balances}
-                            blockExplorers={blockExplorers}
-                            connection={connection}
-                            globals={globals}
-                            settings={settings}
-                            system={system}
-                            disabled={true}
-                          />
-                        </Segment>
-                      </div>
+                  {(distributionPeriod)
+                    ? (
+                      <Popup
+                        content={t('beos_withdraw:disabled_for_distribution_period')}
+                        inverted
+                        position="right center"
+                        trigger={(
+                          <Segment>
+                            <WalletPanelButtonRamBuy
+                              account={accounts[settings.account]}
+                              actions={actions}
+                              balances={balances}
+                              blockExplorers={blockExplorers}
+                              connection={connection}
+                              disabled
+                              globals={globals}
+                              settings={settings}
+                              system={system}
+                            />
+                          </Segment>
+                        )}
+                      />
+                    )
                     : (
                       <Segment>
                         <WalletPanelButtonRamBuy
@@ -147,24 +156,29 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {(chain
-                    && chain.hasOwnProperty('distributionPeriodInfo')
-                    && chain.distributionPeriodInfo.ramDistribution) ?
-                      <div data-tooltip="Function will be enabled after distribution period" data-position="bottom center">
-                        <Segment>
-                          <WalletPanelButtonRamSell
-                            account={accounts[settings.account]}
-                            actions={actions}
-                            balances={balances}
-                            blockExplorers={blockExplorers}
-                            connection={connection}
-                            globals={globals}
-                            settings={settings}
-                            system={system}
-                            disabled={true}
-                          />
-                        </Segment>
-                      </div>
+                  {(distributionPeriod)
+                    ? (
+                      <Popup
+                        content={t('beos_withdraw:disabled_for_distribution_period')}
+                        inverted
+                        position="right center"
+                        trigger={(
+                          <Segment>
+                            <WalletPanelButtonRamSell
+                              account={accounts[settings.account]}
+                              actions={actions}
+                              balances={balances}
+                              blockExplorers={blockExplorers}
+                              connection={connection}
+                              disabled
+                              globals={globals}
+                              settings={settings}
+                              system={system}
+                            />
+                          </Segment>
+                        )}
+                      />
+                    )
                     : (
                       <Segment>
                         <WalletPanelButtonRamSell
@@ -180,25 +194,6 @@ class WalletPanelUnlocked extends Component<Props> {
                         />
                       </Segment>
                     )
-                  }
-                  {(blockchain
-                    && blockchain.supportedContracts
-                    && blockchain.supportedContracts.includes("beosexchange"))
-                    ? (
-                      <Segment>
-                        <WalletPanelButtonWithdraw
-                          actions={actions}
-                          balances={balances}
-                          blockchains={blockchains}
-                          blockExplorers={blockExplorers}
-                          connection={connection}
-                          settings={settings}
-                          system={system}
-                          transaction={transaction}
-                        />
-                      </Segment>
-                    )
-                    : false
                   }
                   {(settings.walletMode === 'watch')
                     ? (
