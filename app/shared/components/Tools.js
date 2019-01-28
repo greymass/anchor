@@ -24,18 +24,7 @@ class Tools extends Component<Props> {
 
     return (
       <React.Fragment>
-        <Segment attached="top">
-          <Header icon size="large" textAlign="center">
-            <Icon
-              name="cog"
-            />
-            {t('tools_title')}
-            <Header.Subheader
-              content={t('tools_description')}
-            />
-          </Header>
-        </Segment>
-        <Segment attached padded="very">
+        <Segment>
           <Header>
             {t('tools_settings_header')}
             <Header.Subheader
