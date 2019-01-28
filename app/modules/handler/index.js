@@ -2,23 +2,15 @@ import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import Root from '../../modules/handler/containers/Root';
-import Routes from './routes';
+import Root from './containers/Root';
 
-const renderApp = routes => {
+const renderApp = () => {
   render(
     <AppContainer>
-      <Root routes={routes} />
+      <Root />
     </AppContainer>,
     document.getElementById('root')
   );
 };
 
-renderApp(Routes);
-
-if (module.hot) {
-  module.hot.accept('./routes', () => {
-    const newRoutes = require('./routes');
-    renderApp(newRoutes);
-  });
-}
+renderApp();
