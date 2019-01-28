@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Dropdown, Header, Menu } from 'semantic-ui-react';
+import { Icon, Menu } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import Blockies from 'react-blockies';
 
@@ -17,7 +17,7 @@ import * as ChainActions from '../../../shared/actions/chain';
 // import * as ContractsActions from '../../../shared/actions/contracts';
 // import * as CreateAccountActions from '../../../shared/actions/createaccount';
 import * as GlobalsActions from '../../../shared/actions/globals';
-// import * as ProducersActions from '../../../shared/actions/producers';
+import * as NavigationActions from '../actions/navigation';
 // import * as ProposalsActions from '../../../shared/actions/governance/proposals';
 // import * as SellRamActions from '../../../shared/actions/system/sellram';
 // import * as SettingsActions from '../../../shared/actions/settings';
@@ -27,7 +27,7 @@ import * as GlobalsActions from '../../../shared/actions/globals';
 // import * as TransferActions from '../../../shared/actions/transfer';
 // import * as ValidateActions from '../../../shared/actions/validate';
 // import * as VoteProducerActions from '../../../shared/actions/system/voteproducer';
-// import * as WalletActions from '../../../shared/actions/wallet';
+import * as WalletActions from '../../../shared/actions/wallet';
 // import * as SystemStateActions from '../../../shared/actions/system/systemstate';
 // import * as BEOSWithdrawActions from '../../../shared/actions/blockchains/beos/withdraw';
 
@@ -160,6 +160,15 @@ class MenuContainer extends Component<Props> {
             wallet={wallet}
           />
           <GlobalHardwareLedgerStatus />
+          <Menu.Item
+            as="a"
+            active={module === 'settings'}
+            onClick={() => this.props.actions.changeModule('settings')}
+            name="settings"
+            color="pink"
+          >
+            <Icon name="settings" />
+          </Menu.Item>
         </Menu.Menu>
       </Menu>
     );
