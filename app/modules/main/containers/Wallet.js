@@ -49,13 +49,6 @@ class WalletContainer extends Component<Props> {
           }}
         >
           <Segment basic>
-            <Notifications
-              actions={actions}
-              app={app}
-              settings={settings}
-              wallet={wallet}
-            />
-
             <ContentContainer />
           </Segment>
           <MenuContainer />
@@ -68,7 +61,7 @@ class WalletContainer extends Component<Props> {
             transform: 'rotate(0.5turn)',
           // filter: FlipV;
             right: '-1em',
-            opacity: 0.25,
+            opacity: 0.5,
             position: 'fixed',
             zIndex: -1
           }}
