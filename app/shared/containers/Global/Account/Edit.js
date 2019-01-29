@@ -172,7 +172,6 @@ class GlobalAccountEdit extends Component<Props> {
 function mapStateToProps(state) {
   return {
     connection: state.connection,
-    keys: state.keys,
     settings: state.settings,
   };
 }
