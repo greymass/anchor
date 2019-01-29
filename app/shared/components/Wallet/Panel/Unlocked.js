@@ -43,6 +43,9 @@ class WalletPanelUnlocked extends Component<Props> {
       transaction,
       t
     } = this.props;
+    // Disable RAM markets on specific chains (Worbli)
+    const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
+    // Disable features based on distribution feature (BEOS)
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
     if (!settings.account) return false;
     return (
@@ -140,7 +143,10 @@ class WalletPanelUnlocked extends Component<Props> {
                         )}
                       />
                     )
-                    : (
+                    : false
+                  }
+                  {(!distributionPeriod && !disableRamMarket)
+                    ? (
                       <Segment>
                         <WalletPanelButtonRamBuy
                           account={accounts[settings.account]}
@@ -155,6 +161,7 @@ class WalletPanelUnlocked extends Component<Props> {
                         />
                       </Segment>
                     )
+                    : false
                   }
                   {(distributionPeriod)
                     ? (
@@ -179,7 +186,10 @@ class WalletPanelUnlocked extends Component<Props> {
                         )}
                       />
                     )
-                    : (
+                    : false
+                  }
+                  {(!distributionPeriod && !disableRamMarket)
+                    ? (
                       <Segment>
                         <WalletPanelButtonRamSell
                           account={accounts[settings.account]}
@@ -194,6 +204,7 @@ class WalletPanelUnlocked extends Component<Props> {
                         />
                       </Segment>
                     )
+                    : false
                   }
                   {(settings.walletMode === 'watch')
                     ? (
