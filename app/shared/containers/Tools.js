@@ -248,6 +248,12 @@ class ToolsContainer extends Component<Props> {
             }
           }
         }
+        // Disable "create new account" on specific chains (Worbli)
+        const disableCreateAccount = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
+        if (pane.name === 'create_account' && disableCreateAccount) {
+          return false;
+        }
+
         return (
           !walletMode
           || (walletTemp && pane.modes.includes('temp'))
