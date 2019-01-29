@@ -54,6 +54,7 @@ class ContractInterfaceFormAction extends Component<Props> {
     });
   }
   onToggle = (e, { name, checked }) => {
+    debugger
     this.setState({
       form: Object.assign(
         {},
@@ -98,10 +99,32 @@ class ContractInterfaceFormAction extends Component<Props> {
     } = this.props;
     const signing = !!(system.TRANSACTION_BUILD === 'PENDING');
     const fields = contract.getFields(contractAction);
-
     const formFields = [];
-    fields.forEach((field) => {
+    const fieldsMeta = fields.map((field) => {
+      if (field.type.includes('[]')) {
+        return { ...field, type: 'array' };
+      }
+      return field;
+    });
+    fieldsMeta.forEach((field) => {
       switch (field.type) {
+        case 'array': {
+          formFields.push((
+            <Form.Dropdown
+              allowAdditions
+              value={['test']}
+              fluid
+              key={`${contractAction}-${field.name}-${field.type}`}
+              label={`${field.name} (${field.type})`}
+              multiple
+              name={field.name}
+              onChange={this.onToggle}
+              search
+              selection
+            />
+          ));
+          break;
+        }
         case 'bool': {
           formFields.push((
             <Form.Checkbox
