@@ -68,6 +68,33 @@ export function getBlockExplorers() {
           }
         }
       ],
+      'eos-testnet-jungle': [
+        {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://jungle.bloks.io/account/{account}',
+            txid: 'https://jungle.bloks.io/transaction/{txid}'
+          }
+        },
+      ],
+      'eos-testnet-cryptokylin': [
+        {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://kylin.bloks.io/account/{account}',
+            txid: 'https://kylin.bloks.io/transaction/{txid}'
+          }
+        },
+      ],
+      'bos-mainnet': [
+        {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://bos.bloks.io/account/{account}',
+            txid: 'https://bos.bloks.io/transaction/{txid}'
+          }
+        },
+      ],
       'beos-testnet': [
         {
           name: 'explore.beos.world',
@@ -110,6 +137,15 @@ export function getBlockExplorers() {
             txid: 'https://blockchain-tracker.insights.network/transactions/{txid}'
           }
         }
+      ],
+      'worbli-mainnet': [
+        {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://worbli.bloks.io/account/{account}',
+            txid: 'https://worbli.bloks.io/transaction/{txid}'
+          }
+        },
       ]
     };
 
