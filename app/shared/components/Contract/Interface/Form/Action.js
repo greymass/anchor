@@ -269,3 +269,45 @@ class ContractInterfaceFormAction extends Component<Props> {
 }
 
 export default translate('contract')(ContractInterfaceFormAction);
+
+// Example Multi Dropdown
+
+import React, { Component } from 'react'
+import { Dropdown } from 'semantic-ui-react'
+
+const options = [
+  { key: '', text: 'Type your items', value: '' }
+]
+
+class DropdownExampleAllowAdditions extends Component {
+  state = { options }
+
+  handleAddition = (e, { value }) => {
+    this.setState({
+      options: [{ text: value, value }, ...this.state.options],
+    })
+  }
+
+  handleChange = (e, { value }) => this.setState({ currentValues: value })
+
+  render() {
+    const { currentValues } = this.state
+
+    return (
+      <Dropdown
+        options={this.state.options}
+        placeholder='Choose Languages'
+        search
+        selection
+        fluid
+        multiple
+        allowAdditions
+        value={currentValues}
+        onAddItem={this.handleAddition}
+        onChange={this.handleChange}
+      />
+    )
+  }
+}
+
+export default DropdownExampleAllowAdditions
