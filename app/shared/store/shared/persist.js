@@ -7,6 +7,7 @@ import EOSAccount from '../../utils/EOS/Account';
 import { update as update009 } from './migrations/009-updateSettings';
 import { update as update010 } from './migrations/010-updateBlockchains';
 import { update as update011 } from './migrations/011-updateBlockchains';
+import { update as update012 } from './migrations/012-updateBlockchains';
 
 const defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
 
@@ -248,11 +249,17 @@ const migrations = {
   11: (state) => Object.assign({}, state, {
     blockchains: update011(state.blockchains),
   }),
+  /*
+    12 - Rechange chainId and node
+  */
+  12: (state) => Object.assign({}, state, {
+    blockchains: update012(state.blockchains),
+  }),
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 11,
+  version: 12,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables

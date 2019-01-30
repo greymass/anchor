@@ -5,10 +5,10 @@ const defaultExchangeAccounts = [
 ];
 
 // exchange accounts by chain id
-// if chain id not specified, default will be used 
+// if chain id not specified, default will be used
 const exchangeAccounts = {
   default: defaultExchangeAccounts,
-  '50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd': []
+  'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4': []
 }
 
 export default (chainId = null) => chainId && exchangeAccounts.hasOwnProperty(chainId) ? exchangeAccounts[chainId] : exchangeAccounts.default;
