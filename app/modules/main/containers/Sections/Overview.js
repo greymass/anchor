@@ -3,33 +3,65 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Placeholder, Segment } from 'semantic-ui-react';
+import { Header, Placeholder, Segment, Table } from 'semantic-ui-react';
 import { times } from 'lodash';
 
 class OverviewContainer extends Component<Props> {
   render() {
     const {
-      app
+      accounts,
+      balances,
+      app,
+      wallets
     } = this.props;
     console.log(this.props)
     return (
       <Segment>
         overview
         <Segment vertical>
-          {times(10, i => (
-            <Placeholder fluid key={i}>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line />
-                <Placeholder.Line />
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          ))}
+          <Table>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  Total
+                </Table.Cell>
+                <Table.Cell>
+                  Total
+                </Table.Cell>
+                <Table.Cell>
+                  Total
+                </Table.Cell>
+                <Table.Cell>
+                  Total
+                </Table.Cell>
+                <Table.Cell>
+                  Total
+                </Table.Cell>
+              </Table.Row>
+              {wallets.map((wallet) => {
+                const isLoaded = !!(accounts[wallet.account]);
+                const account = accounts[wallet.account];
+                const balance = balances[wallet.account];
+                console.log(account, balance)
+                return (
+                  <Table.Row>
+                    <Table.Cell>
+                      {wallet.account}
+                      <br/>
+                      { isLoaded ? 'loaded' : 'not loaded'}
+                    </Table.Cell>
+                    <Table.Cell>
+                      { (isLoaded) ? account.head_block_time : ''}
+                    </Table.Cell>
+                    <Table.Cell>
+                      { (isLoaded) ? `${balance.EOS} EOS` : ''}
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
+
+            </Table.Body>
+          </Table>
         </Segment>
       </Segment>
     );
@@ -38,15 +70,17 @@ class OverviewContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    accounts: state.accounts,
+    balances: state.balances,
     app: state.app,
-    navigation: state.navigation
+    navigation: state.navigation,
+    wallets: state.wallets
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
     }, dispatch)
   };
 }
