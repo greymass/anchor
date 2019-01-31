@@ -199,6 +199,7 @@ class ProducersTable extends Component<Props> {
               <Table.HeaderCell>
                 {t('block_producer')}
               </Table.HeaderCell>
+              <Table.HeaderCell collapsing />
               <Table.HeaderCell textAlign="center" width={5}>
                 {producersVotedIn ? t('block_producer_total_votes') : ''}
               </Table.HeaderCell>
