@@ -17,7 +17,7 @@ export default class ProducersSelectorItem extends Component<Props> {
             disabled={isProxying}
             icon="circle minus"
             onClick={() => removeProducer(producer)}
-            size="tiny"
+            size="mini"
             style={{ marginRight: '1em' }}
           />
           {producer}
