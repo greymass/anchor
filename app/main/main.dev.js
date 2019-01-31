@@ -88,7 +88,7 @@ app.on('ready', async () => {
     // TODO: during protocol registration, the uri handler may need to be triggered
   });
 
-  initProtocolHandler();
+  // initProtocolHandler();
   // If this is the first run, walk through the welcome
   if (!store.getState().settings.configured) {
     log.info('new installation detected');
