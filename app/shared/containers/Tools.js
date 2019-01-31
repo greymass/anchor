@@ -35,6 +35,7 @@ import ToolsSystemLog from '../components/Tools/System/Log';
 import ToolsWallets from '../components/Tools/Wallets';
 
 import * as AccountsActions from '../actions/accounts';
+import * as BEOSWithdrawActions from '../actions/blockchains/beos/withdraw';
 import * as BidNameActions from '../actions/system/bidname';
 import * as ContractsActions from '../actions/contracts';
 import * as ClaimAirgrabActions from '../actions/system/claimairgrab';
@@ -376,6 +377,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...AppActions,
+      ...BEOSWithdrawActions,
       ...BidNameActions,
       ...ClaimAirgrabActions,
       ...ContractsActions,
