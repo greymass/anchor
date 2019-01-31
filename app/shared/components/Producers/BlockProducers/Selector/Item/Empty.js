@@ -16,16 +16,15 @@ export default class ProducersSelectorItemEmpty extends Component<Props> {
               {(modified)
                 ? (
                   <Message
-                    icon="warning sign"
                     header={t('producer_voter_remove_all_votes_header')}
                     content={t('producer_voter_remove_all_votes_subheader')}
                   />
                 )
                 : (
                   <Message
-                    icon="law"
                     header={t('producer_voter_no_producers_votes_cast_header')}
                     content={t('producer_voter_no_producers_votes_cast_subheader')}
+                    size="small"
                   />
                 )
               }
