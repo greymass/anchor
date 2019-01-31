@@ -1,5 +1,4 @@
 {
-  "disabled_for_distribution_period": "This function will be enabled after distribution period has ended.",
   "withdraw_bitshares_account_validation": "Please wait, Bitshares account is validating...",
   "withdraw_confirming_bitshares_network_fee": "Fee for withdrawal is the same as for the transfer in the Bitshares network.",
   "withdraw_confirming_body_quantity": "Please ensure the quantity for this withdrawal is valid.",

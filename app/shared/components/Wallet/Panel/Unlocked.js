@@ -70,7 +70,7 @@ class WalletPanelUnlocked extends Component<Props> {
                   {(distributionPeriod)
                     ? (
                       <Popup
-                        content={t('beos_withdraw:disabled_for_distribution_period')}
+                        content={t('wallet_disabled_for_distribution_period')}
                         inverted
                         position="right center"
                         trigger={(
@@ -123,7 +123,7 @@ class WalletPanelUnlocked extends Component<Props> {
                   {(distributionPeriod)
                     ? (
                       <Popup
-                        content={t('beos_withdraw:disabled_for_distribution_period')}
+                        content={t('wallet_disabled_for_distribution_period')}
                         inverted
                         position="right center"
                         trigger={(
@@ -166,7 +166,7 @@ class WalletPanelUnlocked extends Component<Props> {
                   {(distributionPeriod)
                     ? (
                       <Popup
-                        content={t('beos_withdraw:disabled_for_distribution_period')}
+                        content={t('wallet_disabled_for_distribution_period')}
                         inverted
                         position="right center"
                         trigger={(

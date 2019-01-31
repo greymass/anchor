@@ -38,6 +38,7 @@
   "wallet_actions_dangerous": "Warning: Danger Zone",
   "wallet_advanced_header": "Advanced Controls",
   "wallet_convert_to_ledger": "Use Ledger for Wallet",
+  "wallet_disabled_for_distribution_period": "This function will be enabled after distribution period has ended.",
   "wallet_mode_explain_cold": "This wallet is running as a 'Cold' wallet, meaning it should be run offline and is unable to broadcast transactions. Broadasting must be done via a watch wallet.",
   "wallet_mode_explain_hot": "This wallet is running as a 'Hot' wallet, meaning it can create, sign, and broadcast transactions without the assistance of any other wallet.",
   "wallet_mode_explain_ledger": "This wallet is running as a 'Ledger' wallet, meaning it has been paired with a Ledger device. The a device with running the proper seed is required to issue transactions on this account.",
