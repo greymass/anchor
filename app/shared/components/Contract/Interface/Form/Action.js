@@ -8,6 +8,8 @@ import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
 import WalletModalContentBroadcast from '../../../Wallet/Modal/Content/Broadcast';
 
 const initialState = {
+  arrayOptions: {},
+  currentArrayValues: {},
   form: {}
 };
 
@@ -40,7 +42,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         return String(value);
       }
     }
-  }
+  };
   onChange = (e, { name, value }) => {
     const { contractAction } = this.props;
     this.setState({
@@ -52,7 +54,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         }
       )
     });
-  }
+  };
   onToggle = (e, { name, checked }) => {
     debugger
     this.setState({
@@ -64,7 +66,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         }
       )
     });
-  }
+  };
   onSubmit = () => {
     const {
       actions,
@@ -74,7 +76,7 @@ class ContractInterfaceFormAction extends Component<Props> {
     } = this.props;
     const { form } = this.state;
     actions.buildTransaction(contract, contractAction, settings.account, form);
-  }
+  };
   resetForm = (contractAction) => {
     const {
       contract
@@ -85,7 +87,7 @@ class ContractInterfaceFormAction extends Component<Props> {
       formData[field.name] = this.formatField(contractAction, field.name);
     });
     this.setState({ form: formData });
-  }
+  };
   render() {
     const {
       actions,
@@ -97,6 +99,10 @@ class ContractInterfaceFormAction extends Component<Props> {
       t,
       transaction
     } = this.props;
+    const {
+      arrayOptions,
+      currentArrayValues
+    } =  this.state;
     const signing = !!(system.TRANSACTION_BUILD === 'PENDING');
     const fields = contract.getFields(contractAction);
     const formFields = [];
@@ -112,15 +118,23 @@ class ContractInterfaceFormAction extends Component<Props> {
           formFields.push((
             <Form.Dropdown
               allowAdditions
-              value={['test']}
               fluid
-              key={`${contractAction}-${field.name}-${field.type}`}
-              label={`${field.name} (${field.type})`}
               multiple
               name={field.name}
-              onChange={this.onToggle}
+              options={(arrayOptions[field.name] || []).concat([{ key: '', text: 'Type your items', value: 'placeholder' }])}
               search
               selection
+              value={currentArrayValues[field.name] || []}
+              onAddItem={(e, { name, value }) => {
+                this.setState({
+                  arrayOptions: {
+                    [name]: [{ text: value, value }, ...(this.state.arrayOptions[name] || [])]
+                  }
+                });
+              }}
+              onChange={(e, { name, value }) => {
+                this.setState({ currentArrayValues: { [name]: value } });
+              }}
             />
           ));
           break;
@@ -270,44 +284,38 @@ class ContractInterfaceFormAction extends Component<Props> {
 
 export default translate('contract')(ContractInterfaceFormAction);
 
-// Example Multi Dropdown
-
-import React, { Component } from 'react'
-import { Dropdown } from 'semantic-ui-react'
-
-const options = [
-  { key: '', text: 'Type your items', value: '' }
-]
-
-class DropdownExampleAllowAdditions extends Component {
-  state = { options }
-
-  handleAddition = (e, { value }) => {
-    this.setState({
-      options: [{ text: value, value }, ...this.state.options],
-    })
-  }
-
-  handleChange = (e, { value }) => this.setState({ currentValues: value })
-
-  render() {
-    const { currentValues } = this.state
-
-    return (
-      <Dropdown
-        options={this.state.options}
-        placeholder='Choose Languages'
-        search
-        selection
-        fluid
-        multiple
-        allowAdditions
-        value={currentValues}
-        onAddItem={this.handleAddition}
-        onChange={this.handleChange}
-      />
-    )
-  }
-}
-
-export default DropdownExampleAllowAdditions
+// // Example Multi Dropdown
+//
+// import React, { Component } from 'react'
+// import { Dropdown } from 'semantic-ui-react'
+//
+// const options = [
+//   { key: '', text: 'Type your items', value: '' }
+// ]
+//
+// class DropdownExampleAllowAdditions extends Component {
+//   state = { options }
+//
+//   test
+//
+//   render() {
+//     const { currentValues } = this.state
+//
+//     return (
+//       <Dropdown
+//         options={this.state.options}
+//         placeholder='Choose Languages'
+//         search
+//         selection
+//         fluid
+//         multiple
+//         allowAdditions
+//         value={currentValues}
+//         onAddItem={this.handleAddition}
+//         onChange={this.handleChange}
+//       />
+//     )
+//   }
+// }
+//
+// export default DropdownExampleAllowAdditions
