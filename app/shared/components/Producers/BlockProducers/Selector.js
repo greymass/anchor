@@ -75,7 +75,6 @@ class ProducersSelector extends Component<Props> {
           () => (
             <Segment loading={!(account)}>
               <List
-                divided
                 relaxed
                 size="small"
               >
