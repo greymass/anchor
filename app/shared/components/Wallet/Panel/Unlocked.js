@@ -255,4 +255,4 @@ class WalletPanelUnlocked extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletPanelUnlocked);
+export default translate(['wallet', 'beos_withdraw'])(WalletPanelUnlocked);
