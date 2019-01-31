@@ -56,33 +56,6 @@ class ProducersTableRow extends Component<Props> {
           singleLine
           textAlign="center"
         >
-          {(shouldDisplayInfoButton) && (
-            <span>
-              {(hasInfo)
-                ? (
-                  <Button
-                    color="purple"
-                    icon="magnify"
-                    onClick={() => getProducerInfo(producer.owner)}
-                    size="small"
-                  />
-                ) : (
-                  <Popup
-                    content={t('producer_json_unavailable_content')}
-                    header={t('producer_json_unavailable_header')}
-                    hoverable
-                    inverted
-                    position="left center"
-                    trigger={
-                      (isMainnet)
-                      ? <Button icon="magnify" size="small" />
-                      : false
-                    }
-                  />
-                )
-              }
-            </span>
-          )}
           {(producersVotedIn) && (
             <Popup
               content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
@@ -125,6 +98,35 @@ class ProducersTableRow extends Component<Props> {
               />
             </Header.Subheader>
           </Header>
+        </Table.Cell>
+        <Table.Cell collapsing>
+          {(shouldDisplayInfoButton) && (
+            <span>
+              {(hasInfo)
+                ? (
+                  <Button
+                    color="purple"
+                    icon="magnify"
+                    onClick={() => getProducerInfo(producer.owner)}
+                    size="small"
+                  />
+                ) : (
+                  <Popup
+                    content={t('producer_json_unavailable_content')}
+                    header={t('producer_json_unavailable_header')}
+                    hoverable
+                    inverted
+                    position="left center"
+                    trigger={
+                      (isMainnet)
+                      ? <Button icon="magnify" size="small" />
+                      : false
+                    }
+                  />
+                )
+              }
+            </span>
+          )}
         </Table.Cell>
         <Table.Cell
           singleLine
