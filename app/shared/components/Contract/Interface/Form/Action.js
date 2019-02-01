@@ -52,7 +52,7 @@ class ContractInterfaceFormAction extends Component<Props> {
   };
   onChange = (e, { name, value }, type = null) => {
     const { contractAction } = this.props;
-    console.log({valueonchange: value})
+    console.log({ valueonchange: value });
     this.setState({
       form: Object.assign(
         {},
@@ -64,7 +64,6 @@ class ContractInterfaceFormAction extends Component<Props> {
     });
   };
   onToggle = (e, { name, checked }) => {
-    debugger
     this.setState({
       form: Object.assign(
         {},
@@ -109,7 +108,7 @@ class ContractInterfaceFormAction extends Component<Props> {
     } = this.props;
     const {
       currentArrayValues
-    } =  this.state;
+    } = this.state;
     const signing = !!(system.TRANSACTION_BUILD === 'PENDING');
     const fields = contract.getFields(contractAction);
     const formFields = [];
@@ -132,7 +131,9 @@ class ContractInterfaceFormAction extends Component<Props> {
               options={
                 (currentArrayValues[field.name] || [])
                   .map(option => ({ text: option, value: option, key: option }))
-                  .concat([{ key: '', text: 'Type your items', value: 'placeholder', disabled: true }])
+                  .concat([{
+ key: '', text: 'Type your items', value: 'placeholder', disabled: true
+}])
               }
               search
               selection
@@ -291,39 +292,3 @@ class ContractInterfaceFormAction extends Component<Props> {
 }
 
 export default translate('contract')(ContractInterfaceFormAction);
-
-// // Example Multi Dropdown
-//
-// import React, { Component } from 'react'
-// import { Dropdown } from 'semantic-ui-react'
-//
-// const options = [
-//   { key: '', text: 'Type your items', value: '' }
-// ]
-//
-// class DropdownExampleAllowAdditions extends Component {
-//   state = { options }
-//
-//   test
-//
-//   render() {
-//     const { currentValues } = this.state
-//
-//     return (
-//       <Dropdown
-//         options={this.state.options}
-//         placeholder='Choose Languages'
-//         search
-//         selection
-//         fluid
-//         multiple
-//         allowAdditions
-//         value={currentValues}
-//         onAddItem={this.handleAddition}
-//         onChange={this.handleChange}
-//       />
-//     )
-//   }
-// }
-//
-// export default DropdownExampleAllowAdditions
