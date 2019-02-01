@@ -2,6 +2,8 @@ import * as types from './types';
 import eos from './helpers/eos';
 
 export function buildTransaction(contract, action, account, data) {
+  console.log({action})
+  console.log({data})
   return (dispatch: () => void, getState) => {
     const {
       connection

@@ -26,11 +26,15 @@ class ContractInterfaceFormAction extends Component<Props> {
       this.resetForm(nextProps.contractAction);
     }
   }
-  formatField = (contractAction, name, value = '') => {
+  formatField = (contractAction, name, value = '', type = null) => {
     const {
       contract
     } = this.props;
-    const fieldType = contract.getFieldType(contractAction, name);
+    let fieldType = contract.getFieldType(contractAction, name);
+
+    if (type === 'array') {
+      fieldType = 'array';
+    }
     switch (fieldType) {
       case 'int': {
         return parseInt(value, 10);
@@ -38,19 +42,24 @@ class ContractInterfaceFormAction extends Component<Props> {
       case 'bool': {
         return value ? 1 : 0;
       }
+      case 'array': {
+        console.log({value})
+        return value;
+      }
       default: {
         return String(value);
       }
     }
   };
-  onChange = (e, { name, value }) => {
+  onChange = (e, { name, value }, type = null) => {
     const { contractAction } = this.props;
+    console.log({valueonchange: value})
     this.setState({
       form: Object.assign(
         {},
         this.state.form,
         {
-          [name]: this.formatField(contractAction, name, value)
+          [name]: this.formatField(contractAction, name, value, type)
         }
       )
     });
@@ -100,7 +109,6 @@ class ContractInterfaceFormAction extends Component<Props> {
       transaction
     } = this.props;
     const {
-      arrayOptions,
       currentArrayValues
     } =  this.state;
     const signing = !!(system.TRANSACTION_BUILD === 'PENDING');
@@ -116,24 +124,24 @@ class ContractInterfaceFormAction extends Component<Props> {
       switch (field.type) {
         case 'array': {
           formFields.push((
-            <Form.Dropdown
+            <Form.Select
               allowAdditions
               fluid
+              label={field.name}
               multiple
               name={field.name}
-              options={(arrayOptions[field.name] || []).concat([{ key: '', text: 'Type your items', value: 'placeholder' }])}
+              options={
+                (currentArrayValues[field.name] || [])
+                  .map(option => ({ text: option, value: option, key: option }))
+                  .concat([{ key: '', text: 'Type your items', value: 'placeholder', disabled: true }])
+              }
               search
               selection
               value={currentArrayValues[field.name] || []}
-              onAddItem={(e, { name, value }) => {
-                this.setState({
-                  arrayOptions: {
-                    [name]: [{ text: value, value }, ...(this.state.arrayOptions[name] || [])]
-                  }
-                });
-              }}
               onChange={(e, { name, value }) => {
-                this.setState({ currentArrayValues: { [name]: value } });
+                this.setState({ currentArrayValues: { [name]: value } }, () => {
+                  this.onChange(null, { name, value }, field.type);
+                });
               }}
             />
           ));
@@ -156,7 +164,8 @@ class ContractInterfaceFormAction extends Component<Props> {
               key={`${contractAction}-${field.name}-${field.type}`}
               label={`${field.name} (${field.type})`}
               name={field.name}
-              onChange={this.onChange}
+              onChange={this.onChange
+              }
             />
           ));
         }
