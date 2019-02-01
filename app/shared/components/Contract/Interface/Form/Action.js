@@ -43,7 +43,6 @@ class ContractInterfaceFormAction extends Component<Props> {
         return value ? 1 : 0;
       }
       case 'array': {
-        console.log({value})
         return value;
       }
       default: {
@@ -115,7 +114,7 @@ class ContractInterfaceFormAction extends Component<Props> {
     const fields = contract.getFields(contractAction);
     const formFields = [];
     const fieldsMeta = fields.map((field) => {
-      if (field.type.includes('[]')) {
+      if (field.type.substr(field.type.length - 2) === '[]') {
         return { ...field, type: 'array' };
       }
       return field;
