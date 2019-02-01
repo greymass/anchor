@@ -6,6 +6,7 @@ import { Segment } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
 import WalletPanelLocked from '../../../../Wallet/Panel/Locked';
+import { Form } from '../../../../Wallet/Panel/Modal/Account/Request/Code';
 
 class ToolsGovernanceProposalsProposalVote extends Component<Props> {
   render() {
