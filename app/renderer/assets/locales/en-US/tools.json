@@ -252,6 +252,7 @@
   "tools_permissions_warning_header": "Changing keys is a potentially dangerous action",
   "tools_proposal_approved_message_content": "The stake weighted value of this account has been recorded as approving this proposal.",
   "tools_proposal_approved_message_header": "This account has approved this proposal.",
+  "tools_proposal_commented": "Commented",
   "tools_proposal_leave_comment": "Leave a comment about this proposal..",
   "tools_proposal_modify_vote": "If you would like to modify your vote, use the buttons below.",
   "tools_proposal_rejected_message_content": "The stake weighted value of this account has been recorded as opposing this proposal.",
