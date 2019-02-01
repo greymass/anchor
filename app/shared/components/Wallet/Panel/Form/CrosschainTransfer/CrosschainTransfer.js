@@ -83,6 +83,9 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
 
   validateAccount = debounce(async (value, asset) => {
     this.setState({ formError: null });
+    const { quantity } = this.state;
+    const { balances, settings: { account } } = this.props;
+    const [valueBalanceCompare, symbol] = quantity.split(" ");
 
     if (!value) {
       return;
@@ -94,7 +97,11 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       const response = await fetch(validationUrl);
       const { isValid } = await response.json();
       if (isValid) {
-        this.setState({ isValidAccount: true, formError: null });
+        if (parseFloat(valueBalanceCompare) > balances[account][asset]) {
+          this.setState({ formError: 'insufficient_balance' });
+        } else {
+          this.setState({ isValidAccount: true, formError: null });
+        }
       } else {
         this.setState({
           isValidAccount: false,
@@ -111,7 +118,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
   }, 150);
 
   onChange = (e, { name, value, valid }) => {
-    const { asset, formError } = this.state;
+    const { asset, formError, to } = this.state;
     const { balances, settings: { account } } = this.props;
     const newState = { [name]: value };
 
@@ -125,7 +132,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       if (parseFloat(value) > balances[account][asset]) {
         this.setState({ formError: 'insufficient_balance' });
       } else {
-        this.setState({ formError: null });
+        this.validateAccount(to, asset);
       }
     }
 
