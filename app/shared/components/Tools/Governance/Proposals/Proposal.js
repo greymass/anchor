@@ -16,7 +16,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const { comment } = this.state;
     const voter = settings.account;
     const vote = 1;
-    const json = JSON.stringify( comment ? { comment } : {});
+    const json = JSON.stringify(comment ? { comment } : {});
     actions.voteProposal(scope, voter, proposal, vote, json);
   };
   oppose = (proposal) => {
@@ -54,8 +54,8 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const vote = find(votes, ['proposal_name', proposal_name]);
     const voted = !!(vote);
     const approved = (voted) ? !!(vote.vote) : false;
-    const comment = vote &&  JSON.parse(vote.vote_json).comment;
-    const isVotePending = !!(system.GOVERNANCE_VOTE_PROPOSAL === 'PENDING' || system.GOVERNANCE_UNVOTE_PROPOSAL === 'PENDING')
+    const comment = vote && JSON.parse(vote.vote_json).comment;
+    const isVotePending = !!(system.GOVERNANCE_VOTE_PROPOSAL === 'PENDING' || system.GOVERNANCE_UNVOTE_PROPOSAL === 'PENDING');
     const isSupporting = (voted && approved);
     const isAgainst = (voted && !approved);
     const isExpired = (new Date().getTime() > Date.parse(expires_at));
@@ -64,8 +64,8 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     }
     let datePosted = false;
     try {
-      datePosted = proposal.created_at.split("T")[0].split("-").join('');
-    } catch(err) {
+      datePosted = proposal.created_at.split('T')[0].split('-').join('');
+    } catch (err) {
       // no catch
     }
     return (
@@ -110,14 +110,14 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               {t('tools_proposal_commented')}&nbsp;:&nbsp;{comment}
             </h3>
           )}
-          <br/>
+          <br />
           <p>
             {t('tools_proposal_view_on_block_explorer')}
           </p>
           <List horizontal>
             <List.Item as="a">
               <GlobalModalDangerLink
-                content={`bloks.io`}
+                content="bloks.io"
                 link={`https://bloks.io/vote/referendums/${proposal_name}`}
                 settings={settings}
               />
@@ -126,7 +126,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               ? (
                 <List.Item as="a">
                   <GlobalModalDangerLink
-                    content={`eosauthority.com`}
+                    content="eosauthority.com"
                     link={`https://eosauthority.com/polls_details?proposal=${proposal_name}_${datePosted}&lnc=en`}
                     settings={settings}
                   />
@@ -136,7 +136,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             }
             <List.Item as="a">
               <GlobalModalDangerLink
-                content={`eosx.io`}
+                content="eosx.io"
                 link={`https://www.eosx.io/tools/referendums/proposals/${proposal_name}`}
                 settings={settings}
               />
