@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { find } from 'lodash';
 
 import TimeAgo from 'react-timeago';
-import { Button, Divider, List, Header, Message, Segment } from 'semantic-ui-react';
+import { Button, Divider, List, Header, Message, Segment, Form } from 'semantic-ui-react';
 
 import GlobalModalDangerLink from '../../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposalVote from './Proposal/Vote';
@@ -13,9 +13,10 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
   approve = (proposal) => {
     const { actions, settings } = this.props;
     const { scope } = this.props;
+    const { comment } = this.state;
     const voter = settings.account;
     const vote = 1;
-    const json = JSON.stringify({});
+    const json = JSON.stringify( comment ? { comment } : {});
     actions.voteProposal(scope, voter, proposal, vote, json);
   };
   oppose = (proposal) => {
@@ -37,7 +38,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
       actions,
       blockExplorers,
       isLocked,
-      voteDisabled,
       settings,
       proposal,
       system,
@@ -150,15 +150,22 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               icon: 'checkmark'
             }}
             confirm={(
-              <Button
-                color="blue"
-                content={t('confirm')}
-                disabled={isSupporting}
-                floated="right"
-                icon="checkmark"
-                loading={isVotePending}
-                onClick={() => this.approve(proposal_name)}
-              />
+              <Form>
+                <Form.TextArea
+                  rows={3}
+                  placeholder={t('tools_proposal_leave_comment')}
+                  onChange={(e) => this.setState({ comment: e.target.value })}
+                />
+                <Button
+                  color="blue"
+                  content={t('confirm')}
+                  disabled={isSupporting}
+                  floated="right"
+                  icon="checkmark"
+                  loading={isVotePending}
+                  onClick={() => this.approve(proposal_name)}
+                />
+              </Form>
             )}
             content={t('tools_governance_proposal_confirm_vote_yes')}
             isLocked={isLocked}
@@ -178,15 +185,22 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               icon: 'x'
             }}
             confirm={(
-              <Button
-                color="blue"
-                content={t('confirm')}
-                disabled={isAgainst}
-                floated="right"
-                icon="checkmark"
-                loading={isVotePending}
-                onClick={() => this.oppose(proposal_name)}
-              />
+              <Form>
+                <Form.TextArea
+                  rows={3}
+                  placeholder={t('tools_proposal_leave_comment')}
+                  onChange={(e) => this.setState({ comment: e.target.value })}
+                />
+                <Button
+                  color="blue"
+                  content={t('confirm')}
+                  disabled={isAgainst}
+                  floated="right"
+                  icon="checkmark"
+                  loading={isVotePending}
+                  onClick={() => this.oppose(proposal_name)}
+                />
+              </Form>
             )}
             content={t('tools_governance_proposal_confirm_vote_no')}
             isLocked={isLocked}
