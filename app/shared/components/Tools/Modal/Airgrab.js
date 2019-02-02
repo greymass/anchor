@@ -7,7 +7,7 @@ import { Button, Segment } from 'semantic-ui-react';
 
 class ToolsModalDelegation extends Component<Props> {
   confirmClaim = () => {
-    const  { action } = this.props;
+    const  { claimAirgrab } = this.props;
 
     actions.claimAirgrab();
   };
