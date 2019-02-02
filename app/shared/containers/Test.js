@@ -28,9 +28,11 @@ import * as VoteProducerActions from '../actions/system/voteproducer';
 import * as WalletActions from '../actions/wallet';
 import * as SystemStateActions from '../actions/system/systemstate';
 
+import Airgrabs from '../components/Tools/Airgrabs';
+
 class TestContainer extends Component<Props> {
   render() {
-    return <DevTest {...this.props} />;
+    return <Airgrabs {...this.props} />;
   }
 }
 
