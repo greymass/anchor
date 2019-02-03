@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
-import { forEach } from 'lodash';
+import { forEach, map, uniq } from 'lodash';
 import Blockies from 'react-blockies';
 
 import * as AccountsActions from '../../../shared/actions/accounts';
