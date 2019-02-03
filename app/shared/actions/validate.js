@@ -4,7 +4,7 @@ import { getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
 import { getGlobals } from './globals';
-import { historyPluginCheck } from './connection';
+import { getSupportedCalls } from './connection';
 
 import eos from './helpers/eos';
 
@@ -124,7 +124,7 @@ export function validateNode(
               type: types.VALIDATE_NODE_SUCCESS
             });
             // Check if the new node supports the History Plugin
-            dispatch(historyPluginCheck());
+            dispatch(getSupportedCalls());
             // Grab globals
             dispatch(getGlobals());
             // Refresh our connection properties with new chain info
