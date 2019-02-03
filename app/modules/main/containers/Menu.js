@@ -104,15 +104,19 @@ class MenuContainer extends Component<Props> {
     const {
       actions,
       settings,
-      validate
+      validate,
+      wallets,
     } = this.props;
     const {
-      getAccount,
+      getAccounts,
       getConstants,
       getGlobals,
       getInfo
     } = actions;
     if (validate.NODE === 'SUCCESS') {
+      const chainAccounts = [].concat(wallets).filter((w) => (w.chainId === settings.chainId));
+      const accountNames = uniq(map(chainAccounts, 'account'));
+      getAccounts(accountNames);
       if (settings.account) {
         getAccount(settings.account);
       }
@@ -185,6 +189,7 @@ function mapStateToProps(state) {
     system: state.system,
     validate: state.validate,
     wallet: state.wallet,
+    wallets: state.wallets,
   };
 }
 
