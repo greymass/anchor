@@ -12,6 +12,7 @@ import chain from './chain';
 import connection from './connection';
 import contracts from './contracts';
 import customtokens from './customtokens';
+import features from './system/features';
 import globals from './globals';
 import keys from './keys';
 import ledger from './hardware/ledger';
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   connection,
   contracts,
   customtokens,
+  features,
   globals,
   keys,
   ledger,
