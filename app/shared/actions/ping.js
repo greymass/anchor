@@ -1,28 +1,6 @@
-import axios from 'axios';
+import { httpQueue, httpClient } from '../utils/httpClient';
 import { defer, find } from 'lodash';
-import PQueue from 'p-queue';
-
 import * as types from './types';
-
-const queue = new PQueue({
-  concurrency: 4
-});
-
-const instance = axios.create({
-  timeout: 3000,
-});
-
-instance.interceptors.request.use((config) => {
-  const modified = Object.assign({}, config);
-  modified.ts = performance.now();
-  return modified;
-});
-
-instance.interceptors.response.use((response) => {
-  const modified = Object.assign({}, response);
-  modified.ms = Number(performance.now() - modified.config.ts);
-  return modified;
-});
 
 export function pingNode(endpoint, data = {}, path = '/v1/history/get_actions') {
   return (dispatch: () => void, getState) => {
@@ -37,8 +15,8 @@ export function pingNode(endpoint, data = {}, path = '/v1/history/get_actions') 
         producer,
       }
     });
-    queue.add(() =>
-      instance
+    httpQueue.add(() =>
+      httpClient
         .post(`${host}${path}`, data)
         .then((response) => dispatch({
           type: types.UTILS_PING_NODE_SUCCESS,
