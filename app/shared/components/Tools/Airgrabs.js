@@ -1,13 +1,14 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
-
 import {
   Button,
-  Header,
+  Header, Input,
   Segment,
   Table
 } from 'semantic-ui-react';
+
+import ToolsModalAirgrab from './Modal/Airgrab';
 
 const airgrabs = [
   {
@@ -36,46 +37,66 @@ class ToolsAirgrabs extends PureComponent<Props> {
   };
   render() {
     const {
+      actions,
+      blockExplorers,
+      settings,
+      system,
       t
     } = this.props;
     const {
-      claimingAirgrab
+      claimingAirgrab,
+      searchQuery
     } = this.state;
     return (
       <Segment basic>
-        {(claimingAirgrab)
-          ? (
-            <ToolsModalAirgrab
-              airgrab={claimingAirgrab}
-              onClose={this.cancel}
-              open
-            />
-          )
-          : false
-        }
+        {claimingAirgrab && (
+          <ToolsModalAirgrab
+            actions={actions}
+            airgrab={claimingAirgrab}
+            blockExplorers={blockExplorers}
+            onClose={() => this.setState({ claimingAirgrab: false })}
+            settings={settings}
+            system={system}
+          />
+          )}
         <Header floated="left">
           {t('tools_airgrabs_header')}
           <Header.Subheader>
             {t('tools_airgrabs_subheader')}
           </Header.Subheader>
         </Header>
+        <Segment
+          basic
+          floated="right"
+          style={{ margin: 0 }}
+        >
+          <Input
+            floated="right"
+            placeholder={t('tools_airgrabs_search_placeholder')}
+            onChange={(e) => this.setState({ searchQuery: e.target.value })}
+          />
+        </Segment>
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell />
               <Table.HeaderCell>
-                {t('tools_airgrabs_symbol')}
-              </Table.HeaderCell>
-              <Table.HeaderCell collapsing>
                 {t('tools_airgrabs_account')}
               </Table.HeaderCell>
               <Table.HeaderCell>
                 {t('tools_airgrabs_until')}
               </Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {(airgrabs.map((airgrab) => {
+            {(airgrabs.filter((airgrab) => {
+              return !searchQuery ||
+                (airgrab.symbol &&
+                  airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (airgrab.account &&
+                  airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase()));
+            }).map((airgrab) => {
                 return (
                   <Table.Row key={airgrab.symbol}>
                     <Table.Cell>
@@ -86,19 +107,16 @@ class ToolsAirgrabs extends PureComponent<Props> {
                     </Table.Cell>
                     <Table.Cell
                       content={airgrab.account}
-                      textAlign="center"
                     />
                     <Table.Cell
-                      content={airgrab.account}
-                      textAlign="center"
+                      content={airgrab.endDate && new Date(airgrab.endDate).toLocaleDateString('en-US')}
                     />
                     <Table.Cell
-                      content={airgrab.account}
-                      textAlign="center"
+                      textAlign="right"
                     >
                       <Button
                         onClick={() => this.setState({ claimingAirgrab: airgrab })}
-                        content={t('tools_claim_airgrab')}
+                        content={t('tools_airgrabs_claim')}
                       />
                     </Table.Cell>
                   </Table.Row>
