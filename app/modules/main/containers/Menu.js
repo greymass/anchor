@@ -116,13 +116,10 @@ class MenuContainer extends Component<Props> {
     if (validate.NODE === 'SUCCESS') {
       const chainAccounts = [].concat(wallets).filter((w) => (w.chainId === settings.chainId));
       const accountNames = uniq(map(chainAccounts, 'account'));
-      getAccounts(accountNames);
-      if (settings.account) {
-        getAccount(settings.account);
-      }
       getConstants();
       getGlobals();
       getInfo();
+      getAccounts(accountNames);
     }
   }
   render() {
