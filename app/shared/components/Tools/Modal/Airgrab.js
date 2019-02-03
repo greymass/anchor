@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Button, Segment, Header } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import { Button, Segment } from 'semantic-ui-react';
 
 class ToolsModalDelegation extends Component<Props> {
   confirmClaim = () => {
-    const  { claimAirgrab } = this.props;
+    const  { actions } = this.props;
 
     actions.claimAirgrab();
   };
@@ -15,10 +15,10 @@ class ToolsModalDelegation extends Component<Props> {
   render() {
     const {
       actions,
+      airgrab,
       blockExplorers,
       onClose,
       onOpen,
-      openModal,
       settings,
       system,
       t
@@ -29,16 +29,12 @@ class ToolsModalDelegation extends Component<Props> {
         actionName="AIRGRAB"
         actions={actions}
         blockExplorers={blockExplorers}
-        button={{
-          color: 'blue',
-          content: t('tools_bid_name_modal_button_add'),
-          floated: 'right',
-          icon: 'plus'
-        }}
+        button={false}
         content={(
-          <Segment>
+          <Segment  basic>
             <Header
-              content={t('tools_modal_airgrab_header')}
+              content={t('tools_modal_airgrab_header', { symbol: airgrab.symbol })}
+              subheader={t('tools_modal_airgrab_subheader')}
             />
             <Button
               onClick={this.confirmClaim}
@@ -49,10 +45,10 @@ class ToolsModalDelegation extends Component<Props> {
         icon="sticky note outline"
         onClose={onClose}
         onOpen={onOpen}
-        openModal={openModal}
+        openModal
         settings={settings}
         system={system}
-        title={t('tools_modal_bid_name_header')}
+        title={t('tools_modal_airgrab_title')}
       />
     );
   }
