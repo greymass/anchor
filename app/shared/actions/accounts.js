@@ -3,6 +3,7 @@ import { forEach } from 'lodash';
 import * as types from './types';
 import eos from './helpers/eos';
 import { addCustomTokenBeos } from './settings';
+import { httpQueue, httpClient } from '../utils/httpClient';
 
 const ecc = require('eosjs-ecc');
 
@@ -31,6 +32,7 @@ export function clearBalanceCache() {
 }
 
 export function refreshAccountBalances(account, requestedTokens) {
+  console.log(account, requestedTokens);
   return (dispatch: () => void) =>
     dispatch(getCurrencyBalance(account, requestedTokens));
 }
@@ -169,36 +171,15 @@ export function getAccount(account = '') {
       });
     }
     const {
-      connection,
-      settings
+      connection
     } = getState();
-    if (account && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getAccount(account).then((results) => {
-        // Trigger the action to load this accounts balances'
-        if (settings.account === account) {
-          dispatch(getCurrencyBalance(account));
-        }
-        // PATCH - Force in self_delegated_bandwidth if it doesn't exist
-        const modified = Object.assign({}, results);
-        if (!modified.self_delegated_bandwidth) {
-          modified.self_delegated_bandwidth = {
-            cpu_weight: `0.0000 ${connection.chainSymbol || 'EOS'}`,
-            net_weight: `0.0000 ${connection.chainSymbol || 'EOS'}`
-          };
-        }
-        // If a proxy voter is set, cache it's data for vote referencing
-        if (modified.voter_info && modified.voter_info.proxy) {
-          dispatch(getAccount(modified.voter_info.proxy));
-        }
-        // Dispatch the results of the account itself
-        return dispatch({
-          type: types.GET_ACCOUNT_SUCCESS,
-          payload: { results: modified }
-        });
-      }).catch((err) => dispatch({
-        type: types.GET_ACCOUNT_FAILURE,
-        payload: { err, account_name: account },
-      }));
+    if (account && (connection.httpEndpoint || connection.httpEndpoint.length !== 0)) {
+      eos(connection).getAccount(account).then((results) =>
+        dispatch(processLoadedAccount(account, results)))
+        .catch((err) => dispatch({
+          type: types.GET_ACCOUNT_FAILURE,
+          payload: { err, account_name: account },
+        }));
       return;
     }
     dispatch({
@@ -208,9 +189,54 @@ export function getAccount(account = '') {
   };
 }
 
+export function processLoadedAccount(account, results) {
+  return (dispatch: () => void, getState) => {
+    const {
+      connection
+    } = getState();
+    // Trigger the action to load this accounts balances
+    dispatch(getCurrencyBalance(account));
+    // PATCH - Force in self_delegated_bandwidth if it doesn't exist
+    const modified = Object.assign({}, results);
+    if (!modified.self_delegated_bandwidth) {
+      modified.self_delegated_bandwidth = {
+        cpu_weight: `0.0000 ${connection.chainSymbol || 'EOS'}`,
+        net_weight: `0.0000 ${connection.chainSymbol || 'EOS'}`
+      };
+    }
+    // If a proxy voter is set, cache it's data for vote referencing
+    if (modified.voter_info && modified.voter_info.proxy) {
+      dispatch(getAccount(modified.voter_info.proxy));
+    }
+    // Dispatch the results of the account itself
+    return dispatch({
+      type: types.GET_ACCOUNT_SUCCESS,
+      payload: { results: modified }
+    });
+  };
+}
+
 export function getAccounts(accounts = []) {
-  return (dispatch: () => void) =>
-    forEach(accounts, (account) => dispatch(getAccount(account)));
+  return (dispatch: () => void, getState) => {
+    const { connection, features } = getState();
+    const { endpoints } = features;
+    if (endpoints['/v1/chain/get_accounts']) {
+      httpQueue.add(() =>
+        httpClient
+          .post(`${connection.httpEndpoint}/v1/chain/get_accounts`, {
+            accounts
+          })
+          .then((response) =>
+            forEach(response.data, (results) =>
+              dispatch(processLoadedAccount(results.account_name, results))))
+          .catch((err) => dispatch({
+            type: types.GET_ACCOUNTS_FAILURE,
+            payload: { err }
+          })));
+    } else {
+      return forEach(accounts, (account) => dispatch(getAccount(account)));
+    }
+  };
 }
 
 export function getActions(account, start, offset) {
@@ -282,24 +308,33 @@ function sortByReqId(actionOne, actionTwo) {
   return actionTwo.account_action_seq - actionOne.account_action_seq;
 }
 
+function getSelectedTokens(connection, requestedTokens, settings) {
+  const { customTokens } = settings;
+  const newCustomTokens = customTokens.filter((token) => (connection.chainId === token.split(':')[0]));
+  let selectedTokens = [`${connection.chainId}:eosio.token:${connection.chainSymbol || 'EOS'}`];
+  if (newCustomTokens && newCustomTokens.length > 0) {
+    selectedTokens = [...newCustomTokens, ...selectedTokens];
+  }
+  // if specific tokens are requested, use them
+  if (requestedTokens) {
+    requestedTokens.map((token) => `${connection.chainId}:${token}`);
+    selectedTokens = requestedTokens;
+  }
+  return selectedTokens;
+}
+
 export function getCurrencyBalance(account, requestedTokens = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
+      features,
       settings
     } = getState();
+    const {
+      endpoints
+    } = features;
     if (account && (settings.node || settings.node.length !== 0)) {
-      const { customTokens } = settings;
-      const newCustomTokens = customTokens.filter((token) => (connection.chainId === token.split(':')[0]));
-      let selectedTokens = [`${connection.chainId}:eosio.token:${connection.chainSymbol || 'EOS'}`];
-      if (newCustomTokens && newCustomTokens.length > 0) {
-        selectedTokens = [...newCustomTokens, ...selectedTokens];
-      }
-      // if specific tokens are requested, use them
-      if (requestedTokens) {
-        requestedTokens.map((token) => `${connection.chainId}:${token}`);
-        selectedTokens = requestedTokens;
-      }
+      const selectedTokens = getSelectedTokens(connection, requestedTokens, settings);
       dispatch({
         type: types.GET_ACCOUNT_BALANCE_REQUEST,
         payload: {
@@ -310,7 +345,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
 
       if (connection.chainSymbol === 'BEOS') {
         selectedTokens = [];
-        eos(connection).getCurrencyStats('eosio.token', '').then((data) => {
+        return eos(connection).getCurrencyStats('eosio.token', '').then((data) => {
           const allTokens = Object.keys(data);
           allTokens.forEach((token) => {
             selectedTokens.push(`${connection.chainId}:eosio.token:${token}`);
@@ -339,20 +374,46 @@ export function getCurrencyBalance(account, requestedTokens = false) {
           type: types.GET_ACCOUNT_BALANCE_FAILURE,
           payload: { err, account_name: account }
         }));
+      };
+
+      if (endpoints['/v1/chain/get_currency_balances']) {
+        httpQueue.add(() =>
+          httpClient
+            .post(`${connection.httpEndpoint}/v1/chain/get_currency_balances`, {
+              account
+            })
+            .then((response) =>
+              forEach(response.data, (results) =>
+                dispatch({
+                  type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+                  payload: {
+                    account_name: account,
+                    contract: results.code,
+                    precision: formatPrecisions(results),
+                    symbol: results.symbol,
+                    tokens: formatBalances([`${results.amount} ${results.symbol}`], results.symbol)
+                  }
+                })))
+            .catch((err) => dispatch({
+              type: types.GET_ACCOUNT_BALANCE_FAILURE,
+              payload: { err }
+            })));
       } else {
         forEach(selectedTokens, (namespace) => {
           const [, contract, symbol] = namespace.split(':');
-          eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
-            dispatch({
-              type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-              payload: {
-                account_name: account,
-                contract,
-                precision: formatPrecisions(results),
-                symbol,
-                tokens: formatBalances(results, symbol)
-              }
-            }))
+          eos(connection)
+            .getCurrencyBalance(contract, account, symbol)
+            .then((results) =>
+              dispatch({
+                type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+                payload: {
+                  account_name: account,
+                  contract,
+                  precision: formatPrecisions(results),
+                  symbol,
+                  tokens: formatBalances(results, symbol)
+                }
+              }))
             .catch((err) => dispatch({
               type: types.GET_ACCOUNT_BALANCE_FAILURE,
               payload: { err, account_name: account }
@@ -367,14 +428,18 @@ function formatPrecisions(balances) {
   const precision = {};
   for (let i = 0; i < balances.length; i += 1) {
     const [amount, symbol] = balances[i].split(' ');
-    const [, suffix] = amount.split('.');
-    let suffixLen = 0;
-    if (suffix !== undefined) {
-      suffixLen = suffix.length;
-    }
-    precision[symbol] = suffixLen;
+    precision[symbol] = getSuffixLength(amount);
   }
   return precision;
+}
+
+function getSuffixLength(string) {
+  const [, suffix] = string.split('.');
+  let suffixLen = 0;
+  if (suffix !== undefined) {
+    suffixLen = suffix.length;
+  }
+  return suffixLen;
 }
 
 function formatBalances(balances, forcedSymbol = false) {
