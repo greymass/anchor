@@ -2,7 +2,7 @@ import axios from 'axios';
 import PQueue from 'p-queue';
 
 const httpQueue = new PQueue({
-  concurrency: 4
+  concurrency: 2
 });
 
 const httpClient = axios.create({
