@@ -1,4 +1,5 @@
 import { find } from 'lodash';
+import bip39 from 'bip39';
 
 import { getCurrencyBalance } from './accounts';
 import * as types from './types';
@@ -140,6 +141,14 @@ export function validateNode(
 }
 
 export function validateKey(key) {
+  let privateKey = key;
+  // check if key is mnemonic
+  if (key.split(' ').length === 12) {
+    // convert mnemonic to seed
+    const seed = bip39.mnemonicToSeedHex(key).toString();
+    privateKey = ecc.seedPrivate(seed);
+  }
+
   return async (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_KEY_PENDING });
     const {
@@ -161,7 +170,7 @@ export function validateKey(key) {
       const permissions = ['active', 'owner'];
       try {
         // Derive the public key from the private key provided
-        const expect = ecc.privateToPublic(key, connection.keyPrefix);
+        const expect = ecc.privateToPublic(privateKey, connection.keyPrefix);
         // Filter the account's permissions to find any valid matches
         const validPermissions = account.permissions.filter((perm) => {
           // Get the threshold a key needs to perform operations
