@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Header, Placeholder, Segment, Table } from 'semantic-ui-react';
 import { times } from 'lodash';
+import OverviewBlockchainContainer from './Overview/Blockchain';
 
 class OverviewContainer extends Component<Props> {
   render() {
@@ -64,6 +65,9 @@ class OverviewContainer extends Component<Props> {
           </Table>
         </Segment>
       </Segment>
+        <OverviewBlockchainContainer
+          settings={settings}
+        />
     );
   }
 }
