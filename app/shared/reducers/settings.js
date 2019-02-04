@@ -1,4 +1,4 @@
-import { get } from 'dot-prop-immutable';
+import { get, set } from 'dot-prop-immutable';
 
 import * as types from '../actions/types';
 
@@ -21,6 +21,8 @@ const initialState = {
   blockExplorer: 'bloks.io',
   // Current chain_id
   chainId: false,
+  // Additional settings per blockchain
+  chainSettings: {},
   // List of contacts
   contacts: [],
   // Custom tokens the wallet should be tracking
