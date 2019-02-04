@@ -31,7 +31,7 @@ class ToolsModalDelegation extends Component<Props> {
         blockExplorers={blockExplorers}
         button={false}
         content={(
-          <Segment  basic>
+          <Segment basic>
             <Header
               content={t('tools_modal_airgrab_header', { symbol: airgrab.symbol })}
               subheader={t('tools_modal_airgrab_subheader')}
@@ -42,7 +42,7 @@ class ToolsModalDelegation extends Component<Props> {
             />
           </Segment>
         )}
-        icon="sticky note outline"
+        icon="arrow down"
         onClose={onClose}
         onOpen={onOpen}
         openModal
