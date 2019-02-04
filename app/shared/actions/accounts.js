@@ -389,7 +389,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                   payload: {
                     account_name: account,
                     contract: results.code,
-                    precision: formatPrecisions(results),
+                    precision: formatPrecisions([`${results.amount} ${results.symbol}`]),
                     symbol: results.symbol,
                     tokens: formatBalances([`${results.amount} ${results.symbol}`], results.symbol)
                   }
@@ -424,6 +424,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
   };
 }
 
+// Expects array of balance strings, e.g. ['1.2345 EOS']
 function formatPrecisions(balances) {
   const precision = {};
   for (let i = 0; i < balances.length; i += 1) {
