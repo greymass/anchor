@@ -34,13 +34,15 @@ export function resetApp() {
   };
 }
 
-export function setSetting(key, value) {
+export function setSetting(key, value, chainId = false) {
   return (dispatch: () => void) => {
+    const payload = { [key]: value };
+    if (chainId) {
+      payload.__id = chainId;
+    }
     dispatch({
       type: types.SET_SETTING,
-      payload: {
-        [key]: value
-      }
+      payload
     });
   };
 }
