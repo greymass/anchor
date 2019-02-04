@@ -65,7 +65,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
           dispatch(AccountActions.getAccount(accountName));
         }
 
-        dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
+        dispatch(TableActions.getTable('snax', settings.account, 'delband'));
       }, 500);
 
       return dispatch({

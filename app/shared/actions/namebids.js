@@ -13,11 +13,11 @@ export function getBidForName(name) {
     const { connection, settings } = getState();
 
     const query = {
-      code: 'eosio',
+      code: 'snax',
       json: true,
       limit: 1,
       lower_bound: name,
-      scope: 'eosio',
+      scope: 'snax',
       table: 'namebids'
     };
 
@@ -57,10 +57,10 @@ export function getBidsForAccount(previous = false) {
     let { recentBids } = settings;
 
     const query = {
-      code: 'eosio',
+      code: 'snax',
       json: true,
       limit: 1000,
-      scope: 'eosio',
+      scope: 'snax',
       table: 'namebids'
     };
 

@@ -48,7 +48,7 @@ class ToolsDelegations extends Component<Props> {
       settings
     } = this.props;
 
-    actions.getTable('eosio', settings.account, 'delband');
+    actions.getTable('snax', settings.account, 'delband');
   }
 
   onOpenModal = (delegation) => this.setState({ openModal: true, delegationToEdit: delegation });

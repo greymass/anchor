@@ -28,8 +28,8 @@ export function getProducers(previous = false) {
     const { connection } = getState();
     const query = {
       json: true,
-      code: 'eosio',
-      scope: 'eosio',
+      code: 'snax',
+      scope: 'snax',
       table: 'producers',
       limit: 1000,
     };

@@ -3,7 +3,7 @@ import { uniq } from 'lodash';
 const update = (settings, defaultChainId) => {
   const newSettings = Object.assign({}, settings);
   // Create or update the `customTokens` setting
-  const customTokens = [`${defaultChainId}:eosio.token:EOS`];
+  const customTokens = [`${defaultChainId}:snax.token:SNAX`];
   settings.customTokens.forEach((token) => {
     if (token.split(':').length < 3) {
       customTokens.push(`${defaultChainId}:${token}`);

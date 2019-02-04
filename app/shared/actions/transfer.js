@@ -31,7 +31,7 @@ export function transfer(from, to, quantity, memo, symbol) {
         sign: connection.sign
       }).then((tx) => {
         // If this is an offline transaction, also store the ABI
-        if (!connection.sign && account !== 'eosio.token') {
+        if (!connection.sign && account !== 'snax.token') {
           return eos(connection).getAbi(account).then((contract) =>
             dispatch({
               payload: {

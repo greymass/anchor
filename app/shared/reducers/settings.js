@@ -26,7 +26,7 @@ const initialState = {
   // Custom tokens the wallet should be tracking
   customTokens: [
     // Always track the EOS token
-    'eos-mainnet:eosio.token:EOS'
+    'eos-mainnet:snax.token:EOS'
   ],
   // State to view by default in DevTest
   devTestDefaultState: false,

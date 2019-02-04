@@ -24,7 +24,7 @@ class WalletStatus extends Component<Props> {
       settings
     } = this.props;
 
-    actions.getTable('eosio', settings.account, 'delband');
+    actions.getTable('snax', settings.account, 'delband');
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });

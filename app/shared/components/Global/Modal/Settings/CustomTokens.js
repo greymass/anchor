@@ -37,6 +37,7 @@ class GlobalModalSettingsCustomTokens extends Component<Props> {
     const { getCurrencyStats } = actions;
     const contractName = account.toLowerCase();
     const symbolName = symbol.toUpperCase();
+
     getCurrencyStats(contractName, symbolName);
     this.setState({
       loading: true

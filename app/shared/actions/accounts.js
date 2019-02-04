@@ -283,7 +283,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
     if (account && (settings.node || settings.node.length !== 0)) {
       const { customTokens } = settings;
       const newCustomTokens = customTokens.filter((token) => (connection.chainId === token.split(':')[0]));
-      let selectedTokens = [`${connection.chainId}:eosio.token:${connection.chainSymbol || 'EOS'}`];
+      let selectedTokens = [`${connection.chainId}:snax.token:${connection.chainSymbol || 'SNAX'}`];
       if (newCustomTokens && newCustomTokens.length > 0) {
         selectedTokens = [...newCustomTokens, ...selectedTokens];
       }
@@ -300,57 +300,24 @@ export function getCurrencyBalance(account, requestedTokens = false) {
         }
       });
 
-      if (connection.chainSymbol === 'BEOS') {
-        selectedTokens = [];
-        eos(connection).getCurrencyStats('eosio.token', '').then((data) => {
-          const allTokens = Object.keys(data);
-          allTokens.forEach((token) => {
-            selectedTokens.push(`${connection.chainId}:eosio.token:${token}`);
-          });
-          forEach(selectedTokens, (namespace) => {
-            const [, contract, symbol] = namespace.split(':');
-            dispatch(addCustomTokenBeos('eosio.token', symbol));
-            eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
-              dispatch({
-                type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-                payload: {
-                  account_name: account,
-                  contract,
-                  precision: formatPrecisions(results),
-                  symbol,
-                  tokens: formatBalances(results, symbol)
-                }
-              }))
-              .catch((err) => dispatch({
-                type: types.GET_ACCOUNT_BALANCE_FAILURE,
-                payload: { err, account_name: account }
-              }));
-          });
-          return selectedTokens;
-        }).catch((err) => dispatch({
-          type: types.GET_ACCOUNT_BALANCE_FAILURE,
-          payload: { err, account_name: account }
-        }));
-      } else {
-        forEach(selectedTokens, (namespace) => {
-          const [, contract, symbol] = namespace.split(':');
-          eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
-            dispatch({
-              type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-              payload: {
-                account_name: account,
-                contract,
-                precision: formatPrecisions(results),
-                symbol,
-                tokens: formatBalances(results, symbol)
-              }
-            }))
-            .catch((err) => dispatch({
-              type: types.GET_ACCOUNT_BALANCE_FAILURE,
-              payload: { err, account_name: account }
-            }));
-        });
-      }
+      forEach(selectedTokens, (namespace) => {
+        const [, contract, symbol] = namespace.split(':');
+        eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
+          dispatch({
+            type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+            payload: {
+              account_name: account,
+              contract,
+              precision: formatPrecisions(results),
+              symbol,
+              tokens: formatBalances(results, symbol)
+            }
+          }))
+          .catch((err) => dispatch({
+            type: types.GET_ACCOUNT_BALANCE_FAILURE,
+            payload: { err, account_name: account }
+          }));
+      });
     }
   };
 }

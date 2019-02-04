@@ -10,7 +10,7 @@ export function getGlobals() {
       type: types.SYSTEM_GET_GLOBALS_REQUEST
     });
     const { connection } = getState();
-    eos(connection).getTableRows(true, 'eosio', 'eosio', 'global').then((results) => dispatch({
+    eos(connection).getTableRows(true, 'snax', 'snax', 'global').then((results) => dispatch({
       type: types.SYSTEM_GET_GLOBALS_SUCCESS,
       payload: { results }
     })).catch((err) => dispatch({
@@ -20,14 +20,16 @@ export function getGlobals() {
   };
 }
 
-export function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS') {
+export function getCurrencyStats(contractName = 'snax.token', symbolName = 'SNAX') {
   const account = contractName.toLowerCase();
+  console.log('account', account);
   const symbol = symbolName.toUpperCase();
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_CURRENCYSTATS_REQUEST
     });
     const { connection } = getState();
+
     eos(connection).getCurrencyStats(account, symbol).then((results) => {
       if (isEmpty(results)) {
         return dispatch({
@@ -64,8 +66,8 @@ export function getRamStats() {
     });
     const { connection } = getState();
     const query = {
-      scope: 'eosio',
-      code: 'eosio',
+      scope: 'snax',
+      code: 'snax',
       table: 'rammarket',
       json: true
     };
