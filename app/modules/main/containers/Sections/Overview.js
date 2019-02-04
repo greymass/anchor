@@ -10,6 +10,7 @@ import ReactJson from 'react-json-view';
 import * as SettingsActions from '../../../../shared/actions/settings';
 
 import ExplorerLink from '../../../../shared/components/Global/Modal/ExplorerLink';
+import GlobalSettingsOverviewToken from '../../../../shared/components/Global/Settings/OverviewToken';
 import GlobalAccountFragmentTokenBalance from '../../../../shared/containers/Global/Account/Fragment/TokenBalance';
 import GlobalAccountFragmentRamPercent from '../../../../shared/containers/Global/Account/Fragment/RamPercent';
 import GlobalAccountFragmentResourcePercent from '../../../../shared/containers/Global/Account/Fragment/ResourcePercent';
@@ -30,7 +31,9 @@ class OverviewContainer extends Component<Props> {
       wallets,
     } = this.props;
     const chainAccounts = [].concat(wallets).filter((w) => (w.chainId === settings.chainId));
+    const chainSettings = settings.chainSettings[settings.chainId];
     const accountNames = uniq(map(chainAccounts, 'account')).sort();
+    const [overviewContract, overviewSymbol] = (chainSettings.overviewToken || 'eosio:EOS').split(':');
     return (
       <React.Fragment>
         <OverviewBlockchainContainer
@@ -48,6 +51,14 @@ class OverviewContainer extends Component<Props> {
                     EOS Balance
                   </Table.Cell>
                   <Table.Cell textAlign="right">
+                    <GlobalSettingsOverviewToken
+                      actions={actions}
+                      chainId={settings.chainId}
+                      defaultValue={chainSettings.overviewToken}
+                      setLanguage={settings.lang}
+                      selection
+                      tokens={settings.customTokens}
+                    />
                   </Table.Cell>
                   <Table.Cell>
                     CPU
@@ -73,6 +84,7 @@ class OverviewContainer extends Component<Props> {
                         />
                       </Table.Cell>
                       <Table.Cell textAlign="right">
+                        <GlobalAccountFragmentTokenBalance
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
@@ -80,6 +92,12 @@ class OverviewContainer extends Component<Props> {
                         />
                       </Table.Cell>
                       <Table.Cell textAlign="right">
+                        <GlobalAccountFragmentTokenBalance
+                          account={accountName}
+                          chainId={settings.chainId}
+                          contract={overviewContract}
+                          token={overviewSymbol}
+                        />
                       </Table.Cell>
                       <Table.Cell>
                         <GlobalAccountFragmentResourcePercent
