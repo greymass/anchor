@@ -103,6 +103,14 @@ export default function settings(state = initialState, action) {
       });
     }
     case types.SET_SETTING: {
+      if (action.payload.__id) {
+        const { payload } = Object.assign({}, action);
+        const { __id } = action.payload;
+        delete payload.__id;
+        return Object.assign({}, state, {
+          chainSettings: set(get(state, 'chainSettings', {}), `${__id}`, payload)
+        });
+      }
       return Object.assign({}, state, action.payload);
     }
     case types.RESET_INVALID_SETTINGS: {
