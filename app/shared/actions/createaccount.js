@@ -117,7 +117,7 @@ export function createAccount(
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     }).then((tx) => {
-      // Hack for account creation - able to remove with eosjs v20 upgrade
+      // Hack for account creation - able to remove with snaxJs v20 upgrade
       let transaction = Object.assign({}, tx);
       const firstAction = get(tx, 'transaction.transaction.actions.0.name', 'newaccount');
       const ownerAccounts = get(tx, 'transaction.transaction.actions.0.data.owner.accounts');

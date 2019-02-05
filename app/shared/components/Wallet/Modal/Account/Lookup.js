@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Button, Form, Header, Icon, Input, List, Message, Modal, Segment } from 'semantic-ui-react';
 
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 export default class WalletModalAccountLookup extends Component<Props> {
   state = {

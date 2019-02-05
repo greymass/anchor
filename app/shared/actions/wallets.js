@@ -8,7 +8,7 @@ import { decrypt, encrypt, setWalletMode } from './wallet';
 import EOSAccount from '../utils/EOS/Account';
 import eos from './helpers/eos';
 
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 const CryptoJS = require('crypto-js');
 
 export function completeConvertToLedger(

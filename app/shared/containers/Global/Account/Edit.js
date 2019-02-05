@@ -14,7 +14,7 @@ import GlobalFormFieldKeyPrivate from '../../../components/Global/Form/Field/Key
 // import GlobalFormFieldGeneric from '../../../components/Global/Form/Field/Generic';
 
 const CryptoJS = require('crypto-js');
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 const authOptions = [
   { key: 'active', text: 'active', value: 'active' },

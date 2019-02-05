@@ -7,7 +7,7 @@ import { Button, Divider, Header, Grid, Label, List, Message, Segment } from 'se
 import GlobalFormFieldKeyPrivate from '../../Global/Form/Field/Key/Private';
 
 const { clipboard } = require('electron');
-const { PrivateKey } = require('eosjs-ecc');
+const { PrivateKey } = require('@snaxfoundation/snaxjs-ecc');
 
 class ToolsKeysValidator extends Component<Props> {
   state = {

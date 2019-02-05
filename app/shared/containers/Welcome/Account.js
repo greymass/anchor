@@ -13,7 +13,7 @@ import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
 
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 type Props = {
   accounts: {},

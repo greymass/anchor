@@ -1,6 +1,6 @@
 import { forOwn, find, map, pick } from 'lodash';
 
-const Eos = require('eosjs');
+const Eos = require('@snaxfoundation/snaxjs');
 
 export const typeMap = {
   bool: 'bool',

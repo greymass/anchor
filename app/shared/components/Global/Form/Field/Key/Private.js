@@ -5,7 +5,7 @@ import { Checkbox, Form, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
 
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 class GlobalFormFieldKeyPrivate extends Component<Props> {
   state = {

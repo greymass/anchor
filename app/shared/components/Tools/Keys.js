@@ -6,7 +6,7 @@ import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 const { clipboard } = require('electron');
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 class ToolsKeys extends Component<Props> {
   state = { keys: [] }

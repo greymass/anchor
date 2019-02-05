@@ -4,7 +4,7 @@ import eos from './helpers/eos';
 import EOSAccount from '../utils/EOS/Account';
 
 const CryptoJS = require('crypto-js');
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 export function setWalletKey(data, password, mode = 'hot', existingHash = false, auth = false, chainId = false) {
   return (dispatch: () => void, getState) => {

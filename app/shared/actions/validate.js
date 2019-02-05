@@ -9,7 +9,7 @@ import { historyPluginCheck } from './connection';
 
 import eos from './helpers/eos';
 
-const ecc = require('eosjs-ecc');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
 
 export function validateAccount(account) {
   return (dispatch: () => void, getState) => {

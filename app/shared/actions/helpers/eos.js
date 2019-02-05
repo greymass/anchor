@@ -4,8 +4,8 @@ import serialize from './ledger/serialize';
 import HardwareLedger from '../../utils/Hardware/Ledger';
 
 const CryptoJS = require('crypto-js');
-const ecc = require('eosjs-ecc');
-const Eos = require('eosjs');
+const ecc = require('@snaxfoundation/snaxjs-ecc');
+const Eos = require('@snaxfoundation/snaxjs');
 
 const Api = require('./hardware/ledger').default;
 
