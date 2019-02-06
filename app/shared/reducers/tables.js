@@ -18,7 +18,7 @@ export default function tables(state = initialState, action) {
       } = action.payload;
 
       // overwrite state to only store one table at a time
-      return set({}, `${code}.${scope}.${table}`, { more, rows });
+      return set(state, `${code}.${scope}.${table}`, { more, rows });
     }
     default: {
       return state;

@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
+import { get } from 'dot-prop-immutable';
 import {
   Button,
   Header, Input,
@@ -35,13 +36,29 @@ class ToolsAirgrabs extends PureComponent<Props> {
   state = {
     claimingAirgrab: false
   };
+  componentDidMount() {
+    const { actions, settings, tables } = this.props;
+
+    airgrabs.forEach((airgrab) => {
+      const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
+      console.log({tables})
+      console.log({airgrabAccount: airgrab.account})
+      console.log({airgrabAccounts})
+      if (airgrabAccounts.length > 0) {
+        return;
+      }
+      actions.getTable(airgrab.account, settings.account, 'accounts');
+    });
+  }
+
   render() {
     const {
       actions,
       blockExplorers,
       settings,
       system,
-      t
+      t,
+      tables
     } = this.props;
     const {
       claimingAirgrab,
@@ -97,31 +114,36 @@ class ToolsAirgrabs extends PureComponent<Props> {
                 (airgrab.account &&
                   airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase()));
             }).map((airgrab) => {
-                return (
-                  <Table.Row key={airgrab.symbol}>
-                    <Table.Cell>
-                      <Header
-                        content={airgrab.symbol}
-                        size="small"
-                      />
-                    </Table.Cell>
-                    <Table.Cell
-                      content={airgrab.account}
+              console.log({tables})
+              console.log({airgrab})
+              const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
+              const claimed = airgrabAccounts.length > 0;
+              return (
+                <Table.Row key={airgrab.symbol}>
+                  <Table.Cell>
+                    <Header
+                      content={airgrab.symbol}
+                      size="small"
                     />
-                    <Table.Cell
-                      content={airgrab.endDate && new Date(airgrab.endDate).toLocaleDateString('en-US')}
+                  </Table.Cell>
+                  <Table.Cell
+                    content={airgrab.account}
+                  />
+                  <Table.Cell
+                    content={airgrab.endDate && new Date(airgrab.endDate).toLocaleDateString('en-US')}
+                  />
+                  <Table.Cell
+                    textAlign="right"
+                  >
+                    <Button
+                      disabled={claimed}
+                      onClick={() => this.setState({ claimingAirgrab: airgrab })}
+                      content={claimed ? t('tools_airgrabs_already_claimed') : t('tools_airgrabs_claim')}
                     />
-                    <Table.Cell
-                      textAlign="right"
-                    >
-                      <Button
-                        onClick={() => this.setState({ claimingAirgrab: airgrab })}
-                        content={t('tools_airgrabs_claim')}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                );
-              }))}
+                  </Table.Cell>
+                </Table.Row>
+              );
+            }))}
           </Table.Body>
         </Table>
       </Segment>
