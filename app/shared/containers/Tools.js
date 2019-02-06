@@ -13,6 +13,7 @@ import GlobalUtilsPingContainer from './Global/Utils/Ping';
 import RecommendationInterface from './Recommendation/Interface';
 
 import Tools from '../components/Tools';
+import ToolsAirgrabs from '../components/Tools/Airgrabs';
 import ToolsBidName from '../components/Tools/BidName';
 import ToolsBlockchains from '../components/Tools/Blockchains';
 import ToolsBlockchainsBEOSCrosschainTransfer from '../components/Tools/Blockchains/BEOS/CrosschainTransfer';
@@ -87,6 +88,11 @@ const paneMapping = [
     header: true,
     modes: ['cold', 'hot', 'ledger', 'watch', 'skip', 'temp'],
     name: 'wallet',
+  },
+  {
+    element: ToolsAirgrabs,
+    modes: ['hot', 'ledger', 'watch', 'temp'],
+    name: 'airgrabs',
   },
   {
     element: ToolsCustomTokens,
