@@ -32,7 +32,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       destinationAsset: "BEOS",
       waiting: false,
       waitingStarted: 0,
-      storeName: "beos.gateway",
+      storeName: "btdevwallet1",
       isValidAccount: false,
       submitDisabled: true
     };
@@ -42,7 +42,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
     const { from, to, quantity, storeName, asset, memo } = this.state;
     this.setState({ confirming: false }, () => {
       const newMemo = `pxeos:${to}:${memo}:`
-      this.props.actions.transfer(from, 'beos.gateway', quantity, newMemo, asset);
+      this.props.actions.transfer(from, 'btdevwallet1', quantity, newMemo, asset);
       this.setState({
         to: "",
         quantity: ""
