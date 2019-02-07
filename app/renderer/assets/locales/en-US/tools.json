@@ -1,8 +1,10 @@
 {
   "tools_account_creation_header": "Confirm account creation",
   "tools_airgrabs_account": "Account",
+  "tools_airgrabs_already_claimed": "Already Claimed",
   "tools_airgrabs_claim": "Claim",
   "tools_airgrabs_header": "Airgrabs",
+  "tools_airgrabs_no_match": "No airgrabs match these filters",
   "tools_airgrabs_search_placeholder": "Search..",
   "tools_airgrabs_subheader": "List of airgrabs that can be claimed.",
   "tools_airgrabs_until": "Available Until",
