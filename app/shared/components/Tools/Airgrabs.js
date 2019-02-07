@@ -4,7 +4,9 @@ import { translate } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 import {
   Button,
-  Header, Input,
+  Header,
+  Input,
+  Message,
   Segment,
   Table
 } from 'semantic-ui-react';
@@ -18,8 +20,8 @@ const airgrabs = [
     method: 'signup',
     description: 'Payments & Budget Management Decentralized App Leveraging the Blockchain, Cryptocurrency and AI Technologies. Drops happen every 24 hours, Airgrab Today!',
     url: 'https://www.atidium.io/',
-    startDate: '2019-02-02T22:40:49+00:00',
-    endDate: '2019-03-02T22:40:49+00:00'
+    startTime: '2019-02-02T22:40:49+00:00',
+    endTime: '2019-03-02T22:40:49+00:00'
   },
   {
     symbol: 'BRM',
@@ -27,8 +29,8 @@ const airgrabs = [
     method: 'open',
     description: 'Very First Open source Billing and Revenue Management on Blockchain. OpenBRM is a carrier-grade billing platform aimed at telecommunications, Subscription, Utilities and logistics organizations.',
     url: 'https://openbrm.io',
-    startDate: '2019-02-02T22:40:49+00:00',
-    endDate: '2019-02-12T22:40:49+00:00'
+    startTime: '2019-02-02T22:40:49+00:00',
+    endTime: '2019-02-12T22:40:49+00:00'
   }
 ];
 
@@ -67,6 +69,17 @@ class ToolsAirgrabs extends PureComponent<Props> {
       claimingAirgrab,
       searchQuery
     } = this.state;
+
+    const filteredAirgrabs = airgrabs.filter((airgrab) => {
+      const airgrabStarted = new Date(airgrab.startTime) <  new Date();
+      const airgrabEnded = new Date(airgrab.endTime) < new Date();
+      const matchesSearchQuery = !searchQuery  ||
+        (airgrab.symbol &&
+        airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (airgrab.account &&
+          airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase()));
+      return airgrabStarted && !airgrabEnded && matchesSearchQuery;
+    });
     return (
       <Segment basic>
         {claimingAirgrab && (
@@ -110,15 +123,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {(airgrabs.filter((airgrab) => {
-              return !searchQuery ||
-                (airgrab.symbol &&
-                  airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (airgrab.account &&
-                  airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase()));
-            }).map((airgrab) => {
-              console.log({tables})
-              console.log({airgrab})
+            {filteredAirgrabs.map((airgrab) => {
               const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
               const claimed = airgrabAccounts.length > 0;
               return (
@@ -133,7 +138,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
                     content={airgrab.account}
                   />
                   <Table.Cell
-                    content={airgrab.endDate && new Date(airgrab.endDate).toLocaleDateString('en-US')}
+                    content={airgrab.endTime && new Date(airgrab.endTime).toLocaleDateString('en-US')}
                   />
                   <Table.Cell
                     textAlign="right"
@@ -146,9 +151,15 @@ class ToolsAirgrabs extends PureComponent<Props> {
                   </Table.Cell>
                 </Table.Row>
               );
-            }))}
+            })}
           </Table.Body>
         </Table>
+        {filteredAirgrabs.length === 0 && (
+          <Message
+            content={t('tools_airgrabs_no_match')}
+            warning
+          />
+        )}
       </Segment>
     );
   }
