@@ -8,6 +8,9 @@ export default function tables(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return initialState;
     }
+    case types.CLEAR_TABLES: {
+      return initialState;
+    }
     case types.SYSTEM_GETTABLE_SUCCESS: {
       const {
         code,
