@@ -54,6 +54,13 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
   };
 }
 
+export function clearTables() {
+  return (dispatch: () => void) => {
+    dispatch({ type: types.CLEAR_TABLES });
+  };
+}
+
 export default {
-  getTable
+  getTable,
+  clearTables
 };
