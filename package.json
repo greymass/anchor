@@ -4,11 +4,11 @@
   "version": "0.7.2",
   "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
   "scripts": {
-    "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
-    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
-    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
-    "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-    "dev": "cross-env START_HOT=1 node -r babel-register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 npm run start-renderer-dev",
+    "build": "npx concurrently \"npm run build-main\" \"npm run build-renderer\"",
+    "build-dll": "npx cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
+    "build-main": "npx cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
+    "build-renderer": "npx cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
+    "dev": "npx cross-env START_HOT=1 node -r babel-register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 npm run start-renderer-dev",
     "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
     "flow": "flow",
     "flow-typed": "rimraf flow-typed/npm && flow-typed install --overwrite || true",
@@ -19,7 +19,7 @@
     "package-mac": "npm run build && build --publish never",
     "package-linux": "npm run build && build --linux --publish never",
     "package-win": "npm run build && build --win --x64 --ia32 --publish never",
-    "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps && node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
+    "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps",
     "prestart": "npm run build",
     "release": "npm run build && build -mwl",
     "start": "cross-env NODE_ENV=production electron ./app/",
@@ -67,7 +67,6 @@
       "icon": "app/renderer/assets/icons/mac/icon.icns"
     },
     "win": {
-      "certificateFile": "aaroncox.p12",
       "icon": "app/renderer/assets/icons/win/icon.ico",
       "publisherName": "Aaron Cox",
       "target": [
@@ -220,7 +219,7 @@
     "eslint-plugin-react": "^7.9.1",
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "fbjs-scripts": "^0.8.3",
+    "fbjs-scripts": "^1.0.1",
     "file-loader": "^1.1.11",
     "find-in-files": "^0.5.0",
     "flow-bin": "^0.73.0",
@@ -295,10 +294,5 @@
     "redux-persist": "^5.10.0",
     "redux-persist-electron-storage": "^1.1.2",
     "redux-thunk": "^2.3.0"
-  },
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x",
-    "yarn": ">=0.21.3"
   }
 }

@@ -16,6 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "^4.22.0",
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "node-hid": "^0.7.6",
+    "usb": "^1.5.0"
   }
 }
