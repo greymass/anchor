@@ -28,6 +28,12 @@ class ToolsProxy extends Component<Props> {
     this.tick();
   }
 
+  componentWillUnmount() {
+    const { actions } = this.props;
+
+    actions.clearTables();
+  }
+
   tick() {
     const {
       actions,

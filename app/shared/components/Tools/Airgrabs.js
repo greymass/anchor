@@ -41,9 +41,6 @@ class ToolsAirgrabs extends PureComponent<Props> {
 
     airgrabs.forEach((airgrab) => {
       const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
-      console.log({tables})
-      console.log({airgrabAccount: airgrab.account})
-      console.log({airgrabAccounts})
       if (airgrabAccounts.length > 0) {
         return;
       }
@@ -53,6 +50,8 @@ class ToolsAirgrabs extends PureComponent<Props> {
 
   componentWillUnmount() {
     const { actions } = this.props;
+
+    actions.clearTables();
   }
 
   render() {
