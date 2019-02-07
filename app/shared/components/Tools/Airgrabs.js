@@ -51,6 +51,10 @@ class ToolsAirgrabs extends PureComponent<Props> {
     });
   }
 
+  componentWillUnmount() {
+    const { actions } = this.props;
+  }
+
   render() {
     const {
       actions,
