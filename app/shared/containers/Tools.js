@@ -37,6 +37,7 @@ import ToolsWallets from '../components/Tools/Wallets';
 import * as AccountsActions from '../actions/accounts';
 import * as BidNameActions from '../actions/system/bidname';
 import * as ContractsActions from '../actions/contracts';
+import * as ClaimAirgrabActions from '../actions/system/claimairgrab';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
 import * as GlobalsActions from '../actions/globals';
@@ -373,6 +374,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...BidNameActions,
+      ...ClaimAirgrabActions,
       ...ContractsActions,
       ...CreateAccountActions,
       ...CustomTokensActions,

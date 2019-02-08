@@ -7,9 +7,9 @@ import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
 class ToolsModalDelegation extends Component<Props> {
   confirmClaim = () => {
-    const  { actions } = this.props;
+    const { actions, airgrab } = this.props;
 
-    actions.claimAirgrab();
+    actions.claimairgrab(airgrab);
   };
 
   render() {
@@ -26,7 +26,7 @@ class ToolsModalDelegation extends Component<Props> {
 
     return (
       <GlobalTransactionModal
-        actionName="AIRGRAB"
+        actionName="CLAIMAIRGRAB"
         actions={actions}
         blockExplorers={blockExplorers}
         button={false}
