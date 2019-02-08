@@ -18,7 +18,7 @@
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "package-mac": "npm run build && build --publish never",
     "package-linux": "npm run build && build --linux --publish never",
-    "package-win": "npm run build && build --win --x64 --ia32 --publish never",
+    "package-win": "npm run build && build --win --x64 --publish never",
     "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps",
     "prestart": "npm run build",
     "release": "npm run build && build -mwl",
@@ -73,8 +73,7 @@
         {
           "target": "nsis",
           "arch": [
-            "x64",
-            "ia32"
+            "x64"
           ]
         }
       ]
@@ -105,8 +104,6 @@
         {
           "target": "deb",
           "arch": [
-            "armv7l",
-            "arm64",
             "x64"
           ]
         },
