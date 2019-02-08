@@ -173,7 +173,7 @@ class ToolsFormBidName extends Component<Props> {
     } = this.props;
 
     actions.bidname(formValues);
-  }
+  };
 
   formErrorsOnRender() {
     const {

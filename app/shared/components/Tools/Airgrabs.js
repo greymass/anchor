@@ -18,6 +18,10 @@ const airgrabs = [
     symbol: 'ATD',
     account: 'eosatidiumio',
     method: 'signup',
+    methodAttributes: {
+      owner: '{account}',
+      quantity: '0.0000 ATD'
+    },
     description: 'Payments & Budget Management Decentralized App Leveraging the Blockchain, Cryptocurrency and AI Technologies. Drops happen every 24 hours, Airgrab Today!',
     url: 'https://www.atidium.io/',
     startTime: '2019-02-02T22:40:49+00:00',
@@ -27,6 +31,11 @@ const airgrabs = [
     symbol: 'BRM',
     account: 'openbrmeos11',
     method: 'open',
+    methodAttributes: {
+      owner: '{account}',
+      quantity: '0.0000 ATD',
+      ram_buyer: '{account}'
+    },
     description: 'Very First Open source Billing and Revenue Management on Blockchain. OpenBRM is a carrier-grade billing platform aimed at telecommunications, Subscription, Utilities and logistics organizations.',
     url: 'https://openbrm.io',
     startTime: '2019-02-02T22:40:49+00:00',
@@ -71,9 +80,9 @@ class ToolsAirgrabs extends PureComponent<Props> {
     } = this.state;
 
     const filteredAirgrabs = airgrabs.filter((airgrab) => {
-      const airgrabStarted = new Date(airgrab.startTime) <  new Date();
+      const airgrabStarted = !airgrab.startTime || new Date(airgrab.startTime) < new Date();
       const airgrabEnded = new Date(airgrab.endTime) < new Date();
-      const matchesSearchQuery = !searchQuery  ||
+      const matchesSearchQuery = !searchQuery ||
         (airgrab.symbol &&
         airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (airgrab.account &&
