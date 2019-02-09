@@ -19,7 +19,7 @@ export function claimairgrab(airgrab) {
     const methodAttributes = {};
 
     Object.keys(airgrab.methodAttributes).forEach((attribute) => {
-      methodAttributes[attribute] = attribute.replace('{account}', settings.account);
+      methodAttributes[attribute] = airgrab.methodAttributes[attribute].replace('{account}', settings.account);
     });
 
     return eos(connection, true).transaction({
@@ -31,11 +31,7 @@ export function claimairgrab(airgrab) {
             actor: account,
             permission: authorization
           }],
-          data: {
-            owner: settings.account,
-            symbol: '0.000 BRM',
-            ram_payer: settings.account
-          }
+          data: methodAttributes
         }
       ]
     }, {
