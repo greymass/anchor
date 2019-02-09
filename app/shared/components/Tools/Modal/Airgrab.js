@@ -43,8 +43,11 @@ class ToolsModalAirgrab extends Component<Props> {
             />
             <Header
               content={t('tools_modal_airgrab_header', { symbol: airgrab.symbol })}
-              subheader={t('tools_modal_airgrab_subheader')}
             />
+            <p>
+              {t('tools_modal_airgrab_subheader')}
+            </p>
+            <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
             <Button
               onClick={this.confirmClaim}
               content={t('tools_modal_airgrab_button')}
