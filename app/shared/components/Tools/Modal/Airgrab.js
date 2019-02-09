@@ -36,22 +36,32 @@ class ToolsModalAirgrab extends Component<Props> {
         button={false}
         content={((keys && keys.key) || settings.walletMode === 'watch' || settings.walletMode === 'ledger') ? (
           <Segment loading={system.CLAIMAIRGRAB === 'PENDING'} basic>
-            <Message
-              content={t('tools_airgrabs_message_warning')}
-              icon="warning sign"
-              warning
-            />
+            <strong>
+              {t('tools_modal_airgrab_description_label')}
+            </strong>
+            <p style={{ margin: '20px' }}>
+              {airgrab.description}
+            </p>
+            <hr style={{ marginTop: '20px', marginBottom: '20px' }} />
             <Header
               content={t('tools_modal_airgrab_header', { symbol: airgrab.symbol })}
             />
             <p>
               {t('tools_modal_airgrab_subheader')}
             </p>
-            <hr style={{ marginTop: '30px', marginBottom: '30px' }} />
-            <Button
-              onClick={this.confirmClaim}
-              content={t('tools_modal_airgrab_button')}
+            <Message
+              content={t('tools_airgrabs_message_warning')}
+              icon="warning sign"
+              warning
             />
+            <Segment basic clearing>
+              <Button
+                color="blue"
+                floated="right"
+                onClick={this.confirmClaim}
+                content={t('tools_modal_airgrab_button')}
+              />
+            </Segment>
           </Segment>
         ) : (
           <WalletPanelLocked
