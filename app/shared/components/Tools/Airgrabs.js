@@ -10,77 +10,17 @@ import {
   Segment,
   Table
 } from 'semantic-ui-react';
+import DangerLink from '../Global/Modal/DangerLink';
 
 import ToolsModalAirgrab from './Modal/Airgrab';
-
-const airgrabs = [
-  {
-    symbol: 'ATD',
-    account: 'eosatidiumio',
-    method: 'signup',
-    methodAttributes: {
-      owner: '{account}',
-      quantity: '0.0000 ATD'
-    },
-    description: 'Payments & Budget Management Decentralized App Leveraging the Blockchain, Cryptocurrency and AI Technologies. Drops happen every 24 hours, Airgrab Today!',
-    url: 'https://www.atidium.io/',
-    startTime: '2019-02-02T22:40:49+00:00',
-    endTime: '2019-03-20T22:40:49+00:00'
-  },
-  {
-    symbol: 'BRM',
-    account: 'openbrmeos11',
-    method: 'open',
-    methodAttributes: {
-      owner: '{account}',
-      quantity: '0.0000 BRM',
-      ram_payer: '{account}'
-    },
-    description: 'Very First Open source Billing and Revenue Management on Blockchain. OpenBRM is a carrier-grade billing platform aimed at telecommunications, Subscription, Utilities and logistics organizations.',
-    url: 'https://openbrm.io'
-  },
-  {
-    symbol: 'NEB',
-    account: 'nebulatokenn',
-    method: 'open',
-    methodAttributes: {
-      owner: '{account}',
-      symbol: '0.0000 NEB',
-      ram_payer: '{account}'
-    },
-    description: 'Nebula is a decentralized, curated list of professionals and job opportunities.',
-    url: 'https://nebulaprotocol.com'
-  },
-  {
-    symbol: 'POOR',
-    account: 'poormantoken',
-    method: 'signup',
-    methodAttributes: {
-      owner: '{account}',
-      quantity: '0.0000 POOR'
-    },
-    description: 'A reward for people who STAKE and VOTE for EOS Block Producers with MONTHLY drops.',
-    url: 'https://eostoolkit.io/airgrab',
-  },
-  {
-    symbol: 'WIZZ',
-    account: 'wizznetwork1',
-    method: 'signup',
-    methodAttributes: {
-      owner: '{account}',
-      quantity: '0.0000 WIZZ'
-    },
-    description: 'Modern Decentralized Ecosystem, Built on EOSIO. Tools, Rewards, Chat, and more. AIGRAB NOW!',
-    url: 'https://wizz.network',
-  },
-];
 
 class ToolsAirgrabs extends PureComponent<Props> {
   state = {
     claimingAirgrab: false
   };
   componentDidMount() {
-    const { actions, settings, tables } = this.props;
+    const { app, actions, settings, tables } = this.props;
+    const airgrabs = get(app, `constants.airdrops.${settings.chainId}`) || [];
 
     airgrabs.forEach((airgrab) => {
       const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
@@ -99,6 +39,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
 
   render() {
     const {
+      app,
       actions,
       blockExplorers,
       keys,
@@ -113,6 +54,8 @@ class ToolsAirgrabs extends PureComponent<Props> {
       claimingAirgrab,
       searchQuery
     } = this.state;
+
+    const airgrabs = get(app, `constants.airdrops.${settings.chainId}`) || [];
 
     const filteredAirgrabs = airgrabs.filter((airgrab) => {
       const airgrabStarted = !airgrab.startTime || new Date(airgrab.startTime) < new Date();
@@ -154,6 +97,23 @@ class ToolsAirgrabs extends PureComponent<Props> {
             floated="right"
             placeholder={t('tools_airgrabs_search_placeholder')}
             onChange={(e) => this.setState({ searchQuery: e.target.value })}
+          />
+        </Segment>
+        <Segment style={{ marginTop: '60px', marginBottom: '10px' }}basic>
+          <Message
+            textAlign="left"
+            content={
+              <React.Fragment>
+                {t('tools_airgrab_anything_missing')}
+                &nbsp;
+                <DangerLink
+                  content={'https://t.me/eoswalletgreymass'}
+                  link={'https://t.me/eoswalletgreymass'}
+                  settings={settings}
+                />
+              </React.Fragment>
+            }
+            warning
           />
         </Segment>
         <Table definition striped unstackable>
