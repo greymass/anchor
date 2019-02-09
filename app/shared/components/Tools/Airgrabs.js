@@ -25,7 +25,7 @@ const airgrabs = [
     description: 'Payments & Budget Management Decentralized App Leveraging the Blockchain, Cryptocurrency and AI Technologies. Drops happen every 24 hours, Airgrab Today!',
     url: 'https://www.atidium.io/',
     startTime: '2019-02-02T22:40:49+00:00',
-    endTime: '2019-03-02T22:40:49+00:00'
+    endTime: '2019-03-20T22:40:49+00:00'
   },
   {
     symbol: 'BRM',
@@ -33,14 +33,46 @@ const airgrabs = [
     method: 'open',
     methodAttributes: {
       owner: '{account}',
-      quantity: '0.0000 ATD',
-      ram_buyer: '{account}'
+      quantity: '0.0000 BRM',
+      ram_payer: '{account}'
     },
     description: 'Very First Open source Billing and Revenue Management on Blockchain. OpenBRM is a carrier-grade billing platform aimed at telecommunications, Subscription, Utilities and logistics organizations.',
-    url: 'https://openbrm.io',
-    startTime: '2019-02-02T22:40:49+00:00',
-    endTime: '2019-02-12T22:40:49+00:00'
-  }
+    url: 'https://openbrm.io'
+  },
+  {
+    symbol: 'NEB',
+    account: 'nebulatokenn',
+    method: 'open',
+    methodAttributes: {
+      owner: '{account}',
+      symbol: '0.0000 NEB',
+      ram_payer: '{account}'
+    },
+    description: 'Nebula is a decentralized, curated list of professionals and job opportunities.',
+    url: 'https://nebulaprotocol.com'
+  },
+  {
+    symbol: 'POOR',
+    account: 'poormantoken',
+    method: 'signup',
+    methodAttributes: {
+      owner: '{account}',
+      quantity: '0.0000 POOR'
+    },
+    description: 'A reward for people who STAKE and VOTE for EOS Block Producers with MONTHLY drops.',
+    url: 'https://eostoolkit.io/airgrab',
+  },
+  {
+    symbol: 'WIZZ',
+    account: 'wizznetwork1',
+    method: 'signup',
+    methodAttributes: {
+      owner: '{account}',
+      quantity: '0.0000 WIZZ'
+    },
+    description: 'Modern Decentralized Ecosystem, Built on EOSIO. Tools, Rewards, Chat, and more. AIGRAB NOW!',
+    url: 'https://wizz.network',
+  },
 ];
 
 class ToolsAirgrabs extends PureComponent<Props> {
@@ -69,10 +101,13 @@ class ToolsAirgrabs extends PureComponent<Props> {
     const {
       actions,
       blockExplorers,
+      keys,
       settings,
       system,
       t,
-      tables
+      tables,
+      validate,
+      wallet
     } = this.props;
     const {
       claimingAirgrab,
@@ -96,9 +131,12 @@ class ToolsAirgrabs extends PureComponent<Props> {
             actions={actions}
             airgrab={claimingAirgrab}
             blockExplorers={blockExplorers}
+            keys={keys}
             onClose={() => this.setState({ claimingAirgrab: false })}
             settings={settings}
             system={system}
+            validate={validate}
+            wallet={wallet}
           />
           )}
         <Header floated="left">
