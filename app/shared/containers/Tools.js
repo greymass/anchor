@@ -56,6 +56,7 @@ import * as UnregProxyActions from '../actions/system/unregproxy';
 import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
+import * as AppActions from '../actions/app';
 
 const paneMapping = [
   {
@@ -373,6 +374,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...AppActions,
       ...BidNameActions,
       ...ClaimAirgrabActions,
       ...ContractsActions,
