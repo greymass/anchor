@@ -11,7 +11,6 @@ import {
   Table
 } from 'semantic-ui-react';
 import DangerLink from '../Global/Modal/DangerLink';
-
 import ToolsModalAirgrab from './Modal/Airgrab';
 
 class ToolsAirgrabs extends PureComponent<Props> {
@@ -19,7 +18,35 @@ class ToolsAirgrabs extends PureComponent<Props> {
     claimingAirgrab: false
   };
   componentDidMount() {
-    const { app, actions, settings, tables } = this.props;
+    this.fetchAirgrabsData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { app, settings } = this.props;
+
+    const currentAirgrabs = get(app, `constants.airdrops.${settings.account}`) || [];
+    const prevAirgrabs = get(prevProps.app, `constants.airdrops.${settings.account}`) || [];
+
+    if (currentAirgrabs.length !== prevAirgrabs.length) {
+      this.fetchAirgrabsData();
+    }
+  }
+
+  componentWillUnmount() {
+    const { actions } = this.props;
+
+    actions.clearTables();
+  }
+
+  fetchConstants = () => {
+    const { actions } = this.props;
+
+    actions.getConstants();
+  };
+
+  fetchAirgrabsData = () => {
+    const { actions, settings, tables } = this.props;
+
     const airgrabs = get(app, `constants.airdrops.${settings.chainId}`) || [];
 
     airgrabs.forEach((airgrab) => {
@@ -29,13 +56,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
       }
       actions.getTable(airgrab.account, settings.account, 'accounts');
     });
-  }
-
-  componentWillUnmount() {
-    const { actions } = this.props;
-
-    actions.clearTables();
-  }
+  };
 
   render() {
     const {
@@ -119,7 +140,10 @@ class ToolsAirgrabs extends PureComponent<Props> {
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell />
+              <Button
+                onClick={this.fetchConstants}
+                content={t('tools_airgrabs_reload')}
+              />
               <Table.HeaderCell>
                 {t('tools_airgrabs_account')}
               </Table.HeaderCell>
