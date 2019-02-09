@@ -65,5 +65,6 @@ export function getConstants() {
 
 export default {
   downloadProgress,
+  getConstants,
   initApp
 };

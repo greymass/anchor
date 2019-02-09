@@ -22,10 +22,10 @@ class ToolsAirgrabs extends PureComponent<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { app, settings } = this.props;
+    const { app } = this.props;
 
-    const currentAirgrabs = get(app, `constants.airdrops.${settings.account}`) || [];
-    const prevAirgrabs = get(prevProps.app, `constants.airdrops.${settings.account}`) || [];
+    const currentAirgrabs = get(app, 'constants.airgrabs') || [];
+    const prevAirgrabs = get(prevProps.app, 'constants.airgrabs') || [];
 
     if (currentAirgrabs.length !== prevAirgrabs.length) {
       this.fetchAirgrabsData();
@@ -45,9 +45,9 @@ class ToolsAirgrabs extends PureComponent<Props> {
   };
 
   fetchAirgrabsData = () => {
-    const { actions, settings, tables } = this.props;
+    const { actions, app, settings, tables } = this.props;
 
-    const airgrabs = get(app, `constants.airdrops.${settings.chainId}`) || [];
+    const airgrabs = get(app, 'constants.airgrabs') || [];
 
     airgrabs.forEach((airgrab) => {
       const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
@@ -76,7 +76,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
       searchQuery
     } = this.state;
 
-    const airgrabs = get(app, `constants.airdrops.${settings.chainId}`) || [];
+    const airgrabs = get(app, 'constants.airgrabs') || [];
 
     const filteredAirgrabs = airgrabs.filter((airgrab) => {
       const airgrabStarted = !airgrab.startTime || new Date(airgrab.startTime) < new Date();
@@ -140,10 +140,15 @@ class ToolsAirgrabs extends PureComponent<Props> {
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>
-              <Button
-                onClick={this.fetchConstants}
-                content={t('tools_airgrabs_reload')}
-              />
+              <Table.HeaderCell textAlign="center">
+                <Button
+                  size="mini"
+                  style={{ pointerEvents: 'auto' }}
+                  loading={system.GETCONSTANTS === 'PENDING'}
+                  onClick={this.fetchConstants}
+                  content={t('tools_airgrabs_refresh')}
+                />
+              </Table.HeaderCell>
               <Table.HeaderCell>
                 {t('tools_airgrabs_account')}
               </Table.HeaderCell>
@@ -176,6 +181,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
                   >
                     <Button
                       disabled={claimed}
+                      color={claimed ? 'grey' : 'blue'}
                       onClick={() => this.setState({ claimingAirgrab: airgrab })}
                       content={claimed ? t('tools_airgrabs_already_claimed') : t('tools_airgrabs_claim')}
                     />
