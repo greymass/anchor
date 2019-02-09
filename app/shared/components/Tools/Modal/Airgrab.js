@@ -1,13 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Segment, Header } from 'semantic-ui-react';
+import { Button, Segment, Header, Message } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import ToolsHardwareLedgerStatusMessage from '../Hardware/Ledger/Status/Message';
-import { Message } from '../../Wallet/Panel/Form/Stake/Confirming';
+import WalletPanelLocked from '../../Wallet/Panel/Locked';
 
-class ToolsModalDelegation extends Component<Props> {
+class ToolsModalAirgrab extends Component<Props> {
   confirmClaim = () => {
     const { actions, airgrab } = this.props;
 
@@ -19,11 +18,14 @@ class ToolsModalDelegation extends Component<Props> {
       actions,
       airgrab,
       blockExplorers,
+      keys,
       onClose,
       onOpen,
       settings,
       system,
-      t
+      t,
+      validate,
+      wallet
     } = this.props;
 
     return (
@@ -32,23 +34,30 @@ class ToolsModalDelegation extends Component<Props> {
         actions={actions}
         blockExplorers={blockExplorers}
         button={false}
-        content={(
+        content={((keys && keys.key) || settings.walletMode === 'watch' || settings.walletMode === 'ledger') ? (
           <Segment loading={system.CLAIMAIRGRAB === 'PENDING'} basic>
-            <Header
-              content={t('tools_modal_airgrab_header', { symbol: airgrab.symbol })}
-              subheader={t('tools_modal_airgrab_subheader')}
-            />
             <Message
               content={t('tools_airgrabs_message_warning')}
               icon="warning sign"
               warning
+            />
+            <Header
+              content={t('tools_modal_airgrab_header', { symbol: airgrab.symbol })}
+              subheader={t('tools_modal_airgrab_subheader')}
             />
             <Button
               onClick={this.confirmClaim}
               content={t('tools_modal_airgrab_button')}
             />
           </Segment>
-        )}
+        ) : (
+          <WalletPanelLocked
+            actions={actions}
+            settings={settings}
+            validate={validate}
+            wallet={wallet}
+          />
+          )}
         icon="arrow down"
         onClose={onClose}
         onOpen={onOpen}
@@ -61,4 +70,4 @@ class ToolsModalDelegation extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalDelegation);
+export default translate('tools')(ToolsModalAirgrab);

@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ToolsFormBidName from '../Form/BidName';
 
-class ToolsModalDelegation extends Component<Props> {
+class ToolsModalBidName extends Component<Props> {
   render() {
     const {
       account,
@@ -64,4 +64,4 @@ class ToolsModalDelegation extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalDelegation);
+export default translate('tools')(ToolsModalBidName);
