@@ -113,7 +113,7 @@ const knownChains = [
     chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
     keyPrefix: 'EOS',
     name: 'Worbli',
-    node: 'https://api.worbli-mainnet.eoscalgary.io',
+    node: 'https://api.worbli.io',
     supportedContracts: [],
     symbol: 'WBI',
     testnet: false
