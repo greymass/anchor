@@ -45,6 +45,8 @@ class ProducersTableRow extends Component<Props> {
       )
       : 'None';
     const shouldDisplayInfoButton = connection.supportedContracts && connection.supportedContracts.includes('producerinfo');
+    const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
+
     return (
       <Table.Row positive={isActive} key={producer.key}>
         <Table.Cell
@@ -78,26 +80,27 @@ class ProducersTableRow extends Component<Props> {
               }
             </span>
           )}
-
-          <Popup
-            content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
-            header={t('producer_vote_header', { producer: producer.owner })}
-            hoverable
-            position="right center"
-            trigger={(
-              <Button
-                color={isSelected ? 'blue' : 'grey'}
-                disabled={!isValidUser || isProxying}
-                icon={isSelected ? 'checkmark box' : 'minus square outline'}
-                onClick={
-                  (isSelected)
-                  ? () => removeProducer(producer.owner)
-                  : () => addProducer(producer.owner)
-                }
-                size="small"
-              />
+          {(producersVotedIn) && (
+            <Popup
+              content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
+              header={t('producer_vote_header', { producer: producer.owner })}
+              hoverable
+              position="right center"
+              trigger={(
+                <Button
+                  color={isSelected ? 'blue' : 'grey'}
+                  disabled={!isValidUser || isProxying}
+                  icon={isSelected ? 'checkmark box' : 'minus square outline'}
+                  onClick={
+                    (isSelected)
+                    ? () => removeProducer(producer.owner)
+                    : () => addProducer(producer.owner)
+                  }
+                  size="small"
+                />
+              )}
+            />
             )}
-          />
         </Table.Cell>
         <Table.Cell
           singleLine
@@ -123,20 +126,22 @@ class ProducersTableRow extends Component<Props> {
         <Table.Cell
           singleLine
         >
-          <Progress
-            color="teal"
-            label={(
-              <div className="label">
-                {votePercent}%
-                <Responsive as="span" minWidth={800}>
-                  - {voteFormatted}
-                </Responsive>
-              </div>
-            )}
-            percent={parseFloat(votePercent * 100) / 100}
-            size="tiny"
-            style={{ minWidth: 0 }}
-          />
+          {(producersVotedIn) && (
+            <Progress
+              color="teal"
+              label={(
+                <div className="label">
+                  {votePercent}%
+                  <Responsive as="span" minWidth={800}>
+                    - {voteFormatted}
+                  </Responsive>
+                </div>
+              )}
+              percent={parseFloat(votePercent * 100) / 100}
+              size="tiny"
+              style={{ minWidth: 0 }}
+            />
+          )}
         </Table.Cell>
         <Table.Cell
           singleLine

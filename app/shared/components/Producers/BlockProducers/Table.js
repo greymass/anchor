@@ -141,6 +141,7 @@ class ProducersTable extends Component<Props> {
         }
       }
     }
+    const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
     return (
       <Segment basic loading={loading} vertical>
         <ProducersModalInfo
@@ -151,7 +152,7 @@ class ProducersTable extends Component<Props> {
         />
         <Grid>
           <Grid.Column width={8}>
-            {(activatedStakePercent < 15)
+            {(activatedStakePercent < 15 && producersVotedIn)
               ? (
                 <Header size="small">
                   {activatedStake.toLocaleString()} {t('block_producer_chain_symbol_staked', { connection: connection.chainSymbol })} ({activatedStakePercent}%)
@@ -163,8 +164,7 @@ class ProducersTable extends Component<Props> {
                     {t('block_producer_total_weight')}
                   </Header.Subheader>
                 </Header>
-              )
-              : (
+              ) : (producersVotedIn) ? (
                 <Header size="small">
                   {t('producers_block_producers')}
                   <Header.Subheader>
@@ -175,8 +175,7 @@ class ProducersTable extends Component<Props> {
                     {t('block_producer_total_weight')}
                   </Header.Subheader>
                 </Header>
-              )
-            }
+              ) : ''}
           </Grid.Column>
           <Grid.Column width={8} key="ProducersVotingPreview" textAlign="right">
             <Input
@@ -201,7 +200,7 @@ class ProducersTable extends Component<Props> {
                 {t('block_producer')}
               </Table.HeaderCell>
               <Table.HeaderCell width={5}>
-                {t('block_producer_total_votes')}
+                {producersVotedIn ? t('block_producer_total_votes') : ''}
               </Table.HeaderCell>
               <Table.HeaderCell collapsing />
             </Table.Row>
