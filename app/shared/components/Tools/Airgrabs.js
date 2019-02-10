@@ -13,6 +13,9 @@ import {
 import DangerLink from '../Global/Modal/DangerLink';
 import ToolsModalAirgrab from './Modal/Airgrab';
 
+const blackListedMethodAttributes = ['to', 'from'];
+const whiteListedMethods = ['open', 'signup'];
+
 class ToolsAirgrabs extends PureComponent<Props> {
   state = {
     claimingAirgrab: false
@@ -79,6 +82,11 @@ class ToolsAirgrabs extends PureComponent<Props> {
     const airgrabs = get(app, 'constants.airgrabs') || [];
 
     const filteredAirgrabs = airgrabs.filter((airgrab) => {
+      const methodWhiteListed = whiteListedMethods.includes(airgrab.method);
+      const noAttributesBlackListed =
+        Object.keys(airgrab.methodAttributes).filter(attribute => {
+          return blackListedMethodAttributes.includes(attribute);
+        }).length === 0;
       const airgrabStarted = !airgrab.startTime || new Date(airgrab.startTime) < new Date();
       const airgrabEnded = new Date(airgrab.endTime) < new Date();
       const matchesSearchQuery = !searchQuery ||
@@ -86,7 +94,9 @@ class ToolsAirgrabs extends PureComponent<Props> {
         airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (airgrab.account &&
           airgrab.symbol.toLowerCase().includes(searchQuery.toLowerCase()));
-      return airgrabStarted && !airgrabEnded && matchesSearchQuery;
+
+      return methodWhiteListed && noAttributesBlackListed &&
+        airgrabStarted && !airgrabEnded && matchesSearchQuery;
     });
     return (
       <Segment basic>
@@ -174,7 +184,10 @@ class ToolsAirgrabs extends PureComponent<Props> {
                     content={airgrab.account}
                   />
                   <Table.Cell
-                    content={airgrab.endTime && new Date(airgrab.endTime).toLocaleDateString('en-US')}
+                    content={airgrab.endTime ?
+                      new Date(airgrab.endTime).toLocaleDateString('en-US') :
+                      t('tools_airgrabs_unknown_date')
+                    }
                   />
                   <Table.Cell
                     textAlign="right"
