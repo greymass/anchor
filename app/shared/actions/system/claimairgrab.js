@@ -2,6 +2,9 @@ import * as types from '../types';
 import eos from '../helpers/eos';
 import { getTable } from '../table';
 
+const blackListedMethodAttributes = ['to', 'from'];
+const whiteListedMethods = ['open', 'signup'];
+
 export function claimairgrab(airgrab) {
   return (dispatch: () => void, getState) => {
     const {
@@ -18,7 +21,14 @@ export function claimairgrab(airgrab) {
 
     const methodAttributes = {};
 
+    if (!whiteListedMethods.includes(airgrab.method)) {
+      return;
+    }
+
     Object.keys(airgrab.methodAttributes).forEach((attribute) => {
+      if (blackListedMethodAttributes.includes(attribute)) {
+        return;
+      }
       methodAttributes[attribute] = airgrab.methodAttributes[attribute].replace('{account}', settings.account);
     });
 
