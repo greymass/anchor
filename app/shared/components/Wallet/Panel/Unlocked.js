@@ -6,7 +6,6 @@ import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
 
 import WalletPanelButtonBroadcast from './Button/Broadcast';
-import WalletPanelButtonLock from './Button/Lock';
 import WalletPanelButtonStake from './Button/Stake';
 
 import WalletPanelButtonTransferReceive from './Button/Transfer/Receive';
@@ -14,8 +13,6 @@ import WalletPanelButtonTransferSend from './Button/Transfer/Send';
 
 import WalletPanelButtonRamSell from './Button/Ram/Sell';
 import WalletPanelButtonRamBuy from './Button/Ram/Buy';
-
-import WalletPanelButtonWithdraw from './Button/Withdraw';
 
 class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 }
@@ -32,6 +29,7 @@ class WalletPanelUnlocked extends Component<Props> {
     const {
       actions,
       accounts,
+      app,
       balances,
       blockExplorers,
       chain,
@@ -108,6 +106,7 @@ class WalletPanelUnlocked extends Component<Props> {
                   <Segment>
                     <WalletPanelButtonTransferSend
                       actions={actions}
+                      app={app}
                       balances={balances}
                       blockExplorers={blockExplorers}
                       connection={connection}
