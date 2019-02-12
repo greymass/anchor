@@ -11,6 +11,7 @@
   },
   "scripts": {
     "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "preinstall": "npm install usb",
     "postinstall": "npm run electron-rebuild"
   },
   "license": "MIT",
