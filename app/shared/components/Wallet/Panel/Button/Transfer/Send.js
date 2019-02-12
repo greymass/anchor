@@ -11,6 +11,7 @@ type Props = {
   },
   blockExplorers: {},
   balances: {},
+  connection: {},
   settings: {},
   system: {},
   t: () => void
@@ -22,6 +23,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
   render() {
     const {
       actions,
+      app,
       blockExplorers,
       balances,
       connection,
@@ -43,6 +45,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
         content={(
           <WalletPanelFormTransfer
             actions={actions}
+            app={app}
             balances={balances}
             connection={connection}
             settings={settings}

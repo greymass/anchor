@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { Form, Input, Dropdown, Radio } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { sortBy } from 'lodash';
-
-import exchangeAccounts from '../../../../constants/exchangeAccounts';
+import { get } from 'dot-prop-immutable';
 
 class GlobalFormFieldAccount extends Component<Props> {
   constructor(props) {
@@ -43,6 +42,7 @@ class GlobalFormFieldAccount extends Component<Props> {
 
   render() {
     const {
+      app,
       autoFocus,
       chainId,
       contacts,
@@ -72,8 +72,8 @@ class GlobalFormFieldAccount extends Component<Props> {
         text: `${contact.accountName} ${contact.label ? (`(${contact.label})`) : ''}`
       }));
     } else if (fieldOption === 'exchanges') {
-      const exchanges = exchangeAccounts(chainId);
-      dropdownOptions = sortBy(exchanges).map((exchangeAccount) => ({
+      const exchangeAccounts = get(app, 'constants.exchanges') || [];
+      dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => ({
         value: exchangeAccount,
         text: exchangeAccount
       }));

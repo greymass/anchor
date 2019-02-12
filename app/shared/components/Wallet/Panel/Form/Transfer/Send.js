@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Button, Divider, Form, Message, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { findIndex } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
 import debounce from 'lodash/debounce';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
@@ -10,8 +11,6 @@ import FormMessageError from '../../../../Global/Form/Message/Error';
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
 import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
-
-import exchangeAccounts from '../../../../../constants/exchangeAccounts';
 
 class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
@@ -147,6 +146,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const {
+      app,
       connection: { chainId },
       settings
     } = this.props;
@@ -170,8 +170,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
     if (to === settings.account) {
       return 'cannot_transfer_to_self';
     }
-
-    if (exchangeAccounts(chainId).includes(to) && (!memo || memo.length === 0)) {
+    const exchangeAccounts = get(app, 'constants.exchanges') || [];
+    if (exchangeAccounts.includes(to) && (!memo || memo.length === 0)) {
       return 'transferring_to_exchange_without_memo';
     }
 
@@ -180,6 +180,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
   render() {
     const {
+      app,
       balances,
       connection,
       onClose,
@@ -203,6 +204,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const balance = balances[settings.account];
 
     let exchangeWarning;
+
+    const exchangeAccounts = get(app, 'constants.exchanges') || [];
 
     if (memo && memo !== '') {
       exchangeAccounts(connection.chainId).forEach((exchangeAccount) => {
@@ -247,6 +250,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
           ) : (
             <Segment basic clearing>
               <GlobalFormFieldAccount
+                app={app}
                 autoFocus
                 contacts={settings.contacts}
                 enableContacts

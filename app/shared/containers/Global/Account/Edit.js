@@ -11,7 +11,6 @@ import { decrypt } from '../../../actions/wallet';
 import GlobalFormFieldAccount from '../../../components/Global/Form/Field/Account';
 import GlobalFormFieldKeyPublic from '../../../components/Global/Form/Field/Key/Public';
 import GlobalFormFieldKeyPrivate from '../../../components/Global/Form/Field/Key/Private';
-// import GlobalFormFieldGeneric from '../../../components/Global/Form/Field/Generic';
 
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
@@ -91,8 +90,7 @@ class GlobalAccountEdit extends Component<Props> {
   }
   render() {
     const {
-      account,
-      authorization,
+      app,
       connection,
       data,
       t,
@@ -118,6 +116,7 @@ class GlobalAccountEdit extends Component<Props> {
           <Header>
             <Form>
               <GlobalFormFieldAccount
+                app={app}
                 label={t('tools:tools_form_account_edit_account')}
                 name="account"
                 onChange={this.onChange}
