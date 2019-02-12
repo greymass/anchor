@@ -11,6 +11,7 @@ const knownChains = [
     node: 'https://api.beos.world',
     supportedContracts: [
       'beosexchange',
+      'bidname',
       'customtokens',
       'producerinfo',
       'proposals',
@@ -26,6 +27,7 @@ const knownChains = [
     name: 'BOS',
     node: 'https://hapi.bos.eosrio.io',
     supportedContracts: [
+      'bidname',
       'regproxyinfo',
     ],
     symbol: 'BOS',
@@ -38,6 +40,7 @@ const knownChains = [
     name: 'EOS',
     node: 'https://eos.greymass.com',
     supportedContracts: [
+      'bidname',
       'crosschaintransfer',
       'customtokens',
       'producerinfo',
@@ -53,7 +56,7 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Jungle (EOS)',
     node: 'http://jungle.cryptolions.io:18888',
-    supportedContracts: [],
+    supportedContracts: ['bidname'],
     symbol: 'EOS',
     testnet: true
   },
@@ -63,7 +66,7 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'CryptoKylin (EOS)',
     node: 'https://kylin.eoscanada.com:443',
-    supportedContracts: [],
+    supportedContracts: ['bidname'],
     symbol: 'EOS',
     testnet: true
   },
@@ -84,7 +87,7 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Insights',
     node: 'https://ireland-history.insights.network',
-    supportedContracts: [],
+    supportedContracts: ['bidname'],
     symbol: 'INSTAR',
     testnet: false
   },
@@ -94,7 +97,7 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Telos',
     node: 'https://telos.greymass.com',
-    supportedContracts: [],
+    supportedContracts: ['bidname'],
     symbol: 'TLOS',
     testnet: false
   },
@@ -104,7 +107,7 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Telos',
     node: 'https://api.eos.miami:17441',
-    supportedContracts: [],
+    supportedContracts: ['bidname'],
     symbol: 'TLOS',
     testnet: true
   },
