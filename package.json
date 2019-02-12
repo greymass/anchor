@@ -19,6 +19,7 @@
     "package-mac": "npm run build && build --publish never",
     "package-linux": "npm run build && build --linux --publish never",
     "package-win": "npm run build && build --win --x64 --publish never",
+    "preinstall": "cd ./app && npm install usb && cd ..",
     "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps",
     "prestart": "npm run build",
     "release": "npm run build && build -mwl",
