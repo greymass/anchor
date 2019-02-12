@@ -28,8 +28,8 @@ export default class GlobalModalExplorerLink extends Component<Props> {
       return false;
     }
 
-    if (linkBlockId) {
-      linkBlockId = linkBlockId.toString();
+    if (linkBlockId || linkType === 'account') {
+      linkBlockId = linkBlockId && linkBlockId.toString();
 
       const urlPartsWithoutVariable = blockExplorer[linkType].split(`{${linkType}}`);
 
