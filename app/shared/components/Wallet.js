@@ -12,7 +12,9 @@ type Props = {
   actionHistories: {},
   actions: {},
   allBlockExplorers: {},
+  app: {},
   balances: {},
+  blockchains: {},
   chain: {},
   connection: {},
   globals: {},
@@ -30,6 +32,7 @@ export default class Wallet extends Component<Props> {
 
   render() {
     const {
+      app,
       actionHistories,
       actions,
       accounts,
@@ -53,6 +56,7 @@ export default class Wallet extends Component<Props> {
         <Grid.Row>
           <Grid.Column width={6}>
             <WalletPanel
+              app={app}
               actions={actions}
               accounts={accounts}
               balances={balances}

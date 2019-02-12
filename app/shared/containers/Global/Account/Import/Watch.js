@@ -7,7 +7,6 @@ import compose from 'lodash/fp/compose';
 import { intersection, isEqual } from 'lodash';
 import { Button, Checkbox, Divider, Form, Header, Icon, Label, List, Modal, Segment, Tab } from 'semantic-ui-react';
 
-import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldAccount from '../../../../components/Global/Form/Field/Account';
 import GlobalFragmentAuthorization from '../../../../components/Global/Fragment/Authorization';
 
@@ -100,10 +99,10 @@ class GlobalModalAccountImportWatch extends Component<Props> {
     const {
       accounts,
       onClose,
+      app,
       t,
     } = this.props;
     const {
-      allValid,
       loaded,
       selected,
       valid,
@@ -119,6 +118,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
           <Form>
             <Form.Group>
               <GlobalFormFieldAccount
+                app={app}
                 autoFocus
                 label={t('global_account_import_watch_account')}
                 name="key"
@@ -228,6 +228,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    app: state.app,
     settings: state.settings,
     system: state.system,
     validate: state.validate

@@ -10,6 +10,7 @@ export default class WalletPanel extends Component<Props> {
     const {
       accounts,
       actions,
+      app,
       balances,
       blockchains,
       blockExplorers,
@@ -47,6 +48,7 @@ export default class WalletPanel extends Component<Props> {
         <WalletPanelUnlocked
           accounts={accounts}
           actions={actions}
+          app={app}
           balances={balances}
           blockchains={blockchains}
           blockExplorers={blockExplorers}
