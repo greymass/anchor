@@ -382,18 +382,28 @@ export function getCurrencyBalance(account, requestedTokens = false) {
             .post(`${connection.httpEndpoint}/v1/chain/get_currency_balances`, {
               account
             })
-            .then((response) =>
-              forEach(response.data, (results) =>
-                dispatch({
-                  type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-                  payload: {
-                    account_name: account,
-                    contract: results.code,
-                    precision: formatPrecisions([`${results.amount} ${results.symbol}`]),
-                    symbol: results.symbol,
-                    tokens: formatBalances([`${results.amount} ${results.symbol}`], results.symbol)
-                  }
-                })))
+            .then((results) =>
+              dispatch({
+                type: types.GET_ACCOUNT_BALANCES_SUCCESS,
+                payload: {
+                  account,
+                  precisions: reduce(
+                    results.data,
+                    (res, { amount, symbol }) => ({
+                      ...res,
+                      ...formatPrecisions([`${amount} ${symbol}`])
+                    }), {}
+                  ),
+                  results: results.data,
+                  tokens: reduce(
+                    results.data,
+                    (res, { amount, symbol }) => ({
+                      ...res,
+                      ...formatBalances([`${amount} ${symbol}`])
+                    }), {}
+                  )
+                }
+              }))
             .catch((err) => dispatch({
               type: types.GET_ACCOUNT_BALANCE_FAILURE,
               payload: { err }
