@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Icon, Image, Menu } from 'semantic-ui-react';
-import Logo from '../../../renderer/assets/images/anchor-icon-2.png';
+import Logo from '../../../renderer/assets/images/anchor-icon.png';
 
 import NavigationActions from '../actions/navigation';
 
@@ -33,7 +33,7 @@ class SidebarContainer extends Component<Props> {
               marginBottom: '0.5rem',
             }}
           />
-          Home
+          Overview
         </Menu.Item>
         <Menu.Item
           as="a"
