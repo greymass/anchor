@@ -18,6 +18,7 @@ import * as ChainActions from '../../../shared/actions/chain';
 // import * as CreateAccountActions from '../../../shared/actions/createaccount';
 import * as GlobalsActions from '../../../shared/actions/globals';
 import * as NavigationActions from '../actions/navigation';
+import * as SyncActions from '../../../shared/actions/sync';
 // import * as ProposalsActions from '../../../shared/actions/governance/proposals';
 // import * as SellRamActions from '../../../shared/actions/system/sellram';
 // import * as SettingsActions from '../../../shared/actions/settings';
@@ -93,7 +94,7 @@ class MenuContainer extends Component<Props> {
       }
     }
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 30000);
+    this.interval = setInterval(this.tick.bind(this), 10000);
   }
 
   componentWillUnmount() {
@@ -103,23 +104,19 @@ class MenuContainer extends Component<Props> {
   tick() {
     const {
       actions,
-      settings,
       validate,
-      wallets,
     } = this.props;
     const {
-      getAccounts,
+      sync,
       getConstants,
       getGlobals,
       getInfo
     } = actions;
     if (validate.NODE === 'SUCCESS') {
-      const chainAccounts = [].concat(wallets).filter((w) => (w.chainId === settings.chainId));
-      const accountNames = uniq(map(chainAccounts, 'account'));
+      sync();
       getConstants();
       getGlobals();
-      getInfo();
-      getAccounts(accountNames);
+      // getInfo();
     }
   }
   render() {
@@ -132,11 +129,8 @@ class MenuContainer extends Component<Props> {
     } = this.props;
     return (
       <Menu
+        className="nav-topbar"
         fixed="top"
-        style={{
-          border: 'none',
-          borderBottom: '1px solid rgba(34,36,38,.15)',
-        }}
       >
         <GlobalBlockchainDropdown
           style={{
@@ -198,6 +192,7 @@ function mapDispatchToProps(dispatch) {
       ...BlockExplorersActions,
       ...ChainActions,
       ...GlobalsActions,
+      ...SyncActions,
       ...NavigationActions,
       ...WalletActions,
     }, dispatch)
