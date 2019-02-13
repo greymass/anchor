@@ -10,13 +10,9 @@ export function downloadProgress(progress) {
   };
 }
 
-export function initApp() {
-  return (dispatch: () => void) => {
-    dispatch({
-      type: types.APP_INIT
-    });
-  };
-}
+export const initApp = () => (dispatch: () => void) => dispatch({
+  type: types.APP_INIT
+});
 
 export function getConstants() {
   return (dispatch: () => void, getState) => {
