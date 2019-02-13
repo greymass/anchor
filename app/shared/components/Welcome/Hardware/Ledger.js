@@ -13,20 +13,26 @@ class WelcomeHardwareLedger extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment
-        size="small"
-        stacked
-      >
-        <Header>
-          {t('welcome_stage')} #2: {t('welcome_stage_account_ledger')}
+      <React.Fragment>
+        <Header size="huge">
+          <Header.Subheader>
+            {t('welcome_step')} #2
+          </Header.Subheader>
+          {t('welcome_stage_account_ledger')}
         </Header>
-        <p>{t('welcome_instructions_8')}</p>
-        <WelcomeHardwareLedgerContainer
-          onClose={onClose}
-          onComplete={onComplete}
-          onStageSelect={onStageSelect}
-        />
-      </Segment>
+        <Segment
+          padded
+          size="small"
+          stacked
+        >
+          <p>{t('welcome_instructions_8')}</p>
+          <WelcomeHardwareLedgerContainer
+            onClose={onClose}
+            onComplete={onComplete}
+            onStageSelect={onStageSelect}
+          />
+        </Segment>
+      </React.Fragment>
     );
   }
 }
