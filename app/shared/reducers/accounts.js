@@ -1,4 +1,6 @@
 import * as types from '../actions/types';
+import { set } from 'dot-prop-immutable';
+import { sumBy } from 'lodash';
 
 const initialState = {
   __lookups: []
@@ -9,6 +11,23 @@ export default function accounts(state = initialState, action) {
     case types.CLEAR_ACCOUNT_CACHE:
     case types.RESET_ALL_STATES: {
       return initialState;
+    }
+    case types.SYSTEM_GETTABLE_SUCCESS: {
+      if (action.payload.code === 'eosio' && action.payload.table === 'delband') {
+        return set(state, `${action.payload.scope}.delegated`, {
+          rows: action.payload.rows,
+          total: sumBy(action.payload.rows, (row) => {
+            // Skip any staked balances to avoid duplicate data
+            if (row.from === row.to) return 0;
+            // Skip any incoming staked balances
+            if (row.from !== action.payload.scope) return 0;
+            // Return sum of both CPU + NET
+            const value = parseFloat(row.cpu_weight) + parseFloat(row.net_weight)
+            return value;
+          }),
+        });
+      }
+      return state;
     }
     case types.GET_ACCOUNT_SUCCESS: {
       return Object.assign({}, state, {
