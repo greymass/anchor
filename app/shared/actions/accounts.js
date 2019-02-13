@@ -1,8 +1,9 @@
-import { forEach } from 'lodash';
+import { difference, find, forEach, intersection, map, orderBy, pick, reduce, sortBy, uniq } from 'lodash';
 
 import * as types from './types';
 import eos from './helpers/eos';
 import { addCustomTokenBeos } from './settings';
+import { getTable } from './table';
 import { httpQueue, httpClient } from '../utils/httpClient';
 
 const ecc = require('eosjs-ecc');
@@ -32,7 +33,6 @@ export function clearBalanceCache() {
 }
 
 export function refreshAccountBalances(account, requestedTokens) {
-  console.log(account, requestedTokens);
   return (dispatch: () => void) =>
     dispatch(getCurrencyBalance(account, requestedTokens));
 }
