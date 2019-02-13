@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Container, Dropdown, Form, Input, Message, Radio, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Dropdown, Form, Header, Input, Message, Radio, Segment } from 'semantic-ui-react';
 
 import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
@@ -286,7 +286,7 @@ class WelcomeKeyContainer extends Component<Props> {
         {(settings.walletMode !== 'cold')
           ? (
             <React.Fragment>
-              <p>{t('welcome_instructions_sign_tx')}</p>
+              <Header>{t('welcome_instructions_sign_tx')}</Header>
               <Form.Field
                 autoFocus
                 control={Radio}
@@ -303,7 +303,7 @@ class WelcomeKeyContainer extends Component<Props> {
         {(settings.walletMode !== 'watch')
           ? (
             <React.Fragment>
-              <p>{t('welcome_instructions_5')}</p>
+              <Header>{t('welcome_instructions_5')}</Header>
               <Form.Field
                 autoFocus
                 control={Input}
@@ -323,7 +323,7 @@ class WelcomeKeyContainer extends Component<Props> {
               {(settings.walletMode === 'cold')
                 ? (
                   <React.Fragment>
-                    <p>{t('tools:tools_form_permissions_auth_permission')}</p>
+                    <Header>{t('tools:tools_form_permissions_auth_permission')}</Header>
                     <Dropdown
                       defaultValue={authorization}
                       fluid
@@ -342,7 +342,7 @@ class WelcomeKeyContainer extends Component<Props> {
         {(settings.walletMode === 'watch')
           ? (
             <React.Fragment>
-              <p>{t('tools:tools_form_permissions_auth_permission')}</p>
+              <Header>{t('tools:tools_form_permissions_auth_permission')}</Header>
               <Dropdown
                 defaultValue={authorization}
                 fluid
