@@ -5,27 +5,24 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 
-class GlobalAccountFragmentRamPercent extends PureComponent<Props> {
+class GlobalAccountFragmentTokenDelegated extends PureComponent<Props> {
   render() {
     const {
-      used,
-      max,
+      balance
     } = this.props;
-    if (!max) return false;
     return (
       <React.Fragment>
-        {(((max - used) / max) * 100).toFixed(1)}%
+        {balance.toFixed(4)}
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  used: get(state.accounts, `${ownProps.account}.ram_usage`),
-  max: get(state.accounts, `${ownProps.account}.ram_quota`),
+  balance: get(state, `accounts.${ownProps.account}.delegated.total`, 0)
 });
 
 export default compose(
   translate('global'),
   connect(mapStateToProps)
-)(GlobalAccountFragmentRamPercent);
+)(GlobalAccountFragmentTokenDelegated);
