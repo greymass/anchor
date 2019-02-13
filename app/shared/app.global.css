@@ -4,13 +4,36 @@ body {
   background: #f1f0ee;
 }
 
+.ui.table.overview {
+  border: 1px solid rgba(34,36,38,.15);
+  border-left: 0;
+}
+
+.ui.table.overview thead tr th:first-child:not(.ignored),
+.ui.table.overview tbody tr td:first-child:not(.ignored) {
+  background: rgb(248,248,248);
+  border-left: 1px solid rgba(34,36,38,.1);
+  border-right: 1px solid rgba(34,36,38,.1);
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.ui.top.fixed.menu.nav-topbar {
+  z-index: 1001;
+}
+
+.ui.labeled.icon.menu.nav-sidebar,
+.ui.labeled.icon.menu.nav-sidebar .item{
+  z-index: 2001;
+}
+
 .ui.labeled.icon.menu.nav-sidebar {
   border: none;
   border-right: 1px solid rgba(34,36,38,.15);
   border-radius: 0;
   height: 100vh;
-  z-index: 2;
-
 }
 .ui.labeled.icon.menu.nav-sidebar > .item {
   border: none;
