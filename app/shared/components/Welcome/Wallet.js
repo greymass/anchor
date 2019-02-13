@@ -11,19 +11,25 @@ class WelcomeWallet extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment
-        size="small"
-        stacked
-      >
+      <React.Fragment>
         <Header>
-          {t('welcome_stage')} #4: {t('welcome_stage_wallet')}
+          <Header.Subheader>
+            {t('welcome_step')} #4
+          </Header.Subheader>
+          {t('welcome_stage_wallet')}
         </Header>
-        <p>{t('welcome_instructions_6')}</p>
-        <WelcomeWalletContainer
-          editing
-          onStageSelect={onStageSelect}
-        />
-      </Segment>
+        <Segment
+          color="green"
+          size="small"
+          stacked
+        >
+          <p>{t('welcome_instructions_6')}</p>
+          <WelcomeWalletContainer
+            editing
+            onStageSelect={onStageSelect}
+          />
+        </Segment>
+      </React.Fragment>
     );
   }
 }

@@ -11,17 +11,24 @@ class WelcomeKey extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment
-        size="small"
-        stacked
-      >
-        <Header>
-          {t('welcome_stage')} #3: {t('welcome_stage_authorize')}
+      <React.Fragment>
+        <Header size="huge">
+          <Header.Subheader>
+            {t('welcome_step')} #3
+          </Header.Subheader>
+          {t('welcome_stage_authorize')}
         </Header>
-        <WelcomeKeyContainer
-          onStageSelect={onStageSelect}
-        />
-      </Segment>
+        <Segment
+          color="green"
+          stacked
+        >
+          <Segment basic>
+            <WelcomeKeyContainer
+              onStageSelect={onStageSelect}
+            />
+          </Segment>
+        </Segment>
+      </React.Fragment>
     );
   }
 }

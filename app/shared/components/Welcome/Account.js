@@ -13,19 +13,27 @@ class WelcomeAccount extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment
-        size="small"
-        stacked
-      >
-        <Header>
-          {t('welcome_stage')} #2: {t('welcome_stage_account')}
+      <React.Fragment>
+        <Header size="huge">
+          <Header.Subheader>
+            {t('welcome_step')} #2
+          </Header.Subheader>
+          {t('welcome_stage_account')}
         </Header>
-        <WelcomeAccountContainer
-          hardwareLedgerImport={hardwareLedgerImport}
-          onStageSelect={onStageSelect}
-          stage={stage}
-        />
-      </Segment>
+        <Segment
+          color="green"
+          size="small"
+          stacked
+        >
+          <Segment basic>
+            <WelcomeAccountContainer
+              hardwareLedgerImport={hardwareLedgerImport}
+              onStageSelect={onStageSelect}
+              stage={stage}
+            />
+          </Segment>
+        </Segment>
+      </React.Fragment>
     );
   }
 }

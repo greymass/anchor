@@ -47,7 +47,7 @@ class WelcomeAdvancedContainer extends Component<Props> {
 
     return (
       <Form>
-        <Segment color="blue">
+        <Segment color="grey">
           <Header
             content={t('welcome_cold_wallet_header')}
             subheader={t('welcome_cold_wallet_subheader')}
@@ -61,7 +61,7 @@ class WelcomeAdvancedContainer extends Component<Props> {
             style={{ marginTop: '1em' }}
           />
         </Segment>
-        <Segment color="blue">
+        <Segment color="grey">
           <Header
             content={t('welcome_restore_wallet_header')}
             subheader={t('welcome_restore_wallet_subheader')}

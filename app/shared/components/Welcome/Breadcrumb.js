@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Breadcrumb } from 'semantic-ui-react';
+import { Icon, Step } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 class WelcomeBreadcrumb extends Component<Props> {
@@ -11,63 +11,70 @@ class WelcomeBreadcrumb extends Component<Props> {
       t,
       walletMode
     } = this.props;
+    console.log(stage)
     return (
-      <Breadcrumb size="large">
+      <Step.Group attached="bottom" fluid size="small" vertical>
         {(walletMode !== 'cold')
-          ? [(
-            <Breadcrumb.Section
+          ? (
+            <Step
               active={(stage === 0)}
+              completed={(stage > 0)}
+              description="test"
+              icon="wifi"
               key="connection_stage"
               onClick={(stage > 0) ? () => onStageSelect(0) : null}
-            >
-              {t('welcome_stage_connection')}
-            </Breadcrumb.Section>
-          ), (
-            <Breadcrumb.Divider key="divider" icon="right angle" />
-          )]
-          : [(
-            <Breadcrumb.Section
+              title={t('welcome_stage_connection')}
+            />
+          )
+          : (
+            <Step
+              description="test"
+              icon="snowflake"
               key="connection_stage_cold"
-            >
-              {t('welcome_stage_coldwallet')}
-            </Breadcrumb.Section>
-          ), (
-            <Breadcrumb.Divider key="divider" icon="right angle" />
-          )]
+              title={t('welcome_stage_coldwallet')}
+            />
+          )
         }
-        <Breadcrumb.Section
-          active={(stage === 1)}
-          onClick={(stage > 1) ? () => onStageSelect(1) : null}
-        >
-          {t('welcome_stage_account')}
-        </Breadcrumb.Section>
-        <Breadcrumb.Divider icon="right angle" />
+        <Step
+          active={(stage === 2)}
+          completed={(stage > 2)}
+          disabled={(stage < 2)}
+          description="test"
+          icon="id badge"
+          onClick={(stage > 2) ? () => onStageSelect(2) : null}
+          title={t('welcome_stage_account')}
+        />
         {(walletMode !== 'watch')
           ? (
             <React.Fragment>
-              <Breadcrumb.Section
+              <Step
                 active={(stage === 3)}
+                completed={(stage > 3)}
+                description="test"
+                disabled={(stage < 3)}
+                icon="key"
                 onClick={(stage > 3) ? () => onStageSelect(3) : null}
-              >
-                {t('welcome_stage_authorize')}
-              </Breadcrumb.Section>
-              <Breadcrumb.Divider icon="right angle" />
-              <Breadcrumb.Section
+                title={t('welcome_stage_authorize')}
+              />
+              <Step
                 active={(stage === 4)}
-              >
-                {t('welcome_stage_wallet')}
-              </Breadcrumb.Section>
+                description="test"
+                disabled={(stage < 4)}
+                icon="lock"
+                title={t('welcome_stage_wallet')}
+              />
             </React.Fragment>
           )
           : (
-            <Breadcrumb.Section
+            <Step
               active={(stage === 3)}
-            >
-              {t('welcome_stage_watchwallet')}
-            </Breadcrumb.Section>
+              disabled={(stage < 3)}
+              icon="info"
+              title={t('welcome_stage_watchwallet')}
+            />
           )
         }
-      </Breadcrumb>
+      </Step.Group>
     );
   }
 }

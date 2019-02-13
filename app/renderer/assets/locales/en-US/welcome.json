@@ -1,6 +1,8 @@
 {
   "welcome_account_coldwallet_content": "A cold wallet cannot verify the validity of the account name used. Please ensure it is correct or transactions may not be able to be signed.",
   "welcome_account_coldwallet_title": "Cold Wallet - Account Import",
+  "welcome_step": "Step",
+  "welcome_stage_advanced_instructions": "The following options are provided as alternative setup methods.",
   "welcome_account_lookup_content": "If you enter a public key, a lookup will be performed to find associated accounts.",
   "welcome_account_lookup_fail_content": "The account name or public key could not be found.",
   "welcome_account_lookup_fail_title": "Failed to locate an account",

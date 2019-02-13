@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
-import { Button, Container, Divider, Dropdown, Form, Input, Message } from 'semantic-ui-react';
+import { Button, Container, Divider, Dropdown, Form, Header, Input, Message } from 'semantic-ui-react';
 
 import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
@@ -195,7 +195,7 @@ class WelcomeAccountContainer extends Component<Props> {
     }
     return (
       <React.Fragment>
-        <p>{instruction}</p>
+        <Header>{instruction}</Header>
         <Form>
           {input}
           {message}

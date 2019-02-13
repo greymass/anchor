@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Divider, Form, Input, Message, Popup } from 'semantic-ui-react';
 
 import GlobalBlockchainDropdown from '../Global/Blockchain/Dropdown';
 
@@ -155,27 +155,7 @@ class WelcomeConnectionContainer extends Component<Props> {
     } catch (e) {
       // console.log('url error', e);
     }
-    let message = (
-      <Message
-        color="blue"
-        content={(
-          <p>
-            <a
-              onClick={() => this.openLink('https://github.com/greymass/eos-voter/blob/master/nodes.md')}
-              onKeyPress={() => this.openLink('https://github.com/greymass/eos-voter/blob/master/nodes.md')}
-              role="link"
-              style={{ cursor: 'pointer' }}
-              tabIndex={0}
-            >
-              {t('welcome:welcome_more_servers_2')}
-            </a>
-          </p>
-        )}
-        icon="info circle"
-        info
-        header={t('welcome:welcome_more_servers_1')}
-      />
-    );
+    let message = false;
     let checkbox = false;
     // display an error if the server could not be validated
     if (validate.NODE === 'FAILURE') {
@@ -231,18 +211,21 @@ class WelcomeConnectionContainer extends Component<Props> {
       <Form>
         {(walletMode !== 'cold')
           ? (
-            <Form.Field
-              autoFocus={autoFocus}
-              control={Input}
-              fluid
-              icon={(validate.NODE === 'SUCCESS') ? 'checkmark' : 'x'}
-              label={t('wallet:wallet_panel_form_node')}
-              loading={(validate.NODE === 'PENDING')}
-              name="node"
-              onChange={this.onChange}
-              placeholder={`https://...`}
-              value={node}
-            />
+            <React.Fragment>
+              <Form.Field
+                autoFocus={autoFocus}
+                control={Input}
+                fluid
+                icon={(validate.NODE === 'SUCCESS') ? 'checkmark' : 'x'}
+                label={t('wallet:wallet_panel_form_node')}
+                loading={(validate.NODE === 'PENDING')}
+                name="node"
+                onChange={this.onChange}
+                placeholder={`https://...`}
+                value={node}
+              />
+              <Divider horizontal>or</Divider>
+            </React.Fragment>
           )
           : false
         }
@@ -263,7 +246,7 @@ class WelcomeConnectionContainer extends Component<Props> {
               {message}
               {historyPluginMessage}
               {checkbox}
-              <Container textAlign="center">
+              <Container textAlign="right">
                 <Button
                   content={t('welcome:welcome_connect_server')}
                   disabled={disabled}
