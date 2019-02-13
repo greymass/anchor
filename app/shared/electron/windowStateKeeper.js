@@ -15,8 +15,8 @@ export function windowStateKeeper(store) {
     windowState = {
       x: undefined,
       y: undefined,
-      width: 1000,
-      height: 800,
+      width: 940,
+      height: 580,
     };
   }
 
