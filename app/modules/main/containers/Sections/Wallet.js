@@ -52,7 +52,7 @@ function mapStateToProps(state) {
     connection: state.connection,
     // contracts: state.contracts,
     // globals: state.globals,
-    // keys: state.keys,
+    keys: state.keys,
     // ledger: state.ledger,
     // producers: state.producers,
     // proposals: state.proposals,
@@ -60,7 +60,7 @@ function mapStateToProps(state) {
     system: state.system,
     // tables: state.tables,
     transaction: state.transaction,
-    // validate: state.validate,
+    validate: state.validate,
     wallet: state.wallet,
     // wallets: state.wallets,
   };
@@ -91,7 +91,7 @@ function mapDispatchToProps(dispatch) {
       // ...TransferActions,
       // ...ValidateActions,
       // ...VoteProducerActions,
-      // ...WalletActions,
+      ...WalletActions,
     }, dispatch)
   };
 }
