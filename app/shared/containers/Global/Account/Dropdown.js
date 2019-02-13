@@ -49,22 +49,31 @@ class GlobalAccountDropdown extends Component<Props> {
           || w.authorization !== wallet.authorization
         )
       ))
-      .sort((a, b) => a.account > b.account)
+      .sort((a, b) => a.account > b.account);
+    let trigger = (
+      <GlobalFragmentWallet
+        account={wallet.account}
+        authorization={wallet.authorization}
+        mode={wallet.mode}
+        pubkey={wallet.pubkey}
+      />
+    );
+    if (!settings.account) {
+      trigger = (
+        <Header
+          content="No account selected"
+          subheader="Choose an account to use"
+          size="small"
+          style={{ margin: 0 }}
+        />
+      );
+    }
     return (
       <Dropdown
         item
         labeled
         style={style || {}}
-        trigger={(
-          <span>
-            <GlobalFragmentWallet
-              account={wallet.account}
-              authorization={wallet.authorization}
-              mode={wallet.mode}
-              pubkey={wallet.pubkey}
-            />
-          </span>
-        )}
+        trigger={trigger}
       >
         <Dropdown.Menu key="parent">
           <Dropdown.Menu key="menu" scrolling>
