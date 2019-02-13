@@ -13,29 +13,36 @@ class WelcomeConnection extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment
-        size="small"
-        stacked
-      >
-        <Header>
-          {t('welcome_stage')} #1: {' '}
+      <React.Fragment>
+        <Header size="huge">
+          <Header.Subheader>
+            {t('welcome_step')} #1
+          </Header.Subheader>
           {(settings.walletMode === 'cold')
             ? t('welcome_stage_blockchain')
             : t('welcome_stage_connection')
           }
         </Header>
-        <p>
-          {(settings.walletMode === 'cold')
-            ? t('welcome_instructions_one_cold')
-            : t('welcome_instructions_one')
-          }
-        </p>
-        <WelcomeConnectionContainer
-          editing
-          onStageSelect={onStageSelect}
-          stage={stage}
-        />
-      </Segment>
+        <Segment
+          color="green"
+          size="small"
+          stacked
+        >
+          <Segment basic>
+            <Header>
+              {(settings.walletMode === 'cold')
+                ? t('welcome_instructions_one_cold')
+                : t('welcome_instructions_one')
+              }
+            </Header>
+            <WelcomeConnectionContainer
+              editing
+              onStageSelect={onStageSelect}
+              stage={stage}
+            />
+          </Segment>
+        </Segment>
+      </React.Fragment>
     );
   }
 }
