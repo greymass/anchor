@@ -498,6 +498,35 @@ export function clearAccountByKey() {
   };
 }
 
+export function syncAccounts() {
+  return (dispatch: () => void, getState) => {
+    const {
+      accounts,
+      settings,
+      wallets
+    } = getState();
+    // Filter wallet data down to the current chain
+    const chainWallets = wallets.filter((w) => (w.chainId === settings.chainId));
+    // Create a list of all account names loaded for this chain
+    const chainAccounts = uniq(map(chainWallets, 'account'));
+    // Determine which accounts haven't been loaded into state
+    const missingAccountDataFor = difference(chainAccounts, Object.keys(accounts));
+    // Immediately fetch all accounts for which data is missing
+    if (missingAccountDataFor.length > 0) {
+      dispatch(getAccounts(missingAccountDataFor));
+    }
+    // Load any existing account data that matched our existing accounts
+    const existingAccounts = Object.values(pick(accounts, chainAccounts));
+    // If any exist
+    if (existingAccounts.length > 0) {
+      // Determine the oldest account
+      const [mostStaleAccount] = sortBy(existingAccounts, ['head_block_num']);
+      // and update it
+      dispatch(getAccount(mostStaleAccount.account_name));
+    }
+  };
+}
+
 export default {
   checkAccountAvailability,
   checkAccountExists,
@@ -508,5 +537,6 @@ export default {
   getAccountByKey,
   getActions,
   getCurrencyBalance,
+  syncAccounts,
   refreshAccountBalances
 };
