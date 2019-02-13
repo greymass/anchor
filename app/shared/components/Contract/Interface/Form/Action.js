@@ -93,6 +93,7 @@ class ContractInterfaceFormAction extends Component<Props> {
   };
   resetForm = (contractAction) => {
     const {
+      actions,
       contract
     } = this.props;
     const formData = {};
@@ -101,6 +102,7 @@ class ContractInterfaceFormAction extends Component<Props> {
       formData[field.name] = this.formatField(contractAction, field.name);
     });
     this.setState({ form: formData });
+    actions.clearSystemState();
   };
   render() {
     const {
