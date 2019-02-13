@@ -189,6 +189,12 @@ export function getAccount(account = '') {
   };
 }
 
+export function getDelegatedBalances(account) {
+  return (dispatch: () => void, getState) => {
+    dispatch(getTable('eosio', account, 'delband'));
+  };
+}
+
 export function processLoadedAccount(account, results) {
   return (dispatch: () => void, getState) => {
     const {
@@ -196,6 +202,7 @@ export function processLoadedAccount(account, results) {
     } = getState();
     // Trigger the action to load this accounts balances
     dispatch(getCurrencyBalance(account));
+    dispatch(getDelegatedBalances(account));
     // PATCH - Force in self_delegated_bandwidth if it doesn't exist
     const modified = Object.assign({}, results);
     if (!modified.self_delegated_bandwidth) {
