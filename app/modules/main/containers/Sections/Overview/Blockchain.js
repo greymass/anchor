@@ -12,23 +12,29 @@ import GlobalFragmentBlockchain from '../../../../../shared/components/Global/Fr
 import GlobalFragmentChainLogo from '../../../../../shared/components/Global/Fragment/ChainLogo';
 
 class OverviewBlockchainContainer extends Component<Props> {
+  componentDidUpdate(prevProps, prevState) {
+    Object.entries(this.props).forEach(([key, val]) =>
+      prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    );
+  }
   render() {
     const {
       blockchain,
       node,
     } = this.props;
     return (
-      <Segment stacked>
+      <Segment color="green">
         <Header>
           <GlobalFragmentChainLogo
             avatar
             chainId={blockchain.chainId}
           />
-          <Header.Content>
+          <Header.Content style={{ overflow: 'hidden' }}>
             {blockchain.name}
             <Header.Subheader>
-              Connected via {node}
+              {blockchain.chainId.substr(0, 8)}...{blockchain.chainId.substr(-8)}
             </Header.Subheader>
+
           </Header.Content>
         </Header>
 
