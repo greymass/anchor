@@ -9,27 +9,50 @@ import {
 
 import GovernanceContainer from './Sections/Governance';
 import WalletContainer from './Sections/Wallet';
+import TestsContainer from './Sections/Tests';
 import ToolsContainer from './Sections/Tools';
 import SettingsContainer from './Sections/Settings';
 import OverviewContainer from './Sections/Overview';
+import { Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
 
 class ContentContainer extends Component<Props> {
   render = () => (
-    <HashRouter>
-      <Switch>
-        <Route exact path="/" component={OverviewContainer} />
-        <Route exact path="/wallet" component={WalletContainer} />
-        <Route path="/governance" component={GovernanceContainer} />
-        <Route exact path="/tools" component={ToolsContainer} />
-        <Route exact path="/settings" component={SettingsContainer} />
-      </Switch>
-    </HashRouter>
+    <React.Fragment>
+      <Dimmer
+        active={this.props.validate.NODE === 'PENDING'}
+        inverted
+        style={{
+          height: '100vh',
+        }}
+      >
+        <Loader
+          size="massive"
+        >
+          <Header
+            content="Establishing Connection"
+            subheader={this.props.settings.node}
+          />
+        </Loader>
+      </Dimmer>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={OverviewContainer} />
+          <Route exact path="/test" component={TestsContainer} />
+          <Route exact path="/wallet" component={WalletContainer} />
+          <Route path="/governance" component={GovernanceContainer} />
+          <Route exact path="/tools" component={ToolsContainer} />
+          <Route exact path="/settings" component={SettingsContainer} />
+        </Switch>
+      </HashRouter>
+    </React.Fragment>
   );
 }
 
 function mapStateToProps(state) {
   return {
     navigation: state.navigation,
+    settings: state.settings,
+    validate: state.validate,
   };
 }
 
