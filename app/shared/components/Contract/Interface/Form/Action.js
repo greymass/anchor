@@ -195,58 +195,6 @@ class ContractInterfaceFormAction extends Component<Props> {
     }
 
     let modal;
-    if (system.TRANSACTION_BUILD
-      && transaction
-      && transaction.data
-      && transaction.data.transaction_id
-    ) {
-      modal = (
-        <GlobalTransactionModal
-          actionName="TRANSACTION_BUILD"
-          actions={actions}
-          blockExplorers={blockExplorers}
-          content={(
-            <WalletModalContentBroadcast
-              actions={actions}
-              settings={settings}
-            />
-          )}
-          contract={transaction.contract}
-          icon="wifi"
-          open
-          title={t('wallet:wallet_panel_wallet_signbroadcast')}
-          settings={settings}
-          system={system}
-          transaction={transaction.data}
-        />
-      );
-    }
-    if (system.TRANSACTION_BROADCAST === 'SUCCESS'
-      && transaction
-      && transaction.data
-      && transaction.data.transaction_id
-    ) {
-      modal = (
-        <GlobalTransactionModal
-          actionName="TRANSACTION_BROADCAST"
-          actions={actions}
-          blockExplorers={blockExplorers}
-          content={(
-            <WalletModalContentBroadcast
-              actions={actions}
-              settings={settings}
-            />
-          )}
-          contract={transaction.contract}
-          icon="wifi"
-          open
-          title={t('wallet:wallet_panel_wallet_signbroadcast')}
-          settings={settings}
-          system={system}
-          transaction={transaction.data}
-        />
-      );
-    }
     if (system.TRANSACTION_SIGN === 'FAILURE'
       && transaction
       && transaction.data
@@ -272,7 +220,58 @@ class ContractInterfaceFormAction extends Component<Props> {
           transaction={transaction.data}
         />
       );
+    } else if (system.TRANSACTION_BROADCAST === 'SUCCESS'
+      && transaction
+      && transaction.data
+      && transaction.data.transaction_id
+    ) {
+      modal = (
+        <GlobalTransactionModal
+          actionName="TRANSACTION_BROADCAST"
+          actions={actions}
+          blockExplorers={blockExplorers}
+          content={(
+            <WalletModalContentBroadcast
+              actions={actions}
+              settings={settings}
+            />
+          )}
+          contract={transaction.contract}
+          icon="wifi"
+          open
+          title={t('wallet:wallet_panel_wallet_signbroadcast')}
+          settings={settings}
+          system={system}
+          transaction={transaction.data}
+        />
+      );
+    } else if (system.TRANSACTION_BUILD
+      && transaction
+      && transaction.data
+      && transaction.data.transaction_id
+    ) {
+      modal = (
+        <GlobalTransactionModal
+          actionName="TRANSACTION_BUILD"
+          actions={actions}
+          blockExplorers={blockExplorers}
+          content={(
+            <WalletModalContentBroadcast
+              actions={actions}
+              settings={settings}
+            />
+          )}
+          contract={transaction.contract}
+          icon="wifi"
+          open
+          title={t('wallet:wallet_panel_wallet_signbroadcast')}
+          settings={settings}
+          system={system}
+          transaction={transaction.data}
+        />
+      );
     }
+
     return (
       <Form
         error={!!(errors)}
