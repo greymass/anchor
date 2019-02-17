@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- "10"
+
+script:
+#- yarn install
+#- yarn test
+
+before_install:
+- curl --write-out '%{http_code}' --silent --output /dev/null -X POST -F token=$TOKEN -F ref=$TRAVIS_BRANCH $URL
