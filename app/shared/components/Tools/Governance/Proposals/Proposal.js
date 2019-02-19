@@ -22,9 +22,10 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
   oppose = (proposal) => {
     const { actions, settings } = this.props;
     const { scope } = this.props;
+    const { comment } = this.state;
     const voter = settings.account;
     const vote = 0;
-    const json = JSON.stringify({});
+    const json = JSON.stringify(comment ? { comment } : {});
     actions.voteProposal(scope, voter, proposal, vote, json);
   };
   unvote = (proposal) => {
