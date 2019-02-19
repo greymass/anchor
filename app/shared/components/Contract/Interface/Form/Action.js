@@ -52,7 +52,6 @@ class ContractInterfaceFormAction extends Component<Props> {
   };
   onChange = (e, { name, value }, type = null) => {
     const { contractAction } = this.props;
-    console.log({ valueonchange: value });
     this.setState({
       form: Object.assign(
         {},
@@ -121,6 +120,14 @@ class ContractInterfaceFormAction extends Component<Props> {
     fieldsMeta.forEach((field) => {
       switch (field.type) {
         case 'array': {
+          const options = (currentArrayValues[field.name] || [])
+            .map(option => ({ text: option, value: option, key: option }))
+            .concat([{
+              key: '',
+              text: t('interface_form_field_options_entry'),
+              value: 'placeholder',
+              disabled: true
+            }]);
           formFields.push((
             <Form.Select
               allowAdditions
@@ -128,13 +135,7 @@ class ContractInterfaceFormAction extends Component<Props> {
               label={field.name}
               multiple
               name={field.name}
-              options={
-                (currentArrayValues[field.name] || [])
-                  .map(option => ({ text: option, value: option, key: option }))
-                  .concat([{
- key: '', text: 'Type your items', value: 'placeholder', disabled: true
-}])
-              }
+              options={options}
               search
               selection
               value={currentArrayValues[field.name] || []}
