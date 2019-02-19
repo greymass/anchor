@@ -149,7 +149,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
                           <Checkbox
                             label={auth}
                             name={auth}
-                            onClick={this.toggleAccount}
+                            onChange={this.toggleAccount}
                           />
                         </p>
                       );
