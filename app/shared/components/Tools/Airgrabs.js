@@ -98,6 +98,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
       return methodWhiteListed && noAttributesBlackListed &&
         airgrabStarted && !airgrabEnded && matchesSearchQuery;
     });
+    console.log(filteredAirgrabs);
     return (
       <Segment basic>
         {claimingAirgrab && (
@@ -175,10 +176,16 @@ class ToolsAirgrabs extends PureComponent<Props> {
               return (
                 <Table.Row key={airgrab.symbol}>
                   <Table.Cell>
-                    <Header
-                      content={airgrab.symbol}
-                      size="small"
-                    />
+                    <Header size="small">
+                      {airgrab.symbol}
+                      <Header.Subheader>
+                        <DangerLink
+                          content={airgrab.url}
+                          link={airgrab.url}
+                          settings={settings}
+                        />
+                      </Header.Subheader>
+                    </Header>
                   </Table.Cell>
                   <Table.Cell
                     content={airgrab.account}
