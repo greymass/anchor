@@ -110,11 +110,14 @@ export default function wallets(state = initialState, action) {
       return other;
     }
     case types.UPGRADE_WALLET: {
-      const [current, other] = partition(state, {
+      const partitionQuery = {
         account: action.payload.account,
-        authorization: action.payload.oldAuthorization,
         chainId: action.payload.chainId,
-      });
+      };
+      if (action.payload.oldAuthorization) {
+        partitionQuery.authorization = action.payload.oldAuthorization;
+      }
+      const [current, other] = partition(state, partitionQuery);
       if (current.length > 0) {
         const modified = Object.assign({}, current[0]);
         modified.accountData = action.payload.accountData;
