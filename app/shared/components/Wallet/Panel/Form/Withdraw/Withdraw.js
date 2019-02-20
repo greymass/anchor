@@ -23,7 +23,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
     this.state = {
       asset: "PXBTS",
       confirming: false,
-      feeBitshares: 0.1042,
+      feeBitshares: 0.4546,
       formError: false,
       from: props.settings.account,
       quantity: " PXBTS",
