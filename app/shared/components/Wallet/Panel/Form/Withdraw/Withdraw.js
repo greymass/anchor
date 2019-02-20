@@ -21,19 +21,19 @@ class WalletPanelFormWithdraw extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      asset: "PXBTS",
+      asset: "BTS",
       confirming: false,
       feeBitshares: 0.4546,
       formError: false,
       from: props.settings.account,
-      quantity: " PXBTS",
+      quantity: " BTS",
       to: "",
       waiting: false,
       waitingStarted: 0,
       assetAccountTypes: {
-        PXBTS: "Bitshares",
-        PXBRNP: "Bitshares",
-        PXEOS: "Eos"
+        BTS: "Bitshares",
+        BRNP: "Bitshares",
+        EOS: "Eos"
       },
       storeName: "beos.gateway",
       isValidAccount: false,
@@ -93,7 +93,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
       return;
     }
 
-    if (includes(["PXBTS", "PXBRNP"], asset)) {
+    if (includes(["BTS", "BRNP"], asset)) {
       const url = "https://gateway.beos.world/api/v2";
       const validationUrl = `${url}/wallets/bitshares2/address-validator?address=${value}`;
       try {
@@ -102,7 +102,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
         if (isValid) {
           if (parseFloat(valueFeeCompare) > balances[account][asset]) {
             this.setState({ formError: 'insufficient_balance' });
-          } else if (((asset === 'PXBTS') || (asset === 'PXBRNP')) && (parseFloat(valueFeeCompare) <= feeBitshares)) {
+          } else if (((asset === 'BTS') || (asset === 'BRNP')) && (parseFloat(valueFeeCompare) <= feeBitshares)) {
             this.setState({ formError: 'bitshares_error' });
           } else {
             this.setState({ isValidAccount: true, formError: null });
@@ -120,7 +120,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
         });
         throw e;
       }
-    } else if (asset === "PXEOS") {
+    } else if (asset === "EOS") {
       const { blockchains } = this.props;
       const nodeUrl = blockchains
         .filter(({ _id }) => _id === "eos-mainnet")
@@ -170,7 +170,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
       newState.asset = asset;
       if (parseFloat(value) > balances[account][asset]) {
         this.setState({ formError: 'insufficient_balance' });
-      } else if (((asset === 'PXBTS') || (asset === 'PXBRNP')) && (parseFloat(value) <= feeBitshares)) {
+      } else if (((asset === 'BTS') || (asset === 'BRNP')) && (parseFloat(value) <= feeBitshares)) {
         this.setState({ formError: 'bitshares_error' });
       } else {
         this.validateAccount(to, asset);
@@ -194,7 +194,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
       !to ||
       !!formError ||
       !isValidAccount ||
-      (((asset === 'PXBTS') || (asset === 'PXBRNP')) && (parseFloat(value) <= feeBitshares))
+      (((asset === 'BTS') || (asset === 'BRNP')) && (parseFloat(value) <= feeBitshares))
       ? true
       : false;
   };
