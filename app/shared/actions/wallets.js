@@ -265,11 +265,14 @@ export function upgradeWallet(chainId, account, authorization, password = false,
       connection,
       wallets
     } = getState();
-    const [current] = partition(wallets, {
+    const partitionQuery = {
       account,
-      authorization,
       chainId
-    });
+    };
+    if (authorization) {
+      partitionQuery.authorization = authorization
+    }
+    const [current] = partition(wallets, partitionQuery);
     if (current.length > 0) {
       eos(connection).getAccount(account).then((accountData) => {
         const wallet = current[0];
@@ -290,7 +293,7 @@ export function upgradeWallet(chainId, account, authorization, password = false,
           }
         });
         if (swap === true) {
-          dispatch(useWallet(current.chainId, account, auth));
+          dispatch(useWallet(chainId, account, auth));
         }
         return false;
       }).catch((err) => dispatch({
