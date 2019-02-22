@@ -14,6 +14,13 @@ const initialState = {
   form: {}
 };
 
+const relevantSystemStateVariables = [
+  'TRANSACTION_BROADCAST',
+  'TRANSACTION_BUILD',
+  'TRANSACTION_BUILD_LAST_ERROR',
+  'TRANSACTION_SIGN'
+]
+
 class ContractInterfaceFormAction extends Component<Props> {
   state = initialState;
   componentDidMount() {
@@ -27,6 +34,21 @@ class ContractInterfaceFormAction extends Component<Props> {
       this.resetForm(nextProps.contractAction);
     }
   }
+  shouldComponentUpdate(nextProps) {
+    const { system } = this.props;
+    if (system === nextProps) {
+      return true;
+    }
+
+    for (const systemState in relevantSystemStateVariables) {
+      if (system[systemState] !== relevantSystemStateVariables[systemState]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   formatField = (contractAction, name, value = '', type = null) => {
     const {
       contract
