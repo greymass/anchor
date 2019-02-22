@@ -18,7 +18,7 @@ export default class GlobalModalExplorerLink extends Component<Props> {
 
     const { blockExplorer: selected } = settings;
 
-    if (!blockExplorers) return false;
+    if (!blockExplorers) return content;
 
     const blockExplorer = (selected in Object.keys(blockExplorers))
       ? blockExplorers[selected]
