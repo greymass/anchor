@@ -29,9 +29,9 @@ class OverviewSidebarContainer extends Component<Props> {
   render() {
     return (
       <React.Fragment>
-        <GlobalSidebarUpdate
+        {/* <GlobalSidebarUpdate
           update={this.props.latestUpdate}
-        />
+        /> */}
         <GlobalBlockchainContainer />
       </React.Fragment>
     );
