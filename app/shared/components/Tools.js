@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import ReactJson from 'react-json-view';
 
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
@@ -21,7 +22,17 @@ class Tools extends Component<Props> {
       settings,
       t
     } = this.props;
-
+    return (
+      <ReactJson
+        collapsed={2}
+        displayDataTypes={false}
+        displayObjectSize={false}
+        iconStyle="square"
+        name={null}
+        src={this.props.settings}
+        style={{ padding: '1em' }}
+      />
+    )
     return (
       <React.Fragment>
         <Segment>
