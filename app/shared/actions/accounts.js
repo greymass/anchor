@@ -173,7 +173,7 @@ export function getAccount(account = '') {
     const {
       connection
     } = getState();
-    if (account && (connection.httpEndpoint || connection.httpEndpoint.length !== 0)) {
+    if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
       eos(connection).getAccount(account).then((results) =>
         dispatch(processLoadedAccount(account, results)))
         .catch((err) => dispatch({
