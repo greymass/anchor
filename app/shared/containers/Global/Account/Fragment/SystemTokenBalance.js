@@ -23,8 +23,11 @@ class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
 
 const mapStateToProps = (state, ownProps) => {
   const liquid = get(state, `balances.${ownProps.account}.${ownProps.token}`, 0);
-  const cpu = parseFloat(get(state, `accounts.${ownProps.account}.self_delegated_bandwidth.cpu_weight`, '0.0000 TOKEN').split(' ')[0]);
-  const net = parseFloat(get(state, `accounts.${ownProps.account}.self_delegated_bandwidth.net_weight`, '0.0000 TOKEN').split(' ')[0]);
+  const path = `accounts.${ownProps.account}.self_delegated_bandwidth`;
+  const cpuWeight = String(get(state, `${path}.cpu_weight`, '0.0000 TOKEN'))
+  const netWeight = String(get(state, `${path}.cpu_weight`, '0.0000 TOKEN'))
+  const cpu = parseFloat(cpuWeight.split(' ')[0]);
+  const net = parseFloat(netWeight.split(' ')[0]);
   const delegated = get(state, `accounts.${ownProps.account}.delegated.total`, 0);
   return ({
     balance: liquid + cpu + net + delegated
