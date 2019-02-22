@@ -82,14 +82,14 @@ class MenuContainer extends Component<Props> {
         if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
           history.push('/');
         } else {
-          getCurrencyStats();
+          // getCurrencyStats();
           getBlockExplorers();
-          forEach(settings.customTokens, (token) => {
-            const [chainId, contract, symbol] = token.split(':');
-            if (chainId === settings.chainId) {
-              getCurrencyStats(contract, symbol.toUpperCase());
-            }
-          });
+          // forEach(settings.customTokens, (token) => {
+          //   const [chainId, contract, symbol] = token.split(':');
+          //   if (chainId === settings.chainId) {
+          //     getCurrencyStats(contract, symbol.toUpperCase());
+          //   }
+          // });
         }
       }
     }
@@ -192,8 +192,8 @@ function mapDispatchToProps(dispatch) {
       ...BlockExplorersActions,
       ...ChainActions,
       ...GlobalsActions,
-      ...SyncActions,
       ...NavigationActions,
+      ...SyncActions,
       ...WalletActions,
     }, dispatch)
   };
