@@ -47,6 +47,7 @@ class WelcomeImportContainer extends Component<Props> {
         settings,
         wallets,
       } = JSON.parse(data);
+      // Restore all defined networks
       networks.forEach((network) => {
         if (network && network.schema === 'anchor.v1.network') {
           // actions.importBlockchainFromBackup(network.data);
@@ -55,6 +56,7 @@ class WelcomeImportContainer extends Component<Props> {
           console.log(network);
         }
       });
+      // Restore all wallets
       wallets.forEach((wallet) => {
         if (wallet && wallet.schema === 'anchor.v1.wallet') {
           actions.importWalletFromBackup(wallet.data);
@@ -63,10 +65,12 @@ class WelcomeImportContainer extends Component<Props> {
           console.log(wallet);
         }
       });
+      // Restore settings
       if (settings && settings.schema === 'anchor.v1.settings') {
         const newSettings = update009(settings.data, defaultChainId);
         actions.validateNode(newSettings.node, newSettings.chainId, true, true);
         actions.setSettings(newSettings);
+        actions.useWallet(newSettings.chainId, newSettings.account, newSettings.authorization);
       } else {
         // unable to import settings
         console.log(settings);
