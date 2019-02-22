@@ -43,12 +43,11 @@ class OverviewTableHeader extends Component<Props> {
                   const [chain, contract, symbol] = token.split(':');
                   if (chain !== settings.chainId) return false;
                   return (
-                    <Table.HeaderCell>
+                    <Table.HeaderCell textAlign="right">
                       <Header
                         content={symbol}
                         subheader={contract}
                       />
-
                     </Table.HeaderCell>
                   );
                 })}
