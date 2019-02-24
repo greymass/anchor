@@ -19,6 +19,7 @@
   "producer_json_unavailable_header": "Information Unavailable",
   "producer_none_loaded": "No hay datos de productores cargados...",
   "producer_none_match": "Ningún productor coincide con la consulta de búsqueda.",
+  "producers_no_voting": "Block producers are not voted in on this Blockchain, therefore this section is read-only",
   "producer_production_disabled": "Inactivo",
   "producer_production_enabled": "Produciendo",
   "producer_production_never": "Nunca",

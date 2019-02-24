@@ -19,6 +19,7 @@
   "producer_json_unavailable_header": "정보 없음",
   "producer_none_loaded": "프로듀서 정보를 가져오지 못했습니다",
   "producer_none_match": "일치하는 프로듀서 없습니다.",
+  "producers_no_voting": "Block producers are not voted in on this Blockchain, therefore this section is read-only",
   "producer_production_disabled": "비활성화",
   "producer_production_enabled": "생성중",
   "producer_production_never": "없음",
