@@ -19,6 +19,7 @@
   "producer_json_unavailable_header": "Teave pole saadaval",
   "producer_none_loaded": "Tootja andmeid pole laetud...",
   "producer_none_match": "Ükski tootja ei vasta otsingule.",
+  "producers_no_voting": "Block producers are not voted in on this Blockchain, therefore this section is read-only",
   "producer_production_disabled": "Mitteaktiivne",
   "producer_production_enabled": "Tootmas",
   "producer_production_never": "Mitte kunagi",
