@@ -19,6 +19,7 @@
   "producer_json_unavailable_header": "情報が利用できません",
   "producer_none_loaded": "プロデューサデータがありません...",
   "producer_none_match": "検索条件に一致するプロデューサがありません。",
+  "producers_no_voting": "Block producers are not voted in on this Blockchain, therefore this section is read-only",
   "producer_production_disabled": "非アクティブ",
   "producer_production_enabled": "プロデュース中",
   "producer_production_never": "なし",

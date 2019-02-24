@@ -16,6 +16,7 @@
   "interface_form_action_header": "Action Parameters",
   "interface_form_action_instructions": "If you would like to submit a transaction to this Smart Contract for this action, please fill in the fields below.",
   "interface_form_action_subheader": "The selected contract action uses the following parameters.",
+  "interface_form_field_options_entry": "Enter each value and press enter...",
   "interface_header": "Smart Contract Interface Tool",
   "interface_instructions_body_1": "Actions submitted from the Smart Contract Interface Tool are real transactions on the EOS blockchain. From this interface you are able to perform every action on any contract, including transferring EOS, creating accounts, and altering an accounts permissions/keys. These actions, once submitted, are irreversable and could lead to loss of or harm to your account.",
   "interface_instructions_body_2": "While this tool is useful for things like AirGrabs, ICO Registrations, and claiming wizards - please be cautious. Do not follow any instructions that request you 'transfer EOS with eosio.token' or 'set your account permissions' unless you have an understanding of the actions you are going to perform.",

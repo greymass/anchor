@@ -16,6 +16,7 @@
   "interface_form_action_header": "작업 매개 변수",
   "interface_form_action_instructions": "이 작업에 대해 스마트 계약서에 거래를 제출하려면 아래 입력란을 작성하세요.",
   "interface_form_action_subheader": "선택한 계약 작업은 다음 매개 변수를 사용합니다.",
+  "interface_form_field_options_entry": "Enter each value and press enter...",
   "interface_header": "스마트 계약 인터페이스 도구",
   "interface_instructions_body_1": "Smart Contract Interface Tool에서 제출 된 작업은 EOS 블록 체인의 실제 거래입니다. 이 인터페이스에서 EOS를 전송하고, 계정을 만들고, 계정 권한 / 키를 변경하는 등 모든 계약에서 모든 작업을 수행 할 수 있습니다. 제출 된 이러한 행위는 돌이킬 수 없으며 귀하의 계정을 손실하거나 손상할 수 있습니다.",
   "interface_instructions_body_2": "이 도구는 AirGrabs, ICO 등록 및 무료 나눔 수집 같은 것들에 유용하지만 주의하세요. Eosio.token을 사용하여 EOS를 보내는 지침을 이해하지 못했거나 무엇을해야할지 잘 모르는 경우에는 계정 권한 설정 요구를 따르지 마세요.",

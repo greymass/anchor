@@ -16,6 +16,7 @@
   "interface_form_action_header": "アクションパラメータ",
   "interface_form_action_instructions": "このアクションのこのスマートコントラクトにトランザクションを送信したい場合は、以下の欄に記入して下さい。",
   "interface_form_action_subheader": "選択したコントラクトアクションは以下のパラメータを使用します。",
+  "interface_form_field_options_entry": "Enter each value and press enter...",
   "interface_header": "スマートコントラクトインターフェースツール",
   "interface_instructions_body_1": "スマートコントラクトインターフェースツールから送信されたアクションはEOSブロックチェーンの実際のトランザクションです。このインターフェースから、EOSの移転、アカウント作成およびアカウントの権限/キーの変更を含む任意のコントラクトのすべてのアクションを実行できます。これらのアクションは、一度送信したら取り消し不可能であり、損失に繋がる場合やアカウントに害をなす場合があります。",
   "interface_instructions_body_2": "このツールはAirGrabやICO登録、請求ウィザードなどに便利ですが、とにかく気をつけてください。実行しようとしているアクションを理解している場合を除いて、「eosio.tokenでEOSを移転する」や「アカウント権限を設定する」といったことを要求する指示には従わないで下さい。",

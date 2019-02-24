@@ -19,6 +19,7 @@
   "producer_json_unavailable_header": "Information Unavailable",
   "producer_none_loaded": "Данные производителей блоков не загружены...",
   "producer_none_match": "Ни один производитель не соответствует поисковому запросу.",
+  "producers_no_voting": "Block producers are not voted in on this Blockchain, therefore this section is read-only",
   "producer_production_disabled": "Неактивный",
   "producer_production_enabled": "Производство блоков включено",
   "producer_production_never": "Никогда",
