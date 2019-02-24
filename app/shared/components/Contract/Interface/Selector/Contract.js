@@ -11,9 +11,20 @@ class ContractInterfaceSelectorContract extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      contractName: props.contractName
+      contractName: props.contractName,
+      loadingContract: false
     };
   }
+  componentWillReceiveProps(nextProps) {
+    const { contract } = this.props;
+    const { contractName } = this.state;
+
+    const contractChange = !nextProps.contract || contract.account !== contractName;
+    if (contractChange) {
+      this.setState({ loadingContract: false })
+    }
+  }
+
   onChange = (e, { name, selection, value }) => {
     this.setState({ [name]: value }, () => {
       // If this is the dropdown, fire the submit
@@ -27,7 +38,9 @@ class ContractInterfaceSelectorContract extends Component<Props> {
       onSet,
       onSubmit
     } = this.props;
-    onSet(this.state, onSubmit);
+    this.setState({ loadingContract: true }, () => {
+      onSet(this.state, onSubmit);
+    });
   }, 300)
   render() {
     const {
@@ -37,7 +50,8 @@ class ContractInterfaceSelectorContract extends Component<Props> {
       settings
     } = this.props;
     const {
-      contractName
+      contractName,
+      loading
     } = this.state;
 
     let recentOptions = [];
@@ -48,44 +62,9 @@ class ContractInterfaceSelectorContract extends Component<Props> {
       }));
     }
 
-    let display = (
-      <Segment basic>
-        <Form
-          onSubmit={this.onSubmit}
-        >
-          <Header>
-            {t('interface_header')}
-            <Header.Subheader>
-              {t('interface_subheader')}
-            </Header.Subheader>
-          </Header>
-          <Form.Group inline widths="equal">
-            <Form.Dropdown
-              additionLabel=""
-              allowAdditions
-              autoFocus
-              fluid
-              label={t('interface_contract_account_name')}
-              name="contractName"
-              placeholder={t('interface_contract_account_name_placeholder')}
-              onChange={this.onChange}
-              openOnFocus={false}
-              options={recentOptions}
-              search
-              searchInput={{ autoFocus: true }}
-              selection
-              selectOnBlur={false}
-              selectOnNavigation={false}
-            />
-          </Form.Group>
-          <Button
-            content={t('interface_contract_load')}
-            primary
-          />
-        </Form>
-      </Segment>
-    );
-    if (contract && contract.account === contractName) {
+    let display;
+    const shouldDisplayContractInfo = contract && contract.account === contractName;
+    if (shouldDisplayContractInfo) {
       display = (
         <Segment secondary stacked>
           <Button
@@ -100,6 +79,45 @@ class ContractInterfaceSelectorContract extends Component<Props> {
               {t('interface_contract_loaded_subheader')}
             </Header.Subheader>
           </Header>
+        </Segment>
+      );
+    } else {
+      display = (
+        <Segment basic>
+          <Form
+            onSubmit={this.onSubmit}
+          >
+            <Header>
+              {t('interface_header')}
+              <Header.Subheader>
+                {t('interface_subheader')}
+              </Header.Subheader>
+            </Header>
+            <Form.Group inline widths="equal">
+              <Form.Dropdown
+                additionLabel=""
+                allowAdditions
+                autoFocus
+                fluid
+                label={t('interface_contract_account_name')}
+                name="contractName"
+                placeholder={t('interface_contract_account_name_placeholder')}
+                onChange={this.onChange}
+                openOnFocus={false}
+                options={recentOptions}
+                search
+                searchInput={{ autoFocus: true }}
+                selection
+                selectOnBlur={false}
+                selectOnNavigation={false}
+              />
+            </Form.Group>
+            <Button
+              content={t('interface_contract_load')}
+              loading={loading}
+              primary
+            />
+          </Form>
         </Segment>
       );
     }
