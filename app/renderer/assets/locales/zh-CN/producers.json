@@ -19,6 +19,7 @@
   "producer_json_unavailable_header": "Information Unavailable",
   "producer_none_loaded": "没有生成器数据加载...",
   "producer_none_match": "No producers match the search query.",
+  "producers_no_voting": "Block producers are not voted in on this Blockchain, therefore this section is read-only",
   "producer_production_disabled": "无效",
   "producer_production_enabled": "生产",
   "producer_production_never": "从不",
