@@ -10,6 +10,7 @@ class ContractInterfaceSelectorAction extends Component<Props> {
       contract,
       contractAction,
       onChange,
+      system,
       t
     } = this.props;
     const actionOptions = contract.getActions().map((action) => ({
@@ -33,10 +34,11 @@ class ContractInterfaceSelectorAction extends Component<Props> {
               defaultValue={contractAction}
               fluid
               label={t('interface_actions_header')}
+              loading={system.GETABI === 'PENDING'}
               name="contractAction"
-              placeholder={t('interface_actions_header')}
               onChange={onChange}
               options={actionOptions}
+              placeholder={t('interface_actions_header')}
               search
               selection
             />
