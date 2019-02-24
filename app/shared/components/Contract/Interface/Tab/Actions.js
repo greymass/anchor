@@ -27,6 +27,7 @@ class ContractInterfaceTabActions extends Component<Props> {
           contractAction={contractAction}
           onChange={onChange}
           onSubmit={onSubmit}
+          system={system}
         />
         {(contractAction)
           ? (

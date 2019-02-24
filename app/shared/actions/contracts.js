@@ -5,7 +5,7 @@ import eos from './helpers/eos';
 export function getAbi(account) {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.SYSTEM_GETABI_REQUEST
+      type: types.SYSTEM_GETABI_PENDING
     });
     const { connection } = getState();
     return eos(connection, true).getAbi(account).then((contract) => {
