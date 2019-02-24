@@ -12,18 +12,14 @@ class ContractInterfaceSelectorContract extends Component<Props> {
     super(props);
     this.state = {
       contractName: props.contractName,
-      loadingContract: false
+      loadingAccount: false
     };
   }
   componentWillReceiveProps(nextProps) {
-    const { contract } = this.props;
-    const { contractName } = this.state;
-
-    const contractChange = !nextProps.contract || contract.account !== contractName;
-    if (contractChange) {
-      this.setState({ loadingContract: false })
+    if (this.props.contract && !nextProps.contract) {
+      this.setState({ loadingAccount: false });
     }
-  }
+  };
 
   onChange = (e, { name, selection, value }) => {
     this.setState({ [name]: value }, () => {
@@ -32,16 +28,18 @@ class ContractInterfaceSelectorContract extends Component<Props> {
         this.onSubmit();
       }
     });
-  }
+  };
   onSubmit = debounce(() => {
     const {
       onSet,
       onSubmit
     } = this.props;
-    this.setState({ loadingContract: true }, () => {
+    console.log({props: this.props})
+    this.setState({ loadingAccount: true }, () => {
+      this.forceUpdate();
       onSet(this.state, onSubmit);
     });
-  }, 300)
+  }, 300);
   render() {
     const {
       contract,
@@ -51,7 +49,7 @@ class ContractInterfaceSelectorContract extends Component<Props> {
     } = this.props;
     const {
       contractName,
-      loading
+      loadingAccount
     } = this.state;
 
     let recentOptions = [];
@@ -64,6 +62,7 @@ class ContractInterfaceSelectorContract extends Component<Props> {
 
     let display;
     const shouldDisplayContractInfo = contract && contract.account === contractName;
+
     if (shouldDisplayContractInfo) {
       display = (
         <Segment secondary stacked>
@@ -84,6 +83,7 @@ class ContractInterfaceSelectorContract extends Component<Props> {
     } else {
       display = (
         <Segment basic>
+          loadingAccount: {String(loadingAccount)}
           <Form
             onSubmit={this.onSubmit}
           >
@@ -112,16 +112,24 @@ class ContractInterfaceSelectorContract extends Component<Props> {
                 selectOnNavigation={false}
               />
             </Form.Group>
+            loadingAccount: {String(loadingAccount)}
             <Button
               content={t('interface_contract_load')}
-              loading={loading}
+              disabled={loadingAccount}
+              loading={loadingAccount}
               primary
             />
           </Form>
         </Segment>
       );
     }
-    return display;
+    console.log({loadingAccount});
+    return (
+      <React.Fragment>
+        loadingAccount: {String(loadingAccount)}
+        {display}
+      </React.Fragment>
+    );
   }
 }
 
