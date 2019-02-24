@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Divider, Form, Header, Message } from 'semantic-ui-react';
+import { attempt, isError } from 'lodash';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
@@ -35,6 +36,7 @@ class ContractInterfaceFormAction extends Component<Props> {
     if (type === 'array') {
       fieldType = 'array';
     }
+
     switch (fieldType) {
       case 'int': {
         return parseInt(value, 10);
@@ -45,7 +47,13 @@ class ContractInterfaceFormAction extends Component<Props> {
       case 'array': {
         return value;
       }
+      case 'string': {
+        return String(value);
+      }
       default: {
+        if (!isError(attempt(JSON.parse, value))) {
+          return JSON.parse(value);
+        }
         return String(value);
       }
     }
