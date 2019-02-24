@@ -36,12 +36,13 @@ class ContractInterfaceFormAction extends Component<Props> {
   }
   shouldComponentUpdate(nextProps) {
     const { system } = this.props;
-    if (system === nextProps) {
+
+    if (system === nextProps.system) {
       return true;
     }
 
     for (const systemState in relevantSystemStateVariables) {
-      if (system[systemState] !== relevantSystemStateVariables[systemState]) {
+      if (system[systemState] !== nextProps.system[systemState]) {
         return true;
       }
     }
@@ -293,7 +294,6 @@ class ContractInterfaceFormAction extends Component<Props> {
         />
       );
     }
-
     return (
       <Form
         error={!!(errors)}

@@ -6,15 +6,9 @@ import { Form, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
 export default class GlobalFormFieldGeneric extends Component<Props> {
-  state = { value: '' };
   onChange = debounce((e, { name, value }) => {
-    const parsed = value;
-    this.setState({
-      value: parsed
-    }, () => {
-      this.props.onChange(e, { name, value: parsed });
-    });
-  }, 300)
+    this.props.onChange(e, { name, value });
+  }, 300);
   render() {
     const {
       autoFocus,
