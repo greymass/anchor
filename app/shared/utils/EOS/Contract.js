@@ -74,6 +74,9 @@ export default class EOSContract {
     if (field && field.type in this.typeMap) {
       return this.typeMap[field.type];
     }
+    if (field && field.type) {
+      return field.type;
+    }
     return 'string';
   }
 
