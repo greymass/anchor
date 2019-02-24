@@ -5,21 +5,13 @@ import debounce from 'lodash/debounce';
 
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 
-import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
-
 class ContractInterfaceSelectorContract extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      contractName: props.contractName,
-      loadingAccount: false
+      contractName: props.contractName
     };
   }
-  componentWillReceiveProps(nextProps) {
-    if (this.props.contract && !nextProps.contract) {
-      this.setState({ loadingAccount: false });
-    }
-  };
 
   onChange = (e, { name, selection, value }) => {
     this.setState({ [name]: value }, () => {
@@ -34,22 +26,18 @@ class ContractInterfaceSelectorContract extends Component<Props> {
       onSet,
       onSubmit
     } = this.props;
-    console.log({props: this.props})
-    this.setState({ loadingAccount: true }, () => {
-      this.forceUpdate();
-      onSet(this.state, onSubmit);
-    });
+    onSet(this.state, onSubmit);
   }, 300);
   render() {
     const {
       contract,
       onReset,
+      system,
       t,
       settings
     } = this.props;
     const {
-      contractName,
-      loadingAccount
+      contractName
     } = this.state;
 
     let recentOptions = [];
@@ -62,7 +50,7 @@ class ContractInterfaceSelectorContract extends Component<Props> {
 
     let display;
     const shouldDisplayContractInfo = contract && contract.account === contractName;
-
+    console.log({system})
     if (shouldDisplayContractInfo) {
       display = (
         <Segment secondary stacked>
@@ -83,7 +71,6 @@ class ContractInterfaceSelectorContract extends Component<Props> {
     } else {
       display = (
         <Segment basic>
-          loadingAccount: {String(loadingAccount)}
           <Form
             onSubmit={this.onSubmit}
           >
@@ -112,24 +99,17 @@ class ContractInterfaceSelectorContract extends Component<Props> {
                 selectOnNavigation={false}
               />
             </Form.Group>
-            loadingAccount: {String(loadingAccount)}
             <Button
               content={t('interface_contract_load')}
-              disabled={loadingAccount}
-              loading={loadingAccount}
+              loading={system.GETABI === 'PENDING'}
+              disabled={system.GETABI === 'PENDING'}
               primary
             />
           </Form>
         </Segment>
       );
     }
-    console.log({loadingAccount});
-    return (
-      <React.Fragment>
-        loadingAccount: {String(loadingAccount)}
-        {display}
-      </React.Fragment>
-    );
+    return display;
   }
 }
 

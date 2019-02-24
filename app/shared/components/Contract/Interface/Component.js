@@ -178,6 +178,7 @@ class ContractInterfaceComponent extends Component<Props> {
               onSet={this.onSet}
               onSubmit={this.onSubmit}
               settings={settings}
+              system={system}
             />
           )
         }
