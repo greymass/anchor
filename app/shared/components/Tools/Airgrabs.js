@@ -98,7 +98,6 @@ class ToolsAirgrabs extends PureComponent<Props> {
       return methodWhiteListed && noAttributesBlackListed &&
         airgrabStarted && !airgrabEnded && matchesSearchQuery;
     });
-    console.log(filteredAirgrabs);
     return (
       <Segment basic>
         {claimingAirgrab && (
@@ -131,7 +130,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
             onChange={(e) => this.setState({ searchQuery: e.target.value })}
           />
         </Segment>
-        <Segment style={{ marginTop: '60px', marginBottom: '10px' }}basic>
+        <Segment style={{ marginTop: '60px', marginBottom: '10px' }} basic>
           <Message
             textAlign="left"
             content={
