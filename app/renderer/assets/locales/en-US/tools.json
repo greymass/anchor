@@ -1,7 +1,7 @@
 {
   "tools_account_creation_header": "Confirm account creation",
   "tools_airgrabs_account": "Account",
-  "tools_airgrab_anything_missing":  "Is an airdrop missing from this list? If so, let us know by dropping by the TeamGreaymass Wallet telegram channel: ",
+  "tools_airgrab_anything_missing":  "Is an airdrop missing from this list? If so, let us know by dropping by the Greymass Wallet telegram channel: ",
   "tools_airgrabs_already_claimed": "Already Claimed",
   "tools_airgrabs_claim": "Claim",
   "tools_airgrabs_header": "Airgrabs",
@@ -9,7 +9,7 @@
   "tools_airgrabs_no_match": "No airgrabs match these filters",
   "tools_airgrabs_refresh": "Refresh Table",
   "tools_airgrabs_search_placeholder": "Search..",
-  "tools_airgrabs_subheader": "Airgrabs are amount of tokens that can be claimed by your account.",
+  "tools_airgrabs_subheader": "Airgrabs are a token distribution method in which you can manually claim a balance.",
   "tools_airgrabs_unknown_date": "Unknown Date",
   "tools_airgrabs_until": "Available Until",
   "tools_beos_account_taken_error": "BEOS account is taken.",
