@@ -26,8 +26,10 @@ class GlobalAccountSelectWallet extends Component<Props> {
   }
 
   swapAccount = (chainId, account, authorization, password = false) => {
-    const { actions } = this.props;
-    actions.getInfo();
+    const { actions, settings } = this.props;
+    if (!['cold'].includes(settings.walletMode)) {
+      actions.getInfo();
+    }
     actions.useWallet(chainId, account, authorization);
     if (password) {
       actions.unlockWallet(password);
