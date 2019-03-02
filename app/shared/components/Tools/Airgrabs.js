@@ -14,7 +14,7 @@ import DangerLink from '../Global/Modal/DangerLink';
 import ToolsModalAirgrab from './Modal/Airgrab';
 
 const blackListedMethodAttributes = ['to', 'from'];
-const whiteListedMethods = ['open', 'signup'];
+const whiteListedMethods = ['claim', 'open', 'signup'];
 
 class ToolsAirgrabs extends PureComponent<Props> {
   state = {
