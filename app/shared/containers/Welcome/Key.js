@@ -167,12 +167,7 @@ class WelcomeKeyContainer extends Component<Props> {
       key,
       visible
     } = this.state;
-    let currentPublic;
-    try {
-      currentPublic = ecc.privateToPublic(keys.key, connection.keyPrefix);
-    } catch (e) {
-      // invalid key
-    }
+    const currentPublic = keys.pubkey || false;
     // For hot wallets
     let validKeys = false;
     if (accounts[account]) {
