@@ -92,6 +92,16 @@ const knownChains = [
     testnet: false
   },
   {
+    _id: 'meetone-mainnet',
+    chainId: 'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422',
+    keyPrefix: 'EOS',
+    name: 'MEET.ONE',
+    node: 'https://fullnode.meet.one',
+    supportedContracts: [],
+    symbol: 'MEETONE',
+    testnet: false
+  },
+  {
     _id: 'telos-mainnet',
     chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
     keyPrefix: 'EOS',
