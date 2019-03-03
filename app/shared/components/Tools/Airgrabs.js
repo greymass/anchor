@@ -165,13 +165,17 @@ class ToolsAirgrabs extends PureComponent<Props> {
               <Table.HeaderCell>
                 {t('tools_airgrabs_until')}
               </Table.HeaderCell>
+              <Table.HeaderCell textAlign="right">
+                {t('tools_airgrabs_unclaimed')}
+              </Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {filteredAirgrabs.map((airgrab) => {
               const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
-              const claimed = airgrabAccounts.length > 0;
+              const unclaimedBalance = (airgrabAccounts && airgrabAccounts.length && airgrabAccounts[0].claimed === 0);
+              const claimed = (airgrabAccounts.length > 0 && !unclaimedBalance);
               return (
                 <Table.Row key={airgrab.symbol}>
                   <Table.Cell>
@@ -196,6 +200,15 @@ class ToolsAirgrabs extends PureComponent<Props> {
                     }
                   />
                   <Table.Cell
+                    collapsing
+                    content={unclaimedBalance ?
+                      airgrabAccounts[0].balance :
+                      '~'
+                    }
+                    textAlign="right"
+                  />
+                  <Table.Cell
+                    collapsing
                     textAlign="right"
                   >
                     <Button
