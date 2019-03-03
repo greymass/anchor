@@ -3,7 +3,7 @@ import eos from '../helpers/eos';
 import { getTable } from '../table';
 
 const blackListedMethodAttributes = ['to', 'from'];
-const whiteListedMethods = ['open', 'signup'];
+const whiteListedMethods = ['claim', 'open', 'signup'];
 
 export function claimairgrab(airgrab) {
   return (dispatch: () => void, getState) => {
