@@ -36,6 +36,9 @@ export default function app(state = initialState, action) {
         constants: action.payload.data
       });
     }
+    case types.SYSTEM_GETCONSTANTS_FAILURE: {
+      return Object.assign({}, initialState);
+    }
     default: {
       return state;
     }
