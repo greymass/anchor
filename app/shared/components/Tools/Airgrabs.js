@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
+import { orderBy } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import {
   Button,
@@ -81,7 +82,8 @@ class ToolsAirgrabs extends PureComponent<Props> {
 
     const airgrabs = get(app, 'constants.airgrabs') || [];
 
-    const filteredAirgrabs = airgrabs.filter((airgrab) => {
+
+    const filtered = airgrabs.filter((airgrab) => {
       const methodWhiteListed = whiteListedMethods.includes(airgrab.method);
       const noAttributesBlackListed =
         Object.keys(airgrab.methodAttributes).filter(attribute => {
@@ -98,6 +100,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
       return methodWhiteListed && noAttributesBlackListed &&
         airgrabStarted && !airgrabEnded && matchesSearchQuery;
     });
+    const filteredAirgrabs = orderBy(filtered, ['symbol']);
     return (
       <Segment basic>
         {claimingAirgrab && (
