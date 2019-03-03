@@ -4,6 +4,7 @@
   "tools_airgrab_anything_missing":  "Is an airdrop missing from this list? If so, let us know by dropping by the Greymass Wallet telegram channel: ",
   "tools_airgrabs_already_claimed": "Already Claimed",
   "tools_airgrabs_claim": "Claim",
+  "tools_airgrabs_unclaimed": "Unclaimed",
   "tools_airgrabs_header": "Airgrabs",
   "tools_airgrabs_message_warning": "This transaction will consume RAM.",
   "tools_airgrabs_no_match": "No airgrabs match these filters",
