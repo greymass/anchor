@@ -53,17 +53,21 @@ class ToolsAirgrabs extends PureComponent<Props> {
   };
 
   fetchAirgrabsData = () => {
-    const { actions, app, settings, tables } = this.props;
+    const { actions, app, settings, tables, validate } = this.props;
 
-    const airgrabs = get(app, 'constants.airgrabs') || [];
+    if (validate.NODE === 'SUCCESS') {
+      actions.getConstants();
 
-    airgrabs.forEach((airgrab) => {
-      const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
-      if (airgrabAccounts.length > 0) {
-        return;
-      }
-      actions.getTable(airgrab.account, settings.account, 'accounts');
-    });
+      const airgrabs = get(app, 'constants.airgrabs') || [];
+
+      airgrabs.forEach((airgrab) => {
+        const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
+        if (airgrabAccounts.length > 0) {
+          return;
+        }
+        actions.getTable(airgrab.account, settings.account, 'accounts');
+      });
+    }
   };
 
   render() {
