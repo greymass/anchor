@@ -26,12 +26,16 @@ class ToolsAirgrabs extends PureComponent<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { app } = this.props;
+    const { app, settings } = this.props;
 
     const currentAirgrabs = get(app, 'constants.airgrabs') || [];
     const prevAirgrabs = get(prevProps.app, 'constants.airgrabs') || [];
 
-    if (currentAirgrabs.length !== prevAirgrabs.length) {
+    if (
+      currentAirgrabs.length !== prevAirgrabs.length
+      || settings.account !== prevProps.settings.account
+      || settings.chainId !== prevProps.settings.chainId
+    ) {
       this.fetchAirgrabsData();
     }
   }
