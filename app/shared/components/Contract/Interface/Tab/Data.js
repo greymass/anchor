@@ -20,6 +20,7 @@ class ContractInterfaceTabData extends Component<Props> {
           </Header.Subheader>
         </Header>
         <ReactJson
+          collapsed={2}
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"
