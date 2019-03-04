@@ -10,6 +10,7 @@ import GlobalModalDangerLink from '../../../Global/Modal/DangerLink';
 import ToolsGovernanceProposalsProposalVote from './Proposal/Vote';
 
 class ToolsGovernanceProposalsProposal extends Component<Props> {
+  state = {};
   approve = (proposal) => {
     const { actions, settings } = this.props;
     const { scope } = this.props;
