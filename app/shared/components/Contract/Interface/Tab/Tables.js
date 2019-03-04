@@ -29,7 +29,7 @@ class ContractInterfaceTabTables extends Component<Props> {
       tables
     } = this.props;
     const tableScope = contractTableScope || contract.account;
-    const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`)
+    const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`);
     if (tableData) {
       const { rows } = tableData;
       const { key_names } = contract.getTable(contractTable);
@@ -58,7 +58,7 @@ class ContractInterfaceTabTables extends Component<Props> {
     const { key_names } = contract.getTable(contractTable);
     const [index] = key_names;
     const tableScope = contractTableScope || contract.account;
-    const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`)
+    const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`);
     let rows = false;
     let more = false;
     if (!refresh && tableData) {
@@ -94,7 +94,7 @@ class ContractInterfaceTabTables extends Component<Props> {
         const { type: dataType } = table;
         const tableScope = contractTableScope || contract.account;
         ({ fields } = contract.getStruct(dataType));
-        const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`)
+        const tableData = get(tables, `${contract.account}.${tableScope}.${contractTable}`);
         if (tableData) {
           ({ rows } = tableData);
         }
