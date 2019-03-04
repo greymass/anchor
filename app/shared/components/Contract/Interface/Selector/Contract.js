@@ -50,7 +50,6 @@ class ContractInterfaceSelectorContract extends Component<Props> {
 
     let display;
     const shouldDisplayContractInfo = contract && contract.account === contractName;
-    console.log({system})
     if (shouldDisplayContractInfo) {
       display = (
         <Segment secondary stacked>
