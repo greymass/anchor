@@ -20,6 +20,7 @@ import * as SettingsActions from '../actions/settings';
 import * as TransactionActions from '../actions/transaction';
 import * as ValidateActions from '../actions/validate';
 import * as WalletActions from '../actions/wallet';
+import * as AppActions from '../actions/app';
 
 type Props = {
   actions: {},
@@ -36,6 +37,7 @@ class ColdWalletContainer extends Component<Props> {
   };
   componentDidMount = () => {
     const {
+      actions,
       keys,
       wallet
     } = this.props;
@@ -45,7 +47,13 @@ class ColdWalletContainer extends Component<Props> {
       } = this.props;
       history.push('/');
     }
-  }
+
+    const {
+      initApp
+    } = actions;
+
+    initApp();
+  };
 
   continueSetup = () => {
     const {
@@ -145,6 +153,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...AppActions,
       ...SettingsActions,
       ...TransactionActions,
       ...ValidateActions,
