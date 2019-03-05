@@ -92,7 +92,8 @@ class GlobalModalAccountImportHot extends Component<Props> {
     } = this.state;
     const matches = accounts.__lookups;
     const disabled = (!selected.length || !valid);
-    if (['watch', 'ledger'].includes(settings.walletMode) && !settings.walletHash) {
+
+    if ([undefined, 'watch', 'ledger'].includes(settings.walletMode) && !settings.walletHash) {
       // If a hot wallet already exists and a wallet hash does not, inform them to swap first
       const hotWalletExists = wallets.some(o => o.mode === 'hot');
       if (!hotWalletExists) {
