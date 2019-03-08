@@ -48,6 +48,8 @@
       "node_modules/",
       "renderer/assets/",
       "renderer/basic/index.html",
+      "renderer/main/index.html",
+      "renderer/handler/index.html",
       "main.prod.js",
       "main.prod.js.map",
       "package.json"
