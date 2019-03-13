@@ -3,16 +3,25 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Placeholder, Segment } from 'semantic-ui-react';
+import { Button, Placeholder, Segment } from 'semantic-ui-react';
 import { times } from 'lodash';
 
 import Tools from '../../../../shared/containers/Tools';
 
+import URIActions from '../../../handler/actions/uri';
+const { ipcRenderer } = require('electron')
+
 class TestsContainer extends Component<Props> {
+  testURI = () => {
+    ipcRenderer.send('openUri', 'eosio://gWNgZGRkWLKvhPGVQSgDCCwwugsUgQAYLQRjAIGCm_OuXYwMIDUA');
+  }
   render() {
     return (
       <Segment>
-        test
+        <Button
+          content="URI Test"
+          onClick={this.testURI}
+        />
       </Segment>
     );
   }
@@ -27,7 +36,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
+      ...URIActions,
     }, dispatch)
   };
 }
