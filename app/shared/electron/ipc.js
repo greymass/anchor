@@ -38,6 +38,11 @@ const configureIPC = (ui) => {
     });
   });
 
+  ipcMain.on('openUri', (event, url) => {
+    ui.show();
+    ui.webContents.send('openUri', url);
+  });
+
   ipcMain.on('saveFile', (event, savePath = false, data, prefix = 'tx') => {
     const defaultPath = (savePath || app.getPath('documents'));
     const defaultFilename = `${prefix}-${getDateString()}.json`;
