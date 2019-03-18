@@ -6,6 +6,7 @@ const update = (blockchains) => {
 
     if (chain.chainId === 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4') {
       chain.testnet = true;
+      chain.node = 'https://api.testnet.beos.world';
     }
 
     newBlockchains.push(chain);

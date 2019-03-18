@@ -106,10 +106,10 @@ export function getBlockExplorers() {
       ],
       'beos-testnet': [
         {
-          name: 'explore.beos.world',
+          name: 'explore.testnet.beos.world',
           patterns: {
-            account: 'https://explore.beos.world/accounts/{account}',
-            txid: 'https://explore.beos.world/transactions/{txid}'
+            account: 'https://explore.testnet.beos.world/accounts/{account}',
+            txid: 'https://explore.testnet.beos.world/transactions/{txid}'
           }
         }
       ],
