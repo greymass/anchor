@@ -30,6 +30,10 @@ export function historyPluginCheck() {
         historyAccount = 'beos.gateway';
         break;
       }
+      case 'cbef47b0b26d2b8407ec6a6f91284100ec32d288a39d4b4bbd49655f7c484112': {
+        historyAccount = 'beos.gateway';
+        break;
+      }
       default: {
         historyAccount = 'teamgreymass';
         break;
