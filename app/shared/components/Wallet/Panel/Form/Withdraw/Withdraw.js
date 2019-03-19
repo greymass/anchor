@@ -96,7 +96,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
     if (includes(["BTS", "BROWNIE"], asset)) {
       let url = "https://gateway.beos.world/api/v2";
       if (this.props.connection && (this.props.connection.chainId === 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4')) {
-        let url = "https://gateway.testnet.beos.world/api/v2";
+        url = "https://gateway.testnet.beos.world/api/v2";
       }
       const validationUrl = `${url}/wallets/bitshares2/address-validator?address=${value}`;
       try {
