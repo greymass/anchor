@@ -5,7 +5,7 @@ import * as types from '../actions/types';
 const knownChains = [
   {
     _id: 'beos-mainnet',
-    chainId: 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4',
+    chainId: 'cbef47b0b26d2b8407ec6a6f91284100ec32d288a39d4b4bbd49655f7c484112',
     keyPrefix: 'EOS',
     name: 'BEOS',
     node: 'https://api.beos.world',
