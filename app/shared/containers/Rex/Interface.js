@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Tab } from '../../components/Contract/Interface/Component';
+import { Tab } from 'semantic-ui-react';
+
 import RexInterfaceAbout from '../../components/Rex/Interface/About';
 import RexInterfaceFund from '../../components/Rex/Interface/Fund';
-
+import RexInterfaceManageRex from '../../components/Rex/Interface/ManageRex';
+import RexInterfaceRentResources from '../../components/Rex/Interface/RentResources';
 
 type Props = {
   actions: {},
   accounts: {},
+  connection: {},
   settings: {},
   t: {}
 };
@@ -21,6 +24,7 @@ class RexInterface extends Component<Props> {
   render() {
     const {
       actions,
+      connection,
       t
     } = this.props;
 
@@ -49,6 +53,7 @@ class RexInterface extends Component<Props> {
           content: (
             <RexInterfaceFund
               actions={actions}
+              connection={connection}
             />
           )
         }
@@ -62,8 +67,9 @@ class RexInterface extends Component<Props> {
         pane: {
           key: 'manage_rex',
           content: (
-            <RexInterfaceFund
+            <RexInterfaceManageRex
               actions={actions}
+              connection={connection}
             />
           )
         }
@@ -77,12 +83,14 @@ class RexInterface extends Component<Props> {
         pane: {
           key: 'rent_resources',
           content: (
-            <RexInterfaceFund
+            <RexInterfaceRentResources
               actions={actions}
+              connection={connection}
             />
           )
         }
-      }]
+      }
+    ];
     return (
       <React.Fragment>
         <Tab
@@ -99,6 +107,7 @@ class RexInterface extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    connection: state.connection,
     settings: state.settings
   };
 }

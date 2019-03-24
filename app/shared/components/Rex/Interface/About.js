@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Message,
-  Segment,
+  Segment
 } from 'semantic-ui-react';
 
 class RexInterfaceAbout extends PureComponent<Props> {
@@ -18,7 +18,7 @@ class RexInterfaceAbout extends PureComponent<Props> {
           warning
         >
           {t('rex_interface_about_message')}
-        </Message
+        </Message>
       </Segment>
     );
   }
