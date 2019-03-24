@@ -30,6 +30,13 @@ class RexInterfaceFund extends PureComponent<Props> {
     } else {
       this.setState({ error: invalidErrorMessage[name] });
     }
+
+    const balanceAmount = 100.00;
+    const notEnoughBalance = balanceAmount < value;
+
+    if (notEnoughBalance) {
+      this.setState({ error: 'not_enough_balance' });
+    }
   };
   render() {
     const {
@@ -43,7 +50,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       fundingAmount
     } = this.state;
 
-    const saveDisabled = fundingAmount && defundingAmount && !isEmpty(error);
+    const saveDisabled = error || !fundingAmount || !defundingAmount;
 
     return (
       <Segment basic>
@@ -81,7 +88,7 @@ class RexInterfaceFund extends PureComponent<Props> {
             defaultValue={fundingAmount || ''}
             key="fundingAmount"
             label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
-            name="bid"
+            name="fundingAmount"
             onChange={this.handleChange}
           />
           <GlobalFormFieldToken
@@ -89,8 +96,8 @@ class RexInterfaceFund extends PureComponent<Props> {
             defaultValue={defundingAmount || ''}
             key="defundingAmount"
             label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
-            name="bid"
-            onChange={({ value}) => this.setState({ defundingAmount: value })}
+            name="defundingAmount"
+            onChange={this.handleChange}
           />
           {error && (
             <GlobalFormMessageError error={error} />
