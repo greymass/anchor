@@ -11,6 +11,12 @@ import {
   Modal,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
+import GlobalFormMessageError from '../../Global/Form/Message/Error';
+
+const invalidErrorMessage = {
+  rentCpu: 'cpu_amoun_invalid',
+  rentNet: 'net_amount_invalid',
+};
 
 class RexInterfaceFund extends PureComponent<Props> {
   state = {
@@ -19,6 +25,24 @@ class RexInterfaceFund extends PureComponent<Props> {
   confirmTransaction = () => {
     // confirm transaction
   };
+  handleChange = ({ name, value, valid }) => {
+    if (valid) {
+      this.setState({ [name]: value });
+    } else {
+      this.setState({ error: invalidErrorMessage[name] });
+    }
+
+    const balanceAmount = 100.00;
+    const costFor30days = 0.1;
+
+    if (['amountToSell', 'amountToBuy'].includes(name)) {
+      const notEnoughBalance = balanceAmount < value * costFor30days;
+
+      if (notEnoughBalance) {
+        this.setState({ error: 'not_enough_balance' });
+      }
+    }
+  };
   render() {
     const {
       connection,
@@ -26,8 +50,10 @@ class RexInterfaceFund extends PureComponent<Props> {
     } = this.props;
     const {
       confirming,
+      error,
       resourceAmount,
-      resourceType
+      resourceType,
+      transactionType
     } = this.state;
 
     const costFor30days = 0.1;
@@ -39,6 +65,8 @@ class RexInterfaceFund extends PureComponent<Props> {
         value: transactionType
       }
     ));
+
+    const saveDisabled = error || !resourceAmount;
 
     return (
       <Segment basic>
@@ -77,8 +105,9 @@ class RexInterfaceFund extends PureComponent<Props> {
             <br />
             <Dropdown
               autoFocus
-              defaultValue="sell"
-              onChange={({ value }) => this.setState({ transactionType: value })}
+              defaultValue="rent_cpu"
+              name="transactionType"
+              onChange={({ name, value }) => this.handleChange({ name, value, valid: true })}
               options={dropdownOptions}
               search
               selection
@@ -89,14 +118,18 @@ class RexInterfaceFund extends PureComponent<Props> {
           <GlobalFormFieldToken
             connection={connection}
             defaultValue={resourceAmount || ''}
-            label={t('rex_interface_rent_resources_amount_label')}
-            name="bid"
-            onChange={({ value}) => this.setState({ resourceAmount: value })}
+            label={t('rex_interface_rent_resources_amount_label', { chainSymbol: connection.chainSymbol })}
+            name="resourceAmount"
+            onChange={this.handleChange}
           />
-          { resourceAmount && t('rex_interface_rent_confirmation_modal_rent_net', { cost: resourceAmount * costFor30days }) }
+          { resourceAmount && t('rex_interface_rent_confirmation_modal_rent_net', { cost: resourceAmount * costFor30days, type: transactionType }) }
+          {error && (
+            <GlobalFormMessageError error={error} />
+          )}
           <Button
-            onClick={() => this.setState({ confirming: true })}
             content={t('rex_interface_rent_resources_button')}
+            disabled={saveDisabled}
+            onClick={() => this.setState({ confirming: true })}
           />
         </Form>
       </Segment>
