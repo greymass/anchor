@@ -1,0 +1,13 @@
+{
+  "rex_interface_about_header": "Rex is the new eosio set of contracts that allow EOS users to earn passive income from their EOS. \n\n The idea is that one can assign the EOS they own to a fund and receive REX tokens in exchange. The staking power coming from the EOS that is exchanged for Rex will then be lent to users that in exchange will pay a small fee to that same fund. Furthermore,  that fund is also where users purchasing EOS names must send their funds. Because the amount of REX is finite, the result is that the EOS to REX ration can only go up meaning that whoever lends their EOS to the fund will at least recover the entirety of those funds, but can almost always expect more.\n\n",
+  "rex_interface_about_warning": "Please note that only users that have voted for 21 block producers or delegated their voting power are allowed to use REX.",
+  "rex_interface_fund_confirmation_modal_header_funding": "Confirm funding amount:",
+  "rex_interface_fund_confirmation_modal_header_defunding": "Confirm defunding amount:",
+  "rex_interface_fund_confirmation_modal_funding": "About to add {{amount}} {{chainSymbol}} to your fund. The amount will be removed from your balance and will show up in your fund.",
+  "rex_interface_fund_confirmation_modal_defunding": "About to remove {{amount}} {{chainSymbol}} from your fund. The amount will be added to your balance.",
+  "rex_interface_fund_message": "This is the first step no matter how you want to use REX. The {{chainSymbol}} added to your fund here will be available either rent resources or generate revenue.",
+  "rex_interface_fund_label_fund": "Funding Amount (in {{chainSymbol}})",
+  "rex_interface_fund_label_defund": "Defunding Amount (in {{chainSymbol}})",
+  "rex_interface_fund_button": "Fund",
+
+}
