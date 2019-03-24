@@ -10,10 +10,26 @@ import {
   Modal,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
+import GlobalFormMessageError from '../../Global/Form/Message/Error';
+
+const invalidErrorMessage = {
+  defundingAmount: 'defunding_amount_invalid',
+  fundingAmount: 'funding_amount_invalid',
+};
 
 class RexInterfaceFund extends PureComponent<Props> {
+  state = {
+    confirming: false
+  };
   confirmTransaction = () => {
     // confirm transaction
+  };
+  handleChange = ({ name, value, valid }) => {
+    if (valid) {
+      this.setState({ [name]: value });
+    } else {
+      this.setState({ error: invalidErrorMessage[name] });
+    }
   };
   render() {
     const {
@@ -22,9 +38,12 @@ class RexInterfaceFund extends PureComponent<Props> {
     } = this.props;
     const {
       confirming,
-      defundingAmount
-      fundingAmount,
+      defundingAmount,
+      error,
+      fundingAmount
     } = this.state;
+
+    const saveDisabled = fundingAmount && defundingAmount && !isEmpty(error);
 
     return (
       <Segment basic>
@@ -60,19 +79,26 @@ class RexInterfaceFund extends PureComponent<Props> {
           <GlobalFormFieldToken
             connection={connection}
             defaultValue={fundingAmount || ''}
-            label={t('rex_interface_fund_label', { chainSymbol: connection.chainSymbol })}
+            key="fundingAmount"
+            label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
             name="bid"
-            onChange={({ value}) => this.setState({ fundingAmount: value })}
+            onChange={this.handleChange}
           />
           <GlobalFormFieldToken
             connection={connection}
             defaultValue={defundingAmount || ''}
-            label={t('rex_interface_defund_label', { chainSymbol: connection.chainSymbol })}
+            key="defundingAmount"
+            label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
             name="bid"
             onChange={({ value}) => this.setState({ defundingAmount: value })}
           />
+          {error && (
+            <GlobalFormMessageError error={error} />
+          )}
           <Button
             onClick={() => this.setState({ confirming: true })}
+            content={t('rex_interface_fund_button')}
+            disabled={saveDisabled}
           />
         </Form>
       </Segment>

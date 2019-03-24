@@ -33,6 +33,7 @@ import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
 import ToolsSystemLog from '../components/Tools/System/Log';
 import ToolsWallets from '../components/Tools/Wallets';
+import RexInterface from './Rex/Interface';
 
 import * as AccountsActions from '../actions/accounts';
 import * as BEOSWithdrawActions from '../actions/blockchains/beos/withdraw';
@@ -163,6 +164,11 @@ const paneMapping = [
     requiredContract: 'producerinfo'
   },
   {
+    element: RexInterface,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'rex_interface',
+  },
+  {
     element: ToolsContacts,
     modes: ['hot', 'watch', 'ledger'],
     name: 'contacts',
@@ -238,9 +244,9 @@ class ToolsContainer extends Component<Props> {
       t
     } = this.props;
     return paneMapping
-    .filter((pane) => {
-      const {
-        settings
+      .filter((pane) => {
+        const {
+          settings
         } = this.props;
         const {
           skipImport,
