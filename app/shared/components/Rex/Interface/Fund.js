@@ -50,7 +50,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       fundingAmount
     } = this.state;
 
-    const saveDisabled = error || !fundingAmount || !defundingAmount;
+    const fundDisabled = error || !fundingAmount || !defundingAmount;
 
     return (
       <Segment basic>
@@ -59,28 +59,35 @@ class RexInterfaceFund extends PureComponent<Props> {
             centered={false}
             open
           >
-            <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header')} />
-            <Modal.Content>
-              {fundingAmount ? (
-                <h2>
-                  {t('rex_interface_fund_confirmation_modal_funding', { fundingAmount })}
-                </h2>
-              ) : (
-                <h2>
-                  {t('rex_interface_fund_confirmation_modal_defunding', { defundingAmount })}
-                </h2>
-              )}
-              <Button
-                content={t('rex_interface_fund_confirmation_modal_button')}
-                onClick={this.confirmTransaction}
-              />
-            </Modal.Content>
+            {fundingAmount ? (
+              <React.Fragment>
+                <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header_funding', { fundingType: (fundingAmount ? 'funding' : 'defunding') })} />
+                <Modal.Content>
+                  <h2>
+                    {t('rex_interface_fund_confirmation_modal_funding', { chainSymbol: connection.chainSymbol })}
+                  </h2>
+                </Modal.Content>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header_funding', { fundingType: (fundingAmount ? 'funding' : 'defunding') })} />
+                <Modal.Content>
+                  <h2>
+                    {t('rex_interface_fund_confirmation_modal_defunding', { chainSymbol: connection.chainSymbol  })}
+                  </h2>
+                </Modal.Content>
+              </React.Fragment>
+            )}
+            <Button
+              content={t('common:confirm')}
+              onClick={this.confirmTransaction}
+            />
           </Modal>
         )}
         <Message
           warning
         >
-          {t('rex_interface_fund_message')}
+          {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
         </Message>
         <Form>
           <GlobalFormFieldToken
@@ -105,7 +112,7 @@ class RexInterfaceFund extends PureComponent<Props> {
           <Button
             onClick={() => this.setState({ confirming: true })}
             content={t('rex_interface_fund_button')}
-            disabled={saveDisabled}
+            disabled={fundDisabled}
           />
         </Form>
       </Segment>
