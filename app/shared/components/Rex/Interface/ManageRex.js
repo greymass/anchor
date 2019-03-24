@@ -11,6 +11,12 @@ import {
   Modal,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
+import GlobalFormMessageError from '../../Global/Form/Message/Error';
+
+const invalidErrorMessage = {
+  amountToBuy: 'amount_to_buy_invalid',
+  amountToSell: 'amount_to_sell_invalid'
+};
 
 class RexInterfaceManageRex extends PureComponent<Props> {
   state = {
@@ -18,7 +24,23 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     transactionType: 'buy'
   };
   confirmTransaction = () => {
-    // confirm transaction
+    // confirm transactions
+  };
+  handleChange = ({ name, value, valid }) => {
+    if (valid) {
+      this.setState({ [name]: value });
+    } else {
+      this.setState({ error: invalidErrorMessage[name] });
+    }
+
+    const fundAmount = 100.00;
+    if (['amountToSell', 'amountToBuy'].includes(name)) {
+      const notEnoughBalance = fundAmount < value;
+
+      if (notEnoughBalance) {
+        this.setState({ error: 'not_enough_balance' });
+      }
+    }
   };
   render() {
     const {
@@ -26,9 +48,10 @@ class RexInterfaceManageRex extends PureComponent<Props> {
       t
     } = this.props;
     const {
+      amountToBuy,
+      amountToSell,
       confirming,
-      eosAmount,
-      rexAmount,
+      error,
       transactionType
     } = this.state;
 
@@ -42,6 +65,8 @@ class RexInterfaceManageRex extends PureComponent<Props> {
       }
     ));
 
+    const saveDisabled = error || (!amountToBuy && !amountToSell);
+
     return (
       <Segment basic>
         {confirming && (
@@ -51,7 +76,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           >
             <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
             <Modal.Content>
-              {eosAmount ? (
+              {amountToBuy ? (
                 <h2>
                   {t('rex_interface_manage_rex_confirmation_modal_buy_rex', { eosAmount })}
                 </h2>
@@ -78,8 +103,9 @@ class RexInterfaceManageRex extends PureComponent<Props> {
             <br />
             <Dropdown
               autoFocus
-              defaultValue="sell"
-              onChange={({ value }) => this.setState({ transactionType: value })}
+              defaultValue="amountToBuy"
+              name="transactionType"
+              onChange={({ name, value }) => this.handleChange({ name, value, valid: true })}
               options={dropdownOptions}
               search
               selection
@@ -91,26 +117,30 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           {transactionType ? (
             <GlobalFormFieldToken
               connection={connection}
-              defaultValue={eosAmount || ''}
+              defaultValue={amountToBuy || ''}
               label={t('rex_interface_manage_rex_buy', { chainSymbol: connection.chainSymbol })}
-              name="bid"
-              onChange={({ value }) => this.setState({ eosAmount: value })}
+              name="amountToBuy"
+              onChange={this.handleChange}
             />
           ) : (
             <GlobalFormFieldToken
               connection={connection}
-              defaultValue={rexAmount || ''}
+              defaultValue={amountToSell || ''}
               label={t('rex_interface_manage_rex_sell', { chainSymbol: connection.chainSymbol })}
-              name="bid"
-              onChange={({ value}) => this.setState({ rexAmount: value })}
+              name="amountToSell"
+              onChange={this.handleChange}
             />
           )}
 
-          { eosAmount && t('rex_interface_manage_rex_amount_in_rex', { cost: eosAmount * priceOfRex }) }
-          { eosAmount && t('rex_interface_manage_rex_amount_in_eos', { cost: rexAmount / priceOfRex }) }
+          { amountToBuy && t('rex_interface_manage_rex_amount_in_rex', { cost: amountToBuy * priceOfRex }) }
+          { amountToSell && t('rex_interface_manage_rex_amount_in_eos', { cost: amountToSell / priceOfRex }) }
+          {error && (
+            <GlobalFormMessageError error={error} />
+          )}
           <Button
-            onClick={() => this.setState({ confirming: true })}
             content={t('rex_interface_manage_rex_button')}
+            disabled={saveDisabled}
+            onClick={() => this.setState({ confirming: true })}
           />
         </Form>
       </Segment>
