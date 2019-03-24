@@ -13,11 +13,6 @@ import {
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 
-const invalidErrorMessage = {
-  amountToBuy: 'amount_to_buy_invalid',
-  amountToSell: 'amount_to_sell_invalid'
-};
-
 class RexInterfaceManageRex extends PureComponent<Props> {
   state = {
     confirming: false,
@@ -30,7 +25,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     if (valid) {
       this.setState({ [name]: value });
     } else {
-      this.setState({ error: invalidErrorMessage[name] });
+      this.setState({ error: 'Invalid Amount' });
     }
 
     const fundAmount = 100.00;
@@ -38,7 +33,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
       const notEnoughBalance = fundAmount < value;
 
       if (notEnoughBalance) {
-        this.setState({ error: 'not_enough_balance' });
+        this.setState({ error: 'insufficient_balance' });
       }
     }
   };
@@ -78,15 +73,23 @@ class RexInterfaceManageRex extends PureComponent<Props> {
             <Modal.Content>
               {amountToBuy ? (
                 <h2>
-                  {t('rex_interface_manage_rex_confirmation_modal_buy_rex', { eosAmount })}
+                  {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
+                    amountToBuy,
+                    rexAmount: (amountToBuy / priceOfRex),
+                    chainSymbol: connection.chainSymbol
+                  })}
                 </h2>
               ) : (
                 <h2>
-                  {t('rex_interface_manage_rex_confirmation_modal_sell_rex', { rexAmount })}
+                  {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
+                    amountToSell,
+                    chainAmount: (amountToBuy * priceOfRex),
+                    chainSymbol: connection.chainSymbol
+                  })}
                 </h2>
               )}
               <Button
-                content={t('rex_interface_manage_rex_confirmation_modal_button')}
+                content={t('common:confirm')}
                 onClick={this.confirmTransaction}
               />
             </Modal.Content>
@@ -95,7 +98,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
         <Message
           warning
         >
-          {t('rex_interface_manage_rex_message')}
+          {t('rex_interface_manage_rex_message', { chainSymbo: connection.chainSymbol })}
         </Message>
         <Form>
           <label>
