@@ -13,6 +13,9 @@ import {
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 
 class RexInterfaceFund extends PureComponent<Props> {
+  state = {
+    confirming: false
+  };
   confirmTransaction = () => {
     // confirm transaction
   };
@@ -24,10 +27,18 @@ class RexInterfaceFund extends PureComponent<Props> {
     const {
       confirming,
       resourceAmount,
-      resourceType,
+      resourceType
     } = this.state;
 
     const costFor30days = 0.1;
+
+    const dropdownOptions = ['sell', 'buy'].map((transactionType) => (
+      {
+        key: transactionType,
+        text: transactionType,
+        value: transactionType
+      }
+    ));
 
     return (
       <Segment basic>
@@ -60,11 +71,21 @@ class RexInterfaceFund extends PureComponent<Props> {
           {t('rex_interface_fund_message')}
         </Message>
         <Form>
-          <Dropdown
-            label={t('rex_interface_rent_resources_amount_label')}
-            onChange={({ value}) => this.setState({ resourceType: value })}
-            options={['cpu', 'net']}
-          />
+
+          <label>
+            <strong>{t('rex_interface_rent_resources_amount_label')}</strong>
+            <br />
+            <Dropdown
+              autoFocus
+              defaultValue="sell"
+              onChange={({ value }) => this.setState({ transactionType: value })}
+              options={dropdownOptions}
+              search
+              selection
+            />
+          </label>
+          <br />
+          <br />
           <GlobalFormFieldToken
             connection={connection}
             defaultValue={resourceAmount || ''}
@@ -75,6 +96,7 @@ class RexInterfaceFund extends PureComponent<Props> {
           { resourceAmount && t('rex_interface_rent_confirmation_modal_rent_net', { cost: resourceAmount * costFor30days }) }
           <Button
             onClick={() => this.setState({ confirming: true })}
+            content={t('rex_interface_rent_resources_button')}
           />
         </Form>
       </Segment>

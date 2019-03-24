@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Button,
+  Dropdown,
   Form,
   Message,
   Segment,
@@ -10,9 +11,12 @@ import {
   Modal,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
-import { Dropdown } from './RentResources';
 
 class RexInterfaceManageRex extends PureComponent<Props> {
+  state = {
+    confirming: false,
+    transactionType: 'buy'
+  };
   confirmTransaction = () => {
     // confirm transaction
   };
@@ -29,6 +33,14 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     } = this.state;
 
     const priceOfRex = 0.001;
+
+    const dropdownOptions = ['sell', 'buy'].map((transactionType) => (
+      {
+        key: transactionType,
+        text: transactionType,
+        value: transactionType
+      }
+    ));
 
     return (
       <Segment basic>
@@ -61,11 +73,20 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           {t('rex_interface_manage_rex_message')}
         </Message>
         <Form>
-          <Dropdown
-            label={t('rex_interface_rent_resources_amount_label')}
-            onChange={({ value}) => this.setState({ transactionType: value })}
-            options={['sell', 'buy']}
-          />
+          <label>
+            <strong>{t('rex_interface_manage_rex_amount_label')}</strong>
+            <br />
+            <Dropdown
+              autoFocus
+              defaultValue="sell"
+              onChange={({ value }) => this.setState({ transactionType: value })}
+              options={dropdownOptions}
+              search
+              selection
+            />
+          </label>
+          <br />
+          <br />
 
           {transactionType ? (
             <GlobalFormFieldToken
@@ -73,7 +94,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
               defaultValue={eosAmount || ''}
               label={t('rex_interface_manage_rex_buy', { chainSymbol: connection.chainSymbol })}
               name="bid"
-              onChange={({ value}) => this.setState({ eosAmount: value })}
+              onChange={({ value }) => this.setState({ eosAmount: value })}
             />
           ) : (
             <GlobalFormFieldToken
@@ -89,6 +110,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           { eosAmount && t('rex_interface_manage_rex_amount_in_eos', { cost: rexAmount / priceOfRex }) }
           <Button
             onClick={() => this.setState({ confirming: true })}
+            content={t('rex_interface_manage_rex_button')}
           />
         </Form>
       </Segment>
