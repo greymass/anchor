@@ -58,7 +58,7 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     const costFor30days = 0.1;
 
-    const dropdownOptions = ['sell', 'buy'].map((transactionType) => (
+    const dropdownOptions = ['cpu', 'net'].map((transactionType) => (
       {
         key: transactionType,
         text: transactionType,
@@ -99,9 +99,8 @@ class RexInterfaceFund extends PureComponent<Props> {
           {t('rex_interface_fund_message')}
         </Message>
         <Form>
-
           <label>
-            <strong>{t('rex_interface_rent_resources_amount_label')}</strong>
+            <strong>{t('rex_interface_transaction_type_label')}</strong>
             <br />
             <Dropdown
               autoFocus
@@ -122,7 +121,17 @@ class RexInterfaceFund extends PureComponent<Props> {
             name="resourceAmount"
             onChange={this.handleChange}
           />
-          { resourceAmount && t('rex_interface_rent_confirmation_modal_rent_net', { cost: resourceAmount * costFor30days, type: transactionType }) }
+          { resourceAmount &&
+            t(
+              'rex_interface_rent_confirmation_modal_rent_net',
+              {
+                amount: resourceAmount,
+                chainSymbol: connection.chainSymbol,
+                cost: resourceAmount * costFor30days,
+                type: transactionType
+              }
+            )
+          }
           {error && (
             <GlobalFormMessageError error={error} />
           )}
