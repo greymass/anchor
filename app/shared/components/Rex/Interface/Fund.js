@@ -20,7 +20,8 @@ const invalidErrorMessage = {
 
 class RexInterfaceFund extends PureComponent<Props> {
   state = {
-    confirming: false
+    confirming: false,
+    transactionType: 'fund'
   };
   confirmTransaction = () => {
     // confirm transaction
@@ -57,7 +58,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     const dropdownOptions = ['fund', 'defund'].map((transactionType) => (
       {
         key: transactionType,
-        text: transactionType,
+        text: t(`rex_interface_fund_options_${transactionType}`),
         value: transactionType
       }
     ));
@@ -100,42 +101,40 @@ class RexInterfaceFund extends PureComponent<Props> {
           {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
         </Message>
         <Form>
-          <label>
-            <strong>{t('rex_interface_transaction_type_label')}</strong>
-            <br />
-            <Dropdown
-              autoFocus
-              defaultValue="fund"
-              name="transactionType"
-              onChange={(e) => this.handleChange({
-                name: 'transactionType',
-                value: e.target.value,
-                valid: true
-              })}
-              options={dropdownOptions}
-              search
-              selection
-            />
-          </label>
-          {transactionType === 'fund' ? (
-            <GlobalFormFieldToken
-              connection={connection}
-              defaultValue={fundingAmount || ''}
-              key="fundingAmount"
-              label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
-              name="fundingAmount"
-              onChange={this.handleChange}
-            />
-          ) : (
-            <GlobalFormFieldToken
-              connection={connection}
-              defaultValue={defundingAmount || ''}
-              key="defundingAmount"
-              label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
-              name="defundingAmount"
-              onChange={this.handleChange}
-            />
-          )}
+          <Form.Group widths="equal">
+            <label>
+              <strong>{t('rex_interface_transaction_type_label')}</strong>
+              <br />
+              <Dropdown
+                autoFocus
+                defaultValue="fund"
+                name="transactionType"
+                onChange={(e, props) => this.handleChange({ ...props, valid: true })}
+                options={dropdownOptions}
+                selection
+                style={{ marginTop: '4px' }}
+              />
+            </label>
+            {transactionType === 'fund' ? (
+              <GlobalFormFieldToken
+                connection={connection}
+                defaultValue={fundingAmount || ''}
+                key="fundingAmount"
+                label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
+                name="fundingAmount"
+                onChange={this.handleChange}
+              />
+            ) : (
+              <GlobalFormFieldToken
+                connection={connection}
+                defaultValue={defundingAmount || ''}
+                key="defundingAmount"
+                label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
+                name="defundingAmount"
+                onChange={this.handleChange}
+              />
+            )}
+          </Form.Group>
 
           {error && (
             <GlobalFormMessageError error={error} />
