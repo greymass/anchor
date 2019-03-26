@@ -1,14 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-
 import { Tab } from 'semantic-ui-react';
 
 import RexInterfaceAbout from '../../components/Rex/Interface/About';
 import RexInterfaceFund from '../../components/Rex/Interface/Fund';
 import RexInterfaceManageRex from '../../components/Rex/Interface/ManageRex';
 import RexInterfaceRentResources from '../../components/Rex/Interface/RentResources';
+import { translate } from "react-i18next";
 
 type Props = {
   actions: {},
@@ -33,7 +32,7 @@ class RexInterface extends Component<Props> {
         menuItem: {
           key: 'about',
           icon: 'info',
-          content: t('rex_interface_about')
+          content: t('rex_interface_menu_about')
         },
         pane: {
           key: 'about',
@@ -46,7 +45,7 @@ class RexInterface extends Component<Props> {
         menuItem: {
           key: 'fund',
           icon: 'arrow down',
-          content: t('rex_interface_fund')
+          content: t('rex_interface_menu_fund')
         },
         pane: {
           key: 'fund',
@@ -62,7 +61,7 @@ class RexInterface extends Component<Props> {
         menuItem: {
           key: 'manage_rex',
           icon: 'arrow right',
-          content: t('rex_interface_manage_rex')
+          content: t('rex_interface_menu_manage_rex')
         },
         pane: {
           key: 'manage_rex',
@@ -78,7 +77,7 @@ class RexInterface extends Component<Props> {
         menuItem: {
           key: 'rent_resources',
           icon: 'arrow down',
-          content: t('rex_interface_rent_resources')
+          content: t('rex_interface_menu_rent_resources')
         },
         pane: {
           key: 'rent_resources',
@@ -112,4 +111,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(RexInterface));
+export default translate('rex')(connect(mapStateToProps)(RexInterface));
