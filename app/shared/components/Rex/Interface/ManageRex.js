@@ -52,7 +52,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
 
     const priceOfRex = 0.001;
 
-    const dropdownOptions = ['sell', 'buy'].map((transactionType) => (
+    const dropdownOptions = ['buy', 'sell'].map((transactionType) => (
       {
         key: transactionType,
         text: transactionType,
@@ -98,17 +98,22 @@ class RexInterfaceManageRex extends PureComponent<Props> {
         <Message
           warning
         >
-          {t('rex_interface_manage_rex_message', { chainSymbo: connection.chainSymbol })}
+          {t('rex_interface_manage_rex_message', { chainSymbol: connection.chainSymbol })}
         </Message>
         <Form>
           <label>
-            <strong>{t('rex_interface_manage_rex_amount_label')}</strong>
+            <strong>{t('rex_interface_transaction_type_label')}</strong>
+            <br />
             <br />
             <Dropdown
               autoFocus
-              defaultValue="amountToBuy"
+              defaultValue="buy"
               name="transactionType"
-              onChange={({ name, value }) => this.handleChange({ name, value, valid: true })}
+              onChange={(e) => this.handleChange({
+                name: 'transactionType',
+                value: e.target.value,
+                valid: true
+              })}
               options={dropdownOptions}
               search
               selection
@@ -117,7 +122,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           <br />
           <br />
 
-          {transactionType ? (
+          {transactionType === 'buy' ? (
             <GlobalFormFieldToken
               connection={connection}
               defaultValue={amountToBuy || ''}
@@ -141,7 +146,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
             <GlobalFormMessageError error={error} />
           )}
           <Button
-            content={t('rex_interface_manage_rex_button')}
+            content={transactionType === 'buy' ? t('rex_interface_manage_rex_buy_button') : t('rex_interface_manage_rex_sell_button')}
             disabled={saveDisabled}
             onClick={() => this.setState({ confirming: true })}
           />
