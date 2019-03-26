@@ -99,28 +99,28 @@ class RexInterfaceFund extends PureComponent<Props> {
           {t('rex_interface_fund_message')}
         </Message>
         <Form>
-          <label>
-            <strong>{t('rex_interface_transaction_type_label')}</strong>
-            <br />
-            <Dropdown
-              autoFocus
-              defaultValue="rent_cpu"
-              name="transactionType"
-              onChange={({ name, value }) => this.handleChange({ name, value, valid: true })}
-              options={dropdownOptions}
-              search
-              selection
+          <Form.Group widths="equal">
+            <label>
+              <strong>{t('rex_interface_transaction_type_label')}</strong>
+              <br />
+              <Dropdown
+                autoFocus
+                defaultValue="cpu"
+                name="transactionType"
+                onChange={({ name, value }) => this.handleChange({ name, value, valid: true })}
+                options={dropdownOptions}
+                selection
+                style={{ marginTop: '4px' }}
+              />
+            </label>
+            <GlobalFormFieldToken
+              connection={connection}
+              defaultValue={resourceAmount || ''}
+              label={t('rex_interface_rent_resources_amount_label', { chainSymbol: connection.chainSymbol })}
+              name="resourceAmount"
+              onChange={this.handleChange}
             />
-          </label>
-          <br />
-          <br />
-          <GlobalFormFieldToken
-            connection={connection}
-            defaultValue={resourceAmount || ''}
-            label={t('rex_interface_rent_resources_amount_label', { chainSymbol: connection.chainSymbol })}
-            name="resourceAmount"
-            onChange={this.handleChange}
-          />
+          </Form.Group>
           { resourceAmount &&
             t(
               'rex_interface_rent_confirmation_modal_rent_net',

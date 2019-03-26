@@ -55,7 +55,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     const dropdownOptions = ['buy', 'sell'].map((transactionType) => (
       {
         key: transactionType,
-        text: transactionType,
+        text: t(`rex_interface_${transactionType}`),
         value: transactionType
       }
     ));
@@ -101,44 +101,43 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           {t('rex_interface_manage_rex_message', { chainSymbol: connection.chainSymbol })}
         </Message>
         <Form>
-          <label>
-            <strong>{t('rex_interface_transaction_type_label')}</strong>
-            <br />
-            <br />
-            <Dropdown
-              autoFocus
-              defaultValue="buy"
-              name="transactionType"
-              onChange={(e) => this.handleChange({
-                name: 'transactionType',
-                value: e.target.value,
-                valid: true
-              })}
-              options={dropdownOptions}
-              search
-              selection
-            />
-          </label>
-          <br />
-          <br />
+          <Form.Group widths="equal">
+            <label>
+              <strong>{t('rex_interface_transaction_type_label')}</strong>
+              <br />
+              <Dropdown
+                autoFocus
+                defaultValue="buy"
+                name="transactionType"
+                onChange={(e) => this.handleChange({
+                  name: 'transactionType',
+                  value: e.target.value,
+                  valid: true
+                })}
+                options={dropdownOptions}
+                selection
+                style={{ marginTop: '4px' }}
+              />
+            </label>
 
-          {transactionType === 'buy' ? (
-            <GlobalFormFieldToken
-              connection={connection}
-              defaultValue={amountToBuy || ''}
-              label={t('rex_interface_manage_rex_buy', { chainSymbol: connection.chainSymbol })}
-              name="amountToBuy"
-              onChange={this.handleChange}
-            />
-          ) : (
-            <GlobalFormFieldToken
-              connection={connection}
-              defaultValue={amountToSell || ''}
-              label={t('rex_interface_manage_rex_sell', { chainSymbol: connection.chainSymbol })}
-              name="amountToSell"
-              onChange={this.handleChange}
-            />
-          )}
+            {transactionType === 'buy' ? (
+              <GlobalFormFieldToken
+                connection={connection}
+                defaultValue={amountToBuy || ''}
+                label={t('rex_interface_manage_rex_buy', { chainSymbol: connection.chainSymbol })}
+                name="amountToBuy"
+                onChange={this.handleChange}
+              />
+            ) : (
+              <GlobalFormFieldToken
+                connection={connection}
+                defaultValue={amountToSell || ''}
+                label={t('rex_interface_manage_rex_sell', { chainSymbol: connection.chainSymbol })}
+                name="amountToSell"
+                onChange={this.handleChange}
+              />
+            )}
+          </Form.Group>
 
           { amountToBuy && t('rex_interface_manage_rex_amount_in_rex', { cost: amountToBuy * priceOfRex }) }
           { amountToSell && t('rex_interface_manage_rex_amount_in_eos', { cost: amountToSell / priceOfRex }) }
