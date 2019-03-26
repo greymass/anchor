@@ -26,5 +26,7 @@
   "rex_interface_manage_rex_message": "This is where you can use the {{chainSymbol}} in your fund to purchase  some REX and potentially generate some revenue.",
   "rex_interface_transaction_type_label": "Type of transaction",
   "rex_interface_manage_rex_buy": "Buying Amount (in {{chainSymbol}})",
-  "rex_interface_manage_rex_sell": "Selling Amount (in Rex)"
+  "rex_interface_manage_rex_sell": "Selling Amount (in Rex)",
+  "rex_interface_fund_options_fund": "Add Funds",
+  "rex_interface_fund_options_defund": "Remove Funds"
 }
