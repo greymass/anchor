@@ -49,6 +49,7 @@ import * as ProducersActions from '../actions/producers';
 import * as ProposalsActions from '../actions/governance/proposals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
+import * as RexActions from '../actions/system/rexActions';
 import * as SettingsActions from '../actions/settings';
 import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
@@ -164,11 +165,6 @@ const paneMapping = [
     requiredContract: 'producerinfo'
   },
   {
-    element: RexInterface,
-    modes: ['hot', 'watch', 'ledger'],
-    name: 'rex_interface',
-  },
-  {
     element: ToolsContacts,
     modes: ['hot', 'watch', 'ledger'],
     name: 'contacts',
@@ -198,6 +194,11 @@ const paneMapping = [
     element: ToolsProxy,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'proxy',
+  },
+  {
+    element: RexInterface,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'rex_interface',
   },
   {
     header: true,
@@ -397,6 +398,7 @@ function mapDispatchToProps(dispatch) {
       ...ProposalsActions,
       ...RegProxyActions,
       ...RegproxyinfoActions,
+      ...RexActions,
       ...SettingsActions,
       ...StakeActions,
       ...SystemStateActions,

@@ -56,7 +56,7 @@ class ToolsProxy extends Component<Props> {
   }
 
   onFetchRecentBids = (e) => {
-    const  { actions } = this.props;
+    const { actions } = this.props;
 
     const {
       getBidsForAccount
