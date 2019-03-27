@@ -25,7 +25,7 @@ class ContractInterfaceTabData extends Component<Props> {
           displayObjectSize={false}
           iconStyle="square"
           name={null}
-          src={contract}
+          src={{}}
           style={{ padding: '1em' }}
           theme="harmonic"
         />
