@@ -87,6 +87,7 @@ export function clearTransaction() {
 }
 
 export function setTransaction(data) {
+  console.log({data})
   return (dispatch: () => void) => {
     try {
       dispatch({
