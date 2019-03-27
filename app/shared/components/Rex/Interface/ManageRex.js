@@ -55,7 +55,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     const dropdownOptions = ['buy', 'sell'].map((transactionType) => (
       {
         key: transactionType,
-        text: t(`rex_interface_${transactionType}`),
+        text: t(`rex_interface_manage_rex_options_${transactionType}`),
         value: transactionType
       }
     ));
