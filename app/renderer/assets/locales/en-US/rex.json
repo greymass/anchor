@@ -1,6 +1,8 @@
 {
   "rex_interface_menu_about": "About",
   "rex_interface_menu_fund": "Fund",
+  "rex_interface_manage_rex_options_buy": "Buy Rex",
+  "rex_interface_manage_rex_options_sell": "Sell Rex",
   "rex_interface_menu_manage_rex": "Manage Rex",
   "rex_interface_menu_rent_resources": "Rent Resources",
   "rex_interface_about_header": "Rex is the new EOSIO set of contracts that allow EOS users to earn passive income from their EOS. \n\n The idea is that one can assign the EOS they own to a fund and receive REX tokens in exchange. The staking power coming from the EOS that is exchanged for Rex will then be lent to users that in exchange will pay a small fee to that same fund. Furthermore,  that fund is also where users purchasing EOS names must send their funds. Because the amount of REX is finite, the result is that the EOS to REX ration can only go up meaning that whoever lends their EOS to the fund will at least recover the entirety of those funds, but can almost always expect more.\n\n",
