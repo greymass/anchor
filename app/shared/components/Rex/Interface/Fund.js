@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Button,
+  Container,
   Dropdown,
   Form,
   Message,
@@ -27,18 +28,20 @@ class RexInterfaceFund extends PureComponent<Props> {
     // confirm transaction
   };
   handleChange = ({ name, value, valid }) => {
-    if (valid) {
-      this.setState({ [name]: value });
-    } else {
-      this.setState({ error: invalidErrorMessage[name] });
-    }
+    this.setState({ error: null }, () => {
+      if (valid) {
+        this.setState({ [name]: value });
+      } else {
+        return this.setState({ error: invalidErrorMessage[name] });
+      }
 
-    const balanceAmount = 100.00;
-    const notEnoughBalance = balanceAmount < value;
+      const balanceAmount = 100.00;
+      const notEnoughBalance = balanceAmount < value;
 
-    if (notEnoughBalance) {
-      this.setState({ error: 'not_enough_balance' });
-    }
+      if (notEnoughBalance) {
+        this.setState({ error: 'not_enough_balance' });
+      }
+    });
   };
   render() {
     const {
@@ -53,8 +56,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       transactionType
     } = this.state;
 
-    const fundDisabled = error || !fundingAmount || !defundingAmount;
-
+    const fundDisabled = error || (!fundingAmount && !defundingAmount);
     const dropdownOptions = ['fund', 'defund'].map((transactionType) => (
       {
         key: transactionType,
@@ -67,32 +69,43 @@ class RexInterfaceFund extends PureComponent<Props> {
       <Segment basic>
         {confirming && (
           <Modal
-            centered={false}
             open
+            size="small"
           >
             {fundingAmount ? (
               <React.Fragment>
                 <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header_funding', { fundingType: (fundingAmount ? 'funding' : 'defunding') })} />
                 <Modal.Content>
-                  <h2>
-                    {t('rex_interface_fund_confirmation_modal_funding', { chainSymbol: connection.chainSymbol })}
-                  </h2>
+                  <p>
+                    {t('rex_interface_fund_confirmation_modal_funding', { amount: fundingAmount, chainSymbol: connection.chainSymbol })}
+                  </p>
                 </Modal.Content>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header_funding', { fundingType: (fundingAmount ? 'funding' : 'defunding') })} />
                 <Modal.Content>
-                  <h2>
-                    {t('rex_interface_fund_confirmation_modal_defunding', { chainSymbol: connection.chainSymbol  })}
-                  </h2>
+                  <p>
+                    {t('rex_interface_fund_confirmation_modal_defunding', { amount: defundingAmount, hainSymbol: connection.chainSymbol  })}
+                  </p>
                 </Modal.Content>
               </React.Fragment>
             )}
-            <Button
-              content={t('common:confirm')}
-              onClick={this.confirmTransaction}
-            />
+            <Modal.Actions>
+              <Container>
+                <Button
+                  content={t('common:close')}
+                  onClick={() => this.setState({ confirming: false })}
+                  textAlign="left"
+                />
+                <Button
+                  color="green"
+                  content={t('common:confirm')}
+                  onClick={this.confirmTransaction}
+                  textAlign="right"
+                />
+              </Container>
+            </Modal.Actions>
           </Modal>
         )}
         <Message
@@ -122,7 +135,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                 key="fundingAmount"
                 label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
                 name="fundingAmount"
-                onChange={this.handleChange}
+                onChange={(e, props) => this.handleChange(props)}
               />
             ) : (
               <GlobalFormFieldToken
@@ -131,13 +144,16 @@ class RexInterfaceFund extends PureComponent<Props> {
                 key="defundingAmount"
                 label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
                 name="defundingAmount"
-                onChange={this.handleChange}
+                onChange={(e, props) => this.handleChange(props)}
               />
             )}
           </Form.Group>
 
           {error && (
-            <GlobalFormMessageError error={error} />
+            <GlobalFormMessageError
+              style={{ marginTop: '20px', marginBottom: '20px' }}
+              error={error}
+            />
           )}
           <Button
             onClick={() => this.setState({ confirming: true })}
