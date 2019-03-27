@@ -2,18 +2,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
+import { translate } from 'react-i18next';
 
 import RexInterfaceAbout from '../../components/Rex/Interface/About';
 import RexInterfaceFund from '../../components/Rex/Interface/Fund';
 import RexInterfaceManageRex from '../../components/Rex/Interface/ManageRex';
 import RexInterfaceRentResources from '../../components/Rex/Interface/RentResources';
-import { translate } from "react-i18next";
 
 type Props = {
   actions: {},
   accounts: {},
   connection: {},
   settings: {},
+  system: {},
   t: {}
 };
 
@@ -24,6 +25,8 @@ class RexInterface extends Component<Props> {
     const {
       actions,
       connection,
+      settings,
+      system,
       t
     } = this.props;
 
@@ -53,6 +56,8 @@ class RexInterface extends Component<Props> {
             <RexInterfaceFund
               actions={actions}
               connection={connection}
+              settings={settings}
+              system={system}
             />
           )
         }

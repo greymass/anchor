@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
+import GlobalTransactionHandler from '../../Global/Transaction/Handler';
 
 const invalidErrorMessage = {
   defundingAmount: 'defunding_amount_invalid',
@@ -24,8 +25,26 @@ class RexInterfaceFund extends PureComponent<Props> {
     confirming: false,
     transactionType: 'fund'
   };
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.clearSystemState();
+  }
   confirmTransaction = () => {
-    // confirm transaction
+    const { actions, settings } = this.props;
+    const { defundingAmount, fundingAmount, transactionType } = this.state;
+
+    if (transactionType === 'fund') {
+      actions.fund({
+        amount: fundingAmount,
+        owner: settings.account
+      });
+    } else {
+      actions.defund({
+        amount: defundingAmount,
+        owner: settings.account
+      });
+    }
   };
   handleChange = ({ name, value, valid }) => {
     this.setState({ error: null }, () => {
@@ -45,7 +64,11 @@ class RexInterfaceFund extends PureComponent<Props> {
   };
   render() {
     const {
+      actions,
+      blockExplorers,
       connection,
+      settings,
+      system,
       t
     } = this.props;
     const {
@@ -64,6 +87,17 @@ class RexInterfaceFund extends PureComponent<Props> {
         value: transactionType
       }
     ));
+    let transaction;
+    let contract;
+
+    const actionName = transactionType === 'fund' ? 'REX_FUND' : 'REX_DEFUND';
+
+    if (system && system[`${actionName}_LAST_TRANSACTION`]) {
+      transaction = system[`${actionName}_LAST_TRANSACTION`];
+    }
+    if (system && system[`${actionName}_LAST_CONTRACT`]) {
+      contract = system[`${actionName}_LAST_CONTRACT`];
+    }
 
     return (
       <Segment basic>
@@ -72,36 +106,54 @@ class RexInterfaceFund extends PureComponent<Props> {
             open
             size="small"
           >
-            {fundingAmount ? (
-              <React.Fragment>
-                <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header_funding', { fundingType: (fundingAmount ? 'funding' : 'defunding') })} />
-                <Modal.Content>
-                  <p>
-                    {t('rex_interface_fund_confirmation_modal_funding', { amount: fundingAmount, chainSymbol: connection.chainSymbol })}
-                  </p>
-                </Modal.Content>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header_funding', { fundingType: (fundingAmount ? 'funding' : 'defunding') })} />
-                <Modal.Content>
-                  <p>
-                    {t('rex_interface_fund_confirmation_modal_defunding', { amount: defundingAmount, hainSymbol: connection.chainSymbol  })}
-                  </p>
-                </Modal.Content>
-              </React.Fragment>
-            )}
+            <Header
+              icon="cubes"
+              content={
+                transactionType === 'fund' ?
+                  t('rex_interface_fund_confirmation_modal_header_funding') :
+                  t('rex_interface_fund_confirmation_modal_header_defunding')
+              }
+            />
+
+            <Modal.Content>
+              <GlobalTransactionHandler
+                actionName={transactionType === 'fund' ? 'REX_FUND' : 'REX_DEFUND'}
+                actions={actions}
+                blockExplorers={blockExplorers}
+                content={(
+                  <React.Fragment>
+                    {fundingAmount ? (
+                      <p>
+                        {t('rex_interface_fund_confirmation_modal_funding', { amount: fundingAmount })}
+                      </p>
+                    ) : (
+                      <p>
+                        {t('rex_interface_fund_confirmation_modal_defunding', { amount: defundingAmount })}
+                      </p>
+                    )}
+                  </React.Fragment>
+                )}
+                contract={contract}
+                onClose={this.onClose}
+                onSubmit={this.onSubmit}
+                settings={settings}
+                system={system}
+                transaction={transaction}
+              />
+
+            </Modal.Content>
             <Modal.Actions>
               <Container>
                 <Button
-                  content={t('common:close')}
-                  onClick={() => this.setState({ confirming: false })}
+                  color="green"
+                  content={t('common:confirm')}
+                  disabled={system.REX_FUND}
+                  onClick={this.confirmTransaction}
                   textAlign="left"
                 />
                 <Button
-                  color="green"
-                  content={t('common:confirm')}
-                  onClick={this.confirmTransaction}
+                  content={t('common:close')}
+                  onClick={() => this.setState({ confirming: false })}
                   textAlign="right"
                 />
               </Container>
