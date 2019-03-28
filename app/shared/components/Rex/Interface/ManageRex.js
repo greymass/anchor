@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Button,
+  Container,
   Dropdown,
   Form,
   Message,
@@ -12,14 +13,33 @@ import {
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
+import GlobalTransactionHandler from '../../Global/Transaction/Handler';
 
 class RexInterfaceManageRex extends PureComponent<Props> {
   state = {
     confirming: false,
     transactionType: 'buy'
   };
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.clearSystemState();
+  }
   confirmTransaction = () => {
-    // confirm transactions
+    // const { actions, settings } = this.props;
+    // const { amountToBuy, amountToSell, transactionType } = this.state;
+    //
+    // if (transactionType === 'buy') {
+    //   actions.buyRex({
+    //     amount: amountToBuy,
+    //     owner: settings.account
+    //   });
+    // } else {
+    //   actions.sellRex({
+    //     amount: amountToSell,
+    //     owner: settings.account
+    //   });
+    // }
   };
   handleChange = ({ name, value, valid }) => {
     if (valid) {
@@ -39,7 +59,11 @@ class RexInterfaceManageRex extends PureComponent<Props> {
   };
   render() {
     const {
+      actions,
+      blockExplorers,
       connection,
+      settings,
+      system,
       t
     } = this.props;
     const {
@@ -60,6 +84,18 @@ class RexInterfaceManageRex extends PureComponent<Props> {
       }
     ));
 
+    let transaction;
+    let contract;
+
+    const actionName = transactionType === 'fund' ? 'BUY_REX' : 'SELL_REX';
+
+    if (system && system[`${actionName}_LAST_TRANSACTION`]) {
+      transaction = system[`${actionName}_LAST_TRANSACTION`];
+    }
+    if (system && system[`${actionName}_LAST_CONTRACT`]) {
+      contract = system[`${actionName}_LAST_CONTRACT`];
+    }
+
     const saveDisabled = error || (!amountToBuy && !amountToSell);
 
     return (
@@ -71,28 +107,56 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           >
             <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
             <Modal.Content>
-              {amountToBuy ? (
-                <h2>
-                  {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
-                    amountToBuy,
-                    rexAmount: (amountToBuy / priceOfRex),
-                    chainSymbol: connection.chainSymbol
-                  })}
-                </h2>
-              ) : (
-                <h2>
-                  {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
-                    amountToSell,
-                    chainAmount: (amountToBuy * priceOfRex),
-                    chainSymbol: connection.chainSymbol
-                  })}
-                </h2>
-              )}
-              <Button
-                content={t('common:confirm')}
-                onClick={this.confirmTransaction}
+              <GlobalTransactionHandler
+                actionName={transactionType === 'buy' ? 'BUY_REX' : 'SELL_REX'}
+                actions={actions}
+                blockExplorers={blockExplorers}
+                content={(
+                  <React.Fragment>
+                    {amountToBuy ? (
+                      <p>
+                        {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
+                          amountToBuy,
+                          rexAmount: (amountToBuy / priceOfRex),
+                          chainSymbol: connection.chainSymbol
+                        })}
+                      </p>
+                    ) : (
+                      <p>
+                        {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
+                          amountToSell,
+                          chainAmount: (amountToBuy * priceOfRex),
+                          chainSymbol: connection.chainSymbol
+                        })}
+                      </p>
+                    )}
+                  </React.Fragment>
+                )}
+                contract={contract}
+                onClose={this.onClose}
+                onSubmit={this.onSubmit}
+                settings={settings}
+                system={system}
+                transaction={transaction}
               />
             </Modal.Content>
+
+            <Modal.Actions>
+              <Container>
+                <Button
+                  content={t('common:close')}
+                  onClick={() => this.setState({ confirming: false })}
+                  textAlign="left"
+                />
+                <Button
+                  color="green"
+                  content={t('common:confirm')}
+                  disabled={system.BUY_REX || system.SELL_REX}
+                  onClick={this.confirmTransaction}
+                  textAlign="right"
+                />
+              </Container>
+            </Modal.Actions>
           </Modal>
         )}
         <Message
