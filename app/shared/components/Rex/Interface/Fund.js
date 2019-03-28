@@ -31,20 +31,20 @@ class RexInterfaceFund extends PureComponent<Props> {
     actions.clearSystemState();
   }
   confirmTransaction = () => {
-    const { actions, settings } = this.props;
-    const { defundingAmount, fundingAmount, transactionType } = this.state;
-
-    if (transactionType === 'fund') {
-      actions.fund({
-        amount: fundingAmount,
-        owner: settings.account
-      });
-    } else {
-      actions.defund({
-        amount: defundingAmount,
-        owner: settings.account
-      });
-    }
+    // const { actions, settings } = this.props;
+    // const { defundingAmount, fundingAmount, transactionType } = this.state;
+    //
+    // if (transactionType === 'fund') {
+    //   actions.fund({
+    //     amount: fundingAmount,
+    //     owner: settings.account
+    //   });
+    // } else {
+    //   actions.defund({
+    //     amount: defundingAmount,
+    //     owner: settings.account
+    //   });
+    // }
   };
   handleChange = ({ name, value, valid }) => {
     this.setState({ error: null }, () => {
@@ -145,15 +145,15 @@ class RexInterfaceFund extends PureComponent<Props> {
             <Modal.Actions>
               <Container>
                 <Button
-                  color="green"
-                  content={t('common:confirm')}
-                  disabled={system.REX_FUND}
-                  onClick={this.confirmTransaction}
+                  content={t('common:close')}
+                  onClick={() => this.setState({ confirming: false })}
                   textAlign="left"
                 />
                 <Button
-                  content={t('common:close')}
-                  onClick={() => this.setState({ confirming: false })}
+                  color="green"
+                  content={t('common:confirm')}
+                  disabled={system.REX_FUND || system.REX_DEFUND}
+                  onClick={this.confirmTransaction}
                   textAlign="right"
                 />
               </Container>

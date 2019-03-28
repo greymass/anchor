@@ -24,6 +24,7 @@ class RexInterface extends Component<Props> {
   render() {
     const {
       actions,
+      blockExplorers,
       connection,
       settings,
       system,
@@ -55,6 +56,7 @@ class RexInterface extends Component<Props> {
           content: (
             <RexInterfaceFund
               actions={actions}
+              blockExplorers={blockExplorers}
               connection={connection}
               settings={settings}
               system={system}
@@ -73,7 +75,10 @@ class RexInterface extends Component<Props> {
           content: (
             <RexInterfaceManageRex
               actions={actions}
+              blockExplorers={blockExplorers}
               connection={connection}
+              settings={settings}
+              system={system}
             />
           )
         }
@@ -89,7 +94,10 @@ class RexInterface extends Component<Props> {
           content: (
             <RexInterfaceRentResources
               actions={actions}
+              blockExplorers={blockExplorers}
               connection={connection}
+              settings={settings}
+              system={system}
             />
           )
         }
@@ -111,6 +119,7 @@ class RexInterface extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    blockExplorers: state.blockExplorers[state.settings.account],
     connection: state.connection,
     settings: state.settings
   };
