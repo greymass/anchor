@@ -16,8 +16,7 @@ import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionHandler from '../../Global/Transaction/Handler';
 
 const invalidErrorMessage = {
-  rentCpu: 'cpu_amoun_invalid',
-  rentNet: 'net_amount_invalid',
+  resourceAmount: 'amount_invalid'
 };
 
 class RexInterfaceFund extends PureComponent<Props> {
@@ -46,23 +45,28 @@ class RexInterfaceFund extends PureComponent<Props> {
     //   });
     // }
   };
-  handleChange = ({ name, value, valid }) => {
-    if (valid) {
-      this.setState({ [name]: value });
-    } else {
-      this.setState({ error: invalidErrorMessage[name] });
-    }
+  handleChange = (e, { name, value, valid }) => {
+    console.log({e})
+    console.log({ name })
 
-    const balanceAmount = 100.00;
-    const costFor30days = 0.1;
-
-    if (['amountToSell', 'amountToBuy'].includes(name)) {
-      const notEnoughBalance = balanceAmount < value * costFor30days;
-
-      if (notEnoughBalance) {
-        this.setState({ error: 'not_enough_balance' });
+    this.setState({ error: null }, () => {
+      if (valid) {
+        this.setState({ [name]: value });
+      } else {
+        return this.setState({ error: invalidErrorMessage[name] });
       }
-    }
+
+      const fundAmount = 100.00;
+      const costFor30days = 0.1;
+
+      if (['resourceAmount'].includes(name)) {
+        const notEnoughBalance = fundAmount < value * costFor30days;
+
+        if (notEnoughBalance) {
+          this.setState({ error: 'not_enough_balance' });
+        }
+      }
+    });
   };
   render() {
     const {
@@ -94,7 +98,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     let transaction;
     let contract;
 
-    const actionName = transactionType === 'fund' ? 'BUY_REX' : 'SELL_REX';
+    const actionName = transactionType === 'cpu' ? 'RENT_CPU' : 'RENT_NET';
 
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
@@ -171,7 +175,14 @@ class RexInterfaceFund extends PureComponent<Props> {
                 autoFocus
                 defaultValue="cpu"
                 name="transactionType"
-                onChange={({ name, value }) => this.handleChange({ name, value, valid: true })}
+                onChange={(e) => this.handleChange(
+                  e,
+                  {
+                    name: 'transactionType',
+                    value: e.target.value,
+                    valid: true
+                  }
+                )}
                 options={dropdownOptions}
                 selection
                 style={{ marginTop: '4px' }}
@@ -197,7 +208,10 @@ class RexInterfaceFund extends PureComponent<Props> {
             )
           }
           {error && (
-            <GlobalFormMessageError error={error} />
+            <GlobalFormMessageError
+              style={{ marginTop: '20px', marginBottom: '20px' }}
+              error={error}
+            />
           )}
           <Button
             content={t('rex_interface_rent_resources_button')}

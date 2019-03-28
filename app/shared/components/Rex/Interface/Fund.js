@@ -54,7 +54,7 @@ class RexInterfaceFund extends PureComponent<Props> {
         return this.setState({ error: invalidErrorMessage[name] });
       }
 
-      const balanceAmount = 100.00;
+      const balanceAmount = 100.00; // Grab actual balance
       const notEnoughBalance = balanceAmount < value;
 
       if (notEnoughBalance) {
