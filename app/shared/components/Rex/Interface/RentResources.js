@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Button,
+  Container,
   Dropdown,
   Form,
   Message,
@@ -12,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
+import GlobalTransactionHandler from '../../Global/Transaction/Handler';
 
 const invalidErrorMessage = {
   rentCpu: 'cpu_amoun_invalid',
@@ -20,10 +22,29 @@ const invalidErrorMessage = {
 
 class RexInterfaceFund extends PureComponent<Props> {
   state = {
-    confirming: false
+    confirming: false,
+    transactionType: 'cpu'
   };
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.clearSystemState();
+  }
   confirmTransaction = () => {
-    // confirm transaction
+    // const { actions, settings } = this.props;
+    // const { resourceAmount, transactionType } = this.state;
+    //
+    // if (transactionType === 'cpu') {
+    //   actions.rentCpu({
+    //     amount: resourceAmount,
+    //     owner: settings.account
+    //   });
+    // } else {
+    //   actions.rentNet({
+    //     amount: resourceAmount,
+    //     owner: settings.account
+    //   });
+    // }
   };
   handleChange = ({ name, value, valid }) => {
     if (valid) {
@@ -45,7 +66,11 @@ class RexInterfaceFund extends PureComponent<Props> {
   };
   render() {
     const {
+      actions,
+      blockExplorers,
       connection,
+      settings,
+      system,
       t
     } = this.props;
     const {
@@ -66,6 +91,18 @@ class RexInterfaceFund extends PureComponent<Props> {
       }
     ));
 
+    let transaction;
+    let contract;
+
+    const actionName = transactionType === 'fund' ? 'BUY_REX' : 'SELL_REX';
+
+    if (system && system[`${actionName}_LAST_TRANSACTION`]) {
+      transaction = system[`${actionName}_LAST_TRANSACTION`];
+    }
+    if (system && system[`${actionName}_LAST_CONTRACT`]) {
+      contract = system[`${actionName}_LAST_CONTRACT`];
+    }
+
     const saveDisabled = error || !resourceAmount;
 
     return (
@@ -77,20 +114,47 @@ class RexInterfaceFund extends PureComponent<Props> {
           >
             <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header')} />
             <Modal.Content>
-              {resourceType === 'cpu' ? (
-                <h2>
-                  {t('rex_interface_rent_confirmation_modal_rent_cpu', { resourceAmount, cost })}
-                </h2>
-              ) : (
-                <h2>
-                  {t('rex_interface_rent_confirmation_modal_rent_net', { resourceAmount, cost })}
-                </h2>
-              )}
-              <Button
-                content={t('rex_interface_fund_confirmation_modal_button')}
-                onClick={this.confirmTransaction}
+              <GlobalTransactionHandler
+                actionName={transactionType === 'buy' ? 'BUY_REX' : 'SELL_REX'}
+                actions={actions}
+                blockExplorers={blockExplorers}
+                content={(
+                  <React.Fragment>
+                    {resourceType === 'cpu' ? (
+                      <p>
+                        {t('rex_interface_rent_confirmation_modal_rent_cpu', { resourceAmount, cost: (resourceAmount * costFor30days) })}
+                      </p>
+                    ) : (
+                      <p>
+                        {t('rex_interface_rent_confirmation_modal_rent_net', { resourceAmount, cost: (resourceAmount * costFor30days) })}
+                      </p>
+                    )}
+                  </React.Fragment>
+                )}
+                contract={contract}
+                onClose={this.onClose}
+                onSubmit={this.onSubmit}
+                settings={settings}
+                system={system}
+                transaction={transaction}
               />
             </Modal.Content>
+            <Modal.Actions>
+              <Container>
+                <Button
+                  content={t('common:close')}
+                  onClick={() => this.setState({ confirming: false })}
+                  textAlign="left"
+                />
+                <Button
+                  color="green"
+                  content={t('common:confirm')}
+                  disabled={system.RENT_CPU || system.RENT_NET}
+                  onClick={this.confirmTransaction}
+                  textAlign="right"
+                />
+              </Container>
+            </Modal.Actions>
           </Modal>
         )}
         <Message
