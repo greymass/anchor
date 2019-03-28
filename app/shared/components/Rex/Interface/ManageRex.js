@@ -42,20 +42,22 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     // }
   };
   handleChange = ({ name, value, valid }) => {
-    if (valid) {
-      this.setState({ [name]: value });
-    } else {
-      this.setState({ error: 'Invalid Amount' });
-    }
-
-    const fundAmount = 100.00;
-    if (['amountToSell', 'amountToBuy'].includes(name)) {
-      const notEnoughBalance = fundAmount < value;
-
-      if (notEnoughBalance) {
-        this.setState({ error: 'insufficient_balance' });
+    this.setState({ error: null }, () => {
+      if (valid) {
+        this.setState({ [name]: value });
+      } else {
+        return this.setState({ error: 'Invalid Amount' });
       }
-    }
+
+      const fundAmount = 100.00;
+      if (['amountToSell', 'amountToBuy'].includes(name)) {
+        const notEnoughBalance = fundAmount < value;
+
+        if (notEnoughBalance) {
+          this.setState({ error: 'insufficient_balance' });
+        }
+      }
+    });
   };
   render() {
     const {
@@ -206,7 +208,10 @@ class RexInterfaceManageRex extends PureComponent<Props> {
           { amountToBuy && t('rex_interface_manage_rex_amount_in_rex', { cost: amountToBuy * priceOfRex }) }
           { amountToSell && t('rex_interface_manage_rex_amount_in_eos', { cost: amountToSell / priceOfRex }) }
           {error && (
-            <GlobalFormMessageError error={error} />
+            <GlobalFormMessageError
+              error={error}
+              style={{ marginTop: '20px', marginBottom: '20px' }}
+            />
           )}
           <Button
             content={transactionType === 'buy' ? t('rex_interface_manage_rex_buy_button') : t('rex_interface_manage_rex_sell_button')}

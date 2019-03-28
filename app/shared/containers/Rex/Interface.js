@@ -119,7 +119,7 @@ class RexInterface extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
-    blockExplorers: state.blockExplorers[state.settings.account],
+    blockExplorers: (state.connection && state.blockexplorers[state.connection.chainKey]) || {},
     connection: state.connection,
     settings: state.settings
   };
