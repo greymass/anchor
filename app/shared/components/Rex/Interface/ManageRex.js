@@ -41,12 +41,12 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     //   });
     // }
   };
-  handleChange = ({ name, value, valid }) => {
+  handleChange = (e, { name, value, valid }) => {
     this.setState({ error: null }, () => {
       if (valid) {
         this.setState({ [name]: value });
       } else {
-        return this.setState({ error: 'Invalid Amount' });
+        return this.setState({ error: 'invalid_amount' });
       }
 
       const fundAmount = 100.00;
@@ -99,13 +99,14 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     }
 
     const saveDisabled = error || (!amountToBuy && !amountToSell);
+    const displaySuccessMessage = !saveDisabled;
 
     return (
       <Segment basic>
         {confirming && (
           <Modal
-            centered={false}
             open
+            size="small"
           >
             <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
             <Modal.Content>
@@ -115,20 +116,18 @@ class RexInterfaceManageRex extends PureComponent<Props> {
                 blockExplorers={blockExplorers}
                 content={(
                   <React.Fragment>
-                    {amountToBuy ? (
+                    { amountToBuy ? (
                       <p>
                         {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
                           amountToBuy,
-                          rexAmount: (amountToBuy / priceOfRex),
-                          chainSymbol: connection.chainSymbol
+                          rexAmount: (amountToBuy.split(' ')[0] / priceOfRex)
                         })}
                       </p>
                     ) : (
                       <p>
                         {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
                           amountToSell,
-                          chainAmount: (amountToBuy * priceOfRex),
-                          chainSymbol: connection.chainSymbol
+                          rexAmount: (amountToSell.split(' ')[0] * priceOfRex)
                         })}
                       </p>
                     )}
@@ -166,7 +165,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
         >
           {t('rex_interface_manage_rex_message', { chainSymbol: connection.chainSymbol })}
         </Message>
-        <Form>
+        <Form success={displaySuccessMessage}>
           <Form.Group widths="equal">
             <label>
               <strong>{t('rex_interface_transaction_type_label')}</strong>
@@ -175,11 +174,14 @@ class RexInterfaceManageRex extends PureComponent<Props> {
                 autoFocus
                 defaultValue="buy"
                 name="transactionType"
-                onChange={(e) => this.handleChange({
-                  name: 'transactionType',
-                  value: e.target.value,
-                  valid: true
-                })}
+                onChange={(e) => this.handleChange(
+                  e,
+                  {
+                    name: 'transactionType',
+                    value: e.target.value,
+                    valid: true
+                  }
+                )}
                 options={dropdownOptions}
                 selection
                 style={{ marginTop: '4px' }}
@@ -204,9 +206,28 @@ class RexInterfaceManageRex extends PureComponent<Props> {
               />
             )}
           </Form.Group>
-
-          { amountToBuy && t('rex_interface_manage_rex_amount_in_rex', { cost: amountToBuy * priceOfRex }) }
-          { amountToSell && t('rex_interface_manage_rex_amount_in_eos', { cost: amountToSell / priceOfRex }) }
+          { displaySuccessMessage && transactionType === 'buy' && amountToBuy && (
+            <Message success>
+              {t(
+                'rex_interface_manage_rex_amount_to_buy',
+                {
+                  amount: amountToBuy,
+                  rexAmount: amountToBuy.split(' ')[0] / priceOfRex
+                }
+              )}
+            </Message>
+          )}
+          { displaySuccessMessage && transactionType === 'sell' && amountToSell && (
+            <Message success>
+              {t(
+                'rex_interface_manage_rex_amount_to_sell',
+                {
+                  amount: amountToSell,
+                  rexAmount: amountToSell.split(' ')[0] / priceOfRex
+                }
+              )}
+            </Message>
+          )}
           {error && (
             <GlobalFormMessageError
               error={error}
