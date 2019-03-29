@@ -14,7 +14,6 @@ class OverviewTableHeader extends Component<Props> {
           <Table.HeaderCell collapsing>
             <Header
               content="Account(s)"
-              subheader="subheader"
             />
           </Table.HeaderCell>
           {(view === 'systemtokens')
