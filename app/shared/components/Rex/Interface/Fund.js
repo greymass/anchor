@@ -65,6 +65,7 @@ class RexInterfaceFund extends PureComponent<Props> {
   render() {
     const {
       actions,
+      balance,
       blockExplorers,
       connection,
       settings,
@@ -167,6 +168,7 @@ class RexInterfaceFund extends PureComponent<Props> {
         </Message>
         <Form>
           <Form.Group widths="equal">
+            <p>{t('rex_interface_fund_balance', { balance } )}</p>
             <label>
               <strong>{t('rex_interface_transaction_type_label')}</strong>
               <br />

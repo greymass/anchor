@@ -12,7 +12,7 @@
   "error_cannot_transfer_to_self": "Invalid recipient, cannot transfer funds to self.",
   "error_defunding_amount_invalid": "Defunding Amount Invalid",
   "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
-  "error_funding_amount_invalid": "Funding Amount Invalid",
+  "error_funding_amount_invalid": "Funding Amount Invalid, eg. '12.1212'",
   "error_insufficient_balance": "Insufficient available balance to complete transaction.",
   "error_invalid_accountName": "Invalid Account Name, make sure it is comprised of 1 to 12 letters.",
   "error_invalid_activeKeyValue": "Invalid Active Key, make sure it starts with '{{chainSymbol}}' and has an additional 50 characters.",
