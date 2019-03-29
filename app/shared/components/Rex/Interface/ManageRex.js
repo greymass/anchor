@@ -49,6 +49,10 @@ class RexInterfaceManageRex extends PureComponent<Props> {
         return this.setState({ error: 'invalid_amount' });
       }
 
+      if (name === 'transactionType') {
+        this.setState({ amountToBuy: null, amountToSell: null })
+      }
+
       const fundAmount = 100.00;
       if (['amountToSell', 'amountToBuy'].includes(name)) {
         const notEnoughBalance = fundAmount < value;
@@ -89,7 +93,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     let transaction;
     let contract;
 
-    const actionName = transactionType === 'fund' ? 'BUY_REX' : 'SELL_REX';
+    const actionName = transactionType === 'buy' ? 'BUY_REX' : 'SELL_REX';
 
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
@@ -98,7 +102,9 @@ class RexInterfaceManageRex extends PureComponent<Props> {
       contract = system[`${actionName}_LAST_CONTRACT`];
     }
 
-    const saveDisabled = error || (!amountToBuy && !amountToSell);
+    const saveDisabled = error ||
+      (!amountToBuy && transactionType === 'buy') ||
+      (!amountToSell && transactionType === 'sell');
     const displaySuccessMessage = !saveDisabled;
 
     return (
@@ -116,7 +122,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
                 blockExplorers={blockExplorers}
                 content={(
                   <React.Fragment>
-                    { amountToBuy ? (
+                    { transactionType === 'buy' ? (
                       <p>
                         {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
                           amountToBuy,
@@ -174,14 +180,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
                 autoFocus
                 defaultValue="buy"
                 name="transactionType"
-                onChange={(e) => this.handleChange(
-                  e,
-                  {
-                    name: 'transactionType',
-                    value: e.target.value,
-                    valid: true
-                  }
-                )}
+                onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
                 options={dropdownOptions}
                 selection
                 style={{ marginTop: '4px' }}
@@ -191,7 +190,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
             {transactionType === 'buy' ? (
               <GlobalFormFieldToken
                 connection={connection}
-                defaultValue={amountToBuy || ''}
+                key="amountToBuy"
                 label={t('rex_interface_manage_rex_buy', { chainSymbol: connection.chainSymbol })}
                 name="amountToBuy"
                 onChange={this.handleChange}
@@ -199,7 +198,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
             ) : (
               <GlobalFormFieldToken
                 connection={connection}
-                defaultValue={amountToSell || ''}
+                key="amountToSell"
                 label={t('rex_interface_manage_rex_sell', { chainSymbol: connection.chainSymbol })}
                 name="amountToSell"
                 onChange={this.handleChange}
