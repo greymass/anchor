@@ -16,7 +16,7 @@ import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionHandler from '../../Global/Transaction/Handler';
 
 const invalidErrorMessage = {
-  resourceAmount: 'amount_invalid'
+  resourceAmount: 'invalid_amount'
 };
 
 class RexInterfaceFund extends PureComponent<Props> {
@@ -46,9 +46,6 @@ class RexInterfaceFund extends PureComponent<Props> {
     // }
   };
   handleChange = (e, { name, value, valid }) => {
-    console.log({e})
-    console.log({ name })
-
     this.setState({ error: null }, () => {
       if (valid) {
         this.setState({ [name]: value });
@@ -108,13 +105,14 @@ class RexInterfaceFund extends PureComponent<Props> {
     }
 
     const saveDisabled = error || !resourceAmount;
+    const displaySuccessMessage = !saveDisabled;
 
     return (
       <Segment basic>
         {confirming && (
           <Modal
-            centered={false}
             open
+            size="small"
           >
             <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header')} />
             <Modal.Content>
@@ -166,7 +164,9 @@ class RexInterfaceFund extends PureComponent<Props> {
         >
           {t('rex_interface_fund_message')}
         </Message>
-        <Form>
+        <Form
+          success={displaySuccessMessage}
+        >
           <Form.Group widths="equal">
             <label>
               <strong>{t('rex_interface_transaction_type_label')}</strong>
@@ -196,17 +196,21 @@ class RexInterfaceFund extends PureComponent<Props> {
               onChange={this.handleChange}
             />
           </Form.Group>
-          { resourceAmount &&
-            t(
-              'rex_interface_rent_confirmation_modal_rent_net',
+          { displaySuccessMessage && (
+            <Message success>
               {
-                amount: resourceAmount,
-                chainSymbol: connection.chainSymbol,
-                cost: resourceAmount * costFor30days,
-                type: transactionType
+                t(
+                  'rex_interface_rent_confirmation_modal_rent_net',
+                  {
+                    amount: resourceAmount,
+                    chainSymbol: connection.chainSymbol,
+                    cost: resourceAmount * costFor30days,
+                    type: transactionType
+                  }
+                )
               }
-            )
-          }
+            </Message>
+          )}
           {error && (
             <GlobalFormMessageError
               style={{ marginTop: '20px', marginBottom: '20px' }}
