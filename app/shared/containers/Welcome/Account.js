@@ -6,12 +6,14 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
 import { translate } from 'react-i18next';
-import { Button, Container, Divider, Dropdown, Form, Header, Input, Message } from 'semantic-ui-react';
+import { Button, Container, Divider, Dropdown, Form, Header, Image, Input, Message } from 'semantic-ui-react';
 
 import * as AccountActions from '../../actions/accounts';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
+
+import LedgerLogo from '../../../renderer/assets/images/ledger.png';
 
 const ecc = require('eosjs-ecc');
 
@@ -128,15 +130,7 @@ class WelcomeAccountContainer extends Component<Props> {
         defaultValue={account}
       />
     );
-    let message = (
-      <Message
-        color="blue"
-        content={t('welcome:welcome_account_lookup_content')}
-        icon="search"
-        info
-        header={t('welcome:welcome_account_lookup_title')}
-      />
-    );
+    let message = false;
     // display an error if the account could not be found
     if (validate.ACCOUNT === 'FAILURE') {
       message = (
@@ -195,7 +189,7 @@ class WelcomeAccountContainer extends Component<Props> {
     }
     return (
       <React.Fragment>
-        <Header>{instruction}</Header>
+        <p>{instruction}</p>
         <Form>
           {input}
           {message}
@@ -222,16 +216,24 @@ class WelcomeAccountContainer extends Component<Props> {
             ? (
               <React.Fragment>
                 <Divider horizontal>or</Divider>
-                <Container textAlign="center">
-                  <Button
-                    color="purple"
-                    content={t('welcome:welcome_lookup_account_ledger')}
-                    icon="usb"
-                    onClick={hardwareLedgerImport}
-                    size="small"
-                    style={{ marginTop: '1em' }}
-                  />
-                </Container>
+                <Header>
+                  <Image src={LedgerLogo} />
+                  <Header.Content>
+                    Use a Ledger Device
+                    <Header.Subheader>
+                      Detect and load accounts from a Ledger device.
+                    </Header.Subheader>
+                  </Header.Content>
+                </Header>
+                <Button
+                  basic
+                  color="blue"
+                  content={t('welcome:welcome_lookup_account_ledger')}
+                  icon="usb"
+                  onClick={hardwareLedgerImport}
+                  size="small"
+                  style={{ marginTop: '1em' }}
+                />
               </React.Fragment>
             )
             : false
