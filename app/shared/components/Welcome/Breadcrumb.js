@@ -11,7 +11,7 @@ class WelcomeBreadcrumb extends Component<Props> {
       t,
       walletMode
     } = this.props;
-    console.log(stage)
+    return false
     return (
       <Step.Group attached="bottom" fluid size="small" vertical>
         {(walletMode !== 'cold')
