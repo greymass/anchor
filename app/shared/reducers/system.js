@@ -8,9 +8,18 @@ export default function system(state = {}, action) {
   if (
     action.type === types.RESET_ALL_STATES
     || action.type === types.RESET_SYSTEM_STATES
-    || action.type === types.SYSTEM_EOSIOURI_TEMPLATEURI_PENDING
   ) {
     return {};
+  }
+
+  if (action.type === types.SYSTEM_EOSIOURI_RESET) {
+    return Object.assign({}, state, {
+      EOSIOURISIGN: false,
+      EOSIOURICALLBACK: false,
+      EOSIOURIBUILD: false,
+      EOSIOURIBROADCAST: false,
+      EOSIOURIBUILD_LAST_TRANSACTION: false,
+    });
   }
 
   const matches = /^SYSTEM_(.*)_(PENDING|SUCCESS|FAILURE)$/.exec(type);

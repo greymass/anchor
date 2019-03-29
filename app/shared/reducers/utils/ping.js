@@ -107,12 +107,10 @@ export default function ping(state = initialState, action) {
           break;
         }
         default: {
-          console.log(response.status === 200)
           validResponse = (response.status === 200);
           break;
         }
       }
-      console.log("valid", path, response, validResponse);
       if (!validResponse) {
         // Response failed to meet criteria to be compatible
         current.failure += 1;
