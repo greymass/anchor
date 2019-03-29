@@ -82,9 +82,9 @@ class WalletContainer extends Component<Props> {
           fluid
           src={background}
           style={{
+            // bottom: 0,
             top: 50,
             transform: 'rotate(0.5turn)',
-          // filter: FlipV;
             right: '-1em',
             opacity: 0.5,
             position: 'fixed',

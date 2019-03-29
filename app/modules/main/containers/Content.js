@@ -13,7 +13,7 @@ import TestsContainer from './Sections/Tests';
 import ToolsContainer from './Sections/Tools';
 import SettingsContainer from './Sections/Settings';
 import OverviewContainer from './Sections/Overview';
-import { Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
+import { Button, Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
 
 class ContentContainer extends Component<Props> {
   render = () => (
@@ -37,7 +37,7 @@ class ContentContainer extends Component<Props> {
       <HashRouter>
         <Switch>
           <Route exact path="/" component={OverviewContainer} />
-          <Route exact path="/test" component={TestsContainer} />
+          <Route exact path="/tests" component={TestsContainer} />
           <Route exact path="/wallet" component={WalletContainer} />
           <Route path="/governance" component={GovernanceContainer} />
           <Route exact path="/tools" component={ToolsContainer} />
