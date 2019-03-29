@@ -20,7 +20,7 @@ class ToolsContainer extends Component<Props> {
       <React.Fragment>
         <HashRouter>
           <Switch>
-            <Route exact path="/tools" component={Tools} />
+            <Route exact path="/tools" component={ToolsHome} />
           </Switch>
         </HashRouter>
       </React.Fragment>
