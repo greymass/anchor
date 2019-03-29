@@ -1,11 +1,10 @@
-import * as types from '../../../shared/actions/types';
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
 
-// Dispatch from anywhere like normal.
+import * as types from '../../../shared/actions/types';
 
 export function changeModule(module) {
   return (dispatch: () => void) => {
-    dispatch(push(`/${module}`))
+    dispatch(push(`/${module}`));
     return dispatch({
       type: types.NAVIGATION_CHANGE_MODULE,
       payload: { module }
