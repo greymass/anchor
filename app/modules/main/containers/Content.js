@@ -37,10 +37,10 @@ class ContentContainer extends Component<Props> {
       <HashRouter>
         <Switch>
           <Route exact path="/" component={OverviewContainer} />
-          <Route exact path="/tests" component={TestsContainer} />
-          <Route exact path="/wallet" component={WalletContainer} />
+          <Route path="/tests" component={TestsContainer} />
+          <Route path="/wallet" component={WalletContainer} />
           <Route path="/governance" component={GovernanceContainer} />
-          <Route exact path="/tools" component={ToolsContainer} />
+          <Route path="/tools" component={ToolsContainer} />
           <Route exact path="/settings" component={SettingsContainer} />
         </Switch>
       </HashRouter>
