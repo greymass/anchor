@@ -99,22 +99,6 @@ class Proxies extends Component<Props> {
           onBottomVisible={this.loadMore}
           once={false}
         >
-          <ProducersProxy
-            account={account}
-            accounts={accounts}
-            actions={actions}
-            addProxy={addProxy}
-            blockExplorers={allBlockExplorers[connection.chainKey]}
-            currentProxy={currentProxy}
-            keys={keys}
-            isProxying={isProxying}
-            isValidUser={isValidUser}
-            onClose={this.onClose}
-            removeProxy={removeProxy}
-            settings={settings}
-            system={system}
-            tables={tables}
-          />
           <ProxiesTable
             accounts={accounts}
             actions={actions}

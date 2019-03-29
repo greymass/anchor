@@ -15,6 +15,9 @@ class WelcomeAdvanced extends Component<Props> {
     return (
       <React.Fragment>
         <Header size="huge">
+          <Header.Subheader>
+            {t('welcome_step')} #1
+          </Header.Subheader>
           {t('welcome_stage_advanced')}
         </Header>
         <Segment
@@ -23,7 +26,7 @@ class WelcomeAdvanced extends Component<Props> {
           stacked
         >
           <Segment basic>
-            <Header>{t('welcome_stage_advanced_instructions')}</Header>
+            <p>{t('welcome_stage_advanced_instructions')}</p>
             <WelcomeAdvancedContainer
               editing
               onClose={onClose}

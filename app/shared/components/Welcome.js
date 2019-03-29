@@ -169,118 +169,114 @@ class Welcome extends Component<Props> {
     }
     return (
       <Container>
-        <Segment basic>
-          <Grid
-            style={{
-              height: '100vh'
-            }}
+        <Grid
+          style={{
+            height: '100vh',
+            margin: 0
+          }}
+        >
+          <Grid.Column
+            textAlign="left"
+            width={6}
           >
-            <Grid.Column
-              textAlign="left"
-              width={6}
-            >
-              <Segment basic style={{ marginBottom: 0 }}>
-                <Image
-                  centered
-                  size="medium"
-                  src={logo}
-                  style={{ maxWidth: '128px' }}
-                />
-                <Header
-                  textAlign="center"
-                  size="large"
-                >
-                  <Header.Content>
-                    <Image
-                      centered
-                      size="medium"
-                      src={logoText}
-                      style={{ maxWidth: '192px', marginBottom: '1em' }}
-                    />
-                    <Header.Subheader>
-                      {t('application_version')}
-                    </Header.Subheader>
-                  </Header.Content>
-                </Header>
-                {(stage >= 0)
-                  ? (
-                    <WelcomeBreadcrumb
-                      onStageSelect={this.onStageSelect}
-                      stage={stage}
-                      walletMode={settings.walletMode}
-                    />
-                  )
-                  : false
-                }
-              </Segment>
-              <Segment basic textAlign="center" style={{ marginTop: 0 }}>
-                <GlobalSettingsLanguage
-                  actions={actions}
-                  setLanguage={settings.lang}
-                  i18n={i18n}
-                  settings
-                  selection
-                />
-              </Segment>
-            </Grid.Column>
-            <Grid.Column
-              textAlign="left"
-              style={{ paddingTop: '2rem' }}
-              width={10}
-            >
-              {stageElement}
-              <Container textAlign="center">
-                {(stage === 0 && !advancedSetup)
-                  ? (
-                    <p>
-                      <Button
-                        content={t('welcome:welcome_advanced_setup')}
-                        color="purple"
-                        icon="lab"
-                        onClick={this.setupAdvanced}
-                        size="tiny"
-                        style={{ marginTop: '1em' }}
-                      />
-                    </p>
-                  )
-                  : false
-                }
-                {(!hardwareLedgerImport
-                  && (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
-                  && !settings.walletInit
-                  && settings.walletMode !== 'cold'
+            <Segment basic style={{ marginBottom: 0 }}>
+              <Image
+                centered
+                size="medium"
+                src={logo}
+                style={{ maxWidth: '128px' }}
+              />
+              <Header
+                textAlign="center"
+                size="large"
+              >
+                <Header.Content>
+                  <Image
+                    centered
+                    size="medium"
+                    src={logoText}
+                    style={{ maxWidth: '192px', marginBottom: '1em' }}
+                  />
+                  <Header.Subheader>
+                    {t('application_version')}
+                  </Header.Subheader>
+                </Header.Content>
+              </Header>
+              {(stage >= 0)
+                ? (
+                  <WelcomeBreadcrumb
+                    onStageSelect={this.onStageSelect}
+                    stage={stage}
+                    walletMode={settings.walletMode}
+                  />
                 )
-                  ? (
-                    <p>
-                      <Button
-                        content={t('welcome:welcome_lookup_account_skip')}
-                        icon="x"
-                        onClick={this.skipImport}
-                        size="small"
-                        style={{ marginTop: '1em' }}
-                      />
-                    </p>
-                  )
-                  : false
-                }
-              </Container>
-            </Grid.Column>
-          </Grid>
-        </Segment>
+                : false
+              }
+            </Segment>
+            <Segment basic textAlign="center" style={{ marginTop: 0 }}>
+              <GlobalSettingsLanguage
+                actions={actions}
+                setLanguage={settings.lang}
+                i18n={i18n}
+                settings
+                selection
+              />
+            </Segment>
+          </Grid.Column>
+          <Grid.Column
+            textAlign="left"
+            style={{ paddingTop: '2rem' }}
+            width={10}
+          >
+            {stageElement}
+            <Container textAlign="center">
+              {(stage === 0 && !advancedSetup)
+                ? (
+                  <p>
+                    <Button
+                      content={t('welcome:welcome_advanced_setup')}
+                      color="green"
+                      icon="lab"
+                      onClick={this.setupAdvanced}
+                      size="small"
+                      style={{ marginTop: '1em' }}
+                    />
+                  </p>
+                )
+                : false
+              }
+              {(!hardwareLedgerImport
+                && (stage === 1 || (stage === 2 && validate.ACCOUNT !== 'SUCCESS'))
+                && !settings.walletInit
+                && settings.walletMode !== 'cold'
+              )
+                ? (
+                  <p>
+                    <Button
+                      content={t('welcome:welcome_lookup_account_skip')}
+                      icon="x"
+                      onClick={this.skipImport}
+                      size="small"
+                      style={{ marginTop: '1em' }}
+                    />
+                  </p>
+                )
+                : false
+              }
+            </Container>
+          </Grid.Column>
+        </Grid>
         <Image
           fluid
           src={background}
           style={{
             bottom: 0,
-            // transform: 'rotate(0.5turn)',
-          // filter: FlipV;
             left: 0,
             opacity: 0.5,
             position: 'fixed',
             zIndex: -1
           }}
         />
-
       </Container>
     );
   }

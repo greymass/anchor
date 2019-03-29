@@ -21,8 +21,9 @@ class NavigationGovernanceContainer extends PureComponent<Props> {
     } = navigation;
     return (
       <Menu
-        pointing
-        size="large"
+        attached
+        size="huge"
+        style={{ marginTop: 0 }}
       >
         <Menu.Item
           as="a"

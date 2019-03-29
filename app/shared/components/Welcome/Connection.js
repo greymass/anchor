@@ -29,12 +29,12 @@ class WelcomeConnection extends Component<Props> {
           stacked
         >
           <Segment basic>
-            <Header>
+            <p>
               {(settings.walletMode === 'cold')
                 ? t('welcome_instructions_one_cold')
-                : t('welcome_instructions_one')
+                : t('welcome_instructions_1_r2')
               }
-            </Header>
+            </p>
             <WelcomeConnectionContainer
               editing
               onStageSelect={onStageSelect}

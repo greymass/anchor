@@ -186,23 +186,16 @@ class WelcomeKeyContainer extends Component<Props> {
     let buttonIcon = 'search';
     let buttonText = t('welcome_compare_key');
     let matching = (
-      <Segment secondary>
+      <p>
         {t('welcome_key_compare_expecting_match_to')}
-        <br />
-        {Array.from(validKeys).map((key) => (
-          <small key={key}><code>{key}</code><br /></small>
-        ))}
-      </Segment>
+        <p>
+          {Array.from(validKeys).map((key) => (
+            <small key={key}><code>{key}</code><br /></small>
+          ))}
+        </p>
+      </p>
     );
-    let message = (
-      <Message
-        color="blue"
-        content={t('welcome_key_compare_content')}
-        icon="info circle"
-        info
-        header={t('welcome_key_compare_title')}
-      />
-    );
+    let message = false;
     switch (settings.walletMode) {
       case 'cold': {
         buttonColor = 'purple';
@@ -286,7 +279,7 @@ class WelcomeKeyContainer extends Component<Props> {
         {(settings.walletMode !== 'cold')
           ? (
             <React.Fragment>
-              <Header>{t('welcome_instructions_sign_tx')}</Header>
+              <Header size="small">{t('welcome_instructions_sign_tx')}</Header>
               <Form.Field
                 autoFocus
                 control={Radio}
@@ -303,7 +296,7 @@ class WelcomeKeyContainer extends Component<Props> {
         {(settings.walletMode !== 'watch')
           ? (
             <React.Fragment>
-              <Header>{t('welcome_instructions_5')}</Header>
+              <Header size="small">{t('welcome_instructions_5')}</Header>
               <Form.Field
                 autoFocus
                 control={Input}
