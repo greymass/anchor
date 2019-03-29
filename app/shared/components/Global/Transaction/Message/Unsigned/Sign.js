@@ -44,12 +44,13 @@ class GlobalTransactionMessageUnsignedSign extends Component<Props> {
               </Header>
               <GlobalTransactionViewDetail
                 broadcastable={!signed}
-                transaction={{data: transaction}}
+                transaction={{ data: transaction }}
               />
-              <Container textAlign="center">
+              <Container>
                 <Button
                   color="purple"
                   content={t('broadcast_transaction_signbroadcast')}
+                  floated="right"
                   icon="wifi"
                   onClick={this.signbroadcast}
                   size="large"

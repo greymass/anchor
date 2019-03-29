@@ -209,9 +209,22 @@ class WelcomeConnectionContainer extends Component<Props> {
     );
     return (
       <Form>
+        <Form.Field>
+          <label>
+            {(settings.walletMode === 'cold')
+              ? t('welcome:welcome_network_config_cold')
+              : t('welcome:welcome_network_config_r2')
+            }
+          </label>
+          <GlobalBlockchainDropdown
+            selection
+            showName
+          />
+        </Form.Field>
         {(walletMode !== 'cold')
           ? (
             <React.Fragment>
+              <Divider horizontal>or</Divider>
               <Form.Field
                 autoFocus={autoFocus}
                 control={Input}
@@ -224,22 +237,10 @@ class WelcomeConnectionContainer extends Component<Props> {
                 placeholder={`https://...`}
                 value={node}
               />
-              <Divider horizontal>or</Divider>
             </React.Fragment>
           )
           : false
         }
-        <Form.Field>
-          <label>
-            {(settings.walletMode === 'cold')
-              ? t('welcome:welcome_network_config_cold')
-              : t('welcome:welcome_network_config')
-            }
-          </label>
-          <GlobalBlockchainDropdown
-            selection
-          />
-        </Form.Field>
         {(walletMode !== 'cold')
           ? (
             <React.Fragment>
