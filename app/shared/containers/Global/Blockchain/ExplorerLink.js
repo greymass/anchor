@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { find } from 'lodash';
 
 import ExplorerLink from '../../../../shared/components/Global/Modal/ExplorerLink';
 
@@ -16,9 +17,12 @@ class GlobalBlockchainExplorerLink extends PureComponent<Props> {
   );
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const chainId = (ownProps.chainId) ? ownProps.chainId : state.settings.chainId;
+  const blockchain = find(state.blockchains, { chainId });
   return {
-    blockExplorers: state.blockexplorers[state.connection.chainKey],
+    blockchain,
+    blockExplorers: state.blockexplorers[blockchain._id],
     settings: state.settings,
   };
 }
