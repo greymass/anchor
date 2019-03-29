@@ -31,6 +31,8 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      fluid,
+      selection,
       settings,
       style,
       t,
@@ -41,9 +43,10 @@ class GlobalAccountDropdown extends Component<Props> {
     if (!wallets || wallets.length === 0) {
       return false;
     }
+    let { chainId } = settings;
     const options = wallets
       .filter(w => (
-        w.chainId === settings.chainId
+        w.chainId === chainId
         && (
           w.account !== wallet.account
           || w.authorization !== wallet.authorization
@@ -70,8 +73,10 @@ class GlobalAccountDropdown extends Component<Props> {
     }
     return (
       <Dropdown
-        item
+        fluid={fluid}
+        item={!selection}
         labeled
+        selection={selection}
         style={style || {}}
         trigger={trigger}
       >
