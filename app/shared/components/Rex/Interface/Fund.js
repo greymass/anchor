@@ -80,7 +80,9 @@ class RexInterfaceFund extends PureComponent<Props> {
       transactionType
     } = this.state;
 
-    const fundDisabled = error || (!fundingAmount && !defundingAmount);
+    const fundDisabled = error ||
+      (!fundingAmount && transactionType === 'fund') ||
+      (!defundingAmount && transactionType === 'defund');
     const dropdownOptions = ['fund', 'defund'].map((transactionType) => (
       {
         key: transactionType,
@@ -123,7 +125,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                 blockExplorers={blockExplorers}
                 content={(
                   <React.Fragment>
-                    {fundingAmount ? (
+                    {transactionType === 'fund' ? (
                       <p>
                         {t('rex_interface_fund_confirmation_modal_funding', { amount: fundingAmount })}
                       </p>
@@ -166,9 +168,18 @@ class RexInterfaceFund extends PureComponent<Props> {
         >
           {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
         </Message>
+        <Message success>{
+            t(
+              'rex_interface_fund_balance',
+              {
+                balance: balance[connection.chainSymbol],
+                chainSymbol: connection.chainSymbol
+              }
+            )
+          }
+        </Message>
         <Form>
           <Form.Group widths="equal">
-            <p>{t('rex_interface_fund_balance', { balance } )}</p>
             <label>
               <strong>{t('rex_interface_transaction_type_label')}</strong>
               <br />

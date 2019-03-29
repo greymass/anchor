@@ -114,10 +114,10 @@ class RexInterfaceFund extends PureComponent<Props> {
             open
             size="small"
           >
-            <Header icon="cubes" content={t('rex_interface_fund_confirmation_modal_header')} />
+            <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
             <Modal.Content>
               <GlobalTransactionHandler
-                actionName={transactionType === 'buy' ? 'BUY_REX' : 'SELL_REX'}
+                actionName={transactionType === 'cpu' ? 'RENT_CPU' : 'RENT_NET'}
                 actions={actions}
                 blockExplorers={blockExplorers}
                 content={(
@@ -175,14 +175,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                 autoFocus
                 defaultValue="cpu"
                 name="transactionType"
-                onChange={(e) => this.handleChange(
-                  e,
-                  {
-                    name: 'transactionType',
-                    value: e.target.value,
-                    valid: true
-                  }
-                )}
+                onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
                 options={dropdownOptions}
                 selection
                 style={{ marginTop: '4px' }}
