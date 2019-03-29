@@ -28,6 +28,11 @@ const initialState = {
 
 export default function features(state = initialState, action) {
   switch (action.type) {
+    case types.VALIDATE_NODE_SUCCESS:
+    case types.FEATURES_AVAILABLE_ENDPOINTS_FAILURE:
+    case types.FEATURES_AVAILABLE_ENDPOINTS_PENDING: {
+      return Object.assign({}, initialState);
+    }
     case types.FEATURES_AVAILABLE_ENDPOINTS_SUCCESS: {
       return Object.assign({}, state, {
         endpoints: action.payload
