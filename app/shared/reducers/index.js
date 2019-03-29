@@ -5,6 +5,7 @@ import { routerReducer as router } from 'react-router-redux';
 import accounts from './accounts';
 import actions from './actions';
 import app from './app';
+import auths from './auths';
 import balances from './balances';
 import blockchains from './blockchains';
 import blockexplorers from './blockexplorers';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   accounts,
   actions,
   app,
+  auths,
   balances,
   blockchains,
   blockexplorers,
