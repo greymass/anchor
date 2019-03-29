@@ -4,9 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Grid, Header, Segment } from 'semantic-ui-react';
+
+import NavigationActions from '../../../actions/navigation';
 
 class ToolsHome extends Component<Props> {
+  onClick = (e, data) => this.props.actions.changeModule(data.name)
   render() {
     return (
       <div>
@@ -202,7 +205,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
+      ...NavigationActions,
     }, dispatch)
   };
 }
