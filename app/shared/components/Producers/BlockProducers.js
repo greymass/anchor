@@ -146,26 +146,7 @@ class BlockProducers extends Component<Props> {
             </Header>
           </Loader>
         </Dimmer>
-        <Grid.Row>
-          <Grid.Column width={5}>
-            {(isLoaded)
-              ? sidebar
-              : (
-                <Segment raised>
-                  <Placeholder>
-                    <Placeholder.Header image>
-                      <Placeholder.Line />
-                      <Placeholder.Line />
-                    </Placeholder.Header>
-                    <Placeholder.Paragraph>
-                      <Placeholder.Line length='medium' />
-                      <Placeholder.Line length='short' />
-                    </Placeholder.Paragraph>
-                  </Placeholder>
-                </Segment>
-              )
-            }
-          </Grid.Column>
+        <Grid.Row style={{ paddingTop: 0 }}>
           <Grid.Column width={11}>
             {(isLoaded)
               ? [(
@@ -208,6 +189,25 @@ class BlockProducers extends Component<Props> {
               : (
                 <ProducersTablePlaceholder />
               )}
+          </Grid.Column>
+          <Grid.Column width={5} style={{ paddingTop: '1em' }}>
+            {(isLoaded)
+              ? sidebar
+              : (
+                <Segment raised>
+                  <Placeholder>
+                    <Placeholder.Header image>
+                      <Placeholder.Line />
+                      <Placeholder.Line />
+                    </Placeholder.Header>
+                    <Placeholder.Paragraph>
+                      <Placeholder.Line length='medium' />
+                      <Placeholder.Line length='short' />
+                    </Placeholder.Paragraph>
+                  </Placeholder>
+                </Segment>
+              )
+            }
           </Grid.Column>
         </Grid.Row>
       </Grid>
