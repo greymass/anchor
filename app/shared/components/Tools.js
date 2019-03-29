@@ -23,17 +23,6 @@ class Tools extends Component<Props> {
       t
     } = this.props;
     return (
-      <ReactJson
-        collapsed={2}
-        displayDataTypes={false}
-        displayObjectSize={false}
-        iconStyle="square"
-        name={null}
-        src={this.props.settings}
-        style={{ padding: '1em' }}
-      />
-    )
-    return (
       <React.Fragment>
         <Segment>
           <Header>
