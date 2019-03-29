@@ -21,7 +21,7 @@ class GlobalFragmentWallet extends PureComponent<Props> {
       >
         <Blockies
           className="ui image"
-          seed={pubkey}
+          seed={`${account}@${authorization}`}
         />
         <Header.Content>
           {account}
