@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Dimmer, Loader, Menu, Segment } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
+import { find } from 'lodash';
+import { Segment } from 'semantic-ui-react';
 
 import URIActions from '../actions/uri';
 import SettingsActions from '../../../shared/actions/settings';
@@ -11,116 +11,149 @@ import TransactionActions from '../../../shared/actions/transaction';
 import ValidateActions from '../../../shared/actions/validate';
 import WalletActions from '../../../shared/actions/wallet';
 
-import GlobalAccountDropdown from '../../../shared/containers/Global/Account/Dropdown';
-import GlobalTransactionHandler from '../../../shared/components/Global/Transaction/Handler';
+import PromptStage from './Stage';
+import PromptHeader from '../components/Header';
+import PromptShare from '../components/Share';
 
-import ErrorMessage from '../components/error';
+const { remote } = require('electron');
+
+const initialState = {
+  blockchain: {},
+  displayShareLink: false,
+  wallet: {
+    account: undefined,
+    authorization: undefined,
+    mode: undefined,
+    pubkey: undefined,
+  }
+};
 
 class PromptContainer extends Component<Props> {
-  // TODO: Remove, this is only needed in development when the main window isn't being loaded
+  state = initialState
   componentDidMount() {
-    const {
-      actions,
-      settings,
-      validate,
-    } = this.props;
-    const {
-      setWalletMode
-    } = actions;
-    setWalletMode(settings.walletMode);
-    switch (settings.walletMode) {
-      default: {
-        if (validate.NODE !== 'SUCCESS' && settings.node) {
-          const { validateNode } = actions;
-          validateNode(settings.node);
-        }
-        break;
-      }
+    this.templateURI();
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.system.EOSIOURI === 'PENDING' && this.props.system.EOSIOURI === 'SUCCESS') {
+      this.templateURI();
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.settings.account !== this.props.settings.account
-      || nextProps.settings.authorization !== this.props.settings.authorization
-      || (nextProps.system.EOSIOURI === 'SUCCESS' && this.props.system.EOSIOURI === 'PENDING')
-    ) {
-      // Regenerate the template based on the new account
-      this.props.actions.templateURI();
+  onShareLink = () => this.setState({ displayShareLink: !this.state.displayShareLink })
+  onClose = () => {
+    const { actions } = this.props;
+    actions.clearURI();
+    const w = remote.getCurrentWindow();
+    w.close();
+  }
+  onSign = () => {
+    const { wallet } = this.state;
+    const { actions, blockchains, prompt } = this.props;
+    const { chainId, tx } = prompt;
+    const blockchain = find(blockchains, { chainId });
+    actions.signURI(tx, blockchain, wallet);
+  }
+  templateURI = () => {
+    const { actions, blockchains, prompt } = this.props;
+    const { chainId } = prompt;
+    const newState = {};
+    // Set the blockchain for this network
+    const blockchain = find(blockchains, { chainId });
+    newState.blockchain = blockchain;
+    // Set the wallet to use by default for this network if not set
+    const defaultWallet = find(this.props.wallets, { chainId });
+    if (defaultWallet) {
+      const wallet = {
+        account: defaultWallet.account,
+        authorization: defaultWallet.authorization,
+        mode: defaultWallet.mode,
+        pubkey: defaultWallet.pubkey,
+      };
+      newState.wallet = wallet;
+      // Regenerate the template based on the blockchain and selected wallet
+      actions.templateURI(blockchain, wallet);
+    } else {
+      newState.wallet = {};
     }
+    this.setState(newState);
+  }
+  swapAccount = (e, { value }) => {
+    const { actions, blockchains, prompt } = this.props;
+    const { chainId } = prompt;
+    const blockchain = find(blockchains, { chainId });
+    const {
+      account,
+      authorization,
+      mode,
+      pubkey
+    } = value;
+    const wallet = {
+      account,
+      authorization,
+      mode,
+      pubkey,
+    };
+    this.setState({ wallet }, () => actions.templateURI(blockchain, wallet));
   }
   render() {
     const {
-      actions,
       prompt,
-      settings,
       system,
-      validate,
     } = this.props;
-    const loading = (system.EOSIOURI === 'PENDING' || validate.WALLET_PASSWORD === 'PENDING' || system.EOSIOURI_TEMPLATEURI === 'PENDING');
-    const error = system.EOSIOURI_TEMPLATEURI_LAST_ERROR;
+    const {
+      blockchain,
+      displayShareLink,
+      wallet
+    } = this.state;
+    const {
+      account,
+      authorization,
+      mode,
+      pubkey,
+    } = wallet;
+    const {
+      response
+    } = prompt;
+    const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
+    const hasBroadcast = !!(response && (response.processed && response.processed.receipt.status === 'executed'));
+    const hasExpired = !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
+    const hasWallet = !!(account && authorization && mode && pubkey);
+    // const error = system.EOSIOURIBUILD_LAST_ERROR;
     return (
-      <Segment tertiary>
-        <Menu
-          fixed="top"
-          style={{
-            border: 'none',
-            borderBottom: '1px solid rgba(34,36,38,.15)',
-          }}
-        >
-          <Menu.Item header>
-            Signing Request
-          </Menu.Item>
-          <GlobalAccountDropdown />
-        </Menu>
-        <div style={{ marginTop: '61px' }}>
-          <Dimmer active={loading} inverted>
-            <Loader>Processing Incoming Request</Loader>
-          </Dimmer>
-          <ReactJson
-            collapsed={1}
-            displayDataTypes={false}
-            displayObjectSize={false}
-            iconStyle="square"
-            name={null}
-            src={this.props}
-            style={{ padding: '1em' }}
-            theme="harmonic"
-          />
-          {(prompt && prompt.tx)
-            ? (
-              <Segment attached>
-                <GlobalTransactionHandler
-                  actionName="TRANSACTION_SIGN"
-                  actions={actions}
-                  blockExplorers={{}}
-                  contract={prompt.contract}
-                  content={<span>No transaction currently loaded.</span>}
-                  icon="wifi"
-                  open={false}
-                  settings={settings}
-                  system={system}
-                  transaction={prompt.tx}
-                />
-              </Segment>
-            )
-            : false
-          }
-          {(error)
-            ? (
-              <Segment attached>
-                <ErrorMessage
-                  error={error}
-                />
-              </Segment>
-            )
-            : false
-          }
-          <Segment attached="bottom">
-            <Button
-              content="close"
+      <Segment
+        tertiary
+        padded
+        style={{ height: '100%', minHeight: '100%' }}
+      >
+        <PromptShare
+          onClose={this.onShareLink}
+          open={displayShareLink}
+          uri={prompt.uri}
+        />
+        <PromptHeader
+          blockchain={blockchain}
+          hasBroadcast={hasBroadcast}
+          hasExpired={hasExpired}
+          prompt={prompt}
+          loading={loading}
+        />
+        {(hasWallet)
+          ? (
+            <PromptStage
+              hasBroadcast={hasBroadcast}
+              hasExpired={hasExpired}
+              onClose={this.onClose}
+              onShareLink={this.onShareLink}
+              swapAccount={this.swapAccount}
+              wallet={wallet}
             />
-          </Segment>
-        </div>
+          )
+          : (
+            <span> no wallets</span>
+          )
+        }
+        <Segment basic style={{ marginTop: 0 }} textAlign="center">
+          <p>Chain ID: {blockchain.chainId}</p>
+        </Segment>
       </Segment>
     );
   }
@@ -128,10 +161,10 @@ class PromptContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    blockchains: state.blockchains,
     prompt: state.prompt,
-    settings: state.settings,
     system: state.system,
-    validate: state.validate,
+    wallets: state.wallets,
   };
 }
 
