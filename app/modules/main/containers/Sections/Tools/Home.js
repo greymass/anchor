@@ -14,6 +14,11 @@ class ToolsHome extends Component<Props> {
     return (
       <div>
         <Segment>
+          <Button
+            content="Delegations"
+            name="tools/delegations"
+            onClick={this.onClick}
+          />
         </Segment>
         <Grid columns={4}>
           <Grid.Column>

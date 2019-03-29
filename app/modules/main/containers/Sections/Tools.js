@@ -13,6 +13,7 @@ import { times } from 'lodash';
 
 import Tools from '../../../../shared/containers/Tools';
 import ToolsHome from './Tools/Home';
+import ToolsDelegations from './Tools/Delegations';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -21,6 +22,7 @@ class ToolsContainer extends Component<Props> {
         <HashRouter>
           <Switch>
             <Route exact path="/tools" component={ToolsHome} />
+            <Route path="/tools/delegations" component={ToolsDelegations} />
           </Switch>
         </HashRouter>
       </React.Fragment>
