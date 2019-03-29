@@ -12,6 +12,8 @@ import RexInterfaceRentResources from '../../components/Rex/Interface/RentResour
 type Props = {
   actions: {},
   accounts: {},
+  balance: {},
+  blockExplorers: {},
   connection: {},
   settings: {},
   system: {},
@@ -24,6 +26,7 @@ class RexInterface extends Component<Props> {
   render() {
     const {
       actions,
+      balance,
       blockExplorers,
       connection,
       settings,
@@ -56,6 +59,7 @@ class RexInterface extends Component<Props> {
           content: (
             <RexInterfaceFund
               actions={actions}
+              balance={balance}
               blockExplorers={blockExplorers}
               connection={connection}
               settings={settings}
