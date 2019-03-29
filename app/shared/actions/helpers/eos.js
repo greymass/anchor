@@ -1,13 +1,11 @@
 import { decrypt } from '../wallet';
 
 import serialize from './ledger/serialize';
-import HardwareLedger from '../../utils/Hardware/Ledger';
 
+const { remote } = require('electron');
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');
-
-const LedgerApi = require('./hardware/ledger').default;
 
 import { Api, JsonRpc } from 'eosjs2';
 const JsSignatureProvider = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig').default;
@@ -44,8 +42,7 @@ export default function eos(connection, signing = false, v2 = false) {
     const signProvider = async ({ transaction }) => {
       const { fc } = Eos(connection);
       const buffer = serialize(fc.types.config.chainId, transaction, fc.types);
-      const { transport } = new HardwareLedger();
-      const api = new LedgerApi(transport);
+      const { api } = remote.getGlobal('hardwareLedger');
       const result = await api.signTransaction(
         decrypted.signPath,
         buffer.toString('hex')
