@@ -77,7 +77,7 @@ class ToolsGovernanceProposals extends Component<Props> {
       list,
       votes
     } = proposals;
-    const isLocked = (!['ledger', 'watch'].includes(settings.walletMode) && !keys.key);
+    const isLocked = (!['ledger', 'watch'].includes(settings.walletMode) && (keys && !keys.key));
     let recentOptions = [];
     if (settings && settings.recentProposalsScopes) {
       recentOptions = settings.recentProposalsScopes.map((recentProposalsScope) => ({
