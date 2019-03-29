@@ -13,6 +13,8 @@ class ToolsHome extends Component<Props> {
   render() {
     return (
       <div>
+        <Segment>
+        </Segment>
         <Grid columns={4}>
           <Grid.Column>
             <Segment.Group vertical>
