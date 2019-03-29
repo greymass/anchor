@@ -9,7 +9,6 @@ class ErrorMessage extends Component<Props> {
       error,
       t
     } = this.props;
-    console.log(this.props)
     return (
       <Message
         content={error.message}
