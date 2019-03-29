@@ -1,14 +1,20 @@
 /* eslint global-require: 0, flowtype-errors/show-errors: 0 */
 
-import { app, crashReporter, protocol } from 'electron';
+import { app, crashReporter, ipcMain, protocol } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from '../modules/main/electron';
 import { createTray } from '../modules/tray/electron';
 import { createTrayIcon } from '../modules/tray/electron/icon';
 import { createProtocolHandlers } from '../modules/handler/electron';
+import HardwareLedger from '../shared/utils/Hardware/Ledger';
+import * as types from '../shared/actions/types';
+import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardware/ledger';
 
 const log = require('electron-log');
 const path = require('path');
+
+const Transport = require('@ledgerhq/hw-transport-node-hid').default;
+
 
 let resourcePath = __dirname;
 let ui = null;
@@ -140,4 +146,37 @@ const showManager = () => {
   }
 };
 
+ipcMain.on('connectHardwareLedger', (event, signPath, devicePath) => {
+  Transport
+    .open(devicePath)
+    .then((transport) => {
+      if (process.env.NODE_ENV === 'development') {
+        transport.setDebugMode(true);
+      }
+      global.hardwareLedger.destroy();
+      global.hardwareLedger = new HardwareLedger(transport);
+      store.dispatch({
+        payload: {
+          devicePath,
+          signPath
+        },
+        type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
+      });
+      store.dispatch(getAppConfiguration());
+      return transport;
+    })
+    .catch((error) => {
+      setTimeout(() => {
+        store.dispatch(ledgerStartListen());
+      }, 1000);
+      store.dispatch({
+        payload: {
+          error
+        },
+        type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
+      });
+    });
+});
+
+global.hardwareLedger = new HardwareLedger();
 global.showManager = showManager;
