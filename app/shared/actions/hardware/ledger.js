@@ -5,7 +5,7 @@ import HardwareLedger from '../../utils/Hardware/Ledger';
 const Api = require('../helpers/hardware/ledger').default;
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
-let hardwareLedger = new HardwareLedger();
+const { ipcRenderer, remote } = require('electron');
 
 function handleComplete() {
   console.log('complete fired');
@@ -15,8 +15,9 @@ function handleError(error) {
   console.log('handleError', error);
 }
 
-function getAppConfiguration() {
+export function getAppConfiguration() {
   return (dispatch: () => void) => {
+    const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     const { transport } = hardwareLedger;
     const api = new Api(transport);
     return api
@@ -60,36 +61,7 @@ function handleEvent(event) {
         const signPath = (getState().wallet.path);
         if (!isConnected) {
           if (!isCurrentDevice || !isAppRunning) {
-            Transport
-              .open(event.device.path)
-              .then((transport) => {
-                if (process.env.NODE_ENV === 'development') {
-                  transport.setDebugMode(true);
-                }
-                hardwareLedger.destroy();
-                hardwareLedger = new HardwareLedger(transport);
-                dispatch({
-                  payload: {
-                    devicePath: event.device.path,
-                    // transport,
-                    signPath
-                  },
-                  type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
-                });
-                dispatch(getAppConfiguration());
-                return transport;
-              })
-              .catch((error) => {
-                setTimeout(() => {
-                  dispatch(ledgerStartListen());
-                }, 1000);
-                dispatch({
-                  payload: {
-                    error
-                  },
-                  type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
-                });
-              });
+            ipcRenderer.send('connectHardwareLedger', signPath, event.device.path);
           }
         }
         break;
@@ -109,6 +81,7 @@ function handleEvent(event) {
 
 export function ledgerStartListen() {
   return (dispatch: () => void, getState) => {
+    const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     hardwareLedger.destroy();
     if (getState().ledger.subscriber !== null) {
       return;
@@ -143,6 +116,7 @@ export function ledgerStopListen() {
     const {
       subscriber
     } = ledger;
+    const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     const { transport } = hardwareLedger;
     if (transport && transport.close) {
       transport.close();
@@ -168,6 +142,7 @@ export function ledgerGetPublicKey(index = 0, display = false) {
         ? types.SYSTEM_LEDGER_DISPLAY_PUBLIC_KEY_PENDING
         : types.SYSTEM_LEDGER_GET_PUBLIC_KEY_PENDING
     });
+    const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     const { transport } = hardwareLedger;
     const api = new Api(transport);
     const pathParts = ledger.bip44Path.split('/');
@@ -210,8 +185,9 @@ export function ledgerGetStatus(state) {
   if (state.listening) {
     status = 'awaiting_connection';
     // If the wallet is connected
-    const { transport } = new HardwareLedger();
-    if (state.devicePath && state.application && state.application.version) {
+    const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
+    const { transport } = hardwareLedger;
+    if (state.devicePath && state.application && state.application.version && transport) {
       status = 'connected';
     }
   }
@@ -252,6 +228,7 @@ export function ledgerGetStatus(state) {
 }
 
 export default {
+  getAppConfiguration,
   ledgerGetPublicKey,
   ledgerGetStatus,
   ledgerResetPublicKey,

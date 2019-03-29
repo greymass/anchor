@@ -1,15 +1,14 @@
-let instance;
+const Api = require('../../actions/helpers/hardware/ledger').default;
+
 export default class HardwareLedger {
   constructor(transport = false) {
-    if (instance) {
-      return instance;
-    }
     this.transport = transport;
-    instance = this;
-    return instance;
+    if (transport) {
+      this.api = new Api(transport);
+    }
+    return this;
   }
   destroy() {
-    instance = false;
     this.transport = false;
   }
 }
