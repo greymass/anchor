@@ -34,8 +34,12 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
   render() {
     const {
       blockchains,
+      disabled,
+      fluid,
+      selected,
       selection,
       settings,
+      showName,
       style,
       t,
     } = this.props;
@@ -48,6 +52,9 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
     let blockchain = find(blockchains, { chainId });
     if (!blockchain) {
       blockchain = {};
+    }
+    if (selected) {
+      blockchain = find(blockchains, { chainId: selected });
     }
     const { displayTestNetworks } = settings;
     const options = blockchains
@@ -76,24 +83,48 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
       color: 'green',
       name: 'id card'
     };
+    const trigger = (
+      <span>
+        <GlobalFragmentChainLogo
+          chainId={blockchain.chainId}
+          noPopup
+          style={{
+            float: 'left',
+            marginRight: '1em',
+            height: '2em',
+            width: '2em',
+          }}
+        />
+        {(showName && blockchain && blockchain.name)
+          ? (
+            <Header
+              content={blockchain.name}
+              subheader={`${blockchain.chainId.substr(0, 6)}...${blockchain.chainId.substr(-6)}`}
+              size="small"
+              style={{ margin: 0 }}
+            />
+          )
+          : false
+        }
+      </span>
+    );
+    if (disabled) {
+      return (
+        <Segment
+          content={trigger}
+          style={{ margin: 0 }}
+        />
+      );
+    }
     return (
       <Dropdown
+        fluid={fluid}
         item
         labeled
+        placeholder={showName ? 'Select a blockchain...' : false}
         selection={selection}
         style={style}
-        trigger={(
-          <span>
-            <GlobalFragmentChainLogo
-              chainId={blockchain.chainId}
-              noPopup
-              style={{
-                height: '2em',
-                width: '2em',
-              }}
-            />
-          </span>
-        )}
+        trigger={trigger}
       >
         <Dropdown.Menu style={{ minWidth: '200px' }}>
           {options.map(option => {
