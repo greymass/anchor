@@ -50,7 +50,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
       }
 
       if (name === 'transactionType') {
-        this.setState({ amountToBuy: null, amountToSell: null })
+        this.setState({ amountToBuy: null, amountToSell: null });
       }
 
       const fundAmount = 100.00;
@@ -133,7 +133,7 @@ class RexInterfaceManageRex extends PureComponent<Props> {
                       <p>
                         {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
                           amountToSell,
-                          rexAmount: (amountToSell.split(' ')[0] * priceOfRex)
+                          rexAmount: (amountToSell.split(' ')[0] / priceOfRex)
                         })}
                       </p>
                     )}
