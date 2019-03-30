@@ -46,6 +46,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     // }
   };
   handleChange = (e, { name, value, valid }) => {
+    console.log({ name, value })
     this.setState({ error: null }, () => {
       if (valid) {
         this.setState({ [name]: value });
@@ -81,6 +82,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       resourceType,
       transactionType
     } = this.state;
+    console.log({transactionType})
 
     const costFor30days = 0.1;
 
@@ -106,6 +108,7 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     const saveDisabled = error || !resourceAmount;
     const displaySuccessMessage = !saveDisabled;
+    const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
 
     return (
       <Segment basic>
@@ -122,13 +125,31 @@ class RexInterfaceFund extends PureComponent<Props> {
                 blockExplorers={blockExplorers}
                 content={(
                   <React.Fragment>
-                    {resourceType === 'cpu' ? (
+                    {transactionType === 'cpu' ? (
                       <p>
-                        {t('rex_interface_rent_confirmation_modal_rent_cpu', { resourceAmount, cost: (resourceAmount * costFor30days) })}
+                        {
+                          t(
+                            'rex_interface_rent_confirmation_modal_rent_cpu',
+                            {
+                              amount: resourceAmount,
+                              chainSymbol: connection.chainSymbol,
+                              cost
+                            }
+                          )
+                        }
                       </p>
                     ) : (
                       <p>
-                        {t('rex_interface_rent_confirmation_modal_rent_net', { resourceAmount, cost: (resourceAmount * costFor30days) })}
+                        {
+                          t(
+                            'rex_interface_rent_confirmation_modal_rent_net',
+                            {
+                              amount: resourceAmount,
+                              chainSymbol: connection.chainSymbol,
+                              cost
+                            }
+                          )
+                        }
                       </p>
                     )}
                   </React.Fragment>
@@ -189,16 +210,29 @@ class RexInterfaceFund extends PureComponent<Props> {
               onChange={this.handleChange}
             />
           </Form.Group>
-          { displaySuccessMessage && (
-            <Message success>
+          { displaySuccessMessage && transactionType === 'cpu' && (
+            <Message key="cpu" success>
+              {
+                t(
+                  'rex_interface_rent_confirmation_modal_rent_cpu',
+                  {
+                    amount: resourceAmount,
+                    chainSymbol: connection.chainSymbol,
+                    cost
+                  }
+                )
+              }
+            </Message>
+          )}
+          { displaySuccessMessage && transactionType === 'net' && (
+            <Message key="net" success>
               {
                 t(
                   'rex_interface_rent_confirmation_modal_rent_net',
                   {
                     amount: resourceAmount,
                     chainSymbol: connection.chainSymbol,
-                    cost: resourceAmount * costFor30days,
-                    type: transactionType
+                    cost
                   }
                 )
               }
