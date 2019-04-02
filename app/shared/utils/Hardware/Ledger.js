@@ -9,6 +9,9 @@ export default class HardwareLedger {
     return this;
   }
   destroy() {
+    if (this.transport && this.transport.close) {
+      this.transport.close();
+    }
     this.transport = false;
   }
 }
