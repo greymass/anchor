@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
+import { findIndex } from 'lodash';
 import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../Button/Elevate';
@@ -31,6 +32,7 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      auths,
       fluid,
       selection,
       settings,
@@ -84,7 +86,9 @@ class GlobalAccountDropdown extends Component<Props> {
           <Dropdown.Menu key="menu" scrolling>
             {(options.length > 0)
               ? options.map(w => {
-                if (w.mode === 'watch' || w.mode === 'ledger') {
+                const { pubkey } = w;
+                const unlocked = (findIndex(auths, { pubkey }) >= 0);
+                if (w.mode === 'watch' || w.mode === 'ledger' || unlocked) {
                   return (
                     <Dropdown.Item
                       onClick={() => this.swapAccount(w.account, w.authorization)}
@@ -144,6 +148,7 @@ class GlobalAccountDropdown extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    auths: state.auths,
     settings: state.settings,
     validate: state.validate,
     wallet: state.wallet,
