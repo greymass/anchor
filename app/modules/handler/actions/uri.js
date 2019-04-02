@@ -22,10 +22,8 @@ export function broadcastURI(tx, blockchain, callback = false) {
     });
     eos(modified)
       .pushTransaction(tx.transaction).then((response) => {
-        console.log(response)
         if (callback) {
           dispatch(callbackURIWithProcessed({
-            bi: response.processed.id,
             bn: response.processed.block_num,
             tx: response.transaction_id,
             sig: tx.transaction.signatures
@@ -43,9 +41,12 @@ export function broadcastURI(tx, blockchain, callback = false) {
   };
 }
 
-export function callbackURIWithProcessed({ bi, bn, tx, sig }, callback) {
-  return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+export function callbackURIWithProcessed({
+  bn,
+  tx,
+  sig
+}, callback) {
+  return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_EOSIOURICALLBACK_PENDING
     });
