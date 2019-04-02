@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Icon } from 'semantic-ui-react';
+import { Button, Header, Icon, Label } from 'semantic-ui-react';
 
 class PromptActionSign extends Component<Props> {
   render() {
@@ -12,28 +12,52 @@ class PromptActionSign extends Component<Props> {
       t,
       wallet,
     } = this.props;
+    console.log(loading, disabled)
     return (
       <Button
-        content={(
-          <Header
-            style={{ color: '#ececec' }}
-            textAlign="left"
-          >
-            <Icon name="pencil" />
+        animated="fade"
+        as="div"
+        disabled={disabled}
+        floated="right"
+        labelPosition="left"
+        onClick={onClick}
+      >
+        <Label
+          as="a"
+          basic
+          pointing="right"
+        >
+          <Header textAlign="left">
             <Header.Content>
-              <Header.Subheader style={{ color: '#ececec', fontWeight: 'bold' }}>
+              <Header.Subheader style={{ fontWeight: 'bold' }}>
                 Sign Transaction
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
           </Header>
-        )}
-        color="purple"
-        disabled={disabled}
-        floated="right"
-        loading={loading}
-        onClick={onClick}
-      />
+        </Label>
+        <Button
+          color="green"
+          icon
+          loading={loading}
+          style={{ position: 'relative' }}
+        >
+          <Button.Content hidden style={{ marginTop: '-0.75em' }}>
+            <Icon
+              name="signup"
+              size="large"
+              style={{ marginRight: 0 }}
+            />
+          </Button.Content>
+          <Button.Content visible style={{ margin: '0 1em' }}>
+            <Icon
+              name="pencil"
+              size="large"
+              style={{ marginRight: 0 }}
+            />
+          </Button.Content>
+        </Button>
+      </Button>
     );
   }
 }
