@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Table, Icon, Popup } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
-import TimeAgo from 'react-timeago';
 
 class ProposalsTable extends Component<Props> {
   state= { selectedProposal: null };
@@ -10,6 +9,7 @@ class ProposalsTable extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      contracts,
       isLocked,
       list,
       scope,
@@ -67,6 +67,7 @@ class ProposalsTable extends Component<Props> {
                     </Table.Cell>
                     <Table.Cell>
                       <Button
+                        disabled={proposal.expired}
                         icon={selected ? 'x' : 'bars'}
                         onClick={() => {
                           this.setState({
@@ -84,6 +85,7 @@ class ProposalsTable extends Component<Props> {
                           <ToolsGovernanceProposalsProposal
                             actions={actions}
                             blockExplorers={blockExplorers}
+                            contracts={contracts}
                             isLocked={isLocked}
                             key={proposal.proposal_name}
                             proposal={proposal}

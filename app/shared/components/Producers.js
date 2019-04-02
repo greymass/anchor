@@ -148,6 +148,7 @@ class Producers extends Component<Props> {
       blockchains,
       blockExplorers,
       connection,
+      contracts,
       globals,
       keys,
       producers,
@@ -286,6 +287,7 @@ class Producers extends Component<Props> {
               <ToolsGovernanceProposals
                 actions={actions}
                 blockExplorers={blockExplorers}
+                contracts={contracts}
                 keys={keys}
                 proposals={proposals}
                 settings={settings}

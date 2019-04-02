@@ -4,16 +4,15 @@ import { translate } from 'react-i18next';
 import { find } from 'lodash';
 
 import {
-  Button,
   Container,
   Dropdown,
   Header,
-  Icon,
   Input,
   List,
   Loader,
   Message,
   Segment,
+  Select,
   Visibility
 } from 'semantic-ui-react';
 
@@ -25,10 +24,11 @@ class ToolsGovernanceProposals extends Component<Props> {
     amount: 10,
     scope: 'eosio.forum',
     queryString: '',
-    onlyVoted: false
   };
   componentDidMount() {
+    const { actions } = this.props;
     this.sync();
+    actions.getAbi('eosio.forum');
   }
   componentWillReceiveProps(prevProps) {
     const { settings } = this.props;
@@ -36,7 +36,7 @@ class ToolsGovernanceProposals extends Component<Props> {
     if (settings.account !== prevSettings.account || settings.chainId !== prevSettings.chainId) {
       this.sync();
     }
-  };
+  }
   onChange = (e, { name, selection, value }) => {
     this.setState({ [name]: value }, () => {
       // If this is the dropdown, fire the submit
@@ -57,6 +57,7 @@ class ToolsGovernanceProposals extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      contracts,
       keys,
       proposals,
       settings,
@@ -67,7 +68,8 @@ class ToolsGovernanceProposals extends Component<Props> {
     } = this.props;
     const {
       amount,
-      onlyVoted,
+      filterByVote,
+      filterByStatus,
       queryString,
       scope
     } = this.state;
@@ -83,11 +85,18 @@ class ToolsGovernanceProposals extends Component<Props> {
         value: recentProposalsScope,
       }));
     }
+    const currentTime = new Date();
     const validList = list.filter((proposal) => !!proposal.valid)
       .map((proposal) => {
-        const voted = !!find(votes, { proposal_name: proposal.proposal_name });
+        const vote = find(votes, { proposal_name: proposal.proposal_name });
         const proposalAttributes = proposal;
-        proposalAttributes.voted = voted;
+
+        proposalAttributes.voted = !!vote;
+        proposalAttributes.accepted = vote && vote.vote === 1;
+        proposalAttributes.rejected = vote && vote.vote === 0;
+
+        proposalAttributes.expired = !!(new Date(proposal.expires_at) < currentTime);
+        proposalAttributes.active = !!(new Date(proposal.expires_at) >= currentTime);
 
         return proposalAttributes;
       });
@@ -96,7 +105,62 @@ class ToolsGovernanceProposals extends Component<Props> {
           (proposal.proposal_name &&
             proposal.proposal_name.toLowerCase().includes(queryString.toLowerCase())) ||
           (proposal.title && proposal.title.toLowerCase().includes(queryString.toLowerCase()))));
-    const sortedList = filteredList.filter((proposal) => !onlyVoted || proposal.voted);
+    const sortedList = filteredList.filter((proposal) => {
+      switch (filterByVote) {
+        case 'accepted':
+          return proposal.accepted;
+        case 'rejected':
+          return proposal.rejected;
+        case 'unvoted':
+          return !proposal.voted;
+        case 'all':
+        default:
+          return true;
+      }
+    }).filter((proposal) => {
+      switch (filterByStatus) {
+        case 'expired':
+          return proposal.expired;
+        case 'active':
+        default:
+          return proposal.active;
+      }
+    });
+    const filterByVoteOptions = [
+      {
+        key: 'all',
+        text: t('tools_proposals_voted_filter_all'),
+        value: 'all',
+      },
+      {
+        key: 'accepted',
+        text: t('tools_proposals_voted_filter_accepted'),
+        value: 'accepted',
+      },
+      {
+        key: 'rejected',
+        text: t('tools_proposals_voted_filter_rejected'),
+        value: 'rejected',
+      },
+      {
+        key: 'unvoted',
+        text: t('tools_proposals_voted_filter_unvoted'),
+        value: 'unvoted',
+      }
+    ];
+
+    const filterByStatusOptions = [
+      {
+        key: 'active',
+        text: t('tools_proposals_status_filter_active'),
+        value: 'active',
+      },
+      {
+        key: 'expired',
+        text: t('tools_proposals_status_filter_expired'),
+        value: 'expired',
+      }
+    ];
     return (
       <Segment basic>
         <Header>
@@ -131,15 +195,15 @@ class ToolsGovernanceProposals extends Component<Props> {
                 </List.Item>
                 <List.Item>
                   <GlobalModalDangerLink
-                    content={`https://www.eosx.io/tools/referendums/proposals`}
-                    link={`https://www.eosx.io/tools/referendums/proposals`}
+                    content="https://www.eosx.io/tools/referendums/proposals"
+                    link="https://www.eosx.io/tools/referendums/proposals"
                     settings={settings}
                   />
                 </List.Item>
                 <List.Item>
                   <GlobalModalDangerLink
-                    content={`https://eosauthority.com/polls?&lnc=en`}
-                    link={`https://eosauthority.com/polls?&lnc=en`}
+                    content="https://eosauthority.com/polls?&lnc=en"
+                    link="https://eosauthority.com/polls?&lnc=en"
                     settings={settings}
                   />
                 </List.Item>
@@ -183,12 +247,21 @@ class ToolsGovernanceProposals extends Component<Props> {
           placeholder={t('tools_proposals_search_placeholder')}
           onChange={(e) => this.setState({ queryString: e.target.value })}
         />
-        <Button
-          color={onlyVoted ? 'blue' : 'grey'}
-          content={t('tools_proposal_sort_by_vote')}
-          floated="right"
-          icon={onlyVoted ? 'check square outline' : 'square outline'}
-          onClick={() => this.setState({ onlyVoted: !onlyVoted })}
+        <Select
+          defaultValue="all"
+          name="filterByVote"
+          onChange={(e, { value }) => this.setState({ filterByVote: value })}
+          options={filterByVoteOptions}
+          selection
+          style={{ marginLeft: '10px' }}
+        />
+        <Select
+          defaultValue="active"
+          name="filterByStatus"
+          onChange={(e, { value }) => this.setState({ filterByStatus: value })}
+          options={filterByStatusOptions}
+          selection
+          style={{ marginLeft: '10px' }}
         />
         {(sortedList.length > 0) ? (
           <Visibility
@@ -201,6 +274,7 @@ class ToolsGovernanceProposals extends Component<Props> {
             <ProposalsTable
               actions={actions}
               blockExplorers={blockExplorers}
+              contracts={contracts}
               isLocked={isLocked}
               list={sortedList.splice(0, amount)}
               scope={scope}
@@ -217,7 +291,7 @@ class ToolsGovernanceProposals extends Component<Props> {
             warning
           />
         )}
-        {((!queryString && !onlyVoted && amount < sortedList.length) ||
+        {((!queryString && !filterByVote && amount < sortedList.length) ||
           (system.GOVERNANCE_GET_PROPOSALS === 'PENDING')) && (
           <Segment key="ProposalsTableLoading" clearing padded vertical>
             <Loader active />
