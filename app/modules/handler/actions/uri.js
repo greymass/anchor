@@ -253,8 +253,8 @@ export function templateURI(blockchain, wallet) {
     });
     const head = (await EOS.getInfo(true)).head_block_num;
     const block = await EOS.getBlock(head);
-    // Force 2hr expiration of txs, shouldn't hit
-    block.expire_seconds = 60 * 60 * 2;
+    // Force 1hr expiration of txs, shouldn't hit
+    block.expire_seconds = 60 * 60 * 1;
     try {
       // Setup decompression
       const opts = {
