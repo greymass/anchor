@@ -53,7 +53,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
   const menuBuilder = new MenuBuilder(ui);
   menuBuilder.buildMenu();
 
-  configureIPC(ui);
+  configureIPC(ui, true);
 
   return ui;
 };
