@@ -12,13 +12,17 @@ export default function system(state = {}, action) {
     return {};
   }
 
-  if (action.type === types.SYSTEM_EOSIOURI_RESET) {
+  if (
+    action.type === types.SYSTEM_EOSIOURI_RESET
+  ) {
     return Object.assign({}, state, {
-      EOSIOURISIGN: false,
-      EOSIOURICALLBACK: false,
       EOSIOURIBUILD: false,
-      EOSIOURIBROADCAST: false,
       EOSIOURIBUILD_LAST_TRANSACTION: false,
+      EOSIOURIBUILD_LAST_ERROR: false,
+      EOSIOURIBROADCAST: false,
+      EOSIOURICALLBACK: false,
+      EOSIOURISIGN: false,
+      EOSIOURISIGN_LAST_ERROR: false,
     });
   }
 
@@ -85,6 +89,11 @@ export default function system(state = {}, action) {
 
   if (requestState === 'SUCCESS' || requestState === 'PENDING') delete newState[errField];
   if (requestState === 'FAILURE') delete newState[txField];
+
+  if (action.type === types.SYSTEM_EOSIOURIBUILD_PENDING) {
+    delete newState.EOSIOURIBUILD_LAST_ERROR;
+    delete newState.EOSIOURISIGN_LAST_ERROR;
+  }
 
   return newState;
 }
