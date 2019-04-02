@@ -17,51 +17,53 @@ const getDateString = () => {
   return `${year}${month}${day}-${hour}${min}${sec}`;
 };
 
-const configureIPC = (ui) => {
-  ipcMain.on('openFile', (event, openPath = false) => {
-    const defaultPath = (openPath || app.getPath('documents'));
-    dialog.showOpenDialog(ui, { defaultPath }, (fileNames) => {
-      if (fileNames === undefined) {
-        event.sender.send('openFileCancel');
-        return;
-      }
-      const [fileName] = fileNames;
-      fs.readFile(fileName, 'utf-8', (err, data) => {
-        if (err) {
-          console.log(`An error ocurred reading the file: ${err.message}`);
-          event.sender.send('openFileError', err);
+const configureIPC = (ui, primary = false) => {
+  if (primary) {
+    ipcMain.on('openFile', (event, openPath = false) => {
+      const defaultPath = (openPath || app.getPath('documents'));
+      dialog.showOpenDialog(ui, { defaultPath }, (fileNames) => {
+        if (fileNames === undefined) {
+          event.sender.send('openFileCancel');
           return;
         }
-        event.sender.send('lastFileSuccess', fileName);
-        event.sender.send('openFileData', data);
+        const [fileName] = fileNames;
+        fs.readFile(fileName, 'utf-8', (err, data) => {
+          if (err) {
+            console.log(`An error ocurred reading the file: ${err.message}`);
+            event.sender.send('openFileError', err);
+            return;
+          }
+          event.sender.send('lastFileSuccess', fileName);
+          event.sender.send('openFileData', data);
+        });
       });
     });
-  });
+
+    ipcMain.on('saveFile', (event, savePath = false, data, prefix = 'tx') => {
+      const defaultPath = (savePath || app.getPath('documents'));
+      const defaultFilename = `${prefix}-${getDateString()}.json`;
+      const fileName = dialog.showSaveDialog({
+        title: 'Save File',
+        defaultPath: `${defaultPath}/${defaultFilename}`,
+        filters: [
+          { name: 'JSON Files', extensions: ['json'] }
+        ]
+      });
+
+      if (!fileName) return;
+
+      fs.writeFileSync(fileName, data);
+      event.sender.send('lastFileSuccess', fileName);
+    });
+
+    ipcMain.on('checkForUpdates', () => {
+      checkForUpdates({}, ui);
+    });
+  }
 
   ipcMain.on('openUri', (event, url) => {
     ui.show();
     ui.webContents.send('openUri', url);
-  });
-
-  ipcMain.on('saveFile', (event, savePath = false, data, prefix = 'tx') => {
-    const defaultPath = (savePath || app.getPath('documents'));
-    const defaultFilename = `${prefix}-${getDateString()}.json`;
-    const fileName = dialog.showSaveDialog({
-      title: 'Save File',
-      defaultPath: `${defaultPath}/${defaultFilename}`,
-      filters: [
-        { name: 'JSON Files', extensions: ['json'] }
-      ]
-    });
-
-    if (!fileName) return;
-
-    fs.writeFileSync(fileName, data);
-    event.sender.send('lastFileSuccess', fileName);
-  });
-
-  ipcMain.on('checkForUpdates', () => {
-    checkForUpdates({}, ui);
   });
 };
 
