@@ -4,14 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 
-import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFragmentWallet from '../../../../components/Global/Fragment/Wallet';
 import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
 
-class GlobalAccountDropdown extends Component<Props> {
+class GlobalAccountDropdownSelect extends Component<Props> {
   state = { open: false }
   onClose = () => {
     this.setState({ open: false });
@@ -27,27 +26,23 @@ class GlobalAccountDropdown extends Component<Props> {
       account,
       authorization,
       chainId,
-      fluid,
       mode,
       onSelect,
       pubkey,
-      selection,
       style,
       t,
       wallets
     } = this.props;
-
     if (!wallets || wallets.length === 0) {
       return false;
     }
-    const options = wallets
+    const availableWallets = wallets
       .filter(w => (
         w.chainId === chainId
         && (w.account !== account || w.authorization !== authorization)
       ))
       .sort((a, b) => a.account > b.account);
-    console.log(options, wallets, chainId)
-    let trigger = (
+    const trigger = (
       <GlobalFragmentWallet
         account={account}
         authorization={authorization}
@@ -55,68 +50,31 @@ class GlobalAccountDropdown extends Component<Props> {
         pubkey={pubkey}
       />
     );
-    if (!account || !authorization || !pubkey) {
-      trigger = (
-        <Header
-          content="No account selected"
-          subheader="Choose an account to use"
-          size="small"
-          style={{ margin: 0 }}
+    const options = availableWallets.map((wallet) => ({
+      key: `${wallet.account}@${wallet.authorization}`,
+      text: `${wallet.account}@${wallet.authorization}`,
+      value: wallet,
+      content: (
+        <GlobalFragmentWallet
+          account={wallet.account}
+          authorization={wallet.authorization}
+          mode={wallet.mode}
+          pubkey={wallet.pubkey}
         />
-      );
-    }
+      )
+    }));
     return (
       <Dropdown
-        fluid={fluid}
-        item={!selection}
-        labeled
-        selection={selection}
+        onChange={onSelect}
+        options={options}
+        scrolling
+        selection
         style={style || {}}
         trigger={trigger}
-      >
-        <Dropdown.Menu key="parent">
-          <Dropdown.Menu key="menu" scrolling>
-            {(options.length > 0)
-              ? options
-                .map(w => {
-                  return (
-                    <Dropdown.Item
-                      key={`${w.account}@${w.authorization}`}
-                      onClick={onSelect}
-                      value={w}
-                    >
-                      <GlobalFragmentWallet
-                        account={w.account}
-                        authorization={w.authorization}
-                        mode={w.mode}
-                        pubkey={w.pubkey}
-                      />
-                    </Dropdown.Item>
-                  );
-              })
-              : (
-                <Dropdown.Item
-                  content={(
-                    <p>No additional accounts loaded.</p>
-                  )}
-                  key="empty"
-                  style={{
-                    lineHeight: '1.25em',
-                    width: '300px',
-                    maxWidth: '300px',
-                    padding: '1em',
-                    whiteSpace: 'normal'
-                  }}
-                />
-              )
-            }
-          </Dropdown.Menu>
-        </Dropdown.Menu>
-      </Dropdown>
+      />
     );
   }
 }
-
 
 function mapStateToProps(state) {
   return {
@@ -139,4 +97,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   translate('global'),
   connect(mapStateToProps, mapDispatchToProps)
-)(GlobalAccountDropdown);
+)(GlobalAccountDropdownSelect);
