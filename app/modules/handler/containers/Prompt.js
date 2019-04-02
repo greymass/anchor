@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { find } from 'lodash';
+import { find, pick } from 'lodash';
 import { Segment } from 'semantic-ui-react';
 
 import URIActions from '../actions/uri';
@@ -53,46 +53,32 @@ class PromptContainer extends Component<Props> {
     actions.signURI(tx, blockchain, wallet);
   }
   templateURI = () => {
-    const { actions, blockchains, prompt } = this.props;
+    const { blockchains, prompt, wallets } = this.props;
     const { chainId } = prompt;
-    const newState = {};
     // Set the blockchain for this network
     const blockchain = find(blockchains, { chainId });
-    newState.blockchain = blockchain;
-    // Set the wallet to use by default for this network if not set
-    const defaultWallet = find(this.props.wallets, { chainId });
+    // Find the default wallet for this chain (defaults to first at the moment)
+    const defaultWallet = find(wallets, { chainId });
     if (defaultWallet) {
-      const wallet = {
-        account: defaultWallet.account,
-        authorization: defaultWallet.authorization,
-        mode: defaultWallet.mode,
-        pubkey: defaultWallet.pubkey,
-      };
-      newState.wallet = wallet;
-      // Regenerate the template based on the blockchain and selected wallet
-      actions.templateURI(blockchain, wallet);
+      // If a default was found, set the blockchain and swap to it
+      this.setState({ blockchain }, () => {
+        this.swapAccount(false, { value: defaultWallet });
+      });
     } else {
-      newState.wallet = {};
+      // If not, empty the current wallet and set the blockchain
+      this.setState({
+        blockchain,
+        wallet: {}
+      });
     }
-    this.setState(newState);
   }
   swapAccount = (e, { value }) => {
-    const { actions, blockchains, prompt } = this.props;
-    const { chainId } = prompt;
-    const blockchain = find(blockchains, { chainId });
-    const {
-      account,
-      authorization,
-      mode,
-      pubkey
-    } = value;
-    const wallet = {
-      account,
-      authorization,
-      mode,
-      pubkey,
-    };
-    this.setState({ wallet }, () => actions.templateURI(blockchain, wallet));
+    const { actions } = this.props;
+    const { blockchain } = this.state;
+    const wallet = pick(value, ['account', 'authorization', 'mode', 'path', 'pubkey']);
+    this.setState({
+      wallet
+    }, () => actions.templateURI(blockchain, wallet));
   }
   render() {
     const {
@@ -113,11 +99,12 @@ class PromptContainer extends Component<Props> {
     const {
       response
     } = prompt;
+    if (!blockchain) return false;
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
     const hasBroadcast = !!(response && (response.processed && response.processed.receipt.status === 'executed'));
+    console.log(prompt)
     const hasExpired = !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
     const hasWallet = !!(account && authorization && mode && pubkey);
-    // const error = system.EOSIOURIBUILD_LAST_ERROR;
     return (
       <Segment
         tertiary
@@ -139,6 +126,7 @@ class PromptContainer extends Component<Props> {
         {(hasWallet)
           ? (
             <PromptStage
+              blockchain={blockchain}
               hasBroadcast={hasBroadcast}
               hasExpired={hasExpired}
               onClose={this.onClose}
@@ -152,7 +140,9 @@ class PromptContainer extends Component<Props> {
           )
         }
         <Segment basic style={{ marginTop: 0 }} textAlign="center">
-          <p>Chain ID: {blockchain.chainId}</p>
+          <p>
+            Chain ID: {(blockchain) ? blockchain.chainId : 'loading'}
+          </p>
         </Segment>
       </Segment>
     );

@@ -8,10 +8,11 @@ class PromptFragmentTransactionAction extends Component<Props> {
   render() {
     const {
       action,
+      index,
       t,
     } = this.props;
     return (
-      <Segment secondary>
+      <Segment secondary key={index}>
         <Label basic size="large">
           #1
         </Label>
@@ -34,8 +35,8 @@ class PromptFragmentTransactionAction extends Component<Props> {
             theme="harmonic"
           />
         </Segment>
-        {action.authorization.map((auth) => (
-          <Label basic>
+        {action.authorization.map((auth, idx) => (
+          <Label basic key={`${idx}@${auth.actor}@${auth.permission}`}>
             <Icon name="pencil" />
             Authorization:
             <Label.Detail>
