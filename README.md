@@ -23,12 +23,12 @@
 
 ### Releases
 
-Current 0.7.4 release downloads:
+Current 0.7.5 release downloads:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.7.4/win-eos-voter-0.7.4.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.7.4/mac-eos-voter-0.7.4.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.4/linux-eos-voter-0.7.4-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.4/linux-eos-voter-0.7.4-amd64.snap)
+- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v0.7.5/win-eos-voter-0.7.5.exe)
+- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v0.7.5/mac-eos-voter-0.7.5.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v0.7.5/linux-eos-voter-0.7.5-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v0.7.5/linux-eos-voter-0.7.5-amd64.snap)
 
 The latest release will always be available on the releases page of this repository:
 
@@ -103,20 +103,20 @@ Signed by [jesta on keybase](https://keybase.io/jesta)
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
-shasum -b -a 512 linux-eos-voter-0.7.4-amd64.deb
-ec117530d7a7cd540e1fc649d1c6914817e900a492651765518b1b65624d6ee0dfc907ae9b8ee0fe2087cad66e392a4bcf233c5e113191792cd648d9356bef8e *linux-eos-voter-0.7.4-amd64.deb
-shasum -b -a 512 linux-eos-voter-0.7.4-arm64.deb
-5ff0fcea3ae45400fd2179d28b54d8a282c8b36682d013e78a3dea1c21261d48c9a5412e72e4cd51b220fc44adda192958a5ad0f992027eee49c12d7bc5f0759 *linux-eos-voter-0.7.4-arm64.deb
-shasum -b -a 512 linux-eos-voter-0.7.4-armv7l.deb
-ed1e61e8ecf846321d8ef5d2df1bdc80e90e4a97544eb7cf9351b4753ee84b75ba420c1d7f106846f7d04138cf41dee67e951387e454b930ebff6ec112914254 *linux-eos-voter-0.7.4-armv7l.deb
-shasum -b -a 512 linux-eos-voter-0.7.4-x86_64.AppImage
-4301bbc3b05d67239fa2d2bd20eb5f83c55ab339ce362ddf3c0e1903ef2eecceb916c1bb713ebcbfe2a45e08a39561f56fe18613dd5d2a8a032f10de35bac86a *linux-eos-voter-0.7.4-x86_64.AppImage
-shasum -b -a 512 mac-eos-voter-0.7.4.dmg
-3059fddd190ab7e1c727984f8ae6ce676c56c6fca33ee7631396565a8c158a11351edefcbb85dad7bdcd602399337261582d1495e3129450925092586e7923ba *mac-eos-voter-0.7.4.dmg
-shasum -b -a 512 mac-eos-voter-0.7.4.zip
-1228177f2f15d83e52c029dda3ac86f851b8ca1022ea96f197235c7894b2a8456dfb195bf189303cd766d369fc2d6d84c749faa41f39aaaf032c3fd3857fc07a *mac-eos-voter-0.7.4.zip
-shasum -b -a 512 win-eos-voter-0.7.4.exe
-3b7b11c18c6377ba804815666197a4964cacb90d19b69a78427013c0940c38d8667aa44a9ed72e421a7103dcb567b9ec5aef7f5f112e76c6a30d22ac99a73040 *win-eos-voter-0.7.4.exe
+shasum -b -a 512 linux-eos-voter-0.7.5-amd64.deb
+bea81fe2e68cda5609a9e322fc54d44d774c3f0204dcbe874bb0a021d8d408db2ba375aeab984e5cc44886a66608168f6889b57f1dffce6cc266f3edc1c83d92 *linux-eos-voter-0.7.5-amd64.deb
+shasum -b -a 512 linux-eos-voter-0.7.5-arm64.deb
+ebc6cc2b876cc1e37e47aeb5472cf51f6a58d8299dc0cd491423c7de6a31b8cb179198ac50e4a3601c48ae87b366fddb1a89e1c7eae57c7428dfc01b60550989 *linux-eos-voter-0.7.5-arm64.deb
+shasum -b -a 512 linux-eos-voter-0.7.5-armv7l.deb
+d3d39e6aa3fbb0aab564ebbb4a9da21d34bda928e5b42eb6fbba62fcf3fba678710aeade713125b24b8294f3f68f236f3c32cda53e0f251135f3bd329bf236de *linux-eos-voter-0.7.5-armv7l.deb
+shasum -b -a 512 linux-eos-voter-0.7.5-x86_64.AppImage
+771a355b2a87c8078a10ee6bded05a87a892c47f7e2e8483ad889a70b6b81300a257c07ff99551c3bad99dc5b7e83eaa90d55fc07ab5ae5fcbd3cdf0ce0349e2 *linux-eos-voter-0.7.5-x86_64.AppImage
+shasum -b -a 512 mac-eos-voter-0.7.5.dmg
+6dcde6ffcec4d249768e2e5c3b954123c6f4e034e9098785f66343e2277de2533697050b9aaec684a33c2ea7c40d60fca104f86bf6809ec4cc4c41d2bfac3272 *mac-eos-voter-0.7.5.dmg
+shasum -b -a 512 mac-eos-voter-0.7.5.zip
+df15d10696995558e39dd919cf86b019678d7defd6bb778b36787330d35ab32ec21aa0cb4d922f3fa0fa09b98f315d1b99713e63d3251423861f783178d2a158 *mac-eos-voter-0.7.5.zip
+shasum -b -a 512 win-eos-voter-0.7.5.exe
+04c58dc9c238e9c0535a9347dcabc3364966a0d1473e98a2e13434cf3199fca0491f51b9a945ea2326c8ae203b04f533d730f9aa904168dcfea5b365a2c24a4d *win-eos-voter-0.7.5.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.1.0
 Comment: https://keybase.io/crypto
