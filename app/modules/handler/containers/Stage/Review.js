@@ -15,8 +15,9 @@ class PromptStageReview extends Component<Props> {
     const {
       onShareLink,
       prompt,
+      settings,
       system,
-      wallet
+      wallet,
     } = this.props;
     const {
       chainId,
@@ -26,13 +27,16 @@ class PromptStageReview extends Component<Props> {
 
     const error = system.EOSIOURIBUILD_LAST_ERROR;
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
+    console.log(this.props)
     return (
       <Grid stackable>
         <Grid.Column width={6}>
           <PromptControls
             callback={callback}
             chainId={chainId}
+            onCheck={this.props.onCheck}
             onSelect={this.props.swapAccount}
+            settings={settings}
             wallet={wallet}
           />
         </Grid.Column>
@@ -52,7 +56,13 @@ class PromptStageReview extends Component<Props> {
             : false
           }
           {(tx)
-            ? tx.actions.map((action) => <PromptFragmentTransactionAction action={action} />)
+            ? tx.actions.map((action, index) => (
+              <PromptFragmentTransactionAction
+                action={action}
+                key={index}
+                index={index}
+              />
+            ))
             : false
           }
           {(error)
@@ -74,6 +84,7 @@ class PromptStageReview extends Component<Props> {
 function mapStateToProps(state) {
   return {
     prompt: state.prompt,
+    settings: state.settings,
     system: state.system,
   };
 }

@@ -9,7 +9,9 @@ class PromptControls extends Component<Props> {
     const {
       callback,
       chainId,
+      onCheck,
       onSelect,
+      settings,
       t,
       wallet,
     } = this.props;
@@ -55,25 +57,32 @@ class PromptControls extends Component<Props> {
             pubkey={pubkey}
             chainId={chainId}
             onSelect={onSelect}
-            selection
           />
         </Form.Field>
-        <Form.Field>
-          <label>
-            <Icon name="cogs" />
-            Signing Preferences
-          </label>
-          <Segment style={{ marginTop: 0 }}>
-            <Form.Checkbox
-              checked
-              label="Preview before Broadcasting"
-            />
-            <Form.Checkbox
-              checked
-              label="Increase privacy by using anonymous callback proxy"
-            />
-          </Segment>
-        </Form.Field>
+        {(settings && ['ledger', 'hot'].includes(wallet.mode))
+          ? (
+            <Form.Field>
+              <label>
+                <Icon name="cogs" />
+                Signing Preferences
+              </label>
+              <Segment style={{ marginTop: 0 }}>
+                <Form.Checkbox
+                  checked={settings.eosio_signbroadcast}
+                  label="Broadcast transaction automatically after signing."
+                  name="eosio_signbroadcast"
+                  onChange={onCheck}
+                />
+                <Form.Checkbox
+                  checked
+                  label="Increase privacy by using anonymous callback proxy"
+                  style={{ display: 'none' }}
+                />
+              </Segment>
+            </Form.Field>
+          )
+          : false
+        }
         {callbackField}
       </Form>
     );
