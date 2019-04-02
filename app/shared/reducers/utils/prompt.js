@@ -19,6 +19,10 @@ export default function prompt(state = {}, action) {
     case types.SYSTEM_EOSIOURIBUILD_SUCCESS: {
       return Object.assign({}, state, action.payload);
     }
+    case types.SYSTEM_EOSIOURISIGN_FAILURE: {
+      console.log(action)
+      return state;
+    }
     case types.SYSTEM_EOSIOURISIGN_SUCCESS: {
       return Object.assign({}, state, {
         signed: action.payload.signed
@@ -47,13 +51,13 @@ export default function prompt(state = {}, action) {
         callbackURL: action.payload.s,
       });
     }
-    case types.SET_CURRENT_WALLET: {
-      return Object.assign({}, state, {
-        response: undefined,
-        signed: undefined,
-        tx: undefined
-      });
-    }
+    // case types.SET_CURRENT_WALLET: {
+    //   return Object.assign({}, state, {
+    //     response: undefined,
+    //     signed: undefined,
+    //     tx: undefined
+    //   });
+    // }
     default: {
       return state;
     }

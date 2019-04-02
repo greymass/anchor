@@ -6,7 +6,13 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find, includes } from 'lodash';
 
-import { Dimmer, Header, Loader, Segment } from 'semantic-ui-react';
+import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react';
+
+import PromptStageReview from './Stage/Review';
+import PromptStageBroadcast from './Stage/Broadcast';
+import PromptStageExpired from './Stage/Expired';
+import PromptStageHardwareLedger from './Stage/Hardware/Ledger';
+import PromptStageSuccess from './Stage/Success';
 
 import PromptActionBroadcast from '../components/Actions/Broadcast';
 import PromptActionCancel from '../components/Actions/Cancel';
@@ -14,32 +20,44 @@ import PromptActionComplete from '../components/Actions/Complete';
 import PromptActionDownload from '../components/Actions/Download';
 import PromptActionRecreate from '../components/Actions/Recreate';
 import PromptActionSign from '../components/Actions/Sign';
+import PromptActionSignBroadcast from '../components/Actions/SignBroadcast';
 
-import PromptStageReview from './Stage/Review';
-import PromptStageBroadcast from './Stage/Broadcast';
-import PromptStageExpired from './Stage/Expired';
-import PromptStageSuccess from './Stage/Success';
+import PromptActionUnlock from '../components/Actions/Unlock';
 
 import URIActions from '../actions/uri';
+import * as HardwareLedgerActions from '../../../shared/actions/hardware/ledger';
+import { setSetting } from '../../../shared/actions/settings';
+import { unlockWalletByAuth } from '../../../shared/actions/wallet';
 
 const { ipcRenderer } = require('electron');
 
+const potentialSettings = ['eosio_signbroadcast'];
+
 class PromptStage extends Component<Props> {
   onBroadcast = () => {
-    const { actions, blockchains, prompt } = this.props;
     const {
+      actions,
+      prompt
+    } = this.props;
+    const {
+      blockchain,
       callback,
-      chainId,
       signed,
     } = prompt;
-    const blockchain = find(blockchains, { chainId });
-    actions.callbackURIWithProcessed({
-      bi: '',
-      bn: 123456,
-      tx: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-      sig: ['ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'],
-    }, callback);
-    // actions.broadcastURI(signed, blockchain, callback);
+    // actions.callbackURIWithProcessed({
+    //   bn: 123456,
+    //   tx: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+    //   sig: ['ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'],
+    // }, callback);
+    actions.broadcastURI(signed, blockchain, callback);
+  }
+  onCheck = (e, { name, checked }) => {
+    if (potentialSettings.includes(name)) {
+      const { actions } = this.props;
+      actions.setSetting(name, checked);
+    } else {
+      console.log('unrecognized setting: ', name, checked);
+    }
   }
   onRecreate = () => {
     const {
@@ -53,29 +71,56 @@ class PromptStage extends Component<Props> {
   onSign = () => {
     const {
       actions,
-      blockchains,
+      blockchain,
       prompt,
       wallet
     } = this.props;
-    const { chainId, tx } = prompt;
-    const blockchain = find(blockchains, { chainId });
+    const { tx } = prompt;
     actions.signURI(tx, blockchain, wallet);
+  }
+  onSignBroadcast = () => {
+    const {
+      actions,
+      blockchain,
+      prompt,
+      wallet
+    } = this.props;
+    const {
+      callback,
+    } = prompt;
+    const { tx } = prompt;
+    actions.signURI(tx, blockchain, wallet, true, callback);
+  }
+  onUnlock = (password) => {
+    const {
+      actions,
+      wallet
+    } = this.props;
+    actions.unlockWalletByAuth(wallet.account, wallet.authorization, password);
   }
   render() {
     const {
-      actionName,
+      availableKeys,
+      blockchain,
       hasBroadcast,
       hasExpired,
       onClose,
       onShareLink,
       prompt,
       settings,
+      status,
       system,
       wallet,
+      validate,
     } = this.props;
     const transaction = prompt.signed;
     const awaitingDevice = (system.EOSIOURISIGN === 'PENDING');
-    const canSign = !!(['hot', 'ledger'].includes(wallet.mode));
+    const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
+    const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
+    const canSignWithDevice = (wallet.mode === 'ledger' && status === 'connected');
+    const canSign = (canSignWithKey || canSignWithDevice);
+    // console.log(this.props)
+    // console.log(couldSignWithKey, canSignWithKey, canSignWithDevice, canSign);
     const hasSignature = !!(
       transaction
       && transaction.transaction
@@ -83,9 +128,10 @@ class PromptStage extends Component<Props> {
     );
     const uriDigested = !!(prompt.tx);
     const hasTransaction = !!(transaction && transaction.transaction_id);
-    const hasError = (system[`${actionName}_LAST_ERROR`]);
     const signing = (system.EOSIOURISIGN === 'PENDING');
     const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
+    const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
+    const error = system.EOSIOURIBUILD_LAST_ERROR || system.EOSIOURISIGN_LAST_ERROR;
 
     // console.log(prompt);
     // console.log('hasExpired', hasExpired)
@@ -98,6 +144,7 @@ class PromptStage extends Component<Props> {
 
     let stage = (
       <PromptStageReview
+        onCheck={this.onCheck}
         onShareLink={onShareLink}
         prompt={prompt}
         swapAccount={this.props.swapAccount}
@@ -107,11 +154,23 @@ class PromptStage extends Component<Props> {
 
     let nextAction = (
       <PromptActionSign
-        disabled={!prompt.tx || signing}
+        disabled={!prompt.tx || signing || !canSign}
+        loading={signing}
         onClick={this.onSign}
         wallet={wallet}
       />
     );
+
+    if (settings.eosio_signbroadcast) {
+      nextAction = (
+        <PromptActionSignBroadcast
+          disabled={!prompt.tx || signing || !canSign}
+          loading={signing}
+          onClick={this.onSignBroadcast}
+          wallet={wallet}
+        />
+      );
+    }
 
     let cancelAction = (
       <PromptActionCancel
@@ -119,13 +178,24 @@ class PromptStage extends Component<Props> {
       />
     );
 
-    if (!canSign) {
+    if (wallet.mode === 'watch') {
       nextAction = (
         <PromptActionDownload
           disabled={!prompt.tx || signing}
           onClick={this.onSaveUnsigned}
           prompt={prompt}
           settings={settings}
+          wallet={wallet}
+        />
+      );
+    }
+
+    if (wallet.mode === 'ledger' && !canSign) {
+      stage = (
+        <PromptStageHardwareLedger
+          onShareLink={onShareLink}
+          prompt={prompt}
+          swapAccount={this.props.swapAccount}
           wallet={wallet}
         />
       );
@@ -143,6 +213,15 @@ class PromptStage extends Component<Props> {
           onClick={onClose}
         />
       );
+    } else if (couldSignWithKey && !canSign) {
+      nextAction = (
+        <PromptActionUnlock
+          disabled={!prompt.tx || signing || validatingPassword}
+          loading={validatingPassword}
+          onClick={this.onUnlock}
+          wallet={wallet}
+        />
+      );
     } else if (!hasBroadcast && hasExpired) {
       stage = (
         <PromptStageExpired
@@ -155,8 +234,6 @@ class PromptStage extends Component<Props> {
           wallet={wallet}
         />
       );
-    } else if (hasError) {
-      console.log('display err');
     } else if (hasTransaction && !hasSignature && !includes(['watch', 'ledger'], settings.walletMode)) {
       console.log('display signer');
     } else if (hasTransaction && wallet.mode === 'watch') {
@@ -165,7 +242,9 @@ class PromptStage extends Component<Props> {
       console.log('display ledger');
     } else if (uriDigested && hasTransaction && hasSignature && !hasBroadcast && !awaitingDevice) {
       stage = (
-        <PromptStageBroadcast />
+        <PromptStageBroadcast
+          blockchain={blockchain}
+        />
       );
       nextAction = (
         <PromptActionBroadcast
@@ -178,13 +257,17 @@ class PromptStage extends Component<Props> {
 
     return (
       <React.Fragment>
-        <Segment attached>
+        <Segment
+          attached="bottom"
+          style={{
+            marginBottom: 0
+          }}
+        >
           <Dimmer
             active={signing || broadcasting}
             inverted
           >
             <Loader
-              indeterminate
               size="big"
             >
               <Header>
@@ -197,12 +280,34 @@ class PromptStage extends Component<Props> {
           </Dimmer>
           {stage}
         </Segment>
+        {(error)
+          ? (
+            <Segment size="large" color="red" inverted>
+              {(error.message)
+                ? (
+                  <Header>
+                    <Icon name="warning sign" />
+                    <Header.Content>
+                      {(wallet.mode === 'ledger')
+                        ? 'Try again - the device failed to sign this transaction.'
+                        : 'There was a problem signing this transaction.'
+                      }
+                      <Header.Subheader style={{ color: 'white' }}>
+                        {error.message}
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                )
+                : false
+              }
+            </Segment>
+          )
+          : false
+        }
         <Segment
-          attached="bottom"
           basic
           clearing
-          secondary
-          style={{ marginBottom: 0 }}
+          style={{ margin: 0 }}
         >
           {nextAction}
           {cancelAction}
@@ -214,16 +319,21 @@ class PromptStage extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    availableKeys: state.auths.map((auth) => auth.pubkey),
     blockchains: state.blockchains,
     prompt: state.prompt,
     settings: state.settings,
+    status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
     system: state.system,
+    validate: state.validate,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      setSetting,
+      unlockWalletByAuth,
       ...URIActions,
     }, dispatch)
   };
