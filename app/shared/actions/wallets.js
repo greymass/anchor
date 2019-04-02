@@ -223,9 +223,9 @@ export function useWallet(chainId, account, authorization) {
     }
     const newWallet = find(wallets, walletQuery);
     // Lock the wallet to remove old account keys
-    dispatch({
-      type: types.WALLET_LOCK
-    });
+    // dispatch({
+    //   type: types.WALLET_LOCK
+    // });
     //  Reset the unregistered producers
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
