@@ -28,7 +28,8 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const json = JSON.stringify(comment ? { comment } : {});
     actions.voteProposal(scope, voter, proposal, vote, json);
   };
-  unvote = (proposal) => {
+  unvote
+    = (proposal) => {
     const { actions, settings } = this.props;
     const { scope } = this.props;
     const voter = settings.account;
@@ -38,6 +39,7 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      contracts,
       isLocked,
       settings,
       proposal,
@@ -177,8 +179,10 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             )}
             content={t('tools_governance_proposal_confirm_vote_yes')}
             isLocked={isLocked}
+            proposal_name={proposal_name}
             settings={settings}
             system={system}
+            vote_value="yes"
             validate={validate}
             wallet={wallet}
           />
@@ -212,9 +216,11 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             )}
             content={t('tools_governance_proposal_confirm_vote_no')}
             isLocked={isLocked}
+            proposal_name={proposal_name}
             settings={settings}
             system={system}
             validate={validate}
+            vote_value="no"
             wallet={wallet}
           />
           <ToolsGovernanceProposalsProposalVote
@@ -239,7 +245,9 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               />
             )}
             content={t('tools_governance_proposal_confirm_unvote')}
+            expires_at={expires_at}
             isLocked={isLocked}
+            proposal_name={proposal_name}
             settings={settings}
             system={system}
             validate={validate}
