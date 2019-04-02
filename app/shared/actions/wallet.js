@@ -1,3 +1,5 @@
+import { find } from 'lodash';
+
 import * as types from './types';
 import { setSetting } from './settings';
 import eos from './helpers/eos';
@@ -233,6 +235,60 @@ export function unlockWallet(password, useWallet = false) {
   };
 }
 
+export function unlockWalletByAuth(account, authorization, password) {
+  return async (dispatch: () => void, getState) => {
+    const state = getState();
+    const {
+      accounts,
+      connection,
+      settings,
+      wallets,
+    } = state;
+    const wallet = find(wallets, { account, authorization });
+    let accountData = accounts[wallet.account];
+    if (settings.walletMode === 'hot' && !accountData) {
+      accountData = await eos(connection).getAccount(wallet.account);
+    }
+    dispatch({
+      type: types.VALIDATE_WALLET_PASSWORD_PENDING
+    });
+    setTimeout(() => {
+      try {
+        let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        if (ecc.isValidPrivate(key) === true) {
+          const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
+          // Obfuscate key for in-memory storage
+          const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+          // Set the keys for use
+          dispatch({
+            payload: {
+              account: wallet.account,
+              accountData: account,
+              authorization: wallet.authorization,
+              hash,
+              key,
+              pubkey
+            },
+            type: types.SET_AUTH
+          });
+          return dispatch({
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+          });
+        }
+      } catch (err) {
+        return dispatch({
+          err,
+          type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+        });
+      }
+      return dispatch({
+        type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+      });
+    }, 10);
+  };
+}
+
 export function clearWallet() {
   return (dispatch: () => void) => {
     dispatch({
@@ -310,9 +366,10 @@ export default {
   decrypt,
   encrypt,
   lockWallet,
-  unlockWallet,
   setTemporaryKey,
   setWalletKey,
   setWalletMode,
+  unlockWallet,
+  unlockWalletByAuth,
   validateWalletPassword
 };
