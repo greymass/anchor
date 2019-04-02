@@ -3,23 +3,12 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Header, Icon, Label } from 'semantic-ui-react';
 
-const { clipboard, ipcRenderer } = require('electron');
-
-class PromptActionDownload extends Component<Props> {
-  onSaveUnsigned = () => {
-    const { prompt, settings } = this.props;
-    const { contract, tx } = prompt;
-    const data = JSON.stringify({
-      contract,
-      transaction: tx
-    }, null, 2);
-    console.log("trigger")
-    ipcRenderer.send('saveFile', settings.lastFilePath, data);
-  }
+class PromptActionSign extends Component<Props> {
   render() {
     const {
       disabled,
       loading,
+      onClick,
       t,
       wallet,
     } = this.props;
@@ -30,7 +19,7 @@ class PromptActionDownload extends Component<Props> {
         disabled={disabled}
         floated="right"
         labelPosition="left"
-        onClick={this.onSaveUnsigned}
+        onClick={onClick}
       >
         <Label
           as="a"
@@ -40,30 +29,54 @@ class PromptActionDownload extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                Save Unsigned Transaction
+                Sign & Broadcast Transaction
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
           </Header>
         </Label>
         <Button
-          color="orange"
+          color="purple"
           icon
           loading={loading}
           style={{ position: 'relative' }}
         >
           <Button.Content hidden style={{ marginTop: '-0.75em' }}>
             <Icon
-              name="save"
+              name="signup"
               size="large"
-              style={{ marginRight: 0 }}
+              style={{ margin: 0 }}
+            />
+            <Icon
+              name="plus"
+              size="small"
+              style={{
+                margin: '0 0.5em'
+              }}
+            />
+            <Icon
+              name="cloud upload"
+              size="large"
+              style={{ margin: 0 }}
             />
           </Button.Content>
           <Button.Content visible style={{ margin: '0 1em' }}>
             <Icon
-              name="save outline"
+              name="pencil"
               size="large"
-              style={{ marginRight: 0 }}
+              style={{ margin: 0 }}
+            />
+            <Icon
+              name="plus"
+              size="small"
+              style={{
+                margin: '0 0.5em'
+              }}
+            />
+            <Icon
+              name="cloud"
+              size="large"
+              style={{ margin: 0 }}
             />
           </Button.Content>
         </Button>
@@ -72,4 +85,4 @@ class PromptActionDownload extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionDownload);
+export default translate('global')(PromptActionSign);
