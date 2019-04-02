@@ -4,6 +4,8 @@ import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
 import { httpClient } from '../../../shared/utils/httpClient';
 
+const { ipcRenderer } = require('electron');
+
 const { SigningRequest } = require('eosio-uri');
 const zlib = require('zlib');
 
@@ -152,7 +154,7 @@ export function setURI(uri) {
   };
 }
 
-export function signURI(tx, blockchain, wallet) {
+export function signURI(tx, blockchain, wallet, broadcast = false, callback = false) {
   return (dispatch: () => void, getState) => {
     const {
       auths,
@@ -165,6 +167,7 @@ export function signURI(tx, blockchain, wallet) {
       chainId: blockchain.chainId,
       httpEndpoint: blockchain.node,
       signMethod: (wallet.mode === 'ledger') ? 'ledger' : false,
+      signPath: (wallet.mode === 'ledger') ? wallet.path : false,
     });
     // Logic to pull unlocked auths from storage
     if (!networkConfig.signMethod && wallet.mode === 'hot') {
@@ -178,27 +181,56 @@ export function signURI(tx, blockchain, wallet) {
     }
     // Establish Signer
     const signer = eos(networkConfig, true);
-    // Sign the transaction
-    signer
-      .transaction(tx, {
-        broadcast: false, //connection.broadcast,
-        expireInSeconds: connection.expireInSeconds,
-        sign: true, //connection.sign
-      })
-      .then((signed) => {
-        return dispatch({
-          payload: { signed },
-          type: types.SYSTEM_EOSIOURISIGN_SUCCESS
+    setTimeout(() => {
+      signer
+        .transaction(tx, {
+          broadcast,
+          expireInSeconds: (broadcast) ? undefined : connection.expireInSeconds,
+          sign: true,
+        })
+        .then((signed) => {
+          dispatch({
+            payload: { signed },
+            type: types.SYSTEM_EOSIOURISIGN_SUCCESS
+          });
+          if (broadcast) {
+            if (callback) {
+              dispatch(callbackURIWithProcessed({
+                bn: signed.processed.block_num,
+                tx: signed.transaction_id,
+                sig: signed.transaction.signatures
+              }, callback));
+            }
+            dispatch({
+              payload: { response: signed },
+              type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
+            });
+          }
+        })
+        .catch((err) => {
+          // If the transaction failed with the Ledger, reset the device connection
+          if (wallet.mode === 'ledger') {
+            const shouldReset = (
+              // (err && err.statusCode && err.statusCode === 27013)
+              (err && err.id === 'TransportLocked')
+              || (err && err.message && err.message.startsWith('Cannot write to HID device'))
+            );
+            if (shouldReset) {
+              const { ledger } = getState();
+              if (global && global.initHardwareLedger) {
+                global.initHardwareLedger(false, wallet.path, ledger.devicePath);
+              }
+              if (ipcRenderer) {
+                ipcRenderer.send('connectHardwareLedger', wallet.path, ledger.devicePath);
+              }
+            }
+          }
+          return dispatch({
+            payload: { err, tx },
+            type: types.SYSTEM_EOSIOURISIGN_FAILURE
+          });
         });
-        // return dispatch(setTransaction(JSON.stringify({
-        //   contract,
-        //   transaction: signed
-        // })));
-      })
-      .catch((err) => dispatch({
-        payload: { err, tx },
-        type: types.SYSTEM_EOSIOURISIGN_FAILURE
-      }));
+    }, 250);
   };
 }
 
