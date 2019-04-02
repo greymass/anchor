@@ -21,6 +21,7 @@ class ToolsHardwareLedgerStatus extends Component<Props> {
   }
   render() {
     const {
+      hideOptions,
       ledger,
       settings,
       status,
@@ -120,7 +121,7 @@ class ToolsHardwareLedgerStatus extends Component<Props> {
             : false
           }
         </Segment>
-        {(status !== 'transport_error')
+        {(status !== 'transport_error' && !hideOptions)
           ? (
             <Segment attached textAlign="center">
               <Checkbox
