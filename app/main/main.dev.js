@@ -146,7 +146,12 @@ const showManager = () => {
   }
 };
 
-ipcMain.on('connectHardwareLedger', (event, signPath, devicePath) => {
+let initHardwareRetry;
+
+const initHardwareLedger = (event, signPath, devicePath) => {
+  if (initHardwareRetry) {
+    clearInterval(initHardwareRetry);
+  }
   Transport
     .open(devicePath)
     .then((transport) => {
@@ -163,12 +168,10 @@ ipcMain.on('connectHardwareLedger', (event, signPath, devicePath) => {
         type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
       });
       store.dispatch(getAppConfiguration());
-      return transport;
+      return true;
     })
     .catch((error) => {
-      setTimeout(() => {
-        store.dispatch(ledgerStartListen());
-      }, 1000);
+      initHardwareRetry = setInterval(initHardwareLedger(event, signPath, devicePath), 1000);
       store.dispatch({
         payload: {
           error
@@ -176,7 +179,10 @@ ipcMain.on('connectHardwareLedger', (event, signPath, devicePath) => {
         type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
       });
     });
-});
+};
+
+ipcMain.on('connectHardwareLedger', initHardwareLedger);
 
 global.hardwareLedger = new HardwareLedger();
+global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;
