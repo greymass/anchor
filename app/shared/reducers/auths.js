@@ -5,6 +5,10 @@ const initialState = [];
 
 export default function auths(state = initialState, action) {
   switch (action.type) {
+    case types.WALLET_LOCK: {
+      return [...initialState];
+    }
+    case types.SET_AUTH:
     case types.SET_CURRENT_KEY: {
       const partitionQuery = {
         pubkey: action.payload.pubkey
