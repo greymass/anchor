@@ -61,6 +61,18 @@ export function callbackURIWithProcessed({
     s = s.replace('{{sig}}', sig[0]);
     s = s.replace('{{sig[0]}}', sig[0]);
 
+    // If it's not a background call, return to state
+    if (!background) {
+      return dispatch({
+        type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
+        payload: {
+          background,
+          s
+        }
+      });
+    }
+
+    // Otherwise execute background call
     httpClient
       .post(s, {
         bn,
@@ -70,6 +82,7 @@ export function callbackURIWithProcessed({
       .then(() => dispatch({
         type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
         payload: {
+          background,
           s
         }
       }))
