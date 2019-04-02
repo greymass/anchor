@@ -16,9 +16,20 @@ function handleError(error) {
 }
 
 export function getAppConfiguration() {
-  return (dispatch: () => void) => {
+  return (dispatch: () => void, getState) => {
     const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
+    // console.log(hardwareLedger)
     const { transport } = hardwareLedger;
+    // If transport has been removed, fail
+    if (!transport) {
+      return dispatch({
+        payload: {
+          error: 'no transport',
+          transport,
+        },
+        type: types.HARDWARE_LEDGER_APP_FAILURE,
+      });
+    }
     const api = new Api(transport);
     return api
       .getAppConfiguration()
@@ -41,10 +52,18 @@ export function getAppConfiguration() {
           type: types.HARDWARE_LEDGER_APP_FAILURE,
         });
         setTimeout(() => {
-          if (error.message && error.message.startsWith('Cannot write to HID device')) {
-            dispatch(ledgerStopListen());
-            return dispatch(ledgerStartListen());
+          // if () {
+          //   console.log("restart transport");
+          // }
+          if (
+            (error.message && error.message.startsWith('Cannot write to HID device'))
+            // || (error.name && error.name === 'TransportStatusError')
+          ) {
+            // reinitialize
+            const { ledger, wallet } = getState();
+            return global.initHardwareLedger(false, wallet.path, ledger.devicePath);
           }
+          // retry
           return dispatch(getAppConfiguration());
         }, 1000);
       });
@@ -67,7 +86,8 @@ function handleEvent(event) {
         break;
       }
       case 'remove': {
-        const ledger = new HardwareLedger().destroy();
+        const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
+        hardwareLedger.destroy();
         return dispatch({
           type: types.HARDWARE_LEDGER_DEVICE_DISCONNECTED
         });
@@ -118,9 +138,9 @@ export function ledgerStopListen() {
     } = ledger;
     const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     const { transport } = hardwareLedger;
-    if (transport && transport.close) {
-      transport.close();
-    }
+    // if (transport && transport.close) {
+    //   transport.close();
+    // }
 
     if (subscriber && subscriber.unsubscribe) {
       ledger.subscriber.unsubscribe();
