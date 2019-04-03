@@ -308,6 +308,10 @@ export function templateURI(blockchain, wallet) {
     const block = await EOS.getBlock(head);
     // Force 1hr expiration of txs, shouldn't hit
     block.expire_seconds = 60 * 60 * 1;
+    if (wallet.mode === 'watch') {
+      // Increase to 2hr for watch wallets
+      block.expire_seconds = 60 * 60 * 2;
+    }
     try {
       // Setup decompression
       const opts = {
