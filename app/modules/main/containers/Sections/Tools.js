@@ -4,16 +4,14 @@ import { bindActionCreators } from 'redux';
 import {
   HashRouter,
   Route,
-  Switch
+  Switch,
+  withRouter
 } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Placeholder, Segment } from 'semantic-ui-react';
-import { times } from 'lodash';
 
-import Tools from '../../../../shared/containers/Tools';
 import ToolsHome from './Tools/Home';
 import ToolsDelegations from './Tools/Delegations';
+import ToolsAirgrabs from './Tools/Airgrabs';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -24,6 +22,7 @@ class ToolsContainer extends Component<Props> {
             <Route exact path="/tools" component={ToolsHome} />
             <Route path="/tools/v1" component={Tools} />
             <Route path="/tools/delegations" component={ToolsDelegations} />
+            <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
           </Switch>
         </HashRouter>
       </React.Fragment>
