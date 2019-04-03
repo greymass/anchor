@@ -2,18 +2,18 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
+import { Button, Header, Message, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 const { clipboard } = require('electron');
 const ecc = require('eosjs-ecc');
 
 class ToolsKeys extends Component<Props> {
-  state = { keys: [] }
+  state = { keys: [] };
 
   copyToClipboard = () => {
     clipboard.writeText(JSON.stringify(this.state.keys));
-  }
+  };
 
   generateKeyPair = () => {
     const { connection } = this.props;
@@ -27,7 +27,7 @@ class ToolsKeys extends Component<Props> {
     }).catch((e) => {
       console.log('error', e);
     });
-  }
+  };
 
   render() {
     const { connection, t } = this.props;
