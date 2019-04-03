@@ -57,18 +57,22 @@ class TestsContainer extends Component<Props> {
     };
     return (
       <Segment style={{ margin: 0 }}>
+        <Header
+          content="EOSIO URI Signing Tests"
+          size="large"
+        />
         {Object.keys(uris).map((blockchain) => (
           <Segment basic>
             <Header content={blockchain} />
             {uris[blockchain].map(([desc, uri]) => (
-              <div>
+              <Segment attached>
+                <p>{uri}</p>
                 <Button
                   color="blue"
                   content={desc}
                   onClick={() => this.testURI(uri)}
                 />
-                {uri}
-              </div>
+              </Segment>
             ))}
           </Segment>
         ))}
