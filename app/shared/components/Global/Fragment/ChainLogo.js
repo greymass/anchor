@@ -12,7 +12,8 @@ import telosLogo from '../../../../renderer/assets/images/telos.png';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
 
 const logos = {
-  '50f1cee2e3750f473e673049c1b828ec10e10eb96c7211a91cc2bd29ae94c6dd': beosLogo, // testnet (beos)
+  'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4': beosLogo, // mainnet (beos)
+  'cbef47b0b26d2b8407ec6a6f91284100ec32d288a39d4b4bbd49655f7c484112': beosLogo, // testnet (beos)
   'd5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86': bosLogo, // mainnet (bos)
   'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906': eosLogo, // mainnet (eos)
   '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca': eosLogo, // jungle (eos)
