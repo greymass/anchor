@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import GlobalAccountDropdownSelect from '../../../../shared/containers/Global/Account/Dropdown/Select';
 
-class PromptControls extends Component<Props> {
+class PromptReviewControls extends Component<Props> {
   render() {
     const {
       callback,
@@ -89,4 +89,4 @@ class PromptControls extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptControls);
+export default translate('global')(PromptReviewControls);
