@@ -112,27 +112,27 @@ shasum -b -a 512 linux-eos-voter-0.7.5-armv7l.deb
 shasum -b -a 512 linux-eos-voter-0.7.5-x86_64.AppImage
 405c1e7dbe98bf7e442a51143c3be5cbc0028d179f3417809e7f6bfd178cf6e0a509461264ec469335f46605518fdce59d3f26ab02f4d9c0e80e49abe7b2a743 *linux-eos-voter-0.7.5-x86_64.AppImage
 shasum -b -a 512 mac-eos-voter-0.7.5.dmg
-9bfcbbc04c6b8f1f78c22a5b8827caba3ed0375ea05c562e933abbffc4ac7a258c5cf247d2a20af05a058125f71cc3121a70d9094d9eafdd52016af1f02c7987 *mac-eos-voter-0.7.5.dmg
+5f3d0825530a98285fa0191c2c7a956f7d7ba741d5a3992900be95f9eee5cb4c81aa368567c2ebd4fa1d16e40a9f21a641dfa1ea6388cc569ca8763d9e1f84c0 *mac-eos-voter-0.7.5.dmg
 shasum -b -a 512 mac-eos-voter-0.7.5.zip
-54dc3a97558f0e7f9710714b658f6730a636a1e83054461f3180123c68f01618299ed04ea7fc5907cdddbb0f453a0ed672d47356c42ffa90519b8ac8a035f928 *mac-eos-voter-0.7.5.zip
+de65d261a754791da6ec7d0a850e552e3d5a8d828cf837c9fa84a0aa0d05ddde61c59179d4a027122b66783db6351ae427917640f85266287d80e7a5003918ae *mac-eos-voter-0.7.5.zip
 shasum -b -a 512 win-eos-voter-0.7.5.exe
 bf6e1010371a8d5aed757dd0efb3e1b89d5c0a5a1604c7beb3074de367d1a350e1f2a4cf60ecfb9fade3960174557b062aabb88a498f68034cbeb5a046269d50 *win-eos-voter-0.7.5.exe
 -----BEGIN PGP SIGNATURE-----
 Version: Keybase OpenPGP v2.1.0
 Comment: https://keybase.io/crypto
 
-wsFcBAABCgAGBQJcpNf1AAoJECyLxnO05hN9fFMP/04SyfCnDTW2ZAJN5kyiZJkd
-+/c4wyCvsMi+7d//LBNlY27r1zGuHCKxkCfsYEpZM9biC1kCsaadreH5dHbtC/Ou
-fIwKCW8XQwxmKGNXc9Ohf0YuyjBxG6c+xRAbGMqWpUZSrUsMgKL7PPfCUg3HO9mP
-4uu2BBM+LY+GABWtJHVRxhVQJeUtG0gw54QWV6dow1jkXNTSM6ANhL0mGG6DlNB+
-lrSpMXT2nCKFf9mLJRW5wjsnrjp2goCiwlWMsedu/SKqQ83f4ligQ8+r8lEE4Bf7
-oyl3oStzhYuNzMSdseZzHsa4F/sZjoV/JOOL5ZH7Jfl4lx+TjQFgwAEicKDz6eBT
-wkeAux31zX/6Iyj0A4VXtpTVIQI7d7OnJ1R86c23x90rbKxieLojRXAt5iAqucn1
-Lunfgt34oHfH1/CaZOnfqPwYTsftVJkj4WVW30r4vtMvd7bv3WzqwYhRaCMHeeeg
-WcmyCQKnmtUuOGEJC8h5YAb7MN9fHrHt4/v+Fbzd79F1mj1JkGTEbEeRq6kR67L1
-Pjz4rdRw3zM6yeeYbI1SAp385XsKMInMfMjgyHLHGG0d9QujvoRutZoCzwdYaw8D
-RAMD2ZQmqGPMO9VJ1uwJHsS+nIJaWb+K4dQfy5vKDrc5/QLydXmSM51SEAsD44wg
-jucMM00OlQqXoCP7yK4Q
-=tFge
+wsFcBAABCgAGBQJcpNwAAAoJECyLxnO05hN9awsP/ioJ5zINASlEZj7COiYrMDu+
+yGDJUJdMZemcCQpHyvBFcV/SGgbZdVd9MM0yc28k7IESHi6kV3BhspexB0tU7Lsf
++KMLGOd2zlS0On9MnQdnrjJdSfxPvk+sguj9A5/y0nyzF+TgTHFXiz6nSPQJ8RVQ
+Y0jXD8sy5ntp7/NJYJD+h4PKkb6CguAyJQ+rcd+dvO0cT0k6WP8pBGlIgRdB+Cm5
+4OPss4rImS22OvmEVqgbaSsBS+yqqJ+fI7841J5M6iio5dRK14ynuVHpBj//t24E
+wMcwKcfcn9bL3/KghJ0QAEDY0aUM5U0lwnuwutVMfNRWRmFnHV4Uglw1yectP7xN
+cDFvBr3aUJg5DwxhnLo0vBua8Lq21QamUc584f94u8QC6YW9kQlMbmLsNAUh4XpU
+jS2JELTqn026SsIni6QNlbsB7QrUpcW/k9rpu3mAmk9Hbc/GkkdwuYgTLQlnPuTJ
+FvsfJ/yn/dkQw/ZM6QcFGtIBD08XyYiBOfcrY6B4cTC4cVxuK7oep1dmsMUKTO9u
+KAocVUwV2XG8IONyNl0uBG3Z/UWcjVTl9BnJkl0zBQVOOJE2Ur7brmnIAs6Bg359
+7TCWLtUwfIgMToZz3I0rFiYsuqufPieDbICayLlYdysRB8Ol5xTqt2sH2BDUGpLR
+tO63ZSfugUz4R5y4YS4J
+=gVCf
 -----END PGP SIGNATURE-----
 ```
