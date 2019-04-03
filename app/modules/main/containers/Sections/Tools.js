@@ -15,6 +15,7 @@ import ToolsAirgrabs from './Tools/Airgrabs';
 import ToolsKeyGenerator from './Tools/KeyGenerator';
 import ToolsKeyValidator from './Tools/KeyValidator';
 import ToolsCustomTokens from './Tools/CustomTokens';
+import ToolsPermissions from './Tools/Permissions';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -29,6 +30,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
             <Route path="/tools/key_validator" component={ToolsKeyValidator} />
             <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
+            <Route path="/tools/permissions" component={ToolsPermissions} />
           </Switch>
         </HashRouter>
       </React.Fragment>
