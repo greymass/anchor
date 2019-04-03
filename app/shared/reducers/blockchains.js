@@ -12,9 +12,7 @@ const knownChains = [
     supportedContracts: [
       'beosexchange',
       'bidname',
-      'customtokens',
       'producerinfo',
-      'proposals',
       'regproxyinfo',
     ],
     symbol: 'BEOS',
@@ -29,9 +27,7 @@ const knownChains = [
     supportedContracts: [
       'beosexchange',
       'bidname',
-      'customtokens',
       'producerinfo',
-      'proposals',
       'regproxyinfo',
     ],
     symbol: 'BEOS',
