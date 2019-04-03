@@ -19,6 +19,7 @@ import ToolsPermissions from './Tools/Permissions';
 import ToolsRecommendations from './Tools/Recommendations';
 import ToolsSmartContracts from './Tools/SmartContracts';
 import ToolsLedger from './Tools/Ledger';
+import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -37,6 +38,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/recommendations" component={ToolsRecommendations} />
             <Route path="/tools/smart-contracts" component={ToolsSmartContracts} />
             <Route path="/tools/ledger" component={ToolsLedger} />
+            <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
           </Switch>
         </HashRouter>
       </React.Fragment>
