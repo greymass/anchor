@@ -17,6 +17,12 @@ export function broadcastURI(tx, blockchain, callback = false) {
     const {
       connection
     } = getState();
+    if (!blockchain) {
+      return dispatch({
+        payload: { err: 'no_blockchain' },
+        type: types.SYSTEM_EOSIOURIBROADCAST_FAILURE
+      });
+    }
     const modified = Object.assign({}, connection, {
       broadcast: false,
       chainId: blockchain.chainId,
