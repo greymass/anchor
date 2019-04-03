@@ -16,6 +16,7 @@ import ToolsKeyGenerator from './Tools/KeyGenerator';
 import ToolsKeyValidator from './Tools/KeyValidator';
 import ToolsCustomTokens from './Tools/CustomTokens';
 import ToolsPermissions from './Tools/Permissions';
+import ToolsRecommendations from './Tools/Recommendations'
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -31,6 +32,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/key_validator" component={ToolsKeyValidator} />
             <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
             <Route path="/tools/permissions" component={ToolsPermissions} />
+            <Route path="/tools/recommendations" component={ToolsRecommendations}/>
           </Switch>
         </HashRouter>
       </React.Fragment>
