@@ -2,18 +2,15 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Divider, Header, Grid, Label, List, Message, Segment } from 'semantic-ui-react';
+import { Header, Label, List, Message, Segment } from 'semantic-ui-react';
 
 import GlobalFormFieldKeyPrivate from '../../Global/Form/Field/Key/Private';
-
-const { clipboard } = require('electron');
-const { PrivateKey } = require('eosjs-ecc');
 
 class ToolsKeysValidator extends Component<Props> {
   state = {
     valid: false,
     publicKey: ''
-  }
+  };
   onChange = (e, { publicKey, valid }) => this.setState({ publicKey, valid })
   render() {
     const { connection, t } = this.props;
