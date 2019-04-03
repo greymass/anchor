@@ -12,7 +12,6 @@ class PromptActionSign extends Component<Props> {
       t,
       wallet,
     } = this.props;
-    console.log(loading, disabled)
     return (
       <Button
         animated="fade"
