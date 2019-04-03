@@ -11,6 +11,7 @@ import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react';
 import PromptStageReview from './Stage/Review';
 import PromptStageBroadcast from './Stage/Broadcast';
 import PromptStageExpired from './Stage/Expired';
+import PromptStageForbidden from './Stage/Forbidden';
 import PromptStageHardwareLedger from './Stage/Hardware/Ledger';
 import PromptStageSuccess from './Stage/Success';
 
@@ -37,10 +38,10 @@ class PromptStage extends Component<Props> {
   onBroadcast = () => {
     const {
       actions,
+      blockchain,
       prompt
     } = this.props;
     const {
-      blockchain,
       callback,
       signed,
     } = prompt;
@@ -200,8 +201,20 @@ class PromptStage extends Component<Props> {
         />
       );
     }
-
-    if (!awaitingDevice && hasBroadcast) {
+    if (prompt && prompt.uri && error && error.type === 'forbidden') {
+      stage = (
+        <PromptStageForbidden
+          error={error}
+          prompt={prompt}
+        />
+      );
+      nextAction = false;
+      cancelAction = (
+        <PromptActionComplete
+          onClick={onClose}
+        />
+      );
+    } else if (!awaitingDevice && hasBroadcast) {
       stage = (
         <PromptStageSuccess
           settings={settings}
@@ -255,6 +268,8 @@ class PromptStage extends Component<Props> {
       );
     }
 
+    console.log(error)
+
     return (
       <React.Fragment>
         <Segment
@@ -280,7 +295,7 @@ class PromptStage extends Component<Props> {
           </Dimmer>
           {stage}
         </Segment>
-        {(error)
+        {(error && error.type !== 'forbidden')
           ? (
             <Segment size="large" color="red" inverted>
               {(error.message)
@@ -312,6 +327,22 @@ class PromptStage extends Component<Props> {
           {nextAction}
           {cancelAction}
         </Segment>
+        {(wallet && wallet.mode === 'watch')
+          ? (
+            <Segment color="orange" style={{ margin: 0 }}>
+              <Header size="large">
+                <Icon name="clock" />
+                <Header.Content>
+                  Offline Signing & Transaction Expirations
+                  <Header.Subheader>
+                    From the moment the unsigned transaction is saved as a file, a 2 hour countdown begins in which the transaction must be completed. Once 2 hours has passed, the transaction will become invalid and unable to perform the desired action.
+                  </Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Segment>
+          )
+          : false
+        }
       </React.Fragment>
     );
   }
