@@ -258,6 +258,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
               type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
             });
           }
+          return true;
         })
         .catch((err) => {
           // If the transaction failed with the Ledger, reset the device connection
@@ -349,6 +350,7 @@ export function templateURI(blockchain, wallet) {
           }
         });
       }
+      console.log(data)
       // Retrieve the ABI
       const contract = await EOS.getAbi(contractName);
       return dispatch({
