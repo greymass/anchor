@@ -18,6 +18,7 @@ import ToolsCustomTokens from './Tools/CustomTokens';
 import ToolsPermissions from './Tools/Permissions';
 import ToolsRecommendations from './Tools/Recommendations';
 import ToolsSmartContracts from './Tools/SmartContracts';
+import ToolsLedger from './Tools/Ledger';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -35,6 +36,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/permissions" component={ToolsPermissions} />
             <Route path="/tools/recommendations" component={ToolsRecommendations} />
             <Route path="/tools/smart-contracts" component={ToolsSmartContracts} />
+            <Route path="/tools/ledger" component={ToolsLedger} />
           </Switch>
         </HashRouter>
       </React.Fragment>
