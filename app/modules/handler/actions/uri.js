@@ -160,6 +160,52 @@ export function setURI(uri) {
   };
 }
 
+const forbiddenActions = [
+  {
+    action: 'updateauth',
+    contract: 'eosio',
+    error: 'EOSIOURI_UPDATEAUTH_ACTIVE_FORBIDDEN',
+    forbiddenData: {
+      permission: 'active'
+    }
+  },
+  {
+    action: 'updateauth',
+    contract: 'eosio',
+    error: 'EOSIOURI_UPDATEAUTH_OWNER_FORBIDDEN',
+    forbiddenData: {
+      permission: 'owner'
+    }
+  },
+  {
+    action: 'linkauth',
+    contract: 'eosio',
+    error: 'EOSIOURI_LINKAUTH_UPDATEAUTH_FORBIDDEN',
+    forbiddenData: {
+      type: 'updateauth'
+    }
+  },
+];
+
+function checkRequest(data) {
+  const errors = forbiddenActions.map((prevent) => {
+    const { action, contract, error } = prevent;
+    const matches = find(data.actions, { name: action, account: contract });
+    if (matches) {
+      if (prevent.forbiddenData) {
+        const act = matches.data;
+        const { forbiddenData } = prevent;
+        const forbiddenExists = Object.keys(forbiddenData).map((field) =>
+          (act[field] && act[field] === forbiddenData[field]));
+        return (forbiddenExists.includes(true)) ? error : false;
+      }
+      return error;
+    }
+    return false;
+  });
+  return errors.filter(item => item !== false);
+}
+
 export function signURI(tx, blockchain, wallet, broadcast = false, callback = false) {
   return (dispatch: () => void, getState) => {
     const {
@@ -290,6 +336,19 @@ export function templateURI(blockchain, wallet) {
       }
       // Form the transaction
       const data = await request.getTransaction(authorization, block);
+      const detectedForbiddenActions = checkRequest(data);
+      if (detectedForbiddenActions && detectedForbiddenActions.length > 0) {
+        return dispatch({
+          type: types.SYSTEM_EOSIOURIBUILD_FAILURE,
+          payload: {
+            err: {
+              message: detectedForbiddenActions[0],
+              type: 'forbidden',
+            },
+            uri
+          }
+        });
+      }
       // Retrieve the ABI
       const contract = await EOS.getAbi(contractName);
       return dispatch({
