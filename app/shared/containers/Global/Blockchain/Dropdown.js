@@ -90,7 +90,6 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
           noPopup
           style={{
             float: 'left',
-            marginRight: '1em',
             height: '2em',
             width: '2em',
           }}
