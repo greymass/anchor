@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
-import PromptControls from '../../components/Review/Controls';
+import PromptReviewControls from '../../components/Review/Controls';
 import ErrorMessage from '../../components/error';
 import PromptFragmentPlaceholderTransactionAction from '../../components/Fragment/Placeholder/Transaction/Action';
 import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
@@ -27,11 +27,11 @@ class PromptStageReview extends Component<Props> {
 
     const error = system.EOSIOURIBUILD_LAST_ERROR;
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
-    console.log(this.props)
+
     return (
       <Grid stackable>
         <Grid.Column width={6}>
-          <PromptControls
+          <PromptReviewControls
             callback={callback}
             chainId={chainId}
             onCheck={this.props.onCheck}
