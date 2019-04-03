@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 import ToolsHome from './Tools/Home';
 import ToolsDelegations from './Tools/Delegations';
 import ToolsAirgrabs from './Tools/Airgrabs';
+import ToolsKeyGenerator from './Tools/KeyGenerator';
+import ToolsKeyValidator from './Tools/KeyValidator';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -23,6 +25,8 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/v1" component={Tools} />
             <Route path="/tools/delegations" component={ToolsDelegations} />
             <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
+            <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
+            <Route path="/tools/key_validator" component={ToolsKeyValidator} />
           </Switch>
         </HashRouter>
       </React.Fragment>
