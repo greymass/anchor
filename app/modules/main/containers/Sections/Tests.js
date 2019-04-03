@@ -28,6 +28,13 @@ class TestsContainer extends Component<Props> {
       EOS: [
         ['refund', 'eosio:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
         ['proxy greymassvote', 'eosio:gWNgZACDVwahBaKXOu-tMrrLCBVigNGCMMYCo7sS0i-vpjKAlAAA'],
+        ['proxy greymassvote w/ foreground callback', 'eosio:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgAA'],
+        ['proxy greymassvote w/ background callback', 'eosio:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgIA'],
+        ['set voting permission', 'eosio:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBghseGl0F0SveGtkxAhWxDztS840vZjD1YqCj_WcJip5_dr06mGZgV_AhneH-I58dWQFKwMSAA'],
+        ['link voting permission to eosio:voteproducer', 'eosio:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYMJUFopc6760yugvibnhpdBekAwA'],
+        ['link voting permission to eosio:updateauth (wont allow)', 'eosio:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYcJUOp2-tyAm6CuJueGl0F6QDAA'],
+        ['set active key (wont allow)', 'eosio:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgiseGtkBKIbVqstZwQrYp72JWeaXszhakXBx3pOE5W8fm169bDMwC9gw7tDfEe-OrKClQEJAA'],
+        ['set owner key (wont allow)', 'eosio:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgg0rFZbzoCkgJGBedqXnGl6MYerFQUf6zlNVPL6tenVwzIDv4AN7w7xHfnqyApWBiQA'],
       ],
       INSIGHTS: [
         ['refund', 'eosio:gWPgYACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],

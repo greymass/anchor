@@ -109,7 +109,7 @@ class PromptContainer extends Component<Props> {
       <Segment
         tertiary
         padded
-        style={{ height: '100%', minHeight: '100%' }}
+        style={{ minHeight: '100%' }}
       >
         <PromptShare
           onClose={this.onShareLink}
