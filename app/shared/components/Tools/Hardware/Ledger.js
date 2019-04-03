@@ -10,10 +10,10 @@ import HardwareLedger from '../../../utils/Hardware/Ledger';
 class ToolsHardwareLedger extends Component<Props> {
   displayPublicKey = () => {
     this.props.actions.ledgerGetPublicKey(0, true);
-  }
+  };
   getPublicKey = () => {
     this.props.actions.ledgerGetPublicKey(0);
-  }
+  };
   render() {
     const {
       accounts,

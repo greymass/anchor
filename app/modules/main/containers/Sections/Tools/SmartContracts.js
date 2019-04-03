@@ -4,14 +4,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import ToolsPermissionsComponent from '../../../../../shared/components/Tools/Permissions';
+import ToolsSmartContractComponent from '../../../../../shared/components/Contract/Interface/Component';
 
 import * as ContractActions from '../../../../../shared/actions/contracts';
 import * as TableActions from '../../../../../shared/actions/table';
 
 class ToolsPermissions extends Component<Props> {
   render = () => (
-    <ToolsPermissionsComponent
+    <ToolsSmartContractComponent
       {...this.props}
     />
   )
