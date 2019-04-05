@@ -22,7 +22,8 @@ import ToolsLedger from './Tools/Ledger';
 import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
 import ToolsBlockchains from './Tools/Blockchains';
 import ToolsWallets from './Tools/Wallets';
-import ToolsApiPing from './Tools/ApiPing'
+import ToolsApiPing from './Tools/ApiPing';
+import ToolsCreateAccount from './Tools/CreateAccount';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -45,6 +46,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/blockchains" component={ToolsBlockchains} />
             <Route path="/tools/wallets" component={ToolsWallets} />
             <Route path="/tools/api_ping" component={ToolsApiPing} />
+            <Route path="/tools/create_account" component={ToolsCreateAccount} />
           </Switch>
         </HashRouter>
       </React.Fragment>
