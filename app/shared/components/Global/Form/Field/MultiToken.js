@@ -43,7 +43,8 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const assets = Object.keys(balances[settings.account]);
     const { customTokens } = settings;
     // Determine which tokens are being tracked
-    const trackedTokens = (customTokens) ?
+
+    const trackedTokens = (connection.supportedContracts && connection.supportedContracts.includes('customtokens') && customTokens) ?
       (
         customTokens.map((tokenName) => {
           const [chainId, contract, symbol] = tokenName.split(':');
