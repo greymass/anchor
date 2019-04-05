@@ -41,11 +41,11 @@ class WalletContainer extends Component<Props> {
     const {
       initialized
     } = this.state;
-    if (!settings.walletInit) {
-      return (
-        <WelcomeContainer />
-      )
-    }
+    // if (!settings.walletInit) {
+    //   return (
+    //     <WelcomeContainer />
+    //   )
+    // }
     if (!initialized) {
       return (
         <span>Loading...</span>
@@ -82,9 +82,9 @@ class WalletContainer extends Component<Props> {
           fluid
           src={background}
           style={{
-            // bottom: 0,
-            top: 50,
-            transform: 'rotate(0.5turn)',
+            bottom: 0,
+            // top: 50,
+            // transform: 'rotate(0.5turn)',
             right: '-1em',
             opacity: 0.5,
             position: 'fixed',
