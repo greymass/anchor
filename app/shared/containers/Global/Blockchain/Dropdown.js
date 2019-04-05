@@ -43,6 +43,9 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
       style,
       t,
     } = this.props;
+    if (!settings.blockchains || settings.blockchains === []) {
+      return false;
+    }
     let defaultLocString = 'global_account_select_blockchain_default';
     if (settings.walletMode === 'cold') {
       defaultLocString = 'global_account_select_blockchain_default_cold';
@@ -83,7 +86,7 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
       color: 'green',
       name: 'id card'
     };
-    const trigger = (
+    let trigger = (
       <span>
         <GlobalFragmentChainLogo
           chainId={blockchain.chainId}
@@ -107,6 +110,9 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
         }
       </span>
     );
+    if (!blockchain.chainId) {
+      trigger = false;
+    }
     if (disabled) {
       return (
         <Segment
