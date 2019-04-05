@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import ToolsPing from '../../../../../shared/components/Tools/Ping';
+import ToolsApiPingComponent from '../../../../../shared/components/Tools/Ping';
 
 import * as PingActions from '../../../../../shared/actions/ping';
 import * as ProducersActions from '../../../../../shared/actions/producers';
@@ -12,7 +12,7 @@ import * as SettingsActions from '../../../../../shared/actions/settings';
 
 class ToolsApiPing extends Component<Props> {
   render = () => (
-    <ToolsPing
+    <ToolsApiPingComponent
       {...this.props}
     />
   )
