@@ -21,6 +21,7 @@ import ToolsSmartContracts from './Tools/SmartContracts';
 import ToolsLedger from './Tools/Ledger';
 import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
 import ToolsBlockchains from './Tools/Blockchains';
+import ToolsWallets from './Tools/Wallets';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -41,6 +42,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/ledger" component={ToolsLedger} />
             <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
             <Route path="/tools/blockchains" component={ToolsBlockchains} />
+            <Route path="/tools/wallets" component={ToolsWallets} />
           </Switch>
         </HashRouter>
       </React.Fragment>

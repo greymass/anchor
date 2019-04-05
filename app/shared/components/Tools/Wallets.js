@@ -42,7 +42,7 @@ class ToolsWallets extends Component<Props> {
       JSON.stringify(backup),
       'wallet'
     );
-  }
+  };
   duplicateWallet = (account, authorization) =>
     this.setState({ duplicatingWallet: { account, authorization } })
   render() {
