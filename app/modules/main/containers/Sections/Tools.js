@@ -22,6 +22,7 @@ class ToolsContainer extends Component<Props> {
         <HashRouter>
           <Switch>
             <Route exact path="/tools" component={ToolsHome} />
+            <Route path="/tools/v1" component={Tools} />
             <Route path="/tools/delegations" component={ToolsDelegations} />
           </Switch>
         </HashRouter>
