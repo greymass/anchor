@@ -7,7 +7,10 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+
+import * as NavigationActions from '../../actions/navigation';
 
 import ToolsHome from './Tools/Home';
 import ToolsDelegations from './Tools/Delegations';
@@ -28,9 +31,21 @@ import ToolsBidName from './Tools/BidName';
 import ToolsProxy from './Tools/Proxy';
 
 class ToolsContainer extends Component<Props> {
+  onClick = (e, data) => {
+    this.props.actions.changeModule(data.name);
+  };
   render() {
+    const { navigation } = this.props;
     return (
       <React.Fragment>
+        <Button
+          color="purple"
+          content="< Back to Tools"
+          disabled={navigation.module === 'tools'}
+          name="tools"
+          onClick={this.onClick}
+          style={{ marginBottom: '15px' }}
+        />
         <HashRouter>
           <Switch>
             <Route exact path="/tools" component={ToolsHome} />
@@ -67,7 +82,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
+      ...NavigationActions
     }, dispatch)
   };
 }
