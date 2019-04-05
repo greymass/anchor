@@ -14,7 +14,7 @@ class ToolsProxy extends Component<Props> {
     const { actions } = this.props;
 
     actions.getTable('regproxyinfo', 'regproxyinfo', 'proxies');
-  }
+  };
 
   render() {
     const {
