@@ -18,8 +18,11 @@ class ToolsCustomTokens extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    balances: state.balances,
+    blockchains: state.blockchains,
     connection: state.connection,
     customtokens: state.customtokens,
+    globals: state.globals,
     settings: state.settings
   };
 }
