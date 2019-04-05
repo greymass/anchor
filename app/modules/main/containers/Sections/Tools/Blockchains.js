@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsBlockchainsComponent from '../../../../../shared/components/Tools/Blockchains';
 
-class ToolsPermissions extends Component<Props> {
+class ToolsBlockchains extends Component<Props> {
   render = () => (
     <ToolsBlockchainsComponent
       {...this.props}
@@ -21,4 +21,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(ToolsPermissions));
+export default withRouter(connect(mapStateToProps)(ToolsBlockchains));
