@@ -8,6 +8,7 @@ import ToolsAirgrabsComponent from '../../../../../shared/components/Tools/Airgr
 
 import * as AirgrabActions from '../../../../../shared/actions/system/claimairgrab';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
+import * as TableActions from '../../../../../shared/actions/table';
 
 class ToolsAirgrabs extends Component<Props> {
   render = () => (
@@ -35,7 +36,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AirgrabActions,
-      ...SystemStateActions
+      ...SystemStateActions,
+      ...TableActions
     }, dispatch)
   };
 }
