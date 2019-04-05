@@ -22,6 +22,7 @@ class OverviewBlockchainContainer extends Component<Props> {
       blockchain,
       node,
     } = this.props;
+    if (!blockchain) return false;
     return (
       <Segment color="green">
         <Header>
