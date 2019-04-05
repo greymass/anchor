@@ -15,7 +15,7 @@ class ToolsRecommendations extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    accounts: state.accounts,
+    account: state.accounts[state.settings.account],
     settings: state.settings
   };
 }

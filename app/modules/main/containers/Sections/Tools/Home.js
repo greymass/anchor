@@ -4,223 +4,65 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Button, Grid, Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import NavigationActions from '../../../actions/navigation';
 import SettingsActions from '../../../../../shared/actions/settings';
 
+const toolSections = {
+  Tokens: {
+    Airgrabs: {
+      path: 'tools/airgrabs'
+    },
+    'Custom Tokens': {
+      path: 'tools/custom_tokens'
+    }
+  },
+  Security: {
+    Keys: {
+      path: 'tools/keys'
+    },
+    Permissions: {
+      path: 'tools/permissions'
+    },
+    'Best Practices': {
+      path: 'tools/recommendations'
+    }
+  }
+};
+
 class ToolsHome extends Component<Props> {
   onClick = (e, data) => this.props.actions.changeModule(data.name)
   onReset = () => this.props.actions.clearSettingsCache()
+
   render() {
+    const linkStyle = { cursor: 'pointer' }
+
     return (
-      <div>
-        <Segment>
-          <p>
-            <Button
-              content="V1 Tools Interface"
-              name="tools/v1"
-              onClick={this.onClick}
-              primary
-            />
-          </p>
-          <Button
-            content="Reset"
-            onClick={this.onReset}
-          />
-          <Button
-            content="Delegations"
-            name="tools/delegations"
-            onClick={this.onClick}
-          />
-        </Segment>
-        <Grid columns={4}>
+      <Grid columns={4}>
+        {Object.keys(toolSections).map(sectionGroupTitle => (
           <Grid.Column>
             <Segment.Group vertical>
               <Header attached="top" inverted>
-                Tokens
+                {sectionGroupTitle}
               </Header>
-              <Segment>
-                Airgrabs
-              </Segment>
-              <Segment>
-                Custom Tokens
-              </Segment>
+              {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => (
+                <Segment>
+                  <a
+                    name={toolSections[sectionGroupTitle][sectionTitle].path}
+                    onClick={this.onClick}
+                    style={linkStyle}
+                  >
+                    {sectionTitle}
+                  </a>
+                </Segment>
+              ))}
             </Segment.Group>
           </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts (move to dropdown)
-              </Segment>
-              <Segment>
-                Blockchains (move to dropdown)
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Security
-              </Header>
-              <Segment>
-                Keys
-              </Segment>
-              <Segment>
-                Permissions
-              </Segment>
-              <Segment>
-                Best Practices
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Hardware
-              </Header>
-              <Segment>
-                Ledger
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                3rd Party Services
-              </Header>
-              <Segment>
-                Crosschain Transfer
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Network Utilities
-              </Header>
-              <Segment>
-                API Performance Analysis
-              </Segment>
-              <Segment>
-                API Traffic Log
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Registration
-              </Header>
-              <Segment>
-                Proxy Voter
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Utilities
-              </Header>
-              <Segment>
-                Contacts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                Manage
-              </Header>
-              <Segment>
-                Accounts
-              </Segment>
-              <Segment>
-                Blockchains
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-        </Grid>
-      </div>
+        ))}
+      </Grid>
     );
   }
-}
-
-function mapStateToProps(state) {
-  return {
-
-  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -232,4 +74,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsHome));
+export default withRouter(connect({}, mapDispatchToProps)(ToolsHome));
