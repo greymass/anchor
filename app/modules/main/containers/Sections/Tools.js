@@ -25,6 +25,7 @@ import ToolsWallets from './Tools/Wallets';
 import ToolsApiPing from './Tools/ApiPing';
 import ToolsCreateAccount from './Tools/CreateAccount';
 import ToolsBidName from './Tools/BidName';
+import ToolsProxy from './Tools/Proxy';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -49,6 +50,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/api_ping" component={ToolsApiPing} />
             <Route path="/tools/create_account" component={ToolsCreateAccount} />
             <Route path="/tools/bid_name" component={ToolsBidName} />
+            <Route path="/tools/proxy" component={ToolsProxy} />
           </Switch>
         </HashRouter>
       </React.Fragment>
