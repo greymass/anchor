@@ -24,6 +24,7 @@ import ToolsBlockchains from './Tools/Blockchains';
 import ToolsWallets from './Tools/Wallets';
 import ToolsApiPing from './Tools/ApiPing';
 import ToolsCreateAccount from './Tools/CreateAccount';
+import ToolsBidName from './Tools/BidName';
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -47,6 +48,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/wallets" component={ToolsWallets} />
             <Route path="/tools/api_ping" component={ToolsApiPing} />
             <Route path="/tools/create_account" component={ToolsCreateAccount} />
+            <Route path="/tools/bid_name" component={ToolsBidName} />
           </Switch>
         </HashRouter>
       </React.Fragment>
