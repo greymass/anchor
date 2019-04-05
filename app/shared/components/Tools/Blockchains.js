@@ -13,7 +13,6 @@ import {
   Table
 } from 'semantic-ui-react';
 
-import GlobalButtonBlockchainImport from '../Global/Button/Blockchain/Import';
 import ToolsModalBlockchain from './Modal/Blockchain';
 
 class ToolsBlockchains extends PureComponent<Props> {
