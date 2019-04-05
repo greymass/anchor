@@ -10,7 +10,7 @@ import * as TableActions from '../../../../../shared/actions/table';
 import * as RegProxyActions from '../../../../../shared/actions/system/regproxy';
 import * as UnregProxyActions from '../../../../../shared/actions/system/unregproxy';
 
-class ToolsPermissions extends Component<Props> {
+class ToolsProxy extends Component<Props> {
   render = () => (
     <ToolsProxyComponent
       {...this.props}
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsPermissions));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsProxy));
