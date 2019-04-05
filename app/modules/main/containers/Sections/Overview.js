@@ -28,6 +28,9 @@ class OverviewContainer extends Component<Props> {
     const {
       view
     } = this.state;
+    if (!settings.walletInit) {
+      return false;
+    }
     return (
       <React.Fragment>
         <Grid stackable>
