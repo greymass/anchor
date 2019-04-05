@@ -14,6 +14,14 @@ class ToolsHome extends Component<Props> {
     return (
       <div>
         <Segment>
+          <p>
+            <Button
+              content="V1 Tools Interface"
+              name="tools/v1"
+              onClick={this.onClick}
+              primary
+            />
+          </p>
           <Button
             content="Delegations"
             name="tools/delegations"
