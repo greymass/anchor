@@ -8,7 +8,7 @@ import ToolsWalletsComponent from '../../../../../shared/components/Tools/Wallet
 
 import * as WalletsActions from '../../../../../shared/actions/wallets';
 
-class ToolsPermissions extends Component<Props> {
+class ToolsWallets extends Component<Props> {
   render = () => (
     <ToolsWalletsComponent
       {...this.props}
@@ -37,4 +37,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsPermissions));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsWallets));

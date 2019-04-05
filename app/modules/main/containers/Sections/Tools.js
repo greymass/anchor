@@ -22,6 +22,7 @@ import ToolsLedger from './Tools/Ledger';
 import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
 import ToolsBlockchains from './Tools/Blockchains';
 import ToolsWallets from './Tools/Wallets';
+import ToolsApiPing from './Tools/ApiPing'
 
 class ToolsContainer extends Component<Props> {
   render() {
@@ -43,6 +44,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
             <Route path="/tools/blockchains" component={ToolsBlockchains} />
             <Route path="/tools/wallets" component={ToolsWallets} />
+            <Route path="/tools/api_ping" component={ToolsApiPing} />
           </Switch>
         </HashRouter>
       </React.Fragment>
