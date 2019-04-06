@@ -49,23 +49,22 @@ class ToolsContainer extends Component<Props> {
         <HashRouter>
           <Switch>
             <Route exact path="/tools" component={ToolsHome} />
-            <Route path="/tools/v1" component={Tools} />
-            <Route path="/tools/delegations" component={ToolsDelegations} />
             <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
+            <Route path="/tools/api_ping" component={ToolsApiPing} />
+            <Route path="/tools/bid_name" component={ToolsBidName} />
+            <Route path="/tools/blockchains" component={ToolsBlockchains} />
+            <Route path="/tools/create_account" component={ToolsCreateAccount} />
+            <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
+            <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
+            <Route path="/tools/delegations" component={ToolsDelegations} />
             <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
             <Route path="/tools/key_validator" component={ToolsKeyValidator} />
-            <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
-            <Route path="/tools/permissions" component={ToolsPermissions} />
-            <Route path="/tools/recommendations" component={ToolsRecommendations} />
-            <Route path="/tools/smart-contracts" component={ToolsSmartContracts} />
             <Route path="/tools/ledger" component={ToolsLedger} />
-            <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
-            <Route path="/tools/blockchains" component={ToolsBlockchains} />
-            <Route path="/tools/wallets" component={ToolsWallets} />
-            <Route path="/tools/api_ping" component={ToolsApiPing} />
-            <Route path="/tools/create_account" component={ToolsCreateAccount} />
-            <Route path="/tools/bid_name" component={ToolsBidName} />
+            <Route path="/tools/permissions" component={ToolsPermissions} />
             <Route path="/tools/proxy" component={ToolsProxy} />
+            <Route path="/tools/recommendations" component={ToolsRecommendations} />
+            <Route path="/tools/smart_contracts" component={ToolsSmartContracts} />
+            <Route path="/tools/wallets" component={ToolsWallets} />
           </Switch>
         </HashRouter>
       </React.Fragment>
