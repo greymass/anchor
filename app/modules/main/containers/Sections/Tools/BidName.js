@@ -6,8 +6,9 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsBidNameComponent from '../../../../../shared/components/Tools/BidName';
 
-import * as NameBidsActions from '../../../../../shared/actions/namebids';
 import * as BidNameActions from '../../../../../shared/actions/system/bidname';
+import * as NameBidsActions from '../../../../../shared/actions/namebids';
+import * as TableActions from '../../../../../shared/actions/table';
 
 class ToolsBidName extends Component<Props> {
   render = () => (
@@ -34,8 +35,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...BidNameActions,
       ...NameBidsActions,
-      ...BidNameActions
+      ...TableActions
     }, dispatch)
   };
 }

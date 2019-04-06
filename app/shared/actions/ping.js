@@ -1,5 +1,5 @@
+import { find } from 'lodash';
 import { httpQueue, httpClient } from '../utils/httpClient';
-import { defer, find } from 'lodash';
 import * as types from './types';
 
 export function pingNode(endpoint, data = {}, path = '/v1/history/get_actions') {
@@ -71,7 +71,7 @@ export function pingSetEstimatedRequests(estimated) {
 
 export function pingStop() {
   return (dispatch: () => void) => {
-    queue.clear();
+    httpQueue.clear();
     dispatch({
       type: types.UTILS_PING_NODE_STOP
     });
@@ -80,7 +80,7 @@ export function pingStop() {
 
 export function pingReset() {
   return (dispatch: () => void) => {
-    queue.clear();
+    httpQueue.clear();
     dispatch({
       type: types.UTILS_PING_NODE_RESET
     });

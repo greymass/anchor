@@ -16,17 +16,57 @@ const toolSections = {
     },
     'Custom Tokens': {
       path: 'tools/custom_tokens'
+    },
+    Delegations: {
+      path: 'tools/delegations'
     }
   },
   Security: {
-    Keys: {
-      path: 'tools/keys'
+    'Best Practices': {
+      path: 'tools/recommendations'
+    },
+    'Generate Keys': {
+      path: 'tools/key_generator'
     },
     Permissions: {
       path: 'tools/permissions'
     },
-    'Best Practices': {
-      path: 'tools/recommendations'
+    'Validate Keys': {
+      path: 'tools/key_validatoras'
+    }
+  },
+  Hardware: {
+    Ledger: {
+      path: 'tools/ledger'
+    }
+  },
+  '3rd Party Services': {
+    'Crosschain Transfers': {
+      path: 'tools/crosschain_transfers'
+    }
+  },
+  'Network Utilities': {
+    'API Performance Analysis': {
+      path: 'tools/api_ping'
+    }
+  },
+  Registration: {
+    'Create Account': {
+      path: 'tools/create_account'
+    },
+    Proxy: {
+      path: 'tools/proxy'
+    }
+  },
+  Utilities: {
+    'Bid Name': {
+      path: 'tools/bid_name'
+    },
+    Contacts: {
+      path: 'tools/contacts'
+    },
+    'Smart Contracts': {
+      path: 'tools/smart_contracts'
     }
   }
 };
@@ -74,4 +114,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect({}, mapDispatchToProps)(ToolsHome));
+export default withRouter(connect(() => {}, mapDispatchToProps)(ToolsHome));
