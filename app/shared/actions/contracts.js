@@ -1,9 +1,9 @@
 import * as types from './types';
-import EOSContract from '../utils/EOS/Contract';
 import eos from './helpers/eos';
 
 export function getAbi(account) {
   return (dispatch: () => void, getState) => {
+    console.log('golden')
     dispatch({
       type: types.SYSTEM_GETABI_PENDING
     });
