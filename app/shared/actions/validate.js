@@ -13,6 +13,12 @@ const ecc = require('eosjs-ecc');
 export function validateAccount(account) {
   return (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_ACCOUNT_PENDING });
+    // Prevent private keys from submitting
+    if (ecc.isValidPrivate(account) || (account.startsWith('5') && account.length === 51)) {
+      return dispatch({
+        type: types.VALIDATE_ACCOUNT_FAILURE,
+      });
+    }
     if (!account) {
       return dispatch({
         type: types.VALIDATE_ACCOUNT_FAILURE
