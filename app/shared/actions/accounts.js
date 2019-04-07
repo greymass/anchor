@@ -4,6 +4,8 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { addCustomTokenBeos } from './settings';
 
+const ecc = require('eosjs-ecc');
+
 export function clearAccountCache() {
   return (dispatch: () => void) => {
     dispatch({
@@ -160,6 +162,12 @@ export function getAccount(account = '') {
       type: types.GET_ACCOUNT_REQUEST,
       payload: { account_name: account }
     });
+    // Prevent private keys from submitting
+    if (ecc.isValidPrivate(account) || (account.startsWith('5') && account.length === 51)) {
+      return dispatch({
+        type: types.VALIDATE_ACCOUNT_FAILURE,
+      });
+    }
     const {
       connection,
       settings
@@ -387,6 +395,12 @@ export function getAccountByKey(key) {
       type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
       payload: { key }
     });
+    // Prevent private keys from submitting
+    if (ecc.isValidPrivate(key) || !key.startsWith('EOS')) {
+      return dispatch({
+        type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+      });
+    }
     const {
       connection,
       settings
