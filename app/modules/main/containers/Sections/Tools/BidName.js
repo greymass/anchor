@@ -9,8 +9,15 @@ import ToolsBidNameComponent from '../../../../../shared/components/Tools/BidNam
 import * as BidNameActions from '../../../../../shared/actions/system/bidname';
 import * as NameBidsActions from '../../../../../shared/actions/namebids';
 import * as TableActions from '../../../../../shared/actions/table';
+import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsBidName extends Component<Props> {
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.moduleLoaded();
+  }
+  
   render = () => (
     <ToolsBidNameComponent
       {...this.props}
@@ -37,6 +44,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...BidNameActions,
       ...NameBidsActions,
+      ...NavigationActions,
       ...TableActions
     }, dispatch)
   };
