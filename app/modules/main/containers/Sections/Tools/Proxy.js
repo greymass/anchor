@@ -28,7 +28,7 @@ class ToolsProxy extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
-    allBlockExplorers: state.blockExplorers,
+    allBlockExplorers: state.blockexplorers,
     connection: state.connection,
     contracts: state.contracts,
     keys: state.keys,

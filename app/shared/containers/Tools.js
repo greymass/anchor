@@ -290,7 +290,7 @@ class ToolsContainer extends Component<Props> {
       .map((pane) => {
         const {
           chain
-          } = this.props;
+        } = this.props;
         if (pane.header) {
           return {
             menuItem: (

@@ -6,9 +6,11 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsCreateAccountComponent from '../../../../../shared/components/Tools/CreateAccount';
 
-import * as systemActions from '../../../../../shared/actions/system/systemstate';
-import * as createAccountActions from '../../../../../shared/actions/createaccount';
+import * as AccountsActions from '../../../../../shared/actions/accounts';
+import * as CreateAccountActions from '../../../../../shared/actions/createaccount';
+import * as GlobalsActions from '../../../../../shared/actions/globals';
 import * as NavigationActions from '../../../actions/navigation';
+import * as SystemActions from '../../../../../shared/actions/system/systemstate';
 
 class ToolsCrosschainTransfer extends Component<Props> {
   componentDidMount() {
@@ -24,9 +26,10 @@ class ToolsCrosschainTransfer extends Component<Props> {
 }
 
 function mapStateToProps(state) {
+  console.log({state})
   return {
     accounts: state.accounts,
-    allBlockExplorers: state.blockExplorers,
+    allBlockExplorers: state.blockexplorers,
     balances: state.blockchains,
     connection: state.connection,
     globals: state.globals,
@@ -41,9 +44,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...createAccountActions,
+      ...AccountsActions,
+      ...CreateAccountActions,
+      ...GlobalsActions,
       ...NavigationActions,
-      ...systemActions
+      ...SystemActions
     }, dispatch)
   };
 }
