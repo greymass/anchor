@@ -9,8 +9,15 @@ import ToolsProxyComponent from '../../../../../shared/components/Tools/Proxy';
 import * as TableActions from '../../../../../shared/actions/table';
 import * as RegProxyActions from '../../../../../shared/actions/system/regproxy';
 import * as UnregProxyActions from '../../../../../shared/actions/system/unregproxy';
+import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsProxy extends Component<Props> {
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.moduleLoaded();
+  }
+
   render = () => (
     <ToolsProxyComponent
       {...this.props}
@@ -36,6 +43,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...NavigationActions,
       ...RegProxyActions,
       ...TableActions,
       ...UnregProxyActions
