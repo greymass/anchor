@@ -4,41 +4,43 @@ import { bindActionCreators } from 'redux';
 import {
   HashRouter,
   Route,
-  Segment,
   Switch,
   withRouter
 } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import { Button, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+
+import ToolsAirgrabs from './Tools/Airgrabs';
+import ToolsApiPing from './Tools/ApiPing';
+import ToolsBidName from './Tools/BidName';
+import ToolsBlockchains from './Tools/Blockchains';
+import ToolsContacts from './Tools/Contacts';
+import ToolsCreateAccount from './Tools/CreateAccount';
+import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
+import ToolsCustomTokens from './Tools/CustomTokens';
+import ToolsDelegations from './Tools/Delegations';
+import ToolsHome from './Tools/Home';
+import ToolsKeyGenerator from './Tools/KeyGenerator';
+import ToolsKeyValidator from './Tools/KeyValidator';
+import ToolsLedger from './Tools/Ledger';
+import ToolsPermissions from './Tools/Permissions';
+import ToolsProxy from './Tools/Proxy';
+import ToolsRecommendations from './Tools/Recommendations';
+import ToolsSmartContracts from './Tools/SmartContracts';
+import ToolsWallets from './Tools/Wallets';
 
 import * as NavigationActions from '../../actions/navigation';
 
-import ToolsHome from './Tools/Home';
-import ToolsDelegations from './Tools/Delegations';
-import ToolsAirgrabs from './Tools/Airgrabs';
-import ToolsKeyGenerator from './Tools/KeyGenerator';
-import ToolsKeyValidator from './Tools/KeyValidator';
-import ToolsCustomTokens from './Tools/CustomTokens';
-import ToolsPermissions from './Tools/Permissions';
-import ToolsRecommendations from './Tools/Recommendations';
-import ToolsSmartContracts from './Tools/SmartContracts';
-import ToolsLedger from './Tools/Ledger';
-import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
-import ToolsBlockchains from './Tools/Blockchains';
-import ToolsWallets from './Tools/Wallets';
-import ToolsApiPing from './Tools/ApiPing';
-import ToolsCreateAccount from './Tools/CreateAccount';
-import ToolsBidName from './Tools/BidName';
-import ToolsProxy from './Tools/Proxy';
-
 class ToolsContainer extends Component<Props> {
   onClick = (e, data) => {
-    this.props.actions.changeModule(data.name);
+    const { actions } = this.props;
+
+    actions.changeModule(data.name);
   };
   render() {
     const { navigation } = this.props;
     return (
-      <Segment loading={navigation.loading}>
+      <Segment basic loading={navigation.loading}>
         <Button
           color="purple"
           content="< Back to Tools"
@@ -53,6 +55,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
             <Route path="/tools/api_ping" component={ToolsApiPing} />
             <Route path="/tools/bid_name" component={ToolsBidName} />
+            <Route path="/tools/contacts" component={ToolsContacts} />
             <Route path="/tools/blockchains" component={ToolsBlockchains} />
             <Route path="/tools/create_account" component={ToolsCreateAccount} />
             <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />

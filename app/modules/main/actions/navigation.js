@@ -7,18 +7,15 @@ export function changeModule(module) {
     dispatch(push(`/${module}`));
     return dispatch({
       type: types.NAVIGATION_CHANGE_MODULE,
-      payload: { module, loading: true }
+      payload: { module }
     });
   };
 }
 
 export function moduleLoaded() {
-  return (dispatch: () => void) => {
-    dispatch(push(`/${module}`));
-    return dispatch({
-      type: types.NAVIGATION_LOADING_ENDED,
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.NAVIGATION_LOADING_ENDED
+  });
 }
 
 export default {
