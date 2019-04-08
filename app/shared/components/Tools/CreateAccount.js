@@ -34,8 +34,6 @@ class ToolsCreateAccount extends Component<Props> {
 
     const transaction = system && system.CREATEACCOUNT_LAST_TRANSACTION;
 
-    console.log({allBlockExplorers})
-
     return (
       <div>
         {((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
