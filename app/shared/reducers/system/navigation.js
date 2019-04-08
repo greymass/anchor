@@ -1,7 +1,8 @@
 import * as types from '../../actions/types';
 
 const initialState = {
-  module: 'home'
+  module: 'home',
+  loading: false
 };
 
 export default function navigation(state = initialState, action) {
