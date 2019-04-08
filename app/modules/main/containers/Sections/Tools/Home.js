@@ -10,62 +10,62 @@ import NavigationActions from '../../../actions/navigation';
 import SettingsActions from '../../../../../shared/actions/settings';
 
 const toolSections = {
-  Tokens: {
-    Airgrabs: {
+  tools_menu_token_header: {
+    tools_menu_airgrab: {
       path: 'tools/airgrabs'
     },
-    'Custom Tokens': {
+    tools_menu_custom_tokens: {
       path: 'tools/custom_tokens'
     },
-    Delegations: {
+    tools_menu_delegations: {
       path: 'tools/delegations'
     }
   },
-  Security: {
-    'Best Practices': {
+  tools_menu_security_header: {
+    tools_menu_recommendations: {
       path: 'tools/recommendations'
     },
-    'Generate Keys': {
+    tools_menu_generatekey: {
       path: 'tools/key_generator'
     },
-    Permissions: {
+    tools_menu_permissions: {
       path: 'tools/permissions'
     },
-    'Validate Keys': {
+    tools_menu_keys: {
       path: 'tools/key_validator'
     }
   },
-  Hardware: {
-    Ledger: {
+  tools_menu_hardware_header: {
+    tools_ledger_title: {
       path: 'tools/ledger'
     }
   },
-  '3rd Party Services': {
-    'Crosschain Transfers': {
+  tools_menu_third_party_services_header: {
+    tools_menu_beos_crosschaintransfer: {
       path: 'tools/crosschain_transfer'
     }
   },
-  'Network Utilities': {
+  tools_menu_network_utilitiies_header: {
     'API Performance Analysis': {
       path: 'tools/api_ping'
     }
   },
-  Registration: {
-    'Create Account': {
+  tools_menu_registration: {
+    tools_menu_create_account: {
       path: 'tools/create_account'
     },
-    Proxy: {
+    tools_menu_proxy: {
       path: 'tools/proxy'
     }
   },
-  Utilities: {
-    'Bid Name': {
+  tools_menu_utilities_header: {
+    tools_menu_name_bidding: {
       path: 'tools/bid_name'
     },
-    Contacts: {
+    tools_menu_contacts: {
       path: 'tools/contacts'
     },
-    'Smart Contracts': {
+    tools_menu_contracts: {
       path: 'tools/smart_contracts'
     }
   }
