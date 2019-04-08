@@ -16,7 +16,6 @@ import GovernanceProxiesContainer from './Governance/Proxies';
 class ContentContainer extends Component<Props> {
   render = () => {
     const {
-      blockchains,
       settings,
     } = this.props;
     console.log(settings);
