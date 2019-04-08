@@ -32,7 +32,7 @@ const toolSections = {
       path: 'tools/permissions'
     },
     'Validate Keys': {
-      path: 'tools/key_validatoras'
+      path: 'tools/key_validator'
     }
   },
   Hardware: {
@@ -42,7 +42,7 @@ const toolSections = {
   },
   '3rd Party Services': {
     'Crosschain Transfers': {
-      path: 'tools/crosschain_transfers'
+      path: 'tools/crosschain_transfer'
     }
   },
   'Network Utilities': {
