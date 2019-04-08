@@ -9,8 +9,15 @@ import Producers from '../../../../../shared/components/Producers';
 import * as ProducersActions from '../../../../../shared/actions/producers';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as TableActions from '../../../../../shared/actions/table';
+import * as NavigationActions from '../../../actions/navigation';
 
 class GovernenceProducersContainer extends Component<Props> {
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.moduleLoaded();
+  }
+
   render() {
     return (
       <Producers
@@ -44,6 +51,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...NavigationActions,
       ...ProducersActions,
       ...SystemStateActions,
       ...TableActions,
