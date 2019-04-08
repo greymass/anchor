@@ -6,9 +6,16 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsCrosschainTransferComponent from '../../../../../shared/components/Tools/Blockchains/BEOS/CrosschainTransfer';
 
-import * as crosschainWithdrawActions from '../../../../../shared/actions/blockchains/beos/withdraw';
+import * as CrosschainWithdrawActions from '../../../../../shared/actions/blockchains/beos/withdraw';
+import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsCrosschainTransfer extends Component<Props> {
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.moduleLoaded();
+  }
+
   render = () => (
     <ToolsCrosschainTransferComponent
       {...this.props}
@@ -34,7 +41,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...crosschainWithdrawActions
+      ...CrosschainWithdrawActions,
+      ...NavigationActions
     }, dispatch)
   };
 }
