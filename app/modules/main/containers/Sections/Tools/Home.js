@@ -3,18 +3,18 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { translate } from 'react-i18next';
 
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import NavigationActions from '../../../actions/navigation';
-import SettingsActions from '../../../../../shared/actions/settings';
 
 const toolSections = {
   tools_menu_token_header: {
-    tools_menu_airgrab: {
+    tools_menu_airgrabs: {
       path: 'tools/airgrabs'
     },
-    tools_menu_custom_tokens: {
+    tools_menu_customtokens: {
       path: 'tools/custom_tokens'
     },
     tools_menu_delegations: {
@@ -22,10 +22,10 @@ const toolSections = {
     }
   },
   tools_menu_security_header: {
-    tools_menu_recommendations: {
+    tools_menu_recommendation: {
       path: 'tools/recommendations'
     },
-    tools_menu_generatekey: {
+    tools_menu_keygenerator: {
       path: 'tools/key_generator'
     },
     tools_menu_permissions: {
@@ -36,7 +36,7 @@ const toolSections = {
     }
   },
   tools_menu_hardware_header: {
-    tools_ledger_title: {
+    tools_menu_ledger: {
       path: 'tools/ledger'
     }
   },
@@ -45,12 +45,12 @@ const toolSections = {
       path: 'tools/crosschain_transfer'
     }
   },
-  tools_menu_network_utilitiies_header: {
+  tools_menu_network_utilities_header: {
     'API Performance Analysis': {
       path: 'tools/api_ping'
     }
   },
-  tools_menu_registration: {
+  tools_menu_registration_header: {
     tools_menu_create_account: {
       path: 'tools/create_account'
     },
@@ -76,7 +76,8 @@ class ToolsHome extends Component<Props> {
   onReset = () => this.props.actions.clearSettingsCache()
 
   render() {
-    const linkStyle = { cursor: 'pointer' }
+    const  { t } = this.props;
+    const linkStyle = { cursor: 'pointer' };
 
     return (
       <Grid columns={4}>
@@ -84,7 +85,7 @@ class ToolsHome extends Component<Props> {
           <Grid.Column>
             <Segment.Group vertical>
               <Header attached="top" inverted>
-                {sectionGroupTitle}
+                {t(sectionGroupTitle)}
               </Header>
               {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => (
                 <Segment>
@@ -93,7 +94,7 @@ class ToolsHome extends Component<Props> {
                     onClick={this.onClick}
                     style={linkStyle}
                   >
-                    {sectionTitle}
+                    {t(sectionTitle)}
                   </a>
                 </Segment>
               ))}
@@ -108,10 +109,9 @@ class ToolsHome extends Component<Props> {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...NavigationActions,
-      ...SettingsActions,
+      ...NavigationActions
     }, dispatch)
   };
 }
 
-export default withRouter(connect(() => {}, mapDispatchToProps)(ToolsHome));
+export default withRouter(connect(() => {}, mapDispatchToProps)(translate('tools')(ToolsHome)));
