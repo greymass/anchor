@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import {
   HashRouter,
   Route,
+  Segment,
   Switch,
   withRouter
 } from 'react-router-dom';
@@ -37,7 +38,7 @@ class ToolsContainer extends Component<Props> {
   render() {
     const { navigation } = this.props;
     return (
-      <React.Fragment>
+      <Segment loading={navigation.loading}>
         <Button
           color="purple"
           content="< Back to Tools"
@@ -67,7 +68,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/wallets" component={ToolsWallets} />
           </Switch>
         </HashRouter>
-      </React.Fragment>
+      </Segment>
     );
   }
 }
