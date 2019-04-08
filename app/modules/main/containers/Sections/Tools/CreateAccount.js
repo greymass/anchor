@@ -26,7 +26,6 @@ class ToolsCrosschainTransfer extends Component<Props> {
 }
 
 function mapStateToProps(state) {
-  console.log({state})
   return {
     accounts: state.accounts,
     allBlockExplorers: state.blockexplorers,
