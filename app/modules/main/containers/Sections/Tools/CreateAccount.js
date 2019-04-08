@@ -8,8 +8,14 @@ import ToolsCreateAccountComponent from '../../../../../shared/components/Tools/
 
 import * as systemActions from '../../../../../shared/actions/system/systemstate';
 import * as createAccountActions from '../../../../../shared/actions/createaccount';
+import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsCrosschainTransfer extends Component<Props> {
+  componentDidMount() {
+    const { actions } = this.props;
+
+    actions.moduleLoaded();
+  }
   render = () => (
     <ToolsCreateAccountComponent
       {...this.props}
@@ -36,6 +42,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...createAccountActions,
+      ...NavigationActions,
       ...systemActions
     }, dispatch)
   };
