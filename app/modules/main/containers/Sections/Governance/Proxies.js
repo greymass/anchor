@@ -10,15 +10,8 @@ import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as TableActions from '../../../../../shared/actions/table';
 import * as VoteProducerActions from '../../../../../shared/actions/system/voteproducer';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
-import * as NavigationActions from '../../../actions/navigation';
 
 class GovernenceProxiesContainer extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
-
   render() {
     return (
       <Proxies
@@ -54,7 +47,6 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
-      ...NavigationActions,
       ...SystemStateActions,
       ...TableActions,
       ...VoteProducerActions
