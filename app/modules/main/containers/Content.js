@@ -8,11 +8,13 @@ import {
 } from 'react-router-dom';
 
 import GovernanceContainer from './Sections/Governance';
-import WalletContainer from './Sections/Wallet';
+import HomeContainer from './Sections/Home';
 import TestsContainer from './Sections/Tests';
 import ToolsContainer from './Sections/Tools';
 import SettingsContainer from './Sections/Settings';
-import OverviewContainer from './Sections/Overview';
+import VersionContainer from './Sections/Version';
+import WalletContainer from './Sections/Wallet';
+
 import { Button, Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
 
 class ContentContainer extends Component<Props> {
@@ -36,12 +38,13 @@ class ContentContainer extends Component<Props> {
       </Dimmer>
       <HashRouter>
         <Switch>
-          <Route exact path="/" component={OverviewContainer} />
+          <Route exact path="/" component={HomeContainer} />
           <Route path="/tests" component={TestsContainer} />
           <Route path="/wallet" component={WalletContainer} />
           <Route path="/governance" component={GovernanceContainer} />
           <Route path="/tools" component={ToolsContainer} />
-          <Route exact path="/settings" component={SettingsContainer} />
+          <Route path="/settings" component={SettingsContainer} />
+          <Route path="/version" component={VersionContainer} />
         </Switch>
       </HashRouter>
     </React.Fragment>
