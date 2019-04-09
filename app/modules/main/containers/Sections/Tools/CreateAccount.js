@@ -23,7 +23,7 @@ function mapStateToProps(state) {
   return {
     accounts: state.accounts,
     allBlockExplorers: state.blockexplorers,
-    balances: state.blockchains,
+    balances: state.balances,
     connection: state.connection,
     globals: state.globals,
     keys: state.keys,

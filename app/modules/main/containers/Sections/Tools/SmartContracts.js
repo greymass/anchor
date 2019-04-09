@@ -9,6 +9,9 @@ import ToolsSmartContractComponent from '../../../../../shared/components/Contra
 
 import * as ContractActions from '../../../../../shared/actions/contracts';
 import * as TableActions from '../../../../../shared/actions/table';
+import * as SettingsActions from '../../../../../shared/actions/settings';
+import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
+import * as TransactionActions from '../../../../../shared/actions/transaction';
 
 import EOSContract from '../../../../../shared/utils/EOS/Contract';
 
@@ -38,7 +41,10 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...ContractActions,
-      ...TableActions
+      ...SettingsActions,
+      ...SystemStateActions,
+      ...TableActions,
+      ...TransactionActions
     }, dispatch)
   };
 }
