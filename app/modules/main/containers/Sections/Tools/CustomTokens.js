@@ -7,15 +7,8 @@ import { withRouter } from 'react-router-dom';
 import ToolsCustomTokensComponent from '../../../../../shared/components/Tools/CustomTokens';
 
 import * as CustomTokensActions from '../../../../../shared/actions/customtokens';
-import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsCustomTokens extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
-
   render = () => (
     <ToolsCustomTokensComponent
       {...this.props}
@@ -37,8 +30,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...CustomTokensActions,
-      ...NavigationActions
+      ...CustomTokensActions
     }, dispatch)
   };
 }

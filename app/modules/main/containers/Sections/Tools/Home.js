@@ -72,15 +72,19 @@ const toolSections = {
 };
 
 class ToolsHome extends Component<Props> {
-  onClick = (e, data) => this.props.actions.changeModule(data.name)
-  onReset = () => this.props.actions.clearSettingsCache()
+  onClick = (e) => {
+    this.props.actions.changeModule(e.target.name);
+    e.preventDefault();
+  };
+
+  onReset = () => this.props.actions.clearSettingsCache();
 
   render() {
-    const  { t } = this.props;
+    const { t } = this.props;
     const linkStyle = { cursor: 'pointer' };
 
     return (
-      <Grid columns={4}>
+      <Grid columns={4} stackable>
         {Object.keys(toolSections).map(sectionGroupTitle => (
           <Grid.Column>
             <Segment.Group vertical>

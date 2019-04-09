@@ -9,17 +9,10 @@ import ToolsSmartContractComponent from '../../../../../shared/components/Contra
 
 import * as ContractActions from '../../../../../shared/actions/contracts';
 import * as TableActions from '../../../../../shared/actions/table';
-import * as NavigationActions from '../../../actions/navigation';
 
 import EOSContract from '../../../../../shared/utils/EOS/Contract';
 
 class ToolsPermissions extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
-
   render = () => (
     <ToolsSmartContractComponent
       {...this.props}
@@ -45,7 +38,6 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...ContractActions,
-      ...NavigationActions,
       ...TableActions
     }, dispatch)
   };
