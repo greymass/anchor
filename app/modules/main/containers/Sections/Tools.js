@@ -29,6 +29,8 @@ import ToolsRecommendations from './Tools/Recommendations';
 import ToolsSmartContracts from './Tools/SmartContracts';
 import ToolsWallets from './Tools/Wallets';
 
+import Tools from '../../../../shared/containers/Tools';
+
 import * as NavigationActions from '../../actions/navigation';
 
 class ToolsContainer extends Component<Props> {
@@ -40,7 +42,7 @@ class ToolsContainer extends Component<Props> {
   render() {
     const { navigation } = this.props;
     return (
-      <Segment style={{ margin: 0 }} loading={navigation.loading}>
+      <Segment style={{ margin: 0 }}>
         <Button
           color="purple"
           content="< Back to Tools"
@@ -69,6 +71,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/recommendations" component={ToolsRecommendations} />
             <Route path="/tools/smart_contracts" component={ToolsSmartContracts} />
             <Route path="/tools/wallets" component={ToolsWallets} />
+            <Route path="/tools/v1" component={Tools} />
           </Switch>
         </HashRouter>
       </Segment>

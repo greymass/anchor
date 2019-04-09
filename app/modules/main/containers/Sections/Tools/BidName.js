@@ -9,6 +9,8 @@ import ToolsBidNameComponent from '../../../../../shared/components/Tools/BidNam
 import * as BidNameActions from '../../../../../shared/actions/system/bidname';
 import * as NameBidsActions from '../../../../../shared/actions/namebids';
 import * as TableActions from '../../../../../shared/actions/table';
+import * as AccountsActions from '../../../../../shared/actions/accounts';
+import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 
 class ToolsBidName extends Component<Props> {
   render = () => (
@@ -35,8 +37,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...AccountsActions,
       ...BidNameActions,
       ...NameBidsActions,
+      ...SystemStateActions,
       ...TableActions
     }, dispatch)
   };

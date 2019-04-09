@@ -12,13 +12,6 @@ export function changeModule(module) {
   };
 }
 
-export function moduleLoaded() {
-  return (dispatch: () => void) => dispatch({
-    type: types.NAVIGATION_LOADING_ENDED
-  });
-}
-
 export default {
-  changeModule,
-  moduleLoaded
+  changeModule
 };

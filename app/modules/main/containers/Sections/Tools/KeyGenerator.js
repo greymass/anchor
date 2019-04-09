@@ -5,13 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsKeyGeneratorComponent from '../../../../../shared/components/Tools/Keys';
 
-class ToolsDelegations extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
-
+class ToolsKeyGenerator extends Component<Props> {
   render = () => (
     <ToolsKeyGeneratorComponent
       {...this.props}
@@ -25,4 +19,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(ToolsDelegations));
+export default withRouter(connect(mapStateToProps)(ToolsKeyGenerator));
