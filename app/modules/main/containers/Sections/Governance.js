@@ -14,20 +14,27 @@ import GovernanceProposalsContainer from './Governance/Proposals';
 import GovernanceProxiesContainer from './Governance/Proxies';
 
 class ContentContainer extends Component<Props> {
-  render = () => (
-    <React.Fragment>
-      <NavigationGovernanceContainer />
-      <Segment attached>
-        <HashRouter>
-          <Switch>
-            <Route exact path="/governance/producers" component={GovernanceProducersContainer} />
-            <Route exact path="/governance/proposals" component={GovernanceProposalsContainer} />
-            <Route exact path="/governance/proxies" component={GovernanceProxiesContainer} />
-          </Switch>
-        </HashRouter>
-      </Segment>
-    </React.Fragment>
-  );
+  render = () => {
+    const {
+      blockchains,
+      settings,
+    } = this.props;
+    console.log(settings);
+    return (
+      <React.Fragment>
+        <NavigationGovernanceContainer />
+        <Segment attached>
+          <HashRouter>
+            <Switch>
+              <Route exact path="/governance/producers" component={GovernanceProducersContainer} />
+              <Route exact path="/governance/proposals" component={GovernanceProposalsContainer} />
+              <Route exact path="/governance/proxies" component={GovernanceProxiesContainer} />
+            </Switch>
+          </HashRouter>
+        </Segment>
+      </React.Fragment>
+    );
+  }
 }
 
 function mapStateToProps(state) {
