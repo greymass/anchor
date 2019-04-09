@@ -17,6 +17,8 @@ const initialState = {
   account: '',
   // The loaded authorization
   authorization: undefined,
+  // The enabled blockchains (array of chain ids)
+  blockchains: [],
   // The block explorer used
   blockExplorer: 'bloks.io',
   // Current chain_id

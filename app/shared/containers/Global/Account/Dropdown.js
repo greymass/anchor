@@ -42,17 +42,14 @@ class GlobalAccountDropdown extends Component<Props> {
       wallet,
       wallets
     } = this.props;
+    const { chainId } = settings;
     if (!wallets || wallets.length === 0) {
       return false;
     }
-    let { chainId } = settings;
     const options = wallets
       .filter(w => (
-        w.chainId === chainId
-        && (
-          w.account !== wallet.account
-          || w.authorization !== wallet.authorization
-        )
+        w.account !== wallet.account
+        || w.authorization !== wallet.authorization
       ))
       .sort((a, b) => a.account > b.account);
     let trigger = (
@@ -122,22 +119,17 @@ class GlobalAccountDropdown extends Component<Props> {
                   />
                 );
               })
-              : (
-                <Dropdown.Item
-                  content={(
-                    <p>{t('global_accounts_dropdown_no_accounts')}</p>
-                  )}
-                  key="empty"
-                  style={{
-                    lineHeight: '1.25em',
-                    width: '300px',
-                    maxWidth: '300px',
-                    padding: '1em',
-                    whiteSpace: 'normal'
-                  }}
-                />
-              )
+              : false
             }
+            <Dropdown.Header>
+              <Button
+                basic
+                content="Manage Accounts"
+                fluid
+                icon="users"
+                size="small"
+              />
+            </Dropdown.Header>
           </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
@@ -152,7 +144,7 @@ function mapStateToProps(state) {
     settings: state.settings,
     validate: state.validate,
     wallet: state.wallet,
-    wallets: state.wallets
+    wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId))
   };
 }
 

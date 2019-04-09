@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
-import logo from '../../renderer/assets/images/greymasstext.png';
+import logo from '../../renderer/assets/images/greymass-vertical.svg';
+import anchorLogo from '../../renderer/assets/images/anchor-logo.svg';
+import anchorText from '../../renderer/assets/images/anchor-text.svg';
 import GlobalButtonResetContainer from '../containers/Global/Button/Reset';
 
 const { shell } = require('electron');
@@ -18,15 +20,15 @@ export default class About extends Component<Props> {
           (t) => (
             <Grid>
               <Grid.Row>
-                <Grid.Column width={8}>
-                  <Segment basic>
-                    <Header size="large">
-                      {t('application_name')}
+                <Grid.Column width={10}>
+                  <Segment size="large">
+                    <Image alt="Anchor Logo" centered src={anchorLogo} size="small" />
+                    <Image alt="Anchor" centered src={anchorText} size="small" style={{ marginTop: '1em' }} />
+                    <Header image size="large" textAlign="center">
                       <Header.Subheader>
-                        {t('application_version')}
+                        {t('application_name')} {t('application_version')}
                       </Header.Subheader>
                     </Header>
-                    <Divider />
                     <p>{t('about_message_1')}</p>
                     <p>{t('about_message_2')}</p>
                     <Header>
@@ -51,22 +53,23 @@ export default class About extends Component<Props> {
                     <p>{t('about_license_body_4')}</p>
                   </Segment>
                 </Grid.Column>
-                <Grid.Column width={8}>
-                  <Segment>
-                    <Image src={logo} alt="Greymass" />
-                    <Segment basic padded>
-                      <p>{t('about_greymass_message_1')}</p>
-                      <p>
-                        {t('about_greymass_message_2')}
-                        {' '}
-                        <a
-                          onClick={() => this.openLink('https://greymass.com')}
-                          role="button"
-                        >
-                          https://greymass.com
-                        </a>.
-                      </p>
-                    </Segment>
+                <Grid.Column width={6}>
+                  <Segment basic size="large">
+                    <Image alt="Greymass" centered src={logo} size="small" />
+                    <Divider />
+                    <p>{t('about_greymass_message_1')}</p>
+                    <p>
+                      {t('about_greymass_message_2')}:
+                    </p>
+                    <p>
+                      <a
+                        onClick={() => this.openLink('https://greymass.com')}
+                        role='button'
+                        style={{ cursor: 'pointer' }}
+                      >
+                        https://greymass.com
+                      </a>
+                    </p>
                   </Segment>
                 </Grid.Column>
               </Grid.Row>
