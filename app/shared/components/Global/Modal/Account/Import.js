@@ -11,7 +11,6 @@ import GlobalModalAccountImportWatch from '../../../../containers/Global/Account
 class GlobalModalAccountImport extends Component<Props> {
   getPanes = () => {
     const {
-      connection,
       onClose,
       settings,
       t
