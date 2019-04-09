@@ -7,14 +7,8 @@ import { withRouter } from 'react-router-dom';
 import ToolsContactsComponent from '../../../../../shared/components/Tools/Contacts';
 
 import * as SettingsActions from '../../../../../shared/actions/settings';
-import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsContacts extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
   render = () => (
     <ToolsContactsComponent
       {...this.props}
@@ -31,7 +25,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...NavigationActions,
       ...SettingsActions
     }, dispatch)
   };
