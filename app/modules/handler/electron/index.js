@@ -3,6 +3,7 @@ import packageJson from '../../../package.json';
 
 import { configureIPC } from '../../../shared/electron/ipc';
 import { clearURI } from '../actions/uri';
+import { windowStateKeeper } from '../../../shared/electron/windowStateKeeper';
 
 const log = require('electron-log');
 const path = require('path');
@@ -15,14 +16,17 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
   log.info('protocol handler: creating ui');
   log.info('initial request', request);
 
+  const uiStateKeeper = windowStateKeeper(store, 'signingWindow');
+
   const { name, version } = packageJson;
   const title = `Signing Request - ${name} (${version})`;
 
   ui = new BrowserWindow({
     alwaysOnTop: true,
-    center: true,
-    width: 800,
-    height: 600,
+    x: uiStateKeeper.x,
+    y: uiStateKeeper.y,
+    width: uiStateKeeper.width,
+    height: uiStateKeeper.height,
     title,
     skipTaskbar: true,
     show: false,
@@ -30,6 +34,8 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
   });
+
+  uiStateKeeper.track(ui);
 
   ui.loadURL(`file://${path.join(resourcePath, 'renderer/handler/index.html')}`);
 
