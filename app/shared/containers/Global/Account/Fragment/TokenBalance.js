@@ -13,7 +13,7 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
     } = this.props;
     return (
       <React.Fragment>
-        {balance.toFixed(precision)}
+        {balance && balance.toFixed(precision)}
       </React.Fragment>
     );
   }
