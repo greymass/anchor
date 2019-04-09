@@ -8,6 +8,7 @@ import ToolsCustomTokensComponent from '../../../../../shared/components/Tools/C
 
 import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as CustomTokensActions from '../../../../../shared/actions/customtokens';
+import * as GlobalsActions from '../../../../../shared/actions/globals';
 import * as SettingsActions from '../../../../../shared/actions/settings';
 
 class ToolsCustomTokens extends Component<Props> {
@@ -34,6 +35,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...CustomTokensActions,
+      ...GlobalsActions,
       ...SettingsActions
     }, dispatch)
   };

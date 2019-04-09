@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import { Button, Checkbox, Form, Header, Icon, Segment, Table, TextArea } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
-import TimeAgo from 'react-timeago';
 
-const { clipboard, ipcRenderer } = require('electron');
+const { ipcRenderer } = require('electron');
 
 class ToolsSystemLog extends Component<Props> {
   state = {
