@@ -7,8 +7,8 @@ import { withRouter } from 'react-router-dom';
 import ToolsCrosschainTransferComponent from '../../../../../shared/components/Tools/Blockchains/BEOS/CrosschainTransfer';
 
 import * as CrosschainWithdrawActions from '../../../../../shared/actions/blockchains/beos/withdraw';
-import * as NavigationActions from '../../../actions/navigation';
 import * as SettingsActions from '../../../../../shared/actions/settings';
+import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 
 class ToolsCrosschainTransfer extends Component<Props> {
   render = () => (
@@ -37,7 +37,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...CrosschainWithdrawActions,
-      ...SettingsActions
+      ...SettingsActions,
+      ...SystemStateActions
     }, dispatch)
   };
 }
