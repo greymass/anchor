@@ -11,12 +11,6 @@ import * as NavigationActions from '../../../actions/navigation';
 import * as SettingsActions from '../../../../../shared/actions/settings';
 
 class ToolsCrosschainTransfer extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
-
   render = () => (
     <ToolsCrosschainTransferComponent
       {...this.props}
@@ -43,7 +37,6 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...CrosschainWithdrawActions,
-      ...NavigationActions,
       ...SettingsActions
     }, dispatch)
   };
