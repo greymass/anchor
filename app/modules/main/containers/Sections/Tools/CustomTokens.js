@@ -6,7 +6,9 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsCustomTokensComponent from '../../../../../shared/components/Tools/CustomTokens';
 
+import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as CustomTokensActions from '../../../../../shared/actions/customtokens';
+import * as SettingsActions from '../../../../../shared/actions/settings';
 
 class ToolsCustomTokens extends Component<Props> {
   render = () => (
@@ -30,7 +32,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...CustomTokensActions
+      ...AccountsActions,
+      ...CustomTokensActions,
+      ...SettingsActions
     }, dispatch)
   };
 }

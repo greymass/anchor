@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Grid, Header, Segment } from 'semantic-ui-react';
 
 import NavigationActions from '../../../actions/navigation';
+import SettingsActions from '../../../../../shared/actions/settings';
 
 const toolSections = {
   tools_menu_token_header: {
@@ -68,12 +69,29 @@ const toolSections = {
     tools_menu_contracts: {
       path: 'tools/smart_contracts'
     }
+  },
+  tools_menu_advanced_header: {
+    tools_system_log_header: {
+      path: 'tools/api_traffic_log'
+    },
+    tools_menu_state: {
+      path: 'tools/wallet_state'
+    },
+    tools_menu_state_chain: {
+      path: 'tools/chain_state'
+    },
+    tools_menu_state_globals: {
+      path: 'tools/global_state'
+    },
+    tools_reset_header_header: {
+      path: 'tools/reset_application'
+    }
   }
 };
 
 class ToolsHome extends Component<Props> {
-  onClick = (e) => {
-    this.props.actions.changeModule(e.target.name);
+  onClick = (e, data) => {
+    this.props.actions.changeModule((data && data.name) || e.target.name);
     e.preventDefault();
   };
 
@@ -84,28 +102,45 @@ class ToolsHome extends Component<Props> {
     const linkStyle = { cursor: 'pointer' };
 
     return (
-      <Grid columns={4} stackable>
-        {Object.keys(toolSections).map(sectionGroupTitle => (
-          <Grid.Column>
-            <Segment.Group vertical>
-              <Header attached="top" inverted>
-                {t(sectionGroupTitle)}
-              </Header>
-              {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => (
-                <Segment>
-                  <a
-                    name={toolSections[sectionGroupTitle][sectionTitle].path}
-                    onClick={this.onClick}
-                    style={linkStyle}
-                  >
-                    {t(sectionTitle)}
-                  </a>
-                </Segment>
-              ))}
-            </Segment.Group>
-          </Grid.Column>
-        ))}
-      </Grid>
+      <React.Fragment>
+        <Segment style={{ margin: 0, marginBottom: 15 }}>
+          <p>
+            <Button
+              content="V1 Tools Interface"
+              name="tools/v1"
+              onClick={this.onClick}
+              primary
+            />
+            &nbsp;
+            <Button
+              content="Reset Wallet"
+              onClick={this.onReset}
+            />
+          </p>
+        </Segment>
+        <Grid columns={4} stackable>
+          {Object.keys(toolSections).map(sectionGroupTitle => (
+            <Grid.Column>
+              <Segment.Group vertical>
+                <Header attached="top" inverted>
+                  {t(sectionGroupTitle)}
+                </Header>
+                {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => (
+                  <Segment>
+                    <a
+                      name={toolSections[sectionGroupTitle][sectionTitle].path}
+                      onClick={this.onClick}
+                      style={linkStyle}
+                    >
+                      {t(sectionTitle)}
+                    </a>
+                  </Segment>
+                ))}
+              </Segment.Group>
+            </Grid.Column>
+          ))}
+        </Grid>
+      </React.Fragment>
     );
   }
 }
@@ -113,7 +148,8 @@ class ToolsHome extends Component<Props> {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...NavigationActions
+      ...NavigationActions,
+      ...SettingsActions
     }, dispatch)
   };
 }
