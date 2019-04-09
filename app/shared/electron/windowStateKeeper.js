@@ -1,14 +1,16 @@
 import debounce from 'lodash/debounce';
 import { setSetting } from '../actions/settings';
 
-export function windowStateKeeper(store) {
+export function windowStateKeeper(store, scope) {
   let window;
   let windowState;
 
+  const scopeString = scope || '';
+
   function setBounds() {
     // Restore from store
-    if (store.getState().settings.setupData) {
-      windowState = store.getState().settings.setupData;
+    if (store.getState().settings[`${scopeString}setupData`]) {
+      windowState = store.getState().settings[`${scopeString}setupData`];
       return;
     }
     // Default
@@ -25,7 +27,7 @@ export function windowStateKeeper(store) {
       windowState = window.getBounds();
     }
     windowState.isMaximized = window.isMaximized();
-    store.dispatch(setSetting('setupData', windowState));
+    store.dispatch(setSetting(`${scopeString}setupData`, windowState));
   }
 
   function track(win) {
@@ -37,7 +39,6 @@ export function windowStateKeeper(store) {
       win.on(event, saveState);
     });
   }
-
   setBounds();
   return ({
     x: windowState.x,
