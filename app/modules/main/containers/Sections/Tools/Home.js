@@ -32,7 +32,7 @@ const toolSections = {
     tools_menu_permissions: {
       path: 'tools/permissions'
     },
-    tools_menu_keys: {
+    tools_menu_keyvalidator: {
       path: 'tools/key_validator'
     }
   },
@@ -74,9 +74,6 @@ const toolSections = {
     tools_system_log_header: {
       path: 'tools/api_traffic_log'
     },
-    tools_menu_state: {
-      path: 'tools/wallet_state'
-    },
     tools_menu_state_chain: {
       path: 'tools/chain_state'
     },
@@ -85,6 +82,9 @@ const toolSections = {
     },
     tools_reset_header_header: {
       path: 'tools/reset_application'
+    },
+    tools_menu_state: {
+      path: 'tools/wallet_state'
     }
   }
 };
