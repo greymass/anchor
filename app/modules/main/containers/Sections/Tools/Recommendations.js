@@ -6,8 +6,6 @@ import { withRouter } from 'react-router-dom';
 
 import RecommendationInterfaceList from '../../../../../shared/components/Recommendation/Interface/List';
 
-import * as NavigationActions from '../../../actions/navigation';
-
 class ToolsRecommendations extends Component<Props> {
   componentDidMount() {
     const { actions } = this.props;
@@ -29,12 +27,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({
-      ...NavigationActions
-    }, dispatch)
-  };
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsRecommendations));
+export default withRouter(connect(mapStateToProps)(ToolsRecommendations));

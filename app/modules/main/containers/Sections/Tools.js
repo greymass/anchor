@@ -40,7 +40,7 @@ class ToolsContainer extends Component<Props> {
   render() {
     const { navigation } = this.props;
     return (
-      <Segment basic loading={navigation.loading}>
+      <Segment style={{ margin: 0 }} loading={navigation.loading}>
         <Button
           color="purple"
           content="< Back to Tools"
