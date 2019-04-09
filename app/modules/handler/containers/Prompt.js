@@ -91,20 +91,12 @@ class PromptContainer extends Component<Props> {
       wallet
     } = this.state;
     const {
-      account,
-      authorization,
-      mode,
-      pubkey,
-    } = wallet;
-    const {
       response
     } = prompt;
     if (!blockchain) return false;
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
     const hasBroadcast = !!(response && (response.processed && response.processed.receipt.status === 'executed'));
-    console.log(prompt)
     const hasExpired = !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
-    const hasWallet = !!(account && authorization && mode && pubkey);
     return (
       <Segment
         tertiary
@@ -123,22 +115,15 @@ class PromptContainer extends Component<Props> {
           prompt={prompt}
           loading={loading}
         />
-        {(hasWallet)
-          ? (
-            <PromptStage
-              blockchain={blockchain}
-              hasBroadcast={hasBroadcast}
-              hasExpired={hasExpired}
-              onClose={this.onClose}
-              onShareLink={this.onShareLink}
-              swapAccount={this.swapAccount}
-              wallet={wallet}
-            />
-          )
-          : (
-            <span> no wallets</span>
-          )
-        }
+        <PromptStage
+          blockchain={blockchain}
+          hasBroadcast={hasBroadcast}
+          hasExpired={hasExpired}
+          onClose={this.onClose}
+          onShareLink={this.onShareLink}
+          swapAccount={this.swapAccount}
+          wallet={wallet}
+        />
         <Segment basic style={{ marginTop: 0 }} textAlign="center">
           <p>
             Chain ID: {(blockchain) ? blockchain.chainId : 'loading'}
