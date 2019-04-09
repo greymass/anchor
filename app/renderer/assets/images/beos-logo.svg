@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 512 512" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+   
+    .fil1 {fill:#2279BE}
+    .fil0 {fill:#2279BE;fill-rule:nonzero}
+   
+  </style>
+  </defs>
+  <g id="Layer_x0020_1" style="" transform="matrix(0.585226, 0, 0, 0.585226, 83.65094, 1.134077)">
+    <g id="_2183746297376">
+      <path class="fil1" d="M304 515c7,1 13,4 19,8l62 -62c-24,-21 -52,-32 -81,-33l0 87z"/>
+      <path class="fil1" d="M336 536c4,6 7,12 8,19l88 0c-3,-32 -15,-59 -34,-81l-62 62z"/>
+      <path class="fil1" d="M344 574c-1,7 -4,13 -7,19l62 61c20,-24 31,-52 33,-81l-88 1z"/>
+      <path class="fil1" d="M323 607c-6,4 -12,6 -19,7l0 88c32,-2 59,-14 81,-34l-62 -61z"/>
+      <path class="fil1" d="M285 515c-7,1 -13,4 -19,8 -43,-40 -76,-75 -109,-112l0 -154 128 112 0 74 0 72z"/>
+      <path class="fil1" d="M253 536c-4,6 -7,12 -8,19l-89 0 0 -114 97 95z"/>
+      <path class="fil1" d="M245 575c1,6 4,12 8,18l-63 62c-20,-24 -31,-52 -32,-81l87 1z"/>
+      <path class="fil1" d="M267 607c5,4 11,6 18,8l0 87c-31,-2 -59,-14 -80,-33l62 -62z"/>
+    </g>
+    <path class="fil0" d="M287 866l-287 -172 81 -404 3 -6 211 -284 211 284 2 6 81 404 -294 177 -8 -5zm-256 -186l264 158 263 -158 -77 -381 -186 -252 -187 252 -77 381z"/>
+    <path class="fil0" d="M108 298c-5,126 -1,236 32,327 33,90 94,157 161,219l-18 19c-71,-65 -137,-138 -172,-233 -34,-95 -35,-210 -30,-338l27 6z"/>
+    <path class="fil0" d="M481 298c5,126 1,236 -32,327 -33,90 -94,157 -161,219l19 19c71,-65 136,-138 171,-233 35,-95 36,-210 31,-338l-28 6z"/>
+  </g>
+</svg>

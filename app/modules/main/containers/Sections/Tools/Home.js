@@ -7,9 +7,11 @@ import { withRouter } from 'react-router-dom';
 import { Button, Grid, Header, Segment } from 'semantic-ui-react';
 
 import NavigationActions from '../../../actions/navigation';
+import SettingsActions from '../../../../../shared/actions/settings';
 
 class ToolsHome extends Component<Props> {
   onClick = (e, data) => this.props.actions.changeModule(data.name)
+  onReset = () => this.props.actions.clearSettingsCache()
   render() {
     return (
       <div>
@@ -22,6 +24,10 @@ class ToolsHome extends Component<Props> {
               primary
             />
           </p>
+          <Button
+            content="Reset"
+            onClick={this.onReset}
+          />
           <Button
             content="Delegations"
             name="tools/delegations"
@@ -221,6 +227,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...NavigationActions,
+      ...SettingsActions,
     }, dispatch)
   };
 }
