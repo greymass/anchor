@@ -9,15 +9,8 @@ import ToolsApiPingComponent from '../../../../../shared/components/Tools/Ping';
 import * as PingActions from '../../../../../shared/actions/ping';
 import * as ProducersActions from '../../../../../shared/actions/producers';
 import * as SettingsActions from '../../../../../shared/actions/settings';
-import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsApiPing extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
-
   render = () => (
     <ToolsApiPingComponent
       {...this.props}
@@ -40,7 +33,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...NavigationActions,
       ...PingActions,
       ...ProducersActions,
       ...SettingsActions
