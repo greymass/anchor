@@ -1,35 +1,19 @@
 // @flow
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
+import { Button, Dropdown, Header, Segment } from 'semantic-ui-react';
 
-import GlobalButtonElevate from '../Button/Elevate';
 import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
 import * as BlockchainsActions from '../../../actions/blockchains';
-import * as WalletActions from '../../../actions/wallet';
-import * as WalletsActions from '../../../actions/wallets';
 
-class GlobalBlockchainDropdown extends PureComponent<Props> {
-  state = { open: false }
-  onClose = () => {
-    this.setState({ open: false });
-  }
-  onOpen = () => {
-    this.setState({ open: true });
-  }
-  onToggle = () => {
-    this.setState({ open: !this.state.open });
-  }
+class GlobalBlockchainDropdown extends Component<Props> {
   swapBlockchain = (chainId) => {
     const { actions } = this.props;
     actions.swapBlockchain(chainId);
-    // if (password) {
-    //   actions.unlockWallet(password);
-    // }
   }
   render() {
     const {
@@ -41,14 +25,9 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
       settings,
       showName,
       style,
-      t,
     } = this.props;
-    if (!settings.blockchains || settings.blockchains === []) {
+    if (!settings.blockchains || settings.blockchains.length === 0 || !settings.walletInit) {
       return false;
-    }
-    let defaultLocString = 'global_account_select_blockchain_default';
-    if (settings.walletMode === 'cold') {
-      defaultLocString = 'global_account_select_blockchain_default_cold';
     }
     const { chainId } = settings;
     if (!blockchains) return false;
@@ -59,12 +38,10 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
     if (selected) {
       blockchain = find(blockchains, { chainId: selected });
     }
-    const { displayTestNetworks } = settings;
     const options = blockchains
       .filter(b => (
         (
-          (true && b.testnet)
-          || !b.testnet
+          settings.blockchains.includes(b.chainId)
         )
         && b.chainId !== blockchain.chainId
       ))
@@ -82,21 +59,22 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
           b
         };
       });
-    let icon = {
-      color: 'green',
-      name: 'id card'
-    };
-    let trigger = (
+    const trigger = (
       <span>
-        <GlobalFragmentChainLogo
-          chainId={blockchain.chainId}
-          noPopup
-          style={{
-            float: 'left',
-            height: '2em',
-            width: '2em',
-          }}
-        />
+        {(blockchain && blockchain.chainId)
+          ? (
+            <GlobalFragmentChainLogo
+              chainId={blockchain.chainId}
+              noPopup
+              style={{
+                float: 'left',
+                height: '2em',
+                width: '2em',
+              }}
+            />
+          )
+          : 'Select a Blockchain'
+        }
         {(showName && blockchain && blockchain.name)
           ? (
             <Header
@@ -110,9 +88,6 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
         }
       </span>
     );
-    if (!blockchain.chainId) {
-      trigger = false;
-    }
     if (disabled) {
       return (
         <Segment
@@ -131,17 +106,30 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
         style={style}
         trigger={trigger}
       >
-        <Dropdown.Menu style={{ minWidth: '200px' }}>
+        <Dropdown.Menu
+          style={{
+            minWidth: '200px',
+            paddingTop: '1em',
+          }}
+        >
           {options.map(option => {
               const {
                 props,
-                b
               } = option;
               return (
                 <Dropdown.Item {...props} />
               );
             })
           }
+          <Dropdown.Header>
+            <Button
+              basic
+              content="Manage Blockchains"
+              fluid
+              icon="cubes"
+              size="small"
+            />
+          </Dropdown.Header>
         </Dropdown.Menu>
       </Dropdown>
     );
