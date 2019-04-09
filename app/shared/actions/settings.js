@@ -4,14 +4,11 @@ import * as validate from './validate';
 import { setWalletMode } from './wallet';
 import { removeWallet } from './wallets';
 
-const { remote } = require('electron');
-
 export function clearSettingsCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_ALL_STATES
     });
-    remote.getCurrentWindow().reload();
   };
 }
 

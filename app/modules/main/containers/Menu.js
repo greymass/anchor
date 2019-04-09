@@ -132,7 +132,7 @@ class MenuContainer extends Component<Props> {
         className="nav-topbar"
         fixed="top"
         style={{
-          minHeight: '3.929em'
+          minHeight: '4.428em'
         }}
       >
         <GlobalBlockchainDropdown
