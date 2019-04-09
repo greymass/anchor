@@ -10,14 +10,8 @@ import * as StakeActions from '../../../../../shared/actions/stake';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as TableActions from '../../../../../shared/actions/table';
 import * as WalletActions from '../../../../../shared/actions/wallet';
-import * as NavigationActions from '../../../actions/navigation';
 
 class ToolsDelegations extends Component<Props> {
-  componentDidMount() {
-    const { actions } = this.props;
-
-    actions.moduleLoaded();
-  }
   render = () => (
     <ToolsDelegationsComponent
       {...this.props}
@@ -42,7 +36,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...NavigationActions,
       ...StakeActions,
       ...SystemStateActions,
       ...TableActions,
