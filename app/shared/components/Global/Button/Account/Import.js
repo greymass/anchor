@@ -15,7 +15,6 @@ class GlobalButtonAccountImport extends Component<Props> {
 
   render() {
     const {
-      connection,
       settings,
       t
     } = this.props;
@@ -24,7 +23,6 @@ class GlobalButtonAccountImport extends Component<Props> {
     } = this.state;
     return (
       <GlobalModalAccountImport
-        connection={connection}
         onClose={this.onClose}
         open={open}
         settings={settings}
