@@ -45,7 +45,7 @@ function updateBlockchain(payload) {
 
 function updateBlockchainSetting(chainId, key, value) {
   return (dispatch: () => void) => {
-    dispatch({
+    return dispatch({
       type: types.SYSTEM_BLOCKCHAINS_SET_SETTING,
       payload: { chainId, key, value }
     });

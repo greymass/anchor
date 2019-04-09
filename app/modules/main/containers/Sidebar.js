@@ -9,6 +9,8 @@ import Logo from '../../../renderer/assets/images/anchor-shape.svg';
 import packageJson from '../../../package.json';
 import NavigationActions from '../actions/navigation';
 
+import GreymassLogoHorizontal from '../../../renderer/assets/images/anchor-text.svg';
+
 class SidebarContainer extends Component<Props> {
   onClick = (e, data) => this.props.actions.changeModule(data.name)
   render() {
@@ -41,7 +43,7 @@ class SidebarContainer extends Component<Props> {
           />
           Home
         </Menu.Item>
-        {(settings.walletInit)
+        {(settings.walletInit && settings.chainId)
           ? (
             <React.Fragment>
               <Menu.Item
@@ -91,8 +93,14 @@ class SidebarContainer extends Component<Props> {
           <Icon name="wrench" />
           Tools
         </Menu.Item>
-        <Menu.Item as="a" name="version">
-          v{packageJson.version}
+        <Menu.Item
+          as="a"
+          name="version"
+          onClick={this.onClick}
+          style={{ padding: '0.5em 0' }}
+        >
+          {packageJson.version}
+          <Image centered src={GreymassLogoHorizontal} style={{ marginTop: '0.25em', maxWidth: '6em', width: '6em' }} />
         </Menu.Item>
       </Menu>
     );

@@ -6,6 +6,7 @@ import { find } from 'lodash';
 
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
 import GlobalBlockchainContainer from './Blockchain';
+import GlobalButtonAccountImport from '../../../../../shared/components/Global/Button/Account/Import';
 
 const latestUpdate = {
   version: '1.0.1',
@@ -27,8 +28,14 @@ class OverviewSidebarContainer extends Component<Props> {
     );
   }
   render() {
+    const {
+      settings
+    } = this.props;
     return (
       <React.Fragment>
+        <GlobalButtonAccountImport
+          settings={settings}
+        />
         {/* <GlobalSidebarUpdate
           update={this.props.latestUpdate}
         /> */}
