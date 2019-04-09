@@ -13,6 +13,7 @@ import PromptStageBroadcast from './Stage/Broadcast';
 import PromptStageExpired from './Stage/Expired';
 import PromptStageForbidden from './Stage/Forbidden';
 import PromptStageHardwareLedger from './Stage/Hardware/Ledger';
+import PromptStageNotConfigured from './Stage/NotConfigured';
 import PromptStageSuccess from './Stage/Success';
 
 import PromptActionBroadcast from '../components/Actions/Broadcast';
@@ -114,34 +115,28 @@ class PromptStage extends Component<Props> {
       wallet,
       validate,
     } = this.props;
-    const transaction = prompt.signed;
+
     const awaitingDevice = (system.EOSIOURISIGN === 'PENDING');
-    const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
-    const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
-    const canSignWithDevice = (wallet.mode === 'ledger' && status === 'connected');
-    const canSign = (canSignWithKey || canSignWithDevice);
-    // console.log(this.props)
-    // console.log(couldSignWithKey, canSignWithKey, canSignWithDevice, canSign);
-    const hasSignature = !!(
-      transaction
-      && transaction.transaction
-      && transaction.transaction.signatures.length > 0
-    );
-    const uriDigested = !!(prompt.tx);
-    const hasTransaction = !!(transaction && transaction.transaction_id);
     const signing = (system.EOSIOURISIGN === 'PENDING');
     const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
     const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
     const error = system.EOSIOURIBUILD_LAST_ERROR || system.EOSIOURISIGN_LAST_ERROR;
 
-    // console.log(prompt);
-    // console.log('hasExpired', hasExpired)
-    // console.log('settings.walletMode', settings.walletMode);
-    // console.log('awaitingDevice', awaitingDevice);
-    // console.log('hasBroadcast', hasBroadcast);
-    // console.log('hasTransaction', hasTransaction);
-    // console.log('hasSignature', hasSignature);
-    // console.log('hasError', hasError);
+    const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
+    const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
+    const canSignWithDevice = (wallet.mode === 'ledger' && status === 'connected');
+    const canSign = (canSignWithKey || canSignWithDevice);
+
+    const transaction = prompt.signed;
+    const hasSignature = !!(
+      transaction
+      && transaction.transaction
+      && transaction.transaction.signatures.length > 0
+    );
+    const hasTransaction = !!(transaction && transaction.transaction_id);
+    const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
+
+    const uriDigested = !!(prompt.tx);
 
     let stage = (
       <PromptStageReview
@@ -201,11 +196,24 @@ class PromptStage extends Component<Props> {
         />
       );
     }
+
     if (prompt && prompt.uri && error && error.type === 'forbidden') {
       stage = (
         <PromptStageForbidden
           error={error}
           prompt={prompt}
+        />
+      );
+      nextAction = false;
+      cancelAction = (
+        <PromptActionComplete
+          onClick={onClose}
+        />
+      );
+    } else if (!hasWallet) {
+      stage = (
+        <PromptStageNotConfigured
+          blockchain={blockchain}
         />
       );
       nextAction = false;
@@ -267,8 +275,6 @@ class PromptStage extends Component<Props> {
         />
       );
     }
-
-    console.log(error)
 
     return (
       <React.Fragment>
