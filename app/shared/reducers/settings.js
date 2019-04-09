@@ -70,6 +70,8 @@ const initialState = {
   skipLinkModal: false,
   // Window State Management
   setupData: {},
+  // Window State Management
+  signingWindowsetupData: {},
   // Wallet Password Validity Hash
   walletHash: false,
   // Wallet Status
