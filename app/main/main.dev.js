@@ -8,7 +8,7 @@ import { createTrayIcon } from '../modules/tray/electron/icon';
 import { createProtocolHandlers } from '../modules/handler/electron';
 import HardwareLedger from '../shared/utils/Hardware/Ledger';
 import * as types from '../shared/actions/types';
-import { getAppConfiguration } from '../shared/actions/hardware/ledger';
+import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardware/ledger';
 
 const log = require('electron-log');
 const path = require('path');
