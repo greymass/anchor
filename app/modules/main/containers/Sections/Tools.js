@@ -10,11 +10,13 @@ import {
 import { Button, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
+import ScrollToTop from '../../../../shared/components/Global/ScrollToTop';
+import GlobalBlockchainManage from '../../../../shared/containers/Global/Blockchain/Manage';
+
 import ToolsAirgrabs from './Tools/Airgrabs';
 import ToolsApiPing from './Tools/ApiPing';
 import ToolsApiTrafficLog from './Tools/ApiTrafficLog';
 import ToolsBidName from './Tools/BidName';
-import ToolsBlockchains from './Tools/Blockchains';
 import ToolsChainState from './Tools/ChainState';
 import ToolsContacts from './Tools/Contacts';
 import ToolsCreateAccount from './Tools/CreateAccount';
@@ -39,31 +41,19 @@ import Tools from '../../../../shared/containers/Tools';
 import * as NavigationActions from '../../actions/navigation';
 
 class ToolsContainer extends Component<Props> {
-  onClick = (e, data) => {
-    const { actions } = this.props;
-
-    actions.changeModule(data.name);
-  };
+  onClick = (e, data) => this.props.actions.changeModule(data.name)
   render() {
     const { navigation } = this.props;
     return (
-      <Segment style={{ margin: 0 }}>
-        <Button
-          color="purple"
-          content="< Back to Tools"
-          disabled={navigation.module === 'tools'}
-          name="tools"
-          onClick={this.onClick}
-          style={{ marginBottom: '15px' }}
-        />
-        <HashRouter>
+      <HashRouter>
+        <ScrollToTop>
           <Switch>
             <Route exact path="/tools" component={ToolsHome} />
             <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
             <Route path="/tools/api_ping" component={ToolsApiPing} />
             <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />
             <Route path="/tools/bid_name" component={ToolsBidName} />
-            <Route path="/tools/blockchains" component={ToolsBlockchains} />
+            <Route path="/tools/blockchains" component={GlobalBlockchainManage} />
             <Route path="/tools/chain_state" component={ToolsChainState} />
             <Route path="/tools/contacts" component={ToolsContacts} />
             <Route path="/tools/create_account" component={ToolsCreateAccount} />
@@ -83,8 +73,8 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/wallets" component={ToolsWallets} />
             <Route path="/tools/v1" component={Tools} />
           </Switch>
-        </HashRouter>
-      </Segment>
+        </ScrollToTop>
+      </HashRouter>
     );
   }
 }

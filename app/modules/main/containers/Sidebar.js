@@ -29,6 +29,7 @@ class SidebarContainer extends Component<Props> {
         style={{
           display: 'flex',
           minWidth: '7.67em',
+          minHeight: '100vh',
         }}
         vertical
       >
@@ -43,7 +44,7 @@ class SidebarContainer extends Component<Props> {
           />
           Home
         </Menu.Item>
-        {(settings.walletInit && settings.chainId)
+        {(settings.walletMode !== 'cold' && settings.walletInit && settings.chainId)
           ? (
             <React.Fragment>
               <Menu.Item
@@ -86,13 +87,15 @@ class SidebarContainer extends Component<Props> {
           onClick={this.onClick}
           name="tools"
           color="violet"
-          style={{
-            flexGrow: 1
-          }}
         >
           <Icon name="wrench" />
           Tools
         </Menu.Item>
+        <Menu.Header
+          style={{
+            flexGrow: 1
+          }}
+        />
         <Menu.Item
           as="a"
           name="version"

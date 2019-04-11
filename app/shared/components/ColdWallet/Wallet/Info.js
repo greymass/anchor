@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import { Divider, Icon, Header, List, Segment } from 'semantic-ui-react';
+import ColdWalletPanelButtonSignTransaction from './Panel/Button/SignTransaction';
 
 class ColdWalletInfo extends Component<Props> {
   render() {
-    const { t } = this.props;
+    const { actions, t } = this.props;
     return (
-      <Segment basic padded style={{ paddingTop: 0 }}>
-        <Segment attached="top" secondary textAlign="center">
+      <React.Fragment>
+        <Segment attached="top" style={{ marginTop: 0 }} textAlign="center">
           <Header icon size="large">
             <Icon
               color="blue"
@@ -21,7 +22,12 @@ class ColdWalletInfo extends Component<Props> {
             />
           </Header>
         </Segment>
-        <Segment attached>
+        <Segment attached textAlign="center">
+          <ColdWalletPanelButtonSignTransaction
+            actions={actions}
+          />
+        </Segment>
+        <Segment attached="bottom">
           <Header>
             {t('coldwallet_wallet_instructions_title')}
           </Header>
@@ -63,7 +69,7 @@ class ColdWalletInfo extends Component<Props> {
 
           </Segment>
         </Segment>
-      </Segment>
+      </React.Fragment>
     );
   }
 }

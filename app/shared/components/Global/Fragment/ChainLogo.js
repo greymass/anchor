@@ -7,9 +7,9 @@ import beosLogo from '../../../../renderer/assets/images/beos-logo.svg';
 import bosLogo from '../../../../renderer/assets/images/bos.png';
 import eosLogo from '../../../../renderer/assets/images/eos.png';
 import insightsLogo from '../../../../renderer/assets/images/insights.svg';
-import meetoneLogo from '../../../../renderer/assets/images/meetone.png';
+import meetoneLogo from '../../../../renderer/assets/images/meetone.svg';
 import placeholder from '../../../../renderer/assets/images/placeholder.png';
-import telosLogo from '../../../../renderer/assets/images/telos.png';
+import telosLogo from '../../../../renderer/assets/images/telos.svg';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
 
 const logos = {

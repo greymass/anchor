@@ -23,18 +23,7 @@ export default class ColdWalletPanel extends Component<Props> {
       validate,
       wallet
     } = this.props;
-
     let panel = false;
-    if ((!keys || !keys.key) && wallet.data) {
-      panel = (
-        <WalletPanelLocked
-          actions={actions}
-          settings={settings}
-          validate={validate}
-          wallet={wallet}
-        />
-      );
-    }
     if (keys && keys.key) {
       panel = (
         <ColdWalletPanelUnlocked
