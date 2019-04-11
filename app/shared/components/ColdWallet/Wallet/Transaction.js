@@ -62,8 +62,8 @@ class ColdWalletTransaction extends Component<Props> {
     const expired = (now > expires);
     const disabled = (signed);
     return (
-      <Segment basic>
-        <Segment attached="top">
+      <React.Fragment>
+        <Segment attached="top" style={{ marginTop: 0 }}>
           <Header size="large">
             {t('coldwallet_transaction_signature_request_title')}
             <Header.Subheader>
@@ -133,10 +133,10 @@ class ColdWalletTransaction extends Component<Props> {
         </Segment>
         <Segment attached>
           <GlobalTransactionViewFull
-            transaction={data}
+            transaction={data.transaction.transaction}
           />
         </Segment>
-      </Segment>
+      </React.Fragment>
     );
   }
 }

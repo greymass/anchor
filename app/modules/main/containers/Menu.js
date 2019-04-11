@@ -73,26 +73,26 @@ class MenuContainer extends Component<Props> {
 
     initApp();
 
-    switch (settings.walletMode) {
-      case 'cold': {
-        history.push('/coldwallet');
-        break;
-      }
-      default: {
-        if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
-          history.push('/');
-        } else {
-          // getCurrencyStats();
-          getBlockExplorers();
-          // forEach(settings.customTokens, (token) => {
-          //   const [chainId, contract, symbol] = token.split(':');
-          //   if (chainId === settings.chainId) {
-          //     getCurrencyStats(contract, symbol.toUpperCase());
-          //   }
-          // });
-        }
-      }
-    }
+    // switch (settings.walletMode) {
+    //   case 'cold': {
+    //     history.push('/coldwallet');
+    //     break;
+    //   }
+    //   default: {
+    //     if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
+    //       history.push('/');
+    //     } else {
+    //       // getCurrencyStats();
+    //       getBlockExplorers();
+    //       // forEach(settings.customTokens, (token) => {
+    //       //   const [chainId, contract, symbol] = token.split(':');
+    //       //   if (chainId === settings.chainId) {
+    //       //     getCurrencyStats(contract, symbol.toUpperCase());
+    //       //   }
+    //       // });
+    //     }
+    //   }
+    // }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 10000);
   }
@@ -104,6 +104,7 @@ class MenuContainer extends Component<Props> {
   tick() {
     const {
       actions,
+      settings,
       validate,
     } = this.props;
     const {
@@ -112,7 +113,7 @@ class MenuContainer extends Component<Props> {
       getGlobals,
       getInfo
     } = actions;
-    if (validate.NODE === 'SUCCESS') {
+    if (settings.walletMode !== 'cold' && validate.NODE === 'SUCCESS') {
       sync();
       getConstants();
       getGlobals();
@@ -130,18 +131,20 @@ class MenuContainer extends Component<Props> {
     return (
       <Menu
         className="nav-topbar"
-        fixed="top"
+        attached
         style={{
           minHeight: '4.428em'
         }}
       >
         <GlobalBlockchainDropdown
+          onNavigationChange={this.props.actions.changeModule}
           style={{
-            marginLeft: '107px',
-            paddingLeft: '1.5rem'
+            // marginLeft: '107px',
+            // paddingLeft: '1.5rem'
           }}
         />
         <GlobalAccountDropdown
+          onNavigationChange={this.props.actions.changeModule}
           style={{
             minWidth: '250px'
           }}
