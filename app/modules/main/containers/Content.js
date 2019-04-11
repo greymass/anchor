@@ -7,6 +7,8 @@ import {
   Switch
 } from 'react-router-dom';
 
+import { Container, Dimmer, Header, Loader } from 'semantic-ui-react';
+
 import GovernanceContainer from './Sections/Governance';
 import HomeContainer from './Sections/Home';
 import TestsContainer from './Sections/Tests';
@@ -14,8 +16,6 @@ import ToolsContainer from './Sections/Tools';
 import SettingsContainer from './Sections/Settings';
 import VersionContainer from './Sections/Version';
 import WalletContainer from './Sections/Wallet';
-
-import { Button, Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
 
 class ContentContainer extends Component<Props> {
   render = () => (
@@ -39,6 +39,7 @@ class ContentContainer extends Component<Props> {
       <HashRouter>
         <Switch>
           <Route exact path="/" component={HomeContainer} />
+          <Route path="/home" component={HomeContainer} />
           <Route path="/tests" component={TestsContainer} />
           <Route path="/wallet" component={WalletContainer} />
           <Route path="/governance" component={GovernanceContainer} />
