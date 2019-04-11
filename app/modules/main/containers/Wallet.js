@@ -10,6 +10,7 @@ import MenuContainer from './Menu';
 import SidebarContainer from './Sidebar';
 import Notifications from '../../../shared/components/Notifications';
 import WelcomeContainer from '../../../shared/containers/Welcome';
+import { setWalletMode } from '../../../shared/actions/wallet';
 import * as ValidateActions from '../../../shared/actions/validate';
 
 import background from '../../../renderer/assets/images/geometric-background.svg';
@@ -22,6 +23,9 @@ class WalletContainer extends Component<Props> {
       const { validateNode } = actions;
       validateNode(settings.node, settings.chainId, false, true);
       this.state = { initialized: false };
+    }
+    if (settings.walletInit && settings.walletMode) {
+      actions.setWalletMode(settings.walletMode);
     }
   }
   state = { initialized: true };
@@ -136,6 +140,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      setWalletMode,
       ...ValidateActions,
     }, dispatch)
   };
