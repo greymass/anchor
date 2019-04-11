@@ -36,9 +36,9 @@ export function foreach<T, A>(
 * const eos = new Eos(transport)
 */
 export default class Eos {
-  transport: Transport<*>;
+  transport;
 
-  constructor(transport: Transport<*>) {
+  constructor(transport) {
     this.transport = transport;
     transport.decorateAppAPIMethods(
       this,
