@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import ColdWalletContainer from './ColdWallet';
+import GlobalBlockchainManage from '.../../../shared/containers/Global/Blockchain/Manage';
 import HomeAccountsContainer from './Home/Accounts';
-import HomeBlockchainContainer from './Home/Blockchain';
-import HomeBlockchainsContainer from './Home/Blockchains';
+import HomeInitializeContainer from './Home/Initialize';
 import OverviewContainer from './Overview';
 
 class HomeContainer extends Component<Props> {
@@ -16,13 +17,16 @@ class HomeContainer extends Component<Props> {
       wallets,
     } = this.props;
     if (!settings.walletInit) {
-      return <HomeBlockchainsContainer />;
+      return <HomeInitializeContainer />;
     }
-    if (!settings.chainId) {
-      return <HomeBlockchainContainer />;
+    if (!settings.chainId || settings.blockchains.length === 0) {
+      return <GlobalBlockchainManage />;
     }
     if (!wallets || wallets.length === 0) {
       return <HomeAccountsContainer />;
+    }
+    if (settings.walletMode === 'cold') {
+      return <ColdWalletContainer />
     }
     return <OverviewContainer />;
   }

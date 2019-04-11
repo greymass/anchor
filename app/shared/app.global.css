@@ -4,8 +4,13 @@ body {
   background: #f1f0ee;
 }
 
-.ui.top.aligned.page.modals {
+/* .ui.top.aligned.page.modals {
   padding-top: 3em;
+} */
+
+.modals.dimmer .ui.scrolling.modal,
+.modals.dimmer[class*="top aligned"] .modal {
+  margin: 12vh auto;
 }
 
 .prompt-header .ui.steps .step {
@@ -44,11 +49,6 @@ body {
 
 .ui.top.fixed.menu.nav-topbar {
   z-index: 1001;
-}
-
-.ui.labeled.icon.menu.nav-sidebar,
-.ui.labeled.icon.menu.nav-sidebar .item{
-  z-index: 2001;
 }
 
 .ui.labeled.icon.menu.nav-sidebar {
