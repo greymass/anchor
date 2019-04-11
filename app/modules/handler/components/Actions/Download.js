@@ -11,9 +11,16 @@ class PromptActionDownload extends Component<Props> {
     const { contract, tx } = prompt;
     const data = JSON.stringify({
       contract,
-      transaction: tx
+      transaction: {
+        transaction_id: '',
+        broadcast: false,
+        transaction: {
+          compression: 'none',
+          signatures: [],
+          transaction: tx
+        }
+      }
     }, null, 2);
-    console.log("trigger")
     ipcRenderer.send('saveFile', settings.lastFilePath, data);
   }
   render() {
