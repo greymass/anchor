@@ -35,7 +35,7 @@ class WelcomeImportContainer extends Component<Props> {
       if (account && authorization && chainId) {
         actions.useWallet(chainId, account, authorization);
       }
-      history.push('/voter');
+      history.push('/');
     }
   }
   handleImport = (event, data) => {
