@@ -95,7 +95,11 @@ class ToolsHome extends Component<Props> {
     e.preventDefault();
   };
 
-  onReset = () => this.props.actions.clearSettingsCache();
+  onReset = () => {
+    const { actions, history } = this.props;
+    actions.clearSettingsCache();
+    actions.changeModule('');
+  }
 
   render() {
     const { t } = this.props;

@@ -10,7 +10,6 @@ import {
 import { Button, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-import ScrollToTop from '../../../../shared/components/Global/ScrollToTop';
 import GlobalBlockchainManage from '../../../../shared/containers/Global/Blockchain/Manage';
 
 import ToolsAirgrabs from './Tools/Airgrabs';
@@ -46,34 +45,32 @@ class ToolsContainer extends Component<Props> {
     const { navigation } = this.props;
     return (
       <HashRouter>
-        <ScrollToTop>
-          <Switch>
-            <Route exact path="/tools" component={ToolsHome} />
-            <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
-            <Route path="/tools/api_ping" component={ToolsApiPing} />
-            <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />
-            <Route path="/tools/bid_name" component={ToolsBidName} />
-            <Route path="/tools/blockchains" component={GlobalBlockchainManage} />
-            <Route path="/tools/chain_state" component={ToolsChainState} />
-            <Route path="/tools/contacts" component={ToolsContacts} />
-            <Route path="/tools/create_account" component={ToolsCreateAccount} />
-            <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
-            <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
-            <Route path="/tools/delegations" component={ToolsDelegations} />
-            <Route path="/tools/global_state" component={ToolsGlobalState} />
-            <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
-            <Route path="/tools/key_validator" component={ToolsKeyValidator} />
-            <Route path="/tools/ledger" component={ToolsLedger} />
-            <Route path="/tools/permissions" component={ToolsPermissions} />
-            <Route path="/tools/proxy" component={ToolsProxy} />
-            <Route path="/tools/recommendations" component={ToolsRecommendations} />
-            <Route path="/tools/reset_application" component={ToolsResetApplication} />
-            <Route path="/tools/smart_contracts" component={ToolsSmartContracts} />
-            <Route path="/tools/wallet_state" component={ToolsWalletState} />
-            <Route path="/tools/wallets" component={ToolsWallets} />
-            <Route path="/tools/v1" component={Tools} />
-          </Switch>
-        </ScrollToTop>
+        <Switch>
+          <Route exact path="/tools" component={ToolsHome} />
+          <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
+          <Route path="/tools/api_ping" component={ToolsApiPing} />
+          <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />
+          <Route path="/tools/bid_name" component={ToolsBidName} />
+          <Route path="/tools/blockchains" component={GlobalBlockchainManage} />
+          <Route path="/tools/chain_state" component={ToolsChainState} />
+          <Route path="/tools/contacts" component={ToolsContacts} />
+          <Route path="/tools/create_account" component={ToolsCreateAccount} />
+          <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
+          <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
+          <Route path="/tools/delegations" component={ToolsDelegations} />
+          <Route path="/tools/global_state" component={ToolsGlobalState} />
+          <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
+          <Route path="/tools/key_validator" component={ToolsKeyValidator} />
+          <Route path="/tools/ledger" component={ToolsLedger} />
+          <Route path="/tools/permissions" component={ToolsPermissions} />
+          <Route path="/tools/proxy" component={ToolsProxy} />
+          <Route path="/tools/recommendations" component={ToolsRecommendations} />
+          <Route path="/tools/reset_application" component={ToolsResetApplication} />
+          <Route path="/tools/smart_contracts" component={ToolsSmartContracts} />
+          <Route path="/tools/wallet_state" component={ToolsWalletState} />
+          <Route path="/tools/wallets" component={ToolsWallets} />
+          <Route path="/tools/v1" component={Tools} />
+        </Switch>
       </HashRouter>
     );
   }

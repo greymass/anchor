@@ -2,7 +2,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {
+  HashRouter,
+  Route,
+  Switch,
+  withRouter
+} from 'react-router-dom';
 
 import ColdWalletContainer from './ColdWallet';
 import GlobalBlockchainManage from '.../../../shared/containers/Global/Blockchain/Manage';
@@ -11,24 +16,43 @@ import HomeInitializeContainer from './Home/Initialize';
 import OverviewContainer from './Overview';
 
 class HomeContainer extends Component<Props> {
-  render() {
+  constructor(props) {
+    super(props);
+    this.checkForRedirect();
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.checkForRedirect();
+    }
+  }
+  checkForRedirect = () => {
     const {
+      history,
       settings,
       wallets,
     } = this.props;
     if (!settings.walletInit) {
-      return <HomeInitializeContainer />;
+      history.push('/home/init');
+    } else if (!settings.chainId || settings.blockchains.length === 0) {
+      history.push('/home/blockchains');
+    } else if (!wallets || wallets.length === 0) {
+      history.push('/home/accounts');
+    } else if (settings.walletMode === 'cold') {
+      history.push('/home/coldwallet');
     }
-    if (!settings.chainId || settings.blockchains.length === 0) {
-      return <GlobalBlockchainManage />;
-    }
-    if (!wallets || wallets.length === 0) {
-      return <HomeAccountsContainer />;
-    }
-    if (settings.walletMode === 'cold') {
-      return <ColdWalletContainer />
-    }
-    return <OverviewContainer />;
+  }
+  render() {
+    return (
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={OverviewContainer} />
+          <Route path="/home/init" component={HomeInitializeContainer} />
+          <Route path="/home/blockchains" component={GlobalBlockchainManage} />
+          <Route path="/home/accounts" component={HomeAccountsContainer} />
+          <Route path="/home/coldwallet" component={ColdWalletContainer} />
+        </Switch>
+      </HashRouter>
+    );
   }
 }
 
