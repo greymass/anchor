@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 import { configureStore, history } from '../../../shared/store/renderer/configureStore';
 import i18n from '../../../shared/i18n';
+import ScrollToTop from '../../../shared/components/Global/ScrollToTop';
 
 import '../../../shared/app.global.css';
 
@@ -18,7 +19,9 @@ export default class Root extends Component<Props> {
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
-            <Routes />
+            <ScrollToTop>
+              <Routes />
+            </ScrollToTop>
           </ConnectedRouter>
         </Provider>
       </I18nextProvider>
