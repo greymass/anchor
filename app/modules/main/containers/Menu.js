@@ -176,7 +176,7 @@ class MenuContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     actions: state.actions,
-    locked: state.locked,
+    locked: (!state.keys.key && state.auths.length === 0),
     navigation: state.navigation,
     prompt: state.prompt,
     settings: state.settings,
