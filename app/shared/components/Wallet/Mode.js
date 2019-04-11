@@ -22,6 +22,7 @@ class WalletMode extends Component<Props> {
                   color="blue"
                   name="snowflake"
                   size="large"
+                  style={{ margin: 0 }}
                 />
               </Menu.Item>
             )}
@@ -40,6 +41,7 @@ class WalletMode extends Component<Props> {
                   color="orange"
                   name="eye"
                   size="large"
+                  style={{ margin: 0 }}
                 />
               </Menu.Item>
             )}

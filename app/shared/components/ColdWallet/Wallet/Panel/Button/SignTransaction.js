@@ -19,7 +19,6 @@ class ColdWalletPanelButtonSignTransaction extends Component<Props> {
       <Button
         color="blue"
         content={t('collwallet_load_transaction')}
-        fluid
         icon="upload"
         onClick={this.handleClick}
       />

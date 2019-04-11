@@ -20,7 +20,12 @@ export default function transaction(state = initialState, action) {
       return Object.assign({}, state, {
         contract: action.payload.contract,
         data: action.payload.transaction,
-        signed: (action.payload.transaction.transaction.signatures.length > 0)
+        signed: !!(
+          action.payload.transaction.transaction
+          && action.payload.transaction
+          && action.payload.transaction.transaction.signatures
+          && action.payload.transaction.transaction.signatures.length > 0
+        )
       });
     }
     case types.SET_TRANSACTION_FAILURE: {

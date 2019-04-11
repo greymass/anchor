@@ -28,42 +28,9 @@ export default class ColdWalletPanelUnlocked extends Component<Props> {
         {
           (t) => (
             <div>
-              {(!keys.temporary)
-                ? (
-                  <WalletPanelButtonLock
-                    lockWallet={actions.lockWallet}
-                  />
-                )
-                : ''
-              }
-              <Segment vertical>
-
-                <Accordion
-                  as={Menu}
-                  fluid
-                  vertical
-                >
-                  <Menu.Item>
-                    <Accordion.Title
-                      active={activeIndex === 0}
-                      content={t('wallet_actions')}
-                      index={0}
-                      onClick={this.handleClick}
-                    />
-                    <Accordion.Content
-                      active={activeIndex === 0}
-                    >
-                      <Segment.Group>
-                        <Segment basic>
-                          <ColdWalletPanelButtonSignTransaction
-                            actions={actions}
-                          />
-                        </Segment>
-                      </Segment.Group>
-                    </Accordion.Content>
-                  </Menu.Item>
-                </Accordion>
-              </Segment>
+              <ColdWalletPanelButtonSignTransaction
+                actions={actions}
+              />
             </div>
           )
         }

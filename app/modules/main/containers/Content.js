@@ -19,7 +19,7 @@ import { Button, Container, Dimmer, Header, Image, Loader, Segment } from 'seman
 
 class ContentContainer extends Component<Props> {
   render = () => (
-    <React.Fragment>
+    <Container fluid>
       <Dimmer
         active={this.props.validate.NODE === 'PENDING'}
         inverted
@@ -47,7 +47,7 @@ class ContentContainer extends Component<Props> {
           <Route path="/version" component={VersionContainer} />
         </Switch>
       </HashRouter>
-    </React.Fragment>
+    </Container>
   );
 }
 

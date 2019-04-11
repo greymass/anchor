@@ -51,47 +51,76 @@ class WalletContainer extends Component<Props> {
         <span>Loading...</span>
       )
     }
+    // <React.Fragment>
+    //   <div
+    //     style={{
+    //       zIndex: 1002,
+    //       position: 'fixed',
+    //       top: 0,
+    //       left: 0,
+    //       WebkitBoxFlex: 0,
+    //     }}
+    //   >
+    //   </div>
+    //   <div
+    //     id="test-test"
+    //     style={{
+    //       flex: '1 1 auto',
+    //       WebkitBoxFlex: 1,
+    //       paddingTop: '61px',
+    //       paddingLeft: '107px'
+    //     }}
+    //   >
+        <Segment basic>
+        </Segment>
+    //     <MenuContainer />
+    //   </div>
+    //   <Image
+    //     fluid
+    //     src={background}
+    //     style={{
+    //       bottom: 0,
+    //       // top: 50,
+    //       // transform: 'rotate(0.5turn)',
+    //       right: '-1em',
+    //       opacity: 0.5,
+    //       position: 'fixed',
+    //       zIndex: -1
+    //     }}
+    //   />
+    // </React.Fragment>
     return (
-      <React.Fragment>
-        <div
-          style={{
-            zIndex: 1002,
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            WebkitBoxFlex: 0,
-          }}
-        >
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        // alignContent: 'stretch',
+        alignItems: 'flex-start',
+      }}>
+        <div style={{
+          flex: '0 1 auto',
+          position: 'sticky',
+          top: 0,
+        }}>
           <SidebarContainer />
         </div>
-        <div
-          id="test-test"
-          style={{
-            flex: '1 1 auto',
-            WebkitBoxFlex: 1,
-            paddingTop: '61px',
-            paddingLeft: '107px'
-          }}
-        >
-          <Segment basic>
+        <div style={{
+          flex: '1 1 auto',
+        }}>
+          <div style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 999
+          }}>
+            <MenuContainer />
+          </div>
+          <div style={{
+            padding: '1.25em'
+          }}>
             <ContentContainer />
-          </Segment>
-          <MenuContainer />
+          </div>
         </div>
-        <Image
-          fluid
-          src={background}
-          style={{
-            bottom: 0,
-            // top: 50,
-            // transform: 'rotate(0.5turn)',
-            right: '-1em',
-            opacity: 0.5,
-            position: 'fixed',
-            zIndex: -1
-          }}
-        />
-      </React.Fragment>
+      </div>
+
     );
   }
 }

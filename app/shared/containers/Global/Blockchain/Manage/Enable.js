@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find, sortBy } from 'lodash';
-import { Form, Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Segment, Table } from 'semantic-ui-react';
 
-import GlobalFormFieldUrl from '../../../components/Global/Form/Field/Url';
-import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
-import * as BlockchainsActions from '../../../actions/blockchains';
-import { setSetting } from '../../../actions/settings';
+import GlobalFormFieldUrl from '../../../../components/Global/Form/Field/Url';
+import GlobalFragmentChainLogo from '../../../../components/Global/Fragment/ChainLogo';
+import * as BlockchainsActions from '../../../../actions/blockchains';
+import { setSetting } from '../../../../actions/settings';
 
-class GlobalBlockchainCheckboxes extends Component<Props> {
+class GlobalBlockchainEnable extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,67 +51,57 @@ class GlobalBlockchainCheckboxes extends Component<Props> {
       }
     });
   }
+  complete = () => {
+    const {
+      actions,
+      onComplete,
+      settings,
+    } = this.props;
+    if (!settings.walletInit) {
+      actions.setSetting('walletInit', true);
+    }
+    if (onComplete) {
+      onComplete();
+    }
+  }
   render() {
     const {
       blockchains,
-      disabled,
-      selected,
       settings,
-      showName,
     } = this.props;
     const {
       enabledChains,
       invalidEndpoints,
     } = this.state;
-    const { chainId } = settings;
     if (!blockchains) return false;
-    let blockchain = find(blockchains, { chainId });
-    if (!blockchain) {
-      blockchain = {};
-    }
-    if (selected) {
-      blockchain = find(blockchains, { chainId: selected });
-    }
     const { displayTestNetworks } = settings;
     const filtered = blockchains.filter(b => (((displayTestNetworks && b.testnet) || !b.testnet)));
     const sorted = sortBy(filtered, ['testnet', 'name'], ['asc', 'asc']);
-    let trigger = (
-      <span>
-        <GlobalFragmentChainLogo
-          chainId={blockchain.chainId}
-          noPopup
-          style={{
-            float: 'left',
-            height: '2em',
-            width: '2em',
-          }}
-        />
-        {(showName && blockchain && blockchain.name)
-          ? (
-            <Header
-              content={blockchain.name}
-              subheader={`${blockchain.chainId.substr(0, 6)}...${blockchain.chainId.substr(-6)}`}
-              size="small"
-              style={{ margin: 0 }}
-            />
-          )
-          : false
-        }
-      </span>
-    );
-    if (!blockchain.chainId) {
-      trigger = false;
-    }
-    if (disabled) {
-      return (
-        <Segment
-          content={trigger}
-          style={{ margin: 0 }}
-        />
-      );
-    }
+    const chainCount = enabledChains.length;
     return (
       <Form>
+        <Header
+          content="Which blockchains do you plan on using?"
+          subheader="You can add/remove blockchains at any point in the future."
+          style={{ marginTop: 0 }}
+        />
+        <Button
+          content={(chainCount !== 0)
+            ? `Enable ${chainCount} blockchains`
+            : 'Choose at least one blockchain'
+          }
+          disabled={chainCount === 0}
+          icon={chainCount === 0 ? 'warning sign' : 'checkmark'}
+          onClick={this.complete}
+          primary={(chainCount !== 0)}
+        />
+        <Button
+          chainId="new"
+          content="Add Blockchain"
+          floated="right"
+          icon="circle plus"
+          onClick={this.props.onEdit}
+        />
         <Table verticalAlign="middle" unstackable>
           <Table.Header>
             <Table.Row>
@@ -198,4 +188,4 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   translate('global'),
   connect(mapStateToProps, mapDispatchToProps)
-)(GlobalBlockchainCheckboxes);
+)(GlobalBlockchainEnable);

@@ -53,7 +53,12 @@ function updateBlockchainSetting(chainId, key, value) {
 }
 
 function importBlockchainFromBackup(blockchain) {
-  console.log('import', blockchain);
+  return (dispatch: () => void) => {
+    return dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_UPDATE,
+      payload: blockchain
+    });
+  };
 }
 
 export default {

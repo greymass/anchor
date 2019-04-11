@@ -4,14 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Dropdown, Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Dropdown, Grid, Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldAccount from '../../../../components/Global/Form/Field/Account';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
+import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 
 import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
+import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
 
 class GlobalModalAccountImportCold extends Component<Props> {
@@ -36,7 +38,9 @@ class GlobalModalAccountImportCold extends Component<Props> {
       settings,
     } = this.props;
     actions.importWallet(settings.chainId, account, authorization, key, password, 'cold');
-    this.props.onClose();
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   }
   onChange = (e, { name, valid, value }) => {
     this.setState({
@@ -52,6 +56,7 @@ class GlobalModalAccountImportCold extends Component<Props> {
   render() {
     const {
       accounts,
+      actions,
       onClose,
       settings,
       system,
@@ -73,42 +78,94 @@ class GlobalModalAccountImportCold extends Component<Props> {
         value: authority
       }
     ));
+    if (!settings.walletHash) {
+      return (
+        <Tab.Pane>
+          <Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column>
+                <Segment color="purple">
+                  <Header icon>
+                    <Icon name="lock" />
+                    <Header.Content>
+                      {t('global_account_import_private_requires_hash_header_r2')}
+                    </Header.Content>
+                    <Header.Subheader>
+                      {t('global_account_import_private_requires_hash_subheader_r2')}
+                    </Header.Subheader>
+                  </Header>
+                </Segment>
+              </Grid.Column>
+              <Grid.Column>
+                <p>
+                  {t('global_account_import_private_requires_hash_description')}
+                </p>
+                <WalletPanelFormHash
+                  actions={actions}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Tab.Pane>
+      );
+    }
     return (
       <Tab.Pane>
-        <Segment basic>
-          <Segment attached="top">
-            <GlobalFormFieldAccount
-              autoFocus
-              fluid
-              label={t('global_account_import_watch_account')}
-              name="account"
-              placeholder={t('welcome:welcome_account_compare_placeholder')}
-              onChange={this.onChange}
-              ref={(input) => { this.input = input; }}
-              value={account}
-            />
-          </Segment>
-          <Segment attached>
-            <GlobalFormFieldKeyPrivate
-              label={t('global_account_import_private_key')}
-              name="key"
-              placeholder={t('welcome:welcome_key_compare_placeholder')}
-              onChange={this.onChange}
-              value={key}
-            />
-          </Segment>
-          <Segment attached="bottom">
-            <p>{t('tools:tools_form_permissions_auth_permission')}</p>
-            <Dropdown
-              defaultValue={authorization}
-              fluid
-              onChange={this.setAuthorization}
-              options={options}
-              selection
-            />
-          </Segment>
-        </Segment>
-        <Divider />
+        <Grid stackable>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <Grid.Column>
+                <Segment color="blue">
+                  <Header icon>
+                    <Icon color="blue" name="snowflake" />
+                    <Header.Content>
+                      {t('global_account_import_private_cold_wallet_header')}
+                    </Header.Content>
+                    <Header.Subheader>
+                      {t('global_account_import_private_cold_wallet_subheader')}
+                    </Header.Subheader>
+                  </Header>
+                  <p>
+                    {t('global_account_import_private_cold_wallet_description')}
+                  </p>
+                </Segment>
+              </Grid.Column>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment attached="top">
+                <GlobalFormFieldAccount
+                  autoFocus
+                  fluid
+                  label={t('global_account_import_watch_account')}
+                  name="account"
+                  placeholder={t('welcome:welcome_account_compare_placeholder')}
+                  onChange={this.onChange}
+                  ref={(input) => { this.input = input; }}
+                  value={account}
+                />
+              </Segment>
+              <Segment attached>
+                <GlobalFormFieldKeyPrivate
+                  label={t('global_account_import_private_key')}
+                  name="key"
+                  placeholder={t('welcome:welcome_key_compare_placeholder')}
+                  onChange={this.onChange}
+                  value={key}
+                />
+              </Segment>
+              <Segment attached="bottom">
+                <p>{t('tools:tools_form_permissions_auth_permission')}</p>
+                <Dropdown
+                  defaultValue={authorization}
+                  fluid
+                  onChange={this.setAuthorization}
+                  options={options}
+                  selection
+                />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <Segment basic clearing>
           <Button
             floated="left"
@@ -151,7 +208,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...SettingsActions,
-      ...WalletsActions
+      ...WalletActions,
+      ...WalletsActions,
     }, dispatch)
   };
 }
