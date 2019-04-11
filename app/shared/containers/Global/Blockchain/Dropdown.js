@@ -121,15 +121,21 @@ class GlobalBlockchainDropdown extends Component<Props> {
               );
             })
           }
-          <Dropdown.Header>
-            <Button
-              basic
-              content="Manage Blockchains"
-              fluid
-              icon="cubes"
-              size="small"
-            />
-          </Dropdown.Header>
+          {(this.props.onNavigationChange)
+            ? (
+              <Dropdown.Header>
+                <Button
+                  basic
+                  content="Manage Blockchains"
+                  fluid
+                  icon="cubes"
+                  onClick={() => this.props.onNavigationChange('tools/blockchains')}
+                  size="small"
+                />
+              </Dropdown.Header>
+            )
+            : false
+          }
         </Dropdown.Menu>
       </Dropdown>
     );

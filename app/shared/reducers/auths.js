@@ -5,6 +5,7 @@ const initialState = [];
 
 export default function auths(state = initialState, action) {
   switch (action.type) {
+    case types.RESET_ALL_STATES:
     case types.WALLET_LOCK: {
       return [...initialState];
     }

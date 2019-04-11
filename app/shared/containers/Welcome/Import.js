@@ -9,6 +9,7 @@ import { translate } from 'react-i18next';
 import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semantic-ui-react';
 
 import * as AccountsActions from '../../actions/accounts';
+import * as BlockchainsActions from '../../actions/blockchains';
 import * as SettingsActions from '../../actions/settings';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
@@ -50,21 +51,25 @@ class WelcomeImportContainer extends Component<Props> {
       // Restore all defined networks
       networks.forEach((network) => {
         if (network && network.schema === 'anchor.v1.network') {
-          // actions.importBlockchainFromBackup(network.data);
+          actions.importBlockchainFromBackup(network.data);
         } else {
           // unable to import settings
           console.log(network);
         }
       });
+      const chainIds = [];
       // Restore all wallets
       wallets.forEach((wallet) => {
         if (wallet && wallet.schema === 'anchor.v1.wallet') {
+          chainIds.push(wallet.data.chainId);
           actions.importWalletFromBackup(wallet.data);
         } else {
           // unable to import settings
           console.log(wallet);
         }
       });
+      // Enable all of the blockchains that wallets were imported for
+      actions.setSetting('blockchains', chainIds);
       // Restore settings
       if (settings && settings.schema === 'anchor.v1.settings') {
         const newSettings = update009(settings.data, defaultChainId);
@@ -99,7 +104,6 @@ class WelcomeImportContainer extends Component<Props> {
         icon="save"
         onClick={this.import}
         size="small"
-        style={{ marginTop: '1em' }}
       />
     );
   }
@@ -117,6 +121,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...BlockchainsActions,
       ...SettingsActions,
       ...ValidateActions,
       ...WalletActions,
