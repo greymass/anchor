@@ -42,7 +42,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     this.setState({ confirming: false }, () => {
       this.props.actions.transfer(from, to, quantity, memo, asset);
     });
-  }
+  };
 
   onSubmit = () => {
     this.setState({
@@ -58,7 +58,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
         waiting: false
       });
     }, 3000);
-  }
+  };
 
   tick = () => this.setState({ waiting: true });
 
@@ -69,18 +69,17 @@ class WalletPanelFormTransferSend extends Component<Props> {
     });
     e.preventDefault();
     return false;
-  }
+  };
 
   getContractHash = debounce((value) => {
     const { actions } = this.props;
 
     actions.getContractHash(value);
-  }, 400)
+  }, 400);
 
   onChange = (e, { name, value, valid }) => {
     if (name === 'to') {
       const {
-        actions,
         settings
       } = this.props;
       const {
@@ -115,7 +114,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
         this.onError(error);
       }
     });
-  }
+  };
 
   onError = (error) => {
     let formError;
@@ -128,13 +127,13 @@ class WalletPanelFormTransferSend extends Component<Props> {
       formError,
       submitDisabled: true
     });
-  }
+  };
 
   onBack = () => {
     this.setState({
       confirming: false
     });
-  }
+  };
 
   errorInForm = () => {
     const {
@@ -147,7 +146,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     const {
       app,
-      connection: { chainId },
       settings
     } = this.props;
 
@@ -176,7 +174,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     }
 
     return false;
-  }
+  };
 
   render() {
     const {
