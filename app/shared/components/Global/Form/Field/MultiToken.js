@@ -6,9 +6,10 @@ import { debounce, find } from 'lodash';
 export default class GlobalFormFieldMultiToken extends Component<Props> {
   constructor(props) {
     super(props);
+    const { connection } = this.props;
     const [quantity, asset] = props.value.split(' ');
     this.state = {
-      asset: asset || 'EOS',
+      asset: asset || connection.chainSymbol || 'EOS',
       quantity
     };
   }
