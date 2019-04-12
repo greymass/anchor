@@ -28,7 +28,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
         : `${parseFloat(0).toFixed(assetPrecision)} ${asset}`;
       this.props.onChange(e, { name: this.props.name, value: parsed });
     });
-  }, 300)
+  }, 300);
   render() {
     const {
       balances,
@@ -42,17 +42,22 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     } = this.props;
     const assets = Object.keys(balances[settings.account]);
     const { customTokens } = settings;
+
     // Determine which tokens are being tracked
-    const trackedTokens = (customTokens) ?
-      (
-        customTokens.map((tokenName) => {
-          const [chainId, contract, symbol] = tokenName.split(':');
-          return { contract, symbol };
-        })
-      ) : [{
+    const trackedTokens = (customTokens || []).map((tokenName) => {
+      const [chainId, contract, symbol] = tokenName.split(':');
+      return { contract, symbol };
+    });
+
+    const trackedTokensIncludeChainSymbol =
+      !trackedTokens.map(token => token.symbol).includes(connection.chainSymbol);
+
+    if (trackedTokensIncludeChainSymbol) {
+      trackedTokens.push({
         contract: 'eosio',
         symbol: connection.chainSymbol || 'EOS'
-      }];
+      });
+    }
 
     const options = [];
     // Iterate assets and build the options list based on tracked tokens
