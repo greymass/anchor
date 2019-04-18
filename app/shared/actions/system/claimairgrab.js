@@ -49,6 +49,17 @@ export function claimairgrab(airgrab) {
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     }).then((tx) => {
+      if (!connection.broadcast) {
+        // If this is not broadcast, it's likely a watch wallet and the contract needs to be retrieved/stored
+        return eos(connection, true).getAbi(airgrab.account).then((contract) => dispatch({
+          payload: { contract, tx },
+          type: types.SYSTEM_CLAIMAIRGRAB_SUCCESS
+        })).catch((err) => dispatch({
+          type: types.SYSTEM_GETABI_FAILURE,
+          payload: { err },
+        }));
+      }
+
       setTimeout(() => {
         dispatch(getTable(airgrab.account, settings.account, 'accounts'));
       }, 500);
