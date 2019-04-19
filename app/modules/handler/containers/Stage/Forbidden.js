@@ -23,12 +23,16 @@ class PromptStageForbidden extends Component<Props> {
               <Header.Content>
                 This Signing Request has a forbidden action.
                 <Header.Subheader>
-                  Anchor prevents certain types of actions from being performed to help protect your account(s).
+                  Anchor prevents certain types of actions from being performed to help
+                  protect your account(s).
                 </Header.Subheader>
               </Header.Content>
             </Header>
             <p>{t(error.message)}</p>
-            <p>If you'd like to learn more about why this signing request has potentially dangerous effects, share the following URL with those you trust for their opinion.</p>
+            <p>
+              If you would like to learn more about why this signing request has potentially
+              dangerous effects, share the following URL with those you trust for their opinion.
+            </p>
             <Form>
               <Form.TextArea>
                 {`https://eosio.to/${uriParts[1]}`}
