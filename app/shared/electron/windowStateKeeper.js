@@ -9,7 +9,7 @@ export function windowStateKeeper(store, scope) {
 
   function setBounds() {
     // Restore from store
-    if (store.getState().settings[`${scopeString}setupData`]) {
+    if (Object.keys(store.getState().settings[`${scopeString}setupData`] || {}).length !== 0) {
       windowState = store.getState().settings[`${scopeString}setupData`];
       return;
     }
