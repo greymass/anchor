@@ -16,6 +16,7 @@ export default class GlobalTransactionViewAction extends Component<Props> {
           <Label.Detail>{action.name}</Label.Detail>
         </Label>
         <ReactJson
+          collapseStringsAfterLength={32}
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"
