@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
+import Either from 'eitherx'
 
 import ContentContainer from './Content';
+import ContentErrorContainer from './ContentError';
 import MenuContainer from './Menu';
 import SidebarContainer from './Sidebar';
 import Notifications from '../../../shared/components/Notifications';
@@ -28,7 +30,10 @@ class WalletContainer extends Component<Props> {
       actions.setWalletMode(settings.walletMode);
     }
   }
-  state = { initialized: true };
+  state = {
+    initialized: true,
+    errorBoundaryKey: 0,
+  };
   componentDidUpdate(prevProps) {
     if (
       !this.state.initialized
@@ -43,56 +48,14 @@ class WalletContainer extends Component<Props> {
       settings,
     } = this.props;
     const {
-      initialized
+      errorBoundaryKey,
+      initialized,
     } = this.state;
-    // if (!settings.walletInit) {
-    //   return (
-    //     <WelcomeContainer />
-    //   )
-    // }
     if (!initialized) {
       return (
         <span>Loading...</span>
       )
     }
-    // <React.Fragment>
-    //   <div
-    //     style={{
-    //       zIndex: 1002,
-    //       position: 'fixed',
-    //       top: 0,
-    //       left: 0,
-    //       WebkitBoxFlex: 0,
-    //     }}
-    //   >
-    //   </div>
-    //   <div
-    //     id="test-test"
-    //     style={{
-    //       flex: '1 1 auto',
-    //       WebkitBoxFlex: 1,
-    //       paddingTop: '61px',
-    //       paddingLeft: '107px'
-    //     }}
-    //   >
-        <Segment basic>
-        </Segment>
-    //     <MenuContainer />
-    //   </div>
-    //   <Image
-    //     fluid
-    //     src={background}
-    //     style={{
-    //       bottom: 0,
-    //       // top: 50,
-    //       // transform: 'rotate(0.5turn)',
-    //       right: '-1em',
-    //       opacity: 0.5,
-    //       position: 'fixed',
-    //       zIndex: -1
-    //     }}
-    //   />
-    // </React.Fragment>
     return (
       <div style={{
         display: 'flex',
@@ -120,7 +83,28 @@ class WalletContainer extends Component<Props> {
           <div style={{
             padding: '1.25em'
           }}>
-            <ContentContainer />
+            <Image
+              fluid
+              src={background}
+              style={{
+                bottom: 0,
+                // top: 62,
+                // transform: 'rotate(0.5turn)',
+                right: '-1em',
+                opacity: 0.5,
+                position: 'fixed',
+                zIndex: -1
+              }}
+            />
+            <Either
+              catchError={({ error }) => (
+                <ContentErrorContainer
+                  error={error}
+                />
+              )}
+              key={errorBoundaryKey}
+              render={() => <ContentContainer />}
+            />
           </div>
         </div>
       </div>
