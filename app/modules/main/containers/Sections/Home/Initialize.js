@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Image, Segment } from 'semantic-ui-react';
+import { Button, Card, Divider, Image, Message, Segment } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
 
 import { setSetting } from '../../../../../shared/actions/settings';
@@ -68,34 +68,38 @@ class HomeInitializeContainer extends Component<Props> {
             }}
           />
         </Segment>
+
         <Segment basic textAlign="center">
           <p>Welcome to Anchor!</p>
           <p>
             <Button
               color="green"
-              content="Setup Blockchain(s)"
+              content="Get Started"
               icon="sign-in"
               onClick={this.initialize}
-              size="large"
+              size="huge"
             />
           </p>
-          <p>
-            Have a backup file from either Anchor or eos-voter?
-          </p>
-          <p>
-            <WelcomeImportContainer />
-          </p>
-          <p>For Advanced Users:</p>
-          <p>
-            <Button
-              basic
-              color="blue"
-              content={t('welcome:welcome_use_coldwallet')}
-              icon="snowflake"
-              onClick={this.useColdWallet}
-              size="small"
-            />
-          </p>
+          <Card centered raised style={{ marginTop: '1em' }}>
+            <Card.Content>
+              <Card.Description style={{ marginBottom: '1em' }}>
+                Do you already have a backup from Anchor or eos-voter?
+              </Card.Description>
+              <WelcomeImportContainer />
+            </Card.Content>
+            <Card.Content extra>
+              For Advanced Users:
+            </Card.Content>
+            <Card.Content>
+              <Button
+                color="purple"
+                content={t('welcome:welcome_use_coldwallet')}
+                icon="snowflake"
+                onClick={this.useColdWallet}
+                size="small"
+              />
+            </Card.Content>
+          </Card>
         </Segment>
       </React.Fragment>
     );
