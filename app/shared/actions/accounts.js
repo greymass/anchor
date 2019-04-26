@@ -341,7 +341,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       endpoints
     } = features;
     if (account && (settings.node || settings.node.length !== 0)) {
-      const selectedTokens = getSelectedTokens(connection, requestedTokens, settings);
+      let selectedTokens = getSelectedTokens(connection, requestedTokens, settings);
       dispatch({
         type: types.GET_ACCOUNT_BALANCE_REQUEST,
         payload: {
@@ -381,7 +381,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
           type: types.GET_ACCOUNT_BALANCE_FAILURE,
           payload: { err, account_name: account }
         }));
-      };
+      }
 
       if (endpoints['/v1/chain/get_currency_balances']) {
         httpQueue.add(() =>

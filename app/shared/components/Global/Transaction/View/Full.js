@@ -20,6 +20,8 @@ class GlobalTransactionViewFull extends Component<Props> {
           </Header.Subheader>
         </Header>
         <ReactJson
+          collapseStringsAfterLength={32}
+
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"
