@@ -1,10 +1,11 @@
 import concat from 'lodash/concat';
+import { Api, JsonRpc } from 'eosjs2';
 
 import * as types from './types';
 import eos from './helpers/eos';
 
 export function getTable(code, scope, table, limit = 1000, index = false, previous = false) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GETTABLE_REQUEST
     });
@@ -27,30 +28,41 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
       return;
     }
 
-    eos(connection).getTableRows(query).then((results) => {
-      const { more } = results;
-      let { rows } = results;
-      // If previous rows were returned
-      if (previous) {
-        // slice last element to avoid dupes
-        previous.pop();
-        // merge arrays
-        rows = concat(previous, rows);
+    const results = await eos(connection).getTableRows(query)
+    const { more } = results;
+    let { rows } = results;
+    // If previous rows were returned
+    if (previous) {
+      // slice last element to avoid dupes
+      previous.pop();
+      // merge arrays
+      rows = concat(previous, rows);
+    }
+    const rpc = new JsonRpc('http://eos.greymass.com');
+    const api = new Api({ rpc });
+    rows = rows.map(async (row) => {
+      const original = row;
+      if (row.packed_transaction) {
+        const data = await api.deserializeTransactionWithActions(row.packed_transaction);
+        original.unpacked_transaction = data;
       }
-      return dispatch({
-        type: types.SYSTEM_GETTABLE_SUCCESS,
-        payload: {
-          code,
-          more,
-          rows,
-          scope,
-          table
-        }
-      });
-    }).catch((err) => dispatch({
-      type: types.SYSTEM_GETTABLE_FAILURE,
-      payload: { err },
-    }));
+      return original;
+    });
+    rows = await Promise.all(rows);
+    return dispatch({
+      type: types.SYSTEM_GETTABLE_SUCCESS,
+      payload: {
+        code,
+        more,
+        rows,
+        scope,
+        table
+      }
+    });
+    // }).catch((err) => dispatch({
+    //   type: types.SYSTEM_GETTABLE_FAILURE,
+    //   payload: { err },
+    // }));
   };
 }
 

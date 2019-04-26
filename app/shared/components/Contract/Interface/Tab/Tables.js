@@ -133,14 +133,30 @@ class ContractInterfaceTabTables extends Component<Props> {
                     <Table.Body>
                       {rows.map((row) => (
                         <Table.Row>
-                          {fields.map((field) => (
-                            <Table.Cell>
-                              {(row[field.name] instanceof Object)
-                                ? JSON.stringify(row[field.name])
-                                : row[field.name]
-                              }
-                            </Table.Cell>
-                          ))}
+                          {fields.map((field) => {
+                            let data = row[field.name]
+                            if (field.name === 'packed_transaction') {
+                              data = row.unpacked_transaction;
+                            }
+                            return (
+                              <Table.Cell verticalAlign="top">
+                                {(data instanceof Object)
+                                  ? (
+                                    <ReactJson
+                                      displayDataTypes={false}
+                                      displayObjectSize={false}
+                                      iconStyle="square"
+                                      name={null}
+                                      src={data}
+                                      style={{ padding: '1em' }}
+                                      theme="harmonic"
+                                    />
+                                  )
+                                  : data
+                                }
+                              </Table.Cell>
+                            )
+                          })}
                         </Table.Row>
                       ))}
                     </Table.Body>
