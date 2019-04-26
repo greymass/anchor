@@ -25,7 +25,7 @@ class GlobalAccountFragmentVoterInfoEffectiveness extends Component<Props> {
     ) {
       return (
         <React.Fragment>
-          ~
+          None
         </React.Fragment>
       );
     }
@@ -35,7 +35,7 @@ class GlobalAccountFragmentVoterInfoEffectiveness extends Component<Props> {
     if (selfWeight <= 0) {
       return (
         <React.Fragment>
-          ~
+          None
         </React.Fragment>
       );
     }
