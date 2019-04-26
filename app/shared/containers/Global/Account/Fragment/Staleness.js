@@ -22,6 +22,7 @@ class GlobalAccountFragmentDataStaleness extends PureComponent<Props> {
           content={<TimeAgo date={`${lastUpdate}z`} />}
           flowing
           header={t('last_updated')}
+          position="right center"
           size="tiny"
           trigger={(
             <Icon
