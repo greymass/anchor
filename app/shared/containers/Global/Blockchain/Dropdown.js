@@ -109,18 +109,8 @@ class GlobalBlockchainDropdown extends Component<Props> {
         <Dropdown.Menu
           style={{
             minWidth: '200px',
-            paddingTop: '1em',
           }}
         >
-          {options.map(option => {
-              const {
-                props,
-              } = option;
-              return (
-                <Dropdown.Item {...props} />
-              );
-            })
-          }
           {(this.props.onNavigationChange)
             ? (
               <Dropdown.Header>
@@ -133,6 +123,23 @@ class GlobalBlockchainDropdown extends Component<Props> {
                   size="small"
                 />
               </Dropdown.Header>
+            )
+            : false
+          }
+          {options.map(option => {
+              const {
+                props,
+              } = option;
+              return (
+                <Dropdown.Item {...props} />
+              );
+            })
+          }
+          {(!options.length)
+            ? (
+              <Dropdown.Item
+                content="No other blockchains configured."
+              />
             )
             : false
           }
