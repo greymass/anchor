@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Grid, Segment } from 'semantic-ui-react';
 
-import OverviewBlockchainContainer from './Overview/Blockchain';
 import OverviewSidebarContainer from './Overview/Sidebar';
 
 import OverviewMenu from '../../components/Overview/Menu';
@@ -16,12 +15,13 @@ class OverviewContainer extends Component<Props> {
     view: 'systemtokens'
   }
   componentDidUpdate(prevProps, prevState) {
-    Object.entries(this.props).forEach(([key, val]) => prevProps[key] !== val && console.log(`OverviewContainer '${key}' changed`));
-    Object.entries(this.state).forEach(([key, val]) => prevState[key] !== val && console.log(`OverviewContainer '${key}' changed`));
+    // Object.entries(this.props).forEach(([key, val]) => prevProps[key] !== val && console.log(`OverviewContainer '${key}' changed`));
+    // Object.entries(this.state).forEach(([key, val]) => prevState[key] !== val && console.log(`OverviewContainer '${key}' changed`));
   }
   viewChange = (e, data) => this.setState({ view: data.name })
   render() {
     const {
+      chainSymbol,
       settings,
       wallets,
     } = this.props;
@@ -42,6 +42,7 @@ class OverviewContainer extends Component<Props> {
                   viewChange={this.viewChange}
                 />
                 <OverviewTable
+                  chainSymbol={chainSymbol}
                   settings={settings}
                   view={view}
                   wallets={wallets}
@@ -60,6 +61,7 @@ class OverviewContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    chainSymbol: state.connection.chainSymbol,
     navigation: state.navigation,
     settings: state.settings,
     wallets: state.wallets
