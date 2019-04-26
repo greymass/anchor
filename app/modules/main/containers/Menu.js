@@ -90,6 +90,7 @@ class MenuContainer extends Component<Props> {
       settings,
       actions,
       locked,
+      pubkeys,
       validate,
       wallet,
     } = this.props;
@@ -122,6 +123,7 @@ class MenuContainer extends Component<Props> {
             actions={actions}
             key="lockstate"
             locked={locked}
+            pubkeys={pubkeys}
             validate={validate}
             wallet={wallet}
           />
@@ -144,9 +146,10 @@ class MenuContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     actions: state.actions,
-    locked: (!state.keys.key && state.auths.length === 0),
+    locked: (!state.keys.key && state.auths.keystore.length === 0),
     navigation: state.navigation,
     prompt: state.prompt,
+    pubkeys: map(state.auths.keystore, 'pubkey'),
     settings: state.settings,
     system: state.system,
     validate: state.validate,
