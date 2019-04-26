@@ -81,28 +81,28 @@ class GlobalModalAccountImportCold extends Component<Props> {
     if (!settings.walletHash) {
       return (
         <Tab.Pane>
-          <Grid>
+          <Grid divided="vertically" padded="vertically" stackable>
             <Grid.Row columns={2}>
               <Grid.Column>
-                <Segment color="purple">
-                  <Header icon>
-                    <Icon name="lock" />
-                    <Header.Content>
-                      {t('global_account_import_private_requires_hash_header_r2')}
-                    </Header.Content>
+                <Header size="large">
+                  <Icon name="lock" />
+                  <Header.Content>
+                    {t('global_account_import_private_requires_hash_header_r2')}
                     <Header.Subheader>
                       {t('global_account_import_private_requires_hash_subheader_r2')}
                     </Header.Subheader>
-                  </Header>
-                </Segment>
+                  </Header.Content>
+                </Header>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column verticalAlign="middle" textAlign="center">
                 <p>
-                  {t('global_account_import_private_requires_hash_description')}
+                  <WalletPanelFormHash
+                    actions={actions}
+                  />
                 </p>
-                <WalletPanelFormHash
-                  actions={actions}
-                />
+                <p>
+                  Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.
+                </p>
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -120,10 +120,10 @@ class GlobalModalAccountImportCold extends Component<Props> {
                     <Icon color="blue" name="snowflake" />
                     <Header.Content>
                       {t('global_account_import_private_cold_wallet_header')}
+                      <Header.Subheader>
+                        {t('global_account_import_private_cold_wallet_subheader')}
+                      </Header.Subheader>
                     </Header.Content>
-                    <Header.Subheader>
-                      {t('global_account_import_private_cold_wallet_subheader')}
-                    </Header.Subheader>
                   </Header>
                   <p>
                     {t('global_account_import_private_cold_wallet_description')}
@@ -215,6 +215,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global'),
+  translate(['global', 'tools', 'welcome']),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportCold);

@@ -16,9 +16,14 @@ import GlobalModalAccountImportLedger from '../../../../../shared/containers/Glo
 import GlobalModalAccountImportWatch from '../../../../../shared/containers/Global/Account/Import/Watch';
 
 class HomeAccountsContainer extends Component<Props> {
+  onClose = () => {
+    const {
+      history,
+    } = this.props;
+    history.push('/');
+  }
   getPanes = () => {
     const {
-      onClose,
       settings,
       t
     } = this.props;
@@ -28,21 +33,21 @@ class HomeAccountsContainer extends Component<Props> {
       menuItem: t('global_modal_account_import_ledger_wallet'),
       render: () => (
         <Tab.Pane>
-          <GlobalModalAccountImportLedger onClose={onClose} />
+          <GlobalModalAccountImportLedger onClose={this.onClose} />
         </Tab.Pane>
       )
     };
     const hotWallet = {
       menuItem: t('global_modal_account_import_hot_wallet'),
-      render: () => <GlobalModalAccountImportHot onClose={onClose} />
+      render: () => <GlobalModalAccountImportHot onClose={this.onClose} />
     };
     const watchWallet = {
       menuItem: t('global_modal_account_import_watch_wallet'),
-      render: () => <GlobalModalAccountImportWatch onClose={onClose} />
+      render: () => <GlobalModalAccountImportWatch onClose={this.onClose} />
     };
     const coldWallet = {
       menuItem: t('global_modal_account_import_cold_wallet'),
-      render: () => <GlobalModalAccountImportCold onClose={onClose} />
+      render: () => <GlobalModalAccountImportCold onClose={this.onClose} />
     };
 
     switch (settings.walletMode) {
@@ -58,9 +63,6 @@ class HomeAccountsContainer extends Component<Props> {
     return panes;
   }
   render() {
-    const {
-      settings,
-    } = this.props;
     const panes = this.getPanes();
     return (
       <React.Fragment>

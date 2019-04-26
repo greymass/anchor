@@ -4,6 +4,7 @@
   "transfer_confirming_title": "Review your Transaction",
   "transfer_destination_account_is_contract":"The destination account has a smart contract enabled, and by sending to this account, your transfer may trigger additional actions which could consume RAM.",
   "transfer_header_available": "available to transfer.",
+  "transfer_header_available_r2": "available",
   "transfer_label_from": "Origin Account",
   "transfer_label_memo": "Transfer Memo",
   "transfer_label_quantity": "Quantity",
