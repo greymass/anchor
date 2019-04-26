@@ -34,7 +34,7 @@ class WalletPanelFormHash extends Component<Props> {
           fluid
           key="password"
           icon="lock"
-          label={t('wallet_panel_password_label')}
+          label={t('wallet_panel_password_label_r2')}
           name="password"
           type="password"
           onChange={this.onChange}
