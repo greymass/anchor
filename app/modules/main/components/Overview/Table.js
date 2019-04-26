@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Header, Table } from 'semantic-ui-react';
 import { map, uniq } from 'lodash';
 
 import ExplorerLink from '../../../../shared/containers/Global/Blockchain/ExplorerLink';
@@ -23,6 +23,7 @@ class OverviewTable extends Component<Props> {
   }
   render() {
     const {
+      chainSymbol,
       settings,
       view,
       wallets,
@@ -77,7 +78,7 @@ class OverviewTable extends Component<Props> {
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
-                          token="EOS"
+                          token={chainSymbol}
                         />
                       </Table.Cell>
                       <Table.Cell textAlign="right">
@@ -85,7 +86,7 @@ class OverviewTable extends Component<Props> {
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
-                          token="EOS"
+                          token={chainSymbol}
                         />
                       </Table.Cell>
                       <Table.Cell textAlign="right">
@@ -93,7 +94,7 @@ class OverviewTable extends Component<Props> {
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
-                          token="EOS"
+                          token={chainSymbol}
                         />
                       </Table.Cell>
                       <Table.Cell textAlign="right">
@@ -101,7 +102,7 @@ class OverviewTable extends Component<Props> {
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
-                          token="EOS"
+                          token={chainSymbol}
                         />
                       </Table.Cell>
                     </React.Fragment>
