@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { find } from 'lodash';
+import { find, findIndex } from 'lodash';
 
 import { Button, Dropdown, Header, Label, Popup, Table } from 'semantic-ui-react';
 
@@ -67,6 +67,7 @@ class ToolsTableRowWallet extends Component<Props> {
   ));
   render() {
     const {
+      auths,
       current,
       blockchains,
       settings,
@@ -223,6 +224,7 @@ class ToolsTableRowWallet extends Component<Props> {
         ));
       }
     }
+    const unlocked = (findIndex(auths.keystore, { pubkey }) >= 0);
     return (
       <Table.Row key={`${account}-${authorization}`}>
         <Table.Cell collapsing>
@@ -251,7 +253,7 @@ class ToolsTableRowWallet extends Component<Props> {
           <GlobalButtonWalletUpgrade
             wallet={wallet}
           />
-          {(mode === 'hot' || mode === 'cold')
+          {(!unlocked && (mode === 'hot' || mode === 'cold'))
             ? (
               <GlobalButtonElevate
                 onSuccess={(password) => this.swapWallet(account, authorization, password)}
@@ -270,7 +272,7 @@ class ToolsTableRowWallet extends Component<Props> {
             )
             : false
           }
-          {(mode === 'watch' || mode === 'ledger')
+          {(mode === 'watch' || mode === 'ledger' || unlocked)
             ? (
               <Button
                 color="green"
