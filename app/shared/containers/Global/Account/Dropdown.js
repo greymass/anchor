@@ -80,11 +80,26 @@ class GlobalAccountDropdown extends Component<Props> {
         trigger={trigger}
       >
         <Dropdown.Menu key="parent">
-          <Dropdown.Menu key="menu" scrolling>
+          <Dropdown.Menu key="menu" scrolling style={{ marginTop: 0 }}>
+            {(this.props.onNavigationChange)
+              ? (
+                <Dropdown.Header>
+                  <Button
+                    basic
+                    content="Manage Wallets"
+                    fluid
+                    icon="users"
+                    onClick={() => this.props.onNavigationChange('tools/wallets')}
+                    size="small"
+                  />
+                </Dropdown.Header>
+              )
+              : false
+            }
             {(options.length > 0)
               ? options.map(w => {
                 const { pubkey } = w;
-                const unlocked = (findIndex(auths, { pubkey }) >= 0);
+                const unlocked = (findIndex(auths.keystore, { pubkey }) >= 0);
                 if (w.mode === 'watch' || w.mode === 'ledger' || unlocked) {
                   return (
                     <Dropdown.Item
@@ -121,15 +136,6 @@ class GlobalAccountDropdown extends Component<Props> {
               })
               : false
             }
-            <Dropdown.Header>
-              <Button
-                basic
-                content="Manage Accounts"
-                fluid
-                icon="users"
-                size="small"
-              />
-            </Dropdown.Header>
           </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
