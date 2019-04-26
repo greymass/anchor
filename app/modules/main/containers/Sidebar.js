@@ -64,12 +64,12 @@ class SidebarContainer extends Component<Props> {
                 name="wallet"
                 color="blue"
               >
-                <Icon name="id card" />
+                <Icon name="money bill" />
                 Wallet
               </Menu.Item>
               <Menu.Item
                 as="a"
-                active={module.startsWith('governance')}
+                active={module && module.startsWith('governance')}
                 onClick={this.onClick}
                 name="governance/producers"
                 color="purple"
@@ -83,7 +83,7 @@ class SidebarContainer extends Component<Props> {
         }
         <Menu.Item
           as="a"
-          active={module === 'tools'}
+          active={module && module.startsWith('tools')}
           onClick={this.onClick}
           name="tools"
           color="violet"
