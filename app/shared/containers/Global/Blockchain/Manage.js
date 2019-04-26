@@ -21,8 +21,8 @@ class GlobalBlockchainManage extends Component<Props> {
     super(props);
     this.state = {
       editing: false,
-      enabling: (props.settings.blockchains.length === 0),
-    }
+      enabling: (!props.settings.blockchains || props.settings.blockchains.length === 0),
+    };
   }
   enableBlockchains = () => this.setState({ enabling: !this.state.enabling })
   editBlockchain = (e, { chainId }) => {
@@ -46,7 +46,9 @@ class GlobalBlockchainManage extends Component<Props> {
       editing,
       enabling,
     } = this.state;
-    const filtered = blockchains.filter(b => (settings.blockchains.includes(b.chainId)));
+    const filtered = (settings.blockchains)
+      ? blockchains.filter(b => (settings.blockchains.includes(b.chainId)))
+      : [];
     const sorted = sortBy(filtered, ['testnet', 'name'], ['asc', 'asc']);
     if (editing) {
       return (
@@ -72,7 +74,7 @@ class GlobalBlockchainManage extends Component<Props> {
     return (
       <Segment style={{ marginTop: 0 }}>
         <Header
-          content="Select which blockchain you'd like to use"
+          content="Select which blockchain you'd like to start using"
           subheader="You can easily switch between blockchains using the dropdown menu in the upper left menu."
           style={{ marginTop: 0 }}
         />
