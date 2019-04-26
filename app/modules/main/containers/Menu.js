@@ -10,52 +10,17 @@ import Blockies from 'react-blockies';
 import * as AccountsActions from '../../../shared/actions/accounts';
 import * as AppActions from '../../../shared/actions/app';
 import * as BlockExplorersActions from '../../../shared/actions/blockexplorers';
-// import * as BuyRamBytesActions from '../../../shared/actions/system/buyrambytes';
-// import * as BuyRamActions from '../../../shared/actions/system/buyram';
 import * as ChainActions from '../../../shared/actions/chain';
-// import * as ConnectionActions from '../../../shared/actions/connection';
-// import * as ContractsActions from '../../../shared/actions/contracts';
-// import * as CreateAccountActions from '../../../shared/actions/createaccount';
 import * as GlobalsActions from '../../../shared/actions/globals';
 import * as NavigationActions from '../actions/navigation';
 import * as SyncActions from '../../../shared/actions/sync';
-// import * as ProposalsActions from '../../../shared/actions/governance/proposals';
-// import * as SellRamActions from '../../../shared/actions/system/sellram';
-// import * as SettingsActions from '../../../shared/actions/settings';
-// import * as StakeActions from '../../../shared/actions/stake';
-// import * as TableActions from '../../../shared/actions/table';
-// import * as TransactionActions from '../../../shared/actions/transaction';
-// import * as TransferActions from '../../../shared/actions/transfer';
-// import * as ValidateActions from '../../../shared/actions/validate';
-// import * as VoteProducerActions from '../../../shared/actions/system/voteproducer';
 import * as WalletActions from '../../../shared/actions/wallet';
-// import * as SystemStateActions from '../../../shared/actions/system/systemstate';
-// import * as BEOSWithdrawActions from '../../../shared/actions/blockchains/beos/withdraw';
 
 import GlobalAccountDropdown from '../../../shared/containers/Global/Account/Dropdown';
 import GlobalBlockchainDropdown from '../../../shared/containers/Global/Blockchain/Dropdown';
 import GlobalHardwareLedgerStatus from '../../../shared/containers/Global/Hardware/Ledger/Status';
 import WalletLockState from '../../../shared/components/Wallet/LockState';
 import WalletMode from '../../../shared/components/Wallet/Mode';
-import logo from '../../../renderer/assets/images/greymass.png';
-
-const accounts = [
-  {
-    key: 'developjesta@owner',
-    text: 'developjesta@owner',
-    value: 'developjesta@owner',
-  },
-  {
-    key: 'developjesta@active',
-    text: 'developjesta@active',
-    value: 'developjesta@active',
-  },
-  {
-    key: 'teamgreymass@active',
-    text: 'teamgreymass@active',
-    value: 'teamgreymass@active',
-  },
-];
 
 class MenuContainer extends Component<Props> {
   componentDidMount() {
