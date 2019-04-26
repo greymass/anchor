@@ -16,7 +16,7 @@ class GlobalBlockchainEnable extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      enabledChains: [...props.settings.blockchains],
+      enabledChains: (props.settings.blockchains) ? [...props.settings.blockchains] : [],
       invalidEndpoints: [],
     };
   }
@@ -142,7 +142,7 @@ class GlobalBlockchainEnable extends Component<Props> {
                     }}
                   />
                 </Table.Cell>
-                {enabledChains.includes(b.chainId)
+                {(enabledChains.includes(b.chainId) && settings.walletMode !== 'cold')
                   ? (
                     <Table.Cell>
                       <GlobalFormFieldUrl
