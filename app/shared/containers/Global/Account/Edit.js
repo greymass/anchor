@@ -98,7 +98,6 @@ class GlobalAccountEdit extends Component<Props> {
     const { wif } = this.state;
     return (
       <Modal
-        centered={false}
         closeIcon
         closeOnDimmerClick={false}
         onClose={this.onClose}
