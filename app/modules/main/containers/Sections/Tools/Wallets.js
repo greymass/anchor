@@ -18,6 +18,7 @@ class ToolsWallets extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    auths: state.auths,
     blockchains: state.blockchains,
     connection: state.connection,
     settings: state.settings,
