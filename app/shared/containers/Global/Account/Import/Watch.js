@@ -155,7 +155,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
                       return options.map(({type, pubkey}) => {
                         const isSelected = (selected.indexOf(`${account}@${type}@${pubkey}`) >= 0);
                         return (
-                          <List.Item key={`${account}-${type}-${isSelected}`}>
+                          <List.Item key={`${account}-${type}-${pubkey}-${isSelected}`}>
                             <Checkbox
                               checked={isSelected}
                               label={(

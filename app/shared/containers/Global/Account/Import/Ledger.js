@@ -251,9 +251,9 @@ class GlobalModalAccountImportLedger extends Component<Props> {
           ? (
             <Segment basic>
               <Message
-                content={t('global_account_import_ledger_not_connected_content')}
+                content={t('global_account_import_ledger_not_connected_content_r2')}
                 icon="usb"
-                header={t('global_account_import_ledger_not_connected_header')}
+                header={t('global_account_import_ledger_not_connected_header_r2')}
                 warning
               />
             </Segment>

@@ -62,30 +62,37 @@ class Tools extends Component<Props> {
                 selection
               />
             </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_skip_link_modal')}</label>
-              <GlobalSettingsSkipLinkModal
-                actions={actions}
-                defaultValue={settings.skipLinkModal}
-                selection
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_resource_display_format')}</label>
-              <GlobalSettingsResourceDisplayFormat
-                actions={actions}
-                defaultValue={settings.displayResourcesAvailable || false}
-                selection
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_transfer_spam_filter')}</label>
-              <GlobalSettingsFilterSpamTransfers
-                actions={actions}
-                defaultValue={settings.filterSpamTransfersUnder}
-                selection
-              />
-            </Form.Field>
+            {(settings.walletMode !== 'cold')
+              ? (
+                <React.Fragment>
+                  <Form.Field>
+                    <label>{t('tools_change_skip_link_modal')}</label>
+                    <GlobalSettingsSkipLinkModal
+                      actions={actions}
+                      defaultValue={settings.skipLinkModal}
+                      selection
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{t('tools_change_resource_display_format')}</label>
+                    <GlobalSettingsResourceDisplayFormat
+                      actions={actions}
+                      defaultValue={settings.displayResourcesAvailable || false}
+                      selection
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{t('tools_change_transfer_spam_filter')}</label>
+                    <GlobalSettingsFilterSpamTransfers
+                      actions={actions}
+                      defaultValue={settings.filterSpamTransfersUnder}
+                      selection
+                    />
+                  </Form.Field>
+                </React.Fragment>
+              )
+              : false
+            }
             <Form.Field>
               <label>{t('tools_change_display_test_networks')}</label>
               <GlobalSettingsShowTestnets

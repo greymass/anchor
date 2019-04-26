@@ -48,6 +48,7 @@ class ToolsWallets extends Component<Props> {
   render() {
     const {
       actions,
+      auths,
       blockchains,
       connection,
       settings,
@@ -65,7 +66,7 @@ class ToolsWallets extends Component<Props> {
       return false;
     }
     return (
-      <Segment basic>
+      <Segment style={{ marginTop: 0 }}>
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -121,6 +122,7 @@ class ToolsWallets extends Component<Props> {
                 .map((w) => (
                   <ToolsTableRowWallet
                     actions={actions}
+                    auths={auths}
                     blockchains={blockchains}
                     current={wallet}
                     duplicateWallet={this.duplicateWallet}
