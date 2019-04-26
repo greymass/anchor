@@ -53,8 +53,58 @@ class OverviewTable extends Component<Props> {
       });
     });
 
+    let header;
+
+    switch (view) {
+      default:
+      case 'systemtokens': {
+        header = (
+          <Header>
+            System Token: {chainSymbol}
+            <Header.Subheader>
+              The native resource token for this blockchain.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+      case 'balances': {
+        header = (
+          <Header>
+            Tracked Tokens
+            <Header.Subheader>
+              The EOSIO token variants created on this blockchain.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+      case 'governance': {
+        header = (
+          <Header>
+            Governance Statistics
+            <Header.Subheader>
+              A breakdown of all loaded accounts and their involvement in governance.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+      case 'resources': {
+        header = (
+          <Header>
+            Resource Usage
+            <Header.Subheader>
+              The resource usage breakdown for all loaded accounts on this blockchain.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+    }
     return (
       <div style={{ overflowX: 'auto' }}>
+        {header}
         <Table celled className="overview" size="small" striped unstackable>
           <OverviewTableHeader
             settings={settings}
