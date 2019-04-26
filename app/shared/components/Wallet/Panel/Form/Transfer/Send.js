@@ -12,23 +12,28 @@ import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
 import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
 
+const initialState = {
+  confirming: false,
+  formError: false,
+  formId: false,
+  memo: '',
+  memoValid: true,
+  quantity: '',
+  quantitySet: false,
+  submitDisabled: true,
+  to: '',
+  toValid: true,
+  waiting: false,
+  waitingStarted: 0
+};
+
 class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = Object.assign({}, initialState, {
       asset: props.connection.chainSymbol || 'EOS',
-      confirming: false,
-      formError: false,
       from: props.settings.account,
-      memo: '',
-      memoValid: true,
-      quantity: '',
-      submitDisabled: true,
-      to: '',
-      toValid: true,
-      waiting: false,
-      waitingStarted: 0
-    };
+    });
   }
 
   onConfirm = () => {
@@ -63,10 +68,12 @@ class WalletPanelFormTransferSend extends Component<Props> {
   tick = () => this.setState({ waiting: true });
 
   onCancel = (e) => {
-    this.setState({
-      confirming: false,
-      waiting: false
-    });
+    this.setState(Object.assign({}, initialState, {
+      formId: new Date()
+    }));
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
     e.preventDefault();
     return false;
   };
@@ -176,12 +183,27 @@ class WalletPanelFormTransferSend extends Component<Props> {
     return false;
   };
 
+  fillMax = () => {
+    console.log(this.props, this.state);
+    const {
+      balances,
+      settings,
+    } = this.props;
+    const {
+      asset
+    } = this.state;
+    const balance = balances[settings.account];
+    this.setState({
+      quantity: `${balance[asset]} ${asset}`,
+      quantitySet: Date.now(),
+    });
+  }
+
   render() {
     const {
       app,
       balances,
       connection,
-      onClose,
       settings,
       system,
       t
@@ -190,9 +212,11 @@ class WalletPanelFormTransferSend extends Component<Props> {
       asset,
       confirming,
       formError,
+      formId,
       from,
       memo,
       quantity,
+      quantitySet,
       submitDisabled,
       to,
       waiting,
@@ -226,6 +250,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const hasWarnings = exchangeWarning || shouldDisplayTransferingToContractMessage;
     return (
       <Form
+        key={formId}
         loading={system.TRANSFER === 'PENDING'}
         onKeyPress={this.onKeyPress}
         onSubmit={this.onSubmit}
@@ -271,7 +296,24 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 balances={balances}
                 connection={connection}
                 icon="x"
-                label={t('transfer_label_token_and_quantity')}
+                label={(
+                  <span>
+                    <span style={{ float: 'right' }}>
+                      <a
+                        onClick={this.fillMax}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {(balance[asset] && balance[asset].toFixed(4)) || '0.0000'}
+                        {' '}
+                        {asset}
+                      </a>
+                      {' '}
+                      {t('transfer_header_available_r2')}
+                    </span>
+                    {t('transfer_label_token_and_quantity')}
+                  </span>
+                )}
+                key={quantitySet}
                 loading={false}
                 maximum={balance[asset]}
                 name="quantity"
@@ -279,13 +321,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 settings={settings}
                 value={quantity}
               />
-              <p>
-                {(balance[asset] && balance[asset].toFixed(4)) || '0.0000'}
-                &nbsp;
-                {asset}
-                &nbsp;
-                {t('transfer_header_available')}
-              </p>
               <GlobalFormFieldMemo
                 icon="x"
                 label={t('transfer_label_memo')}
@@ -301,18 +336,20 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
               { exchangeWarning }
 
-              <Divider />
-              <Button
-                content={t('confirm')}
-                disabled={submitDisabled}
-                floated="right"
-                primary
-              />
-              <Button
-                onClick={onClose}
-              >
-                <Icon name="x" /> {t('cancel')}
-              </Button>
+              <Segment basic>
+                <Button
+                  content={t('confirm')}
+                  disabled={submitDisabled}
+                  floated="right"
+                  primary
+                />
+                <Button
+                  onClick={this.onCancel}
+                >
+                  <Icon name="x" /> {t('reset')}
+                </Button>
+
+              </Segment>
             </Segment>
           )}
       </Form>
