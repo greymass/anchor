@@ -8,6 +8,7 @@ import compose from 'lodash/fp/compose';
 class GlobalAccountFragmentVoterInfoWeightValue extends PureComponent<Props> {
   render() {
     const {
+      lng,
       weight,
     } = this.props;
     if (!weight) {
@@ -21,9 +22,10 @@ class GlobalAccountFragmentVoterInfoWeightValue extends PureComponent<Props> {
     const current = Math.round((new Date()).getTime() / 1000);
     const doubleWeight = parseInt((current - epoch) / (24 * 60 * 60 * 7), 10) * parseFloat(1 / 52);
     const value = (weight) / (2 ** doubleWeight);
+    const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: 4 });
     return (
       <React.Fragment>
-        {(value / 10000).toFixed(4)}
+        {formatter.format((value / 10000).toFixed(4))}
       </React.Fragment>
     );
   }
