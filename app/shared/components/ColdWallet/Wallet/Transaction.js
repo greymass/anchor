@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { get, set } from 'dot-prop-immutable';
+import { get } from 'dot-prop-immutable';
 
 import { Button, Container, Header, Message, Segment } from 'semantic-ui-react';
 
@@ -50,7 +50,7 @@ class ColdWalletTransaction extends Component<Props> {
       data,
       signed
     } = transaction;
-    const { expiration } = data.transaction.transaction;
+    const expiration = get(data, 'transaction.transaction.expiration');
     const { account, authorization } = settings;
     const auth = get(data, 'transaction.transaction.actions.0.authorization.0', {
       actor: 'undefined',
@@ -75,23 +75,24 @@ class ColdWalletTransaction extends Component<Props> {
             signed={signed}
             transaction={transaction}
           />
-          <Container textAlign="center">
-            {(expired)
-              ? (
-                <Message error>
-                  {t('coldwallet_transaction_invalid_expired')}
-                </Message>
-              )
-              : false
-            }
-            {(!matchingAuthorization)
-              ? (
-                <Message error>
-                  {t('coldwallet_transaction_invalid_authorization', auth)}
-                </Message>
-              )
-              : false
-            }
+          {(expired)
+            ? (
+              <Message error>
+                {t('coldwallet_transaction_invalid_expired')}
+              </Message>
+            )
+            : false
+          }
+          {(!matchingAuthorization)
+            ? (
+              <Message error>
+                {t('coldwallet_transaction_invalid_authorization', auth)}
+              </Message>
+            )
+            : false
+          }
+          <Container fluid textAlign="center">
+
             {(!signed && matchingAuthorization)
               ? (
                 <Button
@@ -128,12 +129,12 @@ class ColdWalletTransaction extends Component<Props> {
         </Segment>
         <Segment attached>
           <GlobalTransactionViewActions
-            actions={data.transaction.transaction.actions}
+            actions={get(data, 'transaction.transaction.actions', [])}
           />
         </Segment>
         <Segment attached>
           <GlobalTransactionViewFull
-            transaction={data.transaction.transaction}
+            transaction={get(data, 'transaction.transaction', {})}
           />
         </Segment>
       </React.Fragment>
