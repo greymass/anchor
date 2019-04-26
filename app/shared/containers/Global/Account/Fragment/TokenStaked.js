@@ -4,15 +4,19 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
+import { Icon } from 'semantic-ui-react';
 
 class GlobalAccountFragmentTokenStaked extends PureComponent<Props> {
   render() {
     const {
-      balance
+      balance,
+      lng,
     } = this.props;
+    if (balance === false) return <Icon name="clock" />;
+    const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: 4 });
     return (
       <React.Fragment>
-        {balance.toFixed(4)}
+        {formatter.format(balance.toFixed(4))}
       </React.Fragment>
     );
   }
@@ -21,8 +25,13 @@ class GlobalAccountFragmentTokenStaked extends PureComponent<Props> {
 
 const mapStateToProps = (state, ownProps) => {
   const path = `accounts.${ownProps.account}.self_delegated_bandwidth`;
-  const cpuWeight = String(get(state, `${path}.cpu_weight`, '0.0000 TOKEN'))
-  const netWeight = String(get(state, `${path}.cpu_weight`, '0.0000 TOKEN'))
+  const cpuWeight = String(get(state, `${path}.cpu_weight`, false));
+  const netWeight = String(get(state, `${path}.net_weight`, false));
+  if (cpuWeight === false || netWeight === false) {
+    return ({
+      balance: false
+    });
+  }
   const cpu = parseFloat(cpuWeight.split(' ')[0]);
   const net = parseFloat(netWeight.split(' ')[0]);
   return ({
