@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Grid, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
@@ -99,22 +99,31 @@ class GlobalModalAccountImportHot extends Component<Props> {
       if (!hotWalletExists) {
         return (
           <Tab.Pane>
-            <Segment basic padded>
-              <Header icon textAlign="center">
-                <Icon name="warning sign" />
-                <Header.Content>
-                  {t('global_account_import_private_requires_hash_header')}
-                </Header.Content>
-                <Header.Subheader>
-                  {t('global_account_import_private_requires_hash_subheader')}
-                </Header.Subheader>
-              </Header>
-              <Segment basic>
-                <WalletPanelFormHash
-                  actions={actions}
-                />
-              </Segment>
-            </Segment>
+            <Grid divided="vertically" padded="vertically" stackable>
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  <Header size="large">
+                    <Icon name="lock" />
+                    <Header.Content>
+                      {t('global_account_import_private_requires_hash_header_r2')}
+                      <Header.Subheader>
+                        {t('global_account_import_private_requires_hash_subheader_r2')}
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                </Grid.Column>
+                <Grid.Column verticalAlign="middle" textAlign="center">
+                  <p>
+                    <WalletPanelFormHash
+                      actions={actions}
+                    />
+                  </p>
+                  <p>
+                    Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.
+                  </p>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Tab.Pane>
         );
       }
