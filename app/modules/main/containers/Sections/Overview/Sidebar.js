@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { find } from 'lodash';
 
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
-import GlobalBlockchainContainer from './Blockchain';
 import GlobalButtonAccountImport from '../../../../../shared/components/Global/Button/Account/Import';
 
 const latestUpdate = {
@@ -24,22 +23,26 @@ and more text for formatting testing
 class OverviewSidebarContainer extends Component<Props> {
   componentDidUpdate(prevProps, prevState) {
     Object.entries(this.props).forEach(([key, val]) =>
-      prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+      prevProps[key] !== val && console.log(`Sidebar Prop '${key}' changed`)
     );
   }
   render() {
     const {
+      app,
       settings
     } = this.props;
+    const {
+      constants
+    } = app;
     return (
       <React.Fragment>
         <GlobalButtonAccountImport
           settings={settings}
         />
-        {/* <GlobalSidebarUpdate
+        <GlobalSidebarUpdate
+          constants={constants}
           update={this.props.latestUpdate}
-        /> */}
-        <GlobalBlockchainContainer />
+        />
       </React.Fragment>
     );
   }
@@ -47,6 +50,7 @@ class OverviewSidebarContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    app: state.app,
     blockchain: find(state.blockchains, { chainId: state.settings.chainId }),
     latestUpdate,
     node: state.connection.httpEndpoint,
