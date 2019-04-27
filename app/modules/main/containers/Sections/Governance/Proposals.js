@@ -9,6 +9,7 @@ import ToolsGovernanceProposals from '../../../../../shared/components/Tools/Gov
 import * as ContractsActions from '../../../../../shared/actions/contracts';
 import * as ProposalsActions from '../../../../../shared/actions/governance/proposals';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class GovernenceProposalsContainer extends Component<Props> {
   render() {
@@ -32,6 +33,7 @@ function mapDispatchToProps(dispatch) {
       ...ContractsActions,
       ...ProposalsActions,
       ...SystemStateActions,
+      ...WalletActions
     }, dispatch)
   };
 }
