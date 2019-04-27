@@ -14,6 +14,7 @@ import * as SystemStateActions from '../../../../../shared/actions/system/system
 import * as TransactionActions from '../../../../../shared/actions/transaction';
 
 import EOSContract from '../../../../../shared/utils/EOS/Contract';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsPermissions extends Component<Props> {
   render = () => (
@@ -44,7 +45,8 @@ function mapDispatchToProps(dispatch) {
       ...SettingsActions,
       ...SystemStateActions,
       ...TableActions,
-      ...TransactionActions
+      ...TransactionActions,
+      ...WalletActions
     }, dispatch)
   };
 }
