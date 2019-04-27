@@ -9,7 +9,7 @@ import {
   withRouter
 } from 'react-router-dom';
 
-import { Grid, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import GlobalTransactionHandler from '../../../../../shared/components/Global/Transaction/Handler';
 import WalletPanelFormTransferSend from '../../../../../shared/components/Wallet/Panel/Form/Transfer/Send';
@@ -18,7 +18,7 @@ import { clearSystemState } from '../../../../../shared/actions/system/systemsta
 import { getContractHash } from '../../../../../shared/actions/accounts';
 import { transfer } from '../../../../../shared/actions/transfer';
 
-class WalletHomeContainer extends Component<Props> {
+class WalletStakeContainer extends Component<Props> {
   onClose = () => this.props.actions.clearSystemState()
   render() {
     const {
@@ -30,32 +30,20 @@ class WalletHomeContainer extends Component<Props> {
       settings,
       system,
     } = this.props;
-    console.log(this.props.actions.clearSystemState)
+    const transaction = system.TRANSFER_LAST_TRANSACTION;
     return (
       <React.Fragment>
         <Grid stackable>
           <Grid.Row>
-            <Grid.Column width={12}>
+            <Grid.Column width={10}>
               <Segment color="blue" piled>
-                <GlobalTransactionHandler
-                  actionName="TRANSFER"
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  content={(
-                    <WalletPanelFormTransferSend
-                      actions={actions}
-                      app={app}
-                      balances={balances}
-                      connection={connection}
-                      settings={settings}
-                      system={system}
-                    />
-                  )}
-                  icon="arrow circle up"
-                  onClose={this.onClose}
-                  settings={settings}
-                  system={system}
-                />
+                <Header>
+                  Stake Tokens
+                  <Header.Subheader>
+
+                  </Header.Subheader>
+                </Header>
+
               </Segment>
             </Grid.Column>
           </Grid.Row>
@@ -85,4 +73,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletHomeContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletStakeContainer));
