@@ -68,8 +68,8 @@ const initialState = {
   walletHash: false,
   // Wallet Status
   walletInit: false,
-  // Wallet Mode (hot/cold/watch)
-  walletMode: 'hot',
+  // Wallet Mode (hot/cold/watch/ledger)
+  walletMode: false,
   // Wallet is Temporary
   walletTemp: false,
 };
