@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
+import { isEmpty } from 'lodash';
 
 class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
   render() {
@@ -25,10 +26,12 @@ class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const liquid = get(state, `balances.${ownProps.account}.${ownProps.token}`, false);
+  const loaded = !isEmpty(get(state, `balances.${ownProps.account}`));
+  const defaultValue = loaded ? 0 : false;
+  const liquid = get(state, `balances.${ownProps.account}.${ownProps.token}`, defaultValue);
   const path = `accounts.${ownProps.account}.self_delegated_bandwidth`;
-  const cpuWeight = String(get(state, `${path}.cpu_weight`, false));
-  const netWeight = String(get(state, `${path}.net_weight`, false));
+  const cpuWeight = String(get(state, `${path}.cpu_weight`, defaultValue));
+  const netWeight = String(get(state, `${path}.net_weight`, defaultValue));
   if (liquid === false || cpuWeight === false || netWeight === false) {
     return ({
       balance: false
