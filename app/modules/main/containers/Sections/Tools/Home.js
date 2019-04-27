@@ -112,7 +112,6 @@ const toolSections = {
 
 class ToolsHome extends Component<Props> {
   onClick = (e, data) => {
-    console.log(data)
     this.props.actions.changeModule((data && data.name) || e.target.name);
     e.preventDefault();
   };
