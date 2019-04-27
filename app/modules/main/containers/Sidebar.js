@@ -17,6 +17,7 @@ class SidebarContainer extends Component<Props> {
     const {
       navigation,
       settings,
+      wallets,
     } = this.props;
     const {
       module
@@ -44,7 +45,12 @@ class SidebarContainer extends Component<Props> {
           />
           Home
         </Menu.Item>
-        {(settings.walletMode !== 'cold' && settings.walletInit && settings.chainId)
+        {(
+          settings.walletMode !== 'cold'
+          && settings.walletInit
+          && settings.chainId
+          && wallets > 0
+        )
           ? (
             <React.Fragment>
               <Menu.Item
@@ -114,6 +120,7 @@ function mapStateToProps(state) {
   return {
     navigation: state.navigation,
     settings: state.settings,
+    wallets: state.wallets.length,
   };
 }
 
