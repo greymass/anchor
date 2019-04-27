@@ -18,19 +18,16 @@ class ContentContainer extends Component<Props> {
     const {
       settings,
     } = this.props;
-    console.log(settings);
     return (
       <React.Fragment>
         <NavigationGovernanceContainer />
-        <Segment attached>
-          <HashRouter>
-            <Switch>
-              <Route exact path="/governance/producers" component={GovernanceProducersContainer} />
-              <Route exact path="/governance/proposals" component={GovernanceProposalsContainer} />
-              <Route exact path="/governance/proxies" component={GovernanceProxiesContainer} />
-            </Switch>
-          </HashRouter>
-        </Segment>
+        <HashRouter>
+          <Switch>
+            <Route exact path="/governance/producers" component={GovernanceProducersContainer} />
+            <Route exact path="/governance/proposals" component={GovernanceProposalsContainer} />
+            <Route exact path="/governance/proxies" component={GovernanceProxiesContainer} />
+          </Switch>
+        </HashRouter>
       </React.Fragment>
     );
   }
