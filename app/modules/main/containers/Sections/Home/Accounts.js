@@ -30,7 +30,11 @@ class HomeAccountsContainer extends Component<Props> {
     const panes = [];
 
     const ledgerWallet = {
-      menuItem: t('global_modal_account_import_ledger_wallet'),
+      menuItem: {
+        key: 'ledger',
+        icon: 'usb',
+        content: t('global_modal_account_import_ledger_wallet'),
+      },
       render: () => (
         <Tab.Pane>
           <GlobalModalAccountImportLedger onClose={this.onClose} />
@@ -38,15 +42,27 @@ class HomeAccountsContainer extends Component<Props> {
       )
     };
     const hotWallet = {
-      menuItem: t('global_modal_account_import_hot_wallet'),
+      menuItem: {
+        key: 'hot',
+        icon: 'id card',
+        content: t('global_modal_account_import_hot_wallet'),
+      },
       render: () => <GlobalModalAccountImportHot onClose={this.onClose} />
     };
     const watchWallet = {
-      menuItem: t('global_modal_account_import_watch_wallet'),
+      menuItem: {
+        key: 'watch',
+        icon: 'eye',
+        content: t('global_modal_account_import_watch_wallet'),
+      },
       render: () => <GlobalModalAccountImportWatch onClose={this.onClose} />
     };
     const coldWallet = {
-      menuItem: t('global_modal_account_import_cold_wallet'),
+      menuItem: {
+        key: 'cold',
+        icon: 'snowflake',
+        content: t('global_modal_account_import_cold_wallet'),
+      },
       render: () => <GlobalModalAccountImportCold onClose={this.onClose} />
     };
 
