@@ -14,7 +14,7 @@ class OverviewMenu extends Component<Props> {
       viewChange,
     } = this.props;
     return (
-      <Menu secondary size="small">
+      <Menu pointing secondary size="small">
         <Menu.Item
           active={view === 'systemtokens'}
           content="System Token"
