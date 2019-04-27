@@ -11,6 +11,7 @@ import * as ProducersActions from '../../../../../shared/actions/producers';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as TableActions from '../../../../../shared/actions/table';
 import * as VoteProducerActions from '../../../../../shared/actions/system/voteproducer';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class GovernenceProducersContainer extends Component<Props> {
   render() {
@@ -52,6 +53,7 @@ function mapDispatchToProps(dispatch) {
       ...SystemStateActions,
       ...TableActions,
       ...VoteProducerActions,
+      ...WalletActions
     }, dispatch)
   };
 }

@@ -18,7 +18,7 @@ class GlobalTransactionMessageSignedBroadcast extends Component<Props> {
       broadcastTransaction
     } = actions;
     broadcastTransaction(transaction, actionname);
-  }
+  };
   render() {
     const {
       onClose,
