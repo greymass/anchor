@@ -138,7 +138,7 @@ class BlockProducers extends Component<Props> {
     const isLoaded = !!(display && producers.list.length > 0);
 
     return (
-      <Grid divided>
+      <Grid>
         <Dimmer active={!isLoaded} inverted>
           <Loader size="large" inverted>
             <Header>
