@@ -18,7 +18,7 @@ const toolSections = {
       path: 'tools/airgrabs'
     },
     tools_menu_customtokens: {
-      modes: ['hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/custom_tokens'
     },
     tools_menu_delegations: {
@@ -32,7 +32,7 @@ const toolSections = {
       path: 'tools/recommendations'
     },
     tools_menu_keygenerator: {
-      modes: ['cold', 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/key_generator'
     },
     tools_menu_permissions: {
@@ -40,13 +40,13 @@ const toolSections = {
       path: 'tools/permissions'
     },
     tools_menu_keyvalidator: {
-      modes: ['cold', 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/key_validator'
     }
   },
   tools_menu_hardware_header: {
     tools_menu_ledger: {
-      modes: ['hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/ledger'
     }
   },
@@ -58,7 +58,7 @@ const toolSections = {
   },
   tools_menu_network_utilities_header: {
     'API Performance Analysis': {
-      modes: ['hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/api_ping'
     }
   },
@@ -82,29 +82,29 @@ const toolSections = {
       path: 'tools/contacts'
     },
     tools_menu_contracts: {
-      modes: ['hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/smart_contracts'
     }
   },
   tools_menu_advanced_header: {
     tools_system_log_header: {
-      modes: ['hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/api_traffic_log'
     },
     tools_menu_state_chain: {
-      modes: ['cold', 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/chain_state'
     },
     tools_menu_state_globals: {
-      modes: ['cold', 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/global_state'
     },
     tools_reset_header_header: {
-      modes: ['cold', 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/reset_application'
     },
     tools_menu_state: {
-      modes: ['cold', 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/wallet_state'
     }
   }
@@ -150,7 +150,7 @@ class ToolsHome extends Component<Props> {
           {Object.keys(toolSections).map(sectionGroupTitle => {
             const hasValidItems = filter(
               toolSections[sectionGroupTitle],
-              (item) => item.modes.includes(settings.walletMode)
+              (item) => (item.modes.includes(settings.walletMode) || item.modes.includes('all'))
             );
             if (!hasValidItems.length) return false;
             return (
@@ -161,7 +161,7 @@ class ToolsHome extends Component<Props> {
                   </Header>
                   {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
                     const item = toolSections[sectionGroupTitle][sectionTitle];
-                    const isValidItem = item.modes.includes(settings.walletMode);
+                    const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
                     if (!isValidItem) return false;
                     return (
                       <Segment>
@@ -188,6 +188,7 @@ class ToolsHome extends Component<Props> {
 function mapStateToProps(state) {
   return {
     settings: state.settings,
+    wallets: state.wallets.length,
   };
 }
 
