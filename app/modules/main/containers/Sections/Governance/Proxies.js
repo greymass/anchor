@@ -11,6 +11,7 @@ import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as TableActions from '../../../../../shared/actions/table';
 import * as VoteProducerActions from '../../../../../shared/actions/system/voteproducer';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class GovernenceProxiesContainer extends Component<Props> {
   render() {
@@ -53,7 +54,8 @@ function mapDispatchToProps(dispatch) {
       ...AccountsActions,
       ...SystemStateActions,
       ...TableActions,
-      ...VoteProducerActions
+      ...VoteProducerActions,
+      ...WalletActions
     }, dispatch)
   };
 }
