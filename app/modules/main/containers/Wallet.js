@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Container, Dimmer, Header, Image, Loader, Segment } from 'semantic-ui-react';
+import { Container, Dimmer, Grid, Header, Image, Loader, Segment } from 'semantic-ui-react';
 import Either from 'eitherx'
 
 import ContentContainer from './Content';
@@ -15,6 +15,8 @@ import WelcomeContainer from '../../../shared/containers/Welcome';
 import { setWalletMode } from '../../../shared/actions/wallet';
 import * as ValidateActions from '../../../shared/actions/validate';
 
+import anchorLogo from '../../../renderer/assets/images/anchor-logo.svg';
+import anchorText from '../../../renderer/assets/images/anchor-text.svg';
 import background from '../../../renderer/assets/images/geometric-background.svg';
 
 class WalletContainer extends Component<Props> {
@@ -24,7 +26,9 @@ class WalletContainer extends Component<Props> {
     if (connectionStatus !== 'SUCCESS' && settings.node) {
       const { validateNode } = actions;
       validateNode(settings.node, settings.chainId, false, true);
-      this.state = { initialized: false };
+      this.state = {
+        initialized: true
+      };
     }
     if (settings.walletInit && settings.walletMode) {
       actions.setWalletMode(settings.walletMode);
@@ -53,8 +57,37 @@ class WalletContainer extends Component<Props> {
     } = this.state;
     if (!initialized) {
       return (
-        <span>Loading...</span>
-      )
+        <Grid
+          style={{
+            height: '100%'
+          }}
+          textAlign="center"
+          verticalAlign="middle"
+        >
+          <Grid.Column>
+            <Segment basic style={{ marginTop: 0 }}>
+              <Image
+                alt="Anchor Logo"
+                centered
+                src={anchorLogo}
+                style={{
+                  width: '256px',
+                }}
+              />
+              <Image
+                alt="Anchor"
+                centered
+                src={anchorText}
+                style={{
+                  width: '256px',
+                  marginTop: '1em',
+                }}
+              />
+            </Segment>
+            Loading...
+          </Grid.Column>
+        </Grid>
+      );
     }
     return (
       <div style={{
