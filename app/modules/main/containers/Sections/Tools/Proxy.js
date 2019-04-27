@@ -11,6 +11,7 @@ import * as RegProxyActions from '../../../../../shared/actions/system/regproxy'
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as UnregProxyActions from '../../../../../shared/actions/system/unregproxy';
 import * as RegProxyInfoActions from '../../../../../shared/actions/system/community/regproxyinfo';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 
 class ToolsProxy extends Component<Props> {
@@ -43,7 +44,8 @@ function mapDispatchToProps(dispatch) {
       ...RegProxyInfoActions,
       ...SystemStateActions,
       ...TableActions,
-      ...UnregProxyActions
+      ...UnregProxyActions,
+      ...WalletActions
     }, dispatch)
   };
 }
