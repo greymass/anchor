@@ -69,12 +69,7 @@ class ToolsPing extends Component<Props> {
       const {
         producersInfo
       } = this.props.producers;
-      const endpoints = [
-        {
-          producer: 'blockmatrix1',
-          host: 'https://proxy.eosnode.tools'
-        },
-      ];
+      const endpoints = [];
       Object.keys(producersInfo).forEach((key) => {
         const producer = producersInfo[key];
         if (producer.nodes && producer.nodes.length) {
