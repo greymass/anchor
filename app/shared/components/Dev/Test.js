@@ -50,6 +50,26 @@ class DevTest extends Component<Props> {
     actions.voteproducers([], 'jestaaaaaaaa');
     this.setState({ actionName: 'VOTEPRODUCER' });
   }
+  testRexBuy = () => {
+    const { actions } = this.props;
+    actions.buyrex('1.0000 EOS');
+    this.setState({ actionName: 'BUYREX' });
+  }
+  testRexDeposit = () => {
+    const { actions } = this.props;
+    actions.depositrex('1.0000 EOS');
+    this.setState({ actionName: 'DEPOSITREX' });
+  }
+  testRexSell = () => {
+    const { actions } = this.props;
+    actions.sellrex('1.0000 REX');
+    this.setState({ actionName: 'SELLREX' });
+  }
+  testRexWithdraw = () => {
+    const { actions } = this.props;
+    actions.withdrawrex('1.0000 EOS');
+    this.setState({ actionName: 'WITHDRAWREX' });
+  }
   testExport = () => {
     const { connection, wallet } = this.props;
     // Create an empty model
@@ -100,6 +120,26 @@ class DevTest extends Component<Props> {
             basic
             vertical
           >
+            <Button
+              content="Deposit to REX 1.0000 EOS"
+              onClick={this.testRexDeposit}
+              primary
+            />
+            <Button
+              content="Withdraw from REX 1.0000 EOS"
+              onClick={this.testRexWithdraw}
+              primary
+            />
+            <Button
+              content="Buy REX Token with 1.0000 EOS"
+              onClick={this.testRexBuy}
+              primary
+            />
+            <Button
+              content="Sell REX Token 1.0000 REX"
+              onClick={this.testRexSell}
+              primary
+            />
             <Button
               content="Transfer 0.0001 EOS"
               onClick={this.testTransfer}
