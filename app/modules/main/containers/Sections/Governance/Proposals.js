@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsGovernanceProposals from '../../../../../shared/components/Tools/Governance/Proposals';
 
+import * as ContractsActions from '../../../../../shared/actions/contracts';
 import * as ProposalsActions from '../../../../../shared/actions/governance/proposals';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 
@@ -28,6 +29,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...ContractsActions,
       ...ProposalsActions,
       ...SystemStateActions,
     }, dispatch)
