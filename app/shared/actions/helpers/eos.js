@@ -7,9 +7,12 @@ const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');
 
-const Api = require('./hardware/ledger').default;
+const LedgerApi = require('./hardware/ledger').default;
 
-export default function eos(connection, signing = false) {
+import { Api, JsonRpc } from 'eosjs2';
+const JsSignatureProvider = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig').default;
+
+export default function eos(connection, signing = false, v2 = false) {
   const decrypted = Object.assign({}, connection);
   if (signing && decrypted.keyProviderObfuscated) {
     const {
@@ -41,7 +44,7 @@ export default function eos(connection, signing = false) {
       const { fc } = Eos(connection);
       const buffer = serialize(fc.types.config.chainId, transaction, fc.types);
       const { transport } = new HardwareLedger();
-      const api = new Api(transport);
+      const api = new LedgerApi(transport);
       const result = await api.signTransaction(
         decrypted.signPath,
         buffer.toString('hex')
@@ -53,6 +56,18 @@ export default function eos(connection, signing = false) {
     decrypted.signProvider = promiseSigner;
   } else {
     decrypted.signProvider = undefined;
+  }
+
+  if (v2) {
+    const signatureProvider = new JsSignatureProvider(decrypted.keyProvider);
+    const rpc = new JsonRpc(decrypted.httpEndpoint);
+    const api = new Api({
+      rpc,
+      signatureProvider,
+      textDecoder: new TextDecoder(),
+      textEncoder: new TextEncoder()
+    });
+    return api;
   }
 
   return Eos(decrypted);
