@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
+import { isEmpty } from 'lodash';
 
 class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
   render() {
@@ -23,10 +24,14 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  balance: get(state, `balances.${ownProps.account}.${ownProps.token}`, false),
-  precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, false),
-});
+const mapStateToProps = (state, ownProps) => {
+  const loaded = !isEmpty(get(state, `balances.${ownProps.account}`));
+  const defaultValue = loaded ? 0 : false;
+  return {
+    balance: get(state, `balances.${ownProps.account}.${ownProps.token}`, defaultValue),
+    precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, defaultValue),
+  }
+};
 
 export default compose(
   translate('global'),
