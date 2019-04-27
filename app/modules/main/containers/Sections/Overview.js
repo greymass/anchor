@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Grid, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import OverviewSidebarContainer from './Overview/Sidebar';
 
@@ -31,16 +31,67 @@ class OverviewContainer extends Component<Props> {
     if (!settings.walletInit) {
       return false;
     }
+    let header;
+
+    switch (view) {
+      default:
+      case 'systemtokens': {
+        header = (
+          <Header>
+            System Token: {chainSymbol}
+            <Header.Subheader>
+              The native resource token for this blockchain.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+      case 'balances': {
+        header = (
+          <Header>
+            Tracked Tokens
+            <Header.Subheader>
+              The EOSIO token variants created on this blockchain.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+      case 'governance': {
+        header = (
+          <Header>
+            Governance Statistics
+            <Header.Subheader>
+              A breakdown of all loaded accounts and their involvement in governance.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+      case 'resources': {
+        header = (
+          <Header>
+            Resource Usage
+            <Header.Subheader>
+              The resource usage breakdown for all loaded accounts on this blockchain.
+            </Header.Subheader>
+          </Header>
+        );
+        break;
+      }
+    }
     return (
       <React.Fragment>
         <Grid stackable>
           <Grid.Row>
             <Grid.Column width={12}>
-              <Segment color="green" piled>
-                <OverviewMenu
-                  view={view}
-                  viewChange={this.viewChange}
-                />
+              <OverviewMenu
+                view={view}
+                viewChange={this.viewChange}
+              />
+              <Segment color="green" piled style={{ marginTop: 0 }}>
+                {header}
+
                 <OverviewTable
                   chainSymbol={chainSymbol}
                   settings={settings}
