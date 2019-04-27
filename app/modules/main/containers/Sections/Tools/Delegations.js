@@ -39,6 +39,7 @@ function mapDispatchToProps(dispatch) {
       ...StakeActions,
       ...SystemStateActions,
       ...TableActions,
+      ...WalletActions,
       ...WalletActions
     }, dispatch)
   };

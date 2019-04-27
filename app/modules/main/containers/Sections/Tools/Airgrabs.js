@@ -11,6 +11,7 @@ import * as AirgrabActions from '../../../../../shared/actions/system/claimairgr
 import * as AppActions from '../../../../../shared/actions/app';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as TableActions from '../../../../../shared/actions/table';
+import * as AppActions from '../../../../../shared/actions/app';
 import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsAirgrabs extends Component<Props> {
@@ -25,6 +26,7 @@ function mapStateToProps(state) {
   return {
     app: state.app,
     accounts: state.accounts,
+    balance: state.balance,
     blockExplorers: state.blockexplorers,
     pubkeys: {
       available: state.storage.keys,

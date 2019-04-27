@@ -29,8 +29,9 @@ export default class WalletLockStateLocked extends Component<Props> {
     const {
       password
     } = this.state;
+    console.log('submitted');
     actions.unlockWallet(password);
-  }
+  };
   render() {
     const {
       validate
@@ -41,7 +42,7 @@ export default class WalletLockStateLocked extends Component<Props> {
     return (
       <I18n ns="wallet">
         {
-          (t) => (
+          () => (
             <WalletModalUnlock
               onChange={this.onChange}
               onKeyPress={this.onKeyPress}

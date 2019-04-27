@@ -18,7 +18,7 @@ class GlobalTransactionMessageUnsignedSign extends Component<Props> {
       signTransaction
     } = actions;
     signTransaction(transaction, contract);
-  }
+  };
   render() {
     const {
       onClose,
