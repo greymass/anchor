@@ -65,7 +65,7 @@ class SidebarContainer extends Component<Props> {
               </Menu.Item>
               <Menu.Item
                 as="a"
-                active={module === 'wallet'}
+                active={module && module.startsWith('wallet')}
                 onClick={this.onClick}
                 name="wallet"
                 color="blue"
