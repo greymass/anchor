@@ -11,6 +11,7 @@ import GlobalAccountFragmentStaleness from '../../../../shared/containers/Global
 import GlobalAccountFragmentSystemTokenBalance from '../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
 import GlobalAccountFragmentTokenBalance from '../../../../shared/containers/Global/Account/Fragment/TokenBalance';
 import GlobalAccountFragmentTokenDelegated from '../../../../shared/containers/Global/Account/Fragment/TokenDelegated';
+import GlobalAccountFragmentTokenRefunding from '../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
 import GlobalAccountFragmentTokenStaked from '../../../../shared/containers/Global/Account/Fragment/TokenStaked';
 import GlobalAccountFragmentVoterInfoVotes from '../../../../shared/containers/Global/Account/Fragment/VoterInfo/Votes';
 import GlobalAccountFragmentVoterInfoEffectiveness from '../../../../shared/containers/Global/Account/Fragment/VoterInfo/Effectiveness';
@@ -90,6 +91,14 @@ class OverviewTable extends Component<Props> {
                       </Table.Cell>
                       <Table.Cell textAlign="right">
                         <GlobalAccountFragmentTokenDelegated
+                          account={accountName}
+                          chainId={settings.chainId}
+                          contract="eosio"
+                          token={chainSymbol}
+                        />
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">
+                        <GlobalAccountFragmentTokenRefunding
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
