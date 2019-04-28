@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
+import { isEmpty, sum } from 'lodash';
 
 class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
   render() {
@@ -37,11 +37,24 @@ const mapStateToProps = (state, ownProps) => {
       balance: false
     });
   }
-  const cpu = parseFloat(cpuWeight.split(' ')[0]);
-  const net = parseFloat(netWeight.split(' ')[0]);
   const delegated = get(state, `accounts.${ownProps.account}.delegated.total`, 0);
+  // Get refunding balances for total
+  let netRefunding = 0;
+  let cpuRefunding = 0;
+  const hasRefund = !isEmpty(get(state, `accounts.${ownProps.account}.refund_request`));
+  if (hasRefund) {
+    netRefunding = get(state, `accounts.${ownProps.account}.refund_request.net_amount`, 0);
+    cpuRefunding = get(state, `accounts.${ownProps.account}.refund_request.cpu_amount`, 0);
+  }
   return ({
-    balance: liquid + cpu + net + delegated
+    balance: sum([
+      parseFloat(liquid),
+      parseFloat(delegated),
+      parseFloat(cpuWeight),
+      parseFloat(netWeight),
+      parseFloat(netRefunding),
+      parseFloat(cpuRefunding),
+    ])
   });
 };
 
