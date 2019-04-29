@@ -30,20 +30,14 @@ class RexInterfaceFund extends PureComponent<Props> {
     actions.clearSystemState();
   }
   confirmTransaction = () => {
-    // const { actions, settings } = this.props;
-    // const { resourceAmount, transactionType } = this.state;
-    //
-    // if (transactionType === 'cpu') {
-    //   actions.rentCpu({
-    //     amount: resourceAmount,
-    //     owner: settings.account
-    //   });
-    // } else {
-    //   actions.rentNet({
-    //     amount: resourceAmount,
-    //     owner: settings.account
-    //   });
-    // }
+    const { actions } = this.props;
+    const { resourceAmount, transactionType } = this.state;
+
+    if (transactionType === 'cpu') {
+      actions.rentcpu(resourceAmount);
+    } else {
+      actions.rentnet(resourceAmount);
+    }
   };
   handleChange = (e, { name, value, valid }) => {
     console.log({ name, value })
