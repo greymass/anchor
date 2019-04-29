@@ -10,6 +10,7 @@ import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 
 import RexActions from '../../actions/system/rex';
+import TableAction from '../../actions/table';
 
 type Props = {
   actions: {},
@@ -117,7 +118,8 @@ class RexRent extends Component<Props> {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...RexActions
+      ...RexActions,
+      ...TableAction
     }, dispatch)
   };
 }

@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { bindActionCreators } from 'redux';
 
 import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
 
 import RexActions from '../../actions/system/rex';
-
-import { bindActionCreators } from 'redux';
+import TableAction from '../../actions/table';
 
 type Props = {
   actions: {},
@@ -107,7 +107,8 @@ class RexLend extends Component<Props> {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...RexActions
+      ...RexActions,
+      ...TableAction
     }, dispatch)
   };
 }
