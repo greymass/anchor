@@ -167,7 +167,8 @@ class RexInterfaceFund extends PureComponent<Props> {
         >
           {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
         </Message>
-        <Message success>{
+        <Message
+          content={
             t(
               'rex_interface_fund_balance',
               {
@@ -176,7 +177,7 @@ class RexInterfaceFund extends PureComponent<Props> {
               }
             )
           }
-        </Message>
+        />
         <Form>
           <Form.Group widths="equal">
             <label>

@@ -67,16 +67,15 @@ class RexInterfaceFund extends PureComponent<Props> {
       connection,
       settings,
       system,
-      t
+      t,
+      tables
     } = this.props;
     const {
       confirming,
       error,
       resourceAmount,
-      resourceType,
       transactionType
     } = this.state;
-    console.log({transactionType})
 
     const costFor30days = 0.1;
 
@@ -91,7 +90,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     let transaction;
     let contract;
 
-    const actionName = transactionType === 'cpu' ? 'RENT_CPU' : 'RENT_NET';
+    const actionName = transactionType === 'cpu' ? 'RENTCPU' : 'RENTNET';
 
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
@@ -103,147 +102,169 @@ class RexInterfaceFund extends PureComponent<Props> {
     const saveDisabled = error || !resourceAmount;
     const displaySuccessMessage = !saveDisabled;
     const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
+    const fundedBalance = tables.eosio[settings.account].fundbal[0];
 
+    const confirmationPage = (
+      <React.Fragment>
+        <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
+        <GlobalTransactionHandler
+          actionName={transactionType === 'cpu' ? 'RENTCPU' : 'RENTNET'}
+          actions={actions}
+          blockExplorers={blockExplorers}
+          content={(
+            <React.Fragment>
+              {transactionType === 'cpu' ? (
+                <p>
+                  {
+                    t(
+                      'rex_interface_rent_confirmation_modal_rent_cpu',
+                      {
+                        amount: resourceAmount,
+                        chainSymbol: connection.chainSymbol,
+                        cost
+                      }
+                    )
+                  }
+                </p>
+              ) : (
+                <p>
+                  {
+                    t(
+                      'rex_interface_rent_confirmation_modal_rent_net',
+                      {
+                        amount: resourceAmount,
+                        chainSymbol: connection.chainSymbol,
+                        cost
+                      }
+                    )
+                  }
+                </p>
+              )}
+            </React.Fragment>
+          )}
+          contract={contract}
+          onClose={this.onClose}
+          onSubmit={this.onSubmit}
+          settings={settings}
+          system={system}
+          transaction={transaction}
+        />
+        <Container>
+          <Button
+            content={t('common:close')}
+            onClick={() => this.setState({ confirming: false })}
+            textAlign="left"
+          />
+          <Button
+            color="green"
+            content={t('common:confirm')}
+            disabled={system.RENT_CPU || system.RENT_NET}
+            onClick={this.confirmTransaction}
+            textAlign="right"
+          />
+        </Container>
+      </React.Fragment>
+    );
     return (
       <Segment basic>
-        {confirming && (
-          <Modal
-            open
-            size="small"
-          >
-            <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
-            <Modal.Content>
-              <GlobalTransactionHandler
-                actionName={transactionType === 'cpu' ? 'RENT_CPU' : 'RENT_NET'}
-                actions={actions}
-                blockExplorers={blockExplorers}
-                content={(
-                  <React.Fragment>
-                    {transactionType === 'cpu' ? (
-                      <p>
-                        {
-                          t(
-                            'rex_interface_rent_confirmation_modal_rent_cpu',
-                            {
-                              amount: resourceAmount,
-                              chainSymbol: connection.chainSymbol,
-                              cost
-                            }
-                          )
-                        }
-                      </p>
-                    ) : (
-                      <p>
-                        {
-                          t(
-                            'rex_interface_rent_confirmation_modal_rent_net',
-                            {
-                              amount: resourceAmount,
-                              chainSymbol: connection.chainSymbol,
-                              cost
-                            }
-                          )
-                        }
-                      </p>
-                    )}
-                  </React.Fragment>
-                )}
-                contract={contract}
-                onClose={this.onClose}
-                onSubmit={this.onSubmit}
-                settings={settings}
-                system={system}
-                transaction={transaction}
+        {confirming ? confirmationPage : (
+          <React.Fragment>
+            <Message
+              warning
+            >
+              {t('rex_interface_fund_message')}
+            </Message>
+            <Message
+              success
+              content={
+                t(
+                  'rex_interface_rent_funding_balance',
+                  {
+                    fundedBalance,
+                    chainSymbol: connection.chainSymbol
+                  }
+                )
+              }
+            />
+            <Form
+              success={displaySuccessMessage}
+            >
+              <Form.Group widths="equal">
+                <Message
+                  content={
+                    t(
+                      'rex_interface_lend_balance',
+                      {
+                        fundedBalance,
+                        chainSymbol: connection.chainSymbol
+                      }
+                    )
+                  }
+                />
+                <label>
+                  <strong>{t('rex_interface_transaction_type_label')}</strong>
+                  <br />
+                  <Dropdown
+                    autoFocus
+                    defaultValue="cpu"
+                    name="transactionType"
+                    onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
+                    options={dropdownOptions}
+                    selection
+                    style={{ marginTop: '4px' }}
+                  />
+                </label>
+                <GlobalFormFieldToken
+                  connection={connection}
+                  defaultValue={resourceAmount || ''}
+                  label={t('rex_interface_rent_resources_amount_label', { chainSymbol: connection.chainSymbol })}
+                  name="resourceAmount"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              { displaySuccessMessage && transactionType === 'cpu' && (
+                <Message key="cpu" success>
+                  {
+                    t(
+                      'rex_interface_rent_confirmation_modal_rent_cpu',
+                      {
+                        amount: resourceAmount,
+                        chainSymbol: connection.chainSymbol,
+                        cost
+                      }
+                    )
+                  }
+                </Message>
+              )}
+              { displaySuccessMessage && transactionType === 'net' && (
+                <Message key="net" success>
+                  {
+                    t(
+                      'rex_interface_rent_confirmation_modal_rent_net',
+                      {
+                        amount: resourceAmount,
+                        chainSymbol: connection.chainSymbol,
+                        cost
+                      }
+                    )
+                  }
+                </Message>
+              )}
+              {error && (
+                <GlobalFormMessageError
+                  style={{ marginTop: '20px', marginBottom: '20px' }}
+                  error={error}
+                />
+              )}
+              <Button
+                content={t('rex_interface_rent_resources_button')}
+                disabled={saveDisabled}
+                onClick={() => this.setState({ confirming: true })}
               />
-            </Modal.Content>
-            <Modal.Actions>
-              <Container>
-                <Button
-                  content={t('common:close')}
-                  onClick={() => this.setState({ confirming: false })}
-                  textAlign="left"
-                />
-                <Button
-                  color="green"
-                  content={t('common:confirm')}
-                  disabled={system.RENT_CPU || system.RENT_NET}
-                  onClick={this.confirmTransaction}
-                  textAlign="right"
-                />
-              </Container>
-            </Modal.Actions>
-          </Modal>
+            </Form>
+          </React.Fragment>
         )}
-        <Message
-          warning
-        >
-          {t('rex_interface_fund_message')}
-        </Message>
-        <Form
-          success={displaySuccessMessage}
-        >
-          <Form.Group widths="equal">
-            <label>
-              <strong>{t('rex_interface_transaction_type_label')}</strong>
-              <br />
-              <Dropdown
-                autoFocus
-                defaultValue="cpu"
-                name="transactionType"
-                onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
-                options={dropdownOptions}
-                selection
-                style={{ marginTop: '4px' }}
-              />
-            </label>
-            <GlobalFormFieldToken
-              connection={connection}
-              defaultValue={resourceAmount || ''}
-              label={t('rex_interface_rent_resources_amount_label', { chainSymbol: connection.chainSymbol })}
-              name="resourceAmount"
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          { displaySuccessMessage && transactionType === 'cpu' && (
-            <Message key="cpu" success>
-              {
-                t(
-                  'rex_interface_rent_confirmation_modal_rent_cpu',
-                  {
-                    amount: resourceAmount,
-                    chainSymbol: connection.chainSymbol,
-                    cost
-                  }
-                )
-              }
-            </Message>
-          )}
-          { displaySuccessMessage && transactionType === 'net' && (
-            <Message key="net" success>
-              {
-                t(
-                  'rex_interface_rent_confirmation_modal_rent_net',
-                  {
-                    amount: resourceAmount,
-                    chainSymbol: connection.chainSymbol,
-                    cost
-                  }
-                )
-              }
-            </Message>
-          )}
-          {error && (
-            <GlobalFormMessageError
-              style={{ marginTop: '20px', marginBottom: '20px' }}
-              error={error}
-            />
-          )}
-          <Button
-            content={t('rex_interface_rent_resources_button')}
-            disabled={saveDisabled}
-            onClick={() => this.setState({ confirming: true })}
-          />
-        </Form>
+
       </Segment>
     );
   }
