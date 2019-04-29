@@ -71,7 +71,7 @@ class RexLend extends Component<Props> {
         menuItem: {
           key: 'manage_rex',
           icon: 'arrow right',
-          content: t('rex_interface_menu_manage_rex')
+          content: t('rex_interface_menu_lend_rex')
         },
         pane: {
           key: 'manage_rex',
