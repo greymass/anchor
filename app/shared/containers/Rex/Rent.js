@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
+import { bindActionCreators } from 'redux';
 
 import RexInterfaceAbout from '../../components/Rex/Rent/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
-
-import { bindActionCreators } from 'redux';
 
 import RexActions from '../../actions/system/rex';
 
