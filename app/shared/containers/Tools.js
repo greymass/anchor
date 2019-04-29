@@ -33,7 +33,8 @@ import ToolsStateGlobals from '../components/Tools/State/Globals';
 import ToolsStateWallet from '../components/Tools/State/Wallet';
 import ToolsSystemLog from '../components/Tools/System/Log';
 import ToolsWallets from '../components/Tools/Wallets';
-import RexInterface from './Rex/Interface';
+import RexLend from './Rex/Lend';
+import RexRent from './Rex/Rent';
 
 import * as AccountsActions from '../actions/accounts';
 import * as BEOSWithdrawActions from '../actions/blockchains/beos/withdraw';
@@ -196,9 +197,14 @@ const paneMapping = [
     name: 'proxy',
   },
   {
-    element: RexInterface,
+    element: RexLend,
     modes: ['hot', 'watch', 'ledger'],
-    name: 'rex_interface',
+    name: 'rex_lend',
+  },
+  {
+    element: RexRent,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'rex_rent',
   },
   {
     header: true,

@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import RexInterfaceAbout from '../../components/Rex/Interface/About';
-import RexInterfaceFund from '../../components/Rex/Interface/Fund';
-import RexInterfaceManageRex from '../../components/Rex/Interface/ManageRex';
-import RexInterfaceRentResources from '../../components/Rex/Interface/RentResources';
+import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
+import RexInterfaceFund from '../../components/Rex/shared/Fund';
+import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
 
 type Props = {
   actions: {},
@@ -20,7 +19,7 @@ type Props = {
   t: {}
 };
 
-class RexInterface extends Component<Props> {
+class RexLend extends Component<Props> {
   props: Props;
 
   render() {
@@ -44,7 +43,7 @@ class RexInterface extends Component<Props> {
         pane: {
           key: 'about',
           content: (
-            <RexInterfaceAbout />
+            <RexInterfaceLendAbout />
           )
         }
       },
@@ -77,26 +76,7 @@ class RexInterface extends Component<Props> {
         pane: {
           key: 'manage_rex',
           content: (
-            <RexInterfaceManageRex
-              actions={actions}
-              blockExplorers={blockExplorers}
-              connection={connection}
-              settings={settings}
-              system={system}
-            />
-          )
-        }
-      },
-      {
-        menuItem: {
-          key: 'rent_resources',
-          icon: 'arrow down',
-          content: t('rex_interface_menu_rent_resources')
-        },
-        pane: {
-          key: 'rent_resources',
-          content: (
-            <RexInterfaceRentResources
+            <RexInterfaceLendManage
               actions={actions}
               blockExplorers={blockExplorers}
               connection={connection}
@@ -130,4 +110,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate('rex')(connect(mapStateToProps)(RexInterface));
+export default translate('rex')(connect(mapStateToProps)(RexLend));
