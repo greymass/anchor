@@ -1,7 +1,4 @@
 {
-  "rex_lend_about_header": "Rex is the new EOSIO set of contracts that allow EOS token holders to earn passive income from their EOS. \n\n The idea is that one can assign the EOS they have to a fund and receive REX tokens in exchange. The staking power coming from the EOS that is exchanged for Rex will then be lent to users that in exchange will pay a small fee increasing the size of the fund. Because the amount of REX is finite, the result is that the EOS to REX ratio can only go up meaning that whoever lends their EOS to the fund will at least recover the entirety of those funds, but can almost always expect a return.\n\n",
-  "rex_lend_about_warning": "Please note that only users that have voted for 21 block producers or delegated their voting power are allowed to use REX.",
-  "rex_rent_about_header": "Rex is the new EOSIO set of contracts that allow users to rent CPU and Bandwidth resources in exchange for a fee.",
   "rex_interface_defund_button": "Remove Funds",
   "rex_interface_fund_balance": "{{balance}} {{chainSymbol}} available",
   "rex_interface_fund_button": "Add Funds",
@@ -28,14 +25,18 @@
   "rex_interface_manage_rex_sell_button": "Sell",
   "rex_interface_menu_about": "About",
   "rex_interface_menu_fund": "Fund",
-  "rex_interface_rent_resources_confirmation_modal_header": "Confirm rental of resource",
-  "rex_interface_menu_rent_rex": "Rent Rex",
   "rex_interface_menu_lend_rex": "Lend Rex",
   "rex_interface_menu_rent_resources": "Rent Resources",
+  "rex_interface_menu_rent_rex": "Rent Rex",
+  "rex_interface_not_voting_or_proxying": "You appear to not be meeting the minimum criteria to use this feature. In order to buy Rex, you must first either vote for 21 block producers or proxy your votes."
   "rex_interface_rent_confirmation_modal_rent_cpu": "Rent {{amount}} of CPU for {{cost}} {{chainSymbol}}.",
   "rex_interface_rent_confirmation_modal_rent_net": "Rent {{amount}} of NET for {{cost}} {{chainSymbol}}.",
   "rex_interface_rent_resources_amount_label": "Amount of Resources (in {{chainSymbol}})",
   "rex_interface_rent_resources_button": "Rent",
+  "rex_interface_rent_resources_confirmation_modal_header": "Confirm rental of resource",
   "rex_interface_rent_resources_trannsaction_type_label": "Transaction Type",
-  "rex_interface_transaction_type_label": "Type of transaction"
+  "rex_interface_transaction_type_label": "Type of transaction",
+  "rex_lend_about_header": "Rex is the new EOSIO set of contracts that allow EOS token holders to earn passive income from their EOS. \n\n The idea is that one can assign the EOS they have to a fund and receive REX tokens in exchange. The staking power coming from the EOS that is exchanged for Rex will then be lent to users that in exchange will pay a small fee increasing the size of the fund. Because the amount of REX is finite, the result is that the EOS to REX ratio can only go up meaning that whoever lends their EOS to the fund will at least recover the entirety of those funds, but can almost always expect a return.\n\n",
+  "rex_lend_about_warning": "Please note that only users that have voted for 21 block producers or delegated their voting power are allowed to use REX.",
+  "rex_rent_about_header": "Rex is the new EOSIO set of contracts that allow users to rent CPU and Bandwidth resources in exchange for a fee."
 }

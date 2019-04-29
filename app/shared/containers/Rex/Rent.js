@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Tab } from 'semantic-ui-react';
+import { Message, Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 
@@ -28,6 +28,7 @@ class RexRent extends Component<Props> {
   render() {
     const {
       actions,
+      accounts,
       balance,
       blockExplorers,
       connection,
@@ -90,14 +91,24 @@ class RexRent extends Component<Props> {
         }
       }
     ];
+    const account = accounts[settings.account];
+    const votingOrProxying = account.voter_info.producers.length === 21 || account.voter_info.proxy;
+
     return (
       <React.Fragment>
-        <Tab
-          defaultActiveIndex={0}
-          onTabChange={this.onTabChange}
-          panes={panes}
-          renderActiveOnly={false}
-        />
+        {votingOrProxying ? (
+          <Tab
+            defaultActiveIndex={0}
+            onTabChange={this.onTabChange}
+            panes={panes}
+            renderActiveOnly={false}
+          />
+        ) : (
+          <Message
+            content={t('rex_not_voting_or_proxying')}
+            warning
+          />
+        )}
       </React.Fragment>
     );
   }
