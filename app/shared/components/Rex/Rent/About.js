@@ -19,14 +19,9 @@ class RexInterfaceAbout extends PureComponent<Props> {
           warning
         >
           <Header.Subheader>
-            {t('rex_interface_about_header')}
+            {t('rex_rent_about_header')}
           </Header.Subheader>
         </Header>
-        <Message
-          warning
-        >
-          {t('rex_interface_about_warning')}
-        </Message>
       </Segment>
     );
   }
