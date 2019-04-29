@@ -11,6 +11,7 @@
   "rex_interface_fund_message": "This is the first step no matter how you want to use REX. The {{chainSymbol}} added to your fund here will be available either rent resources or generate revenue.",
   "rex_interface_fund_options_defund": "Remove Funds",
   "rex_interface_fund_options_fund": "Add Funds",
+  "rex_interface_lend_balance": "{{fundedBalance}} {{chainSymbol}} available",
   "rex_interface_manage_rex_amount_to_buy": "Buy {{rexAmount}} REX for {{amount}}.",
   "rex_interface_manage_rex_amount_to_sell": "Sell {{rexAmount}} REX for {{amount}}.",
   "rex_interface_manage_rex_buy": "Buying Amount (in {{chainSymbol}})",
@@ -29,6 +30,8 @@
   "rex_interface_menu_rent_resources": "Rent Resources",
   "rex_interface_menu_rent_rex": "Rent Rex",
   "rex_interface_not_voting_or_proxying": "You appear to not be meeting the minimum criteria to use this feature. In order to buy Rex, you must first either vote for 21 block producers or proxy your votes."
+  "rex_interface_rent_funding_balance": "{{fundedBalance}} {{chainSymbol}} available",
+  "rex_interface_rent_rex_balance": "{{rexBalance}} REX available",
   "rex_interface_rent_confirmation_modal_rent_cpu": "Rent {{amount}} of CPU for {{cost}} {{chainSymbol}}.",
   "rex_interface_rent_confirmation_modal_rent_net": "Rent {{amount}} of NET for {{cost}} {{chainSymbol}}.",
   "rex_interface_rent_resources_amount_label": "Amount of Resources (in {{chainSymbol}})",
