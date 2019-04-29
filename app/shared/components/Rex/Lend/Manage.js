@@ -26,20 +26,14 @@ class RexInterfaceManageRex extends PureComponent<Props> {
     actions.clearSystemState();
   }
   confirmTransaction = () => {
-    // const { actions, settings } = this.props;
-    // const { amountToBuy, amountToSell, transactionType } = this.state;
-    //
-    // if (transactionType === 'buy') {
-    //   actions.buyRex({
-    //     amount: amountToBuy,
-    //     owner: settings.account
-    //   });
-    // } else {
-    //   actions.sellRex({
-    //     amount: amountToSell,
-    //     owner: settings.account
-    //   });
-    // }
+    const { actions } = this.props;
+    const { amountToBuy, amountToSell, transactionType } = this.state;
+
+    if (transactionType === 'buy') {
+      actions.buyrex(amountToBuy);
+    } else {
+      actions.sellrex(amountToSell);
+    }
   };
   handleChange = (e, { name, value, valid }) => {
     this.setState({ error: null }, () => {

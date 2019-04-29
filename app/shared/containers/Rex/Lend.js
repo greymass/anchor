@@ -8,6 +8,10 @@ import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
 
+import RexActions from '../../actions/system/rex';
+
+import { bindActionCreators } from 'redux';
+
 type Props = {
   actions: {},
   accounts: {},
@@ -100,6 +104,14 @@ class RexLend extends Component<Props> {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({
+      ...RexActions
+    }, dispatch)
+  };
+}
+
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
@@ -110,4 +122,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate('rex')(connect(mapStateToProps)(RexLend));
+export default translate('rex')(connect(mapStateToProps, mapDispatchToProps)(RexLend));
