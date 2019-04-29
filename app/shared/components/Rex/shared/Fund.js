@@ -31,20 +31,19 @@ class RexInterfaceFund extends PureComponent<Props> {
     actions.clearSystemState();
   }
   confirmTransaction = () => {
-    // const { actions, settings } = this.props;
-    // const { defundingAmount, fundingAmount, transactionType } = this.state;
-    //
-    // if (transactionType === 'fund') {
-    //   actions.fund({
-    //     amount: fundingAmount,
-    //     owner: settings.account
-    //   });
-    // } else {
-    //   actions.defund({
-    //     amount: defundingAmount,
-    //     owner: settings.account
-    //   });
-    // }
+    const { actions } = this.props;
+    const { defundingAmount, fundingAmount, transactionType } = this.state;
+
+    if (transactionType === 'fund') {
+
+      actions.depositrex({
+        fundingAmount
+      });
+    } else {
+      actions.withdrawrex({
+        defundingAmount
+      });
+    }
   };
   handleChange = ({ name, value, valid }) => {
     this.setState({ error: null }, () => {
