@@ -11,6 +11,7 @@ import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semant
 import * as AccountsActions from '../../actions/accounts';
 import * as BlockchainsActions from '../../actions/blockchains';
 import * as SettingsActions from '../../actions/settings';
+import * as StorageActions from '../../actions/storage';
 import * as ValidateActions from '../../actions/validate';
 import * as WalletActions from '../../actions/wallet';
 import * as WalletsActions from '../../actions/wallets';
@@ -46,11 +47,12 @@ class WelcomeImportContainer extends Component<Props> {
       const {
         networks,
         settings,
+        storage,
         wallets,
       } = JSON.parse(data);
       // Restore all defined networks
       networks.forEach((network) => {
-        if (network && network.schema === 'anchor.v1.network') {
+        if (network && ['anchor.v1.network', 'anchor.v2.network'].includes(network.schema)) {
           actions.importBlockchainFromBackup(network.data);
         } else {
           // unable to import settings
@@ -60,18 +62,21 @@ class WelcomeImportContainer extends Component<Props> {
       const chainIds = [];
       // Restore all wallets
       wallets.forEach((wallet) => {
-        if (wallet && wallet.schema === 'anchor.v1.wallet') {
+        if (wallet && ['anchor.v1.wallet', 'anchor.v2.wallet'].includes(wallet.schema)) {
           chainIds.push(wallet.data.chainId);
-          actions.importWalletFromBackup(wallet.data);
+          actions.importWalletFromBackup(wallet.data, settings.data);
         } else {
           // unable to import settings
-          console.log(wallet);
         }
       });
+      // Restore storage
+      if (storage && ['anchor.v2.storage'].includes(storage.schema)) {
+        actions.setStorage(storage.data);
+      }
       // Enable all of the blockchains that wallets were imported for
       actions.setSetting('blockchains', chainIds);
       // Restore settings
-      if (settings && settings.schema === 'anchor.v1.settings') {
+      if (settings && ['anchor.v1.settings', 'anchor.v2.settings'].includes(settings.schema)) {
         const newSettings = update009(settings.data, defaultChainId);
         actions.validateNode(newSettings.node, newSettings.chainId, true, true);
         actions.setSettings(newSettings);
@@ -123,6 +128,7 @@ function mapDispatchToProps(dispatch) {
       ...AccountsActions,
       ...BlockchainsActions,
       ...SettingsActions,
+      ...StorageActions,
       ...ValidateActions,
       ...WalletActions,
       ...WalletsActions,
