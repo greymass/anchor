@@ -32,25 +32,14 @@ class HomeContainer extends Component<Props> {
       settings,
       wallets,
     } = this.props;
-    const {
-      pathname
-    } = history.location;
     if (!settings.walletInit) {
-      if (pathname !== '/home/init') {
-        history.push('/home/init');
-      }
-    } else if (!settings.chainId || !settings.blockchains || settings.blockchains.length === 0) {
-      if (pathname !== '/home/blockchains') {
-        history.push('/home/blockchains');
-      }
+      history.push('/home/init');
+    } else if (!settings.chainId || settings.blockchains.length === 0) {
+      history.push('/home/blockchains');
     } else if (!wallets || wallets.length === 0) {
-      if (pathname !== '/home/accounts') {
-        history.push('/home/accounts');
-      }
+      history.push('/home/accounts');
     } else if (settings.walletMode === 'cold') {
-      if (pathname !== '/home/coldwallet') {
-        history.push('/home/coldwallet');
-      }
+      history.push('/home/coldwallet');
     }
   }
   render() {
