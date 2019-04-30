@@ -14,7 +14,7 @@ class GlobalAccountFragmentTokenRefunding extends PureComponent<Props> {
       lng,
       precision,
     } = this.props;
-    if (balance === false) return <Icon name="clock" />;
+    if (balance === false) return <Icon color="grey" name="clock outline" />;
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: precision });
     return (
       <React.Fragment>
