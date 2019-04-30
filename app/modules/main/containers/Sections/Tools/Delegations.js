@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import ToolsDelegationsComponent from '../../../../../shared/components/Tools/Delegations';
 
@@ -25,11 +26,15 @@ function mapStateToProps(state) {
     allBlockExplorers: state.blockexplorers,
     balances: state.balances,
     connection: state.connection,
-    keys: state.keys,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     tables: state.tables,
     validate: state.validate,
+    wallet: state.wallet,
   };
 }
 
@@ -39,7 +44,6 @@ function mapDispatchToProps(dispatch) {
       ...StakeActions,
       ...SystemStateActions,
       ...TableActions,
-      ...WalletActions,
       ...WalletActions
     }, dispatch)
   };

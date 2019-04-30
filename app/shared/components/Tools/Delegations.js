@@ -68,7 +68,7 @@ class ToolsDelegations extends Component<Props> {
       balances,
       allBlockExplorers,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       t,
@@ -101,7 +101,7 @@ class ToolsDelegations extends Component<Props> {
           connection={connection}
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
-          keys={keys}
+          pubkeys={pubkeys}
           onClose={this.onCloseModal}
           openModal={openModal}
           settings={settings}
