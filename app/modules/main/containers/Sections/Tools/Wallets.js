@@ -7,6 +7,7 @@ import { map } from 'lodash';
 
 import ToolsWalletsComponent from '../../../../../shared/components/Tools/Wallets';
 
+import * as WalletActions from '../../../../../shared/actions/wallet';
 import * as WalletsActions from '../../../../../shared/actions/wallets';
 
 class ToolsWallets extends Component<Props> {
@@ -19,7 +20,6 @@ class ToolsWallets extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    auths: state.auths,
     blockchains: state.blockchains,
     connection: state.connection,
     pubkeys: {
@@ -38,6 +38,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...WalletActions,
       ...WalletsActions
     }, dispatch)
   };
