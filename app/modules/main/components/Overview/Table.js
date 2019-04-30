@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Table } from 'semantic-ui-react';
-import { map, uniq } from 'lodash';
+import { isEmpty, map, uniq } from 'lodash';
 
 import ExplorerLink from '../../../../shared/containers/Global/Blockchain/ExplorerLink';
 import OverviewTableHeader from './Table/Header';
@@ -63,23 +63,37 @@ class OverviewTable extends Component<Props> {
           <Table.Body>
             {accountNames.map((accountName) => (
               <Table.Row>
-                <Table.Cell>
-                  <ExplorerLink
-                    content={accountName}
-                    linkData={accountName}
-                    linkType="account"
-                  />
+                <Table.Cell collapsing textAlign="right">
+                  <Header size="small">
+                    <ExplorerLink
+                      content={accountName}
+                      linkData={accountName}
+                      linkType="account"
+                    />
+                  </Header>
                 </Table.Cell>
                 {(view === 'systemtokens')
                   ? (
                     <React.Fragment>
                       <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentTokenBalance
-                          account={accountName}
-                          chainId={settings.chainId}
-                          contract="eosio"
-                          token={chainSymbol}
-                        />
+                        <Header size="small">
+                          <GlobalAccountFragmentSystemTokenBalance
+                            account={accountName}
+                            chainId={settings.chainId}
+                            contract="eosio"
+                            token={chainSymbol}
+                          />
+                        </Header>
+                      </Table.Cell>
+                      <Table.Cell textAlign="right">
+                        <Header size="small">
+                          <GlobalAccountFragmentTokenBalance
+                            account={accountName}
+                            chainId={settings.chainId}
+                            contract="eosio"
+                            token={chainSymbol}
+                          />
+                        </Header>
                       </Table.Cell>
                       <Table.Cell textAlign="right">
                         <GlobalAccountFragmentTokenStaked
@@ -99,14 +113,6 @@ class OverviewTable extends Component<Props> {
                       </Table.Cell>
                       <Table.Cell textAlign="right">
                         <GlobalAccountFragmentTokenRefunding
-                          account={accountName}
-                          chainId={settings.chainId}
-                          contract="eosio"
-                          token={chainSymbol}
-                        />
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentSystemTokenBalance
                           account={accountName}
                           chainId={settings.chainId}
                           contract="eosio"
@@ -147,7 +153,14 @@ class OverviewTable extends Component<Props> {
                 {(view === 'balances')
                   ? (
                     <React.Fragment>
-                      {accountBalances[accountName]}
+                      {(isEmpty(accountBalances))
+                        ? (
+                          <Table.Cell>
+                            No token balances being tracked
+                          </Table.Cell>
+                        )
+                        : accountBalances[accountName]
+                      }
                     </React.Fragment>
                   )
                   : false

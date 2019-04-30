@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Segment } from 'semantic-ui-react';
 
 import OverviewSidebarContainer from './Overview/Sidebar';
 
+import NavigationActions from '../../actions/navigation';
 import OverviewMenu from '../../components/Overview/Menu';
 import OverviewTable from '../../components/Overview/Table';
 
@@ -32,7 +33,6 @@ class OverviewContainer extends Component<Props> {
       return false;
     }
     let header;
-
     switch (view) {
       default:
       case 'systemtokens': {
@@ -85,19 +85,35 @@ class OverviewContainer extends Component<Props> {
         <Grid stackable>
           <Grid.Row>
             <Grid.Column width={12}>
+              <Header
+                content="Account(s) Overview"
+                subheader="Overview of accounts for this blockchain."
+              />
               <OverviewMenu
                 view={view}
                 viewChange={this.viewChange}
               />
               <Segment color="green" piled style={{ marginTop: 0 }}>
                 {header}
-
                 <OverviewTable
                   chainSymbol={chainSymbol}
                   settings={settings}
                   view={view}
                   wallets={wallets}
                 />
+                <Container
+                  fluid
+                  style={{ marginTop: '1em' }}
+                  textAlign="center"
+                >
+                  <Button
+                    basic
+                    content="Manage Wallets"
+                    icon="users"
+                    onClick={() => this.props.actions.changeModule('tools/wallets')}
+
+                  />
+                </Container>
               </Segment>
             </Grid.Column>
             <Grid.Column width={4}>
@@ -122,7 +138,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
+      ...NavigationActions,
     }, dispatch)
   };
 }
