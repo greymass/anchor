@@ -8,9 +8,10 @@ import { map } from 'lodash';
 import ToolsAirgrabsComponent from '../../../../../shared/components/Tools/Airgrabs';
 
 import * as AirgrabActions from '../../../../../shared/actions/system/claimairgrab';
+import * as AppActions from '../../../../../shared/actions/app';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as TableActions from '../../../../../shared/actions/table';
-import * as AppActions from '../../../../../shared/actions/app';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsAirgrabs extends Component<Props> {
   render = () => (
@@ -43,7 +44,8 @@ function mapDispatchToProps(dispatch) {
       ...AirgrabActions,
       ...AppActions,
       ...SystemStateActions,
-      ...TableActions
+      ...TableActions,
+      ...WalletActions,
     }, dispatch)
   };
 }
