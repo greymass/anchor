@@ -88,6 +88,21 @@ export default function system(state = {}, action) {
     }
   }
 
+  if (requestState === 'PENDING' && action.payload && action.payload.total) {
+    newState = set(newState, progressField, {
+      completed: 0,
+      total: action.payload.total,
+    });
+  }
+
+  if (requestState === 'PROGRESS' && state[progressField]) {
+    newState = set(newState, progressField, {
+      completed: state[progressField].completed + 1,
+      total: state[progressField].total,
+    });
+  }
+
+
   if (requestState === 'SUCCESS' || requestState === 'PENDING') {
     del(newState, errField);
   }
