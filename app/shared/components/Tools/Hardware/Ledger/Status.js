@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Checkbox, Header, Icon, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Container, Header, Icon } from 'semantic-ui-react';
 
 class ToolsHardwareLedgerStatus extends Component<Props> {
   start = () => {
@@ -32,59 +32,55 @@ class ToolsHardwareLedgerStatus extends Component<Props> {
       <React.Fragment>
         {(ledger.listening)
           ? (
-            <Segment attached="top" color={(status !== 'connected') ? 'orange' : 'green'}>
-              <Header icon size="large" textAlign="center">
-                {(status === 'transport_error')
-                  ? (
+            <Header icon size="large" textAlign="center">
+              {(status === 'transport_error')
+                ? (
+                  <Icon
+                    color="orange"
+                    name="warning sign"
+                  />
+                )
+                : false
+              }
+              {(status !== 'transport_error' && status !== 'connected')
+                ? (
+                  <Icon
+                    loading
+                    name="circle notched"
+                  />
+                )
+                : false
+              }
+              {(status === 'connected')
+                ? (
+                  (
                     <Icon
-                      color="orange"
-                      name="warning sign"
+                      color="green"
+                      name="usb"
                     />
                   )
-                  : false
-                }
-                {(status !== 'transport_error' && status !== 'connected')
-                  ? (
-                    <Icon
-                      loading
-                      name="circle notched"
-                    />
-                  )
-                  : false
-                }
-                {(status === 'connected')
-                  ? (
-                    (
-                      <Icon
-                        color="green"
-                        name="usb"
-                      />
-                    )
-                  )
-                  : false
-                }
-                {t(`ledger_status_${status}_header`)}
-                <Header.Subheader
-                  content={t(`ledger_status_${status}_subheader`)}
-                />
-              </Header>
-            </Segment>
+                )
+                : false
+              }
+              {t(`ledger_status_${status}_header`)}
+              <Header.Subheader
+                content={t(`ledger_status_${status}_subheader`)}
+              />
+            </Header>
           )
           : (
-            <Segment attached="top" color="grey">
-              <Header icon size="large" textAlign="center">
-                <Icon
-                  name="usb"
-                />
-                {t('ledger_status_disabled_header')}
-                <Header.Subheader
-                  content={t('ledger_status_disabled_subheader')}
-                />
-              </Header>
-            </Segment>
+            <Header icon size="large" textAlign="center">
+              <Icon
+                name="usb"
+              />
+              {t('ledger_status_disabled_header')}
+              <Header.Subheader
+                content={t('ledger_status_disabled_subheader')}
+              />
+            </Header>
           )
         }
-        <Segment attached textAlign="center">
+        <Container fluid textAlign="center">
           {(status === 'transport_error')
             ? (
               <Button
@@ -120,19 +116,19 @@ class ToolsHardwareLedgerStatus extends Component<Props> {
             )
             : false
           }
-        </Segment>
-        {(status !== 'transport_error' && !hideOptions)
-          ? (
-            <Segment attached textAlign="center">
+        </Container>
+        <Container fluid style={{ marginTop: '1em' }} textAlign="center">
+          {(status !== 'transport_error' && !hideOptions)
+            ? (
               <Checkbox
                 defaultChecked={settings.hardwareLedgerSupport}
                 label={t('ledger_service_automatic')}
                 onChange={this.toggleDetection}
               />
-            </Segment>
-          )
-          : false
-        }
+            )
+            : false
+          }
+        </Container>
       </React.Fragment>
     );
   }

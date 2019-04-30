@@ -92,7 +92,7 @@ class ToolsDelegations extends Component<Props> {
     const delegationsToDisplay = sortBy(delegations, 'accountName');
 
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsModalDelegation
           account={accounts[settings.account]}
           actions={actions}

@@ -8,7 +8,7 @@ const { ipcRenderer } = require('electron');
 
 class ToolsSystemLog extends Component<Props> {
   state = {
-    errorsOnly: false
+    errorsOnly: true
   }
   toggleErrors = () => this.setState({ errorsOnly: !this.state.errorsOnly })
   promptSave = () => {
@@ -28,7 +28,7 @@ class ToolsSystemLog extends Component<Props> {
       errorsOnly
     } = this.state;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_system_log_header')}
           <Header.Subheader>

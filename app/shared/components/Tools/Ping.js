@@ -4,6 +4,8 @@ import debounceRender from 'react-debounce-render';
 import { translate } from 'react-i18next';
 import { defer, filter, isEmpty, map, orderBy, remove, sum, uniqBy } from 'lodash';
 
+import { Segment } from 'semantic-ui-react';
+
 import ToolsPingControls from './Ping/Controls';
 import ToolsPingHeader from './Ping/Header';
 import ToolsPingLoader from './Ping/Loader';
@@ -205,7 +207,7 @@ class ToolsPing extends Component<Props> {
     }
     const ordered = orderBy(data, ['seq', 'median'], ['desc', 'asc']);
     return (
-      <React.Fragment>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsPingHeader
           settings={settings}
           setSetting={this.props.actions.setSetting}
@@ -246,7 +248,7 @@ class ToolsPing extends Component<Props> {
           )
           : false
         }
-      </React.Fragment>
+      </Segment>
     );
   }
 }

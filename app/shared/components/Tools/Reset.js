@@ -12,19 +12,22 @@ class ToolsReset extends Component<Props> {
       t
     } = this.props;
     return (
-      <React.Fragment>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
           content={t('tools_reset_header_header')}
           subheader={t('tools_reset_header_subheader')}
         />
-        <Segment basic>
+        <Segment basic size="large">
+          <p>
+            {t('tools_reset_body_1')}
+          </p>
           <p>
             {t('tools_reset_body_1')}
           </p>
           <Divider />
           <GlobalButtonResetContainer />
         </Segment>
-      </React.Fragment>
+      </Segment>
     );
   }
 }

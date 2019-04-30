@@ -133,7 +133,7 @@ class ContractInterfaceComponent extends Component<Props> {
     ];
 
     return (
-      <React.Fragment>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         {(!settings.acceptedContractInterface)
           ? (
             (
@@ -193,7 +193,7 @@ class ContractInterfaceComponent extends Component<Props> {
           )
           : false
         }
-      </React.Fragment>
+      </Segment>
     );
   }
 }

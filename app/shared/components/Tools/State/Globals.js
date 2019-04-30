@@ -12,24 +12,22 @@ class ToolsStateGlobals extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_state_globals_header')}
           <Header.Subheader>
             {t('tools_state_globals_subheader')}
           </Header.Subheader>
         </Header>
-        <Segment basic>
-          <ReactJson
-            displayDataTypes={false}
-            displayObjectSize={false}
-            iconStyle="square"
-            name={null}
-            src={globals.current}
-            style={{ padding: '1em' }}
-            theme="harmonic"
-          />
-        </Segment>
+        <ReactJson
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={globals.current}
+          style={{ padding: '1em' }}
+          theme="harmonic"
+        />
       </Segment>
     );
   }
