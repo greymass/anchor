@@ -8,6 +8,7 @@ import {
   Header,
   Input,
   Message,
+  Segment,
   Table,
   Visibility
 } from 'semantic-ui-react';
@@ -100,7 +101,7 @@ class ToolsContacts extends Component<Props> {
     }).slice(0, numberToLoad);
 
     return (
-      <React.Fragment>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_contact_header_text')}
         </Header>
@@ -220,7 +221,7 @@ class ToolsContacts extends Component<Props> {
               />
             </div>
           )}
-      </React.Fragment>
+      </Segment>
     );
   }
 }
