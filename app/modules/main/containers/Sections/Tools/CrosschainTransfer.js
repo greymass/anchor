@@ -10,6 +10,7 @@ import ToolsCrosschainTransferComponent from '../../../../../shared/components/T
 import * as CrosschainWithdrawActions from '../../../../../shared/actions/blockchains/beos/withdraw';
 import * as SettingsActions from '../../../../../shared/actions/settings';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsCrosschainTransfer extends Component<Props> {
   render = () => (
@@ -42,7 +43,8 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...CrosschainWithdrawActions,
       ...SettingsActions,
-      ...SystemStateActions
+      ...SystemStateActions,
+      ...WalletActions,
     }, dispatch)
   };
 }
