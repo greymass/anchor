@@ -169,24 +169,7 @@ class Producers extends Component<Props> {
       submitting
     } = this.state;
     const { unregisteredProducers } = producers;
-    let sidebar = [(
-      <WalletPanel
-        actions={actions}
-        accounts={accounts}
-        balances={balances}
-        blockchains={blockchains}
-        blockExplorers={allBlockExplorers[connection.chainKey]}
-        connection={connection}
-        globals={globals}
-        key="WalletPanel"
-        keys={keys}
-        settings={settings}
-        system={system}
-        transaction={transaction}
-        validate={validate}
-        wallet={wallet}
-      />
-    )];
+    let sidebar = [];
     const account = accounts[settings.account];
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser = (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode));
@@ -340,4 +323,4 @@ class Producers extends Component<Props> {
   }
 }
 
-export default translate('producers')(Producers);
+export default translate(['tools', 'producers'])(Producers);

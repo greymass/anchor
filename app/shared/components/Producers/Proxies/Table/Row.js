@@ -23,7 +23,6 @@ class ProxiesTableRow extends Component<Props> {
       settings,
       t
     } = this.props;
-
     return (
       <Table.Row key={proxy.owner}>
         <Table.Cell
@@ -45,7 +44,7 @@ class ProxiesTableRow extends Component<Props> {
             trigger={(
               <Button
                 color={isSelected ? 'blue' : 'grey'}
-                icon={isSelected ? 'circle' : 'circle outline'}
+                icon={isSelected ? 'checkmark box' : 'minus square outline'}
                 disabled={!isValidUser}
                 onClick={
                   (isSelected)
