@@ -93,7 +93,7 @@ class ToolsCustomTokens extends Component<Props> {
     filterTokens = filterTokens.map((token) => (token.split(':')[2]));
     const blockchain = find(blockchains, { chainId: connection.chainId });
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_customtokens_header')}
           <Header.Subheader>
@@ -162,6 +162,9 @@ class ToolsCustomTokens extends Component<Props> {
                   let balance = false;
                   if (balances && settings.account && balances[settings.account]) {
                     balance = balances[settings.account][token.symbol];
+                    if (balance === undefined) {
+                      balance = 0;
+                    }
                   }
                   return (
                     <Table.Row key={`${connection.chainId}-${token.contract}-${token.symbol}`}>
