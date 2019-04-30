@@ -19,7 +19,8 @@ const whiteListedMethods = ['claim', 'open', 'signup'];
 
 class ToolsAirgrabs extends PureComponent<Props> {
   state = {
-    claimingAirgrab: false
+    abis: {},
+    claimingAirgrab: false,
   };
   componentDidMount() {
     this.fetchAirgrabsData();
@@ -61,6 +62,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
       const airgrabs = get(app, 'constants.airgrabs') || [];
 
       airgrabs.forEach((airgrab) => {
+
         const airgrabAccounts = get(tables, `${airgrab.account}.${settings.account}.accounts.rows`) || [];
         if (airgrabAccounts.length > 0) {
           return;
@@ -110,7 +112,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
     });
     const filteredAirgrabs = orderBy(filtered, ['symbol']);
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         {claimingAirgrab && (
           <ToolsModalAirgrab
             actions={actions}

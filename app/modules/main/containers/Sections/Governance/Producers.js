@@ -25,7 +25,6 @@ class GovernenceProducersContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
-    actions: state.actions,
     allBlockExplorers: state.blockexplorers,
     balances: state.balances,
     blockchains: state.blockchains,

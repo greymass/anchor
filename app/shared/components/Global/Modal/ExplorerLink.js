@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { isEmpty } from 'lodash';
 import GlobalModalDangerLink from './DangerLink';
 
 export default class GlobalModalExplorerLink extends Component<Props> {
@@ -18,7 +19,7 @@ export default class GlobalModalExplorerLink extends Component<Props> {
 
     const { blockExplorer: selected } = settings;
 
-    if (!blockExplorers) return content;
+    if (!blockExplorers || isEmpty(blockExplorers)) return content;
 
     const blockExplorer = (selected in Object.keys(blockExplorers))
       ? blockExplorers[selected]

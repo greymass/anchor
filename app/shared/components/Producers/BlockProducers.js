@@ -139,14 +139,7 @@ class BlockProducers extends Component<Props> {
 
     return (
       <Grid>
-        <Dimmer active={!isLoaded} inverted>
-          <Loader size="large" inverted>
-            <Header>
-              Loading Producers...
-            </Header>
-          </Loader>
-        </Dimmer>
-        <Grid.Row style={{ paddingTop: 0 }}>
+        <Grid.Row>
           <Grid.Column width={11}>
             {(isLoaded)
               ? [(
@@ -178,14 +171,7 @@ class BlockProducers extends Component<Props> {
                     isValidUser={isValidUser}
                   />
                 </Visibility>
-              ), (
-                  (!querying && amount < producers.list.length)
-                    ? (
-                      <Segment key="ProducersTableLoading" clearing padded vertical>
-                        <Loader active />
-                      </Segment>
-                    ) : false
-                )]
+              )]
               : (
                 <ProducersTablePlaceholder />
               )}

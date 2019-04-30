@@ -31,7 +31,7 @@ class BlockProducersTablePlaceholder extends Component<Props> {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {times(10, i => (
+          {times(20, i => (
             <Table.Row key={i}>
               <Table.Cell singleLine>
                 <Button
