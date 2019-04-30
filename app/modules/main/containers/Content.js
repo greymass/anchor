@@ -9,6 +9,7 @@ import {
 
 import { Container, Dimmer, Header, Loader } from 'semantic-ui-react';
 
+import DevTestContainer from './Sections/DevTest';
 import GovernanceContainer from './Sections/Governance';
 import HomeContainer from './Sections/Home';
 import TestsContainer from './Sections/Tests';
@@ -40,6 +41,7 @@ class ContentContainer extends Component<Props> {
         <Switch>
           <Route exact path="/" component={HomeContainer} />
           <Route path="/home" component={HomeContainer} />
+          <Route path="/devtest" component={DevTestContainer} />
           <Route path="/tests" component={TestsContainer} />
           <Route path="/wallet" component={WalletContainer} />
           <Route path="/governance" component={GovernanceContainer} />
