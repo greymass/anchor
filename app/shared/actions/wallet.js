@@ -1,4 +1,4 @@
-import { find } from 'lodash';
+import { attempt, find, isError, partition } from 'lodash';
 
 import * as types from './types';
 import { setSetting } from './settings';
@@ -171,7 +171,8 @@ export function unlockWallet(password, useWallet = false) {
     const {
       accounts,
       connection,
-      settings
+      settings,
+      storage,
     } = state;
     let { wallet } = state;
     // If a wallet was passed to be used, use that instead of state.
@@ -187,18 +188,18 @@ export function unlockWallet(password, useWallet = false) {
     });
     setTimeout(() => {
       try {
-        let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
-        if (ecc.isValidPrivate(key) === true) {
-          const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
-          // Obfuscate key for in-memory storage
+        const data = decrypt(storage.data, password).toString(CryptoJS.enc.Utf8);
+        // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        if (!isError(attempt(JSON.parse, data))) {
+          const keypair = find(JSON.parse(data), { pubkey: wallet.pubkey });
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
-          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+          const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the active wallet
           dispatch({
             payload: {
               ...wallet,
               accountData: account,
-              pubkey
+              pubkey: wallet.pubkey
             },
             type: types.SET_CURRENT_WALLET
           });
@@ -210,7 +211,7 @@ export function unlockWallet(password, useWallet = false) {
               authorization: wallet.authorization,
               hash,
               key,
-              pubkey
+              pubkey: wallet.pubkey
             },
             type: types.SET_CURRENT_KEY
           });
