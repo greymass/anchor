@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import Proxies from '../../../../../shared/components/Producers/Proxies';
 
@@ -31,9 +32,12 @@ function mapStateToProps(state) {
     connection: state.connection,
     globals: state.globals,
     history: state.history,
-    keys: state.keys,
     navigation: state.navigation,
     producers: state.producers,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     tables: state.tables,

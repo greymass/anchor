@@ -71,7 +71,7 @@ class Proxies extends Component<Props> {
       allBlockExplorers,
       connection,
       globals,
-      keys,
+      pubkeys,
       settings,
       system,
       t,
@@ -88,7 +88,7 @@ class Proxies extends Component<Props> {
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const currentProxy = account && account.voter_info && account.voter_info.proxy;
     const proxies = (tables.regproxyinfo && tables.regproxyinfo.regproxyinfo.proxies.rows) || [];
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
+    const isValidUser = (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode));
 
     return (proxies.length > 0)
       ? [(

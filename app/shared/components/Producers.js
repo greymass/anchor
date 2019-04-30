@@ -152,8 +152,8 @@ class Producers extends Component<Props> {
       connection,
       contracts,
       globals,
-      keys,
       producers,
+      pubkeys,
       settings,
       system,
       t,
@@ -194,9 +194,7 @@ class Producers extends Component<Props> {
     const account = accounts[settings.account];
     const proxyingTo = account && account.voter_info && account.voter_info.proxy;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
-    const isValidUser =
-      !!((keys && keys.key && settings.walletMode !== 'wait') ||
-      ['watch', 'ledger'].includes(settings.walletMode));
+    const isValidUser = (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode));
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     const currentProxy = (account && account.voter_info && account.voter_info.proxy);
 
@@ -213,7 +211,6 @@ class Producers extends Component<Props> {
             addProxy={addProxy}
             blockExplorers={allBlockExplorers[connection.chainKey]}
             currentProxy={currentProxy}
-            keys={keys}
             isProxying={isProxying}
             isValidUser={isValidUser}
             onClose={this.onClose}

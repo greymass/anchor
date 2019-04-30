@@ -75,7 +75,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
       app,
       actions,
       blockExplorers,
-      keys,
+      pubkeys,
       settings,
       system,
       t,
@@ -116,7 +116,7 @@ class ToolsAirgrabs extends PureComponent<Props> {
             actions={actions}
             airgrab={claimingAirgrab}
             blockExplorers={blockExplorers}
-            keys={keys}
+            pubkeys={pubkeys}
             onClose={() => this.setState({ claimingAirgrab: false })}
             settings={settings}
             system={system}

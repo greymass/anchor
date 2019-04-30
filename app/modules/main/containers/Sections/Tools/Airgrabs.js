@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import ToolsAirgrabsComponent from '../../../../../shared/components/Tools/Airgrabs';
 
@@ -24,7 +25,10 @@ function mapStateToProps(state) {
     app: state.app,
     accounts: state.accounts,
     blockExplorers: state.blockexplorers,
-    keys: state.keys,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     tables: state.tables,

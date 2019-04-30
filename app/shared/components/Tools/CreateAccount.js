@@ -22,7 +22,7 @@ class ToolsCreateAccount extends Component<Props> {
       balances,
       connection,
       globals,
-      keys,
+      pubkeys,
       settings,
       system,
       validate,
@@ -36,7 +36,7 @@ class ToolsCreateAccount extends Component<Props> {
 
     return (
       <div>
-        {((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+        {(pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
         ? (
           <Segment basic>
             <Header>

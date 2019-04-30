@@ -88,7 +88,7 @@ class ToolsProxy extends Component<Props> {
       balances,
       blockExplorers,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       validate,
@@ -117,7 +117,7 @@ class ToolsProxy extends Component<Props> {
           balance={balances[settings.account]}
           blockExplorers={blockExplorers}
           connection={connection}
-          keys={keys}
+          pubkeys={pubkeys}
           nameBidToRemove={nameBidToRemove}
           onClose={this.onCloseModal}
           onOpen={this.onOpenModal}

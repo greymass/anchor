@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import ToolsBidNameComponent from '../../../../../shared/components/Tools/BidName';
 
@@ -26,7 +27,10 @@ function mapStateToProps(state) {
     balances: state.balances,
     blockExplorers: state.blockExplorers,
     connection: state.connection,
-    keys: state.keys,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     validate: state.validate,

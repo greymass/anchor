@@ -16,9 +16,7 @@ class VersionContainer extends Component<Props> {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
-    keys: state.keys,
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
