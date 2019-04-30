@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import ToolsWalletsComponent from '../../../../../shared/components/Tools/Wallets';
 
@@ -21,6 +22,10 @@ function mapStateToProps(state) {
     auths: state.auths,
     blockchains: state.blockchains,
     connection: state.connection,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     status: state.status,
     system: state.system,

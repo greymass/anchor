@@ -234,7 +234,7 @@ class ToolsFormBidName extends Component<Props> {
     const {
       actions,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       t,
@@ -256,7 +256,7 @@ class ToolsFormBidName extends Component<Props> {
 
     const formErrorKeys = Object.keys(formErrors);
 
-    return ((keys && keys.key) || settings.walletMode === 'watch' || settings.walletMode === 'ledger')
+    return ((pubkeys.unlocked.includes(wallet.pubkey)) || ['ledger', 'watch'].includes(settings.walletMode))
       ? (
         <Segment
           loading={system.BIDNAME === 'PENDING'}
