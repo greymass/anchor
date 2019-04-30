@@ -80,6 +80,7 @@ class ProducersTableRow extends Component<Props> {
         </Table.Cell>
         <Table.Cell
           singleLine
+          textAlign="center"
         >
           <b>{ position }</b>
         </Table.Cell>
@@ -99,7 +100,7 @@ class ProducersTableRow extends Component<Props> {
             </Header.Subheader>
           </Header>
         </Table.Cell>
-        <Table.Cell collapsing>
+        <Table.Cell collapsing textAlign="center">
           {(shouldDisplayInfoButton) && (
             <span>
               {(hasInfo)
