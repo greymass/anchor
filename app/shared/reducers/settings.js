@@ -48,6 +48,10 @@ const initialState = {
   idleTimeout: 999999999,
   // Default language
   lang: '',
+  // The date the last backup was created
+  lastBackupDate: false,
+  // Set to true if any keys have been added or changed
+  lastBackupInvalidated: true,
   // Last location a file was opened/saved from
   lastFilePath: '',
   // The node to connect to
