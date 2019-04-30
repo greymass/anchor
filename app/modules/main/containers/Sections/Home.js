@@ -13,6 +13,7 @@ import ColdWalletContainer from './ColdWallet';
 import GlobalBlockchainManage from '.../../../shared/containers/Global/Blockchain/Manage';
 import HomeAccountsContainer from './Home/Accounts';
 import HomeInitializeContainer from './Home/Initialize';
+import HomeUpgradeContainer from './Home/Upgrade';
 import OverviewContainer from './Overview';
 
 class HomeContainer extends Component<Props> {
@@ -53,24 +54,41 @@ class HomeContainer extends Component<Props> {
     }
   }
   render() {
+    const {
+      upgradable
+    } = this.props;
+    let interrupt;
+    if (upgradable) {
+      interrupt = <HomeUpgradeContainer />
+    }
     return (
-      <HashRouter>
-        <Switch>
-          <Route exact path="/" component={OverviewContainer} />
-          <Route path="/home/init" component={HomeInitializeContainer} />
-          <Route path="/home/blockchains" component={GlobalBlockchainManage} />
-          <Route path="/home/accounts" component={HomeAccountsContainer} />
-          <Route path="/home/coldwallet" component={ColdWalletContainer} />
-        </Switch>
-      </HashRouter>
+      <React.Fragment>
+        {interrupt}
+        <HashRouter>
+          <Switch>
+            <Route exact path="/" component={OverviewContainer} />
+            <Route path="/home/accounts" component={HomeAccountsContainer} />
+            <Route path="/home/blockchains" component={GlobalBlockchainManage} />
+            <Route path="/home/coldwallet" component={ColdWalletContainer} />
+            <Route path="/home/init" component={HomeInitializeContainer} />
+            <Route path="/home/upgrade" component={HomeUpgradeContainer} />
+          </Switch>
+        </HashRouter>
+      </React.Fragment>
     );
   }
 }
 
 function mapStateToProps(state) {
   return {
+    auths:state.auths,
+    storage:state.storage,
+    connection:state.connection,
     settings: state.settings,
-    wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId))
+    test: state.wallets,
+    wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId)),
+    // Determine if any wallets require an upgrade from v1
+    upgradable: state.wallets.filter(w => w.data).length,
   };
 }
 
