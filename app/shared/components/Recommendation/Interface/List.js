@@ -31,7 +31,7 @@ class RecommendationInterfaceList extends Component<Props> {
     });
 
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
           content={t('recommendations_header_title')}
           floated="left"

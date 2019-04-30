@@ -16,12 +16,12 @@ class ToolsKeysValidator extends Component<Props> {
     const { connection, t } = this.props;
     const { publicKey, valid } = this.state;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
           content={t('tools_keys_key_validator_header')}
           subheader={t('tools_keys_key_validator_subheader')}
         />
-        <Segment>
+        <Segment basic>
           <Message
             content={t('tools_keys_key_validator_info_content')}
             header={t('tools_keys_key_validator_info_header')}
@@ -36,7 +36,7 @@ class ToolsKeysValidator extends Component<Props> {
             placeholder={t('welcome:welcome_key_compare_placeholder')}
           />
         </Segment>
-        <Segment>
+        <Segment basic>
           <Header
             content={t('tools_keys_key_validator_current_header')}
             subheader={t('tools_keys_key_validator_current_subheader')}

@@ -12,7 +12,7 @@ class ToolsStateChain extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_state_chain_header')}
           <Header.Subheader>

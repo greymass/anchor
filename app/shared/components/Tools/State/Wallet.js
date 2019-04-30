@@ -12,7 +12,7 @@ class ToolsStateWallet extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_wallet_state_header')}
           <Header.Subheader>

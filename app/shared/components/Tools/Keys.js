@@ -33,7 +33,7 @@ class ToolsKeys extends Component<Props> {
     const { connection, t } = this.props;
     const { keys } = this.state;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_keys_key_generation_header')}
           <Header.Subheader>
