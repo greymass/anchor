@@ -62,7 +62,7 @@ class ToolsFormDelegation extends Component<Props> {
       actions,
       balance,
       connection,
-      keys,
+      pubkeys,
       onClose,
       settings,
       system,
@@ -79,7 +79,7 @@ class ToolsFormDelegation extends Component<Props> {
       netOriginal
     } = this.state;
 
-    return ((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+    return (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
       ? (
         <WalletPanelFormStake
           account={account}
