@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import ToolsCrosschainTransferComponent from '../../../../../shared/components/Tools/Blockchains/BEOS/CrosschainTransfer';
 
@@ -24,7 +25,10 @@ function mapStateToProps(state) {
     blockchains: state.blockchains,
     blockExplorers: state.blockExplorers,
     connection: state.connection,
-    keys: state.keys,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
