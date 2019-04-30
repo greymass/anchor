@@ -75,7 +75,8 @@ class Proxies extends Component<Props> {
       settings,
       system,
       t,
-      tables
+      tables,
+      wallet,
     } = this.props;
     const {
       addProxy,
@@ -99,6 +100,26 @@ class Proxies extends Component<Props> {
           onBottomVisible={this.loadMore}
           once={false}
         >
+          {(addProxy || removeProxy)
+            ? (
+              <ProducersProxy
+                account={account}
+                accounts={accounts}
+                actions={actions}
+                addProxy={addProxy}
+                blockExplorers={allBlockExplorers[connection.chainKey]}
+                currentProxy={currentProxy}
+                isProxying={isProxying}
+                isValidUser={isValidUser}
+                onClose={this.onClose}
+                removeProxy={removeProxy}
+                settings={settings}
+                system={system}
+                tables={tables}
+              />
+            )
+            : false
+          }
           <ProxiesTable
             accounts={accounts}
             actions={actions}

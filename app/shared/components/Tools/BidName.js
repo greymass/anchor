@@ -110,7 +110,7 @@ class ToolsProxy extends Component<Props> {
     const relevantNameBidsSorted = sortBy(relevantNameBids, 'newname');
 
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsModalBidName
           account={accounts[settings.account]}
           actions={actions}

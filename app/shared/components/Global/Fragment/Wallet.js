@@ -23,7 +23,7 @@ class GlobalFragmentWallet extends PureComponent<Props> {
           className="ui image"
           seed={`${account}@${authorization}`}
         />
-        <Header.Content>
+        <Header.Content style={{ minWidth: '12em' }}>
           {account}
           <Header.Subheader>
             {authorization} / {mode}

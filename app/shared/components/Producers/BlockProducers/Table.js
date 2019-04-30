@@ -143,7 +143,7 @@ class ProducersTable extends Component<Props> {
     }
     const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
     return (
-      <Segment basic loading={loading} vertical>
+      <Segment color="purple" piled loading={loading}>
         <ProducersModalInfo
           producerInfo={producers.producersInfo[viewing]}
           onClose={this.clearProducerInfo}
@@ -186,7 +186,7 @@ class ProducersTable extends Component<Props> {
           </Grid.Column>
         </Grid>
         <Table
-          color="violet"
+          color="grey"
           size="small"
           striped
           style={{ borderRadius: 0 }}
