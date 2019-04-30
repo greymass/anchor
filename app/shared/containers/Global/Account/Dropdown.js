@@ -51,7 +51,7 @@ class GlobalAccountDropdown extends Component<Props> {
         w.account !== wallet.account
         || w.authorization !== wallet.authorization
       ))
-      .sort((a, b) => a.account > b.account);
+      .sort((a, b) => (a.account > b.account ? 1 : -1));
     let trigger = (
       <GlobalFragmentWallet
         account={wallet.account}
