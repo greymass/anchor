@@ -14,7 +14,7 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
       lng,
       precision,
     } = this.props;
-    if (balance === false) return <Icon name="clock" />;
+    if (balance === false) return <Icon color="grey" name="clock outline" />;
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: precision });
     return (
       <React.Fragment>
@@ -30,7 +30,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     balance: get(state, `balances.${ownProps.account}.${ownProps.token}`, defaultValue),
     precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, defaultValue),
-  }
+  };
 };
 
 export default compose(
