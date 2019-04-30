@@ -18,7 +18,7 @@ class ToolsModalAirgrab extends Component<Props> {
       actions,
       airgrab,
       blockExplorers,
-      keys,
+      pubkeys,
       onClose,
       onOpen,
       settings,
@@ -34,7 +34,7 @@ class ToolsModalAirgrab extends Component<Props> {
         actions={actions}
         blockExplorers={blockExplorers}
         button={false}
-        content={((keys && keys.key) || settings.walletMode === 'watch' || settings.walletMode === 'ledger') ? (
+        content={((pubkeys.unlocked.includes(wallet.pubkey)) || ['ledger', 'watch'].includes(settings.walletMode)) ? (
           <Segment loading={system.CLAIMAIRGRAB === 'PENDING'} basic>
             <strong>
               {t('tools_modal_airgrab_description_label')}

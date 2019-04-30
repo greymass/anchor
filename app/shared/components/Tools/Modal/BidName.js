@@ -14,7 +14,7 @@ class ToolsModalBidName extends Component<Props> {
       blockExplorers,
       bidNameToRemove,
       connection,
-      keys,
+      pubkeys,
       onClose,
       onOpen,
       openModal,
@@ -44,7 +44,7 @@ class ToolsModalBidName extends Component<Props> {
             bidNameToRemove={bidNameToRemove}
             connection={connection}
             key="BidNameForm"
-            keys={keys}
+            pubkeys={pubkeys}
             onClose={onClose}
             settings={settings}
             system={system}

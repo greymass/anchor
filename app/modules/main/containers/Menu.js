@@ -89,11 +89,11 @@ class MenuContainer extends Component<Props> {
     const {
       settings,
       actions,
-      locked,
       pubkeys,
       validate,
       wallet,
     } = this.props;
+    const locked = !pubkeys.unlocked.length;
     return (
       <Menu
         className="nav-topbar"
@@ -149,10 +149,12 @@ class MenuContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     actions: state.actions,
-    locked: (!state.keys.key && state.auths.keystore.length === 0),
     navigation: state.navigation,
     prompt: state.prompt,
-    pubkeys: map(state.auths.keystore, 'pubkey'),
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     validate: state.validate,
