@@ -13,7 +13,7 @@ export default class WalletLockState extends Component<Props> {
       validate,
       wallet
     } = this.props;
-    const walletExists = !!(wallet.data || pubkeys.length);
+    const walletExists = !!((wallet.account && wallet.walletMode === 'hot') || pubkeys.unlocked.length);
     if (!walletExists) return '';
     return locked ? (
       <WalletLockStateLocked

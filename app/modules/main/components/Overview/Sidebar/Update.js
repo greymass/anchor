@@ -54,10 +54,10 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
         <Segment attached="top" color="green" textAlign="center">
           <Image centered src={Logo} size="tiny" />
           <Header>
-            v{update.version}
             <Header.Subheader>
-              Now available!
+              Update Available
             </Header.Subheader>
+            v{update.version}
           </Header>
         </Segment>
         <Segment attached="bottom" secondary stacked>
@@ -70,7 +70,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
             trigger={(
               <Button
                 content="View Details"
-                icon="chevron circle up"
+                icon="external"
                 fluid
                 primary
               />
