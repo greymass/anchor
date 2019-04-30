@@ -8,17 +8,38 @@ class OverviewTableHeader extends Component<Props> {
       settings,
       view
     } = this.props;
+    const tokens = settings.customTokens.filter((token) => {
+      const [chain] = token.split(':');
+      return (chain === settings.chainId);
+    });
+    const balanceHeaders = tokens.map((token) => {
+      const [, contract, symbol] = token.split(':');
+      return (
+        <Table.HeaderCell textAlign="right">
+          <Header
+            content={symbol}
+            size="tiny"
+            subheader={contract}
+          />
+        </Table.HeaderCell>
+      );
+    });
     return (
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell collapsing>
+          <Table.HeaderCell collapsing textAlign="right">
             <Header
-              content="Account(s)"
+              content="Accounts"
+              subheader="Overview"
+              size="tiny"
             />
           </Table.HeaderCell>
           {(view === 'systemtokens')
             ? (
               <React.Fragment>
+                <Table.HeaderCell textAlign="right">
+                  Total
+                </Table.HeaderCell>
                 <Table.HeaderCell textAlign="right">
                   Available
                 </Table.HeaderCell>
@@ -29,7 +50,7 @@ class OverviewTableHeader extends Component<Props> {
                   Delegated
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="right">
-                  Total
+                  Refunding
                 </Table.HeaderCell>
               </React.Fragment>
             )
@@ -38,18 +59,12 @@ class OverviewTableHeader extends Component<Props> {
           {(view === 'balances')
             ? (
               <React.Fragment>
-                {settings.customTokens.map((token) => {
-                  const [chain, contract, symbol] = token.split(':');
-                  if (chain !== settings.chainId) return false;
-                  return (
-                    <Table.HeaderCell textAlign="right">
-                      <Header
-                        content={symbol}
-                        subheader={contract}
-                      />
-                    </Table.HeaderCell>
-                  );
-                })}
+                {(balanceHeaders.length > 0)
+                  ? balanceHeaders
+                  : (
+                    <Table.HeaderCell />
+                  )
+                }
               </React.Fragment>
             )
             : false
