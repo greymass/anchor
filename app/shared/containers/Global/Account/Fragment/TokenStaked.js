@@ -12,7 +12,7 @@ class GlobalAccountFragmentTokenStaked extends PureComponent<Props> {
       balance,
       lng,
     } = this.props;
-    if (balance === false) return <Icon name="clock" />;
+    if (balance === false) return <Icon color="grey" name="clock outline" />;
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: 4 });
     return (
       <React.Fragment>
