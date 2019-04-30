@@ -64,9 +64,8 @@ export function setStake(accountName, netAmount, cpuAmount) {
         if (accountName === settings.account) {
           dispatch(AccountActions.getAccount(accountName));
         }
-
         dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
-      }, 500);
+      }, 1000);
 
       return dispatch({
         payload: {
