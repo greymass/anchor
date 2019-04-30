@@ -38,7 +38,7 @@ class ToolsCreateAccount extends Component<Props> {
       <div>
         {(pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
         ? (
-          <Segment basic>
+          <Segment color="violet" piled style={{ margin: 0 }}>
             <Header>
               {t('tools_create_account_header')}
               <Header.Subheader>
