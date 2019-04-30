@@ -12,6 +12,7 @@ import * as NameBidsActions from '../../../../../shared/actions/namebids';
 import * as TableActions from '../../../../../shared/actions/table';
 import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsBidName extends Component<Props> {
   render = () => (
@@ -45,7 +46,8 @@ function mapDispatchToProps(dispatch) {
       ...BidNameActions,
       ...NameBidsActions,
       ...SystemStateActions,
-      ...TableActions
+      ...TableActions,
+      ...WalletActions,
     }, dispatch)
   };
 }

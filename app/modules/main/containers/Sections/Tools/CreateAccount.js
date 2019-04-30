@@ -11,6 +11,7 @@ import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as CreateAccountActions from '../../../../../shared/actions/createaccount';
 import * as GlobalsActions from '../../../../../shared/actions/globals';
 import * as SystemActions from '../../../../../shared/actions/system/systemstate';
+import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsCrosschainTransfer extends Component<Props> {
   render = () => (
@@ -44,7 +45,8 @@ function mapDispatchToProps(dispatch) {
       ...AccountsActions,
       ...CreateAccountActions,
       ...GlobalsActions,
-      ...SystemActions
+      ...SystemActions,
+      ...WalletActions,
     }, dispatch)
   };
 }
