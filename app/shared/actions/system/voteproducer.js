@@ -27,7 +27,7 @@ export function voteproducers(producers = [], proxy = '') {
         // Add a short delay for data processing on the node
         setTimeout(() => {
           dispatch(getAccounts(accounts));
-        }, 500);
+        }, 1000);
         return dispatch({
           payload: {
             connection,
