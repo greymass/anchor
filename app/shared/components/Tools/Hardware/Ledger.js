@@ -27,7 +27,7 @@ class ToolsHardwareLedger extends Component<Props> {
     const { transport } = new HardwareLedger();
     if (!account) return false;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsHardwareLedgerStatus
           actions={actions}
           ledger={ledger}
