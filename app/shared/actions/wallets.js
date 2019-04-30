@@ -1,4 +1,4 @@
-import { find, forEach, partition } from 'lodash';
+import { find, forEach, partition, pluck } from 'lodash';
 
 import * as types from './types';
 import { getAccount } from './accounts';
@@ -8,6 +8,7 @@ import { decrypt, encrypt, setWalletMode } from './wallet';
 import EOSAccount from '../utils/EOS/Account';
 import eos from './helpers/eos';
 
+const async = require("async");
 const ecc = require('eosjs-ecc');
 const CryptoJS = require('crypto-js');
 
@@ -106,15 +107,12 @@ export function prepareConvertToLedgerAbort(
   };
 }
 
-export function importWalletFromBackup(wallet) {
+export function importWalletFromBackup(wallet, settings = {}) {
   return (dispatch: () => void) => {
-    let mode = 'watch';
-    if (wallet.type === 'key' && wallet.data) {
-      mode = 'hot';
-    }
-    if (wallet.type === 'ledger' && wallet.path) {
-      mode = 'ledger';
-    }
+    let mode = wallet.mode || 'watch';
+    if (wallet.path) mode = 'ledger';
+    if (wallet.data) mode = 'hot';
+    if (settings.walletMode === 'cold') mode = 'cold';
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
@@ -122,9 +120,46 @@ export function importWalletFromBackup(wallet) {
         authorization: wallet.authority,
         chainId: wallet.chainId,
         data: wallet.data,
-        mode,
+        mode: wallet.mode || mode,
         path: wallet.path,
         pubkey: wallet.pubkey
+      }
+    });
+  };
+}
+
+function importKeyStorage(
+  password = false,
+  key = false,
+  pubkey = undefined,
+) {
+  return (dispatch: () => void, getState) => {
+    const { storage } = getState();
+    let data;
+    if (storage.data) {
+      // Decrypt storage
+      const decrypted = JSON.parse(decrypt(storage.data, password).toString(CryptoJS.enc.Utf8));
+      // Generate the new record
+      const record = { key, pubkey };
+      // Pull the other records from storage
+      const [, other] = partition(decrypted, { pubkey });
+      // Merge new entry with array
+      data = [record, ...other];
+    } else {
+      // Establish a new array of keys
+      data = [{
+        key,
+        pubkey
+      }];
+    }
+    // Encrypt and store
+    const keys = data.map(k => k.pubkey);
+    const encrypted = encrypt(JSON.stringify(data), password);
+    return dispatch({
+      type: types.WALLET_STORAGE_UPDATE,
+      payload: {
+        data: encrypted,
+        keys,
       }
     });
   };
@@ -142,7 +177,6 @@ export function importWallet(
 ) {
   return (dispatch: () => void, getState) => {
     const { accounts, settings } = getState();
-    const data = (key && password) ? encrypt(key, password) : undefined;
     const accountData = accounts[account];
     let pubkey = (key) ? ecc.privateToPublic(key) : publicKey;
     if (!pubkey && accountData) {
@@ -150,6 +184,10 @@ export function importWallet(
       if (auths.length > 0) {
         ([{ pubkey }] = auths);
       }
+    }
+    // Import key into permanant storage
+    if (key && password) {
+      dispatch(importKeyStorage(password, key, pubkey));
     }
     // Detect if the current account/authorization is being reimported/replaced, and set mode
     if (
@@ -177,7 +215,6 @@ export function importWallet(
         accountData,
         authorization,
         chainId,
-        data,
         mode,
         path,
         pubkey
@@ -214,7 +251,7 @@ export function removeWallet(chainId, account, authorization) {
 
 export function useWallet(chainId, account, authorization) {
   return (dispatch: () => void, getState) => {
-    const { wallet, wallets } = getState();
+    const { auths, wallet, wallets } = getState();
     // Find the wallet by account name + authorization when possible
     const walletQuery = { account, chainId };
     if (authorization) {
@@ -244,6 +281,22 @@ export function useWallet(chainId, account, authorization) {
         payload: newWallet
       });
     }
+    if (newWallet.mode === 'hot') {
+      const existingKey = find(auths.keystore, { pubkey: newWallet.pubkey });
+      if (existingKey) {
+        const { hash, key } = existingKey;
+        dispatch({
+          payload: {
+            account: newWallet.account,
+            authorization: newWallet.authorization,
+            hash,
+            key,
+            pubkey: newWallet.pubkey,
+          },
+          type: types.SET_CURRENT_KEY
+        });
+      }
+    }
     if (newWallet.mode !== 'cold') {
       // Update the account in local state
       dispatch(getAccount(account));
@@ -270,7 +323,7 @@ export function upgradeWallet(chainId, account, authorization, password = false,
       chainId
     };
     if (authorization) {
-      partitionQuery.authorization = authorization
+      partitionQuery.authorization = authorization;
     }
     const [current] = partition(wallets, partitionQuery);
     if (current.length > 0) {
@@ -348,13 +401,72 @@ export function upgradeWatchWallet(chainId, account, authorization, swap = false
   };
 }
 
+async function upgradeV1Wallet(wallet, password, dispatch) {
+  // Decrypt key and determine public key
+  const key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+  const pubkey = ecc.privateToPublic(key);
+  // Create a modified version without the encrypted info for storage
+  const modified = Object.assign({}, wallet);
+  modified.data = undefined;
+  // Update the wallet storage
+  dispatch({
+    type: types.ADD_WALLET,
+    payload: modified
+  });
+  // Dispatch progress
+  dispatch({
+    type: types.SYSTEM_V1UPGRADE_PROGRESS,
+    payload: {
+      account: wallet.account,
+      authorization: wallet.authorization,
+    }
+  });
+  return {
+    key,
+    pubkey,
+  };
+}
+
+export function upgradeV1Wallets(wallets, password) {
+  return async (dispatch: () => void) => {
+    dispatch({
+      type: types.SYSTEM_V1UPGRADE_PENDING,
+      payload: {
+        total: wallets.length
+      }
+    });
+    setTimeout(async () => {
+      const requests = wallets.map(async (wallet) => upgradeV1Wallet(wallet, password, dispatch));
+      const results = await Promise.all(requests);
+      const keys = results.map(k => k.pubkey);
+      const encrypted = encrypt(JSON.stringify(results), password);
+      dispatch({
+        type: types.WALLET_STORAGE_UPDATE,
+        payload: {
+          data: encrypted,
+          keys,
+        }
+      });
+      // Dispatch success
+      return dispatch({
+        type: types.SYSTEM_V1UPGRADE_SUCCESS,
+        payload: {
+          total: wallets.length
+        }
+      });
+    }, 250);
+  };
+}
+
 export default {
   completeConvertToLedger,
+  importKeyStorage,
   importWallet,
   importWalletFromBackup,
   importWallets,
   prepareConvertToLedger,
   prepareConvertToLedgerAbort,
+  upgradeV1Wallets,
   upgradeWallet,
   upgradeWatchWallet,
   useWallet,
