@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 import ToolsCreateAccountComponent from '../../../../../shared/components/Tools/CreateAccount';
 
@@ -26,7 +27,10 @@ function mapStateToProps(state) {
     balances: state.balances,
     connection: state.connection,
     globals: state.globals,
-    keys: state.keys,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     system: state.system,
     validate: state.validate,
