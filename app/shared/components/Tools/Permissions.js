@@ -45,7 +45,7 @@ class ToolsPermissions extends Component<Props> {
       };
     }
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Container>
           {(settings.advancedPermissions)
             ? (
