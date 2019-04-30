@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Message, Button, Header } from 'semantic-ui-react';
+import { Dimmer, Divider, Form, Loader, Message, Button, Header } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeConfirming from './Stake/Confirming';
@@ -255,9 +255,10 @@ class WalletPanelFormStake extends Component<Props> {
       formError = formError || 'account_does_not_exist';
     }
     return (
-      <Segment
-        loading={system.STAKE === 'PENDING'}
-      >
+      <React.Fragment>
+        <Dimmer active={system.STAKE === 'PENDING'}>
+          <Loader>{t('waiting')}</Loader>
+        </Dimmer>
         {(shouldShowForm)
           ? (
             <div>
@@ -309,6 +310,12 @@ class WalletPanelFormStake extends Component<Props> {
                     defaultValue={decimalNetAmount.toFixed(4)}
                   />
                 </Form.Group>
+                <Header textAlign="center">
+                  {(chainSymbolBalance).toFixed(4)} {connection.chainSymbol || 'EOS'}
+                  <Header.Subheader>
+                    {t('amount_unstaked')}
+                  </Header.Subheader>
+                </Header>
                 <FormMessageError
                   error={formError}
                   chainSymbol={connection.chainSymbol}
@@ -353,7 +360,7 @@ class WalletPanelFormStake extends Component<Props> {
               settings={settings}
             />
           ) : ''}
-      </Segment>
+      </React.Fragment>
     );
   }
 }
