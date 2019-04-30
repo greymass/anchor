@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
 
+import OverviewSidebarBackupContainer from './Sidebar/Backup';
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
-import GlobalButtonAccountImport from '../../../../../shared/components/Global/Button/Account/Import';
 
 const latestUpdate = {
   version: '1.0.1',
@@ -36,13 +36,11 @@ class OverviewSidebarContainer extends Component<Props> {
     } = app;
     return (
       <React.Fragment>
-        <GlobalButtonAccountImport
-          settings={settings}
-        />
         <GlobalSidebarUpdate
           constants={constants}
           update={this.props.latestUpdate}
         />
+        <OverviewSidebarBackupContainer />
       </React.Fragment>
     );
   }
