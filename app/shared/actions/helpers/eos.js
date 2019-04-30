@@ -1,5 +1,6 @@
-import { decrypt } from '../wallet';
+import { Api, JsonRpc } from 'eosjs2';
 
+import { decrypt } from '../wallet';
 import serialize from './ledger/serialize';
 
 const { remote } = require('electron');
@@ -7,7 +8,6 @@ const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');
 
-import { Api, JsonRpc } from 'eosjs2';
 const JsSignatureProvider = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig').default;
 
 export default function eos(connection, signing = false, v2 = false) {
