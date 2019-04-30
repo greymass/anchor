@@ -18,7 +18,7 @@ const toolSections = {
       path: 'tools/airgrabs'
     },
     tools_menu_customtokens: {
-      modes: ['all'],
+      modes: ['hot', 'ledger', 'watch'],
       path: 'tools/custom_tokens'
     },
     tools_menu_delegations: {
@@ -46,7 +46,7 @@ const toolSections = {
   },
   tools_menu_hardware_header: {
     tools_menu_ledger: {
-      modes: ['all'],
+      modes: [false, 'hot', 'ledger', 'watch'],
       path: 'tools/ledger'
     }
   },
@@ -58,7 +58,7 @@ const toolSections = {
   },
   tools_menu_network_utilities_header: {
     'API Performance Analysis': {
-      modes: ['all'],
+      modes: [false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_ping'
     }
   },
@@ -82,13 +82,13 @@ const toolSections = {
       path: 'tools/contacts'
     },
     tools_menu_contracts: {
-      modes: ['all'],
+      modes: [false, 'hot', 'ledger', 'watch'],
       path: 'tools/smart_contracts'
     }
   },
   tools_menu_advanced_header: {
     tools_system_log_header: {
-      modes: ['all'],
+      modes: [false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_traffic_log'
     },
     tools_menu_state_chain: {
