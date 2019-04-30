@@ -8,6 +8,7 @@ const initialState = {
 };
 
 export default function keys(state = initialState, action) {
+  return initialState;
   switch (action.type) {
     case types.PREPARE_WALLET_CONVERT_LEDGER_COMPLETE:
     case types.RESET_ALL_STATES:
