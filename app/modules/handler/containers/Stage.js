@@ -356,7 +356,7 @@ class PromptStage extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    availableKeys: state.auths.map((auth) => auth.pubkey),
+    availableKeys: state.auths.keystore.map((auth) => auth.pubkey),
     blockchains: state.blockchains,
     prompt: state.prompt,
     settings: state.settings,
