@@ -23,6 +23,7 @@ import producers from './producers';
 import prompt from './utils/prompt';
 import proposals from './proposals';
 import settings from './settings';
+import storage from './storage';
 import system from './system';
 import systemlog from './system/log';
 import tables from './tables';
@@ -54,6 +55,7 @@ const rootReducer = combineReducers({
   proposals,
   router,
   settings,
+  storage,
   system,
   systemlog,
   tables,
