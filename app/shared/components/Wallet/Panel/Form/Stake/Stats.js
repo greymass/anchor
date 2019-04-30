@@ -15,15 +15,7 @@ class WalletPanelFormStakeStats extends Component<Props> {
     } = this.props;
 
     return (
-      <Segment.Group horizontal>
-        <Segment>
-          <Header textAlign="center">
-            {(chainSymbolBalance).toFixed(4)} {connection.chainSymbol || 'EOS'}
-            <Header.Subheader>
-              {t('amount_unstaked')}
-            </Header.Subheader>
-          </Header>
-        </Segment>
+      <Segment.Group horizontal stacked>
         <Segment>
           <Header textAlign="center">
             {cpuOriginal.toFixed(4)} {connection.chainSymbol || 'EOS'}
