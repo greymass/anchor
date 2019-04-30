@@ -137,7 +137,7 @@ class ProxiesTable extends Component<Props> {
       }
     }
     return (
-      <Segment basic loading={loading} vertical>
+      <Segment color="purple" loading={loading} piled>
         {(showProxyInfo)
           ? (
             <ProducersModalProxyInfo
@@ -164,7 +164,6 @@ class ProxiesTable extends Component<Props> {
           </Grid.Column>
         </Grid>
         <Table
-          color="violet"
           size="small"
           striped
           style={{ borderRadius: 0 }}
