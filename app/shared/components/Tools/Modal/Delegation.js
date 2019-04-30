@@ -15,7 +15,7 @@ class ToolsModalDelegation extends Component<Props> {
       connection,
       delegationToEdit,
       delegationToRemove,
-      keys,
+      pubkeys,
       onClose,
       openModal,
       settings,
@@ -45,7 +45,7 @@ class ToolsModalDelegation extends Component<Props> {
             delegationToEdit={delegationToEdit}
             delegationToRemove={delegationToRemove}
             key="DelegationForm"
-            keys={keys}
+            pubkeys={pubkeys}
             onClose={onClose}
             settings={settings}
             system={system}

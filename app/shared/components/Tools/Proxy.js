@@ -23,7 +23,7 @@ class ToolsProxy extends Component<Props> {
       allBlockExplorers,
       connection,
       contracts,
-      keys,
+      pubkeys,
       settings,
       system,
       validate,
@@ -40,7 +40,7 @@ class ToolsProxy extends Component<Props> {
 
     const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
 
-    return ((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+    return (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
       ? (
         <React.Fragment>
           <Header>
