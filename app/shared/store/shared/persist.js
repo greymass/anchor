@@ -14,6 +14,7 @@ const persistConfig = {
   whitelist: [
     'blockchains',
     'settings',
+    'storage',
     'wallet',
     'wallets'
   ]
