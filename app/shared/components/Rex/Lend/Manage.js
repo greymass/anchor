@@ -186,6 +186,7 @@ class RexLendManage extends PureComponent<Props> {
             color="green"
             content={t('common:confirm')}
             disabled={system.BUY_REX || system.SELL_REX}
+            floated="right"
             onClick={this.confirmTransaction}
             textAlign="right"
           />
