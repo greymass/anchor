@@ -14,6 +14,7 @@ import {
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionHandler from '../../Global/Transaction/Handler';
+import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import { get } from "dot-prop-immutable";
 
 const invalidErrorMessage = {
@@ -39,14 +40,12 @@ class RexInterfaceFund extends PureComponent<Props> {
       this.setState({
         defundingAmount: undefined,
         fundingAmount: undefined,
-        confirming: false,
       });
     }
     if (nextProps.system.WITHDRAWREX === 'SUCCESS' && this.props.system.WITHDRAWREX === 'PENDING') {
       this.setState({
         defundingAmount: undefined,
         fundingAmount: undefined,
-        confirming: false,
       });
     }
   }
@@ -140,16 +139,8 @@ class RexInterfaceFund extends PureComponent<Props> {
     const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
-      <Segment basic loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
-        <Header
-          content={
-            transactionType === 'fund' ?
-              t('rex_interface_fund_confirmation_modal_header_funding') :
-              t('rex_interface_fund_confirmation_modal_header_defunding')
-          }
-        />
-
-        <GlobalTransactionHandler
+      <Segment loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
+        <GlobalTransactionModal
           actionName={transactionType === 'fund' ? 'DEPOSITREX' : 'WITHDRAWREX'}
           actions={actions}
           blockExplorers={blockExplorers}
@@ -164,35 +155,40 @@ class RexInterfaceFund extends PureComponent<Props> {
                   {t('rex_interface_fund_confirmation_modal_defunding', { amount: defundingAmount })}
                 </p>
               )}
+              <Container style={{ marginTop: 10 }}>
+                <Button
+                  content={t('common:close')}
+                  onClick={() => this.setState({ confirming: false })}
+                  textAlign="left"
+                />
+                <Button
+                  color="green"
+                  content={t('common:confirm')}
+                  disabled={system.DEPOSITREX || system.WITHDRAWREX}
+                  floated="right"
+                  onClick={this.confirmTransaction}
+                  textAlign="right"
+                />
+              </Container>
             </React.Fragment>
           )}
           contract={contract}
-          onClose={this.onClose}
+          open
+          onClose={() => this.setState({ confirming: false })}
           onSubmit={this.onSubmit}
           settings={settings}
           system={system}
+          title={(transactionType === 'fund')
+            ? t('rex_interface_fund_confirmation_modal_header_funding')
+            : t('rex_interface_fund_confirmation_modal_header_defunding')
+          }
           transaction={transaction}
         />
-
-        <Container style={{ marginTop: 10 }}>
-          <Button
-            content={t('common:close')}
-            onClick={() => this.setState({ confirming: false })}
-            textAlign="left"
-          />
-          <Button
-            color="green"
-            content={t('common:confirm')}
-            disabled={system.DEPOSITREX || system.WITHDRAWREX}
-            onClick={this.confirmTransaction}
-            textAlign="right"
-          />
-        </Container>
       </Segment>
     ) : '';
 
     return (
-      <Segment basic>
+      <React.Fragment>
         <Header
           content={t('rex_interface_fund_header')}
           subheader={t('rex_interface_fund_subheader', { chainSymbol: connection.chainSymbol })}
@@ -274,11 +270,12 @@ class RexInterfaceFund extends PureComponent<Props> {
                 onClick={() => this.setState({ confirming: true })}
                 content={transactionType === 'fund' ? t('rex_interface_fund_button') : t('rex_interface_defund_button')}
                 disabled={fundDisabled}
+                primary
               />
             </Form>
           </React.Fragment>
         )}
-      </Segment>
+      </React.Fragment>
     );
   }
 }
