@@ -201,14 +201,14 @@ class ToolsGovernanceProposals extends Component<Props> {
           />
         </Container>
         <Grid>
-          <Grid.Column width={10}>
+          <Grid.Column width={12}>
             <Select
               defaultValue="all"
               name="filterByVote"
               onChange={(e, { value }) => this.setState({ filterByVote: value })}
               options={filterByVoteOptions}
               selection
-              style={{ marginLeft: '10px' }}
+              size="small"
             />
             <Select
               defaultValue="active"
@@ -216,11 +216,13 @@ class ToolsGovernanceProposals extends Component<Props> {
               onChange={(e, { value }) => this.setState({ filterByStatus: value })}
               options={filterByStatusOptions}
               selection
-              style={{ marginLeft: '10px' }}
+              size="small"
+              style={{ marginLeft: '0.25em' }}
             />
           </Grid.Column>
-          <Grid.Column width={6} key="ProducersVotingPreview" textAlign="right">
+          <Grid.Column width={4} key="ProducersVotingPreview" textAlign="right">
             <Input
+              fluid
               placeholder={t('tools_proposals_search_placeholder')}
               onChange={(e) => this.setState({ queryString: e.target.value })}
             />

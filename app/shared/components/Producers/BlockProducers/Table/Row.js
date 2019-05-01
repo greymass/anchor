@@ -100,6 +100,19 @@ class ProducersTableRow extends Component<Props> {
             </Header.Subheader>
           </Header>
         </Table.Cell>
+        <Table.Cell
+          singleLine
+          textAlign="center"
+        >
+          {(producersVotedIn) && (
+            <Header size="tiny">
+              {nf.format(producer.tokenVotes)} EOS
+              <Header.Subheader>
+                {votePercent}% - {voteFormatted}
+              </Header.Subheader>
+            </Header>
+          )}
+        </Table.Cell>
         <Table.Cell collapsing textAlign="center">
           {(shouldDisplayInfoButton) && (
             <span>
@@ -128,54 +141,6 @@ class ProducersTableRow extends Component<Props> {
               }
             </span>
           )}
-        </Table.Cell>
-        <Table.Cell
-          singleLine
-          textAlign="center"
-        >
-          {(producersVotedIn) && (
-            <Header size="small">
-              {nf.format(producer.tokenVotes)} EOS
-              <Header.Subheader>
-                {votePercent}% - {voteFormatted}
-              </Header.Subheader>
-            </Header>
-          )}
-        </Table.Cell>
-        <Table.Cell
-          singleLine
-        >
-          {(position < 22)
-          ? (
-            <Popup
-              content={t('active_producer')}
-              inverted
-              position="left center"
-              trigger={(
-                <Icon
-                  color="green"
-                  name="cubes"
-                />
-              )}
-            />
-            ) : false
-          }
-          {(producer.isBackup && position > 21)
-          ? (
-            <Popup
-              content={t('backup_producer')}
-              inverted
-              position="left center"
-              trigger={(
-                <Icon
-                  color="yellow"
-                  name="cube"
-                />
-              )}
-            />
-            ) : ''
-          }
-
         </Table.Cell>
       </Table.Row>
     );
