@@ -33,6 +33,16 @@ class RexInterfaceFund extends PureComponent<Props> {
     actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
     actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
   }
+  componentWillReceiveProps(nextProps) {
+    if ((nextProps.system.RENTCPUREX === 'SUCCESS' && this.props.system.RENTCPUREX === 'PENDING') ||
+        (nextProps.system.RENTNETREX === 'SUCCESS' && this.props.system.RENTNETREX === 'PENDING')){
+      this.setState({
+        confirming: false,
+        resourceAmount: undefined,
+        transactionType: 'cpu',
+      });
+    }
+  }
   confirmTransaction = () => {
     const { actions } = this.props;
     const { resourceAmount, transactionType } = this.state;
@@ -96,8 +106,6 @@ class RexInterfaceFund extends PureComponent<Props> {
       transactionType
     } = this.state;
 
-    const costFor30days = 0.1;
-
     const dropdownOptions = ['cpu', 'net'].map((type) => (
       {
         key: type,
@@ -119,10 +127,9 @@ class RexInterfaceFund extends PureComponent<Props> {
     }
 
     const saveDisabled = error || !resourceAmount;
-    const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
     const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
     const confirmationPage = confirming ? (
-      <Segment basic loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
+      <Segment basic loading={system.RENTCPUREX === 'PENDING' || system.RENTNETREX === 'PENDING'}>
         <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
         <GlobalTransactionHandler
           actionName={transactionType === 'cpu' ? 'RENTCPUREX' : 'RENTNETREX'}
@@ -136,9 +143,8 @@ class RexInterfaceFund extends PureComponent<Props> {
                     t(
                       'rex_interface_rent_confirmation_modal_rent_cpu',
                       {
-                        amount: resourceAmount,
                         chainSymbol: connection.chainSymbol,
-                        cost
+                        cost: resourceAmount,
                       }
                     )
                   }
@@ -149,9 +155,8 @@ class RexInterfaceFund extends PureComponent<Props> {
                     t(
                       'rex_interface_rent_confirmation_modal_rent_net',
                       {
-                        amount: resourceAmount,
                         chainSymbol: connection.chainSymbol,
-                        cost
+                        cost: resourceAmount,
                       }
                     )
                   }
@@ -168,7 +173,7 @@ class RexInterfaceFund extends PureComponent<Props> {
         />
         <Container>
           <Button
-            content={t('common:close')}
+            content={t('common:cancel')}
             onClick={() => this.setState({ confirming: false })}
             textAlign="left"
           />
