@@ -78,13 +78,14 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
     blocksBehind: 3,
     expireSeconds: 30,
   };
+  let contract;
   if (!eosobj[method]) {
-    const updatedContract = await eosobj.getAbi('eosio');
-    if (updatedContract
-      && updatedContract.account_name
-      && updatedContract.abi
+    contract = await eosobj.getAbi('eosio');
+    if (contract
+      && contract.account_name
+      && contract.abi
     ) {
-      eosobj.fc.abiCache.abi(updatedContract.account_name, updatedContract.abi);
+      eosobj.fc.abiCache.abi(contract.account_name, contract.abi);
     }
     method = 'transaction';
     params = {
@@ -113,6 +114,7 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
     return dispatch({
       payload: {
         connection,
+        contract,
         tx,
       },
       type: types[`SYSTEM_${actionVariable}_SUCCESS`]
