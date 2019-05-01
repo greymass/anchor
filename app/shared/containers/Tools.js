@@ -117,6 +117,16 @@ const paneMapping = [
     name: 'permissions',
   },
   {
+    element: RexLend,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'rex_lend',
+  },
+  {
+    element: RexRent,
+    modes: ['hot', 'watch', 'ledger'],
+    name: 'rex_rent',
+  },
+  {
     element: RecommendationInterface,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'recommendation',
@@ -195,16 +205,6 @@ const paneMapping = [
     element: ToolsProxy,
     modes: ['hot', 'ledger', 'watch', 'temp'],
     name: 'proxy',
-  },
-  {
-    element: RexLend,
-    modes: ['hot', 'watch', 'ledger'],
-    name: 'rex_lend',
-  },
-  {
-    element: RexRent,
-    modes: ['hot', 'watch', 'ledger'],
-    name: 'rex_rent',
   },
   {
     header: true,
