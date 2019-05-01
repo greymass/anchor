@@ -167,7 +167,7 @@ class RexLendManage extends PureComponent<Props> {
           />
         </Container>
       </React.Fragment>
-    ) : '';
+    ) : false;
 
     return (
       <Segment basic>
