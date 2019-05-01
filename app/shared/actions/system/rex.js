@@ -78,7 +78,7 @@ function rexAction(actionName, actionVariable, amount, dispatch, getState) {
       dispatch(getCurrencyBalance(settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.accoun));
-    }, 500);
+    }, 1000);
     return dispatch({
       payload: { connection },
       type: types[`SYSTEM_${actionVariable}_SUCCESS`]
