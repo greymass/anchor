@@ -68,7 +68,7 @@ class RexLendManage extends PureComponent<Props> {
 
       const { tables, settings } = this.props;
 
-      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
+      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
       const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
       let notEnoughBalance = false;
@@ -84,7 +84,7 @@ class RexLendManage extends PureComponent<Props> {
       }
 
       if (notEnoughBalance) {
-        this.setState({ error: 'insufficient_balance' });
+        this.setState({ error: 'insufficient_balance_matured' });
       }
     });
   };
