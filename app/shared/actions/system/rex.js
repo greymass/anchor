@@ -4,38 +4,38 @@ import eos from '../helpers/eos';
 
 export function buyrex(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('buyrex', types.BUYREX, amount, dispatch, getState);
+    rexAction('buyrex', 'BUYREX', amount, dispatch, getState);
   };
 }
 
 export function sellrex(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('sellrex', types.SELLREX, amount, dispatch, getState);
+    rexAction('sellrex', 'SELLREX', amount, dispatch, getState);
   };
 }
 
 export function depositrex(amount) {
   console.log({amount})
   return (dispatch: () => void, getState) => {
-    rexAction('deposit', types.DEPOSITREX, amount, dispatch, getState);
+    rexAction('deposit', 'DEPOSITREX', amount, dispatch, getState);
   };
 }
 
 export function withdrawrex(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('withdraw', types.WITHDRAWREX, amount, dispatch, getState);
+    rexAction('withdraw', 'WITHDRAWREX', amount, dispatch, getState);
   };
 }
 
 export function rentcpu(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('rentCpu', types.RENTCPUREX, amount, dispatch, getState);
+    rexAction('rentCpu', 'RENTCPUREX', amount, dispatch, getState);
   };
 }
 
 export function rentnet(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('rentNet', types.RENTNETREX, amount, dispatch, getState);
+    rexAction('rentNet', 'RENTNETREX', amount, dispatch, getState);
   };
 }
 
