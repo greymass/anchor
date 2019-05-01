@@ -1,6 +1,7 @@
 {
   "rex_interface_defund_button": "Remove Funds",
-  "rex_interface_fund_balance": "{{balance}} {{chainSymbol}} available",
+  "rex_interface_fund_balance": "{{balance}} {{chainSymbol}} available for deposit",
+  "rex_interface_fund_withdraw_balance": "{{balance}} {{chainSymbol}} in contract that can be withdrawn",
   "rex_interface_fund_button": "Add Funds",
   "rex_interface_fund_confirmation_modal_defunding": "About to remove {{amount}} from your fund. The amount will be added to your balance.",
   "rex_interface_fund_confirmation_modal_funding": "About to add {{amount}} to your fund. The amount will be removed from your balance and will show up in your fund.",

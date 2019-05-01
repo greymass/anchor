@@ -67,7 +67,7 @@ class RexInterfaceFund extends PureComponent<Props> {
         const balanceAmount = balance[connection.chainSymbol];
         notEnoughBalance = balanceAmount < Number(value.split(' ')[0]);
       } else {
-        const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexfund`) || [])[0];
+        const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.balance`, '0.0000 EOS');
         notEnoughBalance =
           Number((rexBalance || '').split(' ')) <
           Number(value.split(' ')[0]);
@@ -86,7 +86,8 @@ class RexInterfaceFund extends PureComponent<Props> {
       connection,
       settings,
       system,
-      t
+      t,
+      tables,
     } = this.props;
     const {
       confirming,
@@ -117,6 +118,8 @@ class RexInterfaceFund extends PureComponent<Props> {
     if (system && system[`${actionName}_LAST_CONTRACT`]) {
       contract = system[`${actionName}_LAST_CONTRACT`];
     }
+
+    const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
       <Segment basic loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
@@ -181,15 +184,28 @@ class RexInterfaceFund extends PureComponent<Props> {
               {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
             </Message>
             <Message
-              content={
-                t(
-                  'rex_interface_fund_balance',
-                  {
-                    balance: balance[connection.chainSymbol],
-                    chainSymbol: connection.chainSymbol
-                  }
-                )
-              }
+              content={(
+                <React.Fragment>
+                  <p>
+                    {t(
+                      'rex_interface_fund_balance',
+                      {
+                        balance: balance[connection.chainSymbol],
+                        chainSymbol: connection.chainSymbol
+                      }
+                    )}
+                  </p>
+                  <p>
+                    {t(
+                      'rex_interface_fund_withdraw_balance',
+                      {
+                        balance: rexFundBalance,
+                        chainSymbol: ''
+                      }
+                    )}
+                  </p>
+                </React.Fragment>
+              )}
             />
             <Form>
               <Form.Group widths="equal">
