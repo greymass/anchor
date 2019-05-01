@@ -101,7 +101,7 @@ class BlockProducers extends Component<Props> {
 
       const contracts = get(connection, 'supportedContracts', []);
 
-      if (contracts.includes('producerinfo')) {
+      if (contracts && contracts.includes('producerinfo')) {
         getProducersInfo();
       }
     }
