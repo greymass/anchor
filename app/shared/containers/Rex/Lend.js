@@ -108,6 +108,8 @@ class RexLend extends Component<Props> {
     ];
 
     const account = accounts[settings.account];
+    if (!account) return false;
+
     const votingOrProxying = get(account, 'voter_info.producers', []).length >= 21 || account.voter_info.proxy;
     const isNotVotingOrProxying = !votingOrProxying
     const isUnlocked = (keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode);
