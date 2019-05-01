@@ -9,6 +9,7 @@ import { update as update010 } from './migrations/010-updateBlockchains';
 import { update as update011 } from './migrations/011-updateBlockchains';
 import { update as update012 } from './migrations/012-updateBlockchains';
 import { update as update013 } from './migrations/013-updateBlockchains';
+import { update as update014 } from './migrations/014-updateBlockchains';
 
 const defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
 
@@ -262,11 +263,17 @@ const migrations = {
   13: (state) => Object.assign({}, state, {
     blockchains: update013(state.blockchains),
   }),
+  /*
+   14 - Add REX contract support to EOS mainnet
+ */
+  14: (state) => Object.assign({}, state, {
+    blockchains: update014(state.blockchains),
+  }),
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 13,
+  version: 14,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables
