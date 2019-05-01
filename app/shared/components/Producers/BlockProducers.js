@@ -176,7 +176,7 @@ class BlockProducers extends Component<Props> {
                 <ProducersTablePlaceholder />
               )}
           </Grid.Column>
-          <Grid.Column width={5} style={{ paddingTop: '1em' }}>
+          <Grid.Column width={5}>
             {(isLoaded)
               ? sidebar
               : (
