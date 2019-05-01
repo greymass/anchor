@@ -36,10 +36,18 @@ class RexInterfaceFund extends PureComponent<Props> {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.system.DEPOSITREX === 'SUCCESS' && this.props.system.DEPOSITREX === 'PENDING') {
-      this.setState({ confirming: false });
+      this.setState({
+        defundingAmount: undefined,
+        fundingAmount: undefined,
+        confirming: false,
+      });
     }
     if (nextProps.system.WITHDRAWREX === 'SUCCESS' && this.props.system.WITHDRAWREX === 'PENDING') {
-      this.setState({ confirming: false });
+      this.setState({
+        defundingAmount: undefined,
+        fundingAmount: undefined,
+        confirming: false,
+      });
     }
   }
   confirmTransaction = () => {
