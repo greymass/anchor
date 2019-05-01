@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
-import GlobalTransactionHandler from '../../Global/Transaction/Handler';
+import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
 class RexLendManage extends PureComponent<Props> {
   state = {
@@ -28,22 +28,20 @@ class RexLendManage extends PureComponent<Props> {
     actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
     actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.system.BUYREX === 'SUCCESS' && this.props.system.BUYREX === 'PENDING') {
-      this.setState({
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.system.BUYREX === 'SUCCESS' && this.props.system.BUYREX === 'PENDING') {
+  //     this.setState({
+  //       amountToBuy: undefined,
+  //       amountToSell: undefined,
+  //     });
+  //   }
+  //   if (nextProps.system.SELLREX === 'SUCCESS' && this.props.system.SELLREX === 'PENDING') {
+  //     this.setState({
         amountToBuy: undefined,
         amountToSell: undefined,
-        confirming: false,
-      });
-    }
-    if (nextProps.system.SELLREX === 'SUCCESS' && this.props.system.SELLREX === 'PENDING') {
-      this.setState({
-        amountToBuy: undefined,
-        amountToSell: undefined,
-        confirming: false,
-      });
-    }
-  }
+  //     });
+  //   }
+  // }
   confirmTransaction = () => {
     const { actions } = this.props;
     const { amountToBuy, amountToSell, transactionType } = this.state;
@@ -88,6 +86,13 @@ class RexLendManage extends PureComponent<Props> {
       }
     });
   };
+  onClose = () => {
+    this.setState({
+      confirming: false,
+      amountToBuy: undefined,
+      amountToSell: undefined,
+    });
+  }
   render() {
     const {
       actions,
@@ -140,62 +145,61 @@ class RexLendManage extends PureComponent<Props> {
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
-      <Segment loading={system.BUYREX === 'PENDING' || system.SELLREX === 'PENDING'}>
-        <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
-        <GlobalTransactionHandler
-          actionName={transactionType === 'buy' ? 'BUYREX' : 'SELLREX'}
-          actions={actions}
-          blockExplorers={blockExplorers}
-          content={(
-            <React.Fragment>
-              { transactionType === 'buy' ? (
-                <p>
-                  {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
-                    amountToBuy,
-                    rexAmount: (amountToBuy.split(' ')[0] / priceOfRex)
-                  })}
-                </p>
-              ) : (
-                <p>
-                  {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
-                    amountToSell,
-                    rexAmount: (amountToSell.split(' ')[0] / priceOfRex)
-                  })}
-                </p>
-              )}
-            </React.Fragment>
-          )}
-          contract={contract}
-          onClose={this.onClose}
-          onSubmit={this.onSubmit}
-          settings={settings}
-          system={system}
-          transaction={transaction}
-        />
-        <Container>
-          <Button
-            content={t('common:cancel')}
-            onClick={() => this.setState({
-              amountToBuy: undefined,
-              amountToSell: undefined,
-              confirming: false,
-            })}
-            textAlign="left"
-          />
-          <Button
-            color="green"
-            content={t('common:confirm')}
-            disabled={system.BUY_REX || system.SELL_REX}
-            floated="right"
-            onClick={this.confirmTransaction}
-            textAlign="right"
-          />
-        </Container>
-      </Segment>
+      <GlobalTransactionModal
+        actionName={transactionType === 'buy' ? 'BUYREX' : 'SELLREX'}
+        actions={actions}
+        blockExplorers={blockExplorers}
+        content={(
+          <React.Fragment>
+            { transactionType === 'buy' ? (
+              <p>
+                {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
+                  amountToBuy,
+                  rexAmount: (amountToBuy.split(' ')[0] / priceOfRex)
+                })}
+              </p>
+            ) : (
+              <p>
+                {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
+                  amountToSell,
+                  rexAmount: (amountToSell.split(' ')[0] / priceOfRex)
+                })}
+              </p>
+            )}
+            <Container>
+              <Button
+                color="green"
+                content={t('common:confirm')}
+                disabled={system.BUY_REX || system.SELL_REX}
+                floated="right"
+                onClick={this.confirmTransaction}
+                textAlign="right"
+              />
+              <Button
+                content={t('common:cancel')}
+                onClick={() => this.setState({
+                  amountToBuy: undefined,
+                  amountToSell: undefined,
+                  confirming: false,
+                })}
+                textAlign="left"
+              />
+            </Container>
+          </React.Fragment>
+        )}
+        contract={contract}
+        onClose={this.onClose}
+        onSubmit={this.onSubmit}
+        open
+        settings={settings}
+        system={system}
+        title={t('rex_interface_manage_rex_confirmation_modal_header')}
+        transaction={transaction}
+      />
     ) : false;
 
     return (
-      <Segment basic>
+      <React.Fragment>
         <Header>
           {t('rex_interface_manage_rex_header', { chainSymbol: connection.chainSymbol })}
           <Header.Subheader>
@@ -289,12 +293,13 @@ class RexLendManage extends PureComponent<Props> {
               <Button
                 content={transactionType === 'buy' ? t('rex_interface_manage_rex_buy_button') : t('rex_interface_manage_rex_sell_button')}
                 disabled={saveDisabled}
+                primary
                 onClick={() => this.setState({ confirming: true })}
               />
             </Form>
           </React.Fragment>
         )}
-      </Segment>
+      </React.Fragment>
     );
   }
 }
