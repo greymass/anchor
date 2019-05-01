@@ -22,6 +22,18 @@ export default function tables(state = initialState, action) {
 
       return set(state, `${code}.${scope}.${table}`, { more, rows });
     }
+    case types.SYSTEM_GETTABLEBYBOUNDS_SUCCESS: {
+      const {
+        bounds,
+        code,
+        more,
+        rows,
+        scope,
+        table,
+      } = action.payload;
+
+      return set(state, `${code}.${scope}.${table}.${bounds}`, { more, rows });
+    }
     default: {
       return state;
     }
