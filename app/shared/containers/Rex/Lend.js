@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Tab, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
+import { get } from 'dot-prop-immutable';
 
 import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
@@ -107,7 +108,7 @@ class RexLend extends Component<Props> {
     ];
 
     const account = accounts[settings.account];
-    const votingOrProxying = account.voter_info.producers.length >= 21 || account.voter_info.proxy;
+    const votingOrProxying = get(account, 'voter_info.producers', []).length >= 21 || account.voter_info.proxy;
     const isNotVotingOrProxying = !votingOrProxying
     const isUnlocked = (keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode);
     const isLocked = !isUnlocked;
