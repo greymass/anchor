@@ -113,6 +113,8 @@ class RexInterfaceFund extends PureComponent<Props> {
       transactionType
     } = this.state;
 
+    if (!balance) return false;
+
     const fundDisabled = error ||
       (!fundingAmount && transactionType === 'fund') ||
       (!defundingAmount && transactionType === 'defund');
