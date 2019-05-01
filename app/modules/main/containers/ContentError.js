@@ -10,6 +10,7 @@ const { getCurrentWindow } = require('electron').remote;
 
 class ContentErrorContainer extends Component<Props> {
   reset = () => {
+    this.props.actions.changeModule('/');
     getCurrentWindow().reload();
   }
   render = () => {
