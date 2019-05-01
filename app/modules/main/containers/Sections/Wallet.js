@@ -9,6 +9,7 @@ import {
   withRouter
 } from 'react-router-dom';
 
+import WalletRamContainer from './Wallet/Ram';
 import WalletStakeContainer from './Wallet/Stake';
 import WalletTransferContainer from './Wallet/Transfer';
 import NavigationWalletContainer from '../Navigation/Wallet';
@@ -22,6 +23,7 @@ class WalletContainer extends Component<Props> {
           <Switch>
             <Route exact path="/wallet" component={WalletTransferContainer} />
             <Route path="/wallet/stake" component={WalletStakeContainer} />
+            <Route path="/wallet/ram" component={WalletRamContainer} />
           </Switch>
         </HashRouter>
       </React.Fragment>
