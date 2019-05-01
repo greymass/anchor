@@ -110,8 +110,16 @@ class RexLend extends Component<Props> {
     const account = accounts[settings.account];
     if (!account) return false;
 
-    const votingOrProxying = get(account, 'voter_info.producers', []).length >= 21 || account.voter_info.proxy;
-    const isNotVotingOrProxying = !votingOrProxying
+    const votingOrProxying = !!(
+      account
+      && account.voter_info
+      && (
+        get(account, 'voter_info.producers', []).length >= 21
+        || account.voter_info.proxy
+      )
+    );
+
+    const isNotVotingOrProxying = !votingOrProxying;
     const isUnlocked = (keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode);
     const isLocked = !isUnlocked;
 
@@ -126,7 +134,8 @@ class RexLend extends Component<Props> {
           />
         ) : isNotVotingOrProxying ? (
           <Message
-            content={t('rex_not_voting_or_proxying')}
+            header={t('rex_not_voting_or_proxying_header')}
+            content={t('rex_not_voting_or_proxying_subheader')}
             warning
           />
         ) : (
