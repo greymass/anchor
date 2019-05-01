@@ -140,7 +140,7 @@ class RexLendManage extends PureComponent<Props> {
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
-      <React.Fragment>
+      <Segment loading={system.BUYREX === 'PENDING' || system.SELLREX === 'PENDING'}>
         <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
         <GlobalTransactionHandler
           actionName={transactionType === 'buy' ? 'BUYREX' : 'SELLREX'}
@@ -186,18 +186,19 @@ class RexLendManage extends PureComponent<Props> {
             textAlign="right"
           />
         </Container>
-      </React.Fragment>
+      </Segment>
     ) : false;
 
     return (
       <Segment basic>
+        <Header>
+          {t('rex_interface_manage_rex_header', { chainSymbol: connection.chainSymbol })}
+          <Header.Subheader>
+            {t('rex_interface_manage_rex_subheader', { chainSymbol: connection.chainSymbol })}
+          </Header.Subheader>
+        </Header>
         {confirming ? confirmationPage : (
           <React.Fragment>
-            <Message
-              warning
-            >
-              {t('rex_interface_manage_rex_message', { chainSymbol: connection.chainSymbol })}
-            </Message>
             <Message>
               <p>
                 {
