@@ -84,7 +84,7 @@ class ProducersTable extends Component<Props> {
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
             const contracts = get(connection, 'supportedContracts', []);
-            const hasInfo = contracts.includes('producerinfo') && !!(get(producers.producersInfo, producer.owner));
+            const hasInfo = contracts && contracts.includes('producerinfo') && !!(get(producers.producersInfo, producer.owner));
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
