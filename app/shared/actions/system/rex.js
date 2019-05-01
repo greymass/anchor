@@ -49,6 +49,14 @@ function rexAction(actionName, actionVariable, amount, dispatch, getState) {
     type: types[`SYSTEM_${actionVariable}_PENDING`]
   });
 
+  let accountField = 'owner';
+  let amountField = 'amount';
+  if (['BUYREX', 'SELLREX'].includes(actionVariable)) {
+    accountField = 'from';
+  }
+  if (['SELLREX'].includes(actionVariable)) {
+    amountField = 'rex';
+  }
   return eos(connection, true, true).transact({
     actions: [{
       account: 'eosio',
@@ -58,8 +66,8 @@ function rexAction(actionName, actionVariable, amount, dispatch, getState) {
         permission: settings.authorization,
       }],
       data: {
-        owner: settings.account,
-        amount
+        [accountField]: settings.account,
+        [amountField]: amount,
       },
     }]
   }, {
