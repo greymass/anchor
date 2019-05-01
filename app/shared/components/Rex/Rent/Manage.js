@@ -13,7 +13,11 @@ import {
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
-import GlobalTransactionHandler from '../../Global/Transaction/Handler';
+import GlobalTransactionModal from '../../Global/Transaction/Modal';
+import WalletStatusResources from '../../Wallet/Status/Resources';
+
+import EOSAccount from '../../../utils/EOS/Account';
+
 import { get } from "dot-prop-immutable";
 
 const invalidErrorMessage = {
@@ -32,16 +36,6 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
     actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
-  }
-  componentWillReceiveProps(nextProps) {
-    if ((nextProps.system.RENTCPUREX === 'SUCCESS' && this.props.system.RENTCPUREX === 'PENDING') ||
-        (nextProps.system.RENTNETREX === 'SUCCESS' && this.props.system.RENTNETREX === 'PENDING')){
-      this.setState({
-        confirming: false,
-        resourceAmount: undefined,
-        transactionType: 'cpu',
-      });
-    }
   }
   confirmTransaction = () => {
     const { actions } = this.props;
@@ -89,9 +83,18 @@ class RexInterfaceFund extends PureComponent<Props> {
       }
     });
   };
+  onClose = () => {
+    this.setState({
+      confirming: false,
+      resourceAmount: undefined,
+      transactionType: 'cpu',
+    });
+  }
   render() {
     const {
+      accounts,
       actions,
+      balance,
       blockExplorers,
       connection,
       settings,
@@ -130,8 +133,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
     const confirmationPage = confirming ? (
       <Segment basic loading={system.RENTCPUREX === 'PENDING' || system.RENTNETREX === 'PENDING'}>
-        <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
-        <GlobalTransactionHandler
+        <GlobalTransactionModal
           actionName={transactionType === 'cpu' ? 'RENTCPUREX' : 'RENTNETREX'}
           actions={actions}
           blockExplorers={blockExplorers}
@@ -162,49 +164,58 @@ class RexInterfaceFund extends PureComponent<Props> {
                   }
                 </p>
               )}
+              <Container>
+                <Button
+                  content={t('common:cancel')}
+                  onClick={() => this.setState({ confirming: false })}
+                  textAlign="left"
+                />
+                <Button
+                  color="green"
+                  content={t('common:confirm')}
+                  disabled={system.RENT_CPU || system.RENT_NET}
+                  floated="right"
+                  onClick={this.confirmTransaction}
+                  textAlign="right"
+                />
+              </Container>
             </React.Fragment>
           )}
           contract={contract}
           onClose={this.onClose}
           onSubmit={this.onSubmit}
+          open
           settings={settings}
           system={system}
+          title={t('rex_interface_rent_resources_confirmation_modal_header')}
           transaction={transaction}
         />
-        <Container>
-          <Button
-            content={t('common:cancel')}
-            onClick={() => this.setState({ confirming: false })}
-            textAlign="left"
-          />
-          <Button
-            color="green"
-            content={t('common:confirm')}
-            disabled={system.RENT_CPU || system.RENT_NET}
-            onClick={this.confirmTransaction}
-            textAlign="right"
-          />
-        </Container>
       </Segment>
     ) : '';
+
+    const account = accounts[settings.account] || {};
+
+    const delegations = tables &&
+                        tables.eosio &&
+                        tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband &&
+                        tables.eosio[settings.account].delband.rows;
+    const eosAccount = new EOSAccount(account, balance, delegations, connection.chainSymbol);
+
     return (
-      <Segment basic>
+      <React.Fragment>
+        <Header>
+          {t('rex_interface_lease_resources_header', { chainSymbol: connection.chainSymbol })}
+          <Header.Subheader>
+            {t('rex_interface_lease_resources_subheader', { chainSymbol: connection.chainSymbol })}
+          </Header.Subheader>
+        </Header>
         {confirming ? confirmationPage : (
           <React.Fragment>
-            <Message
-              warning
-            >
-              {t('rex_interface_rent_message', { chainSymbol: connection.chainSymbol })}
-            </Message>
-            <Message
-              content={
-                t(
-                  'rex_interface_rent_funding_balance',
-                  {
-                    fundedBalance: rexFundBalance,
-                  }
-                )
-              }
+            <WalletStatusResources
+              disableRam
+              displayResourcesAvailableSetting={settings.displayResourcesAvailable}
+              eosAccount={eosAccount}
             />
             <Form>
               <Form.Group widths="equal">
@@ -229,6 +240,16 @@ class RexInterfaceFund extends PureComponent<Props> {
                   onChange={this.handleChange}
                 />
               </Form.Group>
+              <Message
+                content={
+                  t(
+                    'rex_interface_rent_funding_balance',
+                    {
+                      fundedBalance: rexFundBalance,
+                    }
+                  )
+                }
+              />
               {error && (
                 <GlobalFormMessageError
                   style={{ marginTop: '20px', marginBottom: '20px' }}
@@ -239,12 +260,12 @@ class RexInterfaceFund extends PureComponent<Props> {
                 content={t('rex_interface_rent_resources_button')}
                 disabled={saveDisabled}
                 onClick={() => this.setState({ confirming: true })}
+                primary
               />
             </Form>
           </React.Fragment>
         )}
-
-      </Segment>
+      </React.Fragment>
     );
   }
 }
