@@ -105,7 +105,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     let transaction;
     let contract;
 
-    const actionName = transactionType === 'cpu' ? 'RENTCPU' : 'RENTNET';
+    const actionName = transactionType === 'cpu' ? 'RENTCPUREX' : 'RENTNETREX';
 
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
@@ -123,7 +123,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       <React.Fragment>
         <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
         <GlobalTransactionHandler
-          actionName={transactionType === 'cpu' ? 'RENTCPU' : 'RENTNET'}
+          actionName={transactionType === 'cpu' ? 'RENTCPUREX' : 'RENTNETREX'}
           actions={actions}
           blockExplorers={blockExplorers}
           content={(
