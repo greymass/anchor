@@ -98,6 +98,7 @@ class RexRent extends Component<Props> {
               connection={connection}
               settings={settings}
               system={system}
+              tables={tables}
             />
           )
         }
