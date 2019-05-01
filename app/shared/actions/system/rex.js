@@ -46,7 +46,8 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
   } = getState();
 
   dispatch({
-    type: types[`SYSTEM_${actionVariable}_PENDING`]
+    type: types[`SYSTEM_${actionVariable}_PENDING`],
+    payload: { connection }
   });
 
   let accountField = 'owner';
@@ -61,6 +62,10 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
   // hack to get signing working on ledger - needs to be refactored
   const eosobj = eos(connection, true, true);
   let method = 'transact';
+  let params = {
+    blocksBehind: 3,
+    expireSeconds: 30,
+  };
   if (!eosobj[method]) {
     const updatedContract = await eosobj.getAbi('eosio');
     if (updatedContract
@@ -70,6 +75,11 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
       eosobj.fc.abiCache.abi(updatedContract.account_name, updatedContract.abi);
     }
     method = 'transaction';
+    params = {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
+    };
   }
 
   return eosobj[method]({
@@ -85,17 +95,17 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
         [amountField]: amount,
       },
     }]
-  }, {
-    blocksBehind: 3,
-    expireSeconds: 30,
-  }).then(() => {
+  }, params).then((tx) => {
     setTimeout(() => {
       dispatch(getCurrencyBalance(settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.accoun));
     }, 1000);
     return dispatch({
-      payload: { connection },
+      payload: {
+        connection,
+        tx,
+      },
       type: types[`SYSTEM_${actionVariable}_SUCCESS`]
     });
   }).catch((err) => {
