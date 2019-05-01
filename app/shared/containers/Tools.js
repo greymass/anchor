@@ -120,11 +120,13 @@ const paneMapping = [
     element: RexLend,
     modes: ['hot', 'watch', 'ledger'],
     name: 'rex_lend',
+    requiredContract: 'rex',
   },
   {
     element: RexRent,
     modes: ['hot', 'watch', 'ledger'],
     name: 'rex_rent',
+    requiredContract: 'rex',
   },
   {
     element: RecommendationInterface,
