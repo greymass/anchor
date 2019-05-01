@@ -11,6 +11,8 @@ import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
 
 import RexActions from '../../actions/system/rex';
 import TableAction from '../../actions/table';
+import SystemStateActions from '../../actions/system/systemstate';
+import { Message } from './Rent';
 
 type Props = {
   actions: {},
@@ -34,7 +36,8 @@ class RexLend extends Component<Props> {
       connection,
       settings,
       system,
-      t
+      t,
+      tables
     } = this.props;
 
     const panes = [
@@ -86,19 +89,31 @@ class RexLend extends Component<Props> {
               connection={connection}
               settings={settings}
               system={system}
+              tables={tables}
             />
           )
         }
       }
     ];
+
+    const account = accounts[settings.account];
+    const votingOrProxying = account.voter_info.producers.length === 21 || account.voter_info.proxy;
+
     return (
       <React.Fragment>
-        <Tab
-          defaultActiveIndex={0}
-          onTabChange={this.onTabChange}
-          panes={panes}
-          renderActiveOnly={false}
-        />
+        {votingOrProxying ? (
+          <Tab
+            defaultActiveIndex={0}
+            onTabChange={this.onTabChange}
+            panes={panes}
+            renderActiveOnly={false}
+          />
+        ) : (
+          <Message
+            content={t('rex_not_voting_or_proxying')}
+            warning
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -108,7 +123,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...RexActions,
-      ...TableAction
+      ...TableAction,
+      ...SystemStateActions,
     }, dispatch)
   };
 }
@@ -119,7 +135,8 @@ function mapStateToProps(state) {
     balance: state.balances[state.settings.account],
     blockExplorers: (state.connection && state.blockexplorers[state.connection.chainKey]) || {},
     connection: state.connection,
-    settings: state.settings
+    settings: state.settings,
+    tables: state.tables,
   };
 }
 

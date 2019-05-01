@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
+import { get } from 'dot-prop-immutable';
 import {
   Button,
   Container,
@@ -9,7 +10,6 @@ import {
   Message,
   Segment,
   Header,
-  Modal,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
@@ -104,10 +104,13 @@ class RexLendManage extends PureComponent<Props> {
       (!amountToBuy && transactionType === 'buy') ||
       (!amountToSell && transactionType === 'sell');
     const displaySuccessMessage = !saveDisabled;
+    console.log({tables})
+    const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexbal`) || [])[0];
+    console.log({rexBalance})
+    const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
+   console.log({fundedBalance})
 
-    const fundedBalance = tables.eosio[settings.account].rexbal[0];
-
-    const confirmationPage = (
+    const confirmationPage = (amountToBuy || amountToSell) && (
       <React.Fragment>
         <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
         <GlobalTransactionHandler
