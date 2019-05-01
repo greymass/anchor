@@ -1,5 +1,6 @@
 import * as types from '../types';
-
+import { getCurrencyBalance } from '../accounts';
+import { getTableByBounds } from '../table';
 import eos from '../helpers/eos';
 
 export function buyrex(amount) {
@@ -65,6 +66,11 @@ function rexAction(actionName, actionVariable, amount, dispatch, getState) {
     blocksBehind: 3,
     expireSeconds: 30,
   }).then(() => {
+    setTimeout(() => {
+      dispatch(getCurrencyBalance(settings.account));
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.accoun));
+    }, 500);
     return dispatch({
       payload: { connection },
       type: types[`SYSTEM_${actionVariable}_SUCCESS`]
