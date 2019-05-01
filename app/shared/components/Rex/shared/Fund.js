@@ -39,13 +39,9 @@ class RexInterfaceFund extends PureComponent<Props> {
     const { defundingAmount, fundingAmount, transactionType } = this.state;
 
     if (transactionType === 'fund') {
-      actions.depositrex({
-        fundingAmount
-      });
+      actions.depositrex(fundingAmount);
     } else {
-      actions.withdrawrex({
-        defundingAmount
-      });
+      actions.withdrawrex(defundingAmount);
     }
   };
   handleChange = ({ name, value, valid }) => {
