@@ -52,7 +52,7 @@ class RexLendManage extends PureComponent<Props> {
 
       const { tables, settings } = this.props;
 
-      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.balance`, '0.0000 EOS');
+      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
       const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
       let notEnoughBalance = false;
@@ -116,7 +116,7 @@ class RexLendManage extends PureComponent<Props> {
       (!amountToBuy && transactionType === 'buy') ||
       (!amountToSell && transactionType === 'sell');
     const displaySuccessMessage = !saveDisabled;
-    const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.balance`, '0.0000 EOS');
+    const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
