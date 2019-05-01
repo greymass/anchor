@@ -60,7 +60,7 @@ export default function eos(connection, signing = false, v2 = false) {
     decrypted.signProvider = undefined;
   }
 
-  if (v2) {
+  if (v2 && decrypted.signMethod === 'hot') {
     const signatureProvider = new JsSignatureProvider(decrypted.keyProvider);
     const rpc = new JsonRpc(decrypted.httpEndpoint);
     const api = new Api({
