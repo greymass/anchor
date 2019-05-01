@@ -39,7 +39,7 @@ export function rentnet(amount) {
   };
 }
 
-function rexAction(actionName, actionVariable, amount, dispatch, getState) {
+async function rexAction(actionName, actionVariable, amount, dispatch, getState) {
   const {
     settings,
     connection
@@ -57,7 +57,22 @@ function rexAction(actionName, actionVariable, amount, dispatch, getState) {
   if (['SELLREX'].includes(actionVariable)) {
     amountField = 'rex';
   }
-  return eos(connection, true, true).transact({
+
+  // hack to get signing working on ledger - needs to be refactored
+  const eosobj = eos(connection, true, true);
+  let method = 'transact';
+  if (!eosobj[method]) {
+    const updatedContract = await eosobj.getAbi('eosio');
+    if (updatedContract
+      && updatedContract.account_name
+      && updatedContract.abi
+    ) {
+      eosobj.fc.abiCache.abi(updatedContract.account_name, updatedContract.abi);
+    }
+    method = 'transaction';
+  }
+
+  return eosobj[method]({
     actions: [{
       account: 'eosio',
       name: actionName,
