@@ -25,8 +25,8 @@ class RexLendManage extends PureComponent<Props> {
 
     actions.clearSystemState();
 
-    actions.getTable('eosio', settings.account, 'rexbal');
-    actions.getTable('eosio', settings.account, 'rexfund');
+    actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
+    actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
   }
   confirmTransaction = () => {
     const { actions } = this.props;
@@ -52,8 +52,9 @@ class RexLendManage extends PureComponent<Props> {
 
       const { tables, settings } = this.props;
 
-      const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
-      const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexfund`) || [])[0];
+      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.balance`, '0.0000 EOS');
+      const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+
       let notEnoughBalance = false;
 
       if (name === 'amountToBuy') {
@@ -115,8 +116,8 @@ class RexLendManage extends PureComponent<Props> {
       (!amountToBuy && transactionType === 'buy') ||
       (!amountToSell && transactionType === 'sell');
     const displaySuccessMessage = !saveDisabled;
-    const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexbal`) || [])[0];
-    const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
+    const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.balance`, '0.0000 EOS');
+    const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
       <React.Fragment>
@@ -183,14 +184,14 @@ class RexLendManage extends PureComponent<Props> {
                   t(
                     'rex_interface_rent_funding_balance',
                     {
-                      fundedBalance: Number(fundedBalance || 0).toFixed(4),
+                      fundedBalance: Number(parseFloat(fundedBalance) || 0).toFixed(4),
                       chainSymbol: connection.chainSymbol
                     }
                   )
                 }
               </p>
               <p>
-                {t('rex_interface_rent_rex_balance', { rexBalance: Number(rexBalance || 0).toFixed(4) })}
+                {t('rex_interface_rent_rex_balance', { rexBalance: Number(parseFloat(rexBalance) || 0).toFixed(4) })}
               </p>
             </Message>
             <Form success={displaySuccessMessage}>
