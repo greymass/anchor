@@ -222,7 +222,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                   <br />
                   <Dropdown
                     autoFocus
-                    defaultValue="fund"
+                    defaultValue={transactionType}
                     name="transactionType"
                     onChange={(e, props) => this.handleChange({ ...props, valid: true })}
                     options={dropdownOptions}
