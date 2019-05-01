@@ -50,13 +50,24 @@ class RexLendManage extends PureComponent<Props> {
         this.setState({ amountToBuy: null, amountToSell: null });
       }
 
-      const fundAmount = 100.00;
-      if (['amountToSell', 'amountToBuy'].includes(name)) {
-        const notEnoughBalance = fundAmount < value;
+      const { tables, settings } = this.props;
 
-        if (notEnoughBalance) {
-          this.setState({ error: 'insufficient_balance' });
-        }
+      const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
+      const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexfund`) || [])[0];
+      let notEnoughBalance = false;
+
+      if (name === 'amountToBuy') {
+        notEnoughBalance =
+          Number((fundedBalance || '').split(' ')[0]) <
+          Number(value.split(' ')[0]);
+      } else if (name === 'amountToSell') {
+        notEnoughBalance =
+          Number((rexBalance || '').split(' ')[0]) <
+          Number(value.split(' ')[0]);
+      }
+
+      if (notEnoughBalance) {
+        this.setState({ error: 'insufficient_balance' });
       }
     });
   };
@@ -104,13 +115,10 @@ class RexLendManage extends PureComponent<Props> {
       (!amountToBuy && transactionType === 'buy') ||
       (!amountToSell && transactionType === 'sell');
     const displaySuccessMessage = !saveDisabled;
-    console.log({tables})
     const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexbal`) || [])[0];
-    console.log({rexBalance})
     const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
-   console.log({fundedBalance})
 
-    const confirmationPage = (amountToBuy || amountToSell) && (
+    const confirmationPage = confirming ? (
       <React.Fragment>
         <Header icon="cubes" content={t('rex_interface_manage_rex_confirmation_modal_header')} />
         <GlobalTransactionHandler
@@ -158,7 +166,7 @@ class RexLendManage extends PureComponent<Props> {
           />
         </Container>
       </React.Fragment>
-    );
+    ) : '';
 
     return (
       <Segment basic>
@@ -169,21 +177,21 @@ class RexLendManage extends PureComponent<Props> {
             >
               {t('rex_interface_manage_rex_message', { chainSymbol: connection.chainSymbol })}
             </Message>
-            <Message success>
-              <Header>
+            <Message>
+              <p>
                 {
                   t(
                     'rex_interface_rent_funding_balance',
                     {
-                      fundedBalance,
+                      fundedBalance: Number(fundedBalance || 0).toFixed(4),
                       chainSymbol: connection.chainSymbol
                     }
                   )
                 }
-              </Header>
-              <Header>
-                {t('rex_interface_rent_rex_balance', { rexBalance })}
-              </Header>
+              </p>
+              <p>
+                {t('rex_interface_rent_rex_balance', { rexBalance: Number(rexBalance || 0).toFixed(4) })}
+              </p>
             </Message>
             <Form success={displaySuccessMessage}>
               <Form.Group widths="equal">
