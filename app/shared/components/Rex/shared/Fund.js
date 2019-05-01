@@ -140,7 +140,6 @@ class RexInterfaceFund extends PureComponent<Props> {
     const confirmationPage = confirming ? (
       <Segment basic loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
         <Header
-          icon="cubes"
           content={
             transactionType === 'fund' ?
               t('rex_interface_fund_confirmation_modal_header_funding') :
@@ -192,6 +191,10 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     return (
       <Segment basic>
+        <Header
+          content={t('rex_interface_fund_header')}
+          subheader={t('rex_interface_fund_subheader', { chainSymbol: connection.chainSymbol })}
+        />
         {confirming ? confirmationPage : (
           <React.Fragment>
             <Message
