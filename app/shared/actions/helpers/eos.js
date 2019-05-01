@@ -38,6 +38,7 @@ export default function eos(connection, signing = false, v2 = false) {
   ) {
     delete decrypted.authorization;
   }
+
   // Ledger Interception
   if (decrypted.signMethod === 'ledger') {
     const signProvider = async ({ transaction }) => {
@@ -54,6 +55,7 @@ export default function eos(connection, signing = false, v2 = false) {
     };
     const promiseSigner = args => Promise.resolve(signProvider(args));
     decrypted.signProvider = promiseSigner;
+    return Eos(decrypted);
   } else {
     decrypted.signProvider = undefined;
   }
