@@ -29,13 +29,13 @@ export function withdrawrex(amount) {
 
 export function rentcpu(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('rentCpu', 'RENTCPUREX', amount, dispatch, getState);
+    rexAction('rentcpu', 'RENTCPUREX', amount, dispatch, getState);
   };
 }
 
 export function rentnet(amount) {
   return (dispatch: () => void, getState) => {
-    rexAction('rentNet', 'RENTNETREX', amount, dispatch, getState);
+    rexAction('rentnet', 'RENTNETREX', amount, dispatch, getState);
   };
 }
 
