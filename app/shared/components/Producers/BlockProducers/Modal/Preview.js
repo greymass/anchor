@@ -28,9 +28,10 @@ class ProducersVotingPreview extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'green',
-          content: t('producer_voter_save_changes'),
+          content: t('producer_voter_save_changes_r2'),
           fluid: true,
-          icon: ''
+          icon: '',
+          style: { marginTop: '1em' }
         }}
         content={(
           <ProducersVotingPreviewSelection
@@ -44,7 +45,7 @@ class ProducersVotingPreview extends Component<Props> {
           />
         )}
         icon="exchange"
-        title={t('producer_voter_save_changes')}
+        title={t('producer_voter_save_changes_r2')}
         settings={settings}
         system={system}
       />

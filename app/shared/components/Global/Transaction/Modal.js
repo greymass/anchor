@@ -83,6 +83,7 @@ class GlobalTransactionModal extends Component<Props> {
               icon={button.icon}
               onClick={this.handleOpen}
               size={button.size}
+              style={button.style}
             />
           ) : false
         }
