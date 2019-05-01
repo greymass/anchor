@@ -225,6 +225,7 @@ class RexLendManage extends PureComponent<Props> {
                     label={t('rex_interface_manage_rex_sell', { chainSymbol: connection.chainSymbol })}
                     name="amountToSell"
                     onChange={this.handleChange}
+                    symbol="REX"
                   />
                 )}
               </Form.Group>
