@@ -1,5 +1,5 @@
 import * as types from '../types';
-import { getCurrencyBalance } from '../accounts';
+import { getAccount, getCurrencyBalance } from '../accounts';
 import { getTableByBounds } from '../table';
 import eos from '../helpers/eos';
 
@@ -107,6 +107,7 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
     }]
   }, params).then((tx) => {
     setTimeout(() => {
+      dispatch(getAccount(settings.account));
       dispatch(getCurrencyBalance(settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.accoun));
