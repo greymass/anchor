@@ -35,6 +35,7 @@ class RexRent extends Component<Props> {
 
   render() {
     const {
+      accounts,
       actions,
       balance,
       blockExplorers,
@@ -93,6 +94,7 @@ class RexRent extends Component<Props> {
           key: 'manage_rex',
           content: (
             <RexInterfaceRentManage
+              accounts={accounts}
               actions={actions}
               blockExplorers={blockExplorers}
               connection={connection}
