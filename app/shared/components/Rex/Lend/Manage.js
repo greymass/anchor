@@ -28,6 +28,22 @@ class RexLendManage extends PureComponent<Props> {
     actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
     actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.system.BUYREX === 'SUCCESS' && this.props.system.BUYREX === 'PENDING') {
+      this.setState({
+        amountToBuy: undefined,
+        amountToSell: undefined,
+        confirming: false,
+      });
+    }
+    if (nextProps.system.SELLREX === 'SUCCESS' && this.props.system.SELLREX === 'PENDING') {
+      this.setState({
+        amountToBuy: undefined,
+        amountToSell: undefined,
+        confirming: false,
+      });
+    }
+  }
   confirmTransaction = () => {
     const { actions } = this.props;
     const { amountToBuy, amountToSell, transactionType } = this.state;
