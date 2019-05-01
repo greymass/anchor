@@ -60,13 +60,14 @@ class RexInterfaceFund extends PureComponent<Props> {
       }
 
       const { settings, tables } = this.props;
-      const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
+
+      const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
       let notEnoughBalance = false;
 
       if (name === 'resourceAmount') {
         notEnoughBalance =
-          Number((fundedBalance || '').split(' ')[0]) <
+          Number((rexFundBalance || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
       }
 
@@ -117,8 +118,9 @@ class RexInterfaceFund extends PureComponent<Props> {
     const saveDisabled = error || !resourceAmount;
     const displaySuccessMessage = !saveDisabled;
     const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
-    const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
-
+    console.log({tables})
+    const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+    console.log({rexFundBalance})
     const confirmationPage = confirming ? (
       <React.Fragment>
         <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
@@ -194,8 +196,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                 t(
                   'rex_interface_rent_funding_balance',
                   {
-                    fundedBalance: Number(fundedBalance || 0).toFixed(4),
-                    chainSymbol: connection.chainSymbol
+                    fundedBalance: rexFundBalance,
                   }
                 )
               }
