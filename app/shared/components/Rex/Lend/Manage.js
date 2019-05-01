@@ -174,8 +174,12 @@ class RexLendManage extends PureComponent<Props> {
         />
         <Container>
           <Button
-            content={t('common:close')}
-            onClick={() => this.setState({ confirming: false })}
+            content={t('common:cancel')}
+            onClick={() => this.setState({
+              amountToBuy: undefined,
+              amountToSell: undefined,
+              confirming: false,
+            })}
             textAlign="left"
           />
           <Button
