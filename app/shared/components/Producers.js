@@ -9,7 +9,7 @@ import ProducersVotingPreview from './Producers/BlockProducers/Modal/Preview';
 import Proxies from './Producers/Proxies';
 import ProducersSelector from './Producers/BlockProducers/Selector';
 import ToolsGovernanceProposals from './Tools/Governance/Proposals';
-import WalletPanel from './Wallet/Panel';
+import WalletPanelLocked from './Wallet/Panel/Locked';
 
 class Producers extends Component<Props> {
   constructor(props) {
@@ -202,9 +202,7 @@ class Producers extends Component<Props> {
             system={system}
             tables={tables}
           />
-
-          <Divider hidden={!isProxying} />
-          {(!isProxying || editingProducers) && (
+          {(!isProxying) ? (
             <ProducersVotingPreview
               account={account}
               actions={actions}
@@ -223,8 +221,7 @@ class Producers extends Component<Props> {
               system={system}
               unregisteredProducers={unregisteredProducers}
             />
-          )}
-
+          ) : ''}
           <ProducersSelector
             account={accounts[settings.account]}
             actions={actions}
@@ -244,75 +241,15 @@ class Producers extends Component<Props> {
       );
     }
 
-    const tabPanes = [
-      {
-        menuItem: {
-          key: 'producers',
-          icon: 'gavel',
-          content: t('producers_block_producers'),
-        },
-        render: () => {
-          return (
-            <Tab.Pane>
-              <BlockProducers
-                {...this.props}
-                addProducer={this.addProducer.bind(this)}
-                removeProducer={this.removeProducer.bind(this)}
-                selected={selected}
-                sidebar={sidebar}
-              />
-            </Tab.Pane>
-          );
-        }
-      }
-    ];
-
-    if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
-      tabPanes.push({
-        menuItem: {
-          key: 'proposals',
-          icon: 'balance scale',
-          content: t('tools:tools_menu_governance_proposals'),
-        },
-        render: () => {
-          return (
-            <Tab.Pane>
-              <ToolsGovernanceProposals
-                actions={actions}
-                blockExplorers={blockExplorers}
-                contracts={contracts}
-                keys={keys}
-                proposals={proposals}
-                settings={settings}
-                system={system}
-                validate={validate}
-                wallet={wallet}
-              />
-            </Tab.Pane>
-          );
-        }
-      });
-    }
-
-    if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
-      tabPanes.push({
-        menuItem: {
-          key: 'proxies',
-          icon: 'users',
-          content: t('producers_proxies'),
-        },
-        render: () => {
-          return (
-            <Tab.Pane>
-              <Proxies
-                {...this.props}
-                addProxy={this.addProxy.bind(this)}
-                removeProxy={this.removeProxy.bind(this)}
-              />
-            </Tab.Pane>
-          );
-        }
-      });
+    if (!isValidUser && settings.walletMode !== 'wait') {
+      sidebar = (
+        <WalletPanelLocked
+          actions={actions}
+          settings={settings}
+          validate={validate}
+          wallet={wallet}
+        />
+      );
     }
 
     return (
