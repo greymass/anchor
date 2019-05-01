@@ -37,12 +37,6 @@ class BlockProducersTablePlaceholder extends Component<Props> {
                 <Button
                   color="grey"
                   disabled
-                  icon="magnify"
-                  size="small"
-                />
-                <Button
-                  color="grey"
-                  disabled
                   icon="minus square outline"
                   size="small"
                 />
