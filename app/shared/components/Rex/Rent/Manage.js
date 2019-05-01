@@ -14,6 +14,7 @@ import {
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionHandler from '../../Global/Transaction/Handler';
+import { get } from "dot-prop-immutable";
 
 const invalidErrorMessage = {
   resourceAmount: 'invalid_amount'
@@ -102,7 +103,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     const saveDisabled = error || !resourceAmount;
     const displaySuccessMessage = !saveDisabled;
     const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
-    const fundedBalance = tables.eosio[settings.account].fundbal[0];
+    const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
 
     const confirmationPage = (
       <React.Fragment>

@@ -11,6 +11,7 @@ import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 
 import RexActions from '../../actions/system/rex';
 import TableAction from '../../actions/table';
+import SystemStateActions from '../../actions/system/systemstate';
 
 type Props = {
   actions: {},
@@ -92,24 +93,15 @@ class RexRent extends Component<Props> {
         }
       }
     ];
-    const account = accounts[settings.account];
-    const votingOrProxying = account.voter_info.producers.length === 21 || account.voter_info.proxy;
 
     return (
       <React.Fragment>
-        {votingOrProxying ? (
-          <Tab
-            defaultActiveIndex={0}
-            onTabChange={this.onTabChange}
-            panes={panes}
-            renderActiveOnly={false}
-          />
-        ) : (
-          <Message
-            content={t('rex_not_voting_or_proxying')}
-            warning
-          />
-        )}
+        <Tab
+          defaultActiveIndex={0}
+          onTabChange={this.onTabChange}
+          panes={panes}
+          renderActiveOnly={false}
+        />
       </React.Fragment>
     );
   }
@@ -119,7 +111,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...RexActions,
-      ...TableAction
+      ...TableAction,
+      ...SystemStateActions,
     }, dispatch)
   };
 }
@@ -130,7 +123,8 @@ function mapStateToProps(state) {
     balance: state.balances[state.settings.account],
     blockExplorers: (state.connection && state.blockexplorers[state.connection.chainKey]) || {},
     connection: state.connection,
-    settings: state.settings
+    settings: state.settings,
+    tables: state.tables,
   };
 }
 
