@@ -102,7 +102,7 @@ class RexLendManage extends PureComponent<Props> {
     let transaction;
     let contract;
 
-    const actionName = transactionType === 'buy' ? 'BUY_REX' : 'SELL_REX';
+    const actionName = transactionType === 'buy' ? 'BUYREX' : 'SELLREX';
 
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
