@@ -52,11 +52,23 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
 
   let accountField = 'owner';
   let amountField = 'amount';
-  if (['BUYREX', 'SELLREX'].includes(actionVariable)) {
+  if (['BUYREX', 'SELLREX', 'RENTCPUREX', 'RENTNETREX'].includes(actionVariable)) {
     accountField = 'from';
   }
   if (['SELLREX'].includes(actionVariable)) {
     amountField = 'rex';
+  }
+  if (['RENTCPUREX', 'RENTNETREX'].includes(actionVariable)) {
+    amountField = 'loan_payment';
+  }
+
+  const data = {
+    [accountField]: settings.account,
+    [amountField]: amount,
+  }
+  if (['RENTCPUREX', 'RENTNETREX'].includes(actionVariable)) {
+    data.receiver = settings.account;
+    data.loan_fund = amount;
   }
 
   // hack to get signing working on ledger - needs to be refactored
@@ -90,10 +102,7 @@ async function rexAction(actionName, actionVariable, amount, dispatch, getState)
         actor: settings.account,
         permission: settings.authorization,
       }],
-      data: {
-        [accountField]: settings.account,
-        [amountField]: amount,
-      },
+      data,
     }]
   }, params).then((tx) => {
     setTimeout(() => {
