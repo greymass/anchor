@@ -14,6 +14,7 @@ import {
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionHandler from '../../Global/Transaction/Handler';
+import { get } from "dot-prop-immutable";
 
 const invalidErrorMessage = {
   defundingAmount: 'defunding_amount_invalid',
@@ -26,16 +27,18 @@ class RexInterfaceFund extends PureComponent<Props> {
     transactionType: 'fund'
   };
   componentDidMount() {
-    const { actions } = this.props;
+    const { actions, settings } = this.props;
 
     actions.clearSystemState();
+
+
+    actions.getTable('eosio', settings.account, 'rexfund');
   }
   confirmTransaction = () => {
     const { actions } = this.props;
     const { defundingAmount, fundingAmount, transactionType } = this.state;
 
     if (transactionType === 'fund') {
-
       actions.depositrex({
         fundingAmount
       });
@@ -53,11 +56,29 @@ class RexInterfaceFund extends PureComponent<Props> {
         return this.setState({ error: invalidErrorMessage[name] });
       }
 
-      const balanceAmount = 100.00; // Grab actual balance
-      const notEnoughBalance = balanceAmount < value;
+      const {
+        balance,
+        connection,
+        settings,
+        tables
+      } = this.props;
+
+      const { transactionType } = this.state;
+
+      let notEnoughBalance = false;
+
+      if (transactionType === 'fund') {
+        const balanceAmount = balance[connection.chainSymbol];
+        notEnoughBalance = balanceAmount < Number(value.split(' ')[0]);
+      } else {
+        const rexBalance = (get(tables, `tables.eosio.${settings.account}.rexfund`) || [])[0];
+        notEnoughBalance =
+          Number((rexBalance || '').split(' ')) <
+          Number(value.split(' ')[0]);
+      }
 
       if (notEnoughBalance) {
-        this.setState({ error: 'not_enough_balance' });
+        this.setState({ error: 'insufficient_balance' });
       }
     });
   };
@@ -82,17 +103,17 @@ class RexInterfaceFund extends PureComponent<Props> {
     const fundDisabled = error ||
       (!fundingAmount && transactionType === 'fund') ||
       (!defundingAmount && transactionType === 'defund');
-    const dropdownOptions = ['fund', 'defund'].map((transactionType) => (
+    const dropdownOptions = ['fund', 'defund'].map((type) => (
       {
-        key: transactionType,
-        text: t(`rex_interface_fund_options_${transactionType}`),
-        value: transactionType
+        key: type,
+        text: t(`rex_interface_fund_options_${type}`),
+        value: type
       }
     ));
     let transaction;
     let contract;
 
-    const actionName = transactionType === 'fund' ? 'REX_FUND' : 'REX_DEFUND';
+    const actionName = transactionType === 'fund' ? 'DEPOSITREX' : 'WITHDRAWREX';
 
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
       transaction = system[`${actionName}_LAST_TRANSACTION`];
@@ -101,131 +122,129 @@ class RexInterfaceFund extends PureComponent<Props> {
       contract = system[`${actionName}_LAST_CONTRACT`];
     }
 
-    return (
-      <Segment basic>
-        {confirming && (
-          <Modal
-            open
-            size="small"
-          >
-            <Header
-              icon="cubes"
-              content={
-                transactionType === 'fund' ?
-                  t('rex_interface_fund_confirmation_modal_header_funding') :
-                  t('rex_interface_fund_confirmation_modal_header_defunding')
-              }
-            />
-
-            <Modal.Content>
-              <GlobalTransactionHandler
-                actionName={transactionType === 'fund' ? 'REX_FUND' : 'REX_DEFUND'}
-                actions={actions}
-                blockExplorers={blockExplorers}
-                content={(
-                  <React.Fragment>
-                    {transactionType === 'fund' ? (
-                      <p>
-                        {t('rex_interface_fund_confirmation_modal_funding', { amount: fundingAmount })}
-                      </p>
-                    ) : (
-                      <p>
-                        {t('rex_interface_fund_confirmation_modal_defunding', { amount: defundingAmount })}
-                      </p>
-                    )}
-                  </React.Fragment>
-                )}
-                contract={contract}
-                onClose={this.onClose}
-                onSubmit={this.onSubmit}
-                settings={settings}
-                system={system}
-                transaction={transaction}
-              />
-
-            </Modal.Content>
-            <Modal.Actions>
-              <Container>
-                <Button
-                  content={t('common:close')}
-                  onClick={() => this.setState({ confirming: false })}
-                  textAlign="left"
-                />
-                <Button
-                  color="green"
-                  content={t('common:confirm')}
-                  disabled={system.REX_FUND || system.REX_DEFUND}
-                  onClick={this.confirmTransaction}
-                  textAlign="right"
-                />
-              </Container>
-            </Modal.Actions>
-          </Modal>
-        )}
-        <Message
-          warning
-        >
-          {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
-        </Message>
-        <Message
+    const confirmationPage = confirming ? (
+      <Segment basic loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
+        <Header
+          icon="cubes"
           content={
-            t(
-              'rex_interface_fund_balance',
-              {
-                balance: balance[connection.chainSymbol],
-                chainSymbol: connection.chainSymbol
-              }
-            )
+            transactionType === 'fund' ?
+              t('rex_interface_fund_confirmation_modal_header_funding') :
+              t('rex_interface_fund_confirmation_modal_header_defunding')
           }
         />
-        <Form>
-          <Form.Group widths="equal">
-            <label>
-              <strong>{t('rex_interface_transaction_type_label')}</strong>
-              <br />
-              <Dropdown
-                autoFocus
-                defaultValue="fund"
-                name="transactionType"
-                onChange={(e, props) => this.handleChange({ ...props, valid: true })}
-                options={dropdownOptions}
-                selection
-                style={{ marginTop: '4px' }}
-              />
-            </label>
-            {transactionType === 'fund' ? (
-              <GlobalFormFieldToken
-                connection={connection}
-                defaultValue={fundingAmount || ''}
-                key="fundingAmount"
-                label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
-                name="fundingAmount"
-                onChange={(e, props) => this.handleChange(props)}
-              />
-            ) : (
-              <GlobalFormFieldToken
-                connection={connection}
-                defaultValue={defundingAmount || ''}
-                key="defundingAmount"
-                label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
-                name="defundingAmount"
-                onChange={(e, props) => this.handleChange(props)}
-              />
-            )}
-          </Form.Group>
 
-          {error && (
-            <GlobalFormMessageError
-              style={{ marginTop: '20px', marginBottom: '20px' }}
-              error={error}
-            />
+        <GlobalTransactionHandler
+          actionName={transactionType === 'fund' ? 'DEPOSITREX' : 'WITHDRAWREX'}
+          actions={actions}
+          blockExplorers={blockExplorers}
+          content={(
+            <React.Fragment>
+              {transactionType === 'fund' ? (
+                <p>
+                  {t('rex_interface_fund_confirmation_modal_funding', { amount: fundingAmount })}
+                </p>
+              ) : (
+                <p>
+                  {t('rex_interface_fund_confirmation_modal_defunding', { amount: defundingAmount })}
+                </p>
+              )}
+            </React.Fragment>
           )}
+          contract={contract}
+          onClose={this.onClose}
+          onSubmit={this.onSubmit}
+          settings={settings}
+          system={system}
+          transaction={transaction}
+        />
+
+        <Container style={{ marginTop: 10 }}>
           <Button
-            onClick={() => this.setState({ confirming: true })}
-            content={transactionType === 'fund' ? t('rex_interface_fund_button') : t('rex_interface_defund_button')}
-            disabled={fundDisabled}
+            content={t('common:close')}
+            onClick={() => this.setState({ confirming: false })}
+            textAlign="left"
           />
-        </Form>
+          <Button
+            color="green"
+            content={t('common:confirm')}
+            disabled={system.DEPOSITREX || system.WITHDRAWREX}
+            onClick={this.confirmTransaction}
+            textAlign="right"
+          />
+        </Container>
+      </Segment>
+    ) : '';
+
+    return (
+      <Segment basic>
+        {confirming ? confirmationPage : (
+          <React.Fragment>
+            <Message
+              warning
+            >
+              {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
+            </Message>
+            <Message
+              content={
+                t(
+                  'rex_interface_fund_balance',
+                  {
+                    balance: balance[connection.chainSymbol],
+                    chainSymbol: connection.chainSymbol
+                  }
+                )
+              }
+            />
+            <Form>
+              <Form.Group widths="equal">
+                <label>
+                  <strong>{t('rex_interface_transaction_type_label')}</strong>
+                  <br />
+                  <Dropdown
+                    autoFocus
+                    defaultValue="fund"
+                    name="transactionType"
+                    onChange={(e, props) => this.handleChange({ ...props, valid: true })}
+                    options={dropdownOptions}
+                    selection
+                    style={{ marginTop: '4px' }}
+                  />
+                </label>
+                {transactionType === 'fund' ? (
+                  <GlobalFormFieldToken
+                    connection={connection}
+                    defaultValue={fundingAmount || ''}
+                    key="fundingAmount"
+                    label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
+                    name="fundingAmount"
+                    onChange={(e, props) => this.handleChange(props)}
+                  />
+                ) : (
+                  <GlobalFormFieldToken
+                    connection={connection}
+                    defaultValue={defundingAmount || ''}
+                    key="defundingAmount"
+                    label={t('rex_interface_fund_label_defund', { chainSymbol: connection.chainSymbol })}
+                    name="defundingAmount"
+                    onChange={(e, props) => this.handleChange(props)}
+                  />
+                )}
+              </Form.Group>
+
+              {error && (
+                <GlobalFormMessageError
+                  style={{ marginTop: '20px', marginBottom: '20px' }}
+                  error={error}
+                />
+              )}
+              <Button
+                onClick={() => this.setState({ confirming: true })}
+                content={transactionType === 'fund' ? t('rex_interface_fund_button') : t('rex_interface_defund_button')}
+                disabled={fundDisabled}
+              />
+            </Form>
+          </React.Fragment>
+        )}
       </Segment>
     );
   }

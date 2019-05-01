@@ -43,6 +43,7 @@ function rexAction(actionName, actionVariable, amount, dispatch, getState) {
     settings,
     connection
   } = getState();
+
   dispatch({
     type: types[`SYSTEM_${actionVariable}_PENDING`]
   });
