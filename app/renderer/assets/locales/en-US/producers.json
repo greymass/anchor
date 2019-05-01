@@ -42,6 +42,7 @@
   "producer_voter_save_changes": "Submit votes for selected producers",
   "producer_voter_start_voting_after_proxying": "Submit your votes and stop proxying",
   "producer_voter_start_voting_after_proxying_warning": "Please note that once the following vote is cast, you will no longer be proxying your votes to {{proxyingTo}}.",
+  "producer_voter_save_changes_r2": "Submit Vote(s)",
   "producer_voter_total_staked": "Total Staked",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "total votes cast",
