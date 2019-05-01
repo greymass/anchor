@@ -14,20 +14,20 @@ class RexInterfaceAbout extends PureComponent<Props> {
     } = this.props;
 
     return (
-      <Segment basic>
-        <Header
-          warning
-        >
-          <Header.Subheader>
-            {t('rex_lend_about_header')}
-          </Header.Subheader>
+      <React.Fragment>
+        <Header>
+          {t('rex_lend_about_header')}
         </Header>
+        <Segment basic size="large">
+          <p>{t('rex_lend_about_1')}</p>
+          <p>{t('rex_lend_about_2')}</p>
+        </Segment>
         <Message
           warning
         >
           {t('rex_lend_about_warning')}
         </Message>
-      </Segment>
+      </React.Fragment>
     );
   }
 }
