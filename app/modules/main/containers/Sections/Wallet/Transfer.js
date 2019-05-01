@@ -13,13 +13,13 @@ import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import GlobalTransactionHandler from '../../../../../shared/components/Global/Transaction/Handler';
 import WalletPanelFormTransferSend from '../../../../../shared/components/Wallet/Panel/Form/Transfer/Send';
+import GlobalAccountRequired from '../../../../../shared/containers/Global/Account/Required';
 
 import { clearSystemState } from '../../../../../shared/actions/system/systemstate';
 import { getContractHash } from '../../../../../shared/actions/accounts';
 import { transfer } from '../../../../../shared/actions/transfer';
 
 class WalletTransferContainer extends Component<Props> {
-  onClose = () => this.props.actions.clearSystemState()
   render() {
     const {
       actions,
@@ -43,26 +43,28 @@ class WalletTransferContainer extends Component<Props> {
                     Send tokens to another account, an exchange, or one of your contacts.
                   </Header.Subheader>
                 </Header>
-                <GlobalTransactionHandler
-                  actionName="TRANSFER"
-                  actions={actions}
-                  blockExplorers={blockExplorers}
-                  content={(
-                    <WalletPanelFormTransferSend
-                      actions={actions}
-                      app={app}
-                      balances={balances}
-                      connection={connection}
-                      settings={settings}
-                      system={system}
-                    />
-                  )}
-                  icon="arrow circle up"
-                  onClose={actions.clearSystemState}
-                  settings={settings}
-                  system={system}
-                  transaction={transaction}
-                />
+                <GlobalAccountRequired>
+                  <GlobalTransactionHandler
+                    actionName="TRANSFER"
+                    actions={actions}
+                    blockExplorers={blockExplorers}
+                    content={(
+                      <WalletPanelFormTransferSend
+                        actions={actions}
+                        app={app}
+                        balances={balances}
+                        connection={connection}
+                        settings={settings}
+                        system={system}
+                      />
+                    )}
+                    icon="arrow circle up"
+                    onClose={actions.clearSystemState}
+                    settings={settings}
+                    system={system}
+                    transaction={transaction}
+                  />
+                </GlobalAccountRequired>
               </Segment>
             </Grid.Column>
           </Grid.Row>
