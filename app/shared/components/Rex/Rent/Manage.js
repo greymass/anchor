@@ -26,9 +26,12 @@ class RexInterfaceFund extends PureComponent<Props> {
     transactionType: 'cpu'
   };
   componentDidMount() {
-    const { actions } = this.props;
+    const { actions, settings } = this.props;
 
     actions.clearSystemState();
+
+    actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
+    actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
   }
   confirmTransaction = () => {
     const { actions } = this.props;
@@ -116,13 +119,10 @@ class RexInterfaceFund extends PureComponent<Props> {
     }
 
     const saveDisabled = error || !resourceAmount;
-    const displaySuccessMessage = !saveDisabled;
     const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
-    console.log({tables})
     const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
-    console.log({rexFundBalance})
     const confirmationPage = confirming ? (
-      <React.Fragment>
+      <Segment basic loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>
         <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
         <GlobalTransactionHandler
           actionName={transactionType === 'cpu' ? 'RENTCPUREX' : 'RENTNETREX'}
@@ -180,7 +180,7 @@ class RexInterfaceFund extends PureComponent<Props> {
             textAlign="right"
           />
         </Container>
-      </React.Fragment>
+      </Segment>
     ) : '';
     return (
       <Segment basic>
@@ -201,9 +201,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                 )
               }
             />
-            <Form
-              success={displaySuccessMessage}
-            >
+            <Form>
               <Form.Group widths="equal">
                 <label>
                   <strong>{t('rex_interface_transaction_type_label')}</strong>
@@ -226,34 +224,6 @@ class RexInterfaceFund extends PureComponent<Props> {
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              { displaySuccessMessage && transactionType === 'cpu' && (
-                <Message key="cpu" success>
-                  {
-                    t(
-                      'rex_interface_rent_confirmation_modal_rent_cpu',
-                      {
-                        amount: resourceAmount,
-                        chainSymbol: connection.chainSymbol,
-                        cost
-                      }
-                    )
-                  }
-                </Message>
-              )}
-              { displaySuccessMessage && transactionType === 'net' && (
-                <Message key="net" success>
-                  {
-                    t(
-                      'rex_interface_rent_confirmation_modal_rent_net',
-                      {
-                        amount: resourceAmount,
-                        chainSymbol: connection.chainSymbol,
-                        cost
-                      }
-                    )
-                  }
-                </Message>
-              )}
               {error && (
                 <GlobalFormMessageError
                   style={{ marginTop: '20px', marginBottom: '20px' }}

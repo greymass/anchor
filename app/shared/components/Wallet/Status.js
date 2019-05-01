@@ -60,8 +60,8 @@ class WalletStatus extends Component<Props> {
     const delegations = tables &&
                         tables.eosio &&
                         tables.eosio[settings.account] &&
+                        tables.eosio[settings.account].delband &&
                         tables.eosio[settings.account].delband.rows;
-
     const eosAccount = new EOSAccount(account, balance, delegations, connection.chainSymbol);
 
     let activeTab = (
