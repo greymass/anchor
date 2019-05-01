@@ -8,6 +8,7 @@ import ResourcePercentage from '../../Global/Data/Resource/Percentage';
 class WalletStatusResources extends Component<Props> {
   render() {
     const {
+      disableRam,
       displayResourcesAvailableSetting,
       eosAccount,
       t
@@ -29,25 +30,30 @@ class WalletStatusResources extends Component<Props> {
               t('wallet_status_resources_title_used')
             )}
         </Header>
-        <Grid columns={3} divided>
+        <Grid columns={(disableRam) ? 2 : 3} divided>
           <Grid.Row>
-            <Grid.Column>
-              <Header
-                content={t('wallet_status_resources_ram_available_title')}
-                icon="database"
-                size="small"
-                subheader={t('wallet_status_resources_ram_available_desc')}
-              />
+            {(!disableRam)
+              ? (
+                <Grid.Column>
+                  <Header
+                    content={t('wallet_status_resources_ram_available_title')}
+                    icon="database"
+                    size="small"
+                    subheader={t('wallet_status_resources_ram_available_desc')}
+                  />
 
-              <ResourcePercentage
-                color="teal"
-                percentageUsed={ramUsage}
-                displayResourcesAvailableSetting={displayResourcesAvailableSetting}
-                size="tiny"
-                style={{ minWidth: 0 }}
-              />
+                  <ResourcePercentage
+                    color="teal"
+                    percentageUsed={ramUsage}
+                    displayResourcesAvailableSetting={displayResourcesAvailableSetting}
+                    size="tiny"
+                    style={{ minWidth: 0 }}
+                  />
 
-            </Grid.Column>
+                </Grid.Column>
+              )
+              : false
+            }
             <Grid.Column>
               <Header
                 content={t('wallet_status_resources_cpu_available_title')}
