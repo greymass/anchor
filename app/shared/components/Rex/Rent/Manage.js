@@ -41,7 +41,6 @@ class RexInterfaceFund extends PureComponent<Props> {
     }
   };
   handleChange = (e, { name, value, valid }) => {
-    console.log({ name, value })
     this.setState({ error: null }, () => {
       if (valid) {
         this.setState({ [name]: value });
@@ -58,6 +57,21 @@ class RexInterfaceFund extends PureComponent<Props> {
         if (notEnoughBalance) {
           this.setState({ error: 'not_enough_balance' });
         }
+      }
+
+      const { settings, tables } = this.props;
+      const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
+
+      let notEnoughBalance = false;
+
+      if (name === 'resourceAmount') {
+        notEnoughBalance =
+          Number((fundedBalance || '').split(' ')[0]) <
+          Number(value.split(' ')[0]);
+      }
+
+      if (notEnoughBalance) {
+        this.setState({ error: 'insufficient_balance' });
       }
     });
   };
@@ -80,11 +94,11 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     const costFor30days = 0.1;
 
-    const dropdownOptions = ['cpu', 'net'].map((transactionType) => (
+    const dropdownOptions = ['cpu', 'net'].map((type) => (
       {
-        key: transactionType,
-        text: transactionType,
-        value: transactionType
+        key: type,
+        text: type,
+        value: type
       }
     ));
 
@@ -105,7 +119,7 @@ class RexInterfaceFund extends PureComponent<Props> {
     const cost = resourceAmount && (resourceAmount.split(' ')[0] * costFor30days).toFixed(4);
     const fundedBalance = (get(tables, `tables.eosio.${settings.account}.fundbal`) || [])[0];
 
-    const confirmationPage = (
+    const confirmationPage = confirming ? (
       <React.Fragment>
         <Header icon="cubes" content={t('rex_interface_rent_resources_confirmation_modal_header')} />
         <GlobalTransactionHandler
@@ -165,7 +179,7 @@ class RexInterfaceFund extends PureComponent<Props> {
           />
         </Container>
       </React.Fragment>
-    );
+    ) : '';
     return (
       <Segment basic>
         {confirming ? confirmationPage : (
@@ -173,15 +187,14 @@ class RexInterfaceFund extends PureComponent<Props> {
             <Message
               warning
             >
-              {t('rex_interface_fund_message')}
+              {t('rex_interface_rent_message', { chainSymbol: connection.chainSymbol })}
             </Message>
             <Message
-              success
               content={
                 t(
                   'rex_interface_rent_funding_balance',
                   {
-                    fundedBalance,
+                    fundedBalance: Number(fundedBalance || 0).toFixed(4),
                     chainSymbol: connection.chainSymbol
                   }
                 )
@@ -191,17 +204,6 @@ class RexInterfaceFund extends PureComponent<Props> {
               success={displaySuccessMessage}
             >
               <Form.Group widths="equal">
-                <Message
-                  content={
-                    t(
-                      'rex_interface_lend_balance',
-                      {
-                        fundedBalance,
-                        chainSymbol: connection.chainSymbol
-                      }
-                    )
-                  }
-                />
                 <label>
                   <strong>{t('rex_interface_transaction_type_label')}</strong>
                   <br />

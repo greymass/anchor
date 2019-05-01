@@ -1,28 +1,33 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Tab } from 'semantic-ui-react';
+import { Tab, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 
 import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
+import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
 import RexActions from '../../actions/system/rex';
 import TableAction from '../../actions/table';
 import SystemStateActions from '../../actions/system/systemstate';
-import { Message } from './Rent';
+import WalletActions from '../../actions/wallet';
 
 type Props = {
-  actions: {},
   accounts: {},
+  actions: {},
   balance: {},
   blockExplorers: {},
   connection: {},
+  keys: {},
   settings: {},
   system: {},
-  t: {}
+  t: {},
+  tables: {},
+  validate: {},
+  wallet: {},
 };
 
 class RexLend extends Component<Props> {
@@ -30,14 +35,18 @@ class RexLend extends Component<Props> {
 
   render() {
     const {
+      accounts,
       actions,
       balance,
       blockExplorers,
       connection,
+      keys,
       settings,
       system,
       t,
-      tables
+      tables,
+      validate,
+      wallet,
     } = this.props;
 
     const panes = [
@@ -70,6 +79,7 @@ class RexLend extends Component<Props> {
               connection={connection}
               settings={settings}
               system={system}
+              tables={tables}
             />
           )
         }
@@ -97,21 +107,31 @@ class RexLend extends Component<Props> {
     ];
 
     const account = accounts[settings.account];
-    const votingOrProxying = account.voter_info.producers.length === 21 || account.voter_info.proxy;
+    const votingOrProxying = account.voter_info.producers.length >= 21 || account.voter_info.proxy;
+    const isNotVotingOrProxying = !votingOrProxying
+    const isUnlocked = (keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode);
+    const isLocked = !isUnlocked;
 
     return (
       <React.Fragment>
-        {votingOrProxying ? (
+        {isLocked ? (
+          <WalletPanelLocked
+            actions={actions}
+            settings={settings}
+            validate={validate}
+            wallet={wallet}
+          />
+        ) : isNotVotingOrProxying ? (
+          <Message
+            content={t('rex_not_voting_or_proxying')}
+            warning
+          />
+        ) : (
           <Tab
             defaultActiveIndex={0}
             onTabChange={this.onTabChange}
             panes={panes}
             renderActiveOnly={false}
-          />
-        ) : (
-          <Message
-            content={t('rex_not_voting_or_proxying')}
-            warning
           />
         )}
       </React.Fragment>
@@ -123,8 +143,9 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...RexActions,
-      ...TableAction,
       ...SystemStateActions,
+      ...TableAction,
+      ...WalletActions,
     }, dispatch)
   };
 }
@@ -135,8 +156,11 @@ function mapStateToProps(state) {
     balance: state.balances[state.settings.account],
     blockExplorers: (state.connection && state.blockexplorers[state.connection.chainKey]) || {},
     connection: state.connection,
+    keys: state.keys,
     settings: state.settings,
     tables: state.tables,
+    validate: state.validate,
+    wallet: state.wallet,
   };
 }
 
