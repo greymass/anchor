@@ -225,6 +225,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     const balance = balances[settings.account];
 
+    if (!balance) return false;
+
     let exchangeWarning;
 
     const exchangeAccounts = get(app, 'constants.exchanges') || [];
