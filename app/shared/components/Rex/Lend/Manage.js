@@ -134,6 +134,8 @@ class RexLendManage extends PureComponent<Props> {
     const displaySuccessMessage = !saveDisabled;
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
+
+    const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
     const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
@@ -210,6 +212,9 @@ class RexLendManage extends PureComponent<Props> {
               </p>
               <p>
                 {t('rex_interface_rent_rex_balance', { rexBalance: Number(parseFloat(rexBalance) || 0).toFixed(4) })}
+              </p>
+              <p>
+                {t('rex_interface_rent_rex_balance_mature', { rexBalance: Number(parseFloat(maturedRex) || 0).toFixed(4) })}
               </p>
             </Message>
             <Form success={displaySuccessMessage}>
