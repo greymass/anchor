@@ -34,6 +34,14 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     actions.getTable('eosio', settings.account, 'rexfund');
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.system.DEPOSITREX === 'SUCCESS' && this.props.system.DEPOSITREX === 'PENDING') {
+      this.setState({ confirming: false });
+    }
+    if (nextProps.system.WITHDRAWREX === 'SUCCESS' && this.props.system.WITHDRAWREX === 'PENDING') {
+      this.setState({ confirming: false });
+    }
+  }
   confirmTransaction = () => {
     const { actions } = this.props;
     const { defundingAmount, fundingAmount, transactionType } = this.state;
