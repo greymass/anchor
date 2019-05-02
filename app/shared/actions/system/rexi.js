@@ -76,11 +76,12 @@ export function rentnet(amount) {
 export function unstaketorex(amount, type) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
+    console.log({amount})
     const data = {
       owner: settings.account,
       receiver: settings.account,
-      from_cpu: (type === 'cpu' && amount),
-      from_net: (type === 'net' && amount),
+      from_cpu: (type === 'cpu' && amount) || '0.0000 EOS',
+      from_net: (type === 'net' && amount) || '0.0000 EOS',
     };
     rexAction('unstaketorex', 'UNSTAKETOREX', data, dispatch, getState);
   };
@@ -160,5 +161,6 @@ export default {
   rentcpu,
   rentnet,
   sellrex,
-  withdrawrex
+  withdrawrex,
+  unstaketorex,
 };

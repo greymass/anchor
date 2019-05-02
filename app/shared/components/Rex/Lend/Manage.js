@@ -15,6 +15,7 @@ import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import WalletStatusStaked from '../../Wallet/Status/Staked';
 import EOSAccount from '../../../utils/EOS/Account';
+import { unstaketorex } from '../../../actions/system/rexi';
 
 class RexLendManage extends PureComponent<Props> {
   state = {
@@ -31,12 +32,22 @@ class RexLendManage extends PureComponent<Props> {
   }
   confirmTransaction = () => {
     const { actions } = this.props;
-    const { amountToBuy, amountToSell, transactionType } = this.state;
+    const {
+      amountToBuy,
+      amountToSell,
+      amountToBuyFromCpu,
+      amountToBuyFromNet,
+      transactionType
+    } = this.state;
 
     if (transactionType === 'buy') {
       actions.buyrex(amountToBuy);
-    } else {
+    } else if (transactionType === 'sell') {
       actions.sellrex(amountToSell);
+    } else if (transactionType === 'buy_from_cpu_staked') {
+      actions.unstaketorex(amountToBuyFromCpu, 'cpu');
+    } else {
+      actions.unstaketorex(amountToBuyFromNet, 'net');
     }
   };
   handleChange = (e, { name, value, valid }) => {
@@ -68,9 +79,7 @@ class RexLendManage extends PureComponent<Props> {
           Number((maturedRex || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
       } else if (name === 'amountToBuyFromCpu') {
-        console.log({accounts})
         const cpuWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.cpu_weight`);
-        console.log({cpuWeight})
         notEnoughBalance = Number(cpuWeight.split(' ')[0]) < Number(value.split(' ')[0]);
       } else if (name === 'amountToBuyFromNet') {
         const netWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.net_weight`);
@@ -154,7 +163,11 @@ class RexLendManage extends PureComponent<Props> {
 
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
-        actionName={transactionType === 'buy' ? 'BUYREX' : 'SELLREX'}
+        actionName={
+          transactionType === 'buy' ?
+            'BUYREX' : transactionType === 'sell' ?
+            'SELLREX' : 'UNSTAKETOREX'
+        }
         actions={actions}
         blockExplorers={blockExplorers}
         content={(
@@ -163,14 +176,24 @@ class RexLendManage extends PureComponent<Props> {
               <p>
                 {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
                   amountToBuy,
-                  rexAmount: (amountToBuy.split(' ')[0] / priceOfRex)
+                })}
+              </p>
+            ) : transactionType === 'sell' ? (
+              <p>
+                {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
+                  amountToSell,
+                })}
+              </p>
+            ) : transactionType === 'buyRexFromCpu' ? (
+              <p>
+                {t('rex_interface_manage_rex_confirmation_modal_buy_from_cpu', {
+                  amountToBuyFromCpu,
                 })}
               </p>
             ) : (
               <p>
-                {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
-                  amountToSell,
-                  rexAmount: (amountToSell.split(' ')[0] / priceOfRex)
+                {t('rex_interface_manage_rex_confirmation_modal_buy_from_net', {
+                  amountToBuyFromNet,
                 })}
               </p>
             )}
