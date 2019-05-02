@@ -13,7 +13,7 @@
   "rex_interface_fund_options_defund": "Withdraw Funds",
   "rex_interface_fund_options_fund": "Deposit Funds",
   "rex_interface_manage_rex_confirmation_modal_buy_from_net": "You are about to change {{amountToBuyFromNet}} from Net to Rex.",
-  "rex_interface_manage_rex_confirmation_modal_buy_from_cpu": "You are about to change {{amountToBuyFromNet}} from Net to Rex.",
+  "rex_interface_manage_rex_confirmation_modal_buy_from_cpu": "You are about to change {{amountToBuyFromCpu}} from CPU to Rex.",
   "rex_interface_manage_rex_buy_from_cpu_staked": "Change your staked CPU for REX tokens (enter EOS amount)",
   "rex_interface_manage_rex_buy_from_net_staked": "Change your staked NET for REX tokens (enter EOS amount)",
   "rex_interface_fund_subheader": "Deposit or Withdraw {{chainSymbol}} from the REX system contract.",

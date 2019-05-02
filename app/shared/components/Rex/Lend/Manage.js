@@ -123,8 +123,6 @@ class RexLendManage extends PureComponent<Props> {
       transactionType,
     } = this.state;
 
-    const priceOfRex = 0.001;
-
     const dropdownOptions = ['buy', 'sell', 'buy_from_cpu_staked', 'buy_from_net_staked']
       .map((type) => (
         {
@@ -151,7 +149,6 @@ class RexLendManage extends PureComponent<Props> {
       (!amountToSell && transactionType === 'sell') ||
       (!amountToBuyFromCpu && transactionType === 'buy_from_cpu_staked') ||
       (!amountToBuyFromNet && transactionType === 'buy_from_net_staked');
-    const displaySuccessMessage = !saveDisabled;
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
@@ -184,7 +181,7 @@ class RexLendManage extends PureComponent<Props> {
                   amountToSell,
                 })}
               </p>
-            ) : transactionType === 'buyRexFromCpu' ? (
+            ) : transactionType === 'buy_from_cpu_staked' ? (
               <p>
                 {t('rex_interface_manage_rex_confirmation_modal_buy_from_cpu', {
                   amountToBuyFromCpu,
@@ -201,7 +198,7 @@ class RexLendManage extends PureComponent<Props> {
               <Button
                 color="green"
                 content={t('common:confirm')}
-                disabled={system.BUY_REX || system.SELL_REX}
+                disabled={system.BUYREX || system.SELLREX || system.UNSTAKETOREX}
                 floated="right"
                 onClick={this.confirmTransaction}
                 textAlign="right"
@@ -267,14 +264,14 @@ class RexLendManage extends PureComponent<Props> {
                 {t('rex_interface_rent_rex_balance_mature', { rexBalance: Number(parseFloat(maturedRex) || 0).toFixed(4) })}
               </p>
             </Message>
-            <Form success={displaySuccessMessage}>
+            <Form>
               <Form.Group widths="equal">
                 <label>
                   <strong>{t('rex_interface_transaction_type_label')}</strong>
                   <br />
                   <Dropdown
                     autoFocus
-                    defaultValue="buy"
+                    defaultValue={transactionType}
                     name="transactionType"
                     onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
                     options={dropdownOptions}
@@ -320,28 +317,6 @@ class RexLendManage extends PureComponent<Props> {
                   />
                 )}
               </Form.Group>
-              { displaySuccessMessage && transactionType === 'buy' && amountToBuy && (
-                <Message success>
-                  {t(
-                    'rex_interface_manage_rex_amount_to_buy',
-                    {
-                      amount: amountToBuy,
-                      rexAmount: amountToBuy.split(' ')[0] / priceOfRex
-                    }
-                  )}
-                </Message>
-              )}
-              { displaySuccessMessage && transactionType === 'sell' && amountToSell && (
-                <Message success>
-                  {t(
-                    'rex_interface_manage_rex_amount_to_sell',
-                    {
-                      amount: amountToSell,
-                      rexAmount: amountToSell.split(' ')[0] / priceOfRex
-                    }
-                  )}
-                </Message>
-              )}
               {error && (
                 <GlobalFormMessageError
                   error={error}
