@@ -18,7 +18,7 @@ import * as CreateAccountActions from '../actions/createaccount';
 import * as DelegateActions from '../actions/system/delegatebw';
 import * as GlobalsActions from '../actions/globals';
 import * as ProducersActions from '../actions/producers';
-import * as RexActions from '../actions/system/rex';
+import * as RexActions from '../actions/system/rexi';
 import * as SellRamActions from '../actions/system/sellram';
 import * as SettingsActions from '../actions/settings';
 import * as StakeActions from '../actions/stake';
