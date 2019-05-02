@@ -15,7 +15,7 @@ import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import WalletStatusStaked from '../../Wallet/Status/Staked';
 import EOSAccount from '../../../utils/EOS/Account';
-import { unstaketorex } from '../../../actions/system/rexi';
+import { unstaketorex } from '../../../actions/system/rex';
 
 class RexLendManage extends PureComponent<Props> {
   state = {
