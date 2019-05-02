@@ -8,12 +8,13 @@ import {
   Dropdown,
   Form,
   Message,
-  Segment,
   Header,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
+import WalletStatusStaked from '../../Wallet/Status/Staked';
+import EOSAccount from '../../../utils/EOS/Account';
 
 class RexLendManage extends PureComponent<Props> {
   state = {
@@ -78,10 +79,12 @@ class RexLendManage extends PureComponent<Props> {
       amountToBuy: undefined,
       amountToSell: undefined,
     });
-  }
+  };
   render() {
     const {
+      accounts,
       actions,
+      balance,
       blockExplorers,
       connection,
       settings,
@@ -99,13 +102,14 @@ class RexLendManage extends PureComponent<Props> {
 
     const priceOfRex = 0.001;
 
-    const dropdownOptions = ['buy', 'sell'].map((transactionType) => (
-      {
-        key: transactionType,
-        text: t(`rex_interface_manage_rex_options_${transactionType}`),
-        value: transactionType
-      }
-    ));
+    const dropdownOptions = ['buy', 'sell', 'buy_from_cpu_staked', 'buy_from_net_staked']
+      .map((type) => (
+        {
+          key: type,
+          text: t(`rex_interface_manage_rex_options_${type}`),
+          value: type
+        }
+      ));
 
     let transaction;
     let contract;
@@ -129,6 +133,8 @@ class RexLendManage extends PureComponent<Props> {
     const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
     const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+
+    const showStakedInterface = ['buy_from_cpu_staked', 'buy_from_net_staked'].includes(transactionType);
 
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
@@ -183,6 +189,15 @@ class RexLendManage extends PureComponent<Props> {
         transaction={transaction}
       />
     ) : false;
+
+    const account = accounts[settings.account] || {};
+
+    const delegations = tables &&
+      tables.eosio &&
+      tables.eosio[settings.account] &&
+      tables.eosio[settings.account].delband &&
+      tables.eosio[settings.account].delband.rows;
+    const eosAccount = new EOSAccount(account, balance, delegations, connection.chainSymbol);
 
     return (
       <React.Fragment>
@@ -283,6 +298,16 @@ class RexLendManage extends PureComponent<Props> {
                 onClick={() => this.setState({ confirming: true })}
               />
             </Form>
+            { showStakedInterface && (
+              <React.Fragment>
+                <Header>{t('rex_interface_manage_rex_current_staked')}</Header>
+                <WalletStatusStaked
+                  account={account}
+                  eosAccount={eosAccount}
+                  settings={settings}
+                />
+              </React.Fragment>
+            )}
           </React.Fragment>
         )}
       </React.Fragment>
