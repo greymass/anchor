@@ -173,7 +173,7 @@ class RexInterfaceFund extends PureComponent<Props> {
                 <Button
                   color="green"
                   content={t('common:confirm')}
-                  disabled={system.RENT_CPU || system.RENT_NET}
+                  disabled={system.RENTCPUREX || system.RENTNETREX}
                   floated="right"
                   onClick={this.confirmTransaction}
                   textAlign="right"
