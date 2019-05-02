@@ -58,6 +58,7 @@ const knownChains = [
       'customtokens',
       'producerinfo',
       'proposals',
+      'rex',
       'regproxyinfo'
     ],
     symbol: 'EOS',
