@@ -95,7 +95,9 @@ class RexLend extends Component<Props> {
           key: 'manage_rex',
           content: (
             <RexInterfaceLendManage
+              accounts={accounts}
               actions={actions}
+              balance={balance}
               blockExplorers={blockExplorers}
               connection={connection}
               settings={settings}
