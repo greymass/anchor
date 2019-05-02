@@ -9,7 +9,7 @@
   "rex_interface_fund_header": "REX Funding",
   "rex_interface_fund_label_defund": "Withdrawal Amount (in {{chainSymbol}})",
   "rex_interface_fund_label_fund": "Deposit Amount (in {{chainSymbol}})",
-  "rex_interface_fund_message": "This is the first step no matter how you want to use REX. The {{chainSymbol}} deposited into the smart contract will be made available to either rent network resources or to lease.",
+  "rex_interface_fund_warning_message": "This will often be the first step when wanting to use REX. The {{chainSymbol}} deposited into the smart contract will be made available to either rent network resources or to lease.",
   "rex_interface_fund_options_defund": "Withdraw Funds",
   "rex_interface_fund_options_fund": "Deposit Funds",
   "rex_interface_fund_subheader": "Deposit or Withdraw {{chainSymbol}} from the REX system contract.",
