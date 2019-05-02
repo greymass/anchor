@@ -279,7 +279,7 @@ const migrations = {
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 14,
+  version: 15,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables
