@@ -126,8 +126,10 @@ export default function settings(state = initialState, action) {
       return Object.assign({}, state, action.payload);
     }
     case types.RESET_INVALID_SETTINGS: {
-      return Object.assign({}, validSettings.reduce((o, setting) =>
-        ({ ...o, [setting]: state[setting] }), {}));
+      return Object.assign({}, validSettings.reduce((o, setting) => ({
+        ...o,
+        [setting]: (state[setting]) ? state[setting] : initialState[setting]
+      }), {}));
     }
     default: {
       return state;
