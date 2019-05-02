@@ -15,7 +15,9 @@ const contractBasedFeatures = [
   // https://github.com/AlohaEOS/eos-proxyinfo
   'regproxyinfo',
   // BEOS features for exchanging BTS <-> BEOS
-  'beosexchange'
+  'beosexchange',
+  // REX Smart Contract
+  'rex',
 ];
 
 const initialState = {
