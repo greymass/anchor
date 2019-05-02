@@ -269,6 +269,12 @@ const migrations = {
   14: (state) => Object.assign({}, state, {
     blockchains: update014(state.blockchains),
   }),
+  /*
+   15 - Run again, since any wallet created in 0.7.7 didn't have this as a default
+ */
+  15: (state) => Object.assign({}, state, {
+    blockchains: update014(state.blockchains),
+  }),
 };
 
 const persistConfig = {
