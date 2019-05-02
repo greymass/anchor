@@ -51,11 +51,12 @@ class RexLendManage extends PureComponent<Props> {
         this.setState({ amountToBuy: null, amountToSell: null });
       }
 
-      const { tables, settings } = this.props;
+      const { accounts, tables, settings } = this.props;
 
-      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
+      const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
       const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
+      let notEnoughBalanceMatured = false;
       let notEnoughBalance = false;
 
       if (name === 'amountToBuy') {
@@ -63,13 +64,24 @@ class RexLendManage extends PureComponent<Props> {
           Number((fundedBalance || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
       } else if (name === 'amountToSell') {
-        notEnoughBalance =
-          Number((rexBalance || '').split(' ')[0]) <
+        notEnoughBalanceMatured =
+          Number((maturedRex || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
+      } else if (name === 'amountToBuyFromCpu') {
+        console.log({accounts})
+        const cpuWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.cpu_weight`);
+        console.log({cpuWeight})
+        notEnoughBalance = Number(cpuWeight.split(' ')[0]) < Number(value.split(' ')[0]);
+      } else if (name === 'amountToBuyFromNet') {
+        const netWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.net_weight`);
+        notEnoughBalance = Number(netWeight.split(' ')[0]) < Number(value.split(' ')[0]);
       }
 
-      if (notEnoughBalance) {
+      if (notEnoughBalanceMatured) {
         this.setState({ error: 'insufficient_balance_matured' });
+      }
+      if (notEnoughBalance) {
+        this.setState({ error: 'insufficient_balance' });
       }
     });
   };
@@ -94,10 +106,12 @@ class RexLendManage extends PureComponent<Props> {
     } = this.props;
     const {
       amountToBuy,
+      amountToBuyFromCpu,
+      amountToBuyFromNet,
       amountToSell,
       confirming,
       error,
-      transactionType
+      transactionType,
     } = this.state;
 
     const priceOfRex = 0.001;
@@ -125,7 +139,9 @@ class RexLendManage extends PureComponent<Props> {
 
     const saveDisabled = error ||
       (!amountToBuy && transactionType === 'buy') ||
-      (!amountToSell && transactionType === 'sell');
+      (!amountToSell && transactionType === 'sell') ||
+      (!amountToBuyFromCpu && transactionType === 'buy_from_cpu_staked') ||
+      (!amountToBuyFromNet && transactionType === 'buy_from_net_staked');
     const displaySuccessMessage = !saveDisabled;
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
@@ -240,7 +256,7 @@ class RexLendManage extends PureComponent<Props> {
                     onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
                     options={dropdownOptions}
                     selection
-                    style={{ marginTop: '4px' }}
+                    style={{ marginTop: '4px', width: 200 }}
                   />
                 </label>
 
@@ -252,7 +268,7 @@ class RexLendManage extends PureComponent<Props> {
                     name="amountToBuy"
                     onChange={this.handleChange}
                   />
-                ) : (
+                ) : (transactionType === 'sell') ? (
                   <GlobalFormFieldToken
                     connection={connection}
                     key="amountToSell"
@@ -260,6 +276,24 @@ class RexLendManage extends PureComponent<Props> {
                     name="amountToSell"
                     onChange={this.handleChange}
                     symbol="REX"
+                  />
+                ) : (transactionType === 'buy_from_cpu_staked') ? (
+                  <GlobalFormFieldToken
+                    connection={connection}
+                    key="amountToBuyFromCpu"
+                    label={t('rex_interface_manage_rex_buy_from_cpu_staked', { chainSymbol: connection.chainSymbol })}
+                    name="amountToBuyFromCpu"
+                    onChange={this.handleChange}
+                    symbol="EOS"
+                  />
+                ) : (
+                  <GlobalFormFieldToken
+                    connection={connection}
+                    key="amountToBuyFromNet"
+                    label={t('rex_interface_manage_rex_buy_from_net_staked', { chainSymbol: connection.chainSymbol })}
+                    name="amountToBuyFromNet"
+                    onChange={this.handleChange}
+                    symbol="EOS"
                   />
                 )}
               </Form.Group>
@@ -292,7 +326,7 @@ class RexLendManage extends PureComponent<Props> {
                 />
               )}
               <Button
-                content={transactionType === 'buy' ? t('rex_interface_manage_rex_buy_button') : t('rex_interface_manage_rex_sell_button')}
+                content={transactionType === 'sell' ? t('rex_interface_manage_rex_sell_button') : t('rex_interface_manage_rex_buy_button')}
                 disabled={saveDisabled}
                 primary
                 onClick={() => this.setState({ confirming: true })}
