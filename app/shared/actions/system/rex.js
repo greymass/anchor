@@ -76,7 +76,6 @@ export function rentnet(amount) {
 export function unstaketorex(amount, type) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
-    console.log({amount})
     const data = {
       owner: settings.account,
       receiver: settings.account,
