@@ -198,7 +198,7 @@ class RexInterfaceFund extends PureComponent<Props> {
             <Message
               warning
             >
-              {t('rex_interface_fund_message', { chainSymbol: connection.chainSymbol })}
+              {t('rex_interface_fund_warning_message', { chainSymbol: connection.chainSymbol })}
             </Message>
             <Message
               content={(
