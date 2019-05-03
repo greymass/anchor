@@ -5,17 +5,17 @@ import { get } from 'dot-prop-immutable';
 import {
   Button,
   Container,
+  Divider,
   Dropdown,
   Form,
-  Message,
+  Grid,
   Header,
+  Segment,
+  Table,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import WalletStatusStaked from '../../Wallet/Status/Staked';
-import EOSAccount from '../../../utils/EOS/Account';
-import { unstaketorex } from '../../../actions/system/rex';
 
 class RexLendManage extends PureComponent<Props> {
   state = {
@@ -105,7 +105,6 @@ class RexLendManage extends PureComponent<Props> {
     const {
       accounts,
       actions,
-      balance,
       blockExplorers,
       connection,
       settings,
@@ -127,7 +126,7 @@ class RexLendManage extends PureComponent<Props> {
       .map((type) => (
         {
           key: type,
-          text: t(`rex_interface_manage_rex_options_${type}`),
+          text: t(`rex_interface_manage_rex_options_${type}`, { chainSymbol: connection.chainSymbol }),
           value: type
         }
       ));
@@ -227,13 +226,8 @@ class RexLendManage extends PureComponent<Props> {
     ) : false;
 
     const account = accounts[settings.account] || {};
-
-    const delegations = tables &&
-      tables.eosio &&
-      tables.eosio[settings.account] &&
-      tables.eosio[settings.account].delband &&
-      tables.eosio[settings.account].delband.rows;
-    const eosAccount = new EOSAccount(account, balance, delegations, connection.chainSymbol);
+    const stakedCPU = get(account, 'self_delegated_bandwidth.cpu_weight', 0);
+    const stakedNET = get(account, 'self_delegated_bandwidth.net_weight', 0);
 
     return (
       <React.Fragment>
@@ -245,26 +239,50 @@ class RexLendManage extends PureComponent<Props> {
         </Header>
         {confirming ? confirmationPage : (
           <React.Fragment>
-            <Message>
-              <p>
-                {
-                  t(
-                    'rex_interface_rent_funding_balance',
-                    {
-                      fundedBalance: Number(parseFloat(fundedBalance) || 0).toFixed(4),
-                      chainSymbol: connection.chainSymbol
-                    }
-                  )
-                }
-              </p>
-              <p>
-                {t('rex_interface_rent_rex_balance', { rexBalance: Number(parseFloat(rexBalance) || 0).toFixed(4) })}
-              </p>
-              <p>
-                {t('rex_interface_rent_rex_balance_mature', { rexBalance: Number(parseFloat(maturedRex) || 0).toFixed(4) })}
-              </p>
-            </Message>
-            <Form>
+            <Divider />
+            <Grid columns={2}>
+              <Grid.Row>
+                <Grid.Column>
+                  <Header
+                    content="EOS Balances"
+                  />
+                  <Table definition size="small" textAlign="right">
+                    <Table.Row>
+                      <Table.Cell width={12}>Available EOS (in REX Smart Contract)</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(fundedBalance) || 0).toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell width={12}>Available Staked EOS (CPU)</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(stakedCPU) || 0).toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell width={12}>Available Staked EOS (NET)</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(stakedNET) || 0).toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                  </Table>
+                </Grid.Column>
+                <Grid.Column>
+                  <Header
+                    content="REX Balances"
+                  />
+                  <Table definition size="small" textAlign="right">
+                    <Table.Row>
+                      <Table.Cell width={12}>REX Balance</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(rexBalance) || 0).toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell width={12}>Matured REX Balance</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(maturedRex) || 0).toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                  </Table>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <Divider />
+            <Header
+              content="Exchange EOS/REX"
+            />
+            <Form as={Segment} secondary>
               <Form.Group widths="equal">
                 <label>
                   <strong>{t('rex_interface_transaction_type_label')}</strong>
@@ -276,7 +294,7 @@ class RexLendManage extends PureComponent<Props> {
                     onChange={(e, props) => this.handleChange(e, { ...props, valid: true })}
                     options={dropdownOptions}
                     selection
-                    style={{ marginTop: '4px', width: 200 }}
+                    style={{ marginTop: '4px', width: 250 }}
                   />
                 </label>
 
@@ -330,16 +348,6 @@ class RexLendManage extends PureComponent<Props> {
                 onClick={() => this.setState({ confirming: true })}
               />
             </Form>
-            { showStakedInterface && (
-              <React.Fragment>
-                <Header>{t('rex_interface_manage_rex_current_staked')}</Header>
-                <WalletStatusStaked
-                  account={account}
-                  eosAccount={eosAccount}
-                  settings={settings}
-                />
-              </React.Fragment>
-            )}
           </React.Fragment>
         )}
       </React.Fragment>
