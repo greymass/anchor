@@ -155,8 +155,6 @@ class RexLendManage extends PureComponent<Props> {
     const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
-    const showStakedInterface = ['buy_from_cpu_staked', 'buy_from_net_staked'].includes(transactionType);
-
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
         actionName={

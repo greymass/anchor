@@ -33,15 +33,15 @@ class RexLendSavings extends PureComponent<Props> {
   confirmTransaction = () => {
     const { actions } = this.props;
     const {
-      amountToBuy,
-      amountToSell,
+      amountToAddToSavings,
+      amountToRemoveFromSavings,
       transactionType
     } = this.state;
 
-    if (transactionType === 'buy') {
-      actions.mvtosavings(amountToBuy);
+    if (transactionType === 'add') {
+      actions.mvtosavings(amountToAddToSavings);
     } else {
-      actions.mvfromsavings(amountToSell);
+      actions.mvfrsavings(amountToRemoveFromSavings);
     }
   };
   handleChange = (e, { name, value, valid }) => {
@@ -53,10 +53,10 @@ class RexLendSavings extends PureComponent<Props> {
       }
 
       if (name === 'transactionType') {
-        this.setState({ amountToBuy: null, amountToSell: null });
+        this.setState({ amountToAddToSavings: null, amountToRemoveFromSavings: null });
       }
 
-      const { accounts, tables, settings } = this.props;
+      const { tables, settings } = this.props;
 
       const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
       const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
@@ -64,35 +64,29 @@ class RexLendSavings extends PureComponent<Props> {
       let notEnoughBalanceMatured = false;
       let notEnoughBalance = false;
 
-      if (name === 'amountToBuy') {
+      if (name === 'amountToAddToSavings') {
         notEnoughBalance =
           Number((fundedBalance || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
-      } else if (name === 'amountToSell') {
+      } else if (name === 'amountToRemoveFromSavings') {
         notEnoughBalanceMatured =
           Number((maturedRex || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
-      } else if (name === 'amountToBuyFromCpu') {
-        const cpuWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.cpu_weight`);
-        notEnoughBalance = Number(cpuWeight.split(' ')[0]) < Number(value.split(' ')[0]);
-      } else if (name === 'amountToBuyFromNet') {
-        const netWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.net_weight`);
-        notEnoughBalance = Number(netWeight.split(' ')[0]) < Number(value.split(' ')[0]);
       }
 
-      if (notEnoughBalanceMatured) {
-        this.setState({ error: 'insufficient_balance_matured' });
-      }
       if (notEnoughBalance) {
         this.setState({ error: 'insufficient_balance' });
+      }
+      if (notEnoughBalanceMatured) {
+        this.setState({ error: 'insufficient_balance_matured' });
       }
     });
   };
   onClose = () => {
     this.setState({
       confirming: false,
-      amountToBuy: undefined,
-      amountToSell: undefined,
+      amountToAddToSavings: undefined,
+      amountToRemoveFromSavings: undefined,
     });
   };
   render() {
@@ -107,10 +101,8 @@ class RexLendSavings extends PureComponent<Props> {
       t
     } = this.props;
     const {
-      amountToBuy,
-      amountToBuyFromCpu,
-      amountToBuyFromNet,
-      amountToSell,
+      amountToAddToSavings,
+      amountToRemoveFromSavings,
       confirming,
       error,
       transactionType,
@@ -138,10 +130,8 @@ class RexLendSavings extends PureComponent<Props> {
     }
 
     const saveDisabled = error ||
-      (!amountToBuy && transactionType === 'buy') ||
-      (!amountToSell && transactionType === 'sell') ||
-      (!amountToBuyFromCpu && transactionType === 'buy_from_cpu_staked') ||
-      (!amountToBuyFromNet && transactionType === 'buy_from_net_staked');
+      (!amountToAddToSavings && transactionType === 'add') ||
+      (!amountToRemoveFromSavings && transactionType === 'remove');
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
@@ -149,41 +139,25 @@ class RexLendSavings extends PureComponent<Props> {
     const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
-    const showStakedInterface = ['buy_from_cpu_staked', 'buy_from_net_staked'].includes(transactionType);
-
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
         actionName={
-          transactionType === 'buy' ?
-            'BUYREX' : transactionType === 'sell' ?
-            'SELLREX' : 'UNSTAKETOREX'
+          transactionType === 'add' ? 'MVTOSAVINGSREX' : 'MVFRSAVINGSREX'
         }
         actions={actions}
         blockExplorers={blockExplorers}
         content={(
           <React.Fragment>
-            { transactionType === 'buy' ? (
+            { transactionType === 'add' ? (
               <p>
                 {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
-                  amountToBuy,
-                })}
-              </p>
-            ) : transactionType === 'sell' ? (
-              <p>
-                {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
-                  amountToSell,
-                })}
-              </p>
-            ) : transactionType === 'buy_from_cpu_staked' ? (
-              <p>
-                {t('rex_interface_manage_rex_confirmation_modal_buy_from_cpu', {
-                  amountToBuyFromCpu,
+                  amountToAddToSavings,
                 })}
               </p>
             ) : (
               <p>
-                {t('rex_interface_manage_rex_confirmation_modal_buy_from_net', {
-                  amountToBuyFromNet,
+                {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
+                  amountToRemoveFromSavings,
                 })}
               </p>
             )}
@@ -199,8 +173,8 @@ class RexLendSavings extends PureComponent<Props> {
               <Button
                 content={t('common:cancel')}
                 onClick={() => this.setState({
-                  amountToBuy: undefined,
-                  amountToSell: undefined,
+                  amountToAddToSavings: undefined,
+                  amountToRemoveFromSavings: undefined,
                   confirming: false,
                 })}
                 textAlign="left"
@@ -219,10 +193,6 @@ class RexLendSavings extends PureComponent<Props> {
       />
     ) : false;
 
-    const account = accounts[settings.account] || {};
-    const stakedCPU = get(account, 'self_delegated_bandwidth.cpu_weight', 0);
-    const stakedNET = get(account, 'self_delegated_bandwidth.net_weight', 0);
-
     return (
       <React.Fragment>
         <Header>
@@ -236,25 +206,6 @@ class RexLendSavings extends PureComponent<Props> {
             <Divider />
             <Grid columns={2}>
               <Grid.Row>
-                <Grid.Column>
-                  <Header
-                    content="EOS Balances"
-                  />
-                  <Table definition size="small" textAlign="right">
-                    <Table.Row>
-                      <Table.Cell width={12}>Available EOS (in REX Smart Contract)</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(fundedBalance) || 0).toFixed(4)}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell width={12}>Available Staked EOS (CPU)</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(stakedCPU) || 0).toFixed(4)}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell width={12}>Available Staked EOS (NET)</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(stakedNET) || 0).toFixed(4)}</Table.Cell>
-                    </Table.Row>
-                  </Table>
-                </Grid.Column>
                 <Grid.Column>
                   <Header
                     content="REX Balances"
@@ -292,40 +243,22 @@ class RexLendSavings extends PureComponent<Props> {
                   />
                 </label>
 
-                {transactionType === 'buy' ? (
+                {transactionType === 'add' ? (
                   <GlobalFormFieldToken
                     connection={connection}
-                    key="amountToBuy"
-                    label={t('rex_interface_manage_rex_buy', { chainSymbol: connection.chainSymbol })}
-                    name="amountToBuy"
+                    key="amountToAddToSavings"
+                    label={t('rex_interface_savings_rex_add', { chainSymbol: connection.chainSymbol })}
+                    name="amountToAddToSavings"
                     onChange={this.handleChange}
-                  />
-                ) : (transactionType === 'sell') ? (
-                  <GlobalFormFieldToken
-                    connection={connection}
-                    key="amountToSell"
-                    label={t('rex_interface_manage_rex_sell', { chainSymbol: connection.chainSymbol })}
-                    name="amountToSell"
-                    onChange={this.handleChange}
-                    symbol="REX"
-                  />
-                ) : (transactionType === 'buy_from_cpu_staked') ? (
-                  <GlobalFormFieldToken
-                    connection={connection}
-                    key="amountToBuyFromCpu"
-                    label={t('rex_interface_manage_rex_buy_from_cpu_staked', { chainSymbol: connection.chainSymbol })}
-                    name="amountToBuyFromCpu"
-                    onChange={this.handleChange}
-                    symbol="EOS"
                   />
                 ) : (
                   <GlobalFormFieldToken
                     connection={connection}
-                    key="amountToBuyFromNet"
-                    label={t('rex_interface_manage_rex_buy_from_net_staked', { chainSymbol: connection.chainSymbol })}
-                    name="amountToBuyFromNet"
+                    key="amountToRemoveFromSavings"
+                    label={t('rex_interface_savings_rex_remove', { chainSymbol: connection.chainSymbol })}
+                    name="amountToRemoveFromSavings"
                     onChange={this.handleChange}
-                    symbol="EOS"
+                    symbol="REX"
                   />
                 )}
               </Form.Group>
