@@ -86,6 +86,29 @@ export function unstaketorex(amount, type) {
   };
 }
 
+export function mvtosavings(amount) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const data = {
+      owner: settings.account,
+      rex: amount,
+    };
+    rexAction('mvtosavings', 'MVTOSAVINGSREX', data, dispatch, getState);
+  };
+}
+
+export function mvfrsavings(amount) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const data = {
+      owner: settings.account,
+      rex: amount,
+    };
+    rexAction('mvfrsavings', 'MVFRSAVINGSREX', data, dispatch, getState);
+  };
+}
+
+
 async function rexAction(actionName, actionVariable, data, dispatch, getState) {
   const {
     settings,
@@ -162,4 +185,6 @@ export default {
   sellrex,
   withdrawrex,
   unstaketorex,
+  mvtosavings,
+  mvfrsavings,
 };
