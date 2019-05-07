@@ -1,6 +1,6 @@
 /* eslint flowtype-errors/show-errors: 0 */
 import React from 'react';
 
-import Wallet from '../../modules/main/containers/Wallet';
+import MainIndexContainer from '../../modules/main/containers/Index';
 
-export default () => <Wallet />;
+export default () => <MainIndexContainer />;
