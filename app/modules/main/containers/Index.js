@@ -19,7 +19,7 @@ import anchorLogo from '../../../renderer/assets/images/anchor-logo.svg';
 import anchorText from '../../../renderer/assets/images/anchor-text.svg';
 import background from '../../../renderer/assets/images/geometric-background.svg';
 
-class WalletContainer extends Component<Props> {
+class MainIndexContainer extends Component<Props> {
   constructor(props) {
     super(props);
     const { actions, connectionStatus, settings } = props;
@@ -55,6 +55,7 @@ class WalletContainer extends Component<Props> {
       errorBoundaryKey,
       initialized,
     } = this.state;
+    console.log(initialized)
     if (!initialized) {
       return (
         <Grid
@@ -163,4 +164,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainIndexContainer));
