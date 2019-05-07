@@ -20,7 +20,7 @@ import GlobalTransactionModal from '../../Global/Transaction/Modal';
 class RexLendSavings extends PureComponent<Props> {
   state = {
     confirming: false,
-    transactionType: 'buy'
+    transactionType: 'add'
   };
   componentDidMount() {
     const { actions, settings } = this.props;
@@ -28,7 +28,6 @@ class RexLendSavings extends PureComponent<Props> {
     actions.clearSystemState();
 
     actions.getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account);
-    actions.getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account);
   }
   confirmTransaction = () => {
     const { actions } = this.props;
@@ -58,27 +57,30 @@ class RexLendSavings extends PureComponent<Props> {
 
       const { tables, settings } = this.props;
 
-      const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
-      const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`) || '0.0000 REX';
+      const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`) || '0.0000 REX';
+      const rexMaturities = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_maturities`, []);
+      const rexMaturing = rexMaturities.reduce((rexMaturity, total) => total + rexMaturity.second) / 10000;
+      const rexInSavings = rexBalance.split(' ')[0] - (maturedRex.split(' ')[0] + rexMaturing);
 
-      let notEnoughBalanceMatured = false;
       let notEnoughBalance = false;
+      let notEnoughBalanceInSavings = false;
 
       if (name === 'amountToAddToSavings') {
         notEnoughBalance =
-          Number((fundedBalance || '').split(' ')[0]) <
+          Number((rexBalance || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
       } else if (name === 'amountToRemoveFromSavings') {
-        notEnoughBalanceMatured =
-          Number((maturedRex || '').split(' ')[0]) <
+        notEnoughBalanceInSavings =
+          Number((rexInSavings || '').split(' ')[0]) <
           Number(value.split(' ')[0]);
       }
 
       if (notEnoughBalance) {
         this.setState({ error: 'insufficient_balance' });
       }
-      if (notEnoughBalanceMatured) {
-        this.setState({ error: 'insufficient_balance_matured' });
+      if (notEnoughBalanceInSavings) {
+        this.setState({ error: 'insufficient_balance_savings' });
       }
     });
   };
@@ -91,7 +93,6 @@ class RexLendSavings extends PureComponent<Props> {
   };
   render() {
     const {
-      accounts,
       actions,
       blockExplorers,
       connection,
@@ -108,11 +109,11 @@ class RexLendSavings extends PureComponent<Props> {
       transactionType,
     } = this.state;
 
-    const dropdownOptions = ['buy', 'sell', 'buy_from_cpu_staked', 'buy_from_net_staked']
+    const dropdownOptions = ['add', 'remove']
       .map((type) => (
         {
           key: type,
-          text: t(`rex_interface_manage_rex_options_${type}`, { chainSymbol: connection.chainSymbol }),
+          text: t(`rex_interface_savings_options_${type}`, { chainSymbol: connection.chainSymbol }),
           value: type
         }
       ));
@@ -137,7 +138,6 @@ class RexLendSavings extends PureComponent<Props> {
 
     const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
     const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
-    const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
@@ -150,13 +150,13 @@ class RexLendSavings extends PureComponent<Props> {
           <React.Fragment>
             { transactionType === 'add' ? (
               <p>
-                {t('rex_interface_manage_rex_confirmation_modal_buy_rex', {
+                {t('rex_interface_savings_confirmation_modal_add', {
                   amountToAddToSavings,
                 })}
               </p>
             ) : (
               <p>
-                {t('rex_interface_manage_rex_confirmation_modal_sell_rex', {
+                {t('rex_interface_savings_confirmation_modal_remove', {
                   amountToRemoveFromSavings,
                 })}
               </p>
@@ -250,6 +250,7 @@ class RexLendSavings extends PureComponent<Props> {
                     label={t('rex_interface_savings_rex_add', { chainSymbol: connection.chainSymbol })}
                     name="amountToAddToSavings"
                     onChange={this.handleChange}
+                    symbol="REX"
                   />
                 ) : (
                   <GlobalFormFieldToken
@@ -269,7 +270,7 @@ class RexLendSavings extends PureComponent<Props> {
                 />
               )}
               <Button
-                content={transactionType === 'sell' ? t('rex_interface_manage_rex_sell_button') : t('rex_interface_manage_rex_buy_button')}
+                content={transactionType === 'add' ? t('rex_interface_savings_options_add') : t('rex_interface_savings_options_remove')}
                 disabled={saveDisabled}
                 primary
                 onClick={() => this.setState({ confirming: true })}

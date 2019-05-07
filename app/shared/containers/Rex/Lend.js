@@ -9,6 +9,7 @@ import { get } from 'dot-prop-immutable';
 import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
+import RexInterfaceLendSavings from '../../components/Rex/Lend/Savings';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
 import RexActions from '../../actions/system/rexi';
@@ -95,6 +96,28 @@ class RexLend extends Component<Props> {
           key: 'manage_rex',
           content: (
             <RexInterfaceLendManage
+              accounts={accounts}
+              actions={actions}
+              balance={balance}
+              blockExplorers={blockExplorers}
+              connection={connection}
+              settings={settings}
+              system={system}
+              tables={tables}
+            />
+          )
+        }
+      },
+      {
+        menuItem: {
+          key: 'savings_rex',
+          icon: 'square',
+          content: t('rex_interface_menu_savings')
+        },
+        pane: {
+          key: 'savings_rex',
+          content: (
+            <RexInterfaceLendSavings
               accounts={accounts}
               actions={actions}
               balance={balance}
