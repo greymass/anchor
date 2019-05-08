@@ -383,7 +383,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
         }));
       }
 
-      if (endpoints['/v1/chain/get_currency_balances']) {
+      if (endpoints.includes('/v1/chain/get_currency_balances')) {
         httpQueue.add(() =>
           httpClient
             .post(`${connection.httpEndpoint}/v1/chain/get_currency_balances`, {

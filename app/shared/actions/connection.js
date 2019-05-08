@@ -37,11 +37,13 @@ export function getAvailableEndpoints() {
     });
     httpQueue.add(() =>
       httpClient
-        .post(`${httpEndpoint}/v1/api/get_available_endpoints`)
-        .then((response) => dispatch({
-          type: types.FEATURES_AVAILABLE_ENDPOINTS_SUCCESS,
-          payload: response.data
-        }))
+        .post(`${httpEndpoint}/v1/node/get_supported_apis`)
+        .then((response) => {
+          return dispatch({
+            type: types.FEATURES_AVAILABLE_ENDPOINTS_SUCCESS,
+            payload: response.data.apis
+          })
+        })
         .catch((err) => {
           console.log(err);
           dispatch({
