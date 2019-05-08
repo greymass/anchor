@@ -10,7 +10,7 @@ import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
-import RexActions from '../../actions/system/rexi';
+import RexActions from '../../actions/system/rex';
 import TableAction from '../../actions/table';
 import SystemStateActions from '../../actions/system/systemstate';
 import WalletActions from '../../actions/wallet';
