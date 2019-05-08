@@ -36,16 +36,16 @@ class GlobalBlockchainForm extends Component<Props> {
       if (validate.NODE === 'PENDING') {
         derived = set(state, 'valids.endpoint', false);
         derived = set(derived, 'loading.endpoint', true);
-        derived = del(derived, 'errors.endpoint');
+        derived = set(state, 'errors', {});
       }
       if (validate.NODE === 'FAILURE') {
-        derived = set(state, 'errors.endpoint', validate.NODE_ERROR);
+        derived = set(state, 'errors.endpoint', true);
         derived = del(derived, 'loading.endpoint');
       }
       if (validate.NODE === 'SUCCESS') {
+        derived = set(state, 'errors', {});
         derived = set(state, 'valids.endpoint', true);
         derived = del(derived, 'loading.endpoint');
-        derived = del(derived, 'errors.endpoint');
       }
     }
     return derived;
@@ -237,7 +237,7 @@ class GlobalBlockchainForm extends Component<Props> {
         />
         <Button
           content={t('save')}
-          disabled={!this.isValid()}
+          disabled={(!this.isValid() || hasErrors)}
           icon="save"
           floated="right"
           primary
