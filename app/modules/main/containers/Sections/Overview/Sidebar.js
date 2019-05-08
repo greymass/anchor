@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
 
+import { Header } from 'semantic-ui-react';
+
 import OverviewSidebarBackupContainer from './Sidebar/Backup';
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
 
@@ -36,6 +38,12 @@ class OverviewSidebarContainer extends Component<Props> {
     } = app;
     return (
       <React.Fragment>
+        <Header>
+          App Status
+          <Header.Subheader>
+            Important information and events for your Anchor wallet.
+          </Header.Subheader>
+        </Header>
         <GlobalSidebarUpdate
           constants={constants}
           update={this.props.latestUpdate}
