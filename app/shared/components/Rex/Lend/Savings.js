@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
+import { find } from 'lodash';
 import {
   Button,
   Container,
@@ -57,11 +58,9 @@ class RexLendSavings extends PureComponent<Props> {
 
       const { tables, settings } = this.props;
 
-      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`) || '0.0000 REX';
-      const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`) || '0.0000 REX';
+      const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
       const rexMaturities = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_maturities`, []);
-      const rexMaturing = rexMaturities.reduce((rexMaturity, total) => total + rexMaturity.second) / 10000;
-      const rexInSavings = rexBalance.split(' ')[0] - (maturedRex.split(' ')[0] + rexMaturing);
+      const rexInSavings = (find(rexMaturities, { first: '2106-02-07T06:28:15' }) || { second: 0 }).second / 10000;
 
       let notEnoughBalance = false;
       let notEnoughBalanceInSavings = false;
@@ -72,7 +71,7 @@ class RexLendSavings extends PureComponent<Props> {
           Number(value.split(' ')[0]);
       } else if (name === 'amountToRemoveFromSavings') {
         notEnoughBalanceInSavings =
-          Number((rexInSavings || '').split(' ')[0]) <
+          Number(rexInSavings) <
           Number(value.split(' ')[0]);
       }
 
@@ -136,8 +135,11 @@ class RexLendSavings extends PureComponent<Props> {
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
-    const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
+    const maturedRex = `${get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, 0) / 10000} REX`;
     const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
+    const rexMaturities = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_maturities`, []);
+    console.log({rexMaturities})
+    const rexInSavings = `${(find(rexMaturities, { first: '2106-02-07T06:28:15' }) || { second: 0 }).second / 10000} REX`;
 
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
@@ -165,7 +167,7 @@ class RexLendSavings extends PureComponent<Props> {
               <Button
                 color="green"
                 content={t('common:confirm')}
-                disabled={system.BUYREX || system.SELLREX || system.UNSTAKETOREX}
+                disabled={system.MVTOSAVINGSREX || system.MVFRSAVINGSREX}
                 floated="right"
                 onClick={this.confirmTransaction}
                 textAlign="right"
@@ -212,12 +214,16 @@ class RexLendSavings extends PureComponent<Props> {
                   />
                   <Table definition size="small" textAlign="right">
                     <Table.Row>
-                      <Table.Cell width={12}>REX Balance</Table.Cell>
+                      <Table.Cell width={12}>{t('rex_interface_table_rex_balance')}</Table.Cell>
                       <Table.Cell>{Number(parseFloat(rexBalance) || 0).toFixed(4)}</Table.Cell>
                     </Table.Row>
                     <Table.Row>
-                      <Table.Cell width={12}>Matured REX Balance</Table.Cell>
+                      <Table.Cell width={12}>{t('rex_interface_table_matured_rex_balance')}</Table.Cell>
                       <Table.Cell>{Number(parseFloat(maturedRex) || 0).toFixed(4)}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell width={12}>{t('rex_interface_table_rex_in_savings')}</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(rexInSavings) || 0).toFixed(4)}</Table.Cell>
                     </Table.Row>
                   </Table>
                 </Grid.Column>
@@ -230,7 +236,7 @@ class RexLendSavings extends PureComponent<Props> {
             <Form as={Segment} secondary>
               <Form.Group widths="equal">
                 <label>
-                  <strong>{t('rex_interface_transaction_type_label')}</strong>
+                  <strong>{t('rex_interface_savings_add_or_remove_label')}</strong>
                   <br />
                   <Dropdown
                     autoFocus
