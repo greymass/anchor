@@ -55,7 +55,6 @@ class MainIndexContainer extends Component<Props> {
       errorBoundaryKey,
       initialized,
     } = this.state;
-    console.log(initialized)
     if (!initialized) {
       return (
         <Grid
@@ -131,11 +130,15 @@ class MainIndexContainer extends Component<Props> {
               }}
             />
             <Either
-              catchError={({ error }) => (
-                <ContentErrorContainer
-                  error={error}
-                />
-              )}
+              catchError={({ error, info }) => {
+                console.log(info);
+                console.error(error);
+                return (
+                  <ContentErrorContainer
+                    error={error}
+                  />
+                );
+              }}
               key={errorBoundaryKey}
               render={() => <ContentContainer />}
             />
