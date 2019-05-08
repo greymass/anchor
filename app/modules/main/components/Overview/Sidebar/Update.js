@@ -52,15 +52,12 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
     return (
       <React.Fragment>
         <Segment attached="top" color="green" textAlign="center">
-          <Image centered src={Logo} size="tiny" />
           <Header>
             <Header.Subheader>
               Update Available
             </Header.Subheader>
             v{update.version}
           </Header>
-        </Segment>
-        <Segment attached="bottom" secondary stacked>
           <Modal
             closeIcon
             onOpen={this.toggle}
@@ -69,9 +66,9 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
             size="tiny"
             trigger={(
               <Button
-                content="View Details"
+                centered
+                content="View"
                 icon="external"
-                fluid
                 primary
               />
             )}
