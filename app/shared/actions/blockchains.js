@@ -4,6 +4,7 @@ import { clearWallet } from './wallet';
 import { setSettings, setSettingWithValidation } from './settings';
 import { clearActionsCache } from './accounts';
 import { clearProducerInfo } from './producers';
+import { validateNode } from './validate';
 
 import * as types from './types';
 
@@ -37,10 +38,19 @@ function swapBlockchain(chainId) {
 }
 
 function updateBlockchain(payload) {
-  return (dispatch: () => void) => dispatch({
-    type: types.SYSTEM_BLOCKCHAINS_UPDATE,
-    payload
-  });
+  return (dispatch: () => void, getState) => {
+    const { connection, settings } = getState();
+    if (
+      settings.chainId === payload.chainId
+      && connection.httpEndpoint !== payload.node
+    ) {
+      dispatch(validateNode(payload.node, payload.chainId, false, true));
+    }
+    return dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_UPDATE,
+      payload
+    });
+  };
 }
 
 function updateBlockchainSetting(chainId, key, value) {
