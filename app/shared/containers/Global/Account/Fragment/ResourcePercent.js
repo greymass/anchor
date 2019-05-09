@@ -38,9 +38,12 @@ class GlobalAccountFragmentResourcePercent extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  resource: get(state.accounts, `${ownProps.account}.${ownProps.type}_limit`),
-});
+const mapStateToProps = (state, ownProps) => {
+  const account = ownProps.account.replace('.', '\\.');
+  return {
+    resource: get(state.accounts, `${account}.${ownProps.type}_limit`),
+  };
+};
 
 export default compose(
   translate('global'),

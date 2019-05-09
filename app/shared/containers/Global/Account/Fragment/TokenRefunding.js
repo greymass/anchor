@@ -25,14 +25,15 @@ class GlobalAccountFragmentTokenRefunding extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const loaded = !isEmpty(get(state, `accounts.${ownProps.account}`));
+  const account = ownProps.account.replace('.', '\\.');
+  const loaded = !isEmpty(get(state, `accounts.${account}`));
   const defaultValue = loaded ? 0 : false;
   let netRefunding = 0;
   let cpuRefunding = 0;
-  const hasRefund = !isEmpty(get(state, `accounts.${ownProps.account}.refund_request`));
+  const hasRefund = !isEmpty(get(state, `accounts.${account}.refund_request`));
   if (hasRefund) {
-    netRefunding = get(state, `accounts.${ownProps.account}.refund_request.net_amount`, defaultValue);
-    cpuRefunding = get(state, `accounts.${ownProps.account}.refund_request.cpu_amount`, defaultValue);
+    netRefunding = get(state, `accounts.${account}.refund_request.net_amount`, defaultValue);
+    cpuRefunding = get(state, `accounts.${account}.refund_request.cpu_amount`, defaultValue);
   }
   return {
     balance: parseFloat(netRefunding) + parseFloat(cpuRefunding),
