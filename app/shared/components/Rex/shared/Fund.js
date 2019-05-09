@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
+import { get } from 'dot-prop-immutable';
 import {
   Button,
   Container,
@@ -9,13 +10,11 @@ import {
   Message,
   Segment,
   Header,
-  Modal,
 } from 'semantic-ui-react';
+
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
-import GlobalTransactionHandler from '../../Global/Transaction/Handler';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
-import { get } from "dot-prop-immutable";
 
 const invalidErrorMessage = {
   defundingAmount: 'defunding_amount_invalid',
