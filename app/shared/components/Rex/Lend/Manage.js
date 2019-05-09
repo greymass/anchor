@@ -83,7 +83,7 @@ class RexLendManage extends PureComponent<Props> {
           Number(value.split(' ')[0]);
       } else if (name === 'amountToSell') {
         notEnoughBalanceMatured =
-          Number((maturedRex || '').split(' ')[0]) <
+          Number((maturedRex || '').toString().split(' ')[0]) <
           Number(value.split(' ')[0]);
       } else if (name === 'amountToBuyFromCpu') {
         const cpuWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.cpu_weight`);
