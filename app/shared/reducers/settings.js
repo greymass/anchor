@@ -62,6 +62,8 @@ const initialState = {
   recentContracts: [],
   // Recent referendum scopes the wallet has used
   recentProposalsScopes: [],
+  // The most recently used wallets. Key is the chainId and property is the account/authority.
+  recentWallets: {},
   // If the sidebar is collapsed
   sidebarCollapsed: false,
   // Allows the UI to start with only a connected node
@@ -124,6 +126,16 @@ export default function settings(state = initialState, action) {
         });
       }
       return Object.assign({}, state, action.payload);
+    }
+    case types.SET_CURRENT_WALLET: {
+      const wallet = {
+        account: action.payload.account,
+        authorization: action.payload.authorization,
+        mode: action.payload.mode,
+      };
+      return Object.assign({}, state, {
+        recentWallets: set(state.recentWallets, action.payload.chainId, wallet),
+      });
     }
     case types.RESET_INVALID_SETTINGS: {
       return Object.assign({}, validSettings.reduce((o, setting) => ({
