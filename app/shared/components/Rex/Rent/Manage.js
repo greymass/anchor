@@ -1,6 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
+import { get } from "dot-prop-immutable";
+
 import {
   Button,
   Container,
@@ -9,7 +11,6 @@ import {
   Message,
   Segment,
   Header,
-  Modal,
 } from 'semantic-ui-react';
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
@@ -17,8 +18,6 @@ import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import WalletStatusResources from '../../Wallet/Status/Resources';
 
 import EOSAccount from '../../../utils/EOS/Account';
-
-import { get } from "dot-prop-immutable";
 
 const invalidErrorMessage = {
   resourceAmount: 'invalid_amount'
@@ -91,7 +90,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       resourceAmount: undefined,
       transactionType: 'cpu',
     });
-  }
+  };
   render() {
     const {
       accounts,
@@ -239,7 +238,6 @@ class RexInterfaceFund extends PureComponent<Props> {
                 </label>
                 <GlobalFormFieldToken
                   connection={connection}
-                  defaultValue={resourceAmount || ''}
                   label={t('rex_interface_rent_resources_amount_label', { chainSymbol: connection.chainSymbol })}
                   name="resourceAmount"
                   onChange={this.handleChange}

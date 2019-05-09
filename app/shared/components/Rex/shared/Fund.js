@@ -76,22 +76,22 @@ class RexInterfaceFund extends PureComponent<Props> {
 
       const { transactionType } = this.state;
 
-      let notEnoughBalance = false;
 
       if (transactionType === 'fund') {
         const balanceAmount = balance[connection.chainSymbol];
-        notEnoughBalance = balanceAmount < Number(value.split(' ')[0]);
+
+        if (balanceAmount < Number(value.split(' ')[0])) {
+          this.setState({ error: 'insufficient_balance' });
+        }
       } else {
         const escapedAccountName = settings.account.replace('.', '\\.');
 
-        const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
-        notEnoughBalance =
-          Number((rexBalance || '').split(' ')) <
-          Number(value.split(' ')[0]);
-      }
+        const rexFundBalance =
+          get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
-      if (notEnoughBalance) {
-        this.setState({ error: 'insufficient_balance' });
+        if (Number((rexFundBalance || '').split(' ')[0]) < Number(value.split(' ')[0])) {
+          this.setState({ error: 'insufficient_balance_matured' });
+        }
       }
     });
   };
@@ -246,7 +246,6 @@ class RexInterfaceFund extends PureComponent<Props> {
                 {transactionType === 'fund' ? (
                   <GlobalFormFieldToken
                     connection={connection}
-                    defaultValue={fundingAmount || ''}
                     key="fundingAmount"
                     label={t('rex_interface_fund_label_fund', { chainSymbol: connection.chainSymbol })}
                     name="fundingAmount"
