@@ -57,6 +57,8 @@
   "rex_interface_savings_add_or_remove_label": "Add or Remove REX from Savings ",
   "rex_interface_table_rex_balance": "REX Balance",
   "rex_interface_table_matured_rex_balance": "Matured REX Balance",
+  "rex_interface_savings_header": "Add or Remove REX from Savings",
+  "rex_interface_savings_subheader": "Your REX tokens will usually mature after only four days, allowing you to exchange it back to EOS immediately afterwards. Adding your REX to your Savings will cause the REX to not mature which is a good way to protect your funds at least temporarily in the event that your account is compromised.",
   "rex_interface_table_rex_in_savings": "REX in Savings",
   "rex_interface_savings_confirmation_modal_add": "You are about to add {{amountToAddToSavings}} to your Savings.",
   "rex_interface_savings_confirmation_modal_remove": "You are about to remove {{amountToRemoveFromSavings}} from your Savings.",

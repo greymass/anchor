@@ -197,9 +197,9 @@ class RexLendSavings extends PureComponent<Props> {
     return (
       <React.Fragment>
         <Header>
-          {t('rex_interface_manage_rex_header', { chainSymbol: connection.chainSymbol })}
+          {t('rex_interface_savings_header')}
           <Header.Subheader>
-            {t('rex_interface_manage_rex_subheader', { chainSymbol: connection.chainSymbol })}
+            {t('rex_interface_savings_subheader')}
           </Header.Subheader>
         </Header>
         {confirming ? confirmationPage : (
@@ -230,7 +230,7 @@ class RexLendSavings extends PureComponent<Props> {
             </Grid>
             <Divider />
             <Header
-              content="Exchange EOS/REX"
+              content={t('rex_interface_savings_header')}
             />
             <Form as={Segment} secondary>
               <Form.Group widths="equal">
