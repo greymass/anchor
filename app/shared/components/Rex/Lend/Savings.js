@@ -14,6 +14,7 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
+
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
