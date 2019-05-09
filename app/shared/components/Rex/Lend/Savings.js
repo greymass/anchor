@@ -19,6 +19,13 @@ import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
+const labelStyle = {
+  color: 'black',
+  lineWeight: 'light',
+  fontSize: 13,
+  marginBottom: 4
+};
+
 class RexLendSavings extends PureComponent<Props> {
   state = {
     confirming: false,
@@ -240,7 +247,9 @@ class RexLendSavings extends PureComponent<Props> {
             <Form as={Segment} secondary>
               <Form.Group widths="equal">
                 <label>
-                  <strong>{t('rex_interface_savings_add_or_remove_label')}</strong>
+                  <strong style={labelStyle}>
+                    {t('rex_interface_savings_add_or_remove_label')}
+                  </strong>
                   <br />
                   <Dropdown
                     autoFocus
