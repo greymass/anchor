@@ -64,7 +64,7 @@ export function setSettingWithValidation(key, value) {
         // If nodes are changing, force clear any locally cached data
         dispatch({ type: types.CLEAR_ACCOUNT_CACHE });
         dispatch({ type: types.CLEAR_PRODUCER_CACHE });
-        dispatch(validate.validateNode(value, false, true, true));
+        dispatch(validate.validateNode(value, false, true, true, true));
         break;
       }
       default: {
