@@ -12,8 +12,8 @@ class GlobalAccountFragmentVoterInfoVotes extends PureComponent<Props> {
       producers,
       votes,
     } = this.props;
+    if (votes === 0 || !producers) return votes;
     const sorted = producers.sort();
-    if (votes === 0) return votes;
     return (
       <React.Fragment>
         <Popup
