@@ -75,7 +75,6 @@ class RexInterfaceFund extends PureComponent<Props> {
 
       const { transactionType } = this.state;
 
-
       if (transactionType === 'fund') {
         const balanceAmount = balance[connection.chainSymbol];
 
