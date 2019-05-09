@@ -54,9 +54,9 @@ class ToolsSystemLog extends Component<Props> {
           <Table.Body>
             {(log
               .slice(0, 50)
-              .filter((e) => (!errorsOnly || (e.payload && e.payload.err)))
+              .filter((e) => (!errorsOnly || (e.payload && e.payload.err) || (e.type && e.type.endsWith('_FAILURE'))))
               .map((entry, idx) => {
-                const isError = !!(entry.payload && entry.payload.err);
+                const isError = !!((entry.payload && entry.payload.err) || (entry.type && entry.type.endsWith('_FAILURE')));
                 return (
                   <Table.Row
                     key={`${idx}+${entry.when}`}
