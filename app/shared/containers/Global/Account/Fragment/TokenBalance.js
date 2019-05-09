@@ -25,11 +25,12 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const loaded = !isEmpty(get(state, `balances.${ownProps.account}`));
+  const account = ownProps.account.replace('.', '\\.');
+  const loaded = !isEmpty(get(state, `balances.${account}`));
   const defaultValue = loaded ? 0 : false;
   return {
-    balance: get(state, `balances.${ownProps.account}.${ownProps.token}`, defaultValue),
-    precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, defaultValue),
+    balance: get(state, `balances.${account}.${ownProps.token}`, defaultValue),
+    precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, 4),
   };
 };
 
