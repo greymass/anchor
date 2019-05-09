@@ -24,7 +24,8 @@ class GlobalAccountFragmentTokenStaked extends PureComponent<Props> {
 
 
 const mapStateToProps = (state, ownProps) => {
-  const path = `accounts.${ownProps.account}.self_delegated_bandwidth`;
+  const account = ownProps.account.replace('.', '\\.');
+  const path = `accounts.${account}.self_delegated_bandwidth`;
   const cpuWeight = String(get(state, `${path}.cpu_weight`, false));
   const netWeight = String(get(state, `${path}.net_weight`, false));
   if (cpuWeight === false || netWeight === false) {

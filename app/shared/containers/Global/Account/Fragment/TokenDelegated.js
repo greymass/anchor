@@ -22,9 +22,12 @@ class GlobalAccountFragmentTokenDelegated extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  balance: get(state, `accounts.${ownProps.account}.delegated.total`, false)
-});
+const mapStateToProps = (state, ownProps) => {
+  const account = ownProps.account.replace('.', '\\.');
+  return {
+    balance: get(state, `accounts.${account}.delegated.total`, false)
+  };
+};
 
 export default compose(
   translate('global'),
