@@ -1,6 +1,6 @@
-import { find } from 'lodash';
+import { find, map, uniq } from 'lodash';
 
-import { getCurrencyBalance } from './accounts';
+import { getAccounts, getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
 import { getGlobals } from './globals';
@@ -68,6 +68,7 @@ export function validateNode(
   expectedChainId = false,
   saveAsDefault = false,
   useImmediately = false,
+  refreshAllAccounts = false,
 ) {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -81,7 +82,8 @@ export function validateNode(
         const {
           blockchains,
           connection,
-          settings
+          settings,
+          wallets,
         } = getState();
         let { host, protocol, pathname } = new URL(node);
         // If the protocol contains the original value with a colon,
@@ -127,6 +129,14 @@ export function validateNode(
             dispatch(getSupportedCalls());
             // Grab globals
             dispatch(getGlobals());
+            if (refreshAllAccounts) {
+              // Filter wallet data down to the current chain
+              const chainWallets = wallets.filter((w) => (w.chainId === blockchain.chainId));
+              // Create a list of all account names loaded for this chain
+              const chainAccounts = uniq(map(chainWallets, 'account'));
+              // Refresh all of those accounts
+              dispatch(getAccounts(chainAccounts));
+            }
             // Refresh our connection properties with new chain info
             return dispatch(chain.getInfo());
           }
