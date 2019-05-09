@@ -36,11 +36,14 @@ class GlobalAccountFragmentDataStaleness extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  currentHeight: get(state, 'chain.head_block_num'),
-  lastHeight: get(state, `accounts.${ownProps.account}.head_block_num`),
-  lastUpdate: get(state, `accounts.${ownProps.account}.head_block_time`),
-});
+const mapStateToProps = (state, ownProps) => {
+  const account = ownProps.account.replace('.', '\\.');
+  return {
+    currentHeight: get(state, 'chain.head_block_num'),
+    lastHeight: get(state, `accounts.${account}.head_block_num`),
+    lastUpdate: get(state, `accounts.${account}.head_block_time`),
+  };
+};
 
 export default compose(
   translate('common'),

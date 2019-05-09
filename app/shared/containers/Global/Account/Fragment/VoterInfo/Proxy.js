@@ -25,8 +25,9 @@ class GlobalAccountFragmentVoterInfoProxy extends PureComponent<Props> {
 
 
 const mapStateToProps = (state, ownProps) => {
+  const account = ownProps.account.replace('.', '\\.');
   let proxy;
-  let voter = get(state, `accounts.${ownProps.account}.voter_info`, {});
+  let voter = get(state, `accounts.${account}.voter_info`, {});
   // The get call above will return null as a retrieved value, and if so, set to {}
   if (voter === null) {
     voter = {};
