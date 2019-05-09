@@ -77,34 +77,6 @@ class SidebarContainer extends Component<Props> {
             <React.Fragment>
               <Menu.Item
                 as="a"
-                active={module === 'tests'}
-                onClick={this.onClick}
-                name="tests"
-                color="blue"
-                style={{ color }}
-              >
-                <Icon name="lab" />
-                {(!settings.sidebarCollapsed)
-                  ? 'URI TESTS'
-                  : false
-                }
-              </Menu.Item>
-              <Menu.Item
-                as="a"
-                active={module === 'devtest'}
-                onClick={this.onClick}
-                name="devtest"
-                color="blue"
-                style={{ color }}
-              >
-                <Icon name="lab" />
-                {(!settings.sidebarCollapsed)
-                  ? 'DevTests'
-                  : false
-                }
-              </Menu.Item>
-              <Menu.Item
-                as="a"
                 active={module && module.startsWith('wallet')}
                 onClick={this.onClick}
                 name="wallet"
@@ -128,6 +100,34 @@ class SidebarContainer extends Component<Props> {
                 <Icon name="balance" size="large" />
                 {(!settings.sidebarCollapsed)
                   ? <p>Governance</p>
+                  : false
+                }
+              </Menu.Item>
+              <Menu.Item
+                as="a"
+                active={module === 'tests'}
+                onClick={this.onClick}
+                name="tests"
+                color="red"
+                style={{ color }}
+              >
+                <Icon name="external" />
+                {(!settings.sidebarCollapsed)
+                  ? 'URI TESTS'
+                  : false
+                }
+              </Menu.Item>
+              <Menu.Item
+                as="a"
+                active={module === 'devtest'}
+                onClick={this.onClick}
+                name="devtest"
+                color="orange"
+                style={{ color }}
+              >
+                <Icon name="lab" />
+                {(!settings.sidebarCollapsed)
+                  ? 'DevTests'
                   : false
                 }
               </Menu.Item>
