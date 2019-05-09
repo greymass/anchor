@@ -37,6 +37,7 @@ class MenuContainer extends Component<Props> {
     } = actions;
 
     initApp();
+    getBlockExplorers();
 
     // switch (settings.walletMode) {
     //   case 'cold': {
@@ -48,7 +49,6 @@ class MenuContainer extends Component<Props> {
     //       history.push('/');
     //     } else {
     //       // getCurrencyStats();
-    //       getBlockExplorers();
     //       // forEach(settings.customTokens, (token) => {
     //       //   const [chainId, contract, symbol] = token.split(':');
     //       //   if (chainId === settings.chainId) {
