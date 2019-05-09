@@ -17,6 +17,13 @@ import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
+const labelStyle = {
+  color: 'black',
+  lineWeight: 'light',
+  fontSize: 13,
+  marginBottom: 4
+};
+
 class RexLendManage extends PureComponent<Props> {
   state = {
     confirming: false,
@@ -272,7 +279,7 @@ class RexLendManage extends PureComponent<Props> {
                     </Table.Row>
                     <Table.Row>
                       <Table.Cell width={12}>Matured REX Balance</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(maturedRex) || 0).toFixed(4)}</Table.Cell>
+                      <Table.Cell>{(Number(parseFloat(maturedRex) / 10000) || 0).toFixed(4)}</Table.Cell>
                     </Table.Row>
                   </Table>
                 </Grid.Column>
@@ -285,7 +292,9 @@ class RexLendManage extends PureComponent<Props> {
             <Form as={Segment} secondary>
               <Form.Group widths="equal">
                 <label>
-                  <strong>{t('rex_interface_transaction_type_label')}</strong>
+                  <strong style={labelStyle}>
+                    {t('rex_interface_transaction_type_label')}
+                  </strong>
                   <br />
                   <Dropdown
                     autoFocus
