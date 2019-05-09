@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
-import { get } from "dot-prop-immutable";
+import { get } from 'dot-prop-immutable';
 
 import {
   Button,
