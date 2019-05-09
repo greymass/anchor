@@ -32,7 +32,8 @@ export default function balances(state = initialState, action) {
           }
         }), {}
       ));
-      modified = set(state, action.payload.account, newBalances);
+      const account = action.payload.account.replace('.', '\\.');
+      modified = set(state, account, newBalances);
       modified = set(modified, '__contracts', newPrecisions);
       return modified;
     }
