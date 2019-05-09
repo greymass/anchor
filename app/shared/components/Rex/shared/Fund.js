@@ -82,7 +82,9 @@ class RexInterfaceFund extends PureComponent<Props> {
         const balanceAmount = balance[connection.chainSymbol];
         notEnoughBalance = balanceAmount < Number(value.split(' ')[0]);
       } else {
-        const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.balance`, '0.0000 EOS');
+        const escapedAccountName = settings.account.replace('.', '\\.');
+
+        const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
         notEnoughBalance =
           Number((rexBalance || '').split(' ')) <
           Number(value.split(' ')[0]);
@@ -136,7 +138,9 @@ class RexInterfaceFund extends PureComponent<Props> {
       contract = system[`${actionName}_LAST_CONTRACT`];
     }
 
-    const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+    const escapedAccountName = settings.account.replace('.', '\\.');
+
+    const rexFundBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
       <Segment loading={system.DEPOSITREX === 'PENDING' || system.WITHDRAWREX === 'PENDING'}>

@@ -68,7 +68,9 @@ class RexInterfaceFund extends PureComponent<Props> {
 
       const { settings, tables } = this.props;
 
-      const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+      const escapedAccountName = settings.account.replace('.', '\\.');
+
+      const rexFundBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
       let notEnoughBalance = false;
 
@@ -130,7 +132,10 @@ class RexInterfaceFund extends PureComponent<Props> {
     }
 
     const saveDisabled = error || !resourceAmount;
-    const rexFundBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+
+    const escapedAccountName = settings.account.replace('.', '\\.');
+
+    const rexFundBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
     const confirmationPage = confirming ? (
       <Segment basic loading={system.RENTCPUREX === 'PENDING' || system.RENTNETREX === 'PENDING'}>
         <GlobalTransactionModal
