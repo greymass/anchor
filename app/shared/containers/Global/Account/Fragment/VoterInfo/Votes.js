@@ -33,8 +33,9 @@ class GlobalAccountFragmentVoterInfoVotes extends PureComponent<Props> {
 
 
 const mapStateToProps = (state, ownProps) => {
+  const account = ownProps.account.replace('.', '\\.');
   let proxy;
-  let voter = get(state, `accounts.${ownProps.account}.voter_info`, {});
+  let voter = get(state, `accounts.${account}.voter_info`, {});
   let producers = [];
   let votes = 0;
   if (voter) {
@@ -46,7 +47,8 @@ const mapStateToProps = (state, ownProps) => {
     // Overwrite local account if proxy is set
     if (voter.proxy) {
       ({ proxy } = voter);
-      voter = get(state, `accounts.${voter.proxy}.voter_info`, {});
+      proxy = proxy.replace('.', '\\.');
+      voter = get(state, `accounts.${proxy}.voter_info`, {});
       ({ producers } = voter);
     }
     votes = get(voter, 'producers', []).length;
