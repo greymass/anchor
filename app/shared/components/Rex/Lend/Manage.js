@@ -63,9 +63,9 @@ class RexLendManage extends PureComponent<Props> {
       }
 
       const { accounts, tables, settings } = this.props;
-
-      const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
-      const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+      const escapedAccountName = settings.account.replace('.', '\\.');
+      const maturedRex = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.matured_rex`, '0.0000 REX');
+      const fundedBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
       let notEnoughBalanceMatured = false;
       let notEnoughBalance = false;
@@ -151,9 +151,11 @@ class RexLendManage extends PureComponent<Props> {
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
-    const maturedRex = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.matured_rex`, '0.0000 REX');
-    const rexBalance = get(tables, `eosio.eosio.rexbal.${settings.account}.rows.0.rex_balance`, '0.0000 REX');
-    const fundedBalance = get(tables, `eosio.eosio.rexfund.${settings.account}.rows.0.balance`, '0.0000 EOS');
+    const escapedAccountName = settings.account.replace('.', '\\.');
+
+    const maturedRex = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.matured_rex`, '0.0000 REX');
+    const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');
+    const fundedBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
