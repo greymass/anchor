@@ -19,8 +19,10 @@ export default function tables(state = initialState, action) {
         scope,
         table,
       } = action.payload;
-
-      return set(state, `${code}.${scope}.${table}`, { more, rows });
+      const codeEscaped = code.replace('.', '\\.');
+      const scopeEscaped = scope.replace('.', '\\.');
+      const tableEscaped = table.replace('.', '\\.');
+      return set(state, `${codeEscaped}.${scopeEscaped}.${tableEscaped}`, { more, rows });
     }
     case types.SYSTEM_GETTABLEBYBOUNDS_SUCCESS: {
       const {

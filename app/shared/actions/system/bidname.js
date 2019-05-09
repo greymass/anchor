@@ -18,7 +18,7 @@ export function bidname(data) {
 
     const { account } = settings;
     const [, authorization] = connection.authorization.split('@');
-    
+
     return eos(connection, true).transaction({
       actions: [
         {
@@ -41,7 +41,8 @@ export function bidname(data) {
 
       currentRecentBids.push({ newname: data.newname, bid: data.bid });
 
-      const newRecentBidsState = set(settings.recentBids, `${settings.chainId}.${settings.account}`, currentRecentBids);
+      const accountName = settings.account.replace('.', '\\.');
+      const newRecentBidsState = set(settings.recentBids, `${settings.chainId}.${accountName}`, currentRecentBids);
 
       dispatch(setSetting('recentBids', newRecentBidsState));
       setTimeout(() => {
