@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { filter } from 'lodash';
 
-import { Button, Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Grid, Header, List, Popup, Segment } from 'semantic-ui-react';
 
 import NavigationActions from '../../../actions/navigation';
 import SettingsActions from '../../../../../shared/actions/settings';
@@ -24,6 +24,16 @@ const toolSections = {
     tools_menu_delegations: {
       modes: ['hot', 'ledger', 'watch'],
       path: 'tools/delegations'
+    }
+  },
+  tools_menu_utilities_header: {
+    tools_menu_contacts: {
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
+      path: 'tools/contacts'
+    },
+    tools_menu_contracts: {
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
+      path: 'tools/smart_contracts'
     }
   },
   tools_menu_security_header: {
@@ -44,9 +54,23 @@ const toolSections = {
       path: 'tools/key_validator'
     }
   },
+  tools_menu_registration_header: {
+    tools_menu_create_account: {
+      modes: ['hot', 'ledger', 'watch'],
+      path: 'tools/create_account'
+    },
+    tools_menu_name_bidding: {
+      modes: ['hot', 'ledger', 'watch'],
+      path: 'tools/bid_name'
+    },
+    tools_menu_proxy: {
+      modes: ['hot', 'ledger', 'watch'],
+      path: 'tools/proxy'
+    }
+  },
   tools_menu_hardware_header: {
     tools_menu_ledger: {
-      modes: [false, 'hot', 'ledger', 'watch'],
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/ledger'
     }
   },
@@ -58,39 +82,15 @@ const toolSections = {
   },
   tools_menu_network_utilities_header: {
     'API Performance Analysis': {
-      modes: [false, 'hot', 'ledger', 'watch'],
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_ping'
-    }
-  },
-  tools_menu_registration_header: {
-    tools_menu_create_account: {
-      modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/create_account'
     },
-    tools_menu_proxy: {
-      modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/proxy'
-    }
-  },
-  tools_menu_utilities_header: {
-    tools_menu_name_bidding: {
-      modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/bid_name'
-    },
-    tools_menu_contacts: {
-      modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/contacts'
-    },
-    tools_menu_contracts: {
-      modes: [false, 'hot', 'ledger', 'watch'],
-      path: 'tools/smart_contracts'
-    }
-  },
-  tools_menu_advanced_header: {
     tools_system_log_header: {
-      modes: [false, 'hot', 'ledger', 'watch'],
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_traffic_log'
     },
+  },
+  tools_menu_advanced_header: {
     tools_menu_state_chain: {
       modes: ['all'],
       path: 'tools/chain_state'
@@ -99,14 +99,14 @@ const toolSections = {
       modes: ['all'],
       path: 'tools/global_state'
     },
+    tools_menu_state: {
+      modes: ['all'],
+      path: 'tools/wallet_state'
+    },
     tools_reset_header_header: {
       modes: ['all'],
       path: 'tools/reset_application'
     },
-    tools_menu_state: {
-      modes: ['all'],
-      path: 'tools/wallet_state'
-    }
   }
 };
 
@@ -127,7 +127,11 @@ class ToolsHome extends Component<Props> {
       settings,
       t,
     } = this.props;
-    const linkStyle = { cursor: 'pointer' };
+    const linkStyle = {
+      color: 'black',
+      cursor: 'pointer',
+    };
+    console.log(settings.walletMode)
     return (
       <React.Fragment>
         <Segment style={{ margin: '0 0 15px' }}>
@@ -151,29 +155,53 @@ class ToolsHome extends Component<Props> {
               toolSections[sectionGroupTitle],
               (item) => (item.modes.includes(settings.walletMode) || item.modes.includes('all'))
             );
-            if (!hasValidItems.length) return false;
             return (
               <Grid.Column>
                 <Segment.Group vertical>
-                  <Header attached="top" inverted>
+                  <Header attached="top">
                     {t(sectionGroupTitle)}
                   </Header>
-                  {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
-                    const item = toolSections[sectionGroupTitle][sectionTitle];
-                    const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
-                    if (!isValidItem) return false;
-                    return (
-                      <Segment>
-                        <a
-                          name={item.path}
-                          onClick={this.onClick}
-                          style={linkStyle}
-                        >
-                          {t(sectionTitle)}
-                        </a>
-                      </Segment>
-                    );
-                  })}
+                  <Segment attached="bottom" secondary>
+                    <List divided relaxed="very">
+                      {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
+                        const item = toolSections[sectionGroupTitle][sectionTitle];
+                        const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
+                        const reason = (
+                          <div>
+                            <p>This feature requires a one of the following types of wallets:</p>
+                            <List>
+                              {item.modes
+                                .filter((m) => !!m)
+                                .map((type) =>
+                                  <List.Item content={`${String(type).toUpperCase()} Wallet`} />)}
+                            </List>
+                            <p>Select a compatible wallet to continue.</p>
+                          </div>
+                        );
+                        return (isValidItem)
+                        ? (
+                          <List.Item
+                            content={t(sectionTitle)}
+                            name={item.path}
+                            onClick={this.onClick}
+                            style={linkStyle}
+                          />
+                        )
+                        : (
+                          <Popup
+                            content={reason}
+                            position="right center"
+                            trigger={(
+                              <List.Item
+                                content={t(sectionTitle)}
+                                style={{ color: 'grey' }}
+                              />
+                            )}
+                          />
+                        );
+                      })}
+                    </List>
+                  </Segment>
                 </Segment.Group>
               </Grid.Column>
             );
