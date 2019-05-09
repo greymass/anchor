@@ -23,7 +23,6 @@ export function setConnectionSign(enable = true) {
 export function getSupportedCalls() {
   return (dispatch: () => void, getState) => {
     dispatch(getAvailableEndpoints());
-    // /v1/api/get_available_endpoints
     dispatch(historyPluginCheck());
   };
 }
