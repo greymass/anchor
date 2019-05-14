@@ -243,6 +243,7 @@ export function unlockWalletByAuth(account, authorization, password) {
       accounts,
       connection,
       settings,
+      storage,
       wallets,
     } = state;
     const wallet = find(wallets, { account, authorization });
@@ -255,12 +256,13 @@ export function unlockWalletByAuth(account, authorization, password) {
     });
     setTimeout(() => {
       try {
-        let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
-        if (ecc.isValidPrivate(key) === true) {
-          const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
-          // Obfuscate key for in-memory storage
+        const data = decrypt(storage.data, password).toString(CryptoJS.enc.Utf8);
+        // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        if (!isError(attempt(JSON.parse, data))) {
+          const keypair = find(JSON.parse(data), { pubkey: wallet.pubkey });
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
-          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+          const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
+          const pubkey = ecc.privateToPublic(keypair.key, connection.keyPrefix);
           // Set the keys for use
           dispatch({
             payload: {
