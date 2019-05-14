@@ -34,6 +34,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       asset: props.connection.chainSymbol || 'EOS',
       from: props.settings.account,
     });
+    this.updateState = this.setState.bind(this);
   }
 
   onConfirm = () => {
@@ -184,7 +185,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
   };
 
   fillMax = () => {
-    console.log(this.props, this.state);
     const {
       balances,
       settings,
@@ -309,8 +309,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
                         {' '}
                         {asset}
                       </a>
-                      {' '}
-                      {t('transfer_header_available_r2')}
                     </span>
                     {t('transfer_label_token_and_quantity')}
                   </span>
@@ -348,7 +346,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 <Button
                   onClick={this.onCancel}
                 >
-                  <Icon name="x" /> {t('reset')}
+                  <Icon name="undo" /> {t('reset')}
                 </Button>
 
               </Segment>
