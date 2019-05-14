@@ -9,6 +9,7 @@ import GlobalAccountFragmentRamPercent from '../../../../shared/containers/Globa
 import GlobalAccountFragmentResourcePercent from '../../../../shared/containers/Global/Account/Fragment/ResourcePercent';
 import GlobalAccountFragmentStaleness from '../../../../shared/containers/Global/Account/Fragment/Staleness';
 import GlobalAccountFragmentSystemTokenBalance from '../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
+import GlobalAccountFragmentSystemTokenValue from '../../../../shared/containers/Global/Account/Fragment/SystemTokenValue';
 import GlobalAccountFragmentTokenBalance from '../../../../shared/containers/Global/Account/Fragment/TokenBalance';
 import GlobalAccountFragmentTokenDelegated from '../../../../shared/containers/Global/Account/Fragment/TokenDelegated';
 import GlobalAccountFragmentTokenRefunding from '../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
@@ -25,7 +26,9 @@ class OverviewTable extends Component<Props> {
   render() {
     const {
       chainSymbol,
+      pricefeed,
       settings,
+      supportedContracts,
       view,
       wallets,
     } = this.props;
@@ -33,8 +36,17 @@ class OverviewTable extends Component<Props> {
     const chainAccounts = [].concat(wallets).filter((w) => (w.chainId === settings.chainId));
     const accountNames = uniq(map(chainAccounts, 'account')).sort();
 
+    const tokens = settings.customTokens.filter((token) => {
+      const [chain] = token.split(':');
+      return (chain === settings.chainId);
+    }).sort((a, b) => {
+      const [, , asymbol] = a.split(':');
+      const [, , bsymbol] = b.split(':');
+      return asymbol > bsymbol ? 1 : -1;
+    });
+
     accountNames.forEach((accountName) => {
-      settings.customTokens.forEach((token) => {
+      tokens.forEach((token) => {
         const [chain, contract, symbol] = token.split(':');
         if (chain === settings.chainId) {
           if (!accountBalances[accountName]) {
@@ -54,10 +66,12 @@ class OverviewTable extends Component<Props> {
       });
     });
     return (
-      <div style={{ overflowX: 'auto' }}>
-        <Table celled className="overview" size="small" striped unstackable>
+      <div style={{ overflowX: 'auto', maxWidth: '75vw' }}>
+        <Table celled className="overview" compact size="small" striped unstackable>
           <OverviewTableHeader
+            supportedContracts={supportedContracts}
             settings={settings}
+            tokens={tokens}
             view={view}
           />
           <Table.Body>
@@ -95,6 +109,21 @@ class OverviewTable extends Component<Props> {
                           />
                         </Header>
                       </Table.Cell>
+                      {(supportedContracts.includes('delphioracle'))
+                        ? (
+                          <Table.Cell textAlign="right">
+                            <Header size="small">
+                              <GlobalAccountFragmentSystemTokenValue
+                                account={accountName}
+                                chainId={settings.chainId}
+                                contract="eosio"
+                                token={chainSymbol}
+                              />
+                            </Header>
+                          </Table.Cell>
+                        )
+                        : false
+                      }
                       <Table.Cell textAlign="right">
                         <GlobalAccountFragmentTokenStaked
                           account={accountName}
