@@ -16,9 +16,9 @@ class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
     if (balance === false) return <Icon color="grey" name="clock outline" />;
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: 4 });
     return (
-      <React.Fragment>
+      <span className={(parseFloat(balance, 10) === 0) ? 'nil' : false}>
         {formatter.format(balance.toFixed(4))}
-      </React.Fragment>
+      </span>
     );
   }
 }
