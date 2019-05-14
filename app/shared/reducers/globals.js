@@ -1,8 +1,11 @@
+import { get } from 'dot-prop-immutable';
+
 import * as types from '../actions/types';
 
 const initialState = {
   current: {},
-  contract: {}
+  contract: {},
+  pricefeed: {},
 };
 
 export default function globals(state = initialState, action) {
@@ -37,6 +40,12 @@ export default function globals(state = initialState, action) {
           })
         })
       });
+    }
+    case types.SYSTEM_PRICEFEEDUSD_SUCCESS: {
+      const pricefeed = {
+        USD: get(action, 'payload.results.rows.0.average')
+      };
+      return Object.assign({}, state, { pricefeed });
     }
     case types.GET_CURRENCYSTATS_SUCCESS: {
       return Object.assign({}, state, {

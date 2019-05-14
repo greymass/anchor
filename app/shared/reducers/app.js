@@ -1,10 +1,12 @@
 import * as types from '../actions/types';
 
-
 const contractBasedFeatures = [
   // Used in retrieval of EOS Token information
   // https://github.com/greymass/customtokens
   'customtokens',
+  // Used to retrieve USD price feeds
+  // https://github.com/eostitan/delphioracle
+  'delphioracle',
   // Used in retrieval of EOS Block Producer information
   // https://github.com/greymass/producerjson
   'producerinfo',
@@ -17,6 +19,7 @@ const contractBasedFeatures = [
   // BEOS features for exchanging BTS <-> BEOS
   'beosexchange',
   // REX Smart Contract
+  // https://github.com/EOSIO/eosio.contracts
   'rex',
 ];
 
