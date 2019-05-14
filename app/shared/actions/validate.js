@@ -129,14 +129,16 @@ export function validateNode(
             dispatch(getSupportedCalls());
             // Grab globals
             dispatch(getGlobals());
-            if (refreshAllAccounts) {
-              // Filter wallet data down to the current chain
-              const chainWallets = wallets.filter((w) => (w.chainId === blockchain.chainId));
-              // Create a list of all account names loaded for this chain
-              const chainAccounts = uniq(map(chainWallets, 'account'));
-              // Refresh all of those accounts
-              dispatch(getAccounts(chainAccounts));
-            }
+            setTimeout(() => {
+              if (refreshAllAccounts) {
+                // Filter wallet data down to the current chain
+                const chainWallets = wallets.filter((w) => (w.chainId === blockchain.chainId));
+                // Create a list of all account names loaded for this chain
+                const chainAccounts = uniq(map(chainWallets, 'account'));
+                // Refresh all of those accounts
+                dispatch(getAccounts(chainAccounts));
+              }
+            }, 500);
             // Refresh our connection properties with new chain info
             return dispatch(chain.getInfo());
           }
