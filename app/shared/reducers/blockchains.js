@@ -2,6 +2,64 @@ import { partition, unionBy } from 'lodash';
 
 import * as types from '../actions/types';
 
+const supportedContracts = [
+  {
+    // 'beos-mainnet'
+    chainId: 'cbef47b0b26d2b8407ec6a6f91284100ec32d288a39d4b4bbd49655f7c484112',
+    supportedContracts: ['beosexchange', 'bidname', 'producerinfo', 'regproxyinfo'],
+  },
+  {
+    // 'beos-testnet-2'
+    chainId: 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4',
+    supportedContracts: ['beosexchange', 'bidname', 'producerinfo', 'regproxyinfo'],
+  },
+  {
+    // 'bos-mainnet'
+    chainId: 'd5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86',
+    supportedContracts: ['bidname', 'regproxyinfo'],
+  },
+  {
+    // 'eos-mainnet'
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    supportedContracts: ['bidname', 'crosschaintransfer', 'customtokens', 'delphioracle', 'producerinfo', 'proposals', 'rex', 'regproxyinfo'],
+  },
+  {
+    // 'eos-testnet-jungle'
+    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    supportedContracts: ['bidname'],
+  },
+  {
+    // 'eos-testnet-cryptokylin'
+    chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
+    supportedContracts: ['bidname'],
+  },
+  {
+    // 'insights-mainnet'
+    chainId: 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664',
+    supportedContracts: ['bidname'],
+  },
+  {
+    // 'meetone-mainnet'
+    chainId: 'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422',
+    supportedContracts: [],
+  },
+  {
+    // 'telos-mainnet'
+    chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
+    supportedContracts: ['bidname'],
+  },
+  {
+    // 'telos-testnet'
+    chainId: 'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3',
+    supportedContracts: ['bidname'],
+  },
+  {
+    // 'worbli-mainnet'
+    chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
+    supportedContracts: [],
+  },
+];
+
 const knownChains = [
   {
     _id: 'beos-mainnet',
@@ -9,12 +67,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'BEOS',
     node: 'https://api.beos.world',
-    supportedContracts: [
-      'beosexchange',
-      'bidname',
-      'producerinfo',
-      'regproxyinfo',
-    ],
     symbol: 'BEOS',
     testnet: false
   },
@@ -24,12 +76,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'BEOS',
     node: 'https://api.testnet.beos.world',
-    supportedContracts: [
-      'beosexchange',
-      'bidname',
-      'producerinfo',
-      'regproxyinfo',
-    ],
     symbol: 'BEOS',
     testnet: true
   },
@@ -39,10 +85,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'BOS',
     node: 'https://hapi.bos.eosrio.io',
-    supportedContracts: [
-      'bidname',
-      'regproxyinfo',
-    ],
     symbol: 'BOS',
     testnet: false
   },
@@ -52,15 +94,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'EOS',
     node: 'https://eos.greymass.com',
-    supportedContracts: [
-      'bidname',
-      'crosschaintransfer',
-      'customtokens',
-      'producerinfo',
-      'proposals',
-      'rex',
-      'regproxyinfo'
-    ],
     symbol: 'EOS',
     testnet: false
   },
@@ -70,7 +103,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Jungle (EOS)',
     node: 'http://jungle.cryptolions.io:18888',
-    supportedContracts: ['bidname'],
     symbol: 'EOS',
     testnet: true
   },
@@ -80,7 +112,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'CryptoKylin (EOS)',
     node: 'https://kylin.eoscanada.com:443',
-    supportedContracts: ['bidname'],
     symbol: 'EOS',
     testnet: true
   },
@@ -90,7 +121,6 @@ const knownChains = [
   //   keyPrefix: 'EOS',
   //   name: 'EOSForce',
   //   node: 'https://w1.eosforce.cn',
-  //   supportedContracts: [
   //   ],
   //   symbol: 'EOS',
   //   testnet: false
@@ -111,7 +141,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'MEET.ONE',
     node: 'https://fullnode.meet.one',
-    supportedContracts: [],
     symbol: 'MEETONE',
     testnet: false
   },
@@ -121,7 +150,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Telos',
     node: 'https://telos.greymass.com',
-    supportedContracts: ['bidname'],
     symbol: 'TLOS',
     testnet: false
   },
@@ -131,7 +159,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Telos',
     node: 'https://api.eos.miami:17441',
-    supportedContracts: ['bidname'],
     symbol: 'TLOS',
     testnet: true
   },
@@ -141,7 +168,6 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Worbli',
     node: 'https://api.worbli.io',
-    supportedContracts: [],
     symbol: 'WBI',
     testnet: false
   },
@@ -164,7 +190,11 @@ export default function blockchains(state = initialState, action) {
   switch (action.type) {
     case types.APP_INIT: {
       // When the app initializes, merge any unknown _ids (new chains) into state
-      return unionBy(state, initialState, '_id');
+      const amendChains = unionBy(state, initialState, '_id');
+      const mergeContracts = _(amendChains).keyBy('chainId')
+        .merge(_.keyBy(supportedContracts, 'chainId'))
+        .values().value();
+      return mergeContracts;
     }
     case types.RESET_ALL_STATES: {
       return [...initialState];
