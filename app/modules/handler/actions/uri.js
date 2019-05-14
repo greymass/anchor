@@ -223,7 +223,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
     });
     // Logic to pull unlocked auths from storage
     if (!networkConfig.signMethod && wallet.mode === 'hot') {
-      const auth = find(auths, { pubkey: wallet.pubkey });
+      const auth = find(auths.keystore, { pubkey: wallet.pubkey });
       if (auth) {
         networkConfig.keyProviderObfuscated = {
           key: auth.key,
