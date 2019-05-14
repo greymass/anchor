@@ -6,12 +6,10 @@ class OverviewTableHeader extends Component<Props> {
   render() {
     const {
       settings,
+      supportedContracts,
+      tokens,
       view
     } = this.props;
-    const tokens = settings.customTokens.filter((token) => {
-      const [chain] = token.split(':');
-      return (chain === settings.chainId);
-    });
     const balanceHeaders = tokens.map((token) => {
       const [, contract, symbol] = token.split(':');
       return (
@@ -25,7 +23,7 @@ class OverviewTableHeader extends Component<Props> {
       );
     });
     return (
-      <Table.Header>
+      <Table.Header style={{ width: '100%' }}>
         <Table.Row>
           <Table.HeaderCell collapsing textAlign="right">
             <Header
@@ -43,6 +41,14 @@ class OverviewTableHeader extends Component<Props> {
                 <Table.HeaderCell textAlign="right">
                   Available
                 </Table.HeaderCell>
+                {(supportedContracts.includes('delphioracle'))
+                  ? (
+                    <Table.HeaderCell textAlign="right">
+                      $/USD
+                    </Table.HeaderCell>
+                  )
+                  : false
+                }
                 <Table.HeaderCell textAlign="right">
                   Staked
                 </Table.HeaderCell>

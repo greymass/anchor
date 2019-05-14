@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Container, Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Label, Segment } from 'semantic-ui-react';
 
 import OverviewSidebarContainer from './Overview/Sidebar';
 
@@ -15,14 +15,12 @@ class OverviewContainer extends Component<Props> {
   state = {
     view: 'systemtokens'
   }
-  componentDidUpdate(prevProps, prevState) {
-    // Object.entries(this.props).forEach(([key, val]) => prevProps[key] !== val && console.log(`OverviewContainer '${key}' changed`));
-    // Object.entries(this.state).forEach(([key, val]) => prevState[key] !== val && console.log(`OverviewContainer '${key}' changed`));
-  }
   viewChange = (e, data) => this.setState({ view: data.name })
   render() {
     const {
       chainSymbol,
+      pricefeed,
+      supportedContracts,
       settings,
       wallets,
     } = this.props;
@@ -93,10 +91,46 @@ class OverviewContainer extends Component<Props> {
                 view={view}
                 viewChange={this.viewChange}
               />
-              <Segment color="green" piled style={{ marginTop: 0 }}>
-                {header}
+              <Segment color="green" style={{ marginTop: 0 }}>
+                <Grid style={{ marginBottom: 0 }}>
+                  <Grid.Row>
+                    <Grid.Column width={10}>
+                      {header}
+                    </Grid.Column>
+                    <Grid.Column textAlign="right" width={6}>
+                      {(['systemtokens'].includes(view) && supportedContracts.includes('delphioracle'))
+                        ? (
+                          <Label
+                            color="green"
+                            content={(
+                              <span style={{
+                                display: 'block',
+                                textAlign: 'center',
+                              }}>
+                                ${(pricefeed.USD / 10000).toFixed(2)}
+                                {' '}
+                                <span style={{
+                                  display: 'block',
+                                  marginTop: '0.25em',
+                                  fontSize: '0.70em',
+                                }}>
+                                  USD/EOS
+                                </span>
+
+                              </span>
+                            )}
+                          />
+
+                        )
+                        : false
+                      }
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
                 <OverviewTable
                   chainSymbol={chainSymbol}
+                  pricefeed={pricefeed}
+                  supportedContracts={supportedContracts}
                   settings={settings}
                   view={view}
                   wallets={wallets}
@@ -129,8 +163,10 @@ class OverviewContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     chainSymbol: state.connection.chainSymbol,
+    pricefeed: state.globals.pricefeed,
     navigation: state.navigation,
     settings: state.settings,
+    supportedContracts: state.connection.supportedContracts,
     wallets: state.wallets
   };
 }
