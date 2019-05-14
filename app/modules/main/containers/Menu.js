@@ -117,7 +117,7 @@ class MenuContainer extends Component<Props> {
         <GlobalAccountDropdown
           onNavigationChange={this.props.actions.changeModule}
           style={{
-            minWidth: '250px'
+            minWidth: '10em'
           }}
         />
         <Menu.Menu position="right">
