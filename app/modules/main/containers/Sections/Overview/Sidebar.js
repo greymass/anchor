@@ -8,6 +8,7 @@ import { Header } from 'semantic-ui-react';
 
 import OverviewSidebarBackupContainer from './Sidebar/Backup';
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
+import GlobalSidebarTelegram from '../../../components/Overview/Sidebar/Telegram';
 
 const latestUpdate = {
   version: '1.0.1',
@@ -49,6 +50,7 @@ class OverviewSidebarContainer extends Component<Props> {
           update={this.props.latestUpdate}
         />
         <OverviewSidebarBackupContainer />
+        <GlobalSidebarTelegram />
       </React.Fragment>
     );
   }
