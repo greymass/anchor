@@ -13,6 +13,10 @@ body {
   /* margin: 12vh auto; */
 }
 
+span.nil {
+  color: #acacac;
+}
+
 .prompt-header .ui.steps .step {
   padding: 0.5em 1.5em;
 }
