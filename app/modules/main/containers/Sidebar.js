@@ -103,7 +103,7 @@ class SidebarContainer extends Component<Props> {
                   : false
                 }
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 as="a"
                 active={module === 'tests'}
                 onClick={this.onClick}
@@ -130,7 +130,7 @@ class SidebarContainer extends Component<Props> {
                   ? 'DevTests'
                   : false
                 }
-              </Menu.Item>
+              </Menu.Item> */}
             </React.Fragment>
           )
           : false
