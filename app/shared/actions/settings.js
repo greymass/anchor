@@ -95,7 +95,7 @@ export function addCustomToken(contract, symbol) {
     if (name && name.length > 0) {
       tokens.push(name);
       tokens = new Set(tokens.filter((e) => e));
-      dispatch(setSetting('customTokens', Array.from(tokens)));
+      dispatch(setSetting('customTokens', Array.from(tokens).sort()));
     }
     return dispatch(refreshAccountBalances(settings.account, [name]));
   };
@@ -116,7 +116,7 @@ export function addCustomTokenBeos(contract, symbol) {
     if (name && name.length > 0) {
       tokens.push(name);
       tokens = new Set(tokens.filter((e) => e));
-      return dispatch(setSetting('customTokens', Array.from(tokens)));
+      return dispatch(setSetting('customTokens', Array.from(tokens).sort()));
     }
   };
 }
