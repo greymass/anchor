@@ -28,7 +28,7 @@ class PromptStageNotConfigured extends Component<Props> {
                   </Header.Content>
                 </Header>
               </Segment>
-              <Segment attached size="large">
+              {/* <Segment attached size="large">
                 To enable this blockchain...
               </Segment>
               <Segment attached="bottom">
@@ -40,7 +40,7 @@ class PromptStageNotConfigured extends Component<Props> {
                   content="Import"
                   primary
                 />
-              </Segment>
+              </Segment> */}
             </Grid.Column>
             <Grid.Column
               textAlign="center"

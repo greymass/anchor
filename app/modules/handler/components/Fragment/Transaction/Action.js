@@ -16,11 +16,11 @@ class PromptFragmentTransactionAction extends Component<Props> {
         <Label basic size="large">
           #1
         </Label>
-        <Label basic size="large">
+        <Label color="blue" size="large">
           Contract
           <Label.Detail>{action.account}</Label.Detail>
         </Label>
-        <Label basic size="large">
+        <Label color="blue" size="large">
           Action
           <Label.Detail>{action.name}</Label.Detail>
         </Label>

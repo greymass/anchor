@@ -26,7 +26,9 @@ function swapBlockchain(chainId) {
       let mode = undefined;
       if (settings.recentWallets && settings.recentWallets[chainId]) {
         ({ account, authorization, mode } = settings.recentWallets[chainId]);
-        dispatch(useWallet(chainId, account, authorization))
+        if (account && authorization && chainId) {
+          dispatch(useWallet(chainId, account, authorization));
+        }
       }
       // prevent changing nodes when using a cold wallet
       if (settings.walletMode !== 'cold') {
@@ -40,7 +42,7 @@ function swapBlockchain(chainId) {
         // Set the new chainId
         chainId,
         // If this is a cold wallet, remain in cold, else unset.
-        walletMode: (settings.walletMode === 'cold' ? 'cold' : undefined),
+        walletMode: (settings.walletMode === 'cold' ? 'cold' : mode),
       }));
     }
   };
