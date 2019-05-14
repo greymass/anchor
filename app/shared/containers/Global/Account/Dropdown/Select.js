@@ -26,6 +26,7 @@ class GlobalAccountDropdownSelect extends Component<Props> {
       account,
       authorization,
       chainId,
+      fluid,
       mode,
       onSelect,
       pubkey,
@@ -41,7 +42,7 @@ class GlobalAccountDropdownSelect extends Component<Props> {
         w.chainId === chainId
         && (w.account !== account || w.authorization !== authorization)
       ))
-      .sort((a, b) => a.account > b.account);
+      .sort((a, b) => a.account > b.account ? 1 : -1);
     const trigger = (
       <GlobalFragmentWallet
         account={account}
@@ -65,6 +66,7 @@ class GlobalAccountDropdownSelect extends Component<Props> {
     }));
     return (
       <Dropdown
+        fluid={fluid}
         onChange={onSelect}
         options={options}
         scrolling

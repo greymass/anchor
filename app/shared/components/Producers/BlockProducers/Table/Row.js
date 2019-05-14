@@ -119,6 +119,7 @@ class ProducersTableRow extends Component<Props> {
               {(hasInfo)
                 ? (
                   <Button
+                    basic
                     color="purple"
                     icon="magnify"
                     onClick={() => getProducerInfo(producer.owner)}
@@ -133,7 +134,7 @@ class ProducersTableRow extends Component<Props> {
                     position="left center"
                     trigger={
                       (isMainnet)
-                      ? <Button icon="magnify" size="small" />
+                      ? <Button basic icon="magnify" size="small" />
                       : false
                     }
                   />

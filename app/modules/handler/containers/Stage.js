@@ -120,7 +120,10 @@ class PromptStage extends Component<Props> {
     const signing = (system.EOSIOURISIGN === 'PENDING');
     const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
     const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
-    const error = system.EOSIOURIBUILD_LAST_ERROR || system.EOSIOURISIGN_LAST_ERROR;
+    const error = system.EOSIOURIBUILD_LAST_ERROR || system.EOSIOURISIGN_LAST_ERROR || system.EOSIOURIBROADCAST_LAST_ERROR;
+
+    // console.log(error);
+    // console.log(system);
 
     const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
     const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
@@ -276,6 +279,8 @@ class PromptStage extends Component<Props> {
       );
     }
 
+    // console.log(error)
+
     return (
       <React.Fragment>
         <Segment
@@ -309,10 +314,7 @@ class PromptStage extends Component<Props> {
                   <Header>
                     <Icon name="warning sign" />
                     <Header.Content>
-                      {(wallet.mode === 'ledger')
-                        ? 'Try again - the device failed to sign this transaction.'
-                        : 'There was a problem signing this transaction.'
-                      }
+                      There was a problem with this transaction
                       <Header.Subheader style={{ color: 'white' }}>
                         {error.message}
                       </Header.Subheader>

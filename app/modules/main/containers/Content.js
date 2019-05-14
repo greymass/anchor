@@ -21,9 +21,8 @@ import WalletContainer from './Sections/Wallet';
 class ContentContainer extends Component<Props> {
   render = () => (
     <Container fluid>
-      <Dimmer
+      {/* <Dimmer
         active={this.props.validate.NODE === 'PENDING'}
-        inverted
         style={{
           height: '100vh',
         }}
@@ -36,7 +35,7 @@ class ContentContainer extends Component<Props> {
             subheader={this.props.settings.node}
           />
         </Loader>
-      </Dimmer>
+      </Dimmer> */}
       <HashRouter>
         <Switch>
           <Route exact path="/" component={HomeContainer} />

@@ -33,7 +33,12 @@ class BlockProducers extends Component<Props> {
       validate.NODE === 'PENDING'
       && nextValidate.NODE === 'SUCCESS'
     ) {
-      this.props.actions.getGlobals();
+      const {
+        getGlobals
+      } = this.props.actions;
+      if (getGlobals) {
+        getGlobals();
+      }
       this.tick();
     }
 

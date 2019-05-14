@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import ColdWallet from '../../../../shared/components/ColdWallet/Wallet';
 import * as TransactionActions from '../../../../shared/actions/transaction';
 
-class VersionContainer extends Component<Props> {
+class ColdWalletContainer extends Component<Props> {
   render() {
     return (
       <ColdWallet {...this.props} />
@@ -33,4 +33,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VersionContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ColdWalletContainer));
