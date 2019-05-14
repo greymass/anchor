@@ -11,6 +11,7 @@ import * as AccountsActions from '../../../shared/actions/accounts';
 import * as AppActions from '../../../shared/actions/app';
 import * as BlockExplorersActions from '../../../shared/actions/blockexplorers';
 import * as ChainActions from '../../../shared/actions/chain';
+import * as DelphiOracleActions from '../../../shared/actions/blockchains/eos/delphioracle';
 import * as GlobalsActions from '../../../shared/actions/globals';
 import * as NavigationActions from '../actions/navigation';
 import * as SyncActions from '../../../shared/actions/sync';
@@ -49,6 +50,7 @@ class MenuContainer extends Component<Props> {
     //       history.push('/');
     //     } else {
     //       // getCurrencyStats();
+    //
     //       // forEach(settings.customTokens, (token) => {
     //       //   const [chainId, contract, symbol] = token.split(':');
     //       //   if (chainId === settings.chainId) {
@@ -76,13 +78,13 @@ class MenuContainer extends Component<Props> {
       sync,
       getConstants,
       getGlobals,
-      getInfo
+      getPriceFeed,
     } = actions;
     if (settings.walletMode !== 'cold' && validate.NODE === 'SUCCESS') {
       sync();
       getConstants();
       getGlobals();
-      // getInfo();
+      getPriceFeed();
     }
   }
   render() {
@@ -170,6 +172,7 @@ function mapDispatchToProps(dispatch) {
       ...AppActions,
       ...BlockExplorersActions,
       ...ChainActions,
+      ...DelphiOracleActions,
       ...GlobalsActions,
       ...NavigationActions,
       ...SyncActions,
