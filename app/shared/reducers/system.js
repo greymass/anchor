@@ -104,16 +104,17 @@ export default function system(state = {}, action) {
 
 
   if (requestState === 'SUCCESS' || requestState === 'PENDING') {
-    del(newState, errField);
+    newState = del(newState, errField);
   }
 
   if (requestState === 'FAILURE') {
-    del(newState, txField);
+    newState = del(newState, txField);
   }
 
   if (action.type === types.SYSTEM_EOSIOURIBUILD_PENDING) {
-    del(newState, 'EOSIOURIBUILD_LAST_ERROR');
-    del(newState, 'EOSIOURISIGN_LAST_ERROR');
+    newState = del(newState, 'EOSIOURIBROADCAST_LAST_ERROR');
+    newState = del(newState, 'EOSIOURIBUILD_LAST_ERROR');
+    newState = del(newState, 'EOSIOURISIGN_LAST_ERROR');
   }
 
   return newState;
