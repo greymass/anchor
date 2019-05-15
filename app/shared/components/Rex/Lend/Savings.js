@@ -29,7 +29,7 @@ const labelStyle = {
 class RexLendSavings extends PureComponent<Props> {
   state = {
     confirming: false,
-    transactionType: 'add'
+    transactionType: 'deposit'
   };
   componentDidMount() {
     const { actions, settings } = this.props;
@@ -46,7 +46,7 @@ class RexLendSavings extends PureComponent<Props> {
       transactionType
     } = this.state;
 
-    if (transactionType === 'add') {
+    if (transactionType === 'deposit') {
       actions.mvtosavings(amountToAddToSavings);
     } else {
       actions.mvfrsavings(amountToRemoveFromSavings);
@@ -118,7 +118,7 @@ class RexLendSavings extends PureComponent<Props> {
       transactionType,
     } = this.state;
 
-    const dropdownOptions = ['add', 'remove']
+    const dropdownOptions = ['deposit', 'withdraw']
       .map((type) => (
         {
           key: type,
@@ -140,8 +140,8 @@ class RexLendSavings extends PureComponent<Props> {
     }
 
     const saveDisabled = error ||
-      (!amountToAddToSavings && transactionType === 'add') ||
-      (!amountToRemoveFromSavings && transactionType === 'remove');
+      (!amountToAddToSavings && transactionType === 'deposit') ||
+      (!amountToRemoveFromSavings && transactionType === 'withdraw');
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
@@ -155,21 +155,21 @@ class RexLendSavings extends PureComponent<Props> {
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
         actionName={
-          transactionType === 'add' ? 'MVTOSAVINGSREX' : 'MVFRSAVINGSREX'
+          transactionType === 'deposit' ? 'MVTOSAVINGSREX' : 'MVFRSAVINGSREX'
         }
         actions={actions}
         blockExplorers={blockExplorers}
         content={(
           <React.Fragment>
-            { transactionType === 'add' ? (
+            { transactionType === 'deposit' ? (
               <p>
-                {t('rex_interface_savings_confirmation_modal_add', {
+                {t('rex_interface_savings_confirmation_modal_deposit', {
                   amountToAddToSavings,
                 })}
               </p>
             ) : (
               <p>
-                {t('rex_interface_savings_confirmation_modal_remove', {
+                {t('rex_interface_savings_confirmation_modal_withdraw', {
                   amountToRemoveFromSavings,
                 })}
               </p>
@@ -248,7 +248,7 @@ class RexLendSavings extends PureComponent<Props> {
               <Form.Group widths="equal">
                 <label>
                   <strong style={labelStyle}>
-                    {t('rex_interface_savings_add_or_remove_label')}
+                    {t('rex_interface_savings_deposit_or_withdraw_label')}
                   </strong>
                   <br />
                   <Dropdown
@@ -262,11 +262,11 @@ class RexLendSavings extends PureComponent<Props> {
                   />
                 </label>
 
-                {transactionType === 'add' ? (
+                {transactionType === 'deposit' ? (
                   <GlobalFormFieldToken
                     connection={connection}
                     key="amountToAddToSavings"
-                    label={t('rex_interface_savings_rex_add', { chainSymbol: connection.chainSymbol })}
+                    label={t('rex_interface_savings_rex_deposit', { chainSymbol: connection.chainSymbol })}
                     name="amountToAddToSavings"
                     onChange={this.handleChange}
                     symbol="REX"
@@ -275,7 +275,7 @@ class RexLendSavings extends PureComponent<Props> {
                   <GlobalFormFieldToken
                     connection={connection}
                     key="amountToRemoveFromSavings"
-                    label={t('rex_interface_savings_rex_remove', { chainSymbol: connection.chainSymbol })}
+                    label={t('rex_interface_savings_rex_withdraw', { chainSymbol: connection.chainSymbol })}
                     name="amountToRemoveFromSavings"
                     onChange={this.handleChange}
                     symbol="REX"
@@ -289,7 +289,7 @@ class RexLendSavings extends PureComponent<Props> {
                 />
               )}
               <Button
-                content={transactionType === 'add' ? t('rex_interface_savings_options_add') : t('rex_interface_savings_options_remove')}
+                content={transactionType === 'deposit' ? t('rex_interface_savings_options_deposit') : t('rex_interface_savings_options_withdraw')}
                 disabled={saveDisabled}
                 primary
                 onClick={() => this.setState({ confirming: true })}
