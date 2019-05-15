@@ -1,7 +1,7 @@
 {
-  "name": "eos-voter",
-  "productName": "eos-voter",
-  "version": "0.7.9",
+  "name": "anchor",
+  "productName": "anchor",
+  "version": "0.9.0",
   "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -33,8 +33,8 @@
     "not ie <= 8"
   ],
   "build": {
-    "productName": "eos-voter",
-    "appId": "com.greymass.eos-voter",
+    "productName": "anchor",
+    "appId": "com.greymass.anchor",
     "artifactName": "${os}-${productName}-${version}-${arch}.${ext}",
     "asar": true,
     "protocols": {
@@ -95,15 +95,15 @@
       "oneClick": false,
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
-      "shortcutName": "eos-voter"
+      "shortcutName": "anchor"
     },
     "linux": {
       "category": "Network",
       "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
       "desktop": {
-        "Name": "eos-voter",
+        "Name": "anchor",
         "GenericName": "EOS Voting Client + Wallet",
-        "X-GNOME-FullName": "eos-voter",
+        "X-GNOME-FullName": "anchor",
         "Comment": "Simple light wallet and block producer voting tool for the EOS blockchain",
         "Type": "Application",
         "Terminal": "false",
@@ -148,7 +148,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/greymass/eos-voter.git"
+    "url": "git+https://github.com/greymass/anchor.git"
   },
   "author": {
     "name": "Greymass",
@@ -157,14 +157,14 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/greymass/eos-voter/issues"
+    "url": "https://github.com/greymass/anchor/issues"
   },
   "keywords": [
     "eos",
     "voting",
     "wallet"
   ],
-  "homepage": "https://github.com/greymass/eos-voter#readme",
+  "homepage": "https://github.com/greymass/anchor#readme",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
