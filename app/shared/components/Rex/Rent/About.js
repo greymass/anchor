@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Header,
-  Message,
   Segment
 } from 'semantic-ui-react';
 
