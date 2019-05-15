@@ -106,43 +106,41 @@ class GlobalBlockchainDropdown extends Component<Props> {
         style={style}
         trigger={trigger}
       >
-        <Dropdown.Menu
-          style={{
-            minWidth: '200px',
-          }}
-        >
-          {(this.props.onNavigationChange)
-            ? (
-              <Dropdown.Header>
-                <Button
-                  basic
-                  content="Manage Blockchains"
-                  fluid
-                  icon="cubes"
-                  onClick={() => this.props.onNavigationChange('tools/blockchains')}
-                  size="small"
+        <Dropdown.Menu key="parent">
+          <Dropdown.Menu key="menu" scrolling style={{ minWidth: '200px', marginTop: 0 }}>
+            {(this.props.onNavigationChange)
+              ? (
+                <Dropdown.Header>
+                  <Button
+                    basic
+                    content="Manage Blockchains"
+                    fluid
+                    icon="cubes"
+                    onClick={() => this.props.onNavigationChange('tools/blockchains')}
+                    size="small"
+                  />
+                </Dropdown.Header>
+              )
+              : false
+            }
+            {options.map(option => {
+                const {
+                  props,
+                } = option;
+                return (
+                  <Dropdown.Item {...props} />
+                );
+              })
+            }
+            {(!options.length)
+              ? (
+                <Dropdown.Item
+                  content="No other blockchains configured."
                 />
-              </Dropdown.Header>
-            )
-            : false
-          }
-          {options.map(option => {
-              const {
-                props,
-              } = option;
-              return (
-                <Dropdown.Item {...props} />
-              );
-            })
-          }
-          {(!options.length)
-            ? (
-              <Dropdown.Item
-                content="No other blockchains configured."
-              />
-            )
-            : false
-          }
+              )
+              : false
+            }
+          </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
     );
