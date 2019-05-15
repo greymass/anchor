@@ -6,7 +6,7 @@ const migrations = {
 };
 
 const persistConfig = {
-  key: 'eos-voter-config',
+  key: 'anchor-config',
   version: 1,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
