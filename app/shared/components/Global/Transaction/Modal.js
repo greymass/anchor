@@ -42,6 +42,7 @@ class GlobalTransactionModal extends Component<Props> {
       blockExplorers,
       button,
       content,
+      customTrigger,
       icon,
       openModal,
       title,
@@ -66,27 +67,31 @@ class GlobalTransactionModal extends Component<Props> {
     if (system && system[`${actionName}_LAST_CONTRACT`]) {
       contract = system[`${actionName}_LAST_CONTRACT`];
     }
+    let trigger = (button) ? (
+      <Button
+        color={button.color}
+        content={button.content}
+        disabled={button.disabled}
+        fluid={button.fluid}
+        floated={button.floated}
+        icon={button.icon}
+        onClick={this.handleOpen}
+        size={button.size}
+        style={button.style}
+      />
+    ) : false;
+    if (customTrigger) {
+      trigger = React.cloneElement(customTrigger, {
+        onClick: this.handleOpen
+      });
+    }
     return (
       <Modal
         centered={false}
         closeIcon
         closeOnDimmerClick={false}
         closeOnDocumentClick={false}
-        trigger={(button)
-          ? (
-            <Button
-              color={button.color}
-              content={button.content}
-              disabled={button.disabled}
-              fluid={button.fluid}
-              floated={button.floated}
-              icon={button.icon}
-              onClick={this.handleOpen}
-              size={button.size}
-              style={button.style}
-            />
-          ) : false
-        }
+        trigger={trigger}
         open={openModal || open}
         onOpen={this.onOpen}
         onClose={this.onClose}
