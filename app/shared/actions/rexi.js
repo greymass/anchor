@@ -1,5 +1,11 @@
 import eos from './helpers/eos';
 import * as types from './types';
+import {
+  addCustomToken,
+  clearSettingsCache,
+  clearSettingsInvalid,
+  removeCustomToken, setSetting, setSettings, setSettingWithValidation
+} from './settings';
 
 export function getCPULoans() {
   return (dispatch: () => void, getState) => {
@@ -39,3 +45,8 @@ function getLoans(tableName, actionName, dispatch, getState) {
     });
   });
 }
+
+export default {
+  getCPULoans,
+  getNETLoans,
+};

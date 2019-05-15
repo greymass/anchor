@@ -8,12 +8,14 @@ import { bindActionCreators } from 'redux';
 import RexInterfaceAbout from '../../components/Rex/Rent/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
+import RexInterfaceRentLoans from '../../components/Rex/Rent/Loans';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
 import RexActions from '../../actions/system/rexi';
 import TableAction from '../../actions/table';
 import SystemStateActions from '../../actions/system/systemstate';
 import WalletActions from '../../actions/wallet';
+import RexFetchActions from '../../actions/rexi';
 
 type Props = {
   actions: {},
@@ -86,14 +88,35 @@ class RexRent extends Component<Props> {
       },
       {
         menuItem: {
-          key: 'manage_rex',
+          key: 'rent_resources',
           icon: 'arrow right',
           content: t('rex_interface_menu_rent_resources')
         },
         pane: {
-          key: 'manage_rex',
+          key: 'rent_resources',
           content: (
             <RexInterfaceRentManage
+              accounts={accounts}
+              actions={actions}
+              blockExplorers={blockExplorers}
+              connection={connection}
+              settings={settings}
+              system={system}
+              tables={tables}
+            />
+          )
+        }
+      },
+      {
+        menuItem: {
+          key: 'rent_loans',
+          icon: 'arrow right',
+          content: t('rex_interface_menu_rent_resources')
+        },
+        pane: {
+          key: 'rent_loans',
+          content: (
+            <RexInterfaceRentLoans
               accounts={accounts}
               actions={actions}
               blockExplorers={blockExplorers}
@@ -136,6 +159,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...RexActions,
+      ...RexFetchActions,
       ...SystemStateActions,
       ...TableAction,
       ...WalletActions,
