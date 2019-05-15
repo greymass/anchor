@@ -4,12 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Header, Icon, Image, Menu } from 'semantic-ui-react';
+import { find } from 'lodash';
+
 import Logo from '../../../renderer/assets/images/anchor-shape.svg';
 
 import packageJson from '../../../package.json';
-import NavigationActions from '../actions/navigation';
+import { clearSystemState } from '../../../shared/actions/system/systemstate';
+import * as NavigationActions from '../actions/navigation';
 import * as SettingsActions from '../../../shared/actions/settings';
-
+import WalletPanelButtonBroadcast from '../../../shared/components/Wallet/Panel/Button/Broadcast';
 
 import GreymassLogoHorizontal from '../../../renderer/assets/images/anchor-text-light.svg';
 
@@ -24,8 +27,12 @@ class SidebarContainer extends Component<Props> {
   }
   render() {
     const {
+      actions,
+      blockExplorers,
       navigation,
       settings,
+      system,
+      transaction,
       wallets,
     } = this.props;
     const {
@@ -157,7 +164,14 @@ class SidebarContainer extends Component<Props> {
             flexGrow: 1
           }}
         />
-
+        <WalletPanelButtonBroadcast
+          actions={actions}
+          blockExplorers={blockExplorers}
+          color={color}
+          settings={settings}
+          system={system}
+          transaction={transaction}
+        />
         <Menu.Item
           as="a"
           onClick={this.toggleCollapsed}
@@ -213,9 +227,13 @@ class SidebarContainer extends Component<Props> {
 }
 
 function mapStateToProps(state) {
+  const blockchain = find(state.blockchains, { chainId: state.settings.chainId });
   return {
+    blockExplorers: state.blockexplorers[blockchain._id],
     navigation: state.navigation,
     settings: state.settings,
+    system: state.system,
+    transaction: state.transaction,
     wallets: state.wallets.length,
   };
 }
@@ -223,6 +241,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      clearSystemState,
       ...NavigationActions,
       ...SettingsActions,
     }, dispatch)
