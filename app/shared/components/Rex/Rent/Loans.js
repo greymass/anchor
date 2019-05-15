@@ -2,10 +2,13 @@
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
+  Button,
   Header,
+  Message,
+  Segment,
   Table,
 } from 'semantic-ui-react';
-import { get } from "dot-prop-immutable";
+import { get } from 'dot-prop-immutable';
 
 class RexInterfaceLoans extends PureComponent<Props> {
   componentDidMount() {
@@ -14,6 +17,20 @@ class RexInterfaceLoans extends PureComponent<Props> {
     actions.getCPULoans();
     actions.getNetLoans();
   }
+
+  refreshLoan = () => {
+    const { actions } = this.props;
+    const { refreshingLoan } = this.state;
+
+    actions.refreshLoan(refreshingLoan);
+  };
+
+  refundLoan = () => {
+    const { actions } = this.props;
+    const { refundingLoan } = this.state;
+
+    actions.refundLoan(refundingLoan);
+  };
 
   render() {
     const {
@@ -31,7 +48,7 @@ class RexInterfaceLoans extends PureComponent<Props> {
     const sortedLoans = allLoans.sort(loan => loan.createdAt)
 
     return (
-      <React.Fragment>
+      <Segment basic>
         <Header
           content={t('rex_rent_loans_header')}
         />
@@ -41,44 +58,46 @@ class RexInterfaceLoans extends PureComponent<Props> {
         />
         <Table>
           <Table.Header>
-            <Table.Column>
+            <Table.HeaderCell>
               {t('rex_rent_table_name')}
-            </Table.Column>
-            <Table.Column>
+            </Table.HeaderCell>
+            <Table.HeaderCell>
               {t('rex_rent_table_valid_until')}
-            </Table.Column>
-            <Table.Column />
-            <Table.Column />
+            </Table.HeaderCell>
+            <Table.HeaderCell />
+            <Table.HeaderCell />
           </Table.Header>
           <Table.Body>
             {sortedLoans.map(loan => (
               <Table.Row>
-                <Table.Column>
+                <Table.Cell>
                   {loan.quantity}
-                </Table.Column>
-                <Table.Column>
+                </Table.Cell>
+                <Table.Cell>
                   {loan.type}
-                </Table.Column>
-                <Table.Column>
+                </Table.Cell>
+                <Table.Cell>
                   {(new Date(loan.expires_at)).utc}
-                </Table.Column>
-                <Table.Column>
+                </Table.Cell>
+                <Table.Cell>
                   <Button
                     color="green"
                     content={t('common:renew')}
+                    onClick={this.refreshLoan}
                   />
-                  </Table.Column>
-                <Table.Column>
+                </Table.Cell>
+                <Table.Cell>
                   <Button
                     color="green"
                     content={t('common:remove')}
+                    onClick={this.refundLoan}
                   />
-                </Table.Column>
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table>
-      </React.Fragment>
+      </Segment>
     );
   }
 }
