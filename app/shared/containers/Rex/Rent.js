@@ -110,8 +110,8 @@ class RexRent extends Component<Props> {
       {
         menuItem: {
           key: 'rent_loans',
-          icon: 'arrow right',
-          content: t('rex_interface_menu_rent_resources')
+          icon: 'arrow up',
+          content: t('rex_interface_menu_rent_loans')
         },
         pane: {
           key: 'rent_loans',
