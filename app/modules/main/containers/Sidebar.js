@@ -164,14 +164,22 @@ class SidebarContainer extends Component<Props> {
             flexGrow: 1
           }}
         />
-        <WalletPanelButtonBroadcast
-          actions={actions}
-          blockExplorers={blockExplorers}
-          color={color}
-          settings={settings}
-          system={system}
-          transaction={transaction}
-        />
+        {(
+          blockExplorers
+          && settings.walletInit
+          && settings.chainId
+        )
+          ? (
+            <WalletPanelButtonBroadcast
+              actions={actions}
+              blockExplorers={blockExplorers}
+              color={color}
+              settings={settings}
+              system={system}
+              transaction={transaction}
+            />
+          ) : false
+        }
         <Menu.Item
           as="a"
           onClick={this.toggleCollapsed}
@@ -229,7 +237,7 @@ class SidebarContainer extends Component<Props> {
 function mapStateToProps(state) {
   const blockchain = find(state.blockchains, { chainId: state.settings.chainId });
   return {
-    blockExplorers: state.blockexplorers[blockchain._id],
+    blockExplorers: (blockchain) ? state.blockexplorers[blockchain._id] : false,
     navigation: state.navigation,
     settings: state.settings,
     system: state.system,
