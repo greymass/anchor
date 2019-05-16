@@ -17,6 +17,7 @@
   "property": "Property",
   "public_key": "Public Key",
   "remove": "Remove",
+  "renew": "Renew",
   "reset_application": "DEBUG: Reset Application",
   "feature_not_supported_blockchain": "This feature is not yet available on this blockchain.",
   "search": "Search...",
