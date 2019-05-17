@@ -70,8 +70,10 @@ class RexLendManage extends PureComponent<Props> {
       }
 
       const { accounts, tables, settings } = this.props;
+
       const escapedAccountName = settings.account.replace('.', '\\.');
-      const maturedRex = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.matured_rex`, '0.0000 REX');
+
+      const maturedRex = fetchMaturedBalance(tables, escapedAccountName);
       const fundedBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
       let notEnoughBalanceMatured = false;
@@ -86,10 +88,10 @@ class RexLendManage extends PureComponent<Props> {
           Number((maturedRex || '').toString().split(' ')[0]) <
           Number(value.split(' ')[0]);
       } else if (name === 'amountToBuyFromCpu') {
-        const cpuWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.cpu_weight`);
+        const cpuWeight = get(accounts, `${escapedAccountName}.self_delegated_bandwidth.cpu_weight`);
         notEnoughBalance = Number(cpuWeight.split(' ')[0]) < Number(value.split(' ')[0]);
       } else if (name === 'amountToBuyFromNet') {
-        const netWeight = get(accounts, `${settings.account}.self_delegated_bandwidth.net_weight`);
+        const netWeight = get(accounts, `${escapedAccountName}.self_delegated_bandwidth.net_weight`);
         notEnoughBalance = Number(netWeight.split(' ')[0]) < Number(value.split(' ')[0]);
       }
 
@@ -160,7 +162,8 @@ class RexLendManage extends PureComponent<Props> {
 
     const escapedAccountName = settings.account.replace('.', '\\.');
 
-    const maturedRex = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.matured_rex`, '0.0000 REX');
+    const maturedRex = fetchMaturedBalance(tables, escapedAccountName);
+
     const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');
     const fundedBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
@@ -279,7 +282,7 @@ class RexLendManage extends PureComponent<Props> {
                     </Table.Row>
                     <Table.Row>
                       <Table.Cell width={12}>Matured REX Balance</Table.Cell>
-                      <Table.Cell>{(Number(parseFloat(maturedRex) / 10000) || 0).toFixed(4)}</Table.Cell>
+                      <Table.Cell>{(Number(parseFloat(maturedRex)) || 0).toFixed(4)}</Table.Cell>
                     </Table.Row>
                   </Table>
                 </Grid.Column>
@@ -362,6 +365,19 @@ class RexLendManage extends PureComponent<Props> {
       </React.Fragment>
     );
   }
+}
+
+function fetchMaturedBalance(tables, account) {
+  const rexMaturities = get(tables, `eosio.eosio.rexbal.${account}.rows.0.rex_maturities`, []);
+  let maturedMaturitiesTotal = 0;
+  rexMaturities.forEach(maturity => {
+    if (new Date(maturity.first) < new Date()) {
+      maturedMaturitiesTotal += maturity.second;
+    }
+  });
+  const maturedRexNumber = Number(get(tables, `eosio.eosio.rexbal.${account}.rows.0.matured_rex`, 0));
+
+  return `${(maturedRexNumber + maturedMaturitiesTotal) / 10000} REX`;
 }
 
 export default translate('rex')(RexLendManage);

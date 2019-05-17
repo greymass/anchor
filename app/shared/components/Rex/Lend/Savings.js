@@ -146,8 +146,8 @@ class RexLendSavings extends PureComponent<Props> {
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
     const escapedAccountName = settings.account.replace('.', '\\.');
+    const maturedRex = fetchMaturedBalance(tables, escapedAccountName);
 
-    const maturedRex = `${get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.matured_rex`, 0) / 10000} REX`;
     const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');
     const rexMaturities = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_maturities`, []);
     const rexInSavings = `${(find(rexMaturities, { first: '2106-02-07T06:28:15' }) || { second: 0 }).second / 10000} REX`;
@@ -300,6 +300,19 @@ class RexLendSavings extends PureComponent<Props> {
       </React.Fragment>
     );
   }
+}
+
+function fetchMaturedBalance(tables, account) {
+  const rexMaturities = get(tables, `eosio.eosio.rexbal.${account}.rows.0.rex_maturities`, []);
+  let maturedMaturitiesTotal = 0;
+  rexMaturities.forEach(maturity => {
+    if (new Date(maturity.first) < new Date()) {
+      maturedMaturitiesTotal += maturity.second;
+    }
+  });
+  const maturedRexNumber = Number(get(tables, `eosio.eosio.rexbal.${account}.rows.0.matured_rex`, 0));
+
+  return `${(maturedRexNumber + maturedMaturitiesTotal) / 10000} REX`;
 }
 
 export default translate('rex')(RexLendSavings);
