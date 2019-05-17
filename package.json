@@ -157,14 +157,14 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/greymass/anchor/issues"
+    "url": "https://github.com/greymass/eos-voter/issues"
   },
   "keywords": [
     "anchor",
     "eosio",
     "wallet"
   ],
-  "homepage": "https://github.com/greymass/anchor#readme",
+  "homepage": "https://github.com/greymass/eos-voter#readme",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
