@@ -9,7 +9,7 @@ import eosLogo from '../../../../renderer/assets/images/eos.png';
 import insightsLogo from '../../../../renderer/assets/images/insights.svg';
 import meetoneLogo from '../../../../renderer/assets/images/meetone.svg';
 import placeholder from '../../../../renderer/assets/images/placeholder.png';
-import telosLogo from '../../../../renderer/assets/images/telos.svg';
+import telosLogo from '../../../../renderer/assets/images/telos.png';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
 import waxLogo from '../../../../renderer/assets/images/wax.png';
 
