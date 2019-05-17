@@ -1,8 +1,8 @@
 {
-  "name": "anchor",
-  "productName": "anchor",
+  "name": "anchor-beta",
+  "productName": "Anchor-BETA",
   "version": "0.9.0",
-  "description": "",
+  "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "main": "./main.prod.js",
   "author": {
     "name": "Greymass",
