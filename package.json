@@ -1,8 +1,8 @@
 {
-  "name": "anchor",
-  "productName": "anchor",
+  "name": "anchor-beta",
+  "productName": "Anchor-BETA",
   "version": "0.9.0",
-  "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
+  "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
@@ -33,9 +33,9 @@
     "not ie <= 8"
   ],
   "build": {
-    "productName": "anchor",
-    "appId": "com.greymass.anchor",
-    "artifactName": "${os}-${productName}-${version}-${arch}.${ext}",
+    "productName": "Anchor-BETA",
+    "appId": "com.greymass.anchor-beta",
+    "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,
     "protocols": {
       "name": "eosio",
@@ -99,12 +99,12 @@
     },
     "linux": {
       "category": "Network",
-      "description": "Simple light wallet and block producer voting tool for the EOS blockchain",
+      "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
       "desktop": {
         "Name": "anchor",
-        "GenericName": "EOS Voting Client + Wallet",
+        "GenericName": "Anchor - An EOSIO Light Wallet",
         "X-GNOME-FullName": "anchor",
-        "Comment": "Simple light wallet and block producer voting tool for the EOS blockchain",
+        "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
         "Type": "Application",
         "Terminal": "false",
         "StartupNotify": "false",
@@ -124,7 +124,7 @@
       ]
     },
     "snap": {
-      "synopsis": "Simple light wallet and block producer voting tool for the EOS blockchain",
+      "synopsis": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
       "confinement": "devmode",
       "grade": "devel",
       "buildPackages": [
@@ -148,7 +148,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/greymass/anchor.git"
+    "url": "git+https://github.com/greymass/eos-voter.git"
   },
   "author": {
     "name": "Greymass",
@@ -160,8 +160,8 @@
     "url": "https://github.com/greymass/anchor/issues"
   },
   "keywords": [
-    "eos",
-    "voting",
+    "anchor",
+    "eosio",
     "wallet"
   ],
   "homepage": "https://github.com/greymass/anchor#readme",
