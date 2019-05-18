@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import {
   Button,
+  Container,
   Header,
   Message,
   Segment,
@@ -10,9 +11,12 @@ import {
 } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 import { find } from 'lodash';
-import GlobalTransactionModal, { Container } from './Manage';
+
+import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
 class RexInterfaceLoans extends PureComponent<Props> {
+  state = {};
+
   componentDidMount() {
     const { actions } = this.props;
 
@@ -24,9 +28,9 @@ class RexInterfaceLoans extends PureComponent<Props> {
     const { actions } = this.props;
     const { refreshingLoan, refundingLoan } = this.state;
     if (refreshingLoan) {
-      actions.refreshLoan(refreshingLoan);
+      actions.refreshloan(refreshingLoan);
     } else {
-      actions.refundLoan(refundingLoan);
+      actions.refundloan(refundingLoan);
     }
   };
 
@@ -48,17 +52,26 @@ class RexInterfaceLoans extends PureComponent<Props> {
     } = this.state;
 
     const escapedAccount = settings.account.replace('.', '\\.');
-    const cpuLoans = get(tables, `eosio.eosio.cpuloans.${escapedAccount}.rows`, []);
-    const netLoans = get(tables, `eosio.eosio.netloans.${escapedAccount}.rows`, []);
-
+    const cpuLoans =
+      get(tables, `eosio.${escapedAccount}.cpuloan.rows`, [])
+        .map(loan => ({ ...loan, type: 'cpu' }));
+    const netLoans =
+      get(tables, `eosio.${escapedAccount}.netloan.rows`, [])
+        .map(loan => ({ ...loan, type: 'net' }));
     const allLoans = cpuLoans.concat(netLoans);
-    const sortedLoans = allLoans.sort(loan => loan.createdAt);
-    const loanBeingRefreshed = refreshingLoan && find(allLoans, { id: refreshingLoan });
-    const loanBeingRefunded = refreshingLoan && find(allLoans, { id: refreshingLoan });
+    const sortedLoans = allLoans.sort(loan => loan.createdAt)
+    const loanBeingRefreshed = refreshingLoan && find(allLoans, { loan_num: refreshingLoan });
+    const loanBeingRefunded = refundingLoan && find(allLoans, { loan_num: refundingLoan });
 
     console.log({allLoans});
 
     const confirming = refreshingLoan || refundingLoan;
+
+    const expiresAtDateObject = loanBeingRefreshed && new Date(loanBeingRefreshed.expiration);
+
+    if (expiresAtDateObject) {
+      expiresAtDateObject.setDate(expiresAtDateObject.getDate() + 30);
+    }
 
     const confirmationPage = confirming ? (
       <Segment basic loading={system.REFRESHLOANREX === 'PENDING' || system.REFUNDLOANREX === 'PENDING'}>
@@ -68,14 +81,14 @@ class RexInterfaceLoans extends PureComponent<Props> {
           blockExplorers={blockExplorers}
           content={(
             <React.Fragment>
-              {refreshingLoan ? (
+              {loanBeingRefreshed ? (
                 <p>
                   {
                     t(
                       'rex_interface_rent_confirmation_modal_refresh_loan',
                       {
-                        amount: loanBeingRefreshed.amount,
-                        expiresAt: (loanBeingRefreshed.expires_at + 30.days).utc,
+                        amount: loanBeingRefreshed.total_staked,
+                        expiresAt: expiresAtDateObject.toString(),
                         type: loanBeingRefreshed.type,
                       }
                     )
@@ -87,8 +100,8 @@ class RexInterfaceLoans extends PureComponent<Props> {
                     t(
                       'rex_interface_rent_confirmation_modal_refund_loan',
                       {
-                        amount: loanBeingRefunded.amount,
-                        type: loanBeingRefreshed.type,
+                        amount: loanBeingRefunded.total_staked,
+                        type: loanBeingRefunded.type,
                       }
                     )
                   }
@@ -136,47 +149,58 @@ class RexInterfaceLoans extends PureComponent<Props> {
           content={[t('rex_rent_loans_warning')]}
           warning
         />
-        <Table>
-          <Table.Header>
-            <Table.HeaderCell>
-              {t('rex_rent_table_name')}
-            </Table.HeaderCell>
-            <Table.HeaderCell>
-              {t('rex_rent_table_expires')}
-            </Table.HeaderCell>
-            <Table.HeaderCell />
-            <Table.HeaderCell />
-          </Table.Header>
-          <Table.Body>
-            {sortedLoans.map(loan => (
-              <Table.Row>
-                <Table.Cell>
-                  {loan.quantity}
-                </Table.Cell>
-                <Table.Cell>
-                  {loan.type}
-                </Table.Cell>
-                <Table.Cell>
-                  {(new Date(loan.expires_at)).utc}
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    color="green"
-                    content={t('common:renew')}
-                    onClick={() => this.setState({ refreshingLoan: loan.id })}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    color="green"
-                    content={t('common:remove')}
-                    onClick={() =>  this.setState({ refundingLoan: loan.id })}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+        {sortedLoans.length === 0 ? (
+          <Message>{t('rex_rent_loans_none')}</Message>
+        ) : (
+          <Table>
+            <Table.Header>
+              <Table.HeaderCell>
+                {t('rex_rent_table_stake_amount')}
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                {t('rex_rent_table_type')}
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                {t('rex_rent_table_expires')}
+              </Table.HeaderCell>
+              <Table.HeaderCell />
+              <Table.HeaderCell />
+              <Table.HeaderCell />
+            </Table.Header>
+            <Table.Body>
+              {sortedLoans.map(loan => (
+                <Table.Row>
+                  <Table.Cell>
+                    {loan.total_staked}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {loan.type}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {loan.expiration}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {(new Date(loan.expiration)).utc}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      color="green"
+                      content={t('common:renew')}
+                      onClick={() => this.setState({ refreshingLoan: loan.loan_num })}
+                    />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      color="red"
+                      content={t('common:remove')}
+                      onClick={() => this.setState({ refundingLoan: loan.loan_num })}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        )}
       </Segment>
     );
   }
