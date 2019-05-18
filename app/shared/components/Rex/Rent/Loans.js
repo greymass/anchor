@@ -184,7 +184,7 @@ class RexInterfaceLoans extends PureComponent<Props> {
                 {t('rex_rent_table_stake_amount')}
               </Table.HeaderCell>
               <Table.HeaderCell>
-                {t('rex_rent_table_percentage_used')}
+                {t('rex_rent_table_funded_balance')}
               </Table.HeaderCell>
               <Table.HeaderCell>
                 {t('rex_rent_table_type')}
@@ -203,7 +203,7 @@ class RexInterfaceLoans extends PureComponent<Props> {
                     {loan.total_staked}
                   </Table.Cell>
                   <Table.Cell>
-                    {Math.round(100 - ((loan.balance.split(' ')[0] / loan.payment.split(' ')[0]) * 100))} %
+                    {loan.balance}
                   </Table.Cell>
                   <Table.Cell>
                     {loan.type}
@@ -215,20 +215,19 @@ class RexInterfaceLoans extends PureComponent<Props> {
                     {(new Date(loan.expiration).utc)}
                   </Table.Cell>
                   <Table.Cell>
-                    <Button
-                      color="green"
-                      content={t('common:fund')}
-                      disabled={loan.balance === loan.payment}
-                      onClick={() => this.setState({ refreshingLoan: loan })}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Button
-                      color="red"
-                      content={t('common:defund')}
-                      disabled={loan.balance === '0.0000 EOS'}
-                      onClick={() => this.setState({ refundingLoan: loan })}
-                    />
+                    {loan.balance === '0.0000 EOS' ? (
+                      <Button
+                        color="green"
+                        content={t('common:fund')}
+                        onClick={() => this.setState({ refreshingLoan: loan })}
+                      />
+                    ) : (
+                      <Button
+                        color="red"
+                        content={t('common:defund')}
+                        onClick={() => this.setState({ refundingLoan: loan })}
+                      />
+                    )}
                   </Table.Cell>
                 </Table.Row>
               ))}
