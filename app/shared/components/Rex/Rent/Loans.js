@@ -218,13 +218,13 @@ class RexInterfaceLoans extends PureComponent<Props> {
                     {loan.balance === '0.0000 EOS' ? (
                       <Button
                         color="green"
-                        content={t('common:fund')}
+                        content={t('rex_rent_button_fund_renewal')}
                         onClick={() => this.setState({ refreshingLoan: loan })}
                       />
                     ) : (
                       <Button
-                        color="red"
-                        content={t('common:defund')}
+                        color="yellow"
+                        content={t('rex_rent_button_defund_renewal')}
                         onClick={() => this.setState({ refundingLoan: loan })}
                       />
                     )}
