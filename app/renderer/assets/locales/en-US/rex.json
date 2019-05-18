@@ -53,7 +53,6 @@
   "rex_interface_rent_funding_balance_staked_net": "{{stakedBalance}} {{chainSymbol}} staked to NET",
   "rex_interface_rent_resources_amount_label": "Amount of Resources (in {{chainSymbol}})",
   "rex_interface_rent_resources_button": "Rent",
-  "rex_rent_table_funded_balance": "Funded Balance",
   "rex_interface_rent_resources_confirmation_modal_header": "Confirm rental of resource",
   "rex_interface_rent_resources_transaction_type_label": "Transaction Type",
   "rex_interface_rent_rex_balance": "{{rexBalance}} REX total",
@@ -79,10 +78,13 @@
   "rex_not_voting_or_proxying_subheader": "In order to use the REX features, your account must either be voting for a minimum of 21 block producers or proxying to a voting proxy.",
   "rex_rent_about_header": "REX Exchange - Renting Resources",
   "rex_rent_about_subheader": "REX is the new EOSIO set of contracts that allow users to rent CPU and Bandwidth resources in exchange for a fee.",
+  "rex_rent_button_defund_renewal": "Defund Renewal",
+  "rex_rent_button_fund_renewal": "Fund Renewal",
   "rex_rent_loans_header": "Current CPU/NET Rentals",
   "rex_rent_loans_none": "You currently have no loans.",
-  "rex_rent_loans_warning": "Here you can view a list of all your ongoing rentals. You can also add or remove funds for the renewal of the loans by clicking on the corresponding button. If the loan is funded at the time of expiry, it will be automatically renewed at the time of expiry.",
+  "rex_rent_loans_warning": "Here you can view a list of all your ongoing rentals. You can also add or remove funds for the renewal of any loan by clicking on the corresponding button. If the loan is funded at the time of expiry, it will be automatically renewed.",
   "rex_rent_table_expires": "Expires",
+  "rex_rent_table_funded_balance": "Funded Balance",
   "rex_rent_table_stake_amount": "Stake Amount",
   "rex_rent_table_type": "Type"
 }
