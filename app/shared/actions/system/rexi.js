@@ -201,11 +201,13 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
 export default {
   buyrex,
   depositrex,
+  refreshloan,
+  refundloan,
   rentcpu,
   rentnet,
   sellrex,
-  withdrawrex,
   unstaketorex,
   mvtosavings,
   mvfrsavings,
+  withdrawrex,
 };
