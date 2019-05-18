@@ -1,11 +1,5 @@
 import eos from './helpers/eos';
 import * as types from './types';
-import {
-  addCustomToken,
-  clearSettingsCache,
-  clearSettingsInvalid,
-  removeCustomToken, setSetting, setSettings, setSettingWithValidation
-} from './settings';
 
 export function getCPULoans() {
   return (dispatch: () => void, getState) => {
@@ -34,7 +28,6 @@ function getLoans(tableName, dispatch, getState) {
     upper_bound: settings.account,
   };
   eos(connection).getTableRows(query).then(results => {
-    console.log({results})
     return dispatch({
       type: types.SYSTEM_GETTABLE_SUCCESS,
       payload: {
@@ -44,12 +37,10 @@ function getLoans(tableName, dispatch, getState) {
         table: tableName,
       }
     });
-  }).catch((err) => {
-    return dispatch({
-      type: types.SYSTEM_GETTABLE_FAILURE,
-      payload: { err },
-    });
-  });
+  }).catch((err) => dispatch({
+    type: types.SYSTEM_GETTABLE_FAILURE,
+    payload: { err },
+  }));
 }
 
 export default {

@@ -1,6 +1,7 @@
 import * as types from '../types';
 import { getAccount, getCurrencyBalance } from '../accounts';
 import { getTableByBounds } from '../table';
+import { getCPULoans, getNETLoans } from '../rexi';
 import eos from '../helpers/eos';
 
 export function buyrex(amount) {
@@ -107,15 +108,51 @@ export function mvfrsavings(amount) {
     rexAction('mvfrsavings', 'MVFRSAVINGSREX', data, dispatch, getState);
   };
 }
-
-export function refundloan(loanId) {
+export function fundcpuloan(loanId, payment) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
-      owner: settings.account,
-      loan: loanId,
+      from: settings.account,
+      loan_num: loanId,
+      payment,
     };
-    rexAction('refundloan', 'REFUNDLOANREX', data, dispatch, getState);
+    rexAction('fundcpuloan', 'FUNDCPULOANREX', data, dispatch, getState);
+  };
+}
+
+export function fundnetloan(loanId, payment) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const data = {
+      from: settings.account,
+      loan_num: loanId,
+      payment,
+    };
+    rexAction('fundnetloan', 'FUNDNETLOANREX', data, dispatch, getState);
+  };
+}
+
+export function defundcpuloan(loanId, amount) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const data = {
+      from: settings.account,
+      loan_num: loanId,
+      amount,
+    };
+    rexAction('defcpuloan', 'DEFUNDCPULOANREX', data, dispatch, getState);
+  };
+}
+
+export function defundnetloan(loanId, amount) {
+  return (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    const data = {
+      from: settings.account,
+      loan_num: loanId,
+      amount,
+    };
+    rexAction('defnetloan', 'DEFUNDNETLOANREX', data, dispatch, getState);
   };
 }
 
@@ -181,6 +218,8 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
       dispatch(getCurrencyBalance(settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.accoun));
+      dispatch(getCPULoans());
+      dispatch(getNETLoans());
     }, 1000);
     return dispatch({
       payload: {
@@ -201,8 +240,10 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
 export default {
   buyrex,
   depositrex,
-  refreshloan,
-  refundloan,
+  fundcpuloan,
+  fundnetloan,
+  defundcpuloan,
+  defundnetloan,
   rentcpu,
   rentnet,
   sellrex,

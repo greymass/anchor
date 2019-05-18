@@ -11,6 +11,8 @@
   "continue_setup": "Continue Account Setup",
   "copy_to_clipboard": "Copy to Clipboard",
   "error": "Error",
+  "fund": "Fund",
+  "defund": "Defund",
   "loading": "Loaded",
   "next": "Next",
   "private_key": "Private Key",

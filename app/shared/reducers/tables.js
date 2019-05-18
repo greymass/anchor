@@ -19,9 +19,7 @@ export default function tables(state = initialState, action) {
         scope,
         table,
       } = action.payload;
-
-      console.log({payload: action.payload})
-
+      
       return set(state, `${code}.${scope}.${table}`, { more, rows });
     }
     case types.SYSTEM_GETTABLEBYBOUNDS_SUCCESS: {

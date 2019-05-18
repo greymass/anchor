@@ -10,7 +10,6 @@ import {
   Table,
 } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
-import { find } from 'lodash';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
@@ -28,10 +27,25 @@ class RexInterfaceLoans extends PureComponent<Props> {
     const { actions } = this.props;
     const { refreshingLoan, refundingLoan } = this.state;
     if (refreshingLoan) {
-      actions.refreshloan(refreshingLoan);
+      if (refreshingLoan.type === 'cpu') {
+        actions.fundcpuloan(refreshingLoan.loan_num, refreshingLoan.payment);
+      } else {
+        actions.fundnetloan(refreshingLoan.loan_num, refreshingLoan.payment);
+      }
+    } else if (refundingLoan.type === 'cpu') {
+      actions.defundcpuloan(refundingLoan.loan_num, refundingLoan.balance);
     } else {
-      actions.refundloan(refundingLoan);
+      actions.defundnetloan(refundingLoan.loan_num, refundingLoan.balance);
     }
+  };
+
+  onClose = () => {
+    this.props.actions.clearSystemState();
+
+    this.setState({
+      refreshingLoan: undefined,
+      refundingLoan: undefined,
+    });
   };
 
   render() {
@@ -59,37 +73,47 @@ class RexInterfaceLoans extends PureComponent<Props> {
       get(tables, `eosio.${escapedAccount}.netloan.rows`, [])
         .map(loan => ({ ...loan, type: 'net' }));
     const allLoans = cpuLoans.concat(netLoans);
-    const sortedLoans = allLoans.sort(loan => loan.createdAt)
-    const loanBeingRefreshed = refreshingLoan && find(allLoans, { loan_num: refreshingLoan });
-    const loanBeingRefunded = refundingLoan && find(allLoans, { loan_num: refundingLoan });
-
-    console.log({allLoans});
+    const sortedLoans = allLoans.sort(loan => loan.createdAt);
 
     const confirming = refreshingLoan || refundingLoan;
 
-    const expiresAtDateObject = loanBeingRefreshed && new Date(loanBeingRefreshed.expiration);
+    const expiresAtDateObject = refreshingLoan && new Date(refreshingLoan.expiration);
 
     if (expiresAtDateObject) {
       expiresAtDateObject.setDate(expiresAtDateObject.getDate() + 30);
     }
 
     const confirmationPage = confirming ? (
-      <Segment basic loading={system.REFRESHLOANREX === 'PENDING' || system.REFUNDLOANREX === 'PENDING'}>
+      <Segment
+        basic
+        loading={
+          system.FUNDCPULOANREX === 'PENDING' ||
+          system.FUNDNETLOANREX === 'PENDING' ||
+          system.DEFUNDCPULOANREX === 'PENDING' ||
+          system.DEFUNDNETLOANREX === 'PENDING'
+        }
+      >
         <GlobalTransactionModal
-          actionName={refreshingLoan ? 'REFRESHLOANREX' : 'REFUNDLOANREX'}
+          actionName={
+            refreshingLoan && refreshingLoan.type === 'cpu' ?
+              'FUNDCPULOANREX' : refreshingLoan ?
+              'FUNDNETLOANREX' : refundingLoan.type === 'cpu' ?
+              'DEFUNDCPULOANREX' :
+                'DEFUNDNETLOANREX'
+          }
           actions={actions}
           blockExplorers={blockExplorers}
           content={(
             <React.Fragment>
-              {loanBeingRefreshed ? (
+              {refreshingLoan ? (
                 <p>
                   {
                     t(
                       'rex_interface_rent_confirmation_modal_refresh_loan',
                       {
-                        amount: loanBeingRefreshed.total_staked,
-                        expiresAt: expiresAtDateObject.toString(),
-                        type: loanBeingRefreshed.type,
+                        amount: refreshingLoan.total_staked,
+                        payment: refreshingLoan.payment,
+                        type: refreshingLoan.type,
                       }
                     )
                   }
@@ -100,8 +124,8 @@ class RexInterfaceLoans extends PureComponent<Props> {
                     t(
                       'rex_interface_rent_confirmation_modal_refund_loan',
                       {
-                        amount: loanBeingRefunded.total_staked,
-                        type: loanBeingRefunded.type,
+                        amount: refundingLoan.total_staked,
+                        type: refundingLoan.type,
                       }
                     )
                   }
@@ -110,16 +134,18 @@ class RexInterfaceLoans extends PureComponent<Props> {
               <Container>
                 <Button
                   content={t('common:cancel')}
-                  onClick={() => this.setState({
-                    refreshingLoan: undefined,
-                    refundingLoan: undefined,
-                  })}
+                  onClick={this.onClose}
                   textAlign="left"
                 />
                 <Button
                   color="green"
                   content={t('common:confirm')}
-                  disabled={system.REFRESHLOANREX || system.REFUNDLOANREX}
+                  disabled={
+                    system.FUNDCPULOANREX ||
+                    system.FUNDNETLOANREX ||
+                    system.DEFUNDCPULOANREX ||
+                    system.DEFUNDNETLOANREX
+                  }
                   floated="right"
                   onClick={this.confirmTransaction}
                   textAlign="right"
@@ -158,6 +184,9 @@ class RexInterfaceLoans extends PureComponent<Props> {
                 {t('rex_rent_table_stake_amount')}
               </Table.HeaderCell>
               <Table.HeaderCell>
+                {t('rex_rent_table_percentage_used')}
+              </Table.HeaderCell>
+              <Table.HeaderCell>
                 {t('rex_rent_table_type')}
               </Table.HeaderCell>
               <Table.HeaderCell>
@@ -169,9 +198,12 @@ class RexInterfaceLoans extends PureComponent<Props> {
             </Table.Header>
             <Table.Body>
               {sortedLoans.map(loan => (
-                <Table.Row>
+                <Table.Row key={loan.loan_num}>
                   <Table.Cell>
                     {loan.total_staked}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {Math.round(100 - ((loan.balance.split(' ')[0] / loan.payment.split(' ')[0]) * 100))} %
                   </Table.Cell>
                   <Table.Cell>
                     {loan.type}
@@ -180,20 +212,22 @@ class RexInterfaceLoans extends PureComponent<Props> {
                     {loan.expiration}
                   </Table.Cell>
                   <Table.Cell>
-                    {(new Date(loan.expiration)).utc}
+                    {(new Date(loan.expiration).utc)}
                   </Table.Cell>
                   <Table.Cell>
                     <Button
                       color="green"
-                      content={t('common:renew')}
-                      onClick={() => this.setState({ refreshingLoan: loan.loan_num })}
+                      content={t('common:fund')}
+                      disabled={loan.balance === loan.payment}
+                      onClick={() => this.setState({ refreshingLoan: loan })}
                     />
                   </Table.Cell>
                   <Table.Cell>
                     <Button
                       color="red"
-                      content={t('common:remove')}
-                      onClick={() => this.setState({ refundingLoan: loan.loan_num })}
+                      content={t('common:defund')}
+                      disabled={loan.balance === '0.0000 EOS'}
+                      onClick={() => this.setState({ refundingLoan: loan })}
                     />
                   </Table.Cell>
                 </Table.Row>
