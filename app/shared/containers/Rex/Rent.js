@@ -11,11 +11,11 @@ import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 import RexInterfaceRentLoans from '../../components/Rex/Rent/Loans';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
-import RexActions from '../../actions/system/rexi';
+import RexActions from '../../actions/system/rex';
 import TableAction from '../../actions/table';
 import SystemStateActions from '../../actions/system/systemstate';
 import WalletActions from '../../actions/wallet';
-import RexFetchActions from '../../actions/rexi';
+import RexFetchActions from '../../actions/rex';
 
 type Props = {
   actions: {},
