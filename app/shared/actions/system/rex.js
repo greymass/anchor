@@ -156,17 +156,6 @@ export function defundnetloan(loanId, amount) {
   };
 }
 
-export function refreshloan(loanId) {
-  return (dispatch: () => void, getState) => {
-    const { settings } = getState();
-    const data = {
-      owner: settings.account,
-      loan: loanId,
-    };
-    rexAction('refreshloan', 'REFRESHLOANREX', data, dispatch, getState);
-  };
-}
-
 async function rexAction(actionName, actionVariable, data, dispatch, getState) {
   const {
     settings,
