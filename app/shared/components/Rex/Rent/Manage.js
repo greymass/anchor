@@ -2,7 +2,6 @@
 import React, { PureComponent } from 'react';
 import { translate } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
-
 import {
   Button,
   Container,
@@ -12,7 +11,6 @@ import {
   Segment,
   Header,
 } from 'semantic-ui-react';
-import { get } from 'dot-prop-immutable';
 
 import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
