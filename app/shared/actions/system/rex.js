@@ -1,7 +1,7 @@
 import * as types from '../types';
 import { getAccount, getCurrencyBalance } from '../accounts';
 import { getTableByBounds } from '../table';
-import { getCPULoans, getNETLoans } from '../rexi';
+import { getCPULoans, getNETLoans } from '../rex';
 import eos from '../helpers/eos';
 
 export function buyrex(amount) {
@@ -50,11 +50,12 @@ export function withdrawrex(amount) {
 
 export function rentcpu(amount) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+    const { connection, settings } = getState();
     const data = {
       from: settings.account,
       loan_payment: amount,
       receiver: settings.account,
+      loan_fund: `0.0000 ${connection.chainSymbol}`,
     };
     rexAction('rentcpu', 'RENTCPUREX', data, dispatch, getState);
   };
@@ -62,11 +63,12 @@ export function rentcpu(amount) {
 
 export function rentnet(amount) {
   return (dispatch: () => void, getState) => {
-    const { settings } = getState();
+    const { connection, settings } = getState();
     const data = {
       from: settings.account,
       loan_payment: amount,
       receiver: settings.account,
+      loan_fund: `0.0000 ${connection.chainSymbol}`,
     };
     rexAction('rentnet', 'RENTNETREX', data, dispatch, getState);
   };
