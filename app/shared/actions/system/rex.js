@@ -54,7 +54,6 @@ export function rentcpu(amount) {
     const data = {
       from: settings.account,
       loan_payment: amount,
-      loan_fund: amount,
       receiver: settings.account,
     };
     rexAction('rentcpu', 'RENTCPUREX', data, dispatch, getState);
@@ -67,7 +66,6 @@ export function rentnet(amount) {
     const data = {
       from: settings.account,
       loan_payment: amount,
-      loan_fund: amount,
       receiver: settings.account,
     };
     rexAction('rentnet', 'RENTNETREX', data, dispatch, getState);
