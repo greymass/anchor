@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Message, Tab } from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 
