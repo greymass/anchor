@@ -34,7 +34,6 @@ import ToolsResetApplication from './Tools/ResetApplication';
 import ToolsSmartContracts from './Tools/SmartContracts';
 import ToolsWallets from './Tools/Wallets';
 import ToolsWalletState from './Tools/WalletState';
-import DevTest from './Tests';
 
 import Tools from '../../../../shared/containers/Tools';
 
@@ -47,7 +46,7 @@ class ToolsContainer extends Component<Props> {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path="/tools" component={DevTest} />
+          <Route exact path="/tools" component={ToolsHome} />
           <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
           <Route path="/tools/api_ping" component={ToolsApiPing} />
           <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />

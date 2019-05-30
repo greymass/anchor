@@ -60,33 +60,11 @@ class PromptContainer extends Component<Props> {
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
 
-    console.log({oldprompt})
-    const prompt = {
-      ...oldprompt,
-      req: [
-        'action',
-        {
-          account: 'eosio',
-          authorization: [
-            {
-              actor: 'teamgreymass',
-              permission: 'active'
-            }
-          ],
-          data: '0100000000000000',
-          name: 'refund'
-        }
-      ]
-    };
-
     const specifiedActor = get(prompt, 'req.1.authorization.0.actor');
     const specifiedPermission = get(prompt, 'req.1.authorization.0.permission');
-    console.log({specifiedActor})
-    console.log({specifiedPermission})
     const defaultWallet =
       find(wallets, { chainId, account: specifiedActor, authorization: specifiedPermission }) ||
       find(wallets, { chainId });
-    console.log({defaultWallet})
 
     if (defaultWallet) {
       // If a default was found, set the blockchain and swap to it
@@ -102,7 +80,6 @@ class PromptContainer extends Component<Props> {
     }
   }
   swapAccount = (e, { value }) => {
-    console.log({value})
     const { actions } = this.props;
     const { blockchain } = this.state;
     const wallet = pick(value, ['account', 'authorization', 'mode', 'path', 'pubkey']);
@@ -112,7 +89,7 @@ class PromptContainer extends Component<Props> {
   }
   render() {
     const {
-      prompt:oldprompt,
+      prompt,
       system,
     } = this.props;
     const {
