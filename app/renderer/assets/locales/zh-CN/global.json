@@ -15,6 +15,7 @@
   "error_funding_amount_invalid": "Funding Amount Invalid, eg. '12.1212'",
   "error_insufficient_balance": "Insufficient available balance to complete transaction.",
   "error_insufficient_balance_matured": "Insufficient available matured balance to complete transaction. REX balances must mature for ~4 days before transactions may be created to sell.",
+  "error_insufficient_balance_savings": "Insufficient amount available in Savings.",
   "error_invalid_accountName": "Invalid Account Name, make sure it is comprised of 1 to 12 letters.",
   "error_invalid_activeKeyValue": "Invalid Active Key, make sure it starts with '{{chainSymbol}}' and has an additional 50 characters.",
   "error_invalid_amount": "Invalid Amount, eg. '12.1212'.",
