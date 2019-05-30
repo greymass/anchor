@@ -14,6 +14,7 @@ import WalletActions from '../../../shared/actions/wallet';
 import PromptStage from './Stage';
 import PromptHeader from '../components/Header';
 import PromptShare from '../components/Share';
+import { get } from "dot-prop-immutable";
 
 const { remote } = require('electron');
 
@@ -53,12 +54,40 @@ class PromptContainer extends Component<Props> {
     actions.signURI(tx, blockchain, wallet);
   }
   templateURI = () => {
-    const { blockchains, prompt, wallets } = this.props;
-    const { chainId } = prompt;
+    const { blockchains, prompt: oldprompt, wallets } = this.props;
+    const { chainId } = oldprompt;
     // Set the blockchain for this network
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
-    const defaultWallet = find(wallets, { chainId });
+
+    console.log({oldprompt})
+    const prompt = {
+      ...oldprompt,
+      req: [
+        'action',
+        {
+          account: 'eosio',
+          authorization: [
+            {
+              actor: 'teamgreymass',
+              permission: 'active'
+            }
+          ],
+          data: '0100000000000000',
+          name: 'refund'
+        }
+      ]
+    };
+
+    const specifiedActor = get(prompt, 'req.1.authorization.0.actor');
+    const specifiedPermission = get(prompt, 'req.1.authorization.0.permission');
+    console.log({specifiedActor})
+    console.log({specifiedPermission})
+    const defaultWallet =
+      find(wallets, { chainId, account: specifiedActor, authorization: specifiedPermission }) ||
+      find(wallets, { chainId });
+    console.log({defaultWallet})
+
     if (defaultWallet) {
       // If a default was found, set the blockchain and swap to it
       this.setState({ blockchain }, () => {
@@ -73,6 +102,7 @@ class PromptContainer extends Component<Props> {
     }
   }
   swapAccount = (e, { value }) => {
+    console.log({value})
     const { actions } = this.props;
     const { blockchain } = this.state;
     const wallet = pick(value, ['account', 'authorization', 'mode', 'path', 'pubkey']);
@@ -82,7 +112,7 @@ class PromptContainer extends Component<Props> {
   }
   render() {
     const {
-      prompt,
+      prompt:oldprompt,
       system,
     } = this.props;
     const {
@@ -90,10 +120,12 @@ class PromptContainer extends Component<Props> {
       displayShareLink,
       wallet
     } = this.state;
+
     const {
       response
     } = prompt;
     if (!blockchain) return false;
+
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
     const hasBroadcast = !!(response && (response.processed && response.processed.receipt.status === 'executed'));
     const hasExpired = !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
