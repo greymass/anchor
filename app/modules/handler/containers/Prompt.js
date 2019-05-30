@@ -54,16 +54,17 @@ class PromptContainer extends Component<Props> {
     actions.signURI(tx, blockchain, wallet);
   }
   templateURI = () => {
-    const { blockchains, prompt: oldprompt, wallets } = this.props;
-    const { chainId } = oldprompt;
+    const { blockchains, prompt, wallets } = this.props;
+    const { chainId } = prompt;
     // Set the blockchain for this network
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
 
-    const specifiedActor = get(prompt, 'req.1.authorization.0.actor');
-    const specifiedPermission = get(prompt, 'req.1.authorization.0.permission');
+    const account = get(prompt, 'req.1.0.authorization.0.actor');
+    const authorization = get(prompt, 'req.1.0.authorization.0.permission');
+
     const defaultWallet =
-      find(wallets, { chainId, account: specifiedActor, authorization: specifiedPermission }) ||
+      find(wallets, { chainId, account, authorization }) ||
       find(wallets, { chainId });
 
     if (defaultWallet) {
