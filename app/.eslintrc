@@ -1,4 +1,5 @@
 {
+  "extends": ["plugin:jest/recommended"],
   "rules": {
     "flowtype/boolean-style": ["error", "boolean"],
     "flowtype/define-flow-type": "warn",
