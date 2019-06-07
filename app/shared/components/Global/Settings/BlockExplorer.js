@@ -14,7 +14,7 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
     const { actions } = this.props;
 
     actions.setSetting('blockExplorer', value);
-  }
+  };
 
   render() {
     const {
