@@ -6,7 +6,7 @@ import { GlobalButtonAccountImport } from './Import';
 
 const mockProps = {
   settings: {},
-  t: {},
+  t: () => null,
 };
 
 describe('GlobalButtonAccountImport', () => {
