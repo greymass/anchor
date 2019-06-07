@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalSettingsBlockExplorer renders correctly 1`] = `
+<Dropdown
+  additionLabel="Add "
+  additionPosition="top"
+  closeOnBlur={true}
+  deburr={false}
+  defaultValue="Bloks IO"
+  icon="dropdown"
+  minCharacters={1}
+  name="Block Explorer"
+  noResultsMessage="No results found."
+  onChange={[Function]}
+  openOnFocus={true}
+  options={
+    Array [
+      Object {
+        "text": "Bloks IO",
+        "value": "Bloks IO",
+      },
+    ]
+  }
+  renderLabel={[Function]}
+  searchInput="text"
+  selectOnBlur={true}
+  selectOnNavigation={true}
+  wrapSelection={true}
+/>
+`;
