@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalButtonAccountImport renders correctly 1`] = `
+<Translate(GlobalModalAccountImport)
+  onClose={[Function]}
+  open={false}
+  settings={Object {}}
+  trigger={
+    <Button
+      as="button"
+      color="blue"
+      content={null}
+      icon="circle plus"
+      onClick={[Function]}
+    />
+  }
+/>
+`;
