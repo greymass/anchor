@@ -6,3 +6,6 @@ import 'babel-polyfill';
 configure({
   adapter: new Adapter(),
 });
+
+// setup mock fetch
+global.fetch = require('jest-fetch-mock');
