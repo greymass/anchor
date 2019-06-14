@@ -1,5 +1,7 @@
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
+import eos from 'eosjs';
+
 import {
   clearAccountCache,
   clearActionsCache,
@@ -9,7 +11,6 @@ import {
 
 import * as types from './types';
 
-import eos from 'eosjs';
 jest.mock('eosjs');
 
 const mockStore = configureStore([thunk]);
@@ -32,7 +33,6 @@ const store = mockStore(() => state);
 describe('accounts actions', () => {
   beforeEach(() => {
     store.clearActions();
-    fetch.resetMocks();
   });
 
   it('clearAccountCache() dispatches the correct action and payload', () => {
