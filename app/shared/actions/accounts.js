@@ -340,6 +340,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
     const {
       endpoints
     } = features;
+
     if (account && (settings.node || settings.node.length !== 0)) {
       let selectedTokens = getSelectedTokens(connection, requestedTokens, settings);
       dispatch({
@@ -417,6 +418,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       } else {
         forEach(selectedTokens, (namespace) => {
           const [, contract, symbol] = namespace.split(':');
+
           eos(connection)
             .getCurrencyBalance(contract, account, symbol)
             .then((results) =>
