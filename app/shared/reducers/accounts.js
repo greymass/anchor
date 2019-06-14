@@ -1,6 +1,7 @@
 import * as types from '../actions/types';
 import { set } from 'dot-prop-immutable';
 import { sumBy, uniq } from 'lodash';
+import Decimal from 'decimal.js';
 
 const initialState = {
   __lookups: [],
@@ -23,7 +24,7 @@ export default function accounts(state = initialState, action) {
             // Skip any incoming staked balances
             if (row.from !== action.payload.scope) return 0;
             // Return sum of both CPU + NET
-            const value = parseFloat(row.cpu_weight) + parseFloat(row.net_weight)
+            const value = parseFloat(Decimal(row.cpu_weight).add(Decimal(row.net_weight)))
             return value;
           }),
         });
