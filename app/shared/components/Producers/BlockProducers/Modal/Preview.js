@@ -11,6 +11,7 @@ class ProducersVotingPreview extends Component<Props> {
       account,
       actions,
       blockExplorers,
+      isProxying,
       lastError,
       onConfirm,
       selected,
@@ -28,13 +29,14 @@ class ProducersVotingPreview extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'green',
-          content: t('producer_voter_save_changes'),
+          content: (isProxying ? t('producer_voter_start_voting_after_proxying') : t('producer_voter_save_changes')),
           fluid: true,
           icon: ''
         }}
         content={(
           <ProducersVotingPreviewSelection
             account={account}
+            isProxying={isProxying}
             lastError={lastError}
             onConfirm={onConfirm}
             selected={selected}
