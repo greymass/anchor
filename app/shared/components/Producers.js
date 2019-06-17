@@ -39,7 +39,7 @@ class Producers extends Component<Props> {
       this.setState({
         lastError: system.VOTEPRODUCER_LAST_ERROR,
         lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
-        submitting: false
+        submitting: false,
       });
     }
     // If no selected are loaded, attempt to retrieve them from the props
@@ -55,9 +55,9 @@ class Producers extends Component<Props> {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const selected_account = account.voter_info.proxy || account.account_name;
-          const selected = editingProducers ?
+          const selected = editingProducers || !accounts[selected_account] ?
             currentlySelected :
-            accounts[selected_account] && accounts[selected_account].voter_info.producers;
+            accounts[selected_account].voter_info.producers;
           // If the voter_info entry exists, load those votes into state
           this.setState({
             selected,
@@ -117,7 +117,7 @@ class Producers extends Component<Props> {
   previewProducerVotes = (previewing) => this.setState({
     previewing,
     lastError: false, // Reset the last error
-    lastTransaction: {} // Reset the last transaction
+    lastTransaction: {}, // Reset the last transaction
   });
 
   submitProducerVotes = () => {
@@ -234,7 +234,7 @@ class Producers extends Component<Props> {
               lastError={lastError}
               lastTransaction={lastTransaction}
               open={previewing}
-              onClose={() => this.previewProducerVotes(false)}
+              onClose={() => this.setState({ editingProducers : false })}
               onConfirm={this.submitProducerVotes.bind(this)}
               onOpen={() => this.previewProducerVotes(true)}
               selected={selected}

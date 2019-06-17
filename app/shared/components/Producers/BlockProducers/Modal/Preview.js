@@ -13,6 +13,7 @@ class ProducersVotingPreview extends Component<Props> {
       blockExplorers,
       isProxying,
       lastError,
+      onClose,
       onConfirm,
       selected,
       settings,
@@ -46,9 +47,10 @@ class ProducersVotingPreview extends Component<Props> {
           />
         )}
         icon="exchange"
-        title={t('producer_voter_save_changes')}
+        onClose={onClose}
         settings={settings}
         system={system}
+        title={t('producer_voter_save_changes')}
       />
     );
   }
