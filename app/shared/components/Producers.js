@@ -55,9 +55,9 @@ class Producers extends Component<Props> {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const selected_account = account.voter_info.proxy || account.account_name;
-          const selected = editingProducers || !accounts[selected_account] ?
+          const selected = editingProducers ?
             currentlySelected :
-            accounts[selected_account].voter_info.producers;
+            accounts[selected_account] && accounts[selected_account].voter_info.producers;
           // If the voter_info entry exists, load those votes into state
           this.setState({
             selected,
