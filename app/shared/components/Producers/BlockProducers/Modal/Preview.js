@@ -15,6 +15,7 @@ class ProducersVotingPreview extends Component<Props> {
       lastError,
       onClose,
       onConfirm,
+      proxyingTo,
       selected,
       settings,
       submitting,
@@ -40,6 +41,7 @@ class ProducersVotingPreview extends Component<Props> {
             isProxying={isProxying}
             lastError={lastError}
             onConfirm={onConfirm}
+            proxyingTo={proxyingTo}
             selected={selected}
             settings={settings}
             submitting={submitting}
