@@ -33,6 +33,7 @@ const store = mockStore(() => state);
 describe('accounts actions', () => {
   beforeEach(() => {
     store.clearActions();
+    jest.clearAllMocks();
   });
 
   it('clearAccountCache() dispatches the correct action and payload', () => {

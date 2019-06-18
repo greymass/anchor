@@ -11,7 +11,7 @@ import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 import RexInterfaceRentLoans from '../../components/Rex/Rent/Loans';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
-import RexActions from '../../actions/system/rex';
+import RexActions from '../../actions/system/rexi';
 import TableAction from '../../actions/table';
 import SystemStateActions from '../../actions/system/systemstate';
 import WalletActions from '../../actions/wallet';

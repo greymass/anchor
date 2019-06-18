@@ -185,7 +185,7 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
     }
     method = 'transaction';
     params = {
-      broadcast: connection.broadcast,
+      broadcast: connecion.broadcast,
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     };
