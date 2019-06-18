@@ -12,7 +12,7 @@ import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
 import RexInterfaceLendSavings from '../../components/Rex/Lend/Savings';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 
-import RexActions from '../../actions/system/rex';
+import RexActions from '../../actions/system/rexi';
 import TableAction from '../../actions/table';
 import SystemStateActions from '../../actions/system/systemstate';
 import WalletActions from '../../actions/wallet';
