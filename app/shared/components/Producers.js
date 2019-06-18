@@ -194,6 +194,7 @@ class Producers extends Component<Props> {
       />
     )];
     const account = accounts[settings.account];
+    const proxyingTo = account && account.voter_info && account.voter_info.proxy;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser =
       !!((keys && keys.key && settings.walletMode !== 'wait') ||
@@ -237,6 +238,7 @@ class Producers extends Component<Props> {
               onClose={() => this.setState({ editingProducers : false })}
               onConfirm={this.submitProducerVotes.bind(this)}
               onOpen={() => this.previewProducerVotes(true)}
+              proxyingTo={proxyingTo}
               selected={selected}
               settings={settings}
               submitting={submitting}
