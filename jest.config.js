@@ -1,4 +1,10 @@
+const utils = require('util');
+
 module.exports = {
+  globals: {
+    TextEncoder: utils.TextEncoder,
+    TextDecoder: utils.TextDecoder
+  },
   clearMocks: true,
   collectCoverageFrom: [
     'src/**/*.{js,jsx,mjs}',
