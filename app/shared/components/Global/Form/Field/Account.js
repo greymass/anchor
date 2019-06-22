@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { Form, Input, Dropdown, Radio } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { sortBy } from 'lodash';
 import { get } from 'dot-prop-immutable';
 
-class GlobalFormFieldAccount extends Component<Props> {
+export class GlobalFormFieldAccount extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +25,7 @@ class GlobalFormFieldAccount extends Component<Props> {
         valid
       });
     });
-  }
+  };
   reset = () => this.setState({ value: '' });
 
   handleRadioChange = (e, { value }) => {
@@ -38,13 +38,12 @@ class GlobalFormFieldAccount extends Component<Props> {
     }, () => {
       this.onChange(e, { name, value: '' });
     });
-  }
+  };
 
   render() {
     const {
       app,
       autoFocus,
-      chainId,
       contacts,
       disabled,
       enableContacts,
