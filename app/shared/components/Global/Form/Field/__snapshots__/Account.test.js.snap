@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFormFieldAccount renders correctly 1`] = `
+<FormField>
+  <FormGroup
+    inline={true}
+  >
+    <label />
+    <FormRadio
+      as={[Function]}
+      checked={true}
+      control={[Function]}
+      key="manual"
+      label={null}
+      name="inputRadioOptions"
+      onChange={[Function]}
+      style={
+        Object {
+          "marginLeft": "10px",
+        }
+      }
+      value="manual"
+    />
+    <FormRadio
+      as={[Function]}
+      checked={false}
+      control={[Function]}
+      key="exchanges"
+      label={null}
+      name="inputRadioOptions"
+      onChange={[Function]}
+      style={
+        Object {
+          "marginLeft": "10px",
+        }
+      }
+      value="exchanges"
+    />
+    <FormRadio
+      as={[Function]}
+      checked={false}
+      control={[Function]}
+      key="contacts"
+      label={null}
+      name="inputRadioOptions"
+      onChange={[Function]}
+      style={
+        Object {
+          "marginLeft": "10px",
+        }
+      }
+      value="contacts"
+    />
+  </FormGroup>
+  <label
+    htmlFor="account_field"
+  >
+    <strong>
+      testing account field
+    </strong>
+    <FormField
+      control={[Function]}
+      error={true}
+      icon="warning"
+      label={false}
+      name="account_field"
+      onChange={[Function]}
+      width={10}
+    />
+  </label>
+</FormField>
+`;
