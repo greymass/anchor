@@ -5,10 +5,10 @@ import { Button } from 'semantic-ui-react';
 
 import GlobalModalBlockchainImport from '../../Modal/Blockchain/Import';
 
-class GlobalButtonBlockchainImport extends Component<Props> {
+export class GlobalButtonBlockchainImport extends Component<Props> {
   state = {
     open: false
-  }
+  };
 
   onOpen = () => this.setState({ open: true });
   onClose = () => this.setState({ open: false });

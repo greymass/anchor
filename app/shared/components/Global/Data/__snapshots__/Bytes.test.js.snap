@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalDataBytes renders correctly 1`] = `
+<Popup
+  content="1000 B"
+  inverted={true}
+  keepInViewPort={true}
+  on="hover"
+  position="top left"
+  trigger={
+    <span>
+       1 kB 
+    </span>
+  }
+/>
+`;

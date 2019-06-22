@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalButtonBlockchainImport renders correctly 1`] = `
+<Translate(GlobalModalBlockchainImport)
+  connection={Object {}}
+  onClose={[Function]}
+  open={false}
+  settings={Object {}}
+  trigger={
+    <Button
+      as="button"
+      color="blue"
+      content={null}
+      icon="circle plus"
+      onClick={[Function]}
+    />
+  }
+/>
+`;
