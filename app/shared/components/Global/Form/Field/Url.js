@@ -30,7 +30,6 @@ export default class GlobalFormFieldUrl extends Component<Props> {
       label,
       loading,
       name,
-      width,
     } = this.props;
     const {
       value
