@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFormFieldRam renders correctly 1`] = `
+<FormField
+  control={[Function]}
+  icon="icon"
+  label="multi token field"
+  name="multi token field"
+  onChange={[Function]}
+  placeholder="0"
+  readOnly={false}
+/>
+`;

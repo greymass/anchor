@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFormFieldMultiToken renders correctly 1`] = `
+<div
+  className="field"
+>
+  <label
+    htmlFor="multi token field"
+  >
+    multi token field
+  </label>
+  <Input
+    control={[Function]}
+    defaultValue="10.0000"
+    name="multi token field"
+    onChange={[Function]}
+    placeholder="0.0000"
+    type="text"
+  >
+    <Dropdown
+      additionLabel="Add "
+      additionPosition="top"
+      closeOnBlur={true}
+      deburr={false}
+      defaultValue="EOS"
+      icon="dropdown"
+      minCharacters={1}
+      name="asset"
+      noResultsMessage="No results found."
+      onChange={[Function]}
+      openOnFocus={true}
+      options={Array []}
+      renderLabel={[Function]}
+      search={true}
+      searchInput="text"
+      selectOnBlur={true}
+      selectOnNavigation={true}
+      selection={true}
+      wrapSelection={true}
+    />
+    <input />
+  </Input>
+</div>
+`;
