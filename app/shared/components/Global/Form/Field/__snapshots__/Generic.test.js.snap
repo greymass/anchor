@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFormFieldGeneric renders correctly 1`] = `
+<FormField
+  control={[Function]}
+  fluid={true}
+  icon="warning"
+  label="testing account field"
+  name="account_field"
+  onChange={[Function]}
+/>
+`;

@@ -32,7 +32,6 @@ export default class GlobalFormFieldServer extends Component<Props> {
     const {
       value
     } = this.state;
-    console.log(fluid)
     return (
       <Form.Field
         autoFocus={autoFocus}

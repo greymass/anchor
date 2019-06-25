@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFormFieldToken renders correctly 1`] = `
+<FormField
+  control={[Function]}
+  icon="icon"
+  label="multi token field"
+  loading={false}
+  name="multi token field"
+  onChange={[Function]}
+  placeholder="string placeholder"
+/>
+`;
