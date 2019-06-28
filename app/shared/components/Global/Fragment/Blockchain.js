@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Popup } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-class GlobalFragmentBlockchain extends Component<Props> {
+export class GlobalFragmentBlockchain extends Component<Props> {
   render() {
     const {
       blockchain,
