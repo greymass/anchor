@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentWallet renders correctly 1`] = `
+<Header
+  size="tiny"
+  style={
+    Object {
+      "margin": 0,
+    }
+  }
+>
+  <Identicon
+    className="ui image"
+    seed="[object Object]@[object Object]"
+  />
+  <HeaderContent
+    style={
+      Object {
+        "minWidth": "10em",
+      }
+    }
+  >
+    <Component />
+    <HeaderSubheader>
+      <Component />
+       / 
+      hot
+    </HeaderSubheader>
+  </HeaderContent>
+</Header>
+`;

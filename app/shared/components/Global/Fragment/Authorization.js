@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Popup } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-class GlobalFragmentAuthorization extends Component<Props> {
+export class GlobalFragmentAuthorization extends Component<Props> {
   render() {
     const {
       account,

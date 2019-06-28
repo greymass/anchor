@@ -1,10 +1,9 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { Button, Grid, Header, Segment } from 'semantic-ui-react';
+import { Button, Grid, Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-
-class GlobalFragmentWalletTypes extends PureComponent<Props> {
+export class GlobalFragmentWalletTypes extends PureComponent<Props> {
   render() {
     const {
       onChange,

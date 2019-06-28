@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentBlockchain renders correctly 1`] = `
+<Popup
+  content="Chain ID: undefined"
+  hoverable={true}
+  inverted={true}
+  keepInViewPort={true}
+  on="hover"
+  position="top left"
+  trigger={<span />}
+/>
+`;

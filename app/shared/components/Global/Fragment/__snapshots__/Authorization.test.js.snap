@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentAuthorization renders correctly 1`] = `
+<Popup
+  content="EOSXXXX"
+  header={[MockFunction]}
+  hoverable={true}
+  inverted={true}
+  keepInViewPort={true}
+  on="hover"
+  position="top left"
+  trigger={
+    <span>
+      <span>
+        Object {}
+      </span>
+      <span
+        style={
+          Object {
+            "opacity": 0.4,
+          }
+        }
+      >
+        @
+        Object {}
+      </span>
+    </span>
+  }
+/>
+`;

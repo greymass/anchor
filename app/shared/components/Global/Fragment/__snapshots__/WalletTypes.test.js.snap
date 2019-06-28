@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentWalletTypes renders correctly 1`] = `
+<Grid
+  divided="vertically"
+  padded="vertically"
+  stackable={true}
+>
+  <GridRow
+    columns={2}
+  >
+    <GridColumn>
+      <Header
+        content="Hot Wallet"
+        icon="lock"
+        size="large"
+        subheader="An account setup to perform actions on the blockchain using a locally encrypted private key. The security of a hot wallet is equal to the security of the computer."
+      />
+    </GridColumn>
+    <GridColumn
+      textAlign="center"
+      verticalAlign="middle"
+    >
+      <p>
+        Import a private key to create a Hot Wallet.
+      </p>
+      <Button
+        as="button"
+        content="Import Private Key"
+        icon="lock"
+        onClick={[Function]}
+        primary={true}
+        size="large"
+        value={1}
+      />
+    </GridColumn>
+  </GridRow>
+  <GridRow
+    columns={2}
+  >
+    <GridColumn>
+      <Header
+        content="Hardware Wallet"
+        icon="usb"
+        size="large"
+        subheader="An account that has been configured to use a hardware signing device. All keys are stored on the device and not on this computer."
+      />
+    </GridColumn>
+    <GridColumn
+      textAlign="center"
+      verticalAlign="middle"
+    >
+      <p>
+        Load the public key(s) from a device to create a Ledger Wallet.
+      </p>
+      <Button
+        as="button"
+        content="Load Public Keys"
+        icon="usb"
+        onClick={[Function]}
+        primary={true}
+        size="large"
+        value={2}
+      />
+    </GridColumn>
+  </GridRow>
+  <GridRow
+    columns={2}
+  >
+    <GridColumn>
+      <Header
+        content="Watch Wallet"
+        icon="eye"
+        size="large"
+        subheader="An account that cannot interact with the blockchain, but can monitor the account and create unsigned transactions for a cold wallet."
+      />
+    </GridColumn>
+    <GridColumn
+      textAlign="center"
+      verticalAlign="middle"
+    >
+      <p>
+        Specify any account name to create a new watch wallet.
+      </p>
+      <Button
+        as="button"
+        content="Create Watch Wallet"
+        icon="eye"
+        onClick={[Function]}
+        primary={true}
+        size="large"
+        value={3}
+      />
+    </GridColumn>
+  </GridRow>
+</Grid>
+`;

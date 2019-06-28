@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFormMessageError renders correctly 1`] = `
+<I18n
+  bindI18n="languageChanged loaded"
+  bindStore="added removed"
+  chainSymbol="EOS"
+  error="there is an error!"
+  ns={
+    Array [
+      "global",
+    ]
+  }
+  nsMode="default"
+  omitBoundRerender={true}
+  onClose={[Function]}
+  style={
+    Object {
+      "marginTop": 10,
+    }
+  }
+  t={[Function]}
+  translateFuncName="t"
+  usePureComponent={false}
+  wait={false}
+  withRef={false}
+>
+  <Component />
+</I18n>
+`;
