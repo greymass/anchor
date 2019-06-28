@@ -29,7 +29,7 @@ const logos = {
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
 };
 
-class GlobalFragmentChainLogo extends PureComponent<Props> {
+export class GlobalFragmentChainLogo extends PureComponent<Props> {
   render() {
     const {
       avatar,
