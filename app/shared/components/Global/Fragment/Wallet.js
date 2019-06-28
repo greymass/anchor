@@ -4,7 +4,7 @@ import { Header } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import Blockies from 'react-blockies';
 
-class GlobalFragmentWallet extends PureComponent<Props> {
+export class GlobalFragmentWallet extends PureComponent<Props> {
   render() {
     const {
       account,
