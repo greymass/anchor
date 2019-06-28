@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentWalletType renders correctly 1`] = `
+<Popup
+  content={[MockFunction]}
+  header={[MockFunction]}
+  inverted={true}
+  keepInViewPort={true}
+  on="hover"
+  position="top left"
+  trigger={
+    <Label
+      basic={true}
+      color="green"
+      content={[MockFunction]}
+      icon="id card"
+      position="left center"
+    />
+  }
+/>
+`;
