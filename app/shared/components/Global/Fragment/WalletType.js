@@ -4,7 +4,7 @@ import { Label, Popup } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
 
-class GlobalFragmentWalletType extends PureComponent<Props> {
+export class GlobalFragmentWalletType extends PureComponent<Props> {
   render() {
     const {
       mode,
