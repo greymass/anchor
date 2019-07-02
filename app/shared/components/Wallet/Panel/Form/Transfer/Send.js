@@ -11,6 +11,7 @@ import FormMessageError from '../../../../Global/Form/Message/Error';
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
 import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
+import JurisdictionsForm from '../Jurisdictions';
 
 class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
@@ -267,6 +268,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
                   warning
                 />
               )}
+              <JurisdictionsForm
+                actions={this.props.actions}
+              />
               <FormFieldMultiToken
                 balances={balances}
                 connection={connection}
