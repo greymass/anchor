@@ -185,7 +185,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
       onClose,
       settings,
       system,
-      t
+      t,
+      jurisdictions
     } = this.props;
     const {
       asset,
@@ -270,6 +271,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               )}
               <JurisdictionsForm
                 actions={this.props.actions}
+                jurisdictions={jurisdictions}
               />
               <FormFieldMultiToken
                 balances={balances}

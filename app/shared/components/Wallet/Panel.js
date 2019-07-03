@@ -22,7 +22,8 @@ export default class WalletPanel extends Component<Props> {
       system,
       transaction,
       validate,
-      wallet
+      wallet,
+      jurisdictions
     } = this.props;
 
     let panel = false;
@@ -59,6 +60,7 @@ export default class WalletPanel extends Component<Props> {
           system={system}
           transaction={transaction}
           validate={validate}
+          jurisdictions={jurisdictions}
         />
       );
     }

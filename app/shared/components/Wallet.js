@@ -24,7 +24,8 @@ type Props = {
   tables: {},
   transaction: {},
   validate: {},
-  wallet: {}
+  wallet: {},
+  jurisdictions: {}
 };
 
 export default class Wallet extends Component<Props> {
@@ -48,7 +49,8 @@ export default class Wallet extends Component<Props> {
       tables,
       transaction,
       validate,
-      wallet
+      wallet,
+      jurisdictions
     } = this.props;
 
     return (
@@ -71,6 +73,7 @@ export default class Wallet extends Component<Props> {
               transaction={transaction}
               validate={validate}
               wallet={wallet}
+              jurisdictions={jurisdictions}
             />
           </Grid.Column>
           <Grid.Column width={10}>

@@ -14,6 +14,7 @@ type Props = {
   connection: {},
   settings: {},
   system: {},
+  jurisdictions: {},
   t: () => void
 };
 
@@ -29,7 +30,8 @@ class WalletPanelButtonTransfer extends Component<Props> {
       connection,
       settings,
       system,
-      t
+      t,
+      jurisdictions
     } = this.props;
     return (
       <GlobalTransactionModal
@@ -50,6 +52,7 @@ class WalletPanelButtonTransfer extends Component<Props> {
             connection={connection}
             settings={settings}
             system={system}
+            jurisdictions={jurisdictions}
           />
         )}
         icon="arrow circle up"

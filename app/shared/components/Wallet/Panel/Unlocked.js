@@ -39,7 +39,8 @@ class WalletPanelUnlocked extends Component<Props> {
       settings,
       system,
       transaction,
-      t
+      t,
+      jurisdictions
     } = this.props;
     // Disable RAM markets on specific chains (Worbli)
     const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
@@ -112,6 +113,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       connection={connection}
                       settings={settings}
                       system={system}
+                      jurisdictions={jurisdictions}
                     />
                   </Segment>
                   <Segment>
