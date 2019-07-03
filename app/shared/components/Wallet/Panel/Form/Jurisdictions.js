@@ -38,6 +38,7 @@ export default class JurisdictionForm extends Component<Props> {
               search
               multiple
               selection
+              onChange={(e, value) => this.props.onChange(value)}
             />
           )
         }
