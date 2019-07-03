@@ -5,8 +5,10 @@ import toJson from 'enzyme-to-json';
 import { GlobalFragmentWalletType } from './WalletType';
 
 const mockProps = {
+  children: <React.Fragment />,
+  content: <React.Fragment />,
   mode: 'hot',
-  t: jest.fn,
+  t: text => text,
 };
 
 describe('GlobalFragmentWalletType', () => {
