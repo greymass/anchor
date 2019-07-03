@@ -8,14 +8,23 @@ import { get } from 'dot-prop-immutable';
 import ProducersModalInfo from './Modal/Info';
 import ProducersTableRow from './Table/Row';
 import ProducersVoteWeight from './Vote/Weight';
+import JurisdictionRow from './Table/JurisdictionRow';
+import { getJurisdictions } from '../../../actions/jurisdictions';
 
 class ProducersTable extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       query: false,
-      viewing: false
+      viewing: false,
+      rows: [],
+      jurisdictions: [],
+      visible: [],
     };
+  }
+
+  componentDidMount() {
+    this.state.jurisdictions = getJurisdictions();
   }
 
   onSearchChange = debounce((e, { value }) => {
@@ -26,6 +35,31 @@ class ProducersTable extends Component<Props> {
     });
     this.props.resetDisplayAmount();
   }, 400);
+
+  setProducerJurisdiction = (codes, owner) => {
+    const arr = [];
+    const jurisdictions = this.state.jurisdictions;
+
+    jurisdictions.forEach((it, i) => {
+      codes.forEach((jt, j) => {
+        if (jurisdictions[i].code === codes[j]) {
+          arr.push(jurisdictions[i]);
+        }
+      });
+    });
+
+    this.state.rows[owner] = arr;
+    this.setState({
+      rows: this.state.rows
+    });
+  }
+
+  setRowVisbilitity = (owner) => {
+    this.state.visible[owner] = !this.state.visible[owner];
+    this.setState({
+      visible: this.state.visible
+    });
+  }
 
   querying() {
     const {
@@ -83,26 +117,41 @@ class ProducersTable extends Component<Props> {
         <Table.Body key="FullResults">
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
+            const isClicked = this.state.visible[producer.owner];
             const contracts = get(connection, 'supportedContracts', []);
             const hasInfo = contracts && contracts.includes('producerinfo') && !!(get(producers.producersInfo, producer.owner));
             return (
-              <ProducersTableRow
-                addProducer={this.props.addProducer}
-                connection={connection}
-                getProducerInfo={this.getProducerInfo}
-                hasInfo={hasInfo}
-                key={`${isProxying}-${producer.key}-${hasInfo}`}
-                isMainnet={isMainnet}
-                isProxying={isProxying}
-                isSelected={isSelected}
-                isValidUser={isValidUser}
-                position={idx + 1}
-                producer={producer}
-                removeProducer={this.props.removeProducer}
-                system={system}
-                settings={settings}
-                totalVoteWeight={totalVoteWeight}
-              />
+              <React.Fragment>
+                <ProducersTableRow
+                  addProducer={this.props.addProducer}
+                  connection={connection}
+                  getProducerInfo={this.getProducerInfo}
+                  hasInfo={hasInfo}
+                  key={`${isProxying}-${producer.key}-${hasInfo}`}
+                  isMainnet={isMainnet}
+                  isProxying={isProxying}
+                  isSelected={isSelected}
+                  isValidUser={isValidUser}
+                  position={idx + 1}
+                  producer={producer}
+                  removeProducer={this.props.removeProducer}
+                  system={system}
+                  settings={settings}
+                  totalVoteWeight={totalVoteWeight}
+                  setProducerJurisdiction={this.setProducerJurisdiction}
+                  setRowVisbilitity={this.setRowVisbilitity}
+                  isClicked={isClicked}
+                />
+                <Table.Row>
+                  <Table.Cell className="jurisdiction-row" colSpan={100}>
+                    {this.state.visible[producer.owner] && <JurisdictionRow
+                      rows={this.state.rows[producer.owner] ? this.state.rows[producer.owner] : []}
+                      setRowVisbilitity={this.setRowVisbilitity}
+                    />}
+                  </Table.Cell>
+                </Table.Row>
+              </React.Fragment>
+
             );
           })}
         </Table.Body>

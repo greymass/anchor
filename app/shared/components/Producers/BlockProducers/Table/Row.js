@@ -6,12 +6,14 @@ import { isEqual } from 'lodash';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
+import { getProducerJurisdiction } from '../../../../actions/jurisdictions';
 
 class ProducersTableRow extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
     !isEqual(this.props.producer.key, nextProps.producer.key)
     || !isEqual(this.props.isValidUser, nextProps.isValidUser)
-    || !isEqual(this.props.isSelected, nextProps.isSelected);
+    || !isEqual(this.props.isSelected, nextProps.isSelected)
+    || !isEqual(this.props.isClicked, nextProps.isClicked);
 
   render() {
     const {
@@ -28,7 +30,10 @@ class ProducersTableRow extends Component<Props> {
       removeProducer,
       settings,
       t,
-      totalVoteWeight
+      totalVoteWeight,
+      setProducerJurisdiction,
+      setRowVisbilitity,
+      isClicked
     } = this.props;
 
     const epoch = 946684800000;
@@ -46,6 +51,7 @@ class ProducersTableRow extends Component<Props> {
       : 'None';
     const shouldDisplayInfoButton = connection.supportedContracts && connection.supportedContracts.includes('producerinfo');
     const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
+    const producersJurisdiction = true;
 
     return (
       <Table.Row positive={isActive} key={producer.key}>
@@ -97,6 +103,25 @@ class ProducersTableRow extends Component<Props> {
                     : () => addProducer(producer.owner)
                   }
                   size="small"
+                />
+              )}
+            />
+            )}
+          {(producersJurisdiction) && (
+            <Popup
+              // content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
+              // header={t('producer_vote_header', { producer: producer.owner })}
+              header="Jurisdiction"
+              content="Description..."
+              hoverable
+              position="right center"
+              trigger={(
+                <Button
+                  color={isClicked ? 'blue' : 'grey'}
+                  disabled={!isValidUser || isProxying}
+                  icon={isClicked ? 'map marker alternate' : 'map marker'}
+                  size="small"
+                  onClick={() => { const a = getProducerJurisdiction(producer.owner); setProducerJurisdiction(a, producer.owner); setRowVisbilitity(producer.owner); }}
                 />
               )}
             />
