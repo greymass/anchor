@@ -21,7 +21,13 @@ export function getJurisdictions() {
       console.log(results);
 
       return dispatch({
-        type: types.GET_JURISDICTION_SUCCESS
+        type: types.GET_JURISDICTION_SUCCESS,
+        payload: {
+          jurisdictions: [
+            { code: 0, name: 'poland', description: 'EAST EUROPE' },
+            { code: 1, name: 'germany', description: 'EAST EUROPE' }
+          ]
+        }
       });
     }).catch((err) => {
       console.log('error', err);

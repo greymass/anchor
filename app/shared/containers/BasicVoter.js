@@ -234,6 +234,7 @@ function mapStateToProps(state) {
     connection: state.connection,
     contracts: state.contracts,
     globals: state.globals,
+    jurisdictions: state.jurisdictions,
     keys: state.keys,
     ledger: state.ledger,
     producers: state.producers,

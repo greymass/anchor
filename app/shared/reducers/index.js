@@ -26,6 +26,7 @@ import transaction from './transaction';
 import validate from './validate';
 import wallet from './wallet';
 import wallets from './wallets';
+import jurisdictions from './jurisdictions';
 
 const rootReducer = combineReducers({
   accounts,
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   contracts,
   customtokens,
   globals,
+  jurisdictions,
   keys,
   ledger,
   ping,
