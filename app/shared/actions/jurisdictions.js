@@ -1,41 +1,35 @@
 
 import * as types from './types';
-import eos from './helpers/eos';
 
 export function getJurisdictions() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: types.GET_JURISDICTION_PENDING
     });
-    const { connection, settings } = getState();
 
-    const query = {
-      code: 'eosio',
-      json: true,
-      scope: 'eosio',
-      table: 'jurisdiction'
-    };
+    const url = 'https://api.testnet.beos.world/v1/jurisdiction/get_all_jurisdictions';
 
-    return dispatch({
-      type: types.GET_JURISDICTION_SUCCESS,
-      payload: {
-        jurisdictions: [
-          { code: 0, name: 'poland', description: 'EAST EUROPE' },
-          { code: 1, name: 'germany', description: 'EAST EUROPE' }
-        ]
-      }
-    });
-
-    // eos(connection).getTableRows(query).then((results) => {
-    //   console.log('qqqq');
-    //   console.log(results);
-    // }).catch((err) => {
-    //   console.log('error', err);
-    //   dispatch({
-    //     type: types.GET_JURISDICTION_FAILURE,
-    //     payload: err
-    //   });
-    // });
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({}),
+      headers
+    }).then(result => result.json())
+      .then((results) => {
+        return dispatch({
+          type: types.GET_JURISDICTION_SUCCESS,
+          payload: {
+            jurisdictions: results.jurisdictions
+          }
+        });
+      }).catch((err) => {
+        console.log('error', err);
+        dispatch({
+          type: types.GET_JURISDICTION_FAILURE,
+          payload: err
+        });
+      });
   };
 }
 
