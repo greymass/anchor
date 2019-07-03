@@ -29,7 +29,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       toValid: true,
       waiting: false,
       waitingStarted: 0,
-      jurisdiction: []
+      jurisdictions: []
     };
   }
 
@@ -79,11 +79,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     actions.getContractHash(value);
   }, 400);
 
-  onJurisdictionChange = (data) => {
-    const jurisdictions = [];
-    for (let i = 0; i < data.value.length; i += 1) {
-      jurisdictions.push(data.options.find(o => o.value === data.value[i]));
-    }
+  onJurisdictionChange = (jurisdictions) => {
     this.setState({ jurisdictions });
   }
 
@@ -282,6 +278,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               <JurisdictionsForm
                 actions={this.props.actions}
                 jurisdictions={jurisdictions}
+                value={this.state.jurisdictions}
                 onChange={this.onJurisdictionChange.bind(this)}
               />
               <FormFieldMultiToken
