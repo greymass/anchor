@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { Header, List } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import WalletMessageContractBase from './Base';
+import GlobalMessageContract from './Base';
 
-class WalletMessageContractTransfer extends Component<Props> {
+export class GlobalMessageContractTransfer extends Component<Props> {
   render() {
     const { data, t } = this.props;
     return (
-      <WalletMessageContractBase>
+      <GlobalMessageContract>
         <Header>
           {t('system_transfer_title')}
         </Header>
@@ -21,9 +21,9 @@ class WalletMessageContractTransfer extends Component<Props> {
         </List>
         <p>{t('system_transfer_5', data)}</p>
         <p>{t('system_transfer_6', data)}</p>
-      </WalletMessageContractBase>
+      </GlobalMessageContract>
     );
   }
 }
 
-export default translate('contracts')(WalletMessageContractTransfer);
+export default translate('contracts')(GlobalMessageContractTransfer);

@@ -2,8 +2,8 @@
 
 exports[`GlobalFragmentWalletType renders correctly 1`] = `
 <Popup
-  content={[MockFunction]}
-  header={[MockFunction]}
+  content="wallet:wallet_mode_explain_hot_2"
+  header="tools:tools_wallets_mode"
   inverted={true}
   keepInViewPort={true}
   on="hover"
@@ -12,7 +12,7 @@ exports[`GlobalFragmentWalletType renders correctly 1`] = `
     <Label
       basic={true}
       color="green"
-      content={[MockFunction]}
+      content="global_modal_account_import_hot_wallet"
       icon="id card"
       position="left center"
     />
