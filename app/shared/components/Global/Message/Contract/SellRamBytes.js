@@ -2,18 +2,18 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import WalletMessageContractBase from './Base';
+import GlobalMessageContract from './Base';
 
-class WalletMessageContractSellRamBytes extends Component<Props> {
+export class GlobalMessageContractSellRamBytes extends Component<Props> {
   render() {
     const { data, t } = this.props;
     return (
-      <WalletMessageContractBase>
+      <GlobalMessageContract>
         <p>{t('system_sellrambytes_1', data)}</p>
         <p>{t('system_sellrambytes_2', data)}</p>
-      </WalletMessageContractBase>
+      </GlobalMessageContract>
     );
   }
 }
 
-export default translate('contracts')(WalletMessageContractSellRamBytes);
+export default translate('contracts')(GlobalMessageContractSellRamBytes);

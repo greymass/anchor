@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalMessageContractBuyRamBytes renders correctly 1`] = `
+<Translate(GlobalMessageContractBase)>
+  <p>
+    <Component />
+  </p>
+  <p>
+    <Component />
+  </p>
+  <p>
+    <Component />
+  </p>
+</Translate(GlobalMessageContractBase)>
+`;

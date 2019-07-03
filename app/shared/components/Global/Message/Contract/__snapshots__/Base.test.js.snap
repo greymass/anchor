@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalMessageContractBase renders correctly 1`] = `
+<Message
+  color="violet"
+  size="small"
+>
+  <Accordion
+    fluid={true}
+  >
+    <AccordionTitle
+      active={false}
+      onClick={[Function]}
+    >
+      <Header
+        size="small"
+      >
+        <Icon
+          as="i"
+          name="dropdown"
+        />
+        <Component />
+      </Header>
+    </AccordionTitle>
+    <AccordionContent
+      active={false}
+    >
+      <Component />
+    </AccordionContent>
+  </Accordion>
+</Message>
+`;

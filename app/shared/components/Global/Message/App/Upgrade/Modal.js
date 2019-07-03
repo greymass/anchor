@@ -6,7 +6,7 @@ import { Modal } from 'semantic-ui-react';
 
 import GlobalMessageAppUpgrade from '../Upgrade';
 
-class GlobalMessageAppUpgradeModal extends Component<Props> {
+export class GlobalMessageAppUpgradeModal extends Component<Props> {
   render() {
     const {
       actions,

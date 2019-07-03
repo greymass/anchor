@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WalletMessageContractTransfer renders correctly 1`] = `
+<Translate(GlobalMessageContractBase)>
+  <Header>
+    <Component />
+  </Header>
+  <p>
+    <Component />
+  </p>
+  <List
+    style={
+      Object {
+        "marginLeft": "2em",
+      }
+    }
+  >
+    <ListItem>
+      <Component />
+    </ListItem>
+    <ListItem>
+      <Component />
+    </ListItem>
+    <ListItem>
+      <Component />
+    </ListItem>
+  </List>
+  <p>
+    <Component />
+  </p>
+  <p>
+    <Component />
+  </p>
+</Translate(GlobalMessageContractBase)>
+`;

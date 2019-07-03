@@ -6,7 +6,7 @@ import { Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 const { ipcRenderer } = require('electron');
 
-class GlobalMessageAppUpgrade extends Component<Props> {
+export class GlobalMessageAppUpgrade extends Component<Props> {
   checkForUpdates = () => {
     ipcRenderer.send('checkForUpdates');
   }
