@@ -54,6 +54,13 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
               <Table.Cell>{to}</Table.Cell>
             </Table.Row>
             <Table.Row>
+              <Table.Cell>Jurisdictions</Table.Cell>
+              <Table.Cell>{this.props.jurisdictions.map((jurisdiction) => {
+                return jurisdiction.value;
+              })}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell>{t('transfer_label_quantity')}</Table.Cell>
               <Table.Cell>
                 {quantity}

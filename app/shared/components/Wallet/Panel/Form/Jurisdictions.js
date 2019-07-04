@@ -20,7 +20,6 @@ export default class JurisdictionForm extends Component<Props> {
     for (let i = 0; i < j.length; i += 1) {
       const name = `${j[i].name} (${j[i].description})`;
       options.push({ code: j[i].code, value: name, text: name });
-      console.log(options);
     }
     this.setState({
       options
