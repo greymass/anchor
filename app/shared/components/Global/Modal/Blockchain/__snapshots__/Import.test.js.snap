@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalBlockchainImport renders correctly 1`] = `
+<Modal
+  centered={false}
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  dimmer={true}
+  eventPool="Modal"
+  onClose={[Function]}
+  open={false}
+  size="small"
+  trigger={true}
+>
+  <Header
+    content="global_button_blockchain_import_action"
+    icon="users"
+    subheader="global_button_blockchain_import_action"
+  />
+  <Translate(Connect(GlobalBlockchainImport))
+    onClose={[Function]}
+  />
+</Modal>
+`;
