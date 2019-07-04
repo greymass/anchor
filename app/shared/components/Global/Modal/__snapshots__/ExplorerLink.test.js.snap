@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalExplorerLink renders correctly 1`] = `
+<Translate(GlobalModalDangerLink)
+  content="Click Here"
+  link="https://bloks.io/accounts/teamgreymass"
+  settings={
+    Object {
+      "blockExplorer": "bloks.io",
+    }
+  }
+/>
+`;
