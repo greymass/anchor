@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Container, Table } from 'semantic-ui-react';
 
-class GlobalModalSettingsCustomTokensConfirm extends Component<Props> {
+export class GlobalModalSettingsCustomTokensConfirm extends Component<Props> {
   render() {
     const {
       onSubmit,

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Header, Modal } from 'semantic-ui-react';
 
-class ModalConstitution extends Component<Props> {
+export class ModalConstitution extends Component<Props> {
   state = { open: false }
 
   componentWillReceiveProps(nextProps) {
@@ -21,12 +21,10 @@ class ModalConstitution extends Component<Props> {
     this.setState({ open: false }, () => {
       actions.setSetting('acceptedConstitution', true);
     });
-  }
+  };
 
   render() {
     const {
-      isUser,
-      settings,
       t
     } = this.props;
     const {

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalSettingsCustomTokens renders correctly 1`] = `
+<Modal
+  centered={true}
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  dimmer={true}
+  eventPool="Modal"
+  onClose={[Function]}
+  size="small"
+>
+  <ModalHeader>
+    global_modal_settings_customtoken_header
+  </ModalHeader>
+  <ModalContent>
+    <p>
+      global_modal_settings_customtoken_description
+    </p>
+    <Translate(GlobalModalSettingsCustomTokensForm)
+      loading={false}
+      onChange={[Function]}
+      onSubmit={[Function]}
+      values={
+        Object {
+          "account": "",
+          "loading": false,
+          "settings": Object {
+            "customTokens": Array [],
+          },
+          "symbol": "",
+          "token": Object {},
+        }
+      }
+    />
+  </ModalContent>
+  <ModalActions>
+    <Segment
+      basic={true}
+      clearing={true}
+    >
+      <Button
+        as="button"
+        content="close"
+        onClick={[Function]}
+        primary={true}
+      />
+    </Segment>
+  </ModalActions>
+</Modal>
+`;
