@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalAccountImport renders correctly 1`] = `
+<Modal
+  centered={false}
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  dimmer={true}
+  eventPool="Modal"
+  onClose={[Function]}
+  size="small"
+>
+  <Header
+    content={[MockFunction]}
+    icon="users"
+    subheader={[MockFunction]}
+  />
+  <Tab
+    defaultActiveIndex={0}
+    grid={
+      Object {
+        "paneWidth": 12,
+        "tabWidth": 4,
+      }
+    }
+    menu={
+      Object {
+        "attached": true,
+        "fluid": true,
+        "inverted": true,
+        "pointing": true,
+        "style": Object {
+          "margin": 0,
+        },
+      }
+    }
+    panes={
+      Array [
+        Object {
+          "menuItem": [MockFunction],
+          "render": [Function],
+        },
+        Object {
+          "menuItem": [MockFunction],
+          "render": [Function],
+        },
+        Object {
+          "menuItem": [MockFunction],
+          "render": [Function],
+        },
+      ]
+    }
+    renderActiveOnly={true}
+  />
+</Modal>
+`;
