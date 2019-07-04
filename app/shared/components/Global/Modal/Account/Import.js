@@ -5,12 +5,11 @@ import { Header, Modal, Tab } from 'semantic-ui-react';
 
 import GlobalAccountImport from '../../../../containers/Global/Account/Import';
 
-class GlobalModalAccountImport extends Component<Props> {
+export class GlobalModalAccountImport extends Component<Props> {
   render() {
     const {
       onClose,
       open,
-      t,
       trigger
     } = this.props;
     return (

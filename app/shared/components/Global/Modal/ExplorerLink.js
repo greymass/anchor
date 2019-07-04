@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { isEmpty } from 'lodash';
-import GlobalModalDangerLink from './DangerLink';
+import DangerLink from './DangerLink';
 
 export default class GlobalModalExplorerLink extends Component<Props> {
   render() {
@@ -45,7 +45,7 @@ export default class GlobalModalExplorerLink extends Component<Props> {
       }
 
       return (
-        <GlobalModalDangerLink
+        <DangerLink
           content={content}
           link={generatedLink}
           settings={settings}

@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Header, Modal, Tab } from 'semantic-ui-react';
+import { Header, Modal } from 'semantic-ui-react';
 
 import GlobalBlockchainImport from '../../../../containers/Global/Blockchain/Import';
 
-class GlobalModalBlockchainImport extends Component<Props> {
+export class GlobalModalBlockchainImport extends Component<Props> {
   render() {
     const {
       onClose,

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalDangerLink renders correctly 1`] = `
+<span>
+  <a
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="link"
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
+    tabIndex={0}
+  />
+</span>
+`;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Container, Form, Input } from 'semantic-ui-react';
 
-class GlobalModalSettingsCustomTokensForm extends Component<Props> {
+export class GlobalModalSettingsCustomTokensForm extends Component<Props> {
   render() {
     const {
       loading,

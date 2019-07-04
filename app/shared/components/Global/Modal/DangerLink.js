@@ -5,8 +5,8 @@ import { Button, Header, Modal } from 'semantic-ui-react';
 
 const { shell } = require('electron');
 
-class GlobalModalDangerLink extends Component<Props> {
-  state = { open: false }
+export class GlobalModalDangerLink extends Component<Props> {
+  state = { open: false };
 
   isSafeish = (url) => (url && (url.startsWith('http:') || url.startsWith('https:') || url.startsWith('mailto:')))
 
