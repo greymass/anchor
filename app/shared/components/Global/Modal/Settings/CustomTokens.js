@@ -10,10 +10,13 @@ const initialState = {
   account: '',
   loading: false,
   symbol: '',
-  token: {}
+  token: {},
+  settings: {
+    customTokens: [],
+  }
 };
 
-class GlobalModalSettingsCustomTokens extends Component<Props> {
+export class GlobalModalSettingsCustomTokens extends Component<Props> {
   state = initialState;
   componentWillReceiveProps(nextProps) {
     const { globals } = nextProps;

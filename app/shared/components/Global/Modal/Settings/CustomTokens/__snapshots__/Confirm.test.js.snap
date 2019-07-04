@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalSettingsCustomTokensConfirm renders correctly 1`] = `
+<Fragment>
+  <Table
+    as="table"
+    definition={true}
+  >
+    <TableRow
+      as="tr"
+      cellAs="td"
+    >
+      <TableCell
+        as="td"
+        width={4}
+      >
+        <Component />
+      </TableCell>
+      <TableCell
+        as="td"
+      >
+        teamgreymass
+      </TableCell>
+    </TableRow>
+    <TableRow
+      as="tr"
+      cellAs="td"
+    >
+      <TableCell
+        as="td"
+      >
+        <Component />
+      </TableCell>
+      <TableCell
+        as="td"
+      />
+    </TableRow>
+    <TableRow
+      as="tr"
+      cellAs="td"
+    >
+      <TableCell
+        as="td"
+      >
+        <Component />
+      </TableCell>
+      <TableCell
+        as="td"
+      />
+    </TableRow>
+  </Table>
+  <Container
+    textAlign="center"
+  >
+    <Button
+      as="button"
+      color="green"
+      content={[MockFunction]}
+      onClick={[Function]}
+    />
+  </Container>
+</Fragment>
+`;
