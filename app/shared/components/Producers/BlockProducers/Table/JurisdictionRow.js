@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Label } from 'semantic-ui-react';
 
 export default class JurisdictionRow extends Component<Props> {
 
   render() {
+    console.log('### visible', this.props.rows);
+
     return (
       <div className="table-scroll">
         <Table

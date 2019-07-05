@@ -24,6 +24,17 @@ class ProducersTable extends Component<Props> {
   componentDidMount() {
     const { actions } = this.props;
     actions.getJurisdictions();
+    // console.log('@!#!@#!@ componentDidMount', this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.jurisdictions.producer !== nextProps.jurisdictions.producer) {
+      // console.log('POL props nextProps ...', this.props.jurisdictions.producer,  nextProps.jurisdictions.producer);
+      this.setProducerJurisdiction(
+        nextProps.jurisdictions.producer_jurisdictions,
+        nextProps.jurisdictions.producer
+      );
+    }
   }
 
   onSearchChange = debounce((e, { value }) => {
@@ -37,10 +48,10 @@ class ProducersTable extends Component<Props> {
 
   setProducerJurisdiction = (table, owner) => {
     const arr = [];
+    // console.log('##### setProducerJurisdiction', table, owner);
     const jurisdictions = this.props.jurisdictions.jurisdictions;
-
-    // const codes = table.payload.producer_jurisdictions;
-    const codes = table.payload.producer_jurisdictions[0].jurisdictions;
+    const codes = table;
+    // const codes = table.payload.producer_jurisdictions[0].jurisdictions;
 
     jurisdictions.forEach((it, i) => {
       codes.forEach((jt, j) => {

@@ -36,6 +36,7 @@ export default function jurisdictions(state = initialState, action) {
       return {
         ...state,
         loading: false,
+        producer: action.payload.producer,
         producer_jurisdictions: action.payload.producer_jurisdictions
       };
     }

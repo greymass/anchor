@@ -77,19 +77,14 @@ export function getProducerJurisdiction(producer) {
     }).then(result => result.json())
       .then((results) => {
         return dispatch({
-          // type: types.GET_JURISDICTION_PRODUCER_SUCCESS,
-          // payload: {
-          //   producer_jurisdictions: results.producer_jurisdictions[0]
-          //     ? results.producer_jurisdictions[0].jurisdictions
-          //     : []
-          // }
           type: types.GET_JURISDICTION_PRODUCER_SUCCESS,
           payload: {
+            producer: producer,
             producer_jurisdictions: results.producer_jurisdictions[0]
               ? results.producer_jurisdictions[0].jurisdictions
               : []
+            // producer_jurisdictions: [0, 40, 41, 50, 15, 18, 23]
           }
-
         });
       }).catch((err) => {
         console.log('error', err);
@@ -104,7 +99,9 @@ export function getProducerJurisdiction(producer) {
     //   type: types.GET_JURISDICTION_PRODUCER_SUCCESS,
     //   payload: {
     //     producer_jurisdictions: [
-    //       { producer: producer, jurisdictions: [0, 40, 41, 50, 15, 18, 23] }
+    //       { producer: producer,
+    //         jurisdictions: [0, 40, 41, 50, 15, 18, 23]
+    //       }
     //     ]
     //   }
     // });
