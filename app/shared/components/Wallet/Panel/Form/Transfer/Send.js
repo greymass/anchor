@@ -75,7 +75,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
   getContractHash = debounce((value) => {
     const { actions } = this.props;
-    console.log('####', actions);
     actions.getContractHash(value);
   }, 400);
 

@@ -9,8 +9,6 @@ import ProducersModalInfo from './Modal/Info';
 import ProducersTableRow from './Table/Row';
 import ProducersVoteWeight from './Vote/Weight';
 import JurisdictionRow from './Table/JurisdictionRow';
-import { getJurisdictions } from '../../../actions/jurisdictions';
-import Actions from '../../Global/Transaction/View/Actions';
 
 class ProducersTable extends Component<Props> {
   constructor(props) {
@@ -19,7 +17,6 @@ class ProducersTable extends Component<Props> {
       query: false,
       viewing: false,
       rows: [],
-      // jurisdictions: [],
       visible: [],
     };
   }
@@ -27,9 +24,6 @@ class ProducersTable extends Component<Props> {
   componentDidMount() {
     const { actions } = this.props;
     actions.getJurisdictions();
-    actions.getProducerJurisdiction();
-    // this.state.jurisdictions = getJurisdictions();
-    console.log('#### props', this.props);
   }
 
   onSearchChange = debounce((e, { value }) => {
@@ -44,9 +38,9 @@ class ProducersTable extends Component<Props> {
   setProducerJurisdiction = (table, owner) => {
     const arr = [];
     const jurisdictions = this.props.jurisdictions.jurisdictions;
-    const codes = table.payload.producer_jurisdictions;
-    console.log('##### halo codes! setProducer', codes);
-    // console.log('####dqwdqwdqdwq# actions', this.props.actions.getJurisdictions());
+
+    // const codes = table.payload.producer_jurisdictions;
+    const codes = table.payload.producer_jurisdictions[0].jurisdictions;
 
     jurisdictions.forEach((it, i) => {
       codes.forEach((jt, j) => {
@@ -157,10 +151,6 @@ class ProducersTable extends Component<Props> {
                 {this.state.visible[producer.owner] &&
                 <Table.Row>
                   <Table.Cell className="jurisdiction-row" colSpan={100}>
-                    {/* {this.state.visible[producer.owner] && <JurisdictionRow
-                      rows={this.state.rows[producer.owner] ? this.state.rows[producer.owner] : []}
-                      setRowVisbilitity={this.setRowVisbilitity}
-                    />} */}
                     <JurisdictionRow
                       rows={this.state.rows[producer.owner] ? this.state.rows[producer.owner] : []}
                       setRowVisbilitity={this.setRowVisbilitity}

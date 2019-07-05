@@ -6,17 +6,8 @@ import { isEqual } from 'lodash';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
-import { getProducerJurisdiction } from '../../../../actions/jurisdictions';
 
 class ProducersTableRow extends Component<Props> {
-  // componentDidMount() {
-  //   const { actions } = this.props;
-  //   actions.getProducerJurisdiction();
-  //   // actions.getProducerJurisdiction();
-  //   // this.state.jurisdictions = getJurisdictions();
-  //   console.log('$$$$$$$$$$$$ getProducerJurisdiction', this.props);
-  // }
-
   shouldComponentUpdate = (nextProps) =>
     !isEqual(this.props.producer.key, nextProps.producer.key)
     || !isEqual(this.props.isValidUser, nextProps.isValidUser)
@@ -42,7 +33,6 @@ class ProducersTableRow extends Component<Props> {
       setProducerJurisdiction,
       setRowVisbilitity,
       isClicked,
-      // jurisdictions,
       actions
     } = this.props;
 
@@ -133,8 +123,7 @@ class ProducersTableRow extends Component<Props> {
                   size="small"
                   onClick={
                     () => {
-                            const a = actions.getProducerJurisdiction(producer.owner);
-                            setProducerJurisdiction(a, producer.owner);
+                            setProducerJurisdiction(actions.getProducerJurisdiction(producer.owner), producer.owner);
                             setRowVisbilitity(producer.owner);
                           }
                   }

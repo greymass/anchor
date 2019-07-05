@@ -10,7 +10,6 @@ export default class JurisdictionsForm extends Component<Props> {
 
   componentDidMount() {
     const { actions, jurisdictions } = this.props;
-    console.log('##### Jurisdiction Form', jurisdictions);
     actions.getJurisdictions();
     this.makeOptions(jurisdictions);
   }

@@ -14,10 +14,6 @@ export default function jurisdictions(state = initialState, action) {
       };
     }
     case types.GET_JURISDICTION_SUCCESS: {
-
-      console.log("[POL] action all", action);
-
-
       return {
         ...state,
         loading: false,
@@ -37,10 +33,6 @@ export default function jurisdictions(state = initialState, action) {
       };
     }
     case types.GET_JURISDICTION_PRODUCER_SUCCESS: {
-
-      console.log("[POL] action one", action);
-
-
       return {
         ...state,
         loading: false,
