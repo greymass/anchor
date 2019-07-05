@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 
-export default class JurisdictionForm extends Component<Props> {
+export default class JurisdictionsForm extends Component<Props> {
   state = {
     options: []
   }
 
   componentDidMount() {
     const { actions, jurisdictions } = this.props;
+    console.log('##### Jurisdiction Form', jurisdictions);
     actions.getJurisdictions();
     this.makeOptions(jurisdictions);
   }

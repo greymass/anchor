@@ -9,6 +9,14 @@ import ProducersVoteWeight from '../Vote/Weight';
 import { getProducerJurisdiction } from '../../../../actions/jurisdictions';
 
 class ProducersTableRow extends Component<Props> {
+  // componentDidMount() {
+  //   const { actions } = this.props;
+  //   actions.getProducerJurisdiction();
+  //   // actions.getProducerJurisdiction();
+  //   // this.state.jurisdictions = getJurisdictions();
+  //   console.log('$$$$$$$$$$$$ getProducerJurisdiction', this.props);
+  // }
+
   shouldComponentUpdate = (nextProps) =>
     !isEqual(this.props.producer.key, nextProps.producer.key)
     || !isEqual(this.props.isValidUser, nextProps.isValidUser)
@@ -33,7 +41,9 @@ class ProducersTableRow extends Component<Props> {
       totalVoteWeight,
       setProducerJurisdiction,
       setRowVisbilitity,
-      isClicked
+      isClicked,
+      // jurisdictions,
+      actions
     } = this.props;
 
     const epoch = 946684800000;
@@ -119,9 +129,15 @@ class ProducersTableRow extends Component<Props> {
                 <Button
                   color={isClicked ? 'blue' : 'grey'}
                   disabled={!isValidUser || isProxying}
-                  icon={isClicked ? 'map marker alternate' : 'map marker'}
+                  icon={isClicked ? 'map marker' : 'map marker alternate'}
                   size="small"
-                  onClick={() => { const a = getProducerJurisdiction(producer.owner); setProducerJurisdiction(a, producer.owner); setRowVisbilitity(producer.owner); }}
+                  onClick={
+                    () => {
+                            const a = actions.getProducerJurisdiction(producer.owner);
+                            setProducerJurisdiction(a, producer.owner);
+                            setRowVisbilitity(producer.owner);
+                          }
+                  }
                 />
               )}
             />
