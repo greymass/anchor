@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalSettingsOverviewToken renders correctly 1`] = `
+<Dropdown
+  additionLabel="Add "
+  additionPosition="top"
+  closeOnBlur={true}
+  deburr={false}
+  defaultValue="eosio:EOS"
+  icon={false}
+  minCharacters={1}
+  name="overviewTokenName"
+  noResultsMessage="No results found."
+  onChange={[Function]}
+  openOnFocus={true}
+  options={Array []}
+  renderLabel={[Function]}
+  scrolling="Scrolling"
+  searchInput="text"
+  selectOnBlur={true}
+  selectOnNavigation={true}
+  size="small"
+  trigger={
+    <Header
+      content="EOS"
+      icon="dropdown"
+      size="tiny"
+      style={
+        Object {
+          "margin": 0,
+        }
+      }
+      subheader="eosio"
+    />
+  }
+  wrapSelection={true}
+/>
+`;

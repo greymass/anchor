@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalSettingsLanguage renders correctly 1`] = `
+<Dropdown
+  additionLabel="Add "
+  additionPosition="top"
+  closeOnBlur={true}
+  deburr={false}
+  icon="dropdown"
+  minCharacters={1}
+  name="transfer filter"
+  noResultsMessage="No results found."
+  onChange={[Function]}
+  openOnFocus={true}
+  options={
+    Array [
+      Object {
+        "flag": "cn",
+        "key": "cn",
+        "text": "中文",
+        "value": "zh-CN",
+      },
+      Object {
+        "flag": "us",
+        "key": "en",
+        "text": "English",
+        "value": "en-US",
+      },
+      Object {
+        "flag": "fr",
+        "key": "fr",
+        "text": "Français",
+        "value": "fr-FR",
+      },
+      Object {
+        "flag": "it",
+        "key": "it",
+        "text": "Italiano",
+        "value": "it-IT",
+      },
+      Object {
+        "flag": "jp",
+        "key": "ja",
+        "text": "日本語",
+        "value": "ja-JP",
+      },
+      Object {
+        "flag": "kr",
+        "key": "kr",
+        "text": "한글",
+        "value": "ko-KR",
+      },
+      Object {
+        "flag": "ru",
+        "key": "ru",
+        "text": "Русский",
+        "value": "ru-RU",
+      },
+    ]
+  }
+  placeholder="global_select_language"
+  renderLabel={[Function]}
+  searchInput="text"
+  selectOnBlur={true}
+  selectOnNavigation={true}
+  selection={Array []}
+  value={[Function]}
+  wrapSelection={true}
+/>
+`;
