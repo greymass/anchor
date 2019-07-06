@@ -7,7 +7,7 @@ import GlobalTransactionViewActions from '../../../Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../../Transaction/View/Detail';
 import GlobalTransactionViewFull from '../../../Transaction/View/Full';
 
-class GlobalTransactionMessageUnsignedSign extends Component<Props> {
+export class GlobalTransactionMessageUnsignedSign extends Component<Props> {
   signbroadcast = () => {
     const {
       actions,

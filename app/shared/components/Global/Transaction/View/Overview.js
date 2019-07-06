@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Statistic } from 'semantic-ui-react';
 
-class GlobalTransactionViewDetail extends Component<Props> {
+export class GlobalTransactionViewDetail extends Component<Props> {
   render() {
     const {
       t,

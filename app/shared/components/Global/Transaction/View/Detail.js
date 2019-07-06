@@ -5,7 +5,7 @@ import { Label, Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 import { get } from 'dot-prop-immutable';
 
-class GlobalTransactionViewDetail extends Component<Props> {
+export class GlobalTransactionViewDetail extends Component<Props> {
   render() {
     const {
       expired,

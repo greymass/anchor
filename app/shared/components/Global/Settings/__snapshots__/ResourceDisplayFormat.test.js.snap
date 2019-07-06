@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalSettingsResourceDisplayFormat renders correctly 1`] = `
+<I18n
+  bindI18n="languageChanged loaded"
+  bindStore="added removed"
+  defaultValue="defaultValue"
+  name="resourceDisplayFormat"
+  ns={
+    Array [
+      "global",
+    ]
+  }
+  nsMode="default"
+  omitBoundRerender={true}
+  selection={Array []}
+  t={[Function]}
+  translateFuncName="t"
+  usePureComponent={false}
+  wait={false}
+  withRef={false}
+>
+  <Component />
+</I18n>
+`;

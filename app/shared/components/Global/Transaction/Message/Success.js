@@ -5,7 +5,7 @@ import { Button, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react
 
 import ExplorerLink from '../../Modal/ExplorerLink';
 
-class GlobalTransactionMessageSuccess extends Component<Props> {
+export class GlobalTransactionMessageSuccess extends Component<Props> {
   render() {
     const {
       blockExplorers,

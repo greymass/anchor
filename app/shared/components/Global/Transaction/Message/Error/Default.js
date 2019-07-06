@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import ReactJson from 'react-json-view';
 
-class GlobalTransactionMessageErrorDefault extends Component<Props> {
+export class GlobalTransactionMessageErrorDefault extends Component<Props> {
   render() {
     const {
       error,

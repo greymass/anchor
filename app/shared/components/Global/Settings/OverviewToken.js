@@ -19,19 +19,17 @@ export default class GlobalSettingsOverviewToken extends Component<Props> {
     this.setState({ value }, () => {
       actions.setSetting('overviewToken', value, chainId);
     });
-  }
+  };
 
   render() {
     const {
       chainId,
       tokens,
       name,
-      search,
       scrolling,
-      selection,
     } = this.props;
 
-    let {
+    const {
       value
     } = this.state;
 

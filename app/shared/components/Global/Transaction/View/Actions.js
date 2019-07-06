@@ -6,7 +6,7 @@ import { Header } from 'semantic-ui-react';
 
 import GlobalTransactionViewAction from './Action';
 
-class GlobalTransactionViewActions extends Component<Props> {
+export class GlobalTransactionViewActions extends Component<Props> {
   render() {
     const {
       actions,

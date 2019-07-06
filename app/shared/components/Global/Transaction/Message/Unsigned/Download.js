@@ -6,7 +6,7 @@ import ReactJson from 'react-json-view';
 
 const { clipboard, ipcRenderer } = require('electron');
 
-class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
+export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       transaction
     }, null, 2);
     ipcRenderer.send('saveFile', settings.lastFilePath, data);
-  }
+  };
   onCopy = () => {
     const {
       transaction
@@ -32,7 +32,7 @@ class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
 
       setTimeout(() => { this.setState({ copiedTransaction: false }); }, 5000);
     });
-  }
+  };
   render() {
     const {
       onClose,
