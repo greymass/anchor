@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-class GlobalSettingsResourceDisplayFormat extends Component<Props> {
+export class GlobalSettingsResourceDisplayFormat extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions } = this.props;
 
     actions.setSetting('displayResourcesAvailable', value);
-  }
+  };
 
   render() {
     const {
