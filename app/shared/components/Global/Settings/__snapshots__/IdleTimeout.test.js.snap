@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalSettingsIdleTimeout renders correctly 1`] = `
+<Dropdown
+  additionLabel="Add "
+  additionPosition="top"
+  closeOnBlur={true}
+  deburr={false}
+  icon="dropdown"
+  minCharacters={1}
+  name="transfer filter"
+  noResultsMessage="No results found."
+  onChange={[Function]}
+  openOnFocus={true}
+  options={
+    Array [
+      Object {
+        "key": "no_timeout",
+        "text": "global_settings_idle_timeout_no_timeout",
+        "value": 999999999,
+      },
+      Object {
+        "key": "five_minutes",
+        "text": "global_settings_idle_timeout_five_minutes",
+        "value": 300000,
+      },
+      Object {
+        "key": "fifteen_minutes",
+        "text": "global_settings_idle_timeout_fifteen_minutes",
+        "value": 900000,
+      },
+      Object {
+        "key": "thirty_minutes",
+        "text": "global_settings_idle_timeout_thirty_minutes",
+        "value": 1800000,
+      },
+      Object {
+        "key": "sixty_minutes",
+        "text": "global_settings_idle_timeout_sixty_minutes",
+        "value": 3600000,
+      },
+    ]
+  }
+  renderLabel={[Function]}
+  searchInput="text"
+  selectOnBlur={true}
+  selectOnNavigation={true}
+  selection={Array []}
+  value="default"
+  wrapSelection={true}
+/>
+`;
