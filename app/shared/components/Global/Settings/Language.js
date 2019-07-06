@@ -13,12 +13,12 @@ const languages = [
   { key: 'ru', value: 'ru-RU', flag: 'ru', text: 'Русский' },
 ];
 
-class GlobalSettingsLanguage extends Component<Props> {
+export class GlobalSettingsLanguage extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions, i18n } = this.props;
     i18n.changeLanguage(value);
     actions.setSetting('lang', value);
-  }
+  };
 
   render() {
     const {

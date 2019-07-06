@@ -3,19 +3,19 @@ import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-class GlobalSettingsIdleTimeout extends Component<Props> {
+export class GlobalSettingsIdleTimeout extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions } = this.props;
 
     actions.setSetting('idleTimeout', value);
-  }
+  };
 
   render() {
     const {
       defaultValue,
       name,
       selection,
-      t
+      t,
     } = this.props;
 
     const timeoutOptions = [

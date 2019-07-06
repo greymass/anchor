@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { List } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
-class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
+export class GlobalTransactionMessageErrorAuthorization extends Component<Props> {
   render() {
     const {
       error,
