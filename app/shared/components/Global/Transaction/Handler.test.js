@@ -8,6 +8,7 @@ const mockProps = {
   actionName: 'claimrewards',
   actions: {},
   blockExplorers: {},
+  content: <React.Fragment />,
   contract: {},
   hideClose: false,
   onClose: () => null,

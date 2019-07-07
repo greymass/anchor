@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionMessageSuccess renders correctly 1`] = `
+<Segment
+  basic={true}
+>
+  <Header
+    content="global_transaction_complete_title"
+    icon="checkmark"
+    size="large"
+  />
+  <ModalContent>
+    <p>
+      global_transaction_complete_message
+    </p>
+    <Segment
+      padded={true}
+      textAlign="center"
+    >
+      <p>
+        txids
+      </p>
+      <p
+        key="0"
+      >
+        #
+        1
+         - 
+        <GlobalModalExplorerLink
+          blockExplorers={Object {}}
+          content="transact...ction_id"
+          linkBlockId={8}
+          linkData="transaction_id"
+          linkType="txid"
+          settings={Object {}}
+        />
+      </p>
+      <p>
+        global_transaction_complete_link_to undefined
+      </p>
+    </Segment>
+    <Message
+      icon={true}
+      size="large"
+      warning={true}
+    >
+      <Icon
+        as="i"
+        name="info circle"
+      />
+      <MessageContent>
+        <MessageHeader>
+          global_transaction_complete_warning_title
+        </MessageHeader>
+        global_transaction_complete_warning_message
+      </MessageContent>
+    </Message>
+  </ModalContent>
+  <ModalActions>
+    <Segment
+      basic={true}
+      clearing={true}
+    >
+      <Button
+        as="button"
+        color="green"
+        floated="right"
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="checkmark"
+        />
+         
+        close
+      </Button>
+    </Segment>
+  </ModalActions>
+</Segment>
+`;
