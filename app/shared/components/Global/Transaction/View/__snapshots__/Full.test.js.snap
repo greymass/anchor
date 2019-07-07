@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionViewFull renders correctly 1`] = `
+<Fragment>
+  <Header>
+    global_transaction_full_details_title
+    <HeaderSubheader>
+      global_transaction_full_details_content
+    </HeaderSubheader>
+  </Header>
+  <t
+    collapseStringsAfterLength={32}
+    collapsed={false}
+    defaultValue={null}
+    displayDataTypes={false}
+    displayObjectSize={false}
+    enableClipboard={true}
+    groupArraysAfterLength={100}
+    iconStyle="square"
+    indentWidth={4}
+    name={null}
+    onAdd={false}
+    onDelete={false}
+    onEdit={false}
+    onSelect={false}
+    shouldCollapse={false}
+    sortKeys={false}
+    src={Object {}}
+    style={
+      Object {
+        "padding": "1em",
+      }
+    }
+    theme="harmonic"
+    validationMessage="Validation Error"
+  />
+</Fragment>
+`;
