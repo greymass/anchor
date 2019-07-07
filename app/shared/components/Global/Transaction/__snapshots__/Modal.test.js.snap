@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionHandler renders correctly 1`] = `
+<Fragment
+  actionname="claimrewards"
+  actions={Object {}}
+/>
+`;

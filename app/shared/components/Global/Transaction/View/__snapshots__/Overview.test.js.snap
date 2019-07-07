@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionViewOverview renders correctly 1`] = `
+<StatisticGroup>
+  <Statistic>
+    <StatisticValue>
+      0
+    </StatisticValue>
+    <StatisticLabel>
+      Contract(s)
+    </StatisticLabel>
+  </Statistic>
+  <Statistic>
+    <StatisticValue>
+      0
+    </StatisticValue>
+    <StatisticLabel>
+      Action(s)
+    </StatisticLabel>
+  </Statistic>
+</StatisticGroup>
+`;
