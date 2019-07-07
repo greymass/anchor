@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionMessageError renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "margin": "10px",
+    }
+  }
+>
+  <Message
+    negative={true}
+  >
+    <Header>
+      error
+    </Header>
+    <Translate(GlobalTransactionMessageErrorDefault)
+      error="error message"
+      onClose={[Function]}
+      style={
+        Object {
+          "margin": "10px",
+        }
+      }
+    />
+  </Message>
+  <Button
+    as="button"
+    color="red"
+    content="close"
+    fluid={true}
+    onClick={[Function]}
+  />
+</div>
+`;

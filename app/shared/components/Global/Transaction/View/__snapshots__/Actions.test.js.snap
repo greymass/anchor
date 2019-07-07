@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionViewActions renders correctly 1`] = `
+<Fragment>
+  <Header>
+    global_transaction_actions_details_title
+    <HeaderSubheader>
+      global_transaction_actions_details_content
+    </HeaderSubheader>
+  </Header>
+</Fragment>
+`;

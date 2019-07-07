@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionMessageUnsignedSign renders correctly 1`] = `
+<Segment
+  basic={true}
+>
+  <Header>
+    broadcast_transaction_confirm_details_title
+    <HeaderSubheader>
+      broadcast_transaction_confirm_details_content
+    </HeaderSubheader>
+  </Header>
+  <Translate(GlobalTransactionViewDetail)
+    broadcastable={true}
+    transaction={
+      Object {
+        "data": Object {
+          "transaction": Object {
+            "signatures": Array [],
+            "transaction": Object {
+              "actions": Array [],
+            },
+          },
+        },
+      }
+    }
+  />
+  <Container>
+    <Button
+      as="button"
+      color="purple"
+      content="broadcast_transaction_signbroadcast"
+      floated="right"
+      icon="wifi"
+      onClick={[Function]}
+      size="large"
+    />
+    <Button
+      as="button"
+      color="grey"
+      content="close"
+      icon="x"
+      onClick={[Function]}
+      size="large"
+    />
+  </Container>
+  <Segment>
+    <Translate(GlobalTransactionViewActions)
+      actions={Array []}
+    />
+    <Divider />
+    <Translate(GlobalTransactionViewFull)
+      transaction={
+        Object {
+          "transaction": Object {
+            "signatures": Array [],
+            "transaction": Object {
+              "actions": Array [],
+            },
+          },
+        }
+      }
+    />
+  </Segment>
+</Segment>
+`;

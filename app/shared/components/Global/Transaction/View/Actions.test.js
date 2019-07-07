@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import { GlobalTransactionViewActions } from './Actions';
 
 const mockProps = {
-  actions: {},
+  actions: [],
   t: text => text,
 };
 

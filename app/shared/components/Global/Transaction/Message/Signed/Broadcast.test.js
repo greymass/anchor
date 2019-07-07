@@ -7,7 +7,14 @@ import { GlobalTransactionMessageSignedBroadcast } from './Broadcast';
 const mockProps = {
   onClose: () => null,
   t: text => text,
-  transaction: {},
+  transaction: {
+    transaction: {
+      signatures: [],
+      transaction: {
+        actions: []
+      }
+    }
+  },
 };
 
 describe('GlobalTransactionMessageSignedBroadcast', () => {

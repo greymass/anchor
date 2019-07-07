@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionMessageUnsignedDownload renders correctly 1`] = `
+<Segment
+  basic={true}
+>
+  <Header
+    content="global_transaction_unsigned_title"
+    icon="checkmark"
+    size="large"
+  />
+  <ModalContent>
+    <p>
+      global_transaction_unsigned_message
+    </p>
+    <Segment
+      padded={true}
+    >
+      <Header
+        content="global_transaction_unsigned_raw_tx"
+      />
+      <t
+        collapseStringsAfterLength={false}
+        collapsed={1}
+        defaultValue={null}
+        displayDataTypes={false}
+        displayObjectSize={false}
+        enableClipboard={true}
+        groupArraysAfterLength={100}
+        iconStyle="square"
+        indentWidth={4}
+        name={null}
+        onAdd={false}
+        onDelete={false}
+        onEdit={false}
+        onSelect={false}
+        shouldCollapse={false}
+        sortKeys={false}
+        src={Object {}}
+        style={
+          Object {
+            "padding": "1em",
+          }
+        }
+        theme="harmonic"
+        validationMessage="Validation Error"
+      />
+      <Segment
+        basic={true}
+        textAlign="center"
+      >
+        <Button
+          as="button"
+          color="blue"
+          content="global_transaction_unsigned_save_file"
+          icon="download"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginBottom": "1em",
+            }
+          }
+        />
+        <Button
+          as="button"
+          color="teal"
+          content="global_transaction_unsigned_copy_to_clipboard"
+          icon="clipboard"
+          onClick={[Function]}
+        />
+      </Segment>
+    </Segment>
+    <Message
+      icon={true}
+      size="large"
+      warning={true}
+    >
+      <Icon
+        as="i"
+        name="info circle"
+      />
+      <MessageContent>
+        <MessageHeader>
+          global_transaction_unsigned_warning_title
+        </MessageHeader>
+        global_transaction_unsigned_warning_message
+      </MessageContent>
+    </Message>
+  </ModalContent>
+  <ModalActions>
+    <Segment
+      basic={true}
+      clearing={true}
+    >
+      <Button
+        as="button"
+        color="green"
+        floated="right"
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="checkmark"
+        />
+         
+        close
+      </Button>
+    </Segment>
+  </ModalActions>
+</Segment>
+`;

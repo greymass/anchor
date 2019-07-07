@@ -6,7 +6,15 @@ import { GlobalTransactionViewDetail } from './Overview';
 
 const mockProps = {
   t: text => text,
-  transaction: {},
+  transaction: {
+    data: {
+      transaction: {
+        transaction: {
+          actions: []
+        }
+      }
+    }
+  },
 };
 
 describe('GlobalTransactionViewOverview', () => {

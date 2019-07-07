@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionMessageHardwareLedger renders correctly 1`] = `
+<Segment
+  basic={true}
+>
+  <Header
+    icon={true}
+    size="large"
+    textAlign="center"
+  >
+    <Icon
+      as="i"
+      loading={true}
+      name="circle notched"
+    />
+    global_transaction_hardware_ledger_awaiting_device_header
+    <HeaderSubheader
+      content="global_transaction_hardware_ledger_awaiting_device_subheader"
+    />
+  </Header>
+</Segment>
+`;

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalTransactionMessageErrorAuthorization renders correctly 1`] = `
+<div>
+  <p>
+    global_transaction_message_error_authorization_paragraph
+  </p>
+  <hr
+    style={
+      Object {
+        "color": "#3C3A3B",
+      }
+    }
+  />
+  <List
+    ordered={true}
+    style={
+      Object {
+        "color": "#3C3A3B",
+      }
+    }
+  >
+    <ListItem>
+      global_transaction_message_error_authorization_list_item_one
+    </ListItem>
+    <ListItem>
+      global_transaction_message_error_authorization_list_item_two
+    </ListItem>
+    <ListItem>
+      global_transaction_message_error_authorization_list_item_three
+    </ListItem>
+  </List>
+  <hr
+    style={
+      Object {
+        "color": "#3C3A3B",
+      }
+    }
+  />
+  <p
+    style={
+      Object {
+        "color": "#3C3A3B",
+      }
+    }
+  >
+    * 
+    global_transaction_message_error_authorization_note
+  </p>
+</div>
+`;

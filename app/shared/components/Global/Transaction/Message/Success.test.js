@@ -10,7 +10,12 @@ const mockProps = {
   onClose: () => null,
   settings: {},
   t: text => text,
-  transaction: {},
+  transaction: {
+    processed: {
+      block_num: 8,
+    },
+    transaction_id: 'transaction_id'
+  },
   transactions: [],
 };
 
