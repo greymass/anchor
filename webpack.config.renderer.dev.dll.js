@@ -27,7 +27,7 @@ export default merge.smart(baseConfig, {
   /**
    * Use `module` from `webpack.config.renderer.dev.js`
    */
-  module: require('./webpack.config.renderer.dev').module,
+  //module: require('./webpack.config.renderer.dev').module,
 
   entry: {
     renderer: Object.keys(dependencies || {}).filter(
