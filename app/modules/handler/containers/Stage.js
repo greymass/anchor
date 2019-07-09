@@ -109,19 +109,29 @@ class PromptStage extends Component<Props> {
       onClose,
       onShareLink,
       prompt,
+      requestedActorMissing,
       settings,
       status,
       system,
-      wallet,
+      t,
       validate,
+      wallet,
     } = this.props;
 
     const awaitingDevice = (system.EOSIOURISIGN === 'PENDING');
     const signing = (system.EOSIOURISIGN === 'PENDING');
     const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
     const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
-    const error = system.EOSIOURIBUILD_LAST_ERROR || system.EOSIOURISIGN_LAST_ERROR || system.EOSIOURIBROADCAST_LAST_ERROR;
+
+    let error = system.EOSIOURIBUILD_LAST_ERROR ||
+      system.EOSIOURISIGN_LAST_ERROR ||
+      system.EOSIOURIBROADCAST_LAST_ERROR;
+
     const warning = system.EOSIOURIBUILD_LAST_WARNING;
+
+    if (requestedActorMissing) {
+      error = { message: t('error_requested_actor_missing') };
+    }
 
     const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
     const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
