@@ -85,7 +85,9 @@ export function validateNode(
           settings,
           wallets,
         } = getState();
-        let { host, protocol, pathname } = new URL(node);
+        let { host, protocol } = new URL(node);
+        const { pathname } = new URL(node);
+
         // If the protocol contains the original value with a colon,
         // it means the protocol was missing and the protocol is the host.
         //
@@ -94,7 +96,7 @@ export function validateNode(
           host = node;
           protocol = 'http:';
         }
-        const httpEndpoint = `${protocol}//${host}`;
+        const httpEndpoint = `${protocol}//${host}${pathname !== '/' ? pathname : ''}`;
         // Establish a modified state to test the connection against
         const modified = {
           ...connection,
