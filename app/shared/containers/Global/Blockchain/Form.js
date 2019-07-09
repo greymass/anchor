@@ -39,7 +39,7 @@ class GlobalBlockchainForm extends Component<Props> {
         derived = set(state, 'errors', {});
       }
       if (validate.NODE === 'FAILURE') {
-        derived = set(state, 'errors.endpoint', true);
+        derived = set(state, 'errors.endpoint', 'undefined');
         derived = del(derived, 'loading.endpoint');
       }
       if (validate.NODE === 'SUCCESS') {
@@ -116,7 +116,7 @@ class GlobalBlockchainForm extends Component<Props> {
         onCancel();
       }
     }
-  }
+  };
   render() {
     const {
       app,
