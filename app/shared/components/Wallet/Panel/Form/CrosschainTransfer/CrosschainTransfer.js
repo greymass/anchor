@@ -82,7 +82,10 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
   onConfirm = () => {
     const { from, to, quantity, storeName, asset, memo } = this.state;
     this.setState({ confirming: false }, () => {
-      const newMemo = `${this.state.assetMemoCoinTypes[asset]}:${to}:${memo}:`;
+      let newMemo = `pxeos:${to}:${memo}:`;
+      if (this.state.assetMemoCoinTypes[asset]) {
+        newMemo = `${this.state.assetMemoCoinTypes[asset]}:${to}:${memo}:`;
+      }
       this.props.actions.transfer(from, 'gateway2beos', quantity, newMemo, asset);
       this.setState({
         to: '',
