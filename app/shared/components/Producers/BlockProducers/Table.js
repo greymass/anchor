@@ -24,12 +24,10 @@ class ProducersTable extends Component<Props> {
   componentDidMount() {
     const { actions } = this.props;
     actions.getJurisdictions();
-    // console.log('@!#!@#!@ componentDidMount', this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.jurisdictions.producer !== nextProps.jurisdictions.producer) {
-      // console.log('POL props nextProps ...', this.props.jurisdictions.producer,  nextProps.jurisdictions.producer);
       this.setProducerJurisdiction(
         nextProps.jurisdictions.producer_jurisdictions,
         nextProps.jurisdictions.producer
@@ -48,7 +46,6 @@ class ProducersTable extends Component<Props> {
 
   setProducerJurisdiction = (table, owner) => {
     const arr = [];
-    // console.log('##### setProducerJurisdiction', table, owner);
     const jurisdictions = this.props.jurisdictions.jurisdictions;
     const codes = table;
     // const codes = table.payload.producer_jurisdictions[0].jurisdictions;
@@ -165,6 +162,9 @@ class ProducersTable extends Component<Props> {
                     <JurisdictionRow
                       rows={this.state.rows[producer.owner] ? this.state.rows[producer.owner] : []}
                       setRowVisbilitity={this.setRowVisbilitity}
+                      codesLabel={t('jurisdictions_code_table_header')}
+                      jurisdictionLabel={t('jurisdictions_jurisdiction_table_header')}
+                      descriptionLabel={t('jurisdictions_description_table_header')}
                     />
                   </Table.Cell>
                 </Table.Row>

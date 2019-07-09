@@ -122,20 +122,10 @@ class ProducersTableRow extends Component<Props> {
                   disabled={!isValidUser || isProxying}
                   icon={isClicked ? 'map marker' : 'map marker alternate'}
                   size="small"
-                  // onClick={
-                  //   () => {
-                  //           setRowVisbilitity(producer.owner);
-                  //           actions.getProducerJurisdiction(producer.owner);
-                  //         }
-                  // }
                   onClick={
-                    () => {
-                            const a =
-                            actions.getProducerJurisdiction(producer.owner);
-                            // console.log('POL a', a);
-                            //setProducerJurisdiction(a, producer.owner);
-                            setRowVisbilitity(producer.owner);
-                          }
+                    (isClicked)
+                    ? () => { setRowVisbilitity(producer.owner); }
+                    : () => { actions.getProducerJurisdiction(producer.owner); setRowVisbilitity(producer.owner); }
                   }
                 />
               )}

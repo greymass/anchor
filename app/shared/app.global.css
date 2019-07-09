@@ -24,6 +24,11 @@ table .jurisdiction-table {
   border-top: 0 !important;
 }
 
+table thead .no-jurisdiction {
+  border-bottom: 0 !important;
+  text-align: center !important;
+}
+
 .table-scroll {
   overflow-y: auto;
   max-height: 200px;
