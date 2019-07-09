@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { find, pick } from 'lodash';
+import { get } from 'dot-prop-immutable';
 import { Segment } from 'semantic-ui-react';
 
 import URIActions from '../actions/uri';
@@ -14,7 +15,6 @@ import WalletActions from '../../../shared/actions/wallet';
 import PromptStage from './Stage';
 import PromptHeader from '../components/Header';
 import PromptShare from '../components/Share';
-import { get } from "dot-prop-immutable";
 
 const { remote } = require('electron');
 
@@ -45,14 +45,14 @@ class PromptContainer extends Component<Props> {
     actions.clearURI();
     const w = remote.getCurrentWindow();
     w.close();
-  }
+  };
   onSign = () => {
     const { wallet } = this.state;
     const { actions, blockchains, prompt } = this.props;
     const { chainId, tx } = prompt;
     const blockchain = find(blockchains, { chainId });
     actions.signURI(tx, blockchain, wallet);
-  }
+  };
   templateURI = () => {
     const { blockchains, prompt, wallets } = this.props;
     const { chainId } = prompt;
@@ -79,7 +79,7 @@ class PromptContainer extends Component<Props> {
         wallet: {}
       });
     }
-  }
+  };
   swapAccount = (e, { value }) => {
     const { actions } = this.props;
     const { blockchain } = this.state;
@@ -87,11 +87,12 @@ class PromptContainer extends Component<Props> {
     this.setState({
       wallet
     }, () => actions.templateURI(blockchain, wallet));
-  }
+  };
   render() {
     const {
       prompt,
       system,
+      wallets,
     } = this.props;
     const {
       blockchain,
@@ -105,8 +106,15 @@ class PromptContainer extends Component<Props> {
     if (!blockchain) return false;
 
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
-    const hasBroadcast = !!(response && (response.processed && response.processed.receipt.status === 'executed'));
-    const hasExpired = !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
+    const hasBroadcast =
+      !!(response && (response.processed && response.processed.receipt.status === 'executed'));
+    const hasExpired =
+      !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
+    const requestedActor = get(prompt, 'req.1.0.authorization.0.actor');
+    const requestedActorMissing =
+      requestedActor &&
+      requestedActor !== '...........1' &&
+      !find(wallets, { account: requestedActor, chainId: blockchain.chainId });
     return (
       <Segment
         tertiary
@@ -131,6 +139,7 @@ class PromptContainer extends Component<Props> {
           hasExpired={hasExpired}
           onClose={this.onClose}
           onShareLink={this.onShareLink}
+          requestedActorMissing={requestedActorMissing}
           swapAccount={this.swapAccount}
           wallet={wallet}
         />
