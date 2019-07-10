@@ -37,7 +37,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
       assetAccountObjects: {
         BTS: {
           memoCoinType: 'bts',
-          walletName: 'BitShares'
+          walletName: 'BitShares',
+          withdrawDesc: 'withdraw'
         }
       }
     };
@@ -73,18 +74,31 @@ class WalletPanelFormWithdraw extends Component<Props> {
               let coinType = null;
               let memoCoinType = null;
               let walletName = null;
+              let withdrawDesc = '';
+              let coinTypeNoBackingCoinType = null;
 
               if (element.backingCoinType !== null) {
+                withdrawDesc = 'withdraw';
                 coinType = element.backingCoinType;
+                coinTypes.find(element => {
+                  if (element.coinType === coinType) {
+                    walletName = element.walletName;
+                  }
+                });
               } else {
+                withdrawDesc = 'crosschain transfer';
                 coinType = element.coinType;
+                tradingPairs.find(element => {
+                  if (element.inputCoinType === coinType) {
+                    coinTypeNoBackingCoinType = element.outputCoinType;
+                  }
+                });
+                coinTypes.find(element => {
+                  if (element.coinType === coinTypeNoBackingCoinType) {
+                    walletName = element.walletName;
+                  }
+                });
               }
-
-              coinTypes.find(element => {
-                if (element.coinType === coinType) {
-                  walletName = element.walletName;
-                }
-              });
 
               tradingPairs.find(element => {
                 if (element.inputCoinType === coinType) {
@@ -94,7 +108,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
 
               assetAccountObjects[element.walletSymbol] = {
                 memoCoinType,
-                walletName
+                walletName,
+                withdrawDesc
               }
             }
           });
@@ -369,7 +384,9 @@ class WalletPanelFormWithdraw extends Component<Props> {
                 &nbsp;
                 {asset}
                 &nbsp;
-                {t('withdraw_header_available')}
+                {t('withdraw_header_available', {
+                  type: assetAccountObjects[asset].withdrawDesc
+                })}
               </p>
             )}
             <FormMessageError
