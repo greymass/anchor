@@ -73,6 +73,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
             if (element.walletType === 'beos') {
 
               let coinType = null;
+              let findMemoCoinType = null;
               let memoCoinType = null;
               let walletName = null;
               let accountName = null;
@@ -82,6 +83,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               if (element.backingCoinType !== null) {
                 withdrawDesc = 'withdraw';
                 coinType = element.backingCoinType;
+                findMemoCoinType = element.coinType;
                 coinTypes.find(element => {
                   if (element.coinType === coinType) {
                     walletName = element.walletName;
@@ -91,6 +93,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               } else {
                 withdrawDesc = 'crosschain transfer';
                 coinType = element.coinType;
+                findMemoCoinType = element.coinType;
                 tradingPairs.find(element => {
                   if (element.inputCoinType === coinType) {
                     coinTypeNoBackingCoinType = element.outputCoinType;
@@ -107,7 +110,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               }
 
               tradingPairs.find(element => {
-                if (element.inputCoinType === coinType) {
+                if (element.inputCoinType === findMemoCoinType) {
                   memoCoinType = element.outputCoinType;
                 }
               });
@@ -130,7 +133,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
     const { asset, assetAccountObjects, from, to, quantity, storeName } = this.state;
     this.setState({ confirming: false }, () => {
       if (assetAccountObjects[asset].walletName === 'BEOS') {
-        const newMemo = `${assetAccountObjects[asset].memoCoinType}:${to}`;
+        const newMemo = `${assetAccountObjects[asset].memoCoinType}:${to}::`;
         this.props.actions.transfer(from, 'beos.gateway', quantity, newMemo, asset);
       } else {
         this.props.actions.beoswithdraw(from, to, quantity, storeName);
