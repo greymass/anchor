@@ -100,7 +100,7 @@ const knownChains = [
     chainId: 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664',
     keyPrefix: 'EOS',
     name: 'Insights',
-    node: 'https://ireland-history.insights.network',
+    node: 'https://instar.greymass.com',
     supportedContracts: ['bidname'],
     symbol: 'INSTAR',
     testnet: false
