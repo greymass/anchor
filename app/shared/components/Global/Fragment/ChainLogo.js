@@ -7,7 +7,7 @@ import beosLogo from '../../../../renderer/assets/images/beos-logo.svg';
 import bosLogo from '../../../../renderer/assets/images/bos.png';
 import eosLogo from '../../../../renderer/assets/images/eos.png';
 import insightsLogo from '../../../../renderer/assets/images/insights.svg';
-import meetoneLogo from '../../../../renderer/assets/images/meetone.svg';
+import meetoneLogo from '../../../../renderer/assets/images/meetone.png';
 import placeholder from '../../../../renderer/assets/images/placeholder.png';
 import telosLogo from '../../../../renderer/assets/images/telos.png';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
@@ -25,6 +25,7 @@ const logos = {
   'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3': telosLogo, // testnet (telos)
   '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f': worbliLogo, // mainnet (worbli)
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
+  '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f': worbliLogo, // worbli mainnet
 };
 
 class GlobalFragmentChainLogo extends PureComponent<Props> {
