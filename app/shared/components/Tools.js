@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
-import ReactJson from 'react-json-view';
 
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
@@ -11,6 +10,7 @@ import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
 import GlobalSettingsFilterSpamTransfers from './Global/Settings/FilterSpamTransfers';
+import GlobalSettingsAllowDangerousTransactions from './Global/Settings/AllowDangerousTransactions';
 
 class Tools extends Component<Props> {
   render() {
@@ -98,6 +98,14 @@ class Tools extends Component<Props> {
               <GlobalSettingsShowTestnets
                 actions={actions}
                 defaultValue={settings.displayTestNetworks}
+                selection
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>{t('tools_change_allow_dangerous_transactions')}</label>
+              <GlobalSettingsAllowDangerousTransactions
+                actions={actions}
+                defaultValue={settings.allowDangerousTransactions}
                 selection
               />
             </Form.Field>
