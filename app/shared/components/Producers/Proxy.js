@@ -79,7 +79,7 @@ class ProducersProxy extends Component<Props> {
           ? (
             <div>
               <Button
-                color="green"
+                color="teal"
                 content={t('producers_panel_refresh_proxy')}
                 fluid
                 icon="sync"

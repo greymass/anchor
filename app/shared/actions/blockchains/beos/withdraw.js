@@ -1,7 +1,7 @@
 import {
-  SYSTEM_BEOSWITHDRAW_PENDING,
-  SYSTEM_BEOSWITHDRAW_SUCCESS,
-  SYSTEM_BEOSWITHDRAW_FAILURE
+  SYSTEM_TRANSFER_PENDING,
+  SYSTEM_TRANSFER_SUCCESS,
+  SYSTEM_TRANSFER_FAILURE
 } from '../../types';
 
 import EOSContract from '../../../utils/EOS/Contract';
@@ -15,10 +15,10 @@ export function beoswithdraw(from, to, quantity, storeName) {
     } = getState();
 
     if (!supportedContracts || !supportedContracts.includes('beosexchange')) {
-      dispatch({ type: SYSTEM_BEOSWITHDRAW_FAILURE });
+      dispatch({ type: SYSTEM_TRANSFER_FAILURE });
     }
 
-    dispatch({ type: SYSTEM_BEOSWITHDRAW_PENDING });
+    dispatch({ type: SYSTEM_TRANSFER_PENDING });
 
     const { connection } = getState();
 
@@ -31,7 +31,8 @@ export function beoswithdraw(from, to, quantity, storeName) {
             withdraw(
               { from, bts_to: to, quantity },
               {
-                broadcast: true,
+                broadcast: connection.broadcast,
+                expireInSeconds: connection.expireInSeconds,
                 sign: connection.sign
               }
             )
@@ -39,26 +40,26 @@ export function beoswithdraw(from, to, quantity, storeName) {
                 dispatch(getCurrencyBalance(from));
                 return dispatch({
                   payload: { tx, connection },
-                  type: SYSTEM_BEOSWITHDRAW_SUCCESS
+                  type: SYSTEM_TRANSFER_SUCCESS
                 });
               })
               .catch(err => {
                 dispatch({
                   payload: { err },
-                  type: SYSTEM_BEOSWITHDRAW_FAILURE
+                  type: SYSTEM_TRANSFER_FAILURE
                 });
               });
           })
           .catch(err => {
             dispatch({
               payload: { err },
-              type: SYSTEM_BEOSWITHDRAW_FAILURE
+              type: SYSTEM_TRANSFER_FAILURE
             });
           });
       }).catch(err => {
         dispatch({
           payload: { err },
-          type: SYSTEM_BEOSWITHDRAW_FAILURE
+          type: SYSTEM_TRANSFER_FAILURE
         });
       });
   };

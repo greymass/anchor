@@ -11,8 +11,11 @@ class ProducersVotingPreview extends Component<Props> {
       account,
       actions,
       blockExplorers,
+      isProxying,
       lastError,
+      onClose,
       onConfirm,
+      proxyingTo,
       selected,
       settings,
       submitting,
@@ -28,7 +31,7 @@ class ProducersVotingPreview extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'green',
-          content: t('producer_voter_save_changes_r2'),
+          content: (isProxying ? t('producer_voter_start_voting_after_proxying') : t('producer_voter_save_changes_r2')),
           fluid: true,
           icon: '',
           style: { marginTop: '1em' }
@@ -36,8 +39,10 @@ class ProducersVotingPreview extends Component<Props> {
         content={(
           <ProducersVotingPreviewSelection
             account={account}
+            isProxying={isProxying}
             lastError={lastError}
             onConfirm={onConfirm}
+            proxyingTo={proxyingTo}
             selected={selected}
             settings={settings}
             submitting={submitting}
@@ -45,9 +50,10 @@ class ProducersVotingPreview extends Component<Props> {
           />
         )}
         icon="exchange"
-        title={t('producer_voter_save_changes_r2')}
+        onClose={onClose}
         settings={settings}
         system={system}
+        title={t('producer_voter_save_changes_r2')}
       />
     );
   }

@@ -155,6 +155,15 @@ export function getBlockExplorers() {
             txid: 'https://worbli.bloks.io/transaction/{txid}'
           }
         },
+      ],
+      'wax-mainnet': [
+        {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://wax.bloks.io/account/{account}',
+            txid: 'https://wax.bloks.io/transaction/{txid}'
+          }
+        },
       ]
     };
 
