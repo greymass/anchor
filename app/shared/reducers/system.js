@@ -27,7 +27,7 @@ export default function system(state = {}, action) {
     });
   }
 
-  const matches = /^SYSTEM_(.*)_(PENDING|PROGRESS|SUCCESS|FAILURE)$/.exec(type);
+  const matches = /^SYSTEM_(.*)_(PENDING|PROGRESS|SUCCESS|FAILURE|WARNING)$/.exec(type);
   if (!matches) return state;
 
   const [, requestName, requestState] = matches;
@@ -37,6 +37,7 @@ export default function system(state = {}, action) {
   const errField = `${requestName}_LAST_ERROR`;
   const nameBidField = `${requestName}_LAST_BID`;
   const progressField = `${requestName}_PROGRESS`;
+  const warningField = `${requestName}_LAST_WARNING`;
   const txField = `${requestName}_LAST_TRANSACTION`;
   const awaitingDeviceField = `${requestName}_AWAITING_DEVICE`;
 
@@ -63,6 +64,14 @@ export default function system(state = {}, action) {
         newState = set(newState, errField, JSON.parse(action.payload.err));
       } catch (e) {
         newState = set(newState, errField, action.payload.err);
+      }
+    }
+
+    if (action.payload.warning) {
+      try {
+        newState = set(newState, warningField, JSON.parse(action.payload.warning));
+      } catch (e) {
+        newState = set(newState, warningField, action.payload.warning);
       }
     }
     if (action.payload.connection) {

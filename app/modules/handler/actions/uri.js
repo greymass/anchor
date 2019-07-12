@@ -292,7 +292,7 @@ export function templateURI(blockchain, wallet) {
     dispatch({
       type: types.SYSTEM_EOSIOURIBUILD_PENDING,
     });
-    const { prompt } = getState();
+    const { prompt, settings } = getState();
     const { uri } = prompt;
     const authorization = {
       actor: wallet.account,
@@ -343,18 +343,30 @@ export function templateURI(blockchain, wallet) {
       const data = await request.getTransaction(authorization, block);
       const detectedForbiddenActions = checkRequest(data);
       if (detectedForbiddenActions && detectedForbiddenActions.length > 0) {
-        return dispatch({
-          type: types.SYSTEM_EOSIOURIBUILD_FAILURE,
-          payload: {
-            err: {
-              message: detectedForbiddenActions[0],
-              type: 'forbidden',
-            },
-            uri
-          }
-        });
+        if (settings.allowDangerousTransactions) {
+          dispatch({
+            type: types.SYSTEM_EOSIOURIBUILD_WARNING,
+            payload: {
+              warning: {
+                message: detectedForbiddenActions[0],
+                type: 'forbidden',
+              },
+              uri
+            }
+          });
+        } else {
+          return dispatch({
+            type: types.SYSTEM_EOSIOURIBUILD_FAILURE,
+            payload: {
+              err: {
+                message: detectedForbiddenActions[0],
+                type: 'forbidden',
+              },
+              uri
+            }
+          });
+        }
       }
-      console.log(data)
       // Retrieve the ABI
       const contract = await EOS.getAbi(contractName);
       return dispatch({
