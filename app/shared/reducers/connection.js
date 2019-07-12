@@ -17,7 +17,8 @@ const initialState = {
   sign: false,
   signMethod: false,
   signPath: false,
-  supportedContracts: []
+  supportedContracts: [],
+  tokenPrecision: 4,
 };
 
 export default function connection(state = initialState, action) {
@@ -50,7 +51,8 @@ export default function connection(state = initialState, action) {
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
-        supportedContracts: (blockchain) ? blockchain.supportedContracts : []
+        supportedContracts: (blockchain) ? blockchain.supportedContracts : [],
+        tokenPrecision: (blockchain && blockchain.tokenPrecision) || 4,
       });
     }
     // Remove key from connection if the wallet is locked/removed
