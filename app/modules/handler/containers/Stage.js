@@ -6,7 +6,7 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find, includes } from 'lodash';
 
-import { Dimmer, Header, Icon, Loader, Segment } from 'semantic-ui-react';
+import { Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-react';
 
 import PromptStageReview from './Stage/Review';
 import PromptStageBroadcast from './Stage/Broadcast';
@@ -121,9 +121,7 @@ class PromptStage extends Component<Props> {
     const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
     const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
     const error = system.EOSIOURIBUILD_LAST_ERROR || system.EOSIOURISIGN_LAST_ERROR || system.EOSIOURIBROADCAST_LAST_ERROR;
-
-    // console.log(error);
-    // console.log(system);
+    const warning = system.EOSIOURIBUILD_LAST_WARNING;
 
     const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
     const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
@@ -200,7 +198,13 @@ class PromptStage extends Component<Props> {
       );
     }
 
-    if (prompt && prompt.uri && error && error.type === 'forbidden') {
+    const shouldDisplayDangerousTransactionsError = prompt &&
+                                                    prompt.uri &&
+                                                    error &&
+                                                    error.type === 'forbidden' &&
+                                                    settings.allowDangerousTransactions;
+
+    if (shouldDisplayDangerousTransactionsError) {
       stage = (
         <PromptStageForbidden
           error={error}
@@ -279,7 +283,8 @@ class PromptStage extends Component<Props> {
       );
     }
 
-    // console.log(error)
+    const shouldDisplayDangerousTransactionWarning =
+      warning && warning.type === 'forbidden' && settings.allowDangerousTransactions;
 
     return (
       <React.Fragment>
@@ -306,6 +311,14 @@ class PromptStage extends Component<Props> {
           </Dimmer>
           {stage}
         </Segment>
+        {(shouldDisplayDangerousTransactionWarning) && (
+          <Message
+            icon="warning sign"
+            header="This is a dangerous transaction"
+            content={warning.message}
+            warning
+          />
+        )}
         {(error && error.type !== 'forbidden')
           ? (
             <Segment size="large" color="red" inverted>

@@ -15,6 +15,8 @@ const initialState = {
   advancedPermissions: false,
   // The loaded account
   account: '',
+  // Allow dangerous transactions
+  allowDangerousTransactions: false,
   // The loaded authorization
   authorization: undefined,
   // The enabled blockchains (array of chain ids)
