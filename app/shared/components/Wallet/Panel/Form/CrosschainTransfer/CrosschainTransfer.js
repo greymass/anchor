@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from "react";
-import { translate } from "react-i18next";
+import React, { Component } from 'react';
+import { translate } from 'react-i18next';
 import {
   Form,
   Segment,
@@ -8,44 +8,88 @@ import {
   Divider,
   Icon,
   Message
-} from "semantic-ui-react";
-import { debounce, findIndex, includes } from "lodash";
+} from 'semantic-ui-react';
+import { debounce, findIndex, includes } from 'lodash';
 
-import GlobalFormFieldAccount from "../../../../Global/Form/Field/Account";
-import FormFieldMultiToken from "../../../../Global/Form/Field/MultiToken";
-import GlobalFormFieldMemo from "../../../../Global/Form/Field/Memo";
-import FormMessageError from "../../../../Global/Form/Message/Error";
-import EOSContract from "../../../../../utils/EOS/Contract";
-import WalletPanelCrosschainTransferConfirming from "./Confirming";
+import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
+import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
+import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
+import FormMessageError from '../../../../Global/Form/Message/Error';
+import EOSContract from '../../../../../utils/EOS/Contract';
+import WalletPanelCrosschainTransferConfirming from './Confirming';
 
 class WalletPanelCrosschainTransfer extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      asset: "EOS",
+      asset: 'EOS',
       confirming: false,
       formError: false,
       from: props.settings.account,
-      quantity: " EOS",
-      to: "",
-      memo: "",
-      destinationAsset: "BEOS",
+      quantity: ' EOS',
+      to: '',
+      memo: '',
+      destinationAsset: 'BEOS',
       waiting: false,
       waitingStarted: 0,
-      storeName: "gateway2beos",
+      storeName: 'gateway2beos',
       isValidAccount: false,
-      submitDisabled: true
+      apiUrl: 'https://gateway.beos.world/api/v2',
+      submitDisabled: true,
+      assetMemoCoinTypes: {}
     };
+  }
+
+  componentWillMount() {
+    let apiUrl = this.state.apiUrl;
+    let assetMemoCoinTypes = {};
+
+    let coinTypesPromisecheck = fetch(apiUrl + '/coins', {
+      method: 'get',
+      headers: new Headers({Accept: 'application/json'})
+    }).then(response => response.json());
+    let tradingPairsPromisecheck = fetch(apiUrl + '/trading-pairs', {
+        method: 'get',
+        headers: new Headers({Accept: 'application/json'})
+    }).then(response => response.json());
+
+    Promise.all([coinTypesPromisecheck, tradingPairsPromisecheck]).then(
+      json_responses => {
+        let [coinTypes, tradingPairs] = json_responses;
+        coinTypes.forEach(element => {
+          if (element.walletType === 'eos') {
+            let coinType = null;
+            let memoCoinType = null;
+
+            coinType = element.coinType;
+
+            tradingPairs.find(element => {
+              if (element.inputCoinType === coinType) {
+                 memoCoinType = element.outputCoinType;
+              }
+            });
+
+            assetMemoCoinTypes[element.walletSymbol] = memoCoinType;
+          }
+        });
+        this.setState({
+          assetMemoCoinTypes
+        });
+      }
+    );
   }
 
   onConfirm = () => {
     const { from, to, quantity, storeName, asset, memo } = this.state;
     this.setState({ confirming: false }, () => {
-      const newMemo = `pxeos:${to}:${memo}:`
+      let newMemo = `pxeos:${to}:${memo}:`;
+      if (this.state.assetMemoCoinTypes[asset]) {
+        newMemo = `${this.state.assetMemoCoinTypes[asset]}:${to}:${memo}:`;
+      }
       this.props.actions.transfer(from, 'gateway2beos', quantity, newMemo, asset);
       this.setState({
-        to: "",
-        quantity: ""
+        to: '',
+        quantity: ''
       })
     });
   };
@@ -85,7 +129,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
     this.setState({ formError: null });
     const { quantity } = this.state;
     const { balances, settings: { account } } = this.props;
-    const [valueBalanceCompare, symbol] = quantity.split(" ");
+    const [valueBalanceCompare, symbol] = quantity.split(' ');
 
     if (!value) {
       return;
@@ -122,12 +166,12 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
     const { balances, settings: { account } } = this.props;
     const newState = { [name]: value };
 
-    if (name === "to") {
+    if (name === 'to') {
       this.validateAccount(value, asset);
     }
 
-    if (name === "quantity") {
-      const [quantity, asset] = value.split(" ");
+    if (name === 'quantity') {
+      const [quantity, asset] = value.split(' ');
       newState.asset = asset;
       if (parseFloat(value) > balances[account][asset]) {
         this.setState({ formError: 'insufficient_balance' });
@@ -148,7 +192,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       to
     } = this.state;
     const { balances, settings: { account } } = this.props;
-    const [value, symbol] = quantity.split(" ");
+    const [value, symbol] = quantity.split(' ');
     const balance = balances[account];
 
     return !quantity ||
@@ -186,7 +230,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
 
     return (
       <Form
-        loading={system.TRANSFER === "PENDING"}
+        loading={system.TRANSFER === 'PENDING'}
         onSubmit={this.onSubmit}
         warning={hasWarnings}
       >
@@ -209,7 +253,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
               autoFocus
               contacts={settings.contacts}
               fluid
-              label={t("crosschain_transfer_label_to", {
+              label={t('crosschain_transfer_label_to', {
                 type: destinationAsset
               })}
               name="to"
@@ -221,7 +265,7 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
               balances={balances}
               connection={connection}
               icon="x"
-              label={t("crosschain_transfer_label_token_and_quantity")}
+              label={t('crosschain_transfer_label_token_and_quantity')}
               loading={false}
               maximum={balance[asset]}
               name="quantity"
@@ -231,21 +275,21 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
             />
             {asset && (
               <p>
-                {(balance[asset] && balance[asset].toFixed(4)) || "0.0000"}
+                {(balance[asset] && balance[asset].toFixed(4)) || '0.0000'}
                 &nbsp;
                 {asset}
                 &nbsp;
-                {t("crosschain_transfer_header_available")}
+                {t('crosschain_transfer_header_available')}
               </p>
             )}
             <GlobalFormFieldMemo
-                icon="x"
-                label={t('crosschain_transfer_label_memo')}
-                loading={false}
-                name="memo"
-                onChange={this.onChange}
-                value={memo}
-              />
+              icon="x"
+              label={t('crosschain_transfer_label_memo')}
+              loading={false}
+              name="memo"
+              onChange={this.onChange}
+              value={memo}
+            />
             <FormMessageError
               error={formError}
               chainSymbol={asset}
@@ -253,13 +297,13 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
             <Divider />
             <Button
               type="submit"
-              content={t("confirm")}
+              content={t('confirm')}
               disabled={this.isSubmitDisabled()}
               floated="right"
               primary
             />
             <Button onClick={onClose}>
-              <Icon name="x" /> {t("cancel")}
+              <Icon name="x" /> {t('cancel')}
             </Button>
           </Segment>
         )}
@@ -268,4 +312,4 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
   }
 }
 
-export default translate("crosschaintransfer")(WalletPanelCrosschainTransfer);
+export default translate('crosschaintransfer')(WalletPanelCrosschainTransfer);

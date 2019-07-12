@@ -65,7 +65,7 @@ class ProducersTableRow extends Component<Props> {
               trigger={(
                 <Button
                   color={isSelected ? 'blue' : 'grey'}
-                  disabled={!isValidUser || isProxying}
+                  disabled={!isValidUser}
                   icon={isSelected ? 'checkmark box' : 'minus square outline'}
                   onClick={
                     (isSelected)

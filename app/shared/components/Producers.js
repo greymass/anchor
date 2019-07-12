@@ -15,6 +15,7 @@ class Producers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      editingProducers: false,
       lastError: false,
       lastTransaction: {},
       previewing: false,
@@ -38,7 +39,7 @@ class Producers extends Component<Props> {
       this.setState({
         lastError: system.VOTEPRODUCER_LAST_ERROR,
         lastTransaction: system.VOTEPRODUCER_LAST_TRANSACTION,
-        submitting: false
+        submitting: false,
       });
     }
     // If no selected are loaded, attempt to retrieve them from the props
@@ -48,15 +49,15 @@ class Producers extends Component<Props> {
       || (nextProps.producers.proxy && nextProps.producers.proxy !== this.state.selected_account)
     ) {
       const { accounts } = nextProps;
+      const { selected: currentlySelected, editingProducers } = this.state;
       // If an account is loaded, attempt to load it's votes
       if (settings.account && accounts[settings.account]) {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const selected_account = account.voter_info.proxy || account.account_name;
-          let selected = account.voter_info.producers
-          if (selected_account !== settings.account && accounts[selected_account]) {
-            selected = accounts[selected_account].voter_info.producers;
-          }
+          const selected = editingProducers || !accounts[selected_account] ?
+            currentlySelected :
+            accounts[selected_account].voter_info.producers;
           // If the voter_info entry exists, load those votes into state
           this.setState({
             selected,
@@ -74,20 +75,20 @@ class Producers extends Component<Props> {
     this.setState({
       addProxy: proxyAccout
     });
-  }
+  };
 
   removeProxy = () => {
     this.setState({
       removeProxy: true
     });
-  }
+  };
 
   onClose = () => {
     this.setState({
       addProxy: false,
       removeProxy: false
     });
-  }
+  };
 
   addProducer = (producer) => {
     const producers = [...this.state.selected];
@@ -95,10 +96,11 @@ class Producers extends Component<Props> {
       producers.push(producer);
       producers.sort();
       this.setState({
-        selected: producers
+        selected: producers,
+        editingProducers: true,
       });
     }
-  }
+  };
 
   removeProducer = (producer) => {
     const producers = [...this.state.selected];
@@ -107,14 +109,15 @@ class Producers extends Component<Props> {
       producers.splice(index, 1);
     }
     this.setState({
-      selected: producers
+      selected: producers,
+      editingProducers: true,
     });
-  }
+  };
 
   previewProducerVotes = (previewing) => this.setState({
     previewing,
     lastError: false, // Reset the last error
-    lastTransaction: {} // Reset the last transaction
+    lastTransaction: {}, // Reset the last transaction
   });
 
   submitProducerVotes = () => {
@@ -135,9 +138,9 @@ class Producers extends Component<Props> {
     this.setState({
       lastError: false, // Reset the last error
       lastTransaction: {}, // Reset the last transaction
-      submitting: true
+      submitting: true,
     });
-  }
+  };
 
   render() {
     const {
@@ -161,6 +164,7 @@ class Producers extends Component<Props> {
     } = this.props;
     const {
       addProxy,
+      editingProducers,
       lastError,
       lastTransaction,
       previewing,
@@ -171,6 +175,7 @@ class Producers extends Component<Props> {
     const { unregisteredProducers } = producers;
     let sidebar = [];
     const account = accounts[settings.account];
+    const proxyingTo = account && account.voter_info && account.voter_info.proxy;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const isValidUser = (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode));
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
@@ -197,24 +202,29 @@ class Producers extends Component<Props> {
             system={system}
             tables={tables}
           />
-          {(!isProxying) ? (
+
+          <Divider hidden={!isProxying} />
+          {(!isProxying || editingProducers) && (
             <ProducersVotingPreview
               account={account}
               actions={actions}
               blockExplorers={allBlockExplorers[connection.chainKey]}
+              isProxying={isProxying}
               lastError={lastError}
               lastTransaction={lastTransaction}
               open={previewing}
-              onClose={() => this.previewProducerVotes(false)}
+              onClose={() => this.setState({ editingProducers : false })}
               onConfirm={this.submitProducerVotes.bind(this)}
               onOpen={() => this.previewProducerVotes(true)}
+              proxyingTo={proxyingTo}
               selected={selected}
               settings={settings}
               submitting={submitting}
               system={system}
               unregisteredProducers={unregisteredProducers}
             />
-          ) : ''}
+          )}
+
           <ProducersSelector
             account={accounts[settings.account]}
             actions={actions}
@@ -234,15 +244,60 @@ class Producers extends Component<Props> {
       );
     }
 
-    if (!isValidUser && settings.walletMode !== 'wait') {
-      sidebar = (
-        <WalletPanelLocked
-          actions={actions}
-          settings={settings}
-          validate={validate}
-          wallet={wallet}
-        />
-      );
+    const tabPanes = [
+      {
+        menuItem: t('producers_block_producers'),
+        render: () => {
+          return (
+            <Tab.Pane>
+              <BlockProducers
+                {...this.props}
+                addProducer={this.addProducer.bind(this)}
+                removeProducer={this.removeProducer.bind(this)}
+                selected={selected}
+              />
+            </Tab.Pane>
+          );
+        }
+      }
+    ];
+
+    if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
+      tabPanes.push({
+        menuItem: t('tools:tools_menu_governance_proposals'),
+        render: () => {
+          return (
+            <Tab.Pane>
+              <ToolsGovernanceProposals
+                actions={actions}
+                blockExplorers={blockExplorers}
+                contracts={contracts}
+                keys={keys}
+                proposals={proposals}
+                settings={settings}
+                system={system}
+                validate={validate}
+                wallet={wallet}
+              />
+            </Tab.Pane>
+          );
+        }
+      });
+    }
+
+    if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
+      tabPanes.push({
+        menuItem: t('producers_proxies'),
+        render: () => (
+          <Tab.Pane>
+            <Proxies
+              {...this.props}
+              addProxy={this.addProxy.bind(this)}
+              removeProxy={this.removeProxy.bind(this)}
+            />
+          </Tab.Pane>
+        )
+      });
     }
 
     return (
