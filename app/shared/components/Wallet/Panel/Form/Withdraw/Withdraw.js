@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from "react";
-import { translate } from "react-i18next";
+import React, { Component } from 'react';
+import { translate } from 'react-i18next';
 import {
   Form,
   Segment,
@@ -8,46 +8,139 @@ import {
   Divider,
   Icon,
   Message
-} from "semantic-ui-react";
-import { debounce, findIndex, includes } from "lodash";
+} from 'semantic-ui-react';
+import { debounce, findIndex, includes } from 'lodash';
 
-import GlobalFormFieldAccount from "../../../../Global/Form/Field/Account";
-import FormFieldMultiToken from "../../../../Global/Form/Field/MultiToken";
-import FormMessageError from "../../../../Global/Form/Message/Error";
-import EOSContract from "../../../../../utils/EOS/Contract";
-import WalletPanelFormWithdrawConfirming from "./Confirming";
+import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
+import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
+import FormMessageError from '../../../../Global/Form/Message/Error';
+import EOSContract from '../../../../../utils/EOS/Contract';
+import WalletPanelFormWithdrawConfirming from './Confirming';
 
 class WalletPanelFormWithdraw extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      asset: "BTS",
+      asset: 'BTS',
       confirming: false,
       feeBitshares: 0.4547,
       formError: false,
       from: props.settings.account,
-      quantity: " BTS",
-      to: "",
+      quantity: ' BTS',
+      to: '',
       waiting: false,
       waitingStarted: 0,
-      assetAccountTypes: {
-        BTS: "Bitshares",
-        BROWNIE: "Bitshares",
-        EOS: "Eos"
-      },
-      storeName: "beos.gateway",
+      storeName: 'beos.gateway',
       isValidAccount: false,
-      submitDisabled: true
+      submitDisabled: true,
+      apiUrl: 'https://gateway.beos.world/api/v2',
+      assetAccountObjects: {
+        BTS: {
+          memoCoinType: 'bts',
+          walletName: 'BitShares',
+          withdrawDesc: 'withdraw',
+          accountName: 'BitShares'
+        }
+      }
     };
   }
 
+  componentWillMount() {
+
+    let apiUrl = this.state.apiUrl;
+    let assetAccountObjects = {};
+
+    let coinTypesPromisecheck = fetch(apiUrl + '/coins', {
+      method: 'get',
+      headers: new Headers({Accept: 'application/json'})
+    }).then(response => response.json());
+    let tradingPairsPromisecheck = fetch(apiUrl + '/trading-pairs', {
+        method: 'get',
+        headers: new Headers({Accept: 'application/json'})
+    }).then(response => response.json());
+
+    Promise.all([
+      coinTypesPromisecheck,
+      tradingPairsPromisecheck
+    ])
+      .then(json_responses => {
+          let [
+              coinTypes,
+              tradingPairs
+          ] = json_responses;
+
+          coinTypes.forEach(element => {
+            if (element.walletType === 'beos') {
+
+              let coinType = null;
+              let findMemoCoinType = null;
+              let memoCoinType = null;
+              let walletName = null;
+              let accountName = null;
+              let withdrawDesc = '';
+              let coinTypeNoBackingCoinType = null;
+
+              if (element.backingCoinType !== null) {
+                withdrawDesc = 'withdraw';
+                coinType = element.backingCoinType;
+                findMemoCoinType = element.coinType;
+                coinTypes.find(element => {
+                  if (element.coinType === coinType) {
+                    walletName = element.walletName;
+                    accountName = element.walletName;
+                  }
+                });
+              } else {
+                withdrawDesc = 'crosschain transfer';
+                coinType = element.coinType;
+                findMemoCoinType = element.coinType;
+                tradingPairs.find(element => {
+                  if (element.inputCoinType === coinType) {
+                    coinTypeNoBackingCoinType = element.outputCoinType;
+                  }
+                });
+                coinTypes.find(element => {
+                  if (element.coinType === coinTypeNoBackingCoinType) {
+                    accountName = element.walletName;
+                  }
+                  if (element.coinType === coinType) {
+                    walletName = element.walletName;
+                  }
+                });
+              }
+
+              tradingPairs.find(element => {
+                if (element.inputCoinType === findMemoCoinType) {
+                  memoCoinType = element.outputCoinType;
+                }
+              });
+
+              assetAccountObjects[element.walletSymbol] = {
+                memoCoinType,
+                walletName,
+                withdrawDesc,
+                accountName
+              }
+            }
+          });
+          this.setState({
+            assetAccountObjects
+          });
+      });
+  }
+
   onConfirm = () => {
-    const { from, to, quantity, storeName } = this.state;
+    const { asset, assetAccountObjects, from, to, quantity, storeName } = this.state;
     this.setState({ confirming: false }, () => {
-      this.props.actions.beoswithdraw(from, to, quantity, storeName);
+      if (assetAccountObjects[asset].walletName === 'BEOS') {
+        const newMemo = `${assetAccountObjects[asset].memoCoinType}:${to}::`;
+        this.props.actions.transfer(from, 'beos.gateway', quantity, newMemo, asset);
+      } else {
+        this.props.actions.beoswithdraw(from, to, quantity, storeName);
+      }
       this.setState({
-        to: "",
-        quantity: ""
+        to: '',
+        quantity: ''
       })
     });
   };
@@ -85,18 +178,18 @@ class WalletPanelFormWithdraw extends Component<Props> {
 
   validateAccount = debounce(async (value, asset) => {
     this.setState({ formError: null });
-    const { feeBitshares, quantity } = this.state;
+    const { assetAccountObjects, feeBitshares, quantity } = this.state;
     const { balances, settings: { account } } = this.props;
-    const [valueFeeCompare, symbol] = quantity.split(" ");
+    const [valueFeeCompare, symbol] = quantity.split(' ');
 
     if (!value) {
       return;
     }
 
-    if (includes(["BTS", "BROWNIE"], asset)) {
-      let url = "https://gateway.beos.world/api/v2";
+    if (assetAccountObjects[asset].accountName === 'BitShares') {
+      let url = 'https://gateway.beos.world/api/v2';
       if (this.props.connection && (this.props.connection.chainId === 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4')) {
-        url = "https://gateway.testnet.beos.world/api/v2";
+        url = 'https://gateway.testnet.beos.world/api/v2';
       }
       const validationUrl = `${url}/wallets/bitshares2/address-validator?address=${value}`;
       try {
@@ -105,7 +198,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
         if (isValid) {
           if (parseFloat(valueFeeCompare) > balances[account][asset]) {
             this.setState({ formError: 'insufficient_balance' });
-          } else if (((asset === 'BTS') || (asset === 'BROWNIE')) && (parseFloat(valueFeeCompare) <= feeBitshares)) {
+          } else if ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(valueFeeCompare) <= feeBitshares)) {
             this.setState({ formError: 'bitshares_error' });
           } else {
             this.setState({ isValidAccount: true, formError: null });
@@ -113,27 +206,27 @@ class WalletPanelFormWithdraw extends Component<Props> {
         } else {
           this.setState({
             isValidAccount: false,
-            formError: "invalid_withdraw_account"
+            formError: 'invalid_withdraw_account'
           });
         }
       } catch (e) {
         this.setState({
           isValidAccount: false,
-          formError: "withdraw_account_validation_failed"
+          formError: 'withdraw_account_validation_failed'
         });
         throw e;
       }
-    } else if (asset === "EOS") {
+    } else if (assetAccountObjects[asset].accountName === 'EOS') {
       const { blockchains } = this.props;
       const nodeUrl = blockchains
-        .filter(({ _id }) => _id === "eos-mainnet")
+        .filter(({ _id }) => _id === 'eos-mainnet')
         .map(({ node }) => node)[0];
       const url = `${nodeUrl}/v1/chain/get_account`;
       try {
         const headers = new Headers();
-        headers.append("Content-Type", "application/json");
+        headers.append('Content-Type', 'application/json');
         const { ok } = await fetch(url, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({ account_name: value }),
           headers
         });
@@ -146,34 +239,61 @@ class WalletPanelFormWithdraw extends Component<Props> {
         } else {
           this.setState({
             isValidAccount: false,
-            formError: "invalid_withdraw_account"
+            formError: 'invalid_withdraw_account'
           });
         }
       } catch (e) {
         this.setState({
           isValidAccount: false,
-          formError: "withdraw_account_validation_failed"
+          formError: 'withdraw_account_validation_failed'
         });
         throw e;
       }
+    } else if (assetAccountObjects[asset].accountName === 'BEOS') {
+      const url = 'https://gateway.beos.world/api/v2';
+      const validation = `${url}/wallets/beos/address-validator?address=${value}`;
+      try {
+        const response = await fetch(validation);
+        const { isValid } = await response.json();
+        if (isValid) {
+          if (parseFloat(valueFeeCompare) > balances[account][asset]) {
+            this.setState({ formError: 'insufficient_balance' });
+          } else {
+            this.setState({ isValidAccount: true, formError: null });
+          }
+        } else {
+          this.setState({
+            isValidAccount: false,
+            formError: 'invalid_withdraw_account'
+          });
+        }
+      } catch (e) {
+        this.setState({
+          isValidAccount: false,
+          formError: 'withdraw_account_validation_failed'
+        });
+        throw e;
+      }
+    } else {
+      this.setState({ isValidAccount: true, formError: null });
     }
   }, 150);
 
   onChange = (e, { name, value, valid }) => {
-    const { asset, feeBitshares, formError, to } = this.state;
+    const { assetAccountObjects, asset, feeBitshares, formError, to } = this.state;
     const { balances, settings: { account } } = this.props;
     const newState = { [name]: value };
 
-    if (name === "to") {
+    if (name === 'to') {
       this.validateAccount(value, asset);
     }
 
-    if (name === "quantity") {
-      const [quantity, asset] = value.split(" ");
+    if (name === 'quantity') {
+      const [quantity, asset] = value.split(' ');
       newState.asset = asset;
       if (parseFloat(value) > balances[account][asset]) {
         this.setState({ formError: 'insufficient_balance' });
-      } else if (((asset === 'BTS') || (asset === 'BROWNIE')) && (parseFloat(value) <= feeBitshares)) {
+      } else if ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(value) <= feeBitshares)) {
         this.setState({ formError: 'bitshares_error' });
       } else {
         this.validateAccount(to, asset);
@@ -184,9 +304,9 @@ class WalletPanelFormWithdraw extends Component<Props> {
   };
 
   isSubmitDisabled = () => {
-    const { asset, feeBitshares, formError, isValidAccount, quantity, to } = this.state;
+    const { assetAccountObjects, asset, feeBitshares, formError, isValidAccount, quantity, to } = this.state;
     const { balances, settings: { account } } = this.props;
-    const [value, symbol] = quantity.split(" ");
+    const [value, symbol] = quantity.split(' ');
     const balance = balances[account];
 
     return !quantity ||
@@ -197,7 +317,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
       !to ||
       !!formError ||
       !isValidAccount ||
-      (((asset === 'BTS') || (asset === 'BROWNIE')) && (parseFloat(value) <= feeBitshares))
+      ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(value) <= feeBitshares))
       ? true
       : false;
   };
@@ -205,7 +325,6 @@ class WalletPanelFormWithdraw extends Component<Props> {
   render() {
     const {
       asset,
-      assetAccountTypes,
       confirming,
       from,
       isValidAccount,
@@ -214,8 +333,10 @@ class WalletPanelFormWithdraw extends Component<Props> {
       formError,
       submitDisabled,
       waiting,
-      waitingStarted
+      waitingStarted,
+      assetAccountObjects
     } = this.state;
+
     const { balances, connection, settings, system, t, onClose } = this.props;
 
     const balance = balances[settings.account];
@@ -224,7 +345,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
 
     return (
       <Form
-        loading={system.BEOSWITHDRAW === "PENDING"}
+        loading={system.TRANSFER === 'PENDING'}
         onSubmit={this.onSubmit}
         warning={hasWarnings}
       >
@@ -233,7 +354,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
             asset={asset}
             balances={balances}
             to={to}
-            withdrawAssetType={assetAccountTypes[asset]}
+            withdrawAssetType={assetAccountObjects[asset].accountName}
             from={from}
             onBack={this.onBack}
             onConfirm={this.onConfirm}
@@ -247,8 +368,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
               autoFocus
               contacts={settings.contacts}
               fluid
-              label={t("withdraw_label_to", {
-                type: assetAccountTypes[asset]
+              label={t('withdraw_label_to', {
+                type: assetAccountObjects[asset].accountName
               })}
               name="to"
               onChange={this.onChange}
@@ -259,7 +380,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               balances={balances}
               connection={connection}
               icon="x"
-              label={t("withdraw_label_token_and_quantity")}
+              label={t('withdraw_label_token_and_quantity')}
               loading={false}
               maximum={balance[asset]}
               name="quantity"
@@ -269,27 +390,29 @@ class WalletPanelFormWithdraw extends Component<Props> {
             />
             {asset && (
               <p>
-                {(balance[asset] && balance[asset].toFixed(4)) || "0.0000"}
+                {(balance[asset] && balance[asset].toFixed(4)) || '0.0000'}
                 &nbsp;
                 {asset}
                 &nbsp;
-                {t("withdraw_header_available")}
+                {t('withdraw_header_available', {
+                  type: assetAccountObjects[asset].withdrawDesc
+                })}
               </p>
             )}
             <FormMessageError
               error={formError}
-              chainSymbol={assetAccountTypes[asset]}
+              chainSymbol={assetAccountObjects[asset].accountName}
             />
             <Divider />
             <Button
               type="submit"
-              content={t("confirm")}
+              content={t('confirm')}
               disabled={this.isSubmitDisabled()}
               floated="right"
               primary
             />
             <Button onClick={onClose}>
-              <Icon name="x" /> {t("cancel")}
+              <Icon name="x" /> {t('cancel')}
             </Button>
           </Segment>
         )}
@@ -298,4 +421,4 @@ class WalletPanelFormWithdraw extends Component<Props> {
   }
 }
 
-export default translate("beos_withdraw")(WalletPanelFormWithdraw);
+export default translate('beos_withdraw')(WalletPanelFormWithdraw);
