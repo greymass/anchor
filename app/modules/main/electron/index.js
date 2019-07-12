@@ -17,7 +17,9 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
 
   const uiStateKeeper = windowStateKeeper(store);
   const { name, version } = packageJson;
+  
   const title = `${name} (${version})`;
+  const macIsCurrentOS = process.platform === 'darwin';
 
   ui = new BrowserWindow({
     closable,
@@ -27,6 +29,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
     height: uiStateKeeper.height,
     title,
     show: true,
+    focusable: !macIsCurrentOS,
     resizable: true,
     backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
