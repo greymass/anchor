@@ -27,7 +27,7 @@ module.exports = {
   testPathIgnorePatterns: ['node_modules', '/test/'],
   transformIgnorePatterns: ['<rootDir>[/\\\\\\\\](build|node_modules)[/\\\\\\\\]'],
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.jsx?$': require.resolve('babel-jest'),
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/config/jest/fileTransform.js',
