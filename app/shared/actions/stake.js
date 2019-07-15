@@ -43,7 +43,9 @@ export function setStake(accountName, netAmount, cpuAmount) {
           currentAccount.account_name,
           accountName,
           increaseInStake.netAmount,
-          increaseInStake.cpuAmount
+          increaseInStake.cpuAmount,
+          false,
+          connection.tokenPrecision
         ));
       }
       if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
@@ -52,7 +54,9 @@ export function setStake(accountName, netAmount, cpuAmount) {
           currentAccount.account_name,
           accountName,
           decreaseInStake.netAmount,
-          decreaseInStake.cpuAmount
+          decreaseInStake.cpuAmount,
+          false,
+          connection.tokenPrecision
         ));
       }
     }, {
