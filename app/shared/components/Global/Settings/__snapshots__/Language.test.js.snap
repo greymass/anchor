@@ -63,8 +63,8 @@ exports[`GlobalSettingsLanguage renders correctly 1`] = `
   searchInput="text"
   selectOnBlur={true}
   selectOnNavigation={true}
-  selection={Array []}
-  value={[Function]}
+  selection={false}
+  value="en-USapp/shared/components/Global/Settings/FilterSpamTransfers.test.js"
   wrapSelection={true}
 />
 `;

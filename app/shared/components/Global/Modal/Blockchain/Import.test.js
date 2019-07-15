@@ -9,7 +9,7 @@ const mockProps = {
   open: false,
   settings: { walletMode: 'hot' },
   t: text => text,
-  trigger: true
+  trigger: <React.Fragment />,
 };
 
 describe('GlobalModalBlockchainImport', () => {

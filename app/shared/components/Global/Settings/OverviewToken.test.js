@@ -8,7 +8,7 @@ const mockProps = {
   chainId: 'chainId',
   defaultValue: 'eosio:EOS',
   name: 'overviewTokenName',
-  scrolling: 'Scrolling',
+  scrolling: true,
   tokens: [],
 };
 

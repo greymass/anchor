@@ -10,7 +10,7 @@ exports[`GlobalModalBlockchainImport renders correctly 1`] = `
   onClose={[Function]}
   open={false}
   size="small"
-  trigger={true}
+  trigger={<React.Fragment />}
 >
   <Header
     content="global_button_blockchain_import_action"

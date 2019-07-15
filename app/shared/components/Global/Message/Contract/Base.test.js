@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 import { GlobalMessageContractBase } from './Base';
 
 const mockProps = {
-  children: {},
+  children: <React.Fragment />,
   t: jest.fn,
 };
 

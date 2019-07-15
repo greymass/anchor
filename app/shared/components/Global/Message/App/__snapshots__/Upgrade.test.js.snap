@@ -19,7 +19,9 @@ exports[`GlobalMessageAppUpgrade renders correctly 1`] = `
       <HeaderContent>
         <Component />
         <HeaderSubheader>
-          <Component />
+          <p>
+            <Component />
+          </p>
         </HeaderSubheader>
       </HeaderContent>
     </Header>

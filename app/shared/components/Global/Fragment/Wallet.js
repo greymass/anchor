@@ -10,7 +10,6 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
       account,
       authorization,
       mode,
-      pubkey,
     } = this.props;
     return (
       <Header
@@ -24,10 +23,14 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
           seed={`${account}@${authorization}`}
         />
         <Header.Content style={{ minWidth: '10em' }}>
-          {account}
-          <Header.Subheader>
-            {authorization} / {mode}
-          </Header.Subheader>
+          <React.Fragment>
+            {account}
+            <Header.Subheader>
+              <React.Fragment>
+                {authorization} / {mode}
+              </React.Fragment>
+            </Header.Subheader>
+          </React.Fragment>
         </Header.Content>
       </Header>
     );

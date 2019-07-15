@@ -24,9 +24,7 @@ exports[`GlobalMessageContractBase renders correctly 1`] = `
     </AccordionTitle>
     <AccordionContent
       active={false}
-    >
-      <Component />
-    </AccordionContent>
+    />
   </Accordion>
 </Message>
 `;

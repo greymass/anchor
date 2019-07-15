@@ -14,8 +14,10 @@ export class GlobalMessageContractBase extends Component<Props> {
         <Accordion fluid>
           <Accordion.Title active={active} onClick={this.onClick}>
             <Header size="small">
-              <Icon name="dropdown" />
-              {t('contract_terms')}
+              <React.Fragment>
+                <Icon name="dropdown" />
+                {t('contract_terms')}
+              </React.Fragment>
             </Header>
           </Accordion.Title>
           <Accordion.Content active={active}>
