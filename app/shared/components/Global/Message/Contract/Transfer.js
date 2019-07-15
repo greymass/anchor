@@ -11,13 +11,15 @@ export class GlobalMessageContractTransfer extends Component<Props> {
     return (
       <GlobalMessageContract>
         <Header>
-          {t('system_transfer_title')}
+          <p>
+            {t('system_transfer_title')}
+          </p>
         </Header>
         <p>{t('system_transfer_1', data)}</p>
         <List style={{ marginLeft: '2em' }}>
-          <List.Item>{t('system_transfer_2', data)}</List.Item>
-          <List.Item>{t('system_transfer_3', data)}</List.Item>
-          <List.Item>{t('system_transfer_4', data)}</List.Item>
+          <List.Item><p>{t('system_transfer_2', data)}</p></List.Item>
+          <List.Item><p>{t('system_transfer_3', data)}</p></List.Item>
+          <List.Item><p>{t('system_transfer_4', data)}</p></List.Item>
         </List>
         <p>{t('system_transfer_5', data)}</p>
         <p>{t('system_transfer_6', data)}</p>
