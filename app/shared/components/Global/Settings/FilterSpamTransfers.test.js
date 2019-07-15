@@ -7,7 +7,7 @@ import { GlobalSettingsFilterSpamTransfers } from './FilterSpamTransfers';
 const mockProps = {
   defaultValue: 'default',
   name: 'transfer filter',
-  selection: [],
+  selection: false,
   t: text => text,
 };
 

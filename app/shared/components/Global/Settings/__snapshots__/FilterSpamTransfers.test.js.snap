@@ -45,7 +45,7 @@ exports[`GlobalSettingsFilterSpamTransfers renders correctly 1`] = `
   searchInput="text"
   selectOnBlur={true}
   selectOnNavigation={true}
-  selection={Array []}
+  selection={false}
   value="default"
   wrapSelection={true}
 />
