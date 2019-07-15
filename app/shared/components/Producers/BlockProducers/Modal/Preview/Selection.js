@@ -27,7 +27,7 @@ class ProducersVotingPreviewSelection extends Component<Props> {
     const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
     const registeredProducersSelected = selected.filter((producer) => !unregisteredProducersSelected.includes(producer))
     const removedProducers =
-      (get(account, 'voter_info.producers') || []).filter((producer) => !registeredProducersSelected.includes(producer));
+      ((account.voter_info && get(account, 'voter_info.producers')) || []).filter((producer) => !registeredProducersSelected.includes(producer));
 
     return (
       <Segment loading={submitting}>
