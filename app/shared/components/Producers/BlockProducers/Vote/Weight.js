@@ -14,6 +14,8 @@ const notation = [
   { value: 1E24, symbol: ' Yv' },
   { value: 1E27, symbol: ' Nv' },
   { value: 1E30, symbol: ' Xv' },
+  { value: 1E33, symbol: ' Bv' },
+  { value: 1E36, symbol: ' gv' }
 ];
 
 export default class ProducersVoteWeight extends Component<Props> {
