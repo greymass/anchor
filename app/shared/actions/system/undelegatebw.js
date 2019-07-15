@@ -14,7 +14,7 @@ export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
     });
 
     return eos(connection, true).transaction(tr => {
-      tr.undelegatebw(undelegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount));
+      tr.undelegatebw(undelegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount, false, connection.tokenPrecision));
     }).then((tx) => {
       dispatch(AccountActions.getAccount(delegator));
       return dispatch({
