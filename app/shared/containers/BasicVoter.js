@@ -68,6 +68,7 @@ class BasicVoterContainer extends Component<Props> {
   componentDidMount() {
     const {
       actions,
+      connection,
       history,
       settings
     } = this.props;
@@ -89,7 +90,7 @@ class BasicVoterContainer extends Component<Props> {
         if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
           history.push('/');
         } else {
-          getCurrencyStats();
+          getCurrencyStats('eosio.token', connection.chainSymbol);
           getBlockExplorers();
           forEach(settings.customTokens, (token) => {
             const [chainId, contract, symbol] = token.split(':');
