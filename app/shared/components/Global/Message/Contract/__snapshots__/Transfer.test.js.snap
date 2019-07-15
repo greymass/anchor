@@ -3,7 +3,9 @@
 exports[`WalletMessageContractTransfer renders correctly 1`] = `
 <Translate(GlobalMessageContractBase)>
   <Header>
-    <Component />
+    <p>
+      <Component />
+    </p>
   </Header>
   <p>
     <Component />
@@ -16,13 +18,19 @@ exports[`WalletMessageContractTransfer renders correctly 1`] = `
     }
   >
     <ListItem>
-      <Component />
+      <p>
+        <Component />
+      </p>
     </ListItem>
     <ListItem>
-      <Component />
+      <p>
+        <Component />
+      </p>
     </ListItem>
     <ListItem>
-      <Component />
+      <p>
+        <Component />
+      </p>
     </ListItem>
   </List>
   <p>
