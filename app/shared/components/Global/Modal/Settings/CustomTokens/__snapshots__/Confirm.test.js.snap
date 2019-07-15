@@ -14,12 +14,16 @@ exports[`GlobalModalSettingsCustomTokensConfirm renders correctly 1`] = `
         as="td"
         width={4}
       >
-        <Component />
+        <p>
+          <Component />
+        </p>
       </TableCell>
       <TableCell
         as="td"
       >
-        teamgreymass
+        <p>
+          teamgreymass
+        </p>
       </TableCell>
     </TableRow>
     <TableRow
@@ -29,11 +33,15 @@ exports[`GlobalModalSettingsCustomTokensConfirm renders correctly 1`] = `
       <TableCell
         as="td"
       >
-        <Component />
+        <p>
+          <Component />
+        </p>
       </TableCell>
       <TableCell
         as="td"
-      />
+      >
+        <p />
+      </TableCell>
     </TableRow>
     <TableRow
       as="tr"
@@ -42,11 +50,15 @@ exports[`GlobalModalSettingsCustomTokensConfirm renders correctly 1`] = `
       <TableCell
         as="td"
       >
-        <Component />
+        <p>
+          <Component />
+        </p>
       </TableCell>
       <TableCell
         as="td"
-      />
+      >
+        <p />
+      </TableCell>
     </TableRow>
   </Table>
   <Container
@@ -55,7 +67,11 @@ exports[`GlobalModalSettingsCustomTokensConfirm renders correctly 1`] = `
     <Button
       as="button"
       color="green"
-      content={[MockFunction]}
+      content={
+        <p>
+          [MockFunction]
+        </p>
+      }
       onClick={[Function]}
     />
   </Container>
