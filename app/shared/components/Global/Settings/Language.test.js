@@ -6,8 +6,8 @@ import { GlobalSettingsLanguage } from './Language';
 
 const mockProps = {
   name: 'transfer filter',
-  selection: [],
-  setLanguage: jest.fn,
+  selection: false,
+  setLanguage: 'en-USapp/shared/components/Global/Settings/FilterSpamTransfers.test.js',
   t: text => text,
 };
 
