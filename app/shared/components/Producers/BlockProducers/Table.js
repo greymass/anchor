@@ -165,6 +165,7 @@ class ProducersTable extends Component<Props> {
                       codesLabel={t('jurisdictions_code_table_header')}
                       jurisdictionLabel={t('jurisdictions_jurisdiction_table_header')}
                       descriptionLabel={t('jurisdictions_description_table_header')}
+                      jurisdictions={jurisdictions}
                     />
                   </Table.Cell>
                 </Table.Row>

@@ -118,7 +118,7 @@ class ProducersTableRow extends Component<Props> {
               position="right center"
               trigger={(
                 <Button
-                  color={isClicked ? 'blue' : 'grey'}
+                  color={isClicked ? 'green' : 'grey'}
                   disabled={!isValidUser || isProxying}
                   icon={isClicked ? 'map marker' : 'map marker alternate'}
                   size="small"
