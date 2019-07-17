@@ -6,25 +6,24 @@ const initialState = {
 };
 
 export default function jurisdictions(state = initialState, action) {
-
   const { type } = action;
-  let matches = /^GET_JURISDICTION_(.*)_(PENDING|SUCCESS|FAILURE)$/.exec(type);
-  let requestName;
-  let requestState;
+  const matches = /^GET_JURISDICTION_(.*)_(PENDING|SUCCESS|FAILURE)$/.exec(type);
+  let requestName = 'request';
+  let requestState = 'state';
   if (matches) {
     requestName = matches[1];
     requestState = matches[2];
   }
 
   switch (action.type) {
-    case types.GET_JURISDICTION_PENDING: {
+    case types.GET_JURISDICTION_ALL_PENDING: {
       return {
         ...state,
         [requestName]: requestState,
         loading: true,
       };
     }
-    case types.GET_JURISDICTION_SUCCESS: {
+    case types.GET_JURISDICTION_ALL_SUCCESS: {
       return {
         ...state,
         loading: false,
@@ -32,7 +31,7 @@ export default function jurisdictions(state = initialState, action) {
         jurisdictions: action.payload.jurisdictions
       };
     }
-    case types.GET_JURISDICTION_FAILURE: {
+    case types.GET_JURISDICTION_ALL_FAILURE: {
       return {
         ...state,
         [requestName]: requestState,

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Table, Segment } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 
 export default class JurisdictionRow extends Component<Props> {
   render() {
@@ -13,7 +13,7 @@ export default class JurisdictionRow extends Component<Props> {
 
     return (
       <div className="table-scroll">
-        {this.props.rows.length > 0 && jurisdictions.PRODUCER === 'SUCCESS' &&
+        {this.props.rows.length > 0 && (this.props.currentProducer ? jurisdictions.PRODUCER === 'SUCCESS' : true) &&
           <Table
             className="ui striped unstackable jurisdiction-table"
           >
@@ -47,7 +47,7 @@ export default class JurisdictionRow extends Component<Props> {
             </Table.Body>
           </Table>
         }
-        {jurisdictions.PRODUCER === 'PENDING' &&
+        {this.props.rows.length === 0 && (this.props.currentProducer ? jurisdictions.PRODUCER === 'PENDING' : false) &&
           <Table
             className="ui striped unstackable jurisdiction-table"
           >
@@ -60,7 +60,7 @@ export default class JurisdictionRow extends Component<Props> {
             </Table.Header>
           </Table>
         }
-        {this.props.rows.length === 0 && jurisdictions.PRODUCER === 'SUCCESS' &&
+        {this.props.rows.length === 0 && (this.props.currentProducer ? jurisdictions.PRODUCER === 'SUCCESS' : true) &&
           <Table
             className="ui striped unstackable jurisdiction-table"
           >

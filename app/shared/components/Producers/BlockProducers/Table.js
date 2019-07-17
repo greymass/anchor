@@ -18,6 +18,7 @@ class ProducersTable extends Component<Props> {
       viewing: false,
       rows: [],
       visible: [],
+      nextProducer: ''
     };
   }
 
@@ -48,7 +49,6 @@ class ProducersTable extends Component<Props> {
     const arr = [];
     const jurisdictions = this.props.jurisdictions.jurisdictions;
     const codes = table;
-    // const codes = table.payload.producer_jurisdictions[0].jurisdictions;
 
     jurisdictions.forEach((it, i) => {
       codes.forEach((jt, j) => {
@@ -65,6 +65,9 @@ class ProducersTable extends Component<Props> {
   }
 
   setRowVisbilitity = (owner) => {
+    this.setState({
+      nextProducer: owner
+    });
     this.state.visible[owner] = !this.state.visible[owner];
     this.setState({
       visible: this.state.visible
@@ -166,6 +169,7 @@ class ProducersTable extends Component<Props> {
                       jurisdictionLabel={t('jurisdictions_jurisdiction_table_header')}
                       descriptionLabel={t('jurisdictions_description_table_header')}
                       jurisdictions={jurisdictions}
+                      currentProducer={this.state.nextProducer === producer.owner}
                     />
                   </Table.Cell>
                 </Table.Row>

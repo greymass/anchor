@@ -4,7 +4,7 @@ import * as types from './types';
 export function getJurisdictions() {
   return (dispatch) => {
     dispatch({
-      type: types.GET_JURISDICTION_PENDING
+      type: types.GET_JURISDICTION_ALL_PENDING
     });
 
     // TODOJUR Get api address depends on devel or prod
@@ -19,7 +19,7 @@ export function getJurisdictions() {
     }).then(result => result.json())
       .then((results) => {
         return dispatch({
-          type: types.GET_JURISDICTION_SUCCESS,
+          type: types.GET_JURISDICTION_ALL_SUCCESS,
           payload: {
             jurisdictions: results.jurisdictions
             // jurisdictions: [
@@ -45,7 +45,7 @@ export function getJurisdictions() {
       }).catch((err) => {
         console.log('error', err);
         dispatch({
-          type: types.GET_JURISDICTION_FAILURE,
+          type: types.GET_JURISDICTION_ALL_FAILURE,
           payload: err
         });
       });
