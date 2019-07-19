@@ -21,7 +21,7 @@ const logos = {
   '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca': eosLogo, // testnet - jungle (eos)
   '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191': eosLogo, // testnet - kylin (eos)
   'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664': insightsLogo, // mainnet (insights)
-  'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422': meetoneLogo // mainnet (meetone)
+  'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422': meetoneLogo, // mainnet (meetone)
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': telosLogo, // mainnet (telos)
   'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3': telosLogo, // testnet (telos)
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
