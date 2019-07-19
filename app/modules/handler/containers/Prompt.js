@@ -60,8 +60,8 @@ class PromptContainer extends Component<Props> {
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
 
-    const account = get(prompt, 'req.1.0.authorization.0.actor');
-    const authorization = get(prompt, 'req.1.0.authorization.0.permission');
+    const account = get(prompt, 'tx.actions.0.authorization.0.actor');
+    const authorization = get(prompt, 'tx.actions.0.authorization.0.permission');
 
     const defaultWallet =
       find(wallets, { chainId, account, authorization }) ||
