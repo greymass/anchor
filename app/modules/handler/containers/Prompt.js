@@ -14,6 +14,7 @@ import WalletActions from '../../../shared/actions/wallet';
 import PromptStage from './Stage';
 import PromptHeader from '../components/Header';
 import PromptShare from '../components/Share';
+import { get } from "dot-prop-immutable";
 
 const { remote } = require('electron');
 
@@ -58,7 +59,14 @@ class PromptContainer extends Component<Props> {
     // Set the blockchain for this network
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
-    const defaultWallet = find(wallets, { chainId });
+
+    const account = get(prompt, 'req.1.0.authorization.0.actor');
+    const authorization = get(prompt, 'req.1.0.authorization.0.permission');
+
+    const defaultWallet =
+      find(wallets, { chainId, account, authorization }) ||
+      find(wallets, { chainId });
+
     if (defaultWallet) {
       // If a default was found, set the blockchain and swap to it
       this.setState({ blockchain }, () => {
@@ -90,10 +98,12 @@ class PromptContainer extends Component<Props> {
       displayShareLink,
       wallet
     } = this.state;
+
     const {
       response
     } = prompt;
     if (!blockchain) return false;
+
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
     const hasBroadcast = !!(response && (response.processed && response.processed.receipt.status === 'executed'));
     const hasExpired = !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
