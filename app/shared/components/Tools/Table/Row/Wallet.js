@@ -41,18 +41,23 @@ class ToolsTableRowWallet extends Component<Props> {
       editAccount: account,
       editAuthorization: authorization,
     });
-  }
+  };
   removeWallet = (account, authorization) => {
-    const { actions, settings } = this.props;
+    const { actions, settings, walletCount } = this.props;
+
     actions.removeWallet(settings.chainId, account, authorization);
-  }
+
+    if (walletCount === 1) {
+      actions.changeModule('');
+    }
+  };
   swapWallet = (account, authorization, password = false) => {
     const { actions, settings } = this.props;
     actions.useWallet(settings.chainId, account, authorization);
     if (password) {
       actions.unlockWallet(password);
     }
-  }
+  };
   convertToLedger = (account, authorization, key = undefined) => this.setState({
     convertToLedgerAccount: account,
     convertToLedgerAuthorization: authorization,
@@ -167,7 +172,6 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
-            disabled={isCurrentWallet}
             icon="trash"
             key="delete"
             onClick={() => this.removeWallet(account, authorization)}
@@ -181,7 +185,6 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
-            disabled={isCurrentWallet}
             icon="trash"
             key="delete"
             onClick={() => this.removeWallet(account, authorization)}
@@ -195,7 +198,6 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
-            disabled={isCurrentWallet}
             icon="trash"
             key="delete"
             onClick={() => this.removeWallet(account, authorization)}
@@ -213,7 +215,6 @@ class ToolsTableRowWallet extends Component<Props> {
             settings={settings}
             trigger={(
               <Dropdown.Item
-                disabled={isCurrentWallet}
                 icon="trash"
                 key="delete"
                 text={t('wallet:wallet_remove')}

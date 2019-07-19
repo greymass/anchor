@@ -32,9 +32,19 @@ class ToolsWallets extends Component<Props> {
     if (!wallets || !wallets.length) {
       return false;
     }
-    console.log(this.props)
     return (
       <Segment style={{ marginTop: 0 }}>
+        {(duplicatingWallet) && (
+          <ToolsModalDuplicatingWallet
+            actions={actions}
+            blockchains={blockchains}
+            duplicatingWallet={duplicatingWallet}
+            onClose={() => this.setState({ duplicatingWallet: null })}
+            settings={settings}
+            system={system}
+            wallets={wallets}
+          />
+        )}
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -46,17 +56,6 @@ class ToolsWallets extends Component<Props> {
               </Header>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              {(duplicatingWallet) && (
-                <ToolsModalDuplicatingWallet
-                  actions={actions}
-                  blockchains={blockchains}
-                  duplicatingWallet={duplicatingWallet}
-                  onClose={() => this.setState({ duplicatingWallet: null })}
-                  settings={settings}
-                  system={system}
-                  wallets={wallets}
-                />
-              )}
               <GlobalButtonAccountImport
                 connection={connection}
                 settings={settings}
@@ -93,6 +92,7 @@ class ToolsWallets extends Component<Props> {
                     settings={settings}
                     status={status}
                     wallet={w}
+                    walletCount={wallets.length}
                     validate={validate}
                   />
                 )))}

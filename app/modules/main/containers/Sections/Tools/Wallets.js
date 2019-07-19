@@ -9,6 +9,7 @@ import ToolsWalletsComponent from '../../../../../shared/components/Tools/Wallet
 
 import * as WalletActions from '../../../../../shared/actions/wallet';
 import * as WalletsActions from '../../../../../shared/actions/wallets';
+import NavigationActions from '../../../actions/navigation';
 
 class ToolsWallets extends Component<Props> {
   render = () => (
@@ -38,6 +39,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...NavigationActions,
       ...WalletActions,
       ...WalletsActions
     }, dispatch)
