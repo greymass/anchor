@@ -305,6 +305,7 @@ class Producers extends Component<Props> {
         <BlockProducers
           {...this.props}
           addProducer={this.addProducer.bind(this)}
+          isValidUser={isValidUser}
           removeProducer={this.removeProducer.bind(this)}
           selected={selected}
           sidebar={sidebar}

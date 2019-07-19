@@ -68,7 +68,7 @@ class BlockProducers extends Component<Props> {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const selected_account = account.voter_info.proxy || account.account_name;
-          let selected = account.voter_info.producers
+          let selected = account.voter_info.producers;
           if (selected_account !== settings.account && accounts[selected_account]) {
             selected = accounts[selected_account].voter_info.producers;
           }
@@ -122,6 +122,7 @@ class BlockProducers extends Component<Props> {
       addProducer,
       connection,
       globals,
+      isValidUser,
       keys,
       producers,
       removeProducer,
@@ -139,7 +140,6 @@ class BlockProducers extends Component<Props> {
     const account = accounts[settings.account];
     const isMainnet = connection.chainKey && connection.chainKey.toLowerCase().indexOf('mainnet') !== -1;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || ['watch','ledger'].includes(settings.walletMode));
     const isLoaded = !!(display && producers.list.length > 0);
 
     return (
@@ -192,8 +192,8 @@ class BlockProducers extends Component<Props> {
                       <Placeholder.Line />
                     </Placeholder.Header>
                     <Placeholder.Paragraph>
-                      <Placeholder.Line length='medium' />
-                      <Placeholder.Line length='short' />
+                      <Placeholder.Line length="medium" />
+                      <Placeholder.Line length="short" />
                     </Placeholder.Paragraph>
                   </Placeholder>
                 </Segment>
