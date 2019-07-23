@@ -110,7 +110,7 @@ class PromptContainer extends Component<Props> {
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
     const hasExpired =
       !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
-    const requestedActor = get(prompt, 'req.1.0.authorization.0.actor');
+    const requestedActor = get(prompt, 'tx.actions.0.authorization.0.actor');
     const requestedActorMissing =
       requestedActor &&
       requestedActor !== '...........1' &&
