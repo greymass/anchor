@@ -41,7 +41,7 @@ class OverviewTableHeader extends Component<Props> {
                 <Table.HeaderCell textAlign="right">
                   Available
                 </Table.HeaderCell>
-                {(supportedContracts.includes('delphioracle'))
+                {(supportedContracts && supportedContracts.includes('delphioracle'))
                   ? (
                     <Table.HeaderCell textAlign="right">
                       $/USD

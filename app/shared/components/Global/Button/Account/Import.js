@@ -7,7 +7,7 @@ import GlobalModalAccountImport from '../../Modal/Account/Import';
 
 class GlobalButtonAccountImport extends Component<Props> {
   state = {
-    open: false
+    open: true
   }
 
   onOpen = () => this.setState({ open: true });
@@ -39,4 +39,4 @@ class GlobalButtonAccountImport extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalButtonAccountImport);
+export default translate(['global', 'welcome'])(GlobalButtonAccountImport);

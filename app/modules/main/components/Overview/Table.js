@@ -109,7 +109,7 @@ class OverviewTable extends Component<Props> {
                           />
                         </Header>
                       </Table.Cell>
-                      {(supportedContracts.includes('delphioracle'))
+                      {(supportedContracts && supportedContracts.includes('delphioracle'))
                         ? (
                           <Table.Cell textAlign="right">
                             <Header size="small">

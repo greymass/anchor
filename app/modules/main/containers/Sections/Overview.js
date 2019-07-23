@@ -98,7 +98,7 @@ class OverviewContainer extends Component<Props> {
                       {header}
                     </Grid.Column>
                     <Grid.Column textAlign="right" width={6}>
-                      {(['systemtokens'].includes(view) && supportedContracts.includes('delphioracle'))
+                      {(['systemtokens'].includes(view) && (supportedContracts && supportedContracts.includes('delphioracle')))
                         ? (
                           <Label
                             color="green"
