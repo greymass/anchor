@@ -19,6 +19,8 @@ import GlobalFormFieldToken from '../../Global/Form/Field/Token';
 import GlobalFormMessageError from '../../Global/Form/Message/Error';
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 
+import fetchMaturedBalance from '../utils/fetchMaturedBalance';
+
 const labelStyle = {
   color: 'black',
   lineWeight: 'light',
@@ -300,19 +302,6 @@ class RexLendSavings extends PureComponent<Props> {
       </React.Fragment>
     );
   }
-}
-
-function fetchMaturedBalance(tables, account) {
-  const rexMaturities = get(tables, `eosio.eosio.rexbal.${account}.rows.0.rex_maturities`, []);
-  let maturedMaturitiesTotal = 0;
-  rexMaturities.forEach(maturity => {
-    if (new Date(maturity.first) < new Date()) {
-      maturedMaturitiesTotal += maturity.second;
-    }
-  });
-  const maturedRexNumber = Number(get(tables, `eosio.eosio.rexbal.${account}.rows.0.matured_rex`, 0));
-
-  return `${(maturedRexNumber + maturedMaturitiesTotal) / 10000} REX`;
 }
 
 export default translate('rex')(RexLendSavings);
