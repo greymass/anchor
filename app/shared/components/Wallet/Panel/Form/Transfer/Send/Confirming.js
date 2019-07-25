@@ -53,13 +53,6 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
               <Table.Cell>{to}</Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell>Jurisdictions</Table.Cell>
-              <Table.Cell>{this.props.jurisdictions.map((jurisdiction) => {
-                return jurisdiction.value;
-              })}
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
               <Table.Cell>{t('transfer_label_quantity')}</Table.Cell>
               <Table.Cell>
                 {quantity}
@@ -70,6 +63,16 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
             <Table.Row>
               <Table.Cell>{t('transfer_label_memo')}</Table.Cell>
               <Table.Cell>{memo}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>{t('transfer_label_jurisdictions')}</Table.Cell>
+              <Table.Cell>
+                <div className="confirm-scroll">
+                  {this.props.jurisdictions.map((jurisdiction) => (
+                    <span className="confirm-wrapper ">{jurisdiction.value}<br /></span>
+                  ))}
+                </div>
+              </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>

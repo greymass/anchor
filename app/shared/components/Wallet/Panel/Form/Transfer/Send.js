@@ -248,7 +248,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               jurisdictions={this.props.jurisdictions.choosenJurisdictions}
             />
           ) : (
-            <Segment basic clearing>
+            <Segment basic clearing className="send-scroll">
               <GlobalFormFieldAccount
                 app={app}
                 autoFocus
@@ -269,10 +269,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
                   warning
                 />
               )}
-              <JurisdictionsForm
-                actions={this.props.actions}
-                jurisdictions={jurisdictions}
-              />
               <FormFieldMultiToken
                 balances={balances}
                 connection={connection}
@@ -307,6 +303,14 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
               { exchangeWarning }
 
+              <Divider />
+              <JurisdictionsForm
+                actions={this.props.actions}
+                jurisdictions={jurisdictions}
+                value={this.state.jurisdictions}
+                onChange={this.onJurisdictionChange.bind(this)}
+                label={t('transfer_label_jurisdictions')}
+              />
               <Divider />
               <Button
                 content={t('confirm')}

@@ -5,6 +5,7 @@
   "transfer_destination_account_is_contract": "The destination account has a smart contract enabled, and by sending to this account, your transfer may trigger additional actions which could consume RAM.",
   "transfer_header_available": "転送可能。",
   "transfer_label_from": "送信元アカウント",
+  "transfer_label_jurisdictions": "Jurisdictions",
   "transfer_label_memo": "転送メモ",
   "transfer_label_quantity": "数量",
   "transfer_label_to": "宛先アカウント",

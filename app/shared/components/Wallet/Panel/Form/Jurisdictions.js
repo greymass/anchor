@@ -47,6 +47,7 @@ export default class JurisdictionsForm extends Component<Props> {
 
   render() {
     const newValue = this.changeValue();
+    const { label } = this.props;
 
     return (
       <I18n ns="wallet">
@@ -61,6 +62,7 @@ export default class JurisdictionsForm extends Component<Props> {
               selection
               value={newValue}
               onChange={(e, value) => this.onChange(value)}
+              label={label}
             />
           )
         }

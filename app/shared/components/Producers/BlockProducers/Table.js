@@ -165,9 +165,9 @@ class ProducersTable extends Component<Props> {
                     <JurisdictionRow
                       rows={this.state.rows[producer.owner] ? this.state.rows[producer.owner] : []}
                       setRowVisbilitity={this.setRowVisbilitity}
-                      codesLabel={t('jurisdictions_code_table_header')}
-                      jurisdictionLabel={t('jurisdictions_jurisdiction_table_header')}
-                      descriptionLabel={t('jurisdictions_description_table_header')}
+                      codesLabel={t('block_producer_jurisdictions_code_table_header')}
+                      jurisdictionLabel={t('block_producer_jurisdictions_jurisdiction_table_header')}
+                      descriptionLabel={t('block_producer_jurisdictions_description_table_header')}
                       jurisdictions={jurisdictions}
                       currentProducer={this.state.nextProducer === producer.owner}
                     />

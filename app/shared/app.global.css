@@ -29,6 +29,26 @@ table thead .no-jurisdiction {
   text-align: center !important;
 }
 
+.table-scroll {
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.confirm-scroll {
+  overflow-y: auto;
+  max-height: 100px;
+}
+
+.send-scroll {
+  overflow-y: auto;
+  height: 455px;
+  margin-bottom: -10px !important;
+}
+
+.confirm-wrapper {
+  word-break: break-all;
+}
+
 .jurisdiction-wrapper-name {
   display: inline-block;
   width: 150px;
@@ -45,9 +65,30 @@ table thead .no-jurisdiction {
   white-space: pre-wrap
 }
 
-.table-scroll {
-  overflow-y: auto;
-  max-height: 200px;
+div .ui.active.visible.fluid.multiple.search.selection.dropdown>a.ui.label {
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+div .ui.fluid.multiple.search.selection.dropdown>a.ui.active.label {
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+div .ui.fluid.multiple.search.selection.dropdown>a.ui.label {
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+div .ui.active.visible.fluid.multiple.search.selection.dropdown>
+div.visible.menu.transition>div.item>span.text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
 
 .ui.table thead tr:first-child > th {

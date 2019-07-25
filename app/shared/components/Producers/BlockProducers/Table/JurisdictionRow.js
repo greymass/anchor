@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Table, Popup } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 
 export default class JurisdictionRow extends Component<Props> {
   render() {

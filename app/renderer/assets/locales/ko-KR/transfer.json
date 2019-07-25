@@ -5,6 +5,7 @@
   "transfer_destination_account_is_contract": "The destination account has a smart contract enabled, and by sending to this account, your transfer may trigger additional actions which could consume RAM.",
   "transfer_header_available": "available to transfer.",
   "transfer_label_from": "보낼 계정",
+  "transfer_label_jurisdictions": "Jurisdictions",
   "transfer_label_memo": "거래 메모",
   "transfer_label_quantity": "수량",
   "transfer_label_to": "받을 계정",
