@@ -284,6 +284,7 @@ const persistConfig = {
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables
   whitelist: [
+    'jurisdictions',
     'blockchains',
     'settings',
     'wallet',

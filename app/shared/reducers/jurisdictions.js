@@ -3,6 +3,7 @@ import * as types from '../actions/types';
 const initialState = {
   loading: false,
   jurisdictions: [],
+  choosenJurisdictions: []
 };
 
 export default function jurisdictions(state = initialState, action) {
@@ -59,6 +60,12 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
+      };
+    }
+    case types.SET_CHOOSEN_JURISDICTIONS: {
+      return {
+        ...state,
+        choosenJurisdictions: action.payload.choosenJurisdictions
       };
     }
     default: {

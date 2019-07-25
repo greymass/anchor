@@ -2,13 +2,15 @@
 import * as types from './types';
 
 export function getJurisdictions() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       type: types.GET_JURISDICTION_ALL_PENDING
     });
+    const {
+      connection
+    } = getState();
 
-    // TODOJUR Get api address depends on devel or prod
-    const url = 'https://api.testnet.beos.world/v1/jurisdiction/get_all_jurisdictions';
+    const url = `${connection.httpEndpoint}/v1/jurisdiction/get_all_jurisdictions`;
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -53,13 +55,17 @@ export function getJurisdictions() {
 }
 
 export function getProducerJurisdiction(producer) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       type: types.GET_JURISDICTION_PRODUCER_PENDING
     });
 
     const params = { producer_names: [producer] };
-    const url = 'https://api.testnet.beos.world/v1/jurisdiction/get_producer_jurisdiction';
+    const {
+      connection
+    } = getState();
+
+    const url = `${connection.httpEndpoint}/v1/jurisdiction/get_all_jurisdictions`;
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -89,7 +95,19 @@ export function getProducerJurisdiction(producer) {
   };
 }
 
+export function saveChoosenJurisdictions(jurisdictions) {
+  return (dispatch) => {
+    dispatch({
+      type: types.SET_CHOOSEN_JURISDICTIONS,
+      payload: {
+        choosenJurisdictions: jurisdictions
+      }
+    });
+  };
+}
+
 export default {
+  saveChoosenJurisdictions,
   getJurisdictions,
   getProducerJurisdiction
 };

@@ -17,9 +17,11 @@ export default class JurisdictionsForm extends Component<Props> {
   makeOptions(jurisdictions) {
     const options = [];
     const j = jurisdictions.jurisdictions;
-    for (let i = 0; i < j.length; i += 1) {
-      const name = `${j[i].name} (${j[i].description})`;
-      options.push({ code: j[i].code, value: name, text: name });
+    if (j) {
+      for (let i = 0; i < j.length; i += 1) {
+        const name = `${j[i].name} (${j[i].description})`;
+        options.push({ code: j[i].code, value: name, text: name });
+      }
     }
     this.setState({
       options
@@ -28,8 +30,9 @@ export default class JurisdictionsForm extends Component<Props> {
 
   changeValue() {
     const newValue = [];
-    for (let i = 0; i < this.props.value.length; i += 1) {
-      newValue.push(this.props.value[i].value);
+    const oldValue = this.props.jurisdictions.choosenJurisdictions;
+    for (let i = 0; i < oldValue.length; i += 1) {
+      newValue.push(oldValue[i].value);
     }
     return newValue;
   }
@@ -39,7 +42,7 @@ export default class JurisdictionsForm extends Component<Props> {
     for (let i = 0; i < data.value.length; i += 1) {
       jurisdictions.push(data.options.find(o => o.value === data.value[i]));
     }
-    this.props.onChange(jurisdictions);
+    this.props.actions.saveChoosenJurisdictions(jurisdictions);
   }
 
   render() {

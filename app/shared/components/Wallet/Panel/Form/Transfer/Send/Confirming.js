@@ -17,7 +17,6 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
   }
 
   render() {
-    console.log(this.props);
     const {
       balances,
       from,

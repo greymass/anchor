@@ -28,8 +28,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       to: '',
       toValid: true,
       waiting: false,
-      waitingStarted: 0,
-      jurisdictions: []
+      waitingStarted: 0
     };
   }
 
@@ -77,10 +76,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const { actions } = this.props;
     actions.getContractHash(value);
   }, 400);
-
-  onJurisdictionChange = (jurisdictions) => {
-    this.setState({ jurisdictions });
-  }
 
   onChange = (e, { name, value, valid }) => {
     if (name === 'to') {
@@ -250,7 +245,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               to={to}
               waiting={waiting}
               waitingStarted={waitingStarted}
-              jurisdictions={this.state.jurisdictions}
+              jurisdictions={this.props.jurisdictions.choosenJurisdictions}
             />
           ) : (
             <Segment basic clearing>
@@ -277,8 +272,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
               <JurisdictionsForm
                 actions={this.props.actions}
                 jurisdictions={jurisdictions}
-                value={this.state.jurisdictions}
-                onChange={this.onJurisdictionChange.bind(this)}
               />
               <FormFieldMultiToken
                 balances={balances}
