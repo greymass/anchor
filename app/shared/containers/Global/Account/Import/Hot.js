@@ -9,6 +9,7 @@ import { Button, Checkbox, Divider, Grid, Header, Icon, Segment, Tab } from 'sem
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
+import GlobalModalAccountImportPassword from './Password';
 
 import EOSAccount from '../../../../utils/EOS/Account';
 import * as AccountsActions from '../../../../actions/accounts';
@@ -97,35 +98,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
       // If a hot wallet already exists and a wallet hash does not, inform them to swap first
       const hotWalletExists = wallets.some(o => o.mode === 'hot');
       if (!hotWalletExists) {
-        return (
-          <Tab.Pane>
-            <Grid divided="vertically" padded="vertically" stackable>
-              <Grid.Row columns={2}>
-                <Grid.Column>
-                  <Header size="large">
-                    <Icon name="lock" />
-                    <Header.Content>
-                      {t('global_account_import_private_requires_hash_header_r2')}
-                      <Header.Subheader>
-                        {t('global_account_import_private_requires_hash_subheader_r2')}
-                      </Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                </Grid.Column>
-                <Grid.Column verticalAlign="middle" textAlign="center">
-                  <p>
-                    <WalletPanelFormHash
-                      actions={actions}
-                    />
-                  </p>
-                  <p>
-                    Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.
-                  </p>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Tab.Pane>
-        );
+        return <GlobalModalAccountImportPassword />;
       }
     }
     return (
