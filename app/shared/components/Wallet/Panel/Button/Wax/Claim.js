@@ -37,7 +37,7 @@ class WalletPanelButtonWaxClaim extends Component<Props> {
     } = this.props;
     return (
       <GlobalTransactionModal
-        actionName="WAX_CLAIMGENESIS"
+        actionName="WAX_CLAIMGBMREWARDS"
         actions={actions}
         blockExplorers={blockExplorers}
         button={{
@@ -47,7 +47,7 @@ class WalletPanelButtonWaxClaim extends Component<Props> {
           icon: 'arrow down',
         }}
         content={(
-          <Segment>
+          <Segment loading={system.WAX_CLAIMGBMREWARDS === 'PENDING'}>
             <Header
               content={t('wax_claim_confirmation_message')}
             />
@@ -58,7 +58,7 @@ class WalletPanelButtonWaxClaim extends Component<Props> {
             />
           </Segment>
         )}
-        icon="database"
+        icon="arrow down"
         title={t('wax_claim_title')}
         settings={settings}
         system={system}
