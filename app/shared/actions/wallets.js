@@ -1,4 +1,4 @@
-import { find, forEach, partition, pluck } from 'lodash';
+import { find, forEach, partition, pluck, uniq } from 'lodash';
 
 import * as types from './types';
 import { getAccount } from './accounts';
@@ -448,7 +448,7 @@ export function upgradeV1Wallets(wallets, password) {
     setTimeout(async () => {
       const requests = wallets.map(async (wallet) => upgradeV1Wallet(wallet, password, dispatch));
       const results = await Promise.all(requests);
-      const keys = results.map(k => k.pubkey);
+      const keys = uniq(results.map(k => k.pubkey));
       const encrypted = encrypt(JSON.stringify(results), password);
       dispatch({
         type: types.WALLET_STORAGE_UPDATE,
