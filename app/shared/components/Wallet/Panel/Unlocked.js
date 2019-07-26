@@ -59,8 +59,8 @@ class WalletPanelUnlocked extends Component<Props> {
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
 
     const isWaxChain = connection.chainId === '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4';
-    const neverClaimedWaxGenesis = (get(tables, `eosio.${settings.account}.genesis.rows`) || []).length === 0;
-    const needsWaxClaimButton = isWaxChain && neverClaimedWaxGenesis;
+    const isGenesisAccount = (get(tables, `eosio.${settings.account}.genesis.rows`) || []).length !== 0;
+    const needsWaxClaimButton = isWaxChain && isGenesisAccount;
 
     if (!settings.account) return false;
     return (
