@@ -108,11 +108,30 @@ export function prepareConvertToLedgerAbort(
 }
 
 export function importWalletFromBackup(wallet, settings = {}) {
-  return (dispatch: () => void) => {
+  return (dispatch: () => void, getState) => {
     let mode = wallet.mode || 'watch';
     if (wallet.path) mode = 'ledger';
     if (wallet.data) mode = 'hot';
     if (settings.walletMode === 'cold') mode = 'cold';
+    if (wallet.path) {
+      const { storage } = getState();
+      // Add the pubkey to the keys array
+      const keys = uniq([
+        ...storage.keys,
+        ...[wallet.pubkey]
+      ]);
+      // Modify path storage to record where this key was accessed from
+      const paths = { ...storage.paths };
+      paths[wallet.pubkey] = wallet.path;
+      dispatch({
+        type: types.WALLET_STORAGE_UPDATE,
+        payload: {
+          data: storage.data,
+          keys,
+          paths,
+        }
+      });
+    }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
