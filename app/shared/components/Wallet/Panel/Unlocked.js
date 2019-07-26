@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Accordion, Menu, Popup, Segment } from 'semantic-ui-react';
-import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
 
 import WalletPanelButtonBroadcast from './Button/Broadcast';
@@ -13,16 +12,17 @@ import WalletPanelButtonTransferSend from './Button/Transfer/Send';
 
 import WalletPanelButtonRamSell from './Button/Ram/Sell';
 import WalletPanelButtonRamBuy from './Button/Ram/Buy';
+import WalletPanelButtonWaxClaim from './Button/Wax/Claim';
 
 class WalletPanelUnlocked extends Component<Props> {
-  state = { activeIndex: 0 }
+  state = { activeIndex: 0 };
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
     const { activeIndex } = this.state;
     const newIndex = activeIndex === index ? -1 : index;
     this.setState({ activeIndex: newIndex });
-  }
+  };
 
   render() {
     const { activeIndex } = this.state;
@@ -45,6 +45,8 @@ class WalletPanelUnlocked extends Component<Props> {
     const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
     // Disable features based on distribution feature (BEOS)
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
+    const isWaxChain = connection.chainId === '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4';
+
     if (!settings.account) return false;
     return (
       <div>
@@ -103,6 +105,19 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
+                  {isWaxChain && (
+                    <Segment>
+                      <WalletPanelButtonWaxClaim
+                        actions={actions}
+                        app={app}
+                        balances={balances}
+                        blockExplorers={blockExplorers}
+                        connection={connection}
+                        settings={settings}
+                        system={system}
+                      />
+                    </Segment>
+                  )}
                   <Segment>
                     <WalletPanelButtonTransferSend
                       actions={actions}

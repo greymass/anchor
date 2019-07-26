@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Button, Header, Segment } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
-import WalletPanelFormRamBuy from '../../Form/Ram/Buy';
-import { Button } from 'semantic-ui-react';
 
 type Props = {
   account: {},
@@ -19,20 +18,18 @@ type Props = {
   t: () => void
 };
 
-class WalletPanelButtonRamBuy extends Component<Props> {
+class WalletPanelButtonWaxClaim extends Component<Props> {
   props: Props;
 
   onConfirm = () => {
     const { actions, settings } = this.props;
 
-    actions.waxClaimGenesis(settings.account);
-  }
+    actions.claimgbmrewards(settings.account);
+  };
 
   render() {
     const {
-      account,
       actions,
-      balances,
       blockExplorers,
       settings,
       system,
@@ -45,14 +42,14 @@ class WalletPanelButtonRamBuy extends Component<Props> {
         blockExplorers={blockExplorers}
         button={{
           color: 'blue',
-          content: t('ram_buy_button_cta'),
+          content: t('wax_claim_title'),
           fluid: true,
           icon: 'arrow down',
         }}
         content={(
           <Segment>
             <Header
-              content={t('wac_claim_confirmation_message')}
+              content={t('wax_claim_confirmation_message')}
             />
             <Button
               style={{ margin: 20 }}
@@ -62,7 +59,7 @@ class WalletPanelButtonRamBuy extends Component<Props> {
           </Segment>
         )}
         icon="database"
-        title={t('ram_buy_modal_title')}
+        title={t('wax_claim_title')}
         settings={settings}
         system={system}
       />
@@ -70,4 +67,4 @@ class WalletPanelButtonRamBuy extends Component<Props> {
   }
 }
 
-export default translate('ram')(WalletPanelButtonRamBuy);
+export default translate('wax')(WalletPanelButtonWaxClaim);

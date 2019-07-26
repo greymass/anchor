@@ -1,14 +1,8 @@
-import { get, set } from 'dot-prop-immutable';
+import * as types from '../../types';
+import * as AccountActions from '../../accounts';
+import eos from '../../helpers/eos';
 
-import * as types from './types';
-import * as AccountActions from './accounts';
-import eos from './helpers/eos';
-
-import { delegatebwParams } from './system/delegatebw';
-import contracts from './contracts';
-import EOSContract from '../utils/EOS/Contract';
-
-export function claimgbmrewards(owner) {
+export function claimgbmrewards() {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -22,14 +16,34 @@ export function claimgbmrewards(owner) {
       type: types.SYSTEM_WAX_CLAIMGBMREWARDS_PENDING
     });
 
-    return eos(connection, true).transaction(tr => {
-      tr.claimgbmvote({
-        owner: currentAccount,
-      });
+    const { account } = settings;
+    const [, authorization] = connection.authorization.split('@');
 
-      tr.claimgenesis({
-        claimer: currentAccount,
-      });
+    return eos(connection, true).transaction({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'claimgbmvote',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            owner: currentAccount
+          }
+        },
+        {
+          account: 'eosio',
+          name: 'claimgenesis',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            claimer: currentAccount
+          }
+        },
+      ]
     }, {
       broadcast: connection.broadcast,
       expireInSeconds: connection.expireInSeconds,
