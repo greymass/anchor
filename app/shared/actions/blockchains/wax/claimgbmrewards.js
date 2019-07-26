@@ -3,7 +3,7 @@ import * as AccountActions from '../../accounts';
 import eos from '../../helpers/eos';
 
 export function claimgbmrewards() {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const {
       connection,
       settings
@@ -19,7 +19,30 @@ export function claimgbmrewards() {
     const { account } = settings;
     const [, authorization] = connection.authorization.split('@');
 
-    return eos(connection, true).transaction({
+    const eosobj = eos(connection, true, true);
+    let method = 'transact';
+    let params = {
+      blocksBehind: 3,
+      expireSeconds: 30,
+    };
+    let contract;
+    if (!eosobj[method]) {
+      contract = await eosobj.getAbi('eosio');
+      if (contract
+        && contract.account_name
+        && contract.abi
+      ) {
+        eosobj.fc.abiCache.abi(contract.account_name, contract.abi);
+      }
+      method = 'transaction';
+      params = {
+        broadcast: connection.broadcast,
+        expireInSeconds: connection.expireInSeconds,
+        sign: connection.sign
+      };
+    }
+
+    return eosobj[method]({
       actions: [
         {
           account: 'eosio',
@@ -44,11 +67,7 @@ export function claimgbmrewards() {
           }
         },
       ]
-    }, {
-      broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
-      sign: connection.sign
-    }).then((tx) => {
+    }, params).then((tx) => {
       setTimeout(() => {
         dispatch(AccountActions.getCurrencyBalance(currentAccount));
       }, 500);
