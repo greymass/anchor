@@ -41,9 +41,9 @@ const toolSections = {
       modes: ['hot', 'ledger', 'watch'],
       path: 'tools/recommendations'
     },
-    tools_menu_keygenerator: {
-      modes: ['all'],
-      path: 'tools/key_generator'
+    tools_menu_managekeys: {
+      modes: ['hot', 'ledger', 'watch'],
+      path: 'tools/keys'
     },
     tools_menu_permissions: {
       modes: ['hot', 'ledger', 'watch'],
