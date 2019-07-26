@@ -176,7 +176,7 @@ export function importWallet(
   path = undefined,
 ) {
   return (dispatch: () => void, getState) => {
-    const { accounts, settings } = getState();
+    const { accounts, storage, settings } = getState();
     const accountData = accounts[account];
     let pubkey = (key) ? ecc.privateToPublic(key) : publicKey;
     if (!pubkey && accountData) {
@@ -188,6 +188,15 @@ export function importWallet(
     // Import key into permanant storage
     if (key && password) {
       dispatch(importKeyStorage(password, key, pubkey));
+    }
+    let detectedPath = path;
+    // If no path was passed, but it's a known key to a path, set it
+    if (!detectedPath && publicKey && storage.paths[publicKey]) {
+      detectedPath = storage.paths[publicKey]
+    }
+    // If a path was exists, this is a hardware wallet and we need to record the pubkey
+    if (detectedPath) {
+      dispatch(importPubkeyStorage(pubkey, detectedPath));
     }
     // Detect if the current account/authorization is being reimported/replaced, and set mode
     if (
@@ -208,6 +217,7 @@ export function importWallet(
         }
       });
     }
+    const modeChange = (detectedPath && ['unknown', 'ledger'].includes(mode)) ? 'ledger' : 'hot';
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
@@ -215,8 +225,8 @@ export function importWallet(
         accountData,
         authorization,
         chainId,
-        mode,
-        path,
+        mode: (modeChange) ? modeChange : mode,
+        path: detectedPath,
         pubkey
       }
     });
