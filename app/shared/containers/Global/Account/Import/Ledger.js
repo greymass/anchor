@@ -138,7 +138,7 @@ class GlobalModalAccountImportLedger extends Component<Props> {
     const matches = accounts.__lookups;
     const panes = [
       {
-        menuItem: 'Ledger Info',
+        menuItem: 'Ledger Settings',
         render: () => (
           <React.Fragment>
             <Table definition>
@@ -197,9 +197,6 @@ class GlobalModalAccountImportLedger extends Component<Props> {
         menuItem: 'Accounts',
         render: () => (
           <Segment attached stacked color="blue">
-            <p>
-              {t('global_account_import_ledger_select_description')}
-            </p>
             <List divided relaxed>
               {(matches.map((account) => {
                 const data = accounts[account];
@@ -246,7 +243,11 @@ class GlobalModalAccountImportLedger extends Component<Props> {
       });
     }
     return (
-      <React.Fragment>
+      <Segment basic>
+        <Header
+          content="Load from Ledger"
+          subheader={t('global_account_import_ledger_select_description')}
+        />
         {(status !== 'connected')
           ? (
             <Segment basic>
@@ -310,7 +311,7 @@ class GlobalModalAccountImportLedger extends Component<Props> {
             onClick={this.importAccounts}
           />
         </Segment>
-      </React.Fragment>
+      </Segment>
     );
   }
 }

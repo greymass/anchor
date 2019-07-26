@@ -112,9 +112,10 @@ class GlobalModalAccountImportWatch extends Component<Props> {
     return (
       <Tab.Pane>
         <Segment basic>
-          <p>
-            {t('global_account_import_watch_description')}
-          </p>
+          <Header
+            content="Watch an account"
+            subheader={t('global_account_import_watch_description')}
+          />
           <Form>
             <Form.Group>
               <GlobalFormFieldAccount
