@@ -128,6 +128,29 @@ export function importWalletFromBackup(wallet, settings = {}) {
   };
 }
 
+function importPubkeyStorage(pubkey, path) {
+  return (dispatch: () => void, getState) => {
+    const { storage } = getState();
+    // Add the pubkey to the keys array
+    const keys = uniq([
+      ...storage.keys,
+      ...[pubkey]
+    ]);
+    // Modify path storage to record where this key was accessed from
+    const paths = { ...storage.paths };
+    paths[pubkey] = path;
+    return dispatch({
+      type: types.WALLET_STORAGE_UPDATE,
+      payload: {
+        data: storage.data,
+        keys,
+        paths,
+      }
+    });
+  };
+}
+
+
 function importKeyStorage(
   password = false,
   key = false,
@@ -154,6 +177,43 @@ function importKeyStorage(
     }
     // Encrypt and store
     const keys = data.map(k => k.pubkey);
+    const encrypted = encrypt(JSON.stringify(data), password);
+    return dispatch({
+      type: types.WALLET_STORAGE_UPDATE,
+      payload: {
+        data: encrypted,
+        keys,
+      }
+    });
+  };
+}
+
+export function importKeypairStorage(
+  password = false,
+  keypairs = [],
+) {
+  return (dispatch: () => void, getState) => {
+    const { storage } = getState();
+    let data;
+    // Generate the new records
+    const records = keypairs.map(([pubkey, key]) => ({ key, pubkey }));
+    // Ensure no duplicates by retrieving all non-matching existing records
+    const newKeys = records.map(k => k.pubkey);
+    if (storage.data) {
+      // Decrypt storage
+      const decrypted = JSON.parse(decrypt(storage.data, password).toString(CryptoJS.enc.Utf8));
+      const [, other] = partition(decrypted, (e) => newKeys.includes(e.pubkey));
+      // Merge new records with existing array
+      data = [...records, ...other];
+    } else {
+      // Establish a new array of keys
+      data = [...records];
+    }
+    const keys = uniq([
+      ...data.map(k => k.pubkey),
+      ...Object.keys(storage.paths),
+    ]);
+    // Encrypt and store
     const encrypted = encrypt(JSON.stringify(data), password);
     return dispatch({
       type: types.WALLET_STORAGE_UPDATE,
@@ -471,6 +531,7 @@ export function upgradeV1Wallets(wallets, password) {
 export default {
   completeConvertToLedger,
   importKeyStorage,
+  importKeypairStorage,
   importWallet,
   importWalletFromBackup,
   importWallets,
