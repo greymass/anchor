@@ -104,9 +104,10 @@ class GlobalModalAccountImportHot extends Component<Props> {
     return (
       <Tab.Pane>
         <Segment basic>
-          <p>
-            {t('global_account_import_private_description')}
-          </p>
+          <Header
+            content="Lookup by Private Key"
+            subheader={t('global_account_import_private_description')}
+          />
           <GlobalFormFieldKeyPrivate
             autoFocus
             connection={connection}
