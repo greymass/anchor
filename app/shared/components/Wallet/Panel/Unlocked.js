@@ -17,6 +17,17 @@ import WalletPanelButtonWaxClaim from './Button/Wax/Claim';
 class WalletPanelUnlocked extends Component<Props> {
   state = { activeIndex: 0 };
 
+  componentDidMount() {
+    const { actions, connection, settings } = this.props;
+
+    const isWaxChain =
+      connection.chainId === '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4';
+
+    if (isWaxChain) {
+      actions.getTable('eosio', settings.account, 'genesis');
+    }
+  }
+
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
     const { activeIndex } = this.state;
@@ -38,6 +49,7 @@ class WalletPanelUnlocked extends Component<Props> {
       validate,
       settings,
       system,
+      tables,
       transaction,
       t
     } = this.props;
@@ -45,7 +57,10 @@ class WalletPanelUnlocked extends Component<Props> {
     const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
     // Disable features based on distribution feature (BEOS)
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
+
     const isWaxChain = connection.chainId === '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4';
+    const neverClaimedWaxGenesis = (get(tables, `eosio.${settings.account}.genesis.rows`) || []).length === 0;
+    const needsWaxClaimButton = isWaxChain && neverClaimedWaxGenesis;
 
     if (!settings.account) return false;
     return (
@@ -105,7 +120,7 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
-                  {isWaxChain && (
+                  {needsWaxClaimButton && (
                     <Segment>
                       <WalletPanelButtonWaxClaim
                         actions={actions}
