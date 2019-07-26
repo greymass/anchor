@@ -506,6 +506,65 @@ export function getAccountByKey(key) {
   };
 }
 
+export function getAccountByKeys(keys) {
+  return (dispatch: () => void, getState) => {
+    // Prevent private keys from submitting
+    const filtered = keys.filter((key) => !ecc.isValidPrivate(key))
+    const {
+      connection,
+      features,
+      settings
+    } = getState();
+    const {
+      endpoints
+    } = features;
+    if (keys.length && (settings.node || settings.node.length !== 0)) {
+      if (endpoints && endpoints.includes('/v1/history/get_keys_accounts')) {
+        dispatch({
+          type: types.SYSTEM_ACCOUNT_BY_KEYS_PENDING,
+          payload: { keys }
+        });
+        return httpQueue.add(() =>
+          httpClient
+            .post(`${connection.httpEndpoint}/v1/history/get_keys_accounts`, {
+              public_keys: keys
+            })
+            .then((results) => {
+              return dispatch({
+                type: types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS,
+                payload: {
+                  accounts: results.data,
+                }
+              });
+            })
+            .catch((err) => dispatch({
+              type: types.GET_ACCOUNT_BALANCE_FAILURE,
+              payload: { err }
+            })));
+      } else {
+        dispatch({
+          type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
+          payload: { keys }
+        });
+        return keys.forEach((key) => eos(connection).getKeyAccounts(key).then((accounts) => {
+          dispatch(getAccounts(accounts.account_names));
+          return dispatch({
+            type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
+            payload: { accounts }
+          });
+        }).catch((err) => dispatch({
+          type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+          payload: { err, keys }
+        })))
+      }
+    }
+    return dispatch({
+      type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+      payload: { keys },
+    });
+  };
+}
+
 export function clearAccountByKey() {
   return (dispatch: () => void) => {
     dispatch({
@@ -551,6 +610,7 @@ export default {
   clearActionsCache,
   getAccount,
   getAccountByKey,
+  getAccountByKeys,
   getActions,
   getCurrencyBalance,
   syncAccounts,

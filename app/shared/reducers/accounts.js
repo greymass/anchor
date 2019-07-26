@@ -1,9 +1,10 @@
 import * as types from '../actions/types';
 import { set } from 'dot-prop-immutable';
-import { sumBy } from 'lodash';
+import { sumBy, uniq } from 'lodash';
 
 const initialState = {
-  __lookups: []
+  __lookups: [],
+  __map: {},
 };
 
 export default function accounts(state = initialState, action) {
@@ -38,6 +39,15 @@ export default function accounts(state = initialState, action) {
     case types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS: {
       return Object.assign({}, state, {
         __lookups: action.payload.accounts.account_names
+      });
+    }
+    case types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS: {
+      return Object.assign({}, state, {
+        __lookups: uniq([
+          ...action.payload.accounts.account_names,
+          ...state.__lookups,
+        ]),
+        __map: action.payload.accounts.map
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEY_PENDING:
