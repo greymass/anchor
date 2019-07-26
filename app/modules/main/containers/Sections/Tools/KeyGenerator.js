@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import ToolsKeyGeneratorComponent from '../../../../../shared/components/Tools/Keys';
+import ToolsKeyGeneratorComponent from '../../../../../shared/components/Tools/KeyGenerator';
+
+import * as WalletsActions from '../../../../../shared/actions/wallets';
 
 class ToolsKeyGenerator extends Component<Props> {
   render = () => (
@@ -19,4 +22,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(ToolsKeyGenerator));
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({
+      ...WalletsActions
+    }, dispatch)
+  };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsKeyGenerator));
