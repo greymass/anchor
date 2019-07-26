@@ -107,6 +107,17 @@ export default class EOSAccount {
 
   getAuthorizations(pubkey) {
     const { account } = this;
+    // If multiple keys are passed, recurse
+    if (Array.isArray(pubkey)) {
+      let valid = [];
+      pubkey.forEach((pkey) => {
+        const matches = filter(account.permissions, (perm) => !!filter(perm.required_auth.keys, { key: pkey }).length);
+        if (matches.length) {
+          valid = [...valid, ...matches];
+        }
+      })
+      return valid;
+    }
     if (account) {
       // Return all authorizations which this key matches
       return filter(account.permissions, (perm) =>
