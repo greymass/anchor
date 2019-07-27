@@ -4,7 +4,11 @@ import { sumBy, uniq } from 'lodash';
 import Decimal from 'decimal.js';
 
 const initialState = {
+  // Account names found via key lookup
   __lookups: [],
+  // Account Permissions found via key lookup
+  __permissions: [],
+  // Map of Permissions to Public Keys
   __map: {},
 };
 
@@ -38,8 +42,12 @@ export default function accounts(state = initialState, action) {
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS: {
+      console.log(action.payload)
       return Object.assign({}, state, {
-        __lookups: action.payload.accounts.account_names
+        __lookups: uniq([
+          ...action.payload.accounts.account_names,
+          ...state.__lookups,
+        ])
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS: {
@@ -48,6 +56,7 @@ export default function accounts(state = initialState, action) {
           ...action.payload.accounts.account_names,
           ...state.__lookups,
         ]),
+        __permissions: action.payload.accounts.permissions,
         __map: action.payload.accounts.map
       });
     }
