@@ -61,7 +61,7 @@ export class GlobalFragmentChainLogo extends PureComponent<Props> {
         content={t('tools:tools_wallets_blockchain')}
         header={name}
         inverted
-        position="top center"
+        position="left center"
         style={{ textAlign: 'center' }}
         trigger={image}
       />
