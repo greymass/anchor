@@ -25,7 +25,13 @@ const initialState = {
 
 export default function connection(state = initialState, action) {
   switch (action.type) {
-    case types.WALLET_REMOVE:
+    case types.WALLET_REMOVE: {
+      return Object.assign({}, state, {
+        authorization: undefined,
+        keyProvider: [],
+        keyProviderObfuscated: {},
+      });
+    }
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
