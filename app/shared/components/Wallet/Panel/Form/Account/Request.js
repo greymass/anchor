@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Container, Form, Message } from 'semantic-ui-react';
+import { Container, Form, Header, Message } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
