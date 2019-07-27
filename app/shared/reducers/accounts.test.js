@@ -6,7 +6,7 @@ import reducer from './accounts';
 describe('accounts reducer', () => {
   it('CLEAR_ACCOUNT_CACHE returns initial state', () => {
     const initialState = { __lookups: [{ account: 'teamgreymass' }] };
-    const expectedNewState = { __lookups: [] };
+    const expectedNewState = { __lookups: [], __map: {} };
     const action = { type: types.CLEAR_ACCOUNT_CACHE };
 
     expect(reducer(initialState, action)).toEqual(expectedNewState);
@@ -14,7 +14,7 @@ describe('accounts reducer', () => {
 
   it('RESET_ALL_STATES returns initial state', () => {
     const initialState = { __lookups: [{ account: 'teamgreymass' }] };
-    const expectedNewState = { __lookups: [] };
+    const expectedNewState = { __lookups: [], __map: {} };
     const action = { type: types.RESET_ALL_STATES };
 
     expect(reducer(initialState, action)).toEqual(expectedNewState);
