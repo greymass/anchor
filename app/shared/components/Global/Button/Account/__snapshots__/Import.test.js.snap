@@ -3,7 +3,7 @@
 exports[`GlobalButtonAccountImport renders correctly 1`] = `
 <Translate(GlobalModalAccountImport)
   onClose={[Function]}
-  open={false}
+  open={true}
   settings={Object {}}
   trigger={
     <Button
