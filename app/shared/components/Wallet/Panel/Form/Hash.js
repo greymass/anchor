@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormModalConfirm from './Modal/Confirm';
 
@@ -39,15 +39,29 @@ class WalletPanelFormHash extends Component<Props> {
           type="password"
           onChange={this.onChange}
         />
-        <WalletPanelFormModalConfirm
-          buttonText={t('wallet_panel_hash_button')}
-          disabled={!password}
-          open={confirming}
-          onCancel={this.onCancel}
-          onConfirm={this.onConfirm}
-          onSubmit={this.onComplete}
-          password={password}
-        />
+        <Segment basic clearing>
+          {(this.props.onClose)
+            ? (
+              <Button
+                floated="left"
+                onClick={this.props.onClose}
+              >
+                <Icon name="x" /> {t('cancel')}
+              </Button>
+            )
+            : false
+          }
+          <WalletPanelFormModalConfirm
+            buttonText={t('wallet_panel_hash_button')}
+            disabled={!password}
+            floated="right"
+            open={confirming}
+            onCancel={this.onCancel}
+            onConfirm={this.onConfirm}
+            onSubmit={this.onComplete}
+            password={password}
+          />
+        </Segment>
       </Form>
     );
   }
