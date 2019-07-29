@@ -12,8 +12,8 @@ jobs:
           - node8-build-deps-
       - run: npm ci
       - save_cache:
-           paths:
-            - node_modules
+          paths:
+          - node_modules
           key: node8-build-deps-{{ checksum "package-lock.json" }}
       - run: cd app && npm ci
       - run: npm test
