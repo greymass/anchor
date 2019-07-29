@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: node:8
     steps:
-      - run: apt-get install build-essential libudev-dev
+      - run: apt-get update && apt-get install build-essential libudev-dev
       - checkout
       - run: npm ci
       - run: cd app && npm ci
