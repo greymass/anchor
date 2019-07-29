@@ -6,7 +6,15 @@ jobs:
     steps:
       - run: apt-get update && apt-get install build-essential libudev-dev
       - checkout
+      - restore_cache:
+          keys:
+          - node8-build-deps-{{ checksum "package-lock.json" }}
+          - node8-build-deps-
       - run: npm ci
+      - save_cache:
+           paths:
+            - node_modules
+          key: node8-build-deps-{{ checksum "package-lock.json" }}
       - run: cd app && npm ci
       - run: npm test
 workflows:
