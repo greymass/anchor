@@ -41,7 +41,7 @@ const toolSections = {
       path: 'tools/recommendations'
     },
     tools_menu_managekeys: {
-      modes: ['hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/keys'
     },
     tools_menu_permissions: {
@@ -130,7 +130,6 @@ class ToolsHome extends Component<Props> {
       color: 'black',
       cursor: 'pointer',
     };
-    console.log(settings.walletMode)
     return (
       <React.Fragment>
         <Segment style={{ margin: '0 0 15px' }}>
