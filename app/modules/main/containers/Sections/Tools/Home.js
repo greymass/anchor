@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import { filter } from 'lodash';
 
 import { Button, Grid, Header, List, Popup, Segment } from 'semantic-ui-react';
 
@@ -150,35 +149,30 @@ class ToolsHome extends Component<Props> {
           </p>
         </Segment>
         <Grid columns={4} stackable>
-          {Object.keys(toolSections).map(sectionGroupTitle => {
-            const hasValidItems = filter(
-              toolSections[sectionGroupTitle],
-              (item) => (item.modes.includes(settings.walletMode) || item.modes.includes('all'))
-            );
-            return (
-              <Grid.Column>
-                <Segment.Group vertical>
-                  <Header attached="top">
-                    {t(sectionGroupTitle)}
-                  </Header>
-                  <Segment attached="bottom" secondary>
-                    <List divided relaxed="very">
-                      {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
+          {Object.keys(toolSections).map(sectionGroupTitle => (
+            <Grid.Column>
+              <Segment.Group vertical>
+                <Header attached="top">
+                  {t(sectionGroupTitle)}
+                </Header>
+                <Segment attached="bottom" secondary>
+                  <List divided relaxed="very">
+                    {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
                         const item = toolSections[sectionGroupTitle][sectionTitle];
-                        const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
-                        const reason = (
-                          <div>
-                            <p>This feature requires a one of the following types of wallets:</p>
-                            <List>
-                              {item.modes
-                                .filter((m) => !!m)
-                                .map((type) =>
-                                  <List.Item content={`${String(type).toUpperCase()} Wallet`} />)}
-                            </List>
-                            <p>Select a compatible wallet to continue.</p>
-                          </div>
-                        );
-                        return (isValidItem)
+                      const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
+                      const reason = (
+                        <div>
+                          <p>This feature requires a one of the following types of wallets:</p>
+                          <List>
+                            {item.modes
+                              .filter((m) => !!m)
+                              .map((type) =>
+                                <List.Item content={`${String(type).toUpperCase()} Wallet`} />)}
+                          </List>
+                          <p>Select a compatible wallet to continue.</p>
+                        </div>
+                      );
+                      return (isValidItem)
                         ? (
                           <List.Item
                             content={t(sectionTitle)}
@@ -199,13 +193,12 @@ class ToolsHome extends Component<Props> {
                             )}
                           />
                         );
-                      })}
-                    </List>
-                  </Segment>
-                </Segment.Group>
-              </Grid.Column>
-            );
-          })}
+                    })}
+                  </List>
+                </Segment>
+              </Segment.Group>
+            </Grid.Column>
+          ))}
         </Grid>
       </React.Fragment>
     );
