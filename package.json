@@ -247,6 +247,7 @@
     "stylelint-config-standard": "^18.2.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
+    "version-bump-prompt": "^5.0.4",
     "webpack": "^4.11.1",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.0.2",
