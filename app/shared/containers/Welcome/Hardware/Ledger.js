@@ -15,7 +15,7 @@ import * as SettingsActions from '../../../actions/settings';
 import * as WalletActions from '../../../actions/wallet';
 import * as WalletsActions from '../../../actions/wallets';
 
-import GlobalModalAccountImportLedger from '../../Global/Account/Import/Ledger';
+import GlobalModalAccountImportLedger from '../../Global/Account/Import/Ledger/Accounts';
 import ToolsHardwareLedgerStatus from '../../../components/Tools/Hardware/Ledger/Status';
 
 class WelcomeHardwareLedgerContainer extends Component<Props> {
