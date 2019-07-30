@@ -6,14 +6,13 @@ import { isEqual } from 'lodash';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
-import { getProducerJurisdiction } from '../../../../actions/jurisdictions';
+import JurisdictionRow from './JurisdictionRow';
 
 class ProducersTableRow extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
     !isEqual(this.props.producer.key, nextProps.producer.key)
     || !isEqual(this.props.isValidUser, nextProps.isValidUser)
-    || !isEqual(this.props.isSelected, nextProps.isSelected)
-    || !isEqual(this.props.isClicked, nextProps.isClicked);
+    || !isEqual(this.props.isSelected, nextProps.isSelected);
 
   render() {
     const {
@@ -31,10 +30,9 @@ class ProducersTableRow extends Component<Props> {
       settings,
       t,
       totalVoteWeight,
-      setProducerJurisdiction,
-      setRowVisbilitity,
-      isClicked,
-      actions
+      jurisdictions,
+      actions,
+      rows,
     } = this.props;
 
     const epoch = 946684800000;
@@ -110,23 +108,27 @@ class ProducersTableRow extends Component<Props> {
             )}
           {(producersJurisdiction) && (
             <Popup
-              // content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
-              // header={t('producer_vote_header', { producer: producer.owner })}
-              header="Jurisdiction"
-              content="Description..."
+              className="jurisdiction-popup"
               hoverable
-              position="right center"
+              position="left center"
+              mouseEnterDelay="1000"
+              content={
+                <JurisdictionRow
+                  rows={rows}
+                  codesLabel={t('block_producer_jurisdictions_code_table_header')}
+                  jurisdictionLabel={t('block_producer_jurisdictions_jurisdiction_table_header')}
+                  descriptionLabel={t('block_producer_jurisdictions_description_table_header')}
+                  jurisdictions={jurisdictions}
+                  producer={producer.owner}
+                />
+              }
               trigger={(
                 <Button
-                  color={isClicked ? 'green' : 'grey'}
+                  className="jurisdiction-button"
                   disabled={!isValidUser || isProxying}
-                  icon={isClicked ? 'map marker' : 'map marker alternate'}
+                  icon="map marker alternate"
                   size="small"
-                  onClick={
-                    (isClicked)
-                    ? () => { setRowVisbilitity(producer.owner); }
-                    : () => { actions.getProducerJurisdiction(producer.owner); setRowVisbilitity(producer.owner); }
-                  }
+                  onMouseEnter={() => { actions.getProducerJurisdiction(producer.owner); }}
                 />
               )}
             />
