@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Dropdown, Grid, Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Dropdown, Grid, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldAccount from '../../../../components/Global/Form/Field/Account';
@@ -55,11 +55,9 @@ class GlobalModalAccountImportCold extends Component<Props> {
   }
   render() {
     const {
-      accounts,
       actions,
       onClose,
       settings,
-      system,
       t,
       validate
     } = this.props;
