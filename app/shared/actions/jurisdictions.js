@@ -65,7 +65,7 @@ export function getProducerJurisdiction(producer) {
       connection
     } = getState();
 
-    const url = `${connection.httpEndpoint}/v1/jurisdiction/get_all_jurisdictions`;
+    const url = `${connection.httpEndpoint}/v1/jurisdiction/get_producer_jurisdiction`;
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

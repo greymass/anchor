@@ -307,8 +307,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
               <JurisdictionsForm
                 actions={this.props.actions}
                 jurisdictions={jurisdictions}
-                value={this.state.jurisdictions}
-                onChange={this.onJurisdictionChange.bind(this)}
                 label={t('transfer_label_jurisdictions')}
               />
               <Divider />
