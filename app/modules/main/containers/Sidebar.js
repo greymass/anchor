@@ -87,12 +87,26 @@ class SidebarContainer extends Component<Props> {
                 active={module && module.startsWith('wallet')}
                 onClick={this.onClick}
                 name="wallet"
+                color="teal"
+                style={{ color }}
+              >
+                <Icon name="id card" size="large" />
+                {(!settings.sidebarCollapsed)
+                  ? <p>Wallet</p>
+                  : false
+                }
+              </Menu.Item>
+              <Menu.Item
+                as="a"
+                active={module && module.startsWith('resources')}
+                onClick={this.onClick}
+                name="resources"
                 color="blue"
                 style={{ color }}
               >
-                <Icon name="money bill" size="large" />
+                <Icon name="tachometer alternate" size="large" />
                 {(!settings.sidebarCollapsed)
-                  ? <p>Wallet</p>
+                  ? <p>Resources</p>
                   : false
                 }
               </Menu.Item>
