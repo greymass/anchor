@@ -4,13 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Grid, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
-import GlobalButtonElevate from '../../Button/Elevate';
-import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 
-import EOSAccount from '../../../../utils/EOS/Account';
 import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
 import * as WalletActions from '../../../../actions/wallet';
@@ -23,9 +20,9 @@ class GlobalModalAccountImportPassword extends Component<Props> {
       t
     } = this.props;
     return (
-      <Tab.Pane>
-        <Segment basic>
-          <Header size="large">
+      <React.Fragment>
+        <Segment attached="bottom" padded>
+          <Header color="black">
             <Icon name="lock" />
             <Header.Content>
               {t('global_account_import_private_requires_hash_header_r2')}
@@ -34,33 +31,28 @@ class GlobalModalAccountImportPassword extends Component<Props> {
               </Header.Subheader>
             </Header.Content>
           </Header>
-          <Segment basic>
-            <WalletPanelFormHash
-              actions={actions}
-            />
-          </Segment>
-          <Segment color="orange">
-            <Header
-              color="orange"
-              icon="warning"
-              content="Backup your password and keys"
-              subheader="Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered, and without your password, the private keys cannot be decrypted."
-            />
-          </Segment>
+
+          <WalletPanelFormHash
+            actions={actions}
+            onClose={this.props.onClose}
+          />
         </Segment>
-      </Tab.Pane>
+        <Segment color="orange">
+          <Header
+            color="orange"
+            icon="warning"
+            content="Backup your Anchor password"
+            subheader="Ensure you keep a copy of your password safely offline. This password cannot be recovered, and without this password, any private keys stored within Anchor cannot be decrypted."
+          />
+        </Segment>
+      </React.Fragment>
     );
   }
 }
 
 function mapStateToProps(state) {
   return {
-    accounts: state.accounts,
-    connection: state.connection,
     settings: state.settings,
-    system: state.system,
-    validate: state.validate,
-    wallets: state.wallets
   };
 }
 

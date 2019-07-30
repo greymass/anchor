@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-
+import { times } from 'lodash';
 import { Button, Grid, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
@@ -20,7 +20,7 @@ class ToolsKeyGenerator extends Component<Props> {
   copyToClipboard = () => {
     let string = '';
     this.state.keys.forEach((key) => {
-      string += `Public Key: ${key[0]}\nPrivate Key: ${key[1]}\n\n`
+      string += `Public Key: ${key[0]}\nPrivate Key: ${key[1]}\n\n`;
     });
     clipboard.writeText(string);
     this.setState({
@@ -28,15 +28,19 @@ class ToolsKeyGenerator extends Component<Props> {
     }, () => {
       setTimeout(() => {
         this.setState({ copied: false });
-      }, 1500)
+      }, 1500);
     });
   };
+  generateKeyPairs = (e, { count }) => {
+    console.log(count)
+    times(count, this.generateKeyPair);
+  }
 
   generateKeyPair = () => {
     const { connection } = this.props;
     const { keyPrefix } = connection;
-    const keys = this.state.keys.slice(0);
     ecc.randomKey().then(privateKey => {
+      const keys = this.state.keys.slice(0);
       const publicKey = ecc.privateToPublic(privateKey, keyPrefix);
       keys.push([publicKey, privateKey]);
       this.setState({
@@ -45,7 +49,7 @@ class ToolsKeyGenerator extends Component<Props> {
           [publicKey]: false
         }),
       });
-      if(this.props.onKeypair) {
+      if (this.props.onKeypair) {
         this.props.onKeypair(publicKey);
       }
       return keys;
@@ -55,18 +59,17 @@ class ToolsKeyGenerator extends Component<Props> {
   };
 
   toggleReveal = (publicKey) => {
-    console.log(publicKey)
     this.setState({
       revealed: Object.assign({}, this.state.revealed, {
         [publicKey]: !this.state.revealed[publicKey]
       })
-    })
+    });
   }
 
   saveKeyPairs = (password) => {
     const { keys } = this.state;
-    this.props.actions.importKeypairStorage(password, keys)
-    if(this.props.onSave) {
+    this.props.actions.importKeypairStorage(password, keys);
+    if (this.props.onSave) {
       this.props.onSave();
     }
   }
@@ -115,9 +118,8 @@ class ToolsKeyGenerator extends Component<Props> {
         </Segment>
       )
     }
-
     return (
-      <Segment color="violet" style={{ margin: 0 }}>
+      <Segment attached="bottom">
         <Header>
           {t('tools:tools_keys_key_generation_header_r2')}
           <Header.Subheader>
@@ -125,32 +127,24 @@ class ToolsKeyGenerator extends Component<Props> {
           </Header.Subheader>
         </Header>
         <Button
-          color="green"
-          content={t('tools:tools_keys_key_generation_new_key')}
-          icon="plus"
-          onClick={this.generateKeyPair}
-        />
-        <GlobalButtonElevate
-          onSuccess={(password) => this.saveKeyPairs(password)}
-          trigger={(
-            <Button
-              color="purple"
-              content={t('tools:tools_keys_key_generation_save_keys')}
-              disabled={keys.length === 0}
-              icon="plus"
-            />
-          )}
+          color="blue"
+          content="Generate Key Pair (x2)"
+          icon="circle plus"
+          count={2}
+          onClick={this.generateKeyPairs}
         />
         <Button
+          basic
           color={(copied) ? "teal" : "blue"}
           content={(copied) ? 'Copied!' : t('tools:tools_keys_key_generation_copy_clipboard')}
           disabled={keys.length === 0}
+          floated="right"
           icon="clipboard"
           onClick={this.copyToClipboard}
         />
         <Message
           header="Some/all of these keys have NOT been saved."
-          hidden={this.props.closable}
+          hidden={this.props.importing || this.props.closable}
           icon="warning sign"
           negative
           size="large"
@@ -169,50 +163,68 @@ class ToolsKeyGenerator extends Component<Props> {
           )}
         />
         <Segment.Group>
-          {(keys.length) ? keys.map(key => {
-            const isRevealed = (revealed[key[0]]);
-            return (
-              <Segment color="grey">
-                <Table definition>
-                  <Table.Row>
-                    <Table.Cell collapsing>Public Key</Table.Cell>
-                    <Table.Cell>{key[0]}</Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell collapsing>Private Key</Table.Cell>
-                    <Table.Cell>
-                      {(isRevealed)
-                        ? (
-                          <span>
-                          <Icon
-                            name="eye"
-                            onClick={() => this.toggleReveal(key[0])}
-                          />
-                            {key[1]}
-                          </span>
-                        )
-                        : (
-                          <span>
-                            <Icon
-                              name="eye"
-                              onClick={() => this.toggleReveal(key[0])}
-                            />
-                            ************************************************************
-                          </span>
-                        )
-                      }
+          {(keys.length) ? (
+            <React.Fragment>
+              {keys.map(key => {
+                const isRevealed = (revealed[key[0]]);
+                return (
+                  <Segment color="grey">
+                    <Table definition>
+                      <Table.Row>
+                        <Table.Cell collapsing>Public Key</Table.Cell>
+                        <Table.Cell>{key[0]}</Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell collapsing>Private Key</Table.Cell>
+                        <Table.Cell>
+                          {(isRevealed)
+                            ? (
+                              <span>
+                                <Icon
+                                  name="eye"
+                                  onClick={() => this.toggleReveal(key[0])}
+                                />
+                                {key[1]}
+                              </span>
+                            )
+                            : (
+                              <span>
+                                <Icon
+                                  name="eye"
+                                  onClick={() => this.toggleReveal(key[0])}
+                                />
+                                ************************************************************
+                              </span>
+                            )
+                          }
 
-                    </Table.Cell>
-                  </Table.Row>
-                </Table>
+                        </Table.Cell>
+                      </Table.Row>
+                    </Table>
+                  </Segment>
+                )
+              })}
+              <Segment basic textAlign="center">
+                <GlobalButtonElevate
+                  onSuccess={(password) => this.saveKeyPairs(password)}
+                  trigger={(
+                    <Button
+                      centered
+                      color="purple"
+                      content={t('tools:tools_keys_key_generation_save_keys')}
+                      icon="save"
+                    />
+                  )}
+                />
               </Segment>
-            )
-          })
+
+            </React.Fragment>
+          )
           : (
-            <Segment>
-              <Header>
-                Click 'Generate Key' to create a new public/private keypair.
-              </Header>
+            <Segment color="grey" secondary>
+              <p>
+                Click 'Generate Key' to create a new public/private key pair.
+              </p>
             </Segment>
           )
         }
