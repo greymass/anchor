@@ -4,272 +4,108 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { find } from 'lodash';
-import { Button, Checkbox, Divider, Grid, Header, List, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Header, Segment, Tab } from 'semantic-ui-react';
 
-import GlobalButtonElevate from '../../Button/Elevate';
-import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
-import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
-import GlobalModalAccountImportPassword from './Password';
+import GlobalModalAccountImportHot from './Hot';
+import GlobalModalAccountImportLedgerAccounts from './Ledger/Accounts';
+import GlobalModalAccountImportWatch from './Watch';
 
-import EOSAccount from '../../../../utils/EOS/Account';
-import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
-import * as WalletActions from '../../../../actions/wallet';
-import * as WalletsActions from '../../../../actions/wallets';
+import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
 
 class GlobalModalAccountImportExisting extends Component<Props> {
   state = {
-    selected: [],
-    publicKey: '',
-    valid: false,
-    value: ''
+    pane: false
   }
-  componentDidMount() {
-    this.props.actions.clearAccountByKey();
-    this.props.actions.getAccountByKeys(this.props.pubkeys.available);
-  }
-  componentWillReceiveProps(nextProps) {
-    const { validate } = this.props;
-    const nextValidate = nextProps.validate;
-    if (
-      validate.NODE === 'PENDING'
-      && nextValidate.NODE === 'SUCCESS'
-    ) {
-      this.props.actions.clearAccountByKey();
-      this.props.actions.getAccountByKeys(this.props.pubkeys.available);
-    }
-  }
-  importAccounts = (password) => {
-    const {
-      selected,
-      value
-    } = this.state;
-    const {
-      actions,
-      settings
-    } = this.props;
-    const {
-      chainId
-    } = settings;
-    selected.forEach((auth) => {
-      const [account, authorization] = auth.split('@');
-      const mapped = this.props.accounts.__map
-      if (Object.keys(mapped).length) {
-        Object.keys(mapped).map((key) => {
-          if (mapped[key].includes(auth)) {
-            actions.importWallet(chainId, account, authorization, value, password, 'unknown', key);
-          }
-        })
-      } else {
-        actions.importWallet(chainId, account, authorization, value, password);
+  onClose = () => {
+    this.setState({ pane: false }, () => {
+      if (this.props.onClose) {
+        this.props.onClose();
       }
     });
-    this.props.onClose();
   }
-  toggleAccount = (e, { checked, name }) => {
-    const selected = [...this.state.selected];
-    const existing = selected.indexOf(name);
-    if (checked && existing < 0) {
-      selected.push(name);
-    } else if (!checked && existing >= 0) {
-      selected.splice(existing, 1);
-    }
-    this.setState({
-      selected,
-      valid: (selected.length > 0)
-    });
-  }
-  toggleAll = () => {
-    const { selected } = this.state;
-    if (selected.length > 0) {
-      this.setState({ selected: [], valid: false });
-    } else {
-      const { accounts, wallets } = this.props;
-      const matches = accounts.__lookups;
-      if (matches[0].includes('@')) {
-        const results = matches.filter((match) => {
-          const [accountName, accountPerm] = match.split('@');
-          const exists = find(wallets, {
-            account: accountName,
-            authorization: accountPerm
-          });
-          console.log(accountName, accountPerm, exists)
-          return !(exists)
-        })
-        console.log(results)
-        this.setState({ selected: results, valid: true })
-      } else {
-        const { pubkeys, wallets } = this.props
-        const results = matches.map((match) => {
-          const data = accounts[match];
-          if (data) {
-            const authorizations = new EOSAccount(data).getAuthorizations(pubkeys.available);
-            return authorizations.map((authorization) => {
-              const auth = `${match}@${authorization.perm_name}`
-              const exists = find(wallets, {
-                account: match,
-                authorization: authorization.perm_name
-              });
-              if (exists) return false;
-              return auth;
-            });
-          }
-        });
-        this.setState({
-          selected: [].concat.apply([], results),
-          valid: true
-        });
-      }
-    }
+  onClick = (e, { pane }) => this.setState({ pane })
+  enableLedger = () => {
+    this.props.actions.setSetting('hardwareLedgerSupport', true);
+    this.props.actions.ledgerStartListen();
   }
   render() {
     const {
-      accounts,
-      actions,
-      connection,
-      onClose,
-      pubkeys,
-      settings,
-      system,
+      status,
       t,
-      validate,
-      wallets
     } = this.props;
     const {
-      publicKey,
-      selected,
-      valid,
-      value
+      pane
     } = this.state;
-    const matches = accounts.__lookups;
-    const filtered = matches.filter((match) => {
-      if (match.includes('@')) {
-        const [accountName, accountPerm] = match.split('@');
-        const exists = find(wallets, {
-          account: accountName,
-          authorization: accountPerm
-        });
-        return !(exists);
-      } else {
-        const data = accounts[match];
-        if (data) {
-          const authorizations = new EOSAccount(data).getAuthorizations(pubkeys.available);
-          const authMatches = authorizations.filter((authorization) => {
-            const exists = find(wallets, {
-              account: match,
-              authorization: authorization.perm_name
-            });
-            return exists;
-          });
-          return authMatches.length === 0
-        }
-      }
-    })
-    const disabled = (!selected.length || !valid);
-    // console.log(selected)
-    if ([undefined, 'watch', 'ledger'].includes(settings.walletMode) && !settings.walletHash) {
-      // If a hot wallet already exists and a wallet hash does not, inform them to swap first
-      const hotWalletExists = wallets.some(o => o.mode === 'hot');
-      if (!hotWalletExists) {
-        return <GlobalModalAccountImportPassword />;
+    console.log(this.props)
+    if (pane) {
+      switch (pane) {
+        case 'hot':
+          return <GlobalModalAccountImportHot onClose={this.onClose} />;
+        case 'ledger':
+          return (
+            <Tab.Pane>
+              <GlobalModalAccountImportLedgerAccounts onClose={this.onClose} />
+            </Tab.Pane>
+          );
+        case 'watch':
+          return <GlobalModalAccountImportWatch onClose={this.onClose} />;
+        default:
+          break;
       }
     }
     return (
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Automatically find available accounts"
-            subheader={t('global_account_import_existing_description')}
+            content="Import an existing Private Key"
+            subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
           />
-          {(filtered.length > 0)
-            ? (
-              <Segment stacked color="blue">
-                <p>{t('global_account_import_existing_accounts')}</p>
-                <Button
-                  content="Toggle All"
-                  onClick={this.toggleAll}
-                  size="tiny"
-                />
-                <List divided relaxed>
-                  {(filtered.map((account) => {
-                    if (account.includes('@')) {
-                      return (
-                        <List.Item>
-                          <Checkbox
-                            checked={selected.includes(account)}
-                            label={account}
-                            name={account}
-                            onChange={this.toggleAccount}
-                          />
-                        </List.Item>
-                      );
-                    } else {
-                      const data = accounts[account];
-                      if (data) {
-                        const authorizations = new EOSAccount(data).getAuthorizations(pubkeys.available);
-                        return authorizations.map((authorization) => {
-                          const auth = `${account}@${authorization.perm_name}`;
-                          return (
-                            <List.Item>
-                              <Checkbox
-                                checked={selected.includes(auth)}
-                                label={auth}
-                                name={auth}
-                                onChange={this.toggleAccount}
-                              />
-                            </List.Item>
-                          );
-                        });
-                      }
-                    }
-                    return false;
-                  }))}
-                </List>
-              </Segment>
-            )
-            : false
-          }
-          {(filtered.length === 0 && (system.ACCOUNT_BY_KEYS === 'PENDING' || system.ACCOUNT_BY_KEY === 'PENDING'))
-            ? <Segment loading style={{ minHeight: '150px' }}/>
-            : false
-          }
-          {(filtered.length === 0
-            && (system.ACCOUNT_BY_KEYS === 'SUCCESS' || system.ACCOUNT_BY_KEY === 'SUCCESS')
-            && (system.ACCOUNT_BY_KEYS !== 'PENDING' && system.ACCOUNT_BY_KEY !== 'PENDING')
-          )
-            ? (
-              <Segment stacked size="large" color="orange">
-                <Header>
-                  Failed to locate any additional accounts
-                </Header>
-                All accounts for this blockchain that match your existing keypairs have already been imported. Import a new private key to detect new accounts.
-              </Segment>
-            )
-            : false
-          }
-        </Segment>
-        <Divider />
-        <Segment basic clearing>
           <Button
-            floated="left"
-            onClick={onClose}
-          >
-            <Icon name="x" /> {t('cancel')}
-          </Button>
-          <GlobalButtonElevate
-            onSuccess={this.importAccounts}
-            settings={settings}
-            trigger={(
+            color="blue"
+            content="Import Private Key"
+            icon="id card"
+            pane="hot"
+            onClick={this.onClick}
+          />
+        </Segment>
+        <Segment basic>
+          <Header
+            content="Import an existing Account using a Ledger device"
+            subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
+          />
+          {(status === 'connected')
+            ? (
+              <Button
+                color="blue"
+                content="Load from Ledger"
+                icon="usb"
+                pane="ledger"
+                onClick={this.onClick}
+              />
+            )
+            : (
               <Button
                 color="green"
-                content={t('global_button_account_import_action')}
-                disabled={disabled}
-                floated="right"
-                icon="circle plus"
+                content="Enable Ledger Support"
+                icon="usb"
+                pane="ledger"
+                onClick={this.enableLedger}
               />
-            )}
-            validate={validate}
+            )
+          }
+        </Segment>
+        <Segment basic>
+          <Header
+            content="Import an existing account as a Watch Wallet"
+            subheader="A watch wallet is a read-only wallet and doesn't require any key pairs. It can be used with a cold wallet setup for secure signing."
+          />
+          <Button
+            color="blue"
+            content="Setup Watch Wallet"
+            icon="eye"
+            pane="watch"
+            onClick={this.onClick}
           />
         </Segment>
       </Tab.Pane>
@@ -277,32 +113,32 @@ class GlobalModalAccountImportExisting extends Component<Props> {
   }
 }
 
+
 function mapStateToProps(state) {
   return {
-    accounts: state.accounts,
-    connection: state.connection,
-    pubkeys: {
-      available: state.storage.keys,
-    },
-    settings: state.settings,
-    system: state.system,
-    validate: state.validate,
-    wallets: state.wallets
+    storage: state.storage,
+    // accounts: state.accounts,
+    // connection: state.connection,
+    ledger: state.ledger,
+    // settings: state.settings,
+    status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
+    // system: state.system,
+    // validate: state.validate
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      ...AccountsActions,
+      ...HardwareLedgerActions,
       ...SettingsActions,
-      ...WalletActions,
-      ...WalletsActions
     }, dispatch)
   };
 }
 
 export default compose(
-  translate('global'),
+  translate('global', {
+    withRef: true
+  }),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportExisting);

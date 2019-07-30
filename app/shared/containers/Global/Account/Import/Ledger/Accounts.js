@@ -7,15 +7,15 @@ import compose from 'lodash/fp/compose';
 import { intersection, isEqual } from 'lodash';
 import { Button, Checkbox, Divider, Form, Header, Icon, List, Message, Segment, Tab, Table, TextArea } from 'semantic-ui-react';
 
-import GlobalFragmentAuthorization from '../../../../components/Global/Fragment/Authorization';
+import GlobalFragmentAuthorizationComponent from '../../../../../components/Global/Fragment/Authorization';
 
-import EOSAccount from '../../../../utils/EOS/Account';
-import * as AccountsActions from '../../../../actions/accounts';
-import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
-import * as SettingsActions from '../../../../actions/settings';
-import * as WalletsActions from '../../../../actions/wallets';
+import EOSAccount from '../../../../../utils/EOS/Account';
+import * as AccountsActions from '../../../../../actions/accounts';
+import * as HardwareLedgerActions from '../../../../../actions/hardware/ledger';
+import * as SettingsActions from '../../../../../actions/settings';
+import * as WalletsActions from '../../../../../actions/wallets';
 
-class GlobalModalAccountImportLedger extends Component<Props> {
+class GlobalModalAccountImportLedgerAccounts extends Component<Props> {
   state = {
     allValid: false,
     index: 0,
@@ -148,13 +148,7 @@ class GlobalModalAccountImportLedger extends Component<Props> {
                     Public Key
                   </Table.Cell>
                   <Table.Cell>
-                    <Form>
-                      <TextArea
-                        autoHeight
-                        style={{ wordWrap: 'break-word' }}
-                        value={ledgerKey.wif}
-                      />
-                    </Form>
+                    {ledgerKey.wif}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -192,56 +186,69 @@ class GlobalModalAccountImportLedger extends Component<Props> {
         )
       },
     ];
-    if (matches.length > 0) {
-      panes.unshift({
-        menuItem: 'Accounts',
-        render: () => (
-          <Segment attached stacked color="blue">
-            <List divided relaxed>
-              {(matches.map((account) => {
-                const data = accounts[account];
-                if (data) {
-                  const authorizations = new EOSAccount(data).getAuthorizations(ledgerKey.wif);
-                  return authorizations.map((authorization) => {
-                    const auth = `${account}@${authorization.perm_name}`;
-                    const uid = `${account}@${authorization.perm_name}@${ledgerKey.wif}@${ledger.path}`;
-                    const isSelected = (selected.indexOf(uid) >= 0);
-                    return (
-                      <List.Item key={`${account}-${auth}-${isSelected}`}>
-                        <Checkbox
-                          checked={isSelected}
-                          label={(
-                            <Header
-                              style={{ cursor: 'pointer' }}
-                            >
-                              <Icon
-                                color={(isSelected) ? 'green' : 'grey'}
-                                name={(isSelected) ? 'check square outline' : 'square outline'}
-                              />
-                              <Header.Content>
-                                <GlobalFragmentAuthorization
-                                  account={account}
-                                  authorization={authorization.perm_name}
-                                  pubkey={ledgerKey.wif}
+    panes.unshift({
+      menuItem: 'Accounts',
+      render: () => (
+        <Segment attached stacked color="blue">
+          {(matches.length > 0)
+            ? (
+              <List divided relaxed>
+                {(matches.map((account) => {
+                  const data = accounts[account];
+                  if (data) {
+                    const authorizations = new EOSAccount(data).getAuthorizations(ledgerKey.wif);
+                    return authorizations.map((authorization) => {
+                      const auth = `${account}@${authorization.perm_name}`;
+                      const uid = `${account}@${authorization.perm_name}@${ledgerKey.wif}@${ledger.path}`;
+                      const isSelected = (selected.indexOf(uid) >= 0);
+                      return (
+                        <List.Item key={`${account}-${auth}-${isSelected}`}>
+                          <Checkbox
+                            checked={isSelected}
+                            label={(
+                              <Header
+                                style={{ cursor: 'pointer' }}
+                              >
+                                <Icon
+                                  color={(isSelected) ? 'green' : 'grey'}
+                                  name={(isSelected) ? 'check square outline' : 'square outline'}
                                 />
-                              </Header.Content>
-                            </Header>
-                          )}
-                          name={uid}
-                          onClick={this.onToggleSelected}
-                          value={ledgerKey.wif}
-                        />
-                      </List.Item>
-                    );
-                  });
-                }
-                return false;
-              }))}
-            </List>
-          </Segment>
-        )
-      });
-    }
+                                <Header.Content>
+                                  <GlobalFragmentAuthorizationComponent
+                                    account={account}
+                                    authorization={authorization.perm_name}
+                                    pubkey={ledgerKey.wif}
+                                  />
+                                </Header.Content>
+                              </Header>
+                            )}
+                            name={uid}
+                            onClick={this.onToggleSelected}
+                            value={ledgerKey.wif}
+                          />
+                        </List.Item>
+                      );
+                    });
+                  }
+                  return false;
+                }))}
+              </List>
+            )
+            : false
+          }
+          {(matches.length === 0)
+            ? (
+              <div>
+                <p>No accounts found with the public key of {ledgerKey.wif}.</p>
+                <p>Modify the Ledger Settings to use a different Key Index if you believe accounts already exist on this device.</p>
+              </div>
+
+            )
+            : false
+          }
+        </Segment>
+      )
+    });
     return (
       <Segment basic>
         <Header
@@ -345,4 +352,4 @@ export default compose(
     withRef: true
   }),
   connect(mapStateToProps, mapDispatchToProps)
-)(GlobalModalAccountImportLedger);
+)(GlobalModalAccountImportLedgerAccounts);
