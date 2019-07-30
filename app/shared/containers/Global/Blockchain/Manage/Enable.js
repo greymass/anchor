@@ -97,7 +97,7 @@ class GlobalBlockchainEnable extends Component<Props> {
         />
         <Button
           chainId="new"
-          content="Add Blockchain"
+          content="Custom Blockchain"
           floated="right"
           icon="circle plus"
           onClick={this.props.onEdit}
@@ -113,16 +113,24 @@ class GlobalBlockchainEnable extends Component<Props> {
           </Table.Header>
           <Table.Body>
             {sorted.map((b) => (
-              <Table.Row>
-                <Table.Cell collapsing textAlign="center">
+              <Table.Row
+                style={{ backgroundColor: enabledChains.includes(b.chainId) ? '#ffffff' : '#ececec' }}
+              >
+                <Table.Cell
+                  collapsing
+                  onClick={() => this.toggleChain(b.chainId)}
+                  textAlign="center"
+                >
                   <Icon
                     name={enabledChains.includes(b.chainId) ? 'check square outline' : 'square outline'}
-                    onClick={() => this.toggleChain(b.chainId)}
                     size="large"
                     style={{ userSelect: 'none' }}
                   />
                 </Table.Cell>
-                <Table.Cell collapsing>
+                <Table.Cell
+                  collapsing
+                  onClick={() => this.toggleChain(b.chainId)}
+                >
                   <GlobalFragmentChainLogo
                     chainId={b.chainId}
                     noPopup
@@ -142,9 +150,9 @@ class GlobalBlockchainEnable extends Component<Props> {
                     }}
                   />
                 </Table.Cell>
-                {(enabledChains.includes(b.chainId) && settings.walletMode !== 'cold')
-                  ? (
-                    <Table.Cell>
+                <Table.Cell>
+                  {(enabledChains.includes(b.chainId) && settings.walletMode !== 'cold')
+                    ? (
                       <GlobalFormFieldUrl
                         defaultValue={b.node || ''}
                         error={invalidEndpoints.includes(b.chainId)}
@@ -153,10 +161,10 @@ class GlobalBlockchainEnable extends Component<Props> {
                         onChange={this.onNodeChange}
                         width={7}
                       />
-                    </Table.Cell>
-                  )
-                  : false
-                }
+                    )
+                    : false
+                  }
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
