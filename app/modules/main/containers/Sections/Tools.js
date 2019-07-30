@@ -43,7 +43,6 @@ import * as NavigationActions from '../../actions/navigation';
 class ToolsContainer extends Component<Props> {
   onClick = (e, data) => this.props.actions.changeModule(data.name)
   render() {
-    const { navigation } = this.props;
     return (
       <HashRouter>
         <Switch>

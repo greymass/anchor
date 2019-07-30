@@ -4,11 +4,7 @@ import { bindActionCreators } from 'redux';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Header, Segment, Tab } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
-
-import { setSetting } from '../../../../../shared/actions/settings';
-import { swapBlockchain } from '../../../../../shared/actions/blockchains';
 
 import GlobalAccountImport from '../../../../../shared/containers/Global/Account/Import';
 
@@ -35,8 +31,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      setSetting,
-      swapBlockchain,
+
     }, dispatch)
   };
 }

@@ -124,21 +124,13 @@ class GlobalBlockchainDropdown extends Component<Props> {
               : false
             }
             {options.map(option => {
-                const {
-                  props,
-                } = option;
-                return (
-                  <Dropdown.Item {...props} />
-                );
-              })
-            }
-            {(!options.length)
-              ? (
-                <Dropdown.Item
-                  content="No other blockchains configured."
-                />
-              )
-              : false
+              const {
+                props,
+              } = option;
+              return (
+                <Dropdown.Item {...props} />
+              );
+            })
             }
           </Dropdown.Menu>
         </Dropdown.Menu>
