@@ -258,7 +258,7 @@ export function importWallet(
     const { accounts, storage, settings } = getState();
     const accountData = accounts[account];
     let pubkey = (key) ? ecc.privateToPublic(key) : publicKey;
-    if (!pubkey && accountData) {
+    if (!pubkey) {
       const auths = new EOSAccount(accountData).getKeysForAuthorization(authorization);
       if (auths.length > 0) {
         ([{ pubkey }] = auths);
@@ -270,8 +270,8 @@ export function importWallet(
     }
     let detectedPath = path;
     // If no path was passed, but it's a known key to a path, set it
-    if (!detectedPath && publicKey && storage.paths[publicKey]) {
-      detectedPath = storage.paths[publicKey]
+    if (!detectedPath && pubkey && storage.paths[pubkey]) {
+      detectedPath = storage.paths[pubkey];
     }
     // If a path was exists, this is a hardware wallet and we need to record the pubkey
     if (detectedPath) {
@@ -296,7 +296,7 @@ export function importWallet(
         }
       });
     }
-    const modeChange = (detectedPath && ['unknown', 'ledger'].includes(mode)) ? 'ledger' : 'hot';
+    const modeChange = (detectedPath && ['unknown', 'ledger'].includes(mode)) ? 'ledger' : mode;
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
@@ -348,10 +348,6 @@ export function useWallet(chainId, account, authorization) {
       walletQuery.authorization = authorization;
     }
     const newWallet = find(wallets, walletQuery);
-    // Lock the wallet to remove old account keys
-    // dispatch({
-    //   type: types.WALLET_LOCK
-    // });
     //  Reset the unregistered producers
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
