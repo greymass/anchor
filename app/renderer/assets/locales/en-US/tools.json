@@ -18,7 +18,7 @@
   "tools_bid_highest_bid": "highest bid",
   "tools_bid_name_bid": "Your Bid Amount",
   "tools_keys_key_generation_save_keys": "Save Keys to Wallet",
-  "tools_keys_key_generation_header_r2": "Generate Keypairs",
+  "tools_keys_key_generation_header_r2": "Generate Key Pairs",
   "tools_keys_key_generation_subheader_message_r2": "Securely generate new keypairs to either save in your local wallet or copy to an external application.",
   "tools_bid_name_highest_bid": "Highest Bid",
   "tools_bid_name_info_content": "Name bidding allows you to place a bid on any 1-11 character name.",

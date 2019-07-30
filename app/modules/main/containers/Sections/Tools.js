@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import GlobalBlockchainManage from '../../../../shared/containers/Global/Blockchain/Manage';
 
+import ToolsAccounts from './Tools/Accounts';
 import ToolsAirgrabs from './Tools/Airgrabs';
 import ToolsApiPing from './Tools/ApiPing';
 import ToolsApiTrafficLog from './Tools/ApiTrafficLog';
@@ -47,6 +48,7 @@ class ToolsContainer extends Component<Props> {
       <HashRouter>
         <Switch>
           <Route exact path="/tools" component={ToolsHome} />
+          <Route path="/tools/accounts" component={ToolsAccounts} />
           <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
           <Route path="/tools/api_ping" component={ToolsApiPing} />
           <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />

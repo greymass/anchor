@@ -18,6 +18,13 @@ class WalletPanelFormHash extends Component<Props> {
     actions.setWalletHash(password);
   }
   onConfirm = () => this.setState({ confirming: true });
+  onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onConfirm();
+      e.preventDefault();
+      return false;
+    }
+  }
   render() {
     const {
       t,
@@ -27,7 +34,7 @@ class WalletPanelFormHash extends Component<Props> {
       password
     } = this.state;
     return (
-      <Form>
+      <Form onKeyPress={this.onKeyPress}>
         <Form.Field
           autoFocus
           control={Form.Input}

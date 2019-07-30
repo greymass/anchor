@@ -15,7 +15,15 @@ export class GlobalFormFieldAccount extends Component<Props> {
   }
   onChange = (e, { name, value }) => {
     const parsed = value.trim().toLowerCase();
-    const valid = !!(parsed.match(/^[a-z12345.]{1,12}$/g));
+    let valid = false;
+    switch (this.props.rules) {
+      case 'generic':
+        valid = !!(parsed.match(/^[a-z12345]{12}$/g));
+        break;
+      default:
+        valid = !!(parsed.match(/^[a-z12345.]{1,12}$/g));
+        break;
+    }
     this.setState({
       value: parsed
     }, () => {

@@ -17,6 +17,7 @@ class ToolsWallets extends Component<Props> {
       actions,
       blockchains,
       connection,
+      history,
       pubkeys,
       settings,
       status,
@@ -58,6 +59,7 @@ class ToolsWallets extends Component<Props> {
             <Grid.Column textAlign="right">
               <GlobalButtonAccountImport
                 connection={connection}
+                history={history}
                 settings={settings}
               />
             </Grid.Column>
