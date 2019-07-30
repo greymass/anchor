@@ -50,12 +50,23 @@ class OverviewSidebarBackupContainer extends Component<Props> {
 
   render() {
     const {
-      settings
+      buttonOnly,
+      settings,
     } = this.props;
     const {
       lastBackupDate,
       lastBackupInvalidated,
     } = settings;
+    const button = (
+      <Button
+        color="purple"
+        content="Backup"
+        icon="save"
+        onClick={this.backup}
+        size="tiny"
+      />
+    );
+    if (buttonOnly) return button;
     return (
       <React.Fragment>
         <Segment color="purple" textAlign="center">
@@ -72,13 +83,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
               : 'Never'
             }
           </Header>
-          <Button
-            color="purple"
-            content="Backup"
-            icon="save"
-            onClick={this.backup}
-            size="tiny"
-          />
+          {button}
         </Segment>
       </React.Fragment>
     );
