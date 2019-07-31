@@ -1,10 +1,10 @@
-import { find } from 'lodash';
+import { find, map, uniq } from 'lodash';
 
-import { getCurrencyBalance } from './accounts';
+import { getAccounts, getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
 import { getGlobals } from './globals';
-import { historyPluginCheck } from './connection';
+import { getSupportedCalls } from './connection';
 
 import eos from './helpers/eos';
 
@@ -68,6 +68,7 @@ export function validateNode(
   expectedChainId = false,
   saveAsDefault = false,
   useImmediately = false,
+  refreshAllAccounts = false,
 ) {
   return (dispatch: () => void, getState) => {
     dispatch({
@@ -81,9 +82,12 @@ export function validateNode(
         const {
           blockchains,
           connection,
-          settings
+          settings,
+          wallets,
         } = getState();
-        let { host, protocol, pathname } = new URL(node);
+        let { host, protocol } = new URL(node);
+        const { pathname } = new URL(node);
+
         // If the protocol contains the original value with a colon,
         // it means the protocol was missing and the protocol is the host.
         //
@@ -92,7 +96,7 @@ export function validateNode(
           host = node;
           protocol = 'http:';
         }
-        const httpEndpoint = `${protocol}//${host}`;
+        const httpEndpoint = `${protocol}//${host}${pathname !== '/' ? pathname : ''}`;
         // Establish a modified state to test the connection against
         const modified = {
           ...connection,
@@ -124,9 +128,19 @@ export function validateNode(
               type: types.VALIDATE_NODE_SUCCESS
             });
             // Check if the new node supports the History Plugin
-            dispatch(historyPluginCheck());
+            dispatch(getSupportedCalls());
             // Grab globals
             dispatch(getGlobals());
+            setTimeout(() => {
+              if (refreshAllAccounts) {
+                // Filter wallet data down to the current chain
+                const chainWallets = wallets.filter((w) => (w.chainId === blockchain.chainId));
+                // Create a list of all account names loaded for this chain
+                const chainAccounts = uniq(map(chainWallets, 'account'));
+                // Refresh all of those accounts
+                dispatch(getAccounts(chainAccounts));
+              }
+            }, 500);
             // Refresh our connection properties with new chain info
             return dispatch(chain.getInfo());
           }

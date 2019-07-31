@@ -10,6 +10,7 @@ import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
 import GlobalSettingsFilterSpamTransfers from './Global/Settings/FilterSpamTransfers';
+import GlobalSettingsAllowDangerousTransactions from './Global/Settings/AllowDangerousTransactions';
 
 class Tools extends Component<Props> {
   render() {
@@ -21,21 +22,9 @@ class Tools extends Component<Props> {
       settings,
       t
     } = this.props;
-
     return (
       <React.Fragment>
-        <Segment attached="top">
-          <Header icon size="large" textAlign="center">
-            <Icon
-              name="cog"
-            />
-            {t('tools_title')}
-            <Header.Subheader
-              content={t('tools_description')}
-            />
-          </Header>
-        </Segment>
-        <Segment attached padded="very">
+        <Segment>
           <Header>
             {t('tools_settings_header')}
             <Header.Subheader
@@ -73,35 +62,50 @@ class Tools extends Component<Props> {
                 selection
               />
             </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_skip_link_modal')}</label>
-              <GlobalSettingsSkipLinkModal
-                actions={actions}
-                defaultValue={settings.skipLinkModal}
-                selection
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_resource_display_format')}</label>
-              <GlobalSettingsResourceDisplayFormat
-                actions={actions}
-                defaultValue={settings.displayResourcesAvailable || false}
-                selection
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_transfer_spam_filter')}</label>
-              <GlobalSettingsFilterSpamTransfers
-                actions={actions}
-                defaultValue={settings.filterSpamTransfersUnder}
-                selection
-              />
-            </Form.Field>
+            {(settings.walletMode !== 'cold')
+              ? (
+                <React.Fragment>
+                  <Form.Field>
+                    <label>{t('tools_change_skip_link_modal')}</label>
+                    <GlobalSettingsSkipLinkModal
+                      actions={actions}
+                      defaultValue={settings.skipLinkModal}
+                      selection
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{t('tools_change_resource_display_format')}</label>
+                    <GlobalSettingsResourceDisplayFormat
+                      actions={actions}
+                      defaultValue={settings.displayResourcesAvailable || false}
+                      selection
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{t('tools_change_transfer_spam_filter')}</label>
+                    <GlobalSettingsFilterSpamTransfers
+                      actions={actions}
+                      defaultValue={settings.filterSpamTransfersUnder}
+                      selection
+                    />
+                  </Form.Field>
+                </React.Fragment>
+              )
+              : false
+            }
             <Form.Field>
               <label>{t('tools_change_display_test_networks')}</label>
               <GlobalSettingsShowTestnets
                 actions={actions}
                 defaultValue={settings.displayTestNetworks}
+                selection
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>{t('tools_change_allow_dangerous_transactions')}</label>
+              <GlobalSettingsAllowDangerousTransactions
+                actions={actions}
+                defaultValue={settings.allowDangerousTransactions}
                 selection
               />
             </Form.Field>

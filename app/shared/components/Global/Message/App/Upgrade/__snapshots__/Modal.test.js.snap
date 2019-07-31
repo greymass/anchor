@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentWalletTypes renders correctly 1`] = `
+<Modal
+  centered={true}
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  content={
+    <Translate(GlobalMessageAppUpgrade)
+      actions={Object {}}
+      constants={Object {}}
+      name="Modal Name"
+      version={1}
+    />
+  }
+  dimmer={true}
+  eventPool="Modal"
+  open={true}
+  size="small"
+/>
+`;

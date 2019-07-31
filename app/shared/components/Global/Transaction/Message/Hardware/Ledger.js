@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
-class GlobalTransactionMessageHardwareLedger extends Component<Props> {
+export class GlobalTransactionMessageHardwareLedger extends Component<Props> {
   render() {
     const {
       t

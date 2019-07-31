@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Icon, Menu } from 'semantic-ui-react';
+import { Icon, Menu, Popup } from 'semantic-ui-react';
 
 import WalletLockStateLocked from './LockState/Locked';
 
@@ -9,10 +9,11 @@ export default class WalletLockState extends Component<Props> {
     const {
       actions,
       locked,
+      pubkeys,
       validate,
       wallet
     } = this.props;
-    const walletExists = !!(wallet.data);
+    const walletExists = !!((wallet.account && wallet.mode === 'hot') || pubkeys.unlocked.length);
     if (!walletExists) return '';
     return locked ? (
       <WalletLockStateLocked
@@ -21,18 +22,23 @@ export default class WalletLockState extends Component<Props> {
         wallet={wallet}
       />
     ) : (
-      <Menu.Item
-        color="yellow"
-        key="lockstate"
-        inverted="true"
-        onClick={actions.lockWallet}
-      >
-        <Icon
-          color="yellow"
-          name="unlock"
-        />
-      </Menu.Item>
-
+      <Popup
+        content="The wallet is currently unlocked. Click this menu item to lock it."
+        inverted
+        trigger={(
+          <Menu.Item
+            color="yellow"
+            key="lockstate"
+            inverted="true"
+            onClick={actions.lockWallet}
+          >
+            <Icon
+              color="yellow"
+              name="unlock"
+            />
+          </Menu.Item>
+        )}
+      />
     );
   }
 }

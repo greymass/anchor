@@ -1,5 +1,4 @@
 import * as types from './types';
-import EOSContract from '../utils/EOS/Contract';
 import eos from './helpers/eos';
 
 export function getAbi(account) {

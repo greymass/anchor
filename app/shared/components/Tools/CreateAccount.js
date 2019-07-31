@@ -12,7 +12,7 @@ import WalletPanelLocked from '../Wallet/Panel/Locked';
 class ToolsCreateAccount extends Component<Props> {
   onClose = () => {
     this.props.actions.clearSystemState();
-  }
+  };
 
   render() {
     const {
@@ -22,7 +22,7 @@ class ToolsCreateAccount extends Component<Props> {
       balances,
       connection,
       globals,
-      keys,
+      pubkeys,
       settings,
       system,
       validate,
@@ -36,9 +36,9 @@ class ToolsCreateAccount extends Component<Props> {
 
     return (
       <div>
-        {((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+        {(pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
         ? (
-          <Segment basic>
+          <Segment color="violet" piled style={{ margin: 0 }}>
             <Header>
               {t('tools_create_account_header')}
               <Header.Subheader>
@@ -49,7 +49,7 @@ class ToolsCreateAccount extends Component<Props> {
               actionName="CREATEACCOUNT"
               actions={actions}
               blockExplorers={allBlockExplorers[connection.chainKey]}
-              content={connection.chain === "BEOS" ? (
+              content={connection.chain === 'BEOS' ? (
                 <CreateBitsharesEosAccount
                   account={account}
                   balance={balances[settings.account]}

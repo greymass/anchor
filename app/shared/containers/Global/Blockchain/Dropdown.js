@@ -5,42 +5,29 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
+import { Button, Dropdown, Header, Segment } from 'semantic-ui-react';
 
-import GlobalButtonElevate from '../Button/Elevate';
 import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
 import * as BlockchainsActions from '../../../actions/blockchains';
-import * as WalletActions from '../../../actions/wallet';
-import * as WalletsActions from '../../../actions/wallets';
 
 class GlobalBlockchainDropdown extends Component<Props> {
-  state = { open: false }
-  onClose = () => {
-    this.setState({ open: false });
-  }
-  onOpen = () => {
-    this.setState({ open: true });
-  }
-  onToggle = () => {
-    this.setState({ open: !this.state.open });
-  }
   swapBlockchain = (chainId) => {
     const { actions } = this.props;
     actions.swapBlockchain(chainId);
-    // if (password) {
-    //   actions.unlockWallet(password);
-    // }
   }
   render() {
     const {
       blockchains,
+      disabled,
+      fluid,
+      selected,
       selection,
       settings,
-      t,
+      showName,
+      style,
     } = this.props;
-    let defaultLocString = 'global_account_select_blockchain_default';
-    if (settings.walletMode === 'cold') {
-      defaultLocString = 'global_account_select_blockchain_default_cold';
+    if (!settings.blockchains || settings.blockchains.length === 0 || !settings.walletInit) {
+      return false;
     }
     const { chainId } = settings;
     if (!blockchains) return false;
@@ -48,12 +35,13 @@ class GlobalBlockchainDropdown extends Component<Props> {
     if (!blockchain) {
       blockchain = {};
     }
-    const { displayTestNetworks } = settings;
+    if (selected) {
+      blockchain = find(blockchains, { chainId: selected });
+    }
     const options = blockchains
       .filter(b => (
         (
-          (true && b.testnet)
-          || !b.testnet
+          settings.blockchains.includes(b.chainId)
         )
         && b.chainId !== blockchain.chainId
       ))
@@ -71,40 +59,80 @@ class GlobalBlockchainDropdown extends Component<Props> {
           b
         };
       });
-    let icon = {
-      color: 'green',
-      name: 'id card'
-    };
-    return (
-      <Dropdown
-        item
-        labeled
-        selection={selection}
-        trigger={(
-          <span>
+    const trigger = (
+      <span>
+        {(blockchain && blockchain.chainId)
+          ? (
             <GlobalFragmentChainLogo
-              avatar
               chainId={blockchain.chainId}
-              name={blockchain.name}
+              noPopup
               style={{
-                marginRight: '0.5em'
+                float: 'left',
+                height: '2em',
+                width: '2em',
               }}
             />
-            {(blockchain && blockchain.name) ? blockchain.name : t(defaultLocString)}
-          </span>
-        )}
+          )
+          : 'Select a Blockchain'
+        }
+        {(showName && blockchain && blockchain.name)
+          ? (
+            <Header
+              content={blockchain.name}
+              subheader={`${blockchain.chainId.substr(0, 6)}...${blockchain.chainId.substr(-6)}`}
+              size="small"
+              style={{ margin: 0 }}
+            />
+          )
+          : false
+        }
+      </span>
+    );
+    if (disabled) {
+      return (
+        <Segment
+          content={trigger}
+          style={{ margin: 0 }}
+        />
+      );
+    }
+    return (
+      <Dropdown
+        fluid={fluid}
+        item
+        labeled
+        placeholder={showName ? 'Select a blockchain...' : false}
+        selection={selection}
+        style={style}
+        trigger={trigger}
       >
-        <Dropdown.Menu style={{ minWidth: '200px' }}>
-          {options.map(option => {
+        <Dropdown.Menu key="parent">
+          <Dropdown.Menu key="menu" scrolling style={{ minWidth: '200px', marginTop: 0 }}>
+            {(this.props.onNavigationChange)
+              ? (
+                <Dropdown.Header>
+                  <Button
+                    basic
+                    content="Manage Blockchains"
+                    fluid
+                    icon="cubes"
+                    onClick={() => this.props.onNavigationChange('tools/blockchains')}
+                    size="small"
+                  />
+                </Dropdown.Header>
+              )
+              : false
+            }
+            {options.map(option => {
               const {
                 props,
-                b
               } = option;
               return (
                 <Dropdown.Item {...props} />
               );
             })
-          }
+            }
+          </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
     );

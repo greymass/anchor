@@ -10,10 +10,10 @@ import HardwareLedger from '../../../utils/Hardware/Ledger';
 class ToolsHardwareLedger extends Component<Props> {
   displayPublicKey = () => {
     this.props.actions.ledgerGetPublicKey(0, true);
-  }
+  };
   getPublicKey = () => {
     this.props.actions.ledgerGetPublicKey(0);
-  }
+  };
   render() {
     const {
       accounts,
@@ -27,7 +27,7 @@ class ToolsHardwareLedger extends Component<Props> {
     const { transport } = new HardwareLedger();
     if (!account) return false;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsHardwareLedgerStatus
           actions={actions}
           ledger={ledger}

@@ -23,6 +23,7 @@ export default class GlobalFormFieldServer extends Component<Props> {
     const {
       autoFocus,
       disabled,
+      fluid,
       icon,
       label,
       loading,
@@ -31,13 +32,13 @@ export default class GlobalFormFieldServer extends Component<Props> {
     const {
       value
     } = this.state;
-
     return (
       <Form.Field
         autoFocus={autoFocus}
         control={Input}
         defaultValue={value}
         disabled={disabled}
+        fluid={fluid}
         icon={icon}
         label={label}
         loading={loading}

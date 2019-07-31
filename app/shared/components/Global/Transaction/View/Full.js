@@ -5,7 +5,7 @@ import ReactJson from 'react-json-view';
 
 import { Header } from 'semantic-ui-react';
 
-class GlobalTransactionViewFull extends Component<Props> {
+export class GlobalTransactionViewFull extends Component<Props> {
   render() {
     const {
       t,
@@ -20,6 +20,8 @@ class GlobalTransactionViewFull extends Component<Props> {
           </Header.Subheader>
         </Header>
         <ReactJson
+          collapseStringsAfterLength={32}
+
           displayDataTypes={false}
           displayObjectSize={false}
           iconStyle="square"

@@ -23,10 +23,13 @@ export default class GlobalFormFieldUrl extends Component<Props> {
     const {
       autoFocus,
       disabled,
+      error,
+      fluid,
       icon,
+      inline,
       label,
       loading,
-      name
+      name,
     } = this.props;
     const {
       value
@@ -38,7 +41,10 @@ export default class GlobalFormFieldUrl extends Component<Props> {
         control={Input}
         defaultValue={value}
         disabled={disabled}
+        error={error}
+        fluid={fluid}
         icon={icon}
+        inline={inline}
         label={label}
         loading={loading}
         name={name}

@@ -1,22 +1,25 @@
 // @flow
 import React, { Component } from 'react';
-import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
+import { Dimmer, Grid, Header, Loader, Placeholder, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 
 import ProducersTable from './BlockProducers/Table';
+import ProducersTablePlaceholder from './BlockProducers/Table/Placeholder';
 
 class BlockProducers extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       amount: 10,
+      display: false,
       querying: false
     };
   }
 
   componentDidMount() {
-    this.tick();
+    setTimeout(() => this.setState({ display: true }), 250);
+    setTimeout(() => this.tick(), 500);
     this.interval = setInterval(this.tick.bind(this), 120000);
   }
 
@@ -30,7 +33,12 @@ class BlockProducers extends Component<Props> {
       validate.NODE === 'PENDING'
       && nextValidate.NODE === 'SUCCESS'
     ) {
-      this.props.actions.getGlobals();
+      const {
+        getGlobals
+      } = this.props.actions;
+      if (getGlobals) {
+        getGlobals();
+      }
       this.tick();
     }
 
@@ -60,7 +68,7 @@ class BlockProducers extends Component<Props> {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const selected_account = account.voter_info.proxy || account.account_name;
-          let selected = account.voter_info.producers
+          let selected = account.voter_info.producers;
           if (selected_account !== settings.account && accounts[selected_account]) {
             selected = accounts[selected_account].voter_info.producers;
           }
@@ -114,70 +122,86 @@ class BlockProducers extends Component<Props> {
       addProducer,
       connection,
       globals,
+      isValidUser,
       keys,
       producers,
       removeProducer,
       selected,
       settings,
-      system,
-      t
+      sidebar,
+      system
     } = this.props;
     const {
       amount,
+      display,
       querying
     } = this.state;
 
     const account = accounts[settings.account];
     const isMainnet = connection.chainKey && connection.chainKey.toLowerCase().indexOf('mainnet') !== -1;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || ['watch','ledger'].includes(settings.walletMode));
+    const isLoaded = !!(display && producers.list.length > 0);
 
     return (
-      (producers.list.length > 0)
-        ? [(
-          <Visibility
-            continuous
-            key="ProducersTable"
-            fireOnMount
-            onBottomVisible={this.loadMore}
-            once={false}
-          >
-            <ProducersTable
-              account={accounts[settings.account]}
-              actions={actions}
-              addProducer={addProducer}
-              amount={amount}
-              attached="top"
-              connection={connection}
-              globals={globals}
-              isMainnet={isMainnet}
-              isProxying={isProxying}
-              isQuerying={this.isQuerying}
-              keys={keys}
-              producers={producers}
-              removeProducer={removeProducer}
-              resetDisplayAmount={this.resetDisplayAmount}
-              selected={selected}
-              settings={settings}
-              system={system}
-              isValidUser={isValidUser}
-            />
-          </Visibility>
-        ), (
-            (!querying && amount < producers.list.length)
-              ? (
-                <Segment key="ProducersTableLoading" clearing padded vertical>
-                  <Loader active />
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={11}>
+            {(isLoaded)
+              ? [(
+                <Visibility
+                  continuous
+                  key="ProducersTable"
+                  fireOnMount
+                  onBottomVisible={this.loadMore}
+                  once={false}
+                >
+                  <ProducersTable
+                    account={accounts[settings.account]}
+                    actions={actions}
+                    addProducer={addProducer}
+                    amount={amount}
+                    attached="top"
+                    connection={connection}
+                    globals={globals}
+                    isMainnet={isMainnet}
+                    isProxying={isProxying}
+                    isQuerying={this.isQuerying}
+                    keys={keys}
+                    producers={producers}
+                    removeProducer={removeProducer}
+                    resetDisplayAmount={this.resetDisplayAmount}
+                    selected={selected}
+                    settings={settings}
+                    system={system}
+                    isValidUser={isValidUser}
+                  />
+                </Visibility>
+              )]
+              : (
+                <ProducersTablePlaceholder />
+              )}
+          </Grid.Column>
+          <Grid.Column width={5}>
+            {(isLoaded)
+              ? sidebar
+              : (
+                <Segment raised>
+                  <Placeholder>
+                    <Placeholder.Header image>
+                      <Placeholder.Line />
+                      <Placeholder.Line />
+                    </Placeholder.Header>
+                    <Placeholder.Paragraph>
+                      <Placeholder.Line length="medium" />
+                      <Placeholder.Line length="short" />
+                    </Placeholder.Paragraph>
+                  </Placeholder>
                 </Segment>
-              ) : false
-          )]
-        : (
-          <Segment attached="bottom" stacked>
-            <Header textAlign="center">
-              {t('producer_none_loaded')}
-            </Header>
-          </Segment>
-        )
+              )
+            }
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

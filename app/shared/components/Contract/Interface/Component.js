@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Checkbox, Divider, Header, Icon, Label, Menu, Segment, Tab } from 'semantic-ui-react';
+import { Checkbox, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import ContractInterfaceTabActions from './Tab/Actions';
 import ContractInterfaceTabData from './Tab/Data';
@@ -16,14 +16,14 @@ class ContractInterfaceComponent extends Component<Props> {
     contractName: '',
     contractTable: '',
     contractTableScope: ''
-  }
+  };
   isValidContract = (name) => {
     const { contracts } = this.props;
     return (
       contracts[name]
       && contracts[name] instanceof EOSContract
     );
-  }
+  };
   onChange = (e, { name, value }) => {
     const state = { [name]: value };
     // Reset the selected action if the contract name changes
@@ -33,13 +33,13 @@ class ContractInterfaceComponent extends Component<Props> {
       state.contractTableScope = '';
     }
     this.setState(state);
-  }
+  };
   onSet = (data, callback = () => {}) => this.setState(data, callback)
   onSubmit = () => {
     const { actions } = this.props;
     const { contractName } = this.state;
     actions.getAbi(contractName);
-  }
+  };
   // Reset table scope to prevent visibility element from retriggering constantly
   onTabChange = () => this.setState({
     contractTable: '',
@@ -133,7 +133,7 @@ class ContractInterfaceComponent extends Component<Props> {
     ];
 
     return (
-      <React.Fragment>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         {(!settings.acceptedContractInterface)
           ? (
             (
@@ -193,7 +193,7 @@ class ContractInterfaceComponent extends Component<Props> {
           )
           : false
         }
-      </React.Fragment>
+      </Segment>
     );
   }
 }

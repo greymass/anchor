@@ -7,7 +7,7 @@ import GlobalTransactionViewActions from '../../../Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../../Transaction/View/Detail';
 import GlobalTransactionViewFull from '../../../Transaction/View/Full';
 
-class GlobalTransactionMessageSignedBroadcast extends Component<Props> {
+export class GlobalTransactionMessageSignedBroadcast extends Component<Props> {
   broadcast = () => {
     const {
       actionname,
@@ -18,7 +18,7 @@ class GlobalTransactionMessageSignedBroadcast extends Component<Props> {
       broadcastTransaction
     } = actions;
     broadcastTransaction(transaction, actionname);
-  }
+  };
   render() {
     const {
       onClose,

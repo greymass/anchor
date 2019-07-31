@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import compose from 'lodash/fp/compose';
 import { translate } from 'react-i18next';
-import { Divider, Form, Button, Message } from 'semantic-ui-react';
+import { Accordion, Button, Divider, Form, Icon, Message } from 'semantic-ui-react';
 import { find } from 'lodash';
 import { delete as del, set } from 'dot-prop-immutable';
 
@@ -22,9 +22,10 @@ class GlobalBlockchainForm extends Component<Props> {
       errors: {},
       loading: {},
       newChain: !!(props.chainId === 'new'),
+      showAdvanced: !!(props.chainId === 'new'),
       values: Object.assign({}, props.blockchain),
       valids: {
-        endpoint: false
+        endpoint: props.settings.walletMode === 'cold' || false
       },
     };
   }
@@ -35,16 +36,16 @@ class GlobalBlockchainForm extends Component<Props> {
       if (validate.NODE === 'PENDING') {
         derived = set(state, 'valids.endpoint', false);
         derived = set(derived, 'loading.endpoint', true);
-        derived = del(derived, 'errors.endpoint');
+        derived = set(state, 'errors', {});
       }
       if (validate.NODE === 'FAILURE') {
-        derived = set(state, 'errors.endpoint', validate.NODE_ERROR);
+        derived = set(state, 'errors.endpoint', 'undefined');
         derived = del(derived, 'loading.endpoint');
       }
       if (validate.NODE === 'SUCCESS') {
+        derived = set(state, 'errors', {});
         derived = set(state, 'valids.endpoint', true);
         derived = del(derived, 'loading.endpoint');
-        derived = del(derived, 'errors.endpoint');
       }
     }
     return derived;
@@ -52,13 +53,17 @@ class GlobalBlockchainForm extends Component<Props> {
   componentDidMount() {
     this.props.actions.clearValidationState();
     const {
+      settings
+    } = this.props;
+    const {
       chainId,
       node
     } = this.state.values;
-    if (node && chainId) {
+    if (settings.walletMode !== 'cold' && node && chainId) {
       this.props.actions.validateNode(node, chainId);
     }
   }
+  showAdvanced = () => this.setState({ showAdvanced: !this.state.showAdvanced });
   isValid = () => !Object.values(this.state.valids).includes(false)
   onCancel = () => {
     this.state = {
@@ -111,16 +116,18 @@ class GlobalBlockchainForm extends Component<Props> {
         onCancel();
       }
     }
-  }
+  };
   render() {
     const {
       app,
-      t
+      settings,
+      t,
     } = this.props;
     const {
       errors,
       loading,
       newChain,
+      showAdvanced,
       values,
     } = this.state;
     const options = app.features.map((feature) => ({
@@ -152,49 +159,66 @@ class GlobalBlockchainForm extends Component<Props> {
           name="chainId"
           onChange={this.onChange}
         />
-        <GlobalFormFieldServer
-          autoFocus={!newChain}
-          defaultValue={node || ''}
-          label={t('tools_form_blockchain_node_label')}
-          loading={loading.endpoint}
-          name="node"
-          onChange={this.onNodeChange}
-        />
         <GlobalFormFieldString
+          autoFocus={!newChain}
           defaultValue={name || ''}
           label={t('tools_form_blockchain_name_label')}
           name="name"
           onChange={this.onChange}
         />
-        <GlobalFormFieldString
-          defaultValue={keyPrefix || ''}
-          label={t('tools_form_blockchain_keyprefix_label')}
-          name="keyPrefix"
-          onChange={this.onChange}
-        />
-        <GlobalFormFieldString
-          defaultValue={symbol || ''}
-          label={t('tools_form_blockchain_symbol_label')}
-          name="symbol"
-          onChange={this.onChange}
-        />
-        <Form.Select
-          defaultValue={supportedContracts}
-          fluid
-          label={t('tools_form_blockchain_features_label')}
-          multiple
-          name="supportedContracts"
-          onChange={this.onSelect}
-          options={options}
-          placeholder={t('tools_form_blockchain_features_placeholder')}
-          selection
-        />
-        <Form.Checkbox
-          checked={testnet}
-          label={t('tools_form_blockchain_testnet_label')}
-          name="testnet"
-          onChange={this.onCheck}
-        />
+        {(settings.walletMode !== 'cold')
+          ? (
+            <GlobalFormFieldServer
+              defaultValue={node || ''}
+              label={t('tools_form_blockchain_node_label')}
+              loading={loading.endpoint}
+              name="node"
+              onChange={this.onNodeChange}
+            />
+          )
+          : false
+        }
+        <Form.Field>
+          <Accordion fluid styled>
+            <Accordion.Title active={showAdvanced} index={0} onClick={this.showAdvanced}>
+              <Icon name='dropdown' />
+              Advanced Configuration
+            </Accordion.Title>
+            <Accordion.Content active={showAdvanced}>
+              <GlobalFormFieldString
+                defaultValue={keyPrefix || ''}
+                label={t('tools_form_blockchain_keyprefix_label')}
+                name="keyPrefix"
+                onChange={this.onChange}
+              />
+              <GlobalFormFieldString
+                defaultValue={symbol || ''}
+                label={t('tools_form_blockchain_symbol_label')}
+                name="symbol"
+                onChange={this.onChange}
+              />
+              <Form.Select
+                defaultValue={supportedContracts}
+                fluid
+                label={t('tools_form_blockchain_features_label')}
+                multiple
+                name="supportedContracts"
+                onChange={this.onSelect}
+                options={options}
+                placeholder={t('tools_form_blockchain_features_placeholder')}
+                selection
+              />
+            </Accordion.Content>
+          </Accordion>
+        </Form.Field>
+        <Form.Field>
+          <Form.Checkbox
+            checked={testnet}
+            label={t('tools_form_blockchain_testnet_label')}
+            name="testnet"
+            onChange={this.onCheck}
+          />
+        </Form.Field>
         <Divider hidden />
         {(hasErrors)
           ? (
@@ -213,7 +237,7 @@ class GlobalBlockchainForm extends Component<Props> {
         />
         <Button
           content={t('save')}
-          disabled={!this.isValid()}
+          disabled={(!this.isValid() || hasErrors)}
           icon="save"
           floated="right"
           primary

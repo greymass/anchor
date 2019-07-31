@@ -10,7 +10,7 @@ import GlobalModalSettingsCustomToken from '../Global/Modal/Settings/CustomToken
 class ToolsCustomTokens extends Component<Props> {
   state = {
     addingToken: false
-  }
+  };
   componentDidMount() {
     this.sync();
   }
@@ -19,7 +19,7 @@ class ToolsCustomTokens extends Component<Props> {
   sync = () => {
     const { actions } = this.props;
     actions.getCustomTokens();
-  }
+  };
   scan = () => {
     const {
       actions,
@@ -42,7 +42,7 @@ class ToolsCustomTokens extends Component<Props> {
 
     tokens = tokens.map((token) => `${chainId}:${token.contract.toLowerCase()}:${token.symbol.toUpperCase()}`);
     actions.getCurrencyBalance(settings.account, tokens);
-  }
+  };
   toggleCustomToken = (e, { checked, name }) => {
     const { actions } = this.props;
     const [chainId, contract, symbol] = name.split(':');
@@ -93,7 +93,7 @@ class ToolsCustomTokens extends Component<Props> {
     filterTokens = filterTokens.map((token) => (token.split(':')[2]));
     const blockchain = find(blockchains, { chainId: connection.chainId });
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_customtokens_header')}
           <Header.Subheader>
@@ -157,10 +157,14 @@ class ToolsCustomTokens extends Component<Props> {
                 .filter((token) => (filterTokens.indexOf(token.symbol) === -1))
                 .map((token) => {
                   const name = `${connection.chainId}:${token.contract}:${token.symbol}`;
-                  const isSelected = !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);
+                  const isSelected =
+                    !!(settings.customTokens && settings.customTokens.indexOf(name) !== -1);
                   let balance = false;
                   if (balances && settings.account && balances[settings.account]) {
                     balance = balances[settings.account][token.symbol];
+                    if (balance === undefined) {
+                      balance = 0;
+                    }
                   }
                   return (
                     <Table.Row key={`${connection.chainId}-${token.contract}-${token.symbol}`}>

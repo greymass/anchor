@@ -225,11 +225,11 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
       if (delegatedBw > 1) {
-        formErrors.delegatedBw = 'error_insufficient_balance';
+        formErrors.delegatedBw = 'insufficient_balance';
       } else if (delegatedCpu > 1) {
-        formErrors.delegatedCpu = 'error_insufficient_balance';
+        formErrors.delegatedCpu = 'insufficient_balance';
       } else {
-        formErrors.ramAmount = 'error_insufficient_balance';
+        formErrors.ramAmount = 'insufficient_balance';
       }
 
       submitDisabled = true;

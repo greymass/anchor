@@ -14,7 +14,7 @@ class ToolsProxy extends Component<Props> {
     const { actions } = this.props;
 
     actions.getTable('regproxyinfo', 'regproxyinfo', 'proxies');
-  }
+  };
 
   render() {
     const {
@@ -23,7 +23,7 @@ class ToolsProxy extends Component<Props> {
       allBlockExplorers,
       connection,
       contracts,
-      keys,
+      pubkeys,
       settings,
       system,
       validate,
@@ -40,9 +40,9 @@ class ToolsProxy extends Component<Props> {
 
     const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
 
-    return ((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+    return (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
       ? (
-        <React.Fragment>
+        <Segment color="violet" piled style={{ margin: 0 }}>
           <Header>
             {t('tools_proxy_header_registration')}
           </Header>
@@ -102,7 +102,7 @@ class ToolsProxy extends Component<Props> {
               />
             )}
           </Segment>
-        </React.Fragment>
+        </Segment>
       )
       : (
         <WalletPanelLocked

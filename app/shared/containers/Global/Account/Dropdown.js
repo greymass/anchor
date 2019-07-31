@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
+import { findIndex } from 'lodash';
 import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../Button/Elevate';
+import GlobalFragmentWallet from '../../../components/Global/Fragment/Wallet';
 import * as WalletActions from '../../../actions/wallet';
 import * as WalletsActions from '../../../actions/wallets';
 
@@ -30,171 +32,109 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      auths,
+      fluid,
+      selection,
       settings,
+      style,
       t,
       validate,
       wallet,
       wallets
     } = this.props;
+    const { chainId } = settings;
     if (!wallets || wallets.length === 0) {
       return false;
     }
     const options = wallets
       .filter(w => (
-        w.chainId === settings.chainId
-        && (
-          w.account !== wallet.account
-          || w.authorization !== wallet.authorization
-        )
+        w.account !== wallet.account
+        || w.authorization !== wallet.authorization
       ))
-      .sort((a, b) => a.account > b.account)
-      .map((w) => {
-        let icon = {
-          color: 'green',
-          name: 'id card'
-        };
-        switch (w.mode) {
-          case 'cold': {
-            icon = {
-              color: 'blue',
-              name: 'snowflake'
-            };
-            break;
-          }
-          case 'ledger': {
-            icon = {
-              color: 'purple',
-              name: 'usb'
-            };
-            break;
-          }
-          case 'watch': {
-            icon = {
-              color: 'grey',
-              name: 'eye'
-            };
-            break;
-          }
-          case 'wait': {
-            icon = {
-              color: 'grey',
-              name: 'sync'
-            };
-            break;
-          }
-          default: {
-            // no default
-          }
-        }
-        return {
-          props: {
-            key: (w.authorization) ? `${w.account}@${w.authorization}` : w.account,
-            icon,
-            onClick: () => {
-              return (w.mode === 'watch' || w.mode === 'ledger') ? this.swapAccount(w.account, w.authorization) : false;
-            },
-            text: (w.authorization) ? `${w.account}@${w.authorization}` : `${w.account} (${t('global_accounts_dropdown_upgrade_required')})`,
-            value: `${w.account}@${w.authorization}`,
-          },
-          w
-        };
-      });
-    let currentName = (wallet.authorization)
-      ? `${wallet.account}@${wallet.authorization}`
-      : `${wallet.account}`;
-    let icon = {
-      color: 'green',
-      name: 'id card'
-    };
-    if (!wallet.mode) {
-      currentName = "Select an Account...";
-      icon = {
-        color: 'red',
-        name: 'x'
-      }
-    }
-    switch (wallet.mode) {
-      case 'cold': {
-        icon = {
-          color: 'blue',
-          name: 'snowflake'
-        };
-        break;
-      }
-      case 'ledger': {
-        icon = {
-          color: 'purple',
-          name: 'usb'
-        };
-        break;
-      }
-      case 'wait': {
-        icon = {
-          color: 'grey',
-          name: 'sync'
-        };
-        break;
-      }
-      case 'watch': {
-        icon = {
-          color: 'grey',
-          name: 'eye'
-        };
-        break;
-      }
-      default: {
-        // no default
-      }
+      .sort((a, b) => (a.account > b.account ? 1 : -1));
+    let trigger = (
+      <GlobalFragmentWallet
+        account={wallet.account}
+        authorization={wallet.authorization}
+        mode={wallet.mode}
+        pubkey={wallet.pubkey}
+      />
+    );
+    if (!settings.account) {
+      trigger = (
+        <Header
+          content="No account selected"
+          subheader="Choose an account to use"
+          size="small"
+          style={{ margin: 0 }}
+        />
+      );
     }
     return (
       <Dropdown
-        item
+        fluid={fluid}
+        item={!selection}
         labeled
-        trigger={(
-          <span>
-            <Icon color={icon.color} name={icon.name} />
-            {' '}
-            {currentName}
-          </span>
-        )}
+        selection={selection}
+        style={style || {}}
+        trigger={trigger}
       >
         <Dropdown.Menu key="parent">
-          <Dropdown.Menu key="menu" scrolling>
+          <Dropdown.Menu key="menu" scrolling style={{ marginTop: 0 }}>
+            {(this.props.onNavigationChange)
+              ? (
+                <Dropdown.Header>
+                  <Button
+                    basic
+                    content="Manage Wallets"
+                    fluid
+                    icon="users"
+                    onClick={() => this.props.onNavigationChange('tools/wallets')}
+                    size="small"
+                  />
+                </Dropdown.Header>
+              )
+              : false
+            }
             {(options.length > 0)
-              ? options.map(option => {
-                const {
-                  props,
-                  w
-                } = option;
-                if (w.mode === 'watch' || w.mode === 'ledger') {
-                  return <Dropdown.Item {...props} />;
+              ? options.map(w => {
+                const { pubkey } = w;
+                const unlocked = (findIndex(auths.keystore, { pubkey }) >= 0);
+                if (w.mode === 'watch' || w.mode === 'ledger' || unlocked) {
+                  return (
+                    <Dropdown.Item
+                      onClick={() => this.swapAccount(w.account, w.authorization)}
+                      key={`${w.account}@${w.authorization}`}
+                    >
+                      <GlobalFragmentWallet
+                        account={w.account}
+                        authorization={w.authorization}
+                        mode={w.mode}
+                        pubkey={w.pubkey}
+                      />
+                    </Dropdown.Item>
+                  );
                 }
                 return (
                   <GlobalButtonElevate
-                    key={props.key}
                     onSuccess={(password) => this.swapAccount(w.account, w.authorization, password)}
                     settings={settings}
-                    trigger={<Dropdown.Item {...props} />}
+                    trigger={(
+                      <Dropdown.Item>
+                        <GlobalFragmentWallet
+                          account={w.account}
+                          authorization={w.authorization}
+                          mode={w.mode}
+                          pubkey={w.pubkey}
+                        />
+                      </Dropdown.Item>
+                    )}
                     validate={validate}
                     wallet={w}
                   />
                 );
               })
-              : (
-                <Dropdown.Item
-                  content={(
-                    <p>{t('global_accounts_dropdown_no_accounts')}</p>
-                  )}
-                  key="empty"
-                  style={{
-                    lineHeight: '1.25em',
-                    width: '300px',
-                    maxWidth: '300px',
-                    padding: '1em',
-                    whiteSpace: 'normal'
-                  }}
-                />
-              )
+              : false
             }
           </Dropdown.Menu>
         </Dropdown.Menu>
@@ -206,10 +146,11 @@ class GlobalAccountDropdown extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    auths: state.auths,
     settings: state.settings,
     validate: state.validate,
     wallet: state.wallet,
-    wallets: state.wallets
+    wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId))
   };
 }
 

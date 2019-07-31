@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Form, Header, Message, Modal, Select } from 'semantic-ui-react';
+import { Form, Header, Input, Message, Modal, Select } from 'semantic-ui-react';
+import { find } from 'lodash';
 
 import { decrypt } from '../../../actions/wallet';
 
@@ -31,26 +32,19 @@ class GlobalAccountEdit extends Component<Props> {
   constructor(props) {
     super(props);
     const {
-      connection,
+      auths,
       data,
-      settings,
     } = this.props;
     const {
-      account,
-      authorization,
-      chainId
+      pubkey
     } = data;
     const state = {};
-    if (
-      account === settings.account
-      && authorization === settings.authorization
-      && chainId === settings.chainId
-      && connection.keyProviderObfuscated
-    ) {
+    const auth = find(auths.keystore, { pubkey });
+    if (auth) {
       const {
         hash,
         key
-      } = connection.keyProviderObfuscated;
+      } = auth;
       if (hash && key) {
         const wif = decrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(wif) === true) {
@@ -98,7 +92,6 @@ class GlobalAccountEdit extends Component<Props> {
     const { wif } = this.state;
     return (
       <Modal
-        centered={false}
         closeIcon
         closeOnDimmerClick={false}
         onClose={this.onClose}
@@ -113,55 +106,65 @@ class GlobalAccountEdit extends Component<Props> {
           />
         </Modal.Header>
         <Modal.Content>
-          <Header>
-            <Form>
-              <GlobalFormFieldAccount
-                app={app}
-                label={t('tools:tools_form_account_edit_account')}
-                name="account"
-                onChange={this.onChange}
-                value={data.account || ''}
-              />
-              <Form.Field
-                control={Select}
-                defaultValue={data.authorization}
-                label={t('tools:tools_form_account_edit_authorization')}
-                name="authorization"
-                options={authOptions}
-              />
-              <Form.Field
-                control={Select}
-                defaultValue={data.mode}
-                label={t('tools:tools_form_account_edit_mode')}
-                name="mode"
-                options={walletOptions}
-              />
-              <GlobalFormFieldKeyPublic
-                connection={connection}
-                defaultValue={data.pubkey || ''}
-                label={t('tools:tools_form_account_edit_pubkey')}
-                name="pubkey"
-                onChange={this.onChange}
-              />
-              {(wif)
-                ? (
-                  <GlobalFormFieldKeyPrivate
-                    autoFocus
-                    connection={connection}
-                    label={t('global_account_import_private_key')}
-                    name="key"
-                    placeholder={t('welcome:welcome_key_compare_placeholder')}
-                    onChange={this.onChange}
-                    value={wif}
-                  />
-                )
-                : false
-              }
-            </Form>
-            <Message
-              content={t('tools:tools_form_account_edit_nosave')}
+          <Message
+            content={t('tools:tools_form_account_edit_nosave')}
+          />
+          <Form>
+            <GlobalFormFieldAccount
+              app={app}
+              label={t('tools:tools_form_account_edit_account')}
+              name="account"
+              onChange={this.onChange}
+              value={data.account || ''}
             />
-          </Header>
+            <Form.Field
+              control={Select}
+              defaultValue={data.authorization}
+              label={t('tools:tools_form_account_edit_authorization')}
+              name="authorization"
+              options={authOptions}
+            />
+            <Form.Field
+              control={Select}
+              defaultValue={data.mode}
+              label={t('tools:tools_form_account_edit_mode')}
+              name="mode"
+              options={walletOptions}
+            />
+            <GlobalFormFieldKeyPublic
+              connection={connection}
+              defaultValue={data.pubkey || ''}
+              label={t('tools:tools_form_account_edit_pubkey')}
+              name="pubkey"
+              onChange={this.onChange}
+            />
+            {(data.mode === 'hot' && wif)
+              ? (
+                <GlobalFormFieldKeyPrivate
+                  autoFocus
+                  connection={connection}
+                  label={t('global_account_import_private_key')}
+                  name="key"
+                  placeholder={t('welcome:welcome_key_compare_placeholder')}
+                  onChange={this.onChange}
+                  value={wif}
+                />
+              )
+              : false
+            }
+            {(data.mode === 'hot' && !wif)
+              ? (
+                <Form.Field
+                  control={Input}
+                  fluid
+                  label={t('global_account_import_private_key')}
+                  name="key"
+                  value="Wallet is currently locked."
+                />
+              )
+              : false
+            }
+          </Form>
         </Modal.Content>
       </Modal>
     );
@@ -170,6 +173,7 @@ class GlobalAccountEdit extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    auths: state.auths,
     connection: state.connection,
     settings: state.settings,
   };

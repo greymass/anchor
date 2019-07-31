@@ -15,7 +15,7 @@ class ToolsPermissions extends Component<Props> {
       actions,
       blockExplorers,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       t,
@@ -23,7 +23,7 @@ class ToolsPermissions extends Component<Props> {
       wallet
     } = this.props;
 
-    if (!['watch', 'ledger'].includes(settings.walletMode) && !(keys && keys.key)) {
+    if (!['watch', 'ledger'].includes(settings.walletMode) && !pubkeys.unlocked.includes(wallet.pubkey)) {
       return (
         <WalletPanelLocked
           actions={actions}
@@ -38,11 +38,6 @@ class ToolsPermissions extends Component<Props> {
     if (!account) return false;
 
     let { pubkey } = wallet;
-    if (!pubkey) {
-      if (keys && keys.pubkey) {
-        ({ pubkey } = keys);
-      }
-    }
     let authorization = new EOSAccount(account).getAuthorization(pubkey, true);
     if (settings.walletMode === 'watch') {
       authorization = {
@@ -50,7 +45,7 @@ class ToolsPermissions extends Component<Props> {
       };
     }
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Container>
           {(settings.advancedPermissions)
             ? (

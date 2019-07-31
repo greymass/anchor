@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-class GlobalSettingsFilterSpamTransfers extends Component<Props> {
+export class GlobalSettingsFilterSpamTransfers extends Component<Props> {
   onChange = (e, { value }) => {
     const { actions } = this.props;
 
     actions.setSetting('filterSpamTransfersUnder', value);
-  }
+  };
 
   render() {
     const {

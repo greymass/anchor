@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Accordion, Header, Icon, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-class WalletMessageContractBase extends Component<Props> {
+export class GlobalMessageContractBase extends Component<Props> {
   state = { active: false }
   onClick = () => this.setState({ active: !this.state.active });
   render() {
@@ -14,8 +14,10 @@ class WalletMessageContractBase extends Component<Props> {
         <Accordion fluid>
           <Accordion.Title active={active} onClick={this.onClick}>
             <Header size="small">
-              <Icon name="dropdown" />
-              {t('contract_terms')}
+              <React.Fragment>
+                <Icon name="dropdown" />
+                {t('contract_terms')}
+              </React.Fragment>
             </Header>
           </Accordion.Title>
           <Accordion.Content active={active}>
@@ -27,4 +29,4 @@ class WalletMessageContractBase extends Component<Props> {
   }
 }
 
-export default translate('contracts')(WalletMessageContractBase);
+export default translate('contracts')(GlobalMessageContractBase);

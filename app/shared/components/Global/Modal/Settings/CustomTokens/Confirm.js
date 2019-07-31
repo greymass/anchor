@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Container, Table } from 'semantic-ui-react';
 
-class GlobalModalSettingsCustomTokensConfirm extends Component<Props> {
+export class GlobalModalSettingsCustomTokensConfirm extends Component<Props> {
   render() {
     const {
       onSubmit,
@@ -15,33 +15,45 @@ class GlobalModalSettingsCustomTokensConfirm extends Component<Props> {
         <Table definition>
           <Table.Row>
             <Table.Cell width={4}>
-              {t('global_modal_settings_customtoken_confirm_issuer')}
+              <p>
+                {t('global_modal_settings_customtoken_confirm_issuer')}
+              </p>
             </Table.Cell>
             <Table.Cell>
-              {token.issuer}
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              {t('global_modal_settings_customtoken_confirm_supply')}
-            </Table.Cell>
-            <Table.Cell>
-              {token.supply}
+              <p>
+                {token.issuer}
+              </p>
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>
-              {t('global_modal_settings_customtoken_confirm_maxsupply')}
+              <p>
+                {t('global_modal_settings_customtoken_confirm_supply')}
+              </p>
             </Table.Cell>
             <Table.Cell>
-              {token.max_supply}
+              <p>
+                {token.supply}
+              </p>
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>
+              <p>
+                {t('global_modal_settings_customtoken_confirm_maxsupply')}
+              </p>
+            </Table.Cell>
+            <Table.Cell>
+              <p>
+                {token.max_supply}
+              </p>
             </Table.Cell>
           </Table.Row>
         </Table>
         <Container textAlign="center">
           <Button
             color="green"
-            content={t('global_modal_settings_customtoken_confirm')}
+            content={<p>{t('global_modal_settings_customtoken_confirm')}</p>}
             onClick={onSubmit}
           />
         </Container>

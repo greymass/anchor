@@ -17,7 +17,7 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
       blockchains,
       blockExplorers,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       transaction,
@@ -31,7 +31,8 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
     if (!settings.acceptedCrosschainTransfers) {
       return (
         <Segment
-          color="blue"
+          color="violet"
+          style={{ margin: 0 }}
           content={(
             <React.Fragment>
               <Header>
@@ -66,13 +67,13 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
       );
     }
 
-    return ((keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode))
+    return (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
       ? (
         <React.Fragment>
-          <Header>
-            {t('tools_blockchains_beos_crosschaintransfer_header')}
-          </Header>
-          <Segment basic>
+          <Segment color="violet" piled style={{ margin: 0 }}>
+            <Header>
+              {t('tools_blockchains_beos_crosschaintransfer_header')}
+            </Header>
             <Message
               header={t('tools_blockchains_beos_crosschaintransfer_explain_header')}
               content={t('tools_blockchains_beos_crosschaintransfer_explain_content')}
@@ -82,18 +83,16 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
               && blockchain.supportedContracts
               && blockchain.supportedContracts.includes('beosexchange'))
               ? (
-                <Segment>
-                  <WalletPanelButtonWithdraw
-                    actions={actions}
-                    balances={balances}
-                    blockchains={blockchains}
-                    blockExplorers={blockExplorers}
-                    connection={connection}
-                    settings={settings}
-                    system={system}
-                    transaction={transaction}
-                  />
-                </Segment>
+                <WalletPanelButtonWithdraw
+                  actions={actions}
+                  balances={balances}
+                  blockchains={blockchains}
+                  blockExplorers={blockExplorers}
+                  connection={connection}
+                  settings={settings}
+                  system={system}
+                  transaction={transaction}
+                />
               )
               : false
             }
@@ -101,18 +100,16 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
               && blockchain.supportedContracts
               && blockchain.supportedContracts.includes('crosschaintransfer'))
               ? (
-                <Segment>
-                  <WalletPanelButtonCrosschainTransfer
-                    actions={actions}
-                    balances={balances}
-                    blockchains={blockchains}
-                    blockExplorers={blockExplorers}
-                    connection={connection}
-                    settings={settings}
-                    system={system}
-                    transaction={transaction}
-                  />
-                </Segment>
+                <WalletPanelButtonCrosschainTransfer
+                  actions={actions}
+                  balances={balances}
+                  blockchains={blockchains}
+                  blockExplorers={blockExplorers}
+                  connection={connection}
+                  settings={settings}
+                  system={system}
+                  transaction={transaction}
+                />
               )
               : false
             }

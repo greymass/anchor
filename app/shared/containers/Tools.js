@@ -50,7 +50,7 @@ import * as ProducersActions from '../actions/producers';
 import * as ProposalsActions from '../actions/governance/proposals';
 import * as RegProxyActions from '../actions/system/regproxy';
 import * as RegproxyinfoActions from '../actions/system/community/regproxyinfo';
-import * as RexActions from '../actions/system/rex';
+import * as RexActions from '../actions/system/rexi';
 import * as SettingsActions from '../actions/settings';
 import * as StakeActions from '../actions/stake';
 import * as SystemStateActions from '../actions/system/systemstate';
@@ -290,7 +290,7 @@ class ToolsContainer extends Component<Props> {
       .map((pane) => {
         const {
           chain
-          } = this.props;
+        } = this.props;
         if (pane.header) {
           return {
             menuItem: (
@@ -366,6 +366,7 @@ function mapStateToProps(state) {
     accounts: state.accounts,
     allBlockExplorers: state.blockexplorers,
     app: state.app,
+    auths: state.auths,
     balances: state.balances,
     blockchains: state.blockchains,
     chain: state.chain,

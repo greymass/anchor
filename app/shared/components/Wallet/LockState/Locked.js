@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Button, Form, Header, Icon, Input, Menu, Message, Modal } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Input, Menu, Message, Modal, Popup } from 'semantic-ui-react';
 
 import WalletModalUnlock from '../Modal/Unlock';
 
@@ -29,8 +29,9 @@ export default class WalletLockStateLocked extends Component<Props> {
     const {
       password
     } = this.state;
+    console.log('submitted');
     actions.unlockWallet(password);
-  }
+  };
   render() {
     const {
       validate
@@ -41,7 +42,7 @@ export default class WalletLockStateLocked extends Component<Props> {
     return (
       <I18n ns="wallet">
         {
-          (t) => (
+          () => (
             <WalletModalUnlock
               onChange={this.onChange}
               onKeyPress={this.onKeyPress}
@@ -49,17 +50,23 @@ export default class WalletLockStateLocked extends Component<Props> {
               onSubmit={this.onSubmit}
               open={open}
               trigger={(
-                <Menu.Item
-                  color="yellow"
-                  key="lockstate"
-                  inverted="true"
-                  onClick={this.onOpen}
-                >
-                  <Icon
-                    color="green"
-                    name="lock"
-                  />
-                </Menu.Item>
+                <Popup
+                  content="The wallet is currently locked. Click this menu item and enter its password to unlock it."
+                  inverted
+                  trigger={(
+                    <Menu.Item
+                      color="yellow"
+                      key="lockstate"
+                      inverted="true"
+                      onClick={this.onOpen}
+                    >
+                      <Icon
+                        color="green"
+                        name="lock"
+                      />
+                    </Menu.Item>
+                  )}
+                />
               )}
               validate={validate}
             />

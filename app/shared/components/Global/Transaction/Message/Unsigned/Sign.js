@@ -7,7 +7,7 @@ import GlobalTransactionViewActions from '../../../Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../../Transaction/View/Detail';
 import GlobalTransactionViewFull from '../../../Transaction/View/Full';
 
-class GlobalTransactionMessageUnsignedSign extends Component<Props> {
+export class GlobalTransactionMessageUnsignedSign extends Component<Props> {
   signbroadcast = () => {
     const {
       actions,
@@ -18,7 +18,7 @@ class GlobalTransactionMessageUnsignedSign extends Component<Props> {
       signTransaction
     } = actions;
     signTransaction(transaction, contract);
-  }
+  };
   render() {
     const {
       onClose,
@@ -44,12 +44,13 @@ class GlobalTransactionMessageUnsignedSign extends Component<Props> {
               </Header>
               <GlobalTransactionViewDetail
                 broadcastable={!signed}
-                transaction={{data: transaction}}
+                transaction={{ data: transaction }}
               />
-              <Container textAlign="center">
+              <Container>
                 <Button
                   color="purple"
                   content={t('broadcast_transaction_signbroadcast')}
+                  floated="right"
                   icon="wifi"
                   onClick={this.signbroadcast}
                   size="large"

@@ -1,8 +1,8 @@
 {
-  "name": "eos-voter",
-  "productName": "eos-voter",
-  "version": "0.7.11",
-  "description": "",
+  "name": "anchor-beta",
+  "productName": "Anchor-BETA",
+  "version": "0.9.0",
+  "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "main": "./main.prod.js",
   "author": {
     "name": "Greymass",

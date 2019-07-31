@@ -68,7 +68,7 @@ class ToolsDelegations extends Component<Props> {
       balances,
       allBlockExplorers,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       t,
@@ -92,7 +92,7 @@ class ToolsDelegations extends Component<Props> {
     const delegationsToDisplay = sortBy(delegations, 'accountName');
 
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsModalDelegation
           account={accounts[settings.account]}
           actions={actions}
@@ -101,7 +101,7 @@ class ToolsDelegations extends Component<Props> {
           connection={connection}
           delegationToEdit={delegationToEdit}
           delegationToRemove={delegationToRemove}
-          keys={keys}
+          pubkeys={pubkeys}
           onClose={this.onCloseModal}
           openModal={openModal}
           settings={settings}

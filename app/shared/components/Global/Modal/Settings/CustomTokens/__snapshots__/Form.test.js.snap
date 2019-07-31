@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalModalSettingsCustomTokensForm renders correctly 1`] = `
+<Form
+  as="form"
+  onSubmit={[Function]}
+>
+  <FormField
+    autoFocus={true}
+    control={[Function]}
+    fluid={true}
+    label="global_modal_settings_customtoken_form_account_label"
+    name="account"
+    placeholder="global_modal_settings_customtoken_form_account_placeholder"
+    type="text"
+    value="eosio"
+  />
+  <FormField
+    control={[Function]}
+    fluid={true}
+    label="global_modal_settings_customtoken_form_symbol_label"
+    name="symbol"
+    placeholder="global_modal_settings_customtoken_form_symbol_placeholder"
+    type="text"
+    value="EOS"
+  />
+  <Container
+    textAlign="center"
+  >
+    <Button
+      as="button"
+      color="green"
+      content="global_modal_settings_customtoken_add"
+    />
+  </Container>
+</Form>
+`;

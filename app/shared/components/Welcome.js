@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Container, Grid, Image, Header } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Image, Segment, Step } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
-import eos from '../../renderer/assets/images/eos.png';
+import logo from '../../renderer/assets/images/anchor-logo.svg';
+import logoText from '../../renderer/assets/images/anchor-text.svg';
+import background from '../../renderer/assets/images/geometric-background.svg';
 
 import WelcomeAccount from './Welcome/Account';
 import WelcomeAdvanced from './Welcome/Advanced';
@@ -122,9 +124,11 @@ class Welcome extends Component<Props> {
     } else if (validate.NODE === 'SUCCESS') {
       stage = 2;
     }
-    if (stageSelect !== false) {
+    console.log(stage)
+    if (stageSelect !== false && stageSelect <= stage) {
       stage = stageSelect;
     }
+    console.log(stage)
     let stageElement = <WelcomeConnection onStageSelect={this.onStageSelect} settings={settings} stage={stage} />;
     if (stage >= 1) {
       // stageElement = <WelcomePath onStageSelect={this.onStageSelect} stage={stage} />;;
@@ -164,51 +168,52 @@ class Welcome extends Component<Props> {
       )
     }
     return (
-      <div className="welcome">
-        <style>
-          {`
-            body > div#root,
-            body > div#root > div,
-            body > div#root > div > div.welcome {
-              height: 100%;
-            }
-          `}
-        </style>
+      <Container>
         <Grid
-          textAlign="center"
-          style={{ height: '100%' }}
+          style={{
+            height: '100vh',
+            margin: 0
+          }}
         >
           <Grid.Column
-            style={{ maxWidth: 450 }}
             textAlign="left"
-            verticalAlign="middle"
+            width={6}
           >
-            <Header
-              color="teal"
-              textAlign="center"
-            >
-              <Image src={eos} />
-              <Header.Content>
-                {t('application_name')}
-                <Header.Subheader>
-                  {t('application_version')}
-                </Header.Subheader>
-              </Header.Content>
-            </Header>
-            {(stage >= 0)
-              ? (
-                <Container textAlign="center">
+            <Segment basic style={{ marginBottom: 0 }}>
+              <Image
+                centered
+                size="medium"
+                src={logo}
+                style={{ maxWidth: '128px' }}
+              />
+              <Header
+                textAlign="center"
+                size="large"
+              >
+                <Header.Content>
+                  <Image
+                    centered
+                    size="medium"
+                    src={logoText}
+                    style={{ maxWidth: '192px', marginBottom: '1em' }}
+                  />
+                  <Header.Subheader>
+                    {t('application_version')}
+                  </Header.Subheader>
+                </Header.Content>
+              </Header>
+              {(stage >= 0)
+                ? (
                   <WelcomeBreadcrumb
                     onStageSelect={this.onStageSelect}
                     stage={stage}
                     walletMode={settings.walletMode}
                   />
-                </Container>
-              )
-              : false
-            }
-            {stageElement}
-            <Container textAlign="center">
+                )
+                : false
+              }
+            </Segment>
+            <Segment basic textAlign="center" style={{ marginTop: 0 }}>
               <GlobalSettingsLanguage
                 actions={actions}
                 setLanguage={settings.lang}
@@ -216,15 +221,24 @@ class Welcome extends Component<Props> {
                 settings
                 selection
               />
+            </Segment>
+          </Grid.Column>
+          <Grid.Column
+            textAlign="left"
+            style={{ paddingTop: '2rem' }}
+            width={10}
+          >
+            {stageElement}
+            <Container textAlign="center">
               {(stage === 0 && !advancedSetup)
                 ? (
                   <p>
                     <Button
                       content={t('welcome:welcome_advanced_setup')}
-                      color="purple"
+                      color="green"
                       icon="lab"
                       onClick={this.setupAdvanced}
-                      size="tiny"
+                      size="small"
                       style={{ marginTop: '1em' }}
                     />
                   </p>
@@ -252,7 +266,18 @@ class Welcome extends Component<Props> {
             </Container>
           </Grid.Column>
         </Grid>
-      </div>
+        <Image
+          fluid
+          src={background}
+          style={{
+            bottom: 0,
+            left: 0,
+            opacity: 0.5,
+            position: 'fixed',
+            zIndex: -1
+          }}
+        />
+      </Container>
     );
   }
 }

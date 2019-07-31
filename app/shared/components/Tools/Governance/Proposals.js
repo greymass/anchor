@@ -6,9 +6,9 @@ import { find } from 'lodash';
 import {
   Container,
   Dropdown,
+  Grid,
   Header,
   Input,
-  List,
   Loader,
   Message,
   Segment,
@@ -77,7 +77,7 @@ class ToolsGovernanceProposals extends Component<Props> {
       list,
       votes
     } = proposals;
-    const isLocked = (!['ledger', 'watch'].includes(settings.walletMode) && !keys.key);
+    const isLocked = (!['ledger', 'watch'].includes(settings.walletMode) && (keys && !keys.key));
     let recentOptions = [];
     if (settings && settings.recentProposalsScopes) {
       recentOptions = settings.recentProposalsScopes.map((recentProposalsScope) => ({
@@ -162,56 +162,13 @@ class ToolsGovernanceProposals extends Component<Props> {
       }
     ];
     return (
-      <Segment basic>
+      <Segment color="purple" piled style={{ marginTop: 0 }}>
         <Header>
           {t('tools_proposals_header')}
           <Header.Subheader>
             {t('tools_proposals_subheader')}
           </Header.Subheader>
         </Header>
-        <Message
-          content={(
-            <React.Fragment>
-              <p>
-                {t('tools_proposals_explanation_one')}
-              </p>
-              <p>
-                {t('tools_proposals_explanation_two')}
-              </p>
-              <List divided relaxed>
-                <List.Item>
-                  <GlobalModalDangerLink
-                    content="https://eosvotes.io"
-                    link="https://eosvotes.io"
-                    settings={settings}
-                  />
-                </List.Item>
-                <List.Item>
-                  <GlobalModalDangerLink
-                    content="https://bloks.io/vote/referendums"
-                    link="https://bloks.io/vote/referendums"
-                    settings={settings}
-                  />
-                </List.Item>
-                <List.Item>
-                  <GlobalModalDangerLink
-                    content="https://www.eosx.io/tools/referendums/proposals"
-                    link="https://www.eosx.io/tools/referendums/proposals"
-                    settings={settings}
-                  />
-                </List.Item>
-                <List.Item>
-                  <GlobalModalDangerLink
-                    content="https://eosauthority.com/polls?&lnc=en"
-                    link="https://eosauthority.com/polls?&lnc=en"
-                    settings={settings}
-                  />
-                </List.Item>
-              </List>
-            </React.Fragment>
-          )}
-          info
-        />
         <Container style={{ display: 'none' }}>
           {(sortedList && sortedList.length)
             ? (
@@ -243,26 +200,34 @@ class ToolsGovernanceProposals extends Component<Props> {
             selectOnNavigation={false}
           />
         </Container>
-        <Input
-          placeholder={t('tools_proposals_search_placeholder')}
-          onChange={(e) => this.setState({ queryString: e.target.value })}
-        />
-        <Select
-          defaultValue="all"
-          name="filterByVote"
-          onChange={(e, { value }) => this.setState({ filterByVote: value })}
-          options={filterByVoteOptions}
-          selection
-          style={{ marginLeft: '10px' }}
-        />
-        <Select
-          defaultValue="active"
-          name="filterByStatus"
-          onChange={(e, { value }) => this.setState({ filterByStatus: value })}
-          options={filterByStatusOptions}
-          selection
-          style={{ marginLeft: '10px' }}
-        />
+        <Grid>
+          <Grid.Column width={12}>
+            <Select
+              defaultValue="all"
+              name="filterByVote"
+              onChange={(e, { value }) => this.setState({ filterByVote: value })}
+              options={filterByVoteOptions}
+              selection
+              size="small"
+            />
+            <Select
+              defaultValue="active"
+              name="filterByStatus"
+              onChange={(e, { value }) => this.setState({ filterByStatus: value })}
+              options={filterByStatusOptions}
+              selection
+              size="small"
+              style={{ marginLeft: '0.25em' }}
+            />
+          </Grid.Column>
+          <Grid.Column width={4} key="ProducersVotingPreview" textAlign="right">
+            <Input
+              fluid
+              placeholder={t('tools_proposals_search_placeholder')}
+              onChange={(e) => this.setState({ queryString: e.target.value })}
+            />
+          </Grid.Column>
+        </Grid>
         {(sortedList.length > 0) ? (
           <Visibility
             continuous

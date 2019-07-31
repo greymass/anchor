@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import { translate } from 'react-i18next';
-import { Button, Container, Form, Header, Segment } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Header, Segment } from 'semantic-ui-react';
 
 import WelcomeImportContainer from './Import';
 
@@ -47,36 +47,32 @@ class WelcomeAdvancedContainer extends Component<Props> {
 
     return (
       <Form>
-        <Segment color="blue">
-          <Header
-            content={t('welcome_cold_wallet_header')}
-            subheader={t('welcome_cold_wallet_subheader')}
-          />
-          <Button
-            color="blue"
-            content={t('welcome_use_coldwallet')}
-            icon="snowflake"
-            onClick={this.useColdWallet}
-            size="small"
-            style={{ marginTop: '1em' }}
-          />
-        </Segment>
-        <Segment color="blue">
-          <Header
-            content={t('welcome_restore_wallet_header')}
-            subheader={t('welcome_restore_wallet_subheader')}
-          />
-          <WelcomeImportContainer />
-        </Segment>
-        <Container textAlign="center">
-          <Button
-            content={t('cancel')}
-            icon="left arrow circle"
-            onClick={this.props.onClose}
-            size="small"
-            style={{ marginTop: '1em' }}
-          />
-        </Container>
+        <Divider />
+        <Header
+          content={t('welcome_cold_wallet_header')}
+          size="small"
+          subheader={t('welcome_cold_wallet_subheader')}
+        />
+        <Button
+          color="blue"
+          content={t('welcome_use_coldwallet')}
+          icon="snowflake"
+          onClick={this.useColdWallet}
+          size="small"
+          style={{ marginTop: '1em' }}
+        />
+        <Header
+          content={t('welcome_restore_wallet_header')}
+          subheader={t('welcome_restore_wallet_subheader')}
+        />
+        <WelcomeImportContainer />
+        <Button
+          content={t('cancel')}
+          icon="left arrow circle"
+          onClick={this.props.onClose}
+          size="small"
+          style={{ marginTop: '1em' }}
+        />
       </Form>
     );
   }

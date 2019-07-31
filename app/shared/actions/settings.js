@@ -4,14 +4,11 @@ import * as validate from './validate';
 import { setWalletMode } from './wallet';
 import { removeWallet } from './wallets';
 
-const { remote } = require('electron');
-
 export function clearSettingsCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_ALL_STATES
     });
-    remote.getCurrentWindow().reload();
   };
 }
 
@@ -34,13 +31,15 @@ export function resetApp() {
   };
 }
 
-export function setSetting(key, value) {
+export function setSetting(key, value, chainId = false) {
   return (dispatch: () => void) => {
+    const payload = { [key]: value };
+    if (chainId) {
+      payload.__id = chainId;
+    }
     dispatch({
       type: types.SET_SETTING,
-      payload: {
-        [key]: value
-      }
+      payload
     });
   };
 }
@@ -65,7 +64,7 @@ export function setSettingWithValidation(key, value) {
         // If nodes are changing, force clear any locally cached data
         dispatch({ type: types.CLEAR_ACCOUNT_CACHE });
         dispatch({ type: types.CLEAR_PRODUCER_CACHE });
-        dispatch(validate.validateNode(value, false, true, true));
+        dispatch(validate.validateNode(value, false, true, true, true));
         break;
       }
       default: {
@@ -96,7 +95,7 @@ export function addCustomToken(contract, symbol) {
     if (name && name.length > 0) {
       tokens.push(name);
       tokens = new Set(tokens.filter((e) => e));
-      dispatch(setSetting('customTokens', Array.from(tokens)));
+      dispatch(setSetting('customTokens', Array.from(tokens).sort()));
     }
     return dispatch(refreshAccountBalances(settings.account, [name]));
   };
@@ -117,7 +116,7 @@ export function addCustomTokenBeos(contract, symbol) {
     if (name && name.length > 0) {
       tokens.push(name);
       tokens = new Set(tokens.filter((e) => e));
-      return dispatch(setSetting('customTokens', Array.from(tokens)));
+      return dispatch(setSetting('customTokens', Array.from(tokens).sort()));
     }
   };
 }

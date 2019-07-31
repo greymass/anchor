@@ -13,20 +13,29 @@ class WelcomeAdvanced extends Component<Props> {
       t
     } = this.props;
     return (
-      <Segment
-        size="small"
-        stacked
-      >
-        <Header
-          content={t('welcome_stage_advanced')}
-        />
-        <WelcomeAdvancedContainer
-          editing
-          onClose={onClose}
-          onStageSelect={onStageSelect}
-          stage={stage}
-        />
-      </Segment>
+      <React.Fragment>
+        <Header size="huge">
+          <Header.Subheader>
+            {t('welcome_step')} #1
+          </Header.Subheader>
+          {t('welcome_stage_advanced')}
+        </Header>
+        <Segment
+          color="green"
+          size="small"
+          stacked
+        >
+          <Segment basic>
+            <p>{t('welcome_stage_advanced_instructions')}</p>
+            <WelcomeAdvancedContainer
+              editing
+              onClose={onClose}
+              onStageSelect={onStageSelect}
+              stage={stage}
+            />
+          </Segment>
+        </Segment>
+      </React.Fragment>
     );
   }
 }

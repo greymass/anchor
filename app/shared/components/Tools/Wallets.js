@@ -2,47 +2,14 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
-import { Button, Grid, Header, Segment, Table } from 'semantic-ui-react';
+import { Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
 import ToolsModalDuplicatingWallet from './Modal/DuplicatingWallet';
 
-import EOSWallet from '../../utils/Anchor/Wallet';
-
-const { ipcRenderer } = require('electron');
-
 class ToolsWallets extends Component<Props> {
   state = {};
-  backup = () => {
-    const {
-      connection,
-      blockchains,
-      settings,
-      wallets
-    } = this.props;
-    const backup = {
-      networks: blockchains.map((blockchain) => ({
-        schema: 'anchor.v1.network',
-        data: Object.assign({}, blockchain)
-      })),
-      settings: {
-        schema: 'anchor.v1.settings',
-        data: Object.assign({}, settings),
-      },
-      wallets: wallets.map((wallet) => {
-        const model = new EOSWallet();
-        model.importProps(wallet, connection.chainId);
-        return model.wallet;
-      })
-    };
-    ipcRenderer.send(
-      'saveFile',
-      settings.lastFilePath,
-      JSON.stringify(backup),
-      'wallet'
-    );
-  }
   duplicateWallet = (account, authorization) =>
     this.setState({ duplicatingWallet: { account, authorization } })
   render() {
@@ -50,6 +17,8 @@ class ToolsWallets extends Component<Props> {
       actions,
       blockchains,
       connection,
+      history,
+      pubkeys,
       settings,
       status,
       system,
@@ -65,7 +34,18 @@ class ToolsWallets extends Component<Props> {
       return false;
     }
     return (
-      <Segment basic>
+      <Segment style={{ marginTop: 0 }}>
+        {(duplicatingWallet) && (
+          <ToolsModalDuplicatingWallet
+            actions={actions}
+            blockchains={blockchains}
+            duplicatingWallet={duplicatingWallet}
+            onClose={() => this.setState({ duplicatingWallet: null })}
+            settings={settings}
+            system={system}
+            wallets={wallets}
+          />
+        )}
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -77,26 +57,10 @@ class ToolsWallets extends Component<Props> {
               </Header>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              {(duplicatingWallet) && (
-                <ToolsModalDuplicatingWallet
-                  actions={actions}
-                  blockchains={blockchains}
-                  duplicatingWallet={duplicatingWallet}
-                  onClose={() => this.setState({ duplicatingWallet: null })}
-                  settings={settings}
-                  system={system}
-                  wallets={wallets}
-                />
-              )}
               <GlobalButtonAccountImport
                 connection={connection}
+                history={history}
                 settings={settings}
-              />
-              <Button
-                color="purple"
-                content={t('tools_wallets_backup_button')}
-                icon="save"
-                onClick={this.backup}
               />
             </Grid.Column>
           </Grid.Row>
@@ -107,6 +71,7 @@ class ToolsWallets extends Component<Props> {
               <Table.HeaderCell>{t('tools_wallets_account')}</Table.HeaderCell>
               <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell>{t('tools_wallets_mode')}</Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell textAlign="right">{t('tools_wallets_controls')}</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -116,7 +81,7 @@ class ToolsWallets extends Component<Props> {
                 .sort((a, b) => {
                   const k1 = `${a.account}@${a.authorization}`;
                   const k2 = `${b.account}@${b.authorization}`;
-                  return k1 > k2;
+                  return (k1 > k2) ? 1 : -1;
                 })
                 .map((w) => (
                   <ToolsTableRowWallet
@@ -125,9 +90,11 @@ class ToolsWallets extends Component<Props> {
                     current={wallet}
                     duplicateWallet={this.duplicateWallet}
                     key={`${w.account}@${w.authorization}`}
+                    pubkeys={pubkeys}
                     settings={settings}
                     status={status}
                     wallet={w}
+                    walletCount={wallets.length}
                     validate={validate}
                   />
                 )))}

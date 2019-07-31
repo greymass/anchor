@@ -88,7 +88,7 @@ class ToolsProxy extends Component<Props> {
       balances,
       blockExplorers,
       connection,
-      keys,
+      pubkeys,
       settings,
       system,
       validate,
@@ -110,14 +110,14 @@ class ToolsProxy extends Component<Props> {
     const relevantNameBidsSorted = sortBy(relevantNameBids, 'newname');
 
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsModalBidName
           account={accounts[settings.account]}
           actions={actions}
           balance={balances[settings.account]}
           blockExplorers={blockExplorers}
           connection={connection}
-          keys={keys}
+          pubkeys={pubkeys}
           nameBidToRemove={nameBidToRemove}
           onClose={this.onCloseModal}
           onOpen={this.onOpenModal}

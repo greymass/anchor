@@ -1,5 +1,6 @@
 import * as types from './types';
 import eos from './helpers/eos';
+import { httpQueue, httpClient } from '../utils/httpClient';
 
 export function setConnectionBroadcast(enable = true) {
   return (dispatch: () => void) => {
@@ -16,6 +17,38 @@ export function setConnectionSign(enable = true) {
       payload: { enable },
       type: types.SET_CONNECTION_SIGN
     });
+  };
+}
+
+export function getSupportedCalls() {
+  return (dispatch: () => void, getState) => {
+    dispatch(getAvailableEndpoints());
+    dispatch(historyPluginCheck());
+  };
+}
+
+export function getAvailableEndpoints() {
+  return (dispatch: () => void, getState) => {
+    const { connection } = getState();
+    const { httpEndpoint } = connection;
+    dispatch({
+      type: types.FEATURES_AVAILABLE_ENDPOINTS_PENDING,
+    });
+    httpQueue.add(() =>
+      httpClient
+        .post(`${httpEndpoint}/v1/node/get_supported_apis`)
+        .then((response) => {
+          return dispatch({
+            type: types.FEATURES_AVAILABLE_ENDPOINTS_SUCCESS,
+            payload: response.data.apis
+          })
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({
+            type: types.FEATURES_AVAILABLE_ENDPOINTS_FAILURE
+          });
+        }));
   };
 }
 
@@ -59,6 +92,7 @@ export function setChainId(chainId) {
 }
 
 export default {
+  getSupportedCalls,
   historyPluginCheck,
   setChainId,
   setConnectionBroadcast,

@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Label, Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
+import { get } from 'dot-prop-immutable';
 
-class GlobalTransactionViewDetail extends Component<Props> {
+export class GlobalTransactionViewDetail extends Component<Props> {
   render() {
     const {
       expired,
@@ -41,7 +42,7 @@ class GlobalTransactionViewDetail extends Component<Props> {
               {t('global_transaction_view_action_count')}
             </Table.Cell>
             <Table.Cell>
-              {data.transaction.transaction.actions.length}
+              {get(data, 'transaction.transaction.actions', []).length}
             </Table.Cell>
           </Table.Row>
           <Table.Row>
@@ -50,9 +51,9 @@ class GlobalTransactionViewDetail extends Component<Props> {
             </Table.Cell>
             <Table.Cell>
               <p>
-                <TimeAgo date={`${data.transaction.transaction.expiration}z`} />
+                <TimeAgo date={`${get(data, 'transaction.transaction.expiration')}z`} />
                 {' '}
-                ({data.transaction.transaction.expiration} UTC)
+                ({get(data, 'transaction.transaction.expiration')} UTC)
               </p>
               {(expired)
                 ? (

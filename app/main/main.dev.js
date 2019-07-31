@@ -1,14 +1,26 @@
 /* eslint global-require: 0, flowtype-errors/show-errors: 0 */
 
-import { app, crashReporter } from 'electron';
+import { app, crashReporter, ipcMain, protocol } from 'electron';
 import { configureStore } from '../shared/store/main/configureStore';
-import { createInterface } from './basic';
+import { createInterface } from '../modules/main/electron';
+import { createTray } from '../modules/tray/electron';
+import { createTrayIcon } from '../modules/tray/electron/icon';
+import { createProtocolHandlers } from '../modules/handler/electron';
+import HardwareLedger from '../shared/utils/Hardware/Ledger';
+import * as types from '../shared/actions/types';
+import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardware/ledger';
 
 const log = require('electron-log');
 const path = require('path');
 
+const Transport = require('@ledgerhq/hw-transport-node-hid').default;
+
+
 let resourcePath = __dirname;
 let ui = null;
+let menu = null;
+let tray = null;
+let pHandler = null;
 
 if (process.mainModule.filename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
@@ -38,6 +50,8 @@ console.log = (...args) => {
 };
 
 log.info('app: initializing');
+protocol.registerStandardSchemes(['eosio']);
+app.setAsDefaultProtocolClient('eosio');
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -56,7 +70,7 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
 
 // crash reporter for failures (NYI)
 crashReporter.start({
-  productName: 'eos-voter',
+  productName: 'anchor',
   companyName: '',
   submitURL: '',
   uploadToServer: false
@@ -74,12 +88,19 @@ app.on('ready', async () => {
     log.info('development mode enabled');
     await installExtensions();
   }
+
+  protocol.registerHttpProtocol('eosio', (req, cb) => {
+    console.log('protocol handler: register', req, cb);
+    // TODO: during protocol registration, the uri handler may need to be triggered
+  });
+
+  initProtocolHandler();
   // If this is the first run, walk through the welcome
   if (!store.getState().settings.configured) {
     log.info('new installation detected');
     ui = initManager('/', true);
   } else {
-    // initMenu();
+    initMenu();
   }
 });
 
@@ -88,8 +109,18 @@ app.on('window-all-closed', () => {
   log.info('app: window-all-closed');
   app.quit();
 });
-app.on('will-finish-launching', () => { log.info('app: will-finish-launching'); });
-app.on('before-quit', () => { log.info('app: before-quit'); });
+app.on('will-finish-launching', () => {
+  app.on('open-url', (req, url) => {
+    log.info('app: open-url', url);
+    pHandler.webContents.send('openUri', url);
+    pHandler.show();
+  });
+  log.info('app: will-finish-launching');
+});
+app.on('before-quit', () => {
+  log.info('app: before-quit');
+  pHandler.close();
+});
 app.on('will-quit', () => { log.info('app: will-quit'); });
 app.on('quit', () => { log.info('app: quit'); });
 
@@ -100,10 +131,58 @@ const initManager = (route = '/', closable = true) => {
   });
 };
 
+const initMenu = () => {
+  menu = createTray(resourcePath); // Initialize the menu
+  tray = createTrayIcon(resourcePath, menu); // Initialize the tray
+};
+
+const initProtocolHandler = (request = false) => {
+  pHandler = createProtocolHandlers(resourcePath, store, request);
+};
+
 const showManager = () => {
   if (!ui) {
     ui = initManager();
   }
 };
 
+let initHardwareRetry;
+
+const initHardwareLedger = (event, signPath, devicePath) => {
+  if (initHardwareRetry) {
+    clearInterval(initHardwareRetry);
+  }
+  Transport
+    .open(devicePath)
+    .then((transport) => {
+      if (process.env.NODE_ENV === 'development') {
+        transport.setDebugMode(true);
+      }
+      global.hardwareLedger.destroy();
+      global.hardwareLedger = new HardwareLedger(transport);
+      store.dispatch({
+        payload: {
+          devicePath,
+          signPath
+        },
+        type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
+      });
+      store.dispatch(getAppConfiguration());
+      return true;
+    })
+    .catch((error) => {
+      initHardwareRetry = setInterval(initHardwareLedger(event, signPath, devicePath), 1000);
+      store.dispatch({
+        payload: {
+          error
+        },
+        type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
+      });
+    });
+};
+
+ipcMain.on('connectHardwareLedger', initHardwareLedger);
+
+global.hardwareLedger = new HardwareLedger();
+global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalFragmentWalletType renders correctly 1`] = `
+<Popup
+  content="wallet:wallet_mode_explain_hot_2"
+  header="tools:tools_wallets_mode"
+  inverted={true}
+  keepInViewPort={true}
+  on="hover"
+  position="top left"
+  trigger={
+    <Label
+      basic={true}
+      color="green"
+      content="global_modal_account_import_hot_wallet"
+      icon="id card"
+      position="left center"
+    />
+  }
+/>
+`;

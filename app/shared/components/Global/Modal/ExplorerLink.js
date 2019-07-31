@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import GlobalModalDangerLink from './DangerLink';
+import { isEmpty } from 'lodash';
+import DangerLink from './DangerLink';
 
 export default class GlobalModalExplorerLink extends Component<Props> {
   render() {
@@ -18,7 +19,7 @@ export default class GlobalModalExplorerLink extends Component<Props> {
 
     const { blockExplorer: selected } = settings;
 
-    if (!blockExplorers) return false;
+    if (!blockExplorers || isEmpty(blockExplorers)) return content;
 
     const blockExplorer = (selected in Object.keys(blockExplorers))
       ? blockExplorers[selected]
@@ -28,20 +29,23 @@ export default class GlobalModalExplorerLink extends Component<Props> {
       return false;
     }
 
-    if (linkBlockId || linkType === 'account') {
-      linkBlockId = linkBlockId && linkBlockId.toString();
-
+    if (linkData || linkType === 'account') {
       const urlPartsWithoutVariable = blockExplorer[linkType].split(`{${linkType}}`);
 
       let generatedLink = null;
-      if ((linkType === 'txid') && ((urlPartsWithoutVariable[0] === 'https://explore.beos.world/transactions/') || (urlPartsWithoutVariable[0] === 'https://explore.testnet.beos.world/transactions/'))) {
-        generatedLink = `${urlPartsWithoutVariable[0]}${linkBlockId}/${linkData}${urlPartsWithoutVariable[1]}`;
+      if ((linkType === 'txid')) {
+        if (linkBlockId && (urlPartsWithoutVariable[0] === 'https://explore.beos.world/transactions/' || (urlPartsWithoutVariable[0] === 'https://explore.testnet.beos.world/transactions/'))) {
+          linkBlockId = linkBlockId && linkBlockId.toString();
+          generatedLink = `${urlPartsWithoutVariable[0]}${linkBlockId}/${linkData}${urlPartsWithoutVariable[1]}`;
+        } else {
+          generatedLink = `${urlPartsWithoutVariable[0]}${linkData}${urlPartsWithoutVariable[1]}`;
+        }
       } else {
         generatedLink = `${urlPartsWithoutVariable[0]}${linkData}${urlPartsWithoutVariable[1]}`;
       }
 
       return (
-        <GlobalModalDangerLink
+        <DangerLink
           content={content}
           link={generatedLink}
           settings={settings}

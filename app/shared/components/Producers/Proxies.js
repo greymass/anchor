@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
+import ProducersProxy from './Proxy';
 import ProxiesTable from './Proxies/Table';
 
 class Proxies extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      addProxy: false,
       amount: 10,
-      querying: false
+      querying: false,
+      removeProxy: false,
     };
   }
 
@@ -21,6 +24,25 @@ class Proxies extends Component<Props> {
 
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+
+  addProxy = (proxyAccout) => {
+    this.setState({
+      addProxy: proxyAccout
+    });
+  }
+
+  removeProxy = () => {
+    this.setState({
+      removeProxy: true
+    });
+  }
+
+  onClose = () => {
+    this.setState({
+      addProxy: false,
+      removeProxy: false
+    });
   }
 
   loadMore = () => this.setState({ amount: this.state.amount + 10 });
@@ -46,25 +68,28 @@ class Proxies extends Component<Props> {
     const {
       accounts,
       actions,
-      addProxy,
+      allBlockExplorers,
+      connection,
       globals,
-      keys,
-      removeProxy,
+      pubkeys,
       settings,
       system,
       t,
-      tables
+      tables,
+      wallet,
     } = this.props;
     const {
+      addProxy,
       amount,
       querying,
+      removeProxy,
     } = this.state;
 
     const account = accounts[settings.account];
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
     const currentProxy = account && account.voter_info && account.voter_info.proxy;
     const proxies = (tables.regproxyinfo && tables.regproxyinfo.regproxyinfo.proxies.rows) || [];
-    const isValidUser = !!((keys && keys.key && settings.walletMode !== 'wait') || settings.walletMode === 'watch');
+    const isValidUser = (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode));
 
     return (proxies.length > 0)
       ? [(
@@ -75,10 +100,30 @@ class Proxies extends Component<Props> {
           onBottomVisible={this.loadMore}
           once={false}
         >
+          {(addProxy || removeProxy)
+            ? (
+              <ProducersProxy
+                account={account}
+                accounts={accounts}
+                actions={actions}
+                addProxy={addProxy}
+                blockExplorers={allBlockExplorers[connection.chainKey]}
+                currentProxy={currentProxy}
+                isProxying={isProxying}
+                isValidUser={isValidUser}
+                onClose={this.onClose}
+                removeProxy={removeProxy}
+                settings={settings}
+                system={system}
+                tables={tables}
+              />
+            )
+            : false
+          }
           <ProxiesTable
             accounts={accounts}
             actions={actions}
-            addProxy={addProxy}
+            addProxy={this.addProxy}
             amount={amount}
             attached="top"
             currentProxy={currentProxy}
@@ -87,7 +132,7 @@ class Proxies extends Component<Props> {
             isQuerying={this.isQuerying}
             isValidUser={isValidUser}
             proxies={proxies}
-            removeProxy={removeProxy}
+            removeProxy={this.removeProxy}
             resetDisplayAmount={this.resetDisplayAmount}
             settings={settings}
             system={system}

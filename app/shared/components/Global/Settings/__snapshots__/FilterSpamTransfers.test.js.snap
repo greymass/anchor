@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalSettingsFilterSpamTransfers renders correctly 1`] = `
+<Dropdown
+  additionLabel="Add "
+  additionPosition="top"
+  closeOnBlur={true}
+  deburr={false}
+  icon="dropdown"
+  minCharacters={1}
+  name="transfer filter"
+  noResultsMessage="No results found."
+  onChange={[Function]}
+  openOnFocus={true}
+  options={
+    Array [
+      Object {
+        "key": "global_settings_filter_spam_transfers_0_0002",
+        "text": "global_settings_filter_spam_transfers_0_0002",
+        "value": 0.0002,
+      },
+      Object {
+        "key": "global_settings_filter_spam_transfers_0_0010",
+        "text": "global_settings_filter_spam_transfers_0_0010",
+        "value": 0.001,
+      },
+      Object {
+        "key": "global_settings_filter_spam_transfers_0_0100",
+        "text": "global_settings_filter_spam_transfers_0_0100",
+        "value": 0.01,
+      },
+      Object {
+        "key": "global_settings_filter_spam_transfers_0_1000",
+        "text": "global_settings_filter_spam_transfers_0_1000",
+        "value": 0.1,
+      },
+      Object {
+        "key": "global_settings_filter_spam_transfers_do_not",
+        "text": "global_settings_filter_spam_transfers_do_not",
+        "value": 0,
+      },
+    ]
+  }
+  renderLabel={[Function]}
+  searchInput="text"
+  selectOnBlur={true}
+  selectOnNavigation={true}
+  selection={false}
+  value="default"
+  wrapSelection={true}
+/>
+`;

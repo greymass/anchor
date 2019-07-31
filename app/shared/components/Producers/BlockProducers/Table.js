@@ -143,54 +143,57 @@ class ProducersTable extends Component<Props> {
     }
     const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
     return (
-      <Segment basic loading={loading} vertical>
-        <ProducersModalInfo
-          producerInfo={producers.producersInfo[viewing]}
-          onClose={this.clearProducerInfo}
-          settings={settings}
-          viewing={viewing}
-        />
-        <Grid>
-          <Grid.Column width={8}>
-            {(activatedStakePercent < 15 && producersVotedIn)
-              ? (
-                <Header size="small">
-                  {activatedStake.toLocaleString()} {t('block_producer_chain_symbol_staked', { connection: connection.chainSymbol })} ({activatedStakePercent}%)
-                  <Header.Subheader>
-                    <ProducersVoteWeight
-                      weight={totalVoteWeight}
-                    />
-                    {' '}
-                    {t('block_producer_total_weight')}
-                  </Header.Subheader>
-                </Header>
-              ) : (producersVotedIn) ? (
-                <Header size="small">
-                  {t('producers_block_producers')}
-                  <Header.Subheader>
-                    <ProducersVoteWeight
-                      weight={totalVoteWeight}
-                    />
-                    {' '}
-                    {t('block_producer_total_weight')}
-                  </Header.Subheader>
-                </Header>
-              ) : ''}
-          </Grid.Column>
-          <Grid.Column width={8} key="ProducersVotingPreview" textAlign="right">
-            <Input
-              icon="search"
-              onChange={this.onSearchChange}
-              placeholder={t('search')}
-            />
-          </Grid.Column>
-        </Grid>
+      <React.Fragment>
+        <Segment attached="top" color="purple" piled loading={loading}>
+          <ProducersModalInfo
+            producerInfo={producers.producersInfo[viewing]}
+            onClose={this.clearProducerInfo}
+            settings={settings}
+            viewing={viewing}
+          />
+          <Grid>
+            <Grid.Column width={8}>
+              {(activatedStakePercent < 15 && producersVotedIn)
+                ? (
+                  <Header size="small">
+                    {activatedStake.toLocaleString()} {t('block_producer_chain_symbol_staked', { connection: connection.chainSymbol })} ({activatedStakePercent}%)
+                    <Header.Subheader>
+                      <ProducersVoteWeight
+                        weight={totalVoteWeight}
+                      />
+                      {' '}
+                      {t('block_producer_total_weight')}
+                    </Header.Subheader>
+                  </Header>
+                ) : (producersVotedIn) ? (
+                  <Header size="small">
+                    {t('producers_block_producers')}
+                    <Header.Subheader>
+                      <ProducersVoteWeight
+                        weight={totalVoteWeight}
+                      />
+                      {' '}
+                      {t('block_producer_total_weight')}
+                    </Header.Subheader>
+                  </Header>
+                ) : ''}
+            </Grid.Column>
+            <Grid.Column width={8} key="ProducersVotingPreview" textAlign="right">
+              <Input
+                icon="search"
+                onChange={this.onSearchChange}
+                placeholder={t('search')}
+              />
+            </Grid.Column>
+          </Grid>
+        </Segment>
         <Table
-          color="violet"
+          attached="bottom"
+          color="grey"
           size="small"
           striped
           style={{ borderRadius: 0 }}
-          unstackable
+
         >
           <Table.Header>
             <Table.Row>
@@ -199,7 +202,7 @@ class ProducersTable extends Component<Props> {
               <Table.HeaderCell>
                 {t('block_producer')}
               </Table.HeaderCell>
-              <Table.HeaderCell width={5}>
+              <Table.HeaderCell textAlign="center" width={5}>
                 {producersVotedIn ? t('block_producer_total_votes') : ''}
               </Table.HeaderCell>
               <Table.HeaderCell collapsing />
@@ -212,7 +215,7 @@ class ProducersTable extends Component<Props> {
             {baseTable}
           </Transition>
         </Table>
-      </Segment>
+      </React.Fragment>
     );
   }
 }

@@ -10,7 +10,7 @@ const transactionErrorsMapping = {
   unsatisfied_authorization: GlobalTransactionErrorAuthorization
 };
 
-class GlobalTransactionMessageError extends Component<Props> {
+export class GlobalTransactionMessageError extends Component<Props> {
   constructor(props) {
     super(props);
     const {

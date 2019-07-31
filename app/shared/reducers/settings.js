@@ -1,4 +1,4 @@
-import { get } from 'dot-prop-immutable';
+import { get, set } from 'dot-prop-immutable';
 
 import * as types from '../actions/types';
 
@@ -15,12 +15,18 @@ const initialState = {
   advancedPermissions: false,
   // The loaded account
   account: '',
+  // Allow dangerous transactions
+  allowDangerousTransactions: false,
   // The loaded authorization
   authorization: undefined,
+  // The enabled blockchains (array of chain ids)
+  blockchains: [],
   // The block explorer used
   blockExplorer: 'bloks.io',
   // Current chain_id
   chainId: false,
+  // Additional settings per blockchain
+  chainSettings: {},
   // List of contacts
   contacts: [],
   // Custom tokens the wallet should be tracking
@@ -44,6 +50,10 @@ const initialState = {
   idleTimeout: 999999999,
   // Default language
   lang: '',
+  // The date the last backup was created
+  lastBackupDate: false,
+  // Set to true if any keys have been added or changed
+  lastBackupInvalidated: true,
   // Last location a file was opened/saved from
   lastFilePath: '',
   // The node to connect to
@@ -54,18 +64,24 @@ const initialState = {
   recentContracts: [],
   // Recent referendum scopes the wallet has used
   recentProposalsScopes: [],
+  // The most recently used wallets. Key is the chainId and property is the account/authority.
+  recentWallets: {},
+  // If the sidebar is collapsed
+  sidebarCollapsed: false,
   // Allows the UI to start with only a connected node
   skipImport: false,
   // Allows users to go to link directly (without passing through DangerLink) when set to true
   skipLinkModal: false,
   // Window State Management
   setupData: {},
+  // Window State Management
+  signingWindowsetupData: {},
   // Wallet Password Validity Hash
   walletHash: false,
   // Wallet Status
   walletInit: false,
-  // Wallet Mode (hot/cold/watch)
-  walletMode: 'hot',
+  // Wallet Mode (hot/cold/watch/ledger)
+  walletMode: false,
   // Wallet is Temporary
   walletTemp: false,
 };
@@ -103,11 +119,31 @@ export default function settings(state = initialState, action) {
       });
     }
     case types.SET_SETTING: {
+      if (action.payload.__id) {
+        const { payload } = Object.assign({}, action);
+        const { __id } = action.payload;
+        delete payload.__id;
+        return Object.assign({}, state, {
+          chainSettings: set(get(state, 'chainSettings', {}), `${__id}`, payload)
+        });
+      }
       return Object.assign({}, state, action.payload);
     }
+    case types.SET_CURRENT_WALLET: {
+      const wallet = {
+        account: action.payload.account,
+        authorization: action.payload.authorization,
+        mode: action.payload.mode,
+      };
+      return Object.assign({}, state, {
+        recentWallets: set(state.recentWallets, action.payload.chainId, wallet),
+      });
+    }
     case types.RESET_INVALID_SETTINGS: {
-      return Object.assign({}, validSettings.reduce((o, setting) =>
-        ({ ...o, [setting]: state[setting] }), {}));
+      return Object.assign({}, validSettings.reduce((o, setting) => ({
+        ...o,
+        [setting]: (state[setting]) ? state[setting] : initialState[setting]
+      }), {}));
     }
     default: {
       return state;

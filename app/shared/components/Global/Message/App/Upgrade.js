@@ -6,17 +6,17 @@ import { Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 const { ipcRenderer } = require('electron');
 
-class GlobalMessageAppUpgrade extends Component<Props> {
+export class GlobalMessageAppUpgrade extends Component<Props> {
   checkForUpdates = () => {
     ipcRenderer.send('checkForUpdates');
-  }
+  };
   skipUpdate = () => {
     const {
       actions,
       constants
     } = this.props;
     actions.setSetting('upgradeSkip', constants.version);
-  }
+  };
   render() {
     const {
       constants,
@@ -28,10 +28,14 @@ class GlobalMessageAppUpgrade extends Component<Props> {
           <Header color="blue" icon size="large">
             <Icon name="info circle" />
             <Header.Content>
-              {t('global_app_requires_upgrade_header', { new: constants.version })}
-              <Header.Subheader>
-                {t('global_app_requires_upgrade_subheader')}
-              </Header.Subheader>
+              <React.Fragment>
+                {t('global_app_requires_upgrade_header', { new: constants.version })}
+                <Header.Subheader>
+                  <p>
+                    {t('global_app_requires_upgrade_subheader')}
+                  </p>
+                </Header.Subheader>
+              </React.Fragment>
             </Header.Content>
           </Header>
           <Form>

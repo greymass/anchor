@@ -9,7 +9,7 @@ import ProducersVotingPreview from './Producers/BlockProducers/Modal/Preview';
 import Proxies from './Producers/Proxies';
 import ProducersSelector from './Producers/BlockProducers/Selector';
 import ToolsGovernanceProposals from './Tools/Governance/Proposals';
-import WalletPanel from './Wallet/Panel';
+import WalletPanelLocked from './Wallet/Panel/Locked';
 
 class Producers extends Component<Props> {
   constructor(props) {
@@ -149,13 +149,11 @@ class Producers extends Component<Props> {
       allBlockExplorers,
       balances,
       blockchains,
-      blockExplorers,
       connection,
       contracts,
       globals,
-      keys,
       producers,
-      proposals,
+      pubkeys,
       settings,
       system,
       t,
@@ -175,30 +173,11 @@ class Producers extends Component<Props> {
       submitting
     } = this.state;
     const { unregisteredProducers } = producers;
-    let sidebar = [(
-      <WalletPanel
-        actions={actions}
-        accounts={accounts}
-        balances={balances}
-        blockchains={blockchains}
-        blockExplorers={allBlockExplorers[connection.chainKey]}
-        connection={connection}
-        globals={globals}
-        key="WalletPanel"
-        keys={keys}
-        settings={settings}
-        system={system}
-        transaction={transaction}
-        validate={validate}
-        wallet={wallet}
-      />
-    )];
+    let sidebar = [];
     const account = accounts[settings.account];
     const proxyingTo = account && account.voter_info && account.voter_info.proxy;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
-    const isValidUser =
-      !!((keys && keys.key && settings.walletMode !== 'wait') ||
-      ['watch', 'ledger'].includes(settings.walletMode));
+    const isValidUser = (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode));
     const modified = (selected.sort().toString() !== producers.selected.sort().toString());
     const currentProxy = (account && account.voter_info && account.voter_info.proxy);
 
@@ -215,7 +194,6 @@ class Producers extends Component<Props> {
             addProxy={addProxy}
             blockExplorers={allBlockExplorers[connection.chainKey]}
             currentProxy={currentProxy}
-            keys={keys}
             isProxying={isProxying}
             isValidUser={isValidUser}
             onClose={this.onClose}
@@ -324,21 +302,17 @@ class Producers extends Component<Props> {
 
     return (
       <div ref={this.handleContextRef}>
-        <Grid divided>
-          <Grid.Row>
-            <Grid.Column width={6}>
-              {sidebar}
-            </Grid.Column>
-            <Grid.Column width={10}>
-              <Tab
-                panes={tabPanes}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <BlockProducers
+          {...this.props}
+          addProducer={this.addProducer.bind(this)}
+          isValidUser={isValidUser}
+          removeProducer={this.removeProducer.bind(this)}
+          selected={selected}
+          sidebar={sidebar}
+        />
       </div>
     );
   }
 }
 
-export default translate('producers')(Producers);
+export default translate(['tools', 'producers'])(Producers);

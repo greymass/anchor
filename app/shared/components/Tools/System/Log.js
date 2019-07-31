@@ -3,14 +3,12 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 
 import { Button, Checkbox, Form, Header, Icon, Segment, Table, TextArea } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
-import TimeAgo from 'react-timeago';
 
-const { clipboard, ipcRenderer } = require('electron');
+const { ipcRenderer } = require('electron');
 
 class ToolsSystemLog extends Component<Props> {
   state = {
-    errorsOnly: false
+    errorsOnly: true
   }
   toggleErrors = () => this.setState({ errorsOnly: !this.state.errorsOnly })
   promptSave = () => {
@@ -30,7 +28,7 @@ class ToolsSystemLog extends Component<Props> {
       errorsOnly
     } = this.state;
     return (
-      <Segment basic>
+      <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
           {t('tools_system_log_header')}
           <Header.Subheader>
@@ -56,9 +54,9 @@ class ToolsSystemLog extends Component<Props> {
           <Table.Body>
             {(log
               .slice(0, 50)
-              .filter((e) => (!errorsOnly || (e.payload && e.payload.err)))
+              .filter((e) => (!errorsOnly || (e.payload && e.payload.err) || (e.type && e.type.endsWith('_FAILURE'))))
               .map((entry, idx) => {
-                const isError = !!(entry.payload && entry.payload.err);
+                const isError = !!((entry.payload && entry.payload.err) || (entry.type && entry.type.endsWith('_FAILURE')));
                 return (
                   <Table.Row
                     key={`${idx}+${entry.when}`}

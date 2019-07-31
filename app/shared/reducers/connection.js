@@ -4,8 +4,8 @@ import * as types from '../actions/types';
 
 const initialState = {
   authorization: undefined,
-  chain: 'eos-mainnet',
   broadcast: true,
+  chain: 'EOS',
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   chainKey: 'eos-mainnet',
   chainSymbol: 'EOS',
@@ -14,6 +14,8 @@ const initialState = {
   historyPluginEnabled: true,
   httpEndpoint: null,
   keyPrefix: 'EOS',
+  keyProvider: [],
+  keyProviderObfuscated: {},
   sign: false,
   signMethod: false,
   signPath: false,
@@ -23,7 +25,13 @@ const initialState = {
 
 export default function connection(state = initialState, action) {
   switch (action.type) {
-    case types.WALLET_REMOVE:
+    case types.WALLET_REMOVE: {
+      return Object.assign({}, state, {
+        authorization: undefined,
+        keyProvider: [],
+        keyProviderObfuscated: {},
+      });
+    }
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }

@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { find } from 'lodash';
+import { find, findIndex } from 'lodash';
 
-import { Button, Dropdown, Header, Label, Popup, Table } from 'semantic-ui-react';
+import { Button, Dropdown, Header, Icon, Label, Popup, Table } from 'semantic-ui-react';
 
 import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
@@ -14,6 +14,7 @@ import GlobalFragmentWalletType from '../../../Global/Fragment/WalletType';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
 import GlobalAccountConvertLedger from '../../../../containers/Global/Account/Convert/Ledger';
 import EOSAccount from '../../../../utils/EOS/Account';
+import WalletLockState from '../../../Wallet/LockState';
 
 const initialLedgerState = {
   convertToLedgerAccount: undefined,
@@ -40,18 +41,23 @@ class ToolsTableRowWallet extends Component<Props> {
       editAccount: account,
       editAuthorization: authorization,
     });
-  }
+  };
   removeWallet = (account, authorization) => {
-    const { actions, settings } = this.props;
+    const { actions, settings, walletCount } = this.props;
+
     actions.removeWallet(settings.chainId, account, authorization);
-  }
+
+    if (walletCount === 1) {
+      actions.changeModule('');
+    }
+  };
   swapWallet = (account, authorization, password = false) => {
     const { actions, settings } = this.props;
     actions.useWallet(settings.chainId, account, authorization);
     if (password) {
       actions.unlockWallet(password);
     }
-  }
+  };
   convertToLedger = (account, authorization, key = undefined) => this.setState({
     convertToLedgerAccount: account,
     convertToLedgerAuthorization: authorization,
@@ -69,6 +75,7 @@ class ToolsTableRowWallet extends Component<Props> {
     const {
       current,
       blockchains,
+      pubkeys,
       settings,
       status,
       t,
@@ -115,7 +122,7 @@ class ToolsTableRowWallet extends Component<Props> {
           data={wallet}
           onClose={this.resetEditWallet}
         />
-      )
+      );
     }
     const items = [
       (
@@ -165,7 +172,6 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
-            disabled={isCurrentWallet}
             icon="trash"
             key="delete"
             onClick={() => this.removeWallet(account, authorization)}
@@ -179,7 +185,6 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
-            disabled={isCurrentWallet}
             icon="trash"
             key="delete"
             onClick={() => this.removeWallet(account, authorization)}
@@ -193,7 +198,6 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <Dropdown.Item
             content={t('wallet:wallet_remove')}
-            disabled={isCurrentWallet}
             icon="trash"
             key="delete"
             onClick={() => this.removeWallet(account, authorization)}
@@ -206,12 +210,11 @@ class ToolsTableRowWallet extends Component<Props> {
         icon = 'id card';
         items.push((
           <GlobalButtonElevate
-            key='remove'
+            key="remove"
             onSuccess={() => this.removeWallet(account, authorization)}
             settings={settings}
             trigger={(
               <Dropdown.Item
-                disabled={isCurrentWallet}
                 icon="trash"
                 key="delete"
                 text={t('wallet:wallet_remove')}
@@ -223,11 +226,12 @@ class ToolsTableRowWallet extends Component<Props> {
         ));
       }
     }
+    const unlocked = (pubkeys.unlocked.includes(pubkey));
     return (
       <Table.Row key={`${account}-${authorization}`}>
         <Table.Cell collapsing>
           {modal}
-          <Header>
+          <Header size="small">
             <GlobalFragmentAuthorization
               account={account}
               authorization={authorization}
@@ -235,11 +239,11 @@ class ToolsTableRowWallet extends Component<Props> {
             />
           </Header>
         </Table.Cell>
-        <Table.Cell collapsing>
-         <GlobalFragmentChainLogo
-           avatar
-           chainId={blockchain.chainId}
-           name={blockchain.name}
+        <Table.Cell collapsing textAlign="center">
+          <GlobalFragmentChainLogo
+            avatar
+            chainId={blockchain.chainId}
+            name={blockchain.name}
           />
         </Table.Cell>
         <Table.Cell>
@@ -247,11 +251,26 @@ class ToolsTableRowWallet extends Component<Props> {
             mode={mode}
           />
         </Table.Cell>
+        <Table.Cell collapsing textAlign="center">
+          {(mode === 'hot')
+            ? (
+              <WalletLockState
+                actions={this.props.actions}
+                key="lockstate"
+                locked={!unlocked}
+                pubkeys={pubkeys}
+                validate={validate}
+                wallet={wallet}
+              />
+            )
+            : false
+          }
+        </Table.Cell>
         <Table.Cell collapsing textAlign="right">
           <GlobalButtonWalletUpgrade
             wallet={wallet}
           />
-          {(mode === 'hot' || mode === 'cold')
+          {(!unlocked && (mode === 'hot' || mode === 'cold'))
             ? (
               <GlobalButtonElevate
                 onSuccess={(password) => this.swapWallet(account, authorization, password)}
@@ -270,7 +289,7 @@ class ToolsTableRowWallet extends Component<Props> {
             )
             : false
           }
-          {(mode === 'watch' || mode === 'ledger')
+          {(mode === 'watch' || mode === 'ledger' || unlocked)
             ? (
               <Button
                 color="green"

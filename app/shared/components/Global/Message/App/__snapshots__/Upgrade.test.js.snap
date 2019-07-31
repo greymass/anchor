@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalMessageAppUpgrade renders correctly 1`] = `
+<Fragment>
+  <Segment
+    basic={true}
+    size="large"
+    textAlign="center"
+  >
+    <Header
+      color="blue"
+      icon={true}
+      size="large"
+    >
+      <Icon
+        as="i"
+        name="info circle"
+      />
+      <HeaderContent>
+        <Component />
+        <HeaderSubheader>
+          <p>
+            <Component />
+          </p>
+        </HeaderSubheader>
+      </HeaderContent>
+    </Header>
+    <Form
+      as="form"
+    >
+      <FormTextArea
+        as={[Function]}
+        control={[Function]}
+        label={[MockFunction]}
+        rows={6}
+        value="constant"
+      />
+    </Form>
+  </Segment>
+  <Segment
+    basic={true}
+    size="large"
+    textAlign="center"
+  >
+    <p>
+      <Button
+        as="button"
+        color="blue"
+        content="Upgrade"
+        icon="up arrow"
+        onClick={[Function]}
+        size="large"
+      />
+    </p>
+    <p>
+      <Button
+        as="button"
+        color="grey"
+        content="Skip this Version"
+        onClick={[Function]}
+      />
+    </p>
+  </Segment>
+</Fragment>
+`;

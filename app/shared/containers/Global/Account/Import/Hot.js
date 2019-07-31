@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Divider, Grid, Header, Icon, Message, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
+import GlobalModalAccountImportPassword from './Password';
 
 import EOSAccount from '../../../../utils/EOS/Account';
 import * as AccountsActions from '../../../../actions/accounts';
@@ -93,113 +94,113 @@ class GlobalModalAccountImportHot extends Component<Props> {
     const matches = accounts.__lookups;
     const disabled = (!selected.length || !valid);
 
+    let passwordPrompt = false;
     if ([undefined, 'watch', 'ledger'].includes(settings.walletMode) && !settings.walletHash) {
-      // If a hot wallet already exists and a wallet hash does not, inform them to swap first
       const hotWalletExists = wallets.some(o => o.mode === 'hot');
       if (!hotWalletExists) {
-        return (
-          <Tab.Pane>
-            <Segment basic padded>
-              <Header icon textAlign="center">
-                <Icon name="warning sign" />
-                <Header.Content>
-                  {t('global_account_import_private_requires_hash_header')}
-                </Header.Content>
-                <Header.Subheader>
-                  {t('global_account_import_private_requires_hash_subheader')}
-                </Header.Subheader>
-              </Header>
-              <Segment basic>
-                <WalletPanelFormHash
-                  actions={actions}
-                />
-              </Segment>
-            </Segment>
-          </Tab.Pane>
-        );
+        passwordPrompt = true;
       }
     }
     return (
       <Tab.Pane>
         <Segment basic>
-          <p>
-            {t('global_account_import_private_description')}
-          </p>
-          <GlobalFormFieldKeyPrivate
-            autoFocus
-            connection={connection}
-            label={t('global_account_import_private_key')}
-            name="key"
-            placeholder={t('welcome:welcome_key_compare_placeholder')}
-            onChange={this.onChange}
-            value={value}
+          <Header
+            content="Import a Private Key"
+            subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
           />
-          {(value && matches.length > 0)
+          {(passwordPrompt)
             ? (
-              <Segment stacked color="blue">
-                {t('global_account_import_select_accounts')}
+              <React.Fragment>
+                <Message
+                  attached="top"
+                  content="Use the tools below to establish a password for use within Anchor before continuing."
+                  header="First: Setup Wallet"
+                  info
+                  size="small"
+                />
+                <GlobalModalAccountImportPassword onClose={this.props.onClose} />
+              </React.Fragment>
+            )
+            : (
+              <React.Fragment>
+                <GlobalFormFieldKeyPrivate
+                  autoFocus
+                  connection={connection}
+                  label={t('global_account_import_private_key')}
+                  name="key"
+                  placeholder={t('welcome:welcome_key_compare_placeholder')}
+                  onChange={this.onChange}
+                  value={value}
+                />
+                {(value && matches.length > 0)
+                  ? (
+                    <Segment stacked color="blue">
+                      {t('global_account_import_select_accounts')}
+                      <Divider />
+                      {(matches.map((account) => {
+                        const data = accounts[account];
+                        if (data) {
+                          const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
+                          return authorizations.map((authorization) => {
+                            const auth = `${account}@${authorization.perm_name}`;
+                            return (
+                              <p>
+                                <Checkbox
+                                  label={auth}
+                                  name={auth}
+                                  onChange={this.toggleAccount}
+                                />
+                              </p>
+                            );
+                          });
+                        }
+                        return false;
+                      }))}
+                    </Segment>
+                  )
+                  : false
+                }
+                {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
+                  ? <Segment loading />
+                  : false
+                }
+                {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
+                  ? (
+                    <Segment stacked color="red">
+                      <Header>
+                        {t('welcome:welcome_account_lookup_fail_title')}
+                      </Header>
+                      {t('welcome:welcome_account_lookup_fail_content')}
+                    </Segment>
+                  )
+                  : false
+                }
                 <Divider />
-                {(matches.map((account) => {
-                  const data = accounts[account];
-                  if (data) {
-                    const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
-                    return authorizations.map((authorization) => {
-                      const auth = `${account}@${authorization.perm_name}`;
-                      return (
-                        <p>
-                          <Checkbox
-                            label={auth}
-                            name={auth}
-                            onChange={this.toggleAccount}
-                          />
-                        </p>
-                      );
-                    });
-                  }
-                  return false;
-                }))}
-              </Segment>
+                <Segment basic clearing>
+                  <Button
+                    floated="left"
+                    onClick={onClose}
+                  >
+                    <Icon name="x" /> {t('cancel')}
+                  </Button>
+                  <GlobalButtonElevate
+                    onSuccess={this.importAccounts}
+                    settings={settings}
+                    trigger={(
+                      <Button
+                        color="green"
+                        content={t('global_button_account_import_action')}
+                        disabled={disabled}
+                        floated="right"
+                        icon="circle plus"
+                      />
+                    )}
+                    validate={validate}
+                  />
+                </Segment>
+              </React.Fragment>
             )
-            : false
           }
-          {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
-            ? <Segment loading />
-            : false
-          }
-          {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
-            ? (
-              <Segment stacked color="red">
-                <Header>
-                  {t('welcome:welcome_account_lookup_fail_title')}
-                </Header>
-                {t('welcome:welcome_account_lookup_fail_content')}
-              </Segment>
-            )
-            : false
-          }
-        </Segment>
-        <Divider />
-        <Segment basic clearing>
-          <Button
-            floated="left"
-            onClick={onClose}
-          >
-            <Icon name="x" /> {t('cancel')}
-          </Button>
-          <GlobalButtonElevate
-            onSuccess={this.importAccounts}
-            settings={settings}
-            trigger={(
-              <Button
-                color="green"
-                content={t('global_button_account_import_action')}
-                disabled={disabled}
-                floated="right"
-                icon="circle plus"
-              />
-            )}
-            validate={validate}
-          />
         </Segment>
       </Tab.Pane>
     );
@@ -229,6 +230,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global'),
+  translate(['global','welcome']),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportHot);

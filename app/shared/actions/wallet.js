@@ -1,3 +1,5 @@
+import { attempt, find, isError, partition } from 'lodash';
+
 import * as types from './types';
 import { setSetting } from './settings';
 import eos from './helpers/eos';
@@ -169,7 +171,8 @@ export function unlockWallet(password, useWallet = false) {
     const {
       accounts,
       connection,
-      settings
+      settings,
+      storage,
     } = state;
     let { wallet } = state;
     // If a wallet was passed to be used, use that instead of state.
@@ -185,18 +188,18 @@ export function unlockWallet(password, useWallet = false) {
     });
     setTimeout(() => {
       try {
-        let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
-        if (ecc.isValidPrivate(key) === true) {
-          const pubkey = ecc.privateToPublic(key, connection.keyPrefix);
-          // Obfuscate key for in-memory storage
+        const data = decrypt(storage.data, password).toString(CryptoJS.enc.Utf8);
+        // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        if (!isError(attempt(JSON.parse, data))) {
+          const keypair = find(JSON.parse(data), { pubkey: wallet.pubkey });
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
-          key = encrypt(key, hash, 1).toString(CryptoJS.enc.Utf8);
+          const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the active wallet
           dispatch({
             payload: {
               ...wallet,
               accountData: account,
-              pubkey
+              pubkey: wallet.pubkey
             },
             type: types.SET_CURRENT_WALLET
           });
@@ -208,7 +211,7 @@ export function unlockWallet(password, useWallet = false) {
               authorization: wallet.authorization,
               hash,
               key,
-              pubkey
+              pubkey: wallet.pubkey
             },
             type: types.SET_CURRENT_KEY
           });
@@ -216,6 +219,62 @@ export function unlockWallet(password, useWallet = false) {
           if (!settings.walletHash) {
             dispatch(setWalletHash(password));
           }
+          return dispatch({
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+          });
+        }
+      } catch (err) {
+        return dispatch({
+          err,
+          type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+        });
+      }
+      return dispatch({
+        type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+      });
+    }, 10);
+  };
+}
+
+export function unlockWalletByAuth(account, authorization, password) {
+  return async (dispatch: () => void, getState) => {
+    const state = getState();
+    const {
+      accounts,
+      connection,
+      settings,
+      storage,
+      wallets,
+    } = state;
+    const wallet = find(wallets, { account, authorization });
+    let accountData = accounts[wallet.account];
+    if (settings.walletMode === 'hot' && !accountData) {
+      accountData = await eos(connection).getAccount(wallet.account);
+    }
+    dispatch({
+      type: types.VALIDATE_WALLET_PASSWORD_PENDING
+    });
+    setTimeout(() => {
+      try {
+        const data = decrypt(storage.data, password).toString(CryptoJS.enc.Utf8);
+        // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        if (!isError(attempt(JSON.parse, data))) {
+          const keypair = find(JSON.parse(data), { pubkey: wallet.pubkey });
+          const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+          const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
+          const pubkey = ecc.privateToPublic(keypair.key, connection.keyPrefix);
+          // Set the keys for use
+          dispatch({
+            payload: {
+              account: wallet.account,
+              accountData: account,
+              authorization: wallet.authorization,
+              hash,
+              key,
+              pubkey
+            },
+            type: types.SET_AUTH
+          });
           return dispatch({
             type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
           });
@@ -310,8 +369,10 @@ export default {
   decrypt,
   encrypt,
   lockWallet,
-  unlockWallet,
   setTemporaryKey,
   setWalletKey,
+  setWalletMode,
+  unlockWallet,
+  unlockWalletByAuth,
   validateWalletPassword
 };

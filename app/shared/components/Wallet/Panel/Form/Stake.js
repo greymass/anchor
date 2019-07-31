@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
-import { Segment, Form, Divider, Message, Button, Header } from 'semantic-ui-react';
+import { Dimmer, Divider, Form, Loader, Message, Button, Header } from 'semantic-ui-react';
 
 import WalletPanelFormStakeStats from './Stake/Stats';
 import WalletPanelFormStakeConfirming from './Stake/Confirming';
@@ -13,16 +13,7 @@ import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
 import GlobalFormFieldToken from '../../../Global/Form/Field/Token';
 import EOSAccount from '../../../../utils/EOS/Account';
 
-type Props = {
-  actions: {},
-  account: {},
-  balance: {},
-  system: {}
-};
-
 class WalletPanelFormStake extends Component<Props> {
-  props: Props;
-
   constructor(props) {
     super(props);
     const { account, balance } = props;
@@ -52,6 +43,7 @@ class WalletPanelFormStake extends Component<Props> {
       submitDisabled: true,
       totalBeingUnstaked
     };
+    this.original = Object.assign({}, this.state);
   }
 
   componentWillMount() {
@@ -222,12 +214,25 @@ class WalletPanelFormStake extends Component<Props> {
     setStake(accountName, decimalNetAmount, decimalCpuAmount);
   }
 
+  onCancel = (e) => {
+    console.log(Object.assign({}, this.original, {
+      formId: new Date()
+    }));
+    this.setState(Object.assign({}, this.original, {
+      formId: new Date()
+    }));
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
+    e.preventDefault();
+    return false;
+  };
+
   render() {
     const {
       account,
       balance,
       connection,
-      onClose,
       system,
       settings,
       t
@@ -239,6 +244,7 @@ class WalletPanelFormStake extends Component<Props> {
       cpuOriginal,
       decimalCpuAmount,
       decimalNetAmount,
+      formId,
       netOriginal,
       submitDisabled
     } = this.state;
@@ -255,9 +261,10 @@ class WalletPanelFormStake extends Component<Props> {
       formError = formError || 'account_does_not_exist';
     }
     return (
-      <Segment
-        loading={system.STAKE === 'PENDING'}
-      >
+      <React.Fragment>
+        <Dimmer active={system.STAKE === 'PENDING'}>
+          <Loader>{t('waiting')}</Loader>
+        </Dimmer>
         {(shouldShowForm)
           ? (
             <div>
@@ -276,6 +283,7 @@ class WalletPanelFormStake extends Component<Props> {
                 netOriginal={netOriginal}
               />
               <Form
+                key={formId}
                 onKeyPress={this.onKeyPress}
                 onSubmit={this.onSubmit}
               >
@@ -298,6 +306,7 @@ class WalletPanelFormStake extends Component<Props> {
                     name="cpuAmount"
                     onChange={this.onChange}
                     defaultValue={decimalCpuAmount.toFixed(4)}
+                    value={decimalCpuAmount.toFixed(4)}
                   />
 
                   <GlobalFormFieldToken
@@ -307,8 +316,15 @@ class WalletPanelFormStake extends Component<Props> {
                     name="netAmount"
                     onChange={this.onChange}
                     defaultValue={decimalNetAmount.toFixed(4)}
+                    value={decimalNetAmount.toFixed(4)}
                   />
                 </Form.Group>
+                <Header textAlign="center">
+                  {(chainSymbolBalance).toFixed(4)} {connection.chainSymbol || 'EOS'}
+                  <Header.Subheader>
+                    {t('amount_unstaked')}
+                  </Header.Subheader>
+                </Header>
                 <FormMessageError
                   error={formError}
                   chainSymbol={connection.chainSymbol}
@@ -321,9 +337,9 @@ class WalletPanelFormStake extends Component<Props> {
                 />
                 <Divider />
                 <Button
-                  content={t('cancel')}
+                  content={t('reset')}
                   color="grey"
-                  onClick={onClose}
+                  onClick={this.onCancel}
                 />
                 <Button
                   content={t('update_staked_coins')}
@@ -353,7 +369,7 @@ class WalletPanelFormStake extends Component<Props> {
               settings={settings}
             />
           ) : ''}
-      </Segment>
+      </React.Fragment>
     );
   }
 }
