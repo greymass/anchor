@@ -39,12 +39,6 @@ table thead .no-jurisdiction {
   max-height: 100px;
 }
 
-.send-scroll {
-  overflow-y: auto;
-  height: 455px;
-  margin-bottom: -10px !important;
-}
-
 .confirm-wrapper {
   word-break: break-all;
 }

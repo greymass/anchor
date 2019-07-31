@@ -248,7 +248,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               jurisdictions={this.props.jurisdictions.choosenJurisdictions}
             />
           ) : (
-            <Segment basic clearing className="send-scroll">
+            <Segment basic clearing>
               <GlobalFormFieldAccount
                 app={app}
                 autoFocus
