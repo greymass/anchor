@@ -69,7 +69,7 @@ export function claimgbmrewards() {
       ]
     }, params).then((tx) => {
       setTimeout(() => {
-        dispatch(AccountActions.getCurrencyBalance(currentAccount));
+        dispatch(AccountActions.getAccount(currentAccount));
       }, 500);
       return dispatch({
         payload: {
