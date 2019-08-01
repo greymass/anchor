@@ -198,7 +198,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
         if (isValid) {
           if (parseFloat(valueFeeCompare) > balances[account][asset]) {
             this.setState({ formError: 'insufficient_balance' });
-          } else if ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(valueFeeCompare) <= feeBitshares)) {
+          } else if ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(valueFeeCompare) <= feeBitshares) && (parseFloat(valueFeeCompare) !== 0)) {
             this.setState({ formError: 'bitshares_error' });
           } else {
             this.setState({ isValidAccount: true, formError: null });
@@ -293,7 +293,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
       newState.asset = asset;
       if (parseFloat(value) > balances[account][asset]) {
         this.setState({ formError: 'insufficient_balance' });
-      } else if ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(value) <= feeBitshares)) {
+      } else if ((assetAccountObjects[asset].accountName === 'BitShares') && (parseFloat(value) <= feeBitshares) && (parseFloat(value) !== 0)) {
         this.setState({ formError: 'bitshares_error' });
       } else {
         this.validateAccount(to, asset);
