@@ -111,7 +111,7 @@ class ProducersTableRow extends Component<Props> {
               className="jurisdiction-popup"
               hoverable
               position="left center"
-              mouseEnterDelay="1000"
+              mouseEnterDelay={1000}
               content={
                 <JurisdictionRow
                   rows={rows}
