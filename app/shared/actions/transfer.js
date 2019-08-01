@@ -2,13 +2,18 @@ import * as types from './types';
 
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
+import toHexString from './helpers/serializeBytes';
 
 export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
     const {
       balances,
-      connection
+      connection,
+      jurisdictions
     } = getState();
+
+    const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+    const serializedArray = toHexString(temp);
     const currentSymbol = symbol || connection.chainSymbol || 'EOS';
 
     dispatch({
@@ -18,13 +23,25 @@ export function transfer(from, to, quantity, memo, symbol) {
     try {
       const contracts = balances.__contracts;
       const account = contracts[currentSymbol].contract;
-      return eos(connection, true).transaction(account, contract => {
-        contract.transfer(
-          from,
-          to,
-          quantity,
-          memo
-        );
+      return eos(connection, true).transaction({
+        actions: [{
+          account,
+          name: 'transfer',
+          authorization: [{
+            actor: from,
+            permission: 'active'
+          }],
+          data: {
+            from,
+            to,
+            quantity,
+            memo
+          }
+        }],
+        transaction_extensions: [{
+          type: 0,
+          data: serializedArray
+        }]
       }, {
         broadcast: connection.broadcast,
         expireInSeconds: connection.expireInSeconds,

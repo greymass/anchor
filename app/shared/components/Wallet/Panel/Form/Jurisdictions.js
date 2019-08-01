@@ -32,7 +32,9 @@ export default class JurisdictionsForm extends Component<Props> {
     const newValue = [];
     const oldValue = this.props.jurisdictions.choosenJurisdictions;
     for (let i = 0; i < oldValue.length; i += 1) {
-      newValue.push(oldValue[i].value);
+      if (oldValue[i] !== null && oldValue[i] !== undefined) {
+        newValue.push(oldValue[i].value);
+      }
     }
     return newValue;
   }
