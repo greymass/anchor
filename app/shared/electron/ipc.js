@@ -59,6 +59,17 @@ const configureIPC = (ui, primary = false) => {
     ipcMain.on('checkForUpdates', () => {
       checkForUpdates({}, ui);
     });
+
+    const defaultSize = {
+      width: 940,
+      height: 580,
+      zoom: 1,
+    };
+
+    ipcMain.on('anchor-resize', (event, size = defaultSize) => {
+      ui.setSize(size.width, size.height);
+      ui.webContents.setZoomFactor(size.zoom)
+    });
   }
 
   ipcMain.on('openUri', (event, url) => {
