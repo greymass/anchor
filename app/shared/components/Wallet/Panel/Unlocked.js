@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Accordion, Menu, Popup, Segment } from 'semantic-ui-react';
-import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
 
 import WalletPanelButtonBroadcast from './Button/Broadcast';
@@ -13,16 +12,48 @@ import WalletPanelButtonTransferSend from './Button/Transfer/Send';
 
 import WalletPanelButtonRamSell from './Button/Ram/Sell';
 import WalletPanelButtonRamBuy from './Button/Ram/Buy';
+import WalletPanelButtonWaxClaim from './Button/Wax/Claim';
 
 class WalletPanelUnlocked extends Component<Props> {
-  state = { activeIndex: 0 }
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeIndex: 0,
+      isWaxChain:
+        props.connection.chainId ===
+          '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+    };
+  }
+
+  componentDidMount() {
+    const { actions, settings } = this.props;
+
+    const { isWaxChain } = this.state;
+
+    if (isWaxChain) {
+      actions.getTable('eosio', settings.account, 'genesis');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { connection } = this.props;
+
+    if (connection.chainId !== nextProps.connection.chainId) {
+      this.setState({
+        isWaxChain:
+          nextProps.connection.chainId ===
+           '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4'
+      });
+    }
+  }
+
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
     const { activeIndex } = this.state;
     const newIndex = activeIndex === index ? -1 : index;
     this.setState({ activeIndex: newIndex });
-  }
+  };
 
   render() {
     const { activeIndex } = this.state;
@@ -38,13 +69,21 @@ class WalletPanelUnlocked extends Component<Props> {
       validate,
       settings,
       system,
+      tables,
       transaction,
       t
     } = this.props;
+    const {
+      isWaxChain
+    } = this.state;
     // Disable RAM markets on specific chains (Worbli)
     const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
     // Disable features based on distribution feature (BEOS)
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
+
+    const isGenesisAccount = (get(tables, `eosio.${settings.account}.genesis.rows`) || []).length !== 0;
+    const needsWaxClaimButton = isWaxChain && isGenesisAccount;
+
     if (!settings.account) return false;
     return (
       <div>
@@ -103,6 +142,19 @@ class WalletPanelUnlocked extends Component<Props> {
                       </Segment>
                     )
                   }
+                  {needsWaxClaimButton && (
+                    <Segment>
+                      <WalletPanelButtonWaxClaim
+                        actions={actions}
+                        app={app}
+                        balances={balances}
+                        blockExplorers={blockExplorers}
+                        connection={connection}
+                        settings={settings}
+                        system={system}
+                      />
+                    </Segment>
+                  )}
                   <Segment>
                     <WalletPanelButtonTransferSend
                       actions={actions}
