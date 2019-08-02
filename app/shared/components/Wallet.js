@@ -68,6 +68,7 @@ export default class Wallet extends Component<Props> {
               keys={keys}
               settings={settings}
               system={system}
+              tables={tables}
               transaction={transaction}
               validate={validate}
               wallet={wallet}
