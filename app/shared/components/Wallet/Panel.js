@@ -20,6 +20,7 @@ export default class WalletPanel extends Component<Props> {
       keys,
       settings,
       system,
+      tables,
       transaction,
       validate,
       wallet
@@ -57,6 +58,7 @@ export default class WalletPanel extends Component<Props> {
           globals={globals}
           settings={settings}
           system={system}
+          tables={tables}
           transaction={transaction}
           validate={validate}
         />
