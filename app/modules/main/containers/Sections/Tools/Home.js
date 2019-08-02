@@ -90,6 +90,10 @@ const toolSections = {
     },
   },
   tools_menu_advanced_header: {
+    tools_menu_display: {
+      modes: ['all'],
+      path: 'tools/display'
+    },
     tools_menu_state_chain: {
       modes: ['all'],
       path: 'tools/chain_state'
