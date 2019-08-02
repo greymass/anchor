@@ -40,6 +40,7 @@ import * as VoteProducerActions from '../actions/system/voteproducer';
 import * as WalletActions from '../actions/wallet';
 import * as SystemStateActions from '../actions/system/systemstate';
 import * as BEOSWithdrawActions from '../actions/blockchains/beos/withdraw';
+import * as WaxClaimActions from '../actions/blockchains/wax/claimgbmrewards';
 
 type Props = {
   actions: {
@@ -274,6 +275,7 @@ function mapDispatchToProps(dispatch) {
       ...ValidateActions,
       ...VoteProducerActions,
       ...WalletActions,
+      ...WaxClaimActions,
     }, dispatch)
   };
 }
