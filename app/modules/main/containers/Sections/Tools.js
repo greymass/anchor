@@ -22,6 +22,7 @@ import ToolsContacts from './Tools/Contacts';
 import ToolsCreateAccount from './Tools/CreateAccount';
 import ToolsCrosschainTransfer from './Tools/CrosschainTransfer';
 import ToolsCustomTokens from './Tools/CustomTokens';
+import ToolsDisplay from './Tools/Display';
 import ToolsDelegations from './Tools/Delegations';
 import ToolsGlobalState from './Tools/GlobalState';
 import ToolsHome from './Tools/Home';
@@ -59,6 +60,7 @@ class ToolsContainer extends Component<Props> {
           <Route path="/tools/create_account" component={ToolsCreateAccount} />
           <Route path="/tools/crosschain_transfer" component={ToolsCrosschainTransfer} />
           <Route path="/tools/custom_tokens" component={ToolsCustomTokens} />
+          <Route path="/tools/display" component={ToolsDisplay} />
           <Route path="/tools/delegations" component={ToolsDelegations} />
           <Route path="/tools/global_state" component={ToolsGlobalState} />
           <Route path="/tools/keys" component={ToolsKeys} />
