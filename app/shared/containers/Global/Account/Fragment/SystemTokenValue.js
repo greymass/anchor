@@ -55,7 +55,7 @@ const mapStateToProps = (state, ownProps) => {
     parseFloat(cpuRefunding),
   ]);
   // Retrieve price from oracle
-  const price = get(state, 'globals.pricefeed.USD');
+  const price = get(state, 'globals.pricefeed.eosusd');
   const balance = (price) ? (price / 10000) * tokens : false;
   return ({
     balance,
