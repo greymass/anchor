@@ -107,7 +107,7 @@ class OverviewContainer extends Component<Props> {
                                 display: 'block',
                                 textAlign: 'center',
                               }}>
-                                ${(pricefeed.USD / 10000).toFixed(2)}
+                                ${(pricefeed.eosusd / 10000).toFixed(2)}
                                 {' '}
                                 <span style={{
                                   display: 'block',
