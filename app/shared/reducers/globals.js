@@ -43,7 +43,7 @@ export default function globals(state = initialState, action) {
     }
     case types.SYSTEM_PRICEFEEDUSD_SUCCESS: {
       const pricefeed = {
-        USD: get(action, 'payload.results.rows.0.average')
+        [action.payload.scope]: get(action, 'payload.results.rows.0.median')
       };
       return Object.assign({}, state, { pricefeed });
     }
