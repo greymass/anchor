@@ -2,7 +2,7 @@ import * as types from './types';
 
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
-import toHexString from './helpers/serializeBytes';
+import serializer from './helpers/serializeBytes';
 
 export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
@@ -13,7 +13,7 @@ export function transfer(from, to, quantity, memo, symbol) {
     } = getState();
 
     const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
-    const serializedArray = toHexString(temp);
+    const serializedArray = serializer.serialize(temp);
     const currentSymbol = symbol || connection.chainSymbol || 'EOS';
 
     dispatch({
