@@ -12,6 +12,7 @@ type Props = {
   },
   blockExplorers: {},
   settings: {},
+  jurisdictions: {},
   t: () => void
 };
 
@@ -104,6 +105,8 @@ class WalletStatusActions extends Component<Props> {
       chain,
       connection,
       settings,
+      actions,
+      jurisdictions,
       t,
     } = this.props;
 
@@ -133,6 +136,8 @@ class WalletStatusActions extends Component<Props> {
                      chain={chain}
                      connection={connection}
                      settings={settings}
+                     actions={actions}
+                     jurisdictions={jurisdictions}
                    />
                  </Visibility>
                ), (

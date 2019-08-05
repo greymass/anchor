@@ -106,8 +106,87 @@ export function saveChoosenJurisdictions(jurisdictions) {
   };
 }
 
+export function getAllProducerJurisdictionForBlock(blockNumber, sequence) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: types.GET_JURISDICTION_ALL_FOR_BLOCK_PENDING
+    });
+
+    const params = { block_number: blockNumber };
+    const {
+      connection
+    } = getState();
+
+    const url = `${connection.httpEndpoint}/v1/jurisdiction_history/get_all_producer_jurisdiction_for_block`;
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers
+    }).then(result => result.json())
+      .then((results) => {
+        return dispatch({
+          type: types.GET_JURISDICTION_ALL_FOR_BLOCK_SUCCESS,
+          payload: {
+            sequenceBlock: sequence,
+            blockJurisdictions: results
+          }
+        });
+      }).catch((err) => {
+        console.log('error', err);
+        dispatch({
+          type: types.GET_JURISDICTION_ALL_FOR_BLOCK_FAILURE,
+          payload: err
+        });
+      });
+  };
+}
+
+export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_PENDING
+    });
+
+    const params = { block_num_or_id: blockNumberOrID };
+    const {
+      connection
+    } = getState();
+
+    const url = `${connection.httpEndpoint}/v1/chain/get_block`;
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers
+    }).then(result => result.json())
+      .then((results) => {
+        return dispatch({
+          type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_SUCCESS,
+          payload: {
+            sequenceTransaction: sequence,
+            transactionExtensions: results.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : results.transactions[0].trx.transaction.transaction_extensions[0].data
+            // transactionExtensions: results
+          }
+        });
+      }).catch((err) => {
+        console.log('error', err);
+        dispatch({
+          type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_FAILURE,
+          payload: err
+        });
+      });
+  };
+}
+
 export default {
   saveChoosenJurisdictions,
   getJurisdictions,
-  getProducerJurisdiction
+  getProducerJurisdiction,
+  getAllProducerJurisdictionForBlock,
+  getAllTransactionJurisdictions
 };

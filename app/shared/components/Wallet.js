@@ -92,6 +92,7 @@ export default class Wallet extends Component<Props> {
               tables={tables}
               validate={validate}
               wallet={wallet}
+              jurisdictions={jurisdictions}
             />
           </Grid.Column>
         </Grid.Row>

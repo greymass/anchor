@@ -1,8 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Table } from 'semantic-ui-react';
+import { Table, Button, Popup } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
+
+import { isEqual } from 'lodash';
 
 import ExplorerLink from '../../../../Global/Modal/ExplorerLink';
 
@@ -52,13 +54,20 @@ class WalletStatusActionsTableRow extends Component<Props> {
       generic: !(rowComponentsMapping[act.name])
     };
   }
+
+  shouldComponentUpdate = (nextProps) =>
+    !isEqual(this.props.isClicked, nextProps.isClicked);
+
   render() {
     const {
       action,
       blockExplorers,
       chain,
       connection,
-      settings
+      settings,
+      setRowVisbilitity,
+      isClicked,
+      actions
     } = this.props;
     const {
       ComponentType,
@@ -122,6 +131,21 @@ class WalletStatusActionsTableRow extends Component<Props> {
           )
           : false
         }
+        <Table.Cell>
+          <Button
+            icon="map marker alternate"
+            size="small"
+            onClick={
+              (isClicked)
+              ? () => { setRowVisbilitity(action.account_action_seq); }
+              : () => {
+                        actions.getAllProducerJurisdictionForBlock(action.block_num, action.account_action_seq);
+                        actions.getAllTransactionJurisdictions(action.block_num, action.account_action_seq);
+                        setRowVisbilitity(action.account_action_seq);
+                      }
+            }
+          />
+        </Table.Cell>
       </Table.Row>
     );
   }

@@ -28,6 +28,7 @@ class TabMenu extends Component<Props> {
         attached
         inverted
         size="large"
+        className="sticky-voter-menu"
       >
         {(settings.walletInit)
           ? (

@@ -21,7 +21,7 @@ class WalletStatus extends Component<Props> {
   componentDidMount = () => {
     const {
       actions,
-      settings
+      settings,
     } = this.props;
 
     actions.getTable('eosio', settings.account, 'delband');
@@ -43,7 +43,8 @@ class WalletStatus extends Component<Props> {
       system,
       t,
       tables,
-      validate
+      validate,
+      jurisdictions
     } = this.props;
 
     const {
@@ -110,6 +111,7 @@ class WalletStatus extends Component<Props> {
               connection={connection}
               settings={settings}
               validate={validate}
+              jurisdictions={jurisdictions}
             />
           );
           break;

@@ -16,6 +16,7 @@ class ProducersTable extends Component<Props> {
       query: false,
       viewing: false,
       rows: [],
+      initialize: false
     };
   }
 
@@ -25,7 +26,8 @@ class ProducersTable extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.jurisdictions.producer !== nextProps.jurisdictions.producer) {
+    if (!this.state.initialize || this.props.jurisdictions.producer !== nextProps.jurisdictions.producer) {
+      this.state.initialize = true;
       this.setProducerJurisdiction(
         nextProps.jurisdictions.producer_jurisdictions,
         nextProps.jurisdictions.producer
@@ -122,29 +124,26 @@ class ProducersTable extends Component<Props> {
             const contracts = get(connection, 'supportedContracts', []);
             const hasInfo = contracts && contracts.includes('producerinfo') && !!(get(producers.producersInfo, producer.owner));
             return (
-              <React.Fragment>
-                <ProducersTableRow
-                  addProducer={this.props.addProducer}
-                  connection={connection}
-                  getProducerInfo={this.getProducerInfo}
-                  hasInfo={hasInfo}
-                  key={`${isProxying}-${producer.key}-${hasInfo}`}
-                  isMainnet={isMainnet}
-                  isProxying={isProxying}
-                  isSelected={isSelected}
-                  isValidUser={isValidUser}
-                  position={idx + 1}
-                  producer={producer}
-                  removeProducer={this.props.removeProducer}
-                  system={system}
-                  settings={settings}
-                  totalVoteWeight={totalVoteWeight}
-                  jurisdictions={jurisdictions}
-                  actions={actions}
-                  rows={this.state.rows}
-                />
-              </React.Fragment>
-
+              <ProducersTableRow
+                addProducer={this.props.addProducer}
+                connection={connection}
+                getProducerInfo={this.getProducerInfo}
+                hasInfo={hasInfo}
+                key={`${isProxying}-${producer.key}-${hasInfo}`}
+                isMainnet={isMainnet}
+                isProxying={isProxying}
+                isSelected={isSelected}
+                isValidUser={isValidUser}
+                position={idx + 1}
+                producer={producer}
+                removeProducer={this.props.removeProducer}
+                system={system}
+                settings={settings}
+                totalVoteWeight={totalVoteWeight}
+                jurisdictions={jurisdictions}
+                actions={actions}
+                rows={this.state.rows}
+              />
             );
           })}
         </Table.Body>
@@ -175,6 +174,9 @@ class ProducersTable extends Component<Props> {
                     removeProducer={this.props.removeProducer}
                     settings={settings}
                     totalVoteWeight={totalVoteWeight}
+                    jurisdictions={jurisdictions}
+                    actions={actions}
+                    rows={this.state.rows}
                   />
                 );
               })}

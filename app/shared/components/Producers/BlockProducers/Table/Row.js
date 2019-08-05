@@ -115,17 +115,14 @@ class ProducersTableRow extends Component<Props> {
               content={
                 <JurisdictionRow
                   rows={rows}
-                  codesLabel={t('block_producer_jurisdictions_code_table_header')}
-                  jurisdictionLabel={t('block_producer_jurisdictions_jurisdiction_table_header')}
-                  descriptionLabel={t('block_producer_jurisdictions_description_table_header')}
                   jurisdictions={jurisdictions}
                   producer={producer.owner}
+                  t={t}
                 />
               }
               trigger={(
                 <Button
                   className="jurisdiction-button"
-                  disabled={!isValidUser || isProxying}
                   icon="map marker alternate"
                   size="small"
                   onMouseEnter={() => { actions.getProducerJurisdiction(producer.owner); }}

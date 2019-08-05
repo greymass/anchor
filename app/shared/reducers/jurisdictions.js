@@ -68,6 +68,52 @@ export default function jurisdictions(state = initialState, action) {
         choosenJurisdictions: action.payload.choosenJurisdictions
       };
     }
+    case types.GET_JURISDICTION_ALL_FOR_BLOCK_PENDING: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loading: true,
+      };
+    }
+    case types.GET_JURISDICTION_ALL_FOR_BLOCK_SUCCESS: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loading: false,
+        sequenceBlock: action.payload.sequenceBlock,
+        blockJurisdictions: action.payload.blockJurisdictions
+      };
+    }
+    case types.GET_JURISDICTION_ALL_FOR_BLOCK_FAILURE: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loading: false,
+      };
+    }
+    case types.GET_JURISDICTION_ALL_FOR_TRANSACTION_PENDING: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loading: true,
+      };
+    }
+    case types.GET_JURISDICTION_ALL_FOR_TRANSACTION_SUCCESS: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loading: false,
+        sequenceTransaction: action.payload.sequenceTransaction,
+        transactionExtensions: action.payload.transactionExtensions
+      };
+    }
+    case types.GET_JURISDICTION_ALL_FOR_TRANSACTION_FAILURE: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loading: false,
+      };
+    }
     default: {
       return state;
     }

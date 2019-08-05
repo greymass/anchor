@@ -29,12 +29,27 @@ table .jurisdiction-table {
   max-height: 200px;
 }
 
+.history-scroll {
+  overflow-y: auto;
+  max-height: 100px;
+}
+
 .confirm-scroll {
   overflow-y: auto;
   max-height: 100px;
 }
 
+.sticky-voter-menu {
+  position: sticky !important;
+  top: 0;
+  z-index: 2;
+}
+
 .confirm-wrapper {
+  word-break: break-all;
+}
+
+.history-wrapper {
   word-break: break-all;
 }
 
@@ -56,6 +71,13 @@ table .jurisdiction-table {
   overflow: hidden !important;
   text-overflow: ellipsis;
   white-space: pre-wrap
+}
+
+label.jurisdiction-label {
+  font-weight: bold !important;
+  display: block !important;
+  text-align: center !important;
+  margin-bottom: 2%;
 }
 
 div .ui.active.visible.fluid.multiple.search.selection.dropdown>a.ui.label {
