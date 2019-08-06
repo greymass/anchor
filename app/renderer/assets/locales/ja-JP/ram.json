@@ -14,6 +14,7 @@
   "ram_form_button_sell": "RAMを売却",
   "ram_form_label_amount_in_bytes": "RAM量 (単位: バイト)",
   "ram_form_label_amount_in_chain_symbol": "Cost of RAM (in {{chainSymbol}})",
+  "ram_form_label_jurisdictions": "Jurisdictions",
   "ram_form_text_amount_estimate": "見積もり数量は",
   "ram_form_text_estimate": "見積もりコストは",
   "ram_sell_button_cta": "RAMを売却",

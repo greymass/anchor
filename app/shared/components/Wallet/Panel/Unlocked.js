@@ -139,6 +139,7 @@ class WalletPanelUnlocked extends Component<Props> {
                               globals={globals}
                               settings={settings}
                               system={system}
+                              jurisdictions={jurisdictions}
                             />
                           </Segment>
                         )}
@@ -159,6 +160,7 @@ class WalletPanelUnlocked extends Component<Props> {
                           settings={settings}
                           system={system}
                           disabled={false}
+                          jurisdictions={jurisdictions}
                         />
                       </Segment>
                     )
@@ -182,6 +184,7 @@ class WalletPanelUnlocked extends Component<Props> {
                               globals={globals}
                               settings={settings}
                               system={system}
+                              jurisdictions={jurisdictions}
                             />
                           </Segment>
                         )}
@@ -202,6 +205,7 @@ class WalletPanelUnlocked extends Component<Props> {
                           settings={settings}
                           system={system}
                           disabled={false}
+                          jurisdictions={jurisdictions}
                         />
                       </Segment>
                     )

@@ -2,12 +2,14 @@ import * as types from '../types';
 
 import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
+import serializer from '../helpers/serializeBytes';
 
 export function sellram(amount) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      settings
+      settings,
+      jurisdictions
     } = getState();
 
     dispatch({
@@ -15,11 +17,28 @@ export function sellram(amount) {
       type: types.SYSTEM_SELLRAM_PENDING
     });
 
+    const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+    const serializedArray = serializer.serialize(temp);
+
     const { account } = settings;
 
-    return eos(connection, true).sellram({
-      account,
-      bytes: Number(amount)
+    return eos(connection, true).transaction({
+      actions: [{
+        account: 'eosio',
+        name: 'sellram',
+        authorization: [{
+          actor: account,
+          permission: 'active'
+        }],
+        data: {
+          account,
+          bytes: Number(amount)
+        }
+      }],
+      transaction_extensions: [{
+        type: 0,
+        data: serializedArray
+      }]
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
       return dispatch({

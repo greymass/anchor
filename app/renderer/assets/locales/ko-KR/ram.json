@@ -14,6 +14,7 @@
   "ram_form_button_sell": "RAM 판매하기",
   "ram_form_label_amount_in_bytes": "RAM 양 (바이트)",
   "ram_form_label_amount_in_chain_symbol": "Cost of RAM (in {{chainSymbol}})",
+  "ram_form_label_jurisdictions": "Jurisdictions",
   "ram_form_text_amount_estimate": "예상 양",
   "ram_form_text_estimate": "예상 비용",
   "ram_sell_button_cta": "RAM 판매하기",

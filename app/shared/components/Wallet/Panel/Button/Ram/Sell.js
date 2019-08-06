@@ -15,6 +15,7 @@ type Props = {
   globals: {},
   settings: {},
   system: {},
+  jurisdictions: {},
   t: () => void
 };
 
@@ -32,7 +33,8 @@ class WalletPanelButtonRamSell extends Component<Props> {
       settings,
       system,
       disabled,
-      t
+      t,
+      jurisdictions
     } = this.props;
     return (
       <GlobalTransactionModal
@@ -55,6 +57,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
             globals={globals}
             settings={settings}
             system={system}
+            jurisdictions={jurisdictions}
           />
         )}
         icon="database"

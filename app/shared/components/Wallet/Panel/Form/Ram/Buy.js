@@ -11,6 +11,7 @@ import FormMessageError from '../../../../Global/Form/Message/Error';
 
 import WalletPanelFormRamByAmount from './ByAmount';
 import WalletPanelFormRamByCost from './ByCost';
+import JurisdictionsForm from '../Jurisdictions';
 
 type Props = {
   actions: {},
@@ -18,7 +19,8 @@ type Props = {
   balance: {},
   connection: {},
   globals: {},
-  system: {}
+  system: {},
+  jurisdictions: {}
 };
 
 class WalletPanelFormRamBuy extends Component<Props> {
@@ -180,7 +182,8 @@ class WalletPanelFormRamBuy extends Component<Props> {
       onClose,
       settings,
       system,
-      t
+      t,
+      jurisdictions
     } = this.props;
 
     const {
@@ -249,6 +252,12 @@ class WalletPanelFormRamBuy extends Component<Props> {
                 <FormMessageError
                   style={{ marginTop: '20px' }}
                   error={formError}
+                />
+                <Divider />
+                <JurisdictionsForm
+                  actions={this.props.actions}
+                  jurisdictions={jurisdictions}
+                  label={t('ram_form_label_jurisdictions')}
                 />
                 <Divider />
                 <Button

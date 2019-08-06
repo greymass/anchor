@@ -118,7 +118,7 @@ export default class JurisdictionsForm extends Component<Props> {
                 <label>{label}</label>
               </Form.Group>
               <Form.Group inline>
-                <div style={{ maxHeight: '50px', maxWidth: '90%', minWidth: '90%', overflow: 'auto' }}>
+                <div style={styles.jurisdictionsLabels}>
                   {this.state.choosenJurisdictions.map((option) => <Label style={{ marginTop: '5px' }}>{option.name}</Label>)}
                 </div>
                 <Modal
@@ -183,5 +183,11 @@ const styles = {
   labelText: {
     marginBottom: '5px',
     fontWeight: 'bold'
+  },
+  jurisdictionsLabels: {
+    maxHeight: '50px',
+    maxWidth: '87%',
+    minWidth: '87%',
+    overflow: 'auto'
   }
 };

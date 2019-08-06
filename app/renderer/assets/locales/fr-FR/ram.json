@@ -14,6 +14,7 @@
   "ram_form_button_sell": "Sell RAM",
   "ram_form_label_amount_in_bytes": "Amount of RAM (in Bytes)",
   "ram_form_label_amount_in_chain_symbol": "Cost of RAM (in {{chainSymbol}})",
+  "ram_form_label_jurisdictions": "Jurisdictions",
   "ram_form_text_amount_estimate": "Estimated amount is",
   "ram_form_text_estimate": "Estimated cost is",
   "ram_sell_button_cta": "Sell RAM",
