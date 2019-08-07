@@ -1,14 +1,27 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Modal, Label, Form, Button, Segment, Grid, Input } from 'semantic-ui-react';
+import { Modal, Label, Form, Button, Segment, Grid, Input, Divider, Icon } from 'semantic-ui-react';
 
 export default class JurisdictionsForm extends Component<Props> {
+  constructor() {
+    super();
+    this.refSearchAll = React.createRef();
+    this.refSearchYours = React.createRef();
+  }
+
   state = {
     options: [],
-    choosenJurisdictions: [],
+    choosenOptions: [],
     allSearch: '',
-    yoursSearch: ''
+    yoursSearch: '',
+    showModal: false,
+    eventSet: false,
+    jurisdictions: [],
+    choosenJurisdictions: [],
+    clickedAll: [],
+    clickedYours: [],
+    shiftClicked: false
   };
 
   componentDidMount() {
@@ -20,7 +33,7 @@ export default class JurisdictionsForm extends Component<Props> {
 
   setUsersJurisdictionsDefault() {
     this.setState({
-      choosenJurisdictions: this.props.jurisdictions.choosenJurisdictions
+      choosenOptions: this.props.jurisdictions.choosenJurisdictions,
     });
     return this.props.jurisdictions.choosenJurisdictions;
   }
@@ -39,7 +52,8 @@ export default class JurisdictionsForm extends Component<Props> {
             value: name,
             text: name,
             name: j[i].name,
-            description: j[i].description
+            description: j[i].description,
+            active: false
           };
         }
         let status = false;
@@ -54,66 +68,274 @@ export default class JurisdictionsForm extends Component<Props> {
       }
     }
     this.setState({
-      options
+      options,
+      jurisdictions: options
     });
     return options;
   }
 
   handleEditClick(e) {
+    const choosen = this.makeAllInactive(this.props.jurisdictions.choosenJurisdictions);
+    const jurisdictions = this.makeAllInactive(this.props.jurisdictions.jurisdictions);
     this.setState({
-      choosenJurisdictions: this.props.jurisdictions.choosenJurisdictions,
-      options: this.props.jurisdictions.jurisdictions,
+      choosenOptions: choosen,
+      choosenJurisdictions: choosen,
+      options: jurisdictions,
       allSearch: '',
-      yoursSearch: ''
+      yoursSearch: '',
+      showModal: true,
+      clickedAll: [],
+      clickedYours: []
     });
+    this.makeOptions(this.props.jurisdictions);
     e.preventDefault();
   }
 
-  clickedLabel(value, status) {
-    let oldValue = Array.from(this.props.jurisdictions.choosenJurisdictions);
-    if (status === 'all') {
-      oldValue.push(value);
-    } else if (oldValue.indexOf(value) !== -1) {
-      oldValue.splice(oldValue.indexOf(value), 1);
+  makeAllInactive(arr) {
+    for (let i = 0; i < arr.length; i += 1) {
+      arr[i].active = false;
     }
-    oldValue = oldValue.sort((a, b) => a.code > b.code);
-    this.props.actions.saveChoosenJurisdictions(oldValue);
-    this.setState({
-      choosenJurisdictions: oldValue
-    });
-    const tempJuri = this.makeOptions(this.props.jurisdictions, oldValue);
-    this.applySearches(tempJuri, oldValue);
+    return arr;
+  }
+
+  clickedLabel(value, status) {
+    if (this.state.shiftClicked) {
+      let arr = [];
+      let ac = false;
+      if (value.active === false) {
+        ac = true;
+      }
+      let clicked = [];
+      if (status === 'all') {
+        arr = this.state.options;
+        clicked = Array.from(this.state.clickedAll);
+      } else {
+        arr = this.state.choosenOptions;
+        clicked = Array.from(this.state.clickedYours);
+      }
+      const index = arr.indexOf(value);
+      let firstActive = 0;
+      for (let i = index; i >= 0; i -= 1) {
+        if (firstActive === 0) {
+          if (arr[i].active === ac) {
+            firstActive = i;
+          }
+        }
+      }
+      if (firstActive !== 0) {
+        firstActive += 1;
+      }
+      if (ac === true) {
+        for (let i = firstActive; i <= index; i += 1) {
+          arr[i].active = ac;
+          clicked.push(arr[i]);
+        }
+      } else {
+        for (let i = firstActive; i <= index; i += 1) {
+          arr[i].active = ac;
+          for (let j = 0; j < clicked.length; j += 1) {
+            if (clicked[j].code === arr[i].code) {
+              clicked.splice(j, 1);
+              j -= 1;
+            }
+          }
+        }
+      }
+      if (status === 'all') {
+        this.setState({
+          options: arr,
+          clickedAll: clicked
+        });
+      } else {
+        this.setState({
+          choosenOptions: arr,
+          clickedYours: clicked
+        });
+      }
+    } else {
+      let oldValue = [];
+      if (status === 'all') {
+        oldValue = Array.from(this.state.jurisdictions);
+        oldValue.map((val) => {
+          if (val.code === value.code) {
+            val.active = !val.active;
+          }
+          return val;
+        });
+        this.setState({
+          options: oldValue,
+          clickedAll: this.state.clickedAll.concat([value])
+        });
+      } else {
+        oldValue = Array.from(this.state.choosenJurisdictions);
+        oldValue.map((val) => {
+          if (val.code === value.code) {
+            val.active = !val.active;
+          }
+          return val;
+        });
+        this.setState({
+          choosenOptions: oldValue,
+          clickedYours: this.state.clickedYours.concat([value])
+        });
+      }
+      let jur = this.state.options;
+      let choJur = this.state.choosenOptions;
+      if (status === 'all') {
+        jur = oldValue;
+      } else {
+        choJur = oldValue;
+      }
+      this.applySearches(jur, choJur);
+    }
   }
 
   applySearches(jurisdictions, choosenJurisdictions) {
-    this.search(this.state.allSearch, 'all', jurisdictions);
-    this.search(this.state.yoursSearch, 'yours', choosenJurisdictions);
+    this.search(this.state.allSearch, 'all', false, jurisdictions);
+    this.search(this.state.yoursSearch, 'yours', false, choosenJurisdictions);
   }
 
-  search(val, status, arrayOfJurisdictions?) {
+  search(val, status, makeInactive = true, arrayOfJurisdictions?) {
     if (status === 'all') {
-      const jurisdictions = (arrayOfJurisdictions !== undefined) ? arrayOfJurisdictions : this.makeOptions(this.props.jurisdictions);
+      if (makeInactive === true) {
+        this.setState({
+          options: this.makeAllInactive(this.state.options),
+          clickedAll: []
+        });
+      }
+      const jurisdictions = (arrayOfJurisdictions !== undefined) ?
+        arrayOfJurisdictions :
+        this.state.jurisdictions;
       const searched = jurisdictions.filter((option) => option.value.includes(val));
       this.setState({
-        options: searched
-      });
-      this.setState({
+        options: searched,
         allSearch: val
       });
     } else {
-      const choosen = (arrayOfJurisdictions !== undefined) ? arrayOfJurisdictions : this.props.jurisdictions.choosenJurisdictions;
+      if (makeInactive === true) {
+        this.setState({
+          choosenOptions: this.makeAllInactive(this.state.choosenOptions),
+          clickedYours: []
+        });
+      }
+      const choosen = (arrayOfJurisdictions !== undefined) ?
+        arrayOfJurisdictions :
+        this.state.choosenJurisdictions;
       const searchedChoosen = choosen.filter((option) => option.value.includes(val));
       this.setState({
-        choosenJurisdictions: searchedChoosen
-      });
-      this.setState({
+        choosenOptions: searchedChoosen,
         yoursSearch: val
       });
     }
   }
 
+  onCloseModal() {
+    this.setState({
+      showModal: false
+    });
+  }
+
+  handleArrowClick(status) {
+    if (status === 'all') {
+      let temp = this.state.jurisdictions.filter((el) => {
+        return el.active === true;
+      });
+      temp = temp.concat(this.state.choosenJurisdictions);
+      temp.map((val) => {
+        val.active = false;
+        return val;
+      });
+      temp.sort((a, b) => a.code - b.code);
+
+      const newJur = [];
+      this.state.jurisdictions.map((val) => {
+        if (this.state.clickedAll.includes(val) === false) {
+          newJur.push(val);
+        }
+      });
+
+      newJur.sort((a, b) => a.code - b.code);
+      this.setState({
+        choosenOptions: temp,
+        choosenJurisdictions: temp,
+        options: newJur,
+        jurisdictions: newJur,
+        clickedAll: [],
+        clickedYours: [],
+        allSearch: '',
+        yoursSearch: ''
+      });
+      this.refSearchAll.current.inputRef.value = '';
+      this.refSearchYours.current.inputRef.value = '';
+    } else {
+      let temp = this.state.choosenJurisdictions.filter((el) => {
+        return el.active === true;
+      });
+      temp = temp.concat(this.state.jurisdictions);
+      temp.map((val) => {
+        val.active = false;
+        return val;
+      });
+      temp.sort((a, b) => a.code - b.code);
+
+      const newJur = [];
+      this.state.choosenJurisdictions.map((val) => {
+        if (this.state.clickedYours.includes(val) === false) {
+          newJur.push(val);
+        }
+        return val;
+      });
+
+      newJur.sort((a, b) => a.code - b.code);
+      this.setState({
+        choosenOptions: newJur,
+        choosenJurisdictions: newJur,
+        options: temp,
+        jurisdictions: temp,
+        clickedYours: [],
+        clickedAll: [],
+        allSearch: '',
+        yoursSearch: ''
+      });
+      this.refSearchYours.current.inputRef.value = '';
+      this.refSearchAll.current.inputRef.value = '';
+    }
+  }
+
+  onSubmit() {
+    this.props.actions.saveChoosenJurisdictions(this.state.choosenJurisdictions);
+    this.setState({
+      choosenOptions: this.state.choosenJurisdictions,
+      showModal: false
+    });
+  }
+
   render() {
     const { label } = this.props;
+    if (this.state.eventSet === false) {
+      this.setState({
+        eventSet: true
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 27) {
+          this.setState({
+            showModal: false,
+            eventSet: true
+          });
+        } else if (e.keyCode === 16) {
+          this.setState({
+            shiftClicked: true
+          });
+        }
+      });
+      document.addEventListener('keyup', (e) => {
+        if (e.keyCode === 16) {
+          this.setState({
+            shiftClicked: false
+          });
+        }
+      });
+    }
 
     return (
       <I18n ns="wallet">
@@ -125,10 +347,13 @@ export default class JurisdictionsForm extends Component<Props> {
               </Form.Group>
               <Form.Group inline>
                 <div style={styles.jurisdictionsLabels}>
-                  {this.props.jurisdictions.choosenJurisdictions.map((option) => <Label style={{ marginTop: '5px' }}>{option.name}</Label>)}
+                  {this.props.jurisdictions.choosenJurisdictions.length > 0 ?
+                  this.props.jurisdictions.choosenJurisdictions.map((option) => <Label key={option.code} style={{ marginTop: '5px' }}>{option.name}</Label>) :
+                  'No jurisdictions.'}
                 </div>
                 <Modal
                   // centered={false}
+                  open={this.state.showModal}
                   trigger={
                     <Button
                       floated="right"
@@ -139,31 +364,48 @@ export default class JurisdictionsForm extends Component<Props> {
                       Edit
                     </Button>}
                   onOpen={() => this.makeOptions(this.props.jurisdictions)}
-                  closeIcon={{ style: { top: '1.0535rem', right: '1rem' }, color: 'black', name: 'close' }}
                 >
                   <Modal.Header>Select jurisdictions</Modal.Header>
                   <Modal.Content scrolling>
                     <Modal.Description>
-                      <Grid columns={2} divided textAlign="center">
+                      <Grid columns={3} textAlign="center">
                         <Grid.Row stretched verticalAlign="middle">
-                          <Grid.Column>
-                            <label style={styles.labelText}>All jurisdictions ({this.state.options.length})</label>
-                            <Input placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
+                          <Grid.Column width={7}>
+                            <label style={styles.labelText}>All jurisdictions ({ this.state.options.length + ' of ' + this.state.jurisdictions.length})</label>
+                            <Input ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
                             <Segment style={styles.segment}>
-                              {this.state.options.map((options) => <Label onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>)}
+                              {this.state.options.map((options) => <Label active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>)}
                             </Segment>
                           </Grid.Column>
-                          <Grid.Column>
-                            <label style={styles.labelText}>Your jurisdictions ({this.state.choosenJurisdictions.length})</label>
-                            <Input placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
+                          <Grid.Column width={1}>
+                            <Icon style={{ cursor: 'pointer' }} onClick={() => this.handleArrowClick('all')} name="arrow right" size="big" /><br />
+                            <Icon style={{ cursor: 'pointer' }} onClick={() => this.handleArrowClick('yours')} name="arrow left" size="big" />
+                          </Grid.Column>
+                          <Grid.Column width={7}>
+                            <label style={styles.labelText}>Your jurisdictions ({this.state.choosenOptions.length + ' of ' + this.state.choosenJurisdictions.length})</label>
+                            <Input ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
                             <Segment style={styles.segment}>
-                              {this.state.choosenJurisdictions.map((value) => <Label onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>)}
+                              {this.state.choosenOptions.map((value) => <Label active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>)}
                             </Segment>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
                     </Modal.Description>
                   </Modal.Content>
+                  <Divider />
+                  <Modal.Actions>
+                    <Button
+                      content={t('confirm')}
+                      floated="right"
+                      primary
+                      onClick={() => this.onSubmit()}
+                    />
+                    <Button
+                      onClick={() => this.onCloseModal()}
+                    >
+                      <Icon name="x" /> {t('cancel')}
+                    </Button>
+                  </Modal.Actions>
                 </Modal>
               </Form.Group>
             </div>
@@ -178,7 +420,8 @@ const styles = {
   label: {
     width: '100%',
     marginBottom: '5px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    userSelect: 'none'
   },
   segment: {
     overflowY: 'auto',
