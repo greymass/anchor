@@ -135,14 +135,6 @@ class ToolsTableRowWallet extends Component<Props> {
           key="edit"
           onClick={() => this.editWallet(account, authorization)}
         />
-      ),
-      (
-        <Dropdown.Item
-          content={t('tools_form_duplicate_duplicate')}
-          icon="copy"
-          key="duplicate"
-          onClick={() => this.props.duplicateWallet(account, authorization)}
-        />
       )
     ];
     // Is this the current wallet? Account + Authorization must match

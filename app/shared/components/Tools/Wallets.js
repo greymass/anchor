@@ -4,14 +4,11 @@ import { translate } from 'react-i18next';
 
 import { Grid, Header, Segment, Table } from 'semantic-ui-react';
 
-import GlobalButtonAccountImport from '../Global/Button/Account/Import';
+import GlobalAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
-import ToolsModalDuplicatingWallet from './Modal/DuplicatingWallet';
 
 class ToolsWallets extends Component<Props> {
   state = {};
-  duplicateWallet = (account, authorization) =>
-    this.setState({ duplicatingWallet: { account, authorization } })
   render() {
     const {
       actions,
@@ -21,31 +18,16 @@ class ToolsWallets extends Component<Props> {
       pubkeys,
       settings,
       status,
-      system,
       t,
       validate,
       wallet,
       wallets
     } = this.props;
-    const {
-      duplicatingWallet
-    } = this.state;
     if (!wallets || !wallets.length) {
       return false;
     }
     return (
       <Segment style={{ marginTop: 0 }}>
-        {(duplicatingWallet) && (
-          <ToolsModalDuplicatingWallet
-            actions={actions}
-            blockchains={blockchains}
-            duplicatingWallet={duplicatingWallet}
-            onClose={() => this.setState({ duplicatingWallet: null })}
-            settings={settings}
-            system={system}
-            wallets={wallets}
-          />
-        )}
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -57,7 +39,7 @@ class ToolsWallets extends Component<Props> {
               </Header>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              <GlobalButtonAccountImport
+              <GlobalAccountImport
                 connection={connection}
                 history={history}
                 settings={settings}
@@ -88,7 +70,6 @@ class ToolsWallets extends Component<Props> {
                     actions={actions}
                     blockchains={blockchains}
                     current={wallet}
-                    duplicateWallet={this.duplicateWallet}
                     key={`${w.account}@${w.authorization}`}
                     pubkeys={pubkeys}
                     settings={settings}
