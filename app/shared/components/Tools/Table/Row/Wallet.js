@@ -7,10 +7,9 @@ import { Button, Dropdown, Header, Icon, Label, Popup, Table } from 'semantic-ui
 
 import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
-import GlobalFragmentAuthorization from '../../../Global/Fragment/Authorization';
-import GlobalFragmentBlockchain from '../../../Global/Fragment/Blockchain';
-import GlobalFragmentChainLogo from '../../../Global/Fragment/ChainLogo';
-import GlobalFragmentWalletType from '../../../Global/Fragment/WalletType';
+import FragmentAuthorization from '../../../Global/Fragment/Authorization';
+import FragmentChainLogo from '../../../Global/Fragment/ChainLogo';
+import FragmentWalletType from '../../../Global/Fragment/WalletType';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
 import GlobalAccountConvertLedger from '../../../../containers/Global/Account/Convert/Ledger';
 import EOSAccount from '../../../../utils/EOS/Account';
@@ -43,12 +42,18 @@ class ToolsTableRowWallet extends Component<Props> {
     });
   };
   removeWallet = (account, authorization) => {
-    const { actions, settings, walletCount } = this.props;
+    const { actions, settings, wallets } = this.props;
 
     actions.removeWallet(settings.chainId, account, authorization);
 
-    if (walletCount === 1) {
-      actions.changeModule('');
+    if (wallets.length === 1) {
+      return actions.changeModule('');
+    }
+
+    if (settings.account === account) {
+      const otherWallet = wallets.find(wallet => wallet.account !== account);
+
+      actions.useWallet(settings.chainId, otherWallet.account, authorization);
     }
   };
   swapWallet = (account, authorization, password = false) => {
@@ -224,7 +229,7 @@ class ToolsTableRowWallet extends Component<Props> {
         <Table.Cell collapsing>
           {modal}
           <Header size="small">
-            <GlobalFragmentAuthorization
+            <FragmentAuthorization
               account={account}
               authorization={authorization}
               pubkey={pubkey}
@@ -232,14 +237,14 @@ class ToolsTableRowWallet extends Component<Props> {
           </Header>
         </Table.Cell>
         <Table.Cell collapsing textAlign="center">
-          <GlobalFragmentChainLogo
+          <FragmentChainLogo
             avatar
             chainId={blockchain.chainId}
             name={blockchain.name}
           />
         </Table.Cell>
         <Table.Cell>
-          <GlobalFragmentWalletType
+          <FragmentWalletType
             mode={mode}
           />
         </Table.Cell>

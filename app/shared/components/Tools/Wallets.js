@@ -75,7 +75,7 @@ class ToolsWallets extends Component<Props> {
                     settings={settings}
                     status={status}
                     wallet={w}
-                    walletCount={wallets.length}
+                    wallets={wallets}
                     validate={validate}
                   />
                 )))}
