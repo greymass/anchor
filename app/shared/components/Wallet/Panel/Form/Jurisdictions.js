@@ -60,6 +60,12 @@ export default class JurisdictionsForm extends Component<Props> {
   }
 
   handleEditClick(e) {
+    this.setState({
+      choosenJurisdictions: this.props.jurisdictions.choosenJurisdictions,
+      options: this.props.jurisdictions.jurisdictions,
+      allSearch: '',
+      yoursSearch: ''
+    });
     e.preventDefault();
   }
 
@@ -119,7 +125,7 @@ export default class JurisdictionsForm extends Component<Props> {
               </Form.Group>
               <Form.Group inline>
                 <div style={styles.jurisdictionsLabels}>
-                  {this.state.choosenJurisdictions.map((option) => <Label style={{ marginTop: '5px' }}>{option.name}</Label>)}
+                  {this.props.jurisdictions.choosenJurisdictions.map((option) => <Label style={{ marginTop: '5px' }}>{option.name}</Label>)}
                 </div>
                 <Modal
                   // centered={false}
