@@ -67,7 +67,8 @@ class WalletStatusActionsTableRow extends Component<Props> {
       settings,
       setRowVisbilitity,
       isClicked,
-      actions
+      actions,
+      t
     } = this.props;
     const {
       ComponentType,
@@ -132,18 +133,26 @@ class WalletStatusActionsTableRow extends Component<Props> {
           : false
         }
         <Table.Cell>
-          <Button
-            icon="map marker alternate"
-            size="small"
-            onClick={
-              (isClicked)
-              ? () => { setRowVisbilitity(action.account_action_seq); }
-              : () => {
-                        actions.getAllProducerJurisdictionForBlock(action.block_num, action.account_action_seq);
-                        actions.getAllTransactionJurisdictions(action.block_num, action.account_action_seq);
-                        setRowVisbilitity(action.account_action_seq);
-                      }
-            }
+          <Popup
+            content={t('actions_table_history_popup')}
+            hoverable
+            position="right center"
+            trigger={(
+              <Button
+                className="jurisdiction-button"
+                icon="map marker alternate"
+                size="small"
+                onClick={
+                  (isClicked)
+                  ? () => { setRowVisbilitity(action.account_action_seq); }
+                  : () => {
+                            actions.getAllProducerJurisdictionForBlock(action.block_num, action.account_action_seq);
+                            actions.getAllTransactionJurisdictions(action.block_num, action.account_action_seq);
+                            setRowVisbilitity(action.account_action_seq);
+                          }
+                }
+              />
+            )}
           />
         </Table.Cell>
       </Table.Row>

@@ -8,6 +8,7 @@
   "actions_table_header_three": "Jurisdictions",
   "actions_table_history_one": "Sent",
   "actions_table_history_two": "Passed",
+  "actions_table_history_popup": "Click here to see jurisdiction history.",
   "actions_table_none": "Belum ada data yang tersimpan.",
   "actions_table_row_claim_text_one": "Diklaim ",
   "actions_table_row_transfer_from": "dari",

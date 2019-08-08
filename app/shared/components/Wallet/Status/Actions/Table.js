@@ -173,6 +173,7 @@ class WalletStatusActionsTable extends Component<Props> {
                   setRowVisbilitity={this.setRowVisbilitity}
                   isClicked={isClicked}
                   actions={actions}
+                  t={t}
                 />
                 {this.state.visible[action.account_action_seq] &&
                 <Table.Row>
