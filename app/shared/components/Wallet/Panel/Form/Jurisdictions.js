@@ -155,6 +155,17 @@ export default class JurisdictionsForm extends Component<Props> {
     } else {
       let oldValue = [];
       if (status === 'all') {
+        let tempClicked = Array.from(this.state.clickedAll);
+        if (value.active === true) {
+          for (let i = 0; i < tempClicked.length; i += 1) {
+            if (tempClicked[i].code === value.code) {
+              tempClicked.splice(i, 1);
+              i -= 1;
+            }
+          }
+        } else {
+          tempClicked = this.state.clickedAll.concat([value]);
+        }
         oldValue = Array.from(this.state.jurisdictions);
         oldValue.map((val) => {
           if (val.code === value.code) {
@@ -164,9 +175,20 @@ export default class JurisdictionsForm extends Component<Props> {
         });
         this.setState({
           options: oldValue,
-          clickedAll: this.state.clickedAll.concat([value])
+          clickedAll: tempClicked
         });
       } else {
+        let tempClicked = Array.from(this.state.clickedYours);
+        if (value.active === true) {
+          for (let i = 0; i < tempClicked.length; i += 1) {
+            if (tempClicked[i].code === value.code) {
+              tempClicked.splice(i, 1);
+              i -= 1;
+            }
+          }
+        } else {
+          tempClicked = this.state.clickedYours.concat([value]);
+        }
         oldValue = Array.from(this.state.choosenJurisdictions);
         oldValue.map((val) => {
           if (val.code === value.code) {
@@ -176,7 +198,7 @@ export default class JurisdictionsForm extends Component<Props> {
         });
         this.setState({
           choosenOptions: oldValue,
-          clickedYours: this.state.clickedYours.concat([value])
+          clickedYours: tempClicked
         });
       }
       let jur = this.state.options;
