@@ -23,7 +23,12 @@ export default class JurisdictionsForm extends Component<Props> {
     clickedYours: [],
     shiftClicked: false,
     tempChoosen: [],
-    tempJurisdictions: []
+    tempJurisdictions: [],
+    ctrlClicked: false,
+    oneActive: {
+      index: 0,
+      status: 'all'
+    }
   };
 
   componentDidMount() {
@@ -33,14 +38,14 @@ export default class JurisdictionsForm extends Component<Props> {
     this.setUsersJurisdictionsDefault();
   }
 
-  setUsersJurisdictionsDefault(data?) {
+  async setUsersJurisdictionsDefault(data?) {
     if (data) {
-      this.setState({
+      await this.setState({
         choosenOptions: data.choosenJurisdictions,
         choosenJurisdictions: data.choosenJurisdictions
       });
     } else {
-      this.setState({
+      await this.setState({
         choosenOptions: this.props.jurisdictions.choosenJurisdictions,
         choosenJurisdictions: this.props.jurisdictions.choosenJurisdictions
       });
@@ -48,7 +53,7 @@ export default class JurisdictionsForm extends Component<Props> {
     return this.props.jurisdictions.choosenJurisdictions;
   }
 
-  makeOptions(jurisdictions, choosen?) {
+  async makeOptions(jurisdictions, choosen?) {
     const options = [];
     const j = jurisdictions.jurisdictions;
     const cj = (choosen !== undefined) ? choosen : jurisdictions.choosenJurisdictions;
@@ -77,10 +82,13 @@ export default class JurisdictionsForm extends Component<Props> {
         }
       }
     }
-    this.setState({
+    await this.setState({
       options,
       jurisdictions: options
     });
+    if (this.state.options && this.state.options.length > 0) {
+      this.clickedLabel(this.state.options[this.state.oneActive.index], this.state.oneActive.status);
+    }
     return options;
   }
 
@@ -97,6 +105,12 @@ export default class JurisdictionsForm extends Component<Props> {
       choosenJurisdictions: choosen,
       options: jurisdictions,
       showModal: true,
+      clickedAll: [],
+      clickedYours: [],
+      oneActive: {
+        index: 0,
+        status: 'all'
+      }
     });
     this.makeOptions(this.props.jurisdictions);
     e.preventDefault();
@@ -112,126 +126,175 @@ export default class JurisdictionsForm extends Component<Props> {
     return arr;
   }
 
-  clickedLabel(value, status) {
-    if (this.state.shiftClicked) {
-      let arr = [];
-      let ac = false;
-      if (value.active === false) {
-        ac = true;
-      }
-      let clicked = [];
-      if (status === 'all') {
-        arr = this.state.options;
-        clicked = Array.from(this.state.clickedAll);
-      } else {
-        arr = this.state.choosenOptions;
-        clicked = Array.from(this.state.clickedYours);
-      }
-      const index = arr.indexOf(value);
-      let firstActive = 0;
-      for (let i = index; i >= 0; i -= 1) {
-        if (firstActive === 0) {
-          if (arr[i].active === ac) {
-            firstActive = i;
-          }
-        }
-      }
-      if (firstActive !== 0) {
-        firstActive += 1;
-      }
-      if (ac === true) {
-        for (let i = firstActive; i <= index; i += 1) {
-          arr[i].active = ac;
-          clicked.push(arr[i]);
+  clickedLabel(value, status, arrayForActive?) {
+    if (value) {
+      let arrayForActiveTemp = [];
+      if (!arrayForActive) {
+        if (status === 'all') {
+          arrayForActiveTemp = this.state.options;
+        } else {
+          arrayForActiveTemp = this.state.choosenOptions;
         }
       } else {
-        for (let i = firstActive; i <= index; i += 1) {
-          arr[i].active = ac;
-          for (let j = 0; j < clicked.length; j += 1) {
-            if (clicked[j].code === arr[i].code) {
-              clicked.splice(j, 1);
-              j -= 1;
+        arrayForActiveTemp = arrayForActive;
+      }
+      for (let i = 0; i < arrayForActiveTemp.length; i += 1) {
+        if (arrayForActiveTemp[i].code === value.code) {
+          this.setState({
+            oneActive: {
+              index: i,
+              status
+            }
+          });
+        }
+      }
+      if (this.state.shiftClicked) {
+        let arr = [];
+        let ac = false;
+        let clicked = [];
+        if (value.active === false) {
+          ac = true;
+        }
+        if (status === 'all') {
+          arr = this.state.options;
+          clicked = Array.from(this.state.clickedAll);
+        } else {
+          arr = this.state.choosenOptions;
+          clicked = Array.from(this.state.clickedYours);
+        }
+        const index = arr.indexOf(value);
+        let firstActive = 0;
+        for (let i = index; i >= 0; i -= 1) {
+          if (firstActive === 0) {
+            if (arr[i].active === ac) {
+              firstActive = i;
             }
           }
         }
-      }
-      if (status === 'all') {
-        this.setState({
-          options: arr,
-          clickedAll: clicked
-        });
-      } else {
-        this.setState({
-          choosenOptions: arr,
-          clickedYours: clicked
-        });
-      }
-    } else {
-      let oldValue = [];
-      if (status === 'all') {
-        let tempClicked = Array.from(this.state.clickedAll);
-        if (value.active === true) {
-          for (let i = 0; i < tempClicked.length; i += 1) {
-            if (tempClicked[i].code === value.code) {
-              tempClicked.splice(i, 1);
-              i -= 1;
-            }
+        if (firstActive !== 0) {
+          firstActive += 1;
+        }
+        if (ac === true) {
+          for (let i = firstActive; i <= index; i += 1) {
+            arr[i].active = ac;
+            clicked.push(arr[i]);
           }
         } else {
-          tempClicked = this.state.clickedAll.concat([value]);
-        }
-        oldValue = Array.from(this.state.jurisdictions);
-        oldValue.map((val) => {
-          if (val.code === value.code) {
-            val.active = !val.active;
-          }
-          return val;
-        });
-        this.setState({
-          options: oldValue,
-          clickedAll: tempClicked
-        });
-      } else {
-        let tempClicked = Array.from(this.state.clickedYours);
-        if (value.active === true) {
-          for (let i = 0; i < tempClicked.length; i += 1) {
-            if (tempClicked[i].code === value.code) {
-              tempClicked.splice(i, 1);
-              i -= 1;
+          for (let i = firstActive; i <= index; i += 1) {
+            arr[i].active = ac;
+            for (let j = 0; j < clicked.length; j += 1) {
+              if (clicked[j].code === arr[i].code) {
+                clicked.splice(j, 1);
+                j -= 1;
+              }
             }
           }
-        } else {
-          tempClicked = this.state.clickedYours.concat([value]);
         }
-        oldValue = Array.from(this.state.choosenJurisdictions);
-        oldValue.map((val) => {
-          if (val.code === value.code) {
-            val.active = !val.active;
+        if (status === 'all') {
+          this.setState({
+            options: arr,
+            clickedAll: clicked
+          });
+        } else {
+          this.setState({
+            choosenOptions: arr,
+            clickedYours: clicked
+          });
+        }
+      } else if (this.state.ctrlClicked) {
+        let oldValue = [];
+        if (status === 'all') {
+          let tempClicked = Array.from(this.state.clickedAll);
+          if (value.active === true) {
+            for (let i = 0; i < tempClicked.length; i += 1) {
+              if (tempClicked[i].code === value.code) {
+                tempClicked.splice(i, 1);
+                i -= 1;
+              }
+            }
+          } else {
+            tempClicked = this.state.clickedAll.concat([value]);
           }
-          return val;
-        });
-        this.setState({
-          choosenOptions: oldValue,
-          clickedYours: tempClicked
-        });
-      }
-      let jur = this.state.options;
-      let choJur = this.state.choosenOptions;
-      if (status === 'all') {
-        jur = oldValue;
+          oldValue = Array.from(this.state.options);
+          oldValue.map((val) => {
+            if (val.code === value.code) {
+              val.active = !val.active;
+            }
+            return val;
+          });
+          this.setState({
+            options: oldValue,
+            clickedAll: tempClicked
+          });
+        } else {
+          let tempClicked = Array.from(this.state.clickedYours);
+          if (value.active === true) {
+            for (let i = 0; i < tempClicked.length; i += 1) {
+              if (tempClicked[i].code === value.code) {
+                tempClicked.splice(i, 1);
+                i -= 1;
+              }
+            }
+          } else {
+            tempClicked = this.state.clickedYours.concat([value]);
+          }
+          oldValue = Array.from(this.state.choosenOptions);
+          oldValue.map((val) => {
+            if (val.code === value.code) {
+              val.active = !val.active;
+            }
+            return val;
+          });
+          this.setState({
+            choosenOptions: oldValue,
+            clickedYours: tempClicked
+          });
+        }
       } else {
-        choJur = oldValue;
+        let oldValue = [];
+        if (status === 'all') {
+          oldValue = this.makeAllInactive(Array.from(this.state.jurisdictions));
+          oldValue.map((val) => {
+            if (val.code === value.code) {
+              val.active = !val.active;
+            }
+            return val;
+          });
+          this.setState({
+            options: oldValue,
+            clickedAll: [value]
+          });
+        } else {
+          oldValue = this.makeAllInactive(Array.from(this.state.choosenJurisdictions));
+          oldValue.map((val) => {
+            if (val.code === value.code) {
+              val.active = !val.active;
+            }
+            return val;
+          });
+          this.setState({
+            choosenOptions: oldValue,
+            clickedYours: [value]
+          });
+        }
+        let jur = this.state.options;
+        let choJur = this.state.choosenOptions;
+        if (status === 'all') {
+          jur = oldValue;
+        } else {
+          choJur = oldValue;
+        }
+        this.applySearches(jur, choJur);
       }
-      this.applySearches(jur, choJur);
     }
   }
 
   applySearches(jurisdictions, choosenJurisdictions) {
-    this.search(this.state.allSearch, 'all', false, jurisdictions);
-    this.search(this.state.yoursSearch, 'yours', false, choosenJurisdictions);
+    this.search(this.state.allSearch, 'all', false, false, jurisdictions);
+    this.search(this.state.yoursSearch, 'yours', false, false, choosenJurisdictions);
   }
 
-  search(val, status, makeInactive = true, arrayOfJurisdictions?) {
+  search(val, status, makeInactive = true, normalSearch = true, arrayOfJurisdictions?) {
     if (status === 'all') {
       if (makeInactive === true) {
         this.setState({
@@ -243,6 +306,11 @@ export default class JurisdictionsForm extends Component<Props> {
         arrayOfJurisdictions :
         this.state.jurisdictions;
       const searched = jurisdictions.filter((option) => option.value.includes(val));
+      if (normalSearch) {
+        if (searched[0]) {
+          this.clickedLabel(searched[0], 'all', searched);
+        }
+      }
       this.setState({
         options: searched,
         allSearch: val
@@ -258,6 +326,11 @@ export default class JurisdictionsForm extends Component<Props> {
         arrayOfJurisdictions :
         this.state.choosenJurisdictions;
       const searchedChoosen = choosen.filter((option) => option.value.includes(val));
+      if (normalSearch) {
+        if (searchedChoosen[0]) {
+          this.clickedLabel(searchedChoosen[0], 'yours', searchedChoosen);
+        }
+      }
       this.setState({
         choosenOptions: searchedChoosen,
         yoursSearch: val
@@ -271,7 +344,7 @@ export default class JurisdictionsForm extends Component<Props> {
     });
   }
 
-  handleArrowClick(status) {
+  async handleArrowClick(status) {
     if (status === 'all') {
       let temp = this.state.jurisdictions.filter((el) => {
         return el.active === true;
@@ -310,7 +383,7 @@ export default class JurisdictionsForm extends Component<Props> {
       }
 
       newJur.sort((a, b) => a.code - b.code);
-      this.setState({
+      await this.setState({
         choosenOptions: temp,
         choosenJurisdictions: temp,
         options: newJur,
@@ -318,7 +391,11 @@ export default class JurisdictionsForm extends Component<Props> {
         clickedAll: [],
         clickedYours: [],
         allSearch: '',
-        yoursSearch: ''
+        yoursSearch: '',
+        oneActive: {
+          index: 0,
+          status: 'all'
+        }
       });
     if (this.refSearchAll.current && this.refSearchYours.current) {
         this.refSearchAll.current.inputRef.value = '';
@@ -363,7 +440,7 @@ export default class JurisdictionsForm extends Component<Props> {
       }
 
       newJur.sort((a, b) => a.code - b.code);
-      this.setState({
+      await this.setState({
         choosenOptions: newJur,
         choosenJurisdictions: newJur,
         options: temp,
@@ -371,12 +448,22 @@ export default class JurisdictionsForm extends Component<Props> {
         clickedYours: [],
         clickedAll: [],
         allSearch: '',
-        yoursSearch: ''
+        yoursSearch: '',
+        oneActive: {
+          index: 0,
+          status: 'all'
+        }
       });
       if (this.refSearchAll.current && this.refSearchYours.current) {
         this.refSearchYours.current.inputRef.value = '';
         this.refSearchAll.current.inputRef.value = '';
       }
+    }
+    if (this.refSearchYours.current !== null) {
+      this.refSearchYours.current.inputRef.value = '';
+    }
+    if (this.state.options && this.state.options.length > 0) {
+      this.clickedLabel(this.state.options[this.state.oneActive.index], this.state.oneActive.status);
     }
   }
 
@@ -460,12 +547,58 @@ export default class JurisdictionsForm extends Component<Props> {
           this.setState({
             shiftClicked: true
           });
+        } else if (e.keyCode === 17) {
+          this.setState({
+            ctrlClicked: true
+          });
+        } else if (e.keyCode === 40) {
+          // down
+          // e.preventDefault();
+          let arr = [];
+          if (this.state.oneActive.status === 'all') {
+            arr = this.state.options;
+          } else {
+            arr = this.state.choosenOptions;
+          }
+          let item = this.state.oneActive.index;
+          if (this.state.oneActive.index < arr.length - 1) {
+            item += 1;
+          }
+          this.clickedLabel(arr[item], this.state.oneActive.status, arr);
+        } else if (e.keyCode === 38) {
+          // up
+          // e.preventDefault();
+          let arr = [];
+          if (this.state.oneActive.status === 'all') {
+            arr = this.state.options;
+          } else {
+            arr = this.state.choosenOptions;
+          }
+          let item = this.state.oneActive.index;
+          if (this.state.oneActive.index !== 0) {
+            item -= 1;
+          }
+          this.clickedLabel(arr[item], this.state.oneActive.status, arr);
+        } else if (e.keyCode === 37) {
+          // left
+          // e.preventDefault();
+          this.handleArrowClick('yours');
+        } else if (e.keyCode === 39) {
+          // right
+          // e.preventDefault();
+          this.handleArrowClick('all');
+        } else if (e.keyCode === 13) {
+          this.handleArrowClick(this.state.oneActive.status);
         }
       });
       document.addEventListener('keyup', (e) => {
         if (e.keyCode === 16) {
           this.setState({
             shiftClicked: false
+          });
+        } else if (e.keyCode === 17) {
+          this.setState({
+            ctrlClicked: false
           });
         }
       });
