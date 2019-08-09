@@ -148,7 +148,7 @@ const showManager = () => {
 
 let initHardwareRetry;
 
-const initHardwareLedger = (event, signPath, devicePath) => {
+const initHardwareLedger = (e, signPath, devicePath) => {
   if (initHardwareRetry) {
     clearInterval(initHardwareRetry);
   }
@@ -171,10 +171,11 @@ const initHardwareLedger = (event, signPath, devicePath) => {
       return true;
     })
     .catch((error) => {
-      initHardwareRetry = setInterval(initHardwareLedger(event, signPath, devicePath), 1000);
+      initHardwareRetry = setInterval(initHardwareLedger(false, signPath, devicePath), 2000);
       store.dispatch({
         payload: {
-          error
+          error,
+          date: Date.now(),
         },
         type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
       });
