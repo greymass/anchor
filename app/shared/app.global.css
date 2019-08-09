@@ -57,6 +57,15 @@ table .jurisdiction-table {
   background-color: grey !important;
 }
 
+.jurisdiction-history-button:hover {
+  background-color: grey !important;
+}
+
+.jurisdiction-history-button {
+  display: block !important;
+  margin: auto !important;
+}
+
 .jurisdiction-wrapper-name {
   display: inline-block;
   width: 150px;

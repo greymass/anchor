@@ -146,7 +146,6 @@ class BlockProducers extends Component<Props> {
             <ProducersTable
               account={accounts[settings.account]}
               actions={actions}
-              // jurisdictions={this.props.jurisdictions}
               jurisdictions={jurisdictions}
               addProducer={addProducer}
               amount={amount}

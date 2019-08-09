@@ -267,6 +267,7 @@ class WalletStatusActionsTable extends Component<Props> {
               <Table.HeaderCell width={2}>
                 {t('actions_table_header_two')}
               </Table.HeaderCell>
+              <Table.HeaderCell width={2}></Table.HeaderCell>
               <Table.HeaderCell width={2} colSpan={2} textAlign="right">
                 {t('actions_table_header_three')}
               </Table.HeaderCell>

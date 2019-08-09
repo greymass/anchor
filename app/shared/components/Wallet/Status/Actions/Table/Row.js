@@ -140,7 +140,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
             position="right center"
             trigger={(
               <Button
-                className="jurisdiction-button"
+                className="jurisdiction-history-button"
                 icon="map marker alternate"
                 size="small"
                 // onClick={
