@@ -16,40 +16,68 @@ class WalletStatusActionsTable extends Component<Props> {
       visible: [],
       leftRows: [],
       rightRows: [],
-      nextSequence: -1
+      nextSequence: -1,
+      ready: [],
+      myBlockJurisdictions: [],
+      myTransactionExtensions: []
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.jurisdictions.sequenceTransaction !== nextProps.jurisdictions.sequenceTransaction) {
-      this.transactionJurisdictions(
-        nextProps.jurisdictions.transactionExtensions,
-        nextProps.jurisdictions.sequenceTransaction
-      );
-      this.blockJurisdictions(
-        nextProps.jurisdictions.blockJurisdictions.producer_jurisdiction_for_block,
-        nextProps.jurisdictions.sequenceTransaction
-      );
-      this.state.visible[nextProps.jurisdictions.sequenceTransaction] = true;
+      const sequence = nextProps.jurisdictions.sequenceTransaction;
+
+      this.state.myTransactionExtensions[sequence] = nextProps.jurisdictions.transactionExtensions;
       this.setState({
-        visible: this.state.visible
+        myTransactionExtensions: this.state.myTransactionExtensions
+      });
+
+      if (!this.state.ready[sequence]) this.state.ready[sequence] = 0;
+
+      this.state.ready[sequence] += 1;
+
+      if (this.state.ready[sequence] === 2) {
+        this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
+        this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
+
+        this.state.ready[sequence] = 0;
+      }
+
+      this.setState({
+        ready: this.state.ready
       });
     }
 
     if (this.props.jurisdictions.sequenceBlock !== nextProps.jurisdictions.sequenceBlock) {
-      this.transactionJurisdictions(
-        nextProps.jurisdictions.transactionExtensions,
-        nextProps.jurisdictions.sequenceBlock
-      );
-      this.blockJurisdictions(
-        nextProps.jurisdictions.blockJurisdictions.producer_jurisdiction_for_block,
-        nextProps.jurisdictions.sequenceBlock
-      );
-      this.state.visible[nextProps.jurisdictions.sequenceBlock] = true;
+      const sequence = nextProps.jurisdictions.sequenceBlock;
+
+      this.state.myBlockJurisdictions[sequence] = nextProps.jurisdictions.blockJurisdictions.producer_jurisdiction_for_block;
       this.setState({
-        visible: this.state.visible
+        myBlockJurisdictions: this.state.myBlockJurisdictions
+      });
+
+      if (!this.state.ready[sequence]) this.state.ready[sequence] = 0;
+
+      this.state.ready[sequence] += 1;
+
+      if (this.state.ready[sequence] === 2) {
+        this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
+        this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
+
+        this.state.ready[sequence] = 0;
+      }
+
+      this.setState({
+        ready: this.state.ready
       });
     }
+  }
+
+  resetReady = (seq) => {
+    this.state.ready[seq] = 0;
+    this.setState({
+      ready: this.state.ready
+    });
   }
 
   setRowVisbilitity = (action) => {
@@ -68,7 +96,7 @@ class WalletStatusActionsTable extends Component<Props> {
     }
     const arr = [];
     const jurisdictions = this.props.jurisdictions.jurisdictions;
-    const codes = serializer.deserialize(transactionExtensions);
+    const codes = serializer.deserialize(transactionExtensions) || [];
 
     jurisdictions.forEach((it, i) => {
       codes.forEach((jt, j) => {
@@ -171,6 +199,7 @@ class WalletStatusActionsTable extends Component<Props> {
                   key={action.account_action_seq}
                   settings={settings}
                   setRowVisbilitity={this.setRowVisbilitity}
+                  resetReady={this.resetReady}
                   isClicked={isClicked}
                   actions={actions}
                   t={t}

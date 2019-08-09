@@ -66,6 +66,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
       connection,
       settings,
       setRowVisbilitity,
+      resetReady,
       isClicked,
       actions,
       t
@@ -142,10 +143,20 @@ class WalletStatusActionsTableRow extends Component<Props> {
                 className="jurisdiction-button"
                 icon="map marker alternate"
                 size="small"
+                // onClick={
+                //   (isClicked)
+                //   ? () => { setRowVisbilitity(action.account_action_seq); }
+                //   : () => {
+                //             actions.getAllProducerJurisdictionForBlock(action.block_num, action.account_action_seq);
+                //             actions.getAllTransactionJurisdictions(action.block_num, action.account_action_seq);
+                //             setRowVisbilitity(action.account_action_seq);
+                //           }
+                // }
                 onClick={
                   (isClicked)
                   ? () => { setRowVisbilitity(action.account_action_seq); }
                   : () => {
+                            resetReady(action.account_action_seq);
                             actions.getAllProducerJurisdictionForBlock(action.block_num, action.account_action_seq);
                             actions.getAllTransactionJurisdictions(action.block_num, action.account_action_seq);
                             setRowVisbilitity(action.account_action_seq);
