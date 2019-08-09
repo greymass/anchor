@@ -75,8 +75,12 @@ export default class JurisdictionsForm extends Component<Props> {
   }
 
   handleEditClick(e) {
-    const choosen = this.makeAllInactive(this.props.jurisdictions.choosenJurisdictions);
-    const jurisdictions = this.makeAllInactive(this.props.jurisdictions.jurisdictions);
+    let choosen = [];
+    let jurisdictions = [];
+    if (this.props.jurisdictions.jurisdictions && this.props.jurisdictions.choosenJurisdictions) {
+      choosen = this.makeAllInactive(this.props.jurisdictions.choosenJurisdictions);
+      jurisdictions = this.makeAllInactive(this.props.jurisdictions.jurisdictions);
+    }
     this.setState({
       choosenOptions: choosen,
       choosenJurisdictions: choosen,
