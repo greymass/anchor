@@ -16,7 +16,7 @@ function handleError(error) {
 }
 
 export function getAppConfiguration() {
-  return (dispatch: () => void, getState) => {
+  return (dispatch: () => void) => {
     const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     // console.log(hardwareLedger)
     const { transport } = hardwareLedger;
@@ -51,21 +51,7 @@ export function getAppConfiguration() {
           },
           type: types.HARDWARE_LEDGER_APP_FAILURE,
         });
-        setTimeout(() => {
-          // if () {
-          //   console.log("restart transport");
-          // }
-          if (
-            (error.message && error.message.startsWith('Cannot write to HID device'))
-            // || (error.name && error.name === 'TransportStatusError')
-          ) {
-            // reinitialize
-            const { ledger, wallet } = getState();
-            return global.initHardwareLedger(false, wallet.path, ledger.devicePath);
-          }
-          // retry
-          return dispatch(getAppConfiguration());
-        }, 1000);
+        setTimeout(() => dispatch(getAppConfiguration()), 1000);
       });
   };
 }
