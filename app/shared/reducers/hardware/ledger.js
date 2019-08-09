@@ -6,6 +6,8 @@ const initialState = {
   application: null,
   // Error Responses
   applicationError: null,
+  // Error Date
+  applicationErrorDate: null,
   // Base bath
   bip44Path: "44'/194'/0'/0/0",
   // Path to the device
@@ -98,13 +100,15 @@ export default function ledger(state = initialState, action) {
     case types.HARDWARE_LEDGER_APP_SUCCESS: {
       return Object.assign({}, state, {
         application: action.payload.application,
-        applicationError: null
+        applicationError: null,
+        applicationErrorDate: null,
       });
     }
     case types.HARDWARE_LEDGER_APP_FAILURE: {
       return Object.assign({}, state, {
         application: null,
-        applicationError: action.payload.error
+        applicationError: action.payload.error,
+        applicationErrorDate: action.payload.date,
       });
     }
     case types.HARDWARE_LEDGER_TRANSPORT_SUCCESS: {
@@ -117,6 +121,7 @@ export default function ledger(state = initialState, action) {
       return Object.assign({}, state, {
         application: null,
         applicationError: null,
+        applicationErrorDate: Date.now(),
         displayingKey: false,
         subscriber: null,
         transportError: action.payload.error
