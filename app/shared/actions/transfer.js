@@ -38,10 +38,7 @@ export function transfer(from, to, quantity, memo, symbol) {
             memo
           }
         }],
-        transaction_extensions: [{
-          type: 0,
-          data: serializedArray
-        }]
+        transaction_extensions: serializedArray
       }, {
         broadcast: connection.broadcast,
         expireInSeconds: connection.expireInSeconds,

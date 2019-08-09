@@ -35,10 +35,7 @@ export function sellram(amount) {
           bytes: Number(amount)
         }
       }],
-      transaction_extensions: [{
-        type: 0,
-        data: serializedArray
-      }]
+      transaction_extensions: serializedArray
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
       return dispatch({

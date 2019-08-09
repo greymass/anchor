@@ -35,10 +35,7 @@ export function buyram(amount) {
           quant: `${amount.toFixed(4)} ${connection.chainSymbol || 'EOS'}`
         }
       }],
-      transaction_extensions: [{
-        type: 0,
-        data: serializedArray
-      }]
+      transaction_extensions: serializedArray
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
 
