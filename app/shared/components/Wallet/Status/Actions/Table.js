@@ -95,7 +95,7 @@ class WalletStatusActionsTable extends Component<Props> {
       return;
     }
     const arr = [];
-    const jurisdictions = this.props.jurisdictions.jurisdictions;
+    const jurisdictions = this.props.jurisdictions.jurisdictions || [];
     const codes = serializer.deserialize(transactionExtensions) || [];
 
     jurisdictions.forEach((it, i) => {
@@ -117,7 +117,7 @@ class WalletStatusActionsTable extends Component<Props> {
       return;
     }
     const arr = [];
-    const jurisdictions = this.props.jurisdictions.jurisdictions;
+    const jurisdictions = this.props.jurisdictions.jurisdictions || [];
     let codes = [];
 
     blockJurisdictions.forEach((it, i) => {

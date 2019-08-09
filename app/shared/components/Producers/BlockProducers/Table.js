@@ -46,7 +46,7 @@ class ProducersTable extends Component<Props> {
 
   setProducerJurisdiction = (table, owner) => {
     const arr = [];
-    const jurisdictions = this.props.jurisdictions.jurisdictions;
+    const jurisdictions = this.props.jurisdictions.jurisdictions || [];
     const codes = table || [];
 
     jurisdictions.forEach((it, i) => {
