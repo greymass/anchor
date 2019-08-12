@@ -59,6 +59,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
       ))
       .sort((a, b) => a.name > b.name)
       .map((b) => {
+        const name = `${b.name} ${(b.testnet ? '(TESTNET)' : '')}`;
         const image = <GlobalFragmentChainLogo avatar chainId={b.chainId} name={b.name} />;
         return {
           props: {
@@ -90,7 +91,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
                 marginRight: '0.5em'
               }}
             />
-            {(blockchain && blockchain.name) ? blockchain.name : t(defaultLocString)}
+            {(blockchain && blockchain.name) ? blockchain.name + (blockchain.testnet ? ' (TESTNET' : '') : t(defaultLocString)}
           </span>
         )}
       >
