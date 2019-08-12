@@ -22,7 +22,7 @@ const knownChains = [
     _id: 'beos-testnet-2',
     chainId: 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4',
     keyPrefix: 'EOS',
-    name: 'BEOS',
+    name: 'Beos-Testnet',
     node: 'https://api.testnet.beos.world',
     supportedContracts: [
       'beosexchange',
