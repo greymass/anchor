@@ -196,6 +196,21 @@ class WalletPanelFormRamBuy extends Component<Props> {
       submitDisabled
     } = this.state;
 
+    let jurisdictionsForm = (<div />);
+
+    if (connection.chain === 'BEOS') {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={this.props.actions}
+            jurisdictions={jurisdictions}
+            label={t('transfer_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
+
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
 
@@ -253,12 +268,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                   style={{ marginTop: '20px' }}
                   error={formError}
                 />
-                <Divider />
-                <JurisdictionsForm
-                  actions={this.props.actions}
-                  jurisdictions={jurisdictions}
-                  label={t('ram_form_label_jurisdictions')}
-                />
+                {jurisdictionsForm}
                 <Divider />
                 <Button
                   content={t('cancel')}

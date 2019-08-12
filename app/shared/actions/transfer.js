@@ -12,8 +12,11 @@ export function transfer(from, to, quantity, memo, symbol) {
       jurisdictions
     } = getState();
 
-    const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
-    const serializedArray = serializer.serialize(temp);
+    let serializedArray = [];
+    if (connection.chain === 'BEOS') {
+      const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+      serializedArray = serializer.serialize(temp);
+    }
     const currentSymbol = symbol || connection.chainSymbol || 'EOS';
 
     dispatch({

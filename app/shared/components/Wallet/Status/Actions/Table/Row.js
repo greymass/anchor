@@ -95,6 +95,11 @@ class WalletStatusActionsTableRow extends Component<Props> {
       return false;
     }
 
+    let checkChain = false;
+    if (connection.chain === 'BEOS') {
+      checkChain = true;
+    }
+
     return (
       <Table.Row style={{ height: '60px' }}>
         <Table.Cell
@@ -133,7 +138,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
           )
           : false
         }
-        <Table.Cell>
+        {(checkChain) && (<Table.Cell>
           <Popup
             content={t('actions_table_history_popup')}
             hoverable
@@ -165,7 +170,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
               />
             )}
           />
-        </Table.Cell>
+          </Table.Cell>)}
       </Table.Row>
     );
   }

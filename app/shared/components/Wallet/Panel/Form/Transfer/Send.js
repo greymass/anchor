@@ -206,6 +206,21 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     const exchangeAccounts = get(app, 'constants.exchanges') || [];
 
+    let jurisdictionsForm = (<div />);
+
+    if (connection.chain === 'BEOS') {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={this.props.actions}
+            jurisdictions={jurisdictions}
+            label={t('transfer_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
+
     if (memo && memo !== '' && exchangeAccounts && exchangeAccounts[connection.chainId]) {
       exchangeAccounts[connection.chainId].forEach((exchangeAccount) => {
         if (memo.match(`.*?${exchangeAccount}.*?`)) {
@@ -303,12 +318,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
               { exchangeWarning }
 
-              <Divider />
-              <JurisdictionsForm
-                actions={this.props.actions}
-                jurisdictions={jurisdictions}
-                label={t('transfer_label_jurisdictions')}
-              />
+              {jurisdictionsForm}
               <Divider />
               <Button
                 content={t('confirm')}

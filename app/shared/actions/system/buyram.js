@@ -17,8 +17,11 @@ export function buyram(amount) {
       type: types.SYSTEM_BUYRAM_PENDING
     });
 
-    const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
-    const serializedArray = serializer.serialize(temp);
+    let serializedArray = [];
+    if (connection.chain === 'BEOS') {
+      const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+      serializedArray = serializer.serialize(temp);
+    }
 
     const { account } = settings;
     return eos(connection, true).transaction({

@@ -188,6 +188,21 @@ class WalletPanelFormRamSell extends Component<Props> {
       priceOfRam
     } = this.state;
 
+    let jurisdictionsForm = (<div />);
+
+    if (connection.chain === 'BEOS') {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={this.props.actions}
+            jurisdictions={jurisdictions}
+            label={t('transfer_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
+
     const shouldShowConfirm = this.state.confirming;
     const shouldShowForm = !shouldShowConfirm;
 
@@ -244,12 +259,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                   style={{ marginTop: '20px' }}
                   error={formError}
                 />
-                <Divider />
-                <JurisdictionsForm
-                  actions={this.props.actions}
-                  jurisdictions={jurisdictions}
-                  label={t('ram_form_label_jurisdictions')}
-                />
+                {jurisdictionsForm}
                 <Divider />
                 <Button
                   content={t('cancel')}

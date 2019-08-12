@@ -52,6 +52,11 @@ class ProducersTableRow extends Component<Props> {
     const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
     const producersJurisdiction = true;
 
+    let checkChain = false;
+    if (connection.chain === 'BEOS') {
+      checkChain = true;
+    }
+
     return (
       <Table.Row positive={isActive} key={producer.key}>
         <Table.Cell
@@ -106,7 +111,7 @@ class ProducersTableRow extends Component<Props> {
               )}
             />
             )}
-          {(producersJurisdiction) && (
+          {(producersJurisdiction) && (checkChain) && (
             <Popup
               hoverable
               position="left center"

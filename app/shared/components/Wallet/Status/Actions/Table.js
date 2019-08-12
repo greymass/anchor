@@ -157,6 +157,16 @@ class WalletStatusActionsTable extends Component<Props> {
 
     const loading = (actionHistory.list.length < 1);
     let baseTable = <Table.Body />;
+
+    let jurisdictionsHeader = (<div />);
+    if (connection.chain === 'BEOS') {
+      jurisdictionsHeader = (
+        <Table.HeaderCell width={2} colSpan={2} textAlign="right">
+          {t('actions_table_header_three')}
+        </Table.HeaderCell>
+      );
+    }
+
     if (!loading) {
       let fullResults = actionHistory.list.slice(0, amount);
 
@@ -268,9 +278,7 @@ class WalletStatusActionsTable extends Component<Props> {
                 {t('actions_table_header_two')}
               </Table.HeaderCell>
               <Table.HeaderCell width={2}></Table.HeaderCell>
-              <Table.HeaderCell width={2} colSpan={2} textAlign="right">
-                {t('actions_table_header_three')}
-              </Table.HeaderCell>
+              {jurisdictionsHeader}
             </Table.Row>
           </Table.Header>
           <Transition animation="slide down" duration={200}>
