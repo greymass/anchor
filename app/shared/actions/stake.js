@@ -9,6 +9,8 @@ import { undelegatebwParams } from './system/undelegatebw';
 import * as AccountActions from './accounts';
 import * as TableActions from './table';
 import eos from './helpers/eos';
+import checkForBeos from '../components/helpers/checkCurrentBlockchain';
+import serializer from './helpers/serializeBytes';
 
 export function setStake(accountName, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
@@ -16,7 +18,8 @@ export function setStake(accountName, netAmount, cpuAmount) {
       accounts,
       connection,
       tables,
-      settings
+      settings,
+      jurisdictions
     } = getState();
 
     const currentAccount = accounts[settings.account];
@@ -36,54 +39,81 @@ export function setStake(accountName, netAmount, cpuAmount) {
       type: types.SYSTEM_STAKE_PENDING
     });
 
-    return eos(connection, true).transaction(tr => {
-      if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
-        tr.delegatebw(delegatebwParams(
-          connection.chainSymbol,
-          currentAccount.account_name,
-          accountName,
-          increaseInStake.netAmount,
-          increaseInStake.cpuAmount
-        ));
-      }
-      if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
-        tr.undelegatebw(undelegatebwParams(
-          connection.chainSymbol,
-          currentAccount.account_name,
-          accountName,
-          decreaseInStake.netAmount,
-          decreaseInStake.cpuAmount
-        ));
-      }
-    }, {
-      broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
-      sign: connection.sign
-    }).then((tx) => {
-      setTimeout(() => {
-        if (accountName === settings.account) {
-          dispatch(AccountActions.getAccount(accountName));
-        }
+    let data = [];
+    let name = 'delegatebw';
+    let status = false;
 
-        dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
-      }, 500);
+    if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
+      data = delegatebwParams(
+        connection.chainSymbol,
+        currentAccount.account_name,
+        accountName,
+        increaseInStake.netAmount,
+        increaseInStake.cpuAmount
+      );
+      name = 'delegatebw';
+      status = true;
+    }
+    if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
+      data = undelegatebwParams(
+        connection.chainSymbol,
+        currentAccount.account_name,
+        accountName,
+        decreaseInStake.netAmount,
+        decreaseInStake.cpuAmount
+      );
+      name = 'undelegatebw';
+      status = true;
+    }
 
-      return dispatch({
-        payload: {
-          connection,
-          tx
-        },
-        type: types.SYSTEM_STAKE_SUCCESS
+    let serializedArray = [];
+    if (checkForBeos(connection)) {
+      const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+      serializedArray = serializer.serialize(temp);
+    }
+
+    if (status) {
+      return eos(connection, true).transaction({
+        actions: [{
+          account: 'eosio',
+          name,
+          authorization: [{
+            actor: currentAccount.account_name,
+            permission: 'active'
+          }],
+          data
+        }],
+        transaction_extensions: serializedArray
+      }, {
+        broadcast: connection.broadcast,
+        expireInSeconds: connection.expireInSeconds,
+        sign: connection.sign
+      }).then((tx) => {
+        setTimeout(() => {
+          if (accountName === settings.account) {
+            dispatch(AccountActions.getAccount(accountName));
+          }
+
+          dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
+        }, 500);
+
+        return dispatch({
+          payload: {
+            connection,
+            tx
+          },
+          type: types.SYSTEM_STAKE_SUCCESS
+        });
+      }).catch((err) => {
+        dispatch({
+          payload: {
+            connection,
+            err
+          },
+          type: types.SYSTEM_STAKE_FAILURE
+        });
       });
-    }).catch((err) => {
-      dispatch({
-        payload: {
-          connection,
-          err
-        },
-        type: types.SYSTEM_STAKE_FAILURE
-      });
-    });
+    }
   };
 }
 

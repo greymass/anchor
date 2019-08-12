@@ -8,6 +8,8 @@ import { Segment, Form, Header, Button, Icon, Table } from 'semantic-ui-react';
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldKeyPublic from '../../Global/Form/Field/Key/Public';
 
+import JurisdictionsForm from '../../Wallet/Panel/Form/Jurisdictions';
+
 class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
   constructor(props) {
     super(props);
@@ -145,7 +147,9 @@ class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
       onClose,
       system,
       t,
-      connection
+      connection,
+      actions,
+      jurisdictions
     } = this.props;
 
     const {
@@ -231,6 +235,11 @@ class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
                 />
                 {accountTakenError}
                 {accountValidationError}
+                <JurisdictionsForm
+                  actions={actions}
+                  jurisdictions={jurisdictions}
+                  label={t('tools_form_create_account_jurisdictions')}
+                />
                 <Segment basic clearing>
                   {(!hideCancel)
                     ? (

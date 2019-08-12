@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "¿Eliminar todos los votos?",
   "producer_voter_remove_all_votes_subheader": "Guardar después de quitar los votos existentes se quitará cualquier voto que has dado previamente para cualquier productor.",
   "producer_voter_save_changes": "Enviar votos a los productores seleccionados",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "Total apostado",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "total votos emitidos",

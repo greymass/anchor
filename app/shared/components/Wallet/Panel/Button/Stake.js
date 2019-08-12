@@ -33,6 +33,7 @@ class WalletPanelButtonStake extends Component<Props> {
       validate,
       system,
       disabled,
+      jurisdictions,
       t
     } = this.props;
 
@@ -72,6 +73,7 @@ class WalletPanelButtonStake extends Component<Props> {
             settings={settings}
             system={system}
             validate={validate}
+            jurisdictions={jurisdictions}
           />
         )}
         icon="microchip"

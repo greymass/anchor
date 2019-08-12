@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "删除所有投票？",
   "producer_voter_remove_all_votes_subheader": "在删除所有现有投票后保存将取消您之前为任何生产者的任何投票.",
   "producer_voter_save_changes": "Submit votes for selected producers",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "总计放样",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "总投票数",

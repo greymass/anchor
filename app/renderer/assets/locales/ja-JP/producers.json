@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "全投票を削除しますか？",
   "producer_voter_remove_all_votes_subheader": "全ての投票を削除した後に保存すると、以前に投じた全てのプロデューサへの全ての投票がキャンセルされます。",
   "producer_voter_save_changes": "選択したプロデューサへの投票を送信する",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "総ステーク量",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "投票済み",

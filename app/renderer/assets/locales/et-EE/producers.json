@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "Eemaldada kõik hääled?",
   "producer_voter_remove_all_votes_subheader": "Salvestamine, peale kõikide häälte eemaldamist, eemaldab eelnevalt antud hääled kõikidelt tootjatelt.",
   "producer_voter_save_changes": "Edasta hääled valitud tootjate poolt",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "Kokku Panustatud",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "kokku hääli",

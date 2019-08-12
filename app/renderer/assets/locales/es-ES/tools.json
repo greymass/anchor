@@ -136,6 +136,7 @@
   "tools_form_contact_label": "Description/Label",
   "tools_form_contact_submit": "Guardar",
   "tools_form_create_account_account_name": "Nombre de la cuenta",
+  "tools_form_create_account_jurisdictions": "Jurisdictions",
   "tools_form_create_account_account_name_warning": "Account names typically require exactly 12 characters. The creation of the account will fail unless the creating account has access to a premium namespace.",
   "tools_form_create_account_active_key": "Clave pública activa",
   "tools_form_create_account_back": "Atrás",

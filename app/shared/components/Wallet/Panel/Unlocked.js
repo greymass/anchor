@@ -84,6 +84,7 @@ class WalletPanelUnlocked extends Component<Props> {
                               validate={validate}
                               settings={settings}
                               system={system}
+                              jurisdictions={jurisdictions}
                             />
                           </Segment>
                         )}
@@ -100,6 +101,7 @@ class WalletPanelUnlocked extends Component<Props> {
                           validate={validate}
                           settings={settings}
                           system={system}
+                          jurisdictions={jurisdictions}
                         />
                       </Segment>
                     )

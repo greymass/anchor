@@ -12,5 +12,6 @@
   "withdraw_label_token_and_quantity": "Token Selection + Quantity",
   "withdraw_modal_title": "Withdraw tokens",
   "withdraw_send_button_cta": "Withdraw tokens",
-  "withdraw_send_button_cta_2": "Withdraw from BEOS to BTS"
+  "withdraw_send_button_cta_2": "Withdraw from BEOS to BTS",
+  "withdraw_label_jurisdictions": "Jurisdictions"
 }

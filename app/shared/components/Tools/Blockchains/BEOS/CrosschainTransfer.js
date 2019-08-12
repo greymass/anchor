@@ -24,6 +24,7 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
       validate,
       wallet,
       t,
+      jurisdictions
     } = this.props;
 
     const blockchain = find(blockchains, { chainId: connection.chainId });
@@ -92,6 +93,7 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
                     settings={settings}
                     system={system}
                     transaction={transaction}
+                    jurisdictions={jurisdictions}
                   />
                 </Segment>
               )

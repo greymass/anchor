@@ -8,6 +8,8 @@ import { get } from 'dot-prop-immutable';
 
 import WalletMessageContractVoteProducer from '../../../../Global/Message/Contract/VoteProducer';
 import ProducersTable from './Selection/ProducersTable';
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
+import JurisdictionsForm from '../../../../Wallet/Panel/Form/Jurisdictions';
 
 class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
@@ -20,8 +22,27 @@ class ProducersVotingPreviewSelection extends Component<Props> {
       settings,
       submitting,
       t,
-      unregisteredProducers
+      unregisteredProducers,
+      jurisdictions,
+      actions,
+      connection
     } = this.props;
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={actions}
+            jurisdictions={jurisdictions}
+            label={t('producers_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
+
     const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
     const registeredProducersSelected = selected.filter((producer) => !unregisteredProducersSelected.includes(producer))
     const removedProducers =
@@ -92,6 +113,7 @@ class ProducersVotingPreviewSelection extends Component<Props> {
               voter: settings.account
             }}
           />
+          {jurisdictionsForm}
           <Divider />
           <Button
             onClick={onClose}

@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "Удалить все голоса?",
   "producer_voter_remove_all_votes_subheader": "Сохранение после удаления всех существующих голосов отменит любой голос, который вы ранее подали для любого производителя блоков.",
   "producer_voter_save_changes": "Submit votes for selected producers",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "Общее количество закреплённых токенов EOS",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "Количество использованных голосов",

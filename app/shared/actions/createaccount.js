@@ -7,6 +7,8 @@ import eos from './helpers/eos';
 import { delegatebwParams } from './system/delegatebw';
 import contracts from './contracts';
 import EOSContract from '../utils/EOS/Contract';
+import checkForBeos from '../components/helpers/checkCurrentBlockchain';
+import serializer from './helpers/serializeBytes';
 
 export function createAccount(
   accountName,
@@ -20,11 +22,18 @@ export function createAccount(
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      settings
+      settings,
+      jurisdictions
     } = getState();
 
+    let serializedArray = [];
+    if (checkForBeos(connection)) {
+      const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+      serializedArray = serializer.serialize(temp);
+    }
+
     const currentAccount = settings.account;
-    
+
     dispatch({
       payload: { connection },
       type: types.SYSTEM_CREATEACCOUNT_PENDING
@@ -35,21 +44,28 @@ export function createAccount(
         .getAbi('eosio')
         .then((c) => {
           const contract = new EOSContract(c.abi, c.account_name);
-          eos(connection, true).contract(contract.account).then(({ newaccount }) => {
-            newaccount(
-              {
+          eos(connection, true).transaction({
+            actions: [{
+              account: 'eosio',
+              name: 'newaccount',
+              authorization: [{
+                actor: currentAccount,
+                permission: 'active'
+              }],
+              data: {
                 creator: currentAccount,
                 name: accountName,
                 init_ram: 1,
                 owner: ownerKey,
                 active: activeKey
-              },
-              {
-                broadcast: connection.broadcast,
-                expireInSeconds: connection.expireInSeconds,
-                sign: connection.sign
               }
-            ).then(tx => {
+            }],
+            transaction_extensions: serializedArray
+          }, {
+            broadcast: connection.broadcast,
+            expireInSeconds: connection.expireInSeconds,
+            sign: connection.sign
+          }).then(tx => {
               setTimeout(() => {
                 dispatch(AccountActions.getAccount(currentAccount));
               }, 500);
@@ -69,25 +85,7 @@ export function createAccount(
                 type: types.SYSTEM_CREATEACCOUNT_FAILURE
               });
             });
-          }).catch((err) => {
-            dispatch({
-              payload: {
-                connection,
-                err
-              },
-              type: types.SYSTEM_CREATEACCOUNT_FAILURE
-            });
           });
-        })
-        .catch((err) => {
-          dispatch({
-            payload: {
-              connection,
-              err
-            },
-            type: types.SYSTEM_CREATEACCOUNT_FAILURE
-          });
-        });
     }
 
     return eos(connection, true).transaction(tr => {
@@ -97,13 +95,13 @@ export function createAccount(
           owner: ownerKey,
           active: activeKey
         });
-  
+
         tr.buyrambytes({
           payer: currentAccount,
           receiver: accountName,
           bytes: Number(ramAmount)
         });
-  
+
         tr.delegatebw(delegatebwParams(
           connection.chainSymbol,
           currentAccount,

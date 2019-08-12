@@ -7,6 +7,8 @@ import { attempt, isError } from 'lodash';
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
 import WalletModalContentBroadcast from '../../../Wallet/Modal/Content/Broadcast';
+import JurisdictionsForm from '../../../Wallet/Panel/Form/Jurisdictions';
+import checkForBeos from '../../../helpers/checkCurrentBlockchain';
 
 const initialState = {
   arrayOptions: {},
@@ -114,7 +116,9 @@ class ContractInterfaceFormAction extends Component<Props> {
       settings,
       system,
       t,
-      transaction
+      transaction,
+      jurisdictions,
+      connection
     } = this.props;
     const {
       currentArrayValues
@@ -272,6 +276,22 @@ class ContractInterfaceFormAction extends Component<Props> {
         />
       );
     }
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={actions}
+            jurisdictions={jurisdictions}
+            label={t('interface_form_action_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
+
     return (
       <Form
         error={!!(errors)}
@@ -289,6 +309,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         <Divider />
         {modal}
         {formFields}
+        {jurisdictionsForm}
         {errors}
         <Button
           content={t('interface_form_action_button')}

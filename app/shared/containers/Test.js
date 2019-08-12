@@ -29,6 +29,7 @@ import * as ValidateActions from '../actions/validate';
 import * as VoteProducerActions from '../actions/system/voteproducer';
 import * as WalletActions from '../actions/wallet';
 import * as SystemStateActions from '../actions/system/systemstate';
+import * as Jurisdictions from '../actions/jurisdictions';
 
 import Airgrabs from '../components/Tools/Airgrabs';
 
@@ -67,6 +68,7 @@ function mapDispatchToProps(dispatch) {
       ...TransferActions,
       ...ValidateActions,
       ...VoteProducerActions,
+      ...Jurisdictions,
       ...WalletActions
     }, dispatch)
   };

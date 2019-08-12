@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "모든 표를 제거하시겠습니까?",
   "producer_voter_remove_all_votes_subheader": "기존 투표를 모두 삭제한 후 저장하시면 이전에 하신 모든 투표가 취소됩니다.",
   "producer_voter_save_changes": "선택한 생산자에 투표 제출하기",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "스테이킹된 EOS 총량",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "총 투표 수",

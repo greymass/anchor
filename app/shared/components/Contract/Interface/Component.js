@@ -55,7 +55,9 @@ class ContractInterfaceComponent extends Component<Props> {
       system,
       t,
       tables,
-      transaction
+      transaction,
+      connection,
+      jurisdictions
     } = this.props;
 
     const {
@@ -90,6 +92,8 @@ class ContractInterfaceComponent extends Component<Props> {
               settings={settings}
               system={system}
               transaction={transaction}
+              connection={connection}
+              jurisdictions={jurisdictions}
             />
           )
         }

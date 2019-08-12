@@ -12,6 +12,8 @@ import FormMessageError from '../../../Global/Form/Message/Error';
 import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
 import GlobalFormFieldToken from '../../../Global/Form/Field/Token';
 import EOSAccount from '../../../../utils/EOS/Account';
+import checkForBeos from '../../../helpers/checkCurrentBlockchain';
+import JurisdictionsForm from './Jurisdictions';
 
 type Props = {
   actions: {},
@@ -230,7 +232,8 @@ class WalletPanelFormStake extends Component<Props> {
       onClose,
       system,
       settings,
-      t
+      t,
+      jurisdictions
     } = this.props;
 
     const {
@@ -254,6 +257,22 @@ class WalletPanelFormStake extends Component<Props> {
         system.ACCOUNT_EXISTS_LAST_ACCOUNT === accountName) {
       formError = formError || 'account_does_not_exist';
     }
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={this.props.actions}
+            jurisdictions={jurisdictions}
+            label={t('update_staked_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
+
     return (
       <Segment
         loading={system.STAKE === 'PENDING'}
@@ -313,6 +332,7 @@ class WalletPanelFormStake extends Component<Props> {
                   error={formError}
                   chainSymbol={connection.chainSymbol}
                 />
+                {jurisdictionsForm}
                 <Divider />
                 <Message
                   icon="info circle"

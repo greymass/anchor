@@ -371,7 +371,7 @@ export default class JurisdictionsForm extends Component<Props> {
               <Form.Group inline>
                 <label>{label}</label>
               </Form.Group>
-              <Form.Group inline>
+              <Form.Group inline style={{ margin: '0 0 1em', boxAlign: 'center', alignItems: 'center', display: 'flex' }}>
                 <div style={styles.jurisdictionsLabels}>
                   {this.props.jurisdictions.choosenJurisdictions.length > 0 ?
                   this.props.jurisdictions.choosenJurisdictions.map((option) => <Label key={option.code} style={{ marginTop: '5px' }}>{option.name}</Label>) :
@@ -400,7 +400,7 @@ export default class JurisdictionsForm extends Component<Props> {
                             <label style={styles.labelText}>All jurisdictions ({ this.state.options.length + ' of ' + this.state.jurisdictions.length})</label>
                             <Input ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
                             <Segment style={styles.segment}>
-                              {this.state.options.map((options) => <Label active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>)}
+                              {this.state.options.map((options) => <Label key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>)}
                             </Segment>
                           </Grid.Column>
                           <Grid.Column width={1}>
@@ -411,7 +411,7 @@ export default class JurisdictionsForm extends Component<Props> {
                             <label style={styles.labelText}>Your jurisdictions ({this.state.choosenOptions.length + ' of ' + this.state.choosenJurisdictions.length})</label>
                             <Input ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
                             <Segment style={styles.segment}>
-                              {this.state.choosenOptions.map((value) => <Label active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>)}
+                              {this.state.choosenOptions.map((value) => <Label key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>)}
                             </Segment>
                           </Grid.Column>
                         </Grid.Row>

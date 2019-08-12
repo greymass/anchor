@@ -18,7 +18,9 @@ class ProducersVotingPreview extends Component<Props> {
       submitting,
       system,
       t,
-      unregisteredProducers
+      unregisteredProducers,
+      jurisdictions,
+      connection
     } = this.props;
 
     return (
@@ -41,6 +43,9 @@ class ProducersVotingPreview extends Component<Props> {
             settings={settings}
             submitting={submitting}
             unregisteredProducers={unregisteredProducers}
+            jurisdictions={jurisdictions}
+            actions={actions}
+            connection={connection}
           />
         )}
         icon="exchange"

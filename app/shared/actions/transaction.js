@@ -1,11 +1,20 @@
 import * as types from './types';
 import eos from './helpers/eos';
+import checkForBeos from '../components/helpers/checkCurrentBlockchain';
+import serializer from './helpers/serializeBytes';
 
 export function buildTransaction(contract, action, account, data) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      connection,
+      jurisdictions
     } = getState();
+
+    let serializedArray = [];
+    if (checkForBeos(connection)) {
+      const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
+      serializedArray = serializer.serialize(temp);
+    }
     // Reset system state to clear any previous transactions
     dispatch({
       type: types.RESET_SYSTEM_STATES
@@ -15,29 +24,32 @@ export function buildTransaction(contract, action, account, data) {
       type: types.SYSTEM_TRANSACTION_BUILD_PENDING
     });
     // Build the operation to perform
-    eos(connection, true)
-      // Specify Contract
-      .contract(contract.account)
-      // Perform specified action w/ data
-      .then((c) => c[action](data, {
-        broadcast: false,
-        sign: connection.sign
+    eos(connection, true).transaction({
+      actions: [{
+        account: contract.account,
+        name: action,
+        authorization: [{
+          actor: account,
+          permission: 'active'
+        }],
+        data
+      }],
+      transaction_extensions: serializedArray
+    }, {
+      broadcast: false,
+      sign: connection.sign
+    })
+      .then((tx) => {
+        // Dispatch transaction
+        dispatch(setTransaction(JSON.stringify({
+          contract,
+          transaction: tx
+        })));
+        return dispatch({
+          payload: { tx },
+          type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
+        });
       })
-        .then((tx) => {
-          // Dispatch transaction
-          dispatch(setTransaction(JSON.stringify({
-            contract,
-            transaction: tx
-          })));
-          return dispatch({
-            payload: { tx },
-            type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
-          });
-        })
-        .catch((err) => dispatch({
-          payload: { err },
-          type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
-        })))
       .catch((err) => dispatch({
         payload: { err },
         type: types.SYSTEM_TRANSACTION_BUILD_FAILURE

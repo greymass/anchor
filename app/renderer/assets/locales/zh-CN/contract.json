@@ -14,6 +14,7 @@
   "interface_data_subheader": "The entire Smart Contract code itself is displayed below.",
   "interface_form_action_button": "Create Transaction",
   "interface_form_action_header": "Action Parameters",
+  "interface_form_action_label_jurisdictions": "Jurisdictions",
   "interface_form_action_instructions": "If you would like to submit a transaction to this Smart Contract for this action, please fill in the fields below.",
   "interface_form_action_subheader": "The selected contract action uses the following parameters.",
   "interface_form_field_options_entry": "Enter each value and press enter...",

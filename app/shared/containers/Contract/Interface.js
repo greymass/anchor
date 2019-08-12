@@ -12,6 +12,7 @@ import * as SystemStateActions from '../../actions/system/systemstate';
 import * as TableActions from '../../actions/table';
 import * as TransactionActions from '../../actions/transaction';
 import * as WalletActions from '../../actions/wallet';
+import * as Jurisdictions from '../../actions/jurisdictions';
 
 import ContractInterfaceComponent from '../../components/Contract/Interface/Component';
 
@@ -38,6 +39,8 @@ function mapStateToProps(state) {
     tables: state.tables,
     transaction: state.transaction,
     validate: state.validate,
+    connection: state.connection,
+    jurisdictions: state.jurisdictions,
     wallet: state.wallet
   };
 }
@@ -51,6 +54,7 @@ function mapDispatchToProps(dispatch) {
       ...TableActions,
       ...TransactionActions,
       ...WalletActions,
+      ...Jurisdictions
     }, dispatch)
   };
 }

@@ -32,6 +32,7 @@
   "update_stake_for_other_header": "Delegating to ",
   "update_staked_account_name": "Account Delegated To",
   "update_staked_coins": "Uuenda Panustatud Saldosid",
+  "update_staked_label_jurisdictions": "Jurisdictions",
   "update_staked_cpu_amount_label": "Set {{chainSymbol}} staked in CPU",
   "update_staked_net_amount_label": "Set {{chainSymbol}} staked in Bandwidth",
   "will_have_less_than_one_unit_staked": "You will have less than 1 {{chainSymbol}} staked to Bandwidth and/or CPU. That may prevent you from carrying out transactions when the network is busy.",

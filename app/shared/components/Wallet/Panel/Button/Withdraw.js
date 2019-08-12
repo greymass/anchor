@@ -30,7 +30,8 @@ class WalletPanelButtonWithdraw extends Component<Props> {
       balances,
       settings,
       system,
-      t
+      t,
+      jurisdictions
     } = this.props;
 
     return (
@@ -52,6 +53,7 @@ class WalletPanelButtonWithdraw extends Component<Props> {
             connection={connection}
             settings={settings}
             system={system}
+            jurisdictions={jurisdictions}
           />
         }
         icon="arrow circle up"

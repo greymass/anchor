@@ -16,6 +16,8 @@ import FormFieldMultiToken from "../../../../Global/Form/Field/MultiToken";
 import FormMessageError from "../../../../Global/Form/Message/Error";
 import EOSContract from "../../../../../utils/EOS/Contract";
 import WalletPanelFormWithdrawConfirming from "./Confirming";
+import JurisdictionsForm from '../Jurisdictions';
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
 
 class WalletPanelFormWithdraw extends Component<Props> {
   constructor(props) {
@@ -216,11 +218,26 @@ class WalletPanelFormWithdraw extends Component<Props> {
       waiting,
       waitingStarted
     } = this.state;
-    const { balances, connection, settings, system, t, onClose } = this.props;
+    const { balances, connection, settings, system, t, onClose, jurisdictions, actions } = this.props;
 
     const balance = balances[settings.account];
 
     let hasWarnings = null;
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <React.Fragment>
+          <Divider />
+          <JurisdictionsForm
+            actions={actions}
+            jurisdictions={jurisdictions}
+            label={t('withdraw_label_jurisdictions')}
+          />
+        </React.Fragment>
+      );
+    }
 
     return (
       <Form
@@ -280,6 +297,7 @@ class WalletPanelFormWithdraw extends Component<Props> {
               error={formError}
               chainSymbol={assetAccountTypes[asset]}
             />
+            {jurisdictionsForm}
             <Divider />
             <Button
               type="submit"

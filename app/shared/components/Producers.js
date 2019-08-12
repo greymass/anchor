@@ -159,7 +159,8 @@ class Producers extends Component<Props> {
       tables,
       transaction,
       validate,
-      wallet
+      wallet,
+      jurisdictions
     } = this.props;
     const {
       addProxy,
@@ -238,6 +239,8 @@ class Producers extends Component<Props> {
               submitting={submitting}
               system={system}
               unregisteredProducers={unregisteredProducers}
+              jurisdictions={jurisdictions}
+              connection={connection}
             />
           ) : ''}
 

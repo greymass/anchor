@@ -44,6 +44,7 @@
   "producer_voter_remove_all_votes_header": "Annuler tous les votes?",
   "producer_voter_remove_all_votes_subheader": "Si vous savegardez après avoir supprimé tous les votes existants, vous rejetez vos votes précédent.",
   "producer_voter_save_changes": "Submit votes for selected producers",
+  "producers_label_jurisdictions": "Jurisdictions",
   "producer_voter_total_staked": "Total Attribué",
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "Total des votes",

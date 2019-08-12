@@ -27,7 +27,8 @@ class ToolsCreateAccount extends Component<Props> {
       system,
       validate,
       wallet,
-      t
+      t,
+      jurisdictions
     } = this.props;
 
     const account = accounts[settings.account];
@@ -60,6 +61,8 @@ class ToolsCreateAccount extends Component<Props> {
                   key="CreateAccountForm"
                   system={system}
                   settings={settings}
+                  jurisdictions={jurisdictions}
+                  actions={actions}
                 />
               ) : (
                 <ToolsFormCreateAccount

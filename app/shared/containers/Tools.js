@@ -62,6 +62,7 @@ import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
 import * as AppActions from '../actions/app';
+import * as Jurisdictions from '../actions/jurisdictions';
 
 const paneMapping = [
   {
@@ -250,7 +251,9 @@ class ToolsContainer extends Component<Props> {
     const {
       allBlockExplorers,
       connection,
-      t
+      t,
+      jurisdictions,
+      actions
     } = this.props;
     return paneMapping
       .filter((pane) => {
@@ -335,6 +338,8 @@ class ToolsContainer extends Component<Props> {
                 <Tab.Pane>
                   {React.createElement(pane.element, {
                     blockExplorers: allBlockExplorers[connection.chainKey],
+                    jurisdictions: jurisdictions,
+                    actions: actions,
                     ...this.props
                   })}
                 </Tab.Pane>
@@ -418,6 +423,7 @@ function mapDispatchToProps(dispatch) {
       ...UpdateAuthActions,
       ...WalletActions,
       ...WalletsActions,
+      ...Jurisdictions
     }, dispatch)
   };
 }

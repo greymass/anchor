@@ -11,6 +11,7 @@ import ToolsPing from '../../../components/Tools/Ping';
 import * as PingActions from '../../../actions/ping';
 import * as ProducersActions from '../../../actions/producers';
 import * as SettingsActions from '../../../actions/settings';
+import * as Jurisdictions from '../../../actions/jurisdictions';
 
 class GlobalUtilsPingContainer extends Component<Props> {
   render() {
@@ -37,6 +38,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...PingActions,
       ...ProducersActions,
+      ...Jurisdictions,
       ...SettingsActions,
     }, dispatch)
   };
