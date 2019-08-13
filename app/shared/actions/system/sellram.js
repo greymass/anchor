@@ -3,6 +3,7 @@ import * as types from '../types';
 import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 import serializer from '../helpers/serializeBytes';
+import checkForBeos from '../../components/helpers/checkCurrentBlockchain';
 
 export function sellram(amount) {
   return (dispatch: () => void, getState) => {
@@ -18,7 +19,7 @@ export function sellram(amount) {
     });
 
     let serializedArray = [];
-    if (connection.chain === 'BEOS') {
+    if (checkForBeos(connection)) {
       const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
       serializedArray = serializer.serialize(temp);
     }

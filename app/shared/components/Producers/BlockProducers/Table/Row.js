@@ -7,6 +7,7 @@ import { isEqual } from 'lodash';
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
 import JurisdictionRow from './JurisdictionRow';
+import checkForBeos from '../../../helpers/checkCurrentBlockchain';
 
 class ProducersTableRow extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
@@ -51,11 +52,6 @@ class ProducersTableRow extends Component<Props> {
     const shouldDisplayInfoButton = connection.supportedContracts && connection.supportedContracts.includes('producerinfo');
     const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
     const producersJurisdiction = true;
-
-    let checkChain = false;
-    if (connection.chain === 'BEOS') {
-      checkChain = true;
-    }
 
     return (
       <Table.Row positive={isActive} key={producer.key}>
@@ -111,7 +107,7 @@ class ProducersTableRow extends Component<Props> {
               )}
             />
             )}
-          {(producersJurisdiction) && (checkChain) && (
+          {(producersJurisdiction) && (checkForBeos(connection)) && (
             <Popup
               hoverable
               position="left center"

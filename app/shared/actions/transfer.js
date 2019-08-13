@@ -3,6 +3,7 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
 import serializer from './helpers/serializeBytes';
+import checkForBeos from '../components/helpers/checkCurrentBlockchain';
 
 export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
@@ -13,7 +14,7 @@ export function transfer(from, to, quantity, memo, symbol) {
     } = getState();
 
     let serializedArray = [];
-    if (connection.chain === 'BEOS') {
+    if (checkForBeos(connection)) {
       const temp = jurisdictions.choosenJurisdictions.map(obj => obj.code);
       serializedArray = serializer.serialize(temp);
     }

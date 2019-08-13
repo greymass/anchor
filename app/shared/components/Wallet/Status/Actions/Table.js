@@ -8,6 +8,7 @@ import ActionsTableRow from './Table/Row';
 import JurisdictionHistoryRow from './Table/JurisdictionHistoryRow';
 
 import serializer from '../../../../../../app/shared/actions/helpers/serializeBytes';
+import checkForBeos from '../../../helpers/checkCurrentBlockchain';
 
 class WalletStatusActionsTable extends Component<Props> {
   constructor(props) {
@@ -159,7 +160,8 @@ class WalletStatusActionsTable extends Component<Props> {
     let baseTable = <Table.Body />;
 
     let jurisdictionsHeader = (<div />);
-    if (connection.chain === 'BEOS') {
+
+    if (checkForBeos(connection)) {
       jurisdictionsHeader = (
         <Table.HeaderCell width={2} colSpan={2} textAlign="right">
           {t('actions_table_header_three')}

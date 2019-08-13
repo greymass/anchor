@@ -12,6 +12,7 @@ import FormMessageError from '../../../../Global/Form/Message/Error';
 import WalletPanelFormRamByAmount from './ByAmount';
 import WalletPanelFormRamByCost from './ByCost';
 import JurisdictionsForm from '../Jurisdictions';
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
 
 
 type Props = {
@@ -190,7 +191,7 @@ class WalletPanelFormRamSell extends Component<Props> {
 
     let jurisdictionsForm = (<div />);
 
-    if (connection.chain === 'BEOS') {
+    if (checkForBeos(connection)) {
       jurisdictionsForm = (
         <React.Fragment>
           <Divider />

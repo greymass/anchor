@@ -22,6 +22,8 @@ import WalletStatusActionTableRowUndelegatebw from './Row/Undelegatebw';
 import WalletStatusActionTableRowUpdateauth from './Row/Updateauth';
 import WalletStatusActionTableRowVoteproducer from './Row/Voteproducer';
 
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
+
 const rowComponentsMapping = {
   buyram: WalletStatusActionTableRowBuyram,
   buyrambytes: WalletStatusActionTableRowBuyram,
@@ -95,11 +97,6 @@ class WalletStatusActionsTableRow extends Component<Props> {
       return false;
     }
 
-    let checkChain = false;
-    if (connection.chain === 'BEOS') {
-      checkChain = true;
-    }
-
     return (
       <Table.Row style={{ height: '60px' }}>
         <Table.Cell
@@ -138,7 +135,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
           )
           : false
         }
-        {(checkChain) && (<Table.Cell>
+        {(checkForBeos(connection)) && (<Table.Cell>
           <Popup
             content={t('actions_table_history_popup')}
             hoverable

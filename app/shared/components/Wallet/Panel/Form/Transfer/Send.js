@@ -12,6 +12,7 @@ import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
 import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
 import JurisdictionsForm from '../Jurisdictions';
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
 
 class WalletPanelFormTransferSend extends Component<Props> {
   constructor(props) {
@@ -208,7 +209,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     let jurisdictionsForm = (<div />);
 
-    if (connection.chain === 'BEOS') {
+    if (checkForBeos(connection)) {
       jurisdictionsForm = (
         <React.Fragment>
           <Divider />
@@ -261,6 +262,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
               waiting={waiting}
               waitingStarted={waitingStarted}
               jurisdictions={this.props.jurisdictions.choosenJurisdictions}
+              connection={connection}
             />
           ) : (
             <Segment basic clearing>
