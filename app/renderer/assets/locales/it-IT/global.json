@@ -151,6 +151,8 @@
   "global_transaction_complete_link_to": "Link to",
   "global_transaction_complete_message": "Le tue transazioni sono state inviate alla blockchain.",
   "global_transaction_complete_title": "Transazione/i inviata/e",
+  "global_transaction_complete_jurisdiction_message": "Transaction may be deferred due to jurisdiction(s) when block producer specific to selected jurisdiction(s) is not producing at that moment. It means that a whole round must be awaited (200 seconds) before the transaction will be processed.",
+  "global_transaction_complete_jurisdiction_title": "  Transaction(s) processing is deferred",
   "global_transaction_complete_warning_message": "L'invio di una transazione non garantisce che sarà confermata. Per garantire che questa transazione sia stata completata e confermata all'interno della rete, fare riferimento all'ID transazione sopra su un block explorer per assicurarsi che sia entrata nell'ultimo blocco irreversibile. ",
   "global_transaction_complete_warning_title": "Le transazioni non sono confermate",
   "global_transaction_full_details_content": "The full data from this transaction is listed below.",

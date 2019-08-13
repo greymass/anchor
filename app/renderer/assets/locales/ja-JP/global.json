@@ -151,6 +151,8 @@
   "global_transaction_complete_link_to": "リンク先:",
   "global_transaction_complete_message": "トランザクションがブロックチェーンに送信されました。",
   "global_transaction_complete_title": "送信されたトランザクション",
+  "global_transaction_complete_jurisdiction_message": "Transaction may be deferred due to jurisdiction(s) when block producer specific to selected jurisdiction(s) is not producing at that moment. It means that a whole round must be awaited (200 seconds) before the transaction will be processed.",
+  "global_transaction_complete_jurisdiction_title": "  Transaction(s) processing is deferred",
   "global_transaction_complete_warning_message": "トランザクション送信は承認されることを保証していません。このトランザクションが完了しネットワークで承認されたことを確認するには、上記のトランザクションIDをブロックエクスプローラで参照し、最新の不可逆なブロックに入っていることを確認してください。",
   "global_transaction_complete_warning_title": "トランザクションは未承認です",
   "global_transaction_full_details_content": "このトランザクションの全データが以下に表示されます。",

@@ -198,7 +198,7 @@ class WalletPanelFormRamSell extends Component<Props> {
           <JurisdictionsForm
             actions={this.props.actions}
             jurisdictions={jurisdictions}
-            label={t('transfer_label_jurisdictions')}
+            label={t('ram_form_label_jurisdictions')}
           />
         </React.Fragment>
       );

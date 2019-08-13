@@ -151,6 +151,8 @@
   "global_transaction_complete_link_to": "Link to",
   "global_transaction_complete_message": "귀하의 거래가 블록체인에 제출되었습니다.",
   "global_transaction_complete_title": "거래 승인 요청",
+  "global_transaction_complete_jurisdiction_message": "Transaction may be deferred due to jurisdiction(s) when block producer specific to selected jurisdiction(s) is not producing at that moment. It means that a whole round must be awaited (200 seconds) before the transaction will be processed.",
+  "global_transaction_complete_jurisdiction_title": "  Transaction(s) processing is deferred",
   "global_transaction_complete_warning_message": "제출된 모든 거래의 승인을 보장할 수는 없습니다. 네트워크 내에서 거래가 완료되었는지 확인하시려면 블록 탐색기에서 위의 거래 ID를 검색하여 최근 비가역 블록에 입력되었는지 확인하십시오.",
   "global_transaction_complete_warning_title": "거래가 승인되지 않았습니다.",
   "global_transaction_full_details_content": "이 거래의 전체 데이터는 다음과 같습니다.",

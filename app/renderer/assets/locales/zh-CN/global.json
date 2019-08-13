@@ -151,6 +151,8 @@
   "global_transaction_complete_link_to": "Link to",
   "global_transaction_complete_message": "您的交易已提交至区块链.",
   "global_transaction_complete_title": "提交的交易",
+  "global_transaction_complete_jurisdiction_message": "Transaction may be deferred due to jurisdiction(s) when block producer specific to selected jurisdiction(s) is not producing at that moment. It means that a whole round must be awaited (200 seconds) before the transaction will be processed.",
+  "global_transaction_complete_jurisdiction_title": "  Transaction(s) processing is deferred",
   "global_transaction_complete_warning_message": "提交交易并不保证会被确认，为了确保交易在网络中完成并确认，请在资源管理器中引用上述交易ID以确保它进入最后一个不可逆转块.",
   "global_transaction_complete_warning_title": "交易未确认",
   "global_transaction_full_details_content": "The full data from this transaction is listed below.",

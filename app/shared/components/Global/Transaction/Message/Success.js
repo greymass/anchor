@@ -92,7 +92,7 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
           </Segment>
           <Message
             icon
-            size="large"
+            size="small"
             warning
           >
             <Icon
@@ -101,6 +101,19 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
             <Message.Content>
               <Message.Header>{t('global_transaction_complete_warning_title')}</Message.Header>
               {t('global_transaction_complete_warning_message')}
+            </Message.Content>
+          </Message>
+          <Message
+            icon
+            size="small"
+            warning
+          >
+            <Icon
+              name="info circle"
+            />
+            <Message.Content>
+              <Message.Header>{t('global_transaction_complete_jurisdiction_title')}</Message.Header>
+              {t('global_transaction_complete_jurisdiction_message')}
             </Message.Content>
           </Message>
         </Modal.Content>

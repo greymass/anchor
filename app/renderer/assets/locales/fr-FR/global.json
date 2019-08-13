@@ -151,6 +151,8 @@
   "global_transaction_complete_link_to": "Link to",
   "global_transaction_complete_message": "Votre transaction a été soumise à la Blockchain.",
   "global_transaction_complete_title": "Transaction Soumise",
+  "global_transaction_complete_jurisdiction_message": "Transaction may be deferred due to jurisdiction(s) when block producer specific to selected jurisdiction(s) is not producing at that moment. It means that a whole round must be awaited (200 seconds) before the transaction will be processed.",
+  "global_transaction_complete_jurisdiction_title": "  Transaction(s) processing is deferred",
   "global_transaction_complete_warning_message": "La soumission d'une transaction ne garantit pas qu'elle sera confirmée. Pour vous assurer que cette transaction a été complétée et confirmée dans le réseau, veuillez faire référence à l'identifiant de transaction ci-dessus.",
   "global_transaction_complete_warning_title": "La transaction n'est pas confirmée.",
   "global_transaction_full_details_content": "The full data from this transaction is listed below.",
