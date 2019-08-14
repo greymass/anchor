@@ -2,8 +2,10 @@ import * as types from '../actions/types';
 
 const initialState = {
   loading: false,
+  onlyActive: false,
   jurisdictions: [],
-  choosenJurisdictions: []
+  choosenJurisdictions: [],
+  activeJurisdictions: []
 };
 
 export default function jurisdictions(state = initialState, action) {
@@ -112,6 +114,18 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
+      };
+    }
+    case types.GET_ACTIVE_JURISDICTION_SUCCESS: {
+      return {
+        ...state,
+        activeJurisdictions: action.payload.jurisdictions
+      };
+    }
+    case types.SAVE_ONLY_ACTIVE: {
+      return {
+        ...state,
+        onlyActive: !state.onlyActive
       };
     }
     default: {

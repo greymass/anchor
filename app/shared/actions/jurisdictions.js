@@ -53,6 +53,42 @@ export function getJurisdictions() {
   };
 }
 
+export function getActiveJurisdictions() {
+  return (dispatch, getState) => {
+    dispatch({
+      type: types.GET_ACTIVE_JURISDICTION_PENDING
+    });
+    const {
+      connection
+    } = getState();
+
+    const url = `${connection.httpEndpoint}/v1/jurisdiction/get_active_jurisdictions`;
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({}),
+      headers
+    }).then(result => result.json())
+      .then((results) => {
+        console.log(results);
+        return dispatch({
+          type: types.GET_ACTIVE_JURISDICTION_SUCCESS,
+          payload: {
+            jurisdictions: results.jurisdictions
+          }
+        });
+      }).catch((err) => {
+        console.log('error', err);
+        dispatch({
+          type: types.GET_ACTIVE_JURISDICTION_FAILURE,
+          payload: err
+        });
+      });
+  };
+}
+
 export function getProducerJurisdiction(producer) {
   return (dispatch, getState) => {
     dispatch({
@@ -178,10 +214,20 @@ export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
   };
 }
 
+export function saveOnlyActive() {
+  return (dispatch) => {
+    dispatch({
+      type: types.SAVE_ONLY_ACTIVE
+    });
+  };
+}
+
 export default {
   saveChoosenJurisdictions,
+  saveOnlyActive,
   getJurisdictions,
   getProducerJurisdiction,
   getAllProducerJurisdictionForBlock,
-  getAllTransactionJurisdictions
+  getAllTransactionJurisdictions,
+  getActiveJurisdictions
 };

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
-import { Modal, Label, Form, Button, Segment, Grid, Input, Divider, Icon } from 'semantic-ui-react';
+import { Modal, Label, Form, Button, Segment, Grid, Input, Checkbox, Icon } from 'semantic-ui-react';
 
 export default class JurisdictionsForm extends Component<Props> {
   constructor() {
@@ -21,7 +21,9 @@ export default class JurisdictionsForm extends Component<Props> {
     choosenJurisdictions: [],
     clickedAll: [],
     clickedYours: [],
-    shiftClicked: false
+    shiftClicked: false,
+    tempChoosen: [],
+    tempJurisdictions: []
   };
 
   componentDidMount() {
@@ -31,10 +33,18 @@ export default class JurisdictionsForm extends Component<Props> {
     this.setUsersJurisdictionsDefault();
   }
 
-  setUsersJurisdictionsDefault() {
-    this.setState({
-      choosenOptions: this.props.jurisdictions.choosenJurisdictions,
-    });
+  setUsersJurisdictionsDefault(data?) {
+    if (data) {
+      this.setState({
+        choosenOptions: data.choosenJurisdictions,
+        choosenJurisdictions: data.choosenJurisdictions
+      });
+    } else {
+      this.setState({
+        choosenOptions: this.props.jurisdictions.choosenJurisdictions,
+        choosenJurisdictions: this.props.jurisdictions.choosenJurisdictions
+      });
+    }
     return this.props.jurisdictions.choosenJurisdictions;
   }
 
@@ -85,14 +95,13 @@ export default class JurisdictionsForm extends Component<Props> {
       choosenOptions: choosen,
       choosenJurisdictions: choosen,
       options: jurisdictions,
-      allSearch: '',
-      yoursSearch: '',
       showModal: true,
-      clickedAll: [],
-      clickedYours: []
     });
     this.makeOptions(this.props.jurisdictions);
     e.preventDefault();
+    if (this.props.jurisdictions.onlyActive) {
+      this.handleOnlyActive(false);
+    }
   }
 
   makeAllInactive(arr) {
@@ -266,6 +275,13 @@ export default class JurisdictionsForm extends Component<Props> {
       let temp = this.state.jurisdictions.filter((el) => {
         return el.active === true;
       });
+      if (this.props.jurisdictions.onlyActive) {
+        const t = this.state.tempChoosen.concat(temp);
+        t.sort((a, b) => a.code - b.code);
+        this.setState({
+          tempChoosen: t
+        });
+      }
       temp = temp.concat(this.state.choosenJurisdictions);
       temp.map((val) => {
         val.active = false;
@@ -279,6 +295,18 @@ export default class JurisdictionsForm extends Component<Props> {
           newJur.push(val);
         }
       });
+      if (this.props.jurisdictions.onlyActive) {
+        const tArray = [];
+        this.state.tempJurisdictions.map((val) => {
+          if (this.state.clickedAll.includes(val) === false) {
+            tArray.push(val);
+          }
+        });
+        tArray.sort((a, b) => a.code - b.code);
+        this.setState({
+          tempJurisdictions: tArray
+        });
+      }
 
       newJur.sort((a, b) => a.code - b.code);
       this.setState({
@@ -297,6 +325,13 @@ export default class JurisdictionsForm extends Component<Props> {
       let temp = this.state.choosenJurisdictions.filter((el) => {
         return el.active === true;
       });
+      if (this.props.jurisdictions.onlyActive) {
+        const t = this.state.tempJurisdictions.concat(temp);
+        t.sort((a, b) => a.code - b.code);
+        this.setState({
+          tempJurisdictions: t
+        });
+      }
       temp = temp.concat(this.state.jurisdictions);
       temp.map((val) => {
         val.active = false;
@@ -311,6 +346,18 @@ export default class JurisdictionsForm extends Component<Props> {
         }
         return val;
       });
+      if (this.props.jurisdictions.onlyActive) {
+        const tArray = [];
+        this.state.tempChoosen.map((val) => {
+          if (this.state.clickedYours.includes(val) === false) {
+            tArray.push(val);
+          }
+        });
+        tArray.sort((a, b) => a.code - b.code);
+        this.setState({
+          tempChoosen: tArray
+        });
+      }
 
       newJur.sort((a, b) => a.code - b.code);
       this.setState({
@@ -334,6 +381,55 @@ export default class JurisdictionsForm extends Component<Props> {
       choosenOptions: this.state.choosenJurisdictions,
       showModal: false
     });
+  }
+
+  handleOnlyActive(change = true) {
+    if (this.props.jurisdictions.onlyActive && change === true) {
+      this.props.actions.saveOnlyActive();
+      this.setUsersJurisdictionsDefault({
+        choosenJurisdictions: this.state.tempChoosen,
+        jurisdictions: this.state.tempJurisdictions
+      });
+      this.setState({
+        allSearch: '',
+        yoursSearch: '',
+        clickedAll: [],
+        clickedYours: []
+      });
+      this.makeOptions(this.props.jurisdictions, this.state.tempChoosen);
+      this.refSearchAll.current.inputRef.value = '';
+      this.refSearchYours.current.inputRef.value = '';
+    } else if (this.props.jurisdictions.onlyActive && change === false) {
+      this.props.actions.getActiveJurisdictions();
+      this.filterOptions(this.props.jurisdictions.activeJurisdictions);
+    } else {
+      if (change === true) {
+        this.props.actions.getActiveJurisdictions();
+        this.props.actions.saveOnlyActive();
+        this.filterOptions(this.props.jurisdictions.activeJurisdictions);
+      }
+    }
+  }
+
+  filterOptions(arr) {
+    this.setState({
+      tempChoosen: this.state.choosenJurisdictions,
+      tempJurisdictions: this.state.jurisdictions
+    });
+    const newOptions = this.state.jurisdictions.filter((a) => arr.includes(a.code));
+    const newChoosenOptions = this.state.choosenJurisdictions.filter((a) => arr.includes(a.code));
+    this.setState({
+      options: newOptions,
+      jurisdictions: newOptions,
+      choosenOptions: newChoosenOptions,
+      choosenJurisdictions: newChoosenOptions,
+      allSearch: '',
+      yoursSearch: '',
+      clickedAll: [],
+      clickedYours: []
+    });
+    this.refSearchAll.current.inputRef.value = '';
+    this.refSearchYours.current.inputRef.value = '';
   }
 
   render() {
@@ -389,7 +485,6 @@ export default class JurisdictionsForm extends Component<Props> {
                     >
                       Edit
                     </Button>}
-                  onOpen={() => this.makeOptions(this.props.jurisdictions)}
                 >
                   <Modal.Header>Select jurisdictions</Modal.Header>
                   <Modal.Content scrolling>
@@ -415,10 +510,10 @@ export default class JurisdictionsForm extends Component<Props> {
                             </Segment>
                           </Grid.Column>
                         </Grid.Row>
+                        <Checkbox checked={this.props.jurisdictions.onlyActive} onClick={() => this.handleOnlyActive()} label="Only active jurisdictions" />
                       </Grid>
                     </Modal.Description>
                   </Modal.Content>
-                  <Divider />
                   <Modal.Actions>
                     <Button
                       content={t('confirm')}
