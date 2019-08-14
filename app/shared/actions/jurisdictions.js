@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import * as types from './types';
 
 export function getJurisdictions() {
@@ -11,46 +11,45 @@ export function getJurisdictions() {
     } = getState();
 
     const url = `${connection.httpEndpoint}/v1/jurisdiction/get_all_jurisdictions`;
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({}),
-      headers
-    }).then(result => result.json())
-      .then((results) => {
-        return dispatch({
-          type: types.GET_JURISDICTION_ALL_SUCCESS,
-          payload: {
-            jurisdictions: results.jurisdictions
-            // jurisdictions: [
-            //   { code: 0, name: 'poland', description: 'EAST EUROPE' },
-            //   { code: 2, name: 'germany', description: 'EAST EUROPE' },
-            //   { code: 3, name: 'china', description: 'EAST EUROPE' },
-            //   { code: 10, name: 'singapur', description: 'YO!' },
-            //   { code: 13, name: 'Vatican', description: 'Waka waka' },
-            //   { code: 15, name: 'notchina', description: 'who cares' },
-            //   { code: 16, name: 'bytopia', description: 'outerplane' },
-            //   { code: 17, name: 'sigil', description: 'cynosure' },
-            //   { code: 18, name: 'elysium', description: 'outerplane' },
-            //   { code: 20, name: 'cityofbrass', description: 'plane of fire' },
-            //   { code: 22, name: 'baldurs gate', description: 'faerun toril' },
-            //   { code: 23, name: 'galactic empire', description: 'the galaxy duh' },
-            //   { code: 30, name: 'USA', description: 'Wyoming!' },
-            //   { code: 40, name: 'Canada', description: 'Northern America' },
-            //   { code: 41, name: 'Russia', description: 'EAST EUROPE' },
-            //   { code: 50, name: 'Slovakia', description: 'EAST EUROPE' },
-            // ]
-          }
-        });
-      }).catch((err) => {
-        console.log('error', err);
-        dispatch({
-          type: types.GET_JURISDICTION_ALL_FAILURE,
-          payload: err
-        });
+
+    axios({
+      method: 'post',
+      url: url,
+      data: {},
+      config: { headers: headers }
+    }).then((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_ALL_SUCCESS,
+        payload: {
+          jurisdictions: response.data.jurisdictions
+          // jurisdictions: [
+          //   { code: 0, name: 'poland', description: 'EAST EUROPE' },
+          //   { code: 2, name: 'germany', description: 'EAST EUROPE' },
+          //   { code: 3, name: 'china', description: 'EAST EUROPE' },
+          //   { code: 10, name: 'singapur', description: 'YO!' },
+          //   { code: 13, name: 'Vatican', description: 'Waka waka' },
+          //   { code: 15, name: 'notchina', description: 'who cares' },
+          //   { code: 16, name: 'bytopia', description: 'outerplane' },
+          //   { code: 17, name: 'sigil', description: 'cynosure' },
+          //   { code: 18, name: 'elysium', description: 'outerplane' },
+          //   { code: 20, name: 'cityofbrass', description: 'plane of fire' },
+          //   { code: 22, name: 'baldurs gate', description: 'faerun toril' },
+          //   { code: 23, name: 'galactic empire', description: 'the galaxy duh' },
+          //   { code: 30, name: 'USA', description: 'Wyoming!' },
+          //   { code: 40, name: 'Canada', description: 'Northern America' },
+          //   { code: 41, name: 'Russia', description: 'EAST EUROPE' },
+          //   { code: 50, name: 'Slovakia', description: 'EAST EUROPE' },
+          // ]
+        }
       });
+    }).catch((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_ALL_FAILURE,
+        payload: response
+      });
+    });
   };
 }
 
@@ -66,32 +65,31 @@ export function getProducerJurisdiction(producer) {
     } = getState();
 
     const url = `${connection.httpEndpoint}/v1/jurisdiction/get_producer_jurisdiction`;
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers
-    }).then(result => result.json())
-      .then((results) => {
-        return dispatch({
-          type: types.GET_JURISDICTION_PRODUCER_SUCCESS,
-          payload: {
-            producer: producer,
-            producer_jurisdictions: results.producer_jurisdictions[0]
-              ? results.producer_jurisdictions[0].jurisdictions
-              : []
-            // producer_jurisdictions: [0, 40, 41, 50, 15, 18, 23]
-          }
-        });
-      }).catch((err) => {
-        console.log('error', err);
-        dispatch({
-          type: types.GET_JURISDICTION_PRODUCER_FAILURE,
-          payload: err
-        });
+
+    axios({
+      method: 'post',
+      url: url,
+      data: params,
+      config: { headers: headers }
+    }).then((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_PRODUCER_SUCCESS,
+        payload: {
+          producer: producer,
+          producer_jurisdictions: response.data.producer_jurisdictions[0]
+            ? response.data.producer_jurisdictions[0].jurisdictions
+            : []
+          // producer_jurisdictions: [0, 40, 41, 50, 15, 18, 23]
+        }
       });
+    }).catch((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_PRODUCER_FAILURE,
+        payload: response
+      });
+    });
   };
 }
 
@@ -118,29 +116,28 @@ export function getAllProducerJurisdictionForBlock(blockNumber, sequence) {
     } = getState();
 
     const url = `${connection.httpEndpoint}/v1/jurisdiction_history/get_all_producer_jurisdiction_for_block`;
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers
-    }).then(result => result.json())
-      .then((results) => {
-        return dispatch({
-          type: types.GET_JURISDICTION_ALL_FOR_BLOCK_SUCCESS,
-          payload: {
-            sequenceBlock: sequence,
-            blockJurisdictions: results
-          }
-        });
-      }).catch((err) => {
-        console.log('error', err);
-        dispatch({
-          type: types.GET_JURISDICTION_ALL_FOR_BLOCK_FAILURE,
-          payload: err
-        });
+
+    axios({
+      method: 'post',
+      url: url,
+      data: params,
+      config: { headers: headers }
+    }).then((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_ALL_FOR_BLOCK_SUCCESS,
+        payload: {
+          sequenceBlock: sequence,
+          blockJurisdictions: response.data
+        }
       });
+    }).catch((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_ALL_FOR_BLOCK_FAILURE,
+        payload: response
+      });
+    });
   };
 }
 
@@ -159,27 +156,25 @@ export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers
-    }).then(result => result.json())
-      .then((results) => {
-        return dispatch({
-          type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_SUCCESS,
-          payload: {
-            sequenceTransaction: sequence,
-            transactionExtensions: results.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : results.transactions[0].trx.transaction.transaction_extensions[0].data
-            // transactionExtensions: results
-          }
-        });
-      }).catch((err) => {
-        console.log('error', err);
-        dispatch({
-          type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_FAILURE,
-          payload: err
-        });
+    axios({
+      method: 'post',
+      url: url,
+      data: params,
+      config: { headers: headers }
+    }).then((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_SUCCESS,
+        payload: {
+          sequenceTransaction: sequence,
+          transactionExtensions: response.data.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : response.data.transactions[0].trx.transaction.transaction_extensions[0].data
+        }
       });
+    }).catch((response) => {
+      return dispatch({
+        type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_FAILURE,
+        payload: response
+      });
+    });
   };
 }
 
