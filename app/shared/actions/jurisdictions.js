@@ -77,7 +77,6 @@ export function getActiveJurisdictions() {
         headers
       }).then(result => result.json())
         .then((results) => {
-          console.log(results);
           return dispatch({
             type: types.GET_ACTIVE_JURISDICTION_SUCCESS,
             payload: {

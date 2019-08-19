@@ -85,6 +85,7 @@ export default class JurisdictionsForm extends Component<Props> {
   }
 
   handleEditClick(e) {
+    this.props.actions.getJurisdictions();
     let choosen = [];
     let jurisdictions = [];
     if (this.props.jurisdictions.jurisdictions && this.props.jurisdictions.choosenJurisdictions) {
@@ -319,8 +320,10 @@ export default class JurisdictionsForm extends Component<Props> {
         allSearch: '',
         yoursSearch: ''
       });
-      this.refSearchAll.current.inputRef.value = '';
-      this.refSearchYours.current.inputRef.value = '';
+    if (this.refSearchAll.current && this.refSearchYours.current) {
+        this.refSearchAll.current.inputRef.value = '';
+        this.refSearchYours.current.inputRef.value = '';
+    }
     } else {
       let temp = this.state.choosenJurisdictions.filter((el) => {
         return el.active === true;
@@ -370,8 +373,10 @@ export default class JurisdictionsForm extends Component<Props> {
         allSearch: '',
         yoursSearch: ''
       });
-      this.refSearchYours.current.inputRef.value = '';
-      this.refSearchAll.current.inputRef.value = '';
+      if (this.refSearchAll.current && this.refSearchYours.current) {
+        this.refSearchYours.current.inputRef.value = '';
+        this.refSearchAll.current.inputRef.value = '';
+      }
     }
   }
 
@@ -397,27 +402,32 @@ export default class JurisdictionsForm extends Component<Props> {
         clickedYours: []
       });
       this.makeOptions(this.props.jurisdictions, this.state.tempChoosen);
-      this.refSearchAll.current.inputRef.value = '';
-      this.refSearchYours.current.inputRef.value = '';
+      if (this.refSearchAll.current && this.refSearchYours.current) {
+        this.refSearchAll.current.inputRef.value = '';
+        this.refSearchYours.current.inputRef.value = '';
+      }
     } else if (this.props.jurisdictions.onlyActive && change === false) {
-      this.props.actions.getActiveJurisdictions();
-      this.filterOptions(this.props.jurisdictions.activeJurisdictions);
+      this.filterOptions();
     } else {
       if (change === true) {
-        this.props.actions.getActiveJurisdictions();
         this.props.actions.saveOnlyActive();
-        this.filterOptions(this.props.jurisdictions.activeJurisdictions);
+        this.filterOptions();
       }
     }
   }
 
-  filterOptions(arr) {
+  filterOptions() {
+    this.props.actions.getActiveJurisdictions();
     this.setState({
       tempChoosen: this.state.choosenJurisdictions,
       tempJurisdictions: this.state.jurisdictions
     });
-    const newOptions = this.state.jurisdictions.filter((a) => arr.includes(a.code));
-    const newChoosenOptions = this.state.choosenJurisdictions.filter((a) => arr.includes(a.code));
+    let newOptions = [];
+    let newChoosenOptions = [];
+    if (this.props.jurisdictions.activeJurisdictions) {
+      newOptions = this.state.jurisdictions.filter((a) => this.props.jurisdictions.activeJurisdictions.includes(a.code));
+      newChoosenOptions = this.state.choosenJurisdictions.filter((a) => this.props.jurisdictions.activeJurisdictions.includes(a.code));
+    }
     this.setState({
       options: newOptions,
       jurisdictions: newOptions,
@@ -428,8 +438,10 @@ export default class JurisdictionsForm extends Component<Props> {
       clickedAll: [],
       clickedYours: []
     });
-    this.refSearchAll.current.inputRef.value = '';
-    this.refSearchYours.current.inputRef.value = '';
+    if (this.refSearchAll.current && this.refSearchYours.current) {
+      this.refSearchAll.current.inputRef.value = '';
+      this.refSearchYours.current.inputRef.value = '';
+    }
   }
 
   render() {
@@ -469,9 +481,9 @@ export default class JurisdictionsForm extends Component<Props> {
               </Form.Group>
               <Form.Group inline style={{ margin: '0 0 1em', boxAlign: 'center', alignItems: 'center', display: 'flex' }}>
                 <div style={styles.jurisdictionsLabels}>
-                  {this.props.jurisdictions.choosenJurisdictions.length > 0 ?
+                  {this.props.jurisdictions.loading === false ? this.props.jurisdictions.fetchingError === false ? (this.props.jurisdictions.choosenJurisdictions.length > 0 ?
                   this.props.jurisdictions.choosenJurisdictions.map((option) => <Label key={option.code} style={{ marginTop: '5px' }}>{option.name}</Label>) :
-                  'No jurisdictions.'}
+                  'No jurisdictions.') : 'Error fetching data' : 'Loading...'}
                 </div>
                 <Modal
                   // centered={false}
@@ -482,6 +494,7 @@ export default class JurisdictionsForm extends Component<Props> {
                       size="small"
                       onClick={(e) => this.handleEditClick(e)}
                       primary
+                      disabled={this.props.jurisdictions.fetchingError || this.props.jurisdictions.loading}
                     >
                       Edit
                     </Button>}
@@ -493,9 +506,9 @@ export default class JurisdictionsForm extends Component<Props> {
                         <Grid.Row stretched verticalAlign="middle">
                           <Grid.Column width={7}>
                             <label style={styles.labelText}>All jurisdictions ({ this.state.options.length + ' of ' + this.state.jurisdictions.length})</label>
-                            <Input ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
+                            <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
                             <Segment style={styles.segment}>
-                              {this.state.options.map((options) => <Label key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>)}
+                              {this.props.jurisdictions.fetchingError === false ? this.state.options.map((options) => <Label key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>) : 'Error fetching data'}
                             </Segment>
                           </Grid.Column>
                           <Grid.Column width={1}>
@@ -504,13 +517,13 @@ export default class JurisdictionsForm extends Component<Props> {
                           </Grid.Column>
                           <Grid.Column width={7}>
                             <label style={styles.labelText}>Your jurisdictions ({this.state.choosenOptions.length + ' of ' + this.state.choosenJurisdictions.length})</label>
-                            <Input ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
+                            <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
                             <Segment style={styles.segment}>
-                              {this.state.choosenOptions.map((value) => <Label key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>)}
+                              {this.props.jurisdictions.fetchingError === false ? this.state.choosenOptions.map((value) => <Label key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>) : 'Error fetching data'}
                             </Segment>
                           </Grid.Column>
                         </Grid.Row>
-                        <Checkbox checked={this.props.jurisdictions.onlyActive} onClick={() => this.handleOnlyActive()} label="Only active jurisdictions" />
+                        <Checkbox disabled={this.props.jurisdictions.fetchingError} checked={this.props.jurisdictions.onlyActive} onClick={() => this.handleOnlyActive()} label="Only active jurisdictions" />
                       </Grid>
                     </Modal.Description>
                   </Modal.Content>

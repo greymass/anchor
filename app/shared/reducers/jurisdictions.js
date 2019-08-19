@@ -3,6 +3,7 @@ import * as types from '../actions/types';
 const initialState = {
   loading: false,
   onlyActive: false,
+  fetchingError: false,
   jurisdictions: [],
   choosenJurisdictions: [],
   activeJurisdictions: []
@@ -24,6 +25,7 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: true,
+        fetchingError: false
       };
     }
     case types.GET_JURISDICTION_ALL_SUCCESS: {
@@ -31,7 +33,8 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         loading: false,
         [requestName]: requestState,
-        jurisdictions: action.payload.jurisdictions
+        jurisdictions: action.payload.jurisdictions,
+        fetchingError: false
       };
     }
     case types.GET_JURISDICTION_ALL_FAILURE: {
@@ -39,6 +42,7 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
+        fetchingError: true
       };
     }
     case types.GET_JURISDICTION_PRODUCER_PENDING: {
@@ -119,13 +123,20 @@ export default function jurisdictions(state = initialState, action) {
     case types.GET_ACTIVE_JURISDICTION_SUCCESS: {
       return {
         ...state,
-        activeJurisdictions: action.payload.jurisdictions
+        activeJurisdictions: action.payload.jurisdictions,
+        fetchingError: false
       };
     }
     case types.SAVE_ONLY_ACTIVE: {
       return {
         ...state,
         onlyActive: !state.onlyActive
+      };
+    }
+    case types.GET_ACTIVE_JURISDICTION_FAILURE: {
+      return {
+        ...state,
+        fetchingError: true
       };
     }
     default: {
