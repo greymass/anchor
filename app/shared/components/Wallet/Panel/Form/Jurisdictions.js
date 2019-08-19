@@ -392,8 +392,8 @@ export default class JurisdictionsForm extends Component<Props> {
     if (this.props.jurisdictions.onlyActive && change === true) {
       this.props.actions.saveOnlyActive();
       this.setUsersJurisdictionsDefault({
-        choosenJurisdictions: this.state.tempChoosen,
-        jurisdictions: this.state.tempJurisdictions
+        choosenJurisdictions: this.makeAllInactive(this.state.tempChoosen),
+        jurisdictions: this.makeAllInactive(this.state.tempJurisdictions)
       });
       this.setState({
         allSearch: '',
