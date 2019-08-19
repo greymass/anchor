@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import debounce from 'lodash/debounce';
 
-import { Segment, Form, Header, Button, Icon, Table } from 'semantic-ui-react';
+import { Segment, Form, Header, Button, Icon, Table, Divider } from 'semantic-ui-react';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldKeyPublic from '../../Global/Form/Field/Key/Public';
@@ -235,6 +235,7 @@ class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
                 />
                 {accountTakenError}
                 {accountValidationError}
+                <Divider />
                 <JurisdictionsForm
                   actions={actions}
                   jurisdictions={jurisdictions}
