@@ -300,6 +300,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
               priceOfRam={priceOfRam}
               ramQuota={ramQuota}
               settings={settings}
+              jurisdictions={jurisdictions.choosenJurisdictions}
             />
           ) : ''}
       </Segment>

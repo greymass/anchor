@@ -9,6 +9,7 @@ import {
   Table
 } from "semantic-ui-react";
 import { translate } from "react-i18next";
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
 
 class WalletPanelFormWithdrawConfirming extends Component<Props> {
   onConfirm = e => {
@@ -30,13 +31,33 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
       t,
       waiting,
       waitingStarted,
-      withdrawAssetType
+      withdrawAssetType,
+      jurisdictions,
+      connection
     } = this.props;
 
     const contract = balances.__contracts[asset.toUpperCase()].contract;
 
     const secondsElapsed = new Date() - waitingStarted;
     const secondsRemaining = parseInt((3000 - secondsElapsed) / 1000, 10) + 1;
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <Table.Row>
+          <Table.Cell>{t('widthdraw_confirming_label_jurisdictions')}</Table.Cell>
+          <Table.Cell>
+            <div className="confirm-scroll">
+              {jurisdictions.choosenJurisdictions.map((jurisdiction) => (
+                <span className="confirm-wrapper ">{jurisdiction.value}<br /></span>
+              ))}
+            </div>
+          </Table.Cell>
+        </Table.Row>
+      );
+    }
+
     return (
       <Segment basic clearing vertical>
         <Header size="small">
@@ -66,6 +87,7 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
                 {quantity} ({contract})
               </Table.Cell>
             </Table.Row>
+            {jurisdictionsForm}
           </Table.Body>
         </Table>
         <Divider />

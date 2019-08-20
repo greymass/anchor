@@ -371,6 +371,7 @@ class WalletPanelFormStake extends Component<Props> {
               onBack={this.onBack}
               onConfirm={this.onConfirm}
               settings={settings}
+              jurisdictions={jurisdictions.choosenJurisdictions}
             />
           ) : ''}
       </Segment>

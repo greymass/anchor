@@ -17,6 +17,7 @@
   "net_that_is_staked": "Staked in Bandwidth",
   "stake_account_name": "Account Name",
   "stake_button_text": "Update Staked {{chainSymbol}}",
+  "stake_label_jurisdictions": "Jurisdictions",
   "stake_confirming_header_one": "About to change delegation of: ",
   "stake_cpu_amount": "CPU Amount",
   "stake_modal_main_title": "Update Staked Amounts",

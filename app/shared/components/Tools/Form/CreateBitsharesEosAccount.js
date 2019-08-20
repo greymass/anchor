@@ -9,6 +9,7 @@ import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
 import GlobalFormFieldKeyPublic from '../../Global/Form/Field/Key/Public';
 
 import JurisdictionsForm from '../../Wallet/Panel/Form/Jurisdictions';
+import checkForBeos from '../../helpers/checkCurrentBlockchain';
 
 class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
   constructor(props) {
@@ -198,6 +199,23 @@ class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
       submitDisabled = true;
     }
 
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <Table.Row>
+          <Table.Cell>{t('tools_form_create_account_label_jurisdictions')}</Table.Cell>
+          <Table.Cell>
+            <div className="confirm-scroll">
+              {jurisdictions.choosenJurisdictions.map((jurisdiction) => (
+                <span className="confirm-wrapper ">{jurisdiction.value}<br /></span>
+              ))}
+            </div>
+          </Table.Cell>
+        </Table.Row>
+      );
+    }
+
     return (
       <Segment
         loading={system.CREATEACCOUNT === 'PENDING'}
@@ -295,6 +313,7 @@ class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
                       {accountName}
                     </Table.Cell>
                   </Table.Row>
+                  {jurisdictionsForm}
                 </Table.Body>
               </Table>
               <Button

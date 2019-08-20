@@ -5,6 +5,7 @@ import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-rea
 
 import WalletMessageContractBuyRamBytes from '../../../../Global/Message/Contract/BuyRamBytes';
 import GlobalDataBytes from '../../../../Global/Data/Bytes';
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
 
 class WalletPanelFormRamBuyConfirming extends Component<Props> {
   onConfirm = () => {
@@ -26,6 +27,21 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
       settings,
       t
     } = this.props;
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <div>
+          <label style={{ marginBottom: '5px', fontWeight: 'bold' }}>{t('ram_confirming_label_jurisdictions')}</label>
+          <div className="confirm-scroll">
+            {this.props.jurisdictions.map((jurisdiction) => (
+              <span className="confirm-wrapper ">{jurisdiction.value}<br /></span>
+            ))}
+          </div>
+        </div>
+      );
+    }
 
     return (
       <Segment basic clearing padding="true">
@@ -61,11 +77,13 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
             {t('ram_confirming_message_in_ram_left')}
           </Header>
         </Segment>
+        <Divider />
+        {jurisdictionsForm}
+        <Divider />
 
         <Message warning>
           {t('ram_confirming_message_price_includes_chain_fee', { chainSymbol: connection.chainSymbol })}
         </Message>
-
         <Divider />
 
 

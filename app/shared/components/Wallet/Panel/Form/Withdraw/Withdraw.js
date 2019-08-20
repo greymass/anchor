@@ -257,6 +257,8 @@ class WalletPanelFormWithdraw extends Component<Props> {
             quantity={quantity}
             waiting={waiting}
             waitingStarted={waitingStarted}
+            jurisdictions={jurisdictions}
+            connection={connection}
           />
         ) : (
           <Segment basic clearing>

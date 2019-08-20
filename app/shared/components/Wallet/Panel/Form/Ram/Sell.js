@@ -288,6 +288,7 @@ class WalletPanelFormRamSell extends Component<Props> {
               onConfirm={this.onConfirm}
               settings={settings}
               newRamAmount={ramQuota - Number(ramToSell)}
+              jurisdictions={jurisdictions.choosenJurisdictions}
             />
           ) : ''}
       </Segment>

@@ -7,6 +7,7 @@
   "ram_confirming_message_in_ram_for": "in RAM for",
   "ram_confirming_message_in_ram_left": "in RAM.",
   "ram_confirming_message_price_estimate_header": "근사값",
+  "ram_confirming_label_jurisdictions": "Jurisdictions",
   "ram_confirming_message_price_estimate_subheader": "RAM의 가격은 Bancor 알고리즘을 통해 지속적으로 변경됩니다. 지불 된 실제 가격은 약간 다를 수 있습니다.",
   "ram_confirming_message_price_includes_chain_fee": "Please note, that this price includes a 0.5 percent system fee which is charged by the {{chainSymbol}} network.",
   "ram_confirming_message_will_have": "이 거래 이후 잔액 은",

@@ -7,6 +7,7 @@
   "ram_confirming_message_in_ram_for": "in RAM for",
   "ram_confirming_message_in_ram_left": "in RAM.",
   "ram_confirming_message_price_estimate_header": "This is an estimate.",
+  "ram_confirming_label_jurisdictions": "Jurisdictions",
   "ram_confirming_message_price_estimate_subheader": "The prices of RAM change continously via the Bancor algorithm. The actual price paid may vary slightly.",
   "ram_confirming_message_price_includes_chain_fee": "Please note, that this price includes a 0.5 percent system fee which is charged by the {{chainSymbol}} network.",
   "ram_confirming_message_will_have": "After this transaction, you will have",

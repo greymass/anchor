@@ -6,6 +6,8 @@ import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-rea
 
 import EOSAccount from '../../../../../utils/EOS/Account';
 
+import checkForBeos from '../../../../helpers/checkCurrentBlockchain';
+
 class WalletPanelFormStakeConfirming extends Component<Props> {
   onConfirm = () => {
     const {
@@ -44,6 +46,21 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
     const unstaking = (cpuDifference < 0 || netDifference < 0);
 
     const unstakingWhenAmountBeingUnstaked = refundDate && unstaking;
+
+    let jurisdictionsForm = (<div />);
+
+    if (checkForBeos(connection)) {
+      jurisdictionsForm = (
+        <div>
+          <label style={{ marginBottom: '5px', fontWeight: 'bold' }}>{t('stake_label_jurisdictions')}</label>
+          <div className="confirm-scroll">
+            {this.props.jurisdictions.map((jurisdiction) => (
+              <span className="confirm-wrapper ">{jurisdiction.value}<br /></span>
+            ))}
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -126,7 +143,8 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
               {t('have_already_unstaked')} {eosAccount.getTotalBeingUnstaked().toFixed(4)} EOS {t('unstaking_will_be_reset')}
             </Message>
           ) : ''}
-
+          <Divider />
+          {jurisdictionsForm}
           <Divider />
           <Button
             onClick={onBack}

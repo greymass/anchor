@@ -18,6 +18,7 @@
   "stake_account_name": "アカウント名",
   "stake_button_text": "Update Staked {{chainSymbol}}",
   "stake_confirming_header_one": "委任を変更しようとしています: ",
+  "stake_label_jurisdictions": "Jurisdictions",
   "stake_cpu_amount": "CPU量",
   "stake_modal_main_title": "Update Staked Amounts",
   "stake_net_amount": "帯域幅",
