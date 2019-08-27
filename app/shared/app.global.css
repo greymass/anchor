@@ -39,12 +39,6 @@ table .jurisdiction-table {
   max-height: 100px;
 }
 
-.sticky-voter-menu {
-  position: sticky !important;
-  top: 0;
-  z-index: 2;
-}
-
 .confirm-wrapper {
   word-break: break-all;
 }
@@ -122,6 +116,10 @@ div.visible.menu.transition>div.item>span.text {
 .ui.grey.button {
   background-color: #e0e1e2;
   color: rgba(0,0,0,.6);
+}
+
+.ui.basic.bottom.attached.segment {
+  margin-top: 60px;
 }
 
 .input-range__slider {
