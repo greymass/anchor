@@ -26,11 +26,17 @@ const contractBasedFeatures = [
 const initialState = {
   constants: {},
   download: undefined,
+  init: false,
   features: contractBasedFeatures
 };
 
 export default function app(state = initialState, action) {
   switch (action.type) {
+    case types.APP_INIT: {
+      return Object.assign({}, state, {
+        init: true
+      });
+    }
     case types.APP_UPDATE_DOWNLOAD_PROGRESS: {
       return Object.assign({}, state, {
         download: action.payload
