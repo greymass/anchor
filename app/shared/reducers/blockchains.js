@@ -145,6 +145,15 @@ const knownChains = [
     testnet: false
   },
   {
+    _id: 'remme-testnet',
+    chainId: '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7  ',
+    keyPrefix: 'EOS',
+    name: 'Remme Testnet',
+    node: 'https://testchain.remme.io/',
+    symbol: 'REM',
+    testnet: true
+  },
+  {
     _id: 'telos-mainnet',
     chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
     keyPrefix: 'EOS',
