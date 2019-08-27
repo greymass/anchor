@@ -92,7 +92,7 @@ export default class JurisdictionsForm extends Component<Props> {
     return options;
   }
 
-  handleEditClick(e) {
+  async handleEditClick(e) {
     this.props.actions.getJurisdictions();
     let choosen = [];
     let jurisdictions = [];
@@ -100,7 +100,7 @@ export default class JurisdictionsForm extends Component<Props> {
       choosen = this.makeAllInactive(this.props.jurisdictions.choosenJurisdictions);
       jurisdictions = this.makeAllInactive(this.props.jurisdictions.jurisdictions);
     }
-    this.setState({
+    await this.setState({
       choosenOptions: choosen,
       choosenJurisdictions: choosen,
       options: jurisdictions,

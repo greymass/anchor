@@ -6,6 +6,7 @@ const initialState = {
   fetchingError: false,
   jurisdictions: [],
   choosenJurisdictions: [],
+  choosenJurisdictionsTemp: [],
   activeJurisdictions: []
 };
 
@@ -34,7 +35,9 @@ export default function jurisdictions(state = initialState, action) {
         loading: false,
         [requestName]: requestState,
         jurisdictions: action.payload.jurisdictions,
-        fetchingError: false
+        fetchingError: false,
+        choosenJurisdictions: state.choosenJurisdictions.length === 0 ? state.choosenJurisdictionsTemp : state.choosenJurisdictions,
+        choosenJurisdictionsTemp: []
       };
     }
     case types.GET_JURISDICTION_ALL_FAILURE: {
@@ -42,7 +45,9 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
-        fetchingError: true
+        fetchingError: true,
+        choosenJurisdictionsTemp: state.choosenJurisdictions.length === 0 ? state.choosenJurisdictionsTemp : state.choosenJurisdictions,
+        choosenJurisdictions: []
       };
     }
     case types.GET_JURISDICTION_PRODUCER_PENDING: {
@@ -124,7 +129,9 @@ export default function jurisdictions(state = initialState, action) {
       return {
         ...state,
         activeJurisdictions: action.payload.jurisdictions,
-        fetchingError: false
+        fetchingError: false,
+        choosenJurisdictions: state.choosenJurisdictions.length === 0 ? state.choosenJurisdictionsTemp : state.choosenJurisdictions,
+        choosenJurisdictionsTemp: []
       };
     }
     case types.SAVE_ONLY_ACTIVE: {
@@ -136,7 +143,9 @@ export default function jurisdictions(state = initialState, action) {
     case types.GET_ACTIVE_JURISDICTION_FAILURE: {
       return {
         ...state,
-        fetchingError: true
+        fetchingError: true,
+        choosenJurisdictionsTemp: state.choosenJurisdictions.length === 0 ? state.choosenJurisdictionsTemp : state.choosenJurisdictions,
+        choosenJurisdictions: []
       };
     }
     default: {
