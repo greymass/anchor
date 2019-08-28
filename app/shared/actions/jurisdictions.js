@@ -148,6 +148,46 @@ export function saveChoosenJurisdictions(jurisdictions) {
   };
 }
 
+export function getProducerJurisdictionForBlock(blockNumber, producer, sequence) {
+  return (dispatch, getState) => {
+
+    const params = { producer: producer, block_number: blockNumber };
+    const {
+      connection
+    } = getState();
+
+    if (checkForBeos(connection)) {
+      dispatch({
+        type: types.GET_JURISDICTION_FOR_BLOCK_PENDING
+      });
+
+      const url = `${connection.httpEndpoint}/v1/jurisdiction_history/get_producer_jurisdiction_for_block`;
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      axios({
+        method: 'post',
+        url: url,
+        data: params,
+        config: { headers: headers }
+      }).then((response) => {
+        return dispatch({
+          type: types.GET_JURISDICTION_FOR_BLOCK_SUCCESS,
+          payload: {
+            sequenceBlock: sequence,
+            blockJurisdictions: response.data.producer_jurisdiction_for_block.length ? response.data.producer_jurisdiction_for_block[0].new_jurisdictions : []
+          }
+        });
+      }).catch((response) => {
+        return dispatch({
+          type: types.GET_JURISDICTION_FOR_BLOCK_FAILURE,
+          payload: response
+        });
+      });
+    }
+  };
+}
+
 export function getAllProducerJurisdictionForBlock(blockNumber, sequence) {
   return (dispatch, getState) => {
 
@@ -175,7 +215,7 @@ export function getAllProducerJurisdictionForBlock(blockNumber, sequence) {
           type: types.GET_JURISDICTION_ALL_FOR_BLOCK_SUCCESS,
           payload: {
             sequenceBlock: sequence,
-            blockJurisdictions: response.data
+            allBlockJurisdictions: response.data
           }
         });
       }).catch((response) => {
@@ -200,6 +240,9 @@ export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
       dispatch({
         type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_PENDING
       });
+      dispatch({
+        type: types.GET_JURISDICTION_FOR_BLOCK_PENDING
+      });
 
       const url = `${connection.httpEndpoint}/v1/chain/get_block`;
 
@@ -211,11 +254,13 @@ export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
         data: params,
         config: { headers: headers }
       }).then((response) => {
+        dispatch(getProducerJurisdictionForBlock(blockNumberOrID, response.data.producer, sequence));
         return dispatch({
           type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_SUCCESS,
           payload: {
             sequenceTransaction: sequence,
-            transactionExtensions: response.data.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : response.data.transactions[0].trx.transaction.transaction_extensions[0].data
+            // transactionExtensions: response.data.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : response.data.transactions[0].trx.transaction.transaction_extensions[0].data
+            transactionExtensions: typeof response.data.transactions[0].trx !== 'object' || response.data.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : response.data.transactions[0].trx.transaction.transaction_extensions[0].data
           }
         });
       }).catch((response) => {
@@ -237,12 +282,22 @@ export function saveOnlyActive() {
   };
 }
 
+export function clearJurisdictionsSequence() {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.CLEAR_JURISDICTIONS_SEQUENCE
+    });
+  };
+}
+
 export default {
   saveChoosenJurisdictions,
   saveOnlyActive,
   getJurisdictions,
   getProducerJurisdiction,
+  getProducerJurisdictionForBlock,
   getAllProducerJurisdictionForBlock,
   getAllTransactionJurisdictions,
-  getActiveJurisdictions
+  getActiveJurisdictions,
+  clearJurisdictionsSequence
 };

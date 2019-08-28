@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Header, Icon, Message, Segment, Transition, Table, Button } from 'semantic-ui-react';
+import { Header, Icon, Message, Segment, Transition, Table } from 'semantic-ui-react';
 
 import ExplorerLink from '../../../Global/Modal/ExplorerLink';
 import ActionsTableRow from './Table/Row';
@@ -41,7 +41,7 @@ class WalletStatusActionsTable extends Component<Props> {
         this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
         this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
 
-        this.state.ready[sequence] = 0;
+        this.state.ready[sequence] = 3;
       }
 
       this.setState({
@@ -52,7 +52,7 @@ class WalletStatusActionsTable extends Component<Props> {
     if (this.props.jurisdictions.sequenceBlock !== nextProps.jurisdictions.sequenceBlock) {
       const sequence = nextProps.jurisdictions.sequenceBlock;
 
-      this.state.myBlockJurisdictions[sequence] = nextProps.jurisdictions.blockJurisdictions.producer_jurisdiction_for_block;
+      this.state.myBlockJurisdictions[sequence] = nextProps.jurisdictions.blockJurisdictions;
       this.setState({
         myBlockJurisdictions: this.state.myBlockJurisdictions
       });
@@ -65,7 +65,7 @@ class WalletStatusActionsTable extends Component<Props> {
         this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
         this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
 
-        this.state.ready[sequence] = 0;
+        this.state.ready[sequence] = 3;
       }
 
       this.setState({
@@ -119,20 +119,12 @@ class WalletStatusActionsTable extends Component<Props> {
     }
     const arr = [];
     const jurisdictions = this.props.jurisdictions.jurisdictions || [];
-    let codes = [];
-
-    blockJurisdictions.forEach((it, i) => {
-      codes = codes.concat(blockJurisdictions[i].new_jurisdictions);
-    });
+    const codes = blockJurisdictions || [];
 
     jurisdictions.forEach((it, i) => {
       codes.forEach((jt, j) => {
         if (jurisdictions[i].code === codes[j]) {
-          this.state.leftRows[sequence].forEach((kt, k) => {
-            if (kt.code === codes[j]) {
-              arr.push(jurisdictions[i]);
-            }
-          });
+          arr.push(jurisdictions[i]);
         }
       });
     });
@@ -222,6 +214,7 @@ class WalletStatusActionsTable extends Component<Props> {
                     <JurisdictionHistoryRow
                       leftRows={this.state.leftRows[action.account_action_seq] ? this.state.leftRows[action.account_action_seq] : []}
                       rightRows={this.state.rightRows[action.account_action_seq] ? this.state.rightRows[action.account_action_seq] : []}
+                      ready={this.state.ready[action.account_action_seq] ? this.state.ready[action.account_action_seq] : -1}
                       jurisdictions={jurisdictions}
                       currentSequence={this.state.nextSequence === action.account_action_seq}
                       t={t}

@@ -4,6 +4,7 @@ import { clearWallet } from './wallet';
 import { setSettings, setSettingWithValidation } from './settings';
 import { clearActionsCache } from './accounts';
 import { clearProducerInfo } from './producers';
+import { clearJurisdictionsSequence } from './jurisdictions';
 
 import * as types from './types';
 
@@ -18,6 +19,7 @@ function swapBlockchain(chainId) {
       // clear all data caches
       dispatch(clearActionsCache());
       dispatch(clearProducerInfo());
+      dispatch(clearJurisdictionsSequence());
       // prevent changing nodes when using a cold wallet
       if (settings.walletMode !== 'cold') {
         dispatch(setSettingWithValidation('node', blockchain.node));

@@ -15,6 +15,9 @@ export function initApp() {
     dispatch({
       type: types.APP_INIT
     });
+    dispatch({
+      type: types.CLEAR_JURISDICTIONS_SEQUENCE
+    });
   };
 }
 
