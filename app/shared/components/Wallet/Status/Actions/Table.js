@@ -116,9 +116,6 @@ class WalletStatusActionsTable extends Component<Props> {
   }
 
   blockJurisdictions = (blockJurisdictions, sequence) => {
-    if (!this.state.leftRows[sequence]) {
-      return;
-    }
     const arr = [];
     const jurisdictions = this.props.jurisdictions.jurisdictions || [];
     const codes = blockJurisdictions || [];
