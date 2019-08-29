@@ -41,7 +41,8 @@ class WalletStatusActionsTable extends Component<Props> {
         this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
         this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
 
-        this.state.ready[sequence] = 3;
+        this.state.ready[sequence] = 0;
+        // this.state.ready[sequence] = 3;
       }
 
       this.setState({
@@ -65,7 +66,8 @@ class WalletStatusActionsTable extends Component<Props> {
         this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
         this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
 
-        this.state.ready[sequence] = 3;
+        // this.state.ready[sequence] = 3;
+        this.state.ready[sequence] = 0;
       }
 
       this.setState({
