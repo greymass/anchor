@@ -44,9 +44,6 @@ export default class JurisdictionHistoryRow extends Component<Props> {
               {leftRows.length === 0 && (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'SUCCESS' : !this.leftError) &&
                 <p>No jurisdictions.</p>
               }
-              {/* {ready === 3 && leftRows.length === 0 && (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'SUCCESS' : !this.leftError) &&
-                <p>No jurisdictions.</p>
-              } */}
               {(currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'PENDING' : false) &&
                 <p>Loading...</p>
               }
@@ -64,9 +61,6 @@ export default class JurisdictionHistoryRow extends Component<Props> {
               {rightRows.length === 0 && (currentSequence ? jurisdictions.FOR_BLOCK === 'SUCCESS' : !this.rightError) &&
                 <p>No jurisdictions.</p>
               }
-              {/* {ready === 3 && rightRows.length === 0 && (currentSequence ? jurisdictions.FOR_BLOCK === 'SUCCESS' : !this.rightError) &&
-                <p>No jurisdictions.</p>
-              } */}
               {(currentSequence ? jurisdictions.FOR_BLOCK === 'PENDING' : false) &&
                 <p>Loading...</p>
               }
