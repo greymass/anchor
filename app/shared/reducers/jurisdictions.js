@@ -123,6 +123,7 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
+        sequenceBlock: action.sequenceBlock,
       };
     }
     case types.GET_JURISDICTION_ALL_FOR_TRANSACTION_PENDING: {
@@ -146,6 +147,7 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
+        sequenceTransaction: action.sequenceTransaction,
       };
     }
     case types.GET_ACTIVE_JURISDICTION_SUCCESS: {

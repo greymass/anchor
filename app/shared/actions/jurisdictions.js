@@ -181,6 +181,7 @@ export function getProducerJurisdictionForBlock(blockNumber, producer, sequence)
       }).catch((response) => {
         return dispatch({
           type: types.GET_JURISDICTION_FOR_BLOCK_FAILURE,
+          sequenceBlock: sequence,
           payload: response
         });
       });
@@ -266,6 +267,7 @@ export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
       }).catch((response) => {
         return dispatch({
           type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_FAILURE,
+          sequenceTransaction: sequence,
           payload: response
         });
       });

@@ -19,6 +19,7 @@ class WalletStatusActionsTable extends Component<Props> {
       rightRows: [],
       nextSequence: -1,
       ready: [],
+      busy: [],
       myBlockJurisdictions: [],
       myTransactionExtensions: []
     };
@@ -27,6 +28,11 @@ class WalletStatusActionsTable extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (this.props.jurisdictions.sequenceTransaction !== nextProps.jurisdictions.sequenceTransaction) {
       const sequence = nextProps.jurisdictions.sequenceTransaction;
+
+      this.state.busy[sequence] = true;
+      this.setState({
+        busy: this.state.busy
+      });
 
       this.state.myTransactionExtensions[sequence] = nextProps.jurisdictions.transactionExtensions;
       this.setState({
@@ -42,7 +48,10 @@ class WalletStatusActionsTable extends Component<Props> {
         this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
 
         this.state.ready[sequence] = 0;
-        // this.state.ready[sequence] = 3;
+        this.state.busy[sequence] = false;
+        this.setState({
+          busy: this.state.busy
+        });
       }
 
       this.setState({
@@ -52,6 +61,11 @@ class WalletStatusActionsTable extends Component<Props> {
 
     if (this.props.jurisdictions.sequenceBlock !== nextProps.jurisdictions.sequenceBlock) {
       const sequence = nextProps.jurisdictions.sequenceBlock;
+
+      this.state.busy[sequence] = true;
+      this.setState({
+        busy: this.state.busy
+      });
 
       this.state.myBlockJurisdictions[sequence] = nextProps.jurisdictions.blockJurisdictions;
       this.setState({
@@ -66,8 +80,11 @@ class WalletStatusActionsTable extends Component<Props> {
         this.transactionJurisdictions(this.state.myTransactionExtensions[sequence], sequence);
         this.blockJurisdictions(this.state.myBlockJurisdictions[sequence], sequence);
 
-        // this.state.ready[sequence] = 3;
         this.state.ready[sequence] = 0;
+        this.state.busy[sequence] = false;
+        this.setState({
+          busy: this.state.busy
+        });
       }
 
       this.setState({
@@ -213,7 +230,8 @@ class WalletStatusActionsTable extends Component<Props> {
                     <JurisdictionHistoryRow
                       leftRows={this.state.leftRows[action.account_action_seq] ? this.state.leftRows[action.account_action_seq] : []}
                       rightRows={this.state.rightRows[action.account_action_seq] ? this.state.rightRows[action.account_action_seq] : []}
-                      ready={this.state.ready[action.account_action_seq] ? this.state.ready[action.account_action_seq] : -1}
+                      // ready={this.state.ready[action.account_action_seq] ? this.state.ready[action.account_action_seq] : -1}
+                      busy={this.state.busy[action.account_action_seq]}
                       jurisdictions={jurisdictions}
                       currentSequence={this.state.nextSequence === action.account_action_seq}
                       t={t}

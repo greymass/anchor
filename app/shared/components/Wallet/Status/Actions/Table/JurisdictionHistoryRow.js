@@ -11,7 +11,8 @@ export default class JurisdictionHistoryRow extends Component<Props> {
     const {
       leftRows,
       rightRows,
-      ready,
+      // ready,
+      busy,
       jurisdictions,
       currentSequence,
       t
@@ -41,10 +42,10 @@ export default class JurisdictionHistoryRow extends Component<Props> {
               {leftRows.length > 0 && (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'SUCCESS' : !this.leftError) && leftRows.map((row, idx) => (
                 <p key={idx} className="history-wrapper">{`${row.name} (${row.description})`}</p>
               ))}
-              {leftRows.length === 0 && (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'SUCCESS' : !this.leftError) &&
+              {!busy && leftRows.length === 0 && (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'SUCCESS' : !this.leftError) &&
                 <p>No jurisdictions.</p>
               }
-              {(currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'PENDING' : false) &&
+              {(busy || (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'PENDING' : false)) &&
                 <p>Loading...</p>
               }
               {this.leftError &&
@@ -58,10 +59,10 @@ export default class JurisdictionHistoryRow extends Component<Props> {
               {rightRows.length > 0 && (currentSequence ? jurisdictions.FOR_BLOCK === 'SUCCESS' : !this.rightError) && rightRows.map((row, idx) => (
                 <p key={idx} className="history-wrapper">{`${row.name} (${row.description})`}</p>
               ))}
-              {rightRows.length === 0 && (currentSequence ? jurisdictions.FOR_BLOCK === 'SUCCESS' : !this.rightError) &&
+              {!busy && rightRows.length === 0 && (currentSequence ? jurisdictions.FOR_BLOCK === 'SUCCESS' : !this.rightError) &&
                 <p>No jurisdictions.</p>
               }
-              {(currentSequence ? jurisdictions.FOR_BLOCK === 'PENDING' : false) &&
+              {(busy || (currentSequence ? jurisdictions.FOR_BLOCK === 'PENDING' : false)) &&
                 <p>Loading...</p>
               }
               {this.rightError &&
