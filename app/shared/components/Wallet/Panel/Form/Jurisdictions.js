@@ -317,7 +317,7 @@ export default class JurisdictionsForm extends Component<Props> {
       const searched = jurisdictions.filter((option) => option.value.includes(val));
       if (normalSearch) {
         if (searched[0]) {
-          this.clickedLabel(searched[0], 'all', searched);
+          this.clickedLabel(searched[0], 'all', searched, true);
         }
       }
       this.setState({
@@ -337,7 +337,7 @@ export default class JurisdictionsForm extends Component<Props> {
       const searchedChoosen = choosen.filter((option) => option.value.includes(val));
       if (normalSearch) {
         if (searchedChoosen[0]) {
-          this.clickedLabel(searchedChoosen[0], 'yours', searchedChoosen);
+          this.clickedLabel(searchedChoosen[0], 'yours', searchedChoosen, true);
         }
       }
       this.setState({
@@ -560,7 +560,7 @@ export default class JurisdictionsForm extends Component<Props> {
           this.setState({
             ctrlClicked: true
           });
-        } else if (e.keyCode === 40) {
+        } else if (e.keyCode === 40 || e.keyCode === 34) {
           // down
           e.preventDefault();
           let arr = [];
@@ -574,7 +574,7 @@ export default class JurisdictionsForm extends Component<Props> {
             item += 1;
           }
           this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
-        } else if (e.keyCode === 38) {
+        } else if (e.keyCode === 38 || e.keyCode === 33) {
           // up
           e.preventDefault();
           let arr = [];
@@ -598,6 +598,24 @@ export default class JurisdictionsForm extends Component<Props> {
           this.handleArrowClick('all');
         } else if (e.keyCode === 13) {
           this.handleArrowClick(this.state.oneActive.status);
+        } else if (e.keyCode === 36) {
+          // home
+          let arr = [];
+          if (this.state.oneActive.status === 'all') {
+            arr = this.state.options;
+          } else {
+            arr = this.state.choosenOptions;
+          }
+          this.clickedLabel(arr[0], this.state.oneActive.status, arr, true);
+        } else if (e.keyCode === 35) {
+          // end
+          let arr = [];
+          if (this.state.oneActive.status === 'all') {
+            arr = this.state.options;
+          } else {
+            arr = this.state.choosenOptions;
+          }
+          this.clickedLabel(arr[arr.length - 1], this.state.oneActive.status, arr, true);
         }
       });
       document.addEventListener('keyup', (e) => {
@@ -648,7 +666,7 @@ export default class JurisdictionsForm extends Component<Props> {
                         <Grid.Row stretched verticalAlign="middle">
                           <Grid.Column width={7}>
                             <label style={styles.labelText}>All jurisdictions ({ this.state.options.length + ' of ' + this.state.jurisdictions.length})</label>
-                            <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
+                            <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} onFocus={() => this.search('', 'all')} />
                             <Segment style={styles.segment}>
                               {this.props.jurisdictions.fetchingError === false ? this.state.options.map((options) => <Label ref={this.optionsRefs[options.name]} key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>) : 'Error fetching data'}
                             </Segment>
@@ -659,7 +677,7 @@ export default class JurisdictionsForm extends Component<Props> {
                           </Grid.Column>
                           <Grid.Column width={7}>
                             <label style={styles.labelText}>Your jurisdictions ({this.state.choosenOptions.length + ' of ' + this.state.choosenJurisdictions.length})</label>
-                            <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
+                            <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} onFocus={() => this.search('', 'yours')} />
                             <Segment style={styles.segment}>
                               {this.props.jurisdictions.fetchingError === false ? this.state.choosenOptions.map((value) => <Label ref={this.optionsRefs[value.name]} key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>) : 'Error fetching data'}
                             </Segment>
