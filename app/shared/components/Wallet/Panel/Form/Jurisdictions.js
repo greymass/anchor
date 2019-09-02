@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { I18n } from 'react-i18next';
 import { Modal, Label, Form, Button, Segment, Grid, Input, Checkbox, Icon } from 'semantic-ui-react';
+import ReactDOM from 'react-dom';
 
 export default class JurisdictionsForm extends Component<Props> {
   constructor() {
@@ -57,6 +58,7 @@ export default class JurisdictionsForm extends Component<Props> {
     const options = [];
     const j = jurisdictions.jurisdictions;
     const cj = (choosen !== undefined) ? choosen : jurisdictions.choosenJurisdictions;
+    this.optionsRefs = {};
     if (j) {
       for (let i = 0; i < j.length; i += 1) {
         let obj = j[i];
@@ -71,6 +73,7 @@ export default class JurisdictionsForm extends Component<Props> {
             active: false
           };
         }
+        this.optionsRefs[j[i].name] = React.createRef();
         let status = false;
         for (let x = 0; x < cj.length; x += 1) {
           if (j[i].code === cj[x].code) {
@@ -126,8 +129,14 @@ export default class JurisdictionsForm extends Component<Props> {
     return arr;
   }
 
-  clickedLabel(value, status, arrayForActive?) {
+  clickedLabel(value, status, arrayForActive?, scrolling = false) {
     if (value) {
+      if (scrolling) {
+        const r = ReactDOM.findDOMNode(this.optionsRefs[value.name].current);
+        if (r) {
+          r.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+        }
+      }
       let arrayForActiveTemp = [];
       if (!arrayForActive) {
         if (status === 'all') {
@@ -553,7 +562,7 @@ export default class JurisdictionsForm extends Component<Props> {
           });
         } else if (e.keyCode === 40) {
           // down
-          // e.preventDefault();
+          e.preventDefault();
           let arr = [];
           if (this.state.oneActive.status === 'all') {
             arr = this.state.options;
@@ -564,10 +573,10 @@ export default class JurisdictionsForm extends Component<Props> {
           if (this.state.oneActive.index < arr.length - 1) {
             item += 1;
           }
-          this.clickedLabel(arr[item], this.state.oneActive.status, arr);
+          this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
         } else if (e.keyCode === 38) {
           // up
-          // e.preventDefault();
+          e.preventDefault();
           let arr = [];
           if (this.state.oneActive.status === 'all') {
             arr = this.state.options;
@@ -578,7 +587,7 @@ export default class JurisdictionsForm extends Component<Props> {
           if (this.state.oneActive.index !== 0) {
             item -= 1;
           }
-          this.clickedLabel(arr[item], this.state.oneActive.status, arr);
+          this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
         } else if (e.keyCode === 37) {
           // left
           // e.preventDefault();
@@ -641,7 +650,7 @@ export default class JurisdictionsForm extends Component<Props> {
                             <label style={styles.labelText}>All jurisdictions ({ this.state.options.length + ' of ' + this.state.jurisdictions.length})</label>
                             <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} />
                             <Segment style={styles.segment}>
-                              {this.props.jurisdictions.fetchingError === false ? this.state.options.map((options) => <Label key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>) : 'Error fetching data'}
+                              {this.props.jurisdictions.fetchingError === false ? this.state.options.map((options) => <Label ref={this.optionsRefs[options.name]} key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>) : 'Error fetching data'}
                             </Segment>
                           </Grid.Column>
                           <Grid.Column width={1}>
@@ -652,7 +661,7 @@ export default class JurisdictionsForm extends Component<Props> {
                             <label style={styles.labelText}>Your jurisdictions ({this.state.choosenOptions.length + ' of ' + this.state.choosenJurisdictions.length})</label>
                             <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} />
                             <Segment style={styles.segment}>
-                              {this.props.jurisdictions.fetchingError === false ? this.state.choosenOptions.map((value) => <Label key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>) : 'Error fetching data'}
+                              {this.props.jurisdictions.fetchingError === false ? this.state.choosenOptions.map((value) => <Label ref={this.optionsRefs[value.name]} key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>) : 'Error fetching data'}
                             </Segment>
                           </Grid.Column>
                         </Grid.Row>
