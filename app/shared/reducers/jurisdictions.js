@@ -71,6 +71,7 @@ export default function jurisdictions(state = initialState, action) {
         ...state,
         [requestName]: requestState,
         loading: false,
+        producer: action.payload.producer,
       };
     }
     case types.SET_CHOOSEN_JURISDICTIONS: {
@@ -176,7 +177,8 @@ export default function jurisdictions(state = initialState, action) {
     case types.CLEAR_JURISDICTIONS_SEQUENCE: {
       return Object.assign({}, state, {
         sequenceTransaction: -1,
-        sequenceBlock: -1
+        sequenceBlock: -1,
+        producer: '',
       });
     }
     default: {

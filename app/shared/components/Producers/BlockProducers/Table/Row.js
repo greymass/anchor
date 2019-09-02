@@ -34,6 +34,8 @@ class ProducersTableRow extends Component<Props> {
       jurisdictions,
       actions,
       rows,
+      PRODUCERS,
+      ALLS
     } = this.props;
 
     const epoch = 946684800000;
@@ -117,6 +119,8 @@ class ProducersTableRow extends Component<Props> {
                   rows={rows}
                   jurisdictions={jurisdictions}
                   producer={producer.owner}
+                  PRODUCERS={PRODUCERS}
+                  ALLS={ALLS}
                   t={t}
                 />
               }

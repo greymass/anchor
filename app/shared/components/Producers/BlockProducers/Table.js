@@ -16,7 +16,9 @@ class ProducersTable extends Component<Props> {
       query: false,
       viewing: false,
       rows: [],
-      initialize: false
+      initialize: false,
+      PRODUCERS: [],
+      ALLS: []
     };
   }
 
@@ -30,7 +32,9 @@ class ProducersTable extends Component<Props> {
       this.state.initialize = true;
       this.setProducerJurisdiction(
         nextProps.jurisdictions.producer_jurisdictions,
-        nextProps.jurisdictions.producer
+        nextProps.jurisdictions.producer,
+        nextProps.jurisdictions.PRODUCER,
+        nextProps.jurisdictions.ALL
       );
     }
   }
@@ -44,10 +48,13 @@ class ProducersTable extends Component<Props> {
     this.props.resetDisplayAmount();
   }, 400);
 
-  setProducerJurisdiction = (table, owner) => {
+  setProducerJurisdiction = (table, owner, PRODUCER, ALL) => {
     const arr = [];
     const jurisdictions = this.props.jurisdictions.jurisdictions || [];
     const codes = table || [];
+
+    this.state.PRODUCERS[owner] = PRODUCER;
+    this.state.ALLS[owner] = ALL;
 
     jurisdictions.forEach((it, i) => {
       codes.forEach((jt, j) => {
@@ -59,7 +66,9 @@ class ProducersTable extends Component<Props> {
 
     this.state.rows[owner] = arr;
     this.setState({
-      rows: this.state.rows
+      rows: this.state.rows,
+      PRODUCERS: this.state.PRODUCERS,
+      ALLS: this.state.ALLS
     });
   }
 
@@ -143,6 +152,8 @@ class ProducersTable extends Component<Props> {
                 jurisdictions={jurisdictions}
                 actions={actions}
                 rows={this.state.rows}
+                PRODUCERS={this.state.PRODUCERS}
+                ALLS={this.state.ALLS}
               />
             );
           })}
@@ -177,6 +188,8 @@ class ProducersTable extends Component<Props> {
                     jurisdictions={jurisdictions}
                     actions={actions}
                     rows={this.state.rows}
+                    PRODUCERS={this.state.PRODUCERS}
+                    ALLS={this.state.ALLS}
                   />
                 );
               })}
