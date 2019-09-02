@@ -540,6 +540,15 @@ export default class JurisdictionsForm extends Component<Props> {
     }
   }
 
+  checkSearchBoxesFocus() {
+    if (ReactDOM.findDOMNode(this.refSearchAll.current) && ReactDOM.findDOMNode(this.refSearchYours.current)) {
+      if (document.activeElement === ReactDOM.findDOMNode(this.refSearchAll.current).children[0] || document.activeElement === ReactDOM.findDOMNode(this.refSearchYours.current).children[0]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   render() {
     const { label } = this.props;
     if (this.state.eventSet === false) {
@@ -591,31 +600,39 @@ export default class JurisdictionsForm extends Component<Props> {
         } else if (e.keyCode === 37) {
           // left
           // e.preventDefault();
-          this.handleArrowClick('yours');
+          if (!this.checkSearchBoxesFocus()) {
+            this.handleArrowClick('yours');
+          }
         } else if (e.keyCode === 39) {
           // right
           // e.preventDefault();
-          this.handleArrowClick('all');
+          if (!this.checkSearchBoxesFocus()) {
+            this.handleArrowClick('all');
+          }
         } else if (e.keyCode === 13) {
           this.handleArrowClick(this.state.oneActive.status);
         } else if (e.keyCode === 36) {
           // home
-          let arr = [];
-          if (this.state.oneActive.status === 'all') {
-            arr = this.state.options;
-          } else {
-            arr = this.state.choosenOptions;
+          if (!this.checkSearchBoxesFocus()) {
+            let arr = [];
+            if (this.state.oneActive.status === 'all') {
+              arr = this.state.options;
+            } else {
+              arr = this.state.choosenOptions;
+            }
+            this.clickedLabel(arr[0], this.state.oneActive.status, arr, true);
           }
-          this.clickedLabel(arr[0], this.state.oneActive.status, arr, true);
         } else if (e.keyCode === 35) {
           // end
-          let arr = [];
-          if (this.state.oneActive.status === 'all') {
-            arr = this.state.options;
-          } else {
-            arr = this.state.choosenOptions;
+          if (!this.checkSearchBoxesFocus()) {
+            let arr = [];
+            if (this.state.oneActive.status === 'all') {
+              arr = this.state.options;
+            } else {
+              arr = this.state.choosenOptions;
+            }
+            this.clickedLabel(arr[arr.length - 1], this.state.oneActive.status, arr, true);
           }
-          this.clickedLabel(arr[arr.length - 1], this.state.oneActive.status, arr, true);
         }
       });
       document.addEventListener('keyup', (e) => {
