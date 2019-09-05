@@ -5,6 +5,8 @@ import { Table } from 'semantic-ui-react';
 export default class JurisdictionRow extends Component<Props> {
   render() {
     const {
+      rows,
+      producer,
       jurisdictions,
       PRODUCERS,
       ALLS,
@@ -13,7 +15,7 @@ export default class JurisdictionRow extends Component<Props> {
 
     return (
       <div className="table-scroll">
-        {this.props.rows[this.props.producer] && this.props.rows[this.props.producer].length > 0 && PRODUCERS[this.props.producer] === 'SUCCESS' &&
+        {rows[producer] && rows[producer].length > 0 && PRODUCERS[producer] === 'SUCCESS' &&
           <Table
             className="ui striped unstackable small jurisdiction-table"
           >
@@ -31,7 +33,7 @@ export default class JurisdictionRow extends Component<Props> {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.props.rows[this.props.producer].map((row, idx) => (
+              {rows[producer].map((row, idx) => (
                 <Table.Row key={idx}>
                   <Table.Cell singleLine>
                     {row.code}
@@ -51,13 +53,13 @@ export default class JurisdictionRow extends Component<Props> {
             </Table.Body>
           </Table>
         }
-        {PRODUCERS[this.props.producer] === 'PENDING' &&
+        {PRODUCERS[producer] === 'PENDING' &&
           <span>Loading...</span>
         }
-        {(PRODUCERS[this.props.producer] === 'FAILURE' || ALLS[this.props.producer] === 'FAILURE') &&
+        {(PRODUCERS[producer] === 'FAILURE' || ALLS[producer] === 'FAILURE') &&
           <span>Error fetching jurisdictions.</span>
         }
-        {(this.props.rows[this.props.producer] && this.props.rows[this.props.producer].length === 0) && PRODUCERS[this.props.producer] === 'SUCCESS' &&
+        {(rows[producer] && rows[producer].length === 0) && PRODUCERS[producer] === 'SUCCESS' &&
           <span>No jurisdictions.</span>
         }
       </div>

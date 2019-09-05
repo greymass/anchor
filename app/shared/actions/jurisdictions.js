@@ -263,7 +263,6 @@ export function getAllTransactionJurisdictions(blockNumberOrID, sequence) {
           type: types.GET_JURISDICTION_ALL_FOR_TRANSACTION_SUCCESS,
           payload: {
             sequenceTransaction: sequence,
-            // transactionExtensions: response.data.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : response.data.transactions[0].trx.transaction.transaction_extensions[0].data
             transactionExtensions: typeof response.data.transactions[0].trx !== 'object' || response.data.transactions[0].trx.transaction.transaction_extensions.length === 0 ? '' : response.data.transactions[0].trx.transaction.transaction_extensions[0].data
           }
         });
@@ -296,13 +295,13 @@ export function clearJurisdictionsSequence() {
 }
 
 export default {
-  saveChoosenJurisdictions,
-  saveOnlyActive,
   getJurisdictions,
+  getActiveJurisdictions,
   getProducerJurisdiction,
+  saveChoosenJurisdictions,
   getProducerJurisdictionForBlock,
   getAllProducerJurisdictionForBlock,
   getAllTransactionJurisdictions,
-  getActiveJurisdictions,
+  saveOnlyActive,
   clearJurisdictionsSequence
 };

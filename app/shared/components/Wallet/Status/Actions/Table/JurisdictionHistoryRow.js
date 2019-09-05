@@ -11,7 +11,6 @@ export default class JurisdictionHistoryRow extends Component<Props> {
     const {
       leftRows,
       rightRows,
-      // ready,
       busy,
       jurisdictions,
       currentSequence,

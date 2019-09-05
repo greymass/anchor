@@ -230,7 +230,6 @@ class WalletStatusActionsTable extends Component<Props> {
                     <JurisdictionHistoryRow
                       leftRows={this.state.leftRows[action.account_action_seq] ? this.state.leftRows[action.account_action_seq] : []}
                       rightRows={this.state.rightRows[action.account_action_seq] ? this.state.rightRows[action.account_action_seq] : []}
-                      // ready={this.state.ready[action.account_action_seq] ? this.state.ready[action.account_action_seq] : -1}
                       busy={this.state.busy[action.account_action_seq]}
                       jurisdictions={jurisdictions}
                       currentSequence={this.state.nextSequence === action.account_action_seq}
