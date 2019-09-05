@@ -135,7 +135,8 @@ class WalletStatusActionsTableRow extends Component<Props> {
           )
           : false
         }
-        {(checkForBeos(connection)) && (<Table.Cell>
+        {(checkForBeos(connection)) && (
+        <Table.Cell>
           <Popup
             content={t('actions_table_history_popup')}
             hoverable
@@ -150,7 +151,6 @@ class WalletStatusActionsTableRow extends Component<Props> {
                   ? () => { setRowVisbilitity(action.account_action_seq); }
                   : () => {
                             resetReady(action.account_action_seq);
-                            // actions.getAllProducerJurisdictionForBlock(action.block_num, action.account_action_seq);
                             actions.getAllTransactionJurisdictions(action.block_num, action.account_action_seq);
                             setRowVisbilitity(action.account_action_seq);
                           }
@@ -158,7 +158,7 @@ class WalletStatusActionsTableRow extends Component<Props> {
               />
             )}
           />
-          </Table.Cell>)}
+        </Table.Cell>)}
       </Table.Row>
     );
   }

@@ -13,6 +13,8 @@ export default class JurisdictionRow extends Component<Props> {
       t
     } = this.props;
 
+    console.log('#### row', this.props);
+
     return (
       <div className="table-scroll">
         {rows[producer] && rows[producer].length > 0 && PRODUCERS[producer] === 'SUCCESS' &&
@@ -54,13 +56,13 @@ export default class JurisdictionRow extends Component<Props> {
           </Table>
         }
         {PRODUCERS[producer] === 'PENDING' &&
-          <span>Loading...</span>
+          <span>{t('block_producer_jurisdictions_state_loading')}</span>
         }
         {(PRODUCERS[producer] === 'FAILURE' || ALLS[producer] === 'FAILURE') &&
-          <span>Error fetching jurisdictions.</span>
+          <span>{t('block_producer_jurisdictions_state_error')}</span>
         }
         {(rows[producer] && rows[producer].length === 0) && PRODUCERS[producer] === 'SUCCESS' &&
-          <span>No jurisdictions.</span>
+          <span>{t('block_producer_jurisdictions_state_none')}</span>
         }
       </div>
     );

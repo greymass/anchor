@@ -42,13 +42,13 @@ export default class JurisdictionHistoryRow extends Component<Props> {
                 <p key={idx} className="history-wrapper">{`${row.name} (${row.description})`}</p>
               ))}
               {!busy && leftRows.length === 0 && (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'SUCCESS' : !this.leftError) &&
-                <p>No jurisdictions.</p>
+                <p>{t('actions_table_history_jurisdictions_none')}</p>
               }
               {(busy || (currentSequence ? jurisdictions.ALL_FOR_TRANSACTION === 'PENDING' : false)) &&
-                <p>Loading...</p>
+                <p>{t('actions_table_history_jurisdictions_loading')}</p>
               }
               {this.leftError &&
-                <p>Error fetching data.</p>
+                <p>{t('actions_table_history_jurisdictions_error')}</p>
               }
             </div>
           </Grid.Column>
@@ -59,13 +59,13 @@ export default class JurisdictionHistoryRow extends Component<Props> {
                 <p key={idx} className="history-wrapper">{`${row.name} (${row.description})`}</p>
               ))}
               {!busy && rightRows.length === 0 && (currentSequence ? jurisdictions.FOR_BLOCK === 'SUCCESS' : !this.rightError) &&
-                <p>No jurisdictions.</p>
+                <p>{t('actions_table_history_jurisdictions_none')}</p>
               }
               {(busy || (currentSequence ? jurisdictions.FOR_BLOCK === 'PENDING' : false)) &&
-                <p>Loading...</p>
+                <p>{t('actions_table_history_jurisdictions_loading')}</p>
               }
               {this.rightError &&
-                <p>Error fetching data.</p>
+                <p>{t('actions_table_history_jurisdictions_error')}</p>
               }
             </div>
           </Grid.Column>
