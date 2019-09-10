@@ -13,8 +13,6 @@ export default class JurisdictionRow extends Component<Props> {
       t
     } = this.props;
 
-    console.log('#### row', this.props);
-
     return (
       <div className="table-scroll">
         {rows[producer] && rows[producer].length > 0 && PRODUCERS[producer] === 'SUCCESS' &&
