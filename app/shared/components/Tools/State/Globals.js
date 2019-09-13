@@ -16,7 +16,7 @@ class ToolsStateGlobals extends Component<Props> {
         <Header>
           {t('tools_state_globals_header')}
           <Header.Subheader>
-            {t('tools_state_globals_subheader')}
+            {t('tools_state_globals_subheader_message')}
           </Header.Subheader>
         </Header>
         <Segment basic>
