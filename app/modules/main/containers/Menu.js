@@ -18,6 +18,7 @@ import * as SyncActions from '../../../shared/actions/sync';
 import * as WalletActions from '../../../shared/actions/wallet';
 
 import GlobalAccountDropdown from '../../../shared/containers/Global/Account/Dropdown';
+import GlobalAppDisconnected from '../../../shared/containers/Global/App/Disconnected';
 import GlobalBlockchainDropdown from '../../../shared/containers/Global/Blockchain/Dropdown';
 import GlobalHardwareLedgerStatus from '../../../shared/containers/Global/Hardware/Ledger/Status';
 import WalletLockState from '../../../shared/components/Wallet/LockState';
@@ -113,6 +114,14 @@ class MenuContainer extends Component<Props> {
             // marginLeft: '107px',
             // paddingLeft: '1.5rem'
           }}
+        />
+        <GlobalAppDisconnected
+          trigger={(
+            <Menu.Item
+              as="a"
+              content={<Icon circular color="red" inverted name="warning" />}
+            />
+          )}
         />
         <GlobalAccountDropdown
           onNavigationChange={this.props.actions.changeModule}
