@@ -89,8 +89,39 @@ export function getRamStats() {
   };
 }
 
+export function getRamPrice() {
+  return (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.SYSTEM_RAMPRICE_PENDING
+    });
+    const { connection } = getState();
+    const query = {
+      json: true,
+      code: 'eosio',
+      scope: 'eosio',
+      table: 'rammarket',
+      limit: 1,
+    };
+
+    if (!connection.httpEndpoint) {
+      return;
+    }
+
+    eos(connection).getTableRows(query).then((results) => dispatch({
+      type: types.SYSTEM_RAMPRICE_SUCCESS,
+      payload: {
+        results,
+      }
+    })).catch((err) => dispatch({
+      type: types.SYSTEM_RAMPRICE_FAILURE,
+      payload: { err },
+    }));
+  };
+}
+
 export default {
   getCurrencyStats,
   getGlobals,
-  getRamStats
+  getRamStats,
+  getRamPrice,
 };
