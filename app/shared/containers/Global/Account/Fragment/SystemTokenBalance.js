@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
-import { isEmpty, sum } from 'lodash';
+import { isEmpty, sum, sumBy } from 'lodash';
 
 class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
   render() {
@@ -27,11 +27,12 @@ const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace('.', '\\.');
   const loaded = !isEmpty(get(state, `balances.${account}`));
   const defaultValue = loaded ? 0 : false;
-  const liquid = get(state, `balances.${account}.${ownProps.token}`, defaultValue);
+  const balances = get(state, `balances.${account}`, defaultValue);
+  const liquid = balances[ownProps.token] || 0;
   const path = `accounts.${account}.self_delegated_bandwidth`;
-  const cpuWeight = String(get(state, `${path}.cpu_weight`, defaultValue));
-  const netWeight = String(get(state, `${path}.net_weight`, defaultValue));
-  if (liquid === false || cpuWeight === false || netWeight === false) {
+  const cpuWeight = get(state, `${path}.cpu_weight`, defaultValue);
+  const netWeight = get(state, `${path}.net_weight`, defaultValue);
+  if (liquid === false && (cpuWeight === false || netWeight === false)) {
     return ({
       balance: false
     });
@@ -45,12 +46,14 @@ const mapStateToProps = (state, ownProps) => {
     netRefunding = get(state, `accounts.${account}.refund_request.net_amount`, 0);
     cpuRefunding = get(state, `accounts.${account}.refund_request.cpu_amount`, 0);
   }
+  const rows = get(state, `tables.eosio.eosio.rexbal.${account}.rows`, defaultValue);
   return ({
     balance: sum([
       parseFloat(liquid),
       parseFloat(delegated),
-      parseFloat(cpuWeight),
-      parseFloat(netWeight),
+      parseFloat(sumBy(rows, 'vote_stake')),
+      parseFloat((cpuWeight) ? cpuWeight : 0),
+      parseFloat((netWeight) ? netWeight : 0),
       parseFloat(netRefunding),
       parseFloat(cpuRefunding),
     ])
