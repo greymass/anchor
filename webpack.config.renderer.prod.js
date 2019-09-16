@@ -50,9 +50,6 @@ export default merge.smart(baseConfig, {
           publicPath: './',
           use: {
             loader: 'css-loader',
-            options: {
-              minimize: true,
-            }
           },
           fallback: 'style-loader',
         })
@@ -65,9 +62,7 @@ export default merge.smart(baseConfig, {
             loader: 'css-loader',
             options: {
               modules: true,
-              minimize: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
             }
           }
         }),
@@ -80,7 +75,6 @@ export default merge.smart(baseConfig, {
             {
               loader: 'css-loader',
               options: {
-                minimize: true,
               }
             },
             {
@@ -98,9 +92,7 @@ export default merge.smart(baseConfig, {
             loader: 'css-loader',
             options: {
               modules: true,
-              minimize: true,
               importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
             }
           },
           {
