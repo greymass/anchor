@@ -23,6 +23,7 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
 
   ui = new BrowserWindow({
     alwaysOnTop: true,
+    frame: false,
     x: uiStateKeeper.x,
     y: uiStateKeeper.y,
     width: uiStateKeeper.width,
