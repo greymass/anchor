@@ -31,6 +31,7 @@ import transaction from './transaction';
 import validate from './validate';
 import wallet from './wallet';
 import wallets from './wallets';
+import whitelist from './whitelist';
 
 const rootReducer = combineReducers({
   accounts,
@@ -62,7 +63,8 @@ const rootReducer = combineReducers({
   transaction,
   validate,
   wallet,
-  wallets
+  wallets,
+  whitelist,
 });
 
 export default rootReducer;
