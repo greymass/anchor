@@ -77,26 +77,28 @@ export function validateNode(
     });
     // Ensure there's a value to test
     if (node || node.length !== 0) {
+      const {
+        blockchains,
+        connection,
+        settings,
+        wallets,
+      } = getState();
+
+      let { host, protocol } = new URL(node);
+      const { pathname } = new URL(node);
+
+      // If the protocol contains the original value with a colon,
+      // it means the protocol was missing and the protocol is the host.
+      //
+      // e.g. `api.example.com` instead of `http://api.example.com`
+      if (`${protocol}${pathname}` === node) {
+        host = node;
+        protocol = 'http:';
+      }
+      const httpEndpoint = `${protocol}//${host}${pathname !== '/' ? pathname : ''}`;
+      const expectedBlockchain = find(blockchains, { chainId: expectedChainId });
       // Establish EOS connection
       try {
-        const {
-          blockchains,
-          connection,
-          settings,
-          wallets,
-        } = getState();
-        let { host, protocol } = new URL(node);
-        const { pathname } = new URL(node);
-
-        // If the protocol contains the original value with a colon,
-        // it means the protocol was missing and the protocol is the host.
-        //
-        // e.g. `api.example.com` instead of `http://api.example.com`
-        if (`${protocol}${pathname}` === node) {
-          host = node;
-          protocol = 'http:';
-        }
-        const httpEndpoint = `${protocol}//${host}${pathname !== '/' ? pathname : ''}`;
         // Establish a modified state to test the connection against
         const modified = {
           ...connection,
@@ -144,14 +146,38 @@ export function validateNode(
             // Refresh our connection properties with new chain info
             return dispatch(chain.getInfo());
           }
-          return dispatch({ type: types.VALIDATE_NODE_FAILURE });
-        }).catch((err) => dispatch({
-          err,
+          return dispatch({
+            payload: {
+              blockchain: expectedBlockchain,
+              node: httpEndpoint,
+              error: 'invalid_head_block',
+              saveAsDefault,
+              settings,
+              useImmediately,
+            },
+            type: types.VALIDATE_NODE_FAILURE
+          });
+        }).catch((error) => dispatch({
+          payload: {
+            blockchain: expectedBlockchain,
+            node: httpEndpoint,
+            error,
+            saveAsDefault,
+            settings,
+            useImmediately,
+          },
           type: types.VALIDATE_NODE_FAILURE
         }));
-      } catch (err) {
+      } catch (error) {
         return dispatch({
-          err,
+          payload: {
+            blockchain: expectedBlockchain,
+            error,
+            node: httpEndpoint,
+            saveAsDefault,
+            settings,
+            useImmediately,
+          },
           type: types.VALIDATE_NODE_FAILURE
         });
       }
