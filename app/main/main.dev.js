@@ -7,6 +7,7 @@ import { createTray } from '../modules/tray/electron';
 import { createTrayIcon } from '../modules/tray/electron/icon';
 import { createProtocolHandlers } from '../modules/handler/electron';
 import HardwareLedger from '../shared/utils/Hardware/Ledger';
+import handleUri from '../shared/utils/UriHandler';
 import * as types from '../shared/actions/types';
 import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardware/ledger';
 
@@ -15,9 +16,8 @@ const path = require('path');
 
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
-
 let resourcePath = __dirname;
-let ui = null;
+let mainWindow = null;
 let menu = null;
 let tray = null;
 let pHandler = null;
@@ -94,14 +94,14 @@ app.on('ready', async () => {
     // TODO: during protocol registration, the uri handler may need to be triggered
   });
 
+  // Establish tray menu
+  // initMenu();
+
+  // Establish the main window
+  initManager('/');
+
+  // Establish the protocol handler window
   initProtocolHandler();
-  // If this is the first run, walk through the welcome
-  if (!store.getState().settings.configured) {
-    log.info('new installation detected');
-    ui = initManager('/', true);
-  } else {
-    initMenu();
-  }
 });
 
 // debug event logging
@@ -110,11 +110,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 app.on('will-finish-launching', () => {
-  app.on('open-url', (req, url) => {
-    log.info('app: open-url', url);
-    pHandler.webContents.send('openUri', url);
-    pHandler.show();
-  });
+  app.on('open-url', (e, url) => handleUri(resourcePath, store, mainWindow, pHandler, url));
   log.info('app: will-finish-launching');
 });
 app.on('before-quit', () => {
@@ -125,15 +121,17 @@ app.on('will-quit', () => { log.info('app: will-quit'); });
 app.on('quit', () => { log.info('app: quit'); });
 
 const initManager = (route = '/', closable = true) => {
-  ui = createInterface(resourcePath, route, closable, store);
-  ui.on('close', () => {
-    ui = null;
+  mainWindow = createInterface(resourcePath, route, closable, store);
+  mainWindow.on('close', () => {
+    mainWindow = null;
   });
 };
 
 const initMenu = () => {
-  menu = createTray(resourcePath); // Initialize the menu
-  tray = createTrayIcon(resourcePath, menu); // Initialize the tray
+  // Initialize the menu
+  menu = createTray(resourcePath);
+  // Initialize the tray icon
+  tray = createTrayIcon(resourcePath, menu);
 };
 
 const initProtocolHandler = (request = false) => {
@@ -141,8 +139,8 @@ const initProtocolHandler = (request = false) => {
 };
 
 const showManager = () => {
-  if (!ui) {
-    ui = initManager();
+  if (!mainWindow) {
+    mainWindow = initManager();
   }
 };
 

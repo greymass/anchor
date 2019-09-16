@@ -19,7 +19,7 @@ class WalletContainer extends Component<Props> {
   render() {
     return (
       <React.Fragment>
-        <NavigationWalletContainer />
+        {/* <NavigationWalletContainer /> */}
         <HashRouter>
           <Switch>
             <Route exact path="/wallet" component={WalletTransferContainer} />
