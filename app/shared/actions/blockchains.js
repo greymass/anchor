@@ -27,6 +27,7 @@ function swapBlockchain(chainId) {
       if (settings.recentWallets && settings.recentWallets[chainId]) {
         ({ account, authorization, mode } = settings.recentWallets[chainId]);
         if (account && authorization && chainId) {
+          dispatch(setSettings({ chainId, account, authorization }));
           dispatch(useWallet(chainId, account, authorization));
         }
       }
