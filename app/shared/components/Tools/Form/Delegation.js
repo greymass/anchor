@@ -67,7 +67,8 @@ class ToolsFormDelegation extends Component<Props> {
       settings,
       system,
       validate,
-      wallet
+      wallet,
+      jurisdictions
     } = this.props;
 
     const {
@@ -96,6 +97,7 @@ class ToolsFormDelegation extends Component<Props> {
           onClose={onClose}
           onConfirm={this.onConfirm}
           system={system}
+          jurisdictions={jurisdictions}
         />
       ) : (
         <WalletPanelLocked

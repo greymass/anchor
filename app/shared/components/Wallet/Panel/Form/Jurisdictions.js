@@ -556,94 +556,98 @@ export default class JurisdictionsForm extends Component<Props> {
         eventSet: true
       });
       document.addEventListener('keydown', (e) => {
-        if (e.keyCode === 27) {
-          this.setState({
-            showModal: false,
-            eventSet: true
-          });
-        } else if (e.keyCode === 16) {
-          this.setState({
-            shiftClicked: true
-          });
-        } else if (e.keyCode === 17) {
-          this.setState({
-            ctrlClicked: true
-          });
-        } else if (e.keyCode === 40 || e.keyCode === 34) {
-          // down
-          e.preventDefault();
-          let arr = [];
-          if (this.state.oneActive.status === 'all') {
-            arr = this.state.options;
-          } else {
-            arr = this.state.choosenOptions;
-          }
-          let item = this.state.oneActive.index;
-          if (this.state.oneActive.index < arr.length - 1) {
-            item += 1;
-          }
-          this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
-        } else if (e.keyCode === 38 || e.keyCode === 33) {
-          // up
-          e.preventDefault();
-          let arr = [];
-          if (this.state.oneActive.status === 'all') {
-            arr = this.state.options;
-          } else {
-            arr = this.state.choosenOptions;
-          }
-          let item = this.state.oneActive.index;
-          if (this.state.oneActive.index !== 0) {
-            item -= 1;
-          }
-          this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
-        } else if (e.keyCode === 37) {
-          // left
-          // e.preventDefault();
-          if (!this.checkSearchBoxesFocus()) {
-            this.handleArrowClick('yours');
-          }
-        } else if (e.keyCode === 39) {
-          // right
-          // e.preventDefault();
-          if (!this.checkSearchBoxesFocus()) {
-            this.handleArrowClick('all');
-          }
-        } else if (e.keyCode === 13) {
-          this.handleArrowClick(this.state.oneActive.status);
-        } else if (e.keyCode === 36) {
-          // home
-          if (!this.checkSearchBoxesFocus()) {
+        if (this.state.showModal) {
+          if (e.keyCode === 27) {
+            this.setState({
+              showModal: false,
+              eventSet: true
+            });
+          } else if (e.keyCode === 16) {
+            this.setState({
+              shiftClicked: true
+            });
+          } else if (e.keyCode === 17) {
+            this.setState({
+              ctrlClicked: true
+            });
+          } else if (e.keyCode === 40 || e.keyCode === 34) {
+            // down
+            e.preventDefault();
             let arr = [];
             if (this.state.oneActive.status === 'all') {
               arr = this.state.options;
             } else {
               arr = this.state.choosenOptions;
             }
-            this.clickedLabel(arr[0], this.state.oneActive.status, arr, true);
-          }
-        } else if (e.keyCode === 35) {
-          // end
-          if (!this.checkSearchBoxesFocus()) {
+            let item = this.state.oneActive.index;
+            if (this.state.oneActive.index < arr.length - 1) {
+              item += 1;
+            }
+            this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
+          } else if (e.keyCode === 38 || e.keyCode === 33) {
+            // up
+            e.preventDefault();
             let arr = [];
             if (this.state.oneActive.status === 'all') {
               arr = this.state.options;
             } else {
               arr = this.state.choosenOptions;
             }
-            this.clickedLabel(arr[arr.length - 1], this.state.oneActive.status, arr, true);
+            let item = this.state.oneActive.index;
+            if (this.state.oneActive.index !== 0) {
+              item -= 1;
+            }
+            this.clickedLabel(arr[item], this.state.oneActive.status, arr, true);
+          } else if (e.keyCode === 37) {
+            // left
+            // e.preventDefault();
+            if (!this.checkSearchBoxesFocus()) {
+              this.handleArrowClick('yours');
+            }
+          } else if (e.keyCode === 39) {
+            // right
+            // e.preventDefault();
+            if (!this.checkSearchBoxesFocus()) {
+              this.handleArrowClick('all');
+            }
+          } else if (e.keyCode === 13) {
+            this.handleArrowClick(this.state.oneActive.status);
+          } else if (e.keyCode === 36) {
+            // home
+            if (!this.checkSearchBoxesFocus()) {
+              let arr = [];
+              if (this.state.oneActive.status === 'all') {
+                arr = this.state.options;
+              } else {
+                arr = this.state.choosenOptions;
+              }
+              this.clickedLabel(arr[0], this.state.oneActive.status, arr, true);
+            }
+          } else if (e.keyCode === 35) {
+            // end
+            if (!this.checkSearchBoxesFocus()) {
+              let arr = [];
+              if (this.state.oneActive.status === 'all') {
+                arr = this.state.options;
+              } else {
+                arr = this.state.choosenOptions;
+              }
+              this.clickedLabel(arr[arr.length - 1], this.state.oneActive.status, arr, true);
+            }
           }
         }
       });
       document.addEventListener('keyup', (e) => {
-        if (e.keyCode === 16) {
-          this.setState({
-            shiftClicked: false
-          });
-        } else if (e.keyCode === 17) {
-          this.setState({
-            ctrlClicked: false
-          });
+        if (this.state.showModal) {
+          if (e.keyCode === 16) {
+            this.setState({
+              shiftClicked: false
+            });
+          } else if (e.keyCode === 17) {
+            this.setState({
+              ctrlClicked: false
+            });
+          }
         }
       });
     }

@@ -74,7 +74,8 @@ class ToolsDelegations extends Component<Props> {
       t,
       tables,
       validate,
-      wallet
+      wallet,
+      jurisdictions
     } = this.props;
 
     const {
@@ -108,6 +109,7 @@ class ToolsDelegations extends Component<Props> {
           system={system}
           validate={validate}
           wallet={wallet}
+          jurisdictions={jurisdictions}
         />
         <Header
           content={t('tools_delegation_header_text')}

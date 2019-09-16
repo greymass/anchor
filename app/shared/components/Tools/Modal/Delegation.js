@@ -22,7 +22,8 @@ class ToolsModalDelegation extends Component<Props> {
       system,
       t,
       validate,
-      wallet
+      wallet,
+      jurisdictions
     } = this.props;
 
     return (
@@ -51,6 +52,7 @@ class ToolsModalDelegation extends Component<Props> {
             system={system}
             validate={validate}
             wallet={wallet}
+            jurisdictions={jurisdictions}
           />
         )}
         icon="microchip"
