@@ -136,6 +136,15 @@ const knownChains = [
     testnet: false
   },
   {
+    _id: 'lynx-testnet',
+    chainId: '0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978',
+    keyPrefix: 'EOS',
+    name: 'Lynx Testnet',
+    node: 'https://lynxtestnet.greymass.com/',
+    symbol: 'SYS',
+    testnet: true
+  },
+  {
     _id: 'meetone-mainnet',
     chainId: 'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422',
     keyPrefix: 'EOS',
@@ -146,7 +155,7 @@ const knownChains = [
   },
   {
     _id: 'remme-testnet',
-    chainId: '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7  ',
+    chainId: '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7',
     keyPrefix: 'EOS',
     name: 'Remme Testnet',
     node: 'https://testchain.remme.io/',
