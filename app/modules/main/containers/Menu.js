@@ -80,12 +80,14 @@ class MenuContainer extends Component<Props> {
       getConstants,
       getGlobals,
       getPriceFeed,
+      getRamStats,
     } = actions;
     if (settings.walletMode !== 'cold' && validate.NODE === 'SUCCESS') {
       sync();
       getConstants();
       getGlobals();
       getPriceFeed();
+      getRamStats();
     }
   }
   render() {
