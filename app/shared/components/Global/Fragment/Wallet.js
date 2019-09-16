@@ -9,20 +9,27 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
     const {
       account,
       authorization,
+      disableAvatar,
       mode,
+      size,
     } = this.props;
     return (
       <Header
-        size="tiny"
+        size={size || 'tiny'}
         style={{
           margin: 0
         }}
       >
-        <Blockies
-          className="ui image"
-          seed={`${account}@${authorization}`}
-        />
-        <Header.Content style={{ minWidth: '10em' }}>
+        {(!disableAvatar)
+          ? (
+            <Blockies
+              className="ui image"
+              seed={`${account}@${authorization}`}
+            />
+          )
+          : false
+        }
+        <Header.Content style={{ minWidth: (disableAvatar) ? 'none' : '10em' }}>
           <React.Fragment>
             {account}
             <Header.Subheader>

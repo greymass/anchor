@@ -32,20 +32,24 @@ class WalletPanelButtonRamSell extends Component<Props> {
       settings,
       system,
       disabled,
-      t
+      t,
+      trigger
     } = this.props;
+    let button = {
+      color: 'blue',
+      content: t('ram_sell_button_cta'),
+      fluid: true,
+      icon: 'database',
+      disabled
+    };
+    if (trigger) {
+      button = trigger;
+    }
     return (
       <GlobalTransactionModal
         actionName="SELLRAM"
         actions={actions}
         blockExplorers={blockExplorers}
-        button={{
-          color: 'blue',
-          content: t('ram_sell_button_cta'),
-          fluid: true,
-          icon: 'database',
-          disabled: disabled
-        }}
         content={(
           <WalletPanelFormRamSell
             account={account}
@@ -57,7 +61,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
             system={system}
           />
         )}
-        icon="database"
+        customTrigger={button}
         title={t('ram_sell_modal_title')}
         settings={settings}
         system={system}

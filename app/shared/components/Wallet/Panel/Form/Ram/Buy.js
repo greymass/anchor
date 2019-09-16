@@ -29,7 +29,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const { account } = props;
 
     this.state = {
-      activeTab: 'byRAMAmount',
+      activeTab: 'byAmount',
       ramUsage: account.ram_usage,
       ramQuota: account.ram_quota,
       ramToBuy: null,
@@ -197,92 +197,96 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const shouldShowForm = !shouldShowConfirm;
 
     return (
-      <Segment
-        loading={system.BUYRAM === 'PENDING'}
-        style={{ minHeight: '100px' }}
-      >
-        {(shouldShowForm)
-          ? (
-            <div>
-              <Menu tabular>
-                <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
-                <Menu.Item name="byAmount" active={activeTab === 'byAmount'} onClick={this.handleTabClick} />
-              </Menu>
-              <Form
-                onKeyPress={this.onKeyPress}
-                onSubmit={this.onSubmit}
-              >
-                <Grid>
-                  <Grid.Column width={8}>
-                    {(activeTab === 'byRAMAmount')
-                      ? (
-                        <WalletPanelFormRamByAmount
-                          amountOfRam={ramToBuy}
-                          connection={connection}
-                          formError={formError}
-                          globals={globals}
-                          onChange={this.onChange}
-                          onError={this.onError}
-                        />
-                      ) : (
-                        <WalletPanelFormRamByCost
-                          connection={connection}
-                          formError={formError}
-                          globals={globals}
-                          onChange={this.onChange}
-                          onError={this.onError}
-                          priceOfRam={priceOfRam}
-                        />
-                      )
-                    }
-                  </Grid.Column>
-                  <Grid.Column width={8}>
-                    <WalletPanelFormRamStats
-                      chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
-                      connection={connection}
-                      ramQuota={ramQuota}
-                      ramUsage={ramUsage}
-                    />
-                  </Grid.Column>
-                </Grid>
+      <React.Fragment>
+        <Menu attached tabular>
+          <Menu.Item name="byAmount" active={activeTab === 'byAmount'} onClick={this.handleTabClick} />
+          <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
+        </Menu>
+        <Segment
+          attached
+          loading={system.BUYRAM === 'PENDING'}
+          style={{ minHeight: '100px' }}
+        >
+          {(shouldShowForm)
+            ? (
+              <div>
 
-                <FormMessageError
-                  style={{ marginTop: '20px' }}
-                  error={formError}
-                />
-                <Divider />
-                <Button
-                  content={t('cancel')}
-                  color="grey"
-                  onClick={onClose}
-                />
-                <Button
-                  content={t('ram_form_button_buy')}
-                  color="green"
-                  disabled={submitDisabled}
-                  floated="right"
-                  primary
-                />
-              </Form>
-            </div>
-          ) : ''}
+                <Form
+                  onKeyPress={this.onKeyPress}
+                  onSubmit={this.onSubmit}
+                >
+                  <Grid>
+                    <Grid.Column width={8}>
+                      {(activeTab === 'byRAMAmount')
+                        ? (
+                          <WalletPanelFormRamByAmount
+                            amountOfRam={ramToBuy}
+                            connection={connection}
+                            formError={formError}
+                            globals={globals}
+                            onChange={this.onChange}
+                            onError={this.onError}
+                          />
+                        ) : (
+                          <WalletPanelFormRamByCost
+                            connection={connection}
+                            formError={formError}
+                            globals={globals}
+                            onChange={this.onChange}
+                            onError={this.onError}
+                            priceOfRam={priceOfRam}
+                          />
+                        )
+                      }
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                      <WalletPanelFormRamStats
+                        chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
+                        connection={connection}
+                        ramQuota={ramQuota}
+                        ramUsage={ramUsage}
+                      />
+                    </Grid.Column>
+                  </Grid>
 
-        {(shouldShowConfirm)
-          ? (
-            <WalletPanelFormRamConfirming
-              buying
-              connection={connection}
-              ramAmount={ramToBuy}
-              newRamAmount={ramQuota + Number(ramToBuy)}
-              chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
-              onBack={this.onBack}
-              onConfirm={this.onConfirm}
-              priceOfRam={priceOfRam}
-              ramQuota={ramQuota}
-              settings={settings}
-            />
-          ) : ''}
-      </Segment>
+                  <FormMessageError
+                    style={{ marginTop: '20px' }}
+                    error={formError}
+                  />
+                  <Divider />
+                  <Button
+                    content={t('cancel')}
+                    color="grey"
+                    onClick={onClose}
+                  />
+                  <Button
+                    content={t('ram_form_button_buy')}
+                    color="green"
+                    disabled={submitDisabled}
+                    floated="right"
+                    primary
+                  />
+                </Form>
+              </div>
+            ) : ''}
+
+          {(shouldShowConfirm)
+            ? (
+              <WalletPanelFormRamConfirming
+                buying
+                connection={connection}
+                ramAmount={ramToBuy}
+                newRamAmount={ramQuota + Number(ramToBuy)}
+                chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
+                onBack={this.onBack}
+                onConfirm={this.onConfirm}
+                priceOfRam={priceOfRam}
+                ramQuota={ramQuota}
+                settings={settings}
+              />
+            ) : ''}
+        </Segment>
+      </React.Fragment>
     );
   }
 }
