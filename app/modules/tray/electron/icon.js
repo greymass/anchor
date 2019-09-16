@@ -11,11 +11,11 @@ const createTrayIcon = (resourcePath, menu) => {
 
   const tray = new Tray(trayIcon);
 
-  tray.on('click', () => {
-    toggleMenu(menu, tray);
-  });
+  // tray.on('right-click', () => {
+  //   toggleMenu(menu, tray);
+  // });
 
-  tray.on('right-click', () => {
+  tray.on('click', () => {
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Debug',
