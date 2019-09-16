@@ -33,8 +33,13 @@ export default function tables(state = initialState, action) {
         scope,
         table,
       } = action.payload;
+      const codeEscaped = code.replace('.', '\\.');
+      const scopeEscaped = scope.replace('.', '\\.');
+      const tableEscaped = table.replace('.', '\\.');
+      const boundsEscaped = bounds.replace('.', '\\.');
 
-      return set(state, `${code}.${scope}.${table}.${bounds}`, { more, rows });
+      console.log(state, codeEscaped, scopeEscaped, tableEscaped, boundsEscaped, more, rows)
+      return set(state, `${codeEscaped}.${scopeEscaped}.${tableEscaped}.${boundsEscaped}`, { more, rows });
     }
     default: {
       return state;
