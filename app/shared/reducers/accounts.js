@@ -1,5 +1,5 @@
 import * as types from '../actions/types';
-import { set } from 'dot-prop-immutable';
+import { get, set } from 'dot-prop-immutable';
 import { sumBy, uniq } from 'lodash';
 import Decimal from 'decimal.js';
 
@@ -16,19 +16,24 @@ export default function accounts(state = initialState, action) {
   switch (action.type) {
     case types.CLEAR_ACCOUNT_CACHE:
     case types.RESET_ALL_STATES: {
-      return initialState;
+      return Object.assign({}, initialState);
     }
     case types.SYSTEM_GETTABLE_SUCCESS: {
-      if (action.payload.code === 'eosio' && action.payload.table === 'delband') {
-        return set(state, `${action.payload.scope}.delegated`, {
+      const account = action.payload.scope.replace('.', '\\.');
+      if (
+        action.payload.code === 'eosio'
+        && action.payload.table === 'delband'
+        && get(state, account, false)
+      ) {
+        return set(state, `${account}.delegated`, {
           rows: action.payload.rows,
           total: sumBy(action.payload.rows, (row) => {
             // Skip any staked balances to avoid duplicate data
             if (row.from === row.to) return 0;
-            // Skip any incoming staked balances
-            if (row.from !== action.payload.scope) return 0;
             // Return sum of both CPU + NET
-            const value = parseFloat(Decimal(row.cpu_weight).add(Decimal(row.net_weight)))
+            const cpu = Decimal(row.cpu_weight.split(' ')[0])
+            const net = Decimal(row.net_weight.split(' ')[0])
+            const value = parseFloat(cpu.add(net));
             return value;
           }),
         });
@@ -36,13 +41,18 @@ export default function accounts(state = initialState, action) {
       return state;
     }
     case types.GET_ACCOUNT_SUCCESS: {
+      const account = action.payload.results.account_name.replace('.', '\\.');
+      // Retain previous delegated state if it exists
+      const delegated = Object.assign({}, {
+        rows: [],
+        total: 0
+      }, get(state, `${account}.delegated`));
       return Object.assign({}, state, {
         __updated: Date.now(),
-        [action.payload.results.account_name]: action.payload.results
+        [action.payload.results.account_name]: Object.assign({}, { delegated }, action.payload.results)
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS: {
-      console.log(action.payload)
       return Object.assign({}, state, {
         __lookups: uniq([
           ...action.payload.accounts.account_names,
