@@ -5,7 +5,7 @@ import { Placeholder, Segment } from 'semantic-ui-react';
 class PromptFragmentPlaceholderTransactionAction extends Component<Props> {
   render() {
     return (
-      <Segment secondary>
+      <React.Fragment>
         <Placeholder
           style={{
             display: 'inline-block',
@@ -44,7 +44,7 @@ class PromptFragmentPlaceholderTransactionAction extends Component<Props> {
         >
           <Placeholder.Image />
         </Placeholder>
-      </Segment>
+      </React.Fragment>
     );
   }
 }

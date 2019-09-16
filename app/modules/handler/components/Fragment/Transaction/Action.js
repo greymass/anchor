@@ -1,50 +1,84 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Icon, Label, Segment } from 'semantic-ui-react';
+import { Button, Icon, Label, List, Segment } from 'semantic-ui-react';
+import { get } from 'dot-prop-immutable';
 import ReactJson from 'react-json-view';
 
 class PromptFragmentTransactionAction extends Component<Props> {
   render() {
     const {
       action,
+      enableWhitelist,
       index,
+      modifyWhitelist,
       t,
+      total,
+      whitelist,
     } = this.props;
     return (
-      <Segment secondary key={index}>
-        <Label basic size="large">
-          #1
-        </Label>
-        <Label color="blue" size="large">
-          Contract
-          <Label.Detail>{action.account}</Label.Detail>
-        </Label>
-        <Label color="blue" size="large">
-          Action
-          <Label.Detail>{action.name}</Label.Detail>
-        </Label>
-        <Segment inverted>
-          <ReactJson
-            displayDataTypes={false}
-            displayObjectSize={false}
-            enableClipboard={false}
-            name={null}
-            src={action.data}
-            style={{ padding: '0.5em' }}
-            theme="harmonic"
-          />
-        </Segment>
-        {action.authorization.map((auth, idx) => (
-          <Label basic key={`${idx}@${auth.actor}@${auth.permission}`}>
-            <Icon name="pencil" />
-            Authorization:
-            <Label.Detail>
-              {auth.actor}@{auth.permission}
-            </Label.Detail>
+      <React.Fragment key={index}>
+        <Segment attached="top" color="blue" inverted>
+          <Label basic size="large">
+            {action.account}
+            <Icon
+              name="caret right"
+              style={{ marginLeft: '1em' }}
+            />
+            {action.name}
           </Label>
-        ))}
-      </Segment>
+          <Label color="blue" size="large">
+            Action {index + 1} of {total}
+          </Label>
+        </Segment>
+        <Segment attached secondary>
+          <List relaxed size="large">
+            {Object.keys(action.data).sort().map((k) => {
+              const isFlexible = get(whitelist, `flexible.${index}.${k}`, false)
+              return (
+                <List.Item>
+                  {(enableWhitelist)
+                    ? (
+                      <Button
+                        basic
+                        color={(isFlexible) ? 'green' : 'grey'}
+                        // style={{ background: 'white' }}
+                        size="large"
+                        floated="left"
+                        icon
+                        index={index}
+                        name={k}
+                        onClick={modifyWhitelist}
+                      >
+                        <Icon
+                          name={(isFlexible) ? 'lock open' : 'lock'}
+                        />
+                      </Button>
+                    )
+                    : false
+                  }
+                  <List.Content>
+                    {k}
+                    <List.Header
+                      style={{ marginTop: '0.25em' }}
+                    >
+                      {action.data[k]}
+                    </List.Header>
+                  </List.Content>
+                </List.Item>
+              );
+            })}
+          </List>
+        </Segment>
+        <Segment attached="bottom">
+          {action.authorization.map((auth, idx) => (
+            <Label color="blue" key={`${idx}@${auth.actor}@${auth.permission}`}>
+              <Icon name="pencil" />
+              {auth.actor}@{auth.permission}
+            </Label>
+          ))}
+        </Segment>
+      </React.Fragment>
     );
   }
 }

@@ -71,11 +71,6 @@ const configureIPC = (ui, primary = false) => {
       ui.webContents.setZoomFactor(size.zoom)
     });
   }
-
-  ipcMain.on('openUri', (event, url) => {
-    ui.show();
-    ui.webContents.send('openUri', url);
-  });
 };
 
 module.exports = { configureIPC };

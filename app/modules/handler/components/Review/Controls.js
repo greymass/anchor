@@ -9,8 +9,11 @@ class PromptReviewControls extends Component<Props> {
     const {
       callback,
       chainId,
+      couldSignWithDevice,
+      enableWhitelist,
       onCheck,
       onSelect,
+      onWhitelist,
       settings,
       t,
       wallet,
@@ -44,11 +47,15 @@ class PromptReviewControls extends Component<Props> {
             Use the controls below to configure how this request will be processed.
           </Header.Subheader>
         </Header>
-        <Divider />
         <Form.Field>
           <label>
-            <Icon name="user" />
-            Signing Account
+            <Icon
+              name="user"
+              style={{
+                marginRight: '0.5em',
+              }}
+            />
+            Account
           </label>
           <GlobalAccountDropdownSelect
             account={account}
@@ -63,16 +70,39 @@ class PromptReviewControls extends Component<Props> {
           ? (
             <Form.Field>
               <label>
-                <Icon name="cogs" />
-                Signing Preferences
+                <Icon
+                  name="cogs"
+                  style={{
+                    marginRight: '0.5em',
+                  }}
+                />
+                Preferences
               </label>
-              <Segment style={{ marginTop: 0 }}>
+              <Segment basic style={{ marginTop: 0 }}>
                 <Form.Checkbox
                   checked={settings.eosio_signbroadcast}
-                  label="Broadcast transaction automatically after signing."
+                  label="Broadcast Transaction"
                   name="eosio_signbroadcast"
                   onChange={onCheck}
+                  toggle
                 />
+                {(
+                  // Using a device prevents whitelists from working
+                  !couldSignWithDevice
+                  // Disable this option for now, not production ready.
+                  && true === false
+                )
+                  ? (
+                    <Form.Checkbox
+                      checked={enableWhitelist}
+                      label="Add Transaction to Whitelist"
+                      name="eosio_whitelist"
+                      onChange={onWhitelist}
+                      toggle
+                    />
+                  )
+                  : false
+                }
                 <Form.Checkbox
                   checked
                   label="Increase privacy by using anonymous callback proxy"
