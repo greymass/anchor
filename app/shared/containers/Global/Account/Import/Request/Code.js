@@ -23,6 +23,7 @@ class GlobalModalAccountImportRequestCode extends Component<Props> {
           <p>2) Select a public key from storage to use for active.</p>
           <p>3) Select a public key from storage to use for owner.</p>
           <p>4) Click Generate Request, which saves the request into an array within settings. The name, active, owner public keys are within this object, along with the creation date, and the request code itself.</p>
+          <p>5) Request Code should be displayed</p>
         </Segment>
       </Tab.Pane>
     );
