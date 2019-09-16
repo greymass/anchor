@@ -134,9 +134,12 @@ class ContractInterfaceTabTables extends Component<Props> {
                       {rows.map((row) => (
                         <Table.Row>
                           {fields.map((field) => {
-                            let data = row[field.name]
+                            let data = row[field.name];
                             if (field.name === 'packed_transaction') {
                               data = row.unpacked_transaction;
+                            }
+                            if (field.name === 'jurisdictions') {
+                              data = row.jurisdiction;
                             }
                             return (
                               <Table.Cell verticalAlign="top">
