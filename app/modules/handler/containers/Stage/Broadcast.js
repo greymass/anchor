@@ -38,7 +38,7 @@ class PromptStageReview extends Component<Props> {
             <Form.Field>
               <label>Raw Signature</label>
               <Form.TextArea
-                rows={2}
+                rows={4}
                 value={signatures.join('\n')}
               />
             </Form.Field>
@@ -51,7 +51,13 @@ class PromptStageReview extends Component<Props> {
               One final opportunity to review the actions in this transaction before broadcasting it to the blockchain.
             </Header.Subheader>
           </Header>
-          {tx.actions.map((action) => <PromptFragmentTransactionAction action={action} />)}
+          {tx.actions.map((action, index) => (
+            <PromptFragmentTransactionAction
+              action={action}
+              index={index}
+              total={tx.actions.length}
+            />
+          ))}
         </Grid.Column>
       </Grid>
     );

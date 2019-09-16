@@ -13,11 +13,15 @@ import PromptFragmentTransactionAction from '../../components/Fragment/Transacti
 class PromptStageReview extends Component<Props> {
   render() {
     const {
+      couldSignWithDevice,
+      enableWhitelist,
+      modifyWhitelist,
       onShareLink,
       prompt,
       settings,
       system,
       wallet,
+      whitelist,
     } = this.props;
     const {
       chainId,
@@ -34,8 +38,11 @@ class PromptStageReview extends Component<Props> {
           <PromptReviewControls
             callback={callback}
             chainId={chainId}
+            couldSignWithDevice={couldSignWithDevice}
+            enableWhitelist={enableWhitelist}
             onCheck={this.props.onCheck}
             onSelect={this.props.swapAccount}
+            onWhitelist={this.props.onWhitelist}
             settings={settings}
             wallet={wallet}
           />
@@ -59,8 +66,11 @@ class PromptStageReview extends Component<Props> {
             ? tx.actions.map((action, index) => (
               <PromptFragmentTransactionAction
                 action={action}
-                key={index}
+                enableWhitelist={enableWhitelist}
+                modifyWhitelist={modifyWhitelist}
                 index={index}
+                total={tx.actions.length}
+                whitelist={whitelist}
               />
             ))
             : false
