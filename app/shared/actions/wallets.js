@@ -382,10 +382,6 @@ export function useWallet(chainId, account, authorization) {
         });
       }
     }
-    if (newWallet.mode !== 'cold') {
-      // Update the account in local state
-      dispatch(getAccount(account));
-    }
     if (newWallet.account !== wallet.account || newWallet.authorization !== wallet.authorization) {
       // Set the active wallet to remember the last used
       return dispatch({
