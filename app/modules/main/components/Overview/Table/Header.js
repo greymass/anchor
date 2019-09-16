@@ -52,6 +52,14 @@ class OverviewTableHeader extends Component<Props> {
                 <Table.HeaderCell textAlign="right">
                   Staked
                 </Table.HeaderCell>
+                {(supportedContracts && supportedContracts.includes('rex'))
+                  ? (
+                    <Table.HeaderCell textAlign="right">
+                      REX
+                    </Table.HeaderCell>
+                  )
+                  : false
+                }
                 <Table.HeaderCell textAlign="right">
                   Delegated
                 </Table.HeaderCell>
