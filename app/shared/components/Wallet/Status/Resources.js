@@ -24,7 +24,7 @@ class WalletStatusResources extends Component<Props> {
       <Segment stacked>
         <Header dividing size="small">
           {(displayResourcesAvailableSetting)
-          ? (
+            ? (
               t('wallet_status_resources_title_available')
             ) : (
               t('wallet_status_resources_title_used')

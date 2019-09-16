@@ -2,11 +2,14 @@
 import React, { Component } from 'react';
 import { Header, Table } from 'semantic-ui-react';
 import { isEmpty, map, uniq } from 'lodash';
+import { Link } from 'react-router-dom';
 
 import ExplorerLink from '../../../../shared/containers/Global/Blockchain/ExplorerLink';
 import OverviewTableHeader from './Table/Header';
-import GlobalAccountFragmentRamPercent from '../../../../shared/containers/Global/Account/Fragment/RamPercent';
-import GlobalAccountFragmentResourcePercent from '../../../../shared/containers/Global/Account/Fragment/ResourcePercent';
+import GlobalAccountLink from '../../../../shared/containers/Global/Account/Link';
+import GlobalAccountFragmentRamPercent from '../../../../shared/containers/Global/Account/Fragment/Ram/Percent';
+import GlobalAccountFragmentResourcePercent from '../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
+import GlobalAccountFragmentREXBalance from '../../../../shared/containers/Global/Account/Fragment/REX/Balance';
 import GlobalAccountFragmentStaleness from '../../../../shared/containers/Global/Account/Fragment/Staleness';
 import GlobalAccountFragmentSystemTokenBalance from '../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
 import GlobalAccountFragmentSystemTokenValue from '../../../../shared/containers/Global/Account/Fragment/SystemTokenValue';
@@ -78,13 +81,7 @@ class OverviewTable extends Component<Props> {
             {accountNames.map((accountName) => (
               <Table.Row>
                 <Table.Cell collapsing textAlign="right">
-                  <Header size="small">
-                    <ExplorerLink
-                      content={accountName}
-                      linkData={accountName}
-                      linkType="account"
-                    />
-                  </Header>
+                  <GlobalAccountLink account={accountName} />
                 </Table.Cell>
                 {(view === 'systemtokens')
                   ? (
@@ -132,6 +129,19 @@ class OverviewTable extends Component<Props> {
                           token={chainSymbol}
                         />
                       </Table.Cell>
+                      {(supportedContracts && supportedContracts.includes('rex'))
+                        ? (
+                          <Table.Cell textAlign="right">
+                            <GlobalAccountFragmentREXBalance
+                              account={accountName}
+                              chainId={settings.chainId}
+                              contract="eosio"
+                              token={chainSymbol}
+                            />
+                          </Table.Cell>
+                        )
+                        : false
+                      }
                       <Table.Cell textAlign="right">
                         <GlobalAccountFragmentTokenDelegated
                           account={accountName}

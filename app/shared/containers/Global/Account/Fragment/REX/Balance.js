@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
+import { isEmpty, sum, sumBy } from 'lodash';
 
-class GlobalAccountFragmentTokenStaked extends PureComponent<Props> {
+class GlobalAccountFragmentREXBalance extends PureComponent<Props> {
   render() {
     const {
       balance,
@@ -22,25 +23,17 @@ class GlobalAccountFragmentTokenStaked extends PureComponent<Props> {
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace('.', '\\.');
-  const path = `accounts.${account}.self_delegated_bandwidth`;
-  const cpuWeight = get(state, `${path}.cpu_weight`, false);
-  const netWeight = get(state, `${path}.net_weight`, false);
-  if (cpuWeight === false || netWeight === false) {
-    return ({
-      balance: false
-    });
-  }
-  const cpu = parseFloat(cpuWeight.split(' ')[0]);
-  const net = parseFloat(netWeight.split(' ')[0]);
+  const loaded = !isEmpty(get(state, `tables.eosio.eosio.rexbal.${account}`));
+  const defaultValue = loaded ? 0 : false;
+  const rows = get(state, `tables.eosio.eosio.rexbal.${account}.rows`, defaultValue);
   return ({
-    balance: cpu + net
+    balance: parseFloat(sumBy(rows, 'vote_stake'))
   });
 };
 
 export default compose(
   translate('global'),
   connect(mapStateToProps)
-)(GlobalAccountFragmentTokenStaked);
+)(GlobalAccountFragmentREXBalance);
