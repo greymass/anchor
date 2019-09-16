@@ -14,7 +14,7 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
       lng,
       precision,
     } = this.props;
-    if (balance === false) return <Icon color="grey" name="clock outline" />;
+    if (balance === false) return '...';
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: precision });
     return (
       <span className={(parseFloat(balance, 10) === 0) ? 'nil' : false}>
@@ -26,10 +26,15 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
 
 const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace('.', '\\.');
-  const loaded = !isEmpty(get(state, `balances.${account}`));
+  const loaded = !isEmpty(get(state, `balances.${account}.${ownProps.token}`));
   const defaultValue = loaded ? 0 : false;
+  // Allow override as prop to use formatting
+  let balance = get(state, `balances.${account}.${ownProps.token}`, defaultValue);
+  if (ownProps.balance) {
+    balance = ownProps.balance;
+  }
   return {
-    balance: get(state, `balances.${account}.${ownProps.token}`, defaultValue),
+    balance,
     precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, 4),
   };
 };
