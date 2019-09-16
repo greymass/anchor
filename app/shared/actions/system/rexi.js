@@ -185,7 +185,7 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
     }
     method = 'transaction';
     params = {
-      broadcast: connecion.broadcast,
+      broadcast: connection.broadcast,
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     };
@@ -206,7 +206,7 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
       dispatch(getAccount(settings.account));
       dispatch(getCurrencyBalance(settings.account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
-      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.accoun));
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account));
       dispatch(getCPULoans());
       dispatch(getNETLoans());
     }, 1000);
