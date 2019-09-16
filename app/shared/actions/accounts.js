@@ -3,7 +3,7 @@ import { difference, find, forEach, intersection, map, orderBy, pick, reduce, so
 import * as types from './types';
 import eos from './helpers/eos';
 import { addCustomTokenBeos } from './settings';
-import { getTable } from './table';
+import { getTable, getTableByBounds } from './table';
 import { httpQueue, httpClient } from '../utils/httpClient';
 
 const ecc = require('eosjs-ecc');
@@ -175,7 +175,7 @@ export function getAccount(account = '') {
     } = getState();
     if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
       eos(connection).getAccount(account).then((results) =>
-        dispatch(processLoadedAccount(account, results)))
+        dispatch(processLoadedAccount(connection.chainId, account, results)))
         .catch((err) => dispatch({
           type: types.GET_ACCOUNT_FAILURE,
           payload: { err, account_name: account },
@@ -195,14 +195,18 @@ export function getDelegatedBalances(account) {
   };
 }
 
-export function processLoadedAccount(account, results) {
+export function processLoadedAccount(chainId, account, results) {
   return (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
-    // Trigger the action to load this accounts balances
+    // get currency balances
     dispatch(getCurrencyBalance(account));
+    // get delegated balances
     dispatch(getDelegatedBalances(account));
+    // get rex balances
+    dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
+    dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
     // PATCH - Force in self_delegated_bandwidth if it doesn't exist
     const modified = Object.assign({}, results);
     if (!modified.self_delegated_bandwidth) {
@@ -218,7 +222,11 @@ export function processLoadedAccount(account, results) {
     // Dispatch the results of the account itself
     return dispatch({
       type: types.GET_ACCOUNT_SUCCESS,
-      payload: { results: modified }
+      payload: {
+        account,
+        chainId,
+        results: modified
+      }
     });
   };
 }
@@ -235,7 +243,7 @@ export function getAccounts(accounts = []) {
           })
           .then((response) =>
             forEach(response.data, (results) =>
-              dispatch(processLoadedAccount(results.account_name, results))))
+              dispatch(processLoadedAccount(connection.chainId, results.account_name, results))))
           .catch((err) => dispatch({
             type: types.GET_ACCOUNTS_FAILURE,
             payload: { err }
@@ -374,7 +382,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
               }))
               .catch((err) => dispatch({
                 type: types.GET_ACCOUNT_BALANCE_FAILURE,
-                payload: { err, account_name: account }
+                payload: { err, account_name: account, contract, symbol }
               }));
           });
           return selectedTokens;
