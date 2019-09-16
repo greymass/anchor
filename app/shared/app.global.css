@@ -4,15 +4,6 @@ body {
   background: #f1f0ee;
 }
 
-/* .ui.top.aligned.page.modals {
-  padding-top: 3em;
-} */
-
-.modals.dimmer .ui.scrolling.modal,
-.modals.dimmer[class*="top aligned"] .modal {
-  /* margin: 12vh auto; */
-}
-
 span.nil {
   color: #acacac;
 }
