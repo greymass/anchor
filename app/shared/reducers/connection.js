@@ -41,8 +41,9 @@ export default function connection(state = initialState, action) {
       });
     }
     // Update httpEndpoint based on node validation/change
+    case types.VALIDATE_NODE_FAILURE:
     case types.VALIDATE_NODE_SUCCESS: {
-      const { blockchain, settings, useImmediately } = action.payload;
+      const { blockchain, err, settings, useImmediately } = action.payload;
       const { account, authorization } = settings;
       // Prevent connection from changing if this was just a validation call
       if (!useImmediately) {
@@ -54,9 +55,10 @@ export default function connection(state = initialState, action) {
           authorization || 'active',
         ].join('@'),
         chain: (blockchain && blockchain.name) || 'EOS Mainnet',
-        chainId: action.payload.info.chain_id,
+        chainId: (action.payload.info) ? action.payload.info.chain_id : settings.chainId,
         chainKey: (blockchain && blockchain._id) || 'eos-mainnet',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
+        err,
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
         supportedContracts: (blockchain) ? blockchain.supportedContracts : [],

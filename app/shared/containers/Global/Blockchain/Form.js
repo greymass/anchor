@@ -25,7 +25,7 @@ class GlobalBlockchainForm extends Component<Props> {
       showAdvanced: !!(props.chainId === 'new'),
       values: Object.assign({}, props.blockchain),
       valids: {
-        endpoint: props.settings.walletMode === 'cold' || false
+        endpoint: true //props.settings.walletMode === 'cold' || false
       },
     };
   }
@@ -34,18 +34,18 @@ class GlobalBlockchainForm extends Component<Props> {
     let derived = {};
     if (state.values.node) {
       if (validate.NODE === 'PENDING') {
-        derived = set(state, 'valids.endpoint', false);
-        derived = set(derived, 'loading.endpoint', true);
+        // derived = set(state, 'valids.endpoint', false);
+        // derived = set(derived, 'loading.endpoint', true);
         derived = set(state, 'errors', {});
       }
       if (validate.NODE === 'FAILURE') {
-        derived = set(state, 'errors.endpoint', 'undefined');
+        // derived = set(state, 'errors.endpoint', 'undefined');
         derived = del(derived, 'loading.endpoint');
       }
       if (validate.NODE === 'SUCCESS') {
         derived = set(state, 'errors', {});
-        derived = set(state, 'valids.endpoint', true);
-        derived = del(derived, 'loading.endpoint');
+        // derived = set(state, 'valids.endpoint', true);
+        // derived = del(derived, 'loading.endpoint');
       }
     }
     return derived;
@@ -60,7 +60,7 @@ class GlobalBlockchainForm extends Component<Props> {
       node
     } = this.state.values;
     if (settings.walletMode !== 'cold' && node && chainId) {
-      this.props.actions.validateNode(node, chainId);
+      // this.props.actions.validateNode(node, chainId);
     }
   }
   showAdvanced = () => this.setState({ showAdvanced: !this.state.showAdvanced });
@@ -81,7 +81,9 @@ class GlobalBlockchainForm extends Component<Props> {
   onNodeChange = (e, { name, valid, value }) => this.setState({
     values: set(this.state.values, name, value),
     valids: set(this.state.valids, name, valid),
-  }, () => this.props.actions.validateNode(value, this.state.values.chainId, false))
+  }, () => {
+    // this.props.actions.validateNode(value, this.state.values.chainId, false)
+  })
   onSelect = (e, { name, value }) => this.setState({
     values: set(this.state.values, name, value)
   })
