@@ -33,8 +33,10 @@ const mapStateToProps = (state, ownProps) => {
       balance: false
     });
   }
+  // console.log(account, cpuWeight, netWeight)
   const cpu = parseFloat(cpuWeight.split(' ')[0]);
   const net = parseFloat(netWeight.split(' ')[0]);
+  // console.log(cpu, net)
   return ({
     balance: cpu + net
   });

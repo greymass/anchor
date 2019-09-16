@@ -72,7 +72,7 @@ class SidebarContainer extends Component<Props> {
               width: ((settings.sidebarCollapsed) ? '2em' : '7em'),
             }}
           />
-            Home
+          Home
         </Menu.Item>
         {(
           settings.walletMode !== 'cold'
@@ -98,9 +98,9 @@ class SidebarContainer extends Component<Props> {
               </Menu.Item>
               <Menu.Item
                 as="a"
-                active={module && module.startsWith('resources')}
+                active={module && module.startsWith('account')}
                 onClick={this.onClick}
-                name="resources"
+                name={`account/${settings.account}`}
                 color="blue"
                 style={{ color }}
               >

@@ -16,7 +16,7 @@ const persistConfig = {
     'settings',
     'storage',
     'wallet',
-    'wallets'
+    'wallets',
   ]
 };
 
