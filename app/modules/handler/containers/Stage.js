@@ -27,6 +27,7 @@ import PromptActionSignBroadcast from '../components/Actions/SignBroadcast';
 import PromptActionUnlock from '../components/Actions/Unlock';
 
 import URIActions from '../actions/uri';
+import WhitelistActions from '../actions/whitelist';
 import * as HardwareLedgerActions from '../../../shared/actions/hardware/ledger';
 import { setSetting } from '../../../shared/actions/settings';
 import { unlockWalletByAuth } from '../../../shared/actions/wallet';
@@ -85,12 +86,19 @@ class PromptStage extends Component<Props> {
       actions,
       blockchain,
       prompt,
-      wallet
+      wallet,
+      whitelist,
     } = this.props;
     const {
       callback,
     } = prompt;
     const { tx } = prompt;
+    if (
+      whitelist.actions
+      && whitelist.actions.length
+    ) {
+      actions.addWhitelist(blockchain, wallet, whitelist);
+    }
     actions.signURI(tx, blockchain, wallet, true, callback);
   }
   onUnlock = (password) => {
@@ -104,10 +112,13 @@ class PromptStage extends Component<Props> {
     const {
       availableKeys,
       blockchain,
+      enableWhitelist,
       hasBroadcast,
       hasExpired,
+      modifyWhitelist,
       onClose,
       onShareLink,
+      onWhitelist,
       prompt,
       requestedActorMissing,
       settings,
@@ -116,6 +127,7 @@ class PromptStage extends Component<Props> {
       t,
       validate,
       wallet,
+      whitelist,
     } = this.props;
 
     const awaitingDevice = (system.EOSIOURISIGN === 'PENDING');
@@ -135,6 +147,7 @@ class PromptStage extends Component<Props> {
 
     const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
     const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
+    const couldSignWithDevice = ['ledger'].includes(wallet.mode);
     const canSignWithDevice = (wallet.mode === 'ledger' && status === 'connected');
     const canSign = (canSignWithKey || canSignWithDevice);
 
@@ -151,11 +164,16 @@ class PromptStage extends Component<Props> {
 
     let stage = (
       <PromptStageReview
+        couldSignWithDevice={couldSignWithDevice}
+        enableWhitelist={enableWhitelist}
+        modifyWhitelist={modifyWhitelist}
         onCheck={this.onCheck}
         onShareLink={onShareLink}
+        onWhitelist={onWhitelist}
         prompt={prompt}
         swapAccount={this.props.swapAccount}
         wallet={wallet}
+        whitelist={whitelist}
       />
     );
 
@@ -298,8 +316,30 @@ class PromptStage extends Component<Props> {
 
     return (
       <React.Fragment>
+        {(error && error.type !== 'forbidden')
+          ? (
+            <Segment attached size="large" color="red" inverted>
+              {(error.message)
+                ? (
+                  <Header>
+                    <Icon name="warning sign" />
+                    <Header.Content>
+                      There was a problem with this transaction
+                      <Header.Subheader style={{ color: 'white' }}>
+                        {error.message}
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                )
+                : false
+              }
+            </Segment>
+          )
+          : false
+        }
         <Segment
           attached="bottom"
+          padded
           style={{
             marginBottom: 0
           }}
@@ -329,35 +369,6 @@ class PromptStage extends Component<Props> {
             warning
           />
         )}
-        {(error && error.type !== 'forbidden')
-          ? (
-            <Segment size="large" color="red" inverted>
-              {(error.message)
-                ? (
-                  <Header>
-                    <Icon name="warning sign" />
-                    <Header.Content>
-                      There was a problem with this transaction
-                      <Header.Subheader style={{ color: 'white' }}>
-                        {error.message}
-                      </Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                )
-                : false
-              }
-            </Segment>
-          )
-          : false
-        }
-        <Segment
-          basic
-          clearing
-          style={{ margin: 0 }}
-        >
-          {nextAction}
-          {cancelAction}
-        </Segment>
         {(wallet && wallet.mode === 'watch')
           ? (
             <Segment color="orange" style={{ margin: 0 }}>
@@ -374,12 +385,21 @@ class PromptStage extends Component<Props> {
           )
           : false
         }
+        <Segment
+          basic
+          clearing
+          style={{ margin: 0 }}
+        >
+          {nextAction}
+          {cancelAction}
+        </Segment>
       </React.Fragment>
     );
   }
 }
 
 function mapStateToProps(state) {
+  console.log(state.whitelist)
   return {
     availableKeys: state.auths.keystore.map((auth) => auth.pubkey),
     blockchains: state.blockchains,
@@ -397,6 +417,7 @@ function mapDispatchToProps(dispatch) {
       setSetting,
       unlockWalletByAuth,
       ...URIActions,
+      ...WhitelistActions,
     }, dispatch)
   };
 }
