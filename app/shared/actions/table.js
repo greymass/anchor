@@ -18,17 +18,23 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
       limit,
     };
     if (index && previous) {
-      // Adding a space in front of every lower bounds
-      //   related: https://github.com/EOSIO/eos/issues/4442
-      query.lower_bound = ` ${previous[previous.length - 1][index]}`;
-      query.table_key = index;
+      if (table === 'infojurisdic') {
+        index = 'name';
+        query.lower_bound = `${previous[previous.length - 1][index]}`;
+        query.table_key = index;
+      } else {
+        // Adding a space in front of every lower bounds
+        //   related: https://github.com/EOSIO/eos/issues/4442
+        query.lower_bound = ` ${previous[previous.length - 1][index]}`;
+        query.table_key = index;
+      }
     }
 
     if (!connection.httpEndpoint) {
       return;
     }
 
-    const results = await eos(connection).getTableRows(query)
+    const results = await eos(connection).getTableRows(query);
     const { more } = results;
     let { rows } = results;
     // If previous rows were returned
