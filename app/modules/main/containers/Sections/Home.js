@@ -31,12 +31,13 @@ class HomeContainer extends Component<Props> {
       history,
       settings,
       wallets,
+      validate,
     } = this.props;
     if (!settings.walletInit) {
       history.push('/home/init');
     } else if (!settings.chainId || settings.blockchains.length === 0) {
       history.push('/home/blockchains');
-    } else if (!wallets || wallets.length === 0) {
+    } else if (validate.NODE === 'SUCCESS' && (!wallets || wallets.length === 0)) {
       history.push('/home/accounts');
     } else if (settings.walletMode === 'cold') {
       history.push('/home/coldwallet');
@@ -48,7 +49,7 @@ class HomeContainer extends Component<Props> {
     } = this.props;
     let interrupt;
     if (upgradable) {
-      interrupt = <HomeUpgradeContainer />
+      interrupt = <HomeUpgradeContainer />;
     }
     return (
       <React.Fragment>
@@ -79,6 +80,7 @@ function mapStateToProps(state) {
     wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId)),
     // Determine if any wallets require an upgrade from v1
     upgradable: state.wallets.filter(w => w.data).length,
+    validate: state.validate,
   };
 }
 
