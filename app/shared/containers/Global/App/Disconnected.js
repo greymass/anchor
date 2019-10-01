@@ -13,13 +13,21 @@ import { find } from 'lodash';
 
 import DangerLink from '../../../containers/Global/DangerLink';
 import { setSettingWithValidation } from '../../../actions/settings';
+import { changeModule } from '../../../../modules/main/actions/navigation';
 
 class DisconnectedContainer extends Component<Props> {
-  state = { open: false }
+  state = {
+    // if modal is open
+    open: false,
+    // if modal has been force closed
+    force: false,
+  }
   componentDidUpdate(prevProps) {
-    const { validate} = this.props;
+    const { validate } = this.props;
+    const { force } = this.state;
     if (
       !this.state.open
+      && !force
       && prevProps.validate.NODE === 'PENDING'
       && validate.NODE === 'FAILURE'
     ) {
@@ -28,9 +36,21 @@ class DisconnectedContainer extends Component<Props> {
       });
     }
   }
-  onClose = () => this.setState({ open: false })
+  onClose = () => this.setState({ open: false, force: true })
   onOpen = () => this.setState({ open: true })
   onRetry = () => this.props.actions.setSettingWithValidation('node', this.props.blockchain.node)
+  manageBlockchains = () => {
+    const { actions, blockchain } = this.props;
+    this.setState({ open: false, force: true }, () => {
+      actions.changeModule(`home/blockchains/${blockchain.chainId}`);
+    });
+  }
+  apiTester = () => {
+    const { actions } = this.props;
+    this.setState({ open: false, force: true }, () => {
+      actions.changeModule('tools/api_ping');
+    });
+  }
   render() {
     const {
       blockchain,
@@ -117,7 +137,6 @@ class DisconnectedContainer extends Component<Props> {
                   <Header>Disconnected</Header>
                   <p>You can continue to use Anchor even while disconnected, but no new data can be retrieved about your accounts. You will also be unable to perform actions until you reconnect to a server.</p>
                   <p>A red warning icon will be displayed in the upper left of the main interface to indicate you are disconnected, and clicking it will bring up this dialog.</p>
-
                 </Segment>
               </Grid.Column>
               <Grid.Column>
@@ -127,26 +146,33 @@ class DisconnectedContainer extends Component<Props> {
                     If you are unable to reconnect with the blockchain using this API node, use the tools below to change to a new API node.
                   </Header.Subheader>
                 </Header>
-
+                {(blockchain.supportedContracts && blockchain.supportedContracts.includes('producerinfo'))
+                  ? (
+                    <React.Fragment>
+                      <Segment basic>
+                        <p>If you'd like to benchmark publicly available APIs to see which are best for you, use the API Performance Analysis tool and select a new server.</p>
+                        <Button
+                          color="blue"
+                          content="Run API Analysis"
+                          fluid
+                          icon="search"
+                          onClick={this.apiTester}
+                        />
+                      </Segment>
+                      <Divider content="OR" horizontal />
+                    </React.Fragment>
+                  )
+                  : false
+                }
                 <Segment basic>
-                  <p>To specify a new blockchain API server to connect with, click the button below.</p>
+                  <p>To specify a new blockchain API server to connect with, click the button below and enter a new server in the <strong>Default Node</strong> field.</p>
                   <Button
                     color="blue"
                     content="Edit Blockchain"
                     fluid
                     icon="pencil"
+                    onClick={this.manageBlockchains}
                   />
-                </Segment>
-                <Divider content="OR" horizontal />
-                <Segment basic>
-                  <p>If you'd like to benchmark publicly available APIs to see which are best for you, use the API Performance Analysis tool and select a new server.</p>
-                  <Button
-                    color="blue"
-                    content="Run API Analysis"
-                    fluid
-                    icon="search"
-                  />
-
                 </Segment>
               </Grid.Column>
             </Grid.Row>
@@ -175,6 +201,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      changeModule,
       setSettingWithValidation,
     }, dispatch)
   };
