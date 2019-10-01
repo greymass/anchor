@@ -69,14 +69,14 @@ class ProducersTableRow extends Component<Props> {
                   icon={isSelected ? 'checkmark box' : 'minus square outline'}
                   onClick={
                     (isSelected)
-                    ? () => removeProducer(producer.owner)
-                    : () => addProducer(producer.owner)
+                      ? () => removeProducer(producer.owner)
+                      : () => addProducer(producer.owner)
                   }
                   size="small"
                 />
               )}
             />
-            )}
+          )}
         </Table.Cell>
         <Table.Cell
           singleLine
