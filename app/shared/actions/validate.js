@@ -113,7 +113,8 @@ export function validateNode(
               return dispatch({
                 type: types.VALIDATE_NODE_FAILURE,
                 payload: {
-                  error: 'mismatch_chainid'
+                  error: 'mismatch_chainid',
+                  settings,
                 }
               });
             }
