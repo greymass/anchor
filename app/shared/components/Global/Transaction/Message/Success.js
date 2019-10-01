@@ -20,14 +20,16 @@ class GlobalTransactionMessageSuccess extends Component<Props> {
     const links = [];
 
     if (blockExplorers && transaction) {
-      links.push(<ExplorerLink
-        blockExplorers={blockExplorers}
-        content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
-        linkData={transaction.transaction_id}
-        linkBlockId={transaction.processed.block_num}
-        linkType="txid"
-        settings={settings}
-      />);
+      if (transaction.processed && transaction.transaction_id) {
+        links.push(<ExplorerLink
+          blockExplorers={blockExplorers}
+          content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
+          linkData={transaction.transaction_id}
+          linkBlockId={transaction.processed.block_num}
+          linkType="txid"
+          settings={settings}
+        />);
+      }
     }
     if (blockExplorers && transactions) {
       transactions.map((tx) =>
