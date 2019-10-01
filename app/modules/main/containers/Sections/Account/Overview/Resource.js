@@ -5,27 +5,18 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
-import { Button, Container, Divider, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
 
-import GlobalAccountFragmentRamPercent from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Percent';
 import GlobalAccountFragmentResourcePercent from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
 import GlobalAccountFragmentResourceProgress from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Progress';
 import GlobalAccountFragmentResourceStaked from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked';
-import GlobalAccountFragmentResourceStakedDelegated from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Delegated';
 import GlobalAccountFragmentResourceStakedSelf from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Self';
 import GlobalAccountFragmentResourceUsage from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Usage';
 import GlobalAccountFragmentResourceMax from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Max';
-import GlobalAccountFragmentStaleness from '../../../../../../shared/containers/Global/Account/Fragment/Staleness';
-import GlobalAccountFragmentSystemTokenBalance from '../../../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
-import GlobalAccountFragmentSystemTokenValue from '../../../../../../shared/containers/Global/Account/Fragment/SystemTokenValue';
-import GlobalAccountFragmentTokenBalance from '../../../../../../shared/containers/Global/Account/Fragment/TokenBalance';
-import GlobalAccountFragmentTokenDelegated from '../../../../../../shared/containers/Global/Account/Fragment/TokenDelegated';
 import GlobalAccountFragmentTokenRefunding from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
-import GlobalAccountFragmentTokenStaked from '../../../../../../shared/containers/Global/Account/Fragment/TokenStaked';
-import GlobalAccountFragmentVoterInfoVotes from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Votes';
-import GlobalAccountFragmentVoterInfoEffectiveness from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Effectiveness';
-import GlobalAccountFragmentVoterInfoWeightValue from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/WeightValue';
-import GlobalAccountFragmentVoterInfoProxy from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Proxy';
+
+import GlobalButtonStake from '../../../../../../shared/containers/Global/Button/Stake';
+import GlobalButtonUnstake from '../../../../../../shared/containers/Global/Button/Unstake';
 
 class AccountOverviewResource extends Component<Props> {
   constructor(props) {
@@ -34,7 +25,7 @@ class AccountOverviewResource extends Component<Props> {
       expanded: false,
     };
   }
-  toggleExpand = (e) => this.setState({
+  toggleExpand = () => this.setState({
     expanded: !this.state.expanded
   })
   render() {
@@ -61,7 +52,9 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        A <strong>time-based</strong> resource an account uses while <strong>performing</strong> smart contract actions.
+                        A <strong>time-based</strong> resource an account uses
+                        {' '}
+                        while <strong>performing</strong> smart contract actions.
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -76,7 +69,9 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        A <strong>size-based</strong> resource an account uses while <strong>sending data</strong> to the blockchain.
+                        A <strong>size-based</strong> resource an account uses
+                        {' '}
+                        while <strong>sending data</strong> to the blockchain.
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -138,13 +133,13 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '1em'
                         }}
                       >
-                        <Button
+                        {/* <Button
                           color="green"
                           content="Lease"
                           floated="right"
                           icon="exchange"
                           size="tiny"
-                        />
+                        /> */}
                       </Container>
                     </Segment>
                   </Grid.Column>
@@ -189,7 +184,7 @@ class AccountOverviewResource extends Component<Props> {
                       unstackable
                     >
                       <Table.Row>
-                        <Table.Cell collapsing>Staked (Self)</Table.Cell>
+                        <Table.Cell collapsing>Staked Tokens</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentResourceStakedSelf
                             account={account}
@@ -201,14 +196,14 @@ class AccountOverviewResource extends Component<Props> {
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell collapsing>Delegated</Table.Cell>
+                        <Table.Cell collapsing>Unstaking</Table.Cell>
                         <Table.Cell>
-                          <GlobalAccountFragmentResourceStakedDelegated
+                          <GlobalAccountFragmentTokenRefunding
                             account={account}
                             chainId={connection.chainId}
                             contract="eosio"
                             token={connection.chainSymbol}
-                            type={resource}
+                            resource={resource}
                           />
                           {` ${connection.chainSymbol}`}
                         </Table.Cell>
@@ -220,18 +215,25 @@ class AccountOverviewResource extends Component<Props> {
                         marginTop: '1em'
                       }}
                     >
-                      <Button
-                        color="blue"
-                        content="Add"
-                        icon="plus circle"
-                        size="tiny"
+                      <GlobalButtonStake
+                        button={{
+                          color: 'blue',
+                          content: 'Add',
+                          floated: 'left',
+                          icon: 'plus circle',
+                          size: 'tiny'
+                        }}
+                        resource={resource}
                       />
-                      <Button
-                        color="red"
-                        content="Remove"
-                        floated="right"
-                        icon="minus circle"
-                        size="tiny"
+                      <GlobalButtonUnstake
+                        button={{
+                          color: 'red',
+                          content: 'Remove',
+                          floated: 'right',
+                          icon: 'minus circle',
+                          size: 'tiny'
+                        }}
+                        resource={resource}
                       />
                     </Container>
                   </Grid.Column>
