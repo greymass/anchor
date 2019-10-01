@@ -66,7 +66,7 @@ class ToolsPing extends Component<Props> {
     // Load producer endpoints
     if (
       this.state.endpoints.length === 0
-      && this.props.producers.producersInfo !== {}
+      && !isEmpty(this.props.producers.producersInfo)
     ) {
       const {
         producersInfo
