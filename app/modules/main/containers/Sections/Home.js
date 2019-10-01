@@ -57,6 +57,7 @@ class HomeContainer extends Component<Props> {
           <Switch>
             <Route exact path="/" component={OverviewContainer} />
             <Route path="/home/accounts" component={HomeAccountsContainer} />
+            <Route path="/home/blockchains/:chain_id" component={GlobalBlockchainManage} />
             <Route path="/home/blockchains" component={GlobalBlockchainManage} />
             <Route path="/home/coldwallet" component={ColdWalletContainer} />
             <Route path="/home/init" component={HomeInitializeContainer} />
