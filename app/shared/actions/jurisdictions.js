@@ -140,6 +140,49 @@ export function getProducerJurisdiction(producer) {
   };
 }
 
+export function getProducersJurisdictions(producer) {
+  return (dispatch, getState) => {
+    const params = { producer_names: producer };
+    const {
+      connection
+    } = getState();
+
+    if (checkForBeos(connection)) {
+      dispatch({
+        type: types.GET_JURISDICTIONS_PRODUCERS_PENDING
+      });
+
+      const url = `${connection.httpEndpoint}/v1/jurisdiction/get_producer_jurisdiction`;
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+
+      axios({
+        method: 'post',
+        url: url,
+        data: params,
+        config: { headers: headers }
+      }).then((response) => {
+        return dispatch({
+          type: types.GET_JURISDICTIONS_PRODUCERS_SUCCESS,
+          payload: {
+            all_producers_jurisdictions: response.data.producer_jurisdictions
+              ? response.data.producer_jurisdictions
+              : []
+          }
+        });
+      }).catch((response) => {
+        return dispatch({
+          type: types.GET_JURISDICTIONS_PRODUCERS_FAILURE,
+          payload: {
+            response,
+            producer: producer,
+          }
+        });
+      });
+    }
+  };
+}
+
 export function saveChoosenJurisdictions(jurisdictions) {
   return (dispatch) => {
     dispatch({

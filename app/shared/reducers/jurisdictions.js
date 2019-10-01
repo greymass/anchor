@@ -75,6 +75,35 @@ export default function jurisdictions(state = initialState, action) {
         producer: action.payload.producer,
       };
     }
+    case types.GET_JURISDICTIONS_PRODUCERS_PENDING: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loadingProducersJurisdictions: true,
+      };
+    }
+    case types.GET_JURISDICTIONS_PRODUCERS_SUCCESS: {
+      let all = state.all_producers_jurisdictions;
+      if (!all) {
+        all = [];
+      }
+      action.payload.all_producers_jurisdictions.forEach((it, i) => {
+        all[it.producer] = it.jurisdictions[0];
+      });
+      return {
+        ...state,
+        [requestName]: requestState,
+        loadingProducersJurisdictions: false,
+        all_producers_jurisdictions: all
+      };
+    }
+    case types.GET_JURISDICTIONS_PRODUCERS_FAILURE: {
+      return {
+        ...state,
+        [requestName]: requestState,
+        loadingProducersJurisdictions: false,
+      };
+    }
     case types.SET_CHOOSEN_JURISDICTIONS: {
       return {
         ...state,
@@ -188,6 +217,7 @@ export default function jurisdictions(state = initialState, action) {
         sequenceTransaction: -1,
         sequenceBlock: -1,
         producer: '',
+        all_producers_jurisdictions: []
       });
     }
     default: {

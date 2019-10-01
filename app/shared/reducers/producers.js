@@ -26,13 +26,15 @@ export default function producers(state = initialState, action) {
     }
     case types.GET_PRODUCERS_FAILURE: {
       return Object.assign({}, state, {
-        list: []
+        list: [],
+        loading: false
       });
     }
     case types.GET_PRODUCERS_SUCCESS: {
       return Object.assign({}, state, {
         __updated: Date.now(),
-        list: action.payload.list
+        list: action.payload.list,
+        loading: false
       });
     }
     case types.SET_CURRENT_WALLET: {
@@ -92,7 +94,11 @@ export default function producers(state = initialState, action) {
       }
       return state;
     }
-    case types.GET_PRODUCERS_REQUEST:
+    case types.GET_PRODUCERS_REQUEST: {
+      return Object.assign({}, state, {
+        loading: true
+      });
+    }
     default: {
       return state;
     }

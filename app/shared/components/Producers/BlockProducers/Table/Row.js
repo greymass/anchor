@@ -7,6 +7,7 @@ import { isEqual } from 'lodash';
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
 import JurisdictionRow from './JurisdictionRow';
+import JurisdictionRowFlag from './JurisdictionRowFlag';
 import checkForBeos from '../../../helpers/checkCurrentBlockchain';
 
 class ProducersTableRow extends Component<Props> {
@@ -38,6 +39,13 @@ class ProducersTableRow extends Component<Props> {
       ALLS
     } = this.props;
 
+    producer.jurisdictions = [];
+    const all = this.props.jurisdictions.jurisdictions;
+    const allProducers = this.props.jurisdictions.all_producers_jurisdictions;
+    const owner = allProducers[producer.owner];
+    if (owner) {
+      producer.jurisdictions.push(all.find(alls => alls.code === owner));
+    }
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
@@ -109,31 +117,6 @@ class ProducersTableRow extends Component<Props> {
               )}
             />
             )}
-          {(producersJurisdiction) && (checkForBeos(connection)) && (
-            <Popup
-              hoverable
-              position="left center"
-              mouseEnterDelay={1000}
-              content={
-                <JurisdictionRow
-                  rows={rows}
-                  jurisdictions={jurisdictions}
-                  producer={producer.owner}
-                  PRODUCERS={PRODUCERS}
-                  ALLS={ALLS}
-                  t={t}
-                />
-              }
-              trigger={(
-                <Button
-                  className="jurisdiction-button"
-                  icon="map marker alternate"
-                  size="small"
-                  onMouseEnter={() => { actions.getProducerJurisdiction(producer.owner); }}
-                />
-              )}
-            />
-            )}
         </Table.Cell>
         <Table.Cell
           singleLine
@@ -155,6 +138,38 @@ class ProducersTableRow extends Component<Props> {
               />
             </Header.Subheader>
           </Header>
+        </Table.Cell>
+        <Table.Cell>
+          {(producer.jurisdictions.length > 0) && (producersJurisdiction) && (checkForBeos(connection)) && (
+            <Popup
+              hoverable
+              position="left center"
+              mouseEnterDelay={1000}
+              content={
+                <JurisdictionRow
+                  rows={rows}
+                  jurisdictions={jurisdictions}
+                  producer={producer.owner}
+                  PRODUCERS={PRODUCERS}
+                  ALLS={ALLS}
+                  t={t}
+                />
+              }
+              trigger={(
+                <a
+                  onMouseEnter={() => { actions.getProducerJurisdiction(producer.owner); }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <JurisdictionRowFlag
+                    producer={producer}
+                  />
+                </a>
+              )}
+            />
+          )}
+          {(producer.jurisdictions.length === 0) && (producersJurisdiction) && (checkForBeos(connection)) && (
+            <span>{t('block_producer_jurisdictions_state_none')}</span>
+          )}
         </Table.Cell>
         <Table.Cell
           singleLine

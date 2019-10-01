@@ -127,7 +127,6 @@ class BlockProducers extends Component<Props> {
       amount,
       querying
     } = this.state;
-
     const account = accounts[settings.account];
     const isMainnet = connection.chainKey && connection.chainKey.toLowerCase().indexOf('mainnet') !== -1;
     const isProxying = !!(account && account.voter_info && account.voter_info.proxy);
@@ -169,7 +168,7 @@ class BlockProducers extends Component<Props> {
             (!querying && amount < producers.list.length)
               ? (
                 <Segment key="ProducersTableLoading" clearing padded vertical>
-                  <Loader active />
+                  {/* <Loader active /> */}
                 </Segment>
               ) : false
           )]

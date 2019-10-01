@@ -3,6 +3,7 @@ import { get } from 'dot-prop-immutable';
 
 import eos from './helpers/eos';
 import * as types from './types';
+import { getProducersJurisdictions } from './jurisdictions';
 
 export function clearProducerCache() {
   return (dispatch: () => void) => {
@@ -38,6 +39,12 @@ export function getProducers(previous = false) {
     }
     eos(connection).getTableRows(query).then((results) => {
       let { rows } = results;
+      let arr = [];
+      rows.forEach((it, i) => {
+        arr.push(rows[i].owner);
+      });
+      dispatch(getProducersJurisdictions(arr));
+
       // If previous rows were returned
       if (previous) {
         // slice last element to avoid dupes

@@ -112,7 +112,7 @@ class ProducersTable extends Component<Props> {
     const totalVoteWeight = (current.total_producer_vote_weight)
       ? current.total_producer_vote_weight
       : 0;
-    const loading = (producers.list.length < 1);
+    const loading = (producers.list.length < 1 || jurisdictions.loadingProducersJurisdictions || producers.loading);
     const querying = this.querying();
     let baseTable = <Table.Body />;
     let searchTable = (
@@ -255,6 +255,9 @@ class ProducersTable extends Component<Props> {
               <Table.HeaderCell collapsing />
               <Table.HeaderCell>
                 {t('block_producer')}
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                {t('block_producer_jurisdictions_jurisdiction_table_header')}
               </Table.HeaderCell>
               <Table.HeaderCell width={5}>
                 {producersVotedIn ? t('block_producer_total_votes') : ''}
