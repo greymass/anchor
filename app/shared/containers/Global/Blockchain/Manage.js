@@ -19,8 +19,11 @@ import GlobalBlockchainEnable from './Manage/Enable';
 class GlobalBlockchainManage extends Component<Props> {
   constructor(props) {
     super(props);
+    const chainId = (props.match && props.match.params && props.match.params.chain_id)
+      ? props.match.params.chain_id
+      : false;
     this.state = {
-      editing: false,
+      editing: chainId,
       enabling: (!props.settings.blockchains || props.settings.blockchains.length === 0),
     };
   }
