@@ -138,6 +138,16 @@ class WalletTransferContainer extends Component<Props> {
                 subheader="Click any balance to automatically fill in the transfer form for that amount."
               />
               <Table definition>
+                {(!filteredTokens || !filteredTokens.length)
+                  ? (
+                    <Table.Row>
+                      <Table.Cell textAlign="center">
+                        No available balances being tracked.
+                      </Table.Cell>
+                    </Table.Row>
+                  )
+                  : false
+                }
                 {filteredTokens.map((symbol) => (
                   <Table.Row>
                     <Table.Cell textAlign="right">{symbol}</Table.Cell>
