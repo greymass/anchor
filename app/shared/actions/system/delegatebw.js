@@ -20,7 +20,10 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
       expireInSeconds: connection.expireInSeconds,
       sign: connection.sign
     }).then((tx) => {
-      dispatch(AccountActions.getAccount(delegator));
+      setTimeout(() => {
+        dispatch(AccountActions.getAccount(delegator));
+        dispatch(AccountActions.getCurrencyBalance(delegator));
+      }, 1000);
       return dispatch({
         payload: {
           connection,
