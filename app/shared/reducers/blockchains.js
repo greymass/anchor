@@ -25,7 +25,7 @@ const supportedContracts = [
   },
   {
     // 'eos-testnet-jungle'
-    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
     supportedContracts: ['bidname'],
   },
   {
@@ -99,7 +99,7 @@ const knownChains = [
   },
   {
     _id: 'eos-testnet-jungle',
-    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
     keyPrefix: 'EOS',
     name: 'Jungle (EOS)',
     node: 'http://jungle.cryptolions.io:18888',
