@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Icon, Label, List, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
-import ReactJson from 'react-json-view';
+import { attempt, isError } from 'lodash';
 
 class PromptFragmentTransactionAction extends Component<Props> {
   render() {
@@ -58,11 +58,18 @@ class PromptFragmentTransactionAction extends Component<Props> {
                     : false
                   }
                   <List.Content>
-                    {k}
+                    {(!isError(attempt(JSON.parse, k)))
+                      ? JSON.parse(k)
+                      : String(k)
+                    }
+                    {JSON.stringify(k)}
                     <List.Header
                       style={{ marginTop: '0.25em' }}
                     >
-                      {action.data[k]}
+                      {(!isError(attempt(JSON.parse, action.data[k])))
+                        ? JSON.parse(action.data[k])
+                        : String(action.data[k])
+                      }
                     </List.Header>
                   </List.Content>
                 </List.Item>
