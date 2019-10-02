@@ -1,6 +1,7 @@
 // @flow
 import { app, Menu, shell, BrowserWindow } from 'electron';
 import { checkForUpdates } from '../shared/updater';
+import { currentVersion } from '../shared/version';
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -171,7 +172,8 @@ export default class MenuBuilder {
         { label: 'Report Bug (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/issues'); } },
         { label: 'Releases (Github)', click() { shell.openExternal('https://github.com/greymass/eos-voter/releases'); } },
         { type: 'separator' },
-        { label: 'Check Updates...', click: (menuItem, browserWindow) => { checkForUpdates(menuItem, browserWindow); } }
+        { label: 'Check Updates...', enabled: false, click: (menuItem, browserWindow) => { checkForUpdates(menuItem, browserWindow); } },
+        { label: 'Current Version', click: () => { currentVersion(); } }
       ]
     }];
 
