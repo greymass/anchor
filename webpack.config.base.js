@@ -8,6 +8,9 @@ import fs from 'fs';
 import { dependencies as externals } from './app/package.json';
 import { dependencies as possibleExternals } from './package.json';
 
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const gitRevisionPlugin = new GitRevisionPlugin();
+
 // Find all the dependencies without a `main` property and add them as webpack externals
 function filterDepWithoutEntryPoints(dep: string): boolean {
   // Return true if we want to add a dependency to externals
@@ -71,5 +74,10 @@ export default {
     }),
 
     new webpack.NamedModulesPlugin(),
+
+    gitRevisionPlugin,
+    new webpack.DefinePlugin({
+      'process.env.COMMITHASH': JSON.stringify(gitRevisionPlugin.commithash().slice(0, 8)),
+    })
   ],
 };
