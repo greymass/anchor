@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
-import { map } from 'lodash';
 
 import RexInterfaceAbout from '../../components/Rex/Rent/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 import RexInterfaceRentLoans from '../../components/Rex/Rent/Loans';
-import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
 import GlobalWalletUnlocked from '../Global/Wallet/Unlocked';
 
 import RexActions from '../../actions/system/rexi';
