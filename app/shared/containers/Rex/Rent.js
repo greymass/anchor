@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { bindActionCreators } from 'redux';
+import { map } from 'lodash';
 
 import RexInterfaceAbout from '../../components/Rex/Rent/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceRentManage from '../../components/Rex/Rent/Manage';
 import RexInterfaceRentLoans from '../../components/Rex/Rent/Loans';
 import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
+import GlobalWalletUnlocked from '../Global/Wallet/Unlocked';
 
 import RexActions from '../../actions/system/rexi';
 import TableAction from '../../actions/table';
@@ -27,9 +29,7 @@ type Props = {
   settings: {},
   system: {},
   t: {},
-  tables: {},
-  validate: {},
-  wallet: {},
+  tables: {}
 };
 
 class RexRent extends Component<Props> {
@@ -42,13 +42,10 @@ class RexRent extends Component<Props> {
       balance,
       blockExplorers,
       connection,
-      keys,
       settings,
       system,
       t,
       tables,
-      validate,
-      wallet,
     } = this.props;
 
     const panes = [
@@ -129,28 +126,15 @@ class RexRent extends Component<Props> {
         }
       }
     ];
-
-    const isUnlocked = (keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode);
-    const isLocked = !isUnlocked;
-
     return (
-      <React.Fragment>
-        {isLocked ? (
-          <WalletPanelLocked
-            actions={actions}
-            settings={settings}
-            validate={validate}
-            wallet={wallet}
-          />
-        ) : (
-          <Tab
-            defaultActiveIndex={0}
-            onTabChange={this.onTabChange}
-            panes={panes}
-            renderActiveOnly={false}
-          />
-        )}
-      </React.Fragment>
+      <GlobalWalletUnlocked>
+        <Tab
+          defaultActiveIndex={0}
+          onTabChange={this.onTabChange}
+          panes={panes}
+          renderActiveOnly={false}
+        />
+      </GlobalWalletUnlocked>
     );
   }
 }
@@ -173,11 +157,8 @@ function mapStateToProps(state) {
     balance: state.balances[state.settings.account],
     blockExplorers: (state.connection && state.blockexplorers[state.connection.chainKey]) || {},
     connection: state.connection,
-    keys: state.keys,
     settings: state.settings,
     tables: state.tables,
-    validate: state.validate,
-    wallet: state.wallet,
   };
 }
 
