@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 import compose from 'lodash/fp/compose';
 
 import { Menu, Tab, Item } from 'semantic-ui-react';
@@ -377,6 +378,10 @@ function mapStateToProps(state) {
     keys: state.keys,
     ledger: state.ledger,
     proposals: state.proposals,
+    pubkeys: {
+      available: state.storage.keys,
+      unlocked: map(state.auths.keystore, 'pubkey')
+    },
     settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
     system: state.system,
