@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
+import { translate } from 'react-i18next';
+import compose from 'lodash/fp/compose';
 
 import { Button, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
 
@@ -16,11 +18,30 @@ import range from 'lodash/range';
 class AccountHeader extends Component<Props> {
   render() {
     const {
+      accounts,
       connection,
       settings,
       t,
     } = this.props;
-    console.log(connection.chainSymbol)
+    const account = accounts[settings.account];
+    let warning;
+    if (account) {
+      const {
+        cpu_limit,
+        net_limit,
+        ram_quota,
+        ram_usage,
+      } = account;
+      if (cpu_limit.available / cpu_limit.max < 0.1) {
+        warning = 'cpu_low';
+      }
+      if (net_limit.available / net_limit.max < 0.1) {
+        warning = 'net_low';
+      }
+      if (((ram_quota - ram_usage) / ram_quota) < 0.1) {
+        warning = 'ram_low';
+      }
+    }
     return (
       <Segment stacked>
         <Grid divided>
@@ -38,8 +59,11 @@ class AccountHeader extends Component<Props> {
               <Grid>
                 <Grid.Row>
                   <Grid.Column width={7} textAlign="center">
-                    <Header color="green" size="large">
-                      OK
+                    <Header color={(warning) ? "orange" : "green"} size="large">
+                      {(warning)
+                        ? t(`global_resource_status_${warning}`)
+                        : 'OK'
+                      }
                       <Header.Subheader>
                         Status
                       </Header.Subheader>
@@ -74,6 +98,7 @@ class AccountHeader extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    accounts: state.accounts,
     connection: state.connection,
     settings: state.settings,
   };
@@ -87,4 +112,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountHeader));
+export default compose(
+  withRouter,
+  translate('global'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountHeader);
