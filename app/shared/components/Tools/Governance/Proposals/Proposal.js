@@ -41,7 +41,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
       actions,
       blockExplorers,
       contracts,
-      isLocked,
       settings,
       proposal,
       system,
@@ -179,7 +178,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               </Form>
             )}
             content={t('tools_governance_proposal_confirm_vote_yes')}
-            isLocked={isLocked}
             proposal_name={proposal_name}
             settings={settings}
             system={system}
@@ -216,7 +214,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
               </Form>
             )}
             content={t('tools_governance_proposal_confirm_vote_no')}
-            isLocked={isLocked}
             proposal_name={proposal_name}
             settings={settings}
             system={system}
@@ -247,7 +244,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
             )}
             content={t('tools_governance_proposal_confirm_unvote')}
             expires_at={expires_at}
-            isLocked={isLocked}
             proposal_name={proposal_name}
             settings={settings}
             system={system}
