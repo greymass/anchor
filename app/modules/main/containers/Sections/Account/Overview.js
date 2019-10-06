@@ -92,6 +92,10 @@ class AccountOverview extends Component<Props> {
       })
     });
   }
+  refresh = () => {
+    const { getAccount } = this.props.actions;
+    getAccount(this.state.account);
+  }
   render() {
     const {
       t
@@ -115,10 +119,21 @@ class AccountOverview extends Component<Props> {
     }
     return (
       <React.Fragment>
-        <Header
-          content="Resource Overview"
-          subheader="Overview of resources for the selected account."
-        />
+        <Container fluid clearing>
+          <Button
+            basic
+            color="grey"
+            content="Refresh"
+            floated="right"
+            icon="refresh"
+            onClick={this.refresh}
+          />
+          <Header
+            content="Resource Overview"
+            subheader="Overview of resources for the selected account."
+            style={{ margin: 0 }}
+          />
+        </Container>
         {(loaded)
           ? (
             <React.Fragment>
