@@ -140,6 +140,7 @@ class ToolsHome extends Component<Props> {
           <p>
             <Button
               content="V1 Tools Interface"
+              icon="external"
               name="tools/v1"
               onClick={this.onClick}
               primary
@@ -147,6 +148,7 @@ class ToolsHome extends Component<Props> {
             &nbsp;
             <Button
               content="Reset Wallet"
+              floated="right"
               onClick={this.onReset}
             />
           </p>
