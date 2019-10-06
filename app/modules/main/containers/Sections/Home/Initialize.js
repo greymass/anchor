@@ -55,7 +55,7 @@ class HomeInitializeContainer extends Component<Props> {
             centered
             src={anchorLogo}
             style={{
-              width: '256px',
+              width: '192px',
             }}
           />
           <Image
@@ -63,21 +63,20 @@ class HomeInitializeContainer extends Component<Props> {
             centered
             src={anchorText}
             style={{
-              width: '256px',
+              width: '192px',
               marginTop: '1em',
             }}
           />
         </Segment>
 
         <Segment basic textAlign="center">
-          <p>Welcome to Anchor!</p>
-          <p>
+          <p style={{ margin: '0' }}>
             <Button
               color="green"
               content="Get Started"
               icon="sign-in"
               onClick={this.initialize}
-              size="huge"
+              size="large"
             />
           </p>
           <Card centered raised style={{ marginTop: '1em' }}>
