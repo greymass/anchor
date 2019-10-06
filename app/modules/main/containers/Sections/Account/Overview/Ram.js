@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
-import { Button, Container, Divider, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
 
 import AccountOverviewRamBuy from './Ram/Buy';
 import AccountOverviewRamSell from './Ram/Sell';
@@ -16,17 +16,6 @@ import GlobalAccountFragmentRamProgress from '../../../../../../shared/container
 import GlobalAccountFragmentRamUsage from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Usage';
 import GlobalAccountFragmentRamMax from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Max';
 import GlobalAccountFragmentRamValue from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Value';
-import GlobalAccountFragmentStaleness from '../../../../../../shared/containers/Global/Account/Fragment/Staleness';
-import GlobalAccountFragmentSystemTokenBalance from '../../../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
-import GlobalAccountFragmentSystemTokenValue from '../../../../../../shared/containers/Global/Account/Fragment/SystemTokenValue';
-import GlobalAccountFragmentTokenBalance from '../../../../../../shared/containers/Global/Account/Fragment/TokenBalance';
-import GlobalAccountFragmentTokenDelegated from '../../../../../../shared/containers/Global/Account/Fragment/TokenDelegated';
-import GlobalAccountFragmentTokenRefunding from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
-import GlobalAccountFragmentTokenStaked from '../../../../../../shared/containers/Global/Account/Fragment/TokenStaked';
-import GlobalAccountFragmentVoterInfoVotes from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Votes';
-import GlobalAccountFragmentVoterInfoEffectiveness from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Effectiveness';
-import GlobalAccountFragmentVoterInfoWeightValue from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/WeightValue';
-import GlobalAccountFragmentVoterInfoProxy from '../../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Proxy';
 
 class AccountOverviewRam extends Component<Props> {
   constructor(props) {
@@ -35,16 +24,15 @@ class AccountOverviewRam extends Component<Props> {
       expanded: false,
     };
   }
-  toggleExpand = (e) => this.setState({
+  toggleExpand = () => this.setState({
     expanded: !this.state.expanded
   })
   render() {
     const {
       account,
       connection,
-      loaded,
     } = this.props;
-    const resource = 'ram'
+    const resource = 'ram';
     const {
       expanded,
     } = this.state;
@@ -112,14 +100,6 @@ class AccountOverviewRam extends Component<Props> {
                           </Table.Cell>
                         </Table.Row>
                       </Table>
-                      <Container
-                        fluid
-                        style={{
-                          marginTop: '1em'
-                        }}
-                      >
-
-                      </Container>
                     </Segment>
                   </Grid.Column>
                   <Grid.Column

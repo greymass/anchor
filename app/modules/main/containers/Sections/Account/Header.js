@@ -8,12 +8,10 @@ import {
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 
-import { Button, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
+import { Grid, Header, Segment } from 'semantic-ui-react';
 
-import GlobalFragmentWallet from '../../../../../shared/components/Global/Fragment/Wallet';
 import GlobalAccountFragmentTokenBalance from '../../../../../shared/containers/Global/Account/Fragment/TokenBalance';
-
-import range from 'lodash/range';
+import GlobalFragmentWallet from '../../../../../shared/components/Global/Fragment/Wallet';
 
 class AccountHeader extends Component<Props> {
   render() {
@@ -59,7 +57,7 @@ class AccountHeader extends Component<Props> {
               <Grid>
                 <Grid.Row>
                   <Grid.Column width={7} textAlign="center">
-                    <Header color={(warning) ? "orange" : "green"} size="large">
+                    <Header color={(warning) ? 'orange' : 'green'} size="large">
                       {(warning)
                         ? t(`global_resource_status_${warning}`)
                         : 'OK'
