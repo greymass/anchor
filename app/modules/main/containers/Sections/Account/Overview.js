@@ -7,7 +7,7 @@ import compose from 'lodash/fp/compose';
 import {
   withRouter
 } from 'react-router-dom';
-import { Button, Container, Divider, Grid, Header, Icon, Progress, Segment, Table } from 'semantic-ui-react';
+import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
 
 import AccountHeader from './Header';
 import AccountOverviewRam from './Overview/Ram';
@@ -15,26 +15,6 @@ import AccountOverviewResource from './Overview/Resource';
 
 import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as NavigationActions from '../../../actions/navigation';
-
-import GlobalAccountFragmentRamPercent from '../../../../../shared/containers/Global/Account/Fragment/Ram/Percent';
-import GlobalAccountFragmentResourcePercent from '../../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
-import GlobalAccountFragmentResourceProgress from '../../../../../shared/containers/Global/Account/Fragment/Resource/Progress';
-import GlobalAccountFragmentResourceStaked from '../../../../../shared/containers/Global/Account/Fragment/Resource/Staked';
-import GlobalAccountFragmentResourceStakedDelegated from '../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Delegated';
-import GlobalAccountFragmentResourceStakedSelf from '../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Self';
-import GlobalAccountFragmentResourceUsage from '../../../../../shared/containers/Global/Account/Fragment/Resource/Usage';
-import GlobalAccountFragmentResourceMax from '../../../../../shared/containers/Global/Account/Fragment/Resource/Max';
-import GlobalAccountFragmentStaleness from '../../../../../shared/containers/Global/Account/Fragment/Staleness';
-import GlobalAccountFragmentSystemTokenBalance from '../../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
-import GlobalAccountFragmentSystemTokenValue from '../../../../../shared/containers/Global/Account/Fragment/SystemTokenValue';
-import GlobalAccountFragmentTokenBalance from '../../../../../shared/containers/Global/Account/Fragment/TokenBalance';
-import GlobalAccountFragmentTokenDelegated from '../../../../../shared/containers/Global/Account/Fragment/TokenDelegated';
-import GlobalAccountFragmentTokenRefunding from '../../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
-import GlobalAccountFragmentTokenStaked from '../../../../../shared/containers/Global/Account/Fragment/TokenStaked';
-import GlobalAccountFragmentVoterInfoVotes from '../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Votes';
-import GlobalAccountFragmentVoterInfoEffectiveness from '../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Effectiveness';
-import GlobalAccountFragmentVoterInfoWeightValue from '../../../../../shared/containers/Global/Account/Fragment/VoterInfo/WeightValue';
-import GlobalAccountFragmentVoterInfoProxy from '../../../../../shared/containers/Global/Account/Fragment/VoterInfo/Proxy';
 
 class AccountOverview extends Component<Props> {
   constructor(props) {
