@@ -8,6 +8,7 @@ import { Button, Confirm } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
 
 import * as LedgerActions from '../../../actions/hardware/ledger';
+import * as NavigationActions from '../../../../modules/main/actions/navigation';
 import * as SettingsActions from '../../../actions/settings';
 
 class GlobalButtonResetContainer extends Component<Props> {
@@ -28,7 +29,7 @@ class GlobalButtonResetContainer extends Component<Props> {
         resetApp
       } = actions;
       resetApp();
-      history.push('/');
+      actions.changeModule('');
     });
   }
 
@@ -37,13 +38,14 @@ class GlobalButtonResetContainer extends Component<Props> {
     return (
       <React.Fragment>
         <Button
-          color="red"
-          content={t('wallet_panel_wallet_remove')}
-          fluid
+          content="Reset Application"
+          floated="right"
           icon="trash"
           onClick={this.open}
         />
         <Confirm
+          content="This action will erase all private keys, settings, accounts and restore this application to its default state. Ensure you have a proper backup before proceeding."
+          header="Warning"
           open={this.state.open}
           onCancel={this.close}
           onConfirm={this.confirmRemoveWallet}
@@ -74,6 +76,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...LedgerActions,
+      ...NavigationActions,
       ...SettingsActions,
     }, dispatch)
   };
