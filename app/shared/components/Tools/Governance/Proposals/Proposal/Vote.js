@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import { Segment, Message } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
-import WalletPanelLocked from '../../../../Wallet/Panel/Locked';
+import GlobalWalletUnlocked from '../../../../../containers/Global/Wallet/Unlocked';
 
 class ToolsGovernanceProposalsProposalVote extends Component<Props> {
   render() {
@@ -17,7 +17,6 @@ class ToolsGovernanceProposalsProposalVote extends Component<Props> {
       confirm,
       content,
       expires_at,
-      isLocked,
       open,
       proposal_name,
       pubkey,
@@ -34,58 +33,53 @@ class ToolsGovernanceProposalsProposalVote extends Component<Props> {
         actions={actions}
         blockExplorers={blockExplorers}
         button={button}
-        content={(isLocked) ? (
-          <WalletPanelLocked
-            actions={actions}
-            settings={settings}
-            validate={validate}
-            wallet={wallet}
-          />
-        ) : (
-          <Segment basic clearing>
-            <p>
-              {content}
-            </p>
+        content={(
+          <GlobalWalletUnlocked>
+            <Segment basic clearing>
+              <p>
+                {content}
+              </p>
 
-            {(actionName === 'GOVERNANCE_VOTE_PROPOSAL') ? (
-              <Message warning>
-                <Message.Header>{t('tools_governance_proposal_ricardian_contract_header')}</Message.Header>
-                <ul>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_one', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_two', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_three', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_four', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_five', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_six', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>{t('tools_governance_proposal_vote_ricardian_contract_seven', { voter: settings.account, proposal_name, vote_value })}</li>
-                </ul>
-              </Message>
-            ) : (
-              <Message warning>
-                <Message.Header>{t('tools_governance_proposal_ricardian_contract_header')}</Message.Header>
-                <ul>
-                  <li>{t('tools_governance_proposal_unvote_ricardian_contract_one', { voter: settings.account, proposal_name, vote_value })}</li>
-                  <li>
-                    {
-                      t(
-                        'tools_governance_proposal_unvote_ricardian_contract_two',
-                        {
-                          voter: settings.account,
-                          proposal_name,
-                          vote_value,
-                          expires_at: expires_at ?
-                            new Date(expires_at).toUTCString() :
-                            t('tools_governance_proposal_vote_ricardian_contract_date_unavailable'),
-                        }
-                      )
-                    }
-                  </li>
-                  <li>{t('tools_governance_proposal_unvote_ricardian_contract_three', { voter: settings.account, proposal_name, vote_value })}</li>
-                </ul>
-              </Message>
-            )}
-            {confirm}
-          </Segment>
+              {(actionName === 'GOVERNANCE_VOTE_PROPOSAL') ? (
+                <Message warning>
+                  <Message.Header>{t('tools_governance_proposal_ricardian_contract_header')}</Message.Header>
+                  <ul>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_one', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_two', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_three', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_four', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_five', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_six', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>{t('tools_governance_proposal_vote_ricardian_contract_seven', { voter: settings.account, proposal_name, vote_value })}</li>
+                  </ul>
+                </Message>
+              ) : (
+                <Message warning>
+                  <Message.Header>{t('tools_governance_proposal_ricardian_contract_header')}</Message.Header>
+                  <ul>
+                    <li>{t('tools_governance_proposal_unvote_ricardian_contract_one', { voter: settings.account, proposal_name, vote_value })}</li>
+                    <li>
+                      {
+                        t(
+                          'tools_governance_proposal_unvote_ricardian_contract_two',
+                          {
+                            voter: settings.account,
+                            proposal_name,
+                            vote_value,
+                            expires_at: expires_at ?
+                              new Date(expires_at).toUTCString() :
+                              t('tools_governance_proposal_vote_ricardian_contract_date_unavailable'),
+                          }
+                        )
+                      }
+                    </li>
+                    <li>{t('tools_governance_proposal_unvote_ricardian_contract_three', { voter: settings.account, proposal_name, vote_value })}</li>
+                  </ul>
+                </Message>
+              )}
+              {confirm}
+            </Segment>
+          </GlobalWalletUnlocked>
         )}
         icon="share square"
         open={open}
