@@ -81,7 +81,7 @@ class OverviewTable extends Component<Props> {
             {accountNames.map((accountName) => (
               <Table.Row>
                 <Table.Cell collapsing textAlign="right">
-                  <GlobalAccountLink account={accountName} />
+                  {accountName}
                 </Table.Cell>
                 {(view === 'systemtokens')
                   ? (
