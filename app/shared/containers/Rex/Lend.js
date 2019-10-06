@@ -10,7 +10,7 @@ import RexInterfaceLendAbout from '../../components/Rex/Lend/About';
 import RexInterfaceFund from '../../components/Rex/shared/Fund';
 import RexInterfaceLendManage from '../../components/Rex/Lend/Manage';
 import RexInterfaceLendSavings from '../../components/Rex/Lend/Savings';
-import WalletPanelLocked from '../../components/Wallet/Panel/Locked';
+import GlobalWalletUnlocked from '../Global/Wallet/Unlocked';
 
 import RexActions from '../../actions/system/rexi';
 import TableAction from '../../actions/table';
@@ -27,9 +27,7 @@ type Props = {
   settings: {},
   system: {},
   t: {},
-  tables: {},
-  validate: {},
-  wallet: {},
+  tables: {}
 };
 
 class RexLend extends Component<Props> {
@@ -42,13 +40,10 @@ class RexLend extends Component<Props> {
       balance,
       blockExplorers,
       connection,
-      keys,
       settings,
       system,
       t,
       tables,
-      validate,
-      wallet,
     } = this.props;
 
     const panes = [
@@ -145,19 +140,10 @@ class RexLend extends Component<Props> {
     );
 
     const isNotVotingOrProxying = !votingOrProxying;
-    const isUnlocked = (keys && keys.key) || ['watch', 'ledger'].includes(settings.walletMode);
-    const isLocked = !isUnlocked;
 
     return (
-      <React.Fragment>
-        {isLocked ? (
-          <WalletPanelLocked
-            actions={actions}
-            settings={settings}
-            validate={validate}
-            wallet={wallet}
-          />
-        ) : isNotVotingOrProxying ? (
+      <GlobalWalletUnlocked>
+        {isNotVotingOrProxying ? (
           <Message
             header={t('rex_not_voting_or_proxying_header')}
             content={t('rex_not_voting_or_proxying_subheader')}
@@ -171,7 +157,7 @@ class RexLend extends Component<Props> {
             renderActiveOnly={false}
           />
         )}
-      </React.Fragment>
+      </GlobalWalletUnlocked>
     );
   }
 }
@@ -193,11 +179,8 @@ function mapStateToProps(state) {
     balance: state.balances[state.settings.account],
     blockExplorers: (state.connection && state.blockexplorers[state.connection.chainKey]) || {},
     connection: state.connection,
-    keys: state.keys,
     settings: state.settings,
     tables: state.tables,
-    validate: state.validate,
-    wallet: state.wallet,
   };
 }
 

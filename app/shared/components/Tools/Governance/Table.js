@@ -10,7 +10,6 @@ class ProposalsTable extends Component<Props> {
       actions,
       blockExplorers,
       contracts,
-      isLocked,
       list,
       scope,
       settings,
@@ -86,7 +85,6 @@ class ProposalsTable extends Component<Props> {
                             actions={actions}
                             blockExplorers={blockExplorers}
                             contracts={contracts}
-                            isLocked={isLocked}
                             key={proposal.proposal_name}
                             proposal={proposal}
                             scope={scope}

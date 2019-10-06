@@ -58,7 +58,6 @@ class ToolsGovernanceProposals extends Component<Props> {
       actions,
       blockExplorers,
       contracts,
-      keys,
       proposals,
       settings,
       system,
@@ -77,7 +76,6 @@ class ToolsGovernanceProposals extends Component<Props> {
       list,
       votes
     } = proposals;
-    const isLocked = (!['ledger', 'watch'].includes(settings.walletMode) && (keys && !keys.key));
     let recentOptions = [];
     if (settings && settings.recentProposalsScopes) {
       recentOptions = settings.recentProposalsScopes.map((recentProposalsScope) => ({
@@ -240,7 +238,6 @@ class ToolsGovernanceProposals extends Component<Props> {
               actions={actions}
               blockExplorers={blockExplorers}
               contracts={contracts}
-              isLocked={isLocked}
               list={sortedList.splice(0, amount)}
               scope={scope}
               settings={settings}
