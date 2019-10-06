@@ -7,6 +7,8 @@ import { translate } from 'react-i18next';
 
 import { Button, Grid, Header, List, Popup, Segment } from 'semantic-ui-react';
 
+import GlobalButtonResetContainer from '../../../../../shared/containers/Global/Button/Reset';
+
 import NavigationActions from '../../../actions/navigation';
 import SettingsActions from '../../../../../shared/actions/settings';
 
@@ -118,13 +120,6 @@ class ToolsHome extends Component<Props> {
     this.props.actions.changeModule((data && data.name) || e.target.name);
     e.preventDefault();
   };
-
-  onReset = () => {
-    const { actions } = this.props;
-    actions.clearSettingsCache();
-    actions.changeModule('');
-  }
-
   render() {
     const {
       settings,
@@ -146,11 +141,7 @@ class ToolsHome extends Component<Props> {
               primary
             />
             &nbsp;
-            <Button
-              content="Reset Wallet"
-              floated="right"
-              onClick={this.onReset}
-            />
+            <GlobalButtonResetContainer />
           </p>
         </Segment>
         <Grid columns={4} stackable>
