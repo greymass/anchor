@@ -1,6 +1,37 @@
 import eos from './helpers/eos';
 import * as types from './types';
 
+export function getREXRates() {
+  return (dispatch: () => void, getState) => {
+    dispatch({ type: types.SYSTEM_GETTABLE_REQUEST });
+    const { connection } = getState();
+    if (!connection.supportedContracts || !connection.supportedContracts.includes('rex')) {
+      return false;
+    }
+    const query = {
+      json: true,
+      code: 'eosio',
+      scope: 'eosio',
+      table: 'rexpool',
+      limit: 10,
+      index_position: 1,
+      key_type: '',
+    };
+    eos(connection).getTableRows(query).then(results => dispatch({
+      type: types.SYSTEM_GETTABLE_SUCCESS,
+      payload: {
+        ...results,
+        code: 'eosio',
+        scope: 'eosio',
+        table: 'rexpool',
+      }
+    })).catch((err) => dispatch({
+      type: types.SYSTEM_GETTABLE_FAILURE,
+      payload: { err },
+    }));
+  };
+}
+
 export function getCPULoans() {
   return (dispatch: () => void, getState) => {
     getLoans('cpuloan', dispatch, getState);
@@ -46,4 +77,5 @@ function getLoans(tableName, dispatch, getState) {
 export default {
   getCPULoans,
   getNETLoans,
+  getREXRates,
 };

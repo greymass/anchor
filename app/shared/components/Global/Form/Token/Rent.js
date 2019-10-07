@@ -5,14 +5,18 @@ import { translate } from 'react-i18next';
 
 import GlobalAccountFragmentResourceStakedDelegated from '../../../../containers/Global/Account/Fragment/Resource/Staked/Delegated';
 import GlobalAccountFragmentResourceStakedSelf from '../../../../containers/Global/Account/Fragment/Resource/Staked/Self';
+import GlobalAccountFragmentREXPrice from '../../../../containers/Global/Account/Fragment/REX/Price';
+import GlobalAccountFragmentTokenBalance from '../../../../containers/Global/Account/Fragment/TokenBalance';
 import GlobalFormFieldToken from '../../../../components/Global/Form/Field/Token';
 
-export class GlobalFormTokenUnstake extends Component<Props> {
+export class GlobalFormTokenRent extends Component<Props> {
   state = {
     value: false,
     valid: false,
   }
-  onChange = (e, { value, valid }) => this.setState({ value, valid });
+  onChange = (e, { value, valid }) => {
+    this.setState({ value, valid });
+  }
   onCancel = () => {
     if (this.props.onClose) {
       this.props.onClose();
@@ -26,17 +30,17 @@ export class GlobalFormTokenUnstake extends Component<Props> {
     }
   }
   onSubmit = () => {
-    const { account, resource } = this.props;
-    const { undelegatebw } = this.props.actions;
+    const { resource } = this.props;
+    const { depositrentcpu, depositrentnet } = this.props.actions;
     const { valid, value } = this.state;
     if (valid) {
       switch (resource) {
         default:
         case 'cpu':
-          undelegatebw(account, account, false, value);
+          depositrentcpu(value);
           break;
         case 'net':
-          undelegatebw(account, account, value, false);
+          depositrentnet(value);
           break;
       }
     }
@@ -46,9 +50,11 @@ export class GlobalFormTokenUnstake extends Component<Props> {
       account,
       connection,
       resource,
+      settings,
     } = this.props;
     const {
       valid,
+      value,
     } = this.state;
     return (
       <Form onKeyPress={this.onKeyPress}>
@@ -61,17 +67,28 @@ export class GlobalFormTokenUnstake extends Component<Props> {
                 key="amount"
                 label={(
                   <Header>
-                    Remove Tokens
+                    Rent {resource.toUpperCase()} via REX
                     <Header.Subheader>
-                      Enter the amount of tokens you would like to remove
+                      Enter the amount of {connection.chainSymbol} to pay in order to rent
                       {' '}
-                      from your staked {resource.toUpperCase()} balance.
+                      {resource.toUpperCase()} resources for a period of 30-days.
                     </Header.Subheader>
                   </Header>
                 )}
                 name="amount"
                 onChange={this.onChange}
               />
+              <Header size="small">
+                Cost Estimate
+                <Header.Subheader>
+                  <GlobalAccountFragmentREXPrice
+                    amount={valid ? value : 0.1}
+                    detailed
+                    resource={resource}
+                    symbol={connection.chainSymbol}
+                  />
+                </Header.Subheader>
+              </Header>
             </Grid.Column>
             <Grid.Column>
               <Table definition textAlign="right">
@@ -79,6 +96,18 @@ export class GlobalFormTokenUnstake extends Component<Props> {
                   <Table.Cell>Account</Table.Cell>
                   <Table.Cell>
                     {account}
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>Available Tokens</Table.Cell>
+                  <Table.Cell>
+                    <GlobalAccountFragmentTokenBalance
+                      account={settings.account}
+                      chainId={settings.chainId}
+                      contract="eosio"
+                      token={connection.chainSymbol}
+                    />
+                    {` ${connection.chainSymbol}`}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -117,10 +146,10 @@ export class GlobalFormTokenUnstake extends Component<Props> {
             </Grid.Column>
             <Grid.Column>
               <Button
-                content="Stake"
+                content={`Rent ${resource.toUpperCase()}`}
                 disabled={!valid}
                 floated="right"
-                icon="circle plus"
+                icon="exchange"
                 primary
                 onClick={this.onSubmit}
               />
@@ -132,4 +161,4 @@ export class GlobalFormTokenUnstake extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalFormTokenUnstake);
+export default translate('global')(GlobalFormTokenRent);
