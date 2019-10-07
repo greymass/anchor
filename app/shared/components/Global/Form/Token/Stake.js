@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Button, Header, Form, Grid, Table } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 
+import GlobalAccountFragmentResourceStakedDelegated from '../../../../containers/Global/Account/Fragment/Resource/Staked/Delegated';
 import GlobalAccountFragmentResourceStakedSelf from '../../../../containers/Global/Account/Fragment/Resource/Staked/Self';
 import GlobalAccountFragmentTokenBalance from '../../../../containers/Global/Account/Fragment/TokenBalance';
 import GlobalFormFieldToken from '../../../../components/Global/Form/Field/Token';
@@ -34,10 +35,10 @@ export class GlobalFormTokenStake extends Component<Props> {
     if (valid) {
       switch (resource) {
         default:
-        case 'CPU':
+        case 'cpu':
           delegatebw(account, account, false, value);
           break;
-        case 'NET':
+        case 'net':
           delegatebw(account, account, value, false);
           break;
       }
@@ -100,6 +101,18 @@ export class GlobalFormTokenStake extends Component<Props> {
                   <Table.Cell>Staked {resource.toUpperCase()} Tokens</Table.Cell>
                   <Table.Cell>
                     <GlobalAccountFragmentResourceStakedSelf
+                      account={account}
+                      chainId={connection.chainId}
+                      contract="eosio"
+                      token={connection.chainSymbol}
+                      type={resource}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>Other {resource.toUpperCase()} Tokens</Table.Cell>
+                  <Table.Cell>
+                    <GlobalAccountFragmentResourceStakedDelegated
                       account={account}
                       chainId={connection.chainId}
                       contract="eosio"

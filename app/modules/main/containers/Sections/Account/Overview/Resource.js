@@ -5,16 +5,18 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
-import { Button, Container, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Popup, Progress, Segment, Table } from 'semantic-ui-react';
 
 import GlobalAccountFragmentResourcePercent from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
 import GlobalAccountFragmentResourceProgress from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Progress';
 import GlobalAccountFragmentResourceStaked from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked';
 import GlobalAccountFragmentResourceStakedSelf from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Self';
+import GlobalAccountFragmentResourceStakedDelegated from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Delegated';
 import GlobalAccountFragmentResourceUsage from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Usage';
 import GlobalAccountFragmentResourceMax from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Max';
 import GlobalAccountFragmentTokenRefunding from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
 
+import GlobalButtonRent from '../../../../../../shared/containers/Global/Button/Rent';
 import GlobalButtonStake from '../../../../../../shared/containers/Global/Button/Stake';
 import GlobalButtonUnstake from '../../../../../../shared/containers/Global/Button/Unstake';
 
@@ -133,13 +135,16 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '1em'
                         }}
                       >
-                        {/* <Button
-                          color="green"
-                          content="Lease"
-                          floated="right"
-                          icon="exchange"
-                          size="tiny"
-                        /> */}
+                        <GlobalButtonRent
+                          button={{
+                            color: 'green',
+                            content: 'Rent',
+                            floated: 'right',
+                            icon: 'exchange',
+                            size: 'tiny'
+                          }}
+                          resource={resource}
+                        />
                       </Container>
                     </Segment>
                   </Grid.Column>
@@ -184,7 +189,19 @@ class AccountOverviewResource extends Component<Props> {
                       unstackable
                     >
                       <Table.Row>
-                        <Table.Cell collapsing>Staked Tokens</Table.Cell>
+                        <Table.Cell collapsing textAlign="right">
+                          <Popup
+                            content="Tokens this account has staked to itself that can be unstaked."
+                            inverted
+                            position="center left"
+                            trigger={(
+                              <span>
+                                Staked Tokens
+                                <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
+                              </span>
+                            )}
+                          />
+                        </Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentResourceStakedSelf
                             account={account}
@@ -196,7 +213,44 @@ class AccountOverviewResource extends Component<Props> {
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell collapsing>Unstaking</Table.Cell>
+                        <Table.Cell collapsing textAlign="right">
+                          <Popup
+                            content="Includes delegated tokens from other accounts and rentals from REX."
+                            inverted
+                            position="center left"
+                            trigger={(
+                              <span>
+                                Other Tokens
+                                <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
+                              </span>
+                            )}
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <GlobalAccountFragmentResourceStakedDelegated
+                            account={account}
+                            chainId={connection.chainId}
+                            contract="eosio"
+                            token={connection.chainSymbol}
+                            type={resource}
+                          />
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell collapsing textAlign="right">
+                          <Popup
+                            content="Tokens this account has staked previously which are now unstaking over the course of 3 days."
+                            inverted
+                            position="center left"
+                            trigger={(
+                              <span>
+                                Unstaking
+                                <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
+                              </span>
+                            )}
+                          />
+
+                        </Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentTokenRefunding
                             account={account}
