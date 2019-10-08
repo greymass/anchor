@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Divider, Grid, Header, Icon, Image, Responsive, Segment, Statistic, Step } from 'semantic-ui-react';
 
-import AnchorLogo from '../../../renderer/assets/images/anchor-shape.svg';
+import AnchorLogo from '../../../renderer/assets/images/anchor-icon-4.png';
 import GlobalFragmentChainLogo from '../../../shared/components/Global/Fragment/ChainLogo';
 
 class PromptHeader extends Component<Props> {
