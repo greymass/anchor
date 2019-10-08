@@ -119,6 +119,7 @@
   "producers_proxies_table_header_name": "Proxy Name",
   "producers_proxies_table_header_website": "Website",
   "producers_table_votes_proxied": "Current producer voting proxy:",
+  "producers_table_votes_proxied_r2": "Currently selected proxy",
   "producers_voter_preview_confirm_unselected": "The following block producers will be removed:",
   "producers_warning_have_unregistered_multiple": "The block producers ({{unregisteredBps}}) will be automatically removed from your selection as they are now unregistered.",
   "producers_warning_have_unregistered_single": "The block producer ({{unregisteredBp}}) will be automatically removed from your selection as they are now unregistered.",
