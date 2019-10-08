@@ -233,7 +233,9 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
     }
     // Establish Signer
     const signer = eos(networkConfig, true);
-    setTimeout(() => {
+    setTimeout(async () => {
+      const contract = await signer.getAbi('eosio');
+      signer.fc.abiCache.abi(contract.account_name, contract.abi);
       signer
         .transaction(tx, {
           broadcast,
