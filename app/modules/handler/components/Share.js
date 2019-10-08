@@ -28,6 +28,7 @@ class PromptShare extends Component<Props> {
         onClose={onClose}
         open={open}
         size="small"
+        scrolling
       >
         <Modal.Header>Signing Request URI (EEP-6)</Modal.Header>
         <Modal.Content>

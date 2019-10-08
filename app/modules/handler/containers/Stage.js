@@ -6,7 +6,7 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find, includes } from 'lodash';
 
-import { Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-react';
+import { Button, Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-react';
 
 import PromptStageReview from './Stage/Review';
 import PromptStageBroadcast from './Stage/Broadcast';
@@ -21,6 +21,7 @@ import PromptActionCancel from '../components/Actions/Cancel';
 import PromptActionComplete from '../components/Actions/Complete';
 import PromptActionDownload from '../components/Actions/Download';
 import PromptActionRecreate from '../components/Actions/Recreate';
+import PromptActionShare from '../components/Actions/Share';
 import PromptActionSign from '../components/Actions/Sign';
 import PromptActionSignBroadcast from '../components/Actions/SignBroadcast';
 
@@ -202,6 +203,12 @@ class PromptStage extends Component<Props> {
         onClick={onClose}
       />
     );
+
+    let helpAction = (
+      <PromptActionShare
+        onClick={onShareLink}
+      />
+    )
 
     if (wallet.mode === 'watch') {
       nextAction = (
@@ -392,6 +399,7 @@ class PromptStage extends Component<Props> {
         >
           {nextAction}
           {cancelAction}
+          {helpAction}
         </Segment>
       </React.Fragment>
     );
@@ -399,7 +407,6 @@ class PromptStage extends Component<Props> {
 }
 
 function mapStateToProps(state) {
-  console.log(state.whitelist)
   return {
     availableKeys: state.auths.keystore.map((auth) => auth.pubkey),
     blockchains: state.blockchains,

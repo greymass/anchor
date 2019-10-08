@@ -17,7 +17,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
       whitelist,
     } = this.props;
     return (
-      <React.Fragment key={index}>
+      <div key={index}>
         <Segment attached="top" color="blue" inverted>
           <Label basic size="large">
             {action.account}
@@ -36,7 +36,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false)
               return (
-                <List.Item>
+                <List.Item key={k}>
                   {(enableWhitelist)
                     ? (
                       <Button
@@ -85,7 +85,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             </Label>
           ))}
         </Segment>
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -151,9 +151,7 @@ class PromptContainer extends Component<Props> {
       requestedActor !== '...........1' &&
       !find(wallets, { account: requestedActor, chainId: blockchain.chainId });
     return (
-      <React.Fragment
-        style={{ minHeight: '100%' }}
-      >
+      <React.Fragment>
         <PromptShare
           onClose={this.onShareLink}
           open={displayShareLink}
