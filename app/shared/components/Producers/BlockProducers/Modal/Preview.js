@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import ProducersVotingPreviewSelection from './Preview/Selection';
+import GlobalUnlock from '../../../../containers/Global/Unlock';
 
 class ProducersVotingPreview extends Component<Props> {
   render() {
@@ -12,6 +13,7 @@ class ProducersVotingPreview extends Component<Props> {
       actions,
       blockExplorers,
       isProxying,
+      isValidUser,
       lastError,
       onClose,
       onConfirm,
@@ -23,7 +25,9 @@ class ProducersVotingPreview extends Component<Props> {
       t,
       unregisteredProducers
     } = this.props;
-
+    if (!isValidUser) {
+      return <GlobalUnlock style={{ marginTop: 0 }} />;
+    }
     return (
       <GlobalTransactionModal
         actionName="VOTEPRODUCER"
@@ -34,7 +38,7 @@ class ProducersVotingPreview extends Component<Props> {
           content: (isProxying ? t('producer_voter_start_voting_after_proxying') : t('producer_voter_save_changes_r2')),
           fluid: true,
           icon: '',
-          style: { marginTop: '1em' }
+          style: { marginTop: 0 }
         }}
         content={(
           <ProducersVotingPreviewSelection
