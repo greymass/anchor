@@ -45,13 +45,14 @@ export class GlobalFormTokenUnstake extends Component<Props> {
     const {
       account,
       connection,
+      processing,
       resource,
     } = this.props;
     const {
       valid,
     } = this.state;
     return (
-      <Form onKeyPress={this.onKeyPress}>
+      <Form loading={processing} onKeyPress={this.onKeyPress}>
         <Grid padded="horizontally">
           <Grid.Row columns={2}>
             <Grid.Column>

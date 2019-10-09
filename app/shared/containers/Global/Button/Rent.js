@@ -32,6 +32,9 @@ class GlobalButtonRent extends Component<Props> {
     if (!connection.supportedContracts || !connection.supportedContracts.includes('rex')) {
       return false;
     }
+    const processing = !!(system
+      && system[`RENT${resource.toUpperCase()}REX`]
+      && system[`RENT${resource.toUpperCase()}REX`] === 'PENDING');
     return (
       <GlobalTransactionModal
         actionName={`RENT${resource.toUpperCase()}REX`}
@@ -44,6 +47,7 @@ class GlobalButtonRent extends Component<Props> {
             actions={actions}
             connection={connection}
             onClose={this.close}
+            processing={processing}
             resource={resource}
             settings={settings}
           />

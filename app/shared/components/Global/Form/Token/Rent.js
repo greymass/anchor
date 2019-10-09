@@ -50,6 +50,7 @@ export class GlobalFormTokenRent extends Component<Props> {
       account,
       connection,
       resource,
+      processing,
       settings,
     } = this.props;
     const {
@@ -57,7 +58,7 @@ export class GlobalFormTokenRent extends Component<Props> {
       value,
     } = this.state;
     return (
-      <Form onKeyPress={this.onKeyPress}>
+      <Form loading={processing} onKeyPress={this.onKeyPress}>
         <Grid padded="horizontally">
           <Grid.Row columns={2}>
             <Grid.Column>
