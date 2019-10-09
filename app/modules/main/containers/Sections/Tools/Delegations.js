@@ -7,6 +7,7 @@ import { map } from 'lodash';
 
 import ToolsDelegationsComponent from '../../../../../shared/components/Tools/Delegations';
 
+import * as AccountsActions from '../../../../../shared/actions/accounts';
 import * as StakeActions from '../../../../../shared/actions/stake';
 import * as SystemStateActions from '../../../../../shared/actions/system/systemstate';
 import * as TableActions from '../../../../../shared/actions/table';
@@ -41,6 +42,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      ...AccountsActions,
       ...StakeActions,
       ...SystemStateActions,
       ...TableActions,
