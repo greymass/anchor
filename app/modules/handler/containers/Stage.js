@@ -323,27 +323,6 @@ class PromptStage extends Component<Props> {
 
     return (
       <React.Fragment>
-        {(error && error.type !== 'forbidden')
-          ? (
-            <Segment attached size="large" color="red" inverted>
-              {(error.message)
-                ? (
-                  <Header>
-                    <Icon name="warning sign" />
-                    <Header.Content>
-                      There was a problem with this transaction
-                      <Header.Subheader style={{ color: 'white' }}>
-                        {error.message}
-                      </Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                )
-                : false
-              }
-            </Segment>
-          )
-          : false
-        }
         <Segment
           attached="bottom"
           padded
@@ -389,6 +368,27 @@ class PromptStage extends Component<Props> {
                   </Header.Subheader>
                 </Header.Content>
               </Header>
+            </Segment>
+          )
+          : false
+        }
+        {(error && error.type !== 'forbidden')
+          ? (
+            <Segment attached size="large" color="red" inverted>
+              {(error.message)
+                ? (
+                  <Header>
+                    <Icon name="warning sign" />
+                    <Header.Content>
+                      There was a problem with this transaction
+                      <Header.Subheader style={{ color: 'white' }}>
+                        {error.message}
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                )
+                : false
+              }
             </Segment>
           )
           : false
