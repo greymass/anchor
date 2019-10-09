@@ -15,21 +15,19 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
   render() {
     const {
       constants,
-      update,
     } = this.props;
     const {
       open
     } = this.state;
-    if (!update) return false;
     const { version } = packageJson;
     let upgradeAvailable = false;
     // Determine if an upgrade is actually available
-    if (version && constants && constants.version && constants.version !== version) {
+    if (version && constants && constants.newversion && constants.newversion !== version) {
       const [
         nextMajor,
         nextMinor,
         nextPatch
-      ] = constants.version.split('.');
+      ] = constants.newversion.split('.');
       const [
         currentMajor,
         currentMinor,
@@ -40,15 +38,23 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
       const matchMinor = (currentMinor === nextMinor);
       upgradeAvailable = (
         nextMajor > currentMajor
-        || (matchMajor && nextMinor > currentMinor)
-        || (matchMajor && matchMinor && nextPatch > currentPatch)
+        || (matchMajor && parseInt(nextMinor, 10) > parseInt(currentMinor, 10))
+        || (matchMajor && matchMinor && parseInt(nextPatch, 10) > parseInt(currentPatch, 10))
       );
+      console.log(nextMajor, currentMajor)
+      console.log(matchMajor, parseInt(nextMinor, 10), parseInt(currentMinor, 10))
+      console.log(matchMajor, matchMinor, parseInt(nextPatch, 10), parseInt(currentPatch, 10))
       // If the user has explicitly skipped this update
       // if (settings.upgradeSkip === constants.version) {
       //   upgradeAvailable = false;
       // }
     }
+
     if (!upgradeAvailable) return false;
+
+    const update = constants.changelog;
+    if (!update) return false;
+
     return (
       <React.Fragment>
         <Segment attached="top" color="green" textAlign="center">
