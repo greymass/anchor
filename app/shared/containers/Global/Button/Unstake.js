@@ -30,6 +30,7 @@ class GlobalButtonUnstake extends Component<Props> {
       t,
     } = this.props;
     const { open } = this.state;
+    const processing = !!(system && system.UNDELEGATEBW && system.UNDELEGATEBW === 'PENDING');
     return (
       <GlobalTransactionModal
         actionName="UNDELEGATEBW"
@@ -42,6 +43,7 @@ class GlobalButtonUnstake extends Component<Props> {
             actions={actions}
             connection={connection}
             onClose={this.close}
+            processing={processing}
             resource={resource}
             settings={settings}
           />
