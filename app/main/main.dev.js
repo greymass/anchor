@@ -84,7 +84,7 @@ app.on('uncaughtException', (error) => {
 
 const instance = app.makeSingleInstance((argv) => {
   if (process.platform === 'win32' || process.platform === 'linux') {
-    uri = argv.slice(1);
+    uri = argv.slice(1)[0];
   }
   if (mainWindow) {
     handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
@@ -104,7 +104,7 @@ app.on('ready', async () => {
   }
 
   protocol.registerHttpProtocol('eosio', (req, cb) => {
-    console.log('protocol handler: register', req, cb);
+    log.info('protocol handler: register', req, cb);
     // TODO: during protocol registration, the uri handler may need to be triggered
   });
 
@@ -118,7 +118,6 @@ app.on('ready', async () => {
   initProtocolHandler();
 });
 
-// debug event logging
 app.on('window-all-closed', () => {
   log.info('app: window-all-closed');
   app.quit();
@@ -136,11 +135,13 @@ app.on('quit', () => { log.info('app: quit'); });
 
 const initManager = (route = '/', closable = true) => {
   if (process.platform === 'win32' || process.platform === 'linux') {
-    uri = process.argv.slice(1);
+    uri = process.argv.slice(1)[0];
   }
   mainWindow = createInterface(resourcePath, route, closable, store, uri, pHandler);
   mainWindow.on('close', () => {
     mainWindow = null;
+    pHandler = null;
+    app.quit();
   });
 };
 
