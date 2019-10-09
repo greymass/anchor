@@ -21,6 +21,7 @@ let mainWindow = null;
 let menu = null;
 let tray = null;
 let pHandler = null;
+let uri = null;
 
 if (process.mainModule.filename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
@@ -81,6 +82,19 @@ app.on('uncaughtException', (error) => {
   log.error(error);
 });
 
+const instance = app.makeSingleInstance((argv) => {
+  if (process.platform === 'win32' || process.platform === 'linux') {
+    uri = argv.slice(1);
+  }
+  if (mainWindow) {
+    handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
+  }
+});
+
+if (instance) {
+  app.quit();
+}
+
 // main start
 app.on('ready', async () => {
   log.info('app: ready');
@@ -121,7 +135,10 @@ app.on('will-quit', () => { log.info('app: will-quit'); });
 app.on('quit', () => { log.info('app: quit'); });
 
 const initManager = (route = '/', closable = true) => {
-  mainWindow = createInterface(resourcePath, route, closable, store);
+  if (process.platform === 'win32' || process.platform === 'linux') {
+    uri = process.argv.slice(1);
+  }
+  mainWindow = createInterface(resourcePath, route, closable, store, uri, pHandler);
   mainWindow.on('close', () => {
     mainWindow = null;
   });
