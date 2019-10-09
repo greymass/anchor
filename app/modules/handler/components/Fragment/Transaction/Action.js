@@ -32,7 +32,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
           </Label>
         </Segment>
         <Segment attached secondary>
-          <List relaxed size="large">
+          <List divided relaxed size="large">
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false)
               return (
@@ -59,15 +59,14 @@ class PromptFragmentTransactionAction extends Component<Props> {
                   }
                   <List.Content>
                     {(!isError(attempt(JSON.parse, k)))
-                      ? JSON.parse(k)
+                      ? JSON.stringify(JSON.parse(k))
                       : String(k)
                     }
-                    {JSON.stringify(k)}
                     <List.Header
                       style={{ marginTop: '0.25em' }}
                     >
                       {(!isError(attempt(JSON.parse, action.data[k])))
-                        ? JSON.parse(action.data[k])
+                        ? JSON.stringify(JSON.parse(action.data[k]))
                         : String(action.data[k])
                       }
                     </List.Header>
@@ -84,6 +83,9 @@ class PromptFragmentTransactionAction extends Component<Props> {
               {auth.actor}@{auth.permission}
             </Label>
           ))}
+          <Label color="white" basic pointing="left">
+            Signatures Required
+          </Label>
         </Segment>
       </div>
     );
