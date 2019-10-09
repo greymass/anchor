@@ -348,7 +348,8 @@ class PromptStage extends Component<Props> {
           attached="bottom"
           padded
           style={{
-            marginBottom: 0
+            marginBottom: 0,
+            paddingTop: '130px',
           }}
         >
           <Dimmer

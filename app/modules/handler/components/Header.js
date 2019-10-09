@@ -42,7 +42,15 @@ class PromptHeader extends Component<Props> {
         clearing
         className="prompt-header"
         secondary
-        style={{ "-webkit-app-region": "drag" }}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '110px',
+          zIndex: 2,
+          '-webkit-app-region': 'drag'
+        }}
       >
         <Grid>
           <Grid.Column width={10}>
