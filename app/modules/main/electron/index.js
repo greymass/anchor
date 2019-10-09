@@ -27,7 +27,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
     width: uiStateKeeper.width,
     height: uiStateKeeper.height,
     title,
-    show: true,
+    show: false,
     resizable: true,
     backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
@@ -39,6 +39,13 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
 
   ui.on('page-title-updated', (e) => {
     e.preventDefault();
+  });
+
+  ui.webContents.on('did-fail-load', () => {
+    log.info('manager: failed loading');
+    ui.show();
+    ui.focus();
+    ui.setTitle(title);
   });
 
   ui.webContents.on('did-finish-load', () => {
