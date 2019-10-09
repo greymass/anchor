@@ -4,6 +4,7 @@ import packageJson from '../../../package.json';
 
 import { configureIPC } from '../../../shared/electron/ipc';
 import { windowStateKeeper } from '../../../shared/electron/windowStateKeeper';
+import handleUri from '../../../shared/utils/UriHandler';
 
 const log = require('electron-log');
 const path = require('path');
@@ -12,7 +13,7 @@ require('electron-context-menu')();
 
 let ui;
 
-const createInterface = (resourcePath, route = '/', closable = true, store) => {
+const createInterface = (resourcePath, route = '/', closable = true, store, uri = false, pHandler = false) => {
   log.info('wallet ui: creating');
 
   const uiStateKeeper = windowStateKeeper(store);
@@ -47,6 +48,10 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
     ui.setTitle(title);
     if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
       ui.openDevTools({ mode: 'detach' });
+    }
+    // Launch + Load URI, if exists
+    if (uri && pHandler) {
+      handleUri(resourcePath, store, ui, pHandler, uri);
     }
   });
 
