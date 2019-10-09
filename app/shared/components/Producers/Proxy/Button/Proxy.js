@@ -39,6 +39,7 @@ class ProducersButtonProxy extends Component<Props> {
           content: buttonText,
           fluid: true,
           icon: 'share square',
+          style: { marginBottom: '1em' }
         }}
         content={(
           <ProducersFormProxy
