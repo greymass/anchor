@@ -103,9 +103,9 @@ class ProducersProxy extends Component<Props> {
                 fluid
                 icon="sync"
                 onClick={this.onRefreshClick}
-                style={{ marginTop: '1em' }}
+                style={{ marginBottom: '1em' }}
               />
-              <Header block color="blue" size="large">
+              <Header block color="blue" size="large" style={{ marginTop: 0 }}>
                 <Icon name="circle info" />
                 <Header.Content>
                   <Header.Subheader>
