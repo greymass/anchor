@@ -24,24 +24,6 @@ class GlobalAccountFragmentRamPrice extends PureComponent<Props> {
         {formatter.format(price.toFixed(precision))}
       </span>
     );
-    const el = (
-      <span>
-        {prettyBytes(used)}
-      </span>
-    );
-    return (
-      <React.Fragment>
-        {(percent < 5)
-          ? (
-            <Popup
-              content="This specific resource is currently running low. Consider staking more in order to increase the account resources to avoid any potential interruptions in its actions."
-              trigger={el}
-            />
-          )
-          : el
-        }
-      </React.Fragment>
-    );
   }
 }
 

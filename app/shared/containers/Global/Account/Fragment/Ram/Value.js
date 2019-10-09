@@ -21,7 +21,6 @@ class GlobalAccountFragmentRamValue extends PureComponent<Props> {
     } = this.props;
     if (!max || !used) return false;
     const percent = (((max - used) / max) * 100).toFixed(1);
-    console.log(percent, max)
     const value = max * price;
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: precision });
     const el = (
@@ -34,7 +33,7 @@ class GlobalAccountFragmentRamValue extends PureComponent<Props> {
         {(percent < 5)
           ? (
             <Popup
-              content="This specific resource is currently running low. Consider staking more in order to increase the account resources to avoid any potential interruptions in its actions."
+              content="This resource is running low. Consider buying more RAM in order to increase the capacity of this account."
               trigger={el}
             />
           )

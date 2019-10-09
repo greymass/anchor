@@ -17,9 +17,9 @@ class GlobalUnlock extends Component<Props> {
       settings,
       validate,
       wallet,
+      style,
       t
     } = this.props;
-    console.log(actions)
     const {
       unlockWallet
     } = actions;
@@ -32,6 +32,7 @@ class GlobalUnlock extends Component<Props> {
         loading={validate.WALLET_PASSWORD === 'PENDING'}
         padded
         stacked
+        style={style}
       >
         <Header
           icon

@@ -183,8 +183,7 @@ class Producers extends Component<Props> {
 
     const producersVotedIn =
       connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
-
-    if (isValidUser && settings.walletMode !== 'wait') {
+    if (settings.walletMode !== 'wait') {
       sidebar = (producersVotedIn) ? (
         <React.Fragment>
           <ProducersProxy
@@ -202,14 +201,14 @@ class Producers extends Component<Props> {
             system={system}
             tables={tables}
           />
-
-          <Divider hidden={!isProxying} />
+          <Divider style={{ display: (!isProxying) ? 'none' : 'block' }} />
           {(!isProxying || editingProducers) && (
             <ProducersVotingPreview
               account={account}
               actions={actions}
               blockExplorers={allBlockExplorers[connection.chainKey]}
               isProxying={isProxying}
+              isValidUser={isValidUser}
               lastError={lastError}
               lastTransaction={lastTransaction}
               open={previewing}

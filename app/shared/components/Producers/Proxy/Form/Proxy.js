@@ -128,7 +128,7 @@ class ProducersFormProxy extends Component<Props> {
           ) : (
             <Segment basic clearing>
               {(isProxying) ? (
-                <Header block size="large">
+                <Header block size="large" style={{ marginTop: 0 }}>
                   <Icon name="circle info" />
                   <Header.Content>
                     <Header.Subheader>
