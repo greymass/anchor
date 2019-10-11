@@ -1,4 +1,5 @@
 import { find } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
 import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
@@ -31,8 +32,17 @@ export function broadcastURI(tx, blockchain, callback = false) {
     eos(modified)
       .pushTransaction(tx.transaction).then((response) => {
         if (callback) {
+          const account = get(tx, 'transaction.transaction.actions.0.authorization.0.actor');
+          const authorization = get(tx, 'transaction.transaction.actions.0.authorization.0.permission');
           dispatch(callbackURIWithProcessed({
+            a: `${account}@${authorization}`,
             bn: response.processed.block_num,
+            t: {
+              broadcast: true,
+              processed: response.processed,
+              transaction: tx.transaction,
+              transaction_id: response.transaction_id,
+            },
             tx: response.transaction_id,
             sig: tx.transaction.signatures
           }, callback));
@@ -50,9 +60,11 @@ export function broadcastURI(tx, blockchain, callback = false) {
 }
 
 export function callbackURIWithProcessed({
+  a,
   bn,
+  sig,
+  t,
   tx,
-  sig
 }, callback) {
   return (dispatch: () => void) => {
     dispatch({
@@ -64,6 +76,7 @@ export function callbackURIWithProcessed({
     } = callback;
 
     let s = url;
+    s = s.replace('{{a}}', a);
     s = s.replace('{{bn}}', bn);
     s = s.replace('{{tx}}', tx);
     s = s.replace('{{sig}}', sig[0]);
@@ -79,13 +92,14 @@ export function callbackURIWithProcessed({
         }
       });
     }
-
     // Otherwise execute background call
     httpClient
       .post(s, {
+        a,
         bn,
-        tx,
         sig: sig[0],
+        t,
+        tx,
       })
       .then(() => dispatch({
         type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
@@ -250,7 +264,9 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
           if (broadcast) {
             if (callback) {
               dispatch(callbackURIWithProcessed({
+                a: `${wallet.account}@${wallet.authorization}`,
                 bn: signed.processed.block_num,
+                t: signed,
                 tx: signed.transaction_id,
                 sig: signed.transaction.signatures
               }, callback));
