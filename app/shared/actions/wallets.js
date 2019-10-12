@@ -270,7 +270,7 @@ export function importWallet(
     }
     let detectedPath = path;
     // If no path was passed, but it's a known key to a path, set it
-    if (!detectedPath && pubkey && storage.paths[pubkey]) {
+    if (!detectedPath && pubkey && storage.paths && storage.paths[pubkey]) {
       detectedPath = storage.paths[pubkey];
     }
     // If a path was exists, this is a hardware wallet and we need to record the pubkey
