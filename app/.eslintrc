@@ -17,6 +17,7 @@
     "flowtype/space-before-type-colon": ["error", "never"],
     "flowtype/union-intersection-spacing": ["error", "always"],
     "flowtype/use-flow-type": "error",
-    "flowtype/valid-syntax": "error"
+    "flowtype/valid-syntax": "error",
+    "import/no-named-as-default": "off"
   }
 }
