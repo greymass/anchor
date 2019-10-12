@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 
 import { Grid, Header, Segment, Table } from 'semantic-ui-react';
 
-import GlobalAccountImport from '../Global/Button/Account/Import';
+import GlobalButtonAccountImport from '../Global/Button/Account/Import';
 import ToolsTableRowWallet from './Table/Row/Wallet';
 
 class ToolsWallets extends Component<Props> {
@@ -39,7 +39,7 @@ class ToolsWallets extends Component<Props> {
               </Header>
             </Grid.Column>
             <Grid.Column textAlign="right">
-              <GlobalAccountImport
+              <GlobalButtonAccountImport
                 connection={connection}
                 history={history}
                 settings={settings}

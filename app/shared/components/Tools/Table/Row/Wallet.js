@@ -7,9 +7,9 @@ import { Button, Dropdown, Header, Icon, Label, Popup, Table } from 'semantic-ui
 
 import GlobalAccountEdit from '../../../../containers/Global/Account/Edit';
 import GlobalButtonElevate from '../../../../containers/Global/Button/Elevate';
-import FragmentAuthorization from '../../../Global/Fragment/Authorization';
-import FragmentChainLogo from '../../../Global/Fragment/ChainLogo';
-import FragmentWalletType from '../../../Global/Fragment/WalletType';
+import GlobalFragmentAuthorization from '../../../Global/Fragment/Authorization';
+import GlobalFragmentChainLogo from '../../../Global/Fragment/ChainLogo';
+import GlobalFragmentWalletType from '../../../Global/Fragment/WalletType';
 import GlobalButtonWalletUpgrade from '../../../../containers/Global/Button/Wallet/Upgrade';
 import GlobalAccountConvertLedger from '../../../../containers/Global/Account/Convert/Ledger';
 import EOSAccount from '../../../../utils/EOS/Account';
@@ -229,7 +229,7 @@ class ToolsTableRowWallet extends Component<Props> {
         <Table.Cell collapsing>
           {modal}
           <Header size="small">
-            <FragmentAuthorization
+            <GlobalFragmentAuthorization
               account={account}
               authorization={authorization}
               pubkey={pubkey}
@@ -237,14 +237,14 @@ class ToolsTableRowWallet extends Component<Props> {
           </Header>
         </Table.Cell>
         <Table.Cell collapsing textAlign="center">
-          <FragmentChainLogo
+          <GlobalFragmentChainLogo
             avatar
             chainId={blockchain.chainId}
             name={blockchain.name}
           />
         </Table.Cell>
         <Table.Cell>
-          <FragmentWalletType
+          <GlobalFragmentWalletType
             mode={mode}
           />
         </Table.Cell>
