@@ -8,6 +8,7 @@ import { Button, Container, Header, Message, Segment } from 'semantic-ui-react';
 import GlobalTransactionViewActions from '../../Global/Transaction/View/Actions';
 import GlobalTransactionViewDetail from '../../Global/Transaction/View/Detail';
 import GlobalTransactionViewFull from '../../Global/Transaction/View/Full';
+import GlobalUnlock from '../../../../shared/containers/Global/Unlock';
 
 import EOSTransaction from '../../../utils/EOS/Transaction';
 
@@ -42,9 +43,11 @@ class ColdWalletTransaction extends Component<Props> {
 
   render() {
     const {
+      pubkeys,
       settings,
       t,
-      transaction
+      transaction,
+      wallet,
     } = this.props;
     const {
       data,
@@ -60,7 +63,11 @@ class ColdWalletTransaction extends Component<Props> {
     const expires = new Date(`${expiration}z`);
     const now = new Date();
     const expired = (now > expires);
+    const locked = !pubkeys.unlocked.includes(wallet.pubkey);
     const disabled = (signed);
+    if (!signed && locked && matchingAuthorization) {
+      return <GlobalUnlock />;
+    }
     return (
       <React.Fragment>
         <Segment attached="top" style={{ marginTop: 0 }}>
@@ -92,8 +99,7 @@ class ColdWalletTransaction extends Component<Props> {
             : false
           }
           <Container fluid textAlign="center">
-
-            {(!signed && matchingAuthorization)
+            {(!signed && !locked && matchingAuthorization)
               ? (
                 <Button
                   color="orange"
