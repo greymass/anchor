@@ -28,6 +28,11 @@ const mapStateToProps = (state, ownProps) => {
   const loaded = !isEmpty(get(state, `balances.${account}`));
   const defaultValue = loaded ? 0 : false;
   const balances = get(state, `balances.${account}`, defaultValue);
+  if (!balances) {
+    return ({
+      balance: false
+    });
+  }
   const liquid = balances[ownProps.token] || 0;
   const path = `accounts.${account}.self_delegated_bandwidth`;
   const cpuWeight = get(state, `${path}.cpu_weight`, defaultValue);
