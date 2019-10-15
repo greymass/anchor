@@ -37,7 +37,7 @@ class HomeContainer extends Component<Props> {
       history.push('/home/init');
     } else if (!settings.chainId || settings.blockchains.length === 0) {
       history.push('/home/blockchains');
-    } else if (validate.NODE === 'SUCCESS' && (!wallets || wallets.length === 0)) {
+    } else if (!wallets || wallets.length === 0) {
       history.push('/home/accounts');
     } else if (settings.walletMode === 'cold') {
       history.push('/home/coldwallet');
