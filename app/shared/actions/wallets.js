@@ -297,6 +297,10 @@ export function importWallet(
       });
     }
     const modeChange = (detectedPath && ['unknown', 'ledger'].includes(mode)) ? 'ledger' : mode;
+    // If no wallet is currently selected, select this one
+    if (!settings.account) {
+      setTimeout(() => dispatch(useWallet(chainId, account, authorization)), 500);
+    }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
