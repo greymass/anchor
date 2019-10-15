@@ -61,6 +61,11 @@ class DisconnectedContainer extends Component<Props> {
     const {
       open
     } = this.state;
+    // If this is a cold wallet, ignore.
+    if (settings.walletMode === 'cold') {
+      return false;
+    }
+    // If node is successfully connected, ignore.
     if (validate.NODE === 'SUCCESS') {
       return false;
     }
