@@ -102,7 +102,7 @@ const knownChains = [
     chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
     keyPrefix: 'EOS',
     name: 'Jungle (EOS)',
-    node: 'http://jungle.cryptolions.io:18888',
+    node: 'https://jungle.greymass.com',
     symbol: 'EOS',
     testnet: true
   },
