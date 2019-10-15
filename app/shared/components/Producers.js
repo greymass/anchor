@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tab, Grid, Divider, Message } from 'semantic-ui-react';
+import { Tab, Divider, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { intersection } from 'lodash';
 
@@ -9,7 +9,6 @@ import ProducersVotingPreview from './Producers/BlockProducers/Modal/Preview';
 import Proxies from './Producers/Proxies';
 import ProducersSelector from './Producers/BlockProducers/Selector';
 import ToolsGovernanceProposals from './Tools/Governance/Proposals';
-import WalletPanelLocked from './Wallet/Panel/Locked';
 
 class Producers extends Component<Props> {
   constructor(props) {
@@ -54,14 +53,14 @@ class Producers extends Component<Props> {
       if (settings.account && accounts[settings.account]) {
         const account = accounts[settings.account];
         if (account.voter_info) {
-          const selected_account = account.voter_info.proxy || account.account_name;
-          const selected = editingProducers || !accounts[selected_account] ?
+          const accountName = account.voter_info.proxy || account.account_name;
+          const selected = editingProducers || !accounts[accountName] ?
             currentlySelected :
-            accounts[selected_account].voter_info.producers;
+            accounts[accountName].voter_info.producers;
           // If the voter_info entry exists, load those votes into state
           this.setState({
             selected,
-            selected_account,
+            selected_account: accountName,
             selected_loaded: true
           });
         } else {
@@ -147,18 +146,14 @@ class Producers extends Component<Props> {
       accounts,
       actions,
       allBlockExplorers,
-      balances,
-      blockchains,
       connection,
       contracts,
-      globals,
       producers,
       pubkeys,
       settings,
       system,
       t,
       tables,
-      transaction,
       validate,
       wallet
     } = this.props;
@@ -183,6 +178,9 @@ class Producers extends Component<Props> {
 
     const producersVotedIn =
       connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
+
+    const blockExplorers = allBlockExplorers[connection.chainKey];
+
     if (settings.walletMode !== 'wait') {
       sidebar = (producersVotedIn) ? (
         <React.Fragment>
@@ -191,7 +189,7 @@ class Producers extends Component<Props> {
             accounts={accounts}
             actions={actions}
             addProxy={addProxy}
-            blockExplorers={allBlockExplorers[connection.chainKey]}
+            blockExplorers={blockExplorers}
             currentProxy={currentProxy}
             isProxying={isProxying}
             isValidUser={isValidUser}
@@ -206,13 +204,13 @@ class Producers extends Component<Props> {
             <ProducersVotingPreview
               account={account}
               actions={actions}
-              blockExplorers={allBlockExplorers[connection.chainKey]}
+              blockExplorers={blockExplorers}
               isProxying={isProxying}
               isValidUser={isValidUser}
               lastError={lastError}
               lastTransaction={lastTransaction}
               open={previewing}
-              onClose={() => this.setState({ editingProducers : false })}
+              onClose={() => this.setState({ editingProducers: false })}
               onConfirm={this.submitProducerVotes.bind(this)}
               onOpen={() => this.previewProducerVotes(true)}
               proxyingTo={proxyingTo}
@@ -246,41 +244,35 @@ class Producers extends Component<Props> {
     const tabPanes = [
       {
         menuItem: t('producers_block_producers'),
-        render: () => {
-          return (
-            <Tab.Pane>
-              <BlockProducers
-                {...this.props}
-                addProducer={this.addProducer.bind(this)}
-                removeProducer={this.removeProducer.bind(this)}
-                selected={selected}
-              />
-            </Tab.Pane>
-          );
-        }
+        render: () => (
+          <Tab.Pane>
+            <BlockProducers
+              {...this.props}
+              addProducer={this.addProducer.bind(this)}
+              removeProducer={this.removeProducer.bind(this)}
+              selected={selected}
+            />
+          </Tab.Pane>
+        )
       }
     ];
 
     if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
       tabPanes.push({
         menuItem: t('tools:tools_menu_governance_proposals'),
-        render: () => {
-          return (
-            <Tab.Pane>
-              <ToolsGovernanceProposals
-                actions={actions}
-                blockExplorers={blockExplorers}
-                contracts={contracts}
-                keys={keys}
-                proposals={proposals}
-                settings={settings}
-                system={system}
-                validate={validate}
-                wallet={wallet}
-              />
-            </Tab.Pane>
-          );
-        }
+        render: () => (
+          <Tab.Pane>
+            <ToolsGovernanceProposals
+              actions={actions}
+              blockExplorers={blockExplorers}
+              contracts={contracts}
+              settings={settings}
+              system={system}
+              validate={validate}
+              wallet={wallet}
+            />
+          </Tab.Pane>
+        )
       });
     }
 
