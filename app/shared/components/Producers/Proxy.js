@@ -57,7 +57,7 @@ class ProducersProxy extends Component<Props> {
 
     return (
       <React.Fragment>
-        {(isValidUser)
+        {(isValidUser && account)
           ? (
             <Header block color="green" size="large">
               <Header.Subheader style={{ marginBottom: '0.5em' }}>
