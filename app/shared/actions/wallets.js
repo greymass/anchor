@@ -277,15 +277,6 @@ export function importWallet(
     if (detectedPath) {
       dispatch(importPubkeyStorage(pubkey, detectedPath));
     }
-    // Detect if the current account/authorization is being reimported/replaced, and set mode
-    if (
-      settings.account === account
-      && settings.authorization === authorization
-    ) {
-      dispatch(setSettings(Object.assign({}, settings, {
-        walletMode: mode
-      })));
-    }
     // as long as this isn't an offline wallet, ensure the blockchain exists
     if (settings.walletMode !== 'cold') {
       dispatch({
@@ -296,10 +287,22 @@ export function importWallet(
         }
       });
     }
-    const modeChange = (detectedPath && ['unknown', 'ledger'].includes(mode)) ? 'ledger' : mode;
+    let modeChange = (detectedPath && ['unknown', 'ledger'].includes(mode)) ? 'ledger' : mode;
+    if (modeChange === 'unknown' && storage.keys.includes(pubkey)) {
+      modeChange = 'hot';
+    }
     // If no wallet is currently selected, select this one
     if (!settings.account) {
       setTimeout(() => dispatch(useWallet(chainId, account, authorization)), 500);
+    }
+    // Detect if the current account/authorization is being reimported/replaced, and set mode
+    if (
+      settings.account === account
+      && settings.authorization === authorization
+    ) {
+      dispatch(setSettings(Object.assign({}, settings, {
+        walletMode: (modeChange) ? modeChange : mode,
+      })));
     }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
