@@ -7,7 +7,8 @@ const initialState = {
   jurisdictions: [],
   choosenJurisdictions: [],
   choosenJurisdictionsTemp: [],
-  activeJurisdictions: []
+  activeJurisdictions: [],
+  activeLoading: false
 };
 
 export default function jurisdictions(state = initialState, action) {
@@ -151,11 +152,18 @@ export default function jurisdictions(state = initialState, action) {
         sequenceTransaction: action.sequenceTransaction,
       };
     }
+    case types.GET_ACTIVE_JURISDICTION_PENDING: {
+      return {
+        ...state,
+        activeLoading: true
+      };
+    }
     case types.GET_ACTIVE_JURISDICTION_SUCCESS: {
       return {
         ...state,
         activeJurisdictions: action.payload.jurisdictions,
         fetchingError: false,
+        activeLoading: false,
         choosenJurisdictions: state.choosenJurisdictions.length === 0 ? state.choosenJurisdictionsTemp : state.choosenJurisdictions,
         choosenJurisdictionsTemp: []
       };

@@ -3,7 +3,7 @@ import * as types from './types';
 import checkForBeos from '../components/helpers/checkCurrentBlockchain';
 
 export function getJurisdictions() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       connection
     } = getState();
@@ -16,7 +16,7 @@ export function getJurisdictions() {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
 
-      axios({
+      await axios({
         method: 'post',
         url: url,
         data: {},
@@ -57,7 +57,7 @@ export function getJurisdictions() {
 }
 
 export function getActiveJurisdictions() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       connection
     } = getState();
@@ -71,7 +71,7 @@ export function getActiveJurisdictions() {
 
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      fetch(url, {
+      await fetch(url, {
         method: 'POST',
         body: JSON.stringify({}),
         headers

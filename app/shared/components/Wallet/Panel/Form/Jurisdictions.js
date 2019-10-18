@@ -512,8 +512,8 @@ export default class JurisdictionsForm extends Component<Props> {
     }
   }
 
-  filterOptions() {
-    this.props.actions.getActiveJurisdictions();
+  async filterOptions() {
+    await this.props.actions.getActiveJurisdictions();
     this.setState({
       tempChoosen: this.state.choosenJurisdictions,
       tempJurisdictions: this.state.jurisdictions
@@ -689,7 +689,11 @@ export default class JurisdictionsForm extends Component<Props> {
                             <label style={styles.labelText}>All jurisdictions ({ this.state.options.length + ' of ' + this.state.jurisdictions.length})</label>
                             <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchAll} autoFocus placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'all')} onFocus={() => this.search('', 'all')} />
                             <Segment style={styles.segment}>
-                              {this.props.jurisdictions.fetchingError === false ? this.state.options.map((options) => <Label ref={this.optionsRefs[options.name]} key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>) : 'Error fetching data'}
+                              {this.props.jurisdictions.activeLoading === false ?
+                                (this.props.jurisdictions.fetchingError === false ?
+                                  this.state.options.map((options) => <Label ref={this.optionsRefs[options.name]} key={options.code} active={options.active} onClick={() => this.clickedLabel(options, 'all')} style={styles.label}>{options.text}</Label>) :
+                                  'Error fetching data') :
+                                'Loading...'}
                             </Segment>
                           </Grid.Column>
                           <Grid.Column width={1}>
@@ -700,7 +704,11 @@ export default class JurisdictionsForm extends Component<Props> {
                             <label style={styles.labelText}>Your jurisdictions ({this.state.choosenOptions.length + ' of ' + this.state.choosenJurisdictions.length})</label>
                             <Input disabled={this.props.jurisdictions.fetchingError} ref={this.refSearchYours} placeholder="Search..." type="text" onChange={(e, data) => this.search(data.value, 'yours')} onFocus={() => this.search('', 'yours')} />
                             <Segment style={styles.segment}>
-                              {this.props.jurisdictions.fetchingError === false ? this.state.choosenOptions.map((value) => <Label ref={this.optionsRefs[value.name]} key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>) : 'Error fetching data'}
+                              {this.props.jurisdictions.activeLoading === false ?
+                                (this.props.jurisdictions.fetchingError === false ?
+                                  this.state.choosenOptions.map((value) => <Label ref={this.optionsRefs[value.name]} key={value.code} active={value.active} onClick={() => this.clickedLabel(value, 'yours')} style={styles.label}>{value.text}</Label>) :
+                                  'Error fetching data') :
+                                'Loading...'}
                             </Segment>
                           </Grid.Column>
                         </Grid.Row>
