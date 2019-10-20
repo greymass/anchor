@@ -178,6 +178,7 @@ export default function jurisdictions(state = initialState, action) {
       return {
         ...state,
         fetchingError: true,
+        activeLoading: false,
         choosenJurisdictionsTemp: state.choosenJurisdictions.length === 0 ? state.choosenJurisdictionsTemp : state.choosenJurisdictions,
         choosenJurisdictions: []
       };
