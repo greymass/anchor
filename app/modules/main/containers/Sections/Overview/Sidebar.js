@@ -6,9 +6,12 @@ import { find } from 'lodash';
 
 import { Header } from 'semantic-ui-react';
 
+import { setSetting } from '../../../../../shared/actions/settings';
+
 import OverviewSidebarBackupContainer from './Sidebar/Backup';
-import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
+import GlobalSidebarPrompt from '../../../components/Overview/Sidebar/Prompt';
 import GlobalSidebarTelegram from '../../../components/Overview/Sidebar/Telegram';
+import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
 
 class OverviewSidebarContainer extends Component<Props> {
   componentDidUpdate(prevProps, prevState) {
@@ -18,6 +21,7 @@ class OverviewSidebarContainer extends Component<Props> {
   }
   render() {
     const {
+      actions,
       app,
       settings
     } = this.props;
@@ -36,6 +40,10 @@ class OverviewSidebarContainer extends Component<Props> {
           constants={constants}
         />
         <OverviewSidebarBackupContainer />
+        <GlobalSidebarPrompt
+          actions={actions}
+          settings={settings}
+        />
         <GlobalSidebarTelegram />
       </React.Fragment>
     );
@@ -54,7 +62,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-
+      setSetting,
     }, dispatch)
   };
 }

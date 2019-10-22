@@ -15,8 +15,10 @@ const initialState = {
   advancedPermissions: false,
   // The loaded account
   account: '',
-  // Allow dangerous transactions
+  // Allow dangerous transactions via EEP-7 Signing Requests
   allowDangerousTransactions: false,
+  // Whether or not to enable the handling of EEP-7 Signing Requests
+  allowSigningRequests: false,
   // The loaded authorization
   authorization: undefined,
   // The enabled blockchains (array of chain ids)
