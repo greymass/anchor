@@ -52,7 +52,6 @@ console.log = (...args) => {
 
 log.info('app: initializing');
 protocol.registerStandardSchemes(['eosio']);
-app.setAsDefaultProtocolClient('eosio');
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -103,10 +102,11 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  protocol.registerHttpProtocol('eosio', (req, cb) => {
-    log.info('protocol handler: register', req, cb);
-    // TODO: during protocol registration, the uri handler may need to be triggered
-  });
+  // Initialize the state of signing requests
+  const { settings } = store.getState();
+  if (settings.allowSigningRequests) {
+    enableSigningRequests();
+  }
 
   // Establish tray menu
   // initMenu();
@@ -199,6 +199,26 @@ const initHardwareLedger = (e, signPath, devicePath) => {
 };
 
 ipcMain.on('connectHardwareLedger', initHardwareLedger);
+
+const enableSigningRequests = () => {
+  log.info('enableSigningRequests')
+  app.setAsDefaultProtocolClient('eosio');
+  protocol.registerHttpProtocol('eosio', (req, cb) => {
+    log.info('protocol handler: register', req, cb);
+  });
+};
+
+const disableSigningRequests = () => {
+  log.info('disableSigningRequests')
+  app.removeAsDefaultProtocolClient('eosio');
+  protocol.unregisterProtocol('eosio', (error) => {
+    log.info('protocol handler: unregister', error);
+  });
+};
+
+// Allow for configuration of signing requests from the UI
+ipcMain.on('enableSigningRequests', enableSigningRequests);
+ipcMain.on('disableSigningRequests', disableSigningRequests);
 
 global.hardwareLedger = new HardwareLedger();
 global.initHardwareLedger = initHardwareLedger;
