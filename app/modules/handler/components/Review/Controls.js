@@ -8,6 +8,7 @@ class PromptReviewControls extends Component<Props> {
   render() {
     const {
       callback,
+      canBroadcast,
       chainId,
       couldSignWithDevice,
       enableWhitelist,
@@ -80,7 +81,8 @@ class PromptReviewControls extends Component<Props> {
               </label>
               <Segment basic style={{ marginTop: 0 }}>
                 <Form.Checkbox
-                  checked={settings.eosio_signbroadcast}
+                  checked={canBroadcast && settings.eosio_signbroadcast}
+                  disabled={!canBroadcast}
                   label="Broadcast Transaction"
                   name="eosio_signbroadcast"
                   onChange={onCheck}

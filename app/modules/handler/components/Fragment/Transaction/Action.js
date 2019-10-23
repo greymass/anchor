@@ -77,15 +77,21 @@ class PromptFragmentTransactionAction extends Component<Props> {
           </List>
         </Segment>
         <Segment attached="bottom">
-          {action.authorization.map((auth, idx) => (
-            <Label color="blue" key={`${idx}@${auth.actor}@${auth.permission}`}>
-              <Icon name="pencil" />
-              {auth.actor}@{auth.permission}
-            </Label>
-          ))}
-          <Label color="white" basic pointing="left">
-            Signatures Required
-          </Label>
+          <List>
+            <List.Header>
+              <Label color="white" basic pointing="left">
+                Signatures Required
+              </Label>
+            </List.Header>
+            {action.authorization.map((auth, idx) => (
+              <List.Item>
+                <Label color="blue" key={`${idx}@${auth.actor}@${auth.permission}`}>
+                  <Icon name="pencil" />
+                  {auth.actor}@{auth.permission}
+                </Label>
+              </List.Item>
+            ))}
+          </List>
         </Segment>
       </div>
     );

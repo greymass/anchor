@@ -13,6 +13,7 @@ import PromptFragmentTransactionAction from '../../components/Fragment/Transacti
 class PromptStageReview extends Component<Props> {
   render() {
     const {
+      canBroadcast,
       couldSignWithDevice,
       enableWhitelist,
       modifyWhitelist,
@@ -37,6 +38,7 @@ class PromptStageReview extends Component<Props> {
         <Grid.Column width={6}>
           <PromptReviewControls
             callback={callback}
+            canBroadcast={canBroadcast}
             chainId={chainId}
             couldSignWithDevice={couldSignWithDevice}
             enableWhitelist={enableWhitelist}

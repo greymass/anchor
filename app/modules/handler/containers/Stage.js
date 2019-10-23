@@ -4,19 +4,22 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { find, includes } from 'lodash';
+import { includes } from 'lodash';
+import { get } from 'dot-prop-immutable';
 
-import { Button, Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-react';
+import { Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-react';
 
-import PromptStageReview from './Stage/Review';
 import PromptStageBroadcast from './Stage/Broadcast';
+import PromptStageCallback from './Stage/Callback';
 import PromptStageExpired from './Stage/Expired';
 import PromptStageForbidden from './Stage/Forbidden';
 import PromptStageHardwareLedger from './Stage/Hardware/Ledger';
 import PromptStageNotConfigured from './Stage/NotConfigured';
+import PromptStageReview from './Stage/Review';
 import PromptStageSuccess from './Stage/Success';
 
 import PromptActionBroadcast from '../components/Actions/Broadcast';
+import PromptActionCallback from '../components/Actions/Callback';
 import PromptActionCancel from '../components/Actions/Cancel';
 import PromptActionComplete from '../components/Actions/Complete';
 import PromptActionDownload from '../components/Actions/Download';
@@ -24,7 +27,6 @@ import PromptActionRecreate from '../components/Actions/Recreate';
 import PromptActionShare from '../components/Actions/Share';
 import PromptActionSign from '../components/Actions/Sign';
 import PromptActionSignBroadcast from '../components/Actions/SignBroadcast';
-
 import PromptActionUnlock from '../components/Actions/Unlock';
 
 import URIActions from '../actions/uri';
@@ -55,6 +57,18 @@ class PromptStage extends Component<Props> {
     // }, callback);
     actions.broadcastURI(signed, blockchain, callback);
   }
+  onCallback = () => {
+    const {
+      actions,
+      blockchain,
+      prompt
+    } = this.props;
+    const {
+      callback,
+      signed,
+    } = prompt;
+    actions.callbackURI(signed, blockchain, callback);
+  }
   onCheck = (e, { name, checked }) => {
     if (potentialSettings.includes(name)) {
       const { actions } = this.props;
@@ -80,7 +94,11 @@ class PromptStage extends Component<Props> {
       wallet
     } = this.props;
     const { tx } = prompt;
-    actions.signURI(tx, blockchain, wallet);
+    // After this signature is added, does it meet the requirements to be able to broadcast?
+    // TODO: Implement checks for existing signatures
+    const authorizations = get(tx, 'actions.0.authorization', []);
+    const canBroadcast = (authorizations.length === 1);
+    actions.signURI(tx, blockchain, wallet, canBroadcast);
   }
   onSignBroadcast = () => {
     const {
@@ -116,6 +134,7 @@ class PromptStage extends Component<Props> {
       enableWhitelist,
       hasBroadcast,
       hasExpired,
+      hasIssuedCallback,
       modifyWhitelist,
       onClose,
       onShareLink,
@@ -134,6 +153,7 @@ class PromptStage extends Component<Props> {
     const awaitingDevice = (system.EOSIOURISIGN === 'PENDING');
     const signing = (system.EOSIOURISIGN === 'PENDING');
     const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
+    const callbacking = (system.EOSIOURICALLBACK === 'PENDING');
     const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
 
     let error = system.EOSIOURIBUILD_LAST_ERROR ||
@@ -160,11 +180,18 @@ class PromptStage extends Component<Props> {
     );
     const hasTransaction = !!(transaction && transaction.transaction_id);
     const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
+    const hasCallback = !!(prompt && prompt.callback && prompt.callback.url);
+
+    // After this signature is added, does it meet the requirements to be able to broadcast?
+    // TODO: Implement checks for existing signatures
+    const authorizations = get(prompt, 'tx.actions.0.authorization', []);
+    const canBroadcast = (canSign && authorizations.length === 1);
 
     const uriDigested = !!(prompt.tx);
 
     let stage = (
       <PromptStageReview
+        canBroadcast={canBroadcast}
         couldSignWithDevice={couldSignWithDevice}
         enableWhitelist={enableWhitelist}
         modifyWhitelist={modifyWhitelist}
@@ -187,7 +214,7 @@ class PromptStage extends Component<Props> {
       />
     );
 
-    if (settings.eosio_signbroadcast) {
+    if (settings.eosio_signbroadcast && canBroadcast) {
       nextAction = (
         <PromptActionSignBroadcast
           disabled={!prompt.tx || signing || !canSign}
@@ -309,13 +336,43 @@ class PromptStage extends Component<Props> {
           blockchain={blockchain}
         />
       );
-      nextAction = (
-        <PromptActionBroadcast
-          disabled={!prompt.tx}
-          onClick={this.onBroadcast}
-          wallet={wallet}
-        />
-      );
+      if (canBroadcast) {
+        nextAction = (
+          <PromptActionBroadcast
+            disabled={!prompt.tx}
+            onClick={this.onBroadcast}
+            wallet={wallet}
+          />
+        );
+      }
+      if (!canBroadcast && hasCallback && !hasIssuedCallback) {
+        stage = (
+          <PromptStageCallback
+            blockchain={blockchain}
+            callbacking={callbacking}
+          />
+        )
+        nextAction = (
+          <PromptActionCallback
+            disabled={!prompt.tx}
+            onClick={this.onCallback}
+            wallet={wallet}
+          />
+        );
+      }
+      if (!canBroadcast && hasCallback && hasIssuedCallback) {
+        stage = (
+          <PromptStageSuccess
+            settings={settings}
+          />
+        );
+        nextAction = false;
+        cancelAction = (
+          <PromptActionComplete
+            onClick={onClose}
+          />
+        );
+      }
     }
 
     const shouldDisplayDangerousTransactionWarning =
@@ -332,17 +389,16 @@ class PromptStage extends Component<Props> {
           }}
         >
           <Dimmer
-            active={signing || broadcasting}
+            active={signing || broadcasting || callbacking}
             inverted
           >
             <Loader
               size="big"
             >
               <Header>
-                {(signing) ? 'Signing' : false}
-                {(broadcasting) ? 'Broadcasting' : false}
-                {' '}
-                Transaction
+                {(broadcasting) ? 'Broadcasting Transaction' : false}
+                {(callbacking) ? 'Issuing Callback' : false}
+                {(signing) ? 'Signing Transaction' : false}
               </Header>
             </Loader>
           </Dimmer>
