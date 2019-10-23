@@ -15,6 +15,10 @@ export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
 
     return eos(connection, true).transaction(tr => {
       tr.undelegatebw(undelegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount, false, connection.tokenPrecision));
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
         dispatch(AccountActions.getAccount(delegator));
