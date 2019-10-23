@@ -98,7 +98,7 @@ const knownChains = [
     testnet: false
   },
   {
-    _id: 'eos-testnet-jungle',
+    _id: 'eos-testnet-jungle-2',
     chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
     keyPrefix: 'EOS',
     name: 'Jungle (EOS)',
