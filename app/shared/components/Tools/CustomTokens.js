@@ -100,8 +100,8 @@ class ToolsCustomTokens extends Component<Props> {
             {t('tools_customtokens_subheader')}
           </Header.Subheader>
         </Header>
-        <Container>
-          {(blockchain.supportedContracts.includes('customtokens'))
+        <Container fluid>
+          {(blockchain.supportedContracts && blockchain.supportedContracts.includes('customtokens'))
             ? (
               <Button
                 color="green"
