@@ -48,7 +48,10 @@ export function broadcastURI(tx, blockchain, callback = false) {
           }, callback));
         }
         return dispatch({
-          payload: { response },
+          payload: {
+            endpoint: modified.httpEndpoint,
+            response
+          },
           type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
         });
       })
@@ -56,6 +59,44 @@ export function broadcastURI(tx, blockchain, callback = false) {
         payload: { err },
         type: types.SYSTEM_EOSIOURIBROADCAST_FAILURE
       }));
+  };
+}
+
+export function callbackURI(tx, blockchain, callback = false) {
+  return async (dispatch: () => void) => {
+    dispatch({
+      type: types.SYSTEM_EOSIOURIBROADCAST_PENDING
+    });
+    const account = get(tx, 'transaction.transaction.actions.0.authorization.1.actor');
+    const authorization = get(tx, 'transaction.transaction.actions.0.authorization.1.permission');
+    const opts = {
+      zlib: {
+        deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
+        inflateRaw: (data) => new Uint8Array(zlib.inflateRawSync(Buffer.from(data))),
+      }
+    };
+    const req = await SigningRequest.create({
+      transaction: tx.transaction.transaction,
+      callback,
+      chainId: blockchain.chainId,
+    }, opts);
+    const uri = req.encode();
+    const response = {
+      broadcast: true,
+      transaction: tx.transaction,
+      transaction_id: tx.transaction_id,
+    };
+    dispatch(callbackURIWithProcessed({
+      a: `${account}@${authorization}`,
+      bn: false,
+      t: uri,
+      tx: tx.transaction_id,
+      sig: tx.transaction.signatures
+    }, callback));
+    return dispatch({
+      payload: { response },
+      type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
+    });
   };
 }
 
@@ -272,7 +313,10 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
               }, callback));
             }
             dispatch({
-              payload: { response: signed },
+              payload: {
+                endpoint: networkConfig.httpEndpoint,
+                response: signed,
+              },
               type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
             });
           }
@@ -405,6 +449,7 @@ export function templateURI(blockchain, wallet) {
 
 export default {
   broadcastURI,
+  callbackURI,
   callbackURIWithProcessed,
   clearURI,
   setURI,
