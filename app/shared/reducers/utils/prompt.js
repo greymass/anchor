@@ -30,7 +30,8 @@ export default function prompt(state = {}, action) {
     }
     case types.SYSTEM_EOSIOURIBROADCAST_SUCCESS: {
       return Object.assign({}, state, {
-        response: action.payload.response
+        endpoint: action.payload.endpoint,
+        response: action.payload.response,
       });
     }
     case types.SYSTEM_EOSIOURICALLBACK_FAILURE: {
