@@ -8,6 +8,7 @@ import { Segment } from 'semantic-ui-react';
 
 import URIActions from '../actions/uri';
 import SettingsActions from '../../../shared/actions/settings';
+import SystemStateActions from '../../../shared/actions/system/systemstate';
 import TransactionActions from '../../../shared/actions/transaction';
 import ValidateActions from '../../../shared/actions/validate';
 import WalletActions from '../../../shared/actions/wallet';
@@ -37,10 +38,12 @@ const initialState = {
 class PromptContainer extends Component<Props> {
   state = initialState
   componentDidMount() {
+    this.props.actions.clearSystemState();
     this.templateURI();
   }
   componentDidUpdate(prevProps) {
     if (prevProps.system.EOSIOURI === 'PENDING' && this.props.system.EOSIOURI === 'SUCCESS') {
+      this.props.actions.clearSystemState();
       this.setState(initialState);
       this.templateURI();
     }
@@ -64,6 +67,10 @@ class PromptContainer extends Component<Props> {
     const { actions, blockchains, prompt } = this.props;
     const { chainId, tx } = prompt;
     const blockchain = find(blockchains, { chainId });
+    // After this signature is added, does it meet the requirements to be able to broadcast?
+    // TODO: Implement checks for existing signatures
+    // const authorizations = get(tx, 'tx.actions.0.authorization', []);
+    // const canBroadcast = (canSign && authorizations.length === 1);
     actions.signURI(tx, blockchain, wallet);
   };
   onWhitelist = (e, { checked }) => {
@@ -90,14 +97,14 @@ class PromptContainer extends Component<Props> {
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
     const account = get(prompt, 'tx.actions.0.authorization.0.actor')
-      || get(prompt, 'req.1.actions.0.authorization.0.actor');
+      || get(prompt, 'req.1.actions.0.authorization.0.actor')
+      || get(prompt, 'req.1.authorization.0.actor');
     const authorization = get(prompt, 'tx.actions.0.authorization.0.permission')
-      || get(prompt, 'req.1.actions.0.authorization.0.permission');
-
+      || get(prompt, 'req.1.actions.0.authorization.0.permission')
+      || get(prompt, 'req.1.authorization.0.permission');
     const defaultWallet =
       find(wallets, { chainId, account, authorization }) ||
       find(wallets, { chainId });
-
     if (defaultWallet) {
       // If a default was found, set the blockchain and swap to it
       this.setState({ blockchain }, () => {
@@ -144,6 +151,7 @@ class PromptContainer extends Component<Props> {
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
     const hasBroadcast =
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
+    const hasIssuedCallback = (system.EOSIOURICALLBACK === 'SUCCESS');
     const hasExpired =
       !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
     const requestedActor = get(prompt, 'tx.actions.0.authorization.0.actor');
@@ -170,6 +178,7 @@ class PromptContainer extends Component<Props> {
           enableWhitelist={enableWhitelist}
           hasBroadcast={hasBroadcast}
           hasExpired={hasExpired}
+          hasIssuedCallback={hasIssuedCallback}
           modifyWhitelist={this.modifyWhitelist}
           onClose={this.onClose}
           onShareLink={this.onShareLink}
@@ -202,6 +211,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...SettingsActions,
+      ...SystemStateActions,
       ...TransactionActions,
       ...URIActions,
       ...ValidateActions,
