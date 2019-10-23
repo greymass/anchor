@@ -126,6 +126,7 @@ export function validateNode(
                 node: httpEndpoint,
                 saveAsDefault,
                 settings,
+                supportedContracts: blockchain.supportedContracts,
                 useImmediately,
               },
               type: types.VALIDATE_NODE_SUCCESS
