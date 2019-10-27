@@ -1,7 +1,7 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "eos-voter",
-  "application_version": "v0.7.11",
+  "application_version": "v0.7.12",
   "back": "Kembali",
   "block_height": "Tinggi Block",
   "blockchain": "Blockchain",
