@@ -17,12 +17,12 @@
     "lint-fix": "npm run lint -- --fix",
     "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
-    "package-mac": "npm run build && build --publish never",
-    "package-linux": "npm run build && build --linux --publish never",
-    "package-win": "npm run build && build --win --x64 --ia32 --publish never",
+    "package-mac": "npm run build && electron-builder --publish never",
+    "package-linux": "npm run build && electron-builder --linux --publish never",
+    "package-win": "npm run build && electron-builder --win --x64 --ia32 --publish never",
     "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps && node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
     "prestart": "npm run build",
-    "release": "npm run build && build -mwl",
+    "release": "npm run build && electron-builder -mwl",
     "start": "cross-env NODE_ENV=production electron ./app/",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron --js-flags='--expose-gc' -r babel-register ./app/main/main.dev",
     "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
@@ -36,6 +36,7 @@
   "build": {
     "productName": "Anchor-BETA",
     "appId": "com.greymass.anchor-beta",
+    "afterSign": "internals/macos/notarize.js",
     "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,
     "protocols": {
@@ -60,6 +61,7 @@
     },
     "dmg": {
       "icon": "app/renderer/assets/icons/mac/icon.icns",
+      "sign": false,
       "contents": [
         {
           "x": 130,
@@ -74,7 +76,11 @@
       ]
     },
     "mac": {
-      "icon": "app/renderer/assets/icons/mac/icon.icns"
+      "entitlements": "internals/macos/entitlements.mac.plist",
+      "entitlementsInherit": "internals/macos/entitlements.mac.plist",
+      "icon": "app/renderer/assets/icons/mac/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
     },
     "win": {
       "certificateFile": "aaroncox.p12",
@@ -190,10 +196,11 @@
     "detect-port": "^1.2.3",
     "devtron": "^1.4.0",
     "electron": "^2.0.7",
-    "electron-builder": "20.28.4",
+    "electron-builder": "22.1.0",
     "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-log": "^2.2.14",
+    "electron-notarize": "^0.1.1",
     "electron-rebuild": "^1.8.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",

@@ -120,7 +120,8 @@ class BasicVoterContainer extends Component<Props> {
       getAccount,
       getConstants,
       getGlobals,
-      getInfo
+      getInfo,
+      getTable
     } = actions;
 
     if (validate.NODE === 'SUCCESS') {
@@ -130,6 +131,7 @@ class BasicVoterContainer extends Component<Props> {
       getConstants();
       getGlobals();
       getInfo();
+      getTable('eosio', settings.account, 'delband');
     }
   }
 
