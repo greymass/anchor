@@ -49,8 +49,8 @@ class ProducersTableRow extends Component<Props> {
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
-    const votePercent = (totalVoteWeight)
-      ? ((parseInt(producer.votes, 10) / parseInt(totalVoteWeight, 10)) * 100).toFixed(2)
+    const votePercent = (producer.percent)
+      ? (producer.percent * 100).toFixed(2)
       : 0;
     const voteFormatted = (producer.votes > 0)
       ? (
@@ -105,7 +105,7 @@ class ProducersTableRow extends Component<Props> {
               trigger={(
                 <Button
                   color={isSelected ? 'blue' : 'grey'}
-                  disabled={!isValidUser || isProxying}
+                  disabled={!isValidUser}
                   icon={isSelected ? 'checkmark box' : 'minus square outline'}
                   onClick={
                     (isSelected)

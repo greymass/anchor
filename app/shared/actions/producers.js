@@ -81,7 +81,7 @@ export function getProducers(previous = false) {
         .filter((p) => (p.producer_key !== 'EOS1111111111111111111111111111111114T1Anm'))
         .map((producer) => {
           const votes = parseInt(producer.total_votes, 10);
-          const percent = votes / current.total_producer_vote_weight;
+          const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
           return Object.assign({}, {
             isBackup,

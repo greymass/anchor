@@ -100,7 +100,7 @@ const knownChains = [
     chainId: 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664',
     keyPrefix: 'EOS',
     name: 'Insights',
-    node: 'https://ireland-history.insights.network',
+    node: 'https://instar.greymass.com',
     supportedContracts: ['bidname'],
     symbol: 'INSTAR',
     testnet: false
@@ -144,6 +144,17 @@ const knownChains = [
     supportedContracts: [],
     symbol: 'WBI',
     testnet: false
+  },
+  {
+    _id: 'wax-mainnet',
+    chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+    keyPrefix: 'EOS',
+    name: 'WAX',
+    node: 'https://wax.greymass.com',
+    supportedContracts: [],
+    symbol: 'WAX',
+    testnet: false,
+    tokenPrecision: 8
   }
 ];
 

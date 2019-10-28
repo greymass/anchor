@@ -10,6 +10,7 @@ import { update as update011 } from './migrations/011-updateBlockchains';
 import { update as update012 } from './migrations/012-updateBlockchains';
 import { update as update013 } from './migrations/013-updateBlockchains';
 import { update as update014 } from './migrations/014-updateBlockchains';
+import { update as update016 } from './migrations/016-updateBlockchains';
 
 const defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
 
@@ -275,11 +276,17 @@ const migrations = {
   15: (state) => Object.assign({}, state, {
     blockchains: update014(state.blockchains),
   }),
+  /*
+   16 - Update default insights node
+  */
+  16: (state) => Object.assign({}, state, {
+    blockchains: update016(state.blockchains),
+  }),
 };
 
 const persistConfig = {
   key: 'eos-voter-config',
-  version: 15,
+  version: 16,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables

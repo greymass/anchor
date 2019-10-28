@@ -110,7 +110,7 @@ class ProducersTable extends Component<Props> {
       : 0;
     const activatedStakePercent = parseFloat((activatedStake / 1000000000) * 100, 10).toFixed(2);
     const totalVoteWeight = (current.total_producer_vote_weight)
-      ? current.total_producer_vote_weight
+      ? parseInt(current.total_producer_vote_weight, 10)
       : 0;
     const loading = (producers.list.length < 1 || jurisdictions.loadingProducersJurisdictions || producers.loading);
     const querying = this.querying();

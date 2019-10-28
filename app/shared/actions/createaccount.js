@@ -108,7 +108,8 @@ export function createAccount(
           accountName,
           delegatedBw.split(' ')[0],
           delegatedCpu.split(' ')[0],
-          transferTokens
+          transferTokens,
+          connection.tokenPrecision
         ));
     }, {
       broadcast: connection.broadcast,

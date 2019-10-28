@@ -15,9 +15,11 @@ class ProducersVotingPreviewSelection extends Component<Props> {
   render() {
     const {
       account,
+      isProxying,
       lastError,
       onClose,
       onConfirm,
+      proxyingTo,
       selected,
       settings,
       submitting,
@@ -44,12 +46,20 @@ class ProducersVotingPreviewSelection extends Component<Props> {
     }
 
     const unregisteredProducersSelected = intersection(selected, unregisteredProducers);
-    const registeredProducersSelected = selected.filter((producer) => !unregisteredProducersSelected.includes(producer));
-    const removedProducers = account.voter_info !== null ? (get(account, 'voter_info.producers') || []).filter((producer) => !registeredProducersSelected.includes(producer)) : [];
+    const registeredProducersSelected = selected.filter((producer) => !unregisteredProducersSelected.includes(producer))
+    const removedProducers =
+      ((account.voter_info && get(account, 'voter_info.producers')) || []).filter((producer) => !registeredProducersSelected.includes(producer));
 
     return (
       <Segment loading={submitting}>
         <Header icon="alarm" content={t('producer_voter_preview_confirm_changes_title')} />
+        {isProxying && (
+          <Message
+            content={t('producer_voter_start_voting_after_proxying_warning', { proxyingTo })}
+            icon="warning sign"
+            warning
+          />
+        )}
         <Modal.Content>
           <Segment basic padded>
             <ProducersTable

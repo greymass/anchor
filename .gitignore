@@ -56,3 +56,4 @@ npm-debug.log.*
 
 VERSION
 COMMITHASH
+.env

@@ -41,6 +41,7 @@ import * as WalletActions from '../actions/wallet';
 import * as SystemStateActions from '../actions/system/systemstate';
 import * as BEOSWithdrawActions from '../actions/blockchains/beos/withdraw';
 import * as Jurisdictions from '../actions/jurisdictions';
+import * as WaxClaimActions from '../actions/blockchains/wax/claimgbmrewards';
 
 type Props = {
   actions: {
@@ -69,6 +70,7 @@ class BasicVoterContainer extends Component<Props> {
   componentDidMount() {
     const {
       actions,
+      connection,
       history,
       settings
     } = this.props;
@@ -90,7 +92,7 @@ class BasicVoterContainer extends Component<Props> {
         if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
           history.push('/');
         } else {
-          getCurrencyStats();
+          getCurrencyStats('eosio.token', connection.chainSymbol);
           getBlockExplorers();
           forEach(settings.customTokens, (token) => {
             const [chainId, contract, symbol] = token.split(':');
@@ -119,7 +121,8 @@ class BasicVoterContainer extends Component<Props> {
       getAccount,
       getConstants,
       getGlobals,
-      getInfo
+      getInfo,
+      getTable
     } = actions;
 
     if (validate.NODE === 'SUCCESS') {
@@ -129,6 +132,7 @@ class BasicVoterContainer extends Component<Props> {
       getConstants();
       getGlobals();
       getInfo();
+      getTable('eosio', settings.account, 'delband');
     }
   }
 
@@ -276,6 +280,7 @@ function mapDispatchToProps(dispatch) {
       ...VoteProducerActions,
       ...WalletActions,
       ...Jurisdictions,
+      ...WaxClaimActions,
     }, dispatch)
   };
 }

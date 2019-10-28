@@ -36,7 +36,7 @@
   "tools_blockchains_beos_crosschaintransfer_accept_body_3": "The creators of eos-voter are in no way responsible for this service, it's data usage policies, and transfers made while using this feature.",
   "tools_blockchains_beos_crosschaintransfer_accept_header": "This feature utilizes 3rd party API services",
   "tools_blockchains_beos_crosschaintransfer_accept_subheader": "Before proceeding, please take a moment to understand what this means.",
-  "tools_blockchains_beos_crosschaintransfer_explain_content": "This utility allows you to deposit/withdraw EOSIO based tokens from a 3rd party gateway. Currently exchanges can be made between EOS (EOS Mainnet) and EOS (BEOS Blockchain), allowing the transition back and forth between EOS and BEOS. More exchange types will be added as BEOS functionality expands and those options will be made available here.",
+  "tools_blockchains_beos_crosschaintransfer_explain_content": "This utility allows you to deposit/withdraw EOSIO based tokens from a 3rd party gateway. Currently exchanges can be made between EOS (EOS Mainnet) and BEOS (BEOS Blockchain), allowing the transition back and forth between EOS and BEOS. More exchange types will be added as BEOS functionality expands and those options will be made available here.",
   "tools_blockchains_beos_crosschaintransfer_explain_header": "What is a crosschain transfer on BEOS?",
   "tools_blockchains_beos_crosschaintransfer_header": "Crosschain Transfer (BEOS)",
   "tools_blockchains_beos_crosschaintransfer_instructions_understood": "I understand and accept this application will use 3rd party data services for this feature.",

@@ -36,7 +36,6 @@ class ProducersSelector extends Component<Props> {
       );
       listItems.push(unregisteredProducers.map((producer) => (
         <ProducersSelectorItem
-          isProxying={isProxying}
           key={`${isProxying}-${producer}-unregistered`}
           producer={producer}
           removeProducer={this.props.removeProducer}

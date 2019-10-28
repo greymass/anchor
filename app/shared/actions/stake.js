@@ -49,7 +49,9 @@ export function setStake(accountName, netAmount, cpuAmount) {
         currentAccount.account_name,
         accountName,
         increaseInStake.netAmount,
-        increaseInStake.cpuAmount
+        increaseInStake.cpuAmount,
+        false,
+        connection.tokenPrecision
       );
       name = 'delegatebw';
       status = true;
@@ -60,7 +62,9 @@ export function setStake(accountName, netAmount, cpuAmount) {
         currentAccount.account_name,
         accountName,
         decreaseInStake.netAmount,
-        decreaseInStake.cpuAmount
+        decreaseInStake.cpuAmount,
+        false,
+        connection.tokenPrecision
       );
       name = 'undelegatebw';
       status = true;
