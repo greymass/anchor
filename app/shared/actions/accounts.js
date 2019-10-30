@@ -391,61 +391,62 @@ export function getCurrencyBalance(account, requestedTokens = false) {
           payload: { err, account_name: account }
         }));
       }
-      if (endpoints && endpoints.includes('/v1/chain/get_currency_balances')) {
-        httpQueue.add(() =>
-          httpClient
-            .post(`${connection.httpEndpoint}/v1/chain/get_currency_balances`, {
-              account
-            })
-            .then((results) =>
-              dispatch({
-                type: types.GET_ACCOUNT_BALANCES_SUCCESS,
-                payload: {
-                  account,
-                  precisions: reduce(
-                    results.data,
-                    (res, { amount, symbol }) => ({
-                      ...res,
-                      ...formatPrecisions([`${amount} ${symbol}`])
-                    }), {}
-                  ),
-                  results: results.data,
-                  tokens: reduce(
-                    results.data,
-                    (res, { amount, symbol }) => ({
-                      ...res,
-                      ...formatBalances([`${amount} ${symbol}`])
-                    }), {}
-                  )
-                }
-              }))
-            .catch((err) => dispatch({
-              type: types.GET_ACCOUNT_BALANCE_FAILURE,
-              payload: { err }
-            })));
-      } else {
-        forEach(selectedTokens, (namespace) => {
-          const [, contract, symbol] = namespace.split(':');
+      // Disabled until API can be optimized.
+      // if (endpoints && endpoints.includes('/v1/chain/get_currency_balances')) {
+      //   httpQueue.add(() =>
+      //     httpClient
+      //       .post(`${connection.httpEndpoint}/v1/chain/get_currency_balances`, {
+      //         account
+      //       })
+      //       .then((results) =>
+      //         dispatch({
+      //           type: types.GET_ACCOUNT_BALANCES_SUCCESS,
+      //           payload: {
+      //             account,
+      //             precisions: reduce(
+      //               results.data,
+      //               (res, { amount, symbol }) => ({
+      //                 ...res,
+      //                 ...formatPrecisions([`${amount} ${symbol}`])
+      //               }), {}
+      //             ),
+      //             results: results.data,
+      //             tokens: reduce(
+      //               results.data,
+      //               (res, { amount, symbol }) => ({
+      //                 ...res,
+      //                 ...formatBalances([`${amount} ${symbol}`])
+      //               }), {}
+      //             )
+      //           }
+      //         }))
+      //       .catch((err) => dispatch({
+      //         type: types.GET_ACCOUNT_BALANCE_FAILURE,
+      //         payload: { err }
+      //       })));
+      // } else {
+      forEach(selectedTokens, (namespace) => {
+        const [, contract, symbol] = namespace.split(':');
 
-          eos(connection)
-            .getCurrencyBalance(contract, account, symbol)
-            .then((results) =>
-              dispatch({
-                type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-                payload: {
-                  account_name: account,
-                  contract,
-                  precision: formatPrecisions(results),
-                  symbol,
-                  tokens: formatBalances(results, symbol)
-                }
-              }))
-            .catch((err) => dispatch({
-              type: types.GET_ACCOUNT_BALANCE_FAILURE,
-              payload: { err, account_name: account }
-            }));
-        });
-      }
+        eos(connection)
+          .getCurrencyBalance(contract, account, symbol)
+          .then((results) =>
+            dispatch({
+              type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+              payload: {
+                account_name: account,
+                contract,
+                precision: formatPrecisions(results),
+                symbol,
+                tokens: formatBalances(results, symbol)
+              }
+            }))
+          .catch((err) => dispatch({
+            type: types.GET_ACCOUNT_BALANCE_FAILURE,
+            payload: { err, account_name: account }
+          }));
+      });
+    // }
     }
   };
 }
