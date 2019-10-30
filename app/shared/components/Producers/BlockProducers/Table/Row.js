@@ -61,7 +61,6 @@ class ProducersTableRow extends Component<Props> {
       : 'None';
     const shouldDisplayInfoButton = connection.supportedContracts && connection.supportedContracts.includes('producerinfo');
     const producersVotedIn = connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
-    const producersJurisdiction = true;
 
     return (
       <Table.Row positive={isActive} key={producer.key}>
@@ -140,7 +139,7 @@ class ProducersTableRow extends Component<Props> {
           </Header>
         </Table.Cell>
         <Table.Cell>
-          {(producer.jurisdictions.length > 0) && (producersJurisdiction) && (checkForBeos(connection)) && (
+          {(producer.jurisdictions.length > 0) && (checkForBeos(connection)) && (
             <Popup
               hoverable
               position="left center"
@@ -167,7 +166,7 @@ class ProducersTableRow extends Component<Props> {
               )}
             />
           )}
-          {(producer.jurisdictions.length === 0) && (producersJurisdiction) && (checkForBeos(connection)) && (
+          {(producer.jurisdictions.length === 0) && (checkForBeos(connection)) && (
             <span>{t('block_producer_jurisdictions_state_none')}</span>
           )}
         </Table.Cell>

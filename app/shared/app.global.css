@@ -47,10 +47,6 @@ table .jurisdiction-table {
   word-break: break-all;
 }
 
-.jurisdiction-button:hover {
-  background-color: grey !important;
-}
-
 .jurisdiction-history-button:hover {
   background-color: grey !important;
 }
