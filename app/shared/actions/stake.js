@@ -39,31 +39,31 @@ export function setStake(accountName, netAmount, cpuAmount) {
       type: types.SYSTEM_STAKE_PENDING
     });
 
-    let data = [];
-    let name = 'delegatebw';
-    let status = false;
+    const data = [];
 
     if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
-      data = delegatebwParams(
-        connection.chainSymbol,
-        currentAccount.account_name,
-        accountName,
-        increaseInStake.netAmount,
-        increaseInStake.cpuAmount
-      );
-      name = 'delegatebw';
-      status = true;
+      data.push({
+        name: 'delegatebw',
+        data: delegatebwParams(
+          connection.chainSymbol,
+          currentAccount.account_name,
+          accountName,
+          increaseInStake.netAmount,
+          increaseInStake.cpuAmount
+        )
+      });
     }
     if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
-      data = undelegatebwParams(
-        connection.chainSymbol,
-        currentAccount.account_name,
-        accountName,
-        decreaseInStake.netAmount,
-        decreaseInStake.cpuAmount
-      );
-      name = 'undelegatebw';
-      status = true;
+      data.push({
+        name: 'undelegatebw',
+        data: undelegatebwParams(
+          connection.chainSymbol,
+          currentAccount.account_name,
+          accountName,
+          decreaseInStake.netAmount,
+          decreaseInStake.cpuAmount
+        )
+      });
     }
 
     let serializedArray = [];
@@ -72,16 +72,16 @@ export function setStake(accountName, netAmount, cpuAmount) {
       serializedArray = serializer.serialize(temp);
     }
 
-    if (status) {
-      return eos(connection, true).transaction({
+    if (data.length > 0) {
+      eos(connection, true).transaction({
         actions: [{
           account: 'eosio',
-          name,
+          name: data[0].name,
           authorization: [{
             actor: currentAccount.account_name,
             permission: 'active'
           }],
-          data
+          data: data[0].data
         }],
         transaction_extensions: serializedArray
       }, {
@@ -89,21 +89,64 @@ export function setStake(accountName, netAmount, cpuAmount) {
         expireInSeconds: connection.expireInSeconds,
         sign: connection.sign
       }).then((tx) => {
-        setTimeout(() => {
-          if (accountName === settings.account) {
-            dispatch(AccountActions.getAccount(accountName));
-          }
+        if (data.length > 1) {
+          eos(connection, true).transaction({
+            actions: [{
+              account: 'eosio',
+              name: data[1].name,
+              authorization: [{
+                actor: currentAccount.account_name,
+                permission: 'active'
+              }],
+              data: data[1].data
+            }],
+            transaction_extensions: serializedArray
+          }, {
+            broadcast: connection.broadcast,
+            expireInSeconds: connection.expireInSeconds,
+            sign: connection.sign
+          }).then((tx2) => {
+            setTimeout(() => {
+              if (accountName === settings.account) {
+                dispatch(AccountActions.getAccount(accountName));
+              }
 
-          dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
-        }, 500);
+              dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
+            }, 500);
 
-        return dispatch({
-          payload: {
-            connection,
-            tx
-          },
-          type: types.SYSTEM_STAKE_SUCCESS
-        });
+            return dispatch({
+              payload: {
+                connection,
+                tx
+              },
+              type: types.SYSTEM_STAKE_SUCCESS
+            });
+          }).catch((err) => {
+            dispatch({
+              payload: {
+                connection,
+                err
+              },
+              type: types.SYSTEM_STAKE_FAILURE
+            });
+          });
+        } else {
+          setTimeout(() => {
+            if (accountName === settings.account) {
+              dispatch(AccountActions.getAccount(accountName));
+            }
+
+            dispatch(TableActions.getTable('eosio', settings.account, 'delband'));
+          }, 500);
+
+          return dispatch({
+            payload: {
+              connection,
+              tx
+            },
+            type: types.SYSTEM_STAKE_SUCCESS
+          });
+        }
       }).catch((err) => {
         dispatch({
           payload: {
