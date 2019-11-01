@@ -7,8 +7,9 @@ import { withRouter } from 'react-router-dom';
 import { Button, Card, Divider, Image, Message, Segment } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
 
-import { setSetting } from '../../../../../shared/actions/settings';
 import { clearValidationState } from '../../../../../shared/actions/validate';
+import { initApp } from '../../../../../shared/actions/app';
+import { setSetting } from '../../../../../shared/actions/settings';
 import { setWalletMode } from '../../../../../shared/actions/wallet';
 
 import WelcomeImportContainer from '../../../../../shared/containers/Welcome/Import';
@@ -22,6 +23,7 @@ class HomeInitializeContainer extends Component<Props> {
       actions,
       history,
     } = this.props;
+    actions.initApp();
     actions.setSetting('walletInit', true);
     e.preventDefault();
     history.push('/home/blockchains');
@@ -115,6 +117,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       clearValidationState,
+      initApp,
       setSetting,
       setWalletMode,
     }, dispatch)
