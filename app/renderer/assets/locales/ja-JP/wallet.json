@@ -64,6 +64,7 @@
   "wallet_panel_password_confirm_description": "続けるにはローカルウォレットのパスワードを再入力してください。",
   "wallet_panel_password_confirm_title": "パスワードを確認",
   "wallet_panel_password_label": "ローカルウォレットのパスワード",
+  "wallet_panel_password_label_r2": "Anchor Password",
   "wallet_panel_waiting_header": "作成待ち",
   "wallet_panel_waiting_instructions": "アプリケーションはこの新アカウントの作成をモニタします。新アカウントが作成されたら、アプリケーションはバックアップパスワードをもう一度入力するように求め、その後ローカルホットウォレットを構築します。",
   "wallet_panel_waiting_subheader": "このアカウントはまだ作成されていません。",
