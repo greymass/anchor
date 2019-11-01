@@ -64,6 +64,7 @@
   "wallet_panel_password_confirm_description": "계속 진행하시려면 로컬 지갑 비밀번호를 다시 입력하십시오.",
   "wallet_panel_password_confirm_title": "비밀번호 확인",
   "wallet_panel_password_label": "로컬 지갑 비밀번호",
+  "wallet_panel_password_label_r2": "Anchor Password",
   "wallet_panel_waiting_header": "생성 기다리는중",
   "wallet_panel_waiting_instructions": "이 프로그램은 새 계정 생성을 관찰할 것입니다. 새 계정이 만들어지면 백업 암호를 한 번 더 입력하라는 메시지를 표시합니다. 그 다음 로컬 라이트 지갑 생성합니다.",
   "wallet_panel_waiting_subheader": "이 계정은 아직 생성되지 않았습니다.",
