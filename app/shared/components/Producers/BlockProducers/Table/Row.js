@@ -43,7 +43,7 @@ class ProducersTableRow extends Component<Props> {
     const all = this.props.jurisdictions.jurisdictions;
     const allProducers = this.props.jurisdictions.all_producers_jurisdictions;
     const owner = allProducers[producer.owner];
-    if (owner) {
+    if (owner && (typeof owner === 'number') && all.length > 0) {
       producer.jurisdictions.push(all.find(alls => alls.code === owner));
     }
     const epoch = 946684800000;

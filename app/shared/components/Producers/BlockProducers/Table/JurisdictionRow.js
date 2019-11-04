@@ -15,7 +15,7 @@ export default class JurisdictionRow extends Component<Props> {
 
     return (
       <div className="table-scroll">
-        {rows[producer] && rows[producer].length > 0 && PRODUCERS[producer] === 'SUCCESS' &&
+        {rows[producer] && rows[producer].length > 0 && PRODUCERS[producer] === 'SUCCESS' && ALLS[producer] === 'SUCCESS' &&
           <Table
             className="ui striped unstackable small jurisdiction-table"
           >
