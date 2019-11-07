@@ -26,24 +26,6 @@ export function getJurisdictions() {
           type: types.GET_JURISDICTION_ALL_SUCCESS,
           payload: {
             jurisdictions: response.data.jurisdictions
-            // jurisdictions: [
-            //   { code: 0, name: 'poland', description: 'EAST EUROPE' },
-            //   { code: 2, name: 'germany', description: 'EAST EUROPE' },
-            //   { code: 3, name: 'china', description: 'EAST EUROPE' },
-            //   { code: 10, name: 'singapur', description: 'YO!' },
-            //   { code: 13, name: 'Vatican', description: 'Waka waka' },
-            //   { code: 15, name: 'notchina', description: 'who cares' },
-            //   { code: 16, name: 'bytopia', description: 'outerplane' },
-            //   { code: 17, name: 'sigil', description: 'cynosure' },
-            //   { code: 18, name: 'elysium', description: 'outerplane' },
-            //   { code: 20, name: 'cityofbrass', description: 'plane of fire' },
-            //   { code: 22, name: 'baldurs gate', description: 'faerun toril' },
-            //   { code: 23, name: 'galactic empire', description: 'the galaxy duh' },
-            //   { code: 30, name: 'USA', description: 'Wyoming!' },
-            //   { code: 40, name: 'Canada', description: 'Northern America' },
-            //   { code: 41, name: 'Russia', description: 'EAST EUROPE' },
-            //   { code: 50, name: 'Slovakia', description: 'EAST EUROPE' },
-            // ]
           }
         });
       }).catch((response) => {
@@ -124,7 +106,6 @@ export function getProducerJurisdiction(producer) {
             producer_jurisdictions: response.data.producer_jurisdictions[0]
               ? response.data.producer_jurisdictions[0].jurisdictions
               : []
-            // producer_jurisdictions: [0, 40, 41, 50, 15, 18, 23]
           }
         });
       }).catch((response) => {
