@@ -78,10 +78,12 @@ class BasicVoterContainer extends Component<Props> {
     const {
       getBlockExplorers,
       getCurrencyStats,
-      initApp
+      initApp,
+      getJurisdictions
     } = actions;
 
     initApp();
+    getJurisdictions();
 
     switch (settings.walletMode) {
       case 'cold': {

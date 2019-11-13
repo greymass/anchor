@@ -13,10 +13,11 @@ class ProducersModalInfo extends Component<Props> {
       producerInfo,
       settings,
       t,
-      viewing
+      viewing,
+      connection
     } = this.props;
     const panes = [
-      { menuItem: 'Producer Details', render: () => <Tab.Pane><ProducersModalInfoDetails settings={settings} producerInfo={producerInfo} /></Tab.Pane> },
+      { menuItem: 'Producer Details', render: () => <Tab.Pane><ProducersModalInfoDetails settings={settings} producerInfo={producerInfo} connection={connection} /></Tab.Pane> },
       { menuItem: 'Producer JSON', render: () => <Tab.Pane><ProducersModalInfoData producerInfo={producerInfo} /></Tab.Pane> },
     ];
     return (

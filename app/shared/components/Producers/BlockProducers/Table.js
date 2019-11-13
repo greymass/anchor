@@ -8,6 +8,7 @@ import { get } from 'dot-prop-immutable';
 import ProducersModalInfo from './Modal/Info';
 import ProducersTableRow from './Table/Row';
 import ProducersVoteWeight from './Vote/Weight';
+import checkForBeos from '../../helpers/checkCurrentBlockchain';
 
 class ProducersTable extends Component<Props> {
   constructor(props) {
@@ -131,7 +132,7 @@ class ProducersTable extends Component<Props> {
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
             const contracts = get(connection, 'supportedContracts', []);
-            const hasInfo = contracts && contracts.includes('producerinfo') && !!(get(producers.producersInfo, producer.owner));
+            const hasInfo = contracts && contracts.includes('producerinfo') && !!(producers.producersInfo[producer.owner] !== undefined);
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
@@ -168,7 +169,7 @@ class ProducersTable extends Component<Props> {
             <Table.Body key="PartResults">
               {partResults.map((producer) => {
                 const isSelected = (selected.indexOf(producer.owner) !== -1);
-                const hasInfo = !!(get(producers.producersInfo, producer.owner));
+                const hasInfo = !!(producers.producersInfo[producer.owner] !== undefined);
                 return (
                   <ProducersTableRow
                     addProducer={this.props.addProducer}
@@ -206,6 +207,7 @@ class ProducersTable extends Component<Props> {
           onClose={this.clearProducerInfo}
           settings={settings}
           viewing={viewing}
+          connection={connection}
         />
         <Grid>
           <Grid.Column width={8}>
@@ -256,9 +258,11 @@ class ProducersTable extends Component<Props> {
               <Table.HeaderCell>
                 {t('block_producer')}
               </Table.HeaderCell>
-              <Table.HeaderCell>
-                {t('block_producer_jurisdictions_jurisdiction_table_header')}
-              </Table.HeaderCell>
+              { checkForBeos(connection) &&
+                <Table.HeaderCell>
+                  {t('block_producer_jurisdictions_jurisdiction_table_header')}
+                </Table.HeaderCell>
+              }
               <Table.HeaderCell width={5}>
                 {producersVotedIn ? t('block_producer_total_votes') : ''}
               </Table.HeaderCell>

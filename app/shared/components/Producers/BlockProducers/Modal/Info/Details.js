@@ -5,6 +5,7 @@ import { Header, Icon, Image, List, Segment, Table } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 
 import DangerLink from '../../../../Global/Modal/DangerLink';
+import checkForBeos from '../../../../../../shared/components/helpers/checkCurrentBlockchain';
 
 import KeybaseImage from '../../../../../../renderer/assets/images/keybase.png';
 import SteemitImage from '../../../../../../renderer/assets/images/steem.png';
@@ -102,12 +103,13 @@ class ProducersModalInfoDetails extends Component<Props> {
     const {
       producerInfo,
       settings,
-      t
+      t,
+      connection
     } = this.props;
     return (
       <React.Fragment>
         <p>
-          {t('producer_info_description')}
+          {checkForBeos(connection) ? t('producer_info_description_beos') : t('producer_info_description')}
           <DangerLink
             content={t('producer_info_description_more')}
             link="https://steemit.com/eos/@greymass/an-eos-smart-contract-for-block-producer-information"
