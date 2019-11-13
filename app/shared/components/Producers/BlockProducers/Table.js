@@ -131,7 +131,7 @@ class ProducersTable extends Component<Props> {
           {fullResults.map((producer, idx) => {
             const isSelected = (selected.indexOf(producer.owner) !== -1);
             const contracts = get(connection, 'supportedContracts', []);
-            const hasInfo = contracts && contracts.includes('producerinfo') && !!(get(producers.producersInfo, producer.owner));
+            const hasInfo = contracts && contracts.includes('producerinfo') && !!(producers.producersInfo[producer.owner] !== undefined);
             return (
               <ProducersTableRow
                 addProducer={this.props.addProducer}
@@ -168,7 +168,7 @@ class ProducersTable extends Component<Props> {
             <Table.Body key="PartResults">
               {partResults.map((producer) => {
                 const isSelected = (selected.indexOf(producer.owner) !== -1);
-                const hasInfo = !!(get(producers.producersInfo, producer.owner));
+                const hasInfo = !!(producers.producersInfo[producer.owner] !== undefined);
                 return (
                   <ProducersTableRow
                     addProducer={this.props.addProducer}
