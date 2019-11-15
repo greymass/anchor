@@ -206,6 +206,7 @@ class ProducersTable extends Component<Props> {
           onClose={this.clearProducerInfo}
           settings={settings}
           viewing={viewing}
+          connection={connection}
         />
         <Grid>
           <Grid.Column width={8}>

@@ -78,9 +78,23 @@ class ProducersTableRow extends Component<Props> {
                     onClick={() => getProducerInfo(producer.owner)}
                     size="small"
                   />
-                ) : (
+                ) : (!(checkForBeos(connection)) &&
                   <Popup
                     content={t('producer_json_unavailable_content')}
+                    header={t('producer_json_unavailable_header')}
+                    hoverable
+                    inverted
+                    position="left center"
+                    trigger={
+                      (isMainnet)
+                      ? <Button icon="magnify" size="small" />
+                      : false
+                    }
+                  />
+                ) ||
+                ((checkForBeos(connection)) &&
+                  <Popup
+                    content={t('producer_json_unavailable_content_beos')}
                     header={t('producer_json_unavailable_header')}
                     hoverable
                     inverted
