@@ -96,6 +96,9 @@ class BlockProducers extends Component<Props> {
       getProducers,
       getProducersInfo
     } = actions;
+
+    getProducersInfo();
+
     if (validate.NODE) {
       getProducers();
 
