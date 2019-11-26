@@ -1,5 +1,6 @@
 import * as types from './types';
 import eos from './helpers/eos';
+import { getJurisdictions } from '../actions/jurisdictions';
 
 export function downloadProgress(progress) {
   return (dispatch: () => void) => {
