@@ -103,105 +103,94 @@ class GlobalModalAccountImportHot extends Component<Props> {
     }
     return (
       <Tab.Pane>
-        <Segment basic>
-          <Header
-            content="Import a Private Key"
-            subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
-          />
-          {(passwordPrompt)
-            ? (
-              <React.Fragment>
-                <Message
-                  attached="top"
-                  content="Use the tools below to establish a password for use within Anchor before continuing."
-                  header="First: Setup Wallet"
-                  info
-                  size="small"
-                />
-                <GlobalModalAccountImportPassword onClose={this.props.onClose} />
-              </React.Fragment>
-            )
-            : (
-              <React.Fragment>
-                <GlobalFormFieldKeyPrivate
-                  autoFocus
-                  connection={connection}
-                  label={t('global_account_import_private_key')}
-                  name="key"
-                  placeholder={t('welcome:welcome_key_compare_placeholder')}
-                  onChange={this.onChange}
-                  value={value}
-                />
-                {(value && matches.length > 0)
-                  ? (
-                    <Segment stacked color="blue">
-                      {t('global_account_import_select_accounts')}
-                      <Divider />
-                      {(matches.map((account) => {
+        {(passwordPrompt)
+          ? (
+            <GlobalModalAccountImportPassword onClose={this.props.onClose} />
+          )
+          : (
+            <Segment basic>
+              <Header
+                content="Import a Private Key"
+                subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
+              />
+              <GlobalFormFieldKeyPrivate
+                autoFocus
+                connection={connection}
+                label={t('global_account_import_private_key')}
+                name="key"
+                placeholder={t('welcome:welcome_key_compare_placeholder')}
+                onChange={this.onChange}
+                value={value}
+              />
+              {(value && matches.length > 0)
+                ? (
+                  <Segment stacked color="blue">
+                    {t('global_account_import_select_accounts')}
+                    <Divider />
+                    {(matches.map((account) => {
                         const data = accounts[account];
-                        if (data) {
-                          const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
-                          return authorizations.map((authorization) => {
+                      if (data) {
+                        const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
+                        return authorizations.map((authorization) => {
                             const auth = `${account}@${authorization.perm_name}`;
-                            return (
-                              <p>
-                                <Checkbox
-                                  label={auth}
-                                  name={auth}
-                                  onChange={this.toggleAccount}
-                                />
-                              </p>
-                            );
-                          });
-                        }
+                          return (
+                            <p>
+                              <Checkbox
+                                label={auth}
+                                name={auth}
+                                onChange={this.toggleAccount}
+                              />
+                            </p>
+                          );
+                        });
+                      }
                         return false;
-                      }))}
-                    </Segment>
-                  )
-                  : false
-                }
-                {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
-                  ? <Segment loading />
-                  : false
-                }
-                {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
-                  ? (
-                    <Segment stacked color="red">
-                      <Header>
-                        {t('welcome:welcome_account_lookup_fail_title')}
-                      </Header>
-                      {t('welcome:welcome_account_lookup_fail_content')}
-                    </Segment>
-                  )
-                  : false
-                }
-                <Divider />
-                <Segment basic clearing>
-                  <Button
-                    floated="left"
-                    onClick={onClose}
-                  >
-                    <Icon name="x" /> {t('cancel')}
-                  </Button>
-                  <GlobalButtonElevate
-                    onSuccess={this.importAccounts}
-                    settings={settings}
-                    trigger={(
-                      <Button
-                        color="green"
-                        content={t('global_button_account_import_action')}
-                        disabled={disabled}
-                        floated="right"
-                        icon="circle plus"
-                      />
-                    )}
-                    validate={validate}
-                  />
-                </Segment>
-              </React.Fragment>
-            )
-          }
-        </Segment>
+                    }))}
+                  </Segment>
+                )
+                : false
+              }
+              {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
+                ? <Segment loading />
+                : false
+              }
+              {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
+                ? (
+                  <Segment stacked color="red">
+                    <Header>
+                      {t('welcome:welcome_account_lookup_fail_title')}
+                    </Header>
+                    {t('welcome:welcome_account_lookup_fail_content')}
+                  </Segment>
+                )
+                : false
+              }
+              <Divider />
+              <Segment basic clearing>
+                <Button
+                  floated="left"
+                  onClick={onClose}
+                >
+                  <Icon name="x" /> {t('cancel')}
+                </Button>
+                <GlobalButtonElevate
+                  onSuccess={this.importAccounts}
+                  settings={settings}
+                  trigger={(
+                    <Button
+                      color="green"
+                      content={t('global_button_account_import_action')}
+                      disabled={disabled}
+                      floated="right"
+                      icon="circle plus"
+                    />
+                  )}
+                  validate={validate}
+                />
+              </Segment>
+            </Segment>
+          )
+        }
       </Tab.Pane>
     );
   }
