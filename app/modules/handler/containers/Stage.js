@@ -86,7 +86,7 @@ class PromptStage extends Component<Props> {
   onSaveUnsigned = () => {
 
   }
-  onSign = () => {
+  onSign = (andBroadcast = false) => {
     const {
       actions,
       blockchain,
@@ -98,7 +98,8 @@ class PromptStage extends Component<Props> {
     // TODO: Implement checks for existing signatures
     const authorizations = get(tx, 'actions.0.authorization', []);
     const canBroadcast = (authorizations.length === 1);
-    actions.signURI(tx, blockchain, wallet, canBroadcast);
+    const broadcast = (prompt.broadcast && andBroadcast)
+    actions.signURI(tx, blockchain, wallet, broadcast, prompt.callback);
   }
   onSignBroadcast = () => {
     const {
@@ -142,6 +143,7 @@ class PromptStage extends Component<Props> {
       prompt,
       requestedActorMissing,
       settings,
+      shouldBroadcast,
       status,
       system,
       t,
@@ -185,7 +187,7 @@ class PromptStage extends Component<Props> {
     // After this signature is added, does it meet the requirements to be able to broadcast?
     // TODO: Implement checks for existing signatures
     const authorizations = get(prompt, 'tx.actions.0.authorization', []);
-    const canBroadcast = (canSign && authorizations.length === 1);
+    const canBroadcast = (canSign && authorizations.length === 1 && prompt.broadcast);
 
     const uriDigested = !!(prompt.tx);
 
@@ -199,6 +201,7 @@ class PromptStage extends Component<Props> {
         onShareLink={onShareLink}
         onWhitelist={onWhitelist}
         prompt={prompt}
+        shouldBroadcast={shouldBroadcast}
         swapAccount={this.props.swapAccount}
         wallet={wallet}
         whitelist={whitelist}
@@ -207,12 +210,18 @@ class PromptStage extends Component<Props> {
 
     let nextAction = (
       <PromptActionSign
+        broadcast
         disabled={!prompt.tx || signing || !canSign}
         loading={signing}
         onClick={this.onSign}
         wallet={wallet}
       />
     );
+
+    // If the transaction has a signature, no need to sign
+    if (hasSignature) {
+      nextAction = false;
+    }
 
     if (settings.eosio_signbroadcast && canBroadcast) {
       nextAction = (
@@ -350,13 +359,12 @@ class PromptStage extends Component<Props> {
           <PromptStageCallback
             blockchain={blockchain}
             callbacking={callbacking}
+            settings={settings}
           />
-        )
+        );
         nextAction = (
-          <PromptActionCallback
-            disabled={!prompt.tx}
-            onClick={this.onCallback}
-            wallet={wallet}
+          <PromptActionComplete
+            onClick={onClose}
           />
         );
       }

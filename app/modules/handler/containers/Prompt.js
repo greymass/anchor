@@ -149,9 +149,10 @@ class PromptContainer extends Component<Props> {
     if (!blockchain) return false;
 
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
+    const shouldBroadcast = prompt.broadcast;
     const hasBroadcast =
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
-    const hasIssuedCallback = (system.EOSIOURICALLBACK === 'SUCCESS');
+    const hasIssuedCallback = (system.EOSIOURICALLBACK === 'SUCCESS' && prompt.background);
     const hasExpired =
       !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
     const requestedActor = get(prompt, 'tx.actions.0.authorization.0.actor');
@@ -184,6 +185,7 @@ class PromptContainer extends Component<Props> {
           onShareLink={this.onShareLink}
           onWhitelist={this.onWhitelist}
           requestedActorMissing={requestedActorMissing}
+          shouldBroadcast={shouldBroadcast}
           swapAccount={this.swapAccount}
           wallet={wallet}
           whitelist={whitelist}
