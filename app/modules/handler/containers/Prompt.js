@@ -190,11 +190,6 @@ class PromptContainer extends Component<Props> {
           wallet={wallet}
           whitelist={whitelist}
         />
-        <Segment basic style={{ marginTop: 0 }} textAlign="center">
-          <p>
-            Chain ID: {(blockchain) ? blockchain.chainId : 'loading'}
-          </p>
-        </Segment>
       </React.Fragment>
     );
   }

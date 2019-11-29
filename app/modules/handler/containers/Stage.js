@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { includes } from 'lodash';
+import { includes, isObject } from 'lodash';
 import { get } from 'dot-prop-immutable';
+import ReactJson from 'react-json-view';
 
 import { Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-react';
 
@@ -393,6 +394,7 @@ class PromptStage extends Component<Props> {
           padded
           style={{
             marginBottom: 0,
+            paddingBottom: '100px',
             paddingTop: '130px',
           }}
         >
@@ -410,59 +412,85 @@ class PromptStage extends Component<Props> {
               </Header>
             </Loader>
           </Dimmer>
-          {stage}
+          {(error && error.type !== 'forbidden')
+            ? (
+              <Segment color="red" inverted style={{ margin: 0 }}>
+                {(error.message)
+                  ? (
+                    <React.Fragment>
+                      <Header>
+                        <Icon name="warning sign" />
+                        <Header.Content>
+                          There was a problem with this transaction
+                        </Header.Content>
+                      </Header>
+                      <Segment>
+                        {isObject(error)
+                          ? (
+                            <ReactJson
+                              collapsed={4}
+                              displayDataTypes={false}
+                              displayObjectSize={false}
+                              iconStyle="square"
+                              name={null}
+                              src={error}
+                              style={{ padding: '1em' }}
+                            />
+                          )
+                          : error
+                        }
+                      </Segment>
+                    </React.Fragment>
+                  )
+                  : false
+                }
+              </Segment>
+            )
+            : stage
+          }
+          {(shouldDisplayDangerousTransactionWarning) && (
+            <Message
+              icon="warning sign"
+              header="This is a dangerous transaction"
+              content={warning.message}
+              warning
+            />
+          )}
+          {(wallet && wallet.mode === 'watch')
+            ? (
+              <Segment color="orange" style={{ margin: 0 }}>
+                <Header size="large">
+                  <Icon name="clock" />
+                  <Header.Content>
+                    Offline Signing & Transaction Expirations
+                    <Header.Subheader>
+                      From the moment the unsigned transaction is saved as a file, a 2 hour countdown begins in which the transaction must be completed. Once 2 hours has passed, the transaction will become invalid and unable to perform the desired action.
+                    </Header.Subheader>
+                  </Header.Content>
+                </Header>
+              </Segment>
+            )
+            : false
+          }
+
         </Segment>
-        {(shouldDisplayDangerousTransactionWarning) && (
-          <Message
-            icon="warning sign"
-            header="This is a dangerous transaction"
-            content={warning.message}
-            warning
-          />
-        )}
-        {(wallet && wallet.mode === 'watch')
-          ? (
-            <Segment color="orange" style={{ margin: 0 }}>
-              <Header size="large">
-                <Icon name="clock" />
-                <Header.Content>
-                  Offline Signing & Transaction Expirations
-                  <Header.Subheader>
-                    From the moment the unsigned transaction is saved as a file, a 2 hour countdown begins in which the transaction must be completed. Once 2 hours has passed, the transaction will become invalid and unable to perform the desired action.
-                  </Header.Subheader>
-                </Header.Content>
-              </Header>
-            </Segment>
-          )
-          : false
-        }
-        {(error && error.type !== 'forbidden')
-          ? (
-            <Segment attached size="large" color="red" inverted>
-              {(error.message)
-                ? (
-                  <Header>
-                    <Icon name="warning sign" />
-                    <Header.Content>
-                      There was a problem with this transaction
-                      <Header.Subheader style={{ color: 'white' }}>
-                        {error.message}
-                      </Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                )
-                : false
-              }
-            </Segment>
-          )
-          : false
-        }
         <Segment
-          basic
           clearing
-          style={{ margin: 0 }}
+          secondary
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '90px',
+            margin: 0,
+            zIndex: 2,
+          }}
         >
-          {nextAction}
+          {(!error || error.type === 'forbidden')
+            ? nextAction
+            : false
+          }
           {cancelAction}
           {helpAction}
         </Segment>
