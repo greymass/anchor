@@ -16,6 +16,7 @@ class PromptReviewControls extends Component<Props> {
       onSelect,
       onWhitelist,
       settings,
+      shouldBroadcast,
       t,
       wallet,
     } = this.props;
@@ -80,14 +81,19 @@ class PromptReviewControls extends Component<Props> {
                 Preferences
               </label>
               <Segment basic style={{ marginTop: 0 }}>
-                <Form.Checkbox
-                  checked={canBroadcast && settings.eosio_signbroadcast}
-                  disabled={!canBroadcast}
-                  label="Broadcast Transaction"
-                  name="eosio_signbroadcast"
-                  onChange={onCheck}
-                  toggle
-                />
+                {(shouldBroadcast)
+                  ? (
+                    <Form.Checkbox
+                      checked={canBroadcast && settings.eosio_signbroadcast}
+                      disabled={!canBroadcast}
+                      label="Broadcast Transaction"
+                      name="eosio_signbroadcast"
+                      onChange={onCheck}
+                      toggle
+                    />
+                  )
+                  : false
+                }
                 {(
                   // Using a device prevents whitelists from working
                   !couldSignWithDevice
