@@ -1,18 +1,45 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
+import { Button, Grid, Header, Icon, Message, Modal, Segment, Tab } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
+import QRCode from 'qrcode';
 
+const zlib = require('zlib');
 const { clipboard, ipcRenderer } = require('electron');
+const { SigningRequest } = require('eosio-uri');
+
+const opts = {
+  zlib: {
+    deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
+    inflateRaw: (data) => new Uint8Array(zlib.inflateRawSync(Buffer.from(data))),
+  },
+};
 
 export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   constructor(props) {
     super(props);
-
     this.state = {
       copiedTransaction: false
     };
+  }
+  componentDidMount() {
+    this.renderQRCode();
+  }
+  async renderQRCode() {
+    const { settings, transaction } = this.props;
+    const { chainId } = settings;
+    const req = await SigningRequest.create({
+      chainId,
+      transaction: transaction.transaction.transaction
+    }, opts);
+    const uri = req.encode();
+    const { canvas } = this;
+    QRCode.toCanvas(canvas, uri, {
+      scale: 6
+    }, (error) => {
+      if (error) console.error(error);
+    });
   }
   promptSave = () => {
     const { contract, settings, transaction } = this.props;
@@ -29,10 +56,14 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
 
     this.setState({ copiedTransaction: true }, () => {
       clipboard.writeText(JSON.stringify(transaction));
-
       setTimeout(() => { this.setState({ copiedTransaction: false }); }, 5000);
     });
   };
+  onTabChange = (e, { activeIndex }) => {
+    if (activeIndex === 0) {
+      this.renderQRCode();
+    }
+  }
   render() {
     const {
       onClose,
@@ -42,21 +73,61 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
     const {
       copiedTransaction
     } = this.state;
-    return (
-      <Segment basic>
-        <Header
-          content={t('global_transaction_unsigned_title')}
-          icon="checkmark"
-          size="large"
-        />
-        <Modal.Content>
-          <p>{t('global_transaction_unsigned_message')}</p>
-          <Segment padded>
-            <Header
-              content={t('global_transaction_unsigned_raw_tx')}
-            />
+    const panes = [
+      {
+        menuItem: 'Signing',
+        render: () => (
+          <Tab.Pane>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column width={8}>
+                  <Header
+                    content="Sign with Mobile Wallet"
+                    subheader="Scan this with an EEP-7 compatible wallet to sign this transaction."
+                  />
+                  <canvas ref={(node) => { this.canvas = node; }} />
+                </Grid.Column>
+                <Grid.Column width={8}>
+                  <Header
+                    content="Export this Transaction"
+                    subheader="Use one of the options below to export this unsigned transaction for use in another program or on another computer."
+                  />
+                  <Button
+                    basic
+                    color="blue"
+                    content="Save as File"
+                    fluid
+                    icon="download"
+                    onClick={this.promptSave}
+                    style={{ marginBottom: '1em' }}
+                  />
+                  <Button
+                    basic
+                    color="blue"
+                    content="Copy to Clipboard"
+                    fluid
+                    icon={(copiedTransaction) ? 'circle check' : 'clipboard'}
+                    onClick={this.onCopy}
+                  />
+                  {(copiedTransaction) && (
+                    <Message
+                      color="teal"
+                      content={t('global_transaction_unsigned_copied')}
+                      icon="check"
+                    />
+                  )}
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Tab.Pane>
+        )
+      },
+      {
+        menuItem: 'Transaction',
+        render: () => (
+          <Tab.Pane>
             <ReactJson
-              collapsed={1}
+              collapsed={4}
               displayDataTypes={false}
               displayObjectSize={false}
               iconStyle="square"
@@ -65,29 +136,23 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
               style={{ padding: '1em' }}
               theme="harmonic"
             />
-            <Segment basic textAlign="center">
-              <Button
-                color="blue"
-                content={t('global_transaction_unsigned_save_file')}
-                icon="download"
-                onClick={this.promptSave}
-                style={{ marginBottom: '1em' }}
-              />
-              <Button
-                color="teal"
-                content={t('global_transaction_unsigned_copy_to_clipboard')}
-                icon={(copiedTransaction) ? "circle check" : "clipboard"}
-                onClick={this.onCopy}
-              />
-              {(copiedTransaction) && (
-                <Message
-                  color="teal"
-                  content={t('global_transaction_unsigned_copied')}
-                  icon="check"
-                />
-              )}
-            </Segment>
-          </Segment>
+          </Tab.Pane>
+        )
+      },
+    ];
+    return (
+      <React.Fragment>
+        <Header
+          content={t('global_transaction_unsigned_title_r2')}
+          icon="qrcode"
+          size="large"
+          subheader={t('global_transaction_unsigned_message_r2')}
+        />
+        <Modal.Content>
+          <Tab
+            onTabChange={this.onTabChange}
+            panes={panes}
+          />
           <Message
             icon
             size="large"
@@ -109,7 +174,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
             </Button>
           </Segment>
         </Modal.Actions>
-      </Segment>
+      </React.Fragment>
 
     );
   }
