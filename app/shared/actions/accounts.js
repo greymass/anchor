@@ -530,7 +530,7 @@ export function getAccountByKeys(keys) {
       endpoints
     } = features;
     if (keys.length && (settings.node || settings.node.length !== 0)) {
-      if (endpoints && endpoints.includes('/v1/history/get_keys_accounts')) {
+      if (true ===false && endpoints && endpoints.includes('/v1/history/get_keys_accounts')) {
         dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEYS_PENDING,
           payload: { keys }

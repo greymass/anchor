@@ -10,19 +10,40 @@ const { ipcRenderer } = require('electron');
 const { SigningRequest } = require('eosio-uri');
 const zlib = require('zlib');
 
+const esrParams = ['bn', 'ex', 'rbn', 'req', 'rid', 'sa', 'sig', 'sp', 'tx']
+
 export function broadcastURI(tx, blockchain, callback = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_EOSIOURIBROADCAST_PENDING
     });
     const {
-      connection
+      connection,
+      prompt,
     } = getState();
     if (!blockchain) {
       return dispatch({
         payload: { err: 'no_blockchain' },
         type: types.SYSTEM_EOSIOURIBROADCAST_FAILURE
       });
+    }
+    // If the prompt itself disables the broadcast, only issue callback
+    if (!prompt.broadcast) {
+      if (callback) {
+        const account = get(tx, 'transaction.transaction.actions.0.authorization.0.actor');
+        const authorization = get(tx, 'transaction.transaction.actions.0.authorization.0.permission');
+        return dispatch(callbackURIWithProcessed({
+          bn: null,
+          ex: connection.expireInSeconds,
+          rbn: tx.transaction.transaction.ref_block_num,
+          req: prompt.uri,
+          rid: tx.transaction.transaction.ref_block_prefix,
+          sa: account,
+          sig: tx.transaction.signatures[0],
+          sp: authorization,
+          tx: tx.transaction_id,
+        }, callback));
+      }
     }
     const modified = Object.assign({}, connection, {
       broadcast: false,
@@ -35,16 +56,15 @@ export function broadcastURI(tx, blockchain, callback = false) {
           const account = get(tx, 'transaction.transaction.actions.0.authorization.0.actor');
           const authorization = get(tx, 'transaction.transaction.actions.0.authorization.0.permission');
           dispatch(callbackURIWithProcessed({
-            a: `${account}@${authorization}`,
             bn: response.processed.block_num,
-            t: {
-              broadcast: true,
-              processed: response.processed,
-              transaction: tx.transaction,
-              transaction_id: response.transaction_id,
-            },
-            tx: response.transaction_id,
-            sig: tx.transaction.signatures
+            ex: connection.expireInSeconds,
+            rbn: tx.transaction.transaction.ref_block_num,
+            req: prompt.uri,
+            rid: tx.transaction.transaction.ref_block_prefix,
+            sa: account,
+            sig: tx.transaction.signatures[0],
+            sp: authorization,
+            tx: tx.transaction_id,
           }, callback));
         }
         return dispatch({
@@ -63,7 +83,8 @@ export function broadcastURI(tx, blockchain, callback = false) {
 }
 
 export function callbackURI(tx, blockchain, callback = false) {
-  return async (dispatch: () => void) => {
+  return async (dispatch: () => void, getState) => {
+    const { connection } = getState();
     dispatch({
       type: types.SYSTEM_EOSIOURIBROADCAST_PENDING
     });
@@ -87,11 +108,15 @@ export function callbackURI(tx, blockchain, callback = false) {
       transaction_id: tx.transaction_id,
     };
     dispatch(callbackURIWithProcessed({
-      a: `${account}@${authorization}`,
-      bn: false,
-      t: uri,
+      bn: null,
+      ex: connection.expireInSeconds,
+      rbn: tx.transaction.transaction.ref_block_num,
+      req: prompt.uri,
+      rid: tx.transaction.transaction.ref_block_prefix,
+      sa: account,
+      sig: tx.transaction.signatures[0],
+      sp: authorization,
       tx: tx.transaction_id,
-      sig: tx.transaction.signatures
     }, callback));
     return dispatch({
       payload: { response },
@@ -100,13 +125,7 @@ export function callbackURI(tx, blockchain, callback = false) {
   };
 }
 
-export function callbackURIWithProcessed({
-  a,
-  bn,
-  sig,
-  t,
-  tx,
-}, callback) {
+export function callbackURIWithProcessed(values, callback) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_EOSIOURICALLBACK_PENDING
@@ -117,12 +136,9 @@ export function callbackURIWithProcessed({
     } = callback;
 
     let s = url;
-    s = s.replace('{{a}}', a);
-    s = s.replace('{{bn}}', bn);
-    s = s.replace('{{tx}}', tx);
-    s = s.replace('{{sig}}', sig[0]);
-    s = s.replace('{{sig[0]}}', sig[0]);
-
+    esrParams.forEach((param) => {
+      s = s.replace(`{{${param}}}`, values[param]);
+    });
     // If it's not a background call, return to state
     if (!background) {
       return dispatch({
@@ -135,13 +151,7 @@ export function callbackURIWithProcessed({
     }
     // Otherwise execute background call
     httpClient
-      .post(s, {
-        a,
-        bn,
-        sig: sig[0],
-        t,
-        tx,
-      })
+      .post(s, values)
       .then(() => dispatch({
         type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
         payload: {
@@ -302,16 +312,20 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             payload: { signed },
             type: types.SYSTEM_EOSIOURISIGN_SUCCESS
           });
+          if (callback && signed.broadcast) {
+            dispatch(callbackURIWithProcessed({
+              bn: (broadcast) ? signed.processed.block_num : null,
+              ex: connection.expireInSeconds,
+              rbn: signed.transaction.transaction.ref_block_num,
+              req: prompt.uri,
+              rid: signed.transaction.transaction.ref_block_prefix,
+              sa: wallet.account,
+              sig: signed.transaction.signatures[0],
+              sp: wallet.authorization,
+              tx: signed.transaction_id,
+            }, callback));
+          }
           if (broadcast) {
-            if (callback) {
-              dispatch(callbackURIWithProcessed({
-                a: `${wallet.account}@${wallet.authorization}`,
-                bn: signed.processed.block_num,
-                t: signed,
-                tx: signed.transaction_id,
-                sig: signed.transaction.signatures
-              }, callback));
-            }
             dispatch({
               payload: {
                 endpoint: networkConfig.httpEndpoint,

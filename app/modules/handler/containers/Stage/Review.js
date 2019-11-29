@@ -20,6 +20,7 @@ class PromptStageReview extends Component<Props> {
       onShareLink,
       prompt,
       settings,
+      shouldBroadcast,
       system,
       wallet,
       whitelist,
@@ -46,6 +47,7 @@ class PromptStageReview extends Component<Props> {
             onSelect={this.props.swapAccount}
             onWhitelist={this.props.onWhitelist}
             settings={settings}
+            shouldBroadcast={shouldBroadcast}
             wallet={wallet}
           />
         </Grid.Column>
