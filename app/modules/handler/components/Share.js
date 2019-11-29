@@ -30,11 +30,11 @@ class PromptShare extends Component<Props> {
         size="small"
         scrolling
       >
-        <Modal.Header>Signing Request URI (EEP-6)</Modal.Header>
+        <Modal.Header>Signing Request (EEP-7)</Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <Header>Sharing a Signing Request</Header>
-            <p>A benefit of using an EEP-6 URI link is that you can share the link with those you trust and verify what actions it will perform before signing.</p>
+            <p>A benefit of using an Signing Request URI link is that you can share the link with those you trust and verify what actions it will perform before signing.</p>
             <Header size="small">Using EOSIO.TO</Header>
             <p>You can open this signing request using https://eosio.to service with the button below to verify the contents of the URI. This link can also safely be shared with others to view the contents of the transaction.</p>
             <GlobalDangerLink
