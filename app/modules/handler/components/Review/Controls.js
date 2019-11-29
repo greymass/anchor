@@ -69,7 +69,7 @@ class PromptReviewControls extends Component<Props> {
         </Form.Field>
         {(settings && ['ledger', 'hot'].includes(wallet.mode))
           ? (
-            <Form.Field>
+            <Form.Field style={{ display: 'none' }}>
               <label>
                 <Icon
                   name="cogs"
