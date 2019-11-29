@@ -48,6 +48,7 @@ export default function prompt(state = {}, action) {
     }
     case types.SYSTEM_EOSIOURICALLBACK_SUCCESS: {
       return Object.assign({}, state, {
+        background: action.payload.background,
         callbackExecuted: true,
         callbackURL: action.payload.s,
       });
