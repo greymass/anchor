@@ -16,7 +16,7 @@ const configureStore = (initialState) => {
 
   middleware.push(thunk);
 
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV === 'development') {
     middleware.push(logger);
   }
 

@@ -48,7 +48,7 @@ class PromptStageReview extends Component<Props> {
           <Header>
             Final Review
             <Header.Subheader>
-              One final opportunity to review the actions in this transaction before broadcasting it to the blockchain.
+              One final opportunity to review the actions in this transaction before broadcasting the transaction.
             </Header.Subheader>
           </Header>
           {tx.actions.map((action, index) => (

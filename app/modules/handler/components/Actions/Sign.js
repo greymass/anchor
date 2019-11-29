@@ -6,6 +6,7 @@ import { Button, Header, Icon, Label } from 'semantic-ui-react';
 class PromptActionSign extends Component<Props> {
   render() {
     const {
+      broadcast,
       disabled,
       loading,
       onClick,
@@ -19,7 +20,7 @@ class PromptActionSign extends Component<Props> {
         disabled={disabled}
         floated="right"
         labelPosition="left"
-        onClick={onClick}
+        onClick={() => onClick(broadcast)}
       >
         <Label
           as="a"
