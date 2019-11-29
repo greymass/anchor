@@ -279,6 +279,7 @@
     "node-notifier": "^5.4.3",
     "p-queue": "^3.0.0",
     "pretty-bytes": "^5.1.0",
+    "qrcode": "^1.4.4",
     "react": "^16.4.0",
     "react-blockies": "^1.4.0",
     "react-debounce-render": "^5.0.0",
