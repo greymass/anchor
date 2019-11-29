@@ -160,6 +160,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
             const exists = find(wallets, {
               account: match,
               authorization: authorization.perm_name,
+              chainId: settings.chainId,
             });
             if (!exists) {
               filtered.push(`${match}@${authorization.perm_name}`);
