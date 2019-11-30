@@ -312,7 +312,10 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             payload: { signed },
             type: types.SYSTEM_EOSIOURISIGN_SUCCESS
           });
-          if (callback && signed.broadcast) {
+          if (
+            (callback && signed.broadcast)
+            || (callback && !callback.broadcast)
+          ) {
             dispatch(callbackURIWithProcessed({
               bn: (broadcast) ? signed.processed.block_num : null,
               ex: connection.expireInSeconds,
