@@ -304,7 +304,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
       signer
         .transaction(tx, {
           broadcast,
-          expireInSeconds: (broadcast) ? undefined : connection.expireInSeconds,
+          expireInSeconds: (broadcast) ? connection.expireInSeconds : 3600,
           sign: true,
         })
         .then((signed) => {
