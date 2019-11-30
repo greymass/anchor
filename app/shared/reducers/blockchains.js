@@ -172,11 +172,11 @@ const knownChains = [
     testnet: false
   },
   {
-    _id: 'telos-testnet',
-    chainId: 'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3',
+    _id: 'telos-testnet-2',
+    chainId: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
     keyPrefix: 'EOS',
     name: 'Telos',
-    node: 'https://api.eos.miami:17441',
+    node: 'https://testnet.eos.miami',
     symbol: 'TLOS',
     testnet: true
   },
