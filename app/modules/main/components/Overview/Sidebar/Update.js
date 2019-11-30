@@ -41,9 +41,9 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
         || (matchMajor && parseInt(nextMinor, 10) > parseInt(currentMinor, 10))
         || (matchMajor && matchMinor && parseInt(nextPatch, 10) > parseInt(currentPatch, 10))
       );
-      console.log(nextMajor, currentMajor)
-      console.log(matchMajor, parseInt(nextMinor, 10), parseInt(currentMinor, 10))
-      console.log(matchMajor, matchMinor, parseInt(nextPatch, 10), parseInt(currentPatch, 10))
+      // console.log(nextMajor, currentMajor)
+      // console.log(matchMajor, parseInt(nextMinor, 10), parseInt(currentMinor, 10))
+      // console.log(matchMajor, matchMinor, parseInt(nextPatch, 10), parseInt(currentPatch, 10))
       // If the user has explicitly skipped this update
       // if (settings.upgradeSkip === constants.version) {
       //   upgradeAvailable = false;
