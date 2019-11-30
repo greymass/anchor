@@ -519,7 +519,7 @@ export function getAccountByKey(key) {
 
 export function getAccountByKeys(keys) {
   return (dispatch: () => void, getState) => {
-    // Prevent private keys from submitting
+    // Prevent private keys from submitting if they somehow were saved as a public key
     const filtered = keys.filter((key) => !ecc.isValidPrivate(key))
     const {
       connection,
@@ -529,11 +529,11 @@ export function getAccountByKeys(keys) {
     const {
       endpoints
     } = features;
-    if (keys.length && (settings.node || settings.node.length !== 0)) {
+    if (filtered.length && (settings.node || settings.node.length !== 0)) {
       if (true ===false && endpoints && endpoints.includes('/v1/history/get_keys_accounts')) {
         dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEYS_PENDING,
-          payload: { keys }
+          payload: { filtered }
         });
         return httpQueue.add(() =>
           httpClient
@@ -555,25 +555,44 @@ export function getAccountByKeys(keys) {
       } else {
         dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
-          payload: { keys }
+          payload: { filtered }
         });
-        return keys.forEach((key) => eos(connection).getKeyAccounts(key).then((accounts) => {
+        return filtered.forEach((key) => eos(connection).getKeyAccounts(key).then((accounts) => {
           dispatch(getAccounts(accounts.account_names));
+          dispatch(getControlledAccounts(accounts.account_names));
           return dispatch({
             type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
             payload: { accounts }
           });
         }).catch((err) => dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
-          payload: { err, keys }
+          payload: { err, filtered }
         })))
       }
     }
     return dispatch({
       type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
-      payload: { keys },
+      payload: { filtered },
     });
   };
+}
+
+export function getControlledAccounts(accounts) {
+  return (dispatch: () => void, getState) => {
+    const {
+      connection,
+      settings
+    } = getState();
+    accounts.forEach((account) => {
+      eos(connection).getControlledAccounts(account).then((results) => {
+        dispatch(getAccounts(results.controlled_accounts));
+        return dispatch({
+          type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
+          payload: { accounts: { account_names: results.controlled_accounts }}
+        });
+      })
+    })
+  }
 }
 
 export function clearAccountByKey() {
