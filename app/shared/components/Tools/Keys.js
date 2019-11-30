@@ -6,6 +6,7 @@ import {
   Button,
   Confirm,
   Header,
+  Icon,
   List,
   Message,
   Modal,
@@ -16,6 +17,7 @@ import {
 import ReactJson from 'react-json-view';
 
 import ToolsKeyGeneratorComponent from './KeyGenerator';
+import ToolsKeyImportComponent from './KeyImport';
 import GlobalFragmentChainLogo from '../Global/Fragment/ChainLogo';
 
 const { clipboard } = require('electron');
@@ -25,6 +27,7 @@ const defaultState =  {
   closable: true,
   confirm: false,
   open: false,
+  openImport: false,
   pubkeys: [],
 }
 
@@ -42,6 +45,7 @@ class ToolsKeys extends Component<Props> {
       this.setState({ confirm: true });
     }
   }
+  onCloseImport = () => this.setState({ openImport: false })
   onForceClose = () => this.setState({ confirm: false, open: false })
   onKeypair = (pubkey) => {
     const { pubkeys } = this.state;
@@ -54,6 +58,7 @@ class ToolsKeys extends Component<Props> {
     });
   }
   onOpen = () => this.setState({ open: true })
+  onOpenImport = () => this.setState({ openImport: true })
   onSave = () => this.setState({ closable: true })
   render() {
     const {
@@ -84,10 +89,35 @@ class ToolsKeys extends Component<Props> {
           open={this.state.open}
           trigger={(
             <Button
+              content="Generate Key Pairs"
+              icon="random"
               onClick={this.onOpen}
-            >
-              Generate Keys
-            </Button>
+              primary
+            />
+          )}
+        />
+        <Modal
+          closeIcon={true}
+          closeOnDimmerClick={false}
+          closeOnDocumentClick={false}
+          content={(
+            <ToolsKeyImportComponent
+              actions={this.props.actions}
+              settings={this.props.settings}
+              onSave={this.onCloseImport}
+            />
+          )}
+          centered={false}
+          onClose={this.onCloseImport}
+          open={this.state.openImport}
+          trigger={(
+            <Button
+              content="Import Key"
+              icon="add"
+              floated="right"
+              onClick={this.onOpenImport}
+              primary
+            />
           )}
         />
         <Confirm
