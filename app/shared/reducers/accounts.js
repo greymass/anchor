@@ -71,7 +71,7 @@ export default function accounts(state = initialState, action) {
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEY_PENDING:
-    case types.SYSTEM_ACCOUNT_BY_KEY_FAILURE:
+    // case types.SYSTEM_ACCOUNT_BY_KEY_FAILURE:
     case types.SYSTEM_ACCOUNT_BY_KEY_CLEAR: {
       return Object.assign({}, state, {
         __lookups: []
