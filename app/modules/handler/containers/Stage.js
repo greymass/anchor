@@ -178,12 +178,16 @@ class PromptStage extends Component<Props> {
     const transaction = prompt.signed;
     const hasSignature = !!(
       transaction
-      && transaction.transaction
-      && transaction.transaction.signatures.length > 0
+      && transaction.signatures
+      && transaction.signatures.length > 0
     );
-    const hasTransaction = !!(transaction && transaction.transaction_id);
+    const hasTransaction = !!(
+      (transaction && transaction.transaction_id)
+      || (transaction && hasSignature)
+    );
     const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
     const hasCallback = !!(prompt && prompt.callback && prompt.callback.url);
+    const hasForegroundCallback = !!(prompt && prompt.callback && prompt.callback.url && prompt.callback.background === false);
 
     // After this signature is added, does it meet the requirements to be able to broadcast?
     // TODO: Implement checks for existing signatures
@@ -304,6 +308,10 @@ class PromptStage extends Component<Props> {
     } else if (!awaitingDevice && hasBroadcast) {
       stage = (
         <PromptStageSuccess
+          blockchain={blockchain}
+          callbacking={callbacking}
+          prompt={prompt}
+          hasForegroundCallback={hasForegroundCallback}
           settings={settings}
         />
       );

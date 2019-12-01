@@ -15,32 +15,38 @@ class PromptStageCallback extends Component<Props> {
       callbacking,
       prompt,
       settings,
+      singleColumn,
     } = this.props;
     const {
       signed,
       tx,
     } = prompt;
-    const { signatures } = signed.transaction;
+    const { signatures } = signed;
     return (
       <Grid>
-        <Grid.Column width={6}>
-          <Header>
-            Transaction Signed
-            <Header.Subheader>
-              The signature below has been created.
-            </Header.Subheader>
-          </Header>
-          <Form>
-            <Form.Field>
-              <label>Signature</label>
-              <Form.TextArea
-                rows={4}
-                value={signatures.join('\n')}
-              />
-            </Form.Field>
-          </Form>
-        </Grid.Column>
-        <Grid.Column width={10}>
+        {(singleColumn)
+          ? false
+          : (
+            <Grid.Column width={6}>
+              <Header>
+                Transaction Signed
+                <Header.Subheader>
+                  The signature below has been created.
+                </Header.Subheader>
+              </Header>
+              <Form>
+                <Form.Field>
+                  <label>Signature</label>
+                  <Form.TextArea
+                    rows={4}
+                    value={signatures.join('\n')}
+                  />
+                </Form.Field>
+              </Form>
+            </Grid.Column>
+          )
+        }
+        <Grid.Column width={(singleColumn) ? 16 : 10}>
           <Segment secondary size="large">
             <Header>
               <Icon name="info circle" />
