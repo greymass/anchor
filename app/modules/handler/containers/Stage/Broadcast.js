@@ -17,7 +17,7 @@ class PromptStageReview extends Component<Props> {
       signed,
       tx,
     } = prompt;
-    const { signatures } = signed.transaction;
+    const { signatures } = signed;
     return (
       <Grid>
         <Grid.Column width={6}>

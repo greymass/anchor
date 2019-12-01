@@ -1,15 +1,21 @@
 import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
+import { Serialize } from 'eosjs2';
 
 import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
 import { httpClient } from '../../../shared/utils/httpClient';
 
 const { ipcRenderer } = require('electron');
-
+const transactionAbi = require('eosjs2/node_modules/eosjs/src/transaction.abi.json');
 const { SigningRequest } = require('eosio-uri');
 const zlib = require('zlib');
+const util = require('util');
 
+const textEncoder = new util.TextEncoder();
+const textDecoder = new util.TextDecoder();
+
+const transactionTypes: Map<string, Serialize.Type> = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), transactionAbi);
 const esrParams = ['bn', 'ex', 'rbn', 'req', 'rid', 'sa', 'sig', 'sp', 'tx']
 
 export function broadcastURI(tx, blockchain, callback = false) {
@@ -50,7 +56,7 @@ export function broadcastURI(tx, blockchain, callback = false) {
       chainId: blockchain.chainId,
       httpEndpoint: blockchain.node
     });
-    eos(modified)
+    eos(modified, false, true)
       .pushTransaction(tx.transaction).then((response) => {
         if (callback) {
           const account = get(tx, 'transaction.transaction.actions.0.authorization.0.actor');
@@ -271,11 +277,33 @@ function checkRequest(data) {
   return errors.filter(item => item !== false);
 }
 
+function arrayToHex(data) {
+  let result = '';
+  for (const x of data) {
+    result += ('00' + x.toString(16)).slice(-2);
+  }
+  return result;
+}
+
+function unpackTransaction(bytes) {
+  const buffer = new Serialize.SerialBuffer({
+    array: bytes,
+    textDecoder,
+    textEncoder,
+  })
+  const type = transactionTypes.get('transaction');
+  if (type) {
+    return type.deserialize(buffer);
+  }
+  return {};
+}
+
 export function signURI(tx, blockchain, wallet, broadcast = false, callback = false) {
   return (dispatch: () => void, getState) => {
     const {
       auths,
-      connection
+      connection,
+      prompt,
     } = getState();
     dispatch({
       type: types.SYSTEM_EOSIOURISIGN_PENDING
@@ -297,33 +325,46 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
       }
     }
     // Establish Signer
-    const signer = eos(networkConfig, true);
+    const signer = eos(networkConfig, true, true);
     setTimeout(async () => {
-      const contract = await signer.getAbi('eosio');
-      signer.fc.abiCache.abi(contract.account_name, contract.abi);
       signer
-        .transaction(tx, {
-          broadcast,
+        .transact(tx, {
+          broadcast: false,
           expireInSeconds: (broadcast) ? connection.expireInSeconds : 3600,
           sign: true,
         })
-        .then((signed) => {
+        .then(async (signed) => {
+          let broadcasted;
+          if (broadcast) {
+            broadcasted = await signer.pushSignedTransaction(signed);
+          }
           dispatch({
-            payload: { signed },
+            payload: {
+              signed: (broadcasted)
+                ? {
+                  signatures: signed.signatures,
+                  ...broadcasted
+                }
+                : {
+                  signatures: signed.signatures,
+                  transaction: unpackTransaction(signed.serializedTransaction),
+                }
+            },
             type: types.SYSTEM_EOSIOURISIGN_SUCCESS
           });
+          const hasCallback = (callback && callback.url)
           if (
-            (callback && signed.broadcast)
+            (callback && broadcast)
             || (callback && !callback.broadcast)
           ) {
             dispatch(callbackURIWithProcessed({
-              bn: (broadcast) ? signed.processed.block_num : null,
+              bn: (broadcast) ? broadcasted.processed.block_num : null,
               ex: connection.expireInSeconds,
-              rbn: signed.transaction.transaction.ref_block_num,
+              rbn: tx.ref_block_num,
               req: prompt.uri,
-              rid: signed.transaction.transaction.ref_block_prefix,
+              rid: tx.ref_block_prefix,
               sa: wallet.account,
-              sig: signed.transaction.signatures[0],
+              sig: signed.signatures[0],
               sp: wallet.authorization,
               tx: signed.transaction_id,
             }, callback));
@@ -332,7 +373,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             dispatch({
               payload: {
                 endpoint: networkConfig.httpEndpoint,
-                response: signed,
+                response: broadcasted,
               },
               type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
             });
@@ -382,7 +423,7 @@ export function templateURI(blockchain, wallet) {
       chainId: blockchain.chainId,
       httpEndpoint: blockchain.node,
       sign: false,
-    });
+    }, false, true);
     const head = (await EOS.getInfo(true)).head_block_num;
     const block = await EOS.getBlock(head);
     // Force 1hr expiration of txs, shouldn't hit
