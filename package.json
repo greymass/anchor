@@ -266,7 +266,7 @@
     "electron-context-menu": "^0.10.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^2.21.10",
-    "eosio-uri": "0.0.5",
+    "eosio-signing-request": "https://github.com/greymass/eosio-signing-transport#feature/id-request",
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "history": "^4.7.2",
