@@ -36,19 +36,8 @@ export function broadcastURI(tx, blockchain, callback = false) {
     // If the prompt itself disables the broadcast, only issue callback
     if (!prompt.broadcast) {
       if (callback) {
-        const account = get(tx, 'transaction.transaction.actions.0.authorization.0.actor');
-        const authorization = get(tx, 'transaction.transaction.actions.0.authorization.0.permission');
-        return dispatch(callbackURIWithProcessed({
-          bn: null,
-          ex: connection.expireInSeconds,
-          rbn: tx.transaction.transaction.ref_block_num,
-          req: prompt.uri,
-          rid: tx.transaction.transaction.ref_block_prefix,
-          sa: account,
-          sig: tx.transaction.signatures[0],
-          sp: authorization,
-          tx: tx.transaction_id,
-        }, callback));
+        const callbackParams = prompt.resolved.getCallback(tx.transaction.signatures);
+        return dispatch(callbackURIWithProcessed(callbackParams));
       }
     }
     const modified = Object.assign({}, connection, {
@@ -59,19 +48,8 @@ export function broadcastURI(tx, blockchain, callback = false) {
     eos(modified, false, true)
       .pushTransaction(tx.transaction).then((response) => {
         if (callback) {
-          const account = get(tx, 'transaction.transaction.actions.0.authorization.0.actor');
-          const authorization = get(tx, 'transaction.transaction.actions.0.authorization.0.permission');
-          dispatch(callbackURIWithProcessed({
-            bn: response.processed.block_num,
-            ex: connection.expireInSeconds,
-            rbn: tx.transaction.transaction.ref_block_num,
-            req: prompt.uri,
-            rid: tx.transaction.transaction.ref_block_prefix,
-            sa: account,
-            sig: tx.transaction.signatures[0],
-            sp: authorization,
-            tx: tx.transaction_id,
-          }, callback));
+          const callbackParams = prompt.resolved.getCallback(tx.transaction.signatures, response.processed.block_num);
+          dispatch(callbackURIWithProcessed(callbackParams));
         }
         return dispatch({
           payload: {
@@ -113,17 +91,8 @@ export function callbackURI(tx, blockchain, callback = false) {
       transaction: tx.transaction,
       transaction_id: tx.transaction_id,
     };
-    dispatch(callbackURIWithProcessed({
-      bn: null,
-      ex: connection.expireInSeconds,
-      rbn: tx.transaction.transaction.ref_block_num,
-      req: prompt.uri,
-      rid: tx.transaction.transaction.ref_block_prefix,
-      sa: account,
-      sig: tx.transaction.signatures[0],
-      sp: authorization,
-      tx: tx.transaction_id,
-    }, callback));
+    const callbackParams = prompt.resolved.getCallback(tx.transaction.signatures);
+    dispatch(callbackURIWithProcessed(callbackParams));
     return dispatch({
       payload: { response },
       type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
@@ -131,19 +100,20 @@ export function callbackURI(tx, blockchain, callback = false) {
   };
 }
 
-export function callbackURIWithProcessed(values, callback) {
+export function callbackURIWithProcessed(callback) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_EOSIOURICALLBACK_PENDING
     });
     const {
       background,
-      url
+      payload,
+      url,
     } = callback;
 
     let s = url;
     esrParams.forEach((param) => {
-      s = s.replace(`{{${param}}}`, values[param]);
+      s = s.replace(`{{${param}}}`, payload[param]);
     });
     // If it's not a background call, return to state
     if (!background) {
@@ -157,7 +127,7 @@ export function callbackURIWithProcessed(values, callback) {
     }
     // Otherwise execute background call
     httpClient
-      .post(s, values)
+      .post(s, payload)
       .then(() => dispatch({
         type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
         payload: {
@@ -357,17 +327,9 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             (callback && broadcast)
             || (callback && !callback.broadcast)
           ) {
-            dispatch(callbackURIWithProcessed({
-              bn: (broadcast) ? broadcasted.processed.block_num : null,
-              ex: connection.expireInSeconds,
-              rbn: tx.ref_block_num,
-              req: prompt.uri,
-              rid: tx.ref_block_prefix,
-              sa: wallet.account,
-              sig: signed.signatures[0],
-              sp: wallet.authorization,
-              tx: signed.transaction_id,
-            }, callback));
+            const blockNum = (broadcasted) ? broadcasted.processed.block_num : null;
+            const callbackParams = prompt.resolved.getCallback(signed.signatures, blockNum)
+            dispatch(callbackURIWithProcessed(callbackParams));
           }
           if (broadcast) {
             dispatch({
