@@ -407,20 +407,6 @@ export function templateURI(blockchain, wallet) {
       };
       // Interpret the Signing Request
       const request = SigningRequest.from(uri, opts);
-      // Determine the contract name
-      let contractName;
-      switch (request.data.req[0]) {
-        case 'action':
-        default:
-          contractName = request.data.req[1].account;
-          break;
-        case 'action[]':
-          contractName = request.data.req[1][0].account;
-          break;
-        case 'transaction':
-          contractName = request.data.req[1].actions[0].account;
-          break;
-      }
       // Form the transaction
       const data = await request.getTransaction(authorization, block);
       const detectedForbiddenActions = checkRequest(data);
@@ -449,12 +435,9 @@ export function templateURI(blockchain, wallet) {
           });
         }
       }
-      // Retrieve the ABI
-      const contract = await EOS.getAbi(contractName);
       return dispatch({
         type: types.SYSTEM_EOSIOURIBUILD_SUCCESS,
         payload: {
-          contract,
           tx: data
         }
       });
