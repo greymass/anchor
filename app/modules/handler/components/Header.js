@@ -48,7 +48,7 @@ class PromptHeader extends Component<Props> {
           left: 0,
           right: 0,
           height: '110px',
-          zIndex: 2,
+          zIndex: 2000,
           '-webkit-app-region': 'drag'
         }}
       >

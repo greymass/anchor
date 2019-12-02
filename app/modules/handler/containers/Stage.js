@@ -495,7 +495,7 @@ class PromptStage extends Component<Props> {
             right: 0,
             height: '90px',
             margin: 0,
-            zIndex: 2,
+            zIndex: 2000,
           }}
         >
           {(!error || error.type === 'forbidden')
