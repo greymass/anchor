@@ -6,18 +6,15 @@ export default function prompt(state = {}, action) {
     case types.SYSTEM_EOSIOURI_PENDING: {
       return {};
     }
-    case types.SYSTEM_EOSIOURI_SUCCESS: {
+    case types.SYSTEM_EOSIOURI_SUCCESS:
+    case types.SYSTEM_EOSIOURIBUILD_SUCCESS: {
       return Object.assign({}, state, action.payload);
     }
     case types.SYSTEM_EOSIOURIBUILD_PENDING: {
       return Object.assign({}, state, {
+        resolved: undefined,
         response: undefined,
-        signed: undefined,
-        tx: undefined
       });
-    }
-    case types.SYSTEM_EOSIOURIBUILD_SUCCESS: {
-      return Object.assign({}, state, action.payload);
     }
     case types.SYSTEM_EOSIOURISIGN_FAILURE: {
       console.log(action)

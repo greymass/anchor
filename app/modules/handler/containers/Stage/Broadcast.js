@@ -15,7 +15,7 @@ class PromptStageReview extends Component<Props> {
     } = this.props;
     const {
       signed,
-      tx,
+      transaction,
     } = prompt;
     const { signatures } = signed;
     return (
@@ -51,11 +51,11 @@ class PromptStageReview extends Component<Props> {
               One final opportunity to review the actions in this transaction before broadcasting the transaction.
             </Header.Subheader>
           </Header>
-          {tx.actions.map((action, index) => (
+          {transaction.actions.map((action, index) => (
             <PromptFragmentTransactionAction
               action={action}
               index={index}
-              total={tx.actions.length}
+              total={transaction.actions.length}
             />
           ))}
         </Grid.Column>

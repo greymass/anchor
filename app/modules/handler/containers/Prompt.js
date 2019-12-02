@@ -65,16 +65,16 @@ class PromptContainer extends Component<Props> {
   onSign = () => {
     const { wallet } = this.state;
     const { actions, blockchains, prompt } = this.props;
-    const { chainId, tx } = prompt;
+    const { chainId, resolved } = prompt;
     const blockchain = find(blockchains, { chainId });
     // After this signature is added, does it meet the requirements to be able to broadcast?
     // TODO: Implement checks for existing signatures
     // const authorizations = get(tx, 'tx.actions.0.authorization', []);
     // const canBroadcast = (canSign && authorizations.length === 1);
-    actions.signURI(tx, blockchain, wallet);
+    actions.signURI(resolved.transaction, blockchain, wallet);
   };
   onWhitelist = (e, { checked }) => {
-    const actions = get(this.props.prompt, 'tx.actions', []);
+    const actions = get(this.props.prompt, 'transaction.actions', []);
     // Establish which fields should have flexible values within the whitelist
     const flexible = actions.map((action) => {
       const flex = {};
@@ -96,10 +96,10 @@ class PromptContainer extends Component<Props> {
     // Set the blockchain for this network
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
-    const account = get(prompt, 'tx.actions.0.authorization.0.actor')
+    const account = get(prompt, 'transaction.actions.0.authorization.0.actor')
       || get(prompt, 'req.1.actions.0.authorization.0.actor')
       || get(prompt, 'req.1.authorization.0.actor');
-    const authorization = get(prompt, 'tx.actions.0.authorization.0.permission')
+    const authorization = get(prompt, 'transaction.actions.0.authorization.0.permission')
       || get(prompt, 'req.1.actions.0.authorization.0.permission')
       || get(prompt, 'req.1.authorization.0.permission');
     const defaultWallet =
@@ -154,8 +154,8 @@ class PromptContainer extends Component<Props> {
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
     const hasIssuedCallback = (system.EOSIOURICALLBACK === 'SUCCESS' && prompt.background);
     const hasExpired =
-      !!(prompt.tx && !hasBroadcast && Date.now() > Date.parse(`${prompt.tx.expiration}z`));
-    const requestedActor = get(prompt, 'tx.actions.0.authorization.0.actor');
+      !!(prompt.transaction && !hasBroadcast && Date.now() > Date.parse(`${prompt.transaction.expiration}z`));
+    const requestedActor = get(prompt, 'transaction.actions.0.authorization.0.actor');
     const requestedActorMissing =
       requestedActor &&
       requestedActor !== '...........1' &&
