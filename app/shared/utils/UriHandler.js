@@ -1,7 +1,7 @@
 import { clone, find, keys, map, omit, pickBy } from 'lodash';
 import eos from '../actions/helpers/eos';
 
-const { SigningRequest } = require('eosio-uri');
+const { SigningRequest } = require('eosio-signing-request');
 const notifier = require('node-notifier');
 const path = require('path');
 
