@@ -7,7 +7,7 @@ import QRCode from 'qrcode';
 
 const zlib = require('zlib');
 const { clipboard, ipcRenderer } = require('electron');
-const { SigningRequest } = require('eosio-uri');
+const { SigningRequest } = require('eosio-signing-request');
 
 const opts = {
   zlib: {

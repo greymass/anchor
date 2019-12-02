@@ -8,7 +8,7 @@ import { httpClient } from '../../../shared/utils/httpClient';
 
 const { ipcRenderer } = require('electron');
 const transactionAbi = require('eosjs2/node_modules/eosjs/src/transaction.abi.json');
-const { SigningRequest } = require('eosio-uri');
+const { SigningRequest } = require('eosio-signing-request');
 const zlib = require('zlib');
 const util = require('util');
 
