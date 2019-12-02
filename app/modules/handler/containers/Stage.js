@@ -94,13 +94,13 @@ class PromptStage extends Component<Props> {
       prompt,
       wallet
     } = this.props;
-    const { tx } = prompt;
+    const { resolved } = prompt;
     // After this signature is added, does it meet the requirements to be able to broadcast?
     // TODO: Implement checks for existing signatures
-    const authorizations = get(tx, 'actions.0.authorization', []);
+    const authorizations = get(resolved.transaction, 'actions.0.authorization', []);
     const canBroadcast = (authorizations.length === 1);
     const broadcast = (prompt.broadcast && andBroadcast)
-    actions.signURI(tx, blockchain, wallet, broadcast, prompt.callback);
+    actions.signURI(resolved.transaction, blockchain, wallet, broadcast, prompt.callback);
   }
   onSignBroadcast = () => {
     const {
@@ -113,14 +113,14 @@ class PromptStage extends Component<Props> {
     const {
       callback,
     } = prompt;
-    const { tx } = prompt;
+    const { resolved } = prompt;
     if (
       whitelist.actions
       && whitelist.actions.length
     ) {
       actions.addWhitelist(blockchain, wallet, whitelist);
     }
-    actions.signURI(tx, blockchain, wallet, true, callback);
+    actions.signURI(resolved.transaction, blockchain, wallet, true, callback);
   }
   onUnlock = (password) => {
     const {
@@ -175,26 +175,29 @@ class PromptStage extends Component<Props> {
     const canSignWithDevice = (wallet.mode === 'ledger' && status === 'connected');
     const canSign = (canSignWithKey || canSignWithDevice);
 
-    const transaction = prompt.signed;
+    const hasTransaction = (prompt.resolved && prompt.resolved.transaction);
+    const { signed } = prompt;
     const hasSignature = !!(
-      transaction
-      && transaction.signatures
-      && transaction.signatures.length > 0
+      signed
+      && signed.signatures
+      && signed.signatures.length > 0
     );
-    const hasTransaction = !!(
-      (transaction && transaction.transaction_id)
-      || (transaction && hasSignature)
-    );
+
     const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
     const hasCallback = !!(prompt && prompt.callback && prompt.callback.url);
-    const hasForegroundCallback = !!(prompt && prompt.callback && prompt.callback.url && prompt.callback.background === false);
+    const hasForegroundCallback = !!(
+      prompt
+      && prompt.callback
+      && prompt.callback.url
+      && prompt.callback.background === false
+    );
 
     // After this signature is added, does it meet the requirements to be able to broadcast?
     // TODO: Implement checks for existing signatures
-    const authorizations = get(prompt, 'tx.actions.0.authorization', []);
+    const authorizations = get(prompt, 'transaction.actions.0.authorization', []);
     const canBroadcast = (canSign && authorizations.length === 1 && prompt.broadcast);
 
-    const uriDigested = !!(prompt.tx);
+    const uriDigested = !!(prompt.transaction);
 
     let stage = (
       <PromptStageReview
@@ -216,7 +219,7 @@ class PromptStage extends Component<Props> {
     let nextAction = (
       <PromptActionSign
         broadcast
-        disabled={!prompt.tx || signing || !canSign}
+        disabled={!hasTransaction || signing || !canSign}
         loading={signing}
         onClick={this.onSign}
         wallet={wallet}
@@ -231,7 +234,7 @@ class PromptStage extends Component<Props> {
     if (settings.eosio_signbroadcast && canBroadcast) {
       nextAction = (
         <PromptActionSignBroadcast
-          disabled={!prompt.tx || signing || !canSign}
+          disabled={!prompt.transaction || signing || !canSign}
           loading={signing}
           onClick={this.onSignBroadcast}
           wallet={wallet}
@@ -254,7 +257,7 @@ class PromptStage extends Component<Props> {
     if (wallet.mode === 'watch') {
       nextAction = (
         <PromptActionDownload
-          disabled={!prompt.tx || signing}
+          disabled={!prompt.transaction || signing}
           onClick={this.onSaveUnsigned}
           prompt={prompt}
           settings={settings}
@@ -324,7 +327,7 @@ class PromptStage extends Component<Props> {
     } else if (couldSignWithKey && !canSign) {
       nextAction = (
         <PromptActionUnlock
-          disabled={!prompt.tx || signing || validatingPassword}
+          disabled={!prompt.transaction || signing || validatingPassword}
           loading={validatingPassword}
           onClick={this.onUnlock}
           wallet={wallet}
@@ -348,7 +351,7 @@ class PromptStage extends Component<Props> {
       console.log('display download');
     } else if (awaitingDevice && wallet.mode === 'ledger') {
       console.log('display ledger');
-    } else if (uriDigested && hasTransaction && hasSignature && !hasBroadcast && !awaitingDevice) {
+    } else if (hasTransaction && hasSignature && !hasBroadcast && !awaitingDevice) {
       stage = (
         <PromptStageBroadcast
           blockchain={blockchain}
@@ -357,7 +360,7 @@ class PromptStage extends Component<Props> {
       if (canBroadcast) {
         nextAction = (
           <PromptActionBroadcast
-            disabled={!prompt.tx}
+            disabled={!prompt.transaction}
             onClick={this.onBroadcast}
             wallet={wallet}
           />
