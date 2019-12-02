@@ -231,7 +231,7 @@ const forbiddenActions = [
 function checkRequest(data) {
   const errors = forbiddenActions.map((prevent) => {
     const { action, contract, error } = prevent;
-    const matches = find(data.actions, { name: action, account: contract });
+    const matches = find(data.transaction.actions, { name: action, account: contract });
     if (matches) {
       if (prevent.forbiddenData) {
         const act = matches.data;
@@ -408,8 +408,9 @@ export function templateURI(blockchain, wallet) {
       // Interpret the Signing Request
       const request = SigningRequest.from(uri, opts);
       // Form the transaction
-      const data = await request.getTransaction(authorization, block);
-      const detectedForbiddenActions = checkRequest(data);
+      const abis = await request.fetchAbis();
+      const resolved = request.resolve(abis, authorization, block);
+      const detectedForbiddenActions = checkRequest(resolved);
       if (detectedForbiddenActions && detectedForbiddenActions.length > 0) {
         if (settings.allowDangerousTransactions) {
           dispatch({
@@ -438,7 +439,7 @@ export function templateURI(blockchain, wallet) {
       return dispatch({
         type: types.SYSTEM_EOSIOURIBUILD_SUCCESS,
         payload: {
-          tx: data
+          resolved,
         }
       });
     } catch (err) {
