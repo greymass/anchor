@@ -28,12 +28,14 @@ class PromptStageReview extends Component<Props> {
     const {
       chainId,
       callback,
-      tx
+      resolved,
     } = prompt;
-
+    if (!resolved) return false
+    const {
+      transaction
+    } = resolved;
     const error = system.EOSIOURIBUILD_LAST_ERROR;
     const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
-
     return (
       <Grid stackable>
         <Grid.Column width={6}>
@@ -66,14 +68,14 @@ class PromptStageReview extends Component<Props> {
             ? <PromptFragmentPlaceholderTransactionAction />
             : false
           }
-          {(tx)
-            ? tx.actions.map((action, index) => (
+          {(transaction)
+            ? transaction.actions.map((action, index) => (
               <PromptFragmentTransactionAction
                 action={action}
                 enableWhitelist={enableWhitelist}
                 modifyWhitelist={modifyWhitelist}
                 index={index}
-                total={tx.actions.length}
+                total={transaction.actions.length}
                 whitelist={whitelist}
               />
             ))
