@@ -322,7 +322,6 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             },
             type: types.SYSTEM_EOSIOURISIGN_SUCCESS
           });
-          const hasCallback = (callback && callback.url)
           if (
             (callback && broadcast)
             || (callback && !callback.broadcast)
