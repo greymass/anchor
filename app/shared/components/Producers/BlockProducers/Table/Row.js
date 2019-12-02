@@ -78,23 +78,9 @@ class ProducersTableRow extends Component<Props> {
                     onClick={() => getProducerInfo(producer.owner)}
                     size="small"
                   />
-                ) : (!(checkForBeos(connection)) &&
+                ) : (
                   <Popup
-                    content={t('producer_json_unavailable_content')}
-                    header={t('producer_json_unavailable_header')}
-                    hoverable
-                    inverted
-                    position="left center"
-                    trigger={
-                      (isMainnet)
-                      ? <Button icon="magnify" size="small" />
-                      : false
-                    }
-                  />
-                ) ||
-                ((checkForBeos(connection)) &&
-                  <Popup
-                    content={t('producer_json_unavailable_content_beos')}
+                    content={checkForBeos(connection) ? t('producer_json_unavailable_content_beos') : t('producer_json_unavailable_content')}
                     header={t('producer_json_unavailable_header')}
                     hoverable
                     inverted
@@ -152,6 +138,7 @@ class ProducersTableRow extends Component<Props> {
             </Header.Subheader>
           </Header>
         </Table.Cell>
+        { checkForBeos(connection) &&
         <Table.Cell>
           {(producer.jurisdictions.length > 0) && (checkForBeos(connection)) && (
             <Popup
@@ -184,6 +171,7 @@ class ProducersTableRow extends Component<Props> {
             <span>{t('block_producer_jurisdictions_state_none')}</span>
           )}
         </Table.Cell>
+        }
         <Table.Cell
           singleLine
         >

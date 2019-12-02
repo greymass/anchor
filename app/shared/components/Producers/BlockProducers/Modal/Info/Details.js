@@ -109,8 +109,7 @@ class ProducersModalInfoDetails extends Component<Props> {
     return (
       <React.Fragment>
         <p>
-          {!checkForBeos(connection) && t('producer_info_description')}
-          {checkForBeos(connection) && t('producer_info_description_beos')}
+          {checkForBeos(connection) ? t('producer_info_description_beos') : t('producer_info_description')}
           <DangerLink
             content={t('producer_info_description_more')}
             link="https://steemit.com/eos/@greymass/an-eos-smart-contract-for-block-producer-information"
