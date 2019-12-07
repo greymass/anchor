@@ -51,7 +51,8 @@ console.log = (...args) => {
 };
 
 log.info('app: initializing');
-protocol.registerStandardSchemes(['eosio']);
+// TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
+protocol.registerStandardSchemes(['eosio', 'esr']);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -201,17 +202,27 @@ const initHardwareLedger = (e, signPath, devicePath) => {
 ipcMain.on('connectHardwareLedger', initHardwareLedger);
 
 const enableSigningRequests = () => {
-  log.info('enableSigningRequests')
+  log.info('enableSigningRequests');
+  // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
   app.setAsDefaultProtocolClient('eosio');
   protocol.registerHttpProtocol('eosio', (req, cb) => {
+    log.info('protocol handler: register', req, cb);
+  });
+  app.setAsDefaultProtocolClient('esr');
+  protocol.registerHttpProtocol('esr', (req, cb) => {
     log.info('protocol handler: register', req, cb);
   });
 };
 
 const disableSigningRequests = () => {
-  log.info('disableSigningRequests')
+  log.info('disableSigningRequests');
+  // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
   app.removeAsDefaultProtocolClient('eosio');
   protocol.unregisterProtocol('eosio', (error) => {
+    log.info('protocol handler: unregister', error);
+  });
+  app.removeAsDefaultProtocolClient('esr');
+  protocol.unregisterProtocol('esr', (error) => {
     log.info('protocol handler: unregister', error);
   });
 };
