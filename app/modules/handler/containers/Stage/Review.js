@@ -34,8 +34,8 @@ class PromptStageReview extends Component<Props> {
     const {
       transaction
     } = resolved;
-    const error = system.EOSIOURIBUILD_LAST_ERROR;
-    const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
+    const error = system.ESRURIBUILD_LAST_ERROR;
+    const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
     return (
       <Grid stackable>
         <Grid.Column width={6}>

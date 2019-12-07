@@ -84,10 +84,10 @@ class PromptReviewControls extends Component<Props> {
                 {(shouldBroadcast)
                   ? (
                     <Form.Checkbox
-                      checked={canBroadcast && settings.eosio_signbroadcast}
+                      checked={canBroadcast && settings.esr_signbroadcast}
                       disabled={!canBroadcast}
                       label="Broadcast Transaction"
-                      name="eosio_signbroadcast"
+                      name="esr_signbroadcast"
                       onChange={onCheck}
                       toggle
                     />
@@ -104,7 +104,7 @@ class PromptReviewControls extends Component<Props> {
                     <Form.Checkbox
                       checked={enableWhitelist}
                       label="Add Transaction to Whitelist"
-                      name="eosio_whitelist"
+                      name="esr_whitelist"
                       onChange={onWhitelist}
                       toggle
                     />

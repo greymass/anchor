@@ -38,7 +38,7 @@ import { unlockWalletByAuth } from '../../../shared/actions/wallet';
 
 const { ipcRenderer } = require('electron');
 
-const potentialSettings = ['eosio_signbroadcast'];
+const potentialSettings = ['esr_signbroadcast'];
 
 class PromptStage extends Component<Props> {
   onBroadcast = () => {
@@ -153,17 +153,17 @@ class PromptStage extends Component<Props> {
       whitelist,
     } = this.props;
 
-    const awaitingDevice = (system.EOSIOURISIGN === 'PENDING');
-    const signing = (system.EOSIOURISIGN === 'PENDING');
-    const broadcasting = (system.EOSIOURIBROADCAST === 'PENDING');
-    const callbacking = (system.EOSIOURICALLBACK === 'PENDING');
+    const awaitingDevice = (system.ESRURISIGN === 'PENDING');
+    const signing = (system.ESRURISIGN === 'PENDING');
+    const broadcasting = (system.ESRURIBROADCAST === 'PENDING');
+    const callbacking = (system.ESRURICALLBACK === 'PENDING');
     const validatingPassword = (validate.WALLET_PASSWORD === 'PENDING');
 
-    let error = system.EOSIOURIBUILD_LAST_ERROR ||
-      system.EOSIOURISIGN_LAST_ERROR ||
-      system.EOSIOURIBROADCAST_LAST_ERROR;
+    let error = system.ESRURIBUILD_LAST_ERROR ||
+      system.ESRURISIGN_LAST_ERROR ||
+      system.ESRURIBROADCAST_LAST_ERROR;
 
-    const warning = system.EOSIOURIBUILD_LAST_WARNING;
+    const warning = system.ESRURIBUILD_LAST_WARNING;
 
     if (requestedActorMissing) {
       error = { message: t('error_requested_actor_missing') };
@@ -231,7 +231,7 @@ class PromptStage extends Component<Props> {
       nextAction = false;
     }
 
-    if (settings.eosio_signbroadcast && canBroadcast) {
+    if (settings.esr_signbroadcast && canBroadcast) {
       nextAction = (
         <PromptActionSignBroadcast
           disabled={!prompt.transaction || signing || !canSign}

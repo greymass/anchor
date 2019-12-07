@@ -147,7 +147,7 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
               });
               // store.dispatch({
               //   payload: { signed },
-              //   type: types.SYSTEM_EOSIOURISIGN_SUCCESS
+              //   type: types.SYSTEM_ESRURISIGN_SUCCESS
               // });
               // if (callback) {
               //   store.dispatch(callbackURIWithProcessed({
@@ -158,7 +158,7 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
               // }
               // store.dispatch({
               //   payload: { response: signed },
-              //   type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
+              //   type: types.SYSTEM_ESRURIBROADCAST_SUCCESS
               // });
             })
         }, 250);

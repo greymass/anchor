@@ -42,7 +42,7 @@ class PromptContainer extends Component<Props> {
     this.templateURI();
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.system.EOSIOURI === 'PENDING' && this.props.system.EOSIOURI === 'SUCCESS') {
+    if (prevProps.system.ESRURI === 'PENDING' && this.props.system.ESRURI === 'SUCCESS') {
       this.props.actions.clearSystemState();
       this.setState(initialState);
       this.templateURI();
@@ -148,11 +148,11 @@ class PromptContainer extends Component<Props> {
     } = prompt;
     if (!blockchain) return false;
 
-    const loading = (system.EOSIOURI === 'PENDING' || system.EOSIOURIBUILD === 'PENDING');
+    const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
     const shouldBroadcast = prompt.broadcast;
     const hasBroadcast =
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
-    const hasIssuedCallback = (system.EOSIOURICALLBACK === 'SUCCESS' && prompt.background);
+    const hasIssuedCallback = (system.ESRURICALLBACK === 'SUCCESS' && prompt.background);
     const hasExpired =
       !!(prompt.transaction && !hasBroadcast && Date.now() > Date.parse(`${prompt.transaction.expiration}z`));
     const requestedActor = get(prompt, 'transaction.actions.0.authorization.0.actor');
