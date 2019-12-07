@@ -14,16 +14,16 @@ export default function system(state = {}, action) {
   }
 
   if (
-    action.type === types.SYSTEM_EOSIOURI_RESET
+    action.type === types.SYSTEM_ESRURI_RESET
   ) {
     return Object.assign({}, state, {
-      EOSIOURIBUILD: false,
-      EOSIOURIBUILD_LAST_TRANSACTION: false,
-      EOSIOURIBUILD_LAST_ERROR: false,
-      EOSIOURIBROADCAST: false,
-      EOSIOURICALLBACK: false,
-      EOSIOURISIGN: false,
-      EOSIOURISIGN_LAST_ERROR: false,
+      ESRURIBUILD: false,
+      ESRURIBUILD_LAST_TRANSACTION: false,
+      ESRURIBUILD_LAST_ERROR: false,
+      ESRURIBROADCAST: false,
+      ESRURICALLBACK: false,
+      ESRURISIGN: false,
+      ESRURISIGN_LAST_ERROR: false,
     });
   }
 
@@ -120,10 +120,10 @@ export default function system(state = {}, action) {
     newState = del(newState, txField);
   }
 
-  if (action.type === types.SYSTEM_EOSIOURIBUILD_PENDING) {
-    newState = del(newState, 'EOSIOURIBROADCAST_LAST_ERROR');
-    newState = del(newState, 'EOSIOURIBUILD_LAST_ERROR');
-    newState = del(newState, 'EOSIOURISIGN_LAST_ERROR');
+  if (action.type === types.SYSTEM_ESRURIBUILD_PENDING) {
+    newState = del(newState, 'ESRURIBROADCAST_LAST_ERROR');
+    newState = del(newState, 'ESRURIBUILD_LAST_ERROR');
+    newState = del(newState, 'ESRURISIGN_LAST_ERROR');
   }
 
   return newState;
