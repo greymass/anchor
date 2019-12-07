@@ -20,45 +20,45 @@ class TestsContainer extends Component<Props> {
   render() {
     const uris = {
       BEOS: [
-        ['refund', 'eosio:gWPgZACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWPgZACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
       BOS: [
-        ['refund', 'eosio:gWNgYwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWNgYwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
       EOS: [
-        ['refund', 'eosio:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
-        ['proxy greymassvote', 'eosio:gWNgZACDVwahBaKXOu-tMrrLCBVigNGCMMYCo7sS0i-vpjKAlAAA'],
-        ['proxy greymassvote w/ foreground callback', 'eosio:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgAA'],
-        ['proxy greymassvote w/ background callback', 'eosio:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgIA'],
-        ['set voting permission', 'eosio:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBghseGl0F0SveGtkxAhWxDztS840vZjD1YqCj_WcJip5_dr06mGZgV_AhneH-I58dWQFKwMSAA'],
-        ['link voting permission to eosio:voteproducer', 'eosio:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYMJUFopc6760yugvibnhpdBekAwA'],
-        ['link voting permission to eosio:updateauth (wont allow)', 'eosio:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYcJUOp2-tyAm6CuJueGl0F6QDAA'],
-        ['set active key (wont allow)', 'eosio:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgiseGtkBKIbVqstZwQrYp72JWeaXszhakXBx3pOE5W8fm169bDMwC9gw7tDfEe-OrKClQEJAA'],
-        ['set owner key (wont allow)', 'eosio:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgg0rFZbzoCkgJGBedqXnGl6MYerFQUf6zlNVPL6tenVwzIDv4AN7w7xHfnqyApWBiQA'],
+        ['refund', 'esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
+        ['proxy greymassvote', 'esr:gWNgZACDVwahBaKXOu-tMrrLCBVigNGCMMYCo7sS0i-vpjKAlAAA'],
+        ['proxy greymassvote w/ foreground callback', 'esr:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgAA'],
+        ['proxy greymassvote w/ background callback', 'esr:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgIA'],
+        ['set voting permission', 'esr:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBghseGl0F0SveGtkxAhWxDztS840vZjD1YqCj_WcJip5_dr06mGZgV_AhneH-I58dWQFKwMSAA'],
+        ['link voting permission to esr:voteproducer', 'esr:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYMJUFopc6760yugvibnhpdBekAwA'],
+        ['link voting permission to esr:updateauth (wont allow)', 'esr:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYcJUOp2-tyAm6CuJueGl0F6QDAA'],
+        ['set active key (wont allow)', 'esr:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgiseGtkBKIbVqstZwQrYp72JWeaXszhakXBx3pOE5W8fm169bDMwC9gw7tDfEe-OrKClQEJAA'],
+        ['set owner key (wont allow)', 'esr:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgg0rFZbzoCkgJGBedqXnGl6MYerFQUf6zlNVPL6tenVwzIDv4AN7w7xHfnqyApWBiQA'],
       ],
       INSIGHTS: [
-        ['refund', 'eosio:gWPgYACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWPgYACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
       JUNGLE: [
-        ['refund', 'eosio:gWNgZgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWNgZgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
       KYLIN: [
-        ['refund', 'eosio:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
+        ['refund', 'esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
       ],
       MEETONE: [
-        ['refund', 'eosio:gWNgZwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWNgZwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
       TELOS: [
-        ['refund', 'eosio:gWNgYgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWNgYgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
       WORBLI: [
-        ['refund', 'eosio:gWNgZQCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+        ['refund', 'esr:gWNgZQCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
       ],
     };
     return (
       <Segment style={{ margin: 0 }}>
         <Header
-          content="EOSIO URI Signing Tests"
+          content="EOSIO Signing Request - Tests"
           size="large"
         />
         {Object.keys(uris).map((blockchain) => (
@@ -81,45 +81,45 @@ class TestsContainer extends Component<Props> {
             action (single)
           </Header>
           <Segment>
-            <p>eosio:gWPgYACDVwahBaKXOu-tMrrLyAgRYoDRgjDGA-u9osFLF_QxgJQAAA</p>
+            <p>esr:gWPgYACDVwahBaKXOu-tMrrLyAgRYoDRgjDGA-u9osFLF_QxgJQAAA</p>
             <Button
               color="blue"
               content="EOS URI Test (set proxy)"
-              onClick={() => this.testURI('eosio:gWPgYACDVwahBaKXOu-tMrrLyAgRYoDRgjDGA-u9osFLF_QxgJQAAA')}
+              onClick={() => this.testURI('esr:gWPgYACDVwahBaKXOu-tMrrLyAgRYoDRgjDGA-u9osFLF_QxgJQAAA')}
             />
           </Segment>
           <Segment>
-            <p>eosio:gWN8zrVqx8w62T9P-_evaTi9u__Nm-qZ52doTXFRt9mTckSkmAEMXhmEFohe6ry3yuguIyNEiAFGC8IYD6z3igYvXdDHAFICAA</p>
+            <p>esr:gWN8zrVqx8w62T9P-_evaTi9u__Nm-qZ52doTXFRt9mTckSkmAEMXhmEFohe6ry3yuguIyNEiAFGC8IYD6z3igYvXdDHAFICAA</p>
             <Button
               color="blue"
               content="Telos URI Test (set proxy)"
-              onClick={() => this.testURI('eosio:gWN8zrVqx8w62T9P-_evaTi9u__Nm-qZ52doTXFRt9mTckSkmAEMXhmEFohe6ry3yuguIyNEiAFGC8IYD6z3igYvXdDHAFICAA')}
+              onClick={() => this.testURI('esr:gWN8zrVqx8w62T9P-_evaTi9u__Nm-qZ52doTXFRt9mTckSkmAEMXhmEFohe6ry3yuguIyNEiAFGC8IYD6z3igYvXdDHAFICAA')}
             />
           </Segment>
         </Segment>
         <Segment basic>
           <Segment>
-            <p>eosio:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA</p>
+            <p>esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA</p>
             <Button
               color="blue"
               content="EOS URI (action)"
-              onClick={() => this.testURI('eosio:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA')}
+              onClick={() => this.testURI('esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA')}
             />
           </Segment>
           <Segment>
-            <p>eosio:gWNgZGRkAIFXBqEgasnK6bugIgwMMJoDLgBkAAA</p>
+            <p>esr:gWNgZGRkAIFXBqEgasnK6bugIgwMMJoDLgBkAAA</p>
             <Button
               color="blue"
               content="EOS URI (action[] - multi)"
-              onClick={() => this.testURI('eosio:gWNgZGRkAIFXBqEgasnK6bugIgwMMJoDLgBkAAA')}
+              onClick={() => this.testURI('esr:gWNgZGRkAIFXBqEgasnK6bugIgwMMJoDLgBkAAA')}
             />
           </Segment>
           <Segment>
-            <p>eosio:gWNgZFoYOi-m6p4oQ91nBiBgBBEMrwxCQdSSldN3MUJEYDIMDBwwBgNICgA</p>
+            <p>esr:gWNgZFoYOi-m6p4oQ91nBiBgBBEMrwxCQdSSldN3MUJEYDIMDBwwBgNICgA</p>
             <Button
               color="blue"
               content="EOS URI (tx - whole)"
-              onClick={() => this.testURI('eosio:gWNgZFoYOi-m6p4oQ91nBiBgBBEMrwxCQdSSldN3MUJEYDIMDBwwBgNICgA')}
+              onClick={() => this.testURI('esr:gWNgZFoYOi-m6p4oQ91nBiBgBBEMrwxCQdSSldN3MUJEYDIMDBwwBgNICgA')}
             />
           </Segment>
         </Segment>
