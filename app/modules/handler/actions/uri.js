@@ -21,7 +21,7 @@ const esrParams = ['bn', 'ex', 'rbn', 'req', 'rid', 'sa', 'sig', 'sp', 'tx']
 export function broadcastURI(tx, blockchain, callback = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.SYSTEM_EOSIOURIBROADCAST_PENDING
+      type: types.SYSTEM_ESRURIBROADCAST_PENDING
     });
     const {
       connection,
@@ -30,7 +30,7 @@ export function broadcastURI(tx, blockchain, callback = false) {
     if (!blockchain) {
       return dispatch({
         payload: { err: 'no_blockchain' },
-        type: types.SYSTEM_EOSIOURIBROADCAST_FAILURE
+        type: types.SYSTEM_ESRURIBROADCAST_FAILURE
       });
     }
     // If the prompt itself disables the broadcast, only issue callback
@@ -56,12 +56,12 @@ export function broadcastURI(tx, blockchain, callback = false) {
             endpoint: modified.httpEndpoint,
             response
           },
-          type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
+          type: types.SYSTEM_ESRURIBROADCAST_SUCCESS
         });
       })
       .catch((err) => dispatch({
         payload: { err },
-        type: types.SYSTEM_EOSIOURIBROADCAST_FAILURE
+        type: types.SYSTEM_ESRURIBROADCAST_FAILURE
       }));
   };
 }
@@ -70,7 +70,7 @@ export function callbackURI(tx, blockchain, callback = false) {
   return async (dispatch: () => void, getState) => {
     const { connection } = getState();
     dispatch({
-      type: types.SYSTEM_EOSIOURIBROADCAST_PENDING
+      type: types.SYSTEM_ESRURIBROADCAST_PENDING
     });
     const account = get(tx, 'transaction.transaction.actions.0.authorization.1.actor');
     const authorization = get(tx, 'transaction.transaction.actions.0.authorization.1.permission');
@@ -95,7 +95,7 @@ export function callbackURI(tx, blockchain, callback = false) {
     dispatch(callbackURIWithProcessed(callbackParams));
     return dispatch({
       payload: { response },
-      type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
+      type: types.SYSTEM_ESRURIBROADCAST_SUCCESS
     });
   };
 }
@@ -103,7 +103,7 @@ export function callbackURI(tx, blockchain, callback = false) {
 export function callbackURIWithProcessed(callback) {
   return (dispatch: () => void) => {
     dispatch({
-      type: types.SYSTEM_EOSIOURICALLBACK_PENDING
+      type: types.SYSTEM_ESRURICALLBACK_PENDING
     });
     const {
       background,
@@ -118,7 +118,7 @@ export function callbackURIWithProcessed(callback) {
     // If it's not a background call, return to state
     if (!background) {
       return dispatch({
-        type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
+        type: types.SYSTEM_ESRURICALLBACK_SUCCESS,
         payload: {
           background,
           s
@@ -129,14 +129,14 @@ export function callbackURIWithProcessed(callback) {
     httpClient
       .post(s, payload)
       .then(() => dispatch({
-        type: types.SYSTEM_EOSIOURICALLBACK_SUCCESS,
+        type: types.SYSTEM_ESRURICALLBACK_SUCCESS,
         payload: {
           background,
           s
         }
       }))
       .catch((error) => dispatch({
-        type: types.SYSTEM_EOSIOURICALLBACK_FAILURE,
+        type: types.SYSTEM_ESRURICALLBACK_FAILURE,
         payload: {
           s,
           error,
@@ -147,14 +147,14 @@ export function callbackURIWithProcessed(callback) {
 
 export function clearURI() {
   return (dispatch: () => void) => dispatch({
-    type: types.SYSTEM_EOSIOURI_RESET
+    type: types.SYSTEM_ESRURI_RESET
   });
 }
 
 export function setURI(uri) {
   return (dispatch: () => void) => {
     dispatch({
-      type: types.SYSTEM_EOSIOURI_PENDING
+      type: types.SYSTEM_ESRURI_PENDING
     });
     try {
       // Setup decompression
@@ -179,7 +179,7 @@ export function setURI(uri) {
       // Pull chainId requested
       const chainId = request.getChainId().toLowerCase();
       return dispatch({
-        type: types.SYSTEM_EOSIOURI_SUCCESS,
+        type: types.SYSTEM_ESRURI_SUCCESS,
         payload: {
           broadcast,
           chainId,
@@ -191,7 +191,7 @@ export function setURI(uri) {
       });
     } catch (err) {
       return dispatch({
-        type: types.SYSTEM_EOSIOURI_FAILURE,
+        type: types.SYSTEM_ESRURI_FAILURE,
         payload: {
           err,
           uri
@@ -205,7 +205,7 @@ const forbiddenActions = [
   {
     action: 'updateauth',
     contract: 'eosio',
-    error: 'EOSIOURI_UPDATEAUTH_ACTIVE_FORBIDDEN',
+    error: 'ESRURI_UPDATEAUTH_ACTIVE_FORBIDDEN',
     forbiddenData: {
       permission: 'active'
     }
@@ -213,7 +213,7 @@ const forbiddenActions = [
   {
     action: 'updateauth',
     contract: 'eosio',
-    error: 'EOSIOURI_UPDATEAUTH_OWNER_FORBIDDEN',
+    error: 'ESRURI_UPDATEAUTH_OWNER_FORBIDDEN',
     forbiddenData: {
       permission: 'owner'
     }
@@ -221,7 +221,7 @@ const forbiddenActions = [
   {
     action: 'linkauth',
     contract: 'eosio',
-    error: 'EOSIOURI_LINKAUTH_UPDATEAUTH_FORBIDDEN',
+    error: 'ESRURI_LINKAUTH_UPDATEAUTH_FORBIDDEN',
     forbiddenData: {
       type: 'updateauth'
     }
@@ -276,7 +276,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
       prompt,
     } = getState();
     dispatch({
-      type: types.SYSTEM_EOSIOURISIGN_PENDING
+      type: types.SYSTEM_ESRURISIGN_PENDING
     });
     const networkConfig = Object.assign({}, connection, {
       chainId: blockchain.chainId,
@@ -320,7 +320,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
                   transaction: unpackTransaction(signed.serializedTransaction),
                 }
             },
-            type: types.SYSTEM_EOSIOURISIGN_SUCCESS
+            type: types.SYSTEM_ESRURISIGN_SUCCESS
           });
           if (
             (callback && broadcast)
@@ -336,7 +336,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
                 endpoint: networkConfig.httpEndpoint,
                 response: broadcasted,
               },
-              type: types.SYSTEM_EOSIOURIBROADCAST_SUCCESS
+              type: types.SYSTEM_ESRURIBROADCAST_SUCCESS
             });
           }
           return true;
@@ -361,7 +361,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
           }
           return dispatch({
             payload: { err, tx },
-            type: types.SYSTEM_EOSIOURISIGN_FAILURE
+            type: types.SYSTEM_ESRURISIGN_FAILURE
           });
         });
     }, 250);
@@ -371,7 +371,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
 export function templateURI(blockchain, wallet) {
   return async (dispatch: () => void, getState) => {
     dispatch({
-      type: types.SYSTEM_EOSIOURIBUILD_PENDING,
+      type: types.SYSTEM_ESRURIBUILD_PENDING,
     });
     const { prompt, settings } = getState();
     const { uri } = prompt;
@@ -413,7 +413,7 @@ export function templateURI(blockchain, wallet) {
       if (detectedForbiddenActions && detectedForbiddenActions.length > 0) {
         if (settings.allowDangerousTransactions) {
           dispatch({
-            type: types.SYSTEM_EOSIOURIBUILD_WARNING,
+            type: types.SYSTEM_ESRURIBUILD_WARNING,
             payload: {
               warning: {
                 message: detectedForbiddenActions[0],
@@ -424,7 +424,7 @@ export function templateURI(blockchain, wallet) {
           });
         } else {
           return dispatch({
-            type: types.SYSTEM_EOSIOURIBUILD_FAILURE,
+            type: types.SYSTEM_ESRURIBUILD_FAILURE,
             payload: {
               err: {
                 message: detectedForbiddenActions[0],
@@ -436,14 +436,14 @@ export function templateURI(blockchain, wallet) {
         }
       }
       return dispatch({
-        type: types.SYSTEM_EOSIOURIBUILD_SUCCESS,
+        type: types.SYSTEM_ESRURIBUILD_SUCCESS,
         payload: {
           resolved,
         }
       });
     } catch (err) {
       return dispatch({
-        type: types.SYSTEM_EOSIOURIBUILD_FAILURE,
+        type: types.SYSTEM_ESRURIBUILD_FAILURE,
         payload: { err },
       });
     }
