@@ -126,6 +126,16 @@ const knownChains = [
   //   testnet: false
   // },
   {
+    _id: 'fio-testnet',
+    chainId: 'c8f1b9de4c310a29161ff74df79d03ea7a5d48462af94041302bd4972bda9e54',
+    keyPrefix: 'FIO',
+    name: 'FIO (Testnet)',
+    node: 'https://testnet.fioprotocol.io',
+    supportedContracts: [],
+    symbol: 'FIO',
+    testnet: true
+  },
+  {
     _id: 'insights-mainnet',
     chainId: 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664',
     keyPrefix: 'EOS',
