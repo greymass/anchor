@@ -20,6 +20,7 @@ import * as WalletActions from '../../../shared/actions/wallet';
 import GlobalAccountDropdown from '../../../shared/containers/Global/Account/Dropdown';
 import GlobalAppDisconnected from '../../../shared/containers/Global/App/Disconnected';
 import GlobalBlockchainDropdown from '../../../shared/containers/Global/Blockchain/Dropdown';
+import GlobalFuelDropdown from '../../../shared/containers/Global/Fuel/Dropdown';
 import GlobalHardwareLedgerStatus from '../../../shared/containers/Global/Hardware/Ledger/Status';
 import WalletLockState from '../../../shared/components/Wallet/LockState';
 import WalletMode from '../../../shared/components/Wallet/Mode';
@@ -135,6 +136,7 @@ class MenuContainer extends Component<Props> {
           <WalletMode
             settings={settings}
           />
+          <GlobalFuelDropdown />
           <WalletLockState
             actions={actions}
             key="lockstate"
