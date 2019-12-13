@@ -1,6 +1,7 @@
 /* eslint global-require: 0, flowtype-errors/show-errors: 0 */
 
 import { app, crashReporter, ipcMain, protocol } from 'electron';
+import "@babel/polyfill";
 import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from '../modules/main/electron';
 import { createTray } from '../modules/tray/electron';
@@ -13,7 +14,6 @@ import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardwa
 
 const log = require('electron-log');
 const path = require('path');
-
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
 let resourcePath = __dirname;
