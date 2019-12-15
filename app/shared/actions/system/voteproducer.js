@@ -13,11 +13,33 @@ export function voteproducers(producers = [], proxy = '') {
       type: types.SYSTEM_VOTEPRODUCER_PENDING,
       payload: { connection }
     });
-    const { account } = settings;
+    const { account, authorization } = settings;
     // sort (required by EOS)
     producers.sort();
-    return eos(connection, true)
-      .voteproducer(account, proxy, producers)
+    return eos(connection, true, true)
+      .transact({
+        actions: [{
+          account: 'eosio',
+          name: 'voteproducer',
+          authorization: [
+            {
+              actor: account,
+              permission: authorization,
+            }
+          ],
+          data: {
+            voter: account,
+            proxy,
+            producers,
+          },
+        }]
+      }, {
+        blocksBehind: 3,
+        broadcast: false,
+        expireSeconds: 60,
+        sign: false,
+      })
+      // .voteproducer(account, proxy, producers)
       .then((tx) => {
         const accounts = [account];
         // If a proxy is set, that account also needs to be loaded
