@@ -1,5 +1,3 @@
-import type Transport from '@ledgerhq/hw-transport-node-hid';
-
 const bippath = require('bip32-path');
 
 const CLA = 0xD4;
