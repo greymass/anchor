@@ -44,6 +44,8 @@ const initialState = {
   displayTestNetworks: false,
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
+  // If Greymass Fuel is enabled or not
+  greymassFuel: false,
   // Default to Ledger import process
   hardwareLedgerImport: false,
   // Enable hardware support for Ledger devices
