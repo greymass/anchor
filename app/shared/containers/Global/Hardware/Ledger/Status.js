@@ -6,13 +6,11 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon, Menu, Popup } from 'semantic-ui-react';
 
-import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
-
 import ToolsHardwareLedgerStatus from '../../../../components/Tools/Hardware/Ledger/Status';
-const { remote } = require('electron');
-
 import * as SettingsActions from '../../../../actions/settings';
 import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
+
+const { remote } = require('electron');
 
 class GlobalHardwareLedgerStatus extends Component<Props> {
   constructor(props) {
