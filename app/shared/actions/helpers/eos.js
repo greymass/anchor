@@ -1,15 +1,12 @@
-import { Api, JsonRpc } from 'eosjs2';
-
 import { decrypt } from '../wallet';
 import serialize from './ledger/serialize';
+const JsSignatureProvider = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig').default;
+import EOSHandler from '../../utils/EOS/Handler';
 
 const { remote } = require('electron');
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');
-
-const { convertLegacyPublicKeys } = require('eosjs2/node_modules/eosjs/dist/eosjs-numeric');
-const JsSignatureProvider = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig').default;
 
 export default function eos(connection, signing = false, v2 = false) {
   const decrypted = Object.assign({}, connection);
@@ -39,7 +36,7 @@ export default function eos(connection, signing = false, v2 = false) {
   }
 
   // Ledger Interception
-  if (decrypted.signMethod === 'ledger') {
+  if (!v2 && decrypted.signMethod === 'ledger') {
     const signProvider = async ({ transaction }) => {
       const { fc } = Eos(connection);
       const buffer = serialize(fc.types.config.chainId, transaction, fc.types);
@@ -58,40 +55,9 @@ export default function eos(connection, signing = false, v2 = false) {
     decrypted.signProvider = undefined;
   }
 
-  if (v2 && decrypted.signMethod === false) {
-    const signatureProvider = new JsSignatureProvider(decrypted.keyProvider);
-    const rpc = new JsonRpc(decrypted.httpEndpoint);
-    class CosignAuthorityProvider {
-      async getRequiredKeys(args) {
-        const { transaction } = args;
-        // Iterate over the actions and authorizations
-        transaction.actions.forEach((action, ti) => {
-          action.authorization.forEach((auth, ai) => {
-            // If the authorization matches the expected cosigner
-            //   then remove it from the transaction while checking
-            //   for what public keys are required
-            if (
-              auth.actor === 'greymassfuel'
-              && auth.permission === 'cosign'
-            ) {
-              delete transaction.actions[ti].authorization.splice(ai, 1);
-            }
-          });
-        });
-        return convertLegacyPublicKeys((await rpc.fetch('/v1/chain/get_required_keys', {
-          transaction,
-          available_keys: args.availableKeys,
-        })).required_keys);
-      }
-    }
-    const api = new Api({
-      authorityProvider: new CosignAuthorityProvider(),
-      rpc,
-      signatureProvider,
-      textDecoder: new TextDecoder(),
-      textEncoder: new TextEncoder()
-    });
-    return api;
+
+  if (v2) {
+    return new EOSHandler(decrypted)
   }
 
   return Eos(decrypted);
