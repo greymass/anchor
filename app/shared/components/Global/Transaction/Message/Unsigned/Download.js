@@ -5,9 +5,12 @@ import { Button, Grid, Header, Icon, Message, Modal, Segment, Tab } from 'semant
 import ReactJson from 'react-json-view';
 import QRCode from 'qrcode';
 
+import GlobalDangerLink from '../../../../../containers/Global/DangerLink';
+
 const zlib = require('zlib');
 const { clipboard, ipcRenderer } = require('electron');
 const { SigningRequest } = require('eosio-signing-request');
+
 
 const opts = {
   zlib: {
@@ -20,7 +23,8 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      copiedTransaction: false
+      copiedTransaction: false,
+      uri: false
     };
   }
   componentDidMount() {
@@ -34,6 +38,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       transaction: transaction.transaction.transaction
     }, opts);
     const uri = req.encode();
+    this.setState({ uri })
     const { canvas } = this;
     QRCode.toCanvas(canvas, uri, {
       scale: 6
@@ -71,8 +76,13 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       transaction
     } = this.props;
     const {
-      copiedTransaction
+      copiedTransaction,
+      uri
     } = this.state;
+    let uriParts = []
+    if (uri) {
+      uriParts = uri.split('://')
+    }
     const panes = [
       {
         menuItem: 'Signing',
@@ -108,6 +118,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
                     fluid
                     icon={(copiedTransaction) ? 'circle check' : 'clipboard'}
                     onClick={this.onCopy}
+                    style={{ marginBottom: '1em' }}
                   />
                   {(copiedTransaction) && (
                     <Message
@@ -116,6 +127,18 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
                       icon="check"
                     />
                   )}
+                  <GlobalDangerLink
+                    content={(
+                      <Button
+                        basic
+                        color="blue"
+                        content="View ESR Link"
+                        fluid
+                        icon="external"
+                      />
+                    )}
+                    link={`https://eosio.to/${uriParts[1]}`}
+                  />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
