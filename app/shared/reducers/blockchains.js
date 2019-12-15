@@ -21,7 +21,17 @@ const supportedContracts = [
   {
     // 'eos-mainnet'
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    supportedContracts: ['bidname', 'crosschaintransfer', 'customtokens', 'delphioracle', 'producerinfo', 'proposals', 'rex', 'regproxyinfo'],
+    supportedContracts: [
+      'bidname',
+      'crosschaintransfer',
+      'customtokens',
+      'delphioracle',
+      // 'greymassfuel',
+      'producerinfo',
+      'proposals',
+      'rex',
+      'regproxyinfo'
+    ],
   },
   {
     // 'eos-testnet-jungle'
