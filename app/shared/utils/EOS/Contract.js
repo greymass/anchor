@@ -28,7 +28,7 @@ export default class EOSContract {
   tx(actionName, account, data) {
     const eos = Eos({
       broadcast: false,
-      expireInSeconds: 3600,
+      expireSeconds: 3600,
       // forceActionDataHex: false,
       httpEndpoint: null,
       sign: false

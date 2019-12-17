@@ -24,7 +24,7 @@ export function createAccount(
     } = getState();
 
     const currentAccount = settings.account;
-    
+
     dispatch({
       payload: { connection },
       type: types.SYSTEM_CREATEACCOUNT_PENDING
@@ -46,7 +46,7 @@ export function createAccount(
               },
               {
                 broadcast: connection.broadcast,
-                expireInSeconds: connection.expireInSeconds,
+                expireSeconds: connection.expireSeconds,
                 sign: connection.sign
               }
             ).then(tx => {
@@ -97,13 +97,13 @@ export function createAccount(
           owner: ownerKey,
           active: activeKey
         });
-  
+
         tr.buyrambytes({
           payer: currentAccount,
           receiver: accountName,
           bytes: Number(ramAmount)
         });
-  
+
         tr.delegatebw(delegatebwParams(
           connection.chainSymbol,
           currentAccount,
@@ -115,7 +115,7 @@ export function createAccount(
         ));
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       // Hack for account creation - able to remove with eosjs v20 upgrade

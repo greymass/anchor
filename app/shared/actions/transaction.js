@@ -117,7 +117,7 @@ export function signTransaction(tx, contract = false) {
     signer
       .transaction(tx.transaction.transaction, {
         broadcast: connection.broadcast,
-        expireInSeconds: connection.expireInSeconds,
+        expireSeconds: connection.expireSeconds,
         sign: connection.sign
       })
       .then((signed) => {

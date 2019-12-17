@@ -180,7 +180,7 @@ export function unvoteProposal(scope, voter, proposal_name) {
       ]
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
@@ -224,7 +224,7 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
       ]
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {

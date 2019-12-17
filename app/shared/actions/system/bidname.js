@@ -32,7 +32,7 @@ export function bidname(data) {
       ]
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       const currentRecentBids = get(settings, `recentBids.${settings.chainId}.${settings.account}`, []) || [];

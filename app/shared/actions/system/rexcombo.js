@@ -74,7 +74,7 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
     ]
   }, {
     broadcast: connection.broadcast,
-    expireInSeconds: connection.expireInSeconds,
+    expireSeconds: connection.expireSeconds,
     sign: connection.sign
   }).then((tx) => {
     setTimeout(() => {

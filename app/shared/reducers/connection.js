@@ -9,7 +9,7 @@ const initialState = {
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   chainKey: 'eos-mainnet',
   chainSymbol: 'EOS',
-  expireInSeconds: 120,
+  expireSeconds: 120,
   // forceActionDataHex: false,
   historyPluginEnabled: true,
   httpEndpoint: null,
@@ -102,7 +102,7 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_COLD: {
       return Object.assign({}, state, {
         broadcast: false,
-        expireInSeconds: 3600,
+        expireSeconds: 3600,
         sign: true,
         signMethod: false
       });
@@ -111,7 +111,7 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_LEDGER: {
       return Object.assign({}, state, {
         broadcast: true,
-        expireInSeconds: 3600,
+        expireSeconds: 3600,
         keyProvider: [],
         keyProviderObfuscated: {},
         sign: true,
@@ -122,7 +122,7 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_WATCH: {
       return Object.assign({}, state, {
         broadcast: false,
-        expireInSeconds: 3600,
+        expireSeconds: 3600,
         keyProvider: [],
         keyProviderObfuscated: {},
         sign: false,
@@ -133,7 +133,7 @@ export default function connection(state = initialState, action) {
     case types.SET_WALLET_HOT: {
       return Object.assign({}, state, {
         broadcast: true,
-        expireInSeconds: 120,
+        expireSeconds: 120,
         signMethod: false
       });
     }
