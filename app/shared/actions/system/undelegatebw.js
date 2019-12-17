@@ -5,16 +5,29 @@ import eos from '../helpers/eos';
 export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      connection,
+      settings
     } = getState();
+
+    const { account, authorization } = settings;
 
     dispatch({
       payload: { connection },
       type: types.SYSTEM_UNDELEGATEBW_PENDING
     });
 
-    return eos(connection, true).transaction(tr => {
-      tr.undelegatebw(undelegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount, false, connection.tokenPrecision));
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'undelegatebw',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: undelegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount, false, connection.tokenPrecision),
+        }
+      ],
     }, {
       broadcast: connection.broadcast,
       expireInSeconds: connection.expireInSeconds,
