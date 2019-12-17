@@ -78,10 +78,10 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
     sign: connection.sign
   }).then((tx) => {
     setTimeout(() => {
-      dispatch(getAccount(settings.account));
-      dispatch(getCurrencyBalance(settings.account));
-      dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', settings.account, settings.account));
-      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', settings.account, settings.account));
+      dispatch(getAccount(account));
+      dispatch(getCurrencyBalance(account));
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
       dispatch(getCPULoans());
       dispatch(getNETLoans());
     }, 1000);
