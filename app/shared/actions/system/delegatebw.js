@@ -5,7 +5,8 @@ import eos from '../helpers/eos';
 export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      connection,
+      settings
     } = getState();
 
     dispatch({
@@ -13,8 +14,20 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
       type: types.SYSTEM_DELEGATEBW_PENDING
     });
 
-    return eos(connection, true).transaction(tr => {
-      tr.delegatebw(delegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount, false, connection.tokenPrecision));
+    const { account, authorization } = settings;
+
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'delegatebw',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: delegatebwParams(connection.chainSymbol || 'EOS', delegator, receiver, netAmount, cpuAmount, false, connection.tokenPrecision)
+        }
+      ],
     }, {
       broadcast: connection.broadcast,
       expireInSeconds: connection.expireInSeconds,
@@ -50,7 +63,7 @@ export function delegatebwParams(chainSymbol, delegator, receiver, netAmount, cp
     receiver,
     stake_net_quantity: `${stakeNetAmount.toFixed(precision)} ${chainSymbol}`,
     stake_cpu_quantity: `${stakeCpuAmount.toFixed(precision)} ${chainSymbol}`,
-    transfer: transferTokens ? 1 : 0
+    transfer: !!transferTokens,
   };
 }
 

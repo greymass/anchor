@@ -16,10 +16,7 @@ export function bidname(data) {
       type: types.SYSTEM_BIDNAME_PENDING
     });
 
-    const { account } = settings;
-    const [, authorization] = connection.authorization.split('@');
-
-    console.log({connection})
+    const { account, authorization } = settings;
 
     return eos(connection, true, true).transact({
       actions: [
