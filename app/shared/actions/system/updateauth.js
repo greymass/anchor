@@ -6,24 +6,34 @@ import eos from '../helpers/eos';
 export function updateauth(permission, parent, auth, authorizationOverride = false) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
-    const { account } = settings;
+    const { account, authorization } = settings;
+
     dispatch({
       payload: { connection },
       type: types.SYSTEM_UPDATEAUTH_PENDING
     });
-    let authorization;
-    // Setting of the authorization based on either an override or the global connection setting
-    if (authorizationOverride || connection.authorization) {
-      authorization = [authorizationOverride || connection.authorization];
-    }
-    return eos(connection, true).updateauth({
-      account,
-      permission,
-      parent,
-      auth
+
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'updateauth',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            account,
+            permission,
+            parent,
+            auth,
+          }
+        }
+      ],
     }, {
-      authorization,
-      broadcast: connection.broadcast
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       // Refresh the account
       setTimeout(dispatch(getAccount(account)), 500);
