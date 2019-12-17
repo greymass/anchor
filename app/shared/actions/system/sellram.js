@@ -15,11 +15,27 @@ export function sellram(amount) {
       type: types.SYSTEM_SELLRAM_PENDING
     });
 
-    const { account } = settings;
+    const { account, authorization } = settings;
 
-    return eos(connection, true).sellram({
-      account,
-      bytes: Number(amount)
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'sellram',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            account,
+            bytes: Number(amount)
+          }
+        }
+      ],
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
       return dispatch({
