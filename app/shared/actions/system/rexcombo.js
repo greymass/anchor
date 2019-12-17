@@ -44,42 +44,21 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
     connection
   } = getState();
 
+  const { account, authorization } = settings;
+
   dispatch({
     type: types[`SYSTEM_${actionVariable}_PENDING`],
     payload: { connection }
   });
 
-  // hack to get signing working on ledger - needs to be refactored
-  const eosobj = eos(connection, true, true);
-  let method = 'transact';
-  let params = {
-    blocksBehind: 3,
-    expireSeconds: 30,
-  };
-  let contract;
-  if (!eosobj[method]) {
-    contract = await eosobj.getAbi('eosio');
-    if (contract
-      && contract.account_name
-      && contract.abi
-    ) {
-      eosobj.fc.abiCache.abi(contract.account_name, contract.abi);
-    }
-    method = 'transaction';
-    params = {
-      broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
-      sign: connection.sign
-    };
-  }
-  return eosobj[method]({
+  return eos(connection, true, true).transact({
     actions: [
       {
         account: 'eosio',
         name: 'deposit',
         authorization: [{
-          actor: settings.account,
-          permission: settings.authorization,
+          actor: account,
+          permission: authorization,
         }],
         data: deposit,
       },
@@ -87,13 +66,17 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
         account: 'eosio',
         name: actionName,
         authorization: [{
-          actor: settings.account,
-          permission: settings.authorization,
+          actor: account,
+          permission: authorization,
         }],
         data,
       }
     ]
-  }, params).then((tx) => {
+  }, {
+    broadcast: connection.broadcast,
+    expireInSeconds: connection.expireInSeconds,
+    sign: connection.sign
+  }).then((tx) => {
     setTimeout(() => {
       dispatch(getAccount(settings.account));
       dispatch(getCurrencyBalance(settings.account));
@@ -105,13 +88,11 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
     return dispatch({
       payload: {
         connection,
-        contract,
         tx,
       },
       type: types[`SYSTEM_${actionVariable}_SUCCESS`]
     });
   }).catch((err) => {
-    console.log(err)
     return dispatch({
       payload: { connection, err },
       type: types[`SYSTEM_${actionVariable}_FAILURE`]
