@@ -30,7 +30,7 @@ export function undelegatebw(delegator, receiver, netAmount, cpuAmount) {
       ],
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {

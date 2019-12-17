@@ -60,7 +60,7 @@ export default class EOSHandler {
     this.tapos = {
       blocksBehind: 3,
       broadcast: config.broadcast,
-      expireSeconds: config.expireInSeconds,
+      expireSeconds: config.expireSeconds,
       sign: config.sign,
     };
     return this;

@@ -37,7 +37,7 @@ export function claimgbmrewards() {
       method = 'transaction';
       params = {
         broadcast: connection.broadcast,
-        expireInSeconds: connection.expireInSeconds,
+        expireSeconds: connection.expireSeconds,
         sign: connection.sign
       };
     }

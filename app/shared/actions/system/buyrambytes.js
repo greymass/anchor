@@ -35,7 +35,7 @@ export function buyrambytes(amount) {
       ]
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       console.log({tx})

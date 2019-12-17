@@ -45,7 +45,7 @@ export function claimairgrab(airgrab) {
       ]
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       if (!connection.broadcast) {
