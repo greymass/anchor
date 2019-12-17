@@ -34,7 +34,7 @@ export function regproxy() {
       ],
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       // Refresh the account

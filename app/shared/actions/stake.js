@@ -61,7 +61,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
       }
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       setTimeout(() => {
