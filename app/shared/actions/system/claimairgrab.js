@@ -16,8 +16,7 @@ export function claimairgrab(airgrab) {
       type: types.SYSTEM_CLAIMAIRGRAB_PENDING
     });
 
-    const { account } = settings;
-    const [, authorization] = connection.authorization.split('@');
+    const { account, authorization } = settings;
 
     const methodAttributes = {};
 
@@ -32,7 +31,7 @@ export function claimairgrab(airgrab) {
       methodAttributes[attribute] = airgrab.methodAttributes[attribute].replace('{account}', settings.account);
     });
 
-    return eos(connection, true).transaction({
+    return eos(connection, true, true).transact({
       actions: [
         {
           account: airgrab.account,
