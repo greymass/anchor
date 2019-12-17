@@ -181,7 +181,7 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
     }]
   }, {
     broadcast: connection.broadcast,
-    expireInSeconds: connection.expireInSeconds,
+    expireSeconds: connection.expireSeconds,
     sign: connection.sign
   }).then((tx) => {
     setTimeout(() => {

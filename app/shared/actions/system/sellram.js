@@ -34,7 +34,7 @@ export function sellram(amount) {
       ],
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
