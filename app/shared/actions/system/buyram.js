@@ -17,11 +17,30 @@ export function buyram(amount) {
 
     const { account } = settings;
 
-    return eos(connection, true).buyram({
-      payer: account,
-      receiver: account,
-      quant: `${amount.toFixed(4)} ${connection.chainSymbol || 'EOS'}`
+    const [, authorization] = connection.authorization.split('@');
+
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'buyram',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            payer: account,
+            receiver: account,
+            quant: `${amount.toFixed(4)} ${connection.chainSymbol || 'EOS'}`
+          }
+        }
+      ]
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
+      console.log({tx})
       setTimeout(dispatch(getAccount(account)), 500);
 
       return dispatch({
