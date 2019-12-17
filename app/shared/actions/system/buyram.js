@@ -15,9 +15,7 @@ export function buyram(amount) {
       type: types.SYSTEM_BUYRAM_PENDING
     });
 
-    const { account } = settings;
-
-    const [, authorization] = connection.authorization.split('@');
+    const { account, authorization } = settings;
 
     return eos(connection, true, true).transact({
       actions: [

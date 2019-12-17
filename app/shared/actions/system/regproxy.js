@@ -10,16 +10,32 @@ export function regproxy() {
       settings
     } = getState();
 
-    const { account } = settings;
+    const { account, authorization } = settings;
 
     dispatch({
       payload: { connection },
       type: types.SYSTEM_REGPROXY_PENDING
     });
 
-    return eos(connection, true).regproxy({
-      proxy: account,
-      isproxy: 1
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'regproxy',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            proxy: account,
+            isproxy: true
+          }
+        }
+      ],
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       // Refresh the account
       setTimeout(dispatch(getAccount(account)), 500);
