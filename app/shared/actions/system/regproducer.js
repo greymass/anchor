@@ -1,6 +1,7 @@
 import * as types from '../types';
 
 import eos from '../helpers/eos';
+import { delegatebwParams } from './delegatebw';
 
 export function regproducer(producerKey, producerUrl, producerLocation = 0) {
   return (dispatch: () => void, getState) => {
@@ -8,16 +9,35 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
       connection,
       settings
     } = getState();
-    const { account } = settings;
+
+    const { account, authorization } = settings;
+
     dispatch({
       payload: { connection },
       type: types.SYSTEM_REGPRODUCER_PENDING
     });
-    return eos(connection, true).regproducer({
-      producer: account,
-      producer_key: producerKey,
-      url: producerUrl,
-      location: 0
+
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'regproducer',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            producer: account,
+            producer_key: producerKey,
+            url: producerUrl,
+            location: 0
+          }
+        }
+      ],
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => dispatch({
       payload: {
         connection,
