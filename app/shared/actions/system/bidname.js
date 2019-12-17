@@ -19,7 +19,9 @@ export function bidname(data) {
     const { account } = settings;
     const [, authorization] = connection.authorization.split('@');
 
-    return eos(connection, true).transaction({
+    console.log({connection})
+
+    return eos(connection, true, true).transact({
       actions: [
         {
           account: 'eosio',

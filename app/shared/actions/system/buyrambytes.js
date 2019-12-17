@@ -17,10 +17,28 @@ export function buyrambytes(amount) {
 
     const { account } = settings;
 
-    return eos(connection, true).buyrambytes({
-      payer: account,
-      receiver: account,
-      bytes: Number(amount)
+    const [, authorization] = connection.authorization.split('@');
+
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'buyrambytes',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            payer: account,
+            receiver: account,
+            bytes: Number(amount)
+          }
+        }
+      ]
+    }, {
+      broadcast: connection.broadcast,
+      expireInSeconds: connection.expireInSeconds,
+      sign: connection.sign
     }).then((tx) => {
       setTimeout(dispatch(getAccount(account)), 500);
 
