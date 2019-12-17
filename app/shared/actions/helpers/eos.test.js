@@ -11,7 +11,7 @@ const connection = {
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   chainKey: 'eos-mainnet',
   chainSymbol: 'EOS',
-  expireInSeconds: 120,
+  expireSeconds: 120,
   historyPluginEnabled: true,
   httpEndpoint: 'https://eos.greymass.com',
   keyPrefix: 'EOS',
