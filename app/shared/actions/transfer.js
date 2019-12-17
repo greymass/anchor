@@ -27,7 +27,7 @@ export function transfer(from, to, quantity, memo, symbol) {
         );
       }, {
         broadcast: connection.broadcast,
-        expireInSeconds: connection.expireInSeconds,
+        expireSeconds: connection.expireSeconds,
         sign: connection.sign
       }).then((tx) => {
         // If this is an offline transaction, also store the ABI

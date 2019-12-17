@@ -36,7 +36,7 @@ export function regproducer(producerKey, producerUrl, producerLocation = 0) {
       ],
     }, {
       broadcast: connection.broadcast,
-      expireInSeconds: connection.expireInSeconds,
+      expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => dispatch({
       payload: {

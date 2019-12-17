@@ -32,7 +32,7 @@ export function beoswithdraw(from, to, quantity, storeName) {
               { from, bts_to: to, quantity },
               {
                 broadcast: connection.broadcast,
-                expireInSeconds: connection.expireInSeconds,
+                expireSeconds: connection.expireSeconds,
                 sign: connection.sign
               }
             )
