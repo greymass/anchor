@@ -40,13 +40,34 @@ export function refreshAccountBalances(account, requestedTokens) {
 export function claimUnstaked(owner) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      connection,
+      settings,
     } = getState();
+    const {
+      account,
+      authorization
+    } = settings;
     dispatch({
       type: types.SYSTEM_REFUND_PENDING
     });
-    return eos(connection, true).refund({
-      owner
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'refund',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            owner
+          }
+        }
+      ],
+    }, {
+      broadcast: connection.broadcast,
+      expireSeconds: connection.expireSeconds,
+      sign: connection.sign
     }).then((tx) => {
       // Reload the account
       dispatch(getAccount(owner));

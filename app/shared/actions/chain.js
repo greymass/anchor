@@ -21,7 +21,7 @@ export function getInfo() {
       return dispatch({
         type: types.GET_CHAIN_INFO_SUCCESS,
         payload: { chain }
-      })
+      });
     }).catch((err) => dispatch({
       type: types.GET_CHAIN_INFO_FAILURE,
       payload: { err },
