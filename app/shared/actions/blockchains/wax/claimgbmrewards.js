@@ -16,33 +16,9 @@ export function claimgbmrewards() {
       type: types.SYSTEM_WAX_CLAIMGBMREWARDS_PENDING
     });
 
-    const { account } = settings;
-    const [, authorization] = connection.authorization.split('@');
+    const { account, authorization } = settings;
 
-    const eosobj = eos(connection, true, true);
-    let method = 'transact';
-    let params = {
-      blocksBehind: 3,
-      expireSeconds: 30,
-    };
-    let contract;
-    if (!eosobj[method]) {
-      contract = await eosobj.getAbi('eosio');
-      if (contract
-        && contract.account_name
-        && contract.abi
-      ) {
-        eosobj.fc.abiCache.abi(contract.account_name, contract.abi);
-      }
-      method = 'transaction';
-      params = {
-        broadcast: connection.broadcast,
-        expireSeconds: connection.expireSeconds,
-        sign: connection.sign
-      };
-    }
-
-    return eosobj[method]({
+    return eos(connection, true, true).transact({
       actions: [
         {
           account: 'eosio',
@@ -67,7 +43,11 @@ export function claimgbmrewards() {
           }
         },
       ]
-    }, params).then((tx) => {
+    }, {
+      broadcast: connection.broadcast,
+      expireSeconds: connection.expireSeconds,
+      sign: connection.sign
+    }).then((tx) => {
       setTimeout(() => {
         dispatch(AccountActions.getAccount(currentAccount));
       }, 500);
