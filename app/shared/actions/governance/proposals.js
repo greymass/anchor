@@ -205,7 +205,7 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
     const { connection, settings } = getState();
     const { account } = settings;
     const [, authorization] = connection.authorization.split('@');
-    return eos(connection, true).transaction({
+    return eos(connection, true, true).transact({
       actions: [
         {
           account: defaultContract,
