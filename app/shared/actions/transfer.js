@@ -7,8 +7,11 @@ export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
     const {
       balances,
-      connection
+      connection,
+      settings
     } = getState();
+    const { account, authorization } = settings;
+
     const currentSymbol = symbol || connection.chainSymbol || 'EOS';
 
     dispatch({
@@ -17,14 +20,24 @@ export function transfer(from, to, quantity, memo, symbol) {
     });
     try {
       const contracts = balances.__contracts;
-      const account = contracts[currentSymbol].contract;
-      return eos(connection, true).transaction(account, contract => {
-        contract.transfer(
-          from,
-          to,
-          quantity,
-          memo
-        );
+      const contractAccount = contracts[currentSymbol].contract;
+      return eos(connection, true, true).transact({
+        actions: [
+          {
+            account: contractAccount,
+            name: 'transfer',
+            authorization: [{
+              actor: account,
+              permission: authorization
+            }],
+            data: {
+              from,
+              to,
+              quantity,
+              memo
+            }
+          }
+        ],
       }, {
         broadcast: connection.broadcast,
         expireSeconds: connection.expireSeconds,

@@ -18,6 +18,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
       tables,
       settings
     } = getState();
+    const { account, authorization } = settings;
 
     const currentAccount = accounts[settings.account];
 
@@ -36,9 +37,17 @@ export function setStake(accountName, netAmount, cpuAmount) {
       type: types.SYSTEM_STAKE_PENDING
     });
 
-    return eos(connection, true).transaction(tr => {
-      if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
-        tr.delegatebw(delegatebwParams(
+    const actions = [];
+
+    if (increaseInStake.netAmount > 0 || increaseInStake.cpuAmount > 0) {
+      actions.push({
+        account: 'eosio',
+        name: 'delegatebw',
+        authorization: [{
+          actor: account,
+          permission: authorization
+        }],
+        data: delegatebwParams(
           connection.chainSymbol,
           currentAccount.account_name,
           accountName,
@@ -46,10 +55,18 @@ export function setStake(accountName, netAmount, cpuAmount) {
           increaseInStake.cpuAmount,
           false,
           connection.tokenPrecision
-        ));
-      }
-      if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
-        tr.undelegatebw(undelegatebwParams(
+        ),
+      });
+    }
+    if (decreaseInStake.netAmount > 0 || decreaseInStake.cpuAmount > 0) {
+      actions.push({
+        account: 'eosio',
+        name: 'undelegatebw',
+        authorization: [{
+          actor: account,
+          permission: authorization
+        }],
+        data: undelegatebwParams(
           connection.chainSymbol,
           currentAccount.account_name,
           accountName,
@@ -57,8 +74,12 @@ export function setStake(accountName, netAmount, cpuAmount) {
           decreaseInStake.cpuAmount,
           false,
           connection.tokenPrecision
-        ));
-      }
+        )
+      });
+    }
+
+    return eos(connection, true, true).transact({
+      actions
     }, {
       broadcast: connection.broadcast,
       expireSeconds: connection.expireSeconds,
