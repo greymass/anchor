@@ -23,14 +23,14 @@ export function createAccount(
       settings
     } = getState();
 
-    const currentAccount = settings.account;
+    const { account, authorization } = settings;
 
     dispatch({
       payload: { connection },
       type: types.SYSTEM_CREATEACCOUNT_PENDING
     });
 
-    if (connection.chainSymbol === "BEOS") {
+    if (connection.chainSymbol === 'BEOS') {
       return eos(connection, true)
         .getAbi('eosio')
         .then((c) => {
@@ -38,7 +38,7 @@ export function createAccount(
           eos(connection, true).contract(contract.account).then(({ newaccount }) => {
             newaccount(
               {
-                creator: currentAccount,
+                creator: account,
                 name: accountName,
                 init_ram: 1,
                 owner: ownerKey,
@@ -51,7 +51,7 @@ export function createAccount(
               }
             ).then(tx => {
               setTimeout(() => {
-                dispatch(AccountActions.getAccount(currentAccount));
+                dispatch(AccountActions.getAccount(account));
               }, 500);
               return dispatch({
                 payload: {
@@ -90,29 +90,69 @@ export function createAccount(
         });
     }
 
-    return eos(connection, true).transaction(tr => {
-        tr.newaccount({
-          creator: currentAccount,
-          name: accountName,
-          owner: ownerKey,
-          active: activeKey
-        });
-
-        tr.buyrambytes({
-          payer: currentAccount,
-          receiver: accountName,
-          bytes: Number(ramAmount)
-        });
-
-        tr.delegatebw(delegatebwParams(
-          connection.chainSymbol,
-          currentAccount,
-          accountName,
-          delegatedBw.split(' ')[0],
-          delegatedCpu.split(' ')[0],
-          transferTokens,
-          connection.tokenPrecision
-        ));
+    return eos(connection, true, true).transact({
+      actions: [
+        {
+          account: 'eosio',
+          name: 'newaccount',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            creator: account,
+            name: accountName,
+            owner: {
+              threshold: 1,
+              keys: [{
+                key: ownerKey,
+                weight: 1
+              }],
+              accounts: [],
+              waits: []
+            },
+            active: {
+              threshold: 1,
+              keys: [{
+                key: activeKey,
+                weight: 1
+              }],
+              accounts: [],
+              waits: []
+            },
+          },
+        },
+        {
+          account: 'eosio',
+          name: 'buyrambytes',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: {
+            payer: account,
+            receiver: accountName,
+            bytes: Number(ramAmount)
+          },
+        },
+        {
+          account: 'eosio',
+          name: 'delegatebw',
+          authorization: [{
+            actor: account,
+            permission: authorization
+          }],
+          data: delegatebwParams(
+            connection.chainSymbol,
+            account,
+            accountName,
+            delegatedBw.split(' ')[0],
+            delegatedCpu.split(' ')[0],
+            transferTokens,
+            connection.tokenPrecision
+          ),
+        },
+      ],
     }, {
       broadcast: connection.broadcast,
       expireSeconds: connection.expireSeconds,
@@ -138,7 +178,7 @@ export function createAccount(
         }
       }
       setTimeout(() => {
-        dispatch(AccountActions.getAccount(currentAccount));
+        dispatch(AccountActions.getAccount(account));
       }, 500);
       return dispatch({
         payload: {
