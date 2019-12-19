@@ -21,7 +21,7 @@ function mapStateToProps(state) {
     accounts: state.accounts,
     ledger: state.ledger,
     settings: state.settings,
-    status: state.status
+    status: LedgerActions.ledgerGetStatus(state.ledger),
   };
 }
 
