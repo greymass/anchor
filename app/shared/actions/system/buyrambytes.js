@@ -38,7 +38,6 @@ export function buyrambytes(amount) {
       expireSeconds: connection.expireSeconds,
       sign: connection.sign
     }).then((tx) => {
-      console.log({tx})
       setTimeout(dispatch(getAccount(account)), 500);
 
       return dispatch({
