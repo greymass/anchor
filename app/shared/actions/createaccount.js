@@ -5,7 +5,7 @@ import * as AccountActions from './accounts';
 import eos from './helpers/eos';
 
 import { delegatebwParams } from './system/delegatebw';
-import contracts from './contracts';
+
 import EOSContract from '../utils/EOS/Contract';
 
 export function createAccount(
@@ -35,39 +35,54 @@ export function createAccount(
         .getAbi('eosio')
         .then((c) => {
           const contract = new EOSContract(c.abi, c.account_name);
-          eos(connection, true).contract(contract.account).then(({ newaccount }) => {
-            newaccount(
+          eos(connection, true, true).transact({
+            actions: [
               {
-                creator: account,
-                name: accountName,
-                init_ram: 1,
-                owner: ownerKey,
-                active: activeKey
+                account: contract.account,
+                name: 'newaccount',
+                authorization: [{
+                  actor: account,
+                  permission: authorization
+                }],
+                data: {
+                  creator: account,
+                  name: accountName,
+                  init_ram: true,
+                  owner: {
+                    threshold: 1,
+                    keys: [{
+                      key: ownerKey,
+                      weight: 1
+                    }],
+                    accounts: [],
+                    waits: []
+                  },
+                  active: {
+                    threshold: 1,
+                    keys: [{
+                      key: activeKey,
+                      weight: 1
+                    }],
+                    accounts: [],
+                    waits: []
+                  },
+                },
               },
-              {
-                broadcast: connection.broadcast,
-                expireSeconds: connection.expireSeconds,
-                sign: connection.sign
-              }
-            ).then(tx => {
-              setTimeout(() => {
-                dispatch(AccountActions.getAccount(account));
-              }, 500);
-              return dispatch({
-                payload: {
-                  connection,
-                  tx
-                },
-                type: types.SYSTEM_CREATEACCOUNT_SUCCESS
-              });
-            }).catch((err) => {
-              dispatch({
-                payload: {
-                  connection,
-                  err
-                },
-                type: types.SYSTEM_CREATEACCOUNT_FAILURE
-              });
+            ],
+          }, {
+            broadcast: connection.broadcast,
+            expireSeconds: connection.expireSeconds,
+            sign: connection.sign
+          }).then(tx => {
+            setTimeout(() => {
+              dispatch(AccountActions.getAccount(account));
+            }, 500);
+            return dispatch({
+              payload: {
+                connection,
+                tx
+              },
+              type: types.SYSTEM_CREATEACCOUNT_SUCCESS
             });
           }).catch((err) => {
             dispatch({
