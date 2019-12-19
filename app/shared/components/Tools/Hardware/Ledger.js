@@ -7,6 +7,8 @@ import { Button, Icon, Header, Label, List, Segment, Table } from 'semantic-ui-r
 import ToolsHardwareLedgerStatus from './Ledger/Status';
 import HardwareLedger from '../../../utils/Hardware/Ledger';
 
+const { remote } = require('electron');
+
 class ToolsHardwareLedger extends Component<Props> {
   displayPublicKey = () => {
     this.props.actions.ledgerGetPublicKey(0, true);
@@ -24,7 +26,7 @@ class ToolsHardwareLedger extends Component<Props> {
       t,
     } = this.props;
     const account = accounts[settings.account];
-    const { transport } = new HardwareLedger();
+    const transport = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     if (!account) return false;
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
