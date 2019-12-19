@@ -57,7 +57,6 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
     const vote = find(votes, ['proposal_name', proposal_name]);
     const voted = !!(vote);
     const approved = (voted) ? !!(vote.vote) : false;
-    console.log({vote})
     const comment = vote && vote.vote_json.length > 0 && JSON.parse(vote.vote_json).comment;
     const isVotePending = !!(system.GOVERNANCE_VOTE_PROPOSAL === 'PENDING' || system.GOVERNANCE_UNVOTE_PROPOSAL === 'PENDING');
     const isSupporting = (voted && approved);
