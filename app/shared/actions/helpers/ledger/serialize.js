@@ -54,8 +54,17 @@ export default function serialize(chainId, transaction, types) {
     }
 
     const data = Buffer.from(action.data, 'hex');
-    encode(writer, fcbuffer.toBuffer(types.unsigned_int(), data.length));
-    encode(writer, data);
+    if (data.length > 0) {
+      encode(writer, fcbuffer.toBuffer(types.unsigned_int(), data.length));
+      encode(writer, data);
+    } else {
+      try {
+        encode(writer, fcbuffer.toBuffer(types.unsigned_int(), 0));
+        encode(writer, new Buffer(0));
+      } catch (e){
+        console.log('err', e);
+      }
+    }
   }
 
   assert(writer, transaction.transaction_extensions.length === 0);
