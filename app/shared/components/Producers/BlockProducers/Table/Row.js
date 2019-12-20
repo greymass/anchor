@@ -1,14 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Header, Icon, Popup, Progress, Responsive, Table } from 'semantic-ui-react';
+import { Button, Header, Icon, Popup, Progress, Responsive, Table, Flag } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
 import ProducersVoteWeight from '../Vote/Weight';
 import JurisdictionRow from './JurisdictionRow';
-import JurisdictionRowFlag from './JurisdictionRowFlag';
 import checkForBeos from '../../../helpers/checkCurrentBlockchain';
+import setProperFlag from '../../../helpers/setProperFlag';
 
 class ProducersTableRow extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
@@ -80,7 +80,7 @@ class ProducersTableRow extends Component<Props> {
                   />
                 ) : (
                   <Popup
-                    content={t('producer_json_unavailable_content')}
+                    content={checkForBeos(connection) ? t('producer_json_unavailable_content_beos') : t('producer_json_unavailable_content')}
                     header={t('producer_json_unavailable_header')}
                     hoverable
                     inverted
@@ -138,6 +138,7 @@ class ProducersTableRow extends Component<Props> {
             </Header.Subheader>
           </Header>
         </Table.Cell>
+        { checkForBeos(connection) &&
         <Table.Cell>
           {(producer.jurisdictions.length > 0) && (checkForBeos(connection)) && (
             <Popup
@@ -159,9 +160,9 @@ class ProducersTableRow extends Component<Props> {
                   onMouseEnter={() => { actions.getProducerJurisdiction(producer.owner); }}
                   style={{ cursor: 'pointer' }}
                 >
-                  <JurisdictionRowFlag
-                    producer={producer}
-                  />
+                  <React.Fragment>
+                    <Flag name={setProperFlag(producer.jurisdictions[0].name)} /><span>{producer.jurisdictions[0].name}</span>
+                  </React.Fragment>
                 </a>
               )}
             />
@@ -170,6 +171,7 @@ class ProducersTableRow extends Component<Props> {
             <span>{t('block_producer_jurisdictions_state_none')}</span>
           )}
         </Table.Cell>
+        }
         <Table.Cell
           singleLine
         >

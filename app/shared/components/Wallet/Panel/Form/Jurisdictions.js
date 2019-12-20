@@ -507,6 +507,10 @@ export default class JurisdictionsForm extends Component<Props> {
     } else {
       if (change === true) {
         this.props.actions.saveOnlyActive();
+        this.setUsersJurisdictionsDefault({
+          choosenJurisdictions: this.makeAllInactive(this.state.tempChoosen),
+          jurisdictions: this.makeAllInactive(this.state.tempJurisdictions)
+        });
         this.filterOptions();
       }
     }
