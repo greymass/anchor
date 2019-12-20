@@ -12,6 +12,7 @@ import packageJson from '../../../package.json';
 import { clearSystemState } from '../../../shared/actions/system/systemstate';
 import * as NavigationActions from '../actions/navigation';
 import * as SettingsActions from '../../../shared/actions/settings';
+import * as TransactionActions from '../../../shared/actions/transaction';
 import WalletPanelButtonBroadcast from '../../../shared/components/Wallet/Panel/Button/Broadcast';
 
 import GreymassLogoHorizontal from '../../../renderer/assets/images/anchor-text-light.svg';
@@ -29,6 +30,7 @@ class SidebarContainer extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      connection,
       navigation,
       settings,
       system,
@@ -179,8 +181,7 @@ class SidebarContainer extends Component<Props> {
           }}
         />
         {(
-          blockExplorers
-          && settings.walletInit
+          settings.walletInit
           && settings.chainId
         )
           ? (
@@ -265,6 +266,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       clearSystemState,
       ...NavigationActions,
+      ...TransactionActions,
       ...SettingsActions,
     }, dispatch)
   };
