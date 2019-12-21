@@ -1,7 +1,7 @@
 import { Api, JsonRpc, Serialize } from 'eosjs2';
 import ecc from 'eosjs-ecc';
 import sha256 from 'fast-sha256';
-import { isObject } from 'lodash';
+import { cloneDeep, isObject } from 'lodash';
 
 import serialize from '../../actions/helpers/ledger/serialize';
 
@@ -15,29 +15,12 @@ const LedgerApi = require('../../actions/helpers/hardware/ledger').default;
 const fuelTransaction = {
   account: 'greymassnoop',
   name: 'noop',
-  authorization: [
-    {
-      actor: 'greymassfuel',
-      permission: 'cosign',
-    }
-  ],
-  data: {}
-};
-
-const testTransaction = {
-  account: 'eosio.token',
-  name: 'transfer',
-  authorization: [
-    {
-      actor: 'greymassfuel',
-      permission: 'cosign',
-    }
-  ],
+  authorization: [{
+    actor: 'greymassfuel',
+    permission: 'cosign',
+  }],
   data: {
-    to: 'teamgreymass',
-    from: 'greymassfuel',
-    quantity: '0.0100 EOS',
-    memo: ''
+    // referrer: 'anchorwallet'
   }
 };
 
@@ -70,25 +53,26 @@ export default class EOSHandler {
     return {
       async getRequiredKeys(args) {
         const { transaction } = args;
-        transaction.actions.forEach((action, ti) => {
+        const modified = cloneDeep(transaction);
+        modified.actions.forEach((action, ti) => {
           action.authorization.forEach((auth, ai) => {
             if (auth.actor === 'greymassfuel' && auth.permission === 'cosign') {
-              delete transaction.actions[ti].authorization.splice(ai, 1);
+              modified.actions[ti].authorization.splice(ai, 1);
             }
           });
         });
         return convertLegacyPublicKeys((await rpc.fetch('/v1/chain/get_required_keys', {
-          transaction,
+          transaction: modified,
           available_keys: args.availableKeys,
         })).required_keys);
       }
     };
   }
   transact(tx) {
-    const transaction = Object.assign({}, tx);
+    const transaction = cloneDeep(tx);
     // append Fuel data where appropriate
-    if (this.config.greymassfuel) {
-      transaction.actions.unshift(fuelTransaction);
+    if (this.config.greymassFuel) {
+      transaction.actions.unshift(cloneDeep(fuelTransaction));
     }
     // no broadcast + sign = create a v16 format transaction
     //   should likely be converted to use esr payloads
@@ -103,7 +87,7 @@ export default class EOSHandler {
     const info = await this.rpc.get_info();
     const height = info.last_irreversible_block_num - this.tapos.blocksBehind;
     const blockInfo = await this.rpc.get_block(height);
-    const transaction = Object.assign({}, tx, {
+    const transaction = Object.assign({}, cloneDeep(tx), {
       actions: await this.ensureSerializedActions(tx.actions),
       context_free_actions: [],
       transaction_extensions: [],
