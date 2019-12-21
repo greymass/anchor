@@ -21,17 +21,17 @@ class GlobalFuelDropdown extends Component<Props> {
     };
   }
   componentDidMount = () => {
-    const { settings } = this.props;
-    if (settings.greymassFuel) {
-      this.props.actions.getFuelQuotaStatus();
-    }
+    this.props.actions.getFuelQuotaStatus();
   }
   onClose = () => this.setState({ open: false })
   onOpen = () => {
-    this.setState({ open: true })
+    this.setState({ open: true });
     this.props.actions.getFuelQuotaStatus();
   }
-  enable = () => this.props.actions.setSetting('greymassFuel', true)
+  enable = () => {
+    this.props.actions.setSetting('greymassFuel', true);
+    this.props.actions.getFuelQuotaStatus();
+  }
   disable = () => this.props.actions.setSetting('greymassFuel', false)
   render() {
     const {
@@ -111,7 +111,6 @@ class GlobalFuelDropdown extends Component<Props> {
                   <Grid.Row columns={2}>
                     <Grid.Column>
                       <Progress
-                        indicating
                         percent={cpupercent}
                         progress="percent"
                       >
@@ -120,7 +119,6 @@ class GlobalFuelDropdown extends Component<Props> {
                     </Grid.Column>
                     <Grid.Column>
                       <Progress
-                        indicating
                         percent={netpercent}
                         progress="percent"
                       >
