@@ -26,7 +26,7 @@ const supportedContracts = [
       'crosschaintransfer',
       'customtokens',
       'delphioracle',
-      // 'greymassfuel',
+      'greymassfuel',
       'producerinfo',
       'proposals',
       'rex',
@@ -36,7 +36,10 @@ const supportedContracts = [
   {
     // 'eos-testnet-jungle'
     chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
-    supportedContracts: ['bidname'],
+    supportedContracts: [
+      'bidname',
+      'greymassfuel',
+    ],
   },
   {
     // 'eos-testnet-cryptokylin'
