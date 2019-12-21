@@ -11,6 +11,7 @@ const initialState = {
   chainSymbol: 'EOS',
   expireSeconds: 120,
   // forceActionDataHex: false,
+  greymassFuel: false,
   historyPluginEnabled: true,
   httpEndpoint: null,
   keyPrefix: 'EOS',
@@ -40,6 +41,14 @@ export default function connection(state = initialState, action) {
         chainId: action.payload.chainId
       });
     }
+    case types.SET_SETTING: {
+      if (action.payload.greymassFuel !== undefined) {
+        return Object.assign({}, state, {
+          greymassFuel: action.payload.greymassFuel
+        });
+      }
+      return state;
+    }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_FAILURE:
     case types.VALIDATE_NODE_SUCCESS: {
@@ -59,6 +68,7 @@ export default function connection(state = initialState, action) {
         chainKey: (blockchain && blockchain._id) || 'eos-mainnet',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         err,
+        greymassFuel: settings.greymassFuel,
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
         supportedContracts: (blockchain) ? blockchain.supportedContracts : [],
