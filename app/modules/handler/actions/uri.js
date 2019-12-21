@@ -164,8 +164,10 @@ export function setURI(uri) {
           inflateRaw: (data) => new Uint8Array(zlib.inflateRawSync(Buffer.from(data))),
         }
       };
+      // Catch old signing requests during v1 -> v2 spec upgrade
+      const modified = uri.replace('eosio:', 'esr:');
       // Interpret the Signing Request
-      const request = SigningRequest.from(uri, opts);
+      const request = SigningRequest.from(modified, opts);
       // Extract relevant information
       const {
         data,
