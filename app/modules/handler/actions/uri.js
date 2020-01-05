@@ -308,10 +308,11 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
         .then(async (signed) => {
           let broadcasted;
           if (broadcast) {
-            broadcasted = await signer.pushSignedTransaction(signed);
+            broadcasted = await signer.api.pushSignedTransaction(signed);
           }
           dispatch({
             payload: {
+              response: broadcasted,
               signed: (broadcasted)
                 ? {
                   signatures: signed.signatures,

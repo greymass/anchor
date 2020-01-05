@@ -99,7 +99,7 @@ class PromptStage extends Component<Props> {
     // TODO: Implement checks for existing signatures
     const authorizations = get(resolved.transaction, 'actions.0.authorization', []);
     const canBroadcast = (authorizations.length === 1);
-    const broadcast = (prompt.broadcast && andBroadcast)
+    const broadcast = !!(prompt.broadcast !== false && andBroadcast)
     actions.signURI(resolved.transaction, blockchain, wallet, broadcast, prompt.callback);
   }
   onSignBroadcast = () => {

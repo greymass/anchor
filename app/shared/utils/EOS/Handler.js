@@ -68,8 +68,9 @@ export default class EOSHandler {
       }
     };
   }
-  transact(tx) {
+  transact(tx, options = false) {
     const transaction = cloneDeep(tx);
+    const tapos = options || this.tapos;
     // append Fuel data where appropriate
     if (this.config.greymassFuel) {
       transaction.actions.unshift(cloneDeep(fuelTransaction));
@@ -77,10 +78,10 @@ export default class EOSHandler {
     // no broadcast + sign = create a v16 format transaction
     //   should likely be converted to use esr payloads
     if (!this.tapos.broadcast && !this.tapos.sign) {
-      return this.createTransaction(transaction, this.tapos);
+      return this.createTransaction(transaction, tapos);
     }
     // otherwise transact
-    return this.api.transact(transaction, this.tapos);
+    return this.api.transact(transaction, tapos);
   }
   // return a transaction like v16 would
   createTransaction = async (tx) => {
