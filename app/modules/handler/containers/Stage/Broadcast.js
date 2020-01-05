@@ -15,8 +15,11 @@ class PromptStageReview extends Component<Props> {
     } = this.props;
     const {
       signed,
-      transaction,
+      resolved,
     } = prompt;
+    const {
+      transaction
+    } = resolved;
     const { signatures } = signed;
     return (
       <Grid>
