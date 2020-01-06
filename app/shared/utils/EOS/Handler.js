@@ -24,6 +24,12 @@ const fuelTransaction = {
   }
 };
 
+const fuelEndpoints = {
+  'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906': 'http://eos.greymass.com',
+  'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473': 'http://jungle.greymass.com',
+  '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'http://telos.greymass.com',
+};
+
 export default class EOSHandler {
   constructor(config) {
     this.config = config;
@@ -32,14 +38,7 @@ export default class EOSHandler {
     } else {
       this.signatureProvider = new JsSignatureProvider(config.keyProvider || []);
     }
-    this.rpc = new JsonRpc(config.httpEndpoint);
-    this.api = new Api({
-      authorityProvider: this.getAuthorityProvider(),
-      rpc: this.rpc,
-      signatureProvider: this.signatureProvider,
-      textDecoder: new TextDecoder(),
-      textEncoder: new TextEncoder()
-    });
+    this.initEOSJS(config.httpEndpoint)
     this.tapos = {
       blocksBehind: 3,
       broadcast: config.broadcast,
@@ -47,6 +46,16 @@ export default class EOSHandler {
       sign: config.sign,
     };
     return this;
+  }
+  initEOSJS(endpoint) {
+    this.rpc = new JsonRpc(endpoint);
+    this.api = new Api({
+      authorityProvider: this.getAuthorityProvider(),
+      rpc: this.rpc,
+      signatureProvider: this.signatureProvider,
+      textDecoder: new TextDecoder(),
+      textEncoder: new TextEncoder()
+    });
   }
   getAuthorityProvider() {
     const { rpc } = this;
@@ -71,8 +80,14 @@ export default class EOSHandler {
   transact(tx, options = false) {
     const transaction = cloneDeep(tx);
     const tapos = options || this.tapos;
-    // append Fuel data where appropriate
+    // is Fuel enabled?
     if (this.config.greymassFuel) {
+      const { chainId } = this.config;
+      // If a Fuel endpoint exists, reinit and force its usage
+      if (fuelEndpoints[chainId]) {
+        this.initEOSJS(fuelEndpoints[chainId]);
+      }
+      // prepend Fuel action data
       transaction.actions.unshift(cloneDeep(fuelTransaction));
     }
     // no broadcast + sign = create a v16 format transaction
