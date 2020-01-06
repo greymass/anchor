@@ -429,28 +429,42 @@ class PromptStage extends Component<Props> {
                 {(error.message)
                   ? (
                     <React.Fragment>
-                      <Header>
+                      <Header size="huge">
                         <Icon name="warning sign" />
                         <Header.Content>
-                          There was a problem with this transaction
+                          {error.message}
+                          <Header.Subheader
+                            style={{ color: 'white' }}
+                          >
+                            There was a problem with this transaction, but it still may have succeeded. Check your account history to determine if it was successful before trying again.
+                          </Header.Subheader>
                         </Header.Content>
                       </Header>
-                      <Segment>
-                        {isObject(error)
-                          ? (
+                      {(error.stack)
+                        ? (
+                          <Segment>
+                            {error.stack}
+                          </Segment>
+
+                        )
+                        : false
+                      }
+                      {(error.json && isObject(error.json))
+                        ? (
+                          <Segment>
                             <ReactJson
                               collapsed={4}
                               displayDataTypes={false}
                               displayObjectSize={false}
                               iconStyle="square"
                               name={null}
-                              src={error}
+                              src={error.json}
                               style={{ padding: '1em' }}
                             />
-                          )
-                          : error
-                        }
-                      </Segment>
+                          </Segment>
+                        )
+                        : false
+                      }
                     </React.Fragment>
                   )
                   : false
