@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Modal, Segment } from 'semantic-ui-react';
 import GlobalDangerLink from '../../../shared/containers/Global/DangerLink';
 
 const { clipboard } = require('electron');
@@ -11,7 +11,7 @@ class PromptShare extends Component<Props> {
   makeLink = () => {
     const { uri } = this.props;
     const uriParts = uri.split(':');
-    return `https://eosio.to/${uriParts[1]}`;
+    return `https://eosio.to/${uriParts[1].replace('//', '')}`;
   }
   render() {
     const {
@@ -24,48 +24,68 @@ class PromptShare extends Component<Props> {
     const link = this.makeLink();
     return (
       <Modal
+        centered={false}
         closeIcon
         onClose={onClose}
         open={open}
-        size="small"
+        size="wide"
+        style={{ marginTop: '110px' }}
         scrolling
       >
-        <Modal.Header>Signing Request (EEP-7)</Modal.Header>
+        <Modal.Header>EOSIO Signing Request (EEP-7)</Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            <Header>Sharing a Signing Request</Header>
-            <p>A benefit of using an Signing Request URI link is that you can share the link with those you trust and verify what actions it will perform before signing.</p>
-            <Header size="small">Using EOSIO.TO</Header>
-            <p>You can open this signing request using https://eosio.to service with the button below to verify the contents of the URI. This link can also safely be shared with others to view the contents of the transaction.</p>
-            <GlobalDangerLink
-              content={(
-                <Button
-                  basic
-                  color="blue"
-                  content="Open Link to EOSIO.TO"
-                  icon="external"
-                />
-              )}
-              link={link}
-            />
-            <Header size="small">Using a raw URI</Header>
-            <p>The text box below contains the raw URI of this transaction. This URI can be shared and used within a variety of applications.</p>
-            <Form>
-              <Form.TextArea
-                style={{
-                  wordBreak: 'break-all'
-                }}
-                value={uri}
-              />
-              <Button
-                basic
-                color="blue"
-                content="Copy to Clipboard"
-                icon="clipboard"
-                onClick={this.onCopyLink}
-              />
-            </Form>
-          </Modal.Description>
+          <Header>
+            <Header.Subheader>
+              A benefit of using the <strong>EOSIO Signing Request</strong> protocol is that you can share the link with those you trust and verify what actions it will perform before signing.
+            </Header.Subheader>
+          </Header>
+          <Grid>
+            <Grid.Row columns={2}>
+              <Grid.Column>
+                <Header attached="top" size="small">
+                  Share Request as a Link
+                </Header>
+                <Segment attached="bottom">
+                  <p>
+                    This text box contains the raw link (URI) of this specific transaction. You can share this link with other users to ask questions or to just share the transaction.
+                  </p>
+                  <Form>
+                    <Form.TextArea
+                      style={{
+                        wordBreak: 'break-all'
+                      }}
+                      value={uri}
+                    />
+                  </Form>
+                  <Button
+                    color="blue"
+                    content="Copy to Clipboard"
+                    fluid
+                    icon="clipboard"
+                    onClick={this.onCopyLink}
+                    style={{ marginTop: '1em' }}
+                  />
+                </Segment>
+              </Grid.Column>
+              <Grid.Column>
+                <Header attached="top" size="small">View/Share using EOSIO.TO</Header>
+                <Segment attached="bottom">
+                  <p>You can also open this signing request using the service found at https://eosio.to using the button below. This site provides a secondary source of information to verify the contents of the URI. This link can also safely be shared with others to view the contents of the transaction.</p>
+                  <GlobalDangerLink
+                    content={(
+                      <Button
+                        color="blue"
+                        content="Open Link to EOSIO.TO"
+                        fluid
+                        icon="external"
+                      />
+                    )}
+                    link={link}
+                  />
+                </Segment>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Modal.Content>
       </Modal>
     );
