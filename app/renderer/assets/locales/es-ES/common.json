@@ -1,7 +1,7 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "eos-voter",
-  "application_version": "v1.0.0-rc2",
+  "application_version": "v1.0.0-rc3",
   "back": "Atrás",
   "block_height": "Altura del bloque",
   "blockchain": "Blockchain",
