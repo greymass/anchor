@@ -72,7 +72,7 @@ class RexLendSavings extends PureComponent<Props> {
 
       const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');
       const rexMaturities = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_maturities`, []);
-      const rexInSavings = (find(rexMaturities, { first: '2106-02-07T06:28:15' }) || { second: 0 }).second / 10000;
+      const rexInSavings = this.getSavingsValue() / 10000;
 
       let notEnoughBalance = false;
       let notEnoughBalanceInSavings = false;
@@ -102,6 +102,28 @@ class RexLendSavings extends PureComponent<Props> {
       amountToRemoveFromSavings: undefined,
     });
   };
+  getSavingsValue = () => {
+    const { settings, tables } = this.props;
+    const escapedAccountName = settings.account.replace('.', '\\.');
+    const matured = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_maturities`, []);
+    // Find savings value
+    let savings = find(matured, {
+      key: '2106-02-07T06:28:15'
+    })
+    // Check legacy fields
+    if (!savings) {
+      savings = find(matured, {
+        first: '2106-02-07T06:28:15'
+      })
+    }
+    // If none, return 0
+    if (!savings) {
+      savings = {
+        value: 0
+      }
+    }
+    return savings.value || savings.second
+  }
   render() {
     const {
       actions,
@@ -152,7 +174,8 @@ class RexLendSavings extends PureComponent<Props> {
 
     const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');
     const rexMaturities = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_maturities`, []);
-    const rexInSavings = `${(find(rexMaturities, { first: '2106-02-07T06:28:15' }) || { second: 0 }).second / 10000} REX`;
+
+    const rexInSavings = this.getSavingsValue() / 10000;
 
     const confirmationPage = confirming ? (
       <GlobalTransactionModal
@@ -225,18 +248,18 @@ class RexLendSavings extends PureComponent<Props> {
                   <Header
                     content="REX Balances"
                   />
-                  <Table definition size="small" textAlign="right">
+                  <Table definition fluid textAlign="right">
                     <Table.Row>
                       <Table.Cell width={12}>{t('rex_interface_table_rex_balance')}</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(rexBalance) || 0).toFixed(4)}</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(rexBalance) || 0).toFixed(4)}&nbsp;REX</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                       <Table.Cell width={12}>{t('rex_interface_table_matured_rex_balance')}</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(maturedRex) || 0).toFixed(4)}</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(maturedRex) || 0).toFixed(4)}&nbsp;REX</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                       <Table.Cell width={12}>{t('rex_interface_table_rex_in_savings')}</Table.Cell>
-                      <Table.Cell>{Number(parseFloat(rexInSavings) || 0).toFixed(4)}</Table.Cell>
+                      <Table.Cell>{Number(parseFloat(rexInSavings) || 0).toFixed(4)}&nbsp;REX</Table.Cell>
                     </Table.Row>
                   </Table>
                 </Grid.Column>
