@@ -12,7 +12,10 @@ class GlobalAccountFragmentResourcePercent extends PureComponent<Props> {
       resource,
     } = this.props;
     if (!resource) return false;
-    const percent = ((resource.available / resource.max) * 100).toFixed(2);
+    let percent = ((resource.available / resource.max) * 100).toFixed(2);
+    if (isNaN(percent)) {
+      percent = 0;
+    }
     return (
       <React.Fragment>
         {(percent < 5)
