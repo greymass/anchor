@@ -30,7 +30,7 @@ const mapStateToProps = (state, ownProps) => {
   const defaultValue = loaded ? 0 : false;
   // Allow override as prop to use formatting
   let balance = get(state, `balances.${account}.${ownProps.token}`, defaultValue);
-  if (ownProps.balance) {
+  if (ownProps.balance !== undefined) {
     balance = ownProps.balance;
   }
   return {
