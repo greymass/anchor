@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { Header, Message } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
 export class GlobalTransactionMessageErrorDefault extends Component<Props> {
@@ -24,9 +25,9 @@ export class GlobalTransactionMessageErrorDefault extends Component<Props> {
       errorMessage = errorMessage && errorMessage.replace(/\(|\)|%/g, '');
       errorMessage = errorMessage || errorMessageArray[0];
     }
-
     return (
-      <div>
+      <Message negative>
+        <Header>{t('error')}</Header>
         <p key={error}>{t(errorMessage || error.message)}</p>
 
         {(typeof error === 'object' && !(error instanceof Error)) ? (
@@ -40,7 +41,7 @@ export class GlobalTransactionMessageErrorDefault extends Component<Props> {
             style={{ padding: '1em' }}
           />
         ) : ''}
-      </div>
+      </Message>
     );
   }
 }
