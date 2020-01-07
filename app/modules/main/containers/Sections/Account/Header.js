@@ -30,10 +30,17 @@ class AccountHeader extends Component<Props> {
         ram_quota,
         ram_usage,
       } = account;
-      if (cpu_limit.available / cpu_limit.max < 0.1) {
+      console.log(cpu_limit.max === 0)
+      if (
+        cpu_limit.max === 0 // no staked CPU
+        || cpu_limit.available / cpu_limit.max < 0.1 // CPU less than 10%
+      ) {
         warning = 'cpu_low';
       }
-      if (net_limit.available / net_limit.max < 0.1) {
+      if (
+        net_limit.max === 0 // no staked NET
+        || net_limit.available / net_limit.max < 0.1 // NET less than 10%
+      ) {
         warning = 'net_low';
       }
       if (((ram_quota - ram_usage) / ram_quota) < 0.1) {
