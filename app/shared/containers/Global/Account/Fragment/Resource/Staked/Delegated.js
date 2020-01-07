@@ -27,6 +27,12 @@ const mapStateToProps = (state, ownProps) => {
   const staked = get(state, `accounts.${account}.self_delegated_bandwidth`, {});
   const total = get(state, `accounts.${account}.total_resources`, {});
   let balance = 0;
+
+  if (Object.keys(staked).length === 0) {
+    return {
+      balance,
+    };
+  }
   switch (ownProps.type) {
     case 'cpu': {
       const stakedCPU = parseFloat(get(staked, 'cpu_weight', '0').split(' ')[0]);
