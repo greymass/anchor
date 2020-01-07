@@ -31,7 +31,9 @@ class AccountOverview extends Component<Props> {
     };
   }
   componentDidMount() {
-    const { account } = this.state;
+    const { settings } = this.props;
+    const { account } = settings;
+
     if (
       // Missing account
       !Object.keys(this.props.accounts).includes(account)
