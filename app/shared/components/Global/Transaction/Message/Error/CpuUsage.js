@@ -22,9 +22,9 @@ export class GlobalTransactionMessageErrorCpuUsage extends Component<Props> {
         </Header>
         <p>Before trying this transaction again, address this issue by taking one or more of the following steps:</p>
         <List relaxed bulleted>
-          <List.Item>Enable Greymass Fuel from the upper right menu and try again.</List.Item>
-          <List.Item>Rent more CPU via REX using the Resources interface and try again.</List.Item>
-          <List.Item>Stake more EOS as CPU using the Resources interface and try again.</List.Item>
+          <List.Item>Enable Greymass Fuel from the upper right menu in the main window and try again.</List.Item>
+          <List.Item>Rent more CPU via REX using the Resources interface in the main window and try again.</List.Item>
+          <List.Item>Stake more EOS as CPU using the Resources interface in the main window and try again.</List.Item>
           <List.Item>Wait for your existing CPU to replenish within the next 24 hours.</List.Item>
         </List>
         {(typeof error === 'object' && error.json) ? (
