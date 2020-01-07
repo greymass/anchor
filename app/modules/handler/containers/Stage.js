@@ -32,6 +32,7 @@ import PromptActionUnlock from '../components/Actions/Unlock';
 
 import URIActions from '../actions/uri';
 import WhitelistActions from '../actions/whitelist';
+import GlobalTransactionMessageError from '../../../shared/components/Global/Transaction/Message/Error';
 import * as HardwareLedgerActions from '../../../shared/actions/hardware/ledger';
 import { setSetting } from '../../../shared/actions/settings';
 import { unlockWalletByAuth } from '../../../shared/actions/wallet';
@@ -425,51 +426,9 @@ class PromptStage extends Component<Props> {
           </Dimmer>
           {(error && error.type !== 'forbidden')
             ? (
-              <Segment color="red" inverted style={{ margin: 0 }}>
-                {(error.message)
-                  ? (
-                    <React.Fragment>
-                      <Header size="huge">
-                        <Icon name="warning sign" />
-                        <Header.Content>
-                          {error.message}
-                          <Header.Subheader
-                            style={{ color: 'white' }}
-                          >
-                            There was a problem with this transaction, but it still may have succeeded. Check your account history to determine if it was successful before trying again.
-                          </Header.Subheader>
-                        </Header.Content>
-                      </Header>
-                      {(error.stack)
-                        ? (
-                          <Segment>
-                            {error.stack}
-                          </Segment>
-
-                        )
-                        : false
-                      }
-                      {(error.json && isObject(error.json))
-                        ? (
-                          <Segment>
-                            <ReactJson
-                              collapsed={4}
-                              displayDataTypes={false}
-                              displayObjectSize={false}
-                              iconStyle="square"
-                              name={null}
-                              src={error.json}
-                              style={{ padding: '1em' }}
-                            />
-                          </Segment>
-                        )
-                        : false
-                      }
-                    </React.Fragment>
-                  )
-                  : false
-                }
-              </Segment>
+              <GlobalTransactionMessageError
+                error={error}
+              />
             )
             : stage
           }
