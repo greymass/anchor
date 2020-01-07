@@ -15,6 +15,7 @@ import GlobalAccountFragmentResourceStakedDelegated from '../../../../../../shar
 import GlobalAccountFragmentResourceUsage from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Usage';
 import GlobalAccountFragmentResourceMax from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Max';
 import GlobalAccountFragmentTokenRefunding from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
+import GlobalAccountFragmentTokenRefundingClaim from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefundingClaim';
 
 import GlobalButtonRent from '../../../../../../shared/containers/Global/Button/Rent';
 import GlobalButtonStake from '../../../../../../shared/containers/Global/Button/Stake';
@@ -260,6 +261,13 @@ class AccountOverviewResource extends Component<Props> {
                             resource={resource}
                           />
                           {` ${connection.chainSymbol}`}
+                          <GlobalAccountFragmentTokenRefundingClaim
+                            account={account}
+                            chainId={connection.chainId}
+                            contract="eosio"
+                            token={connection.chainSymbol}
+                            resource={resource}
+                          />
                         </Table.Cell>
                       </Table.Row>
                     </Table>
