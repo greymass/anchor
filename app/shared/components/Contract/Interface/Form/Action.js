@@ -151,9 +151,12 @@ class ContractInterfaceFormAction extends Component<Props> {
               selection
               value={currentArrayValues[field.name] || []}
               onChange={(e, { name, value }) => {
-                this.setState({ currentArrayValues: { [name]: value } }, () => {
-                  this.onChange(null, { name, value }, field.type);
-                });
+                this.setState(
+                  { currentArrayValues: { ...this.state.currentArrayValues, [name]: value } },
+                  () => {
+                    this.onChange(null, { name, value }, field.type);
+                  }
+                );
               }}
             />
           ));
