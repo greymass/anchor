@@ -47,8 +47,7 @@ class GlobalAccountFragmentRamValue extends PureComponent<Props> {
 const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace('.', '\\.');
   const { ram } = state.globals;
-
-  if (Object.keys(ram).length === 0) {
+  if (!ram || Object.keys(ram).length === 0) {
     return {};
   }
   const quote = parseFloat(get(ram, 'quote_balance', '0').split(' ')[0]);
