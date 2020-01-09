@@ -17,6 +17,7 @@ import * as NavigationActions from '../actions/navigation';
 import * as SyncActions from '../../../shared/actions/sync';
 import * as WalletActions from '../../../shared/actions/wallet';
 
+import isUnlocked from '../../../shared/utils/Anchor/Unlocked';
 import GlobalAccountDropdown from '../../../shared/containers/Global/Account/Dropdown';
 import GlobalAppDisconnected from '../../../shared/containers/Global/App/Disconnected';
 import GlobalBlockchainDropdown from '../../../shared/containers/Global/Blockchain/Dropdown';
@@ -98,8 +99,9 @@ class MenuContainer extends Component<Props> {
       pubkeys,
       validate,
       wallet,
+      unlocked,
     } = this.props;
-    const locked = !pubkeys.unlocked.length;
+    const locked = !unlocked;
     return (
       <Menu
         className="nav-topbar"
@@ -175,6 +177,7 @@ function mapStateToProps(state) {
     validate: state.validate,
     wallet: state.wallet,
     wallets: state.wallets,
+    unlocked: isUnlocked(state),
   };
 }
 
