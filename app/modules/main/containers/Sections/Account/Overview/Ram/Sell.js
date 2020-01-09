@@ -11,6 +11,7 @@ import { clearSystemState } from '../../../../../../../shared/actions/system/sys
 import { getRamStats } from '../../../../../../../shared/actions/globals';
 import * as SellRamActions from '../../../../../../../shared/actions/system/sellram';
 
+import isUnlocked from '../../../../../../../shared/utils/Anchor/Unlocked';
 import WalletPanelButtonRamSell from '../../../../../../../shared/components/Wallet/Panel/Button/Ram/Sell';
 
 class AccountOverviewRamSell extends Component<Props> {
@@ -24,7 +25,9 @@ class AccountOverviewRamSell extends Component<Props> {
       globals,
       settings,
       system,
+      unlocked,
     } = this.props;
+    if (!unlocked) return false;
     return (
       <WalletPanelButtonRamSell
         account={account}
@@ -58,6 +61,7 @@ function mapStateToProps(state, ownProps) {
     globals: state.globals,
     settings: state.settings,
     system: state.system,
+    unlocked: isUnlocked(state),
   };
 }
 

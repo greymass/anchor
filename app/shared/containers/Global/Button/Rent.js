@@ -10,6 +10,7 @@ import compose from 'lodash/fp/compose';
 import * as REXComboActions from '../../../actions/system/rexcombo';
 import * as SystemStateActions from '../../../actions/system/systemstate';
 
+import isUnlocked from '../../../utils/Anchor/Unlocked';
 import GlobalFormTokenRent from '../../../components/Global/Form/Token/Rent';
 import GlobalTransactionModal from '../../../components/Global/Transaction/Modal';
 
@@ -27,7 +28,9 @@ class GlobalButtonRent extends Component<Props> {
       settings,
       system,
       t,
+      unlocked,
     } = this.props;
+    if (!unlocked) return false;
     const { open } = this.state;
     if (!connection.supportedContracts || !connection.supportedContracts.includes('rex')) {
       return false;
@@ -71,6 +74,7 @@ function mapStateToProps(state) {
     connection: state.connection,
     settings: state.settings,
     system: state.system,
+    unlocked: isUnlocked(state),
   };
 }
 
