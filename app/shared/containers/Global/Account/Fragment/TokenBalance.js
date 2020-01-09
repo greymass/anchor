@@ -25,6 +25,11 @@ class GlobalAccountFragmentTokenBalance extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  if (!ownProps.account) {
+    return {
+      balance: false
+    };
+  }
   const account = ownProps.account.replace('.', '\\.');
   const loaded = !isEmpty(get(state, `balances.${account}.${ownProps.token}`));
   const defaultValue = loaded ? 0 : false;
