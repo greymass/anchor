@@ -91,9 +91,9 @@ class AccountOverview extends Component<Props> {
       return (
         <Segment>
           <Header>
-            Select an account
+            No account selected!
             <Header.Subheader>
-
+              Select an account to view its resources.
             </Header.Subheader>
           </Header>
         </Segment>
