@@ -23,7 +23,7 @@ export default class WalletLockState extends Component<Props> {
       />
     ) : (
       <Popup
-        content="The wallet is currently unlocked. Click this menu item to lock it."
+        content="This wallet (and potentially other wallets) is unlocked. Click this icon to lock all of your wallets."
         inverted
         trigger={(
           <Menu.Item
