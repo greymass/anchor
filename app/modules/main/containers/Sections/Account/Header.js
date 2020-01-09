@@ -30,7 +30,6 @@ class AccountHeader extends Component<Props> {
         ram_quota,
         ram_usage,
       } = account;
-      console.log(cpu_limit.max === 0)
       if (
         cpu_limit.max === 0 // no staked CPU
         || cpu_limit.available / cpu_limit.max < 0.1 // CPU less than 10%
