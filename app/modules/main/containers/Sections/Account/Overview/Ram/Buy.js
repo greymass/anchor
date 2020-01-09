@@ -12,6 +12,7 @@ import { getRamStats } from '../../../../../../../shared/actions/globals';
 import * as BuyRamBytesActions from '../../../../../../../shared/actions/system/buyrambytes';
 import * as BuyRamActions from '../../../../../../../shared/actions/system/buyram';
 
+import isUnlocked from '../../../../../../../shared/utils/Anchor/Unlocked';
 import WalletPanelButtonRamBuy from '../../../../../../../shared/components/Wallet/Panel/Button/Ram/Buy';
 
 class AccountOverviewRamBuy extends Component<Props> {
@@ -25,7 +26,9 @@ class AccountOverviewRamBuy extends Component<Props> {
       globals,
       settings,
       system,
+      unlocked,
     } = this.props;
+    if (!unlocked) return false;
     return (
       <WalletPanelButtonRamBuy
         account={account}
@@ -58,6 +61,7 @@ function mapStateToProps(state, ownProps) {
     globals: state.globals,
     settings: state.settings,
     system: state.system,
+    unlocked: isUnlocked(state),
   };
 }
 
