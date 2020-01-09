@@ -10,6 +10,7 @@ import compose from 'lodash/fp/compose';
 import * as DelegateActions from '../../../actions/system/delegatebw';
 import * as SystemStateActions from '../../../actions/system/systemstate';
 
+import isUnlocked from '../../../utils/Anchor/Unlocked';
 import GlobalFormTokenStake from '../../../components/Global/Form/Token/Stake';
 import GlobalTransactionModal from '../../../components/Global/Transaction/Modal';
 
@@ -28,7 +29,9 @@ class GlobalButtonStake extends Component<Props> {
       settings,
       system,
       t,
+      unlocked,
     } = this.props;
+    if (!unlocked) return false;
     const { open } = this.state;
     const processing = !!(system && system.DELEGATEBW && system.DELEGATEBW === 'PENDING');
     return (
@@ -68,6 +71,7 @@ function mapStateToProps(state) {
     connection: state.connection,
     settings: state.settings,
     system: state.system,
+    unlocked: isUnlocked(state),
   };
 }
 
