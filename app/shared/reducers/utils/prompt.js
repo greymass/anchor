@@ -17,7 +17,6 @@ export default function prompt(state = {}, action) {
       });
     }
     case types.SYSTEM_ESRURISIGN_FAILURE: {
-      console.log(action)
       return state;
     }
     case types.SYSTEM_ESRURISIGN_SUCCESS: {
