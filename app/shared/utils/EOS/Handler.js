@@ -77,9 +77,8 @@ export default class EOSHandler {
       }
     };
   }
-  async sign(options) {
-    console.log(this)
-    return await this.signatureProvider.sign(options);
+  sign(options) {
+    return this.signatureProvider.sign(options);
   }
   transact(tx, options = false) {
     const transaction = cloneDeep(tx);
@@ -165,9 +164,13 @@ class LedgerSignatureProvider {
     const ledgerApi = new LedgerApi(transport);
     const { fc } = eosjs1(this.config);
     const tx = this.api.deserializeTransaction(serializedTransaction);
+    // Temporary Fix for Ledger + Identity Requests, to add an authorization
+    if (tx.actions[0].name === 'identity' && tx.actions[0].authorization.length === 0) {
+      const [actor, permission] = this.config.authorization.split('@');
+      tx.actions[0].authorization = [{ actor, permission }];
+    }
     const buffer = serialize(chainId, tx, fc.types);
     const response = await ledgerApi.signTransaction(this.config.signPath, buffer.toString('hex'));
-    console.log(response)
     return {
       signatures: convertSignatures(response.v + response.r + response.s),
       serializedTransaction: this.api.serializeTransaction(tx),
