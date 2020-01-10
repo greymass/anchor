@@ -7,6 +7,7 @@ import GlobalTransactionErrorAuthorization from './Error/Authorization';
 import GlobalTransactionErrorDefault from './Error/Default';
 import GlobalTransactionErrorCpuUsage from './Error/CpuUsage';
 import GlobalTransactionErrorNetUsage from './Error/NetUsage';
+import GlobalTransactionErrorLedgerBusy from './Error/Ledger/Busy';
 import GlobalTransactionErrorLedgerError from '../../../../containers/Global/Hardware/Ledger/Error';
 
 const transactionErrorsMapping = {
@@ -17,7 +18,8 @@ const transactionErrorsMapping = {
 };
 
 const transactionErrorMsgMapping = {
-  'transport.decorateAppAPIMethods is not a function': GlobalTransactionErrorLedgerError
+  'transport.decorateAppAPIMethods is not a function': GlobalTransactionErrorLedgerError,
+  'Transport race condition': GlobalTransactionErrorLedgerBusy,
 };
 
 export class GlobalTransactionMessageError extends Component<Props> {
