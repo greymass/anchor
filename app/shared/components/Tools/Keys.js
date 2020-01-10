@@ -144,7 +144,6 @@ class ToolsKeys extends Component<Props> {
           <Table.Body>
             {pubkeys.available.map((pubkey) => {
               const matching = wallets.filter((wallet) => wallet.pubkey === pubkey);
-              console.log(matching)
               return (
                 <Table.Row>
                   <Table.Cell>

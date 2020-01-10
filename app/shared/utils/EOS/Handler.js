@@ -77,6 +77,10 @@ export default class EOSHandler {
       }
     };
   }
+  async sign(options) {
+    console.log(this)
+    return await this.signatureProvider.sign(options);
+  }
   transact(tx, options = false) {
     const transaction = cloneDeep(tx);
     const tapos = Object.assign({}, options, this.tapos);

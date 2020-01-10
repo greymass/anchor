@@ -8,7 +8,7 @@ import { httpClient } from '../../../shared/utils/httpClient';
 
 const { ipcRenderer } = require('electron');
 const transactionAbi = require('eosjs2/node_modules/eosjs/src/transaction.abi.json');
-const { SigningRequest } = require('eosio-signing-request');
+const { abi, SigningRequest } = require('eosio-signing-request');
 const zlib = require('zlib');
 const util = require('util');
 
@@ -270,6 +270,55 @@ function unpackTransaction(bytes) {
   return {};
 }
 
+export function signIdentityRequest(prompt, blockchain, wallet) {
+  return (dispatch: () => void, getState) => {
+    const {
+      auths,
+      connection,
+    } = getState();
+    dispatch({
+      type: types.SYSTEM_ESRURISIGN_PENDING
+    });
+    const networkConfig = Object.assign({}, connection, {
+      chainId: blockchain.chainId,
+      httpEndpoint: blockchain.node,
+      signMethod: (wallet.mode === 'ledger') ? 'ledger' : false,
+      signPath: (wallet.mode === 'ledger') ? wallet.path : false,
+    });
+    // Logic to pull unlocked auths from storage
+    if (!networkConfig.signMethod && wallet.mode === 'hot') {
+      const auth = find(auths.keystore, { pubkey: wallet.pubkey });
+      if (auth) {
+        networkConfig.keyProviderObfuscated = {
+          key: auth.key,
+          hash: auth.hash,
+        };
+      }
+    }
+    const signer = eos(networkConfig, true, true);
+    setTimeout(async () => {
+      const signed = await signer.sign({
+        chainId: blockchain.chainId,
+        requiredKeys: [wallet.pubkey],
+        serializedTransaction: prompt.resolved.serializedTransaction,
+        abis: [abi.data],
+      });
+      dispatch({
+        payload: {
+          response: signed,
+          signed: {
+            signatures: signed.signatures,
+            transaction: unpackTransaction(signed.serializedTransaction),
+          }
+        },
+        type: types.SYSTEM_ESRURISIGN_SUCCESS
+      });
+      const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
+      dispatch(callbackURIWithProcessed(callbackParams));
+    }, 250);
+  };
+}
+
 export function signURI(tx, blockchain, wallet, broadcast = false, callback = false) {
   return (dispatch: () => void, getState) => {
     const {
@@ -389,7 +438,7 @@ export function templateURI(blockchain, wallet) {
       sign: false,
     }, false, true);
     const head = (await EOS.getInfo(true)).head_block_num;
-    const block = await EOS.getBlock(head);
+    const block = await EOS.getBlock(head - 20);
     // Force 1hr expiration of txs, shouldn't hit
     block.expire_seconds = 60 * 60 * 1;
     if (wallet.mode === 'watch') {
@@ -460,5 +509,6 @@ export default {
   clearURI,
   setURI,
   signURI,
+  signIdentityRequest,
   templateURI
 };
