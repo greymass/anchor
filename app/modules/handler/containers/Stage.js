@@ -14,6 +14,7 @@ import PromptStageBroadcast from './Stage/Broadcast';
 import PromptStageCallback from './Stage/Callback';
 import PromptStageExpired from './Stage/Expired';
 import PromptStageForbidden from './Stage/Forbidden';
+import PromptStageIdentity from './Stage/Identity';
 import PromptStageHardwareLedger from './Stage/Hardware/Ledger';
 import PromptStageNotConfigured from './Stage/NotConfigured';
 import PromptStageReview from './Stage/Review';
@@ -24,6 +25,7 @@ import PromptActionCallback from '../components/Actions/Callback';
 import PromptActionCancel from '../components/Actions/Cancel';
 import PromptActionComplete from '../components/Actions/Complete';
 import PromptActionDownload from '../components/Actions/Download';
+import PromptActionIdentity from '../components/Actions/Identity';
 import PromptActionRecreate from '../components/Actions/Recreate';
 import PromptActionShare from '../components/Actions/Share';
 import PromptActionSign from '../components/Actions/Sign';
@@ -123,6 +125,15 @@ class PromptStage extends Component<Props> {
     }
     actions.signURI(resolved.transaction, blockchain, wallet, true, callback);
   }
+  onSignIdentity = () => {
+    const {
+      actions,
+      blockchain,
+      prompt,
+      wallet
+    } = this.props;
+    actions.signIdentityRequest(prompt, blockchain, wallet);
+  }
   onUnlock = (password) => {
     const {
       actions,
@@ -183,6 +194,17 @@ class PromptStage extends Component<Props> {
       && signed.signatures
       && signed.signatures.length > 0
     );
+
+    let reqType;
+    if (prompt && prompt.req) {
+      ([reqType] = prompt.req);
+    }
+
+    // Once a identity request has been sent, just close
+    if (reqType === 'identity' && hasSignature) {
+      onClose();
+      return false;
+    }
 
     const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
     const hasCallback = !!(prompt && prompt.callback && prompt.callback.url);
@@ -325,6 +347,34 @@ class PromptStage extends Component<Props> {
           onClick={onClose}
         />
       );
+    } else if (reqType === 'identity' && !hasSignature) {
+      stage = (
+        <PromptStageIdentity
+          canSign={canSign}
+          couldSignWithDevice={couldSignWithDevice}
+          onSelect={this.props.swapAccount}
+          wallet={wallet}
+        />
+      )
+      if (couldSignWithKey && !canSign) {
+        nextAction = (
+          <PromptActionUnlock
+            disabled={signing || validatingPassword}
+            loading={validatingPassword}
+            onClick={this.onUnlock}
+            wallet={wallet}
+          />
+        );
+      } else {
+        nextAction = (
+          <PromptActionIdentity
+            disabled={signing || !canSign}
+            loading={signing}
+            onClick={this.onSignIdentity}
+            wallet={wallet}
+          />
+        );
+      }
     } else if (couldSignWithKey && !canSign) {
       nextAction = (
         <PromptActionUnlock
@@ -408,6 +458,7 @@ class PromptStage extends Component<Props> {
             marginBottom: 0,
             paddingBottom: '100px',
             paddingTop: '130px',
+            minHeight: '100vh',
           }}
         >
           <Dimmer
@@ -440,7 +491,7 @@ class PromptStage extends Component<Props> {
               warning
             />
           )}
-          {(wallet && wallet.mode === 'watch')
+          {(wallet && wallet.mode === 'watch' && reqType !== 'identity')
             ? (
               <Segment color="orange" style={{ margin: 0 }}>
                 <Header size="large">
