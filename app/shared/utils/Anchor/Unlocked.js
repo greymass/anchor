@@ -1,6 +1,8 @@
 import { map } from 'lodash';
 
 export default function isUnlocked(state) {
+  // If this is a ledger wallet, always unlocked
+  if (state.settings.walletMode === 'ledger') return true;
   // Retrieve needed data from state
   const { auths, wallet } = state;
   // If missing data, its not unlocked
