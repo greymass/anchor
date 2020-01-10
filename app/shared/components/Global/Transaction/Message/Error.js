@@ -58,9 +58,6 @@ export class GlobalTransactionMessageError extends Component<Props> {
       ComponentType
     } = this.state;
 
-    console.log(error)
-    console.table(error)
-
     return (
       <div style={style}>
         <ComponentType
