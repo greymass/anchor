@@ -8,7 +8,7 @@ import { httpClient } from '../../../shared/utils/httpClient';
 
 const { ipcRenderer } = require('electron');
 const transactionAbi = require('eosjs2/node_modules/eosjs/src/transaction.abi.json');
-const { abi, SigningRequest } = require('eosio-signing-request');
+const { SigningRequest } = require('eosio-signing-request');
 const zlib = require('zlib');
 const util = require('util');
 
@@ -297,24 +297,30 @@ export function signIdentityRequest(prompt, blockchain, wallet) {
     }
     const signer = eos(networkConfig, true, true);
     setTimeout(async () => {
-      const signed = await signer.sign({
-        chainId: blockchain.chainId,
-        requiredKeys: [wallet.pubkey],
-        serializedTransaction: prompt.resolved.serializedTransaction,
-        abis: [abi.data],
-      });
-      dispatch({
-        payload: {
-          response: signed,
-          signed: {
-            signatures: signed.signatures,
-            transaction: unpackTransaction(signed.serializedTransaction),
-          }
-        },
-        type: types.SYSTEM_ESRURISIGN_SUCCESS
-      });
-      const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
-      dispatch(callbackURIWithProcessed(callbackParams));
+      try {
+        const signed = await signer.sign({
+          chainId: blockchain.chainId,
+          requiredKeys: [wallet.pubkey],
+          serializedTransaction: prompt.resolved.serializedTransaction,
+        });
+        dispatch({
+          payload: {
+            response: signed,
+            signed: {
+              signatures: signed.signatures,
+              transaction: unpackTransaction(signed.serializedTransaction),
+            }
+          },
+          type: types.SYSTEM_ESRURISIGN_SUCCESS
+        });
+        const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
+        dispatch(callbackURIWithProcessed(callbackParams));
+      } catch (err) {
+        return dispatch({
+          type: types.SYSTEM_ESRURISIGN_FAILURE,
+          payload: { err },
+        });
+      }
     }, 250);
   };
 }
