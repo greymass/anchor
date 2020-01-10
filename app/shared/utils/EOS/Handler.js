@@ -82,7 +82,7 @@ export default class EOSHandler {
   }
   transact(tx, options = false) {
     const transaction = cloneDeep(tx);
-    const tapos = Object.assign({}, options, this.tapos);
+    const tapos = Object.assign({}, this.tapos, options);
     // is Fuel enabled?
     if (this.config.greymassFuel) {
       const { chainId } = this.config;
