@@ -20,9 +20,9 @@ class OverviewSidebarPrompt extends PureComponent<Props> {
       <Segment attached="top" color="grey" textAlign="center">
         <Header size="tiny">
           <Header.Subheader>
-            EEP-7 Signing Requests
+            EOSIO Signing Requests
           </Header.Subheader>
-          dApp Integration
+          dApp Integration Control
         </Header>
         <Button
           color={(settings.allowSigningRequests) ? 'orange' : 'green'}
