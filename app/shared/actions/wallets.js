@@ -365,7 +365,6 @@ export function useWallet(chainId, account, authorization, mode) {
       type: types.SET_UNREGISTERED_PRODUCERS,
       payload: { unregisteredProducers: [] }
     });
-    console.log({})
     // Set the wallet mode configuration
     dispatch(setWalletMode(newWallet.mode));
     // Update the settings for the current account
@@ -389,13 +388,16 @@ export function useWallet(chainId, account, authorization, mode) {
             authorization: newWallet.authorization,
             hash,
             key,
+            mode: 'hot',
             pubkey: newWallet.pubkey,
           },
           type: types.SET_CURRENT_KEY
         });
       }
     }
-    if (newWallet.account !== wallet.account || newWallet.authorization !== wallet.authorization) {
+    if (newWallet.account !== wallet.account ||
+        newWallet.authorization !== wallet.authorization ||
+        newWallet.mode !== wallet.mode) {
       // Set the active wallet to remember the last used
       return dispatch({
         type: types.SET_CURRENT_WALLET,

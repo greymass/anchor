@@ -32,9 +32,9 @@ class WelcomeImportContainer extends Component<Props> {
         actions,
         history,
       } = this.props;
-      const { account, authorization, chainId } = settings;
+      const { account, authorization, chainId, walletMode } = settings;
       if (account && authorization && chainId) {
-        actions.useWallet(chainId, account, authorization);
+        actions.useWallet(chainId, account, authorization, walletMode);
       }
       history.push('/');
     }

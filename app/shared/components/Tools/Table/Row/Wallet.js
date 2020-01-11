@@ -144,12 +144,13 @@ class ToolsTableRowWallet extends Component<Props> {
     ];
     // Is this the current wallet? Account + Authorization must match
     const isCurrentWallet = (
-      account === current.account
-      && authorization === current.authorization
+      account === current.account &&
+      authorization === current.authorization &&
+      mode === current.mode
     );
     // Is this either a Hot/Watch wallet and is there
     //   a Ledger currently connected? If so, append convert
-    if (isCurrentWallet && ['hot', 'watch'].indexOf(mode) >= 0 && status === 'connected') {
+    if (isCurrentWallet && ['hot',  'watch'].indexOf(mode) >= 0 && status === 'connected') {
       items.push((
         <Dropdown.Item
           content={t('wallet:wallet_convert_to_ledger')}
