@@ -152,7 +152,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
               ? options.map(w => {
                 const { mode } = w;
                 return (
-                  <Table.Row>
+                  <Table.Row key={`${w.account}@${w.authorization}@${w.mode}`}>
                     <Table.Cell>
                       <Header
                         content={`${w.account}@${w.authorization}`}
@@ -198,7 +198,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
                 );
               })
               : (
-                <Table.Row>
+                <Table.Row key="noWallets">
                   <Table.Cell colSpan="3">
                     <Segment basic padded textAlign="center">
                       <Header>

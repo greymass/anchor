@@ -48,8 +48,9 @@ class GlobalAccountDropdown extends Component<Props> {
     }
     const options = wallets
       .filter(w => (
-        w.account !== wallet.account
-        || w.authorization !== wallet.authorization
+        w.account !== wallet.account ||
+        w.authorization !== wallet.authorization ||
+        w.mode !== settings.walletMode
       ))
       .sort((a, b) => (a.account > b.account ? 1 : -1));
     let trigger = (
