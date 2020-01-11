@@ -53,7 +53,7 @@ class ToolsTableRowWallet extends Component<Props> {
     if (settings.account === account) {
       const otherWallet = wallets.find(wallet => wallet.account !== account);
 
-      actions.useWallet(settings.chainId, otherWallet.account, otherWallet.authorization);
+      actions.useWallet(settings.chainId, otherWallet.account, otherWallet.authorization, mode);
     }
   };
   swapWallet = (account, authorization, mode, password = false) => {

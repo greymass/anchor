@@ -30,7 +30,7 @@ export default function wallets(state = initialState, action) {
       const partitionParams = {
         account: action.payload.account,
         chainId: action.payload.chainId || false,
-        mode: 'hot',
+        mode: action.payload.mode || 'hot',
       };
       if (action.payload.authorization) {
         partitionParams.authorization = action.payload.authorization;
@@ -115,6 +115,7 @@ export default function wallets(state = initialState, action) {
         chainId: action.payload.chainId,
         mode: action.payload.mode,
       });
+      console.log({other})
       return other;
     }
     case types.UPGRADE_WALLET: {

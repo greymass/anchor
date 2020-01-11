@@ -25,12 +25,12 @@ class GlobalAccountSelectWallet extends Component<Props> {
     editedNodeAddress: null,
   }
 
-  swapAccount = (chainId, account, authorization, password = false) => {
+  swapAccount = (chainId, account, authorization, mode, password = false) => {
     const { actions, settings } = this.props;
     if (!['cold'].includes(settings.walletMode)) {
       actions.getInfo();
     }
-    actions.useWallet(chainId, account, authorization);
+    actions.useWallet(chainId, account, authorization, mode);
     if (password) {
       actions.unlockWallet(password);
     }
@@ -167,7 +167,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
                       {(w.data)
                         ? (
                           <GlobalButtonElevate
-                            onSuccess={(password) => this.swapAccount(chainId, w.account, w.authorization, password)}
+                            onSuccess={(password) => this.swapAccount(chainId, w.account, w.authorization, w.mode, password)}
                             settings={settings}
                             trigger={(
                               <Button
@@ -188,7 +188,7 @@ class GlobalAccountSelectWallet extends Component<Props> {
                             color="green"
                             content={t('tools:tools_wallets_swap')}
                             icon="random"
-                            onClick={() => this.swapAccount(chainId, w.account, w.authorization)}
+                            onClick={() => this.swapAccount(chainId, w.account, w.authorization, w.mode)}
                           />
                         )
                         : false

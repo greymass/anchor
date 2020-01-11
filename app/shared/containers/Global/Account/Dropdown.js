@@ -23,9 +23,9 @@ class GlobalAccountDropdown extends Component<Props> {
   onToggle = () => {
     this.setState({ open: !this.state.open });
   }
-  swapAccount = (account, authorization, password = false) => {
+  swapAccount = (account, authorization, mode, password = false) => {
     const { actions, settings } = this.props;
-    actions.useWallet(settings.chainId, account, authorization);
+    actions.useWallet(settings.chainId, account, authorization, mode);
     if (password) {
       actions.unlockWallet(password);
     }
@@ -103,7 +103,7 @@ class GlobalAccountDropdown extends Component<Props> {
                 if (w.mode === 'watch' || w.mode === 'ledger' || unlocked) {
                   return (
                     <Dropdown.Item
-                      onClick={() => this.swapAccount(w.account, w.authorization)}
+                      onClick={() => this.swapAccount(w.account, w.authorization, w.mode)}
                       key={`${w.account}@${w.authorization}`}
                     >
                       <GlobalFragmentWallet
@@ -117,7 +117,7 @@ class GlobalAccountDropdown extends Component<Props> {
                 }
                 return (
                   <GlobalButtonElevate
-                    onSuccess={(password) => this.swapAccount(w.account, w.authorization, password)}
+                    onSuccess={(password) => this.swapAccount(w.account, w.authorization, w.mode, password)}
                     settings={settings}
                     trigger={(
                       <Dropdown.Item>
