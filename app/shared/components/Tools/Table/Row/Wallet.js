@@ -41,10 +41,10 @@ class ToolsTableRowWallet extends Component<Props> {
       editAuthorization: authorization,
     });
   };
-  removeWallet = (account, authorization) => {
+  removeWallet = (account, authorization, mode) => {
     const { actions, settings, wallets } = this.props;
 
-    actions.removeWallet(settings.chainId, account, authorization);
+    actions.removeWallet(settings.chainId, account, authorization, mode);
 
     if (wallets.length === 1) {
       return actions.changeModule('');
@@ -56,9 +56,9 @@ class ToolsTableRowWallet extends Component<Props> {
       actions.useWallet(settings.chainId, otherWallet.account, otherWallet.authorization);
     }
   };
-  swapWallet = (account, authorization, password = false) => {
+  swapWallet = (account, authorization, mode, password = false) => {
     const { actions, settings } = this.props;
-    actions.useWallet(settings.chainId, account, authorization);
+    actions.useWallet(settings.chainId, account, authorization, mode);
     if (password) {
       actions.unlockWallet(password);
     }
@@ -171,7 +171,7 @@ class ToolsTableRowWallet extends Component<Props> {
             content={t('wallet:wallet_remove')}
             icon="trash"
             key="delete"
-            onClick={() => this.removeWallet(account, authorization)}
+            onClick={() => this.removeWallet(account, authorization, 'ledger')}
           />
         ));
         break;
@@ -184,7 +184,7 @@ class ToolsTableRowWallet extends Component<Props> {
             content={t('wallet:wallet_remove')}
             icon="trash"
             key="delete"
-            onClick={() => this.removeWallet(account, authorization)}
+            onClick={() => this.removeWallet(account, authorization, 'watch')}
           />
         ));
         break;
@@ -197,7 +197,7 @@ class ToolsTableRowWallet extends Component<Props> {
             content={t('wallet:wallet_remove')}
             icon="trash"
             key="delete"
-            onClick={() => this.removeWallet(account, authorization)}
+            onClick={() => this.removeWallet(account, authorization, 'cold')}
           />
         ));
         break;
@@ -208,7 +208,7 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <GlobalButtonElevate
             key="remove"
-            onSuccess={() => this.removeWallet(account, authorization)}
+            onSuccess={() => this.removeWallet(account, authorization, 'hot')}
             settings={settings}
             trigger={(
               <Dropdown.Item
@@ -225,7 +225,7 @@ class ToolsTableRowWallet extends Component<Props> {
     }
     const unlocked = (pubkeys.unlocked.includes(pubkey));
     return (
-      <Table.Row key={`${account}-${authorization}`}>
+      <Table.Row key={`${account}-${authorization}-${mode}`}>
         <Table.Cell collapsing>
           {modal}
           <Header size="small">
@@ -270,7 +270,7 @@ class ToolsTableRowWallet extends Component<Props> {
           {(!unlocked && (mode === 'hot' || mode === 'cold'))
             ? (
               <GlobalButtonElevate
-                onSuccess={(password) => this.swapWallet(account, authorization, password)}
+                onSuccess={(password) => this.swapWallet(account, authorization, mode, password)}
                 settings={settings}
                 trigger={(
                   <Button
@@ -293,7 +293,7 @@ class ToolsTableRowWallet extends Component<Props> {
                 content={t('tools_wallets_swap')}
                 disabled={isCurrentWallet}
                 icon="random"
-                onClick={() => this.swapWallet(account, authorization)}
+                onClick={() => this.swapWallet(account, authorization, mode)}
               />
             )
             : false
