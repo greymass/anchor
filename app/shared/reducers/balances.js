@@ -45,6 +45,10 @@ export default function balances(state = initialState, action) {
         symbol,
         tokens
       } = action.payload;
+      // If nothing changed, don't mutate state
+      if (state[account_name][symbol] === tokens[symbol]) {
+        return state;
+      }
       return Object.assign({}, state, {
         __contracts: Object.assign({}, state.__contracts, {
           [symbol.toUpperCase()]: {
