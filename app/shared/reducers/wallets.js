@@ -17,9 +17,6 @@ export default function wallets(state = initialState, action) {
         mode: action.payload.mode,
       });
 
-      console.log({other});
-      console.log({payload: action.payload})
-
       return [
         action.payload,
         ...other
@@ -108,14 +105,12 @@ export default function wallets(state = initialState, action) {
       return state;
     }
     case types.REMOVE_WALLET: {
-      console.log({payload: action.payload});
       const [, other] = partition(state, {
         account: action.payload.account,
         authorization: action.payload.authorization,
         chainId: action.payload.chainId,
         mode: action.payload.mode,
       });
-      console.log({other})
       return other;
     }
     case types.UPGRADE_WALLET: {

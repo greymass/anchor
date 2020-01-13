@@ -355,11 +355,9 @@ export function useWallet(chainId, account, authorization, mode) {
       // To be able to find legacy wallets, only add authorization to the query if defined
       walletQuery.authorization = authorization;
     }
-    console.log({wallets})
-    console.log({walletQuery})
+
     const newWallet = find(wallets, walletQuery);
 
-    console.log({newWallet})
     //  Reset the unregistered producers
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
