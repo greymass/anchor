@@ -35,9 +35,9 @@ export function voteproducers(producers = [], proxy = '') {
         }]
       }, {
         blocksBehind: 3,
-        broadcast: false,
+        broadcast: connection.broadcast,
         expireSeconds: 60,
-        sign: false,
+        sign: connection.sign,
       })
       // .voteproducer(account, proxy, producers)
       .then((tx) => {
