@@ -332,7 +332,7 @@ export function importWallets(
       dispatch(importWallet(chainId, account, authorization, key, password, mode)));
 }
 
-export function removeWallet(chainId, account, authorization) {
+export function removeWallet(chainId, account, authorization, mode) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.REMOVE_WALLET,
@@ -340,21 +340,24 @@ export function removeWallet(chainId, account, authorization) {
         account,
         authorization,
         chainId,
+        mode,
       }
     });
   };
 }
 
-export function useWallet(chainId, account, authorization) {
+export function useWallet(chainId, account, authorization, mode) {
   return (dispatch: () => void, getState) => {
     const { auths, wallet, wallets } = getState();
     // Find the wallet by account name + authorization when possible
-    const walletQuery = { account, chainId };
+    const walletQuery = { account, chainId, mode };
     if (authorization) {
       // To be able to find legacy wallets, only add authorization to the query if defined
       walletQuery.authorization = authorization;
     }
+
     const newWallet = find(wallets, walletQuery);
+
     //  Reset the unregistered producers
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
@@ -383,13 +386,16 @@ export function useWallet(chainId, account, authorization) {
             authorization: newWallet.authorization,
             hash,
             key,
+            mode: 'hot',
             pubkey: newWallet.pubkey,
           },
           type: types.SET_CURRENT_KEY
         });
       }
     }
-    if (newWallet.account !== wallet.account || newWallet.authorization !== wallet.authorization) {
+    if (newWallet.account !== wallet.account ||
+        newWallet.authorization !== wallet.authorization ||
+        newWallet.mode !== wallet.mode) {
       // Set the active wallet to remember the last used
       return dispatch({
         type: types.SET_CURRENT_WALLET,

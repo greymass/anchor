@@ -53,7 +53,7 @@ class Welcome extends Component<Props> {
     setSetting('walletInit', true);
     setSetting('walletTemp', false);
     // Set this wallet as the used wallet
-    actions.useWallet(connection.chainId, account, authorization);
+    actions.useWallet(connection.chainId, account, authorization, 'ledger');
     actions.clearValidationState();
     actions.validateNode(settings.node, connection.chainId);
     history.push('/voter');

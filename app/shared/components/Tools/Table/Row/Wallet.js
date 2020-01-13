@@ -41,10 +41,10 @@ class ToolsTableRowWallet extends Component<Props> {
       editAuthorization: authorization,
     });
   };
-  removeWallet = (account, authorization) => {
+  removeWallet = (account, authorization, mode) => {
     const { actions, settings, wallets } = this.props;
 
-    actions.removeWallet(settings.chainId, account, authorization);
+    actions.removeWallet(settings.chainId, account, authorization, mode);
 
     if (wallets.length === 1) {
       return actions.changeModule('');
@@ -53,12 +53,12 @@ class ToolsTableRowWallet extends Component<Props> {
     if (settings.account === account) {
       const otherWallet = wallets.find(wallet => wallet.account !== account);
 
-      actions.useWallet(settings.chainId, otherWallet.account, otherWallet.authorization);
+      actions.useWallet(settings.chainId, otherWallet.account, otherWallet.authorization, mode);
     }
   };
-  swapWallet = (account, authorization, password = false) => {
+  swapWallet = (account, authorization, mode, password = false) => {
     const { actions, settings } = this.props;
-    actions.useWallet(settings.chainId, account, authorization);
+    actions.useWallet(settings.chainId, account, authorization, mode);
     if (password) {
       actions.unlockWallet(password);
     }
@@ -144,12 +144,13 @@ class ToolsTableRowWallet extends Component<Props> {
     ];
     // Is this the current wallet? Account + Authorization must match
     const isCurrentWallet = (
-      account === current.account
-      && authorization === current.authorization
+      account === current.account &&
+      authorization === current.authorization &&
+      mode === current.mode
     );
     // Is this either a Hot/Watch wallet and is there
     //   a Ledger currently connected? If so, append convert
-    if (isCurrentWallet && ['hot', 'watch'].indexOf(mode) >= 0 && status === 'connected') {
+    if (isCurrentWallet && ['hot',  'watch'].indexOf(mode) >= 0 && status === 'connected') {
       items.push((
         <Dropdown.Item
           content={t('wallet:wallet_convert_to_ledger')}
@@ -171,7 +172,7 @@ class ToolsTableRowWallet extends Component<Props> {
             content={t('wallet:wallet_remove')}
             icon="trash"
             key="delete"
-            onClick={() => this.removeWallet(account, authorization)}
+            onClick={() => this.removeWallet(account, authorization, 'ledger')}
           />
         ));
         break;
@@ -184,7 +185,7 @@ class ToolsTableRowWallet extends Component<Props> {
             content={t('wallet:wallet_remove')}
             icon="trash"
             key="delete"
-            onClick={() => this.removeWallet(account, authorization)}
+            onClick={() => this.removeWallet(account, authorization, 'watch')}
           />
         ));
         break;
@@ -197,7 +198,7 @@ class ToolsTableRowWallet extends Component<Props> {
             content={t('wallet:wallet_remove')}
             icon="trash"
             key="delete"
-            onClick={() => this.removeWallet(account, authorization)}
+            onClick={() => this.removeWallet(account, authorization, 'cold')}
           />
         ));
         break;
@@ -208,7 +209,7 @@ class ToolsTableRowWallet extends Component<Props> {
         items.push((
           <GlobalButtonElevate
             key="remove"
-            onSuccess={() => this.removeWallet(account, authorization)}
+            onSuccess={() => this.removeWallet(account, authorization, 'hot')}
             settings={settings}
             trigger={(
               <Dropdown.Item
@@ -225,7 +226,7 @@ class ToolsTableRowWallet extends Component<Props> {
     }
     const unlocked = (pubkeys.unlocked.includes(pubkey));
     return (
-      <Table.Row key={`${account}-${authorization}`}>
+      <Table.Row key={`${account}-${authorization}-${mode}`}>
         <Table.Cell collapsing>
           {modal}
           <Header size="small">
@@ -270,7 +271,7 @@ class ToolsTableRowWallet extends Component<Props> {
           {(!unlocked && (mode === 'hot' || mode === 'cold'))
             ? (
               <GlobalButtonElevate
-                onSuccess={(password) => this.swapWallet(account, authorization, password)}
+                onSuccess={(password) => this.swapWallet(account, authorization, mode, password)}
                 settings={settings}
                 trigger={(
                   <Button
@@ -293,7 +294,7 @@ class ToolsTableRowWallet extends Component<Props> {
                 content={t('tools_wallets_swap')}
                 disabled={isCurrentWallet}
                 icon="random"
-                onClick={() => this.swapWallet(account, authorization)}
+                onClick={() => this.swapWallet(account, authorization, mode)}
               />
             )
             : false

@@ -14,6 +14,7 @@ export default function wallets(state = initialState, action) {
         account: action.payload.account,
         authorization: action.payload.authorization,
         chainId: action.payload.chainId,
+        mode: action.payload.mode,
       });
 
       return [
@@ -26,6 +27,7 @@ export default function wallets(state = initialState, action) {
       const partitionParams = {
         account: action.payload.account,
         chainId: action.payload.chainId || false,
+        mode: action.payload.mode || 'hot',
       };
       if (action.payload.authorization) {
         partitionParams.authorization = action.payload.authorization;
@@ -85,6 +87,7 @@ export default function wallets(state = initialState, action) {
         account: action.payload.account,
         authorization: action.payload.authorization,
         chainId: action.payload.chainId,
+        mode: 'ledger',
       });
       // If the wallet is found
       if (toModify.length) {
@@ -106,6 +109,7 @@ export default function wallets(state = initialState, action) {
         account: action.payload.account,
         authorization: action.payload.authorization,
         chainId: action.payload.chainId,
+        mode: action.payload.mode,
       });
       return other;
     }
@@ -113,6 +117,7 @@ export default function wallets(state = initialState, action) {
       const partitionQuery = {
         account: action.payload.account,
         chainId: action.payload.chainId,
+        mode: action.payload.mode,
       };
       if (action.payload.oldAuthorization) {
         partitionQuery.authorization = action.payload.oldAuthorization;

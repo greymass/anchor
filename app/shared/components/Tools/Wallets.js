@@ -61,8 +61,8 @@ class ToolsWallets extends Component<Props> {
             {([].concat(wallets)
                 .filter((w) => (w.chainId === settings.chainId))
                 .sort((a, b) => {
-                  const k1 = `${a.account}@${a.authorization}`;
-                  const k2 = `${b.account}@${b.authorization}`;
+                  const k1 = `${a.account}@${a.authorization}@${a.mode}`;
+                  const k2 = `${b.account}@${b.authorization}@${b.mode}`;
                   return (k1 > k2) ? 1 : -1;
                 })
                 .map((w) => (
