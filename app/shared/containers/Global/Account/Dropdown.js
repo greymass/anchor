@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
@@ -12,7 +12,7 @@ import GlobalFragmentWallet from '../../../components/Global/Fragment/Wallet';
 import * as WalletActions from '../../../actions/wallet';
 import * as WalletsActions from '../../../actions/wallets';
 
-class GlobalAccountDropdown extends Component<Props> {
+class GlobalAccountDropdown extends PureComponent<Props> {
   state = { open: false }
   onClose = () => {
     this.setState({ open: false });
@@ -32,6 +32,7 @@ class GlobalAccountDropdown extends Component<Props> {
   }
   render() {
     const {
+      allwallets,
       auths,
       fluid,
       selection,
@@ -40,9 +41,8 @@ class GlobalAccountDropdown extends Component<Props> {
       t,
       validate,
       wallet,
-      wallets
     } = this.props;
-    const { chainId } = settings;
+    const wallets = allwallets.filter(w => (w.chainId === settings.chainId));
     if (!wallets || wallets.length === 0) {
       return false;
     }
@@ -144,13 +144,13 @@ class GlobalAccountDropdown extends Component<Props> {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
+    allwallets: state.wallets,
     auths: state.auths,
     settings: state.settings,
     validate: state.validate,
     wallet: state.wallet,
-    wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId))
   };
 }
 
