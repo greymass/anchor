@@ -46,7 +46,7 @@ export default function balances(state = initialState, action) {
         tokens
       } = action.payload;
       // If nothing changed, don't mutate state
-      if (state[account_name][symbol] === tokens[symbol]) {
+      if (state[account_name] && state[account_name][symbol] === tokens[symbol]) {
         return state;
       }
       return Object.assign({}, state, {
