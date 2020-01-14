@@ -1,4 +1,5 @@
 import { get } from 'dot-prop-immutable';
+import { isEqual } from 'lodash';
 
 import * as types from '../actions/types';
 
@@ -45,6 +46,9 @@ export default function globals(state = initialState, action) {
       const pricefeed = {
         [action.payload.scope]: get(action, 'payload.results.rows.0.median')
       };
+      if (isEqual(state.pricefeed, pricefeed)) {
+        return state;
+      }
       return Object.assign({}, state, { pricefeed });
     }
     case types.GET_CURRENCYSTATS_SUCCESS: {
