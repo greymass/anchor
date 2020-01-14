@@ -45,10 +45,12 @@ class HomeContainer extends Component<Props> {
   }
   render() {
     const {
-      upgradable
+      storage,
+      wallets,
     } = this.props;
+    const upgradable = wallets.filter(w => w.mode !== 'watch' && !storage.keys.includes(w.pubkey));
     let interrupt;
-    if (upgradable) {
+    if (upgradable.length) {
       interrupt = <HomeUpgradeContainer />;
     }
     return (
@@ -74,8 +76,6 @@ function mapStateToProps(state) {
   return {
     auths: state.auths,
     settings: state.settings,
-    // Determine if any wallets require an upgrade from v1
-    upgradable: state.wallets.filter(w => w.data).length,
     storage: state.storage,
     wallets: state.wallets,
     validate: state.validate,
