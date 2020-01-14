@@ -144,8 +144,7 @@ class OverviewContainer extends Component<Props> {
                     basic
                     content="Manage Wallets"
                     icon="users"
-                    onClick={() => this.props.actions.changeModule('tools/wallets')}
-
+                    onClick={() => this.props.actions.changeModule('manage/wallets')}
                   />
                 </Container>
               </Segment>

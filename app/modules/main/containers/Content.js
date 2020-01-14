@@ -18,6 +18,8 @@ import ToolsContainer from './Sections/Tools';
 import SettingsContainer from './Sections/Settings';
 import VersionContainer from './Sections/Version';
 import WalletContainer from './Sections/Wallet';
+import ToolsWallets from './Sections/Tools/Wallets';
+import GlobalBlockchainManage from '../../../shared/containers/Global/Blockchain/Manage';
 
 class ContentContainer extends Component<Props> {
   render = () => (
@@ -34,6 +36,8 @@ class ContentContainer extends Component<Props> {
           <Route path="/tools" component={ToolsContainer} />
           <Route path="/settings" component={SettingsContainer} />
           <Route path="/version" component={VersionContainer} />
+          <Route path="/manage/wallets" component={ToolsWallets} />
+          <Route path="/manage/blockchains" component={GlobalBlockchainManage} />
         </Switch>
       </HashRouter>
     </Container>
