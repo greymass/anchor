@@ -31,13 +31,13 @@ class HomeContainer extends Component<Props> {
       history,
       settings,
       wallets,
-      validate,
     } = this.props;
+    const matchingWallets = wallets.filter(w => (w.chainId === settings.chainId));
     if (!settings.walletInit) {
       history.push('/home/init');
     } else if (!settings.chainId || settings.blockchains.length === 0) {
       history.push('/home/blockchains');
-    } else if (!wallets || wallets.length === 0) {
+    } else if (!matchingWallets || matchingWallets.length === 0) {
       history.push('/home/accounts');
     } else if (settings.walletMode === 'cold') {
       history.push('/home/coldwallet');
@@ -72,14 +72,12 @@ class HomeContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    auths:state.auths,
-    storage:state.storage,
-    connection:state.connection,
+    auths: state.auths,
     settings: state.settings,
-    test: state.wallets,
-    wallets: state.wallets.filter(w => (w.chainId === state.settings.chainId)),
     // Determine if any wallets require an upgrade from v1
     upgradable: state.wallets.filter(w => w.data).length,
+    storage: state.storage,
+    wallets: state.wallets,
     validate: state.validate,
   };
 }
