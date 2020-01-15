@@ -103,21 +103,24 @@ export default class EOSHandler {
   }
 
   // return a transaction like v16 would
-    const info = await this.rpc.get_info();
-    const blockInfo = await this.rpc.get_block(height);
-    const transaction = Object.assign({}, cloneDeep(tx), {
-      actions: await this.ensureSerializedActions(tx.actions),
-      context_free_actions: [],
-      transaction_extensions: [],
-      expiration: this.getExpiration(),
-      ref_block_num: blockInfo.block_num & 0xffff,
-      ref_block_prefix: blockInfo.ref_block_prefix,
-      max_cpu_usage_ms: 0,
-      max_net_usage_words: 0,
-      delay_sec: 0,
-    });
   createTransaction = async (tx, combinedOptions = []) => {
+    let transaction = tx;
+    if (!tx.ref_block_num || !tx.ref_block_prefix) {
+      const info = await this.rpc.get_info();
       const height = info.last_irreversible_block_num - combinedOptions.blocksBehind;
+      const blockInfo = await this.rpc.get_block(height);
+      transaction = Object.assign({}, cloneDeep(tx), {
+        actions: await this.ensureSerializedActions(tx.actions),
+        context_free_actions: [],
+        transaction_extensions: [],
+        expiration: this.getExpiration(combinedOptions),
+        ref_block_num: blockInfo.block_num & 0xffff,
+        ref_block_prefix: blockInfo.ref_block_prefix,
+        max_cpu_usage_ms: 0,
+        max_net_usage_words: 0,
+        delay_sec: 0,
+      });
+    }
     const serializedTransaction = this.api.serializeTransaction(transaction);
     return {
       broadcast: false,
