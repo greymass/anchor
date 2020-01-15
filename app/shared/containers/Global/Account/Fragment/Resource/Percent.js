@@ -10,15 +10,22 @@ class GlobalAccountFragmentResourcePercent extends PureComponent<Props> {
   render() {
     const {
       resource,
+      settings,
     } = this.props;
     if (!resource) return false;
-    let percent = ((resource.available / resource.max) * 100).toFixed(2);
+    let percent = ((resource.available / resource.max) * 100).toFixed(1);
     if (isNaN(percent)) {
       percent = 0;
     }
+    if (!settings.displayResourcesAvailable) {
+      percent = (100 - percent).toFixed(1);
+    }
     return (
       <React.Fragment>
-        {(percent < 5)
+        {(
+          (settings.displayResourcesAvailable && percent < 5)
+          || (!settings.displayResourcesAvailable && percent > 95)
+        )
           ? (
             <Popup
               content="This resource is running low. Consider staking more tokens in order to increase the resources made available to this account."
@@ -45,6 +52,7 @@ const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace('.', '\\.');
   return {
     resource: get(state.accounts, `${account}.${ownProps.type}_limit`),
+    settings: state.settings,
   };
 };
 
