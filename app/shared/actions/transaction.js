@@ -4,7 +4,8 @@ import eos from './helpers/eos';
 export function buildTransaction(contract, action, account, data) {
   return (dispatch: () => void, getState) => {
     const {
-      connection
+      connection,
+      settings,
     } = getState();
     // Reset system state to clear any previous transactions
     dispatch({
@@ -15,29 +16,34 @@ export function buildTransaction(contract, action, account, data) {
       type: types.SYSTEM_TRANSACTION_BUILD_PENDING
     });
     // Build the operation to perform
-    eos(connection, true)
+    eos(connection, true, true)
       // Specify Contract
-      .contract(contract.account)
-      // Perform specified action w/ data
-      .then((c) => c[action](data, {
+      .transact({
+        actions: [{
+          account: contract.account,
+          name: action,
+          authorization: [{
+            actor: settings.account,
+            permission: settings.authorization
+          }],
+          data,
+        }]
+      }, {
         broadcast: false,
         sign: connection.sign
       })
-        .then((tx) => {
-          // Dispatch transaction
-          dispatch(setTransaction(JSON.stringify({
-            contract,
-            transaction: tx
-          })));
-          return dispatch({
-            payload: { tx },
-            type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
-          });
-        })
-        .catch((err) => dispatch({
-          payload: { err },
-          type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
-        })))
+      .then((tx) => {
+        console.log(contract, tx)
+        // Dispatch transaction
+        dispatch(setTransaction(JSON.stringify({
+          contract,
+          transaction: tx
+        })));
+        return dispatch({
+          payload: { tx },
+          type: types.SYSTEM_TRANSACTION_BUILD_SUCCESS
+        });
+      })
       .catch((err) => dispatch({
         payload: { err },
         type: types.SYSTEM_TRANSACTION_BUILD_FAILURE
@@ -87,7 +93,6 @@ export function clearTransaction() {
 }
 
 export function setTransaction(data) {
-  console.log({data})
   return (dispatch: () => void) => {
     try {
       dispatch({
