@@ -39,7 +39,6 @@ export default class EOSHandler {
       this.signatureProvider = new JsSignatureProvider(config.keyProvider || []);
     }
     this.initEOSJS(config.httpEndpoint)
-    this.tapos = {
       blocksBehind: 3,
       broadcast: config.broadcast,
       expireSeconds: config.expireSeconds,
@@ -82,7 +81,7 @@ export default class EOSHandler {
   }
   transact(tx, options = false) {
     const transaction = cloneDeep(tx);
-    const tapos = Object.assign({}, this.tapos, options);
+    const combinedOptions = Object.assign({}, this.options, options);
     // is Fuel enabled?
     if (this.config.greymassFuel) {
       const { chainId } = this.config;
@@ -95,16 +94,16 @@ export default class EOSHandler {
     }
     // no broadcast + sign = create a v16 format transaction
     //   should likely be converted to use esr payloads
-    if (!this.tapos.broadcast && !this.tapos.sign) {
-      return this.createTransaction(transaction, tapos);
+    if (!combinedOptions.broadcast && !combinedOptions.sign) {
+      return this.createTransaction(transaction, combinedOptions);
     }
-    // otherwise transact
-    return this.api.transact(transaction, tapos);
+    // issue the transaction with options and config
+    const processed = await this.api.transact(transaction, combinedOptions);
+    return processed;
   }
+
   // return a transaction like v16 would
-  createTransaction = async (tx) => {
     const info = await this.rpc.get_info();
-    const height = info.last_irreversible_block_num - this.tapos.blocksBehind;
     const blockInfo = await this.rpc.get_block(height);
     const transaction = Object.assign({}, cloneDeep(tx), {
       actions: await this.ensureSerializedActions(tx.actions),
@@ -117,6 +116,8 @@ export default class EOSHandler {
       max_net_usage_words: 0,
       delay_sec: 0,
     });
+  createTransaction = async (tx, combinedOptions = []) => {
+      const height = info.last_irreversible_block_num - combinedOptions.blocksBehind;
     const serializedTransaction = this.api.serializeTransaction(transaction);
     return {
       broadcast: false,
@@ -128,8 +129,9 @@ export default class EOSHandler {
       }
     };
   }
-  getExpiration = () => {
-    const { expireSeconds } = this.tapos;
+  getExpiration = (options = {}) => {
+    const combinedOptions = Object.assign({}, this.options, options);
+    const { expireSeconds } = combinedOptions;
     const currentDate = new Date();
     const timePlus = currentDate.getTime() + (expireSeconds * 1000);
     const timeInISOString = (new Date(timePlus)).toISOString();
