@@ -48,7 +48,9 @@ class HomeContainer extends Component<Props> {
       storage,
       wallets,
     } = this.props;
-    const upgradable = wallets.filter(w => w.mode !== 'watch' && !storage.keys.includes(w.pubkey));
+    const upgradable = wallets.filter(w =>
+      !['watch', 'ledger'].includes(w.mode)
+      && !storage.keys.includes(w.pubkey));
     let interrupt;
     if (upgradable.length) {
       interrupt = <HomeUpgradeContainer />;
