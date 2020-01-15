@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Grid, Header, Icon, Message, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment, Tab } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 import QRCode from 'qrcode';
 
@@ -88,19 +88,13 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
         menuItem: 'Signing',
         render: () => (
           <Tab.Pane>
-            <Grid>
+            <Grid divided relaxed>
               <Grid.Row>
-                <Grid.Column width={8}>
-                  <Header
-                    content="Sign with Mobile Wallet"
-                    subheader="Scan this with an EEP-7 compatible wallet to sign this transaction."
-                  />
-                  <canvas ref={(node) => { this.canvas = node; }} />
-                </Grid.Column>
-                <Grid.Column width={8}>
+                <Grid.Column width={6}>
                   <Header
                     content="Export this Transaction"
-                    subheader="Use one of the options below to export this unsigned transaction for use in another program or on another computer."
+                    subheader="Use one of the following options to export this unsigned transaction for use in another program or on another computer."
+                    textAlign="center"
                   />
                   <Button
                     basic
@@ -120,13 +114,6 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
                     onClick={this.onCopy}
                     style={{ marginBottom: '1em' }}
                   />
-                  {(copiedTransaction) && (
-                    <Message
-                      color="teal"
-                      content={t('global_transaction_unsigned_copied')}
-                      icon="check"
-                    />
-                  )}
                   <GlobalDangerLink
                     content={(
                       <Button
@@ -138,6 +125,32 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
                       />
                     )}
                     link={`https://eosio.to/${uriParts[1]}`}
+                  />
+                  <Message
+                    icon
+                    textAlign="left"
+                  >
+                    <Message.Content>
+                      <Message.Header>
+                        Expiration of Transactions
+                      </Message.Header>
+                      Every transaction has an expiration date, after which time even if signed will not be accepted by the blockchain. To successfully complete this transaction, ensure it is signed within the given amount of time.
+                    </Message.Content>
+                  </Message>
+                  {(copiedTransaction) && (
+                    <Message
+                      color="teal"
+                      content={t('global_transaction_unsigned_copied')}
+                      icon="check"
+                    />
+                  )}
+                </Grid.Column>
+                <Grid.Column width={10} textAlign="center">
+                  <canvas ref={(node) => { this.canvas = node; }} />
+                  <Header
+                    content="Sign with a Mobile Wallet"
+                    style={{ marginTop: 0 }}
+                    subheader="Scan this QR Code with an ESR/EEP-7 compatible wallet to sign and complete this transaction."
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -164,31 +177,18 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       },
     ];
     return (
-      <React.Fragment>
+      <Segment basic padded>
         <Header
-          content={t('global_transaction_unsigned_title_r2')}
+          content="Created an Unsigned Transaction"
           icon="qrcode"
           size="large"
-          subheader={t('global_transaction_unsigned_message_r2')}
+          subheader="This read only wallet has created an unsigned transaction which needs to be signed by the appropriate account before broadcasting to the blockchain."
         />
         <Modal.Content>
           <Tab
             onTabChange={this.onTabChange}
             panes={panes}
           />
-          <Message
-            icon
-            size="large"
-            warning
-          >
-            <Icon
-              name="info circle"
-            />
-            <Message.Content>
-              <Message.Header>{t('global_transaction_unsigned_warning_title')}</Message.Header>
-              {t('global_transaction_unsigned_warning_message')}
-            </Message.Content>
-          </Message>
         </Modal.Content>
         <Modal.Actions>
           <Segment basic clearing>
@@ -197,8 +197,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
             </Button>
           </Segment>
         </Modal.Actions>
-      </React.Fragment>
-
+      </Segment>
     );
   }
 }
