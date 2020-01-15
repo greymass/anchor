@@ -10,11 +10,16 @@ class GlobalAccountFragmentRamPercent extends PureComponent<Props> {
     const {
       used,
       max,
+      settings,
     } = this.props;
     if (!max) return false;
+    let percent = (((max - used) / max) * 100).toFixed(1);
+    if (!settings.displayResourcesAvailable) {
+      percent = (100 - percent).toFixed(1);
+    }
     return (
       <React.Fragment>
-        {(((max - used) / max) * 100).toFixed(1)}%
+        {percent}%
       </React.Fragment>
     );
   }
@@ -25,6 +30,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     used: get(state.accounts, `${account}.ram_usage`),
     max: get(state.accounts, `${account}.ram_quota`),
+    settings: state.settings,
   };
 };
 
