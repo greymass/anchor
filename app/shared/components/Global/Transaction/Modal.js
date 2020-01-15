@@ -95,7 +95,7 @@ class GlobalTransactionModal extends Component<Props> {
         open={openModal || open}
         onOpen={this.onOpen}
         onClose={this.onClose}
-        size={size || 'small'}
+        size={size || 'wide'}
       >
         <Header
           icon={icon}
