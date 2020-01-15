@@ -31,6 +31,7 @@ class AccountOverviewRam extends Component<Props> {
     const {
       account,
       connection,
+      settings,
     } = this.props;
     const resource = 'ram';
     const {
@@ -63,7 +64,11 @@ class AccountOverviewRam extends Component<Props> {
                         account={account}
                       />
                       <Header.Subheader>
-                        Available {resource.toUpperCase()}
+                        {(settings.displayResourcesAvailable)
+                          ? 'Available '
+                          : 'Used '
+                        }
+                        {resource.toUpperCase()}
                       </Header.Subheader>
                     </Header>
                     <Segment basic style={{ padding: 0 }}>
