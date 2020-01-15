@@ -22,7 +22,7 @@ export class GlobalTransactionMessageSuccess extends Component<Props> {
     if (blockExplorers && transaction) {
       links.push(<ExplorerLink
         blockExplorers={blockExplorers}
-        content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
+        content={transaction.transaction_id}
         linkData={transaction.transaction_id}
         linkBlockId={transaction.processed.block_num}
         linkType="txid"
