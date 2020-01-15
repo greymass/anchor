@@ -39,6 +39,7 @@ export default class EOSHandler {
       this.signatureProvider = new JsSignatureProvider(config.keyProvider || []);
     }
     this.initEOSJS(config.httpEndpoint)
+    this.options = {
       blocksBehind: 3,
       broadcast: config.broadcast,
       expireSeconds: config.expireSeconds,
@@ -79,7 +80,7 @@ export default class EOSHandler {
   sign(options) {
     return this.signatureProvider.sign(options);
   }
-  transact(tx, options = false) {
+  async transact(tx, options = false) {
     const transaction = cloneDeep(tx);
     const combinedOptions = Object.assign({}, this.options, options);
     // is Fuel enabled?
@@ -99,11 +100,17 @@ export default class EOSHandler {
     }
     // issue the transaction with options and config
     const processed = await this.api.transact(transaction, combinedOptions);
+    // no broadcast = create and return the transaction itself
+    if (!combinedOptions.broadcast) {
+      const deserializedTransaction = this.api.deserializeTransaction(processed.serializedTransaction);
+      return this.createTransaction(deserializedTransaction, combinedOptions, processed.signatures);
+    }
+    // otherwise return processed tx like the normal transact does
     return processed;
   }
 
   // return a transaction like v16 would
-  createTransaction = async (tx, combinedOptions = []) => {
+  createTransaction = async (tx, combinedOptions = [], signatures = []) => {
     let transaction = tx;
     if (!tx.ref_block_num || !tx.ref_block_prefix) {
       const info = await this.rpc.get_info();
@@ -127,7 +134,7 @@ export default class EOSHandler {
       transaction_id: Serialize.arrayToHex(sha256(serializedTransaction)).toLowerCase(),
       transaction: {
         compression: 'none',
-        signatures: [],
+        signatures,
         transaction
       }
     };
