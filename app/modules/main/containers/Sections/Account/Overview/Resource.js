@@ -36,6 +36,7 @@ class AccountOverviewResource extends Component<Props> {
       account,
       connection,
       resource,
+      settings,
     } = this.props;
     const {
       expanded,
@@ -92,7 +93,11 @@ class AccountOverviewResource extends Component<Props> {
                         type={resource}
                       />
                       <Header.Subheader>
-                        Available {resource.toUpperCase()}
+                        {(settings.displayResourcesAvailable)
+                          ? 'Available '
+                          : 'Used '
+                        }
+                        {resource.toUpperCase()}
                       </Header.Subheader>
                     </Header>
                     <Segment basic style={{ padding: 0 }}>
