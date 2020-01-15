@@ -49,21 +49,15 @@ export class GlobalTransactionMessageSuccess extends Component<Props> {
         />
         <Modal.Content>
           <p>{t('global_transaction_complete_message')}</p>
-          <Segment padded textAlign="center">
-            <p>txids</p>
+          <Segment padded textAlign="center" size="large">
             {(blockExplorers)
               ? (
                 <React.Fragment>
                   {links.map((link, idx) => (
                     <p key={idx}>
-                      #{idx+1}
-                      {' - '}
                       {link}
                     </p>
                   ))}
-                  <p>
-                    {`${t('global_transaction_complete_link_to')} ${settings.blockExplorer}`}
-                  </p>
                 </React.Fragment>
               )
               : (
