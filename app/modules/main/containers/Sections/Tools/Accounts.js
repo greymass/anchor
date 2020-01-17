@@ -13,7 +13,7 @@ class ToolsAccountsContainer extends Component<Props> {
     const {
       history,
     } = this.props;
-    history.push('/tools/wallets');
+    history.push('/manage/wallets');
   }
   render() {
     return (

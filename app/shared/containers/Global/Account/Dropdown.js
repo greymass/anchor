@@ -89,7 +89,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
                     content="Manage Wallets"
                     fluid
                     icon="users"
-                    onClick={() => this.props.onNavigationChange('tools/wallets')}
+                    onClick={() => this.props.onNavigationChange('manage/wallets')}
                     size="small"
                   />
                 </Dropdown.Header>
