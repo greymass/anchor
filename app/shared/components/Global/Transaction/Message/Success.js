@@ -22,7 +22,7 @@ export class GlobalTransactionMessageSuccess extends Component<Props> {
     if (blockExplorers && transaction) {
       links.push(<ExplorerLink
         blockExplorers={blockExplorers}
-        content={`${transaction.transaction_id.substr(0, 8)}...${transaction.transaction_id.substr(-8)}`}
+        content={transaction.transaction_id}
         linkData={transaction.transaction_id}
         linkBlockId={transaction.processed.block_num}
         linkType="txid"
@@ -49,21 +49,15 @@ export class GlobalTransactionMessageSuccess extends Component<Props> {
         />
         <Modal.Content>
           <p>{t('global_transaction_complete_message')}</p>
-          <Segment padded textAlign="center">
-            <p>txids</p>
+          <Segment padded textAlign="center" size="large">
             {(blockExplorers)
               ? (
                 <React.Fragment>
                   {links.map((link, idx) => (
                     <p key={idx}>
-                      #{idx+1}
-                      {' - '}
                       {link}
                     </p>
                   ))}
-                  <p>
-                    {`${t('global_transaction_complete_link_to')} ${settings.blockExplorer}`}
-                  </p>
                 </React.Fragment>
               )
               : (

@@ -12,10 +12,10 @@ export class GlobalSettingsResourceDisplayFormat extends Component<Props> {
 
   render() {
     const {
-      defaultValue,
       name,
       selection,
-      t
+      t,
+      value,
     } = this.props;
 
     const options = [
@@ -29,7 +29,7 @@ export class GlobalSettingsResourceDisplayFormat extends Component<Props> {
         onChange={this.onChange}
         options={options}
         selection={selection}
-        value={defaultValue || true}
+        value={value}
       />
     );
   }

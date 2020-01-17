@@ -12,15 +12,19 @@ class GlobalAccountFragmentResourceProgress extends PureComponent<Props> {
       attached,
       label,
       resource,
+      settings,
       size,
       style,
     } = this.props;
     if (!resource) return false;
-    const percent = ((resource.available / resource.max) * 100).toFixed(2);
+    let percent = ((resource.available / resource.max) * 100).toFixed(2);
+    if (!settings.displayResourcesAvailable) {
+      percent = 100 - percent;
+    }
     return (
       <Progress
         attached={attached}
-        indicating
+        indicating={settings.displayResourcesAvailable}
         content={label}
         percent={percent}
         size={size}
@@ -34,6 +38,7 @@ const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace('.', '\\.');
   return {
     resource: get(state.accounts, `${account}.${ownProps.type}_limit`),
+    settings: state.settings,
   };
 };
 

@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { Button, Container, Grid, Header, Label, Segment } from 'semantic-ui-react';
 
 import OverviewSidebarContainer from './Overview/Sidebar';
@@ -178,4 +177,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OverviewContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(OverviewContainer);
