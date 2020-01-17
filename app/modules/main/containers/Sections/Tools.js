@@ -54,7 +54,6 @@ class ToolsContainer extends Component<Props> {
           <Route path="/tools/api_ping" component={ToolsApiPing} />
           <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />
           <Route path="/tools/bid_name" component={ToolsBidName} />
-          <Route path="/tools/blockchains" component={GlobalBlockchainManage} />
           <Route path="/tools/chain_state" component={ToolsChainState} />
           <Route path="/tools/contacts" component={ToolsContacts} />
           <Route path="/tools/create_account" component={ToolsCreateAccount} />
@@ -73,7 +72,6 @@ class ToolsContainer extends Component<Props> {
           <Route path="/tools/reset_application" component={ToolsResetApplication} />
           <Route path="/tools/smart_contracts" component={ToolsSmartContracts} />
           <Route path="/tools/wallet_state" component={ToolsWalletState} />
-          <Route path="/tools/wallets" component={ToolsWallets} />
           <Route path="/tools/v1" component={Tools} />
         </Switch>
       </HashRouter>
