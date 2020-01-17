@@ -116,7 +116,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
                     content="Manage Blockchains"
                     fluid
                     icon="cubes"
-                    onClick={() => this.props.onNavigationChange('tools/blockchains')}
+                    onClick={() => this.props.onNavigationChange('manage/blockchains')}
                     size="small"
                   />
                 </Dropdown.Header>
