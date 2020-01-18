@@ -201,7 +201,7 @@ export function getAccount(account = '') {
             account_name: account
           })
           .then((response) =>
-            dispatch(processLoadedAccount(connection.chainId, account, response)))
+            dispatch(processLoadedAccount(connection.chainId, account, response.data)))
           .catch((err) => dispatch({
             type: types.GET_ACCOUNT_FAILURE,
             payload: { err, account_name: account },
