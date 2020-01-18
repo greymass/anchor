@@ -195,12 +195,17 @@ export function getAccount(account = '') {
       connection
     } = getState();
     if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
-      eos(connection).getAccount(account).then((results) =>
-        dispatch(processLoadedAccount(connection.chainId, account, results)))
-        .catch((err) => dispatch({
-          type: types.GET_ACCOUNT_FAILURE,
-          payload: { err, account_name: account },
-        }));
+      httpQueue.add(() =>
+        httpClient
+          .post(`${connection.httpEndpoint}/v1/chain/get_account`, {
+            account_name: account
+          })
+          .then((response) =>
+            dispatch(processLoadedAccount(connection.chainId, account, response)))
+          .catch((err) => dispatch({
+            type: types.GET_ACCOUNT_FAILURE,
+            payload: { err, account_name: account },
+          })));
       return;
     }
     dispatch({
