@@ -93,23 +93,23 @@ class HomeUpgradeContainer extends Component<Props> {
               {upgradable
                 .sort((a, b) => a.account > b.account ? 1 : -1)
                 .map((wallet) => (
-                <Table.Row>
-                  <Table.Cell collapsing>
-                    <GlobalFragmentChainLogo
-                      avatar
-                      chainId={wallet.chainId}
-                    />
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    <GlobalFragmentAuthorization
-                      account={wallet.account}
-                      authorization={wallet.authorization}
-                      pubkey={wallet.pubkey}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    Wallet Storage - Upgrade Required
-                  </Table.Cell>
+                  <Table.Row>
+                    <Table.Cell collapsing>
+                      <GlobalFragmentChainLogo
+                        avatar
+                        chainId={wallet.chainId}
+                      />
+                    </Table.Cell>
+                    <Table.Cell collapsing>
+                      <GlobalFragmentAuthorization
+                        account={wallet.account}
+                        authorization={wallet.authorization}
+                        pubkey={wallet.pubkey}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      "{wallet.mode}" wallet storage - upgrade required
+                    </Table.Cell>
                 </Table.Row>
               ))}
             </Table>
