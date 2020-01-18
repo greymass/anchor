@@ -25,10 +25,10 @@
 
 現在の 0.7.12 リリースのダウンロード：
 
-- [Windowsインストーラ](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc4/win-eos-voter-0.7.11.exe)
-- [macOSパッケージ](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc4/mac-eos-voter-0.7.11.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc4/linux-eos-voter-0.7.11-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc4/linux-eos-voter-0.7.11-amd64.snap)
+- [Windowsインストーラ](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc5/win-eos-voter-0.7.11.exe)
+- [macOSパッケージ](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc5/mac-eos-voter-0.7.11.dmg)
+- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc5/linux-eos-voter-0.7.11-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v1.0.0-rc5/linux-eos-voter-0.7.11-amd64.snap)
 
 最新のリリースはこのリポジトリのリリースページでいつでも利用可能です:
 

@@ -1,7 +1,7 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "eos-voter",
-  "application_version": "v1.0.0-rc4",
+  "application_version": "v1.0.0-rc5",
   "back": "戻る",
   "block_height": "ブロック高",
   "blockchain": "Blockchain",
