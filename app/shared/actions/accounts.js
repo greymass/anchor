@@ -459,28 +459,28 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       //         payload: { err }
       //       })));
       // } else {
-      forEach(selectedTokens, (namespace) => {
-        const [, contract, symbol] = namespace.split(':');
+        forEach(selectedTokens, (namespace) => {
+          const [, contract, symbol] = namespace.split(':');
 
-        eos(connection)
-          .getCurrencyBalance(contract, account, symbol)
-          .then((results) =>
-            dispatch({
-              type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-              payload: {
-                account_name: account,
-                contract,
-                precision: formatPrecisions(results),
-                symbol,
-                tokens: formatBalances(results, symbol)
-              }
-            }))
-          .catch((err) => dispatch({
-            type: types.GET_ACCOUNT_BALANCE_FAILURE,
-            payload: { err, account_name: account }
-          }));
-      });
-    // }
+          eos(connection)
+            .getCurrencyBalance(contract, account, symbol)
+            .then((results) =>
+              dispatch({
+                type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+                payload: {
+                  account_name: account,
+                  contract,
+                  precision: formatPrecisions(results),
+                  symbol,
+                  tokens: formatBalances(results, symbol)
+                }
+              }))
+            .catch((err) => dispatch({
+              type: types.GET_ACCOUNT_BALANCE_FAILURE,
+              payload: { err, account_name: account }
+            }));
+        });
+      // }
     }
   };
 }
