@@ -48,7 +48,7 @@ class HomeContainer extends Component<Props> {
       storage,
       wallets,
     } = this.props;
-    const upgradable = storage.keys.length === 0;
+    const upgradable = wallets.length > 0 && storage.keys.length === 0;
     let interrupt;
     if (upgradable) {
       interrupt = <HomeUpgradeContainer />;
