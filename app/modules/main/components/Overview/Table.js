@@ -23,9 +23,6 @@ import GlobalAccountFragmentVoterInfoWeightValue from '../../../../shared/contai
 import GlobalAccountFragmentVoterInfoProxy from '../../../../shared/containers/Global/Account/Fragment/VoterInfo/Proxy';
 
 class OverviewTable extends Component<Props> {
-  componentDidUpdate(prevProps) {
-    Object.entries(this.props).forEach(([key, val]) => prevProps[key] !== val && console.log(`OverviewTable '${key}' changed`));
-  }
   render() {
     const {
       chainSymbol,
