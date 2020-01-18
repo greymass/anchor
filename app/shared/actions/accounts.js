@@ -419,10 +419,18 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       }
       // Disabled until API can be optimized.
       // if (endpoints && endpoints.includes('/v1/chain/get_currency_balances')) {
+      //   const tokens = settings.customTokens.filter((t) => {
+      //     const [chain, ] = t.split(':');
+      //     return chain === settings.chainId;
+      //   }).map((t) => {
+      //     const [chain, contract, token] = t.split(':');
+      //     return `${contract}.${token}`;
+      //   });
       //   httpQueue.add(() =>
       //     httpClient
       //       .post(`${connection.httpEndpoint}/v1/chain/get_currency_balances`, {
-      //         account
+      //         account,
+      //         tokens,
       //       })
       //       .then((results) =>
       //         dispatch({
