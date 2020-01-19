@@ -64,6 +64,7 @@
   "wallet_panel_password_confirm_description": "Edastamiseks sisesta uuesti kohalik rahakoti parool.",
   "wallet_panel_password_confirm_title": "Kinnita parool",
   "wallet_panel_password_label": "Kohalik Rahakoti Parool",
+  "wallet_panel_password_label_r2": "Anchor Password",
   "wallet_panel_waiting_header": "Ootab Loomist",
   "wallet_panel_waiting_instructions": "Rakendus jälgib selle uue konto loomist. Kui uus konto on loodud, palub rakendus veel kord sisestada varuparooli ja luua kohalik kuum rahakott.",
   "wallet_panel_waiting_subheader": "Seda kontot pole veel loodud.",

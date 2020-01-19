@@ -4,6 +4,7 @@
   "transfer_confirming_title": "查看您的交易",
   "transfer_destination_account_is_contract": "The destination account has a smart contract enabled, and by sending to this account, your transfer may trigger additional actions which could consume RAM.",
   "transfer_header_available": "available to transfer.",
+  "transfer_header_available_r2": "available",
   "transfer_label_from": "原始账户",
   "transfer_label_memo": "传送备忘录",
   "transfer_label_quantity": "数量",
