@@ -20,9 +20,6 @@ export class GlobalTransactionMessageErrorAuthorization extends Component<Props>
         <hr style={colorStyle} />
         <List style={colorStyle} ordered>
           <List.Item>
-            {t('global_transaction_message_error_authorization_list_item_one')}
-          </List.Item>
-          <List.Item>
             {t('global_transaction_message_error_authorization_list_item_two')}
           </List.Item>
           <List.Item>
