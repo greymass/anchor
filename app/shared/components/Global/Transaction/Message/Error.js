@@ -34,12 +34,22 @@ export class GlobalTransactionMessageError extends Component<Props> {
       errorName = error.json && error.json.error && error.json.error.name;
     }
 
+    // Handle  case where it is greymassfuel error
+    const isFuelError = error.error &&
+      error.error.details &&
+      JSON.stringify(error.error.details).includes('greymassfuel');
+
+    if (isFuelError) {
+      errorName = 'leeway_deadline_exception';
+    }
+
     let component = GlobalTransactionErrorDefault;
     if (transactionErrorsMapping[errorName]) {
       component = transactionErrorsMapping[errorName];
     } else if (transactionErrorMsgMapping[error.message]) {
       component = transactionErrorMsgMapping[error.message];
     }
+
 
     this.state = {
       ComponentType: component
