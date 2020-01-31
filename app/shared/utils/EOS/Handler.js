@@ -80,6 +80,16 @@ export default class EOSHandler {
   sign(options) {
     return this.signatureProvider.sign(options);
   }
+  push(signedTransaction) {
+    let { serializedTransaction, signatures } = signedTransaction;
+    if (!serializedTransaction && signedTransaction.transaction) {
+      serializedTransaction = this.api.serializeTransaction(signedTransaction.transaction.transaction);
+    }
+    if (!signatures && signedTransaction.transaction && signedTransaction.transaction.signatures) {
+      ({ signatures } = signedTransaction.transaction);
+    }
+    return this.api.pushSignedTransaction({ signatures, serializedTransaction });
+  }
   async transact(tx, options = false) {
     const transaction = cloneDeep(tx);
     const combinedOptions = Object.assign({}, this.options, options);
@@ -153,9 +163,6 @@ export default class EOSHandler {
   getInfo = () => this.rpc.get_info()
   getBlock = (height) => this.rpc.get_block(height)
   getAbi = (account) => this.rpc.get_abi(account)
-  pushTransaction = (tx) => {
-    console.log("push", tx)
-  }
 }
 
 class LedgerSignatureProvider {
