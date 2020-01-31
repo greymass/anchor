@@ -8,7 +8,8 @@ const { clipboard, ipcRenderer } = require('electron');
 class PromptActionDownload extends Component<Props> {
   onSaveUnsigned = () => {
     const { prompt, settings } = this.props;
-    const { contract, tx } = prompt;
+    const { contract, resolved } = prompt;
+    const { transaction } = resolved;
     const data = JSON.stringify({
       contract,
       transaction: {
@@ -17,7 +18,7 @@ class PromptActionDownload extends Component<Props> {
         transaction: {
           compression: 'none',
           signatures: [],
-          transaction: tx
+          transaction
         }
       }
     }, null, 2);
