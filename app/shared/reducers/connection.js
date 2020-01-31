@@ -21,6 +21,7 @@ const initialState = {
   signMethod: false,
   signPath: false,
   supportedContracts: [],
+  tokenContract: 'eosio.token',
   tokenPrecision: 4,
 };
 
@@ -72,6 +73,8 @@ export default function connection(state = initialState, action) {
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
         supportedContracts: (blockchain) ? blockchain.supportedContracts : [],
+        systemContract: (blockchain && blockchain.systemContract) || 'eosio',
+        tokenContract: (blockchain && blockchain.tokenContract) || 'eosio.token',
         tokenPrecision: (blockchain && blockchain.tokenPrecision) || 4,
       });
     }
