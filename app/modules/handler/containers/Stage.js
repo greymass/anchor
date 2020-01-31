@@ -280,7 +280,7 @@ class PromptStage extends Component<Props> {
     if (wallet.mode === 'watch') {
       nextAction = (
         <PromptActionDownload
-          disabled={!prompt.transaction || signing}
+          disabled={!(prompt.resolved && prompt.resolved.transaction) || signing}
           onClick={this.onSaveUnsigned}
           prompt={prompt}
           settings={settings}

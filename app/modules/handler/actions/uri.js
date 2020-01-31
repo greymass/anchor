@@ -363,7 +363,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
         .then(async (signed) => {
           let broadcasted;
           if (broadcast) {
-            broadcasted = await signer.api.pushSignedTransaction(signed);
+            broadcasted = await signer.push(signed);
           }
           dispatch({
             payload: {
@@ -375,7 +375,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
                 }
                 : {
                   signatures: signed.signatures,
-                  transaction: unpackTransaction(signed.serializedTransaction),
+                  transaction: signed.transaction,
                 }
             },
             type: types.SYSTEM_ESRURISIGN_SUCCESS
@@ -385,7 +385,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             || (callback && !callback.broadcast)
           ) {
             const blockNum = (broadcasted) ? broadcasted.processed.block_num : null;
-            const callbackParams = prompt.resolved.getCallback(signed.signatures, blockNum)
+            const callbackParams = prompt.resolved.getCallback(signed.signatures, blockNum);
             dispatch(callbackURIWithProcessed(callbackParams));
           }
           if (broadcast) {
@@ -493,9 +493,14 @@ export function templateURI(blockchain, wallet) {
           });
         }
       }
+      const contracts = Array.from(abis);
       return dispatch({
         type: types.SYSTEM_ESRURIBUILD_SUCCESS,
         payload: {
+          contract: {
+            account_name: contracts[0][0],
+            abi: contracts[0][1],
+          },
           resolved,
         }
       });
