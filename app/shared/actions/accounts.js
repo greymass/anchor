@@ -217,7 +217,8 @@ export function getAccount(account = '') {
 
 export function getDelegatedBalances(account) {
   return (dispatch: () => void, getState) => {
-    dispatch(getTable('eosio', account, 'delband'));
+    const { connection } = getState();
+    dispatch(getTable(connection.systemContract, account, 'delband'));
   };
 }
 
@@ -352,7 +353,7 @@ function sortByReqId(actionOne, actionTwo) {
 function getSelectedTokens(connection, requestedTokens, settings) {
   const { customTokens } = settings;
   const newCustomTokens = customTokens.filter((token) => (connection.chainId === token.split(':')[0]));
-  let selectedTokens = [`${connection.chainId}:eosio.token:${connection.chainSymbol || 'EOS'}`];
+  let selectedTokens = [`${connection.chainId}:${connection.tokenContract}:${connection.chainSymbol || 'EOS'}`];
   if (newCustomTokens && newCustomTokens.length > 0) {
     selectedTokens = [...newCustomTokens, ...selectedTokens];
   }
@@ -523,7 +524,7 @@ export function getAccountByKey(key) {
       payload: { key }
     });
     // Prevent private keys from submitting
-    if (ecc.isValidPrivate(key) || !key.startsWith('EOS')) {
+    if (ecc.isValidPrivate(key)) {
       return dispatch({
         type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
       });
