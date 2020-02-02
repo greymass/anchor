@@ -494,13 +494,17 @@ export function templateURI(blockchain, wallet) {
         }
       }
       const contracts = Array.from(abis);
+      let contract;
+      if (contracts.length) {
+        contract = {
+          account_name: contracts[0][0],
+          abi: contracts[0][1],
+        }
+      }
       return dispatch({
         type: types.SYSTEM_ESRURIBUILD_SUCCESS,
         payload: {
-          contract: {
-            account_name: contracts[0][0],
-            abi: contracts[0][1],
-          },
+          contract,
           resolved,
         }
       });
