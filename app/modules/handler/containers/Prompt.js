@@ -146,7 +146,6 @@ class PromptContainer extends Component<Props> {
     const {
       response
     } = prompt;
-    if (!blockchain) return false;
 
     const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
     const shouldBroadcast = prompt.broadcast;
@@ -159,6 +158,7 @@ class PromptContainer extends Component<Props> {
     const requestedActorMissing =
       requestedActor &&
       requestedActor !== '...........1' &&
+      blockchain &&
       !find(wallets, { account: requestedActor, chainId: blockchain.chainId });
     return (
       <React.Fragment>
