@@ -12,6 +12,7 @@ import { Dimmer, Header, Message, Icon, Loader, Segment } from 'semantic-ui-reac
 
 import PromptStageBroadcast from './Stage/Broadcast';
 import PromptStageCallback from './Stage/Callback';
+import PromptStageError from './Stage/Error';
 import PromptStageExpired from './Stage/Expired';
 import PromptStageForbidden from './Stage/Forbidden';
 import PromptStageIdentity from './Stage/Identity';
@@ -315,6 +316,17 @@ class PromptStage extends Component<Props> {
       );
       nextAction = false;
       cancelAction = (
+        <PromptActionComplete
+          onClick={onClose}
+        />
+      );
+    } else if (!blockchain) {
+      stage = (
+        <PromptStageError
+          system={system}
+        />
+      );
+      nextAction = (
         <PromptActionComplete
           onClick={onClose}
         />
