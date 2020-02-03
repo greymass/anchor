@@ -6,6 +6,9 @@ export default function prompt(state = {}, action) {
     case types.SYSTEM_ESRURI_PENDING: {
       return {};
     }
+    case types.SYSTEM_ESRURI_FAILURE: {
+      return Object.assign({}, state, { uri: action.payload.uri });
+    }
     case types.SYSTEM_ESRURI_SUCCESS:
     case types.SYSTEM_ESRURIBUILD_SUCCESS: {
       return Object.assign({}, state, action.payload);
