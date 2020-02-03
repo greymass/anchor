@@ -65,67 +65,72 @@ class PromptHeader extends Component<Props> {
             </Header>
           </Grid.Column>
           <Grid.Column width={6} textAlign="right">
-            <Step.Group>
-              <Step>
-                {(loading)
-                  ? (
-                    <Statistic>
-                      <Statistic.Value>
-                        <Icon color="grey" loading name="circle notch" />
-                      </Statistic.Value>
-                    </Statistic>
-                  )
-                  : false
-                }
-                {(!loading && hasExpired)
-                  ? (
-                    <Statistic>
-                      <Statistic.Value>
-                        <Icon color="orange" name="warning sign" />
-                      </Statistic.Value>
-                      <Statistic.Label>Expired</Statistic.Label>
-                    </Statistic>
-                  )
-                  : false
-                }
-                {(!loading && hasBroadcast)
-                  ? (
-                    <Statistic>
-                      <Statistic.Value>
-                        <Icon color="grey" name="checkmark" />
-                      </Statistic.Value>
-                      <Statistic.Label>Complete</Statistic.Label>
-                    </Statistic>
-                  )
-                  : false
-                }
-                {(!loading && !hasBroadcast && !hasExpired && actions)
-                  ? (
-                    <Statistic>
-                      <Statistic.Value>
-                        {actions}
-                      </Statistic.Value>
-                      <Statistic.Label>Action(s)</Statistic.Label>
-                    </Statistic>
-                  )
-                  : false
-                }
-              </Step>
-              <Step active>
-                <Step.Content>
-                  <GlobalFragmentChainLogo
-                    chainId={blockchain.chainId}
-                    noPopup
-                  />
-                  <Header
-                    content={blockchain.name}
-                    size="small"
-                    style={{ margin: 0 }}
-                    textAlign="center"
-                  />
-                </Step.Content>
-              </Step>
-            </Step.Group>
+            {(prompt && blockchain)
+              ? (
+                <Step.Group>
+                  <Step>
+                    {(loading)
+                      ? (
+                        <Statistic>
+                          <Statistic.Value>
+                            <Icon color="grey" loading name="circle notch" />
+                          </Statistic.Value>
+                        </Statistic>
+                      )
+                      : false
+                    }
+                    {(!loading && hasExpired)
+                      ? (
+                        <Statistic>
+                          <Statistic.Value>
+                            <Icon color="orange" name="warning sign" />
+                          </Statistic.Value>
+                          <Statistic.Label>Expired</Statistic.Label>
+                        </Statistic>
+                      )
+                      : false
+                    }
+                    {(!loading && hasBroadcast)
+                      ? (
+                        <Statistic>
+                          <Statistic.Value>
+                            <Icon color="grey" name="checkmark" />
+                          </Statistic.Value>
+                          <Statistic.Label>Complete</Statistic.Label>
+                        </Statistic>
+                      )
+                      : false
+                    }
+                    {(!loading && !hasBroadcast && !hasExpired && actions)
+                      ? (
+                        <Statistic>
+                          <Statistic.Value>
+                            {actions}
+                          </Statistic.Value>
+                          <Statistic.Label>Action(s)</Statistic.Label>
+                        </Statistic>
+                      )
+                      : false
+                    }
+                  </Step>
+                  <Step active>
+                    <Step.Content>
+                      <GlobalFragmentChainLogo
+                        chainId={blockchain.chainId}
+                        noPopup
+                      />
+                      <Header
+                        content={blockchain.name}
+                        size="small"
+                        style={{ margin: 0 }}
+                        textAlign="center"
+                      />
+                    </Step.Content>
+                  </Step>
+                </Step.Group>
+              )
+              : false
+            }
           </Grid.Column>
         </Grid>
       </Segment>
