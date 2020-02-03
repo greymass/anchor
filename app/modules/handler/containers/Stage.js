@@ -175,7 +175,8 @@ class PromptStage extends Component<Props> {
 
     let error = system.ESRURIBUILD_LAST_ERROR ||
       system.ESRURISIGN_LAST_ERROR ||
-      system.ESRURIBROADCAST_LAST_ERROR;
+      system.ESRURIBROADCAST_LAST_ERROR ||
+      system.ESRURI_LAST_ERROR;
 
     const warning = system.ESRURIBUILD_LAST_WARNING;
 
