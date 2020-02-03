@@ -152,7 +152,7 @@ class PromptContainer extends Component<Props> {
     const shouldBroadcast = prompt.broadcast;
     const hasBroadcast =
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
-    const hasIssuedCallback = (system.ESRURICALLBACK === 'SUCCESS' && prompt.background);
+    const hasIssuedCallback = prompt.callbackExecuted;
     const hasExpired =
       !!(prompt.transaction && !hasBroadcast && Date.now() > Date.parse(`${prompt.transaction.expiration}z`));
     const requestedActor = get(prompt, 'transaction.actions.0.authorization.0.actor');

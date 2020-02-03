@@ -207,12 +207,12 @@ class PromptStage extends Component<Props> {
     }
 
     const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
-    const hasCallback = !!(prompt && prompt.callback && prompt.callback.url);
+    const hasCallback = !!(prompt && prompt.callback);
+
     const hasForegroundCallback = !!(
       prompt
       && prompt.callback
-      && prompt.callback.url
-      && prompt.callback.background === false
+      && prompt.background === false
     );
 
     // After this signature is added, does it meet the requirements to be able to broadcast?
