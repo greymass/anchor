@@ -144,7 +144,7 @@ class PromptStage extends Component<Props> {
   }
   render() {
     const {
-      availableKeys,
+      auths,
       blockchain,
       enableWhitelist,
       hasBroadcast,
@@ -166,6 +166,7 @@ class PromptStage extends Component<Props> {
       whitelist,
     } = this.props;
 
+    const availableKeys = auths.keystore.map((auth) => auth.pubkey);
     const awaitingDevice = (system.ESRURISIGN === 'PENDING');
     const signing = (system.ESRURISIGN === 'PENDING');
     const broadcasting = (system.ESRURIBROADCAST === 'PENDING');
@@ -548,7 +549,7 @@ class PromptStage extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
-    availableKeys: state.auths.keystore.map((auth) => auth.pubkey),
+    auths: state.auths,
     blockchains: state.blockchains,
     prompt: state.prompt,
     settings: state.settings,
