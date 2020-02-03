@@ -227,7 +227,13 @@ const disableSigningRequests = () => {
   });
 };
 
-// Allow for configuration of signing requests from the UI
+// Allow ESR Requests from the UI
+ipcMain.on('openUri', (event, data) => {
+  pHandler.webContents.send('openUri', data);
+  pHandler.show();
+});
+
+// Allow for configuration of ESR from the UI
 ipcMain.on('enableSigningRequests', enableSigningRequests);
 ipcMain.on('disableSigningRequests', disableSigningRequests);
 
