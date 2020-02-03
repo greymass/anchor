@@ -46,16 +46,17 @@ class GlobalFuelDropdown extends Component<Props> {
     if (!available) {
       return false;
     }
-    let netpercent = 0;
-    let cpupercent = 0;
-    let quota = false;
-    if (fuel) {
+    let quota = {
+      cpu: 0,
+      net: 0,
+      quota_cpu: 1,
+      quota_net: 1,
+    };
+    if (fuel && fuel.quota) {
       ({ quota } = fuel);
-      if (quota) {
-        netpercent = 100 - Math.round((quota.net / quota.quota_net) * 100);
-        cpupercent = 100 - Math.round((quota.cpu / quota.quota_cpu) * 100);
-      }
     }
+    const netpercent = 100 - Math.round((quota.net / quota.quota_net) * 100);
+    const cpupercent = 100 - Math.round((quota.cpu / quota.quota_cpu) * 100);
     return (
       <Popup
         trigger={(
@@ -100,36 +101,31 @@ class GlobalFuelDropdown extends Component<Props> {
                 )
               }
             </Segment>
-            {(quota)
-              ? (
-                <Grid>
-                  <Grid.Row columns={1}>
-                    <Grid.Column textAlign="center">
-                      <p>Your quotas remaining are as follows:</p>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row columns={2}>
-                    <Grid.Column>
-                      <Progress
-                        percent={cpupercent}
-                        progress="percent"
-                      >
-                        CPU Quota
-                      </Progress>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Progress
-                        percent={netpercent}
-                        progress="percent"
-                      >
-                        NET Quota
-                      </Progress>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              )
-              : false
-            }
+            <Grid>
+              <Grid.Row columns={1}>
+                <Grid.Column textAlign="center">
+                  <p>Your quotas remaining are as follows:</p>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  <Progress
+                    percent={cpupercent}
+                    progress="percent"
+                  >
+                    CPU Quota
+                  </Progress>
+                </Grid.Column>
+                <Grid.Column>
+                  <Progress
+                    percent={netpercent}
+                    progress="percent"
+                  >
+                    NET Quota
+                  </Progress>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Segment>
         )}
         flowing
