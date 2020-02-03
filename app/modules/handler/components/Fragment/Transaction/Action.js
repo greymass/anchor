@@ -5,6 +5,10 @@ import { Button, Icon, Label, List, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 import { attempt, isError } from 'lodash';
 
+import PromptFragmentTransactionActionFuel from './Action/Fuel';
+
+const fuelActions = ['greymassfuel:cosign', 'greymassnoop:noop'];
+
 class PromptFragmentTransactionAction extends Component<Props> {
   render() {
     const {
@@ -16,10 +20,23 @@ class PromptFragmentTransactionAction extends Component<Props> {
       total,
       whitelist,
     } = this.props;
+    if (
+      action.account
+      && action.name
+      && fuelActions.includes([action.account, action.name].join(':'))
+    ) {
+      return (
+        <PromptFragmentTransactionActionFuel
+          action={action}
+          index={index}
+          total={total}
+        />
+      );
+    }
     return (
       <div key={index}>
         <Segment attached="top" color="blue" inverted>
-          <Label basic size="large">
+          <Label basic>
             {action.account}
             <Icon
               name="caret right"
@@ -27,7 +44,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             />
             {action.name}
           </Label>
-          <Label color="blue" size="large">
+          <Label color="blue">
             Action {index + 1} of {total}
           </Label>
         </Segment>
@@ -77,21 +94,15 @@ class PromptFragmentTransactionAction extends Component<Props> {
           </List>
         </Segment>
         <Segment attached="bottom">
-          <List>
-            <List.Header>
-              <Label color="white" basic pointing="left">
-                Signatures Required
-              </Label>
-            </List.Header>
-            {action.authorization.map((auth, idx) => (
-              <List.Item>
-                <Label color="blue" key={`${idx}@${auth.actor}@${auth.permission}`}>
-                  <Icon name="pencil" />
-                  {auth.actor}@{auth.permission}
-                </Label>
-              </List.Item>
-            ))}
-          </List>
+          <Label color="white" basic pointing="right">
+            Signatures Required
+          </Label>
+          {action.authorization.map((auth, idx) => (
+            <Label color="blue" key={`${idx}@${auth.actor}@${auth.permission}`}>
+              <Icon name="pencil" />
+              {auth.actor}@{auth.permission}
+            </Label>
+          ))}
         </Segment>
       </div>
     );
