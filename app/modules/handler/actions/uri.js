@@ -362,7 +362,13 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
         })
         .then(async (signed) => {
           let broadcasted;
-          if (broadcast) {
+          const shouldBroadcast = (
+            prompt
+            && prompt.resolved
+            && prompt.resolved.request
+            && prompt.resolved.request.shouldBroadcast()
+          );
+          if (shouldBroadcast) {
             broadcasted = await signer.push(signed);
           }
           dispatch({
@@ -370,11 +376,11 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
               response: broadcasted,
               signed: (broadcasted)
                 ? {
-                  signatures: signed.signatures,
+                  signatures: signed.transaction.signatures,
                   ...broadcasted
                 }
                 : {
-                  signatures: signed.signatures,
+                  signatures: signed.transaction.signatures,
                   transaction: signed.transaction,
                 }
             },
@@ -388,7 +394,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             const callbackParams = prompt.resolved.getCallback(signed.transaction.signatures, blockNum);
             dispatch(callbackURIWithProcessed(callbackParams));
           }
-          if (broadcast) {
+          if (broadcasted) {
             dispatch({
               payload: {
                 endpoint: networkConfig.httpEndpoint,
