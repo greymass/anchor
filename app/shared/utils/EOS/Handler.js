@@ -100,8 +100,15 @@ export default class EOSHandler {
       if (fuelEndpoints[chainId]) {
         this.initEOSJS(fuelEndpoints[chainId]);
       }
-      // prepend Fuel action data
-      transaction.actions.unshift(cloneDeep(fuelTransaction));
+      // Check to see if this is already being cosigned by Fuel
+      const [firstAction] = transaction.actions;
+      if (
+        !['greymassfuel', 'greymassnoop'].includes(firstAction.account)
+        && !['cosign', 'noop'].includes(firstAction.name)
+      ) {
+        // prepend Fuel action data
+        transaction.actions.unshift(cloneDeep(fuelTransaction));
+      }
     }
     // no broadcast + sign = create a v16 format transaction
     //   should likely be converted to use esr payloads
