@@ -392,7 +392,7 @@ class PromptStage extends Component<Props> {
     } else if (couldSignWithKey && !canSign) {
       nextAction = (
         <PromptActionUnlock
-          disabled={!prompt.transaction || signing || validatingPassword}
+          disabled={signing || validatingPassword}
           loading={validatingPassword}
           onClick={this.onUnlock}
           wallet={wallet}
