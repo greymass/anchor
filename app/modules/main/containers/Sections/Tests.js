@@ -10,50 +10,84 @@ import ReactJson from 'react-json-view';
 import NavigationActions from '../../actions/navigation';
 import URIActions from '../../../handler/actions/uri';
 
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, remote } = require('electron');
 
 class TestsContainer extends Component<Props> {
   onClick = (e, data) => this.props.actions.changeModule(data.name)
   testURI = (uri) => {
+    // console.log(uri)
+    // remote.getCurrentWindow().loadURL(uri)
+    // this.props.actions.setURI(uri)
     ipcRenderer.send('openUri', uri);
   }
   render() {
     const uris = {
-      BEOS: [
-        ['refund', 'esr:gWPgZACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
-      BOS: [
-        ['refund', 'esr:gWNgYwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
+      // BEOS: [
+      //   ['refund', 'esr:gWPgZACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
+      // BOS: [
+      //   ['refund', 'esr:gWNgYwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
       EOS: [
-        ['refund', 'esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
-        ['proxy greymassvote', 'esr:gWNgZACDVwahBaKXOu-tMrrLCBVigNGCMMYCo7sS0i-vpjKAlAAA'],
-        ['proxy greymassvote w/ foreground callback', 'esr:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgAA'],
-        ['proxy greymassvote w/ background callback', 'esr:gWNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjAyimSUlBQUW-nrpxelVuYmFhfrJefnMgIA'],
-        ['set voting permission', 'esr:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBghseGl0F0SveGtkxAhWxDztS840vZjD1YqCj_WcJip5_dr06mGZgV_AhneH-I58dWQFKwMSAA'],
-        ['link voting permission to esr:voteproducer', 'esr:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYMJUFopc6760yugvibnhpdBekAwA'],
-        ['link voting permission to esr:updateauth (wont allow)', 'esr:gWNgZACDVwahQFI3m3l5NyNUiAFGK8AYcJUOp2-tyAm6CuJueGl0F6QDAA'],
-        ['set active key (wont allow)', 'esr:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgiseGtkBKIbVqstZwQrYp72JWeaXszhakXBx3pOE5W8fm169bDMwC9gw7tDfEe-OrKClQEJAA'],
-        ['set owner key (wont allow)', 'esr:gWNgZGRkAIFXBqEMDqdvrcgJugoVYWCA0c4wBgg0rFZbzoCkgJGBedqXnGl6MYerFQUf6zlNVPL6tenVwzIDv4AN7w7xHfnqyApWBiQA'],
+        [
+          'proxy, broadcast',
+          'esr:gmNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mgmQA'
+        ],
+        [
+          'proxy, fuel, broadcast',
+          'esr:gmNgZGQK0JwrIf3yaioDCAA5jAJT4-ACPs8MXMESDK8MQgtEL3XeW2V0l5ERIsQAowVhjAVGdyFagQIA'
+        ],
+        [
+          'proxy, broadcast, background callback',
+          'esr:gmNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjBbZ5SUFBRb6esnJ-kl5iVn5Bfp5WTmZesnG5slG1mYpuqaWyRa6poYphrrWhikpOqaWZqZpZgZGicmGycyAAA'
+        ],
+        [
+          'proxy, no broadcast, background callback',
+          'esr:gmNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjBZZ5SUFBRb6esnJ-kl5iVn5Bfp5WTmZesnG5slG1mYpuqaWyRa6poYphrrWhikpOqaWZqZpZgZGicmGycyAAA'
+        ],
+        [
+          'proxy, fuel, broadcast, background callback',
+          'esr:gmNgZGQK0JwrIf3yaioDCAA5jAJT4-ACPs8MXMESDK8MQgtEL3XeW2V0l5ERIsQAowVhjAVGdyFama0zSkoKiq309ZOT9BLzkjPyi_RyMvOy9ZONzZKNLExTdc0tEi11TQxTjXUtDFJSdc0szcxSzAyNE5ONExkA'
+        ],
+        [
+          'proxy, fuel, no broadcast, background callback',
+          'esr:gmNgZGQK0JwrIf3yaioDCAA5jAJT4-ACPs8MXMESDK8MQgtEL3XeW2V0l5ERIsQAowVhjAVGdyFamawzSkoKiq309ZOT9BLzkjPyi_RyMvOy9ZONzZKNLExTdc0tEi11TQxTjXUtDFJSdc0szcxSzAyNE5ONExkA'
+        ],
+        [
+          'proxy, broadcast, foreground callback',
+          'esr:gmNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjBaZ5SUFBRb6esnJ-kl5iVn5Bfp5WTmZesnG5slG1mYpuqaWyRa6poYphrrWhikpOqaWZqZpZgZGicmGycyAAA'
+        ],
+        [
+          'proxy, no broadcast, foreground callback',
+          'esr:gmNgZGRkAIFXBqEFopc6760yugsVYWCA0YIwxgKjuxLSL6-mMjBYZ5SUFBRb6esnJ-kl5iVn5Bfp5WTmZesnG5slG1mYpuqaWyRa6poYphrrWhikpOqaWZqZpZgZGicmGycyAAA'
+        ],
+        [
+          'proxy, fuel, broadcast, foreground callback',
+          'esr:gmNgZGQK0JwrIf3yaioDCAA5jAJT4-ACPs8MXMESDK8MQgtEL3XeW2V0l5ERIsQAowVhjAVGdyFaGa0zSkoKiq309ZOT9BLzkjPyi_RyMvOy9ZONzZKNLExTdc0tEi11TQxTjXUtDFJSdc0szcxSzAyNE5ONExkA'
+        ],
+        [
+          'proxy, fuel, no broadcast, foreground callback',
+          'esr:gmNgZGQK0JwrIf3yaioDCAA5jAJT4-ACPs8MXMESDK8MQgtEL3XeW2V0l5ERIsQAowVhjAVGd6FarTNKSgqKrfT1k5P0EvOSM_KL9HIy87L1k43Nko0sTFN1zS0SLXVNDFONdS0MUlJ1zSzNzFLMDI0Tk40TGQA'
+        ],
       ],
-      INSIGHTS: [
-        ['refund', 'esr:gWPgYACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
-      JUNGLE: [
-        ['refund', 'esr:gWNgZgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
-      KYLIN: [
-        ['refund', 'esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
-      ],
-      MEETONE: [
-        ['refund', 'esr:gWNgZwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
-      TELOS: [
-        ['refund', 'esr:gWNgYgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
-      WORBLI: [
-        ['refund', 'esr:gWNgZQCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
-      ],
+      // INSIGHTS: [
+      //   ['refund', 'esr:gWPgYACDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
+      // JUNGLE: [
+      //   ['refund', 'esr:gWNgZgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
+      // KYLIN: [
+      //   ['refund', 'esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA'],
+      // ],
+      // MEETONE: [
+      //   ['refund', 'esr:gWNgZwCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
+      // TELOS: [
+      //   ['refund', 'esr:gWNgYgCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
+      // WORBLI: [
+      //   ['refund', 'esr:gWNgZQCDVwahIGrJyum7GBkhQgwwmgMuAGQAAA'],
+      // ],
     };
     return (
       <Segment style={{ margin: 0 }}>
@@ -76,53 +110,6 @@ class TestsContainer extends Component<Props> {
             ))}
           </Segment>
         ))}
-        <Segment basic>
-          <Header>
-            action (single)
-          </Header>
-          <Segment>
-            <p>esr:gWPgYACDVwahBaKXOu-tMrrLyAgRYoDRgjDGA-u9osFLF_QxgJQAAA</p>
-            <Button
-              color="blue"
-              content="EOS URI Test (set proxy)"
-              onClick={() => this.testURI('esr:gWPgYACDVwahBaKXOu-tMrrLyAgRYoDRgjDGA-u9osFLF_QxgJQAAA')}
-            />
-          </Segment>
-          <Segment>
-            <p>esr:gWN8zrVqx8w62T9P-_evaTi9u__Nm-qZ52doTXFRt9mTckSkmAEMXhmEFohe6ry3yuguIyNEiAFGC8IYD6z3igYvXdDHAFICAA</p>
-            <Button
-              color="blue"
-              content="Telos URI Test (set proxy)"
-              onClick={() => this.testURI('esr:gWN8zrVqx8w62T9P-_evaTi9u__Nm-qZ52doTXFRt9mTckSkmAEMXhmEFohe6ry3yuguIyNEiAFGC8IYD6z3igYvXdDHAFICAA')}
-            />
-          </Segment>
-        </Segment>
-        <Segment basic>
-          <Segment>
-            <p>esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA</p>
-            <Button
-              color="blue"
-              content="EOS URI (action)"
-              onClick={() => this.testURI('esr:gWNgZACDVwahIGrJyum7GKFCDDCaAy4AZAAA')}
-            />
-          </Segment>
-          <Segment>
-            <p>esr:gWNgZGRkAIFXBqEgasnK6bugIgwMMJoDLgBkAAA</p>
-            <Button
-              color="blue"
-              content="EOS URI (action[] - multi)"
-              onClick={() => this.testURI('esr:gWNgZGRkAIFXBqEgasnK6bugIgwMMJoDLgBkAAA')}
-            />
-          </Segment>
-          <Segment>
-            <p>esr:gWNgZFoYOi-m6p4oQ91nBiBgBBEMrwxCQdSSldN3MUJEYDIMDBwwBgNICgA</p>
-            <Button
-              color="blue"
-              content="EOS URI (tx - whole)"
-              onClick={() => this.testURI('esr:gWNgZFoYOi-m6p4oQ91nBiBgBBEMrwxCQdSSldN3MUJEYDIMDBwwBgNICgA')}
-            />
-          </Segment>
-        </Segment>
       </Segment>
     );
   }
