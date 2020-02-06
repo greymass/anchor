@@ -98,12 +98,13 @@
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
-      "deleteAppDataOnUninstall": true,
-      "oneClick": false,
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
-      "shortcutName": "Anchor",
-      "include": "build/installer.nsh"
+      "deleteAppDataOnUninstall": true,
+      "include": "build/installer.nsh",
+      "oneClick": false,
+      "perMachine": true,
+      "shortcutName": "Anchor"
     },
     "linux": {
       "category": "Network",
