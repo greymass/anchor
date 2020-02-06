@@ -1,7 +1,7 @@
 {
   "name": "anchor-beta",
   "productName": "Anchor-BETA",
-  "version": "1.0.0-rc5",
+  "version": "1.0.0-rc6",
   "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
