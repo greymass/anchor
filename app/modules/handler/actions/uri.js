@@ -366,6 +366,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             prompt
             && prompt.resolved
             && prompt.resolved.request
+            && prompt.resolved.request.shouldBroadcast
             && prompt.resolved.request.shouldBroadcast()
           );
           if (shouldBroadcast) {
@@ -391,8 +392,10 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             || (callback && !callback.broadcast)
           ) {
             const blockNum = (broadcasted) ? broadcasted.processed.block_num : null;
-            const callbackParams = prompt.resolved.getCallback(signed.transaction.signatures, blockNum);
-            dispatch(callbackURIWithProcessed(callbackParams));
+            const callbackParams =
+              prompt.resolved.getCallback &&
+              prompt.resolved.getCallback(signed.transaction.signatures, blockNum);
+            callbackParams && dispatch(callbackURIWithProcessed(callbackParams));
           }
           if (broadcasted) {
             dispatch({
