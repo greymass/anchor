@@ -28,14 +28,14 @@ export class GlobalTransactionMessageErrorAuthorization extends Component<Props>
         </List>
         <hr style={colorStyle} />
         <p style={colorStyle}>*&nbsp;{t('global_transaction_message_error_authorization_note')}</p>
-        {(typeof error === 'object') ? (
+        {(typeof error === 'object' && error.json) ? (
           <ReactJson
             collapsed={2}
             displayDataTypes={false}
             displayObjectSize={false}
             iconStyle="square"
             name={null}
-            src={error}
+            src={error.json.error}
             style={{ padding: '1em' }}
           />
         ) : ''}
