@@ -249,17 +249,19 @@ export function unlockWalletByAuth(account, authorization, password) {
     } = state;
 
     const wallet = find(wallets, { account, authorization });
-    const blockchain = find(blockchains, { chainId: wallet.chainId });
 
-    let accountData = accounts[wallet.account];
+    const accountData = accounts[wallet.account];
+
     if (settings.walletMode === 'hot' && !accountData) {
+      const blockchain = find(blockchains, { chainId: wallet.chainId });
+
       const modifiedConnection = Object.assign({}, connection, {
         broadcast: false,
         chainId: blockchain.chainId,
         httpEndpoint: blockchain.node
       });
 
-      accountData = await eos(modifiedConnection).getAccount(wallet.account);
+      await eos(modifiedConnection).getAccount(wallet.account);
     }
 
     dispatch({
