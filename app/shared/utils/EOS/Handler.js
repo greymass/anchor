@@ -6,7 +6,7 @@ import { cloneDeep, isObject } from 'lodash';
 import serialize from '../../actions/helpers/ledger/serialize';
 
 const eosjs1 = require('eosjs');
-const { convertLegacyPublicKeys } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-numeric');
+const { stringToPublicKey, publicKeyToString } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-numeric');
 const { JsSignatureProvider } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-jssig');
 const { remote } = require('electron');
 
@@ -29,6 +29,23 @@ const fuelEndpoints = {
   'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473': 'http://jungle.greymass.com',
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'http://telos.greymass.com',
 };
+
+function convertLegacyPublicKey(s) {
+  let pubkey = s;
+  // Convert Alternative Legacy to EOS for this process
+  if (['FIO'].includes(s.substr(0, 3))) {
+    pubkey = pubkey.replace(/^.{3}/g, 'EOS');
+  }
+  // Convert Legacy Keys
+  if (pubkey.substr(0, 3) === 'EOS') {
+    return publicKeyToString(stringToPublicKey(pubkey));
+  }
+  return pubkey;
+}
+
+function convertLegacyPublicKeys(keys) {
+  return keys.map(convertLegacyPublicKey);
+}
 
 export default class EOSHandler {
   constructor(config) {
