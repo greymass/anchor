@@ -273,6 +273,7 @@
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",
+    "fiojs": "^1.1.1",
     "history": "^4.7.2",
     "humanize-duration": "^3.20.1",
     "i": "^0.3.6",
