@@ -536,6 +536,24 @@ export function getAccountByKey(key) {
     if (key && (settings.node || settings.node.length !== 0)) {
       return eos(connection).getKeyAccounts(key).then((accounts) => {
         dispatch(getAccounts(accounts.account_names));
+        if (key.substr(0, 3) === 'FIO') {
+          return httpQueue.add(() =>
+            httpClient
+              .post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
+                fio_public_key: key
+              })
+              .then((response) => dispatch({
+                type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
+                payload: {
+                  accounts,
+                  addresses: response.data.fio_addresses
+                }
+              }))
+              .catch((err) => dispatch({
+                type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+                payload: { err, key }
+              })));
+        }
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
           payload: { accounts }
