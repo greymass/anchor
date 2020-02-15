@@ -4,6 +4,8 @@ import { sumBy, uniq } from 'lodash';
 import Decimal from 'decimal.js';
 
 const initialState = {
+  // FIO Account Addresses found via key lookup
+  __addresses: [],
   // Account names found via key lookup
   __lookups: [],
   // Account Permissions found via key lookup
@@ -54,6 +56,7 @@ export default function accounts(state = initialState, action) {
     }
     case types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS: {
       return Object.assign({}, state, {
+        __addresses: action.payload.addresses,
         __lookups: uniq([
           ...action.payload.accounts.account_names,
           ...state.__lookups,
