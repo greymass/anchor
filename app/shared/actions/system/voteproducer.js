@@ -3,11 +3,40 @@ import * as types from '../types';
 import { getAccounts } from '../accounts';
 import eos from '../helpers/eos';
 
+function getAction(account, authorization, producers, proxy, network = 'EOS', wallet = null) {
+  const action = {
+    account: 'eosio',
+    name: 'voteproducer',
+    authorization: [
+      {
+        actor: account,
+        permission: authorization,
+      }
+    ],
+    data: {
+      voter: account,
+      proxy,
+      producers,
+    },
+  };
+  // Modify transaction for FIO
+  if (network === 'FIO') {
+    action.data = {
+      actor: account,
+      fio_address: wallet.address,
+      producers,
+      max_fee: '40000000000'
+    };
+  }
+  return action;
+}
+
 export function voteproducers(producers = [], proxy = '') {
   return (dispatch: () => void, getState) => {
     const {
       connection,
-      settings
+      settings,
+      wallet,
     } = getState();
     dispatch({
       type: types.SYSTEM_VOTEPRODUCER_PENDING,
@@ -18,21 +47,7 @@ export function voteproducers(producers = [], proxy = '') {
     producers.sort();
     return eos(connection, true, true)
       .transact({
-        actions: [{
-          account: 'eosio',
-          name: 'voteproducer',
-          authorization: [
-            {
-              actor: account,
-              permission: authorization,
-            }
-          ],
-          data: {
-            voter: account,
-            proxy,
-            producers,
-          },
-        }]
+        actions: [getAction(account, authorization, producers, proxy, connection.keyPrefix, wallet)]
       }, {
         blocksBehind: 3,
         broadcast: connection.broadcast,
