@@ -80,16 +80,22 @@ export function getProducers(previous = false) {
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
-
-          const tokenPrecision = connection.tokenPrecision || 4;
-          const voteWeightMultiple = voteWeightMultiples[connection.chain] || 10 ** tokenPrecision;
-
-          const tokenVotes = (votes / calcVoteWeight() / voteWeightMultiple).toFixed(0);
+          const tokenVotes = (votes / calcVoteWeight() / 10000).toFixed(0);
+          let owner = producer.owner;
+          switch (connection.keyPrefix) {
+            case 'FIO': {
+              owner = producer.fio_address;
+              break;
+            }
+            default: {
+              // no default
+            }
+          }
           return Object.assign({}, {
             isBackup,
             key: `${producer.owner}-${producer.total_votes}`,
             last_produced_block_time: producer.last_produced_block_time,
-            owner: producer.owner,
+            owner,
             percent,
             tokenVotes,
             producer_key: producer.producer_key,
