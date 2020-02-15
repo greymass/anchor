@@ -1,5 +1,6 @@
 import * as types from '../actions/types';
 
+const { Fio } = require('fiojs');
 const initialState = {};
 
 export default function wallet(state = initialState, action) {
@@ -49,7 +50,7 @@ export default function wallet(state = initialState, action) {
       return state;
     }
     case types.SET_CURRENT_WALLET: {
-      return Object.assign({}, state, {
+      const newState = {
         account: action.payload.account,
         accountData: action.payload.accountData,
         authorization: action.payload.authorization,
@@ -59,7 +60,12 @@ export default function wallet(state = initialState, action) {
         mode: action.payload.mode,
         path: action.payload.path,
         pubkey: action.payload.pubkey
-      });
+      };
+      if (newState.pubkey.substr(0, 3) === 'FIO') {
+        newState.accountHash = Fio.accountHash(newState.pubkey);
+        newState.address = action.payload.address;
+      }
+      return Object.assign({}, state, newState);
     }
     default: {
       return state;
