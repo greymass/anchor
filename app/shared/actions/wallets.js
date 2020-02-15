@@ -253,11 +253,13 @@ export function importWallet(
   mode = 'hot',
   publicKey = undefined,
   path = undefined,
+  addressName = undefined,
+  addressNetwork = undefined,
 ) {
   return (dispatch: () => void, getState) => {
-    const { accounts, storage, settings } = getState();
+    const { accounts, connection, storage, settings } = getState();
     const accountData = accounts[account];
-    let pubkey = (key) ? ecc.privateToPublic(key) : publicKey;
+    let pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : publicKey;
     if (!pubkey) {
       const auths = new EOSAccount(accountData).getKeysForAuthorization(authorization);
       if (auths.length > 0) {
@@ -309,6 +311,7 @@ export function importWallet(
       payload: {
         account,
         accountData,
+        address: (addressName) ? `${addressName}@${addressNetwork}` : null,
         authorization,
         chainId,
         mode: (modeChange) ? modeChange : mode,
