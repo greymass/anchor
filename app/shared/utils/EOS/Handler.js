@@ -93,9 +93,9 @@ export default class EOSHandler {
   async transact(tx, options = false) {
     const transaction = cloneDeep(tx);
     const combinedOptions = Object.assign({}, this.options, options);
-    // is Fuel enabled?
-    if (this.config.greymassFuel) {
-      const { chainId } = this.config;
+    const { chainId } = this.config;
+    // is Fuel enabled? && are we on chain where fuel is supported?
+    if (this.config.greymassFuel && fuelEndpoints[chainId]) {
       // If a Fuel endpoint exists, reinit and force its usage
       if (fuelEndpoints[chainId]) {
         this.initEOSJS(fuelEndpoints[chainId]);
