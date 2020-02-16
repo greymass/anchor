@@ -223,7 +223,7 @@ class ToolsFormCreateAccount extends Component<Props> {
 
     const decimalDelegatedResources = decimalDelegatedBw.plus(decimalDelegatedCpu);
 
-    if (ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
+    if (ramPrice && ramPrice.plus(decimalDelegatedResources).greaterThan(decimalBalance)) {
       if (delegatedBw > 1) {
         formErrors.delegatedBw = 'insufficient_balance';
       } else if (delegatedCpu > 1) {
