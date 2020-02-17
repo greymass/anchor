@@ -73,12 +73,11 @@ export function getProducers(previous = false) {
       const data = rows
         .filter((p) => (p.producer_key !== 'EOS1111111111111111111111111111111114T1Anm'))
         .map((producer) => {
-          console.log({producer})
-          console.log({current})
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
-          const tokenVotes = (votes / calcVoteWeight() / 10000).toFixed(0);
+          const tokenPrecision = connection.tokenPrecision || 4;
+          const tokenVotes = (votes / calcVoteWeight() / 10 * tokenPrecision).toFixed(0);
           return Object.assign({}, {
             isBackup,
             key: `${producer.owner}-${producer.total_votes}`,
@@ -108,9 +107,7 @@ export function getProducers(previous = false) {
 function calcVoteWeight() {
   const timestamp = 946684800000;
   const dates = (Date.now() / 1000) - (timestamp / 1000);
-  console.log({dates});
   const weight = Math.floor(dates / (86400 * 7)) / 52;
-  console.log({weight})
   return 2 ** weight;
 }
 
