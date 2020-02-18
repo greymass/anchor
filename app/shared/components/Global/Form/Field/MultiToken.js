@@ -18,12 +18,13 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
       [name]: value,
     }, () => {
       const { asset, quantity } = this.state;
-      const { balances } = this.props;
+      const { balances, connection } = this.props;
       const { precision } = balances.__contracts[asset];
+      const defaultChainPrecision = connection.tokenPrecision || 4;
       const assetPrecision = (
         precision
         && precision[asset] !== undefined
-      ) ? precision[asset] : 4;
+      ) ? precision[asset] : defaultChainPrecision;
       const parsed = (quantity > 0)
         ? `${parseFloat(quantity).toFixed(assetPrecision)} ${asset}`
         : `${parseFloat(0).toFixed(assetPrecision)} ${asset}`;
