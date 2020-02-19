@@ -35,6 +35,7 @@ class ProducersTableRow extends Component<Props> {
 
     console.log({producer})
 
+
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
@@ -108,7 +109,7 @@ class ProducersTableRow extends Component<Props> {
         >
           {(producersVotedIn) && (
             <Header size="tiny">
-              {nf.format(producer.tokenVotes)} EOS
+              {nf.format(producer.tokenVotes)} {connection.chainSymbol || 'EOS'}
               <Header.Subheader>
                 {votePercent}% - {voteFormatted}
               </Header.Subheader>
