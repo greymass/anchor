@@ -4,6 +4,10 @@ import { get } from 'dot-prop-immutable';
 import eos from './helpers/eos';
 import * as types from './types';
 
+const voteWeightMultiples = {
+  WAX: 1.71977206895 * (10 ** 26),
+};
+
 export function clearProducerCache() {
   return (dispatch: () => void) => {
     dispatch({
@@ -76,8 +80,11 @@ export function getProducers(previous = false) {
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
+
           const tokenPrecision = connection.tokenPrecision || 4;
-          const tokenVotes = (votes / calcVoteWeight() / 10 * tokenPrecision).toFixed(0);
+          const voteWeightMultiple = voteWeightMultiples[connection.chain] || 10 ** tokenPrecision;
+
+          const tokenVotes = (votes / calcVoteWeight() / voteWeightMultiple).toFixed(0);
           return Object.assign({}, {
             isBackup,
             key: `${producer.owner}-${producer.total_votes}`,
