@@ -33,9 +33,6 @@ class ProducersTableRow extends Component<Props> {
       totalVoteWeight
     } = this.props;
 
-    console.log({producer})
-
-
     const epoch = 946684800000;
     const lastProduced = (producer.last_produced_block_time * 500) + epoch;
     const isActive = (Date.now() - lastProduced) < 1000;
