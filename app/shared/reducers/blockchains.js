@@ -163,6 +163,15 @@ const knownChains = [
     testnet: false
   },
   {
+    _id: 'lynx-mainnet',
+    chainId: 'b62febe5aadff3d5399090b9565cb420387d3c66f2ccd7c7ac1f532c4f50f573',
+    keyPrefix: 'EOS',
+    name: 'Lynx',
+    node: 'https://lynx.greymass.com/',
+    symbol: 'LNX',
+    testnet: false
+  },
+  {
     _id: 'lynx-testnet',
     chainId: '0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978',
     keyPrefix: 'EOS',
