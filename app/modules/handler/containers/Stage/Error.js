@@ -3,17 +3,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Grid, Header, Icon, Segment } from 'semantic-ui-react';
+import { Grid, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 class PromptStageError extends Component<Props> {
   render() {
     const {
-      system
+      error
     } = this.props;
-    let error;
     return (
-      <Grid>
-        <Grid.Column width={16}>
+      <Grid centered>
+        <Grid.Column width={14}>
           <Segment basic textAlign="center">
             <Header icon size="large">
               <Icon name="warning sign" />
@@ -24,6 +23,16 @@ class PromptStageError extends Component<Props> {
                 </Header.Subheader>
               </Header.Content>
             </Header>
+            {(error)
+              ? (
+                <Message
+                  header="Details"
+                  content={error}
+                  error
+                />
+              )
+              : false
+            }
           </Segment>
         </Grid.Column>
       </Grid>

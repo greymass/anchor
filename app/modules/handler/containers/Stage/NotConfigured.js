@@ -13,11 +13,11 @@ class PromptStageNotConfigured extends Component<Props> {
       blockchain,
     } = this.props;
     return (
-      <Segment attached padded>
+      <Segment basic padded>
         <Grid>
           <Grid.Row>
             <Grid.Column width={12}>
-              <Segment attached="top" color="yellow">
+              <Segment attached="top" color="yellow" size="large">
                 <Header size="large">
                   <Icon color="yellow" name="warning sign" />
                   <Header.Content>
@@ -27,15 +27,16 @@ class PromptStageNotConfigured extends Component<Props> {
                     </Header.Subheader>
                   </Header.Content>
                 </Header>
+                <p>In order to sign requests with this blockchain, you must first enable the blockchain and setup an account through the main interface.</p>
               </Segment>
               {/* <Segment attached size="large">
-                To enable this blockchain...
-              </Segment>
-              <Segment attached="bottom">
-                <Button
+                  To enable this blockchain...
+                  </Segment>
+                  <Segment attached="bottom">
+                  <Button
                   content="Enable"
                   primary
-                />
+                  />
                 <Button
                   content="Import"
                   primary
