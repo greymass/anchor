@@ -165,7 +165,6 @@ class PromptStage extends Component<Props> {
       wallet,
       whitelist,
     } = this.props;
-
     const availableKeys = auths.keystore.map((auth) => auth.pubkey);
     const awaitingDevice = (system.ESRURISIGN === 'PENDING');
     const signing = (system.ESRURISIGN === 'PENDING');
@@ -325,7 +324,7 @@ class PromptStage extends Component<Props> {
     } else if (!blockchain) {
       stage = (
         <PromptStageError
-          system={system}
+          error={`Unknown Blockchain (ID: ${prompt.chainId})`}
         />
       );
       nextAction = (
