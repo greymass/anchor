@@ -71,7 +71,7 @@ class MainIndexContainer extends Component<Props> {
                 centered
                 src={anchorLogo}
                 style={{
-                  width: '192px',
+                  width: '256px',
                 }}
               />
               <Image
