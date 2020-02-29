@@ -259,6 +259,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
+    "@fioprotocol/fiojs": "^0.9.0",
     "asn1-ber": "^1.0.9",
     "axios": "^0.19.0",
     "bip32-path": "^0.4.2",
@@ -273,7 +274,6 @@
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",
-    "fiojs": "^1.1.1",
     "history": "^4.7.2",
     "humanize-duration": "^3.20.1",
     "i": "^0.3.6",
