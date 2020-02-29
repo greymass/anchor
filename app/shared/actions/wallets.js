@@ -253,8 +253,6 @@ export function importWallet(
   mode = 'hot',
   publicKey = undefined,
   path = undefined,
-  addressName = undefined,
-  addressNetwork = undefined,
 ) {
   return (dispatch: () => void, getState) => {
     const { accounts, connection, storage, settings } = getState();
@@ -311,7 +309,6 @@ export function importWallet(
       payload: {
         account,
         accountData,
-        address: (addressName) ? `${addressName}@${addressNetwork}` : null,
         authorization,
         chainId,
         mode: (modeChange) ? modeChange : mode,

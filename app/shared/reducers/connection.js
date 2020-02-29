@@ -72,6 +72,7 @@ export default function connection(state = initialState, action) {
         greymassFuel: settings.greymassFuel,
         httpEndpoint: action.payload.node,
         keyPrefix: (blockchain && blockchain.keyPrefix) || 'EOS',
+        stakedResources: (blockchain && blockchain.stakedResources !== undefined) ? blockchain.stakedResources : true,
         supportedContracts: (blockchain) ? blockchain.supportedContracts : [],
         systemContract: (blockchain && blockchain.systemContract) || 'eosio',
         tokenContract: (blockchain && blockchain.tokenContract) || 'eosio.token',

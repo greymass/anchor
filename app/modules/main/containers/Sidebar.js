@@ -98,20 +98,25 @@ class SidebarContainer extends Component<Props> {
                   : false
                 }
               </Menu.Item>
-              <Menu.Item
-                as="a"
-                active={module && module.startsWith('account')}
-                onClick={this.onClick}
-                name={`account/${settings.account}`}
-                color="blue"
-                style={{ color }}
-              >
-                <Icon name="tachometer alternate" size="large" />
-                {(!settings.sidebarCollapsed)
-                  ? <p>Resources</p>
-                  : false
-                }
-              </Menu.Item>
+              {(connection.stakedResources)
+                ? (
+                  <Menu.Item
+                    as="a"
+                    active={module && module.startsWith('account')}
+                    onClick={this.onClick}
+                    name={`account/${settings.account}`}
+                    color="blue"
+                    style={{ color }}
+                  >
+                    <Icon name="tachometer alternate" size="large" />
+                    {(!settings.sidebarCollapsed)
+                      ? <p>Resources</p>
+                      : false
+                    }
+                  </Menu.Item>
+                )
+                : false
+              }
               <Menu.Item
                 as="a"
                 active={module && module.startsWith('governance')}
@@ -133,21 +138,21 @@ class SidebarContainer extends Component<Props> {
                 name="tests"
                 color="red"
                 style={{ color }}
-              >
+                >
                 <Icon name="external" />
                 {(!settings.sidebarCollapsed)
                   ? 'URI TESTS'
                   : false
                 }
-              </Menu.Item>
-              <Menu.Item
+                </Menu.Item>
+                <Menu.Item
                 as="a"
                 active={module === 'devtest'}
                 onClick={this.onClick}
                 name="devtest"
                 color="orange"
                 style={{ color }}
-              >
+                >
                 <Icon name="lab" />
                 {(!settings.sidebarCollapsed)
                   ? 'DevTests'
@@ -253,6 +258,7 @@ function mapStateToProps(state) {
   const blockchain = find(state.blockchains, { chainId: state.settings.chainId });
   return {
     blockExplorers: (blockchain) ? state.blockexplorers[blockchain._id] : false,
+    connection: state.connection,
     navigation: state.navigation,
     settings: state.settings,
     system: state.system,
