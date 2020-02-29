@@ -141,7 +141,8 @@ export function importWalletFromBackup(wallet, settings = {}) {
         data: wallet.data,
         mode: wallet.mode || mode,
         path: wallet.path,
-        pubkey: wallet.pubkey
+        pubkey: wallet.pubkey,
+        version: wallet.version || 1,
       }
     });
   };
@@ -495,7 +496,9 @@ async function upgradeV1Wallet(wallet, password, dispatch) {
   const pubkey = ecc.privateToPublic(key);
   // Create a modified version without the encrypted info for storage
   const modified = Object.assign({}, wallet);
-  modified.data = undefined;
+  modified.backup = modified.data;
+  delete modified.data;
+  modified.version = 2;
   // Update the wallet storage
   dispatch({
     type: types.ADD_WALLET,
