@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
 
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 
@@ -20,8 +20,24 @@ class GlobalModalAccountImportPassword extends Component<Props> {
       t
     } = this.props;
     return (
-      <React.Fragment>
-        <Segment attached="bottom" padded>
+      <Modal
+        content={(
+          <Segment secondary padded style={{ margin: 0 }}>
+            <WalletPanelFormHash
+              actions={actions}
+              onClose={this.props.onClose}
+            />
+            <Segment color="orange">
+              <Header
+                color="orange"
+                icon="warning"
+                content="Backup your Anchor password"
+                subheader="Ensure you keep a copy of your password safely offline. This password cannot be recovered, and without this password, any private keys stored within Anchor cannot be decrypted."
+              />
+            </Segment>
+          </Segment>
+        )}
+        header={(
           <Header color="black">
             <Icon name="lock" />
             <Header.Content>
@@ -31,21 +47,12 @@ class GlobalModalAccountImportPassword extends Component<Props> {
               </Header.Subheader>
             </Header.Content>
           </Header>
+        )}
+        open
+        size="small"
+      >
 
-          <WalletPanelFormHash
-            actions={actions}
-            onClose={this.props.onClose}
-          />
-        </Segment>
-        <Segment color="orange">
-          <Header
-            color="orange"
-            icon="warning"
-            content="Backup your Anchor password"
-            subheader="Ensure you keep a copy of your password safely offline. This password cannot be recovered, and without this password, any private keys stored within Anchor cannot be decrypted."
-          />
-        </Segment>
-      </React.Fragment>
+      </Modal>
     );
   }
 }
