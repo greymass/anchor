@@ -667,14 +667,21 @@ export function syncAccounts() {
     const chainWallets = wallets.filter((w) => (w.chainId === settings.chainId));
     // Create a list of all account names loaded for this chain
     const chainAccounts = uniq(map(chainWallets, 'account'));
-    // Determine which accounts haven't been loaded into state
-    const missingAccountDataFor = difference(chainAccounts, Object.keys(accounts));
-    // Immediately fetch all accounts for which data is missing
-    if (missingAccountDataFor.length > 0) {
-      dispatch(getAccounts(missingAccountDataFor));
+    // Immediately fetch currently loaded account
+    if (settings.account) {
+      dispatch(getAccount(settings.account));
     }
     // Load any existing account data that matched our existing accounts
     const existingAccounts = Object.values(pick(accounts, chainAccounts));
+    // Determine which accounts haven't been loaded into state
+    const missingAccountDataFor = difference(chainAccounts, Object.keys(accounts));
+    // Push placeholder into existingAccounts for the missing accounts.
+    missingAccountDataFor.forEach((account) => {
+      existingAccounts.push({
+        account_name: account,
+        head_block_num: 0,
+      })
+    })
     // If any exist
     if (existingAccounts.length > 0) {
       // Determine the oldest account
