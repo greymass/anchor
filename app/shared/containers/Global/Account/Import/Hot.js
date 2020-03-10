@@ -6,12 +6,12 @@ import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Button, Checkbox, Divider, Grid, Header, Icon, Message, Segment, Tab } from 'semantic-ui-react';
 
+import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 import GlobalModalAccountImportPassword from './Password';
 
-import EOSAccount from '../../../../utils/EOS/Account';
 import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
 import * as WalletActions from '../../../../actions/wallet';
@@ -92,8 +92,8 @@ class GlobalModalAccountImportHot extends Component<Props> {
       value
     } = this.state;
     const matches = accounts.__lookups;
+    const results = accounts.__results;
     const disabled = (!selected.length || !valid);
-
     let passwordPrompt = false;
     if ([undefined, 'watch', 'ledger'].includes(settings.walletMode) && !settings.walletHash) {
       const hotWalletExists = wallets.some(o => o.mode === 'hot');
@@ -122,50 +122,11 @@ class GlobalModalAccountImportHot extends Component<Props> {
                 onChange={this.onChange}
                 value={value}
               />
-              {(value && matches.length > 0)
-                ? (
-                  <Segment stacked color="blue">
-                    {t('global_account_import_select_accounts')}
-                    <Divider />
-                    {(matches.map((account) => {
-                        const data = accounts[account];
-                      if (data) {
-                        const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
-                        return authorizations.map((authorization) => {
-                            const auth = `${account}@${authorization.perm_name}`;
-                          return (
-                            <p>
-                              <Checkbox
-                                label={auth}
-                                name={auth}
-                                onChange={this.toggleAccount}
-                              />
-                            </p>
-                          );
-                        });
-                      }
-                        return false;
-                    }))}
-                  </Segment>
-                )
-                : false
-              }
-              {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
-                ? <Segment loading />
-                : false
-              }
-              {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
-                ? (
-                  <Segment stacked color="red">
-                    <Header>
-                      {t('welcome:welcome_account_lookup_fail_title')}
-                    </Header>
-                    {t('welcome:welcome_account_lookup_fail_content')}
-                  </Segment>
-                )
-                : false
-              }
-              <Divider />
+              <GlobalAccountImportElementsAccountList
+                publicKey={publicKey}
+                toggleAccount={this.toggleAccount}
+                value={value}
+              />
               <Segment basic clearing>
                 <Button
                   floated="left"
