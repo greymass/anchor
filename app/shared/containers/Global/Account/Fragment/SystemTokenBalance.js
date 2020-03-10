@@ -12,12 +12,13 @@ class GlobalAccountFragmentSystemTokenBalance extends PureComponent<Props> {
     const {
       balance,
       lng,
+      precision,
     } = this.props;
     if (balance === false) return <Icon color="grey" name="clock outline" />;
-    const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: 4 });
+    const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: precision });
     return (
       <span className={(parseFloat(balance, 10) === 0) ? 'nil' : false}>
-        {formatter.format(balance.toFixed(4))}
+        {formatter.format(balance.toFixed(precision))}
       </span>
     );
   }
@@ -61,7 +62,8 @@ const mapStateToProps = (state, ownProps) => {
       parseFloat((netWeight) ? netWeight : 0),
       parseFloat(netRefunding),
       parseFloat(cpuRefunding),
-    ])
+    ]),
+    precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, 4),
   });
 };
 
