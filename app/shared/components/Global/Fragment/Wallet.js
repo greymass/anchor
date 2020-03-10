@@ -8,6 +8,7 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
   render() {
     const {
       account,
+      address,
       authorization,
       disableAvatar,
       mode,
@@ -31,9 +32,10 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
         }
         <Header.Content style={{ minWidth: (disableAvatar) ? 'none' : '10em' }}>
           <React.Fragment>
-            {account}
+            {address || account}
             <Header.Subheader>
               <React.Fragment>
+                {(address) ? `${account} / ` : false}
                 {authorization} / {mode}
               </React.Fragment>
             </Header.Subheader>
