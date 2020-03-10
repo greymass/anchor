@@ -6,6 +6,7 @@ class OverviewTableHeader extends Component<Props> {
   render() {
     const {
       settings,
+      stakedResources,
       supportedContracts,
       tokens,
       view
@@ -49,9 +50,14 @@ class OverviewTableHeader extends Component<Props> {
                   )
                   : false
                 }
-                <Table.HeaderCell textAlign="right">
-                  Staked
-                </Table.HeaderCell>
+                {(stakedResources)
+                  ? (
+                    <Table.HeaderCell textAlign="right">
+                      Staked
+                    </Table.HeaderCell>
+                  )
+                  : false
+                }
                 {(supportedContracts && supportedContracts.includes('rex'))
                   ? (
                     <Table.HeaderCell textAlign="right">
@@ -60,12 +66,22 @@ class OverviewTableHeader extends Component<Props> {
                   )
                   : false
                 }
-                <Table.HeaderCell textAlign="right">
-                  Delegated
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign="right">
-                  Refunding
-                </Table.HeaderCell>
+                {(stakedResources)
+                  ? (
+                    <Table.HeaderCell textAlign="right">
+                      Delegated
+                    </Table.HeaderCell>
+                  )
+                  : false
+                }
+                {(stakedResources)
+                  ? (
+                    <Table.HeaderCell textAlign="right">
+                      Refunding
+                    </Table.HeaderCell>
+                  )
+                  : false
+                }
               </React.Fragment>
             )
             : false
