@@ -4,6 +4,7 @@ import * as types from './types';
 import { getAccount } from './accounts';
 import { setSettings } from './settings';
 import { decrypt, encrypt, setWalletMode } from './wallet';
+import { httpClient } from '../utils/httpClient';
 
 import EOSAccount from '../utils/EOS/Account';
 import eos from './helpers/eos';
@@ -347,8 +348,8 @@ export function removeWallet(chainId, account, authorization) {
 }
 
 export function useWallet(chainId, account, authorization) {
-  return (dispatch: () => void, getState) => {
-    const { auths, wallet, wallets } = getState();
+  return async (dispatch: () => void, getState) => {
+    const { auths, connection, wallet, wallets } = getState();
     // Find the wallet by account name + authorization when possible
     const walletQuery = { account, chainId };
     if (authorization) {
@@ -368,6 +369,20 @@ export function useWallet(chainId, account, authorization) {
       account,
       authorization
     }));
+    // Determine if a FIO address needs to be retrieved for usage purposes
+    if (wallet.pubkey && wallet.pubkey.startsWith('FIO')) {
+      const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
+        fio_public_key: wallet.pubkey
+      });
+      if (
+        response
+        && response.data
+        && response.data.fio_addresses
+        && response.data.fio_addresses.length > 0
+      ) {
+        newWallet.address = response.data.fio_addresses[0].fio_address;
+      }
+    }
     if (newWallet.path) {
       dispatch({
         type: types.SET_CURRENT_WALLET,
