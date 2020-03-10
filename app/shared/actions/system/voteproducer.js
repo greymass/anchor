@@ -25,7 +25,7 @@ function getAction(account, authorization, producers, proxy, network = 'EOS', wa
       actor: account,
       fio_address: wallet.address,
       producers,
-      max_fee: '40000000000'
+      max_fee: 40000000000
     };
   }
   return action;
