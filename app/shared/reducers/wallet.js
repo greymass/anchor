@@ -1,6 +1,5 @@
 import * as types from '../actions/types';
 
-const { Fio } = require('fiojs');
 const initialState = {};
 
 export default function wallet(state = initialState, action) {
@@ -53,6 +52,7 @@ export default function wallet(state = initialState, action) {
       const newState = {
         account: action.payload.account,
         accountData: action.payload.accountData,
+        address: action.payload.address,
         authorization: action.payload.authorization,
         chainId: action.payload.chainId || false,
         convertParameters: action.payload.convertParameters,
@@ -61,10 +61,6 @@ export default function wallet(state = initialState, action) {
         path: action.payload.path,
         pubkey: action.payload.pubkey
       };
-      if (newState.pubkey.substr(0, 3) === 'FIO') {
-        newState.accountHash = Fio.accountHash(newState.pubkey);
-        newState.address = action.payload.address;
-      }
       return Object.assign({}, state, newState);
     }
     default: {
