@@ -90,6 +90,7 @@ class ToolsTableRowWallet extends Component<Props> {
     const {
       account,
       authorization,
+      address,
       chainId,
       mode,
       pubkey
@@ -231,6 +232,7 @@ class ToolsTableRowWallet extends Component<Props> {
           <Header size="small">
             <GlobalFragmentAuthorization
               account={account}
+              address={address}
               authorization={authorization}
               pubkey={pubkey}
             />
