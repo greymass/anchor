@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Table } from 'semantic-ui-react';
-import { isEmpty, map, uniq } from 'lodash';
+import { isEmpty, map, sortBy, uniq } from 'lodash';
 import { Link } from 'react-router-dom';
 
 import ExplorerLink from '../../../../shared/containers/Global/Blockchain/ExplorerLink';
@@ -28,6 +28,7 @@ class OverviewTable extends Component<Props> {
       chainSymbol,
       pricefeed,
       settings,
+      stakedResources,
       supportedContracts,
       view,
       wallets,
@@ -69,169 +70,201 @@ class OverviewTable extends Component<Props> {
       <div style={{ overflowX: 'auto', maxWidth: '75vw' }}>
         <Table celled className="overview" compact size="small" striped unstackable>
           <OverviewTableHeader
-            supportedContracts={supportedContracts}
             settings={settings}
+            stakedResources={stakedResources}
+            supportedContracts={supportedContracts}
             tokens={tokens}
             view={view}
           />
           <Table.Body>
-            {accountNames.map((accountName) => (
-              <Table.Row>
-                <Table.Cell collapsing textAlign="right">
-                  {accountName}
-                </Table.Cell>
-                {(view === 'systemtokens')
-                  ? (
-                    <React.Fragment>
-                      <Table.Cell textAlign="right">
-                        <Header size="small">
-                          <GlobalAccountFragmentSystemTokenBalance
-                            account={accountName}
-                            chainId={settings.chainId}
-                            contract="eosio"
-                            token={chainSymbol}
-                          />
-                        </Header>
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        <Header size="small">
-                          <GlobalAccountFragmentTokenBalance
-                            account={accountName}
-                            chainId={settings.chainId}
-                            contract="eosio"
-                            token={chainSymbol}
-                          />
-                        </Header>
-                      </Table.Cell>
-                      {(supportedContracts && supportedContracts.includes('delphioracle'))
-                        ? (
-                          <Table.Cell textAlign="right">
-                            <Header size="small">
-                              <GlobalAccountFragmentSystemTokenValue
-                                account={accountName}
-                                chainId={settings.chainId}
-                                contract="eosio"
-                                token={chainSymbol}
-                              />
-                            </Header>
-                          </Table.Cell>
-                        )
-                        : false
-                      }
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentTokenStaked
-                          account={accountName}
-                          chainId={settings.chainId}
-                          contract="eosio"
-                          token={chainSymbol}
-                        />
-                      </Table.Cell>
-                      {(supportedContracts && supportedContracts.includes('rex'))
-                        ? (
-                          <Table.Cell textAlign="right">
-                            <GlobalAccountFragmentREXBalance
+            {accountNames.map((accountName) => {
+              const addresses = sortBy(
+                wallets.filter((wallet) => (wallet.address && wallet.account === accountName)),
+                (address) => address.address
+              )
+              return (
+                <Table.Row>
+                  <Table.Cell collapsing textAlign="right">
+                    <strong>{accountName}</strong>
+                    {(addresses.length > 0)
+                      ? (
+                        <div>
+                          {addresses.map((address) => (
+                            <div>{address.address}</div>
+                          ))}
+                        </div>
+                      )
+                      : false
+                    }
+                  </Table.Cell>
+                  {(view === 'systemtokens')
+                    ? (
+                      <React.Fragment>
+                        <Table.Cell textAlign="right">
+                          <Header size="small">
+                            <GlobalAccountFragmentSystemTokenBalance
                               account={accountName}
                               chainId={settings.chainId}
                               contract="eosio"
                               token={chainSymbol}
                             />
-                          </Table.Cell>
-                        )
-                        : false
-                      }
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentTokenDelegated
-                          account={accountName}
-                          chainId={settings.chainId}
-                          contract="eosio"
-                          token={chainSymbol}
-                        />
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentTokenRefunding
-                          account={accountName}
-                          chainId={settings.chainId}
-                          contract="eosio"
-                          token={chainSymbol}
-                        />
-                      </Table.Cell>
-                    </React.Fragment>
-                  )
-                  : false
-                }
-                {(view === 'governance')
-                  ? (
-                    <React.Fragment>
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentVoterInfoWeightValue
-                          account={accountName}
-                        />
-                      </Table.Cell>
-                      <Table.Cell textAlign="right" collapsing>
-                        <GlobalAccountFragmentVoterInfoEffectiveness
-                          account={accountName}
-                        />
-                      </Table.Cell>
-                      <Table.Cell textAlign="right" collapsing>
-                        <GlobalAccountFragmentVoterInfoVotes
-                          account={accountName}
-                        />
-                      </Table.Cell>
-                      <Table.Cell>
-                        <GlobalAccountFragmentVoterInfoProxy
-                          account={accountName}
-                        />
-                      </Table.Cell>
-                    </React.Fragment>
-                  )
-                  : false
-                }
-                {(view === 'balances')
-                  ? (
-                    <React.Fragment>
-                      {(isEmpty(accountBalances))
-                        ? (
-                          <Table.Cell>
-                            No token balances being tracked
-                          </Table.Cell>
-                        )
-                        : accountBalances[accountName]
-                      }
-                    </React.Fragment>
-                  )
-                  : false
-                }
-                {(view === 'resources')
-                  ? (
-                    <React.Fragment>
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentResourcePercent
-                          account={accountName}
-                          type="cpu"
-                        />
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentResourcePercent
-                          account={accountName}
-                          type="net"
-                        />
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        <GlobalAccountFragmentRamPercent
-                          account={accountName}
-                        />
-                      </Table.Cell>
-                    </React.Fragment>
-                  )
-                  : false
-                }
-                <Table.Cell collapsing>
-                  <GlobalAccountFragmentStaleness
-                    account={accountName}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))}
+                          </Header>
+                        </Table.Cell>
+                        <Table.Cell textAlign="right">
+                          <Header size="small">
+                            <GlobalAccountFragmentTokenBalance
+                              account={accountName}
+                              chainId={settings.chainId}
+                              contract="eosio"
+                              token={chainSymbol}
+                            />
+                          </Header>
+                        </Table.Cell>
+                        {(supportedContracts && supportedContracts.includes('delphioracle'))
+                          ? (
+                            <Table.Cell textAlign="right">
+                              <Header size="small">
+                                <GlobalAccountFragmentSystemTokenValue
+                                  account={accountName}
+                                  chainId={settings.chainId}
+                                  contract="eosio"
+                                  token={chainSymbol}
+                                />
+                              </Header>
+                            </Table.Cell>
+                          )
+                          : false
+                        }
+                        {(stakedResources)
+                          ? (
+                            <Table.Cell textAlign="right">
+                              <GlobalAccountFragmentTokenStaked
+                                account={accountName}
+                                chainId={settings.chainId}
+                                contract="eosio"
+                                token={chainSymbol}
+                              />
+                            </Table.Cell>
+                          )
+                          : false
+                        }
+                        {(supportedContracts && supportedContracts.includes('rex'))
+                          ? (
+                            <Table.Cell textAlign="right">
+                              <GlobalAccountFragmentREXBalance
+                                account={accountName}
+                                chainId={settings.chainId}
+                                contract="eosio"
+                                token={chainSymbol}
+                              />
+                            </Table.Cell>
+                          )
+                          : false
+                        }
+                        {(stakedResources)
+                          ? (
+                            <Table.Cell textAlign="right">
+                              <GlobalAccountFragmentTokenDelegated
+                                account={accountName}
+                                chainId={settings.chainId}
+                                contract="eosio"
+                                token={chainSymbol}
+                              />
+                            </Table.Cell>
+                          )
+                          : false
+                        }
+                        {(stakedResources)
+                          ? (
+                            <Table.Cell textAlign="right">
+                              <GlobalAccountFragmentTokenRefunding
+                                account={accountName}
+                                chainId={settings.chainId}
+                                contract="eosio"
+                                token={chainSymbol}
+                              />
+                            </Table.Cell>
+                          )
+                          : false
+                        }
+                      </React.Fragment>
+                    )
+                    : false
+                  }
+                  {(view === 'governance')
+                    ? (
+                      <React.Fragment>
+                        <Table.Cell textAlign="right">
+                          <GlobalAccountFragmentVoterInfoWeightValue
+                            account={accountName}
+                          />
+                        </Table.Cell>
+                        <Table.Cell textAlign="right" collapsing>
+                          <GlobalAccountFragmentVoterInfoEffectiveness
+                            account={accountName}
+                          />
+                        </Table.Cell>
+                        <Table.Cell textAlign="right" collapsing>
+                          <GlobalAccountFragmentVoterInfoVotes
+                            account={accountName}
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <GlobalAccountFragmentVoterInfoProxy
+                            account={accountName}
+                          />
+                        </Table.Cell>
+                      </React.Fragment>
+                    )
+                    : false
+                  }
+                  {(view === 'balances')
+                    ? (
+                      <React.Fragment>
+                        {(isEmpty(accountBalances))
+                          ? (
+                            <Table.Cell>
+                              No token balances being tracked
+                            </Table.Cell>
+                          )
+                          : accountBalances[accountName]
+                        }
+                      </React.Fragment>
+                    )
+                    : false
+                  }
+                  {(view === 'resources')
+                    ? (
+                      <React.Fragment>
+                        <Table.Cell textAlign="right">
+                          <GlobalAccountFragmentResourcePercent
+                            account={accountName}
+                            type="cpu"
+                          />
+                        </Table.Cell>
+                        <Table.Cell textAlign="right">
+                          <GlobalAccountFragmentResourcePercent
+                            account={accountName}
+                            type="net"
+                          />
+                        </Table.Cell>
+                        <Table.Cell textAlign="right">
+                          <GlobalAccountFragmentRamPercent
+                            account={accountName}
+                          />
+                        </Table.Cell>
+                      </React.Fragment>
+                    )
+                    : false
+                  }
+                  <Table.Cell collapsing>
+                    <GlobalAccountFragmentStaleness
+                      account={accountName}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
           </Table.Body>
         </Table>
       </div>

@@ -10,6 +10,7 @@ class OverviewMenu extends Component<Props> {
   }
   render() {
     const {
+      stakedResources,
       view,
       viewChange,
     } = this.props;
@@ -29,13 +30,18 @@ class OverviewMenu extends Component<Props> {
           name="balances"
           onClick={viewChange}
         />
-        <Menu.Item
-          active={view === 'resources'}
-          content="Resources"
-          icon="battery full"
-          name="resources"
-          onClick={viewChange}
-        />
+        {(stakedResources)
+          ? (
+            <Menu.Item
+              active={view === 'resources'}
+              content="Resources"
+              icon="battery full"
+              name="resources"
+              onClick={viewChange}
+            />
+          )
+          : false
+        }
         <Menu.Item
           active={view === 'governance'}
           content="Governance"

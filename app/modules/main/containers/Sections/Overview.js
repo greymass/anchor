@@ -19,8 +19,9 @@ class OverviewContainer extends Component<Props> {
     const {
       chainSymbol,
       pricefeed,
-      supportedContracts,
       settings,
+      stakedResources,
+      supportedContracts,
       wallets,
     } = this.props;
     const {
@@ -87,6 +88,7 @@ class OverviewContainer extends Component<Props> {
                 subheader="Overview of accounts for this blockchain."
               />
               <OverviewMenu
+                stakedResources={stakedResources}
                 view={view}
                 viewChange={this.viewChange}
               />
@@ -129,8 +131,9 @@ class OverviewContainer extends Component<Props> {
                 <OverviewTable
                   chainSymbol={chainSymbol}
                   pricefeed={pricefeed}
-                  supportedContracts={supportedContracts}
                   settings={settings}
+                  supportedContracts={supportedContracts}
+                  stakedResources={stakedResources}
                   view={view}
                   wallets={wallets}
                 />
@@ -164,6 +167,7 @@ function mapStateToProps(state) {
     pricefeed: state.globals.pricefeed,
     navigation: state.navigation,
     settings: state.settings,
+    stakedResources: state.connection.stakedResources,
     supportedContracts: state.connection.supportedContracts,
     wallets: state.wallets
   };
