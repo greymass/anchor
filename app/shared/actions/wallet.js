@@ -4,6 +4,7 @@ import * as types from './types';
 import { setSetting } from './settings';
 import eos from './helpers/eos';
 import EOSAccount from '../utils/EOS/Account';
+import { httpClient } from '../utils/httpClient';
 
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
@@ -183,6 +184,21 @@ export function unlockWallet(password, useWallet = false) {
     if (settings.walletMode === 'hot' && !account) {
       account = await eos(connection).getAccount(wallet.account);
     }
+    let address;
+    // Determine if a FIO address needs to be retrieved for usage purposes
+    if (wallet.pubkey && wallet.pubkey.startsWith('FIO')) {
+      const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
+        fio_public_key: wallet.pubkey
+      });
+      if (
+        response
+        && response.data
+        && response.data.fio_addresses
+        && response.data.fio_addresses.length > 0
+      ) {
+        address = response.data.fio_addresses[0].fio_address;
+      }
+    }
     dispatch({
       type: types.VALIDATE_WALLET_PASSWORD_PENDING
     });
@@ -199,6 +215,7 @@ export function unlockWallet(password, useWallet = false) {
             payload: {
               ...wallet,
               accountData: account,
+              address,
               pubkey: wallet.pubkey
             },
             type: types.SET_CURRENT_WALLET
