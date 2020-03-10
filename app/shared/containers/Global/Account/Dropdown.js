@@ -55,6 +55,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
     let trigger = (
       <GlobalFragmentWallet
         account={wallet.account}
+        address={wallet.address}
         authorization={wallet.authorization}
         mode={wallet.mode}
         pubkey={wallet.pubkey}
@@ -108,6 +109,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
                     >
                       <GlobalFragmentWallet
                         account={w.account}
+                        address={w.address}
                         authorization={w.authorization}
                         mode={w.mode}
                         pubkey={w.pubkey}
@@ -123,6 +125,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
                       <Dropdown.Item>
                         <GlobalFragmentWallet
                           account={w.account}
+                          address={w.address}
                           authorization={w.authorization}
                           mode={w.mode}
                           pubkey={w.pubkey}
