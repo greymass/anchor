@@ -6,19 +6,21 @@ export default class ProducersSelectorItem extends Component<Props> {
   render() {
     const {
       producer,
+      record,
       removeProducer
     } = this.props;
+    const value = (record && record.address) ? record.address : producer
     return (
-      <List.Item key={producer}>
+      <List.Item key={value}>
         <List.Content>
           <Button
             color="red"
             icon="circle minus"
-            onClick={() => removeProducer(producer)}
+            onClick={() => removeProducer(value)}
             size="mini"
             style={{ marginRight: '1em' }}
           />
-          {producer}
+          {value}
         </List.Content>
       </List.Item>
     );

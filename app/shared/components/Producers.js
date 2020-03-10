@@ -54,9 +54,16 @@ class Producers extends Component<Props> {
         const account = accounts[settings.account];
         if (account.voter_info) {
           const accountName = account.voter_info.proxy || account.account_name;
-          const selected = editingProducers || !accounts[accountName] ?
+          let selected = editingProducers || !accounts[accountName] ?
             currentlySelected :
             accounts[accountName].voter_info.producers;
+          if (nextProps.connection.keyPrefix === 'FIO') {
+            const { list } = nextProps.producers;
+            selected = selected.map((s) => {
+              const [record] = list.filter((p) => p.owner === s)
+              return (record && record.address) ? record.address : s;
+            })
+          }
           // If the voter_info entry exists, load those votes into state
           this.setState({
             selected,
@@ -131,7 +138,7 @@ class Producers extends Component<Props> {
       selected
     } = this.state;
     clearSystemState();
-    const availableProducers = producers.list.map((producer) => producer.owner);
+    const availableProducers = producers.list.map((producer) => producer.address || producer.owner);
     const validSelected = intersection(availableProducers, selected);
     voteproducers(validSelected);
     this.setState({
@@ -226,6 +233,7 @@ class Producers extends Component<Props> {
             account={accounts[settings.account]}
             actions={actions}
             isProxying={isProxying}
+            list={producers.list}
             modified={modified}
             removeProducer={this.removeProducer.bind(this)}
             selected={selected}

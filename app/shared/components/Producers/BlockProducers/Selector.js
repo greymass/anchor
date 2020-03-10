@@ -16,6 +16,7 @@ class ProducersSelector extends Component<Props> {
     const {
       account,
       isProxying,
+      list,
       modified,
       selected,
       t,
@@ -34,13 +35,15 @@ class ProducersSelector extends Component<Props> {
           </Header>
         </List.Item>
       );
-      listItems.push(unregisteredProducers.map((producer) => (
-        <ProducersSelectorItem
-          key={`${isProxying}-${producer}-unregistered`}
-          producer={producer}
-          removeProducer={this.props.removeProducer}
-        />
-      )));
+      listItems.push(unregisteredProducers.map((producer) => {
+        return (
+          <ProducersSelectorItem
+            key={`${isProxying}-${producer}-unregistered`}
+            producer={producer}
+            removeProducer={this.props.removeProducer}
+          />
+        )
+      }));
     }
     listItems.push(
       <List.Item key="selectedHeader">
@@ -59,14 +62,18 @@ class ProducersSelector extends Component<Props> {
         modified={modified}
       />);
     } else {
-      listItems.push(validSelected.map((producer) => (
-        <ProducersSelectorItem
-          isProxying={isProxying}
-          key={`${isProxying}-${producer}`}
-          producer={producer}
-          removeProducer={this.props.removeProducer}
-        />
-      )));
+      listItems.push(validSelected.map((producer) => {
+        const [record] = list.filter((p) => p.owner === producer)
+        return (
+          <ProducersSelectorItem
+            isProxying={isProxying}
+            key={`${isProxying}-${producer}`}
+            producer={producer}
+            record={record}
+            removeProducer={this.props.removeProducer}
+          />
+        )
+      }));
     }
     return (
       <I18n ns="producers">
