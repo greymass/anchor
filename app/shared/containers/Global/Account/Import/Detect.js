@@ -7,6 +7,7 @@ import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
 import { Button, Checkbox, Divider, Header, List, Icon, Segment, Tab } from 'semantic-ui-react';
 
+import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalModalAccountImportPassword from './Password';
 
@@ -186,49 +187,21 @@ class GlobalModalAccountImportDetect extends Component<Props> {
           />
           {(filtered.length > 0)
             ? (
-              <Segment stacked color="blue">
-                <p>{t('global_account_import_existing_accounts')}</p>
+              <React.Fragment>
                 <Button
                   content="Toggle All"
                   onClick={this.toggleAll}
                   size="tiny"
+                  style={{ display: 'none' }}
                 />
-                <List divided relaxed>
-                  {(filtered.map((account) => {
-                    if (account.includes('@')) {
-                      return (
-                        <List.Item>
-                          <Checkbox
-                            checked={selected.includes(account)}
-                            label={account}
-                            name={account}
-                            onChange={this.toggleAccount}
-                          />
-                        </List.Item>
-                      );
-                    } else {
-                      const data = accounts[account];
-                      if (data) {
-                        const authorizations = new EOSAccount(data).getAuthorizations(pubkeys.available);
-                        return authorizations.map((authorization) => {
-                          const auth = `${account}@${authorization.perm_name}`;
-                          return (
-                            <List.Item>
-                              <Checkbox
-                                checked={selected.includes(auth)}
-                                label={auth}
-                                name={auth}
-                                onChange={this.toggleAccount}
-                              />
-                            </List.Item>
-                          );
-                        });
-                      }
-                    }
-                    return false;
-                  }))}
-                </List>
-              </Segment>
+                {pubkeys.available.map((publicKey) => (
+                  <GlobalAccountImportElementsAccountList
+                    publicKey={publicKey}
+                    toggleAccount={this.toggleAccount}
+                    value
+                  />
+                ))}
+              </React.Fragment>
             )
             : false
           }
