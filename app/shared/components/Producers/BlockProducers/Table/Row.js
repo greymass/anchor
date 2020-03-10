@@ -59,7 +59,7 @@ class ProducersTableRow extends Component<Props> {
           {(producersVotedIn) && (
             <Popup
               content={t('producer_vote_description', { chainSymbol: connection.chainSymbol })}
-              header={t('producer_vote_header', { producer: producer.owner })}
+              header={t('producer_vote_header', { producer: (producer.address || producer.owner) })}
               hoverable
               position="right center"
               trigger={(
@@ -69,8 +69,8 @@ class ProducersTableRow extends Component<Props> {
                   icon={isSelected ? 'checkmark box' : 'minus square outline'}
                   onClick={
                     (isSelected)
-                      ? () => removeProducer(producer.owner)
-                      : () => addProducer(producer.owner)
+                      ? () => removeProducer(producer.address || producer.owner)
+                      : () => addProducer(producer.address || producer.owner)
                   }
                   size="small"
                 />
@@ -89,7 +89,7 @@ class ProducersTableRow extends Component<Props> {
         >
           <Header size="small">
             <span styles={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
-              {producer.owner}
+              {producer.address || producer.owner}
             </span>
             <Header.Subheader>
               <DangerLink
