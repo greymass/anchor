@@ -9,6 +9,7 @@ import debounce from 'lodash/debounce';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
+import GlobalFormFieldKeyPublic from '../../../../Global/Form/Field/Key/Public';
 import GlobalFormFieldMemo from '../../../../Global/Form/Field/Memo';
 import WalletPanelFormTransferSendConfirming from './Send/Confirming';
 
@@ -274,19 +275,39 @@ class WalletPanelFormTransferSend extends Component<Props> {
             />
           ) : (
             <Segment basic clearing>
-              <GlobalFormFieldAccount
-                app={app}
-                autoFocus
-                contacts={settings.contacts}
-                enableContacts
-                enableExchanges
-                chainId={connection.chainId}
-                fluid
-                label={t('transfer_label_to')}
-                name="to"
-                onChange={this.onChange}
-                value={to}
-              />
+              {(connection.keyPrefix === 'FIO')
+                ? (
+                  <GlobalFormFieldKeyPublic
+                    app={app}
+                    autoFocus
+                    connection={connection}
+                    contacts={settings.contacts}
+                    enableContacts
+                    enableExchanges
+                    chainId={connection.chainId}
+                    fluid
+                    label={t('transfer_label_to_pubkey')}
+                    name="to"
+                    onChange={this.onChange}
+                    value={to}
+                  />
+                )
+                : (
+                  <GlobalFormFieldAccount
+                    app={app}
+                    autoFocus
+                    contacts={settings.contacts}
+                    enableContacts
+                    enableExchanges
+                    chainId={connection.chainId}
+                    fluid
+                    label={t('transfer_label_to')}
+                    name="to"
+                    onChange={this.onChange}
+                    value={to}
+                  />
+                )
+              }
               {(shouldDisplayTransferingToContractMessage) && (
                 <Message
                   content={t('transfer_destination_account_is_contract')}
