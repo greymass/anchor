@@ -7,6 +7,7 @@ export class GlobalFragmentAuthorization extends Component<Props> {
   render() {
     const {
       account,
+      address,
       authorization,
       pubkey,
       t
@@ -27,6 +28,22 @@ export class GlobalFragmentAuthorization extends Component<Props> {
           </span>
         </span>
       );
+    }
+    if (address) {
+      element = (
+        <span>
+          <span>
+            {address}
+          </span>
+          <br/>
+          <span style={{ opacity: 0.4 }}>
+            {account}
+          </span>
+          <span style={{ opacity: 0.4 }}>
+            @{authorization}
+          </span>
+        </span>
+      )
     }
     if (pubkey) {
       return (
