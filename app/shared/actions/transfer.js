@@ -3,12 +3,43 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
 
+function getAction(contractAccount, account, authorization, from, to, quantity, memo, network = 'EOS', connection = null, wallet = null) {
+  const action = {
+    account: contractAccount,
+    name: 'transfer',
+    authorization: [{
+      actor: account,
+      permission: authorization
+    }],
+    data: {
+      from,
+      to,
+      quantity,
+      memo
+    }
+  };
+  // Modify transaction for FIO
+  if (network === 'FIO') {
+    const amount = parseInt(quantity.split(' ')[0] * 1000000000, 10);
+    action.name = 'trnsfiopubky';
+    action.data = {
+      payee_public_key: to,
+      amount,
+      max_fee: 250000000,
+      actor: account,
+      tpid: null,
+    };
+  }
+  return action;
+}
+
 export function transfer(from, to, quantity, memo, symbol) {
   return (dispatch: () => void, getState) => {
     const {
       balances,
       connection,
-      settings
+      settings,
+      wallet
     } = getState();
     const { account, authorization } = settings;
 
@@ -21,24 +52,9 @@ export function transfer(from, to, quantity, memo, symbol) {
     try {
       const contracts = balances.__contracts;
       const contractAccount = contracts[currentSymbol].contract;
-      return eos(connection, true, true).transact({
-        actions: [
-          {
-            account: contractAccount,
-            name: 'transfer',
-            authorization: [{
-              actor: account,
-              permission: authorization
-            }],
-            data: {
-              from,
-              to,
-              quantity,
-              memo
-            }
-          }
-        ],
-      }, {
+      const actions = [getAction(contractAccount, account, authorization, from, to, quantity, memo, connection.keyPrefix, connection, wallet)];
+      const signer = eos(connection, true, true)
+      return signer.transact({ actions }, {
         broadcast: connection.broadcast,
         expireSeconds: connection.expireSeconds,
         sign: connection.sign
