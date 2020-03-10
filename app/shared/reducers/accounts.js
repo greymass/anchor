@@ -10,6 +10,8 @@ const initialState = {
   __lookups: [],
   // Account Permissions found via key lookup
   __permissions: [],
+  // New structure for FIO Address associations
+  __results: {},
   // Map of Permissions to Public Keys
   __map: {},
 };
@@ -60,7 +62,13 @@ export default function accounts(state = initialState, action) {
         __lookups: uniq([
           ...action.payload.accounts.account_names,
           ...state.__lookups,
-        ])
+        ]),
+        __results: Object.assign({}, state.__results, {
+          [action.payload.key]: {
+            addresses: action.payload.addresses,
+            accounts: action.payload.accounts,
+          }
+        })
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS: {
