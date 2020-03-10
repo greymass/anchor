@@ -146,6 +146,7 @@ const knownChains = [
     node: 'https://fiotestnet.greymass.com',
     stakedResources: false,
     supportedContracts: [],
+    stakedResources: false,
     symbol: 'FIO',
     systemContract: 'fio',
     // testnet: true,
