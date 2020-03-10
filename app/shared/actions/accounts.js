@@ -200,8 +200,26 @@ export function getAccount(account = '') {
           .post(`${connection.httpEndpoint}/v1/chain/get_account`, {
             account_name: account
           })
-          .then((response) =>
-            dispatch(processLoadedAccount(connection.chainId, account, response.data)))
+          .then((response) => {
+            if (response.data.voter_info === null) {
+              const query = {
+                json: true,
+                code: 'eosio',
+                scope: 'eosio',
+                table: 'voters',
+                key_type: 'name',
+                index_position: 3,
+                lower_bound: account,
+                limit: 10,
+              };
+              return eos(connection).getTableRows(query).then((result) => {
+                // overload the voter info with table results
+                response.data.voter_info = result.rows[0];
+                return dispatch(processLoadedAccount(connection.chainId, account, response.data));
+              });
+            }
+            return dispatch(processLoadedAccount(connection.chainId, account, response.data))
+          })
           .catch((err) => dispatch({
             type: types.GET_ACCOUNT_FAILURE,
             payload: { err, account_name: account },
@@ -546,6 +564,7 @@ export function getAccountByKey(key) {
                 type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
                 payload: {
                   accounts,
+                  key,
                   addresses: response.data.fio_addresses
                 }
               }))
