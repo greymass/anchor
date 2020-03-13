@@ -9,6 +9,7 @@
   "transfer_label_memo": "거래 메모",
   "transfer_label_quantity": "수량",
   "transfer_label_to": "받을 계정",
+  "transfer_label_to_pubkey": "Destination Public Key",
   "transfer_label_token_and_quantity": "토큰 선택 + 수량",
   "transfer_modal_title": "토큰 전송",
   "transfer_modal_transaction_successful_message": "요청한 거래가 처리되었습니다. 거래 ID는 아래에서 확인할 수 있습니다.",
