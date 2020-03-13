@@ -138,9 +138,10 @@ class PromptStage extends Component<Props> {
   onUnlock = (password) => {
     const {
       actions,
+      blockchain,
       wallet
     } = this.props;
-    actions.unlockWalletByAuth(wallet.account, wallet.authorization, password);
+    actions.unlockWalletByAuth(wallet.account, wallet.authorization, password, blockchain.chainId);
   }
   render() {
     const {
