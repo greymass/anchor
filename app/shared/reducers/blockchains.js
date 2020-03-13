@@ -200,6 +200,15 @@ const knownChains = [
     testnet: true
   },
   {
+    _id: 'proton-testnet',
+    chainId: 'e0a0743522e90db0a1802632b90fc48272957f9c32e4d35639d769546c10b763',
+    keyPrefix: 'EOS',
+    name: 'Proton Testnet',
+    node: 'https://protontestnet.greymass.com/',
+    symbol: 'XPT',
+    testnet: true
+  },
+  {
     _id: 'telos-mainnet',
     chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
     keyPrefix: 'EOS',
