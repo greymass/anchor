@@ -9,6 +9,7 @@
   "transfer_label_memo": "Памятка",
   "transfer_label_quantity": "Количество",
   "transfer_label_to": "Получатель",
+  "transfer_label_to_pubkey": "Destination Public Key",
   "transfer_label_token_and_quantity": "Выбор Токена + Количество",
   "transfer_modal_title": "Передача Токенов",
   "transfer_modal_transaction_successful_message": "Запрошенная транзакция обработана. Идентификатор транзакции можно найти ниже.",
