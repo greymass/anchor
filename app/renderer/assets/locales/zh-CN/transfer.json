@@ -9,6 +9,7 @@
   "transfer_label_memo": "传送备忘录",
   "transfer_label_quantity": "数量",
   "transfer_label_to": "目标帐户",
+  "transfer_label_to_pubkey": "Destination Public Key",
   "transfer_label_token_and_quantity": "令牌选择+数量",
   "transfer_modal_title": "转让令牌",
   "transfer_modal_transaction_successful_message": "请求的交易已处理,交易ID可以在下面找到.",
