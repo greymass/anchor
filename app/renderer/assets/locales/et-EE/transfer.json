@@ -9,6 +9,7 @@
   "transfer_label_memo": "Ülekande Teade",
   "transfer_label_quantity": "Kogus",
   "transfer_label_to": "Saaja Konto",
+  "transfer_label_to_pubkey": "Destination Public Key",
   "transfer_label_token_and_quantity": "Osaku valik + Kogus",
   "transfer_modal_title": "Osakute Ülekanne",
   "transfer_modal_transaction_successful_message": "Taotletud tehing on töödeldud. Kande ID võid leida allpool.",
