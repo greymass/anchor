@@ -119,7 +119,8 @@ export function validateHashPassword(password) {
         const decrypted = decrypt(settings.walletHash, password).toString(CryptoJS.enc.Utf8);
         if (decrypted === 'VALID') {
           return dispatch({
-            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
+            from: 'validateHashPassword'
           });
         }
       } catch (err) {
@@ -150,7 +151,8 @@ export function validateWalletPassword(password, useWallet = false) {
         const key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (ecc.isValidPrivate(key) === true) {
           return dispatch({
-            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
+            from: 'validateWalletPassword'
           });
         }
       } catch (err) {
@@ -237,7 +239,8 @@ export function unlockWallet(password, useWallet = false) {
             dispatch(setWalletHash(password));
           }
           return dispatch({
-            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
+            from: 'unlockWallet'
           });
         }
       } catch (err) {
@@ -253,7 +256,7 @@ export function unlockWallet(password, useWallet = false) {
   };
 }
 
-export function unlockWalletByAuth(account, authorization, password) {
+export function unlockWalletByAuth(account, authorization, password, chainId = false) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -265,7 +268,11 @@ export function unlockWalletByAuth(account, authorization, password) {
       wallets,
     } = state;
 
-    const wallet = find(wallets, { account, authorization });
+    const query = { account, authorization };
+    if (chainId) {
+      query.chainId = chainId;
+    }
+    const wallet = find(wallets, query);
 
     const accountData = accounts[wallet.account];
 
@@ -306,7 +313,8 @@ export function unlockWalletByAuth(account, authorization, password) {
             type: types.SET_AUTH
           });
           return dispatch({
-            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
+            from: 'unlockWalletByAuth'
           });
         }
       } catch (err) {
