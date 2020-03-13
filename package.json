@@ -40,9 +40,10 @@
     "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,
     "protocols": {
-      "name": "eosio",
+      "name": "esr",
+      "role": "Viewer",
       "schemes": [
-        "eosio"
+        "esr"
       ]
     },
     "files": [
@@ -111,13 +112,14 @@
       "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
       "desktop": {
         "Name": "anchor",
-        "GenericName": "Anchor - An EOSIO Light Wallet",
+        "GenericName": "Anchor - EOSIO Light Wallet",
         "X-GNOME-FullName": "anchor",
         "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
         "Type": "Application",
         "Terminal": "false",
         "StartupNotify": "false",
-        "Categories": "Network;"
+        "Categories": "Network;",
+        "MimeType": "application/x-esr;x-scheme-handler/esr;"
       },
       "icon": "app/renderer/assets/icons/png",
       "target": [
