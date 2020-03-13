@@ -77,7 +77,7 @@
   "global_account_import_private_requires_hash_button": "Setup Password",
   "global_account_import_private_requires_hash_description": "Please enter a password of your choosing and keep it safe. This password cannot be recovered and is not stored anywhere within the app.",
   "global_account_import_private_requires_hash_header": "No wallet password established.",
-  "global_account_import_private_requires_hash_header_r2": "Set a secure password for your Anchor wallet",
+  "global_account_import_private_requires_hash_header_r2": "First, you'll need a password.",
   "global_account_import_private_requires_hash_subheader": "Before you can import a private key, the application needs to establish a password for encryption. Please set a password to enabling importing private keys and remember it, it will not be stored and cannot be recovered or changed.",
   "global_account_import_private_requires_hash_subheader_r2": "Before storing any sensitive information, like private keys, first you will need to setup a password for use within your Anchor wallet.",
   "global_account_import_private_requires_hot_header": "See toiming nõuab olemasolevat Kuuma Rahakotti.",
