@@ -478,11 +478,15 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       //         payload: { err }
       //       })));
       // } else {
-        forEach(selectedTokens, (namespace) => {
-          const [, contract, symbol] = namespace.split(':');
-
-          eos(connection)
-            .getCurrencyBalance(contract, account, symbol)
+      forEach(selectedTokens, (namespace) => {
+        const [, contract, symbol] = namespace.split(':');
+        httpQueue.add(() =>
+          httpClient
+            .post(`${connection.httpEndpoint}/v1/chain/get_currency_balance`, {
+              code: contract,
+              account,
+              symbol,
+            })
             .then((results) =>
               dispatch({
                 type: types.GET_ACCOUNT_BALANCE_SUCCESS,
@@ -496,8 +500,8 @@ export function getCurrencyBalance(account, requestedTokens = false) {
               }))
             .catch((err) => dispatch({
               type: types.GET_ACCOUNT_BALANCE_FAILURE,
-              payload: { err, account_name: account }
-            }));
+              payload: { err }
+            })));
         });
       // }
     }
