@@ -25,7 +25,7 @@ function getAction(contractAccount, account, authorization, from, to, quantity, 
     action.data = {
       payee_public_key: to,
       amount,
-      max_fee: 250000000,
+      max_fee: 2000000000,
       actor: account,
       tpid: null,
     };
