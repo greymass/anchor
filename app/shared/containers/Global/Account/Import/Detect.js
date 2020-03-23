@@ -150,13 +150,11 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       selected,
       valid,
     } = this.state;
-    console.log({accounts})
     let matches = accounts.__lookups;
     if (Object.keys(accounts.__permissions).length) {
       matches = accounts.__permissions;
     }
     const filtered = [];
-    console.log({matches})
     matches.forEach((match) => {
       if (match.includes('@')) {
         const [accountName, accountPerm] = match.split('@');
@@ -170,7 +168,6 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       } else {
         const data = accounts[match];
         if (data) {
-          console.log({data})
           const authorizations = new EOSAccount(data).getAuthorizations(pubkeys.available);
           authorizations.forEach((authorization) => {
             const exists = find(wallets, {
@@ -193,8 +190,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
         return <GlobalModalAccountImportPassword />;
       }
     }
-    console.log({filtered})
-    console.log({pubkeys})
+
     return (
       <Tab.Pane>
         <Segment basic>
