@@ -25,8 +25,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
     value: ''
   }
   componentDidMount() {
-    this.props.actions.clearAccountByKey();
-    this.props.actions.getAccountByKeys(this.props.pubkeys.available);
+    this.fetchAccountsByKey();
   }
   componentWillReceiveProps(nextProps) {
     const { validate } = this.props;
@@ -35,10 +34,23 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       validate.NODE === 'PENDING'
       && nextValidate.NODE === 'SUCCESS'
     ) {
-      this.props.actions.clearAccountByKey();
-      this.props.actions.getAccountByKeys(this.props.pubkeys.available);
+      this.fetchAccountsByKey();
     }
   }
+
+  fetchAccountsByKey = () => {
+    const {
+      connection,
+      pubkeys
+    } = this.props;
+
+    const pubkeysToLookup = pubkeys.available.filter(pubkey => {
+      return pubkey.includes(connection.chainSymbol);
+    });
+    this.props.actions.clearAccountByKey();
+    this.props.actions.getAccountByKeys(pubkeysToLookup);
+  };
+
   importAccounts = (password) => {
     const {
       selected,
@@ -138,11 +150,13 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       selected,
       valid,
     } = this.state;
+    console.log({accounts})
     let matches = accounts.__lookups;
     if (Object.keys(accounts.__permissions).length) {
       matches = accounts.__permissions;
     }
     const filtered = [];
+    console.log({matches})
     matches.forEach((match) => {
       if (match.includes('@')) {
         const [accountName, accountPerm] = match.split('@');
@@ -156,6 +170,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       } else {
         const data = accounts[match];
         if (data) {
+          console.log({data})
           const authorizations = new EOSAccount(data).getAuthorizations(pubkeys.available);
           authorizations.forEach((authorization) => {
             const exists = find(wallets, {
@@ -178,6 +193,8 @@ class GlobalModalAccountImportDetect extends Component<Props> {
         return <GlobalModalAccountImportPassword />;
       }
     }
+    console.log({filtered})
+    console.log({pubkeys})
     return (
       <Tab.Pane>
         <Segment basic>
