@@ -19,18 +19,34 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
     } = this.props;
     const matches = accounts.__lookups;
     const results = accounts.__results;
+
+    const authorizations = {};
+
+    matches.forEach((account) => {
+      const data = accounts[account];
+      if (data) {
+        const authorizationList = new EOSAccount(data).getAuthorizations(publicKey);
+        authorizationList.forEach((authorization) => {
+          authorizations[account] = authorizations[account] || [];
+          authorizations[account].push(authorization);
+        });
+      }
+    });
+
+    const hasAuthorizationsToDisplay = Object.values(authorizations).filter(authorizationList => {
+      return authorizationList.length > 0;
+    }).length > 0;
+
     return (
       <React.Fragment>
-        {(value && matches.length > 0)
+        {(value && matches.length > 0 && hasAuthorizationsToDisplay)
           ? (
             <Segment stacked color="blue">
               <p>The following accounts have matched the information provided.</p>
               <List divided relaxed>
                 {(matches.map((account) => {
-                  const data = accounts[account];
-                  if (data) {
-                    const authorizations = new EOSAccount(data).getAuthorizations(publicKey);
-                    return authorizations.map((authorization) => {
+                  if (authorizations[account]) {
+                    return authorizations[account].map((authorization) => {
                       const auth = `${account}@${authorization.perm_name}`;
                       return (
                         <List.Item>
