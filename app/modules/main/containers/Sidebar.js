@@ -61,6 +61,7 @@ class SidebarContainer extends Component<Props> {
           onClick={this.onClick}
           name=""
           style={{
+            backgroundColor: (!module) ? 'rgb(70,71,153)' : '',
             color,
             textAlign: 'center'
           }}
@@ -70,11 +71,19 @@ class SidebarContainer extends Component<Props> {
             src={Logo}
             size="large"
             style={{
-              marginBottom: '0.5rem',
-              width: ((settings.sidebarCollapsed) ? '2em' : '7em'),
+              width: ((settings.sidebarCollapsed) ? '3em' : '7em'),
             }}
           />
-          Home
+          {(!settings.sidebarCollapsed)
+            ? (
+                <p style={{
+                  marginTop: '0.5rem',
+                }}>
+                  Home
+                </p>
+              )
+            : false
+          }
         </Menu.Item>
         {(
           settings.walletMode !== 'cold'

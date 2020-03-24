@@ -116,19 +116,6 @@ class MainIndexContainer extends Component<Props> {
           <div style={{
             padding: '1.25em'
           }}>
-            <Image
-              fluid
-              src={background}
-              style={{
-                bottom: 0,
-                // top: 62,
-                // transform: 'rotate(0.5turn)',
-                right: '-1em',
-                opacity: 0.5,
-                position: 'fixed',
-                zIndex: -1
-              }}
-            />
             <Either
               catchError={({ error, info }) => {
                 console.log(info);
