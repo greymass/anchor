@@ -16,6 +16,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
       system,
       t,
       value,
+      wallets,
     } = this.props;
     const matches = accounts.__lookups;
     const results = accounts.__results;
@@ -27,8 +28,14 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
       if (data) {
         const authorizationList = new EOSAccount(data).getAuthorizations(publicKey);
         authorizationList.forEach((authorization) => {
-          authorizations[account] = authorizations[account] || [];
-          authorizations[account].push(authorization);
+          const existingWallet = wallets.find(wallet => {
+            return authorization.perm_name === wallet.authorization &&
+              account === wallet.account;
+          });
+          if (!existingWallet) {
+            authorizations[account] = authorizations[account] || [];
+            authorizations[account].push(authorization);
+          }
         });
       }
     });
@@ -108,6 +115,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    wallets: state.wallets,
     system: state.system,
   };
 }
