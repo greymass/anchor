@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find, sortBy } from 'lodash';
-import { Button, Form, Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Label, Segment, Table } from 'semantic-ui-react';
 
 import GlobalFormFieldUrl from '../../../../components/Global/Form/Field/Url';
 import GlobalFragmentChainLogo from '../../../../components/Global/Fragment/ChainLogo';
@@ -107,6 +107,12 @@ class GlobalBlockchainEnable extends Component<Props> {
             <Table.Row>
               <Table.HeaderCell></Table.HeaderCell>
               <Table.HeaderCell></Table.HeaderCell>
+              {(displayTestNetworks)
+                ? (
+                  <Table.HeaderCell>Type</Table.HeaderCell>
+                )
+                : false
+              }
               <Table.HeaderCell>Blockchain&nbsp;Network</Table.HeaderCell>
               <Table.HeaderCell>API Server</Table.HeaderCell>
             </Table.Row>
@@ -140,9 +146,20 @@ class GlobalBlockchainEnable extends Component<Props> {
                     }}
                   />
                 </Table.Cell>
+                {(displayTestNetworks)
+                  ? (
+                    <Table.Cell collapsing>
+                      {(b.testnet)
+                        ? <Label color="orange">Testnet</Label>
+                        : <Label color="green">Mainnet</Label>
+                      }
+                    </Table.Cell>
+                  )
+                  : false
+                }
                 <Table.Cell collapsing>
                   <Header
-                    content={(b.testnet) ? `(TESTNET) ${b.name}` : b.name}
+                    content={b.name}
                     subheader={`${b.chainId.substr(0, 6)}...${b.chainId.substr(-6)}`}
                     size="medium"
                     style={{
