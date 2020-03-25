@@ -149,6 +149,7 @@ const knownChains = [
     stakedResources: false,
     symbol: 'FIO',
     systemContract: 'fio',
+    testnet: false,
     tokenContract: 'fio.token',
     tokenPrecision: 8
   },
