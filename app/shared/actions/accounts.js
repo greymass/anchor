@@ -572,10 +572,21 @@ export function getAccountByKey(key) {
                   addresses: response.data.fio_addresses
                 }
               }))
-              .catch((err) => dispatch({
-                type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
-                payload: { err, key }
-              })));
+              .catch((err) => {
+                dispatch({
+                  type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
+                  payload: {
+                    accounts,
+                    key,
+                    addresses: []
+                  }
+                });
+                // return dispatch({
+                //   type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+                //   payload: { err, key }
+                // })
+              })
+            );
         }
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
