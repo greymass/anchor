@@ -139,6 +139,20 @@ const knownChains = [
   //   testnet: false
   // },
   {
+    _id: 'fio',
+    chainId: '0acb3117377209a6d91cee151f02f7a535a4cb773f34cb187c1357b181f4b099',
+    keyPrefix: 'FIO',
+    name: 'FIO',
+    node: 'https://fio.greymass.com',
+    stakedResources: false,
+    supportedContracts: [],
+    stakedResources: false,
+    symbol: 'FIO',
+    systemContract: 'fio',
+    tokenContract: 'fio.token',
+    tokenPrecision: 8
+  },
+  {
     _id: 'fio-testnet-3',
     chainId: 'b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e',
     keyPrefix: 'FIO',
