@@ -2,6 +2,21 @@ import { filter, find, flatten } from 'lodash';
 
 import EOSAccountStats from './Account/Stats';
 
+const { stringToPublicKey, publicKeyToString } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-numeric');
+
+function convertLegacyPublicKey(s) {
+  let pubkey = s;
+  // Convert Alternative Legacy to EOS for this process
+  if (['FIO'].includes(s.substr(0, 3))) {
+    pubkey = pubkey.replace(/^.{3}/g, 'EOS');
+  }
+  // Convert Legacy Keys
+  if (pubkey.substr(0, 3) === 'EOS') {
+    return publicKeyToString(stringToPublicKey(pubkey));
+  }
+  return pubkey;
+}
+
 export default class EOSAccount {
   constructor(
     account = undefined,
@@ -111,17 +126,30 @@ export default class EOSAccount {
     if (Array.isArray(pubkey)) {
       let valid = [];
       pubkey.forEach((pkey) => {
-        const matches = filter(account.permissions, (perm) => !!filter(perm.required_auth.keys, { key: pkey }).length);
+        const converted = convertLegacyPublicKey(pkey);
+        const matches = filter(account.permissions, (perm) => {
+          const keys = perm.required_auth.keys.map((k) => ({
+            key: convertLegacyPublicKey(k.key),
+            weight: k.weight,
+          }));
+          return !!filter(keys, { key: converted }).length;
+        });
         if (matches.length) {
           valid = [...valid, ...matches];
         }
-      })
+      });
       return valid;
     }
+    const converted = convertLegacyPublicKey(pubkey);
     if (account) {
       // Return all authorizations which this key matches
-      return filter(account.permissions, (perm) =>
-        !!filter(perm.required_auth.keys, { key: pubkey }).length);
+      return filter(account.permissions, (perm) => {
+        const keys = perm.required_auth.keys.map((k) => ({
+          key: convertLegacyPublicKey(k.key),
+          weight: k.weight,
+        }));
+        return !!filter(keys, { key: converted }).length;
+      });
     }
     return [];
   }
