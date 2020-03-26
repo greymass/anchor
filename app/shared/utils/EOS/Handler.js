@@ -64,6 +64,9 @@ export default class EOSHandler {
     };
     return this;
   }
+  convert(pubkey) {
+    return convertLegacyPublicKey(pubkey);
+  }
   initEOSJS(endpoint) {
     this.rpc = new JsonRpc(endpoint);
     this.api = new Api({
