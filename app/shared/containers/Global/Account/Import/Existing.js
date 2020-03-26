@@ -37,7 +37,6 @@ class GlobalModalAccountImportExisting extends Component<Props> {
     const {
       pane
     } = this.state;
-    console.log(this.props)
     if (pane) {
       switch (pane) {
         case 'hot':
