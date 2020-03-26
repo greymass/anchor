@@ -434,7 +434,7 @@ export function upgradeWallet(chainId, account, authorization, password = false,
       eos(connection).getAccount(account).then((accountData) => {
         const wallet = current[0];
         const key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
-        const pubkey = (key) ? ecc.privateToPublic(key) : undefined;
+        const pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : undefined;
         const derived = new EOSAccount(accountData).getAuthorization(pubkey);
         const [, auth] = derived.split('@');
         dispatch({
