@@ -125,6 +125,7 @@ class GlobalModalAccountImportLedgerAccounts extends Component<Props> {
   render() {
     const {
       accounts,
+      connection,
       ledger,
       onClose,
       status,
@@ -199,7 +200,11 @@ class GlobalModalAccountImportLedgerAccounts extends Component<Props> {
                     const authorizations = new EOSAccount(data).getAuthorizations(ledgerKey.wif);
                     return authorizations.map((authorization) => {
                       const auth = `${account}@${authorization.perm_name}`;
-                      const uid = `${account}@${authorization.perm_name}@${ledgerKey.wif}@${ledger.path}`;
+                      let { wif } = ledgerKey;
+                      if (connection.keyPrefix !== 'EOS') {
+                        wif = `${connection.keyPrefix}${wif.slice(3)}`;
+                      }
+                      const uid = `${account}@${authorization.perm_name}@${wif}@${ledger.path}`;
                       const isSelected = (selected.indexOf(uid) >= 0);
                       return (
                         <List.Item key={`${account}-${auth}-${isSelected}`}>
@@ -217,14 +222,14 @@ class GlobalModalAccountImportLedgerAccounts extends Component<Props> {
                                   <GlobalFragmentAuthorizationComponent
                                     account={account}
                                     authorization={authorization.perm_name}
-                                    pubkey={ledgerKey.wif}
+                                    pubkey={wif}
                                   />
                                 </Header.Content>
                               </Header>
                             )}
                             name={uid}
                             onClick={this.onToggleSelected}
-                            value={ledgerKey.wif}
+                            value={wif}
                           />
                         </List.Item>
                       );
