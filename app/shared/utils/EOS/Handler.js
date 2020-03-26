@@ -92,7 +92,7 @@ export default class EOSHandler {
         });
         return convertLegacyPublicKeys((await rpc.fetch('/v1/chain/get_required_keys', {
           transaction: modified,
-          available_keys: args.availableKeys,
+          available_keys: convertLegacyPublicKeys(args.availableKeys),
         })).required_keys);
       }
     };
@@ -202,8 +202,26 @@ class LedgerSignatureProvider {
   constructor(config) {
     this.config = config;
     this.rpc = new JsonRpc(config.httpEndpoint);
-    this.api = new Api({ rpc: this.rpc });
+    this.api = new Api({
+      authorityProvider: this.getAuthorityProvider(),
+      rpc: this.rpc
+    });
     this.ledger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
+  }
+  getAuthorityProvider() {
+    const { rpc } = this;
+    return {
+      async getRequiredKeys(args) {
+        const {
+          availableKeys,
+          transaction
+        } = args;
+        return convertLegacyPublicKeys((await rpc.fetch('/v1/chain/get_required_keys', {
+          transaction,
+          available_keys: convertLegacyPublicKeys(availableKeys),
+        })).required_keys);
+      }
+    };
   }
   async getAvailableKeys() {
     const { transport } = this.ledger;
