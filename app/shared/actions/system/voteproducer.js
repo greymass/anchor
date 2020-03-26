@@ -2,8 +2,9 @@ import * as types from '../types';
 
 import { getAccounts } from '../accounts';
 import eos from '../helpers/eos';
+import { httpClient } from '../../utils/httpClient';
 
-function getAction(account, authorization, producers, proxy, network = 'EOS', wallet = null) {
+async function getAction(connection, account, authorization, producers, proxy, network = 'EOS', wallet = null) {
   const action = {
     account: 'eosio',
     name: 'voteproducer',
@@ -21,18 +22,23 @@ function getAction(account, authorization, producers, proxy, network = 'EOS', wa
   };
   // Modify transaction for FIO
   if (network === 'FIO') {
+    const fees = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fee`, {
+      end_point: 'vote_producer',
+      fio_address: wallet.address,
+    });
+    const { fee } = fees.data;
     action.data = {
       actor: account,
       fio_address: wallet.address,
       producers,
-      max_fee: 40000000000
+      max_fee: fee
     };
   }
   return action;
 }
 
 export function voteproducers(producers = [], proxy = '') {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const {
       connection,
       settings,
@@ -45,10 +51,9 @@ export function voteproducers(producers = [], proxy = '') {
     const { account, authorization } = settings;
     // sort (required by EOS)
     producers.sort();
+    const actions = [await getAction(connection, account, authorization, producers, proxy, connection.keyPrefix, wallet)];
     return eos(connection, true, true)
-      .transact({
-        actions: [getAction(account, authorization, producers, proxy, connection.keyPrefix, wallet)]
-      }, {
+      .transact({ actions }, {
         blocksBehind: 3,
         broadcast: connection.broadcast,
         expireSeconds: connection.expireSeconds,
