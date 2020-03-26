@@ -5,7 +5,7 @@ import eos from './helpers/eos';
 import { addCustomTokenBeos } from './settings';
 import { getTable, getTableByBounds } from './table';
 import { httpQueue, httpClient } from '../utils/httpClient';
-
+import EOSHandler from '../utils/EOS/Handler';
 const ecc = require('eosjs-ecc');
 
 export function clearAccountCache() {
@@ -541,9 +541,15 @@ function formatBalances(balances, forcedSymbol = false) {
 
 export function getAccountByKey(key) {
   return (dispatch: () => void, getState) => {
+    const {
+      connection,
+      settings
+    } = getState();
+    const handler = new EOSHandler(connection);
+    const convertedKey = handler.convert(key);
     dispatch({
       type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
-      payload: { key }
+      payload: { key: convertedKey }
     });
     // Prevent private keys from submitting
     if (ecc.isValidPrivate(key)) {
@@ -551,12 +557,8 @@ export function getAccountByKey(key) {
         type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
       });
     }
-    const {
-      connection,
-      settings
-    } = getState();
-    if (key && (settings.node || settings.node.length !== 0)) {
-      return eos(connection).getKeyAccounts(key).then((accounts) => {
+    if (convertedKey && (settings.node || settings.node.length !== 0)) {
+      return eos(connection).getKeyAccounts(convertedKey).then((accounts) => {
         dispatch(getAccounts(accounts.account_names));
         if (key.substr(0, 3) === 'FIO') {
           return httpQueue.add(() =>
