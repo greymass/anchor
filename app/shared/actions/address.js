@@ -7,7 +7,6 @@ export function lookupFioNames(wallet) {
     const {
       connection
     } = getState();
-    console.log(connection.httpEndpoint)
     const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
       fio_public_key: wallet.pubkey
     });
