@@ -300,7 +300,7 @@ export function signIdentityRequest(prompt, blockchain, wallet) {
       try {
         const signed = await signer.sign({
           chainId: blockchain.chainId,
-          requiredKeys: [wallet.pubkey],
+          requiredKeys: [signer.convert(wallet.pubkey)],
           serializedTransaction: prompt.resolved.serializedTransaction,
         });
         dispatch({
