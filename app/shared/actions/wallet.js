@@ -188,17 +188,21 @@ export function unlockWallet(password, useWallet = false) {
     }
     let address;
     // Determine if a FIO address needs to be retrieved for usage purposes
-    if (wallet.pubkey && wallet.pubkey.startsWith('FIO')) {
-      const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
-        fio_public_key: wallet.pubkey
-      });
-      if (
-        response
-        && response.data
-        && response.data.fio_addresses
-        && response.data.fio_addresses.length > 0
-      ) {
-        address = response.data.fio_addresses[0].fio_address;
+    if (connection.chainSymbol === 'FIO') {
+      try {
+        const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
+          fio_public_key: `FIO${wallet.pubkey.slice(3)}`,
+        });
+        if (
+          response
+          && response.data
+          && response.data.fio_addresses
+          && response.data.fio_addresses.length > 0
+        ) {
+          address = response.data.fio_addresses[0].fio_address;
+        }
+      } catch(e) {
+        // no catch
       }
     }
     dispatch({
