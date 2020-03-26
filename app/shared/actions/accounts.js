@@ -495,7 +495,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                   contract,
                   precision: formatPrecisions(results),
                   symbol,
-                  tokens: formatBalances(results, symbol)
+                  tokens: formatBalances(results.data, symbol)
                 }
               }))
             .catch((err) => dispatch({
