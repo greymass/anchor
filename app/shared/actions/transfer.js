@@ -2,8 +2,9 @@ import * as types from './types';
 
 import eos from './helpers/eos';
 import { getCurrencyBalance } from './accounts';
+import { httpClient } from '../utils/httpClient';
 
-function getAction(contractAccount, account, authorization, from, to, quantity, memo, network = 'EOS', connection = null, wallet = null) {
+async function getAction(contractAccount, account, authorization, from, to, quantity, memo, network = 'EOS', connection = null, wallet = null) {
   const action = {
     account: contractAccount,
     name: 'transfer',
@@ -20,12 +21,17 @@ function getAction(contractAccount, account, authorization, from, to, quantity, 
   };
   // Modify transaction for FIO
   if (network === 'FIO') {
+    const fees = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fee`, {
+      end_point: 'transfer_tokens_pub_key',
+      fio_address: wallet.address,
+    });
+    const { fee } = fees.data;
     const amount = parseInt(quantity.split(' ')[0] * 1000000000, 10);
     action.name = 'trnsfiopubky';
     action.data = {
       payee_public_key: to,
       amount,
-      max_fee: 2000000000,
+      max_fee: fee,
       actor: account,
       tpid: null,
     };
@@ -34,7 +40,7 @@ function getAction(contractAccount, account, authorization, from, to, quantity, 
 }
 
 export function transfer(from, to, quantity, memo, symbol) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const {
       balances,
       connection,
@@ -52,7 +58,7 @@ export function transfer(from, to, quantity, memo, symbol) {
     try {
       const contracts = balances.__contracts;
       const contractAccount = contracts[currentSymbol].contract;
-      const actions = [getAction(contractAccount, account, authorization, from, to, quantity, memo, connection.keyPrefix, connection, wallet)];
+      const actions = [await getAction(contractAccount, account, authorization, from, to, quantity, memo, connection.keyPrefix, connection, wallet)];
       const signer = eos(connection, true, true)
       return signer.transact({ actions }, {
         broadcast: connection.broadcast,
