@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Dropdown, Header, Segment } from 'semantic-ui-react';
+import { Button, Dropdown, Header, Label, Segment } from 'semantic-ui-react';
 
 import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
 import * as BlockchainsActions from '../../../actions/blockchains';
@@ -74,6 +74,12 @@ class GlobalBlockchainDropdown extends Component<Props> {
             />
           )
           : 'Select a Blockchain'
+        }
+        {(blockchain.testnet)
+          ? (
+            <Label color="orange" content="Testnet" size="large" />
+          )
+          : false
         }
         {(showName && blockchain && blockchain.name)
           ? (
