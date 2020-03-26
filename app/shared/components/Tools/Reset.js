@@ -21,9 +21,6 @@ class ToolsReset extends Component<Props> {
           <p>
             {t('tools_reset_body_1')}
           </p>
-          <p>
-            {t('tools_reset_body_1')}
-          </p>
           <Divider />
           <GlobalButtonResetContainer />
         </Segment>
