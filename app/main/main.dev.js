@@ -107,6 +107,7 @@ app.on('ready', async () => {
   const { settings } = store.getState();
   if (settings.allowSigningRequests) {
     enableSigningRequests();
+    log.info('signing requests');
   }
 
   // Establish tray menu
@@ -117,15 +118,41 @@ app.on('ready', async () => {
 
   // Establish the protocol handler window
   initProtocolHandler();
+
+  if (uri) {
+    log.error('handling uri on ready');
+
+    log.error({resourcePath});
+    log.error({store});
+    log.error({mainWindow});
+    log.error({pHandler});
+    log.error({uri});
+
+    setTimeout(() => {
+      handleUri(resourcePath, store, mainWindow, pHandler, uri);
+    }, 2000);
+  }
 });
 
 app.on('window-all-closed', () => {
   log.info('app: window-all-closed');
   app.quit();
 });
-app.on('will-finish-launching', () => {
-  app.on('open-url', (e, url) => handleUri(resourcePath, store, mainWindow, pHandler, url));
-  log.info('app: will-finish-launching');
+app.on('open-url', (e, url) => {
+  log.error('open-url');
+  log.error({url});
+
+  if (pHandler) {
+    log.error('handling uri after app is opened');
+    log.error({resourcePath});
+    log.error({store});
+    log.error({mainWindow});
+    log.error({pHandler});
+    log.error({uri});
+    handleUri(resourcePath, store, mainWindow, pHandler, url);
+  } else {
+    uri = url;
+  }
 });
 app.on('before-quit', () => {
   log.info('app: before-quit');
