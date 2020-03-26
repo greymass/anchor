@@ -4,7 +4,7 @@ import * as types from './types';
 import { getAccount } from './accounts';
 import { setSettings } from './settings';
 import { decrypt, encrypt, setWalletMode } from './wallet';
-import { httpClient } from '../utils/httpClient';
+import { lookupFioNames } from './address';
 
 import EOSAccount from '../utils/EOS/Account';
 import eos from './helpers/eos';
@@ -371,17 +371,7 @@ export function useWallet(chainId, account, authorization) {
     }));
     // Determine if a FIO address needs to be retrieved for usage purposes
     if (wallet.pubkey && wallet.pubkey.startsWith('FIO')) {
-      const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
-        fio_public_key: wallet.pubkey
-      });
-      if (
-        response
-        && response.data
-        && response.data.fio_addresses
-        && response.data.fio_addresses.length > 0
-      ) {
-        newWallet.address = response.data.fio_addresses[0].fio_address;
-      }
+      dispatch(lookupFioNames(wallet));
     }
     if (newWallet.path) {
       dispatch({
@@ -413,7 +403,7 @@ export function useWallet(chainId, account, authorization) {
       });
     }
   };
-}
+};
 
 // Upgrades a legacy hot wallet to the newest version
 export function upgradeWallet(chainId, account, authorization, password = false, swap = false) {

@@ -63,6 +63,11 @@ export default function wallet(state = initialState, action) {
       };
       return Object.assign({}, state, newState);
     }
+    case types.SET_CURRENT_WALLET_ADDRESS: {
+      return Object.assign({}, state, {
+        address: action.payload.address
+      });
+    }
     default: {
       return state;
     }
