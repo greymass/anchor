@@ -140,7 +140,7 @@ const knownChains = [
   // },
   {
     _id: 'fio',
-    chainId: '0acb3117377209a6d91cee151f02f7a535a4cb773f34cb187c1357b181f4b099',
+    chainId: '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c',
     keyPrefix: 'FIO',
     name: 'FIO',
     node: 'https://fio.greymass.com',
