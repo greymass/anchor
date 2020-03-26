@@ -39,7 +39,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
                             name={auth}
                             onChange={this.props.toggleAccount}
                           />
-                          {(results[publicKey] && results[publicKey].addresses)
+                          {(results[publicKey] && results[publicKey].addresses && results[publicKey].addresses.length > 0)
                             ? (
                               <List style={{ marginLeft: '2em' }}>
                                 <List.Header>Addresses</List.Header>
