@@ -120,17 +120,9 @@ app.on('ready', async () => {
   initProtocolHandler();
 
   if (uri) {
-    log.error('handling uri on ready');
-
-    log.error({resourcePath});
-    log.error({store});
-    log.error({mainWindow});
-    log.error({pHandler});
-    log.error({uri});
-
     setTimeout(() => {
       handleUri(resourcePath, store, mainWindow, pHandler, uri);
-    }, 2000);
+    }, 1000);
   }
 });
 
@@ -139,16 +131,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 app.on('open-url', (e, url) => {
-  log.error('open-url');
-  log.error({url});
-
   if (pHandler) {
-    log.error('handling uri after app is opened');
-    log.error({resourcePath});
-    log.error({store});
-    log.error({mainWindow});
-    log.error({pHandler});
-    log.error({uri});
     handleUri(resourcePath, store, mainWindow, pHandler, url);
   } else {
     uri = url;
