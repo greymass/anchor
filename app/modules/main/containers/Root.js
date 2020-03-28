@@ -8,14 +8,35 @@ import { configureStore, history } from '../../../shared/store/renderer/configur
 import i18n from '../../../shared/i18n';
 import ScrollToTop from '../../../shared/components/Global/ScrollToTop';
 
+import MessageAppError from '../../../shared/components/Global/Message/App/Error';
+
 import '../../../shared/app.global.css';
 
 const { store } = configureStore();
 
 export default class Root extends Component<Props> {
+  state = {};
+
+  componentDidCatch(error) {
+    this.setState({
+      error,
+    });
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ error: null });
+  }
+
   render() {
+    const { error } = this.state;
+
     const Routes = this.props.routes;
-    return (
+
+    return (error) ? (
+      <I18nextProvider i18n={i18n}>
+        <MessageAppError error={error} />
+      </I18nextProvider>
+    ) : (
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <ConnectedRouter history={history}>
