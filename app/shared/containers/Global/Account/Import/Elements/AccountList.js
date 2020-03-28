@@ -12,6 +12,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
   render() {
     const {
       accounts,
+      connection,
       publicKey,
       system,
       t,
@@ -30,7 +31,8 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
         authorizationList.forEach((authorization) => {
           const existingWallet = wallets.find(wallet => {
             return authorization.perm_name === wallet.authorization &&
-              account === wallet.account;
+              account === wallet.account &&
+              connection.chainId === wallet.chainId;
           });
           if (!existingWallet) {
             authorizations[account] = authorizations[account] || [];
@@ -115,8 +117,9 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
-    wallets: state.wallets,
+    connection: state.connection,
     system: state.system,
+    wallets: state.wallets,
   };
 }
 
