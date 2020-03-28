@@ -81,8 +81,8 @@ export class GlobalFormFieldAccount extends Component<Props> {
     } else if (fieldOption === 'exchanges') {
       const exchangeAccounts = get(app, 'constants.exchanges') || [];
       dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => ({
-        value: exchangeAccount,
-        text: exchangeAccount
+        value: exchangesInfo[exchangeAccount].account,
+        text: exchangesInfo[exchangeAccount].name,
       }));
     }
 
@@ -154,6 +154,11 @@ export class GlobalFormFieldAccount extends Component<Props> {
               name={name}
               onChange={this.onChange}
               options={dropdownOptions}
+              placeholder={
+                fieldOption === 'exchanges' ?
+                  'Select an exchange' :
+                  'Select a contact'
+              }
               selection
             />
           ) : ''}
@@ -164,3 +169,18 @@ export class GlobalFormFieldAccount extends Component<Props> {
 }
 
 export default translate('global')(GlobalFormFieldAccount);
+
+const exchangesInfo = {
+  binancecleos: {
+    account: 'binancecleos',
+    name: 'Binance',
+  },
+  bitfinexdep1: {
+    account: 'bitfinexdep1',
+    name: 'Bitfinex',
+  },
+  krakenkraken: {
+    account: 'krakenkraken',
+    name: 'Kraken',
+  },
+};
