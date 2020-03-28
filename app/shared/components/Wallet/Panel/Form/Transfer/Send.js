@@ -104,7 +104,6 @@ class WalletPanelFormTransferSend extends Component<Props> {
       this.getContractHash(value);
     }
 
-
     const newState = { [name]: value };
     if (name === 'quantity') {
       const [, asset] = value.split(' ');
@@ -162,7 +161,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       return true;
     }
 
-    if (!quantity || quantity === '' || quantity === '0.0000') {
+    if (!quantity || quantity === '' || quantity.includes('0.0000 ')) {
       return true;
     }
 
