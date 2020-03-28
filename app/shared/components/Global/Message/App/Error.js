@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Button, Message, Header } from 'semantic-ui-react';
-import ReactJson from 'react-json-view';
+import { Message, Header, Segment } from 'semantic-ui-react';
 
 class FormMessageError extends Component<Props> {
   render() {
@@ -11,24 +10,21 @@ class FormMessageError extends Component<Props> {
     } = this.props;
 
     return (
-      <Message negative>
+      <Segment>
         <Header>An error occured while loading the app:</Header>
         {typeof error === 'object' ? (
-          <ReactJson
-            displayDataTypes={false}
-            displayObjectSize={false}
-            iconStyle="square"
-            name={null}
-            src={error}
-            style={{ padding: '1em' }}
-            theme="harmonic"
-          />
+          <Message negative>
+            <Header>{error.message}</Header>
+            <p>{error.stack}</p>
+          </Message>
         ) : (
-          <p>
-            {error}
-          </p>
+          <Message negative>
+            <Header>
+              {error}
+            </Header>
+          </Message>
         )}
-      </Message>
+      </Segment>
     );
   }
 }
