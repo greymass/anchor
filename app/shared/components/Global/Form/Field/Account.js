@@ -66,10 +66,17 @@ export class GlobalFormFieldAccount extends Component<Props> {
       width
     } = this.props;
 
-    const {
-      fieldOption,
-      value
-    } = this.state;
+    const { value } = this.state;
+
+    let { fieldOption } = this.state;
+
+    const exchangeAccounts = get(app, 'constants.exchanges') || [];
+
+    if (contacts.includes(value)) {
+      fieldOption = 'contacts';
+    } else if (exchangeAccounts.includes(value)) {
+      fieldOption = 'exchanges';
+    }
 
     let dropdownOptions;
 
@@ -79,7 +86,6 @@ export class GlobalFormFieldAccount extends Component<Props> {
         text: `${contact.accountName} ${contact.label ? (`(${contact.label})`) : ''}`
       }));
     } else if (fieldOption === 'exchanges') {
-      const exchangeAccounts = get(app, 'constants.exchanges') || [];
       dropdownOptions = sortBy(exchangeAccounts).map((exchangeAccount) => ({
         value: exchangesInfo[exchangeAccount].account,
         text: exchangesInfo[exchangeAccount].name,
@@ -133,7 +139,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
                   name="inputRadioOptions"
                   style={{ marginLeft: '10px' }}
                   value={option}
-                  checked={this.state.fieldOption === option}
+                  checked={fieldOption === option}
                   onChange={this.handleRadioChange}
                 />
               ))}
@@ -149,7 +155,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
           {(fieldOption !== 'manual')
           ? (
             <Form.Dropdown
-              defaultValue={value}
+              value={value}
               fluid
               name={name}
               onChange={this.onChange}
