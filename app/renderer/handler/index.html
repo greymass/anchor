@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/stylesheets/loading-widget.css" />
     <script>
       (function() {
         if (!process.env.HOT) {
@@ -15,7 +16,9 @@
     </script>
   </head>
   <body>
-    <div id="root" style="height: 100%; min-height: 100%;">loading</div>
+    <div id="root" style="height: 100%; min-height: 100%;">
+      <div class="loading-widget"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
     <script>
       {
         const scripts = [];
