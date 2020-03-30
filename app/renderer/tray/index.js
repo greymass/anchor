@@ -8,7 +8,6 @@ import Routes from './routes';
 
 
 const renderApp = routes => {
-  console.log('RenderApp');
   render(
     <AppContainer>
       <Root routes={routes} />
