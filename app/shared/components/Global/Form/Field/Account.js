@@ -72,7 +72,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
 
     const exchangeAccounts = get(app, 'constants.exchanges') || [];
 
-    if (contacts &&  contacts.includes(value)) {
+    if (contacts && contacts.includes(value)) {
       fieldOption = 'contacts';
     } else if (exchangeAccounts && exchangeAccounts.includes(value)) {
       fieldOption = 'exchanges';
