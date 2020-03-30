@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Card, Divider, Image, Message, Segment } from 'semantic-ui-react';
+import { Button, Card, Divider, Icon, Image, Message, Segment } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
 
 import { clearValidationState } from '../../../../../shared/actions/validate';
@@ -14,8 +14,8 @@ import { setWalletMode } from '../../../../../shared/actions/wallet';
 
 import WelcomeImportContainer from '../../../../../shared/containers/Welcome/Import';
 
-import anchorLogo from '../../../../../renderer/assets/images/anchor-logo.svg';
-import anchorText from '../../../../../renderer/assets/images/anchor-text.svg';
+import Logo from '../../../../../renderer/assets/images/anchor-white.png';
+import LogoText from '../../../../../renderer/assets/images/anchor-dark-text.png';
 
 class HomeInitializeContainer extends Component<Props> {
   initialize = (e) => {
@@ -51,11 +51,11 @@ class HomeInitializeContainer extends Component<Props> {
     } = this.props;
     return (
       <React.Fragment>
-        <Segment basic style={{ marginTop: 0 }}>
+        <Segment basic style={{ margin: 0 }}>
           <Image
             alt="Anchor Logo"
             centered
-            src={anchorLogo}
+            src={Logo}
             style={{
               width: '192px',
             }}
@@ -63,19 +63,19 @@ class HomeInitializeContainer extends Component<Props> {
           <Image
             alt="Anchor"
             centered
-            src={anchorText}
+            src={LogoText}
             style={{
-              width: '192px',
-              marginTop: '1em',
+              width: '256px',
+              marginTop: '2em',
             }}
           />
         </Segment>
 
-        <Segment basic textAlign="center">
-          <p style={{ margin: '0' }}>
+        <Segment basic textAlign="center" style={{ margin: 0 }}>
+          <p style={{ margin: '1em' }}>
             <Button
               color="green"
-              content="Get Started"
+              content="Setup New Wallet"
               icon="sign-in"
               onClick={this.initialize}
               size="large"
@@ -87,6 +87,9 @@ class HomeInitializeContainer extends Component<Props> {
                 Do you already have a backup from Anchor or eos-voter?
               </Card.Description>
               <WelcomeImportContainer />
+              <p style={{ marginTop: '0.5em' }}>
+                <Icon name="angle double down" />
+              </p>
             </Card.Content>
             <Card.Content extra>
               For Advanced Users:
