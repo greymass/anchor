@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Divider, Grid, Header, Icon, Image, Responsive, Segment, Statistic, Step } from 'semantic-ui-react';
 
-import AnchorLogo from '../../../renderer/assets/images/anchor-icon-2.png';
+import AnchorLogo from '../../../renderer/assets/images/anchor-white.png';
+
 import GlobalFragmentChainLogo from '../../../shared/components/Global/Fragment/ChainLogo';
 
 class PromptHeader extends Component<Props> {
@@ -55,7 +56,14 @@ class PromptHeader extends Component<Props> {
         <Grid>
           <Grid.Column width={10}>
             <Header size="huge" style={{ marginTop: 0 }}>
-              <Image src={AnchorLogo} style={{ marginRight: '0.25em' }} />
+              <Image
+                src={AnchorLogo}
+                style={{
+                  marginRight: '0.25em',
+                  marginTop: 0,
+                  width: '3em',
+                }}
+              />
               <Header.Content>
                 Signing Request
                 <Header.Subheader>

@@ -11,7 +11,8 @@ import WalletModalContentBroadcast from '../../../Wallet/Modal/Content/Broadcast
 const initialState = {
   arrayOptions: {},
   currentArrayValues: {},
-  form: {}
+  form: {},
+  formToggleMatchAccount: {},
 };
 
 class ContractInterfaceFormAction extends Component<Props> {
@@ -82,6 +83,25 @@ class ContractInterfaceFormAction extends Component<Props> {
       )
     });
   };
+  onFormToggleName = (e, { name, checked }) => {
+    const { settings } = this.props;
+    this.setState({
+      form: Object.assign(
+        {},
+        this.state.form,
+        {
+          [name]: checked ? settings.account : ''
+        }
+      ),
+      formToggleMatchAccount: Object.assign(
+        {},
+        this.state.formToggleMatchAccount,
+        {
+          [name]: checked ? 1 : 0
+        }
+      )
+    });
+  };
   onSubmit = () => {
     const {
       actions,
@@ -117,7 +137,9 @@ class ContractInterfaceFormAction extends Component<Props> {
       transaction
     } = this.props;
     const {
-      currentArrayValues
+      currentArrayValues,
+      form,
+      formToggleMatchAccount,
     } = this.state;
     const signing = !!(system.TRANSACTION_BUILD === 'PENDING');
     const fields = contract.getFields(contractAction);
@@ -176,13 +198,24 @@ class ContractInterfaceFormAction extends Component<Props> {
         default: {
           formFields.push((
             <GlobalFormFieldGeneric
-              key={`${contractAction}-${field.name}-${field.type}`}
+              disabled={formToggleMatchAccount[field.name]}
+              key={`${contractAction}-${field.name}-${field.type}-${formToggleMatchAccount[field.name]}`}
               label={`${field.name} (${field.type})`}
               name={field.name}
-              onChange={this.onChange
-              }
+              onChange={this.onChange}
+              value={form[field.name]}
             />
           ));
+          if (field.type === 'name') {
+            formFields.push((
+              <Form.Checkbox
+                key={`${contractAction}-${field.name}-${field.type}-useaccount`}
+                label={`Use current account for field '${field.name}'`}
+                name={field.name}
+                onChange={this.onFormToggleName}
+              />
+            ))
+          }
         }
       }
     });

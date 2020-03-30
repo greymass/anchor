@@ -79,6 +79,7 @@ class GlobalBlockchainManage extends Component<Props> {
         <Header
           content="Select which blockchain you'd like to start using"
           subheader="You can easily switch between blockchains using the dropdown menu in the upper left menu."
+          size="large"
           style={{ marginTop: 0 }}
         />
         <Card.Group>

@@ -83,6 +83,7 @@ class GlobalBlockchainEnable extends Component<Props> {
         <Header
           content="Which blockchains do you plan on using?"
           subheader="You can add/remove blockchains at any point in the future."
+          size="large"
           style={{ marginTop: 0 }}
         />
         <Button

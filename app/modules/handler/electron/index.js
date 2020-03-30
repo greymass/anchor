@@ -19,8 +19,8 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
 
   const uiStateKeeper = windowStateKeeper(store, 'signingWindow');
 
-  const { name, version } = packageJson;
-  const title = `Signing Request - ${name} (${version})`;
+  const { productName, version } = packageJson;
+  const title = `Signing Request - ${productName} (${version})`;
 
   ui = new BrowserWindow({
     alwaysOnTop: true,
