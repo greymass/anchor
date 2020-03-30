@@ -1,6 +1,6 @@
 {
   "account_authority": "Account/Authority",
-  "application_name": "eos-voter",
+  "application_name": "Anchor",
   "application_version": "v1.0.0-rc8",
   "back": "Back",
   "block_height": "Block Height",
