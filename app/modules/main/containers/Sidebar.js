@@ -6,7 +6,9 @@ import { withRouter } from 'react-router-dom';
 import { Header, Icon, Image, Menu } from 'semantic-ui-react';
 import { find } from 'lodash';
 
-import Logo from '../../../renderer/assets/images/anchor-shape.svg';
+import Logo from '../../../renderer/assets/images/anchor-white.png';
+import LogoBackground from '../../../renderer/assets/images/anchor-blue-bg.png';
+import AnchorLogoHorizontal from '../../../renderer/assets/images/anchor-text-light.svg';
 
 import packageJson from '../../../package.json';
 import { clearSystemState } from '../../../shared/actions/system/systemstate';
@@ -15,7 +17,6 @@ import * as SettingsActions from '../../../shared/actions/settings';
 import * as TransactionActions from '../../../shared/actions/transaction';
 import WalletPanelButtonBroadcast from '../../../shared/components/Wallet/Panel/Button/Broadcast';
 
-import GreymassLogoHorizontal from '../../../renderer/assets/images/anchor-text-light.svg';
 
 class SidebarContainer extends Component<Props> {
   onClick = (e, data) => this.props.actions.changeModule(data.name)
@@ -40,16 +41,19 @@ class SidebarContainer extends Component<Props> {
     const {
       module
     } = navigation;
+    const background = '#5169B1';
     const color = '#d1d5d8';
+    const devMode = false;
     return (
       <Menu
         animation="overlay"
         className="nav-sidebar"
         inverted
         icon={settings.sidebarCollapsed}
+        pointing
         style={{
           display: 'flex',
-          background: '#29242f',
+          background: '#1E2229',
           borderRadius: 0,
           borderRight: 'none',
           minHeight: '100vh',
@@ -61,7 +65,9 @@ class SidebarContainer extends Component<Props> {
           onClick={this.onClick}
           name=""
           style={{
-            backgroundColor: (!module) ? 'rgb(70,71,153)' : '',
+            backgroundImage: `url(${LogoBackground})`,
+            backgroundSize: 'contain',
+            borderRadius: 0,
             color,
             textAlign: 'center'
           }}
@@ -79,9 +85,34 @@ class SidebarContainer extends Component<Props> {
                 <p style={{
                   marginTop: '0.5rem',
                 }}>
-                  Home
+                <Image
+                  centered
+                  src={AnchorLogoHorizontal}
+                  style={{
+                    fill: 'currentColor',
+                    marginTop: '0.25em',
+                    maxWidth: ((settings.sidebarCollapsed) ? '4em' : '7em'),
+                    width: ((settings.sidebarCollapsed) ? '4em' : '7em')
+                  }}
+                />
                 </p>
               )
+            : false
+          }
+        </Menu.Item>
+        <Menu.Item
+          as="a"
+          active={(!module)}
+          onClick={this.onClick}
+          name=""
+          style={{
+            backgroundColor: (!module) ? background : '',
+            color,
+          }}
+        >
+          <Icon name="home" size="large" />
+          {(!settings.sidebarCollapsed)
+            ? <p>Home</p>
             : false
           }
         </Menu.Item>
@@ -98,8 +129,10 @@ class SidebarContainer extends Component<Props> {
                 active={module && module.startsWith('wallet')}
                 onClick={this.onClick}
                 name="wallet"
-                color="teal"
-                style={{ color }}
+                style={{
+                  backgroundColor: (module && module.startsWith('wallet')) ? background : '',
+                  color,
+                }}
               >
                 <Icon name="id card" size="large" />
                 {(!settings.sidebarCollapsed)
@@ -114,8 +147,10 @@ class SidebarContainer extends Component<Props> {
                     active={module && module.startsWith('account')}
                     onClick={this.onClick}
                     name={`account/${settings.account}`}
-                    color="blue"
-                    style={{ color }}
+                    style={{
+                      backgroundColor: (module && module.startsWith('account')) ? background : '',
+                      color,
+                    }}
                   >
                     <Icon name="tachometer alternate" size="large" />
                     {(!settings.sidebarCollapsed)
@@ -131,8 +166,10 @@ class SidebarContainer extends Component<Props> {
                 active={module && module.startsWith('governance')}
                 onClick={this.onClick}
                 name="governance/producers"
-                color="purple"
-                style={{ color }}
+                style={{
+                  backgroundColor: (module && module.startsWith('governance')) ? background : '',
+                  color,
+                }}
               >
                 <Icon name="balance" size="large" />
                 {(!settings.sidebarCollapsed)
@@ -140,34 +177,41 @@ class SidebarContainer extends Component<Props> {
                   : false
                 }
               </Menu.Item>
-              {/* <Menu.Item
-                as="a"
-                active={module === 'tests'}
-                onClick={this.onClick}
-                name="tests"
-                color="red"
-                style={{ color }}
-                >
-                <Icon name="external" />
-                {(!settings.sidebarCollapsed)
-                  ? 'URI TESTS'
-                  : false
-                }
-                </Menu.Item>
-                <Menu.Item
-                as="a"
-                active={module === 'devtest'}
-                onClick={this.onClick}
-                name="devtest"
-                color="orange"
-                style={{ color }}
-                >
-                <Icon name="lab" />
-                {(!settings.sidebarCollapsed)
-                  ? 'DevTests'
-                  : false
-                }
-              </Menu.Item> */}
+              {(devMode === true)
+                ? (
+                  <React.Fragment>
+                    <Menu.Item
+                      as="a"
+                      active={module === 'tests'}
+                      onClick={this.onClick}
+                      name="tests"
+                      color="red"
+                      style={{ color }}
+                      >
+                      <Icon name="external" />
+                      {(!settings.sidebarCollapsed)
+                        ? 'URI TESTS'
+                        : false
+                      }
+                      </Menu.Item>
+                      <Menu.Item
+                      as="a"
+                      active={module === 'devtest'}
+                      onClick={this.onClick}
+                      name="devtest"
+                      color="orange"
+                      style={{ color }}
+                      >
+                      <Icon name="lab" />
+                      {(!settings.sidebarCollapsed)
+                        ? 'DevTests'
+                        : false
+                      }
+                    </Menu.Item>
+                  </React.Fragment>
+                )
+                : false
+              }
             </React.Fragment>
           )
           : false
@@ -177,8 +221,10 @@ class SidebarContainer extends Component<Props> {
           active={module && module.startsWith('tools')}
           onClick={this.onClick}
           name="tools"
-          color="violet"
-          style={{ color }}
+          style={{
+            backgroundColor: (module && module.startsWith('tools')) ? background : '',
+            color,
+          }}
         >
           <Icon
             name="wrench"
@@ -217,14 +263,14 @@ class SidebarContainer extends Component<Props> {
           }}
         >
           <Icon
-            name={(settings.sidebarCollapsed) ? 'list' : 'circle arrow left'}
-            size={(settings.sidebarCollapsed) ? 'small' : 'large'}
+            name={(settings.sidebarCollapsed) ? 'caret square right outline' : 'caret square left outline'}
+            size={(settings.sidebarCollapsed) ? 'large' : 'large'}
             style={{
               color,
             }}
           />
           {(!settings.sidebarCollapsed)
-            ? <p>Minimize Sidebar</p>
+            ? <p>Minimize Menu</p>
             : false
           }
         </Menu.Item>
@@ -233,6 +279,7 @@ class SidebarContainer extends Component<Props> {
           name="version"
           onClick={this.onClick}
           style={{
+            borderRadius: 0,
             color,
             padding: '0.5em 0',
             textAlign: 'center',
@@ -248,9 +295,8 @@ class SidebarContainer extends Component<Props> {
           />
           <Image
             centered
-            src={GreymassLogoHorizontal}
+            src={AnchorLogoHorizontal}
             style={{
-              color: 'red',
               fill: 'currentColor',
               marginTop: '0.25em',
               maxWidth: ((settings.sidebarCollapsed) ? '4em' : '7em'),
