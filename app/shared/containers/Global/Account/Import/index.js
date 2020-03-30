@@ -100,8 +100,13 @@ class GlobalAccountImport extends Component<Props> {
     const panes = this.getPanes();
     return (
       <React.Fragment>
-        <Segment attached="top" style={{ marginTop: 0 }}>
-          <Header>
+        <Segment
+          attached="top"
+          style={{ marginTop: 0 }}
+        >
+          <Header
+            size="large"
+          >
             <GlobalFragmentChainLogo
               chainId={connection.chainId}
               noPopup

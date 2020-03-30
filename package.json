@@ -1,7 +1,7 @@
 {
-  "name": "anchor-beta",
-  "productName": "Anchor-BETA",
-  "version": "1.0.0-rc8",
+  "name": "anchor",
+  "productName": "Anchor",
+  "version": "1.0.0",
   "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -34,8 +34,8 @@
     "not ie <= 8"
   ],
   "build": {
-    "productName": "Anchor-BETA",
-    "appId": "com.greymass.anchor-beta",
+    "productName": "Anchor",
+    "appId": "com.greymass.anchor",
     "afterSign": "internals/macos/notarize.js",
     "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,

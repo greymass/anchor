@@ -17,7 +17,8 @@ export default class GlobalFormFieldGeneric extends Component<Props> {
       label,
       loading,
       name,
-      value
+      value,
+      forcedValue
     } = this.props;
     return (
       <Form.Field
@@ -31,6 +32,7 @@ export default class GlobalFormFieldGeneric extends Component<Props> {
         name={name}
         onChange={this.onChange}
         defaultValue={value}
+        value={(forcedValue) ? forcedValue : undefined}
       />
     );
   }
