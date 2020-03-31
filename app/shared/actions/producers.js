@@ -4,10 +4,6 @@ import { get } from 'dot-prop-immutable';
 import eos from './helpers/eos';
 import * as types from './types';
 
-const voteWeightMultiples = {
-  WAX: 1.71977206895 * (10 ** 26),
-};
-
 export function clearProducerCache() {
   return (dispatch: () => void) => {
     dispatch({
@@ -81,10 +77,10 @@ export function getProducers(previous = false) {
           const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
           const tokenPrecision = connection.tokenPrecision || 4;
-          const voteWeightMultiple = voteWeightMultiples[connection.chain] || 10 ** tokenPrecision;
-          const tokenVotes = (votes / calcVoteWeight() / voteWeightMultiple).toFixed(0);
-          const owner = producer.owner;
-          let address = undefined;
+          const voteWeightMultiple = 10 ** tokenPrecision;
+          const tokenVotes = (votes / calcVoteWeight(connection.voteDecayPeriod) / voteWeightMultiple).toFixed(0);
+          const { owner } = producer;
+          let address;
           switch (connection.keyPrefix) {
             case 'FIO': {
               address = producer.fio_address;
@@ -122,10 +118,10 @@ export function getProducers(previous = false) {
   };
 }
 
-function calcVoteWeight() {
+function calcVoteWeight(voteDecayPeriod) {
   const timestamp = 946684800000;
   const dates = (Date.now() / 1000) - (timestamp / 1000);
-  const weight = Math.floor(dates / (86400 * 7)) / 52;
+  const weight = Math.floor(dates / (86400 * 7)) / (voteDecayPeriod || 52);
   return 2 ** weight;
 }
 

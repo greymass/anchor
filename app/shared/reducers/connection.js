@@ -77,6 +77,7 @@ export default function connection(state = initialState, action) {
         systemContract: (blockchain && blockchain.systemContract) || 'eosio',
         tokenContract: (blockchain && blockchain.tokenContract) || 'eosio.token',
         tokenPrecision: (blockchain && blockchain.tokenPrecision) || 4,
+        voteDecayPeriod: (blockchain && blockchain.voteDecayPeriod) || 52,
       });
     }
     // Remove key from connection if the wallet is locked/removed
