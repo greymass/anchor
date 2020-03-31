@@ -76,11 +76,14 @@ export function getProducers(previous = false) {
           const votes = parseInt(producer.total_votes, 10);
           const percent = votes / parseInt(current.total_producer_vote_weight, 10);
           const isBackup = (backupMinimumPercent && percent > backupMinimumPercent);
-          const tokenPrecision = connection.tokenPrecision || 4;
+          const tokenPrecision = connection.votePrecision || connection.tokenPrecision || 4;
           const voteWeightMultiple = 10 ** tokenPrecision;
           const tokenVotes = connection.oneTokenOneVote ?
             (votes / voteWeightMultiple).toFixed(0) :
             (votes / calcVoteWeight(connection.voteDecayPeriod) / voteWeightMultiple).toFixed(0);
+          console.log({tokenPrecision})
+          console.log({tokenVotes})
+          console.log({votes})
           const { owner } = producer;
           let address;
           switch (connection.keyPrefix) {
