@@ -17,27 +17,35 @@ class PromptStageForbidden extends Component<Props> {
     return (
       <Grid>
         <Grid.Column width={16}>
-          <Segment basic size="large">
-            <Header size="large">
+          <Segment color="red" size="large">
+            <Header color="red" size="large">
               <Icon name="warning sign" />
               <Header.Content>
-                This Signing Request has a forbidden action.
+                This request has a forbidden action.
                 <Header.Subheader>
                   Anchor prevents certain types of actions from being performed to help
                   protect your account(s).
                 </Header.Subheader>
               </Header.Content>
             </Header>
-            <p>{t(error.message)}</p>
+            <Segment padded secondary>
+              <strong>Error Code: {error.message}</strong>
+            </Segment>
             <p>
               If you would like to learn more about why this signing request has potentially
-              dangerous effects, share the following URL with those you trust for their opinion.
+              dangerous effects, share the following signing request URL with the experts you trust.
             </p>
-            <Form>
-              <Form.TextArea>
-                {`https://eosio.to/${uriParts[1]}`}
-              </Form.TextArea>
-            </Form>
+            <Segment basic>
+              <Form>
+                <Form.TextArea>
+                  {`https://eosio.to/${uriParts[1]}`}
+                </Form.TextArea>
+              </Form>
+            </Segment>
+            <p>
+              If you are absolutely sure you would like to perform this action, you can allow
+              dangerous actions from within your wallet settings and try again.
+            </p>
           </Segment>
         </Grid.Column>
       </Grid>
