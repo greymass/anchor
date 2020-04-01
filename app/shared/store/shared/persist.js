@@ -31,11 +31,28 @@ const migrations = {
       blockchains,
     };
   },
+  3: (state) => {
+    let { blockchains } = state;
+
+    blockchains = updateBlockchainData(blockchains, 'fio', {
+      noStaking: true,
+    });
+
+    blockchains = updateBlockchainData(blockchains, 'fio-testnet-3', {
+      noStaking: true,
+    });
+
+    // Update the blockchains state.
+    return {
+      ...state,
+      blockchains,
+    };
+  },
 };
 
 const persistConfig = {
   key: 'anchor-config',
-  version: 2,
+  version: 3,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables

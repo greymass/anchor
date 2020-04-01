@@ -80,6 +80,7 @@ export default function connection(state = initialState, action) {
         votePrecision: (blockchain && blockchain.votePrecision),
         voteDecayPeriod: (blockchain && blockchain.voteDecayPeriod) || 52,
         oneTokenOneVote: !!(blockchain && blockchain.oneTokenOneVote),
+        noStaking: !!(blockchain && blockchain.noStaking),
       });
     }
     // Remove key from connection if the wallet is locked/removed
