@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Button, Icon, Label, List, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
-import { attempt, isError } from 'lodash';
+import { attempt, isError, isObject } from 'lodash';
 
 import PromptFragmentTransactionActionFuel from './Action/Fuel';
 
@@ -51,7 +51,9 @@ class PromptFragmentTransactionAction extends Component<Props> {
         <Segment attached secondary>
           <List divided relaxed size="large">
             {Object.keys(action.data).sort().map((k) => {
-              const isFlexible = get(whitelist, `flexible.${index}.${k}`, false)
+              const isFlexible = get(whitelist, `flexible.${index}.${k}`, false);
+              const isJSON = (!isError(attempt(JSON.parse, action.data[k])));
+              const isData = isObject(action.data[k]);
               return (
                 <List.Item key={k}>
                   {(enableWhitelist)
@@ -82,9 +84,17 @@ class PromptFragmentTransactionAction extends Component<Props> {
                     <List.Header
                       style={{ marginTop: '0.25em' }}
                     >
-                      {(!isError(attempt(JSON.parse, action.data[k])))
+                      {(isJSON)
                         ? JSON.stringify(JSON.parse(action.data[k]))
-                        : String(action.data[k])
+                        : false
+                      }
+                      {(isData)
+                        ? JSON.stringify(action.data[k])
+                        : false
+                      }
+                      {(!isData && !isJSON)
+                        ? String(action.data[k])
+                        : false
                       }
                     </List.Header>
                   </List.Content>
