@@ -19,6 +19,7 @@ class ToolsLedger extends Component<Props> {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
+    connection: state.connection,
     ledger: state.ledger,
     settings: state.settings,
     status: LedgerActions.ledgerGetStatus(state.ledger),
