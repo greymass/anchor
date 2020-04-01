@@ -45,6 +45,7 @@ class Producers extends Component<Props> {
     if (
       !this.state.selected_loaded
       || this.state.selected_account !== settings.account
+      || this.state.chainId !== settings.chainId
       || (nextProps.producers.proxy && nextProps.producers.proxy !== this.state.selected_account)
     ) {
       const { accounts } = nextProps;
@@ -68,7 +69,8 @@ class Producers extends Component<Props> {
           this.setState({
             selected,
             selected_account: accountName,
-            selected_loaded: true
+            selected_loaded: true,
+            chain_id: settings.chainId,
           });
         } else {
           // otherwise notify users that they must stake before allowed voting
@@ -187,7 +189,7 @@ class Producers extends Component<Props> {
       connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
 
     const blockExplorers = allBlockExplorers[connection.chainKey];
-    
+
     if (settings.account && settings.walletMode !== 'wait') {
       sidebar = (producersVotedIn) ? (
         <React.Fragment>

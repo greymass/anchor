@@ -81,9 +81,6 @@ export function getProducers(previous = false) {
           const tokenVotes = connection.oneTokenOneVote ?
             (votes / voteWeightMultiple).toFixed(0) :
             (votes / calcVoteWeight(connection.voteDecayPeriod) / voteWeightMultiple).toFixed(0);
-          console.log({tokenPrecision})
-          console.log({tokenVotes})
-          console.log({votes})
           const { owner } = producer;
           let address;
           switch (connection.keyPrefix) {
