@@ -20,6 +20,7 @@ class ToolsHardwareLedger extends Component<Props> {
     const {
       accounts,
       actions,
+      connection,
       ledger,
       settings,
       status,
@@ -87,15 +88,7 @@ class ToolsHardwareLedger extends Component<Props> {
               </List>
             </Segment>
           )
-          : (
-            <Segment padded size="large">
-              <Header>
-                {t('ledger_available_text_header')}
-              </Header>
-              <p>{t('ledger_available_text_1')}</p>
-              <p>{t('ledger_available_text_2')}</p>
-            </Segment>
-          )
+          : false
         }
         <Table definition>
           <Table.Header>
@@ -104,6 +97,42 @@ class ToolsHardwareLedger extends Component<Props> {
             </Table.HeaderCell>
           </Table.Header>
           <Table.Body>
+            <Table.Row>
+              <Table.Cell>
+                {t('ledger_row_public_key')}
+              </Table.Cell>
+              <Table.Cell>
+                {(transport)
+                  ? false
+                  : <Label basic color="yellow" content={t('ledger_row_connected_false')} horizontal />
+                }
+                {(transport && ledger.publicKey)
+                  ? (
+                    <React.Fragment>
+                      <p>{`${connection.keyPrefix}${ledger.publicKey.wif.slice(3)}`}</p>
+                      <Button
+                        content={t('ledger_confirm_public_key')}
+                        onClick={this.displayPublicKey}
+                        primary
+                      />
+                    </React.Fragment>
+                  )
+                  : false
+                }
+                {(transport && !ledger.publicKey)
+                  ? (
+                    <React.Fragment>
+                      <Button
+                        content={t('ledger_retrieve_public_key')}
+                        onClick={this.getPublicKey}
+                        primary
+                      />
+                    </React.Fragment>
+                  )
+                  : false
+                }
+              </Table.Cell>
+            </Table.Row>
             <Table.Row>
               <Table.Cell width={6}>
                 {t('ledger_row_automatic_detection')}
@@ -152,42 +181,6 @@ class ToolsHardwareLedger extends Component<Props> {
                 }
                 {(transport && (!ledger.application || !ledger.application.version))
                   ? <Label basic color="orange" content={t('ledger_status_awaiting_application_subheader')} horizontal />
-                  : false
-                }
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>
-                {t('ledger_row_public_key')}
-              </Table.Cell>
-              <Table.Cell>
-                {(transport)
-                  ? false
-                  : <Label basic color="yellow" content={t('ledger_row_connected_false')} horizontal />
-                }
-                {(transport && ledger.publicKey)
-                  ? (
-                    <React.Fragment>
-                      <p>{ledger.publicKey.wif}</p>
-                      <Button
-                        content={t('ledger_confirm_public_key')}
-                        onClick={this.displayPublicKey}
-                        primary
-                      />
-                    </React.Fragment>
-                  )
-                  : false
-                }
-                {(transport && !ledger.publicKey)
-                  ? (
-                    <React.Fragment>
-                      <Button
-                        content={t('ledger_retrieve_public_key')}
-                        onClick={this.getPublicKey}
-                        primary
-                      />
-                    </React.Fragment>
-                  )
                   : false
                 }
               </Table.Cell>
