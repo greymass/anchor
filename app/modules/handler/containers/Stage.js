@@ -489,22 +489,46 @@ class PromptStage extends Component<Props> {
               </Header>
             </Loader>
           </Dimmer>
+          {(shouldDisplayDangerousTransactionWarning) && (
+            <Message
+              icon="warning sign"
+              header="This transaction is potentially dangerous"
+              content={(
+                <React.Fragment>
+                  <p>
+                    {t(warning.message)}
+                  </p>
+                  <p>
+                    Be cautious before proceeding, this action could cause damages to your account.
+                  </p>
+                </React.Fragment>
+              )}
+              error
+              size="large"
+              style={{ marginTop: 0 }}
+            />
+          )}
           {(error && error.type !== 'forbidden')
             ? (
               <GlobalTransactionMessageError
                 error={error}
               />
             )
-            : stage
+            : false
           }
-          {(shouldDisplayDangerousTransactionWarning) && (
-            <Message
-              icon="warning sign"
-              header="This is a dangerous transaction"
-              content={warning.message}
-              warning
-            />
-          )}
+          {(error && error.type === 'forbidden')
+            ? (
+              <PromptStageForbidden
+                error={error}
+                prompt={prompt}
+              />
+            )
+            : false
+          }
+          {(!error)
+            ? stage
+            : false
+          }
           {(wallet && wallet.mode === 'watch' && reqType !== 'identity')
             ? (
               <Segment color="orange" style={{ margin: 0 }}>
