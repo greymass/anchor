@@ -187,8 +187,8 @@ class Producers extends Component<Props> {
       connection.chainId !== '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f';
 
     const blockExplorers = allBlockExplorers[connection.chainKey];
-
-    if (settings.walletMode !== 'wait') {
+    
+    if (settings.account && settings.walletMode !== 'wait') {
       sidebar = (producersVotedIn) ? (
         <React.Fragment>
           <ProducersProxy
