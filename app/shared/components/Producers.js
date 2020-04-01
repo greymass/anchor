@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Tab, Divider, Message } from 'semantic-ui-react';
+import { Header, Tab, Divider, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { intersection } from 'lodash';
 
 import BlockProducers from './Producers/BlockProducers';
 import ProducersProxy from './Producers/Proxy';
 import ProducersVotingPreview from './Producers/BlockProducers/Modal/Preview';
-import Proxies from './Producers/Proxies';
 import ProducersSelector from './Producers/BlockProducers/Selector';
-import ToolsGovernanceProposals from './Tools/Governance/Proposals';
+import GlobalAccountFragmentVoterInfoEffectiveness from '../containers/Global/Account/Fragment/VoterInfo/Effectiveness';
 
 class Producers extends Component<Props> {
   constructor(props) {
@@ -193,6 +192,24 @@ class Producers extends Component<Props> {
     if (settings.account && settings.walletMode !== 'wait') {
       sidebar = (producersVotedIn) ? (
         <React.Fragment>
+          {(account)
+            ? (
+              <Header block color="green" size="large">
+                <Header.Subheader style={{ marginBottom: '0.5em' }}>
+                  Vote Strength
+                </Header.Subheader>
+                <GlobalAccountFragmentVoterInfoEffectiveness
+                  account={account.account_name}
+                />
+                <Header.Subheader style={{ marginTop: '0.5em' }}>
+                  <small>
+                    Votes decay over time, refresh your vote to increase its strength.
+                  </small>
+                </Header.Subheader>
+              </Header>
+            )
+            : false
+          }
           <ProducersProxy
             account={account}
             accounts={accounts}
