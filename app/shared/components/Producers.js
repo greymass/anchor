@@ -251,56 +251,6 @@ class Producers extends Component<Props> {
       );
     }
 
-    const tabPanes = [
-      {
-        menuItem: t('producers_block_producers'),
-        render: () => (
-          <Tab.Pane>
-            <BlockProducers
-              {...this.props}
-              addProducer={this.addProducer.bind(this)}
-              removeProducer={this.removeProducer.bind(this)}
-              selected={selected}
-            />
-          </Tab.Pane>
-        )
-      }
-    ];
-
-    if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
-      tabPanes.push({
-        menuItem: t('tools:tools_menu_governance_proposals'),
-        render: () => (
-          <Tab.Pane>
-            <ToolsGovernanceProposals
-              actions={actions}
-              blockExplorers={blockExplorers}
-              contracts={contracts}
-              settings={settings}
-              system={system}
-              validate={validate}
-              wallet={wallet}
-            />
-          </Tab.Pane>
-        )
-      });
-    }
-
-    if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
-      tabPanes.push({
-        menuItem: t('producers_proxies'),
-        render: () => (
-          <Tab.Pane>
-            <Proxies
-              {...this.props}
-              addProxy={this.addProxy.bind(this)}
-              removeProxy={this.removeProxy.bind(this)}
-            />
-          </Tab.Pane>
-        )
-      });
-    }
-
     return (
       <div ref={this.handleContextRef}>
         <BlockProducers
