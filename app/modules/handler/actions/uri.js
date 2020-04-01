@@ -204,6 +204,22 @@ export function setURI(uri) {
 }
 
 const forbiddenActions = [
+  // Prevent any eosio::updateauth commands
+  {
+    action: 'updateauth',
+    contract: 'eosio',
+    error: 'ESRURI_UPDATEAUTH_FORBIDDEN',
+  },
+  // Prevent any eosio::linkauth commands
+  {
+    action: 'linkauth',
+    contract: 'eosio',
+    error: 'ESRURI_LINKAUTH_FORBIDDEN',
+    forbiddenData: {
+      type: 'updateauth'
+    }
+  },
+  // Prevent any eosio::updateauth commands involving active
   {
     action: 'updateauth',
     contract: 'eosio',
@@ -212,20 +228,13 @@ const forbiddenActions = [
       permission: 'active'
     }
   },
+  // Prevent any eosio::updateauth commands involving owner
   {
     action: 'updateauth',
     contract: 'eosio',
     error: 'ESRURI_UPDATEAUTH_OWNER_FORBIDDEN',
     forbiddenData: {
       permission: 'owner'
-    }
-  },
-  {
-    action: 'linkauth',
-    contract: 'eosio',
-    error: 'ESRURI_LINKAUTH_UPDATEAUTH_FORBIDDEN',
-    forbiddenData: {
-      type: 'updateauth'
     }
   },
 ];
