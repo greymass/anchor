@@ -210,6 +210,7 @@ export function getAccount(account = '') {
                 key_type: 'name',
                 index_position: 3,
                 lower_bound: account,
+                upper_bound: account,
                 limit: 10,
               };
               return eos(connection).getTableRows(query).then((result) => {
