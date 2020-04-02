@@ -1,58 +1,11 @@
 import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
-const migrations = {
-  2: (state) => {
-    let { blockchains } = state;
-
-    blockchains = updateBlockchainData(blockchains, 'fio', {
-      votePrecision: 4,
-    });
-
-    blockchains = updateBlockchainData(blockchains, 'fio-testnet-3', {
-      votePrecision: 4,
-    });
-
-    blockchains = updateBlockchainData(blockchains, 'wax-mainnet', {
-      voteDecayPeriod: 13,
-    });
-
-    blockchains = updateBlockchainData(blockchains, 'telos-mainnet', {
-      oneTokenOneVote: true,
-    });
-
-    blockchains = updateBlockchainData(blockchains, 'telos-testnet-2', {
-      oneTokenOneVote: true,
-    });
-
-    // Update the blockchains state.
-    return {
-      ...state,
-      blockchains,
-    };
-  },
-  3: (state) => {
-    let { blockchains } = state;
-
-    blockchains = updateBlockchainData(blockchains, 'fio', {
-      noStaking: true,
-    });
-
-    blockchains = updateBlockchainData(blockchains, 'fio-testnet-3', {
-      noStaking: true,
-    });
-
-    // Update the blockchains state.
-    return {
-      ...state,
-      blockchains,
-    };
-  },
-};
+const migrations = {};
 
 const persistConfig = {
   key: 'anchor-config',
-  version: 3,
+  version: 1,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables
