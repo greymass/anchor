@@ -152,7 +152,6 @@ const knownChains = [
     tokenContract: 'fio.token',
     tokenPrecision: 8,
     votePrecision: 4,
-    noStaking: true,
   },
   {
     _id: 'fio-testnet-3',
@@ -168,7 +167,6 @@ const knownChains = [
     tokenContract: 'fio.token',
     tokenPrecision: 8,
     votePrecision: 4,
-    noStaking: true,
   },
   {
     _id: 'insights-mainnet',
