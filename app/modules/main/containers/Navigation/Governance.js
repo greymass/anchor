@@ -48,15 +48,17 @@ class NavigationGovernanceContainer extends PureComponent<Props> {
           )
           : false
         }
-        <Menu.Item
-          as="a"
-          active={module === 'governance/proxies'}
-          onClick={this.onClick}
-          name="governance/proxies"
-        >
-          <Icon name="users" />
-          {t('producers:producers_proxies')}
-        </Menu.Item>
+        {(connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) && (
+          <Menu.Item
+            as="a"
+            active={module === 'governance/proxies'}
+            onClick={this.onClick}
+            name="governance/proxies"
+          >
+            <Icon name="users" />
+            {t('producers:producers_proxies')}
+          </Menu.Item>
+        )}
       </Menu>
     );
   }
