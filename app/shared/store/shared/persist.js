@@ -1,9 +1,7 @@
 import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
-const migrations = {
-
-};
+const migrations = {};
 
 const persistConfig = {
   key: 'anchor-config',
@@ -21,3 +19,24 @@ const persistConfig = {
 };
 
 export default persistConfig;
+
+function updateBlockchainData(blockchains, chainId, keysToUpdate) {
+  const chainToUpdate = blockchains.find((blockchain) => {
+    return blockchain._id === chainId;
+  });
+
+  if (!chainToUpdate) {
+    return blockchains;
+  }
+
+  const updatedBlockchain = {
+    ...chainToUpdate,
+    ...keysToUpdate,
+  };
+
+  const allOtherChains = blockchains.filter((blockchain) => {
+    return blockchain._id !== chainId;
+  });
+
+  return allOtherChains.concat(updatedBlockchain);
+}

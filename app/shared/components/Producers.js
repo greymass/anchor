@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Tab, Divider, Message } from 'semantic-ui-react';
+import { Header, Tab, Divider, Message } from 'semantic-ui-react';
 import { translate } from 'react-i18next';
 import { intersection } from 'lodash';
 
 import BlockProducers from './Producers/BlockProducers';
 import ProducersProxy from './Producers/Proxy';
 import ProducersVotingPreview from './Producers/BlockProducers/Modal/Preview';
-import Proxies from './Producers/Proxies';
 import ProducersSelector from './Producers/BlockProducers/Selector';
-import ToolsGovernanceProposals from './Tools/Governance/Proposals';
+import GlobalAccountFragmentVoterInfoEffectiveness from '../containers/Global/Account/Fragment/VoterInfo/Effectiveness';
 
 class Producers extends Component<Props> {
   constructor(props) {
@@ -45,6 +44,7 @@ class Producers extends Component<Props> {
     if (
       !this.state.selected_loaded
       || this.state.selected_account !== settings.account
+      || this.state.chainId !== settings.chainId
       || (nextProps.producers.proxy && nextProps.producers.proxy !== this.state.selected_account)
     ) {
       const { accounts } = nextProps;
@@ -68,7 +68,8 @@ class Producers extends Component<Props> {
           this.setState({
             selected,
             selected_account: accountName,
-            selected_loaded: true
+            selected_loaded: true,
+            chain_id: settings.chainId,
           });
         } else {
           // otherwise notify users that they must stake before allowed voting
@@ -188,9 +189,27 @@ class Producers extends Component<Props> {
 
     const blockExplorers = allBlockExplorers[connection.chainKey];
 
-    if (settings.walletMode !== 'wait') {
+    if (settings.account && settings.walletMode !== 'wait') {
       sidebar = (producersVotedIn) ? (
         <React.Fragment>
+          {(account)
+            ? (
+              <Header block color="green" size="large">
+                <Header.Subheader style={{ marginBottom: '0.5em' }}>
+                  Vote Strength
+                </Header.Subheader>
+                <GlobalAccountFragmentVoterInfoEffectiveness
+                  account={account.account_name}
+                />
+                <Header.Subheader style={{ marginTop: '0.5em' }}>
+                  <small>
+                    Votes decay over time, refresh your vote to increase its strength.
+                  </small>
+                </Header.Subheader>
+              </Header>
+            )
+            : false
+          }
           <ProducersProxy
             account={account}
             accounts={accounts}
@@ -247,56 +266,6 @@ class Producers extends Component<Props> {
           content={t('producers_no_voting')}
         />
       );
-    }
-
-    const tabPanes = [
-      {
-        menuItem: t('producers_block_producers'),
-        render: () => (
-          <Tab.Pane>
-            <BlockProducers
-              {...this.props}
-              addProducer={this.addProducer.bind(this)}
-              removeProducer={this.removeProducer.bind(this)}
-              selected={selected}
-            />
-          </Tab.Pane>
-        )
-      }
-    ];
-
-    if (connection.supportedContracts && connection.supportedContracts.includes('proposals')) {
-      tabPanes.push({
-        menuItem: t('tools:tools_menu_governance_proposals'),
-        render: () => (
-          <Tab.Pane>
-            <ToolsGovernanceProposals
-              actions={actions}
-              blockExplorers={blockExplorers}
-              contracts={contracts}
-              settings={settings}
-              system={system}
-              validate={validate}
-              wallet={wallet}
-            />
-          </Tab.Pane>
-        )
-      });
-    }
-
-    if (connection.supportedContracts && connection.supportedContracts.includes('regproxyinfo')) {
-      tabPanes.push({
-        menuItem: t('producers_proxies'),
-        render: () => (
-          <Tab.Pane>
-            <Proxies
-              {...this.props}
-              addProxy={this.addProxy.bind(this)}
-              removeProxy={this.removeProxy.bind(this)}
-            />
-          </Tab.Pane>
-        )
-      });
     }
 
     return (
