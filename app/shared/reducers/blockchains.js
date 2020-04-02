@@ -144,14 +144,14 @@ const knownChains = [
     keyPrefix: 'FIO',
     name: 'FIO',
     node: 'https://fio.greymass.com',
-    stakedResources: false,
     supportedContracts: [],
     stakedResources: false,
     symbol: 'FIO',
     systemContract: 'fio',
     testnet: false,
     tokenContract: 'fio.token',
-    tokenPrecision: 8
+    tokenPrecision: 8,
+    votePrecision: 4,
   },
   {
     _id: 'fio-testnet-3',
@@ -159,14 +159,14 @@ const knownChains = [
     keyPrefix: 'FIO',
     name: 'FIO (Testnet 3)',
     node: 'https://fiotestnet.greymass.com',
-    stakedResources: false,
     supportedContracts: [],
     stakedResources: false,
     symbol: 'FIO',
     systemContract: 'fio',
     testnet: true,
     tokenContract: 'fio.token',
-    tokenPrecision: 8
+    tokenPrecision: 8,
+    votePrecision: 4,
   },
   {
     _id: 'insights-mainnet',
@@ -229,8 +229,9 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Telos',
     node: 'https://telos.greymass.com',
+    oneTokenOneVote: true,
     symbol: 'TLOS',
-    testnet: false
+    testnet: false,
   },
   {
     _id: 'telos-testnet-2',
@@ -238,6 +239,7 @@ const knownChains = [
     keyPrefix: 'EOS',
     name: 'Telos',
     node: 'https://testnet.eos.miami',
+    oneTokenOneVote: true,
     symbol: 'TLOS',
     testnet: true
   },
@@ -259,7 +261,8 @@ const knownChains = [
     supportedContracts: [],
     symbol: 'WAX',
     testnet: false,
-    tokenPrecision: 8
+    tokenPrecision: 8,
+    voteDecayPeriod: 13,
   }
 ];
 

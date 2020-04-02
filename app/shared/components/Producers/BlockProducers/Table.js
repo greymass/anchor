@@ -109,13 +109,16 @@ class ProducersTable extends Component<Props> {
       );
 
       if (querying) {
-        const partResults = filter(producers.list, (producer) =>
-          producer.owner.indexOf(query) > -1).slice(0, amount);
+        const partResults = filter(producers.list, (producer) => {
+          return producer.owner.indexOf(query) > -1 ||
+            producer.address && producer.address.indexOf(query) > -1;
+        }).slice(0, amount);
         if (partResults.length > 0) {
           searchTable = (
             <Table.Body key="PartResults">
               {partResults.map((producer) => {
-                const isSelected = (selected.indexOf(producer.owner) !== -1);
+                const isSelected = (selected.indexOf(producer.address || producer.owner) !== -1);
+
                 const hasInfo = !!(get(producers.producersInfo, producer.owner));
                 return (
                   <ProducersTableRow
@@ -153,7 +156,7 @@ class ProducersTable extends Component<Props> {
           />
           <Grid>
             <Grid.Column width={8}>
-              {(activatedStakePercent < 15 && producersVotedIn)
+              {(activatedStakePercent < 15 && producersVotedIn && connection.stakedResources)
                 ? (
                   <Header size="small">
                     {activatedStake.toLocaleString()} {t('block_producer_chain_symbol_staked', { connection: connection.chainSymbol })} ({activatedStakePercent}%)
@@ -165,7 +168,7 @@ class ProducersTable extends Component<Props> {
                       {t('block_producer_total_weight')}
                     </Header.Subheader>
                   </Header>
-                ) : (producersVotedIn) ? (
+                ) : (producersVotedIn && connection.stakedResources) ? (
                   <Header size="small">
                     {t('producers_block_producers')}
                     <Header.Subheader>
