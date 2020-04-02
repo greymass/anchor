@@ -4,7 +4,6 @@ import { translate } from 'react-i18next';
 import { Icon, Header, Button } from 'semantic-ui-react';
 
 import ProducersButtonProxy from './Proxy/Button/Proxy';
-import GlobalAccountFragmentVoterInfoEffectiveness from '../../containers/Global/Account/Fragment/VoterInfo/Effectiveness';
 
 class ProducersProxy extends Component<Props> {
   constructor(props) {
@@ -57,24 +56,6 @@ class ProducersProxy extends Component<Props> {
 
     return (
       <React.Fragment>
-        {(account)
-          ? (
-            <Header block color="green" size="large">
-              <Header.Subheader style={{ marginBottom: '0.5em' }}>
-                Vote Strength
-              </Header.Subheader>
-              <GlobalAccountFragmentVoterInfoEffectiveness
-                account={account.account_name}
-              />
-              <Header.Subheader style={{ marginTop: '0.5em' }}>
-                <small>
-                  Votes decay over time, refresh your vote to increase its strength.
-                </small>
-              </Header.Subheader>
-            </Header>
-          )
-          : false
-        }
         {(isValidUser)
           ? (
             <ProducersButtonProxy
