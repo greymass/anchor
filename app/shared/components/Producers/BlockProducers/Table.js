@@ -156,7 +156,7 @@ class ProducersTable extends Component<Props> {
           />
           <Grid>
             <Grid.Column width={8}>
-              {(activatedStakePercent < 15 && producersVotedIn && !connection.noStaking)
+              {(activatedStakePercent < 15 && producersVotedIn && connection.stakedResources)
                 ? (
                   <Header size="small">
                     {activatedStake.toLocaleString()} {t('block_producer_chain_symbol_staked', { connection: connection.chainSymbol })} ({activatedStakePercent}%)
@@ -168,7 +168,7 @@ class ProducersTable extends Component<Props> {
                       {t('block_producer_total_weight')}
                     </Header.Subheader>
                   </Header>
-                ) : (producersVotedIn && !connection.noStaking) ? (
+                ) : (producersVotedIn && connection.stakedResources) ? (
                   <Header size="small">
                     {t('producers_block_producers')}
                     <Header.Subheader>
