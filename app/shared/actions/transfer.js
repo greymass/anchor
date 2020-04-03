@@ -33,7 +33,7 @@ async function getAction(contractAccount, account, authorization, from, to, quan
       amount,
       max_fee: fee,
       actor: account,
-      tpid: null,
+      tpid: 'tpid@greymass',
     };
   }
   return action;
