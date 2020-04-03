@@ -134,7 +134,8 @@ class ContractInterfaceFormAction extends Component<Props> {
       settings,
       system,
       t,
-      transaction
+      transaction,
+      unlocked,
     } = this.props;
     const {
       currentArrayValues,
@@ -328,7 +329,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         {errors}
         <Button
           content={t('interface_form_action_button')}
-          disabled={signing}
+          disabled={signing || !unlocked}
           loading={signing}
           primary
         />

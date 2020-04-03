@@ -18,7 +18,8 @@ class ContractInterfaceTabActions extends Component<Props> {
       onSubmit,
       settings,
       system,
-      transaction
+      transaction,
+      unlocked,
     } = this.props;
     return (
       <React.Fragment>
@@ -40,6 +41,7 @@ class ContractInterfaceTabActions extends Component<Props> {
                 settings={settings}
                 system={system}
                 transaction={transaction}
+                unlocked={unlocked}
               />
             </Segment>
           ) : false

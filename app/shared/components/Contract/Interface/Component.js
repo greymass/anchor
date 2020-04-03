@@ -55,7 +55,8 @@ class ContractInterfaceComponent extends Component<Props> {
       system,
       t,
       tables,
-      transaction
+      transaction,
+      unlocked,
     } = this.props;
 
     const {
@@ -90,6 +91,7 @@ class ContractInterfaceComponent extends Component<Props> {
               settings={settings}
               system={system}
               transaction={transaction}
+              unlocked={unlocked}
             />
           )
         }
