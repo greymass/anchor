@@ -273,8 +273,8 @@ const initialState = [...knownChains];
 export default function blockchains(state = initialState, action) {
   switch (action.type) {
     case types.APP_INIT: {
-      // When the app initializes, merge any unknown _ids (new chains) into state
-      const amendChains = unionBy(state, initialState, '_id');
+      // When the app initializes, merge any unknown chains into state
+      const amendChains = unionBy(state, initialState, 'chainId');
       const mergeContracts = _(amendChains).keyBy('chainId')
         .merge(_.keyBy(supportedContracts, 'chainId'))
         .values().value();
