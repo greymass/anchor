@@ -34,8 +34,8 @@
     "not ie <= 8"
   ],
   "build": {
-    "productName": "Anchor",
-    "appId": "com.greymass.anchor",
+    "productName": "Anchor-BETA",
+    "appId": "com.greymass.anchor-beta",
     "afterSign": "internals/macos/notarize.js",
     "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,
@@ -105,15 +105,15 @@
       "include": "build/installer.nsh",
       "oneClick": false,
       "perMachine": true,
-      "shortcutName": "Anchor"
+      "shortcutName": "Anchor-BETA"
     },
     "linux": {
       "category": "Network",
       "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
       "desktop": {
-        "Name": "anchor",
+        "Name": "anchor-beta",
         "GenericName": "Anchor - EOSIO Light Wallet",
-        "X-GNOME-FullName": "anchor",
+        "X-GNOME-FullName": "anchor-beta",
         "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
         "Type": "Application",
         "Terminal": "false",
