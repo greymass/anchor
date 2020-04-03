@@ -274,7 +274,7 @@ const knownChains = [
     node: 'https://waxtestnet.greymass.com',
     supportedContracts: [],
     symbol: 'WAX',
-    testnet: false,
+    testnet: true,
     tokenPrecision: 8,
     voteDecayPeriod: 13,
   }
