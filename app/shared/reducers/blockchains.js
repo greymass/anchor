@@ -1,4 +1,4 @@
-import { partition, unionBy } from 'lodash';
+import { find, partition, unionBy } from 'lodash';
 
 import * as types from '../actions/types';
 
@@ -299,7 +299,12 @@ export default function blockchains(state = initialState, action) {
       const [, others] = partition(state, {
         chainId: action.payload.chainId,
       });
-      return [action.payload, ...others];
+      const known = find(knownChains, { chainId: action.payload.chainId });
+      const blockchain = Object.assign({}, action.payload, known, {
+        node: action.payload.node
+      });
+
+      return [blockchain, ...others];
     }
     case types.SYSTEM_BLOCKCHAINS_ENSURE: {
       const [existing, others] = partition(state, {
