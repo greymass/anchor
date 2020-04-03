@@ -271,7 +271,7 @@
     "electron-context-menu": "^0.10.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^2.21.10",
-    "eosio-signing-request": "^1.0.2",
+    "eosio-signing-request": "^1.1.1",
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",
