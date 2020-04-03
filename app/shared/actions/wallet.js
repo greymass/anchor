@@ -267,10 +267,9 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
     const wallet = find(wallets, query);
 
     const accountData = accounts[wallet.account];
+    const blockchain = find(blockchains, { chainId: wallet.chainId });
 
     if (settings.walletMode === 'hot' && !accountData) {
-      const blockchain = find(blockchains, { chainId: wallet.chainId });
-
       const modifiedConnection = Object.assign({}, connection, {
         broadcast: false,
         chainId: blockchain.chainId,
@@ -291,7 +290,7 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
           const keypair = find(JSON.parse(data), { pubkey: wallet.pubkey });
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
           const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
-          const pubkey = ecc.privateToPublic(keypair.key, connection.keyPrefix);
+          const pubkey = ecc.privateToPublic(keypair.key, blockchain.keyPrefix);
           // Set the keys for use
           dispatch({
             payload: {
