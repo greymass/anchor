@@ -9,7 +9,7 @@ class GlobalAccountFragmentVoterInfoEffectiveness extends Component<Props> {
   render() {
     const {
       last,
-      oneTokenOneVote,
+      voteDecay,
       producers,
       proxied,
       proxy,
@@ -42,8 +42,8 @@ class GlobalAccountFragmentVoterInfoEffectiveness extends Component<Props> {
       );
     }
 
-    // Telos is the only oneTokenOneVote chain that we support and it does not have any vote decay.
-    if (oneTokenOneVote) {
+    // Telos is the only voteDecay chain that we support and it does not have any vote decay.
+    if (voteDecay) {
       return (
         <React.Fragment>
           100.00 %
@@ -70,7 +70,7 @@ const mapStateToProps = (state, ownProps) => {
   // const epoch = Date.parse(get(state, 'globals.current')) / 1000;
   let voter = get(state, `accounts.${account}.voter_info`, {});
   const voteDecayPeriod = get(state, 'connection.voteDecayPeriod');
-  const oneTokenOneVote = get(state, 'connection.oneTokenOneVote');
+  const voteDecay = get(state, 'connection.voteDecay');
   // The get call above will return null as a retrieved value, and if so, set to {}
   if (voter === null) {
     voter = {
@@ -81,7 +81,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     // epoch,
     last: voter.last_vote_weight,
-    oneTokenOneVote,
+    voteDecay,
     producers: (voter.producers) ? voter.producers.length : [],
     proxy: voter.proxy,
     proxied: voter.proxied_vote_weight,
