@@ -4,7 +4,6 @@ import * as types from './types';
 import { setSetting } from './settings';
 import eos from './helpers/eos';
 import EOSAccount from '../utils/EOS/Account';
-import { httpClient } from '../utils/httpClient';
 import { lookupFioNames } from './address';
 
 const CryptoJS = require('crypto-js');
