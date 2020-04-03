@@ -43,9 +43,8 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       connection,
       pubkeys
     } = this.props;
-
     const pubkeysToLookup = pubkeys.available.filter(pubkey => {
-      return pubkey.includes(connection.chainSymbol);
+      return pubkey.includes(connection.keyPrefix);
     });
     this.props.actions.clearAccountByKey();
     this.props.actions.getAccountByKeys(pubkeysToLookup);
