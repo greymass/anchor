@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { mapValues } from 'lodash';
+import { map, mapValues } from 'lodash';
 
 import ToolsSmartContractComponent from '../../../../../shared/components/Contract/Interface/Component';
 
@@ -14,6 +14,8 @@ import * as SystemStateActions from '../../../../../shared/actions/system/system
 import * as TransactionActions from '../../../../../shared/actions/transaction';
 
 import EOSContract from '../../../../../shared/utils/EOS/Contract';
+import isUnlocked from '../../../../../shared/utils/Anchor/Unlocked';
+
 import * as WalletActions from '../../../../../shared/actions/wallet';
 
 class ToolsPermissions extends Component<Props> {
@@ -34,7 +36,8 @@ function mapStateToProps(state) {
     settings: state.settings,
     system: state.system,
     tables: state.tables,
-    transaction: state.transaction
+    transaction: state.transaction,
+    unlocked: isUnlocked(state),
   };
 }
 
