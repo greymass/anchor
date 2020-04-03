@@ -35,6 +35,7 @@ const logos = {
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
   '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f': worbliLogo, // mainnet (worbli)
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
+  'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12': waxLogo,
 };
 
 export class GlobalFragmentChainLogo extends PureComponent<Props> {
