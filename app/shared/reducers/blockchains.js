@@ -265,6 +265,18 @@ const knownChains = [
     testnet: false,
     tokenPrecision: 8,
     voteDecayPeriod: 13,
+  },
+  {
+    _id: 'wax-testnet',
+    chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+    keyPrefix: 'EOS',
+    name: 'WAX',
+    node: 'https://waxtestnet.greymass.com',
+    supportedContracts: [],
+    symbol: 'WAX',
+    testnet: false,
+    tokenPrecision: 8,
+    voteDecayPeriod: 13,
   }
 ];
 
