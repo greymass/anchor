@@ -62,6 +62,8 @@ const initialState = {
   lastFilePath: '',
   // The node to connect to
   node: '',
+  // Whether or not the UI has prompted for enabling signing requests
+  promptSigningRequests: false,
   // Recent names that the wallet has bid on.
   recentBids: {},
   // Recent contracts/action combos the wallet has used
