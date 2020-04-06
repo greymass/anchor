@@ -370,7 +370,7 @@ export function useWallet(chainId, account, authorization) {
       authorization
     }));
     // Determine if a FIO address needs to be retrieved for usage purposes
-    if (newWallet.pubkey && newWallet.pubkey.startsWith('FIO')) {
+    if (newWallet.pubkey && newWallet.pubkey.startsWith('FIO') && !newWallet.address) {
       dispatch(lookupFioNames(newWallet));
     }
     if (newWallet.path) {
