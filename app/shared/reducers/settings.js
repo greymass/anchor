@@ -64,6 +64,8 @@ const initialState = {
   node: '',
   // Recent names that the wallet has bid on.
   recentBids: {},
+  // Recent contracts/action combos the wallet has used
+  recentContractActions: [],
   // Recent contracts the wallet has used
   recentContracts: [],
   // Recent referendum scopes the wallet has used
@@ -110,6 +112,20 @@ export default function settings(state = initialState, action) {
       }
       return Object.assign({}, state, {
         recentProposalsScopes: recentProposalsScopes.slice(0, 50)
+      });
+    }
+    case types.SET_RECENT_CONTRACT_ACTION: {
+      const recentContractActions = (state.recentContractActions) ? [...state.recentContractActions] : [];
+      const { contractName, actionName } = action.payload
+      const contractActionCombo = `${contractName}:${actionName}`;
+      if (!recentContractActions.includes(contractActionCombo)) {
+        recentContractActions.unshift(contractActionCombo);
+      } else {
+        recentContractActions.splice(recentContractActions.indexOf(contractActionCombo), 1);
+        recentContractActions.unshift(contractActionCombo);
+      }
+      return Object.assign({}, state, {
+        recentContractActions: recentContractActions.slice(0, 10)
       });
     }
     case types.SYSTEM_GETABI_SUCCESS: {
