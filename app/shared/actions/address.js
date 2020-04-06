@@ -19,7 +19,10 @@ export function lookupFioNames(wallet) {
       dispatch({
         type: types.SET_CURRENT_WALLET_ADDRESS,
         payload: {
-          address: response.data.fio_addresses[0].fio_address
+          account: wallet.account,
+          address: response.data.fio_addresses[0].fio_address,
+          authorization: wallet.authorization,
+          chainId: wallet.chainId,
         }
       });
     }
