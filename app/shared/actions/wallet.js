@@ -189,7 +189,7 @@ export function unlockWallet(password, useWallet = false) {
     let address;
     // Determine if a FIO address needs to be retrieved for usage purposes
     // Determine if a FIO address needs to be retrieved for usage purposes
-    if (wallet.pubkey && wallet.pubkey.startsWith('FIO')) {
+    if (wallet.pubkey && wallet.pubkey.startsWith('FIO') && !wallet.address) {
       dispatch(lookupFioNames(wallet));
     }
     dispatch({
