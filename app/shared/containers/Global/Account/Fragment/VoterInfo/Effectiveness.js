@@ -42,7 +42,6 @@ class GlobalAccountFragmentVoterInfoEffectiveness extends Component<Props> {
       );
     }
 
-    // Telos is the only voteDecay chain that we support and it does not have any vote decay.
     if (voteDecay) {
       return (
         <React.Fragment>
@@ -72,7 +71,7 @@ const mapStateToProps = (state, ownProps) => {
   const voteDecayPeriod = get(state, 'connection.voteDecayPeriod');
   const voteDecay = get(state, 'connection.voteDecay');
   // The get call above will return null as a retrieved value, and if so, set to {}
-  if (voter === null) {
+  if (!voter) {
     voter = {
       producers: []
     };
