@@ -134,6 +134,27 @@ export default function wallets(state = initialState, action) {
         ...other
       ];
     }
+    case types.SET_CURRENT_WALLET_ADDRESS: {
+      const [toModify, others] = partition(state, {
+        account: action.payload.account,
+        authorization: action.payload.authorization,
+        chainId: action.payload.chainId,
+      });
+      // If the wallet is found
+      if (toModify.length) {
+        // Add the conversion parameters to the wallet
+        const modified = Object.assign({}, toModify[0], {
+          address: action.payload.address,
+        });
+        // Store the modified wallet
+        return [
+          modified,
+          ...others
+        ];
+      }
+      // If no match found, return unmodified state
+      return state;
+    }
     default: {
       return state;
     }
