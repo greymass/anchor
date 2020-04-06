@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
-import { Checkbox, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Checkbox, Header, Icon, Label, List, Segment, Tab } from 'semantic-ui-react';
 
 import ContractInterfaceTabActions from './Tab/Actions';
 import ContractInterfaceTabData from './Tab/Data';
@@ -27,10 +27,13 @@ class ContractInterfaceComponent extends Component<Props> {
   onChange = (e, { name, value }) => {
     const state = { [name]: value };
     // Reset the selected action if the contract name changes
-    if (name === 'contractName' && value !== this.state.contractName) {
+    if (name === 'contractName') {
       state.contractAction = '';
       state.contractTable = '';
       state.contractTableScope = '';
+    }
+    if (name === 'contractAction') {
+      this.props.actions.setRecentContractAction(this.state.contractName, value);
     }
     this.setState(state);
   };
@@ -40,6 +43,14 @@ class ContractInterfaceComponent extends Component<Props> {
     const { contractName } = this.state;
     actions.getAbi(contractName);
   };
+  loadRecent = (contract, action) => {
+    this.setState({
+      contractName: contract,
+      contractAction: action,
+    }, () => {
+      this.onSubmit()
+    })
+  }
   // Reset table scope to prevent visibility element from retriggering constantly
   onTabChange = () => this.setState({
     contractTable: '',
@@ -176,6 +187,7 @@ class ContractInterfaceComponent extends Component<Props> {
             <ContractInterfaceSelectorContract
               contract={contract}
               contractName={contractName}
+              key={contractName}
               onReset={this.resetContract}
               onSet={this.onSet}
               onSubmit={this.onSubmit}
@@ -192,6 +204,33 @@ class ContractInterfaceComponent extends Component<Props> {
               panes={panes}
               renderActiveOnly={false}
             />
+          )
+          : false
+        }
+        {(!validContract && settings.recentContractActions && settings.recentContractActions.length > 0)
+          ? (
+            <Segment secondary stacked>
+              <Header>
+                Recently contract actions
+                <Header.Subheader>
+                  Click one of the recently used combinations below to load it.
+                </Header.Subheader>
+              </Header>
+              {settings.recentContractActions.map((recent) => {
+                const [recentContractName, recentContractAction] = recent.split(':');
+                return (
+                  <Label
+                    basic
+                    onClick={() => this.loadRecent(recentContractName, recentContractAction)}
+                    style={{ cursor: 'pointer' }}
+                    color="blue"
+                  >
+                    {recentContractName}
+                    <Label.Detail>{recentContractAction}</Label.Detail>
+                  </Label>
+                )
+              })}
+            </Segment>
           )
           : false
         }
