@@ -144,6 +144,16 @@ export function removeCustomToken(contract, symbol) {
   };
 }
 
+export function setRecentContractAction(contractName, actionName) {
+  return (dispatch: () => void) => dispatch({
+    type: types.SET_RECENT_CONTRACT_ACTION,
+    payload: {
+      contractName,
+      actionName,
+    }
+  });
+}
+
 export default {
   addCustomToken,
   clearSettingsCache,
