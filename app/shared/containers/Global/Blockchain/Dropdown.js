@@ -53,7 +53,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
             image,
             key: b.chainId,
             onClick: () => this.swapBlockchain(b.chainId),
-            text: `${b.name} ${(b.testnet ? '(TESTNET)' : '')}`,
+            text: b.name,
             value: b.chainId,
           },
           b
