@@ -13,6 +13,7 @@ import ColdWalletContainer from './ColdWallet';
 import GlobalBlockchainManage from '.../../../shared/containers/Global/Blockchain/Manage';
 import HomeAccountsContainer from './Home/Accounts';
 import HomeInitializeContainer from './Home/Initialize';
+import HomeSigningRequestPrompt from './Home/SigningRequestPrompt';
 import HomeUpgradeContainer from './Home/Upgrade';
 import OverviewContainer from './Overview';
 
@@ -45,15 +46,23 @@ class HomeContainer extends Component<Props> {
   }
   render() {
     const {
+      settings,
       storage,
       wallets,
     } = this.props;
+    const esrPromptReady = (
+      wallets.length > 0
+      && !settings.promptSigningRequests
+    );
     const upgradable = (
       wallets.length > 0
       && wallets.filter((w) => w.version === 1).length > 0
       && !storage.data
     );
     let interrupt;
+    if (esrPromptReady) {
+      interrupt = <HomeSigningRequestPrompt />;
+    }
     if (upgradable) {
       interrupt = <HomeUpgradeContainer />;
     }
