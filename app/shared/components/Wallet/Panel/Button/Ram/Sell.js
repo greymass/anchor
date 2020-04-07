@@ -36,7 +36,7 @@ class WalletPanelButtonRamSell extends Component<Props> {
       trigger
     } = this.props;
     let button = {
-      color: 'blue',
+      color: 'red',
       content: t('ram_sell_button_cta'),
       fluid: true,
       icon: 'database',
