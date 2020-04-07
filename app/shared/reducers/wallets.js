@@ -142,7 +142,7 @@ export default function wallets(state = initialState, action) {
       });
       // If the wallet is found
       if (toModify.length) {
-        // Add the conversion parameters to the wallet
+        // Add the address to the wallet
         const modified = Object.assign({}, toModify[0], {
           address: action.payload.address,
         });
