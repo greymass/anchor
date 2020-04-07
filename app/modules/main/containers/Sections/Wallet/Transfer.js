@@ -72,11 +72,13 @@ class WalletTransferContainer extends Component<Props> {
       return ((isTracked || isSystemToken) && hasBalance)
     });
 
+    const hasTransaction = (transaction && transaction.transaction_id);
+
     return (
       <React.Fragment>
         <Grid stackable>
           <Grid.Row>
-            <Grid.Column width={10}>
+            <Grid.Column width={(hasTransaction) ? 16 : 10}>
               <Segment color="blue" piled>
                 <Header>
                   Transfer Tokens
@@ -106,7 +108,6 @@ class WalletTransferContainer extends Component<Props> {
                           />
                         )}
                         icon="arrow circle up"
-                        onClose={actions.clearSystemState}
                         settings={settings}
                         system={system}
                         transaction={transaction}
@@ -117,7 +118,12 @@ class WalletTransferContainer extends Component<Props> {
                 </GlobalAccountRequired>
               </Segment>
             </Grid.Column>
-            <Grid.Column width={6}>
+            <Grid.Column
+              style={{
+                display: (hasTransaction) ? 'none' : 'inline-block'
+              }}
+              width={6}
+            >
               <Header
                 content="Selected Account"
                 size="small"
