@@ -186,10 +186,9 @@ export function unlockWallet(password, useWallet = false) {
     if (settings.walletMode === 'hot' && !account) {
       account = await eos(connection).getAccount(wallet.account);
     }
-    let address;
+    const { address } = wallet;
     // Determine if a FIO address needs to be retrieved for usage purposes
-    // Determine if a FIO address needs to be retrieved for usage purposes
-    if (wallet.pubkey && wallet.pubkey.startsWith('FIO') && !wallet.address) {
+    if (wallet.pubkey && wallet.pubkey.startsWith('FIO') && !address) {
       dispatch(lookupFioNames(wallet));
     }
     dispatch({
