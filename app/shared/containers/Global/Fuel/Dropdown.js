@@ -13,6 +13,8 @@ import FuelFullLogo from '../../../../renderer/assets/images/fuel/greymassfuel-h
 import FuelLogo from '../../../../renderer/assets/images/fuel/fuel-square-logo.png';
 import FuelLogoDisabled from '../../../../renderer/assets/images/fuel/fuel-square-logo-grey.png';
 
+const { shell } = require('electron');
+
 class GlobalFuelDropdown extends Component<Props> {
   constructor(props) {
     super(props);
@@ -28,6 +30,7 @@ class GlobalFuelDropdown extends Component<Props> {
     this.setState({ open: true });
     this.props.actions.getFuelQuotaStatus();
   }
+  openLink = (url) => shell.openExternal(url);
   enable = () => {
     this.props.actions.setSetting('greymassFuel', true);
     this.props.actions.getFuelQuotaStatus();
@@ -82,6 +85,13 @@ class GlobalFuelDropdown extends Component<Props> {
             />
             <Segment basic textAlign="center">
               <p>Enable this feature to take advantage transactions powered by Greymass Fuel.</p>
+                <p>
+                  More info:
+                  {' '}
+                  <a href="#" onClick={() => this.openLink('https://greymass.com/fuel')}>
+                    https://greymass.com/fuel
+                  </a>
+                </p>
               {(enabled)
                 ? (
                   <Button
