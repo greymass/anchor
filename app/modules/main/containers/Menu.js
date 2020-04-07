@@ -120,6 +120,12 @@ class MenuContainer extends Component<Props> {
             // paddingLeft: '1.5rem'
           }}
         />
+        <GlobalAccountDropdown
+          onNavigationChange={this.props.actions.changeModule}
+          style={{
+            minWidth: '10em'
+          }}
+        />
         <GlobalAppDisconnected
           trigger={(
             <Menu.Item
@@ -127,12 +133,6 @@ class MenuContainer extends Component<Props> {
               content={<Icon circular color="red" inverted name="warning" />}
             />
           )}
-        />
-        <GlobalAccountDropdown
-          onNavigationChange={this.props.actions.changeModule}
-          style={{
-            minWidth: '10em'
-          }}
         />
         <Menu.Menu position="right">
           <WalletMode
