@@ -147,11 +147,11 @@ export class GlobalFormTokenRent extends Component<Props> {
             </Grid.Column>
             <Grid.Column>
               <Button
+                color="green"
                 content={`Rent ${resource.toUpperCase()}`}
                 disabled={!valid}
                 floated="right"
                 icon="exchange"
-                primary
                 onClick={this.onSubmit}
               />
             </Grid.Column>

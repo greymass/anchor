@@ -84,7 +84,7 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
           <Icon name="arrow left" /> {t('ram_button_confirm_back')}
         </Button>
         <Button
-          color="blue"
+          color="red"
           floated="right"
           onClick={this.onConfirm}
         >
