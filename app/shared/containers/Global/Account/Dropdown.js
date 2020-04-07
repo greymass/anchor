@@ -38,7 +38,6 @@ class GlobalAccountDropdown extends PureComponent<Props> {
       selection,
       settings,
       style,
-      t,
       validate,
       wallet,
     } = this.props;
@@ -61,7 +60,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
         pubkey={wallet.pubkey}
       />
     );
-    if (!settings.account) {
+    if (!wallet.account || !settings.account) {
       trigger = (
         <Header
           content="No account selected"
