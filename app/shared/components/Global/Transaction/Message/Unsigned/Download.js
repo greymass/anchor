@@ -177,11 +177,10 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       },
     ];
     return (
-      <Segment basic padded>
+      <React.Fragment>
         <Header
-          content="Created an Unsigned Transaction"
+          content="Unsigned Transaction"
           icon="qrcode"
-          size="large"
           subheader="This read only wallet has created an unsigned transaction which needs to be signed by the appropriate account before broadcasting to the blockchain."
         />
         <Modal.Content>
@@ -197,7 +196,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
             </Button>
           </Segment>
         </Modal.Actions>
-      </Segment>
+      </React.Fragment>
     );
   }
 }
