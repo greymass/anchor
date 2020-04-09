@@ -1,16 +1,16 @@
-[![Версия](https://img.shields.io/github/release/greymass/eos-voter/all.svg)](https://github.com/greymass/eos-voter/releases)
-[![Проблемы](https://img.shields.io/github/issues/greymass/eos-voter.svg)](https://github.com/greymass/eos-voter/issues)
-[![Лицензия](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/eos-voter/master/LICENSE)
-[![Загрузки](https://img.shields.io/github/downloads/greymass/eos-voter/total.svg)
+[![Версия](https://img.shields.io/github/release/greymass/anchor/all.svg)](https://github.com/greymass/anchor/releases)
+[![Проблемы](https://img.shields.io/github/issues/greymass/anchor.svg)](https://github.com/greymass/anchor/issues)
+[![Лицензия](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/anchor/master/LICENSE)
+[![Загрузки](https://img.shields.io/github/downloads/greymass/anchor/total.svg)
 
-[English](https://github.com/greymatss/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/eos-voter/blob/master/README.kr.md) - [中文](https://github.com/greymass/eos-voter/blob/master/README.zh.md) - [日本語](https://github.com/greymass/eos-voter/blob/master/README.ja.md) - [Русский](https://github.com/greymass/eos-voter/blob/master/README.ru.md)
+[English](https://github.com/greymatss/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/anchor/blob/master/README.kr.md) - [中文](https://github.com/greymass/anchor/blob/master/README.zh.md) - [日本語](https://github.com/greymass/anchor/blob/master/README.ja.md) - [Русский](https://github.com/greymass/anchor/blob/master/README.ru.md)
 
 # eos-voter - Голосование за Производителей Блоков и кошелёк
 
 `eos-voter` - это ограниченный функциональный выпуск лёгкого кошелька, предназначенного для блокцепи EOS. Это приложение может использоваться для подключения к удалённой конечной точке API EOS для голосования за производителей блоков и выполнения основных команд кошелька.
 
 
-[![eos-voter screenshot](https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png)](https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png)
+[![eos-voter screenshot](https://raw.githubusercontent.com/greymass/anchor/master/eos-voter.png)](https://raw.githubusercontent.com/greymass/anchor/master/eos-voter.png)
 
 ### Особенности
 
@@ -26,14 +26,14 @@
 
 Текущая версия 0.7.12:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v1.0.0/win-eos-voter-0.7.11.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v1.0.0/mac-eos-voter-0.7.11.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.snap)
+- [Windows Installer](https://github.com/greymass/anchor/releases/download/v1.0.0/win-eos-voter-0.7.11.exe)
+- [macOS Package](https://github.com/greymass/anchor/releases/download/v1.0.0/mac-eos-voter-0.7.11.dmg)
+- [Linux (deb)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.snap)
 
 Последняя версия всегда будет доступна на странице выпусков этого репозитория:
 
-[https://github.com/greymass/eos-voter/releases](https://github.com/greymass/eos-voter/releases)
+[https://github.com/greymass/anchor/releases](https://github.com/greymass/anchor/releases)
 
 Чтобы определить, какой файл вам нужен, если вы ...
 
@@ -49,7 +49,7 @@
 
 Мы предлагаем публичный список узлов в этом репозитории для использования с этим приложением:
 
-[Https://github.com/greymass/eos-voter/blob/master/nodes.md](https://github.com/greymass/eos-voter/blob/master/nodes.md)
+[Https://github.com/greymass/anchor/blob/master/nodes.md](https://github.com/greymass/anchor/blob/master/nodes.md)
 
 Этот список будет обновляться с течением времени и на него можно ссылаться из окна начального подключения в приложении.
 
@@ -60,7 +60,7 @@
 ** Примечание **: Если вы собираете это приложение в среде разработки Windows, потребуются дополнительные действия.
 
 ```
-git clone https://github.com/greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/anchor.git eos-voter
 cd eos-voter
 npm install
 cd app
@@ -79,7 +79,7 @@ cd ..
 ### Запуск режима разработки
 
 ```
-git clone https://github.com/greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/anchor.git eos-voter
 cd eos-voter
 npm install
 npm run dev
