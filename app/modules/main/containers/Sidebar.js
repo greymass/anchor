@@ -6,9 +6,8 @@ import { withRouter } from 'react-router-dom';
 import { Header, Icon, Image, Menu } from 'semantic-ui-react';
 import { find } from 'lodash';
 
-import Logo from '../../../renderer/assets/images/anchor-white.png';
-import LogoBackground from '../../../renderer/assets/images/anchor-blue-bg.png';
-import AnchorLogoHorizontal from '../../../renderer/assets/images/anchor-text-light.svg';
+import Logo from '../../../renderer/assets/images/anchor-logo-white.svg';
+import AnchorTextHorizontal from '../../../renderer/assets/images/anchor-text-white.svg';
 
 import packageJson from '../../../package.json';
 import { clearSystemState } from '../../../shared/actions/system/systemstate';
@@ -65,7 +64,7 @@ class SidebarContainer extends Component<Props> {
           onClick={this.onClick}
           name=""
           style={{
-            backgroundImage: `url(${LogoBackground})`,
+            backgroundColor: '#3650A2',
             backgroundSize: 'contain',
             borderRadius: 0,
             color,
@@ -87,12 +86,12 @@ class SidebarContainer extends Component<Props> {
                 }}>
                 <Image
                   centered
-                  src={AnchorLogoHorizontal}
+                  src={AnchorTextHorizontal}
                   style={{
                     fill: 'currentColor',
-                    marginTop: '0.25em',
-                    maxWidth: ((settings.sidebarCollapsed) ? '4em' : '7em'),
-                    width: ((settings.sidebarCollapsed) ? '4em' : '7em')
+                    marginTop: '1em',
+                    maxWidth: ((settings.sidebarCollapsed) ? '3em' : '6em'),
+                    width: ((settings.sidebarCollapsed) ? '3em' : '6em')
                   }}
                 />
                 </p>
@@ -295,12 +294,12 @@ class SidebarContainer extends Component<Props> {
           />
           <Image
             centered
-            src={AnchorLogoHorizontal}
+            src={AnchorTextHorizontal}
             style={{
               fill: 'currentColor',
               marginTop: '0.25em',
-              maxWidth: ((settings.sidebarCollapsed) ? '4em' : '7em'),
-              width: ((settings.sidebarCollapsed) ? '4em' : '7em')
+              maxWidth: ((settings.sidebarCollapsed) ? '3em' : '4em'),
+              width: ((settings.sidebarCollapsed) ? '3em' : '4em')
             }}
           />
         </Menu.Item>
