@@ -29,7 +29,7 @@ const logos = {
   'b62febe5aadff3d5399090b9565cb420387d3c66f2ccd7c7ac1f532c4f50f573': lynxLogo, // mainnet (lynx)
   '0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978': lynxLogo, // testnet (lynx)
   'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422': meetoneLogo, // mainnet (meetone)
-  '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7': waxLogo, // testnet (remme)
+  '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7': remmeLogo, // testnet (remme)
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': telosLogo, // mainnet (telos)
   'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3': telosLogo, // testnet (telos)
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
