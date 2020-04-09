@@ -14,8 +14,8 @@ import { setWalletMode } from '../../../../../shared/actions/wallet';
 
 import WelcomeImportContainer from '../../../../../shared/containers/Welcome/Import';
 
-import Logo from '../../../../../renderer/assets/images/anchor-white.png';
-import LogoText from '../../../../../renderer/assets/images/anchor-dark-text.png';
+import Logo from '../../../../../renderer/assets/images/anchor-logo-blue.svg';
+import LogoText from '../../../../../renderer/assets/images/anchor-text-blue.svg';
 
 class HomeInitializeContainer extends Component<Props> {
   initialize = (e) => {
@@ -51,7 +51,11 @@ class HomeInitializeContainer extends Component<Props> {
     } = this.props;
     return (
       <React.Fragment>
-        <Segment basic style={{ margin: 0 }}>
+        <Segment
+          basic
+          style={{ margin: 0 }}
+          textAlign="center"
+        >
           <Image
             alt="Anchor Logo"
             centered
@@ -65,17 +69,18 @@ class HomeInitializeContainer extends Component<Props> {
             centered
             src={LogoText}
             style={{
-              width: '256px',
-              marginTop: '2em',
+              margin: '2em auto 1em',
+              width: '192px',
             }}
           />
+          <p>Desktop EOSIO Wallet</p>
         </Segment>
 
         <Segment basic textAlign="center" style={{ margin: 0 }}>
           <p style={{ margin: '1em' }}>
             <Button
               color="green"
-              content="Setup New Wallet"
+              content="Create New Wallet"
               icon="sign-in"
               onClick={this.initialize}
               size="large"

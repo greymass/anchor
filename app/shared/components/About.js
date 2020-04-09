@@ -4,8 +4,8 @@ import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import { I18n } from 'react-i18next';
 
 import logo from '../../renderer/assets/images/greymass-vertical.svg';
-import anchorLogo from '../../renderer/assets/images/anchor-blue.png';
-import anchorText from '../../renderer/assets/images/anchor-dark-text.png';
+import anchorLogo from '../../renderer/assets/images/anchor-logo-blue.svg';
+import anchorText from '../../renderer/assets/images/anchor-text-blue.svg';
 import GlobalButtonResetContainer from '../containers/Global/Button/Reset';
 
 const { shell } = require('electron');
@@ -29,12 +29,18 @@ export default class About extends Component<Props> {
                       src={anchorText}
                       style={{
                         marginTop: '1em',
-                        width: '192px'
+                        width: '128px'
                       }}
                     />
-                    <Header size="large" textAlign="center">
+                    <Header
+                      size="large"
+                      style={{
+                        marginTop: '0.5em'
+                      }}
+                      textAlign="center"
+                    >
                       <Header.Subheader>
-                        {t('application_name')} {t('application_version')}
+                        {t('application_version')}
                       </Header.Subheader>
                     </Header>
                     <p>{t('about_message_1')}</p>

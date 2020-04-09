@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { translate } from 'react-i18next';
 import { Divider, Grid, Header, Icon, Image, Responsive, Segment, Statistic, Step } from 'semantic-ui-react';
 
-import AnchorLogo from '../../../renderer/assets/images/anchor-white.png';
+import AnchorLogo from '../../../renderer/assets/images/anchor-logo-blue.svg';
 
 import GlobalFragmentChainLogo from '../../../shared/components/Global/Fragment/ChainLogo';
 
@@ -48,7 +48,7 @@ class PromptHeader extends Component<Props> {
           top: 0,
           left: 0,
           right: 0,
-          height: '110px',
+          height: '100px',
           zIndex: 2000,
           '-webkit-app-region': 'drag'
         }}
@@ -61,7 +61,7 @@ class PromptHeader extends Component<Props> {
                 style={{
                   marginRight: '0.25em',
                   marginTop: 0,
-                  width: '3em',
+                  width: '72px',
                 }}
               />
               <Header.Content>
@@ -79,7 +79,7 @@ class PromptHeader extends Component<Props> {
                   <Step>
                     {(loading)
                       ? (
-                        <Statistic>
+                        <Statistic size="small">
                           <Statistic.Value>
                             <Icon color="grey" loading name="circle notch" />
                           </Statistic.Value>
@@ -89,7 +89,7 @@ class PromptHeader extends Component<Props> {
                     }
                     {(!loading && hasExpired)
                       ? (
-                        <Statistic>
+                        <Statistic size="small">
                           <Statistic.Value>
                             <Icon color="orange" name="warning sign" />
                           </Statistic.Value>
