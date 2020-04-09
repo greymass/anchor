@@ -1,7 +1,7 @@
 {
-  "name": "anchor-beta",
-  "productName": "Anchor-BETA",
-  "version": "1.0.0-rc9",
+  "name": "anchor-wallet",
+  "productName": "Anchor Wallet",
+  "version": "1.0.0",
   "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -34,8 +34,8 @@
     "not ie <= 8"
   ],
   "build": {
-    "productName": "Anchor-BETA",
-    "appId": "com.greymass.anchor-beta",
+    "productName": "Anchor Wallet",
+    "appId": "com.greymass.anchor-wallet",
     "afterSign": "internals/macos/notarize.js",
     "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,
@@ -105,15 +105,15 @@
       "include": "build/installer.nsh",
       "oneClick": false,
       "perMachine": true,
-      "shortcutName": "Anchor-BETA"
+      "shortcutName": "Anchor Wallet"
     },
     "linux": {
       "category": "Network",
       "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
       "desktop": {
-        "Name": "anchor-beta",
-        "GenericName": "Anchor - EOSIO Light Wallet",
-        "X-GNOME-FullName": "anchor-beta",
+        "Name": "anchor-wallet",
+        "GenericName": "Anchor - EOSIO Desktop Wallet",
+        "X-GNOME-FullName": "anchor-wallet",
         "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
         "Type": "Application",
         "Terminal": "false",
@@ -173,6 +173,8 @@
   "keywords": [
     "anchor",
     "eosio",
+    "esr",
+    "eosio-signing-request",
     "wallet"
   ],
   "homepage": "https://github.com/greymass/anchor#readme",
