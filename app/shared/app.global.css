@@ -8,13 +8,31 @@ span.nil {
   color: #acacac;
 }
 
+.prompt-header {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+ /* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.prompt-header:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
 .prompt-header .ui.steps .step {
   padding: 0.5em 1.5em;
 }
 
 .prompt-header img {
-  height: 48px;
+  height: 36px;
   padding: 4px;
+}
+
+.prompt-header .ui.hugeheader {
+  margin-top: 1em;
 }
 
 .prompt-header .ui.small.header {
@@ -23,7 +41,7 @@ span.nil {
 
 .prompt-header .ui.statistic > .value,
 .prompt-header .ui.statistics .statistic > .value {
-  font-size: 48px !important;
+  font-size: 36px !important;
 }
 
 .ui.table.overview {
