@@ -7,14 +7,14 @@
 
 # Anchor - A feature rich, open-source, EOSIO Wallet
 
-![Anchor Screenshot 1](https://raw.githubusercontent.com/greymass/anchor/master/internals/img/anchor-ss1.png)
+![Anchor Screenshot 1](https://raw.githubusercontent.com/greymass/anchor/master/internals/img/anchor-wallet-ss1.png)
 
 ### Features
 
 Some of the notable features of Anchor include, but are not limited to:
 
 - A user interface that supports common EOSIO functions (token transfers, resource management, governance, etc).
-- Direct integration with [Greymass Fuel](http://greymass.com/fuel), which provides limited [free CPU/NET resources to every account](https://greymass.com/en/blog/5ms-worth-of-free-transactions-available-now-in-anchor-wallet/) on compatible networks.
+- Direct integration with [Greymass Fuel](http://greymass.com/fuel), which provides limited [free CPU/NET resources to every account](https://greymass.com/en/blog/5ms-worth-of-free-transactions-available-now-in-anchor-wallet-wallet/) on compatible networks.
 - Support for nearly every EOSIO-based blockchain (EOS, Telos, WAX, etc), with new networks added as they launch.
 - Locally encrypted key storage using AES-256 - your private keys never leave the wallet.
 - Optional integration with [Ledger Hardware Wallets](https://www.ledger.com/) for additional key security.
@@ -35,10 +35,10 @@ When downloading from either location, check the URL bar of your browser to ensu
 
 The most recent (v1.0.0) release can downloaded using these links:
 
-- [Windows Installer](https://github.com/greymass/anchor/releases/download/v1.0.0/win-anchor-1.0.0.exe)
-- [macOS Package](https://github.com/greymass/anchor/releases/download/v1.0.0/mac-anchor-1.0.0.dmg)
-- [Linux (deb)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-anchor-1.0.0-amd64.deb)
-- [Linux (AppImage)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-anchor-1.0.0-x86x64.Appimage)
+- [Windows Installer](https://github.com/greymass/anchor/releases/download/v1.0.0/win-anchor-wallet-1.0.0.exe)
+- [macOS Package](https://github.com/greymass/anchor/releases/download/v1.0.0/mac-anchor-wallet-1.0.0.dmg)
+- [Linux (deb)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-anchor-wallet-1.0.0-amd64.deb)
+- [Linux (AppImage)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-anchor-wallet-1.0.0-x86x64.Appimage)
 
 The latest release will always be available on the releases page of this repository:
 
@@ -46,9 +46,9 @@ The latest release will always be available on the releases page of this reposit
 
 To determine which file you need, if you are a...
 
-- **MacOS User**: Download the DMG (`anchor-***.dmg`) file. Open it, and drag the Anchor icon into your Applications folder.
-- **Windows User**: Download the EXE (`anchor-***.exe`) file. Open it, and perform run the installation process.
-- **Linux User**: Download either the AppImage (`anchor-***-_amd64.AppImage`) or DEB (`anchor-***-_amd64.deb`) file
+- **MacOS User**: Download the DMG (`anchor-wallet-***.dmg`) file. Open it, and drag the Anchor icon into your Applications folder.
+- **Windows User**: Download the EXE (`anchor-wallet-***.exe`) file. Open it, and perform run the installation process.
+- **Linux User**: Download either the AppImage (`anchor-wallet-***-_amd64.AppImage`) or DEB (`anchor-wallet-***-_amd64.deb`) file
 
 ### Signatures
 
