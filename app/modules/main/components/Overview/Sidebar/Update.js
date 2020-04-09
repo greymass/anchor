@@ -110,7 +110,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
                       primary
                     />
                   )}
-                  link={`https://github.com/greymass/eos-voter/releases/tag/v${update.version}`}
+                  link={`https://github.com/greymass/anchor/releases/tag/v${update.version}`}
                 />
               </Container>
             </Modal.Content>

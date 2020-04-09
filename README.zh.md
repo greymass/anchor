@@ -1,15 +1,15 @@
-[![version](https://img.shields.io/github/release/greymass/eos-voter/all.svg)](https://github.com/greymass/eos-voter/releases)
-[![issues](https://img.shields.io/github/issues/greymass/eos-voter.svg)](https://github.com/greymass/eos-voter/issues)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/eos-voter/master/LICENSE)
-![downloads](https://img.shields.io/github/downloads/greymass/eos-voter/total.svg)
+[![version](https://img.shields.io/github/release/greymass/anchor/all.svg)](https://github.com/greymass/anchor/releases)
+[![issues](https://img.shields.io/github/issues/greymass/anchor.svg)](https://github.com/greymass/anchor/issues)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/anchor/master/LICENSE)
+![downloads](https://img.shields.io/github/downloads/greymass/anchor/total.svg)
 
-[English](https://github.com/greymass/eos-voter/blob/master/README.md) - [한글](https://github.com/greymass/eos-voter/blob/master/README.kr.md) - [中文](https://github.com/greymass/eos-voter/blob/master/README.zh.md) - [日本語](https://github.com/greymass/eos-voter/blob/master/README.ja.md)
+[English](https://github.com/greymass/anchor/blob/master/README.md) - [한글](https://github.com/greymass/anchor/blob/master/README.kr.md) - [中文](https://github.com/greymass/anchor/blob/master/README.zh.md) - [日本語](https://github.com/greymass/anchor/blob/master/README.ja.md)
 
 # eos-voter - EOS 超级节点投票器 & 钱包
 
 `eos-voter` 是一款为EOS区块链设计的轻量级钱包的有限功能版本。此程序用于连接到远程EOS API节点来执行超级节点投票操作和一些基本钱包命令。
 
-[![eos-voter screenshot](https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png)](https://raw.githubusercontent.com/greymass/eos-voter/master/eos-voter.png)
+[![eos-voter screenshot](https://raw.githubusercontent.com/greymass/anchor/master/eos-voter.png)](https://raw.githubusercontent.com/greymass/anchor/master/eos-voter.png)
 
 ### 功能
 
@@ -25,14 +25,14 @@
 
 当前版本 0.7.12 可供下载:
 
-- [Windows Installer](https://github.com/greymass/eos-voter/releases/download/v1.0.0/win-eos-voter-0.7.11.exe)
-- [macOS Package](https://github.com/greymass/eos-voter/releases/download/v1.0.0/mac-eos-voter-0.7.11.dmg)
-- [Linux (deb)](https://github.com/greymass/eos-voter/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.deb)
-- [Linux (snap)](https://github.com/greymass/eos-voter/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.snap)
+- [Windows Installer](https://github.com/greymass/anchor/releases/download/v1.0.0/win-eos-voter-0.7.11.exe)
+- [macOS Package](https://github.com/greymass/anchor/releases/download/v1.0.0/mac-eos-voter-0.7.11.dmg)
+- [Linux (deb)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.deb)
+- [Linux (snap)](https://github.com/greymass/anchor/releases/download/v1.0.0/linux-eos-voter-0.7.11-amd64.snap)
 
 最新的版本将在此REPO的发布页面中找到：
 
-[https://github.com/greymass/eos-voter/releases](https://github.com/greymass/eos-voter/releases)
+[https://github.com/greymass/anchor/releases](https://github.com/greymass/anchor/releases)
 
 以下用来决定你需要下载哪一个版本, 如果你是...
 
@@ -48,7 +48,7 @@
 
 我们在程序中内置了以下REPO中提供的公共节点:
 
-[https://github.com/greymass/eos-voter/blob/master/nodes.md](https://github.com/greymass/eos-voter/blob/master/nodes.md)
+[https://github.com/greymass/anchor/blob/master/nodes.md](https://github.com/greymass/anchor/blob/master/nodes.md)
 
 该节点列表将被实时更新，并在程序初始化时被调用。
 
@@ -59,7 +59,7 @@
 **注意**: 如果你是在Windows环境下编译Electron应用，你还应做如下操作:
 
 ```
-git clone https://github.com/greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/anchor.git eos-voter
 cd eos-voter
 npm install
 cd app
@@ -78,7 +78,7 @@ cd ..
 ### 调试模式运行
 
 ```
-git clone https://github.com/greymass/eos-voter.git eos-voter
+git clone https://github.com/greymass/anchor.git eos-voter
 cd eos-voter
 npm install
 npm run dev
