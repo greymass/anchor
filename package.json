@@ -159,7 +159,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/greymass/eos-voter.git"
+    "url": "git+https://github.com/greymass/anchor.git"
   },
   "author": {
     "name": "Greymass",
@@ -168,14 +168,14 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/greymass/eos-voter/issues"
+    "url": "https://github.com/greymass/anchor/issues"
   },
   "keywords": [
     "anchor",
     "eosio",
     "wallet"
   ],
-  "homepage": "https://github.com/greymass/eos-voter#readme",
+  "homepage": "https://github.com/greymass/anchor#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -271,7 +271,7 @@
     "electron-context-menu": "^0.10.0",
     "electron-store": "^2.0.0",
     "electron-updater": "^2.21.10",
-    "eosio-signing-request": "^1.1.1",
+    "eosio-signing-request": "^1.1.3",
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",

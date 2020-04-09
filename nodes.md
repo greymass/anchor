@@ -1,12 +1,12 @@
 ## API Node Recommendations
 
-`eos-voter` is a light wallet, which means it relies on an external API node connected to the EOS blockchain network in order to function.
+Anchor is a light wallet, which means it relies on an external API node connected to the EOS blockchain network in order to function.
 
 The list below contains EOS API nodes run by members of the EOS community that you can choose from.
 
 ### Privacy
 
-Even though your keys never leave the `eos-voter` applications, the API node you connect to can still reveal personally identifiable information about you. This information may include:
+Even though your keys never leave the Anchor applications, the API node you connect to can still reveal personally identifiable information about you. This information may include:
 
 - Account Names
 - IP Addresses
