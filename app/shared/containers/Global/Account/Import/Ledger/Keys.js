@@ -77,12 +77,8 @@ class GlobalModalAccountImportLedgerKeys extends Component<Props> {
     const { value } = this.state;
     const loaded = [...this.state.loaded];
     const existing = loaded.indexOf(value);
-    const input = this.input.getWrappedInstance();
     if (existing < 0) {
       loaded.push(value);
-    }
-    if (input) {
-      input.reset();
     }
     this.props.actions.getAccounts(loaded);
     this.setState({
