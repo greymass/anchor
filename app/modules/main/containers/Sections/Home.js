@@ -52,6 +52,7 @@ class HomeContainer extends Component<Props> {
     } = this.props;
     const esrPromptReady = (
       wallets.length > 0
+      && settings.walletMode !== 'cold'
       && !settings.promptSigningRequests
     );
     const upgradable = (
