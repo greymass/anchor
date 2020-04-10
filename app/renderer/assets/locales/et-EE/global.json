@@ -112,7 +112,7 @@
   "global_button_elevate_failure_header": "Sisestatud parool ei vasta valitud rahakoti paroolile.",
   "global_button_elevate_modal_description": "Sisesta jätkamiseks rahakoti parool",
   "global_button_elevate_modal_title": "Lubada Rahakoti Tegevus",
-  "global_dangerlink_warning_body_1": "EOS-voter ei saa vastutada veebilehe turvalisuse eest, mida kavatsete külastada. Palun olge ettevaatlikud oma võtmete ja konto informatsiooni turvalisusega jagades seda ainult siis kui olete absoluutselt kindlad, et teine osapool on usaldusväärne.",
+  "global_dangerlink_warning_body_1": "Anchor can not vouch for the safety of the website you are about to visit. Please be dilligent with the security of your keys and account information, only sharing information when you are absolutely sure it can be trusted.",
   "global_dangerlink_warning_body_2": "Ära kunagi jaga enda privaatvõtmeid.",
   "global_dangerlink_warning_body_3": "Kinnita allpool, kui soovid jätkata.",
   "global_dangerlink_warning_title": "Hoiatus: Olete lahkumas rakendusest",
