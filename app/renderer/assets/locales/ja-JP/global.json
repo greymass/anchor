@@ -112,7 +112,7 @@
   "global_button_elevate_failure_header": "入力したパスワードは、現在選択されているウォレットのものと一致しません。",
   "global_button_elevate_modal_description": "続行するにはウォレットパスワードを入力してください",
   "global_button_elevate_modal_title": "ウォレット操作を承認",
-  "global_dangerlink_warning_body_1": "eos-voterは移動しようとしているウェブサイトの安全を保証できません。キーとアカウント情報の安全に慎重になり、信用できると確信できる場合にのみ情報を共有して下さい。",
+  "global_dangerlink_warning_body_1": "Anchor can not vouch for the safety of the website you are about to visit. Please be dilligent with the security of your keys and account information, only sharing information when you are absolutely sure it can be trusted.",
   "global_dangerlink_warning_body_2": "秘密鍵は絶対に共有しないで下さい。",
   "global_dangerlink_warning_body_3": "進む場合は、以下の確認ボタンを押して下さい。",
   "global_dangerlink_warning_title": "注意: このアプリケーションから離れてもよろしいですか？",
