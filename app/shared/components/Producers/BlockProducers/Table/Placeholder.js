@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Placeholder, Table } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { times } from 'lodash';
 
 class BlockProducersTablePlaceholder extends Component<Props> {
@@ -81,4 +81,4 @@ class BlockProducersTablePlaceholder extends Component<Props> {
   }
 }
 
-export default translate('producers')(BlockProducersTablePlaceholder);
+export default withTranslation('producers')(BlockProducersTablePlaceholder);

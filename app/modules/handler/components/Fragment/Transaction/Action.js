@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Icon, Label, List, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 import { attempt, isError, isObject } from 'lodash';
@@ -119,4 +119,4 @@ class PromptFragmentTransactionAction extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptFragmentTransactionAction);
+export default withTranslation('global')(PromptFragmentTransactionAction);

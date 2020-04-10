@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import WelcomeHardwareLedgerContainer from '../../../containers/Welcome/Hardware/Ledger';
 
 class WelcomeHardwareLedger extends Component<Props> {
@@ -37,4 +37,4 @@ class WelcomeHardwareLedger extends Component<Props> {
   }
 }
 
-export default translate('welcome')(WelcomeHardwareLedger);
+export default withTranslation('welcome')(WelcomeHardwareLedger);

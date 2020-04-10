@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Icon, Menu } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
@@ -52,4 +52,4 @@ class WalletPanelButtonBroadcast extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletPanelButtonBroadcast);
+export default withTranslation('wallet')(WalletPanelButtonBroadcast);

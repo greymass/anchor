@@ -2,7 +2,7 @@
 import { get } from 'dot-prop-immutable';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon, Popup } from 'semantic-ui-react';
 
@@ -37,6 +37,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 export default compose(
-  translate('global'),
+  withTranslation('global'),
   connect(mapStateToProps)
 )(GlobalAccountFragmentRamPrice);

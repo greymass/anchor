@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import {
   Button,
@@ -73,4 +73,4 @@ class ToolsPingLoader extends Component<Props> {
   }
 }
 
-export default translate('ping')(ToolsPingLoader);
+export default withTranslation('ping')(ToolsPingLoader);

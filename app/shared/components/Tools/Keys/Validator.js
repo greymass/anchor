@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Header, Label, List, Message, Segment } from 'semantic-ui-react';
 
@@ -83,4 +83,4 @@ class ToolsKeysValidator extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsKeysValidator);
+export default withTranslation('tools')(ToolsKeysValidator);

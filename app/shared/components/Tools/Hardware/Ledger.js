@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Icon, Header, Label, List, Segment, Table } from 'semantic-ui-react';
 
@@ -192,4 +192,4 @@ class ToolsHardwareLedger extends Component<Props> {
   }
 }
 
-export default translate('ledger')(ToolsHardwareLedger);
+export default withTranslation('ledger')(ToolsHardwareLedger);

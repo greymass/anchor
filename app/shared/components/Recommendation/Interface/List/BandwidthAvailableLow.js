@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Message } from 'semantic-ui-react';
 
@@ -31,4 +31,4 @@ class RecommendationInterfaceListBandwidthAvailableLow extends Component<Props> 
   }
 }
 
-export default translate('recommendations')(RecommendationInterfaceListBandwidthAvailableLow);
+export default withTranslation('recommendations')(RecommendationInterfaceListBandwidthAvailableLow);

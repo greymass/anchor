@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Checkbox, Form, Header, Icon, Segment, Table, TextArea } from 'semantic-ui-react';
 
@@ -102,4 +102,4 @@ class ToolsSystemLog extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsSystemLog);
+export default withTranslation('tools')(ToolsSystemLog);

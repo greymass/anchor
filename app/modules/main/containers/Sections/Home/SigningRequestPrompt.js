@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Header, Modal, Segment } from 'semantic-ui-react';
@@ -87,6 +87,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('global'),
+  withTranslation('global'),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomeUpgradeContainer);

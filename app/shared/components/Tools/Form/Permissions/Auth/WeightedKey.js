@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Form } from 'semantic-ui-react';
 import GlobalFormFieldKeyPublic from '../../../../Global/Form/Field/Key/Public';
@@ -59,4 +59,4 @@ class ToolsFormPermissionsAuthWeightedKey extends Component<Props> {
 }
 
 
-export default translate('tools')(ToolsFormPermissionsAuthWeightedKey);
+export default withTranslation('tools')(ToolsFormPermissionsAuthWeightedKey);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { translate } from "react-i18next";
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from "../../../Global/Transaction/Modal";
 import WalletPanelCrosschainTransfer from "../Form/CrosschainTransfer/CrosschainTransfer";
@@ -63,4 +63,4 @@ class WalletPanelButtonCrosschainTransfer extends Component<Props> {
   }
 }
 
-export default translate("crosschaintransfer")(WalletPanelButtonCrosschainTransfer);
+export default withTranslation("crosschaintransfer")(WalletPanelButtonCrosschainTransfer);

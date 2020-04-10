@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Form, Input } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { sortBy } from 'lodash';
 import { get } from 'dot-prop-immutable';
 
@@ -174,7 +174,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalFormFieldAccount);
+export default withTranslation('global')(GlobalFormFieldAccount);
 
 const exchangesInfo = {
   binancecleos: {

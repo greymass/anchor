@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
 import WalletMessageContractBuyRamBytes from '../../../../Global/Message/Contract/BuyRamBytes';
@@ -95,4 +95,4 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
   }
 }
 
-export default translate('ram')(WalletPanelFormRamBuyConfirming);
+export default withTranslation('ram')(WalletPanelFormRamBuyConfirming);

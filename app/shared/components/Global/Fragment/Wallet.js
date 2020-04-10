@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { Header } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import Blockies from 'react-blockies';
 
 export class GlobalFragmentWallet extends PureComponent<Props> {
@@ -46,4 +46,4 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
   }
 }
 
-export default translate('global')(GlobalFragmentWallet);
+export default withTranslation('global')(GlobalFragmentWallet);

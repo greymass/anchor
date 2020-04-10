@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Container, Dropdown, Form, Input, Message, Segment } from 'semantic-ui-react';
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 
@@ -100,6 +100,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('welcome'),
+  withTranslation('welcome'),
   connect(mapStateToProps, mapDispatchToProps)
 )(WelcomeHardwareLedgerContainer);

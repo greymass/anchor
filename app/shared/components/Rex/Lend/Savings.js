@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 import { find } from 'lodash';
 import {
@@ -327,4 +327,4 @@ class RexLendSavings extends PureComponent<Props> {
   }
 }
 
-export default translate('rex')(RexLendSavings);
+export default withTranslation('rex')(RexLendSavings);

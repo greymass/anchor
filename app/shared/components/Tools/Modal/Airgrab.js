@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Segment, Header, Message } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
@@ -83,4 +83,4 @@ class ToolsModalAirgrab extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalAirgrab);
+export default withTranslation('tools')(ToolsModalAirgrab);

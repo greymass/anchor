@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Popup, Table, Header } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
 
@@ -82,4 +82,4 @@ class ProxiesTableRow extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProxiesTableRow);
+export default withTranslation('producers')(ProxiesTableRow);

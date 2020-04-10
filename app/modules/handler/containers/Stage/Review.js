@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
@@ -106,6 +106,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  translate('global'),
+  withTranslation('global'),
   connect(mapStateToProps)
 )(PromptStageReview);

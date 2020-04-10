@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Container, Divider, Form, Grid, Header, Icon, Input, Modal, Segment, Step, TextArea } from 'semantic-ui-react';
 
@@ -81,4 +81,4 @@ class WalletPanelModalAccountRequestCode extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletPanelModalAccountRequestCode);
+export default withTranslation('wallet')(WalletPanelModalAccountRequestCode);

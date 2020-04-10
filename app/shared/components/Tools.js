@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
@@ -116,4 +116,4 @@ class Tools extends Component<Props> {
   }
 }
 
-export default translate('tools')(Tools);
+export default withTranslation('tools')(Tools);

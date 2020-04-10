@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Modal, Table, Segment } from 'semantic-ui-react';
 
 import DangerLink from '../../../Global/Modal/DangerLink';
@@ -90,4 +90,4 @@ class ProducersProxiesModalProxyInfo extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersProxiesModalProxyInfo);
+export default withTranslation('producers')(ProducersProxiesModalProxyInfo);

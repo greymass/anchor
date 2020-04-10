@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Divider, Icon, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 class ProducersFormProxyConfirming extends Component<Props> {
   onConfirm = (e) => {
@@ -61,4 +61,4 @@ class ProducersFormProxyConfirming extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersFormProxyConfirming);
+export default withTranslation('producers')(ProducersFormProxyConfirming);

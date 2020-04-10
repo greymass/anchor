@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Form, Grid, Header, Modal, Segment } from 'semantic-ui-react';
 import GlobalDangerLink from '../../../shared/containers/Global/DangerLink';
 
@@ -92,4 +92,4 @@ class PromptShare extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptShare);
+export default withTranslation('global')(PromptShare);

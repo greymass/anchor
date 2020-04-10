@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 import {
   Button,
@@ -369,4 +369,4 @@ class RexLendManage extends PureComponent<Props> {
   }
 }
 
-export default translate('rex')(RexLendManage);
+export default withTranslation('rex')(RexLendManage);

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dimmer, Grid, Header, Loader, Placeholder, Segment, Visibility } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 
 import ProducersTable from './BlockProducers/Table';
@@ -206,4 +206,4 @@ class BlockProducers extends Component<Props> {
   }
 }
 
-export default translate('producers')(BlockProducers);
+export default withTranslation('producers')(BlockProducers);

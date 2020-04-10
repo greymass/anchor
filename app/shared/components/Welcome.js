@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Container, Grid, Header, Icon, Image, Segment, Step } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import logo from '../../renderer/assets/images/anchor-logo.svg';
 import logoText from '../../renderer/assets/images/anchor-text.svg';
@@ -282,4 +282,4 @@ class Welcome extends Component<Props> {
   }
 }
 
-export default translate('welcome')(Welcome);
+export default withTranslation('welcome')(Welcome);

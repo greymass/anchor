@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Form, Header, Segment } from 'semantic-ui-react';
 
@@ -49,4 +49,4 @@ class ContractInterfaceSelectorAction extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceSelectorAction);
+export default withTranslation('contract')(ContractInterfaceSelectorAction);

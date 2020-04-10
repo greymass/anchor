@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Segment } from 'semantic-ui-react';
 
 import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
@@ -67,4 +67,4 @@ class WalletPanelButtonWaxClaim extends Component<Props> {
   }
 }
 
-export default translate('wax')(WalletPanelButtonWaxClaim);
+export default withTranslation('wax')(WalletPanelButtonWaxClaim);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Modal, Tab } from 'semantic-ui-react';
 
 import ProducersModalInfoDetails from './Info/Details';
@@ -36,4 +36,4 @@ class ProducersModalInfo extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersModalInfo);
+export default withTranslation('producers')(ProducersModalInfo);

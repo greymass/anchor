@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Popup } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 export class GlobalFragmentBlockchain extends Component<Props> {
   render() {
@@ -27,4 +27,4 @@ export class GlobalFragmentBlockchain extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalFragmentBlockchain);
+export default withTranslation('global')(GlobalFragmentBlockchain);

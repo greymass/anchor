@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
 import { Button, Divider, Header, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import WelcomeConnectionContainer from '../Welcome/Connection';
 
@@ -117,6 +117,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('common'),
+  withTranslation('common'),
   connect(mapStateToProps, mapDispatchToProps)
 )(SidebarConnection);

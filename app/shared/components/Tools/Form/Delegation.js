@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
 import WalletPanelLocked from '../../Wallet/Panel/Locked';
@@ -108,4 +108,4 @@ class ToolsFormDelegation extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsFormDelegation);
+export default withTranslation('tools')(ToolsFormDelegation);

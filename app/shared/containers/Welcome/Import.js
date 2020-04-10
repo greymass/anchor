@@ -5,7 +5,7 @@ import { find } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Checkbox, Container, Form, Input, Message, Popup } from 'semantic-ui-react';
 
 import * as AccountsActions from '../../actions/accounts';
@@ -138,6 +138,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('welcome'),
+  withTranslation('welcome'),
   connect(mapStateToProps, mapDispatchToProps)
 )(WelcomeImportContainer);

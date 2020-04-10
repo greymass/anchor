@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Header, Segment, Divider } from 'semantic-ui-react';
 
@@ -29,4 +29,4 @@ class ToolsReset extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsReset);
+export default withTranslation('tools')(ToolsReset);
