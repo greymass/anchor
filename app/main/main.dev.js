@@ -52,7 +52,24 @@ console.log = (...args) => {
 
 log.info('app: initializing');
 // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
-protocol.registerStandardSchemes(['eosio', 'esr']);
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'eosio',
+    privileges: {
+      standard: true,
+      secure: true,
+      supportFetchAPI: true
+    },
+  },
+  {
+    scheme: 'esr',
+    privileges: {
+      standard: true,
+      secure: true,
+      supportFetchAPI: true
+    },
+  },
+]);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -82,17 +99,19 @@ app.on('uncaughtException', (error) => {
   log.error(error);
 });
 
-const instance = app.makeSingleInstance((argv) => {
-  if (process.platform === 'win32' || process.platform === 'linux') {
-    uri = argv.slice(1)[0];
-  }
-  if (mainWindow) {
-    handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
-  }
-});
+const lock = app.requestSingleInstanceLock();
 
-if (instance) {
-  app.quit();
+if (!lock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    if (process.platform === 'win32' || process.platform === 'linux') {
+      uri = argv.slice(1)[0];
+    }
+    if (mainWindow) {
+      handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
+    }
+  });
 }
 
 // main start
