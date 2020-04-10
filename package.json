@@ -35,7 +35,7 @@
   ],
   "build": {
     "productName": "Anchor Wallet",
-    "appId": "com.greymass.anchor-wallet",
+    "appId": "com.greymass.anchordesktop",
     "afterSign": "internals/macos/notarize.js",
     "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
     "asar": true,
