@@ -31,6 +31,7 @@ class GlobalModalAccountImportExisting extends Component<Props> {
   }
   render() {
     const {
+      connection,
       status,
       t,
     } = this.props;
@@ -58,7 +59,7 @@ class GlobalModalAccountImportExisting extends Component<Props> {
         <Segment basic>
           <Header
             content="Import an existing Private Key"
-            subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
+            subheader={`Anchor will encrypt your private key locally and then find the ${connection.chain} accounts matching the public key.`}
           />
           <Button
             color="blue"
@@ -71,7 +72,7 @@ class GlobalModalAccountImportExisting extends Component<Props> {
         <Segment basic>
           <Header
             content="Import an existing Account using a Ledger device"
-            subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
+            subheader={`Anchor will encrypt your private key locally and then find the ${connection.chain} accounts matching the public key.`}
           />
           {(status === 'connected')
             ? (
@@ -117,7 +118,7 @@ function mapStateToProps(state) {
   return {
     storage: state.storage,
     // accounts: state.accounts,
-    // connection: state.connection,
+    connection: state.connection,
     ledger: state.ledger,
     // settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),

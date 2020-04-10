@@ -111,7 +111,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
             <Segment basic>
               <Header
                 content="Import a Private Key"
-                subheader="Anchor will encrypt your private key locally and then find the EOS accounts matching the public key."
+                subheader={`Anchor will encrypt your private key locally and then find the ${connection.chain} accounts matching the public key.`}
               />
               <GlobalFormFieldKeyPrivate
                 autoFocus
