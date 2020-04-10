@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon, Label } from 'semantic-ui-react';
 
 class PromptActionSign extends Component<Props> {
@@ -62,4 +62,4 @@ class PromptActionSign extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionSign);
+export default withTranslation('global')(PromptActionSign);

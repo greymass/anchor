@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import {
   Button,
   Container,
@@ -211,4 +211,4 @@ class WalletModalContentBroadcast extends Component<Props> {
   }
 }
 
-export default translate('transaction')(WalletModalContentBroadcast);
+export default withTranslation('transaction')(WalletModalContentBroadcast);

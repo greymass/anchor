@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Divider, Form, Icon, Segment, Header, Message } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import ProducersFormProxyConfirming from './Proxy/Confirming';
 import GlobalFormFieldAccount from '../../../Global/Form/Field/Account';
@@ -180,4 +180,4 @@ class ProducersFormProxy extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersFormProxy);
+export default withTranslation('producers')(ProducersFormProxy);

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import debounceRender from 'react-debounce-render';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { defer, filter, isEmpty, map, orderBy, remove, sum, uniqBy } from 'lodash';
 
 import { Header, Segment } from 'semantic-ui-react';
@@ -266,7 +266,7 @@ class ToolsPing extends Component<Props> {
   }
 }
 
-export default debounceRender(translate('ping')(ToolsPing), 100, {
+export default debounceRender(withTranslation('ping')(ToolsPing), 100, {
   leading: true,
   maxWait: 100,
   trailing: true

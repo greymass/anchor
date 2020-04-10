@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Divider, Grid, Header, Icon, Image, Responsive, Segment, Statistic, Step } from 'semantic-ui-react';
 
 import AnchorLogo from '../../../renderer/assets/images/anchor-logo-blue.svg';
@@ -146,4 +146,4 @@ class PromptHeader extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptHeader);
+export default withTranslation('global')(PromptHeader);

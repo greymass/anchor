@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Table } from 'semantic-ui-react';
 
 class WalletPanelFormRamStats extends Component<Props> {
@@ -54,4 +54,4 @@ class WalletPanelFormRamStats extends Component<Props> {
   }
 }
 
-export default translate('ram')(WalletPanelFormRamStats);
+export default withTranslation('ram')(WalletPanelFormRamStats);

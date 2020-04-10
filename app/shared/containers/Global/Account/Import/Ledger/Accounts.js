@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { intersection, isEqual } from 'lodash';
 import { Button, Checkbox, Divider, Form, Header, Icon, List, Message, Segment, Tab, Table, TextArea } from 'semantic-ui-react';
@@ -353,7 +353,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global', {
+  withTranslation('global', {
     withRef: true
   }),
   connect(mapStateToProps, mapDispatchToProps)

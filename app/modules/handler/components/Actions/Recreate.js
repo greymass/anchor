@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon } from 'semantic-ui-react';
 
 class PromptActionBroadcast extends Component<Props> {
@@ -37,4 +37,4 @@ class PromptActionBroadcast extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionBroadcast);
+export default withTranslation('global')(PromptActionBroadcast);

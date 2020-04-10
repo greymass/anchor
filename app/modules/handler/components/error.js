@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Icon, Message } from 'semantic-ui-react';
 
 class ErrorMessage extends Component<Props> {
@@ -20,4 +20,4 @@ class ErrorMessage extends Component<Props> {
   }
 }
 
-export default translate('global')(ErrorMessage);
+export default withTranslation('global')(ErrorMessage);

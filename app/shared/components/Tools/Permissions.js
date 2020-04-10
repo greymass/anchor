@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Container, Icon, Header, Message, Popup, Segment, Table } from 'semantic-ui-react';
 
@@ -197,4 +197,4 @@ class ToolsPermissions extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsPermissions);
+export default withTranslation('tools')(ToolsPermissions);

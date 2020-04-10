@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { map } from 'lodash';
 import compose from 'lodash/fp/compose';
 
@@ -56,6 +56,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate(['wallet']),
+  withTranslation(['wallet']),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalWalletUnlocked);

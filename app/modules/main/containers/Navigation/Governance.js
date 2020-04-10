@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon, Menu } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 
 import NavigationActions from '../../actions/navigation';
@@ -80,6 +80,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('main'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(NavigationGovernanceContainer);

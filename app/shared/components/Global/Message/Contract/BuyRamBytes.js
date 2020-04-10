@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import WalletMessageContract from './Base';
 
@@ -17,4 +17,4 @@ export class GlobalMessageContractBuyRamBytes extends Component<Props> {
   }
 }
 
-export default translate('contracts')(GlobalMessageContractBuyRamBytes);
+export default withTranslation('contracts')(GlobalMessageContractBuyRamBytes);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
@@ -127,4 +127,4 @@ class WalletStatusActionsTableRow extends Component<Props> {
   }
 }
 
-export default translate('actions')(WalletStatusActionsTableRow);
+export default withTranslation('actions')(WalletStatusActionsTableRow);

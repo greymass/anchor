@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Icon, Message } from 'semantic-ui-react';
 
 class ToolsHardwareLedgerStatusMessage extends Component<Props> {
@@ -34,4 +34,4 @@ class ToolsHardwareLedgerStatusMessage extends Component<Props> {
   }
 }
 
-export default translate('ledger')(ToolsHardwareLedgerStatusMessage);
+export default withTranslation('ledger')(ToolsHardwareLedgerStatusMessage);

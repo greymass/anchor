@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Header, Grid, Message, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
@@ -35,4 +35,4 @@ class ToolsStateWallet extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsStateWallet);
+export default withTranslation('tools')(ToolsStateWallet);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Divider, Icon, Header, List, Segment } from 'semantic-ui-react';
 import ColdWalletPanelButtonSignTransaction from './Panel/Button/SignTransaction';
@@ -74,4 +74,4 @@ class ColdWalletInfo extends Component<Props> {
   }
 }
 
-export default translate('coldwallet')(ColdWalletInfo);
+export default withTranslation('coldwallet')(ColdWalletInfo);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message } from 'semantic-ui-react';
 import { findIndex } from 'lodash';
@@ -238,4 +238,4 @@ class ToolsFormProxyInfo extends Component<Props> {
 }
 
 
-export default translate('tools')(ToolsFormProxyInfo);
+export default withTranslation('tools')(ToolsFormProxyInfo);

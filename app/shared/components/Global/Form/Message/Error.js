@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Message, Header } from 'semantic-ui-react';
 
 class FormMessageError extends Component<Props> {
@@ -40,4 +40,4 @@ class FormMessageError extends Component<Props> {
   }
 }
 
-export default translate('global')(FormMessageError);
+export default withTranslation('global')(FormMessageError);

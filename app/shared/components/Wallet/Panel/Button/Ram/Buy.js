@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from '../../../../Global/Transaction/Modal';
 import WalletPanelFormRamBuy from '../../Form/Ram/Buy';
@@ -70,4 +70,4 @@ class WalletPanelButtonRamBuy extends Component<Props> {
   }
 }
 
-export default translate('ram')(WalletPanelButtonRamBuy);
+export default withTranslation('ram')(WalletPanelButtonRamBuy);

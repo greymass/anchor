@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Grid, Header, List, Popup, Segment } from 'semantic-ui-react';
 
@@ -217,4 +217,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate('tools')(ToolsHome)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withTranslation('tools')(ToolsHome)));

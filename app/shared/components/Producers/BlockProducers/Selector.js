@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n, translate } from 'react-i18next';
+import { I18n, withTranslation } from 'react-i18next';
 import { Header, List, Segment } from 'semantic-ui-react';
 import { intersection } from 'lodash';
 
@@ -94,4 +94,4 @@ class ProducersSelector extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersSelector);
+export default withTranslation('producers')(ProducersSelector);

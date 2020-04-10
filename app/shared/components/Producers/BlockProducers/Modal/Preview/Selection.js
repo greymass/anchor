@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Divider, Icon, Message, Segment, Modal, Header } from 'semantic-ui-react';
 import { intersection } from 'lodash';
 import { get } from 'dot-prop-immutable';
@@ -118,4 +118,4 @@ class ProducersVotingPreviewSelection extends Component<Props> {
     );
   }
 }
-export default translate('producers')(ProducersVotingPreviewSelection);
+export default withTranslation('producers')(ProducersVotingPreviewSelection);

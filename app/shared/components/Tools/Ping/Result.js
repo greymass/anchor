@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { isEqual } from 'lodash';
 
@@ -288,4 +288,4 @@ class ToolsPingResult extends Component<Props> {
   }
 }
 
-export default translate('ping')(ToolsPingResult);
+export default withTranslation('ping')(ToolsPingResult);

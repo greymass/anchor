@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Accordion, Menu, Popup, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 
@@ -307,4 +307,4 @@ class WalletPanelUnlocked extends Component<Props> {
   }
 }
 
-export default translate(['wallet', 'beos_withdraw'])(WalletPanelUnlocked);
+export default withTranslation(['wallet', 'beos_withdraw'])(WalletPanelUnlocked);

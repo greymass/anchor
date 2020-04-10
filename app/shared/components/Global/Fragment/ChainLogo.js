@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { Image, Popup } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import beosLogo from '../../../../renderer/assets/images/beos-logo.svg';
 import bosLogo from '../../../../renderer/assets/images/bos.png';
@@ -78,4 +78,4 @@ export class GlobalFragmentChainLogo extends PureComponent<Props> {
   }
 }
 
-export default translate('global')(GlobalFragmentChainLogo);
+export default withTranslation('global')(GlobalFragmentChainLogo);

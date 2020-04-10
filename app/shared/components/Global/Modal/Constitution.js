@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Modal } from 'semantic-ui-react';
 
 export class ModalConstitution extends Component<Props> {
@@ -98,4 +98,4 @@ export class ModalConstitution extends Component<Props> {
   }
 }
 
-export default translate('constitution')(ModalConstitution);
+export default withTranslation('constitution')(ModalConstitution);

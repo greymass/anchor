@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import WelcomeWalletContainer from '../../containers/Welcome/Wallet';
 
 class WelcomeWallet extends Component<Props> {
@@ -34,4 +34,4 @@ class WelcomeWallet extends Component<Props> {
   }
 }
 
-export default translate('welcome')(WelcomeWallet);
+export default withTranslation('welcome')(WelcomeWallet);

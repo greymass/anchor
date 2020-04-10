@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import ToolsFormPermissionsAuth from '../../Form/Permissions/Auth';
@@ -48,4 +48,4 @@ class ToolsModalPermissionAuth extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalPermissionAuth);
+export default withTranslation('tools')(ToolsModalPermissionAuth);

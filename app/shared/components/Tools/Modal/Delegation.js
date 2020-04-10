@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ToolsFormDelegation from '../Form/Delegation';
@@ -64,4 +64,4 @@ class ToolsModalDelegation extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalDelegation);
+export default withTranslation('tools')(ToolsModalDelegation);

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Accordion, Header, Icon, Message } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 export class GlobalMessageContractBase extends Component<Props> {
   state = { active: false }
@@ -29,4 +29,4 @@ export class GlobalMessageContractBase extends Component<Props> {
   }
 }
 
-export default translate('contracts')(GlobalMessageContractBase);
+export default withTranslation('contracts')(GlobalMessageContractBase);

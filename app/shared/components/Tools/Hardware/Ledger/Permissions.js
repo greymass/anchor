@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import ReactJson from 'react-json-view';
 
 import ToolsModalPermissionAuthSet from '../../Modal/Permissions/Auth/Set';
@@ -124,4 +124,4 @@ class ToolsHardwareLedgerPermissions extends Component<Props> {
   }
 }
 
-export default translate('ledger')(ToolsHardwareLedgerPermissions);
+export default withTranslation('ledger')(ToolsHardwareLedgerPermissions);

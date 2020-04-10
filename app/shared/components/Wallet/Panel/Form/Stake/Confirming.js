@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Header, Divider, Icon, Segment, Message } from 'semantic-ui-react';
 
@@ -146,4 +146,4 @@ class WalletPanelFormStakeConfirming extends Component<Props> {
   }
 }
 
-export default translate('stake')(WalletPanelFormStakeConfirming);
+export default withTranslation('stake')(WalletPanelFormStakeConfirming);

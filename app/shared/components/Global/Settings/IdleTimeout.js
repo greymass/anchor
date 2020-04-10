@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 export class GlobalSettingsIdleTimeout extends Component<Props> {
   onChange = (e, { value }) => {
@@ -38,4 +38,4 @@ export class GlobalSettingsIdleTimeout extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalSettingsIdleTimeout);
+export default withTranslation('global')(GlobalSettingsIdleTimeout);

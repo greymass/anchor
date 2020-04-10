@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 const languages = [
   { key: 'cn', value: 'zh-CN', flag: 'cn', text: '中文' },
@@ -41,4 +41,4 @@ export class GlobalSettingsLanguage extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalSettingsLanguage);
+export default withTranslation('global')(GlobalSettingsLanguage);

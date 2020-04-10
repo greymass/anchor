@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Container, Divider, Header, Segment } from 'semantic-ui-react';
 
 import GlobalTransactionViewActions from '../../../Transaction/View/Actions';
@@ -88,4 +88,4 @@ export class GlobalTransactionMessageUnsignedSign extends Component<Props> {
   }
 }
 
-export default translate('transaction')(GlobalTransactionMessageUnsignedSign);
+export default withTranslation('transaction')(GlobalTransactionMessageUnsignedSign);

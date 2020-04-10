@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Dimmer, Divider, Header, Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelButtonUnlock from './Button/Unlock';
@@ -50,4 +50,4 @@ class WalletPanelWaiting extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletPanelWaiting);
+export default withTranslation('wallet')(WalletPanelWaiting);

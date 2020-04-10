@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
 import { Segment, Form, Divider, Grid, Button, Menu } from 'semantic-ui-react';
@@ -278,4 +278,4 @@ class WalletPanelFormRamSell extends Component<Props> {
 }
 
 
-export default translate('ram')(WalletPanelFormRamSell);
+export default withTranslation('ram')(WalletPanelFormRamSell);

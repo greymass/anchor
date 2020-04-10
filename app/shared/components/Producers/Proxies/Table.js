@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { debounce, filter, findIndex, sortBy } from 'lodash';
 import { Grid, Input, Segment, Transition, Table, Message } from 'semantic-ui-react';
 
@@ -192,4 +192,4 @@ class ProxiesTable extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProxiesTable);
+export default withTranslation('producers')(ProxiesTable);

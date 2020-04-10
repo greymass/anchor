@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { debounce, filter, findIndex } from 'lodash';
 import { Grid, Header, Input, Segment, Transition, Table } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
@@ -223,4 +223,4 @@ class ProducersTable extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersTable);
+export default withTranslation('producers')(ProducersTable);

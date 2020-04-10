@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Icon, Image, List, Segment, Table } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 
@@ -281,4 +281,4 @@ class ProducersModalInfoDetails extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersModalInfoDetails);
+export default withTranslation('producers')(ProducersModalInfoDetails);

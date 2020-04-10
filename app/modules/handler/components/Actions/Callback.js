@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon, Label } from 'semantic-ui-react';
 
 import DangerLink from '../../../../shared/containers/Global/DangerLink';
@@ -69,4 +69,4 @@ class PromptActionCallback extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionCallback);
+export default withTranslation('global')(PromptActionCallback);
