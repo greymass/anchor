@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment, Tab } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 import QRCode from 'qrcode';
@@ -201,4 +201,4 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageUnsignedDownload);
+export default withTranslation('global')(GlobalTransactionMessageUnsignedDownload);

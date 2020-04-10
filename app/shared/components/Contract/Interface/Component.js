@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Checkbox, Header, Icon, Label, List, Segment, Tab } from 'semantic-ui-react';
 
 import ContractInterfaceTabActions from './Tab/Actions';
@@ -239,4 +239,4 @@ class ContractInterfaceComponent extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceComponent);
+export default withTranslation('contract')(ContractInterfaceComponent);

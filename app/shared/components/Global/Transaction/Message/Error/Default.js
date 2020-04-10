@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Message } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
@@ -46,4 +46,4 @@ export class GlobalTransactionMessageErrorDefault extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageErrorDefault);
+export default withTranslation('global')(GlobalTransactionMessageErrorDefault);

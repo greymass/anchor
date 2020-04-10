@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Icon, Step } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 class WelcomeBreadcrumb extends Component<Props> {
   render() {
@@ -79,4 +79,4 @@ class WelcomeBreadcrumb extends Component<Props> {
   }
 }
 
-export default translate('welcome')(WelcomeBreadcrumb);
+export default withTranslation('welcome')(WelcomeBreadcrumb);

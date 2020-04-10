@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Divider, Form, Message, Icon, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { findIndex } from 'lodash';
 import { get } from 'dot-prop-immutable';
 
@@ -377,4 +377,4 @@ class WalletPanelFormTransferSend extends Component<Props> {
   }
 }
 
-export default translate('transfer')(WalletPanelFormTransferSend);
+export default withTranslation('transfer')(WalletPanelFormTransferSend);

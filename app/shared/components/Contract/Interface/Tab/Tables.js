@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import ReactJson from 'react-json-view';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 import throttle from 'lodash/throttle';
 
@@ -178,4 +178,4 @@ class ContractInterfaceTabTables extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceTabTables);
+export default withTranslation('contract')(ContractInterfaceTabTables);

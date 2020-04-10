@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon } from 'semantic-ui-react';
 
 class PromptActionHardwareLedger extends Component<Props> {
@@ -34,4 +34,4 @@ class PromptActionHardwareLedger extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionHardwareLedger);
+export default withTranslation('global')(PromptActionHardwareLedger);

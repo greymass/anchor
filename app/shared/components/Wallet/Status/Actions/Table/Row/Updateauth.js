@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Icon } from 'semantic-ui-react';
 
 class WalletStatusActionsTableRowUpdateauth extends Component<Props> {
@@ -22,4 +22,4 @@ class WalletStatusActionsTableRowUpdateauth extends Component<Props> {
   }
 }
 
-export default translate('actions')(WalletStatusActionsTableRowUpdateauth);
+export default withTranslation('actions')(WalletStatusActionsTableRowUpdateauth);

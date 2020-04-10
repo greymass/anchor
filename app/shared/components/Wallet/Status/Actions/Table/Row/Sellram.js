@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Icon } from 'semantic-ui-react';
 
 import GlobalDataBytes from '../../../../../Global/Data/Bytes';
@@ -33,4 +33,4 @@ class WalletStatusActionsTableRowSellram extends Component<Props> {
   }
 }
 
-export default translate('actions')(WalletStatusActionsTableRowSellram);
+export default withTranslation('actions')(WalletStatusActionsTableRowSellram);

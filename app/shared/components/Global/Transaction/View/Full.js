@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import ReactJson from 'react-json-view';
 
 import { Header } from 'semantic-ui-react';
@@ -35,4 +35,4 @@ export class GlobalTransactionViewFull extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionViewFull);
+export default withTranslation('global')(GlobalTransactionViewFull);

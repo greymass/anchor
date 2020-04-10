@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import WelcomePathContainer from '../../containers/Welcome/Path';
 
 class WelcomePath extends Component<Props> {
@@ -26,4 +26,4 @@ class WelcomePath extends Component<Props> {
   }
 }
 
-export default translate('welcome')(WelcomePath);
+export default withTranslation('welcome')(WelcomePath);

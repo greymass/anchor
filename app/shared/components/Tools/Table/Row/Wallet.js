@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { find, findIndex } from 'lodash';
 
 import { Button, Dropdown, Header, Icon, Label, Popup, Table } from 'semantic-ui-react';
@@ -321,4 +321,4 @@ class ToolsTableRowWallet extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsTableRowWallet);
+export default withTranslation('tools')(ToolsTableRowWallet);

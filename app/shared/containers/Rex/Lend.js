@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tab, Message } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 import { get } from 'dot-prop-immutable';
 
@@ -184,4 +184,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate('rex')(connect(mapStateToProps, mapDispatchToProps)(RexLend));
+export default withTranslation('rex')(connect(mapStateToProps, mapDispatchToProps)(RexLend));

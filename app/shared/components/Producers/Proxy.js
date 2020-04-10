@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Icon, Header, Button } from 'semantic-ui-react';
 
 import ProducersButtonProxy from './Proxy/Button/Proxy';
@@ -104,4 +104,4 @@ class ProducersProxy extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersProxy);
+export default withTranslation('producers')(ProducersProxy);

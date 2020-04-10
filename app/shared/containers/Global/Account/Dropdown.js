@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { findIndex } from 'lodash';
 import { Button, Dropdown, Header, Icon, Input, Segment, Tab } from 'semantic-ui-react';
@@ -166,6 +166,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global'),
+  withTranslation('global'),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalAccountDropdown);

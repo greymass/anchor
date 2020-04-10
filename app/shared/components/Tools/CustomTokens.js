@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { find, findIndex } from 'lodash';
 
 import { Button, Checkbox, Container, Header, Popup, Segment, Table } from 'semantic-ui-react';
@@ -205,4 +205,4 @@ class ToolsCustomTokens extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsCustomTokens);
+export default withTranslation('tools')(ToolsCustomTokens);

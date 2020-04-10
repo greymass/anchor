@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Container, Form, Header, Message } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
@@ -79,4 +79,4 @@ class WalletPanelFormAccountRequest extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletPanelFormAccountRequest);
+export default withTranslation('wallet')(WalletPanelFormAccountRequest);

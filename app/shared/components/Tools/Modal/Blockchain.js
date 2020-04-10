@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Modal } from 'semantic-ui-react';
 
 import GlobalBlockchainForm from '../../../containers/Global/Blockchain/Form';
@@ -36,4 +36,4 @@ class ToolsModalBlockchain extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalBlockchain);
+export default withTranslation('tools')(ToolsModalBlockchain);

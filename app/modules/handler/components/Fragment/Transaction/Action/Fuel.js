@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon, Image, Label, List, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
 import { attempt, isError } from 'lodash';
@@ -43,4 +43,4 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptFragmentTransactionActionFuel);
+export default withTranslation('global')(PromptFragmentTransactionActionFuel);

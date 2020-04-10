@@ -8,7 +8,7 @@ import {
   Segment,
   Table
 } from "semantic-ui-react";
-import { translate } from "react-i18next";
+import { withTranslation } from 'react-i18next';
 
 class WalletPanelFormWithdrawConfirming extends Component<Props> {
   onConfirm = e => {
@@ -86,6 +86,6 @@ class WalletPanelFormWithdrawConfirming extends Component<Props> {
   }
 }
 
-export default translate("beos_withdraw")(
+export default withTranslation("beos_withdraw")(
   WalletPanelFormWithdrawConfirming
 );

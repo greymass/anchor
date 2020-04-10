@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Icon, List, Segment } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
 
@@ -41,4 +41,4 @@ export class GlobalTransactionMessageErrorLedgerBusy extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageErrorLedgerBusy);
+export default withTranslation('global')(GlobalTransactionMessageErrorLedgerBusy);

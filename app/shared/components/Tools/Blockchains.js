@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { sumBy } from 'lodash';
 
 import {
@@ -190,4 +190,4 @@ class ToolsBlockchains extends PureComponent<Props> {
   }
 }
 
-export default translate('tools')(ToolsBlockchains);
+export default withTranslation('tools')(ToolsBlockchains);

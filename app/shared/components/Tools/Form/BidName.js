@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import debounce from 'lodash/debounce';
 import { Segment, Form, Button, Message, Table } from 'semantic-ui-react';
 import { Decimal } from 'decimal.js';
@@ -402,4 +402,4 @@ class ToolsFormBidName extends Component<Props> {
 }
 
 
-export default translate('tools')(ToolsFormBidName);
+export default withTranslation('tools')(ToolsFormBidName);

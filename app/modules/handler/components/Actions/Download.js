@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon, Label } from 'semantic-ui-react';
 
 const { clipboard, ipcRenderer } = require('electron');
@@ -80,4 +80,4 @@ class PromptActionDownload extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionDownload);
+export default withTranslation('global')(PromptActionDownload);

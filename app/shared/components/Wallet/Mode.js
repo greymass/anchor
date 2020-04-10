@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Icon, Menu, Popup } from 'semantic-ui-react';
 
 class WalletMode extends Component<Props> {
@@ -57,4 +57,4 @@ class WalletMode extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletMode);
+export default withTranslation('wallet')(WalletMode);

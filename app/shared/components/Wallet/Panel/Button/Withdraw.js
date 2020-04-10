@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { translate } from "react-i18next";
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from "../../../Global/Transaction/Modal";
 import WalletPanelFormWithdraw from "../Form/Withdraw/Withdraw";
@@ -63,4 +63,4 @@ class WalletPanelButtonWithdraw extends Component<Props> {
   }
 }
 
-export default translate("beos_withdraw")(WalletPanelButtonWithdraw);
+export default withTranslation("beos_withdraw")(WalletPanelButtonWithdraw);

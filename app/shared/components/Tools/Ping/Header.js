@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import {
   Checkbox,
@@ -67,4 +67,4 @@ class ToolsPingHeader extends Component<Props> {
   }
 }
 
-export default translate('ping')(ToolsPingHeader);
+export default withTranslation('ping')(ToolsPingHeader);

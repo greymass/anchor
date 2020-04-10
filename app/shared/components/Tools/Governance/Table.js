@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Table, Icon, Popup } from 'semantic-ui-react';
 import ToolsGovernanceProposalsProposal from './Proposals/Proposal';
 
@@ -106,4 +106,4 @@ class ProposalsTable extends Component<Props> {
   }
 }
 
-export default translate('tools')(ProposalsTable);
+export default withTranslation('tools')(ProposalsTable);

@@ -3,7 +3,7 @@ import { get } from 'dot-prop-immutable';
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Button, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
@@ -106,6 +106,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('wallet'),
+  withTranslation('wallet'),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalAccountFragmentTokenRefundingClaim);

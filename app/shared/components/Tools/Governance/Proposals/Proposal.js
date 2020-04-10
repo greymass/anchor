@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { find } from 'lodash';
 
 import TimeAgo from 'react-timeago';
@@ -256,4 +256,4 @@ class ToolsGovernanceProposalsProposal extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsGovernanceProposalsProposal);
+export default withTranslation('tools')(ToolsGovernanceProposalsProposal);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Segment, Divider } from 'semantic-ui-react';
 
 import ToolsButtonRegisterProxy from './Button/RegisterProxy';
@@ -115,4 +115,4 @@ class ToolsProxy extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsProxy);
+export default withTranslation('tools')(ToolsProxy);

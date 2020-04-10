@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import compose from 'lodash/fp/compose';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Accordion, Button, Divider, Form, Icon, Message } from 'semantic-ui-react';
 import { find } from 'lodash';
 import { delete as del, set } from 'dot-prop-immutable';
@@ -270,7 +270,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('tools', {
+  withTranslation('tools', {
     withRef: true
   }),
   connect(mapStateToProps, mapDispatchToProps)

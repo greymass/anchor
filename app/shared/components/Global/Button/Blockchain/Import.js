@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 
 import GlobalModalBlockchainImport from '../../Modal/Blockchain/Import';
@@ -41,4 +41,4 @@ export class GlobalButtonBlockchainImport extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalButtonBlockchainImport);
+export default withTranslation('global')(GlobalButtonBlockchainImport);

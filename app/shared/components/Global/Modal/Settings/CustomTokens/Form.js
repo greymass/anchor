@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Container, Form, Input } from 'semantic-ui-react';
 
 export class GlobalModalSettingsCustomTokensForm extends Component<Props> {
@@ -55,4 +55,4 @@ export class GlobalModalSettingsCustomTokensForm extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalModalSettingsCustomTokensForm);
+export default withTranslation('global')(GlobalModalSettingsCustomTokensForm);

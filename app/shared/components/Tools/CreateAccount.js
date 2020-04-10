@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Header, Segment } from 'semantic-ui-react';
 
@@ -93,4 +93,4 @@ class ToolsCreateAccount extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsCreateAccount);
+export default withTranslation('tools')(ToolsCreateAccount);

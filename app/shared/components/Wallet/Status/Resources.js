@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
 import ResourcePercentage from '../../Global/Data/Resource/Percentage';
@@ -91,4 +91,4 @@ class WalletStatusResources extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletStatusResources);
+export default withTranslation('wallet')(WalletStatusResources);

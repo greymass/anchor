@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import ReactJson from 'react-json-view';
 
 import { Header, Menu, Segment } from 'semantic-ui-react';
@@ -182,4 +182,4 @@ class WalletStatus extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletStatus);
+export default withTranslation('wallet')(WalletStatus);

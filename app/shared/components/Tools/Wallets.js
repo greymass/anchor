@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Grid, Header, Segment, Table } from 'semantic-ui-react';
 
@@ -86,4 +86,4 @@ class ToolsWallets extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsWallets);
+export default withTranslation('tools')(ToolsWallets);

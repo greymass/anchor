@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 class GlobalSettingsShowTestnets extends Component<Props> {
   onChange = (e, { value }) => {
@@ -34,4 +34,4 @@ class GlobalSettingsShowTestnets extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalSettingsShowTestnets);
+export default withTranslation('global')(GlobalSettingsShowTestnets);

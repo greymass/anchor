@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Loader, Segment, Visibility } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import ProducersProxy from './Proxy';
 import ProxiesTable from './Proxies/Table';
@@ -155,4 +155,4 @@ class Proxies extends Component<Props> {
   }
 }
 
-export default translate('producers')(Proxies);
+export default withTranslation('producers')(Proxies);

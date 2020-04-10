@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Message, Modal, Segment } from 'semantic-ui-react';
 
 import GlobalModalSettingsCustomTokenConfirm from './CustomTokens/Confirm';
@@ -132,4 +132,4 @@ export class GlobalModalSettingsCustomTokens extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalModalSettingsCustomTokens);
+export default withTranslation('global')(GlobalModalSettingsCustomTokens);

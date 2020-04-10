@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalMessageContract from './Base';
 
@@ -19,4 +19,4 @@ export class GlobalMessageContractVoteProducer extends Component<Props> {
   }
 }
 
-export default translate('contracts')(GlobalMessageContractVoteProducer);
+export default withTranslation('contracts')(GlobalMessageContractVoteProducer);

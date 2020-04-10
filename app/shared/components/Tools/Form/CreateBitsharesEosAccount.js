@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import debounce from 'lodash/debounce';
 
 import { Segment, Form, Header, Button, Icon, Table } from 'semantic-ui-react';
@@ -307,4 +307,4 @@ class ToolsFormCreateBitsharesEosAccount extends Component<Props> {
 }
 
 
-export default translate('tools')(ToolsFormCreateBitsharesEosAccount);
+export default withTranslation('tools')(ToolsFormCreateBitsharesEosAccount);

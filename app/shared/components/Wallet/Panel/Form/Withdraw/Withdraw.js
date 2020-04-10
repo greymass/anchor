@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import {
   Form,
   Segment,
@@ -421,4 +421,4 @@ class WalletPanelFormWithdraw extends Component<Props> {
   }
 }
 
-export default translate('beos_withdraw')(WalletPanelFormWithdraw);
+export default withTranslation('beos_withdraw')(WalletPanelFormWithdraw);

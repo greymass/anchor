@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { times } from 'lodash';
 import { Button, Grid, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
 import ReactJson from 'react-json-view';
@@ -234,4 +234,4 @@ class ToolsKeyGenerator extends Component<Props> {
   }
 }
 
-export default translate(['global', 'tools'])(ToolsKeyGenerator);
+export default withTranslation(['global', 'tools'])(ToolsKeyGenerator);

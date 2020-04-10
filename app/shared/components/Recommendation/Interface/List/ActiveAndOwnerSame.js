@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Message } from 'semantic-ui-react';
 
@@ -39,4 +39,4 @@ class RecommendationInterfaceListActiveAndOwnerSame extends Component<Props> {
   }
 }
 
-export default translate('recommendations')(RecommendationInterfaceListActiveAndOwnerSame);
+export default withTranslation('recommendations')(RecommendationInterfaceListActiveAndOwnerSame);

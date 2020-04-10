@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { set } from 'dot-prop-immutable';
 import { map } from 'lodash';
 
@@ -83,4 +83,4 @@ class ToolsFormPermissionsAuthSet extends Component<Props> {
 }
 
 
-export default translate('tools')(ToolsFormPermissionsAuthSet);
+export default withTranslation('tools')(ToolsFormPermissionsAuthSet);
