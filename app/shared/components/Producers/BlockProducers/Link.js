@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Header, Modal } from 'semantic-ui-react';
-import { I18n } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 const { shell } = require('electron');
 
-export default class ProducersLink extends Component<Props> {
+class ProducersLink extends Component<Props> {
   state = { open: false }
 
   isSafeish = (url) => url.startsWith('http:') || url.startsWith('https:')
@@ -30,6 +30,7 @@ export default class ProducersLink extends Component<Props> {
     const {
       open
     } = this.state;
+    const { t } = this.props;
     let link = this.props.producer.url;
     if (this.isSafeish(this.props.producer.url)) {
       link = (
@@ -45,45 +46,41 @@ export default class ProducersLink extends Component<Props> {
       );
     }
     return (
-      <I18n ns="producers">
-        {
-          (t) => (
-            <div>
-              {link}
-              <Modal size="tiny" open={open} onClose={this.close}>
-                <Modal.Header>
-                  {t('producer_link_warning_title')}
-                </Modal.Header>
-                <Modal.Content>
-                  <p>
-                    {t('producer_link_warning_body_1')}
-                  </p>
-                  <Header>
-                    {t('producer_link_warning_body_2')}
-                  </Header>
-                  <p>
-                    {t('producer_link_warning_body_3')}
-                  </p>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button
-                    content={t('cancel')}
-                    onClick={this.close}
-                    negative
-                  />
-                  <Button
-                    positive
-                    onClick={this.openLink.bind(this)}
-                    icon="external"
-                    labelPosition="right"
-                    content={t('confirm')}
-                  />
-                </Modal.Actions>
-              </Modal>
-            </div>
-          )
-        }
-      </I18n>
+      <div>
+        {link}
+        <Modal size="tiny" open={open} onClose={this.close}>
+          <Modal.Header>
+            {t('producer_link_warning_title')}
+          </Modal.Header>
+          <Modal.Content>
+            <p>
+              {t('producer_link_warning_body_1')}
+            </p>
+            <Header>
+              {t('producer_link_warning_body_2')}
+            </Header>
+            <p>
+              {t('producer_link_warning_body_3')}
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content={t('cancel')}
+              onClick={this.close}
+              negative
+            />
+            <Button
+              positive
+              onClick={this.openLink.bind(this)}
+              icon="external"
+              labelPosition="right"
+              content={t('confirm')}
+            />
+          </Modal.Actions>
+        </Modal>
+      </div>
     );
   }
 }
+
+export default withTranslation('producers')(ProducersLink);
