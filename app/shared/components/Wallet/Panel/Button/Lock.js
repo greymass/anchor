@@ -1,24 +1,21 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 
-export default class WalletPanelButtonLock extends Component<Props> {
+class WalletPanelButtonLock extends Component<Props> {
   render() {
+    const { t } = this.props;
     return (
-      <I18n ns="wallet">
-        {
-          (t) => (
-            <Button
-              color="purple"
-              content={t('wallet_panel_wallet_lock')}
-              fluid
-              icon="lock"
-              onClick={this.props.lockWallet}
-            />
-          )
-        }
-      </I18n>
+      <Button
+        color="purple"
+        content={t('wallet_panel_wallet_lock')}
+        fluid
+        icon="lock"
+        onClick={this.props.lockWallet}
+      />
     );
   }
 }
+
+export default withTranslation('wallet')(WalletPanelButtonLock);
