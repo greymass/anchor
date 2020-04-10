@@ -21,12 +21,18 @@ const configureIPC = (ui, primary = false) => {
   if (primary) {
     ipcMain.on('openFile', (event, openPath = false) => {
       const defaultPath = (openPath || app.getPath('documents'));
-      dialog.showOpenDialog(ui, { defaultPath }, (fileNames) => {
-        if (fileNames === undefined) {
+      dialog.showOpenDialog({
+        defaultPath,
+        filters: [
+          { name: 'JSON', extensions: ['json'] },
+        ],
+        properties: ['openFile']
+      }).then(({ canceled, filePaths }) => {
+        if (canceled || filePaths === undefined) {
           event.sender.send('openFileCancel');
-          return;
+          return false;
         }
-        const [fileName] = fileNames;
+        const [fileName] = filePaths;
         fs.readFile(fileName, 'utf-8', (err, data) => {
           if (err) {
             console.log(`An error ocurred reading the file: ${err.message}`);
@@ -39,21 +45,21 @@ const configureIPC = (ui, primary = false) => {
       });
     });
 
-    ipcMain.on('saveFile', (event, savePath = false, data, prefix = 'tx') => {
+    ipcMain.on('saveFile', async (event, savePath = false, data, prefix = 'tx') => {
       const defaultPath = (savePath || app.getPath('documents'));
       const defaultFilename = `${prefix}-${getDateString()}.json`;
-      const fileName = dialog.showSaveDialog({
+      const { canceled, filePath } = await dialog.showSaveDialog({
         title: 'Save File',
         defaultPath: `${defaultPath}/${defaultFilename}`,
         filters: [
-          { name: 'JSON Files', extensions: ['json'] }
+          { name: 'JSON', extensions: ['json'] }
         ]
       });
 
-      if (!fileName) return;
+      if (canceled || !filePath) return;
 
-      fs.writeFileSync(fileName, data);
-      event.sender.send('lastFileSuccess', fileName);
+      fs.writeFileSync(filePath, data);
+      event.sender.send('lastFileSuccess', filePath);
     });
 
     ipcMain.on('checkForUpdates', () => {
