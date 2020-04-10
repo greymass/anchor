@@ -53,6 +53,7 @@ class GlobalModalAccountImportContracts extends Component<Props> {
   }
   render() {
     const {
+      connection,
       pubkeys,
       t,
     } = this.props;
@@ -61,7 +62,7 @@ class GlobalModalAccountImportContracts extends Component<Props> {
         <Segment basic>
           <Header
             content="Create account via Smart Contract"
-            subheader="If you have EOS already, you can transfer a small amount to a smart contract to have an account created."
+            subheader={`If you have ${connection.chain} already, you can transfer a small amount to a smart contract to have an account created.`}
           />
           {(!pubkeys.available.length) ? (
             <GlobalModalAccountImportKeys />
@@ -86,6 +87,7 @@ class GlobalModalAccountImportContracts extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    connection: state.connection,
     pubkeys: {
       available: state.storage.keys,
       unlocked: map(state.auths.keystore, 'pubkey')
