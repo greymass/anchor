@@ -4,7 +4,7 @@ import debounceRender from 'react-debounce-render';
 import { translate } from 'react-i18next';
 import { defer, filter, isEmpty, map, orderBy, remove, sum, uniqBy } from 'lodash';
 
-import { Segment } from 'semantic-ui-react';
+import { Header, Segment } from 'semantic-ui-react';
 
 import ToolsPingControls from './Ping/Controls';
 import ToolsPingHeader from './Ping/Header';
@@ -199,7 +199,20 @@ class ToolsPing extends Component<Props> {
       showUnsupported,
       total,
     } = this.state;
-    const { settings } = this.props;
+    const { connection, settings } = this.props;
+    if (!connection.supportedContracts || !connection.supportedContracts.includes('producerinfo')) {
+      return (
+        <Segment color="orange">
+          <Header>
+            This tool does not work with the currently selected blockchain
+            <Header.Subheader>
+              In order for this tool to work on this network, the "producerjson" smart contract must be deployed and populated with API endpoints and Anchor needs to be made aware of its deployent. Please contact the Greymass team for assistance in this matter.
+            </Header.Subheader>
+          </Header>
+        </Segment>
+      )
+    }
+
     const data = [...results];
     if (!showUnsupported) {
       remove(data, (result) => !result.available);
