@@ -9,6 +9,7 @@ import { Button, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 class GlobalModalAccountImportWelcome extends Component<Props> {
   render() {
     const {
+      connection,
       storage,
       t,
     } = this.props;
@@ -17,7 +18,7 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
         <Segment basic>
           <Header
             content="Scan for accounts on this blockchain"
-            subheader="Anchor will automatically query the EOS blockchains for accounts matching your known public keys."
+            subheader={`Anchor will automatically query the ${connection.chain} blockchains for accounts matching your known public keys.`}
           />
           {(!(storage.keys && storage.keys.length))
             ? (
@@ -68,6 +69,7 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    connection: state.connection,
     storage: state.storage,
   };
 }
