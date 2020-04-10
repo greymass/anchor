@@ -95,7 +95,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
     const results = accounts.__results;
     const disabled = (!selected.length || !valid);
     let passwordPrompt = false;
-    if ([undefined, 'watch', 'ledger'].includes(settings.walletMode) && !settings.walletHash) {
+    if (!settings.walletHash) {
       const hotWalletExists = wallets.some(o => o.mode === 'hot');
       if (!hotWalletExists) {
         passwordPrompt = true;
