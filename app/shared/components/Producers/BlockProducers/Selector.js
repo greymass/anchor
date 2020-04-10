@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n, withTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, List, Segment } from 'semantic-ui-react';
 import { intersection } from 'lodash';
 
@@ -76,20 +76,14 @@ class ProducersSelector extends Component<Props> {
       }));
     }
     return (
-      <I18n ns="producers">
-        {
-          () => (
-            <Segment loading={!(account)}>
-              <List
-                relaxed
-                size="small"
-              >
-                {listItems}
-              </List>
-            </Segment>
-          )
-        }
-      </I18n>
+      <Segment loading={!(account)}>
+        <List
+          relaxed
+          size="small"
+        >
+          {listItems}
+        </List>
+      </Segment>
     );
   }
 }
