@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { I18n } from 'react-i18next';
 import { Form, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
