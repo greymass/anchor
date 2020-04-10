@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { ConnectedRouter } from 'react-router-redux';
@@ -7,8 +7,6 @@ import { ConnectedRouter } from 'react-router-redux';
 import { configureStore, history } from '../../../shared/store/renderer/configureStore';
 import i18n from '../../../shared/i18n';
 import ScrollToTop from '../../../shared/components/Global/ScrollToTop';
-
-console.log(configureStore, history)
 
 import MessageAppError from '../../../shared/components/Global/Message/App/Error';
 
@@ -20,7 +18,6 @@ export default class Root extends Component<Props> {
   state = {};
 
   componentDidCatch(error) {
-    console.log(error)
     this.setState({
       error,
     });
@@ -42,10 +39,12 @@ export default class Root extends Component<Props> {
     ) : (
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <ScrollToTop>
-              <Routes />
-            </ScrollToTop>
+          <ConnectedRouter history={history} store={store}>
+            <Suspense fallback={<div>Loading</div>}>
+              <ScrollToTop>
+                <Routes />
+              </ScrollToTop>
+            </Suspense>
           </ConnectedRouter>
         </Provider>
       </I18nextProvider>
