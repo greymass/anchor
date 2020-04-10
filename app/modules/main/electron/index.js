@@ -30,7 +30,10 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
     show: false,
     resizable: true,
     backgroundColor: '#f1f0ee',
-    icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png')
+    icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png'),
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   uiStateKeeper.track(ui);
