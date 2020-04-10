@@ -57,14 +57,6 @@ class HomeInitializeContainer extends Component<Props> {
           textAlign="center"
         >
           <Image
-            alt="Anchor Logo"
-            centered
-            src={Logo}
-            style={{
-              width: '192px',
-            }}
-          />
-          <Image
             alt="Anchor"
             centered
             src={LogoText}
@@ -75,33 +67,32 @@ class HomeInitializeContainer extends Component<Props> {
           />
           <p>Desktop EOSIO Wallet</p>
         </Segment>
-
         <Segment basic textAlign="center" style={{ margin: 0 }}>
-          <p style={{ margin: '1em' }}>
+          <p style={{ margin: '1em auto 3em' }}>
             <Button
-              color="green"
-              content="Create New Wallet"
+              content="Setup New Wallet"
               icon="sign-in"
               onClick={this.initialize}
-              size="large"
+              size="huge"
+              style={{
+                color: '#fff',
+                backgroundColor: '#3650A2'
+              }}
             />
           </p>
           <Card centered raised style={{ marginTop: '1em' }}>
             <Card.Content>
               <Card.Description style={{ marginBottom: '1em' }}>
-                Do you already have a backup from Anchor or eos-voter?
+                Do you have a backup file from either Anchor or eos-voter?
               </Card.Description>
               <WelcomeImportContainer />
-              <p style={{ marginTop: '0.5em' }}>
-                <Icon name="angle double down" />
-              </p>
             </Card.Content>
             <Card.Content extra>
               For Advanced Users:
             </Card.Content>
             <Card.Content>
               <Button
-                color="purple"
+                color="teal"
                 content={t('welcome:welcome_use_coldwallet')}
                 icon="snowflake"
                 onClick={this.useColdWallet}
