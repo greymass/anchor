@@ -4,7 +4,7 @@ import i18n from 'i18next';
 import Backend from 'i18next-sync-fs-backend';
 import sprintf from 'i18next-sprintf-postprocessor';
 import LanguageDetector from 'i18next-electron-language-detector';
-import { reactI18nextModule } from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 
 const path = require('path');
 
@@ -19,7 +19,7 @@ const configureLocalization = (resourcePath, store) => {
     i18n.use(LanguageDetector);
   }
   i18n
-    .use(reactI18nextModule)
+    .use(initReactI18next)
     .use(sprintf)
     .init({
       lng: lang,
