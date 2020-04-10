@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Message } from 'semantic-ui-react';
 import GlobalModalDangerLink from '../../../Global/Modal/DangerLink';
@@ -42,4 +42,4 @@ class RecommendationInterfaceCpuAvailableLow extends Component<Props> {
   }
 }
 
-export default translate('recommendations')(RecommendationInterfaceCpuAvailableLow);
+export default withTranslation('recommendations')(RecommendationInterfaceCpuAvailableLow);

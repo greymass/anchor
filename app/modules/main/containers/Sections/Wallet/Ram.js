@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { get } from 'dot-prop-immutable';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
@@ -182,6 +182,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('global'),
+  withTranslation('global'),
   connect(mapStateToProps, mapDispatchToProps)
 )(WalletRamContainer);

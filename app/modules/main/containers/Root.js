@@ -8,6 +8,8 @@ import { configureStore, history } from '../../../shared/store/renderer/configur
 import i18n from '../../../shared/i18n';
 import ScrollToTop from '../../../shared/components/Global/ScrollToTop';
 
+console.log(configureStore, history)
+
 import MessageAppError from '../../../shared/components/Global/Message/App/Error';
 
 import '../../../shared/app.global.css';
@@ -18,6 +20,7 @@ export default class Root extends Component<Props> {
   state = {};
 
   componentDidCatch(error) {
+    console.log(error)
     this.setState({
       error,
     });

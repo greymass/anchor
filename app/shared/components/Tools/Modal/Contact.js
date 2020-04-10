@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Modal } from 'semantic-ui-react';
 
 import ToolsFormContact from '../Form/Contact';
@@ -43,4 +43,4 @@ class ToolsModalContact extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsModalContact);
+export default withTranslation('tools')(ToolsModalContact);

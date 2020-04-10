@@ -1,7 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { Button, Grid, Header } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 export class GlobalFragmentWalletTypes extends PureComponent<Props> {
   render() {
@@ -79,4 +79,4 @@ export class GlobalFragmentWalletTypes extends PureComponent<Props> {
   }
 }
 
-export default translate('global')(GlobalFragmentWalletTypes);
+export default withTranslation('global')(GlobalFragmentWalletTypes);

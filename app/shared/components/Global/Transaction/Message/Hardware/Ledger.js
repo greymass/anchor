@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
 export class GlobalTransactionMessageHardwareLedger extends Component<Props> {
@@ -25,4 +25,4 @@ export class GlobalTransactionMessageHardwareLedger extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageHardwareLedger);
+export default withTranslation('global')(GlobalTransactionMessageHardwareLedger);

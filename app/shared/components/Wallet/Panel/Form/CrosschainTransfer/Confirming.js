@@ -8,7 +8,7 @@ import {
   Segment,
   Table
 } from "semantic-ui-react";
-import { translate } from "react-i18next";
+import { withTranslation } from 'react-i18next';
 
 class WalletPanelCrosschainTransferConfirming extends Component<Props> {
   onConfirm = e => {
@@ -91,6 +91,6 @@ class WalletPanelCrosschainTransferConfirming extends Component<Props> {
   }
 }
 
-export default translate("crosschaintransfer")(
+export default withTranslation("crosschaintransfer")(
   WalletPanelCrosschainTransferConfirming
 );

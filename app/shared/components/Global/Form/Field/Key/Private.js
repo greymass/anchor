@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Checkbox, Form, Input } from 'semantic-ui-react';
 
 import debounce from 'lodash/debounce';
@@ -84,4 +84,4 @@ class GlobalFormFieldKeyPrivate extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalFormFieldKeyPrivate);
+export default withTranslation('global')(GlobalFormFieldKeyPrivate);

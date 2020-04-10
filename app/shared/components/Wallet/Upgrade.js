@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
@@ -41,4 +41,4 @@ class WalletUpgrade extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletUpgrade);
+export default withTranslation('wallet')(WalletUpgrade);

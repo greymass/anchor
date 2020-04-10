@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import ReactJson from 'react-json-view';
 
 class ProducersModalInfoData extends Component<Props> {
@@ -26,4 +26,4 @@ class ProducersModalInfoData extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersModalInfoData);
+export default withTranslation('producers')(ProducersModalInfoData);

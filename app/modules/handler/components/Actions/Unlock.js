@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Label, Header, Icon } from 'semantic-ui-react';
 import GlobalButtonElevate from '../../../../shared/containers/Global/Button/Elevate';
 
@@ -67,4 +67,4 @@ class PromptActionUnlock extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptActionUnlock);
+export default withTranslation('global')(PromptActionUnlock);

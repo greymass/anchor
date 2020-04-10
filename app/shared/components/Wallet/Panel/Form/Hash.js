@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Form, Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormModalConfirm from './Modal/Confirm';
@@ -74,4 +74,4 @@ class WalletPanelFormHash extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletPanelFormHash);
+export default withTranslation('wallet')(WalletPanelFormHash);

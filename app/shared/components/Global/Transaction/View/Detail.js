@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Label, Table } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 import { get } from 'dot-prop-immutable';
@@ -100,4 +100,4 @@ export class GlobalTransactionViewDetail extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionViewDetail);
+export default withTranslation('global')(GlobalTransactionViewDetail);

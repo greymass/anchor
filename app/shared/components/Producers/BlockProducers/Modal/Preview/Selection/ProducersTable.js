@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Grid, Table } from 'semantic-ui-react';
 import { chunk, last, times } from 'lodash';
 
@@ -42,5 +42,5 @@ class ProducersVotingPreviewSelection extends Component<Props> {
   }
 }
 
-export default translate('producers')(ProducersVotingPreviewSelection);
+export default withTranslation('producers')(ProducersVotingPreviewSelection);
 

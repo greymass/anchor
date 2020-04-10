@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Container, Divider, Form, Header, Segment } from 'semantic-ui-react';
 
 import WelcomeImportContainer from './Import';
@@ -99,6 +99,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('welcome'),
+  withTranslation('welcome'),
   connect(mapStateToProps, mapDispatchToProps)
 )(WelcomeAdvancedContainer);

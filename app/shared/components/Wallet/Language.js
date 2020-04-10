@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Menu } from 'semantic-ui-react';
 import GlobalSettingsLanguage from '../Global/Settings/Language';
 
@@ -30,4 +30,4 @@ class WalletLanguage extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletLanguage);
+export default withTranslation('wallet')(WalletLanguage);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Header, Icon, Message, Segment, Transition, Table } from 'semantic-ui-react';
 
 import ExplorerLink from '../../../Global/Modal/ExplorerLink';
@@ -91,4 +91,4 @@ class WalletStatusActionsTable extends Component<Props> {
   }
 }
 
-export default translate('actions')(WalletStatusActionsTable);
+export default withTranslation('actions')(WalletStatusActionsTable);

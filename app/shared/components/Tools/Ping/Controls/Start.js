@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import {
   Button,
@@ -61,4 +61,4 @@ class ToolsPingControlsStart extends Component<Props> {
   }
 }
 
-export default translate('ping')(ToolsPingControlsStart);
+export default withTranslation('ping')(ToolsPingControlsStart);

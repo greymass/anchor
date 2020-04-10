@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header, Tab, Divider, Message } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { intersection } from 'lodash';
 
 import BlockProducers from './Producers/BlockProducers';
@@ -296,4 +296,4 @@ class Producers extends Component<Props> {
   }
 }
 
-export default translate(['tools', 'producers'])(Producers);
+export default withTranslation(['tools', 'producers'])(Producers);

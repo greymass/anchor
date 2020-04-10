@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ToolsFormRegister from '../Form/RegisterProxy';
@@ -45,4 +45,4 @@ class ToolsButtonRegisterProxy extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsButtonRegisterProxy);
+export default withTranslation('tools')(ToolsButtonRegisterProxy);

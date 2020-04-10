@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalTransactionModal from '../../Global/Transaction/Modal';
 import ToolsFormCreateAccount from '../Form/CreateAccount';
@@ -65,4 +65,4 @@ class ToolsButtonCreateAccount extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsButtonCreateAccount);
+export default withTranslation('tools')(ToolsButtonCreateAccount);

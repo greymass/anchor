@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Label,Menu } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { find } from 'lodash';
 
 import GlobalAccountDropdown from '../containers/Global/Account/Dropdown';
@@ -110,4 +110,4 @@ class TabMenu extends Component<Props> {
   }
 }
 
-export default translate('menu')(TabMenu);
+export default withTranslation('menu')(TabMenu);

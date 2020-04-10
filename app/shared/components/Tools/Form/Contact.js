@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { findIndex } from 'lodash';
 
 import GlobalFormFieldAccount from '../../Global/Form/Field/Account';
@@ -201,4 +201,4 @@ class ToolsFormContact extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsFormContact);
+export default withTranslation('tools')(ToolsFormContact);

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import debounce from 'lodash/debounce';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Container, Form, Input, Message } from 'semantic-ui-react';
 
 import WalletPanelFormModalConfirm from '../../components/Wallet/Panel/Form/Modal/Confirm';
@@ -193,6 +193,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  translate('wallet'),
+  withTranslation('wallet'),
   connect(mapStateToProps, mapDispatchToProps)
 )(WelcomeWalletContainer);

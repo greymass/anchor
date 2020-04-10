@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Divider, Header, Icon, Segment, Table } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import WalletMessageContractTransfer from '../../../../../Global/Message/Contract/Transfer';
 
@@ -94,4 +94,4 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
   }
 }
 
-export default translate('transfer')(WalletPanelFormTransferSendConfirming);
+export default withTranslation('transfer')(WalletPanelFormTransferSendConfirming);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Segment, Header, Icon, Modal } from 'semantic-ui-react';
 
 class WalletPanelModalTransferReceive extends Component<Props> {
@@ -49,4 +49,4 @@ class WalletPanelModalTransferReceive extends Component<Props> {
   }
 }
 
-export default translate('transfer')(WalletPanelModalTransferReceive);
+export default withTranslation('transfer')(WalletPanelModalTransferReceive);

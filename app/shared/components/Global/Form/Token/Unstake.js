@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Header, Form, Grid, Table } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import GlobalAccountFragmentResourceStakedDelegated from '../../../../containers/Global/Account/Fragment/Resource/Staked/Delegated';
 import GlobalAccountFragmentResourceStakedSelf from '../../../../containers/Global/Account/Fragment/Resource/Staked/Self';
@@ -133,4 +133,4 @@ export class GlobalFormTokenUnstake extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalFormTokenUnstake);
+export default withTranslation('global')(GlobalFormTokenUnstake);

@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Dimmer, Header, Grid, Loader, Segment, Visibility } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import range from 'lodash/range';
 
 import ActionsTable from './Actions/Table';
@@ -166,4 +166,4 @@ class WalletStatusActions extends Component<Props> {
   }
 }
 
-export default translate('actions')(WalletStatusActions);
+export default withTranslation('actions')(WalletStatusActions);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Segment } from 'semantic-ui-react';
 
@@ -51,4 +51,4 @@ class ContractInterfaceTabActions extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceTabActions);
+export default withTranslation('contract')(ContractInterfaceTabActions);

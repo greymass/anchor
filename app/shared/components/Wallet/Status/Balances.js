@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon, Popup, Segment, Table } from 'semantic-ui-react';
 import { forEach } from 'lodash';
 import TimeAgo from 'react-timeago';
@@ -183,4 +183,4 @@ class WalletStatusBalances extends Component<Props> {
   }
 }
 
-export default translate('wallet')(WalletStatusBalances);
+export default withTranslation('wallet')(WalletStatusBalances);

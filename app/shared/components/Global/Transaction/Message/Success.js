@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
 
 import ExplorerLink from '../../Modal/ExplorerLink';
@@ -114,4 +114,4 @@ export class GlobalTransactionMessageSuccess extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalTransactionMessageSuccess);
+export default withTranslation('global')(GlobalTransactionMessageSuccess);

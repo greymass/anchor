@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
 
@@ -75,6 +75,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global'),
+  withTranslation('global'),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportPassword);

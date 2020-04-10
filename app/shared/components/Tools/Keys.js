@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import {
   Button,
@@ -188,4 +188,4 @@ class ToolsKeys extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsKeys);
+export default withTranslation('tools')(ToolsKeys);

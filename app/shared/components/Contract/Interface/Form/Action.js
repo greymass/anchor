@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Divider, Form, Header, Message } from 'semantic-ui-react';
 import { attempt, isError } from 'lodash';
 
@@ -338,4 +338,4 @@ class ContractInterfaceFormAction extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceFormAction);
+export default withTranslation('contract')(ContractInterfaceFormAction);

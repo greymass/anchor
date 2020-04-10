@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
@@ -69,4 +69,4 @@ export class GlobalMessageAppUpgrade extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalMessageAppUpgrade);
+export default withTranslation('global')(GlobalMessageAppUpgrade);

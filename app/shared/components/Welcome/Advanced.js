@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Segment } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import WelcomeAdvancedContainer from '../../containers/Welcome/Advanced';
 
 class WelcomeAdvanced extends Component<Props> {
@@ -40,4 +40,4 @@ class WelcomeAdvanced extends Component<Props> {
   }
 }
 
-export default translate('welcome')(WelcomeAdvanced);
+export default withTranslation('welcome')(WelcomeAdvanced);

@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import {
   Button,
   Container,
@@ -239,4 +239,4 @@ class RexInterfaceLoans extends PureComponent<Props> {
   }
 }
 
-export default translate('rex')(RexInterfaceLoans);
+export default withTranslation('rex')(RexInterfaceLoans);

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Button, Header, Modal } from 'semantic-ui-react';
 
 const { shell } = require('electron');
@@ -106,4 +106,4 @@ export class GlobalModalDangerLink extends Component<Props> {
   }
 }
 
-export default translate('global')(GlobalModalDangerLink);
+export default withTranslation('global')(GlobalModalDangerLink);

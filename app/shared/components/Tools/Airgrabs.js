@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { orderBy } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import {
@@ -247,4 +247,4 @@ class ToolsAirgrabs extends PureComponent<Props> {
   }
 }
 
-export default translate('tools')(ToolsAirgrabs);
+export default withTranslation('tools')(ToolsAirgrabs);

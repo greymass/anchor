@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { map } from 'lodash';
 import { Button, Header, Icon, Segment, Tab } from 'semantic-ui-react';
@@ -104,7 +104,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  translate('global', {
+  withTranslation('global', {
     withRef: true
   }),
   connect(mapStateToProps, mapDispatchToProps)

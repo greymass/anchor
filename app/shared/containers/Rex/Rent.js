@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { bindActionCreators } from 'redux';
 
 import RexInterfaceAbout from '../../components/Rex/Rent/About';
@@ -160,4 +160,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default translate('rex')(connect(mapStateToProps, mapDispatchToProps)(RexRent));
+export default withTranslation('rex')(connect(mapStateToProps, mapDispatchToProps)(RexRent));

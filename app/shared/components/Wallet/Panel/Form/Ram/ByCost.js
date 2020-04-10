@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Decimal } from 'decimal.js';
 
 import FormFieldToken from '../../../../Global/Form/Field/Token';
@@ -94,4 +94,4 @@ class WalletPanelFormRamBuyByCost extends Component<Props> {
   }
 }
 
-export default translate('ram')(WalletPanelFormRamBuyByCost);
+export default withTranslation('ram')(WalletPanelFormRamBuyByCost);

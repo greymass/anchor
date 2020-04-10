@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Checkbox, Header, Icon, Message, Segment, Divider } from 'semantic-ui-react';
 import { find } from 'lodash';
 
@@ -127,4 +127,4 @@ class ToolsBlockchainsBEOSCrosschainTransfer extends Component<Props> {
   }
 }
 
-export default translate('tools')(ToolsBlockchainsBEOSCrosschainTransfer);
+export default withTranslation('tools')(ToolsBlockchainsBEOSCrosschainTransfer);

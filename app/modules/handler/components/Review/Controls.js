@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import GlobalAccountDropdownSelect from '../../../../shared/containers/Global/Account/Dropdown/Select';
 
@@ -127,4 +127,4 @@ class PromptReviewControls extends Component<Props> {
   }
 }
 
-export default translate('global')(PromptReviewControls);
+export default withTranslation('global')(PromptReviewControls);

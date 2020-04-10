@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import ReactJson from 'react-json-view';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 
 import { Header } from 'semantic-ui-react';
 
@@ -34,4 +34,4 @@ class ContractInterfaceTabData extends Component<Props> {
   }
 }
 
-export default translate('contract')(ContractInterfaceTabData);
+export default withTranslation('contract')(ContractInterfaceTabData);
