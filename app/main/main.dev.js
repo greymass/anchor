@@ -99,7 +99,7 @@ app.on('uncaughtException', (error) => {
   log.error(error);
 });
 
-const lock = app.requestSingleInstanceLock();
+const lock = process.mas || app.requestSingleInstanceLock();
 
 if (!lock) {
   app.quit()
@@ -108,7 +108,7 @@ if (!lock) {
     if (process.platform === 'win32' || process.platform === 'linux') {
       uri = argv.slice(1)[0];
     }
-    if (mainWindow) {
+    if (mainWindow !== null) {
       handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
     }
   });
