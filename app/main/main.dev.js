@@ -251,13 +251,9 @@ const disableSigningRequests = () => {
   log.info('disableSigningRequests');
   // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
   app.removeAsDefaultProtocolClient('eosio');
-  protocol.unregisterProtocol('eosio', (error) => {
-    log.info('protocol handler: unregister', error);
-  });
+  protocol.unregisterProtocol('eosio');
   app.removeAsDefaultProtocolClient('esr');
-  protocol.unregisterProtocol('esr', (error) => {
-    log.info('protocol handler: unregister', error);
-  });
+  protocol.unregisterProtocol('esr');
 };
 
 // Allow ESR Requests from the UI
