@@ -1,0 +1,50 @@
+{
+  "appId": "com.greymass.anchordesktop.release",
+  "productName": "Anchor Wallet",
+  "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
+  "asar": true,
+  "directories": {
+    "app": "app",
+    "buildResources": "resources",
+    "output": "release"
+  },
+  "files": [
+    "dist/",
+    "node_modules/",
+    "renderer/assets/",
+    "renderer/basic/index.html",
+    "renderer/main/index.html",
+    "renderer/handler/index.html",
+    "main.prod.js",
+    "main.prod.js.map",
+    "package.json"
+  ],
+  "protocols": [
+    {
+      "name": "esr",
+      "role": "Viewer",
+      "schemes": [
+        "esr"
+      ]
+    }
+  ],
+  "publish": {
+    "provider": "github"
+  },
+  "mac": {
+    "category": "public.app-category.finance",
+    "icon": "app/renderer/assets/icons/mac/icon.icns",
+    "target": [
+      "mas"
+    ]
+  },
+  "mas": {
+    "darkModeSupport": false,
+    "entitlements": "internals/macos/entitlements.mas.plist",
+    "entitlementsInherit": "internals/macos/entitlements.mas.inherit.plist",
+    "gatekeeperAssess": false,
+    "hardenedRuntime": false,
+    "identity": "Greymass Inc. (CE35MAVD43)",
+    "provisioningProfile": "embedded.provisionprofile"
+  }
+}
