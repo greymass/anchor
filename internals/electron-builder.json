@@ -1,0 +1,133 @@
+{
+  "appId": "com.greymass.anchordesktop.release",
+  "productName": "Anchor Wallet",
+  "afterSign": "internals/macos/notarize.js",
+  "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
+  "asar": true,
+  "directories": {
+    "buildResources": "resources",
+    "output": "release"
+  },
+  "files": [
+    "dist/",
+    "node_modules/",
+    "renderer/assets/",
+    "renderer/basic/index.html",
+    "renderer/main/index.html",
+    "renderer/handler/index.html",
+    "main.prod.js",
+    "main.prod.js.map",
+    "package.json"
+  ],
+  "protocols": [
+    {
+      "name": "esr",
+      "role": "Viewer",
+      "schemes": [
+        "esr"
+      ]
+    }
+  ],
+  "publish": {
+    "provider": "github"
+  },
+  "linux": {
+    "category": "Network",
+    "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+    "desktop": {
+      "Name": "anchor-wallet",
+      "GenericName": "Anchor - EOSIO Desktop Wallet",
+      "X-GNOME-FullName": "anchor-wallet",
+      "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+      "Type": "Application",
+      "Terminal": "false",
+      "StartupNotify": "false",
+      "Categories": "Network;",
+      "MimeType": "application/x-esr;x-scheme-handler/esr;"
+    },
+    "icon": "app/renderer/assets/icons/png",
+    "target": [
+      {
+        "target": "deb",
+        "arch": [
+          "armv7l",
+          "arm64",
+          "x64"
+        ]
+      },
+      "AppImage"
+    ]
+  },
+  "snap": {
+    "synopsis": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+    "confinement": "devmode",
+    "grade": "devel",
+    "buildPackages": [
+      "gcc",
+      "libusb-1.0-0-dev"
+    ],
+    "stagePackages": [
+      "default",
+      "libusb-1.0-0"
+    ],
+    "plugs": [
+      "default",
+      "hardware-observe",
+      "raw-usb"
+    ]
+  },
+  "mac": {
+    "category": "public.app-category.finance",
+    "darkModeSupport": false,
+    "icon": "app/renderer/assets/icons/mac/icon.icns",
+    "entitlements": "internals/macos/entitlements.mac.plist",
+    "entitlementsInherit": "internals/macos/entitlements.mac.inherit.plist",
+    "identity": "Greymass Inc. (CE35MAVD43)",
+    "provisioningProfile": "embedded.provisionprofile",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "target": [
+      "dmg"
+    ]
+  },
+  "dmg": {
+    "icon": "app/renderer/assets/icons/mac/icon.icns",
+    "sign": false,
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ]
+  },
+  "win": {
+    "certificateFile": "aaroncox.p12",
+    "icon": "app/renderer/assets/icons/win/icon.ico",
+    "publisherName": "Aaron Cox",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    ]
+  },
+  "nsis": {
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": "always",
+    "createStartMenuShortcut": true,
+    "deleteAppDataOnUninstall": true,
+    "include": "build/installer.nsh",
+    "oneClick": false,
+    "perMachine": true,
+    "shortcutName": "Anchor Desktop Dev"
+  }
+}

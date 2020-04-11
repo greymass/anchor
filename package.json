@@ -3,160 +3,6 @@
   "productName": "Anchor Wallet",
   "version": "1.0.0",
   "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
-  "scripts": {
-    "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
-    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
-    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
-    "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-    "bump": "bump package.json package-lock.json app/package.json app/package-lock.json README.md README.*.md shasum.sh app/renderer/assets/locales/**/common.json",
-    "dev": "cross-env START_HOT=1 node -r babel-register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 npm run start-renderer-dev",
-    "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
-    "flow": "flow",
-    "flow-typed": "rimraf flow-typed/npm && flow-typed install --overwrite || true",
-    "lint": "cross-env NODE_ENV=development eslint --cache --format=node_modules/eslint-formatter-pretty .",
-    "lint-fix": "npm run lint -- --fix",
-    "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
-    "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
-    "package-mac": "npm run build && electron-builder --publish never",
-    "package-linux": "npm run build && electron-builder --linux --publish never",
-    "package-win": "npm run build && electron-builder --win --x64 --ia32 --publish never",
-    "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps && node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
-    "prestart": "npm run build",
-    "release": "npm run build && electron-builder -mwl",
-    "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron --js-flags='--expose-gc' -r babel-register ./app/main/main.dev",
-    "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
-    "test": "jest --runInBand"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
-  "build": {
-    "productName": "Anchor Wallet",
-    "appId": "com.greymass.anchordesktop",
-    "afterSign": "internals/macos/notarize.js",
-    "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
-    "asar": true,
-    "protocols": {
-      "name": "esr",
-      "role": "Viewer",
-      "schemes": [
-        "esr"
-      ]
-    },
-    "files": [
-      "dist/",
-      "node_modules/",
-      "renderer/assets/",
-      "renderer/basic/index.html",
-      "renderer/main/index.html",
-      "renderer/handler/index.html",
-      "main.prod.js",
-      "main.prod.js.map",
-      "package.json"
-    ],
-    "publish": {
-      "provider": "github"
-    },
-    "dmg": {
-      "icon": "app/renderer/assets/icons/mac/icon.icns",
-      "sign": false,
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "mac": {
-      "entitlements": "internals/macos/entitlements.mac.plist",
-      "entitlementsInherit": "internals/macos/entitlements.mac.plist",
-      "icon": "app/renderer/assets/icons/mac/icon.icns",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false
-    },
-    "win": {
-      "certificateFile": "aaroncox.p12",
-      "icon": "app/renderer/assets/icons/win/icon.ico",
-      "publisherName": "Aaron Cox",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]
-    },
-    "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": "always",
-      "createStartMenuShortcut": true,
-      "deleteAppDataOnUninstall": true,
-      "include": "build/installer.nsh",
-      "oneClick": false,
-      "perMachine": true,
-      "shortcutName": "Anchor Wallet"
-    },
-    "linux": {
-      "category": "Network",
-      "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
-      "desktop": {
-        "Name": "anchor-wallet",
-        "GenericName": "Anchor - EOSIO Desktop Wallet",
-        "X-GNOME-FullName": "anchor-wallet",
-        "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
-        "Type": "Application",
-        "Terminal": "false",
-        "StartupNotify": "false",
-        "Categories": "Network;",
-        "MimeType": "application/x-esr;x-scheme-handler/esr;"
-      },
-      "icon": "app/renderer/assets/icons/png",
-      "target": [
-        {
-          "target": "deb",
-          "arch": [
-            "armv7l",
-            "arm64",
-            "x64"
-          ]
-        },
-        "AppImage"
-      ]
-    },
-    "snap": {
-      "synopsis": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
-      "confinement": "devmode",
-      "grade": "devel",
-      "buildPackages": [
-        "gcc",
-        "libusb-1.0-0-dev"
-      ],
-      "stagePackages": [
-        "default",
-        "libusb-1.0-0"
-      ],
-      "plugs": [
-        "default",
-        "hardware-observe",
-        "raw-usb"
-      ]
-    },
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/greymass/anchor.git"
@@ -178,6 +24,83 @@
     "wallet"
   ],
   "homepage": "https://github.com/greymass/anchor#readme",
+  "scripts": {
+    "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
+    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
+    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
+    "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
+    "bump": "bump package.json package-lock.json app/package.json app/package-lock.json README.md README.*.md shasum.sh app/renderer/assets/locales/**/common.json",
+    "dev": "cross-env START_HOT=1 node -r babel-register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 npm run start-renderer-dev",
+    "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
+    "flow": "flow",
+    "flow-typed": "rimraf flow-typed/npm && flow-typed install --overwrite || true",
+    "lint": "cross-env NODE_ENV=development eslint --cache --format=node_modules/eslint-formatter-pretty .",
+    "lint-fix": "npm run lint -- --fix",
+    "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
+    "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
+    "package-mac": "npm run build && electron-builder --publish never -c internals/electron-builder.json",
+    "package-linux": "npm run build && electron-builder --linux --publish never -c internals/electron-builder.json",
+    "package-win": "npm run build && electron-builder --win --x64 --ia32 --publish never -c internals/electron-builder.json",
+    "postinstall": "node -r babel-register internals/scripts/CheckNativeDep.js && npm run flow-typed && electron-builder install-app-deps && node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
+    "prestart": "npm run build",
+    "release": "npm run build && electron-builder -mwl",
+    "start": "cross-env NODE_ENV=production electron ./app/",
+    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron --js-flags='--expose-gc' -r babel-register ./app/main/main.dev",
+    "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0",
+    "asn1-ber": "^1.0.9",
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
+    "bip32-path": "^0.4.2",
+    "crypto-js": "^3.1.9-1",
+    "decimal.js": "^10.0.1",
+    "dot-prop-immutable": "^1.4.0",
+    "eitherx": "^1.0.2",
+    "electron-context-menu": "^0.10.0",
+    "electron-store": "^2.0.0",
+    "electron-updater": "^2.21.10",
+    "eosio-signing-request": "^1.1.3",
+    "eosjs": "16.0.8",
+    "eosjs2": "git://github.com/aaroncox/eosjs2",
+    "fast-sha256": "^1.1.1",
+    "fiojs": "^1.1.1",
+    "history": "^4.7.2",
+    "humanize-duration": "^3.20.1",
+    "i": "^0.3.6",
+    "i18next": "19.4.1",
+    "i18next-electron-language-detector": "^0.0.10",
+    "i18next-sprintf-postprocessor": "^0.2.2",
+    "i18next-sync-fs-backend": "^1.1.1",
+    "node-notifier": "^5.4.3",
+    "p-queue": "^3.0.0",
+    "pretty-bytes": "^5.1.0",
+    "qrcode": "^1.4.4",
+    "react": "^16.4.0",
+    "react-blockies": "^1.4.0",
+    "react-debounce-render": "^5.0.0",
+    "react-dom": "^16.4.0",
+    "react-hot-loader": "^4.3.0",
+    "react-i18next": "11.3.4",
+    "react-idle-timer": "^4.0.7",
+    "react-input-range": "^1.3.0",
+    "react-json-view": "^1.17.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-sparklines": "^1.7.0",
+    "react-timeago": "^4.1.9",
+    "redux": "^4.0.0",
+    "redux-electron-ipc": "^1.1.12",
+    "redux-electron-store": "^0.6.2",
+    "redux-persist": "^5.10.0",
+    "redux-persist-electron-storage": "^1.1.2",
+    "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.13.3"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -261,58 +184,11 @@
     "webpack-merge": "^4.1.2",
     "webpack-node-externals": "^1.7.2"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.7.0",
-    "asn1-ber": "^1.0.9",
-    "axios": "^0.19.0",
-    "babel-polyfill": "^6.26.0",
-    "bip32-path": "^0.4.2",
-    "crypto-js": "^3.1.9-1",
-    "decimal.js": "^10.0.1",
-    "dot-prop-immutable": "^1.4.0",
-    "eitherx": "^1.0.2",
-    "electron-context-menu": "^0.10.0",
-    "electron-store": "^2.0.0",
-    "electron-updater": "^2.21.10",
-    "eosio-signing-request": "^1.1.3",
-    "eosjs": "16.0.8",
-    "eosjs2": "git://github.com/aaroncox/eosjs2",
-    "fast-sha256": "^1.1.1",
-    "fiojs": "^1.1.1",
-    "history": "^4.7.2",
-    "humanize-duration": "^3.20.1",
-    "i": "^0.3.6",
-    "i18next": "19.4.1",
-    "i18next-electron-language-detector": "^0.0.10",
-    "i18next-sprintf-postprocessor": "^0.2.2",
-    "i18next-sync-fs-backend": "^1.1.1",
-    "node-notifier": "^5.4.3",
-    "p-queue": "^3.0.0",
-    "pretty-bytes": "^5.1.0",
-    "qrcode": "^1.4.4",
-    "react": "^16.4.0",
-    "react-blockies": "^1.4.0",
-    "react-debounce-render": "^5.0.0",
-    "react-dom": "^16.4.0",
-    "react-hot-loader": "^4.3.0",
-    "react-i18next": "11.3.4",
-    "react-idle-timer": "^4.0.7",
-    "react-input-range": "^1.3.0",
-    "react-json-view": "^1.17.0",
-    "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.9",
-    "react-sparklines": "^1.7.0",
-    "react-timeago": "^4.1.9",
-    "redux": "^4.0.0",
-    "redux-electron-ipc": "^1.1.12",
-    "redux-electron-store": "^0.6.2",
-    "redux-persist": "^5.10.0",
-    "redux-persist-electron-storage": "^1.1.2",
-    "redux-thunk": "^2.3.0",
-    "regenerator-runtime": "^0.13.3"
-  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "devEngines": {
     "node": ">=7.x",
     "npm": ">=4.x",
