@@ -54,3 +54,6 @@ main.js.map
 .idea
 npm-debug.log.*
 .env
+
+all-certs.p12
+embedded.provisionprofile
