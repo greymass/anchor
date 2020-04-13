@@ -89,12 +89,12 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
 }
 
 // crash reporter for failures (NYI)
-crashReporter.start({
-  productName: 'anchor',
-  companyName: '',
-  submitURL: '',
-  uploadToServer: false
-});
+// crashReporter.start({
+//   productName: 'anchor',
+//   companyName: '',
+//   submitURL: '',
+//   uploadToServer: false
+// });
 
 // main exceptions to electron-log
 app.on('uncaughtException', (error) => {
