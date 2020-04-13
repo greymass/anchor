@@ -79,6 +79,8 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
 
+  log.info('anchor: starting with development mode settings')
+
   const p = path.join(resourcePath, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 
@@ -116,7 +118,7 @@ if (!lock) {
 
 // main start
 app.on('ready', async () => {
-  log.info('app: ready');
+  log.info('anchor: ready');
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     log.info('development mode enabled');
     await installExtensions();
@@ -150,7 +152,7 @@ app.on('ready', async () => {
 });
 
 app.on('window-all-closed', () => {
-  log.info('app: window-all-closed');
+  log.info('anchor: window-all-closed');
   app.quit();
 });
 app.on('open-url', (e, url) => {
@@ -161,11 +163,11 @@ app.on('open-url', (e, url) => {
   }
 });
 app.on('before-quit', () => {
-  log.info('app: before-quit');
+  log.info('anchor: before-quit');
   pHandler.close();
 });
 app.on('will-quit', () => { log.info('app: will-quit'); });
-app.on('quit', () => { log.info('app: quit'); });
+app.on('quit', () => { log.info('anchor: quit'); });
 
 const initManager = (route = '/', closable = true) => {
   if (process.platform === 'win32' || process.platform === 'linux') {
