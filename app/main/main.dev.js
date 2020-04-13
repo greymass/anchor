@@ -167,7 +167,13 @@ app.on('before-quit', () => {
   log.info('anchor: before-quit');
   pHandler.close();
 });
-app.on('will-quit', () => { log.info('app: will-quit'); });
+app.on('will-quit', () => {
+  // If this is a development version, always unregister protocols
+  if (process.env.NODE_ENV === 'development') {
+    disableSigningRequests();
+  }
+  log.info('anchor: will-quit');
+});
 app.on('quit', () => { log.info('anchor: quit'); });
 
 const initManager = (route = '/', closable = true) => {
