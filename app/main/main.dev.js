@@ -50,26 +50,31 @@ console.log = (...args) => {
   cl(...args);
 };
 
-log.info('app: initializing');
-// TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
-protocol.registerSchemesAsPrivileged([
-  {
-    scheme: 'eosio',
-    privileges: {
-      standard: true,
-      secure: true,
-      supportFetchAPI: true
-    },
-  },
-  {
-    scheme: 'esr',
-    privileges: {
-      standard: true,
-      secure: true,
-      supportFetchAPI: true
-    },
-  },
-]);
+log.info('anchor: initializing');
+
+// log.info(settings)
+// if (settings.allowSigningRequests) {
+//   // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
+//   log.info('anchor: registering URL schemes');
+//   protocol.registerSchemesAsPrivileged([
+//     {
+//       scheme: 'eosio',
+//       privileges: {
+//         standard: true,
+//         secure: true,
+//         supportFetchAPI: true
+//       },
+//     },
+//     {
+//       scheme: 'esr',
+//       privileges: {
+//         standard: true,
+//         secure: true,
+//         supportFetchAPI: true
+//       },
+//     },
+//   ]);
+// }
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
