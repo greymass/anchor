@@ -3,11 +3,11 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/greymass/anchor/master/LICENSE)
 ![downloads](https://img.shields.io/github/downloads/greymass/anchor/total.svg)
 
-![Anchor Logo](https://raw.githubusercontent.com/greymass/anchor/staging/app/renderer/assets/images/anchor-full-blue.svg?sanitize=true)
+![Anchor Logo](https://raw.githubusercontent.com/greymass/anchor/master/internals/img/anchor.png)
 
 # Anchor - A feature rich, open-source, EOSIO Wallet
 
-![Anchor Screenshot 1](https://raw.githubusercontent.com/greymass/anchor/master/internals/img/anchor-wallet-ss1.png)
+![Anchor Screenshot 1](https://raw.githubusercontent.com/greymass/anchor/master/internals/img/anchor-ss1.png)
 
 ### Features
 
