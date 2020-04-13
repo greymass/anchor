@@ -119,13 +119,14 @@ if (!lock) {
 // main start
 app.on('ready', async () => {
   log.info('anchor: ready');
+  const { settings } = store.getState();
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     log.info('development mode enabled');
+    // install devtool extensions
     await installExtensions();
   }
 
   // Initialize the state of signing requests
-  const { settings } = store.getState();
   if (settings.allowSigningRequests) {
     enableSigningRequests();
     log.info('signing requests');
