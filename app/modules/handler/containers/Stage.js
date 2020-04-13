@@ -345,12 +345,13 @@ class PromptStage extends Component<Props> {
           onClick={onClose}
         />
       );
-    } else if (!awaitingDevice && hasBroadcast) {
+    } else if (!awaitingDevice && (hasForegroundCallback || hasBroadcast)) {
       stage = (
         <PromptStageSuccess
           blockchain={blockchain}
           callbacking={callbacking}
           prompt={prompt}
+          hasBroadcast={hasBroadcast}
           hasForegroundCallback={hasForegroundCallback}
           settings={settings}
         />
@@ -431,7 +432,7 @@ class PromptStage extends Component<Props> {
           />
         );
       }
-      if (!canBroadcast && hasCallback && !hasIssuedCallback) {
+      if (!canBroadcast && hasCallback && hasForegroundCallback && !hasIssuedCallback) {
         stage = (
           <PromptStageCallback
             blockchain={blockchain}
@@ -448,6 +449,7 @@ class PromptStage extends Component<Props> {
       if (!canBroadcast && hasCallback && hasIssuedCallback) {
         stage = (
           <PromptStageSuccess
+            hasBroadcast={hasIssuedCallback || hasBroadcast}
             settings={settings}
           />
         );
