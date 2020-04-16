@@ -97,7 +97,7 @@ const knownChains = [
     chainId: 'd5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86',
     keyPrefix: 'EOS',
     name: 'BOS',
-    node: 'https://hapi.bos.eosrio.io',
+    node: 'https://bos.eosn.io',
     symbol: 'BOS',
     testnet: false
   },
@@ -124,7 +124,7 @@ const knownChains = [
     chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
     keyPrefix: 'EOS',
     name: 'CryptoKylin (EOS Testnet)',
-    node: 'https://kylin.eoscanada.com:443',
+    node: 'https://kylin.eosn.io',
     symbol: 'EOS',
     testnet: true
   },
@@ -203,7 +203,7 @@ const knownChains = [
     chainId: 'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422',
     keyPrefix: 'EOS',
     name: 'MEET.ONE',
-    node: 'https://fullnode.meet.one',
+    node: 'https://meetone.eosn.io',
     symbol: 'MEETONE',
     testnet: false
   },
