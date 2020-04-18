@@ -65,9 +65,9 @@ If you'd rather build the application yourself, please ensure you have nodejs/np
 git clone https://github.com/greymass/anchor.git anchor
 cd anchor
 nvm use v13
-npm install --frozen-lockfile
+yarn --frozen-lockfile
 cd app
-npm install --frozen-lockfile
+yarn --frozen-lockfile
 cd ..
 ```
 
@@ -87,9 +87,9 @@ After the build completes, the files will be located in the `releases` folder wi
 git clone https://github.com/greymass/anchor.git anchor
 cd anchor
 nvm use v13
-npm install --frozen-lockfile
+yarn --frozen-lockfile
 cd app
-npm install --frozen-lockfile
+yarn --frozen-lockfile
 cd ..
 npm run dev
 ```
