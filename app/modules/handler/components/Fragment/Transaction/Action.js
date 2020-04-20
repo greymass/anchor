@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Button, Icon, Label, List, Segment } from 'semantic-ui-react';
+import { Button, Divider, Header, Icon, Label, List, Segment } from 'semantic-ui-react';
 import { get } from 'dot-prop-immutable';
-import { attempt, isError, isObject } from 'lodash';
+import { attempt, isArray, isError, isObject } from 'lodash';
 
 import PromptFragmentTransactionActionFuel from './Action/Fuel';
 
@@ -34,8 +34,27 @@ class PromptFragmentTransactionAction extends Component<Props> {
       );
     }
     return (
-      <div key={index}>
-        <Segment attached="top" color="blue" inverted>
+      <Segment basic key={index}>
+        {(total > 1)
+          ? (
+            <Divider horizontal size="large">
+              <Header>
+                Action {index + 1} of {total}
+              </Header>
+            </Divider>
+          )
+          : false
+        }
+        <Segment
+          basic
+          secondary
+          style={{
+            borderRadius: '.28571429rem',
+          }}
+        >
+          <Divider horizontal style={{ marginTop: 0 }}>
+            Contract Information
+          </Divider>
           <Label basic>
             {action.account}
             <Icon
@@ -44,16 +63,14 @@ class PromptFragmentTransactionAction extends Component<Props> {
             />
             {action.name}
           </Label>
-          <Label color="blue">
-            Action {index + 1} of {total}
-          </Label>
-        </Segment>
-        <Segment attached secondary>
-          <List divided relaxed size="large">
+          <Divider horizontal>Transaction Data</Divider>
+          <List relaxed>
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false);
+              const isList = isArray(action.data[k]);
               const isJSON = (!isError(attempt(JSON.parse, action.data[k])));
               const isData = isObject(action.data[k]);
+              const isEmpty = !(action.data[k]);
               return (
                 <List.Item key={k}>
                   {(enableWhitelist)
@@ -77,44 +94,74 @@ class PromptFragmentTransactionAction extends Component<Props> {
                     : false
                   }
                   <List.Content>
-                    {(!isError(attempt(JSON.parse, k)))
-                      ? JSON.stringify(JSON.parse(k))
-                      : String(k)
-                    }
+                    <Header size="small">
+                      {(!isError(attempt(JSON.parse, k)))
+                        ? JSON.stringify(JSON.parse(k))
+                        : String(k)
+                      }
+                    </Header>
                     <List.Header
                       style={{ marginTop: '0.25em' }}
                     >
-                      {(isJSON)
-                        ? JSON.stringify(JSON.parse(action.data[k]))
-                        : false
-                      }
-                      {(isData)
-                        ? JSON.stringify(action.data[k])
-                        : false
-                      }
-                      {(!isData && !isJSON)
-                        ? String(action.data[k])
-                        : false
-                      }
+                      <Segment
+                        disabled={isEmpty}
+                        style={{
+                          overflowWrap: 'break-word'
+                        }}
+                      >
+                        {(isJSON)
+                          ? JSON.stringify(JSON.parse(action.data[k]))
+                          : false
+                        }
+                        {(isList)
+                          ? action.data[k].map(i => (
+                            <div
+                              style={{
+                                border: '1px solid rgba(34,36,38,.15)',
+                                borderRadius: '2px',
+                                display: 'inline-block',
+                                margin: '0 0.65em 0.5em 0',
+                                padding: '0.5em',
+                              }}
+                            >
+                              {i}
+                            </div>
+                          ))
+                          : false
+                        }
+                        {(isData && !isList)
+                          ? JSON.stringify(action.data[k])
+                          : false
+                        }
+                        {(isEmpty)
+                          ? <span style={{ color: '' }}>No Data</span>
+                          : false
+                        }
+                        {(!isData && !isJSON)
+                          ? String(action.data[k])
+                          : false
+                        }
+                      </Segment>
                     </List.Header>
                   </List.Content>
                 </List.Item>
               );
             })}
           </List>
-        </Segment>
-        <Segment attached="bottom">
-          <Label color="white" basic pointing="right">
+          <Divider horizontal>
             Signatures Required
-          </Label>
-          {action.authorization.map((auth, idx) => (
-            <Label color="blue" key={`${idx}@${auth.actor}@${auth.permission}`}>
-              <Icon name="pencil" />
+          </Divider>
+          {action.authorization.map((auth) => (
+            <Label
+              basic
+              key={`${auth.actor}@${auth.permission}`}
+              size="large"
+            >
               {auth.actor}@{auth.permission}
             </Label>
           ))}
         </Segment>
-      </div>
+      </Segment>
     );
   }
 }
