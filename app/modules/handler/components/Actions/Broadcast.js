@@ -29,7 +29,7 @@ class PromptActionBroadcast extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                Broadcast Transaction
+                {t('handler_broadcast_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
