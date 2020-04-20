@@ -1,0 +1,7 @@
+{
+  "handler_broadcast_header": "Broadcast Transaction",
+  "handler_callback_header": "Submit Callback",
+  "handler_cancel": "Cancel",
+  "handler_close": "Close",
+  "handler_download_header": "Save Unsigned Transaction"
+}
