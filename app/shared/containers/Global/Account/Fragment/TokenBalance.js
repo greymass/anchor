@@ -3,6 +3,7 @@ import { get } from 'dot-prop-immutable';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
