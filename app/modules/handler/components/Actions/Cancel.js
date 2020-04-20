@@ -20,7 +20,7 @@ class PromptActionCancel extends Component<Props> {
               <Header.Subheader>
 
               </Header.Subheader>
-              Cancel
+              {t('handler_cancel')}
             </Header.Content>
           </Header>
         )}
