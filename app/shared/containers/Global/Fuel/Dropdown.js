@@ -84,7 +84,7 @@ class GlobalFuelDropdown extends Component<Props> {
               }}
             />
             <Segment basic textAlign="center">
-              <p>Enable this feature to take advantage transactions powered by Greymass Fuel.</p>
+              <p>Enable this feature to take advantage of transactions powered by Greymass Fuel.</p>
                 <p>
                   More info:
                   {' '}
