@@ -161,7 +161,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       return true;
     }
 
-    if (!quantity || quantity === '' || quantity.includes('0.0000 ')) {
+    if (!quantity || quantity === '') {
       return true;
     }
 
