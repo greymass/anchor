@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
@@ -22,6 +23,7 @@ class PromptStageReview extends Component<Props> {
       settings,
       shouldBroadcast,
       system,
+      t,
       wallet,
       whitelist,
     } = this.props;
@@ -55,13 +57,21 @@ class PromptStageReview extends Component<Props> {
         </Grid.Column>
         <Grid.Column width={10}>
           <Header>
-            Actions to Perform
+            {t('handler_containers_stage_review_header')}
             <Header.Subheader>
-              Listed below are the actions to be performed. If you are unsure of what this request does,
-              {' '}
-              <a onClick={onShareLink} style={{ cursor: 'pointer' }}>
-                use a URI link to ask those you trust
-              </a>.
+              <div dangerouslySetInnerHTML={{
+                __html: t(
+                  'handler_containers_stage_review_paragraph',
+                  {
+                    linkComponent: ReactDOMServer.renderToStaticMarkup(
+                      <a onClick={onShareLink} style={{ cursor: 'pointer' }}>
+                        {t('handler_containers_stage_review_link')}
+                      </a>
+                    )
+                  }
+                )
+              }} />
+
             </Header.Subheader>
           </Header>
           {(loading)
@@ -106,6 +116,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageReview);
