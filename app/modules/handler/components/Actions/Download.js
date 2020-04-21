@@ -48,7 +48,7 @@ class PromptActionDownload extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                {t('handler_download_header')}
+                {t('handler_action_download_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
