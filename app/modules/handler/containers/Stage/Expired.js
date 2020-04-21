@@ -8,7 +8,7 @@ import { Grid, Header, Icon, Segment } from 'semantic-ui-react';
 class PromptStageExpired extends Component<Props> {
   render() {
     const {
-      uri,
+      t,
     } = this.props;
     return (
       <Grid>
@@ -17,9 +17,9 @@ class PromptStageExpired extends Component<Props> {
             <Header size="large">
               <Icon name="warning sign" />
               <Header.Content>
-                This signing request has expired!
+                {t('handler_containers_stage_expired_header')}
                 <Header.Subheader>
-                  Each request from the moment initiated has a limited lifetime to execute.
+                  {t('handler_containers_stage_expired_subheader')}
                 </Header.Subheader>
               </Header.Content>
             </Header>
@@ -37,6 +37,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageExpired);

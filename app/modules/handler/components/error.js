@@ -20,4 +20,4 @@ class ErrorMessage extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(ErrorMessage);
+export default withTranslation('handler')(ErrorMessage);

@@ -146,4 +146,4 @@ class PromptHeader extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptHeader);
+export default withTranslation('handler')(PromptHeader);
