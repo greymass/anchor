@@ -20,9 +20,9 @@ class PromptActionBroadcast extends Component<Props> {
           >
             <Icon name="redo" />
             <Header.Content>
-              Recreate
+              {t('handler_recreate_header')}
               <Header.Subheader style={{ color: '#ececec', fontWeight: 'bold' }}>
-                Transaction
+                {t('handler_recreate_subheader')}
               </Header.Subheader>
             </Header.Content>
           </Header>
