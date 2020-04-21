@@ -1,9 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Button, Header, Icon, Image, Label, List, Segment } from 'semantic-ui-react';
-import { get } from 'dot-prop-immutable';
-import { attempt, isError } from 'lodash';
+import { Icon, Image, Label, Segment } from 'semantic-ui-react';
 
 import FuelFullLogo from '../../../../../../renderer/assets/images/fuel/greymassfuel-horizontal.png';
 
@@ -13,6 +11,7 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
       action,
       index,
       total,
+      t,
     } = this.props;
     return (
       <div key={index}>
@@ -26,7 +25,7 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
             {action.name}
           </Label>
           <Label>
-            Action {index + 1} of {total}
+            {t('handler_fuel_label_one', { index: index + 1, total })}
           </Label>
           <Image
             centered
