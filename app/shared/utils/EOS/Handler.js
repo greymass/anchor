@@ -94,9 +94,9 @@ export default class EOSHandler {
       const abi = store.get(escapedAccount);
       // If local cache is not stale, cache it within eosjs
       if (abi.ts > expires) {
-        this.api.cachedAbis.set(abi.account_name, abi)
+        this.api.cachedAbis.set(abi.account_name, abi);
       }
-    })
+    });
   }
   getAuthorityProvider() {
     const { rpc } = this;
@@ -177,7 +177,6 @@ export default class EOSHandler {
     // otherwise return processed tx like the normal transact does
     return processed;
   }
-
   // return a transaction like v16 would
   createTransaction = async (tx, combinedOptions = [], signatures = []) => {
     let transaction = tx;
@@ -222,12 +221,12 @@ export default class EOSHandler {
       };
     }
     if (!this.hasRequiredTaposFields(transaction)) {
-        throw new Error('Required configuration or TAPOS fields are not present');
+      throw new Error('Required configuration or TAPOS fields are not present');
     }
     const abis = await this.api.getTransactionAbis(tx);
     tx = { ...tx, actions: await this.api.serializeActions(tx.actions) };
     const serializedTransaction = this.api.serializeTransaction(tx);
-    let pushTransactionArgs  = { serializedTransaction, signatures: [] };
+    let pushTransactionArgs = { serializedTransaction, signatures: [] };
     if (sign) {
       const availableKeys = await this.signatureProvider.getAvailableKeys();
       pushTransactionArgs = await this.signatureProvider.sign({
@@ -313,7 +312,6 @@ export default class EOSHandler {
     return abi;
   }
   getRequiredAbis = async (request) => {
-    const requiredAbis = request.getRequiredAbis();
     const abis = new Map();
     await Promise.all(request.getRequiredAbis().map(async (account) => {
       abis.set(account, (await this.getAbi(account)).abi);
@@ -376,17 +374,12 @@ const convertSignatures = (sigs) => {
   if (!Array.isArray(sigs)) {
     sigs = [sigs];
   }
-
   sigs = [].concat.apply([], sigs);
-
   for (let i = 0; i < sigs.length; i++) {
-    const sig = sigs[i]
-    console.log(sig, i, sigs, sig.length)
+    const sig = sigs[i];
     if (typeof sig === 'string' && sig.length === 130) {
-      sigs[i] = ecc.Signature.from(sig).toString()
-      console.log(sigs)
+      sigs[i] = ecc.Signature.from(sig).toString();
     }
   }
-
-  return sigs
-}
+  return sigs;
+};
