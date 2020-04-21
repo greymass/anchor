@@ -26,9 +26,9 @@ class PromptActionShare extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                Questions?
+                {t('handler_share_subheader')}
               </Header.Subheader>
-              Share Request
+              {t('handler_share_header')}
             </Header.Content>
           </Header>
         </Label>
