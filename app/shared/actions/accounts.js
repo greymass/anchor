@@ -494,7 +494,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                 payload: {
                   account_name: account,
                   contract,
-                  precision: formatPrecisions(results),
+                  precision: formatPrecisions(results.data, connection),
                   symbol,
                   tokens: formatBalances(results.data, symbol)
                 }
@@ -510,8 +510,10 @@ export function getCurrencyBalance(account, requestedTokens = false) {
 }
 
 // Expects array of balance strings, e.g. ['1.2345 EOS']
-function formatPrecisions(balances) {
-  const precision = {};
+function formatPrecisions(balances, connection = undefined) {
+  const precision = {
+    [connection.chainSymbol]: connection.tokenPrecision
+  };
   for (let i = 0; i < balances.length; i += 1) {
     const [amount, symbol] = balances[i].split(' ');
     precision[symbol] = getSuffixLength(amount);
