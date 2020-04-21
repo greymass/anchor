@@ -448,7 +448,7 @@ export function templateURI(blockchain, wallet) {
     dispatch({
       type: types.SYSTEM_ESRURIBUILD_PENDING,
     });
-    const { prompt, settings } = getState();
+    const { connection, prompt, settings } = getState();
     const { uri } = prompt;
     const authorization = {
       actor: wallet.account,
@@ -460,14 +460,6 @@ export function templateURI(blockchain, wallet) {
       httpEndpoint: blockchain.node,
       sign: false,
     }, false, true);
-    const head = (await EOS.getInfo(true)).head_block_num;
-    const block = await EOS.getBlock(head - 20);
-    // Force 1hr expiration of txs, shouldn't hit
-    block.expire_seconds = 60 * 60 * 1;
-    if (wallet.mode === 'watch') {
-      // Increase to 2hr for watch wallets
-      block.expire_seconds = 60 * 60 * 2;
-    }
     try {
       // Setup decompression
       const opts = {
@@ -481,9 +473,10 @@ export function templateURI(blockchain, wallet) {
       };
       // Interpret the Signing Request
       const request = SigningRequest.from(uri, opts);
-      // Form the transaction
+      // Retrieve ABIs for this request
       const abis = await request.fetchAbis();
-      const resolved = request.resolve(abis, authorization, block);
+      // Resolve the transaction
+      const resolved = request.resolve(abis, authorization, await EOS.getTransactionHeader(connection.expireSeconds));
       const detectedForbiddenActions = checkRequest(resolved);
       if (detectedForbiddenActions && detectedForbiddenActions.length > 0) {
         if (settings.allowDangerousTransactions) {
