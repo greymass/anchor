@@ -6,20 +6,17 @@ import compose from 'lodash/fp/compose';
 import { Button, Form, Grid, Header, Icon, Segment } from 'semantic-ui-react';
 
 import DangerLink from '../../../../shared/containers/Global/DangerLink';
-import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
 
 class PromptStageCallback extends Component<Props> {
   render() {
     const {
-      blockchain,
-      callbacking,
       prompt,
       settings,
       singleColumn,
+      t,
     } = this.props;
     const {
       signed,
-      tx,
     } = prompt;
     const { signatures } = signed;
     return (
@@ -29,9 +26,9 @@ class PromptStageCallback extends Component<Props> {
           : (
             <Grid.Column width={6}>
               <Header>
-                Transaction Signed
+                {t('handler_containers_stage_callback_grid_header_one')}
                 <Header.Subheader>
-                  The signature below has been created.
+                  {t('handler_containers_stage_callback_grid_subheader_one')}
                 </Header.Subheader>
               </Header>
               <Form>
@@ -51,12 +48,12 @@ class PromptStageCallback extends Component<Props> {
             <Header>
               <Icon name="info circle" />
               <Header.Content>
-                Next Steps
+                {t('handler_containers_stage_callback_grid_subheader_two')}
               </Header.Content>
             </Header>
             <Segment size="large">
               <p>
-                Click the link below to complete this transaction with the originator of the signing request.
+                {t('handler_containers_stage_callback_grid_paragraph_one')}
               </p>
               <p>
                 <DangerLink
@@ -69,7 +66,7 @@ class PromptStageCallback extends Component<Props> {
                 <DangerLink
                   content={(
                     <Button
-                      content="Open Link in Web Browser"
+                      content={t('handler_containers_stage_callback_grid_button')}
                       icon="external"
                       primary
                     />
@@ -79,10 +76,10 @@ class PromptStageCallback extends Component<Props> {
                 />
               </p>
               <p>
-                Once you have visited this URL, you can close this window.
+                {t('handler_containers_stage_callback_grid_paragraph_two')}
               </p>
               <p>
-                <strong>If you do not open this link, your transaction may not complete.</strong>
+                <strong>{t('handler_containers_stage_callback_grid_paragraph_three')}</strong>
               </p>
             </Segment>
           </Segment>
