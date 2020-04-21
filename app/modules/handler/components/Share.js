@@ -97,4 +97,4 @@ class PromptShare extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptShare);
+export default withTranslation('handler')(PromptShare);

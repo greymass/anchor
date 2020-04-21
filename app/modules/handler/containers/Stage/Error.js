@@ -8,7 +8,8 @@ import { Grid, Header, Icon, Message, Segment } from 'semantic-ui-react';
 class PromptStageError extends Component<Props> {
   render() {
     const {
-      error
+      error,
+      t,
     } = this.props;
     return (
       <Grid centered>
@@ -17,16 +18,16 @@ class PromptStageError extends Component<Props> {
             <Header icon size="large">
               <Icon name="warning sign" />
               <Header.Content style={{ marginTop: '1em' }}>
-                Error processing request
+                {t('handler_containers_stage_error_header')}
                 <Header.Subheader>
-                  Please try again. If the problem persists, please contact the dApp developer or Greymass for support.
+                  {t('handler_containers_stage_error_subheader')}
                 </Header.Subheader>
               </Header.Content>
             </Header>
             {(error)
               ? (
                 <Message
-                  header="Details"
+                  header={t('handler_containers_stage_error_message')}
                   content={error}
                   error
                 />
@@ -47,6 +48,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handlers'),
   connect(mapStateToProps)
 )(PromptStageError);
