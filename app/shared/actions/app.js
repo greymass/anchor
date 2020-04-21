@@ -1,5 +1,6 @@
 import * as types from './types';
 import eos from './helpers/eos';
+import { httpQueue, httpClient } from '../utils/httpClient';
 
 export function downloadProgress(progress) {
   return (dispatch: () => void) => {
@@ -15,17 +16,10 @@ export const initApp = () => (dispatch: () => void) => dispatch({
 });
 
 export function getConstants() {
-  return (dispatch: () => void, getState) => {
+  return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_GETCONSTANTS_PENDING
     });
-    const { connection } = getState();
-    // Don't retrieve if we're not on mainnet
-    if (connection.chainKey !== 'eos-mainnet') {
-      return dispatch({
-        type: types.SYSTEM_GETCONSTANTS_FAILURE
-      });
-    }
 
     const query = {
       json: true,
@@ -34,28 +28,33 @@ export function getConstants() {
       table: 'constants',
       limit: 1000,
     };
-    eos(connection).getTableRows(query).then((results) => {
-      const { rows } = results;
-      const data = rows.reduce((map, { key, value }) => {
-        let parsed = value;
-        try {
-          parsed = JSON.parse(value);
-        } catch (e) {
-          // no catch
-        }
-        return {
-          ...map,
-          [key]: parsed
-        };
-      }, {});
-      return dispatch({
-        type: types.SYSTEM_GETCONSTANTS_SUCCESS,
-        payload: { data }
-      });
-    }).catch((err) => dispatch({
-      type: types.SYSTEM_GETCONSTANTS_FAILURE,
-      payload: { err },
-    }));
+
+    httpQueue.add(() =>
+      httpClient
+        .post('https://eos.greymass.com/v1/chain/get_table_rows', query)
+        .then((response) => {
+          const { rows } = response.data;
+          const data = rows.reduce((map, { key, value }) => {
+            let parsed = value;
+            try {
+              parsed = JSON.parse(value);
+            } catch (e) {
+              // no catch
+            }
+            return {
+              ...map,
+              [key]: parsed
+            };
+          }, {});
+          return dispatch({
+            type: types.SYSTEM_GETCONSTANTS_SUCCESS,
+            payload: { data }
+          });
+        })
+        .catch((err) => dispatch({
+          type: types.SYSTEM_GETCONSTANTS_FAILURE,
+          payload: { err },
+        })));
   };
 }
 
