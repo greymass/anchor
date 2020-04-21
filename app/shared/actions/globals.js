@@ -59,10 +59,13 @@ export function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS
 
 export function getRamStats() {
   return (dispatch: () => void, getState) => {
+    const { connection } = getState();
+    if (!connection.stakedResources) {
+      return;
+    }
     dispatch({
       type: types.GET_RAMSTATS_REQUEST
     });
-    const { connection } = getState();
     const query = {
       scope: 'eosio',
       code: 'eosio',
