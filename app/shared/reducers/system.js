@@ -34,6 +34,7 @@ export default function system(state = {}, action) {
 
   const accountField = `${requestName}_LAST_ACCOUNT`;
   const contractField = `${requestName}_LAST_CONTRACT`;
+  const dataField = `${requestName}_DATA`;
   const errField = `${requestName}_LAST_ERROR`;
   const nameBidField = `${requestName}_LAST_BID`;
   const progressField = `${requestName}_PROGRESS`;
@@ -79,6 +80,10 @@ export default function system(state = {}, action) {
       if (connection.signMethod === 'ledger') {
         newState = set(newState, awaitingDeviceField, (requestState === 'PENDING'));
       }
+    }
+    // Attach any returned data
+    if (action.payload.data) {
+      newState = set(newState, dataField, action.payload.data);
     }
     // Attach any returned transactions
     if (action.payload.tx) {
