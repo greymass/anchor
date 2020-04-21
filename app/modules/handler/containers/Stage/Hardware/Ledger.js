@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import ReactJson from 'react-json-view';
-import { Button, Dimmer, Loader, Grid, Header, Icon, Label, Message, Modal, Placeholder, Segment } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 
 import PromptControls from '../../../components/Review/Controls';
 import * as SettingsActions from '../../../../../shared/actions/settings';
@@ -22,6 +21,7 @@ class PromptStageHardwareLedger extends Component<Props> {
       settings,
       status,
       wallet,
+      t,
     } = this.props;
     const {
       chainId,
@@ -39,9 +39,9 @@ class PromptStageHardwareLedger extends Component<Props> {
         </Grid.Column>
         <Grid.Column width={10}>
           <Header>
-            Device not ready...
+            {t('handler_containers_stage_hardware_ledger_header')}
             <Header.Subheader>
-              Please follow the steps below to connect your hardware signing device.
+              {t('handler_containers_stage_hardware_ledger_subheader')}
             </Header.Subheader>
           </Header>
           <ToolsHardwareLedgerStatus
@@ -76,6 +76,6 @@ function mapDispatchToProps(dispatch) {
 
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps, mapDispatchToProps)
 )(PromptStageHardwareLedger);
