@@ -38,6 +38,7 @@ class OverviewSidebarContainer extends Component<Props> {
         </Header>
         <GlobalSidebarUpdate
           constants={constants}
+          settings={settings}
         />
         <OverviewSidebarBackupContainer />
         <GlobalSidebarPrompt
