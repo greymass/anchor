@@ -248,11 +248,15 @@ export function processLoadedAccount(chainId, account, results) {
     } = getState();
     // get currency balances
     dispatch(getCurrencyBalance(account));
-    // get delegated balances
-    dispatch(getDelegatedBalances(account));
+    if (connection.stakedResources !== false) {
+      // get delegated balances
+      dispatch(getDelegatedBalances(account));
+    }
     // get rex balances
-    dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
-    dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
+    if (connection.supportedContracts.includes('rex')) {
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
+      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
+    }
     // PATCH - Force in self_delegated_bandwidth if it doesn't exist
     const modified = Object.assign({}, results);
     if (!modified.self_delegated_bandwidth) {
