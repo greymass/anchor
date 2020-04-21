@@ -5,10 +5,13 @@ const defaultContract = 'delphioracle';
 
 export function getPriceFeed(scope = 'eosusd') {
   return (dispatch: () => void, getState) => {
+    const { connection } = getState();
+    if (!connection.supportedContracts.includes('delphioracle')) {
+      return;
+    }
     dispatch({
       type: types.SYSTEM_PRICEFEEDUSD_PENDING
     });
-    const { connection } = getState();
     const query = {
       json: true,
       code: defaultContract,
