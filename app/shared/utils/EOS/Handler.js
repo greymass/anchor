@@ -208,7 +208,6 @@ export default class EOSHandler {
     };
   }
   customTransact = async (transaction, { broadcast = true, sign = true, blocksBehind, expireSeconds }) => {
-    const info = await this.rpc.get_info();
     let tx = transaction;
     if (
       !this.hasRequiredTaposFields(transaction)
@@ -216,11 +215,11 @@ export default class EOSHandler {
       && expireSeconds
     ) {
       tx = {
-        ...transactionHeader(info.last_irreversible_block_id, expireSeconds),
+        ...(await this.getTransactionHeader(expireSeconds)),
         ...transaction
       };
     }
-    if (!this.hasRequiredTaposFields(transaction)) {
+    if (!this.hasRequiredTaposFields(tx)) {
       throw new Error('Required configuration or TAPOS fields are not present');
     }
     const abis = await this.api.getTransactionAbis(tx);
