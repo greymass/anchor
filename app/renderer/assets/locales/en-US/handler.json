@@ -3,5 +3,13 @@
   "handler_callback_header": "Submit Callback",
   "handler_cancel": "Cancel",
   "handler_close": "Close",
-  "handler_download_header": "Save Unsigned Transaction"
+  "handler_download_header": "Save Unsigned Transaction",
+  "handler_identity_header": "Prove Identity",
+  "handler_recreate_header": "Recreate",
+  "handler_recreate_subheader": "Transaction",
+  "handler_share_subheader": "Questions?",
+  "handler_share_header": "Share Request",
+  "handler_sign_header": "Sign Transaction",
+  "handler_sign_broadcast_header": "Sign & Broadcast Transaction",
+  "handler_unlock_header": "Unlock Wallet"
 }
