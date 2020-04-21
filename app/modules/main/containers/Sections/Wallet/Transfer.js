@@ -21,21 +21,29 @@ import WalletPanelFormTransferSend from '../../../../../shared/components/Wallet
 
 import { clearSystemState } from '../../../../../shared/actions/system/systemstate';
 import { getActions, getContractHash } from '../../../../../shared/actions/accounts';
-import { transfer } from '../../../../../shared/actions/transfer';
+import { transfer, transferSetAsset } from '../../../../../shared/actions/transfer';
 import { useWallet } from '../../../../../shared/actions/wallets';
 
 class WalletTransferContainer extends Component<Props> {
-  setAsset = (asset, amount) => this.refs.transfer.wrappedInstance.updateState({
-    asset,
-    quantity: `${amount} ${asset}`,
-    quantitySet: Date.now(),
-  })
+  state = {
+    isConfirming: false
+  }
+  isConfirming = (value) => this.setState({ isConfirming: value })
+  onClose = () => {
+    this.props.actions.clearSystemState();
+    this.setState({
+      isConfirming: false
+    });
+  }
   swapAccount = (e, { value }) => {
     const { actions } = this.props;
     const { chainId, account, authorization } = value;
     actions.useWallet(chainId, account, authorization);
   }
   render() {
+    const {
+      isConfirming
+    } = this.state;
     const {
       actions,
       app,
@@ -47,7 +55,6 @@ class WalletTransferContainer extends Component<Props> {
       system,
       wallet,
     } = this.props;
-
 
     if (!balances) return false;
 
@@ -78,7 +85,7 @@ class WalletTransferContainer extends Component<Props> {
       <React.Fragment>
         <Grid stackable>
           <Grid.Row>
-            <Grid.Column width={(hasTransaction) ? 16 : 10}>
+            <Grid.Column width={(hasTransaction || isConfirming) ? 16 : 10}>
               <Segment color="blue" piled>
                 <Header>
                   Transfer Tokens
@@ -102,25 +109,25 @@ class WalletTransferContainer extends Component<Props> {
                             app={app}
                             balances={balances}
                             connection={connection}
-                            ref="transfer"
+                            isConfirming={this.isConfirming}
                             settings={settings}
                             system={system}
                           />
                         )}
                         icon="arrow circle up"
+                        onClose={this.onClose}
                         settings={settings}
                         system={system}
                         transaction={transaction}
                       />
                     )
                   }
-
                 </GlobalAccountRequired>
               </Segment>
             </Grid.Column>
             <Grid.Column
               style={{
-                display: (hasTransaction) ? 'none' : 'inline-block'
+                display: (hasTransaction || isConfirming) ? 'none' : 'inline-block'
               }}
               width={6}
             >
@@ -158,7 +165,7 @@ class WalletTransferContainer extends Component<Props> {
                   <Table.Row>
                     <Table.Cell textAlign="right">{symbol}</Table.Cell>
                     <Table.Cell
-                      onClick={() => this.setAsset(symbol, balances[settings.account][symbol])}
+                      onClick={() => this.props.actions.transferSetAsset(balances[settings.account][symbol], symbol)}
                       style={{ cursor: 'pointer' }}
                     >
                       <GlobalAccountFragmentTokenBalance
@@ -201,6 +208,7 @@ function mapDispatchToProps(dispatch) {
       getActions,
       getContractHash,
       transfer,
+      transferSetAsset,
       useWallet,
     }, dispatch)
   };
