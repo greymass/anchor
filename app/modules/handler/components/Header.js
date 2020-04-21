@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Divider, Grid, Header, Icon, Image, Responsive, Segment, Statistic, Step } from 'semantic-ui-react';
+import { Grid, Header, Icon, Image, Segment, Statistic, Step } from 'semantic-ui-react';
 
 import AnchorLogo from '../../../renderer/assets/images/anchor-logo-blue.svg';
 
@@ -65,9 +65,9 @@ class PromptHeader extends Component<Props> {
                 }}
               />
               <Header.Content>
-                Signing Request
+                {t('handler_header_header')}
                 <Header.Subheader>
-                  An incoming signing request has been triggered.
+                  {t('handler_header_subheader')}
                 </Header.Subheader>
               </Header.Content>
             </Header>
@@ -93,7 +93,7 @@ class PromptHeader extends Component<Props> {
                           <Statistic.Value>
                             <Icon color="orange" name="warning sign" />
                           </Statistic.Value>
-                          <Statistic.Label>Expired</Statistic.Label>
+                          <Statistic.Label>{t('handler_header_statistic_one')}</Statistic.Label>
                         </Statistic>
                       )
                       : false
@@ -104,7 +104,7 @@ class PromptHeader extends Component<Props> {
                           <Statistic.Value>
                             <Icon color="grey" name="checkmark" />
                           </Statistic.Value>
-                          <Statistic.Label>Complete</Statistic.Label>
+                          <Statistic.Label>{t('handler_header_statistic_two')}</Statistic.Label>
                         </Statistic>
                       )
                       : false
@@ -115,7 +115,7 @@ class PromptHeader extends Component<Props> {
                           <Statistic.Value>
                             {actions}
                           </Statistic.Value>
-                          <Statistic.Label>Action(s)</Statistic.Label>
+                          <Statistic.Label>{t('handler_header_statistic_three')}</Statistic.Label>
                         </Statistic>
                       )
                       : false

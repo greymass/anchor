@@ -25,7 +25,7 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
             {action.name}
           </Label>
           <Label>
-            {t('handler_fuel_label_one', { index: index + 1, total })}
+            {t('handler_transaction_action_fuel_label_one', { index: index + 1, total })}
           </Label>
           <Image
             centered

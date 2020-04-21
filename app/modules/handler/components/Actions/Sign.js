@@ -30,7 +30,7 @@ class PromptActionSign extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                {t('handler_sign_header')}
+                {t('handler_action_sign_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
