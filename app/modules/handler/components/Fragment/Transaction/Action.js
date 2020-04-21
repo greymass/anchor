@@ -55,7 +55,11 @@ class PromptFragmentTransactionAction extends Component<Props> {
           <Divider horizontal style={{ marginTop: 0 }}>
             Contract Information
           </Divider>
-          <Label basic>
+          <Label
+            basic
+            color="blue"
+            size="large"
+          >
             {action.account}
             <Icon
               name="caret right"
@@ -63,7 +67,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             />
             {action.name}
           </Label>
-          <Divider horizontal>Transaction Data</Divider>
+          <Divider horizontal style={{ marginTop: '1.5em' }}>Transaction Data</Divider>
           <List relaxed>
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false);
@@ -71,6 +75,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
               const isJSON = (!isError(attempt(JSON.parse, action.data[k])));
               const isData = isObject(action.data[k]);
               const isEmpty = !(action.data[k]);
+              const isNoData = isEmpty || (isList && !action.data[k].length);
               return (
                 <List.Item key={k}>
                   {(enableWhitelist)
@@ -104,16 +109,17 @@ class PromptFragmentTransactionAction extends Component<Props> {
                       style={{ marginTop: '0.25em' }}
                     >
                       <Segment
-                        disabled={isEmpty}
+                        disabled={isNoData}
                         style={{
-                          overflowWrap: 'break-word'
+                          overflowWrap: 'break-word',
+                          wordBreak: 'break-all',
                         }}
                       >
                         {(isJSON)
                           ? JSON.stringify(JSON.parse(action.data[k]))
                           : false
                         }
-                        {(isList)
+                        {(isList && action.data[k].length)
                           ? action.data[k].map(i => (
                             <div
                               style={{
@@ -121,10 +127,15 @@ class PromptFragmentTransactionAction extends Component<Props> {
                                 borderRadius: '2px',
                                 display: 'inline-block',
                                 margin: '0 0.65em 0.5em 0',
+                                overflowWrap: 'break-word',
                                 padding: '0.5em',
+                                wordBreak: 'break-all',
                               }}
                             >
-                              {i}
+                              {isObject(i)
+                                ? JSON.stringify(i)
+                                : String(i)
+                              }
                             </div>
                           ))
                           : false
@@ -133,7 +144,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
                           ? JSON.stringify(action.data[k])
                           : false
                         }
-                        {(isEmpty)
+                        {(isNoData)
                           ? <span style={{ color: '' }}>No Data</span>
                           : false
                         }
@@ -148,7 +159,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
               );
             })}
           </List>
-          <Divider horizontal>
+          <Divider horizontal style={{ marginTop: '1.5em' }}>
             Signatures Required
           </Divider>
           {action.authorization.map((auth) => (
