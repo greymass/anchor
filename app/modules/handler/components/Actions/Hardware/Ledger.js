@@ -22,7 +22,7 @@ class PromptActionHardwareLedger extends Component<Props> {
               <Header.Subheader>
 
               </Header.Subheader>
-              Close
+              {t('handler_close')}
             </Header.Content>
           </Header>
         )}
