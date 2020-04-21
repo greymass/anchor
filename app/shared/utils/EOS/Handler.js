@@ -121,6 +121,11 @@ export default class EOSHandler {
       && fuelEndpoints[chainId]
       // is this a broadcast transaction?
       && combinedOptions.broadcast
+      // Ensure if it's an ESR request to only allow specific types
+      && (
+        !combinedOptions.esrReqType
+        || ['action', 'action[]'].includes(combinedOptions.esrReqType)
+      )
     ) {
       // If a Fuel endpoint exists, reinit and force its usage
       if (fuelEndpoints[chainId]) {
