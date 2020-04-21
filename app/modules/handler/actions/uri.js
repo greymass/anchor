@@ -359,10 +359,12 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
     }
     // Establish Signer
     const signer = eos(networkConfig, true, true);
+    const [esrReqType] = prompt.req;
     setTimeout(async () => {
       signer
         .transact(tx, {
           broadcast: false,
+          esrReqType,
           expireSeconds: (broadcast) ? connection.expireSeconds : 3600,
           sign: true,
         })
