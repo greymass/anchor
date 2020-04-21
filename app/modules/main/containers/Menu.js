@@ -74,6 +74,7 @@ class MenuContainer extends Component<Props> {
   tick() {
     const {
       actions,
+      connection,
       settings,
       validate,
     } = this.props;
