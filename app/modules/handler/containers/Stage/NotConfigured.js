@@ -11,6 +11,7 @@ class PromptStageNotConfigured extends Component<Props> {
   render() {
     const {
       blockchain,
+      t,
     } = this.props;
     return (
       <Segment basic padded>
@@ -21,13 +22,13 @@ class PromptStageNotConfigured extends Component<Props> {
                 <Header size="large">
                   <Icon color="yellow" name="warning sign" />
                   <Header.Content>
-                    Blockchain not configured
+                    {t('handler_containers_stage_not_configured_header')}
                     <Header.Subheader>
-                      This blockchain has not been enabled for use within Anchor.
+                      {t('handler_containers_stage_not_configured_subheader')}
                     </Header.Subheader>
                   </Header.Content>
                 </Header>
-                <p>In order to sign requests with this blockchain, you must first enable the blockchain and setup an account through the main interface.</p>
+                <p>{t('handler_containers_stage_not_configured_paragraph')}</p>
               </Segment>
               {/* <Segment attached size="large">
                   To enable this blockchain...
@@ -71,6 +72,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageNotConfigured);

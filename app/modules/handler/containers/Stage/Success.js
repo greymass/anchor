@@ -17,6 +17,7 @@ class PromptStageSuccess extends Component<Props> {
       hasForegroundCallback,
       prompt,
       settings,
+      t,
     } = this.props;
     const {
       response,
@@ -61,13 +62,16 @@ class PromptStageSuccess extends Component<Props> {
               >
                 <Icon color="green" name="check circle outline" />
                 <Header.Content>
-                  Transaction Submitted
+                  {t('handler_containers_stage_success_header')}
                   <Header.Subheader>
-                    The transaction was successfuly sent to the
-                    {(response && response.processed)
-                      ? ' blockchain.'
-                      : ' callback service.'
-                    }
+                    {t(
+                      'handler_containers_stage_success_subheader',
+                      {
+                        responseProcessed: response && response.processed ?
+                          t('handler_containers_stage_success_subheader_blockchain') :
+                          t('handler_containers_stage_success_subheader_callback_service'),
+                      }
+                    )}
                   </Header.Subheader>
                 </Header.Content>
               </Header>

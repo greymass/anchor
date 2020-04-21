@@ -24,6 +24,7 @@ class PromptStageIdentity extends Component<Props> {
       settings,
       status,
       wallet,
+      t,
     } = this.props;
     const {
       chainId,
@@ -43,9 +44,9 @@ class PromptStageIdentity extends Component<Props> {
             <Grid.Column>
               <Segment basic textAlign="center">
                 <Header size="large">
-                  Identity Request
+                  {t('handler_containers_stage_identity_header')}
                   <Header.Subheader>
-                    An application has requested you provide an identity for one of your accounts.
+                    {t('handler_containers_stage_identity_subheader')}
                   </Header.Subheader>
                 </Header>
               </Segment>
@@ -55,7 +56,7 @@ class PromptStageIdentity extends Component<Props> {
             <Grid.Column width={8}>
               <Form>
                 <Form.Field>
-                  <label>Select an account...</label>
+                  <label>{t('handler_containers_stage_identity_label')}</label>
                   <GlobalAccountDropdownSelect
                     account={account}
                     authorization={authorization}
@@ -68,7 +69,7 @@ class PromptStageIdentity extends Component<Props> {
                 {(!canSign && couldSignWithDevice)
                   ? (
                     <Message
-                      content="The Ledger device associated to this account must be connected and the Ledger service enabled to complete this request."
+                      content={t('handler_containers_stage_identity_message_one')}
                       info
                     />
                   )
@@ -77,7 +78,7 @@ class PromptStageIdentity extends Component<Props> {
                 {(mode === 'watch')
                   ? (
                     <Message
-                      content="A 'watch' mode wallet is currently unable to complete identity requests. Select a different account."
+                      content={t('handler_containers_stage_identity_message_two')}
                       color="red"
                       icon="warning sign"
                     />
@@ -124,6 +125,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps, mapDispatchToProps)
 )(PromptStageIdentity);

@@ -21,19 +21,17 @@ class PromptStageForbidden extends Component<Props> {
             <Header color="red" size="large">
               <Icon name="warning sign" />
               <Header.Content>
-                This request has a forbidden action.
+                {t('handler_containers_stage_forbidden_header')}
                 <Header.Subheader>
-                  Anchor prevents certain types of actions from being performed to help
-                  protect your account(s).
+                  {t('handler_containers_stage_forbidden_subheader')}
                 </Header.Subheader>
               </Header.Content>
             </Header>
             <Segment padded secondary>
-              <strong>Error Code: {error.message}</strong>
+              <strong>{t('handler_containers_stage_forbidden_strong', { errorMessage: error.message })}</strong>
             </Segment>
             <p>
-              If you would like to learn more about why this signing request has potentially
-              dangerous effects, share the following signing request URL with the experts you trust.
+              {t('handler_containers_stage_forbidden_paragraph_one')}
             </p>
             <Segment basic>
               <Form>
@@ -43,8 +41,7 @@ class PromptStageForbidden extends Component<Props> {
               </Form>
             </Segment>
             <p>
-              If you are absolutely sure you would like to perform this action, you can allow
-              dangerous actions from within your wallet settings and try again.
+              {t('handler_containers_stage_forbidden_paragraph_two')}
             </p>
           </Segment>
         </Grid.Column>
