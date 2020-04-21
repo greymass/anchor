@@ -104,6 +104,16 @@ export function transfer(from, to, quantity, memo, symbol) {
   };
 }
 
+
+export function transferSetAsset(amount, asset) {
+  return async (dispatch: () => void) => dispatch({
+    payload: { data: { amount, asset } },
+    type: types.SYSTEM_TRANSFER_SET_ASSET_SUCCESS
+  });
+}
+
+
 export default {
-  transfer
+  transfer,
+  transferSetAsset,
 };
