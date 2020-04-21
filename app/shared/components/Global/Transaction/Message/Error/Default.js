@@ -32,7 +32,8 @@ export class GlobalTransactionMessageErrorDefault extends Component<Props> {
 
         {(typeof error === 'object' && !(error instanceof Error)) ? (
           <ReactJson
-            collapsed={2}
+            collapsed={1}
+            collapseStringsAfterLength={60}
             displayDataTypes={false}
             displayObjectSize={false}
             iconStyle="square"

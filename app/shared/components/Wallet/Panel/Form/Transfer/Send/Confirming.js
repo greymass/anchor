@@ -33,7 +33,7 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
     const contract = balances.__contracts[asset.toUpperCase()].contract;
 
     const secondsElapsed = new Date() - waitingStarted;
-    const secondsRemaining = parseInt((3000 - secondsElapsed) / 1000, 10) + 1;
+    const secondsRemaining = parseInt((2000 - secondsElapsed) / 1000, 10) + 1;
     return (
       <Segment basic clearing vertical>
         <Header size="small">
@@ -66,17 +66,6 @@ class WalletPanelFormTransferSendConfirming extends Component<Props> {
             </Table.Row>
           </Table.Body>
         </Table>
-        <WalletMessageContractTransfer
-          data={{
-            from,
-            quantity,
-            to,
-            transaction: {
-              delay: 60
-            }
-          }}
-        />
-        <Divider />
         <Button
           color="green"
           content={(waiting) ? `${t('confirm')} (${secondsRemaining})` : t('confirm')}
