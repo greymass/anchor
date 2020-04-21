@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Divider, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import GlobalAccountDropdownSelect from '../../../../shared/containers/Global/Account/Dropdown/Select';
 
 class PromptReviewControls extends Component<Props> {
@@ -33,7 +33,7 @@ class PromptReviewControls extends Component<Props> {
         <Form.Field>
           <label>
             <Icon name="linkify" />
-            Callback
+            {t('handler_review_form_label_one')}
           </label>
           <Segment basic size="large" style={{ marginTop: 0 }}>
             <p>{url.origin}</p>
@@ -44,9 +44,9 @@ class PromptReviewControls extends Component<Props> {
     return (
       <Form>
         <Header>
-          Request Options
+          {t('handler_review_controls_header')}
           <Header.Subheader>
-            Use the controls below to configure how this request will be processed.
+            {t('handler_review_controls_subheader')}
           </Header.Subheader>
         </Header>
         <Form.Field>
@@ -57,7 +57,7 @@ class PromptReviewControls extends Component<Props> {
                 marginRight: '0.5em',
               }}
             />
-            Account
+            {t('handler_review_form_label_two')}
           </label>
           <GlobalAccountDropdownSelect
             account={account}
@@ -78,12 +78,12 @@ class PromptReviewControls extends Component<Props> {
                     marginRight: '0.5em',
                   }}
                 />
-                Preferences
+                {t('handler_review_form_label_three')}
               </label>
               <Segment basic style={{ marginTop: 0 }}>
                 <Form.Checkbox
                   checked={settings.promptCloseOnComplete}
-                  label="Close window when completed"
+                  label={t('handler_review_form_checkbox_one')}
                   name="promptCloseOnComplete"
                   onChange={onCheck}
                   toggle
@@ -97,8 +97,8 @@ class PromptReviewControls extends Component<Props> {
                     <Form.Checkbox
                       checked={canBroadcast && settings.promptSignAndBroadcast}
                       disabled={!canBroadcast}
-                      label="Broadcast Transaction"
-                      name="promptSignAndBroadcast"
+                      label={t('handler_review_form_checkbox_two')}
+                      name="esr_signbroadcast"
                       onChange={onCheck}
                       toggle
                     />
@@ -114,7 +114,7 @@ class PromptReviewControls extends Component<Props> {
                   ? (
                     <Form.Checkbox
                       checked={enableWhitelist}
-                      label="Add Transaction to Whitelist"
+                      label={t('handler_review_form_checkbox_three')}
                       name="esr_whitelist"
                       onChange={onWhitelist}
                       toggle
@@ -124,7 +124,7 @@ class PromptReviewControls extends Component<Props> {
                 }
                 <Form.Checkbox
                   checked
-                  label="Increase privacy by using anonymous callback proxy"
+                  label={t('handler_review_form_checkbox_four')}
                   style={{ display: 'none' }}
                 />
               </Segment>
@@ -138,4 +138,4 @@ class PromptReviewControls extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptReviewControls);
+export default withTranslation('handler')(PromptReviewControls);

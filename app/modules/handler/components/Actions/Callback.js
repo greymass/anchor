@@ -33,7 +33,7 @@ class PromptActionCallback extends Component<Props> {
               <Header textAlign="left">
                 <Header.Content>
                   <Header.Subheader style={{ fontWeight: 'bold' }}>
-                    {t('handler_callback_header')}
+                    {t('handler_action_callback_header')}
                   </Header.Subheader>
                   {wallet.account}@{wallet.authorization}
                 </Header.Content>
