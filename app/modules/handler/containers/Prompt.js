@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { find, pick } from 'lodash';
 import { get, set } from 'dot-prop-immutable';
-import { Segment } from 'semantic-ui-react';
 
 import URIActions from '../actions/uri';
 import SettingsActions from '../../../shared/actions/settings';
