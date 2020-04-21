@@ -67,7 +67,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             />
             {action.name}
           </Label>
-          <Divider horizontal style={{ marginTop: '1.5em' }}>Transaction Data</Divider>
+          <Divider horizontal style={{ marginTop: '1.5em' }}>{t('handler_fuel_divider')}</Divider>
           <List relaxed>
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false);
@@ -160,7 +160,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             })}
           </List>
           <Divider horizontal style={{ marginTop: '1.5em' }}>
-            Signatures Required
+            {t('handler_fuel_label_two')}
           </Divider>
           {action.authorization.map((auth) => (
             <Label
