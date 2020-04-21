@@ -44,6 +44,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
       system
     } = nextProps;
     const { TRANSFER_SET_ASSET_DATA } = system;
+    if (this.state.from !== nextProps.settings.account) {
+      this.setState({ from: nextProps.settings.account });
+    }
     if (TRANSFER_SET_ASSET_DATA) {
       const { amount, asset } = TRANSFER_SET_ASSET_DATA;
       const { precision } = balances.__contracts[asset.toUpperCase()];
