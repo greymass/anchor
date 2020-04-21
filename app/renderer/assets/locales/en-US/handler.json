@@ -82,4 +82,7 @@
   "handler_containers_stage_success_subheader_callback_service": " callback service.",
   "handler_containers_stage_success_message_one": "The Transaction ID listed above can be used to monitor this transaction. The service it was submitted to is responsible for ensuring the transaction makes it into the greater blockchain network.",
   "handler_containers_stage_success_message_two": "This transaction has been signed and submitted to the callback URL listed above. It has NOT been broadcast to the blockchain, and depending on the type of transaction, its the responsibility of the application listening to the callback to complete the transaction.",
+  "handler_containers_stage_header": "Offline Signing & Transaction Expirations",
+  "handler_containers_stage_subheader": "From the moment the unsigned transaction is saved as a file, a 2 hour countdown begins in which the transaction must be completed. Once 2 hours has passed, the transaction will become invalid and unable to perform the desired action.",
+  "handler_containers_stage_message_paragraph": "Be cautious before proceeding, this action could cause damages to your account."
 }

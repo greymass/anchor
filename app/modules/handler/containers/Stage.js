@@ -517,7 +517,7 @@ class PromptStage extends Component<Props> {
                     {t(warning.message)}
                   </p>
                   <p>
-                    Be cautious before proceeding, this action could cause damages to your account.
+                    {t('handler_containers_stage_message_paragraph')}
                   </p>
                 </React.Fragment>
               )}
@@ -553,9 +553,9 @@ class PromptStage extends Component<Props> {
                 <Header size="large">
                   <Icon name="clock" />
                   <Header.Content>
-                    Offline Signing & Transaction Expirations
+                    {t('handler_containers_stage_header')}
                     <Header.Subheader>
-                      From the moment the unsigned transaction is saved as a file, a 2 hour countdown begins in which the transaction must be completed. Once 2 hours has passed, the transaction will become invalid and unable to perform the desired action.
+                      {t('handler_containers_stage_subheader')}
                     </Header.Subheader>
                   </Header.Content>
                 </Header>
