@@ -17,7 +17,7 @@ class OverviewSidebarPrompt extends PureComponent<Props> {
   render() {
     const { settings } = this.props;
     return (
-      <Segment attached="top" color="grey" textAlign="center">
+      <Segment attached="top" color="orange" textAlign="center">
         <Header size="tiny">
           <Header.Subheader>
             EOSIO Signing Request
