@@ -215,9 +215,6 @@ const forbiddenActions = [
     action: 'linkauth',
     contract: 'eosio',
     error: 'ESRURI_LINKAUTH_FORBIDDEN',
-    forbiddenData: {
-      type: 'updateauth'
-    }
   },
   // Prevent any eosio::updateauth commands involving active
   {
