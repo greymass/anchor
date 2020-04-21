@@ -29,7 +29,7 @@ class PromptActionIdentity extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                {t('handler_identity_header')}
+                {t('handler_action_identity_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>

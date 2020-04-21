@@ -22,7 +22,7 @@ class PromptActionBroadcast extends Component<Props> {
             <Header.Content>
               {t('handler_recreate_header')}
               <Header.Subheader style={{ color: '#ececec', fontWeight: 'bold' }}>
-                {t('handler_recreate_subheader')}
+                {t('handler_action_recreate_subheader')}
               </Header.Subheader>
             </Header.Content>
           </Header>
