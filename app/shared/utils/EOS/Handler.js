@@ -6,12 +6,24 @@ import { cloneDeep, isObject } from 'lodash';
 import serialize from '../../actions/helpers/ledger/serialize';
 
 const eosjs1 = require('eosjs');
+const { transactionHeader } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-serialize');
 const { stringToPublicKey, publicKeyToString } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-numeric');
 const { JsSignatureProvider } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-jssig');
 const { remote } = require('electron');
 
 const LedgerApi = require('../../actions/helpers/hardware/ledger').default;
 
+// Local store for ABIs
+const Store = require('electron-store');
+
+const store = new Store({
+  name: 'abis'
+});
+
+// Number of minutes to cache the ABI
+const abiCacheMinutes = 15;
+
+// Fuel action template
 const fuelTransaction = {
   account: 'greymassnoop',
   name: 'noop',
@@ -76,6 +88,15 @@ export default class EOSHandler {
       textDecoder: new TextDecoder(),
       textEncoder: new TextEncoder()
     });
+    Object.keys(store.store).forEach((account) => {
+      const escapedAccount = account.replace('.', '\\.');
+      const expires = Date.now() - (1000 * 60 * abiCacheMinutes);
+      const abi = store.get(escapedAccount);
+      // If local cache is not stale, cache it within eosjs
+      if (abi.ts > expires) {
+        this.api.cachedAbis.set(abi.account_name, abi)
+      }
+    })
   }
   getAuthorityProvider() {
     const { rpc } = this;
@@ -147,7 +168,7 @@ export default class EOSHandler {
       return this.createTransaction(transaction, combinedOptions);
     }
     // issue the transaction with options and config
-    const processed = await this.api.transact(transaction, combinedOptions);
+    const processed = await this.customTransact(transaction, combinedOptions);
     // no broadcast = create and return the transaction itself
     if (!combinedOptions.broadcast) {
       const deserializedTransaction = this.api.deserializeTransaction(processed.serializedTransaction);
@@ -187,6 +208,58 @@ export default class EOSHandler {
       }
     };
   }
+  customTransact = async (transaction, { broadcast = true, sign = true, blocksBehind, expireSeconds }) => {
+    const info = await this.rpc.get_info();
+    let tx = transaction;
+    if (
+      !this.hasRequiredTaposFields(transaction)
+      && typeof blocksBehind === 'number'
+      && expireSeconds
+    ) {
+      tx = {
+        ...transactionHeader(info.last_irreversible_block_id, expireSeconds),
+        ...transaction
+      };
+    }
+    if (!this.hasRequiredTaposFields(transaction)) {
+        throw new Error('Required configuration or TAPOS fields are not present');
+    }
+    const abis = await this.api.getTransactionAbis(tx);
+    tx = { ...tx, actions: await this.api.serializeActions(tx.actions) };
+    const serializedTransaction = this.api.serializeTransaction(tx);
+    let pushTransactionArgs  = { serializedTransaction, signatures: [] };
+    if (sign) {
+      const availableKeys = await this.signatureProvider.getAvailableKeys();
+      pushTransactionArgs = await this.signatureProvider.sign({
+        chainId: this.config.chainId,
+        requiredKeys: availableKeys,
+        serializedTransaction,
+        abis,
+      });
+    }
+    if (broadcast) {
+      return this.api.pushSignedTransaction(pushTransactionArgs);
+    }
+    return pushTransactionArgs;
+  }
+  hasRequiredTaposFields = ({
+    expiration,
+    ref_block_num,
+    ref_block_prefix,
+  }) => {
+    return !!(expiration && ref_block_num && ref_block_prefix);
+  }
+  reverseNibbles = (hex) => {
+    const rv = [];
+    for (let i = hex.length - 1; i > 0; i -= 2) {
+      rv.push(hex[i - 1] + hex[i]);
+    }
+    return rv.join('');
+  }
+  getBlockPrefix = (blockIdHex) => {
+    const hex = this.reverseNibbles(blockIdHex.substring(16, 24));
+    return parseInt(hex, 16);
+  }
   getExpiration = (options = {}) => {
     const combinedOptions = Object.assign({}, this.options, options);
     const { expireSeconds } = combinedOptions;
@@ -195,12 +268,58 @@ export default class EOSHandler {
     const timeInISOString = (new Date(timePlus)).toISOString();
     return timeInISOString.substr(0, timeInISOString.length - 1);
   }
+  getTransactionHeader = async (expireSeconds) => {
+    const info = await this.getInfo();
+    const refBlock = {
+      timestamp: info.head_block_time,
+      block_num: info.last_irreversible_block_num & 0xffff,
+      ref_block_prefix: this.getBlockPrefix(info.last_irreversible_block_id),
+    };
+    return transactionHeader(refBlock, expireSeconds);
+  }
   ensureSerializedActions = async (actions) => (await (isObject(actions[0].data))
     ? this.api.serializeActions(actions)
     : actions)
   getInfo = () => this.rpc.get_info()
   getBlock = (height) => this.rpc.get_block(height)
-  getAbi = (account) => this.rpc.get_abi(account)
+  getAbi = async (account) => {
+    // Escape for dot notation
+    const escapedAccount = account.replace('.', '\\.');
+    if (store.has(escapedAccount)) {
+      // Check local store for abi
+      const abi = store.get(escapedAccount);
+      // Set cache stale for 15 minutes
+      const expires = Date.now() - (1000 * 60 * abiCacheMinutes);
+      // If cache is not stale, use it
+      if (abi.ts > expires) {
+        // Cache in our eosjs instance
+        this.api.cachedAbis.set(abi.account, abi);
+        // Return cached data
+        return {
+          account_name: abi.account,
+          abi: abi.abi,
+        };
+      }
+    }
+    // If no cache, retrieve
+    const abi = await this.rpc.get_abi(account);
+    // Save in local store
+    store.set(escapedAccount, {
+      ...abi,
+      ts: Date.now(),
+    });
+    // Cache in eosjs instance
+    this.api.cachedAbis.set(abi.account_name, abi.abi);
+    return abi;
+  }
+  getRequiredAbis = async (request) => {
+    const requiredAbis = request.getRequiredAbis();
+    const abis = new Map();
+    await Promise.all(request.getRequiredAbis().map(async (account) => {
+      abis.set(account, (await this.getAbi(account)).abi);
+    }));
+    return abis;
+  }
 }
 
 class LedgerSignatureProvider {
