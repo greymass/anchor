@@ -11,5 +11,8 @@
   "handler_share_header": "Share Request",
   "handler_sign_header": "Sign Transaction",
   "handler_sign_broadcast_header": "Sign & Broadcast Transaction",
-  "handler_unlock_header": "Unlock Wallet"
+  "handler_unlock_header": "Unlock Wallet",
+  "handler_fuel_label_one": "Action {{index}} of {{total}}",
+  "handler_fuel_label_two": "Signatures Required",
+  "handler_fuel_divider": "Transaction Data"
 }
