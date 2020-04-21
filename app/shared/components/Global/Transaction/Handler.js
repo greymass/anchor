@@ -51,6 +51,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
       content = (
         <GlobalTransactionMessageError
           error={system[`${actionName}_LAST_ERROR`]}
+          onClose={onClose}
         />
       );
     } else if (hasTransaction && !hasSignature && !includes(['watch', 'ledger'], settings.walletMode)) {

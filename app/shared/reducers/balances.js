@@ -45,19 +45,11 @@ export default function balances(state = initialState, action) {
         symbol,
         tokens
       } = action.payload;
-      // If nothing changed, don't mutate state
-      if (state[account_name] && state[account_name][symbol] === tokens[symbol]) {
-        return state;
-      }
-      return Object.assign({}, state, {
-        __contracts: Object.assign({}, state.__contracts, {
-          [symbol.toUpperCase()]: {
-            contract,
-            precision
-          }
-        }),
-        [account_name]: Object.assign({}, state[account_name], tokens)
-      });
+      let modified;
+      const account = account_name.replace('.', '\\.');
+      modified = set(state, account, Object.assign({}, state[account_name], tokens));
+      modified = set(modified, `__contracts.${symbol.toUpperCase()}`, { contract, precision });
+      return modified;
     }
     default: {
       return state;

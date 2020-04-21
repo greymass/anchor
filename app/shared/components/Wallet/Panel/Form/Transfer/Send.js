@@ -35,7 +35,40 @@ class WalletPanelFormTransferSend extends Component<Props> {
       asset: props.connection.chainSymbol || 'EOS',
       from: props.settings.account,
     });
-    this.updateState = this.setState.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      balances,
+      connection,
+      system
+    } = nextProps;
+    const { TRANSFER_SET_ASSET_DATA } = system;
+    if (TRANSFER_SET_ASSET_DATA) {
+      const { amount, asset } = TRANSFER_SET_ASSET_DATA;
+      const { precision } = balances.__contracts[asset.toUpperCase()];
+      let precisionValue = connection.tokenPrecision;
+      if (precision) {
+        precisionValue = precision[asset.toUpperCase()];
+      }
+      const quantity = `${amount.toFixed(precisionValue)} ${asset}`;
+      if (
+        this.state.asset !== TRANSFER_SET_ASSET_DATA.asset
+        || this.state.quantity !== quantity
+      ) {
+        this.setState({
+          asset: TRANSFER_SET_ASSET_DATA.asset,
+          quantity,
+          quantitySet: Date.now(),
+        }, () => {
+          this.onChange(null, {
+            name: 'quantity',
+            value: quantity,
+            valid: true,
+          });
+        });
+      }
+    }
   }
 
   onConfirm = () => {
@@ -58,6 +91,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
       waitingStarted: new Date()
     });
     const tick = setInterval(this.tick, 250);
+    if (this.props.isConfirming) {
+      this.props.isConfirming(true);
+    }
     // Make the user wait 3 seconds before they can confirm
     setTimeout(() => {
       clearInterval(tick);
@@ -76,6 +112,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
     if (this.props.onClose) {
       this.props.onClose();
     }
+    if (this.props.isConfirming) {
+      this.props.isConfirming(false);
+    }
     e.preventDefault();
     return false;
   };
@@ -87,6 +126,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
   }, 400);
 
   onChange = (e, { name, value, valid }) => {
+    this.props.actions.clearSystemState();
     if (name === 'to') {
       const {
         settings
@@ -138,6 +178,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
   };
 
   onBack = () => {
+    if (this.props.isConfirming) {
+      this.props.isConfirming(false);
+    }
     this.setState({
       confirming: false
     });
@@ -187,15 +230,28 @@ class WalletPanelFormTransferSend extends Component<Props> {
   fillMax = () => {
     const {
       balances,
+      connection,
       settings,
     } = this.props;
     const {
       asset
     } = this.state;
     const balance = balances[settings.account];
+    const { precision } = balances.__contracts[asset.toUpperCase()]
+    let precisionValue = connection.tokenPrecision;
+    if (precision) {
+      precisionValue = precision[asset.toUpperCase()];
+    }
+    const quantity = `${balance[asset].toFixed(precisionValue)} ${asset}`;
     this.setState({
-      quantity: `${balance[asset]} ${asset}`,
+      quantity,
       quantitySet: Date.now(),
+    }, () => {
+      this.onChange(null, {
+        name: 'quantity',
+        value: quantity,
+        valid: true,
+      });
     });
   }
 
@@ -325,7 +381,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                         onClick={this.fillMax}
                         style={{ cursor: 'pointer' }}
                       >
-                        {(balance[asset] && balance[asset].toFixed(4)) || '0.0000'}
+                        {(balance[asset] && balance[asset].toFixed(connection.tokenPrecision)) || '0.0000'}
                         {' '}
                         {asset}
                       </a>
