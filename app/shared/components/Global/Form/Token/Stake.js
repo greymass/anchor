@@ -80,48 +80,50 @@ export class GlobalFormTokenStake extends Component<Props> {
             </Grid.Column>
             <Grid.Column>
               <Table definition textAlign="right">
-                <Table.Row>
-                  <Table.Cell>Account</Table.Cell>
-                  <Table.Cell>
-                    {account}
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Available Tokens</Table.Cell>
-                  <Table.Cell>
-                    <GlobalAccountFragmentTokenBalance
-                      account={settings.account}
-                      chainId={settings.chainId}
-                      contract="eosio"
-                      token={connection.chainSymbol}
-                    />
-                    {` ${connection.chainSymbol}`}
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Staked {resource.toUpperCase()} Tokens</Table.Cell>
-                  <Table.Cell>
-                    <GlobalAccountFragmentResourceStakedSelf
-                      account={account}
-                      chainId={connection.chainId}
-                      contract="eosio"
-                      token={connection.chainSymbol}
-                      type={resource}
-                    />
-                  </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Other {resource.toUpperCase()} Tokens</Table.Cell>
-                  <Table.Cell>
-                    <GlobalAccountFragmentResourceStakedDelegated
-                      account={account}
-                      chainId={connection.chainId}
-                      contract="eosio"
-                      token={connection.chainSymbol}
-                      type={resource}
-                    />
-                  </Table.Cell>
-                </Table.Row>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>Account</Table.Cell>
+                    <Table.Cell>
+                      {account}
+                    </Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Available Tokens</Table.Cell>
+                    <Table.Cell>
+                      <GlobalAccountFragmentTokenBalance
+                        account={settings.account}
+                        chainId={settings.chainId}
+                        contract="eosio"
+                        token={connection.chainSymbol}
+                      />
+                      {` ${connection.chainSymbol}`}
+                    </Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Staked {resource.toUpperCase()} Tokens</Table.Cell>
+                    <Table.Cell>
+                      <GlobalAccountFragmentResourceStakedSelf
+                        account={account}
+                        chainId={connection.chainId}
+                        contract="eosio"
+                        token={connection.chainSymbol}
+                        type={resource}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Other {resource.toUpperCase()} Tokens</Table.Cell>
+                    <Table.Cell>
+                      <GlobalAccountFragmentResourceStakedDelegated
+                        account={account}
+                        chainId={connection.chainId}
+                        contract="eosio"
+                        token={connection.chainSymbol}
+                        type={resource}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
               </Table>
             </Grid.Column>
           </Grid.Row>

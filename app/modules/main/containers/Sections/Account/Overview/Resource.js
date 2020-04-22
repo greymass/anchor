@@ -116,24 +116,26 @@ class AccountOverviewResource extends Component<Props> {
                         }}
                         unstackable
                       >
-                        <Table.Row>
-                          <Table.Cell collapsing>Used</Table.Cell>
-                          <Table.Cell>
-                            <GlobalAccountFragmentResourceUsage
-                              account={account}
-                              type={resource}
-                            />
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                          <Table.Cell collapsing>Allowed</Table.Cell>
-                          <Table.Cell>
-                            <GlobalAccountFragmentResourceMax
-                              account={account}
-                              type={resource}
-                            />
-                          </Table.Cell>
-                        </Table.Row>
+                        <Table.Body>
+                          <Table.Row>
+                            <Table.Cell collapsing>Used</Table.Cell>
+                            <Table.Cell>
+                              <GlobalAccountFragmentResourceUsage
+                                account={account}
+                                type={resource}
+                              />
+                            </Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell collapsing>Allowed</Table.Cell>
+                            <Table.Cell>
+                              <GlobalAccountFragmentResourceMax
+                                account={account}
+                                type={resource}
+                              />
+                            </Table.Cell>
+                          </Table.Row>
+                        </Table.Body>
                       </Table>
                       <Container
                         fluid
