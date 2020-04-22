@@ -7,7 +7,7 @@ export function getAbi(account) {
       type: types.SYSTEM_GETABI_PENDING
     });
     const { connection } = getState();
-    return eos(connection, true).getAbi(account).then((contract) => {
+    return eos(connection, true, true).rpc.get_abi(account).then((contract) => {
       if (!contract.abi) {
         return dispatch({
           type: types.SYSTEM_GETABI_FAILURE

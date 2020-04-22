@@ -67,7 +67,7 @@ export function transfer(from, to, quantity, memo, symbol) {
       }).then((tx) => {
         // If this is an offline transaction, also store the ABI
         if (!connection.sign && contractAccount !== 'eosio.token') {
-          return eos(connection).getAbi(contractAccount).then((contract) =>
+          return eos(connection, false, true).rpc.get_abi(contractAccount).then((contract) =>
             dispatch({
               payload: {
                 connection,

@@ -27,7 +27,7 @@ export function getProposals(scope = 'eosio.forum', previous = false) {
       return;
     }
 
-    eos(connection).getTableRows(query).then((results) => {
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
       let { rows } = results;
       // If previous rows were returned
       if (previous) {
@@ -111,7 +111,7 @@ export function getVoteInfo(scope, account) {
       lower_bound,
       upper_bound
     };
-    eos(connection).getTableRows(query).then((results) => {
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
       let { rows } = results;
       const votes = rows
         .map((data) => {
