@@ -11,6 +11,8 @@ const { stringToPublicKey, publicKeyToString } = require('eosio-signing-request/
 const { JsSignatureProvider } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-jssig');
 const { remote } = require('electron');
 
+import { httpQueue, httpClient } from '../httpClient';
+
 const LedgerApi = require('../../actions/helpers/hardware/ledger').default;
 
 // Local store for ABIs
@@ -80,7 +82,27 @@ export default class EOSHandler {
     return convertLegacyPublicKey(pubkey);
   }
   initEOSJS(endpoint) {
-    this.rpc = new JsonRpc(endpoint);
+    this.rpc = new JsonRpc(endpoint, {
+      fetch: async (path, request) => {
+        return httpQueue.add(async () => {
+          // Retrieve using axios
+          const response = await httpClient({
+            method: request.method.toLowerCase(),
+            url: path,
+            data: request.body,
+            headers: {
+              'content-type': 'application/json',
+            },
+            timeout: 10000,
+          });
+          // Return a response immitating what eosjs expects
+          return {
+            ok: true,
+            json: () => response.data
+          }
+        });
+      }
+    });
     this.api = new Api({
       authorityProvider: this.getAuthorityProvider(),
       rpc: this.rpc,
