@@ -168,7 +168,7 @@ export function getBlockExplorers() {
     };
 
 
-    // eos(connection).getTableRows(query).then((results) => {
+    // eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
     //   const { rows } = results;
 
     const blockExplorers = {};

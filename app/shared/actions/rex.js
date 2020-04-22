@@ -17,7 +17,7 @@ export function getREXRates() {
       index_position: 1,
       key_type: '',
     };
-    eos(connection).getTableRows(query).then(results => dispatch({
+    eos(connection, false, true).rpc.get_table_rows(query).then(results => dispatch({
       type: types.SYSTEM_GETTABLE_SUCCESS,
       payload: {
         ...results,
@@ -58,7 +58,7 @@ function getLoans(tableName, dispatch, getState) {
     lower_bound: settings.account,
     upper_bound: settings.account,
   };
-  eos(connection).getTableRows(query).then(results => {
+  eos(connection, false, true).rpc.get_table_rows(query).then(results => {
     return dispatch({
       type: types.SYSTEM_GETTABLE_SUCCESS,
       payload: {

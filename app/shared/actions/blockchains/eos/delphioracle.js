@@ -24,7 +24,7 @@ export function getPriceFeed(scope = 'eosusd') {
       return;
     }
 
-    eos(connection).getTableRows(query).then((results) => dispatch({
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => dispatch({
       type: types.SYSTEM_PRICEFEEDUSD_SUCCESS,
       payload: {
         results,

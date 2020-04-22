@@ -421,7 +421,7 @@ export function upgradeWallet(chainId, account, authorization, password = false,
     }
     const [current] = partition(wallets, partitionQuery);
     if (current.length > 0) {
-      eos(connection).getAccount(account).then((accountData) => {
+      eos(connection, false, true).rpc.get_account(account).then((accountData) => {
         const wallet = current[0];
         const key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         const pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : undefined;
@@ -465,7 +465,7 @@ export function upgradeWatchWallet(chainId, account, authorization, swap = false
       mode: 'watch'
     });
     if (current.length > 0) {
-      eos(connection).getAccount(account).then((accountData) => {
+      eos(connection, false, true).rpc.get_account(account).then((accountData) => {
         const model = new EOSAccount(accountData);
         const keys = model.getKeysForAuthorization(authorization);
         if (keys.length > 0) {

@@ -21,7 +21,7 @@ export function getBidForName(name) {
       table: 'namebids'
     };
 
-    eos(connection).getTableRows(query).then((results) => {
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
       const { rows } = results;
       const namebid = rows[0];
       const { recentBids } = settings;
@@ -73,7 +73,7 @@ export function getBidsForAccount(previous = false) {
       });
     }
 
-    eos(connection).getTableRows(query).then((results) => {
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
       const { rows } = results;
 
       rows.forEach((namebid) => {

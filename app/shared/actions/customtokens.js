@@ -30,7 +30,7 @@ export function getCustomTokens(previous = false) {
     if (previous) {
       query.lower_bound = previous[previous.length - 1].owner;
     }
-    eos(connection).getTableRows(query).then((results) => {
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
       let { rows } = results;
       // If previous rows were returned
       if (previous) {

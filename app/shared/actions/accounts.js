@@ -96,16 +96,22 @@ export function getContractHash(accountName) {
     } = getState();
 
     if (accountName && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getCodeHash(accountName).then((response) => dispatch({
-        type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_SUCCESS,
-        payload: {
-          account_name: accountName,
-          contract_hash: response.code_hash
-        }
-      })).catch((err) => dispatch({
-        type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_FAILURE,
-        payload: { err },
-      }));
+      httpQueue.add(() =>
+        httpClient
+          .post(`${connection.httpEndpoint}/v1/chain/get_code_hash`, {
+            account_name: accountName
+          })
+          .then((response) => dispatch({
+            type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_SUCCESS,
+            payload: {
+              account_name: accountName,
+              contract_hash: response.data.code_hash
+            }
+          }))
+          .catch((err) => dispatch({
+            type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_FAILURE,
+            payload: { err },
+          })));
     }
   };
 }
@@ -120,13 +126,12 @@ export function checkAccountAvailability(account = '') {
       connection,
       settings
     } = getState();
-
     if (account && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getAccount(account).then(() => dispatch({
+      eos(connection, false, true).rpc.get_account(account).then((response) => dispatch({
         type: types.SYSTEM_ACCOUNT_AVAILABLE_FAILURE,
-        payload: { account_name: account }
+        payload: { account_name: account, response }
       })).catch((err) => {
-        if (err.status === 500) {
+        if (err.response.status === 500) {
           dispatch({
             type: types.SYSTEM_ACCOUNT_AVAILABLE_SUCCESS,
             payload: { account_name: account }
@@ -168,7 +173,7 @@ export function checkAccountExists(account = '', node) {
         });
       }
 
-      eos(newConnection || connection).getAccount(account).then(() => dispatch({
+      eos(newConnection || connection, false, true).rpc.get_account(account).then(() => dispatch({
         type: types.SYSTEM_ACCOUNT_EXISTS_SUCCESS,
         payload: { account_name: account }
       })).catch((err) => dispatch({
@@ -195,36 +200,36 @@ export function getAccount(account = '') {
       connection
     } = getState();
     if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
-      httpQueue.add(() =>
-        httpClient
-          .post(`${connection.httpEndpoint}/v1/chain/get_account`, {
-            account_name: account
-          })
-          .then((response) => {
-            if (response.data.voter_info === null) {
-              const query = {
-                json: true,
-                code: 'eosio',
-                scope: 'eosio',
-                table: 'voters',
-                key_type: 'name',
-                index_position: 3,
-                lower_bound: account,
-                upper_bound: account,
-                limit: 10,
-              };
-              return eos(connection).getTableRows(query).then((result) => {
+      eos(connection, false, true).rpc.get_account(account)
+        .then((response) => {
+          if (response.voter_info === null) {
+            const query = {
+              json: true,
+              code: 'eosio',
+              scope: 'eosio',
+              table: 'voters',
+              key_type: 'name',
+              index_position: 3,
+              lower_bound: account,
+              upper_bound: account,
+              limit: 1,
+            };
+            return eos(connection, false, true).rpc.get_table_rows(query)
+              .then((result) => {
                 // overload the voter info with table results
-                response.data.voter_info = result.rows[0];
-                return dispatch(processLoadedAccount(connection.chainId, account, response.data));
+                response.voter_info = result.rows[0];
+                return dispatch(processLoadedAccount(connection.chainId, account, response));
+              })
+              .catch((err) => {
+                console.log(err)
               });
-            }
-            return dispatch(processLoadedAccount(connection.chainId, account, response.data))
-          })
-          .catch((err) => dispatch({
-            type: types.GET_ACCOUNT_FAILURE,
-            payload: { err, account_name: account },
-          })));
+          }
+          return dispatch(processLoadedAccount(connection.chainId, account, response))
+        })
+        .catch((err) => dispatch({
+          type: types.GET_ACCOUNT_FAILURE,
+          payload: { err, account_name: account },
+        }));
       return;
     }
     dispatch({
@@ -320,7 +325,7 @@ export function getActions(account, start, offset) {
     });
 
     if (account && (settings.node || settings.node.length !== 0)) {
-      eos(connection).getActions(account, start, offset).then((results) => {
+      eos(connection, false, true).rpc.history_get_actions(account, start, offset).then((results) => {
         const resultNewestAction = results.actions[results.actions.length - 1];
         const resultsNewestActionId = resultNewestAction && resultNewestAction.account_action_seq;
 
@@ -411,7 +416,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
 
       if (connection.chainSymbol === 'BEOS') {
         selectedTokens = [];
-        return eos(connection).getCurrencyStats('eosio.token', '').then((data) => {
+        return eos(connection, false, true).rpc.get_currency_stats('eosio.token', '').then((data) => {
           const allTokens = Object.keys(data);
           allTokens.forEach((token) => {
             selectedTokens.push(`${connection.chainId}:eosio.token:${token}`);
@@ -419,7 +424,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
           forEach(selectedTokens, (namespace) => {
             const [, contract, symbol] = namespace.split(':');
             dispatch(addCustomTokenBeos('eosio.token', symbol));
-            eos(connection).getCurrencyBalance(contract, account, symbol).then((results) =>
+            eos(connection, false, true).rpc.get_currency_balance(contract, account, symbol).then((results) =>
               dispatch({
                 type: types.GET_ACCOUNT_BALANCE_SUCCESS,
                 payload: {
@@ -565,7 +570,7 @@ export function getAccountByKey(key) {
       });
     }
     if (convertedKey && (settings.node || settings.node.length !== 0)) {
-      return eos(connection).getKeyAccounts(convertedKey).then((accounts) => {
+      return eos(connection).rpc.history_get_key_accounts(convertedKey).then((accounts) => {
         dispatch(getAccounts(accounts.account_names));
         if (key.substr(0, 3) === 'FIO') {
           return httpQueue.add(() =>
@@ -653,7 +658,7 @@ export function getAccountByKeys(keys) {
           type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
           payload: { filtered }
         });
-        return filtered.forEach((key) => eos(connection).getKeyAccounts(key).then((accounts) => {
+        return filtered.forEach((key) => eos(connection, false, true).rpc.history_get_key_accounts(key).then((accounts) => {
           dispatch(getAccounts(accounts.account_names));
           dispatch(getControlledAccounts(accounts.account_names));
           return dispatch({
@@ -680,7 +685,7 @@ export function getControlledAccounts(accounts) {
       settings
     } = getState();
     accounts.forEach((account) => {
-      eos(connection).getControlledAccounts(account).then((results) => {
+      eos(connection, false, true).history_get_controlled_accounts(account).then((results) => {
         dispatch(getAccounts(results.controlled_accounts));
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
