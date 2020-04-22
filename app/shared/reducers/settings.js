@@ -38,6 +38,12 @@ const initialState = {
   ],
   // State to view by default in DevTest
   devTestDefaultState: false,
+  // An API key for accessing a dfuse instance
+  dfuseKey: '',
+  // The JWT token for current dfuse usage
+  dfuseAuthorization: undefined,
+  // The JWT expiration timer
+  dfuseAuthorizationExpires: undefined,
   // Defaults to displaying resources remaining
   displayResourcesAvailable: true,
   // Whether or not to display known testnets for the various networks
