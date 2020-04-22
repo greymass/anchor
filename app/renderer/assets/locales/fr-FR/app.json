@@ -1,6 +1,6 @@
 {
-  "app_updating_header": "Updating",
-  "app_updating_subheader": "The app will prompt to restart when completed.",
-  "app_updating_percent_complete": "complete",
+  "app_updating_header": "Mise à jour",
+  "app_updating_subheader": "L'application vous demandera de redémarrer une fois terminée.",
+  "app_updating_percent_complete": "terminé",
   "app_updating_rate": "sec"
 }
