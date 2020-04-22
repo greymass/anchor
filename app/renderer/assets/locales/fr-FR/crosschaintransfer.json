@@ -1,15 +1,15 @@
 {
-  "crosschain_transfer_beos_account_validation": "Please wait, Bitshares EOS account is validating...",
-  "crosschain_transfer_confirming_body_quantity": "Please ensure the quantity for this transfer is valid.",
-  "crosschain_transfer_confirming_eos_network_fee": "Fee for 'Bitshares' withdrawal/crosschain transfer is the same as for the transfer in the Eos network.",
-  "crosschain_transfer_confirming_title": "Review your Transaction",
-  "crosschain_transfer_header_available": "available to transfer.",
-  "crosschain_transfer_modal_title_2": "Crosschain Transfer Tokens",
+  "crosschain_transfer_beos_account_validation": "Veuillez patienter, le compte EOS Bitshares est en cours de validation ...",
+  "crosschain_transfer_confirming_body_quantity": "Veuillez vous assurer que la quantité pour ce transfert est valide.",
+  "crosschain_transfer_confirming_eos_network_fee": "Les frais de retrait / transfert croisé 'Bitshares' sont les mêmes que pour le transfert sur le réseau Eos.",
+  "crosschain_transfer_confirming_title": "Examiner votre transaction",
+  "crosschain_transfer_header_available": "disponible pour transfert.",
+  "crosschain_transfer_modal_title_2": "Jetons de transfert entre chaînes",
   "crosschain_transfer_button_cta_2": "Crosschain Transfer",
-  "crosschain_transfer_label_to": "{{type}} account",
-  "crosschain_transfer_label_from": "Origin Account",
-  "crosschain_transfer_label_quantity": "Quantity",
-  "crosschain_transfer_label_token_and_quantity": "Token Selection + Quantity",
-  "crosschai n_transfer_account_validation_failed": "Bitshares EOS account validation under maintenance",
-  "crosschain_transfer_label_memo": "Crosschain Transfer Memo (optional)"
+  "crosschain_transfer_label_to": "{{type}} compte",
+  "crosschain_transfer_label_from": "Compte d'origine",
+  "crosschain_transfer_label_quantity": "Quantité",
+  "crosschain_transfer_label_token_and_quantity": "Sélection de jeton + quantité",
+  "crosschain_transfer_account_validation_failed": "Validation du compte EOS Bitshares en cours de maintenance",
+  "crosschain_transfer_label_memo": "Mémo de transfert entre chaînes (facultatif)"
 }
