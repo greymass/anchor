@@ -1,15 +1,15 @@
 {
   "broadcast_transaction_broadcast": "Broadcast Transaction",
-  "broadcast_transaction_confirm_details_content": "Review the details of this transaction, and if the details look correct, click the button below to sign and broadcast the transaction.",
-  "broadcast_transaction_confirm_details_title": "Review Transaction",
-  "broadcast_transaction_import_file": "Import Transaction File",
-  "broadcast_transaction_import_file_content": "Select a signed transaction file to begin",
-  "broadcast_transaction_import_file_title": "Import a Transaction File",
-  "broadcast_transaction_import_json": "Import Transaction String",
-  "broadcast_transaction_import_json_label": "Paste the transaction JSON object here..",
-  "broadcast_transaction_invalid_error": "The file or string that was uploaded is invalid.",
-  "broadcast_transaction_not_signed": "Cannot broadcast an unsigned transaction.",
-  "broadcast_transaction_note": "Please note that the transaction must be signed in order for it to be broadcasted.",
-  "broadcast_transaction_paste_json_title": "Paste a Transaction String",
-  "broadcast_transaction_signbroadcast": "Sign + Broadcast Transaction"
+  "broadcast_transaction_confirm_details_content": "Vérifiez les détails de cette transaction et si les détails vous semblent corrects, cliquez sur le bouton ci-dessous pour signer et diffuser la transaction.",
+  "broadcast_transaction_confirm_details_title": "Examiner la transaction",
+  "broadcast_transaction_import_file": "Importer le fichier de transaction",
+  "broadcast_transaction_import_file_content": "Sélectionnez un fichier de transaction signé pour commencer",
+  "broadcast_transaction_import_file_title": "Importer un fichier de transaction",
+  "broadcast_transaction_import_json": "Importer la chaîne de transaction",
+  "broadcast_transaction_import_json_label": "Collez ici l'objet JSON de transaction ..",
+  "broadcast_transaction_invalid_error": "Le fichier ou la chaîne qui a été téléchargé n'est pas valide.",
+  "broadcast_transaction_not_signed": "Impossible de diffuser une transaction non signée.",
+  "broadcast_transaction_note": "Veuillez noter que la transaction doit être signée pour pouvoir être diffusée.",
+  "broadcast_transaction_paste_json_title": "Coller une chaîne de transaction",
+  "broadcast_transaction_signbroadcast": "Signer + Transaction de diffusion"
 }
