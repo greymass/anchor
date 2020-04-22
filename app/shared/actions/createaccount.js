@@ -31,7 +31,7 @@ export function createAccount(
     });
 
     if (connection.chainSymbol === 'BEOS') {
-      return eos(connection, true)
+      return eos(connection, true, true)
         .getAbi('eosio')
         .then((c) => {
           const contract = new EOSContract(c.abi, c.account_name);

@@ -16,7 +16,7 @@ export function setregproxyinfo(data) {
 
     const { account } = settings;
 
-    return eos(connection, true).transaction({
+    return eos(connection, true, true).transact({
       actions: [
         {
           account: 'regproxyinfo',

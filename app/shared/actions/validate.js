@@ -29,7 +29,7 @@ export function validateAccount(account) {
     } = getState();
     try {
       // A generic info call to make sure it's working
-      eos(connection).getAccount(account).then((results) => {
+      eos(connection, false, true).rpc.get_account(account).then((results) => {
         // PATCH - Force in self_delegated_bandwidth if it doesn't exist
         const modified = results;
         if (!modified.self_delegated_bandwidth) {
@@ -105,7 +105,7 @@ export function validateNode(
           httpEndpoint
         };
         // A generic info call to make sure it's working
-        eos(modified).getInfo({}).then(result => {
+        eos(modified, false, true).rpc.get_info({}).then(result => {
           // If we received a valid height, confirm this server can be connected to
           if (result.head_block_num > 1) {
             const blockchain = find(blockchains, { chainId: result.chain_id });
@@ -203,7 +203,7 @@ export function validateKey(key) {
     try {
       let account = accounts[settings.account];
       if (!account) {
-        account = eos(connection).getAccount(settings.account);
+        account = eos(connection, false, true).rpc.get_account(settings.account);
       }
       // Keys must resolve to one of these types of permissions
       try {

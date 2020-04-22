@@ -28,7 +28,7 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
       return;
     }
 
-    const results = await eos(connection).getTableRows(query)
+    const results = await eos(connection, false, true).rpc.get_table_rows(query)
     const { more } = results;
     let { rows } = results;
     // If previous rows were returned
@@ -92,7 +92,7 @@ export function getTableByBounds(code, scope, table, lower_bound, upper_bound, l
       return;
     }
 
-    const results = await eos(connection).getTableRows(query)
+    const results = await eos(connection, false, true).rpc.get_table_rows(query)
     const { more } = results;
     let { rows } = results;
     // If previous rows were returned

@@ -72,7 +72,7 @@ export function historyPluginCheck() {
         break;
       }
     }
-    return eos(connection).getActions(historyAccount).then((result) => dispatch({
+    return eos(connection, false, true).rpc.history_get_actions(historyAccount).then((result) => dispatch({
       type: types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED,
       payload: { enabled: (result.actions && result.actions.length !== 0) }
     })).catch(() => dispatch({

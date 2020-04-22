@@ -56,8 +56,8 @@ export function broadcastTransaction(tx, actionName = false, actionPayload = {})
     const {
       connection
     } = getState();
-    eos(connection)
-      .pushTransaction(tx.transaction).then((response) => {
+    eos(connection, false, true).rpc.push_transaction(tx.transaction)
+      .then((response) => {
         if (actionName) {
           dispatch({
             payload: Object.assign({}, actionPayload, { tx: response }),
@@ -113,14 +113,14 @@ export function signTransaction(tx, contract = false) {
     const {
       connection
     } = getState();
-    const signer = eos(connection, true);
+    const signer = eos(connection, true, true);
     // If a contract was specified along with the transaction, load it.
     if (contract && contract.account && contract.abi) {
       signer.fc.abiCache.abi(contract.account, contract.abi);
     }
     // Sign the transaction
     signer
-      .transaction(tx.transaction.transaction, {
+      .transact(tx.transaction.transaction, {
         broadcast: connection.broadcast,
         expireSeconds: connection.expireSeconds,
         sign: connection.sign
