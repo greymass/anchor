@@ -184,7 +184,7 @@ export function unlockWallet(password, useWallet = false) {
     }
     let account = accounts[wallet.account];
     if (settings.walletMode === 'hot' && !account) {
-      account = await eos(connection).getAccount(wallet.account);
+      account = await eos(connection, false, true).rpc.get_account(wallet.account);
     }
     const { address } = wallet;
     // Determine if a FIO address needs to be retrieved for usage purposes
@@ -274,7 +274,7 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
         httpEndpoint: blockchain.node
       });
 
-      await eos(modifiedConnection).getAccount(wallet.account);
+      await eos(modifiedConnection, false, true).rpc.get_account(wallet.account);
     }
 
     dispatch({

@@ -10,7 +10,13 @@ export function getGlobals() {
       type: types.SYSTEM_GET_GLOBALS_REQUEST
     });
     const { connection } = getState();
-    eos(connection).getTableRows(true, 'eosio', 'eosio', 'global').then((results) => dispatch({
+    const query = {
+      json: true,
+      code: 'eosio',
+      scope: 'eosio',
+      table: 'global',
+    };
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => dispatch({
       type: types.SYSTEM_GET_GLOBALS_SUCCESS,
       payload: { results }
     })).catch((err) => dispatch({
@@ -28,7 +34,7 @@ export function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS
       type: types.GET_CURRENCYSTATS_REQUEST
     });
     const { connection } = getState();
-    eos(connection).getCurrencyStats(account, symbol).then((results) => {
+    eos(connection, false, true).rpc.get_currency_stats(account, symbol).then((results) => {
       if (isEmpty(results)) {
         return dispatch({
           type: types.GET_CURRENCYSTATS_FAILURE,
@@ -73,7 +79,7 @@ export function getRamStats() {
       json: true
     };
 
-    eos(connection).getTableRows(query).then((results) => {
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => {
       const { rows } = results;
       const baseBalance = rows[0].base.balance.split(' ')[0];
       const quoteBalance = rows[0].quote.balance.split(' ')[0];
@@ -110,7 +116,7 @@ export function getRamPrice() {
       return;
     }
 
-    eos(connection).getTableRows(query).then((results) => dispatch({
+    eos(connection, false, true).rpc.get_table_rows(query).then((results) => dispatch({
       type: types.SYSTEM_RAMPRICE_SUCCESS,
       payload: {
         results,
