@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
 import { Header, Icon, Image, Menu } from 'semantic-ui-react';
 import { find } from 'lodash';
 
@@ -25,7 +27,7 @@ class SidebarContainer extends Component<Props> {
       settings,
     } = this.props;
     actions.setSetting('sidebarCollapsed', !settings.sidebarCollapsed);
-  }
+  };
   render() {
     const {
       actions,
@@ -34,6 +36,7 @@ class SidebarContainer extends Component<Props> {
       navigation,
       settings,
       system,
+      t,
       transaction,
       wallets,
     } = this.props;
@@ -111,7 +114,7 @@ class SidebarContainer extends Component<Props> {
         >
           <Icon name="home" size="large" />
           {(!settings.sidebarCollapsed)
-            ? <p>Home</p>
+            ? <p>{t('home')}</p>
             : false
           }
         </Menu.Item>
@@ -135,7 +138,7 @@ class SidebarContainer extends Component<Props> {
               >
                 <Icon name="id card" size="large" />
                 {(!settings.sidebarCollapsed)
-                  ? <p>Wallet</p>
+                  ? <p>{t('wallet')}</p>
                   : false
                 }
               </Menu.Item>
@@ -153,7 +156,7 @@ class SidebarContainer extends Component<Props> {
                   >
                     <Icon name="tachometer alternate" size="large" />
                     {(!settings.sidebarCollapsed)
-                      ? <p>Resources</p>
+                      ? <p>{t('resources')}</p>
                       : false
                     }
                   </Menu.Item>
@@ -172,7 +175,7 @@ class SidebarContainer extends Component<Props> {
               >
                 <Icon name="balance" size="large" />
                 {(!settings.sidebarCollapsed)
-                  ? <p>Governance</p>
+                  ? <p>{t('governance')}</p>
                   : false
                 }
               </Menu.Item>
@@ -186,21 +189,21 @@ class SidebarContainer extends Component<Props> {
                       name="tests"
                       color="red"
                       style={{ color }}
-                      >
+                    >
                       <Icon name="external" />
                       {(!settings.sidebarCollapsed)
                         ? 'URI TESTS'
                         : false
                       }
-                      </Menu.Item>
-                      <Menu.Item
+                    </Menu.Item>
+                    <Menu.Item
                       as="a"
                       active={module === 'devtest'}
                       onClick={this.onClick}
                       name="devtest"
                       color="orange"
                       style={{ color }}
-                      >
+                    >
                       <Icon name="lab" />
                       {(!settings.sidebarCollapsed)
                         ? 'DevTests'
@@ -230,7 +233,7 @@ class SidebarContainer extends Component<Props> {
             size="large"
           />
           {(!settings.sidebarCollapsed)
-            ? <p>Tools</p>
+            ? <p>{t('tools')}</p>
             : false
           }
         </Menu.Item>
@@ -332,4 +335,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarContainer));
+export default compose(
+  withRouter,
+  withTranslation('menu'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(SidebarContainer);
