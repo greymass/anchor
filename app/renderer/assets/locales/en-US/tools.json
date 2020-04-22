@@ -59,6 +59,7 @@
   "tools_change_block_explorer": "Change Block Explorer",
   "tools_change_block_explorer2": "Default Block Explorer",
   "tools_change_display_test_networks": "Enable Testnet Support",
+  "tools_change_dfuse_api_key": "dfuse API Key",
   "tools_change_language": "Change language",
   "tools_change_language2": "Displayed Language",
   "tools_change_node": "Change API node",

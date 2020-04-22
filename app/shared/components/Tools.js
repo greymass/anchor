@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
+import GlobalSettingsDfuse from './Global/Settings/Dfuse';
 import GlobalSettingsShowTestnets from './Global/Settings/ShowTestnets';
 import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
@@ -32,6 +33,15 @@ class Tools extends Component<Props> {
             />
           </Header>
           <Form>
+            <Form.Field>
+              <label>{t('tools_change_language2')}</label>
+              <GlobalSettingsLanguage
+                actions={actions}
+                setLanguage={settings.lang}
+                i18n={i18n}
+                selection
+              />
+            </Form.Field>
             {(settings.walletMode !== 'cold')
               ? (
                 <Form.Field>
@@ -45,15 +55,19 @@ class Tools extends Component<Props> {
                 </Form.Field>
               ) : false
             }
-            <Form.Field>
-              <label>{t('tools_change_language2')}</label>
-              <GlobalSettingsLanguage
-                actions={actions}
-                setLanguage={settings.lang}
-                i18n={i18n}
-                selection
-              />
-            </Form.Field>
+            {(settings.walletMode !== 'cold')
+              ? (
+                <Form.Field>
+                  <label>{t('tools_change_dfuse_api_key')}</label>
+                  <GlobalSettingsDfuse
+                    actions={actions}
+                    value={settings.dfuseKey}
+                  />
+                </Form.Field>
+              )
+              : false
+            }
+
             <Form.Field>
               <label>{t('tools_change_timeout')}</label>
               <GlobalSettingsIdleTimeout

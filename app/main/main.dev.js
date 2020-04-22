@@ -283,3 +283,4 @@ ipcMain.on('disableSigningRequests', disableSigningRequests);
 global.hardwareLedger = new HardwareLedger();
 global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;
+global.store = store;
