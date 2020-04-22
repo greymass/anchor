@@ -1,5 +1,7 @@
 {
   "producer_voting": "Producer Voting",
   "tools": "Tools",
-  "wallet": "Wallet"
+  "wallet": "Wallet",
+  "governance": "Governance",
+  "resources": "Resources"
 }
