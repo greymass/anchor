@@ -1,5 +1,4 @@
 {
-
   "edit": "Modifier la Wallet",
   "key_validation_account_not_found": "Le compte spécifié n'a pu être trouvé.",
   "key_validation_invalid_key": "La clé privée n'a pas pu être résolue en une clé publique. S'il vous plaît assurez-vous qu'elle a été entrée correctement.",

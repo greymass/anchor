@@ -1,5 +1,4 @@
 {
-
   "rex_interface_defund_button": "Retirer des fonds",
   "rex_interface_fund_balance": "{{balance}} {{chainSymbol}} disponible pour dépôt",
   "rex_interface_fund_button": "Fonds de dépôt",
