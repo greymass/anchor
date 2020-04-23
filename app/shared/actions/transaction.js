@@ -56,7 +56,10 @@ export function broadcastTransaction(tx, actionName = false, actionPayload = {})
     const {
       connection
     } = getState();
-    eos(connection, false, true).rpc.push_transaction(tx.transaction)
+    const signer = eos(connection, false, true)
+    const serializedTransaction = signer.api.serializeTransaction(tx.transaction.transaction);
+    const { signatures } = tx.transaction;
+    signer.rpc.push_transaction({ serializedTransaction, signatures })
       .then((response) => {
         if (actionName) {
           dispatch({
