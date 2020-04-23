@@ -6,7 +6,7 @@ const defaultContract = 'delphioracle';
 export function getPriceFeed(scope = 'eosusd') {
   return (dispatch: () => void, getState) => {
     const { connection } = getState();
-    if (!connection.supportedContracts.includes('delphioracle')) {
+    if (!connection || !connection.supportedContracts || !connection.supportedContracts.includes('delphioracle')) {
       return;
     }
     dispatch({
