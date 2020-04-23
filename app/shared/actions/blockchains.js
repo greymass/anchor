@@ -11,10 +11,14 @@ import * as types from './types';
 
 function swapBlockchain(chainId) {
   return (dispatch: () => void, getState) => {
-    const { blockchains, settings } = getState();
+    const { blockchains, connection, settings } = getState();
     const blockchain = find(blockchains, { chainId });
     // only swap if the entry exists
     if (blockchain) {
+      // Trigger event indicating swap
+      dispatch({
+        type: types.SYSTEM_BLOCKCHAIN_SWAP
+      });
       // clear the existing wallet
       dispatch(clearWallet());
       // clear all data caches
@@ -83,8 +87,17 @@ function importBlockchainFromBackup(blockchain) {
   };
 }
 
+function setNodeGeneric() {
+  return (dispatch: () => void) => {
+    return dispatch({
+      type: types.SET_CONNECTION_GENERIC_ENDPOINT
+    });
+  };
+}
+
 export default {
   importBlockchainFromBackup,
+  setNodeGeneric,
   swapBlockchain,
   updateBlockchain,
   updateBlockchainSetting,

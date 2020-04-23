@@ -11,6 +11,7 @@ import {
 import { Button, Divider, Grid, Header, Icon, Message, Modal, Segment } from 'semantic-ui-react';
 import { find } from 'lodash';
 
+import AuthorizationContainer from './Authorization';
 import DangerLink from '../../../containers/Global/DangerLink';
 import { setSettingWithValidation } from '../../../actions/settings';
 import { changeModule } from '../../../../modules/main/actions/navigation';
@@ -54,6 +55,7 @@ class DisconnectedContainer extends Component<Props> {
   render() {
     const {
       blockchain,
+      connection,
       settings,
       trigger,
       validate,
@@ -72,6 +74,19 @@ class DisconnectedContainer extends Component<Props> {
     const errorMessage = (validate.NODE_ERROR) ? validate.NODE_ERROR.message : false;
     // if no blockchain is selected, do not display
     if (!blockchain) return false;
+    // If this is an authorization issue
+    if (validate.NODE === 'FAILURE' && connection.dfuseEndpoint === true) {
+      return (
+        <AuthorizationContainer
+          manageBlockchains={this.manageBlockchains}
+          onClose={this.onClose}
+          onOpen={this.onOpen}
+          onRetry={this.onRetry}
+          open={open}
+          trigger={trigger}
+        />
+      );
+    }
     return (
       <Modal
         centered={false}
@@ -198,6 +213,7 @@ class DisconnectedContainer extends Component<Props> {
 function mapStateToProps(state) {
   return {
     blockchain: find(state.blockchains, { chainId: state.settings.chainId }),
+    connection: state.connection,
     settings: state.settings,
     validate: state.validate,
   };

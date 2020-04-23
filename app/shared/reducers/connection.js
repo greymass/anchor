@@ -10,7 +10,11 @@ const initialState = {
   chainKey: 'eos-mainnet',
   chainSymbol: 'EOS',
   eosioEndpoint: true,
+  // dfuse configuration
+  dfuseAuthorization: undefined,
+  dfuseAuthorizationExpires: undefined,
   dfuseEndpoint: false,
+  dfuseKey: undefined,
   hyperionEndpoint: false,
   expireSeconds: 120,
   // forceActionDataHex: false,
@@ -40,6 +44,11 @@ export default function connection(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
+    case types.SYSTEM_BLOCKCHAIN_SWAP: {
+      return Object.assign({}, state, {
+        dfuseEndpoint: false
+      });
+    }
     case types.SET_CHAIN_ID: {
       return Object.assign({}, state, {
         chainId: action.payload.chainId
@@ -62,7 +71,20 @@ export default function connection(state = initialState, action) {
       if (!useImmediately) {
         return state;
       }
-      return Object.assign({}, state, {
+      let dfuseSettings = {
+        dfuseKey: false,
+        dfuseAuthorization: false,
+        dfuseAuthorizationExpires: false,
+      }
+      if (state.dfuseEndpoint) {
+        dfuseSettings = {
+          dfuseKey: settings.dfuseKey,
+          dfuseAuthorization: settings.dfuseAuthorization,
+          dfuseAuthorizationExpires: settings.dfuseAuthorizationExpires,
+        }
+      }
+      console.log(state, settings, dfuseSettings)
+      return Object.assign({}, state, dfuseSettings, {
         authorization: [
           account,
           authorization || 'active',
@@ -111,6 +133,21 @@ export default function connection(state = initialState, action) {
     case types.SET_CONNECTION_HISTORY_PLUGIN_ENABLED: {
       return Object.assign({}, state, {
         historyPluginEnabled: action.payload.enabled
+      });
+    }
+    case types.SET_CONNECTION_GENERIC_ENDPOINT: {
+      return Object.assign({}, state, {
+        dfuseEndpoint: false,
+        dfuseAuthorization: undefined,
+        dfuseAuthorizationExpires: undefined,
+      });
+    }
+    case types.SET_CONNECTION_DFUSE_ENDPOINT: {
+      return Object.assign({}, state, {
+        dfuseAuthorization: action.payload.dfuseAuthorization,
+        dfuseAuthorizationExpires: action.payload.dfuseAuthorizationExpires,
+        dfuseEndpoint: true,
+        dfuseKey: (action.payload.dfuseKey) ? action.payload.dfuseKey : state.dfuseKey,
       });
     }
     case types.HARDWARE_LEDGER_TRANSPORT_FAILURE: {
