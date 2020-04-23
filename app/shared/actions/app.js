@@ -1,6 +1,6 @@
 import * as types from './types';
 import eos from './helpers/eos';
-import { httpQueue, httpClient } from '../utils/httpClient';
+import { httpClient, httpQueue } from '../utils/http/generic';
 
 export function downloadProgress(progress) {
   return (dispatch: () => void) => {
@@ -16,7 +16,7 @@ export const initApp = () => (dispatch: () => void) => dispatch({
 });
 
 export function getConstants() {
-  return (dispatch: () => void) => {
+  return async (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_GETCONSTANTS_PENDING
     });
@@ -28,7 +28,6 @@ export function getConstants() {
       table: 'constants',
       limit: 1000,
     };
-
     httpQueue.add(() =>
       httpClient
         .post('https://eos.greymass.com/v1/chain/get_table_rows', query)
