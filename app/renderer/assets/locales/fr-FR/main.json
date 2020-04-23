@@ -1,0 +1,13 @@
+{
+  "main_sections_overview_header": "System Token: {{chainSymbol}}",
+  "main_sections_overview_subheader": "The native resource token for this blockchain.",
+  "main_sections_overview_balances_header": "Tracked Tokens",
+  "main_sections_overview_balances_subheader": "The EOSIO token variants created on this blockchain.",
+  "main_sections_overview_governance_header": "Governance Statistics",
+  "main_sections_overview_governance_subheader": "A breakdown of all loaded accounts and their involvement in governance.",
+  "main_sections_overview_resources_header": "Resource Usage",
+  "main_sections_overview_resources_subheader": "The resource usage breakdown for all loaded accounts on this blockchain.",
+  "main_sections_overview_grid_header": "Account(s) Overview",
+  "main_sections_overview_grid_subheader": "Overview of accounts for this blockchain.",
+  "main_sections_overview_container_button": "Manage Wallets"
+}

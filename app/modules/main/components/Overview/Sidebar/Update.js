@@ -5,6 +5,7 @@ import { Button, Container, Form, Header, Icon, Image, Modal, Segment } from 'se
 import DangerLink from '../../../../../shared/containers/Global/DangerLink';
 import Logo from '../../../../../renderer/assets/images/anchor-logo-blue.svg';
 import packageJson from '../../../../../../package.json';
+import { withTranslation } from "react-i18next";
 
 const { ipcRenderer } = require('electron');
 
@@ -15,7 +16,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
   render() {
     const {
       constants,
-      settings,
+      t,
     } = this.props;
     const {
       open
@@ -61,7 +62,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
         <Segment attached="top" color="blue" textAlign="center">
           <Header>
             <Header.Subheader>
-              New Anchor Release
+              {t('main_components_overview_sidebar_update_subheader')}
             </Header.Subheader>
             v{constants.desktop}
           </Header>
@@ -95,7 +96,9 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
               </Header.Content>
             </Header>
             <Modal.Content>
-              <p>An update for Anchor is now available and information about this recent release is included below.</p>
+              <p>
+                {t('main_components_overview_sidebar_modal_paragraph_one')}
+              </p>
               <Form style={{ marginBottom: '1em' }}>
                 <Header size="tiny">
                   {constants.desktop} Release Notes
@@ -104,12 +107,14 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
                   {update.description}
                 </Form.TextArea>
               </Form>
-              <p>For further information about this release, please visit our GitHub releases page.</p>
+              <p>
+                {t('main_components_overview_sidebar_modal_paragraph_two')}
+              </p>
               <Container textAlign="center">
                 <DangerLink
                   content={(
                     <Form.Button
-                      content="View Update on GitHub"
+                      content={t('main_components_overview_sidebar_modal_button')}
                       icon="github"
                       primary
                     />
@@ -120,13 +125,13 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
             </Modal.Content>
             <Modal.Actions>
               <Header size="small">
-                Would you like to automatically update?
+                {t('main_components_overview_sidebar_modal_action_header')}
               </Header>
               <Button basic color='red' onClick={this.toggle}>
-                <Icon name='remove' /> No
+                <Icon name='remove' /> {t('main_components_overview_sidebar_modal_action_no')}
               </Button>
               <Button color='green' onClick={this.checkForUpdates}>
-                <Icon name='checkmark' /> Yes
+                <Icon name='checkmark' /> {t('main_components_overview_sidebar_modal_action_yes')}
               </Button>
             </Modal.Actions>
           </Modal>
@@ -136,4 +141,4 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
   }
 }
 
-export default OverviewSidebarUpdate;
+export default withTranslation('main')(OverviewSidebarUpdate);
