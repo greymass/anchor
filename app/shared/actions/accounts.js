@@ -694,7 +694,7 @@ export function getControlledAccounts(accounts) {
       settings
     } = getState();
     accounts.forEach((account) => {
-      eos(connection, false, true).history_get_controlled_accounts(account).then((results) => {
+      eos(connection, false, true).rpc.history_get_controlled_accounts(account).then((results) => {
         dispatch(getAccounts(results.controlled_accounts));
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
