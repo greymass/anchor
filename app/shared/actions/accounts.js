@@ -562,7 +562,11 @@ export function getAccountByKey(key) {
     } = getState();
     const { httpClient, httpQueue } = await createHttpHandler(connection);
     const handler = new EOSHandler(connection);
-    const convertedKey = handler.convert(key);
+    let convertedKey = handler.convert(key);
+    // Don't allow conversion with dfuse endpoints
+    if (connection.dfuseEndpoint) {
+      convertedKey = key;
+    }
     dispatch({
       type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
       payload: { key: convertedKey }
