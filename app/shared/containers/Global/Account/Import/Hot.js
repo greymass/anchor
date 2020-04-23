@@ -12,6 +12,8 @@ import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 import GlobalModalAccountImportPassword from './Password';
 
+import EOSAccount from '../../../../utils/EOS/Account';
+
 import * as AccountsActions from '../../../../actions/accounts';
 import * as SettingsActions from '../../../../actions/settings';
 import * as WalletActions from '../../../../actions/wallet';
@@ -73,6 +75,36 @@ class GlobalModalAccountImportHot extends Component<Props> {
     }
     this.setState({ selected });
   }
+  toggleAll = () => {
+    const { accounts, connection, wallets } = this.props;
+    const { publicKey } = this.state;
+    const matches = accounts.__lookups;
+    const selected = [];
+    // Generate possible combinations and exclude existing wallets
+    matches.forEach((account) => {
+      const data = accounts[account];
+      if (data) {
+        const authorizationList = new EOSAccount(data).getAuthorizations(publicKey);
+        authorizationList.forEach((authorization) => {
+          const existingWallet = wallets.find(wallet => (
+            authorization.perm_name === wallet.authorization
+            && account === wallet.account
+            && connection.chainId === wallet.chainId
+          ));
+          if (!existingWallet) {
+            selected.push(`${account}@${authorization.perm_name}`);
+          }
+        });
+      }
+    });
+    if (selected.length === this.state.selected.length) {
+      // Reset if everything is selected
+      this.setState({ selected: [] });
+    } else {
+      // otherwise add all auths to the list
+      this.setState({ selected });
+    }
+  }
   render() {
     const {
       accounts,
@@ -122,8 +154,20 @@ class GlobalModalAccountImportHot extends Component<Props> {
                 onChange={this.onChange}
                 value={value}
               />
+              {(value && matches.length > 0)
+                ? (
+                  <Button
+                    content="Toggle All"
+                    color="blue"
+                    onClick={this.toggleAll}
+                    size="small"
+                  />
+                )
+                : false
+              }
               <GlobalAccountImportElementsAccountList
                 publicKey={publicKey}
+                selected={selected}
                 toggleAccount={this.toggleAccount}
                 value={value}
               />

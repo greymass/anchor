@@ -14,6 +14,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
       accounts,
       connection,
       publicKey,
+      selected,
       system,
       t,
       value,
@@ -60,6 +61,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
                       return (
                         <List.Item>
                           <Checkbox
+                            checked={selected && selected.includes(auth)}
                             label={auth}
                             name={auth}
                             onChange={this.props.toggleAccount}
