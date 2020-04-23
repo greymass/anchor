@@ -1,5 +1,8 @@
 {
   "producer_voting": "Vote de Producteur",
   "tools": "Tools",
-  "wallet": "Portefeuille"
+  "wallet": "Portefeuille",
+  "governance": "Governance",
+  "resources": "Resources",
+  "home": "Accueil"
 }
