@@ -83,7 +83,6 @@ export default function connection(state = initialState, action) {
           dfuseAuthorizationExpires: settings.dfuseAuthorizationExpires,
         }
       }
-      console.log(state, settings, dfuseSettings)
       return Object.assign({}, state, dfuseSettings, {
         authorization: [
           account,
