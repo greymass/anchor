@@ -25,6 +25,11 @@
   "main_components_overview_menu_item_two": "Tokens",
   "main_components_overview_menu_item_three": "Resources",
   "main_components_overview_menu_item_four": "Governance",
+  "main_components_overview_no_token_balances": "No token balances being tracked",
+  "main_navigation_wallet_menu_item_one": "Transfer Tokens",
+  "main_navigation_wallet_menu_item_two": "Stake Tokens",
+  "main_navigation_wallet_menu_item_three": "RAM Exchange",
+
 
 
 
