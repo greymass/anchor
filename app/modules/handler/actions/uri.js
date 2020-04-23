@@ -4,7 +4,7 @@ import { Serialize } from 'eosjs2';
 
 import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
-import { httpClient } from '../../../shared/utils/httpClient';
+import { createHttpHandler } from '../../../shared/utils/http/handler';
 
 const { ipcRenderer } = require('electron');
 const transactionAbi = require('eosjs2/node_modules/eosjs/src/transaction.abi.json');
@@ -101,10 +101,11 @@ export function callbackURI(tx, blockchain, callback = false) {
 }
 
 export function callbackURIWithProcessed(callback) {
-  return (dispatch: () => void) => {
+  return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURICALLBACK_PENDING
     });
+    const { connection } = getState();
     const {
       background,
       payload,
@@ -126,6 +127,7 @@ export function callbackURIWithProcessed(callback) {
       });
     }
     // Otherwise execute background call
+    const { httpClient } = await createHttpHandler(connection);
     httpClient
       .post(s, payload)
       .then(() => dispatch({
