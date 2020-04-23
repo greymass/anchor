@@ -76,6 +76,10 @@ const toolSections = {
     }
   },
   tools_menu_third_party_services_header: {
+    tools_menu_dfuse_connection: {
+      modes: ['hot', 'ledger', 'watch'],
+      path: 'tools/dfuse'
+    },
     tools_menu_beos_crosschaintransfer: {
       modes: ['hot', 'ledger', 'watch'],
       path: 'tools/crosschain_transfer'
