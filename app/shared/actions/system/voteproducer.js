@@ -2,7 +2,7 @@ import * as types from '../types';
 
 import { getAccounts } from '../accounts';
 import eos from '../helpers/eos';
-import { httpClient } from '../../utils/httpClient';
+import { createHttpHandler } from '../../utils/http/handler';
 
 async function getAction(connection, account, authorization, producers, proxy, network = 'EOS', wallet = null) {
   const action = {
@@ -22,6 +22,7 @@ async function getAction(connection, account, authorization, producers, proxy, n
   };
   // Modify transaction for FIO
   if (network === 'FIO') {
+    const { httpClient } = await createHttpHandler(connection);
     const fees = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fee`, {
       end_point: 'vote_producer',
       fio_address: wallet.address,
