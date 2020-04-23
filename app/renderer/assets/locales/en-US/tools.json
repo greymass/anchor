@@ -220,6 +220,7 @@
   "tools_keys_key_validator_private_key": "Private Key",
   "tools_keys_key_validator_public_key": "Public Key",
   "tools_keys_key_validator_subheader": "Converts a Private Key into the associated Public Key",
+  "tools_menu_dfuse_connection": "API: dfuse",
   "tools_menu_advanced_header": "Advanced Tools",
   "tools_menu_airgrabs": "Airgrabs",
   "tools_menu_managekeys": "Manage Keys",
