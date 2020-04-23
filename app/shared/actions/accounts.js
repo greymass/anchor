@@ -259,7 +259,7 @@ export function processLoadedAccount(chainId, account, results) {
       dispatch(getDelegatedBalances(account));
     }
     // get rex balances
-    if (connection.supportedContracts.includes('rex')) {
+    if (connection.supportedContracts && connection.supportedContracts.includes('rex')) {
       dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
       dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
     }
