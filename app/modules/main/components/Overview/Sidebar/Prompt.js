@@ -1,6 +1,7 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { Button, Header, Segment } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
 
 const { ipcRenderer } = require('electron');
 
@@ -13,16 +14,16 @@ class OverviewSidebarPrompt extends PureComponent<Props> {
     } else {
       ipcRenderer.send('disableSigningRequests');
     }
-  }
+  };
   render() {
-    const { settings } = this.props;
+    const { settings, t } = this.props;
     return (
       <Segment attached="top" color="orange" textAlign="center">
         <Header size="tiny">
           <Header.Subheader>
-            EOSIO Signing Request
+            {t('main_components_overview_sidebar_prompt_subheader')}
           </Header.Subheader>
-          App Integration
+          {t('main_components_overview_sidebar_prompt_header')}
         </Header>
         <Button
           color={(settings.allowSigningRequests) ? 'orange' : 'green'}
@@ -36,4 +37,4 @@ class OverviewSidebarPrompt extends PureComponent<Props> {
   }
 }
 
-export default OverviewSidebarPrompt;
+export default withTranslation('main')(OverviewSidebarPrompt);

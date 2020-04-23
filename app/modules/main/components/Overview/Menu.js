@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
 
 class OverviewMenu extends Component<Props> {
   componentDidUpdate(prevProps, prevState) {
@@ -13,19 +14,20 @@ class OverviewMenu extends Component<Props> {
       stakedResources,
       view,
       viewChange,
+      t,
     } = this.props;
     return (
       <Menu pointing secondary size="small">
         <Menu.Item
           active={view === 'systemtokens'}
-          content="System Token"
+          content={t('main_components_overview_menu_item_one')}
           icon="cube"
           name="systemtokens"
           onClick={viewChange}
         />
         <Menu.Item
           active={view === 'balances'}
-          content="Tokens"
+          content={t('main_components_overview_menu_item_two')}
           icon="cubes"
           name="balances"
           onClick={viewChange}
@@ -34,7 +36,7 @@ class OverviewMenu extends Component<Props> {
           ? (
             <Menu.Item
               active={view === 'resources'}
-              content="Resources"
+              content={t('main_components_overview_menu_item_three')}
               icon="battery full"
               name="resources"
               onClick={viewChange}
@@ -44,7 +46,7 @@ class OverviewMenu extends Component<Props> {
         }
         <Menu.Item
           active={view === 'governance'}
-          content="Governance"
+          content={t('main_components_overview_menu_item_four')}
           icon="gavel"
           name="governance"
           onClick={viewChange}
@@ -54,4 +56,4 @@ class OverviewMenu extends Component<Props> {
   }
 }
 
-export default OverviewMenu;
+export default withTranslation('main')(OverviewMenu);
