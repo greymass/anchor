@@ -1,12 +1,13 @@
 import * as types from './types';
 
-import { httpClient } from '../utils/httpClient';
+import { createHttpHandler } from '../utils/http/handler';
 
 export function lookupFioNames(wallet) {
   return async (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
+    const { httpClient } = await createHttpHandler(connection);
     const response = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
       fio_public_key: wallet.pubkey
     });
