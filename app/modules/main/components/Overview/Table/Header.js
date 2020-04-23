@@ -1,13 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { Header, Icon, Popup, Table } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
 
 class OverviewTableHeader extends Component<Props> {
   render() {
     const {
-      settings,
       stakedResources,
       supportedContracts,
+      t,
       tokens,
       view
     } = this.props;
@@ -37,10 +38,10 @@ class OverviewTableHeader extends Component<Props> {
             ? (
               <React.Fragment>
                 <Table.HeaderCell textAlign="right">
-                  Total
+                  {t('main_components_overview_table_total')}
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="right">
-                  Available
+                  {t('main_components_overview_table_available')}
                 </Table.HeaderCell>
                 {(supportedContracts && supportedContracts.includes('delphioracle'))
                   ? (
@@ -53,7 +54,7 @@ class OverviewTableHeader extends Component<Props> {
                 {(stakedResources)
                   ? (
                     <Table.HeaderCell textAlign="right">
-                      Staked
+                      {t('main_components_overview_table_staked')}
                     </Table.HeaderCell>
                   )
                   : false
@@ -69,7 +70,7 @@ class OverviewTableHeader extends Component<Props> {
                 {(stakedResources)
                   ? (
                     <Table.HeaderCell textAlign="right">
-                      Delegated
+                      {t('main_components_overview_table_delegated')}
                     </Table.HeaderCell>
                   )
                   : false
@@ -77,7 +78,7 @@ class OverviewTableHeader extends Component<Props> {
                 {(stakedResources)
                   ? (
                     <Table.HeaderCell textAlign="right">
-                      Refunding
+                      {t('main_components_overview_table_refunding')}
                     </Table.HeaderCell>
                   )
                   : false
@@ -104,7 +105,8 @@ class OverviewTableHeader extends Component<Props> {
               <React.Fragment>
                 <Table.HeaderCell textAlign="right">
                   <Popup
-                    content="The strength of each vote, which is the sum of both staked CPU and NET of this account and any other account which has set this account as a proxy."
+                    content={t('main_components_overview_popup_one_content')}
+
                     inverted
                     trigger={(
                       <span>
@@ -113,14 +115,14 @@ class OverviewTableHeader extends Component<Props> {
                           inline
                           name="question circle outline"
                         />
-                        Vote Weight
+                        {t('main_components_overview_popup_one_trigger')}
                       </span>
                     )}
                   />
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="right">
                   <Popup
-                    content="The relative strength of the current vote against the strength of a vote cast today. The strength can be increased to 100% simply by casting your vote again."
+                    content={t('main_components_overview_popup_two_content')}
                     inverted
                     trigger={(
                       <span>
@@ -135,11 +137,11 @@ class OverviewTableHeader extends Component<Props> {
                   />
                 </Table.HeaderCell>
                 <Table.HeaderCell textAlign="right">
-                  Votes
+                  {t('main_components_overview_table_votes')}
                 </Table.HeaderCell>
                 <Table.HeaderCell>
                   <Popup
-                    content="The proxy set by this account. The staked voting weight is transfered from the current account and given to the proxy."
+                    content={t('main_components_overview_popup_three_content')}
                     inverted
                     trigger={(
                       <span>
@@ -148,7 +150,7 @@ class OverviewTableHeader extends Component<Props> {
                           inline
                           name="question circle outline"
                         />
-                        Proxy
+                        {t('main_components_overview_popup_three_trigger')}
                       </span>
                     )}
                   />
@@ -180,4 +182,4 @@ class OverviewTableHeader extends Component<Props> {
   }
 }
 
-export default OverviewTableHeader;
+export default withTranslation('main')(OverviewTableHeader);

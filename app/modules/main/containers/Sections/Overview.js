@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Container, Grid, Header, Label, Segment } from 'semantic-ui-react';
 
+import { withTranslation } from 'react-i18next';
+import compose from 'lodash/fp/compose';
+
 import OverviewSidebarContainer from './Overview/Sidebar';
 
 import NavigationActions from '../../actions/navigation';
@@ -22,6 +25,7 @@ class OverviewContainer extends Component<Props> {
       settings,
       stakedResources,
       supportedContracts,
+      t,
       wallets,
     } = this.props;
     const {
@@ -36,9 +40,10 @@ class OverviewContainer extends Component<Props> {
       case 'systemtokens': {
         header = (
           <Header>
-            System Token: {chainSymbol}
+            {t('main_sections_overview_system_tokens_header', { chainSymbol })}
+
             <Header.Subheader>
-              The native resource token for this blockchain.
+              {t('main_sections_overview_system_tokens_subheader')}
             </Header.Subheader>
           </Header>
         );
@@ -47,9 +52,9 @@ class OverviewContainer extends Component<Props> {
       case 'balances': {
         header = (
           <Header>
-            Tracked Tokens
+            {t('main_sections_overview_balances_header')}
             <Header.Subheader>
-              The EOSIO token variants created on this blockchain.
+              {t('main_sections_overview_balances_header')}
             </Header.Subheader>
           </Header>
         );
@@ -58,9 +63,9 @@ class OverviewContainer extends Component<Props> {
       case 'governance': {
         header = (
           <Header>
-            Governance Statistics
+            {t('main_sections_overview_governance_header')}
             <Header.Subheader>
-              A breakdown of all loaded accounts and their involvement in governance.
+              {t('main_sections_overview_governance_subheader')}
             </Header.Subheader>
           </Header>
         );
@@ -69,9 +74,9 @@ class OverviewContainer extends Component<Props> {
       case 'resources': {
         header = (
           <Header>
-            Resource Usage
+            {t('main_sections_overview_resources_header')}
             <Header.Subheader>
-              The resource usage breakdown for all loaded accounts on this blockchain.
+              {t('main_sections_overview_resources_subheader')}
             </Header.Subheader>
           </Header>
         );
@@ -84,8 +89,8 @@ class OverviewContainer extends Component<Props> {
           <Grid.Row>
             <Grid.Column width={12}>
               <Header
-                content="Account(s) Overview"
-                subheader="Overview of accounts for this blockchain."
+                content={t('main_sections_overview_grid_header')}
+                subheader={t('main_sections_overview_grid_subheader')}
               />
               <OverviewMenu
                 stakedResources={stakedResources}
@@ -144,7 +149,7 @@ class OverviewContainer extends Component<Props> {
                 >
                   <Button
                     basic
-                    content="Manage Wallets"
+                    content={t('main_sections_overview_container_button')}
                     icon="users"
                     onClick={() => this.props.actions.changeModule('manage/wallets')}
                   />
@@ -181,4 +186,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OverviewContainer);
+export default compose(
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(OverviewContainer);
