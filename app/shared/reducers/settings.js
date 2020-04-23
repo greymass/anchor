@@ -173,6 +173,9 @@ export default function settings(state = initialState, action) {
         [setting]: (state[setting]) ? state[setting] : initialState[setting]
       }), {}));
     }
+    case types.SET_CONNECTION_DFUSE_ENDPOINT: {
+      return Object.assign({}, state, action.payload);
+    }
     default: {
       return state;
     }
