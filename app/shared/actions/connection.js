@@ -1,6 +1,6 @@
 import * as types from './types';
 import eos from './helpers/eos';
-import { httpQueue, httpClient } from '../utils/httpClient';
+import { createHttpHandler } from '../utils/http/handler';
 
 export function setConnectionBroadcast(enable = true) {
   return (dispatch: () => void) => {
@@ -28,12 +28,13 @@ export function getSupportedCalls() {
 }
 
 export function getAvailableEndpoints() {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const { connection } = getState();
     const { httpEndpoint } = connection;
     dispatch({
       type: types.FEATURES_AVAILABLE_ENDPOINTS_PENDING,
     });
+    const { httpClient, httpQueue } = await createHttpHandler(connection);
     httpQueue.add(() =>
       httpClient
         .post(`${httpEndpoint}/v1/node/get_supported_apis`)

@@ -4,8 +4,9 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { addCustomTokenBeos } from './settings';
 import { getTable, getTableByBounds } from './table';
-import { httpQueue, httpClient } from '../utils/httpClient';
+import { createHttpHandler } from '../utils/http/handler';
 import EOSHandler from '../utils/EOS/Handler';
+
 const ecc = require('eosjs-ecc');
 
 export function clearAccountCache() {
@@ -85,7 +86,7 @@ export function claimUnstaked(owner) {
 }
 
 export function getContractHash(accountName) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_PENDING,
       payload: { account_name: accountName }
@@ -94,7 +95,7 @@ export function getContractHash(accountName) {
       connection,
       settings
     } = getState();
-
+    const { httpClient, httpQueue } = await createHttpHandler(connection);
     if (accountName && (settings.node || settings.node.length !== 0)) {
       httpQueue.add(() =>
         httpClient
@@ -287,9 +288,10 @@ export function processLoadedAccount(chainId, account, results) {
 }
 
 export function getAccounts(accounts = []) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const { connection, features } = getState();
     const { endpoints } = features;
+    const { httpClient, httpQueue } = await createHttpHandler(connection);
     if (endpoints['/v1/chain/get_accounts']) {
       httpQueue.add(() =>
         httpClient
@@ -394,12 +396,13 @@ function getSelectedTokens(connection, requestedTokens, settings) {
 }
 
 export function getCurrencyBalance(account, requestedTokens = false) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const {
       connection,
       features,
       settings
     } = getState();
+    const { httpClient, httpQueue } = await createHttpHandler(connection);
     const {
       endpoints
     } = features;
@@ -552,11 +555,12 @@ function formatBalances(balances, forcedSymbol = false) {
 }
 
 export function getAccountByKey(key) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     const {
       connection,
       settings
     } = getState();
+    const { httpClient, httpQueue } = await createHttpHandler(connection);
     const handler = new EOSHandler(connection);
     const convertedKey = handler.convert(key);
     dispatch({
@@ -619,7 +623,7 @@ export function getAccountByKey(key) {
 }
 
 export function getAccountByKeys(keys) {
-  return (dispatch: () => void, getState) => {
+  return async (dispatch: () => void, getState) => {
     // Prevent private keys from submitting if they somehow were saved as a public key
     const filtered = keys.filter((key) => !ecc.isValidPrivate(key))
     const {
@@ -627,6 +631,7 @@ export function getAccountByKeys(keys) {
       features,
       settings
     } = getState();
+    const { httpClient, httpQueue } = await createHttpHandler(connection);
     const {
       endpoints
     } = features;
