@@ -23,9 +23,9 @@ class MainIndexContainer extends Component<Props> {
   constructor(props) {
     super(props);
     const { actions, connectionStatus, settings } = props;
+    const { validateNode } = actions;
+    validateNode(settings.node, settings.chainId, false, true);
     if (connectionStatus !== 'SUCCESS' && settings.node) {
-      const { validateNode } = actions;
-      validateNode(settings.node, settings.chainId, false, true);
       this.state = {
         initialized: true
       };
