@@ -280,7 +280,18 @@ ipcMain.on('openUri', (event, data) => {
 ipcMain.on('enableSigningRequests', enableSigningRequests);
 ipcMain.on('disableSigningRequests', disableSigningRequests);
 
+// Allow setting of authorization headers globally
+ipcMain.on('setAuthorizationHeader', (e, token, expires) => {
+  log.info('setAuthorizationHeader');
+  store.dispatch({
+    type: types.SET_CONNECTION_DFUSE_ENDPOINT,
+    payload: {
+      dfuseAuthorization: token,
+      dfuseAuthorizationExpires: expires,
+    }
+  });
+});
+
 global.hardwareLedger = new HardwareLedger();
 global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;
-global.store = store;
