@@ -94,12 +94,18 @@ export default class EOSHandler {
               'content-type': 'application/json',
             },
             timeout: 10000,
-          });
+          }).catch((e) => e);
+          if (response.isAxiosError) {
+            return {
+              ok: false,
+              json: () => response.response.data
+            };
+          }
           // Return a response immitating what eosjs expects
           return {
             ok: true,
             json: () => response.data
-          }
+          };
         });
       }
     });
