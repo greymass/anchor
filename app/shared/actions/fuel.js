@@ -1,6 +1,6 @@
 import * as types from './types';
 
-import { httpQueue, httpClient } from '../utils/httpClient';
+import { httpQueue, httpClient } from '../utils/http/generic';
 
 const host = 'https://eos.greymass.com'
 

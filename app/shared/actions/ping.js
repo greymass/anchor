@@ -1,5 +1,5 @@
 import { find } from 'lodash';
-import { httpQueue, httpClient } from '../utils/httpClient';
+import { httpQueue, httpClient } from '../utils/http/generic';
 import * as types from './types';
 
 export function pingNode(endpoint, data = {}, path = '/v1/history/get_actions') {
