@@ -1,6 +1,5 @@
 import { decrypt } from '../wallet';
 import serialize from './ledger/serialize';
-const JsSignatureProvider = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig').default;
 import EOSHandler from '../../utils/EOS/Handler';
 
 const { remote } = require('electron');
@@ -51,14 +50,8 @@ export default function eos(connection, signing = false, v2 = false) {
     const promiseSigner = args => Promise.resolve(signProvider(args));
     decrypted.signProvider = promiseSigner;
     return Eos(decrypted);
-  } else {
-    decrypted.signProvider = undefined;
   }
 
-
-  if (v2) {
-    return new EOSHandler(decrypted)
-  }
-
-  return Eos(decrypted);
+  decrypted.signProvider = undefined;
+  return new EOSHandler(decrypted);
 }
