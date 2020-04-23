@@ -19,6 +19,11 @@ import anchorLogo from '../../../renderer/assets/images/anchor-logo.svg';
 import anchorText from '../../../renderer/assets/images/anchor-text.svg';
 import background from '../../../renderer/assets/images/geometric-background.svg';
 
+const { ipcRenderer } = require("electron");
+
+// Stupid hack to get electron handlers set
+ipcRenderer.send('setHttpHandler');
+
 class MainIndexContainer extends Component<Props> {
   constructor(props) {
     super(props);

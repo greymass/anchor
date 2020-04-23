@@ -71,19 +71,22 @@ export function validateNode(
   refreshAllAccounts = false,
 ) {
   return (dispatch: () => void, getState) => {
+    const {
+      blockchains,
+      connection,
+      settings,
+      wallets,
+    } = getState();
     dispatch({
-      node,
-      type: types.VALIDATE_NODE_PENDING
+      type: types.VALIDATE_NODE_PENDING,
+      payload: {
+        connection,
+        node,
+        settings,
+      }
     });
     // Ensure there's a value to test
     if (node || node.length !== 0) {
-      const {
-        blockchains,
-        connection,
-        settings,
-        wallets,
-      } = getState();
-
       let { host, protocol } = new URL(node);
       const { pathname } = new URL(node);
 
@@ -159,17 +162,44 @@ export function validateNode(
             },
             type: types.VALIDATE_NODE_FAILURE
           });
-        }).catch((error) => dispatch({
-          payload: {
-            blockchain: expectedBlockchain,
-            node: httpEndpoint,
-            error,
-            saveAsDefault,
-            settings,
-            useImmediately,
-          },
-          type: types.VALIDATE_NODE_FAILURE
-        }));
+        }).catch((error) => {
+          if (
+            error
+            && error.response
+            && error.response.data
+            && error.response.data.code
+            && error.response.data.code === 'auth_invalid_token_error'
+          ) {
+            if (!connection.dfuseEndpoint) {
+              dispatch({
+                type: types.SET_CONNECTION_DFUSE_ENDPOINT,
+                payload: {
+                  dfuseKey: settings.dfuseKey,
+                  dfuseAuthorization: settings.dfuseAuthorization,
+                  dfuseAuthorizationExpires: settings.dfuseAuthorizationExpires,
+                }
+              });
+              return setTimeout(() => dispatch(validateNode(
+                node,
+                expectedChainId,
+                saveAsDefault,
+                useImmediately,
+                refreshAllAccounts,
+              )), 500);
+            }
+          }
+          return dispatch({
+            payload: {
+              blockchain: expectedBlockchain,
+              node: httpEndpoint,
+              error,
+              saveAsDefault,
+              settings,
+              useImmediately,
+            },
+            type: types.VALIDATE_NODE_FAILURE
+          })
+        });
       } catch (error) {
         return dispatch({
           payload: {
