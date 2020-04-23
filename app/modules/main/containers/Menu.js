@@ -127,15 +127,20 @@ class MenuContainer extends Component<Props> {
             minWidth: '10em'
           }}
         />
-        <GlobalAppDisconnected
-          trigger={(
-            <Menu.Item
-              as="a"
-              content={<Icon circular color="red" inverted name="warning" />}
-            />
-          )}
-        />
         <Menu.Menu position="right">
+          <GlobalAppDisconnected
+            trigger={(
+              <Menu.Item
+                as="a"
+                content={(
+                  <Icon.Group size="large">
+                    <Icon color="red" name="wifi" />
+                    <Icon color="red" corner='bottom right' name='exclamation' />
+                  </Icon.Group>
+                )}
+              />
+            )}
+          />
           <WalletMode
             settings={settings}
           />
