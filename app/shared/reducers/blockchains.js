@@ -217,6 +217,15 @@ const knownChains = [
     testnet: true
   },
   {
+    _id: 'proton-mainnet',
+    chainId: '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
+    keyPrefix: 'EOS',
+    name: 'Proton',
+    node: 'https://proton.greymass.com/',
+    symbol: 'XPT',
+    testnet: false
+  },
+  {
     _id: 'proton-testnet',
     chainId: 'e0a0743522e90db0a1802632b90fc48272957f9c32e4d35639d769546c10b763',
     keyPrefix: 'EOS',
