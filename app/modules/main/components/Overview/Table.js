@@ -21,15 +21,16 @@ import GlobalAccountFragmentVoterInfoVotes from '../../../../shared/containers/G
 import GlobalAccountFragmentVoterInfoEffectiveness from '../../../../shared/containers/Global/Account/Fragment/VoterInfo/Effectiveness';
 import GlobalAccountFragmentVoterInfoWeightValue from '../../../../shared/containers/Global/Account/Fragment/VoterInfo/WeightValue';
 import GlobalAccountFragmentVoterInfoProxy from '../../../../shared/containers/Global/Account/Fragment/VoterInfo/Proxy';
+import { withTranslation } from "react-i18next";
 
 class OverviewTable extends Component<Props> {
   render() {
     const {
       chainSymbol,
-      pricefeed,
       settings,
       stakedResources,
       supportedContracts,
+      t,
       view,
       wallets,
     } = this.props;
@@ -224,7 +225,7 @@ class OverviewTable extends Component<Props> {
                         {(isEmpty(accountBalances))
                           ? (
                             <Table.Cell>
-                              No token balances being tracked
+                              {t('main_components_overview_no_token_balances')}
                             </Table.Cell>
                           )
                           : accountBalances[accountName]
@@ -272,4 +273,4 @@ class OverviewTable extends Component<Props> {
   }
 }
 
-export default OverviewTable;
+export default withTranslation('main')(OverviewTable);
