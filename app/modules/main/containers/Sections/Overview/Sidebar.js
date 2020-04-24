@@ -5,25 +5,26 @@ import { connect } from 'react-redux';
 import { find } from 'lodash';
 
 import { Header } from 'semantic-ui-react';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
 
 import { setSetting } from '../../../../../shared/actions/settings';
-
 import OverviewSidebarBackupContainer from './Sidebar/Backup';
 import GlobalSidebarPrompt from '../../../components/Overview/Sidebar/Prompt';
 import GlobalSidebarTelegram from '../../../components/Overview/Sidebar/Telegram';
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
 
 class OverviewSidebarContainer extends Component<Props> {
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     Object.entries(this.props).forEach(([key, val]) =>
-      prevProps[key] !== val && console.log(`Sidebar Prop '${key}' changed`)
-    );
+      prevProps[key] !== val && console.log(`Sidebar Prop '${key}' changed`));
   }
   render() {
     const {
       actions,
       app,
-      settings
+      settings,
+      t,
     } = this.props;
     const {
       constants
@@ -31,9 +32,9 @@ class OverviewSidebarContainer extends Component<Props> {
     return (
       <React.Fragment>
         <Header>
-          App Status
+          {t('main_components_overview_sidebar_header')}
           <Header.Subheader>
-            Important information and events for your Anchor wallet.
+            {t('main_components_overview_sidebar_subheader')}
           </Header.Subheader>
         </Header>
         <GlobalSidebarUpdate
@@ -68,4 +69,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OverviewSidebarContainer);
+export default compose(
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(OverviewSidebarContainer);

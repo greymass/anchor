@@ -14,7 +14,6 @@ import { setWalletMode } from '../../../../../shared/actions/wallet';
 
 import WelcomeImportContainer from '../../../../../shared/containers/Welcome/Import';
 
-import Logo from '../../../../../renderer/assets/images/anchor-logo-blue.svg';
 import LogoText from '../../../../../renderer/assets/images/anchor-text-blue.svg';
 
 class HomeInitializeContainer extends Component<Props> {
@@ -65,12 +64,12 @@ class HomeInitializeContainer extends Component<Props> {
               width: '192px',
             }}
           />
-          <p>Desktop EOSIO Wallet</p>
+          <p>{t('main_components_home_initialize_paragraph_one')}</p>
         </Segment>
         <Segment basic textAlign="center" style={{ margin: 0 }}>
           <p style={{ margin: '1em auto 3em' }}>
             <Button
-              content="Setup New Wallet"
+              content={t('main_components_home_initialize_button_one')}
               icon="sign-in"
               onClick={this.initialize}
               size="huge"
@@ -83,12 +82,12 @@ class HomeInitializeContainer extends Component<Props> {
           <Card centered raised style={{ marginTop: '1em' }}>
             <Card.Content>
               <Card.Description style={{ marginBottom: '1em' }}>
-                Do you have a backup file from either Anchor or eos-voter?
+                {t('main_components_home_initialize_card_description_one')}
               </Card.Description>
               <WelcomeImportContainer />
             </Card.Content>
             <Card.Content extra>
-              For Advanced Users:
+              {t('main_components_home_initialize_card_content_one')}
             </Card.Content>
             <Card.Content>
               <Button
@@ -125,6 +124,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomeInitializeContainer);

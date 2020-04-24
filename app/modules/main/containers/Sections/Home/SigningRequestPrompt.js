@@ -28,6 +28,8 @@ class HomeUpgradeContainer extends Component<Props> {
     });
   }
   render() {
+    const { t } = this.props;
+
     return (
       <React.Fragment>
         <Modal
@@ -42,22 +44,22 @@ class HomeUpgradeContainer extends Component<Props> {
           <Modal.Content>
             <Segment basic size="huge">
               <p>
-                Enabling app integrations will allow you to sign in to any supported application using this desktop Anchor wallet.
+                {t('main_components_home_signing_request_prompt_paragraph_one')}
               </p>
               <p style={{ fontSize: '0.85em' }}>
-                This can be toggled on or off from the sidebar on the Home screen at any time.
+                {t('main_components_home_signing_request_prompt_paragraph_two')}
               </p>
             </Segment>
           </Modal.Content>
           <Modal.Actions>
             <Button
-              content="No, remain disabled"
+              content={t('main_components_home_signing_request_prompt_button_one')}
               floated="left"
               onClick={this.onDisable}
               size="large"
             />
             <Button
-              content="Yes, enable app integrations"
+              content={t('main_components_home_signing_request_prompt_button_two')}
               onClick={this.onEnable}
               primary
               size="large"
@@ -87,6 +89,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomeUpgradeContainer);
