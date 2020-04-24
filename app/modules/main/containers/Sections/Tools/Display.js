@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
+import compose from 'lodash/fp/compose';
 
 const { ipcRenderer } = require('electron');
 
@@ -12,17 +13,19 @@ class ToolsDisplay extends Component<Props> {
     ipcRenderer.send('anchor-resize');
   }
   render = () => {
-    const { setupData } = this.props.settings
+    const { settings, t } = this.props;
+    const { setupData } = settings;
+
     return (
       <Segment>
         <Header>
-          Anchor Display Properties
+          {t('main_components_tools_display_header_one')}
         </Header>
         <Button
-          content="Reset Window Size"
+          content={t('main_components_tools_display_button')}
           onClick={this.reset}
         />
-        <Header attached="top" block content="Window Settings" size="small" />
+        <Header attached="top" block content={t('main_components_tools_display_header_two')} size="small" />
         <Segment attached="bottom">
           <Form >
             <Form.Group>
@@ -44,4 +47,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(ToolsDisplay));
+export default compose(
+  withTranslation('main'),
+  withRouter,
+  connect(mapStateToProps)
+)(ToolsDisplay);
