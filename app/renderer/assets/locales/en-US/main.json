@@ -48,7 +48,26 @@
   "main_components_overview_subheader_one": "Overview of resources for the selected account.",
   "main_components_overview_button_one": "Refresh",
   "main_components_overview_header_two": "Loading Account Data...",
-  "main_components_overview_subheader_two": "The data for this account is being fetched from an API server."
+  "main_components_overview_subheader_two": "The data for this account is being fetched from an API server.",
+  "main_components_governance_disabled_header": "Governance not available on this chain.",
+  "main_components_home_initialize_paragraph_one": "Desktop EOSIO Wallet",
+  "main_components_home_initialize_button_one": "Setup New Wallet",
+  "main_components_home_initialize_card_description_one": "Do you have a backup file from either Anchor or eos-voter?",
+  "main_components_home_initialize_card_content_one": "For Advanced Users:",
+  "main_components_home_signing_request_prompt_paragraph_one": "Enabling app integrations will allow you to sign in to any supported application using this desktop Anchor wallet.",
+  "main_components_home_signing_request_prompt_paragraph_two": "This can be toggled on or off from the sidebar on the Home screen at any time.",
+  "main_components_home_signing_request_prompt_button_one": "No, remain disabled",
+  "main_components_home_signing_request_prompt_button_two": "Yes, enable app integrations",
+  "main_components_home_upgrade_subheader_one": "Wallet Storage",
+  "main_components_home_upgrade_header_one": "Upgrading",
+  "main_components_home_upgrade_header_two": "Wallet Storage - Upgrade Required",
+  "main_components_home_upgrade_subheader_two": "The following wallets need to be upgraded before they can be accessed. Click the button below and enter your local wallet password to complete this process.",
+  "main_components_home_upgrade_button_one": "Upgrade Wallet Storage",
+  "main_components_home_upgrade_table_cell_one": "\"{{walletMode}}\" wallet storage - upgrade required",
+  "main_components_overview_sidebar_backup_subheader": "Last Backup",
+  "main_components_overview_sidebar_backup_header_never": "Never",
+  "main_components_overview_sidebar_header": "App Status",
+  "main_components_overview_sidebar_subheader": "Important information and events for your Anchor wallet.",
 
 
 
