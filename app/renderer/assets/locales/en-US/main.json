@@ -29,6 +29,26 @@
   "main_navigation_wallet_menu_item_one": "Transfer Tokens",
   "main_navigation_wallet_menu_item_two": "Stake Tokens",
   "main_navigation_wallet_menu_item_three": "RAM Exchange",
+  "main_components_overview_ram_subheader": "A <strong>size-based</strong> resource an account can use to <strong>store data</strong> within smart contracts.",
+  "main_components_overview_ram_grid_subheader": "RAM Owned",
+  "main_components_overview_ram_table_cell_one": "Value in EOS",
+  "main_components_overview_ram_table_cell_two": "RAM Price",
+  "main_components_overview_resource_grid_subheader_one": "A <strong>time-based</strong> resource an account uses while <strong>performing</strong> smart contract actions.",
+  "main_components_overview_resource_grid_subheader_two": "A <strong>size-based</strong> resource an account uses while <strong>sending data</strong> to the blockchain.",
+  "main_components_overview_resource_grid_subheader_three_available": "Available ",
+  "main_components_overview_resource_grid_subheader_three_used": "Used ",
+  "main_components_overview_resource_table_popup_one_content": "Allocated to {{resource}}",
+  "main_components_overview_resource_table_popup_one_trigger": "Staked Tokens",
+  "main_components_overview_resource_table_popup_two_content": "Includes delegated tokens from other accounts and rentals from REX.",
+  "main_components_overview_resource_table_popup_two_trigger": "Other Tokens",
+  "main_components_overview_resource_table_popup_three_content": "Tokens this account has staked previously which are now unstaking over the course of 3 days.",
+  "main_components_overview_resource_table_popup_three_trigger": "Unstaking",
+  "main_components_header_header_available": "Available",
+  "main_components_overview_header_one": "Resource Overview",
+  "main_components_overview_subheader_one": "Overview of resources for the selected account.",
+  "main_components_overview_button_one": "Refresh",
+  "main_components_overview_header_two": "Loading Account Data...",
+  "main_components_overview_subheader_two": "The data for this account is being fetched from an API server."
 
 
 
