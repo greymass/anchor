@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, Menu } from 'electron';
 import packageJson from '../../../package.json';
 
 import { configureIPC } from '../../../shared/electron/ipc';
@@ -8,6 +8,7 @@ import { windowStateKeeper } from '../../../shared/electron/windowStateKeeper';
 const { exec } = require('child_process');
 const log = require('electron-log');
 const path = require('path');
+const isMac = () => process.platform === 'darwin';
 
 require('electron-context-menu')();
 
@@ -54,13 +55,16 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
   });
 
   // macOS: Tell Chrome it should enable the "Always open" checkbox for the first ESR link
-  if (process.platform === 'darwin') {
+  if (isMac) {
     exec('defaults write com.google.Chrome ExternalProtocolDialogShowAlwaysOpenCheckbox -bool true');
   }
 
   // TODO: Needs proper hide/close logic independent of the primary ui
   ui.on('close', (e) => {
     if (ui.isVisible()) {
+      if (isMac) {
+        Menu.sendActionToFirstResponder('hide:');
+      }
       store.dispatch(clearURI());
       setTimeout(() => {
         ui.hide();
