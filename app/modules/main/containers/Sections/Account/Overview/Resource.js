@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
+
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
+
 import { Button, Container, Grid, Header, Icon, Popup, Progress, Segment, Table } from 'semantic-ui-react';
 
 import GlobalAccountFragmentResourcePercent from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
@@ -37,6 +41,7 @@ class AccountOverviewResource extends Component<Props> {
       connection,
       resource,
       settings,
+      t,
     } = this.props;
     const {
       expanded,
@@ -56,9 +61,11 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        A <strong>time-based</strong> resource an account uses
-                        {' '}
-                        while <strong>performing</strong> smart contract actions.
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: t('main_components_overview_resource_grid_subheader_one')
+                          }}
+                        />
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -73,9 +80,11 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        A <strong>size-based</strong> resource an account uses
-                        {' '}
-                        while <strong>sending data</strong> to the blockchain.
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: t('main_components_overview_resource_grid_subheader_two')
+                          }}
+                        />
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -94,8 +103,8 @@ class AccountOverviewResource extends Component<Props> {
                       />
                       <Header.Subheader>
                         {(settings.displayResourcesAvailable)
-                          ? 'Available '
-                          : 'Used '
+                          ? t('main_components_overview_resource_grid_subheader_three_available')
+                          : t('main_components_overview_resource_grid_subheader_three_available')
                         }
                         {resource.toUpperCase()}
                       </Header.Subheader>
@@ -179,7 +188,10 @@ class AccountOverviewResource extends Component<Props> {
                         type={resource}
                       />
                       <Header.Subheader>
-                        Allocated to {resource.toUpperCase()}
+                        {t(
+                          'main_components_overview_resource_grid_subheader_four',
+                          { resource: resource.toUpperCase() }
+                        )}
                       </Header.Subheader>
                     </Header>
                     <Progress
@@ -199,12 +211,12 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content="Tokens this account has staked to itself that can be unstaked."
+                            content={t('main_components_overview_resource_table_popup_one_content')}
                             inverted
                             position="center left"
                             trigger={(
                               <span>
-                                Staked Tokens
+                                {t('main_components_overview_resource_table_popup_one_trigger')}
                                 <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
                               </span>
                             )}
@@ -223,12 +235,12 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content="Includes delegated tokens from other accounts and rentals from REX."
+                            content={t('main_components_overview_resource_table_popup_two_content')}
                             inverted
                             position="center left"
                             trigger={(
                               <span>
-                                Other Tokens
+                                {t('main_components_overview_resource_table_popup_two_trigger')}
                                 <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
                               </span>
                             )}
@@ -247,12 +259,12 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content="Tokens this account has staked previously which are now unstaking over the course of 3 days."
+                            content={t('main_components_overview_resource_table_popup_three_content')}
                             inverted
                             position="center left"
                             trigger={(
                               <span>
-                                Unstaking
+                                {t('main_components_overview_resource_table_popup_three_trigger')}
                                 <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
                               </span>
                             )}
@@ -331,4 +343,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountOverviewResource));
+export default compose(
+  withTranslation('main'),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountOverviewResource);
