@@ -4,9 +4,8 @@ import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Dimmer, Header, Loader, Modal, Progress, Segment, Table } from 'semantic-ui-react';
+import { Button, Dimmer, Header, Loader, Modal, Table } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
-import { get } from 'dot-prop-immutable';
 
 import { changeModule } from '../../../actions/navigation';
 import { setSetting } from '../../../../../shared/actions/settings';
@@ -35,6 +34,7 @@ class HomeUpgradeContainer extends Component<Props> {
     const {
       completed,
       system,
+      t,
       total,
       upgradable,
     } = this.props;
@@ -59,9 +59,9 @@ class HomeUpgradeContainer extends Component<Props> {
                   color: 'white'
                 }}
               >
-                Wallet Storage
+                {t('main_components_home_upgrade_subheader_one')}
               </Header.Subheader>
-              Upgrading
+              {t('main_components_home_upgrade_header_one')}
             </Header>
           </Loader>
         </Dimmer>
@@ -71,8 +71,8 @@ class HomeUpgradeContainer extends Component<Props> {
         >
           <Modal.Header>
             <Header
-              content="Wallet Storage - Upgrade Required"
-              subheader="The following wallets need to be upgraded before they can be accessed. Click the button below and enter your local wallet password to complete this process."
+              content={t('main_components_home_upgrade_header_two')}
+              subheader={t('main_components_home_upgrade_subheader_two')}
               style={{ marginTop: 0 }}
             />
           </Modal.Header>
@@ -82,7 +82,7 @@ class HomeUpgradeContainer extends Component<Props> {
                 onSuccess={(password) => this.onClick(password)}
                 trigger={(
                   <Button
-                    content="Upgrade Wallet Storage"
+                    content={t('main_components_home_upgrade_button_one')}
                     primary
                   />
                 )}
@@ -108,7 +108,7 @@ class HomeUpgradeContainer extends Component<Props> {
                       />
                     </Table.Cell>
                     <Table.Cell>
-                      "{wallet.mode}" wallet storage - upgrade required
+                      {t('main_components_home_upgrade_table_cell_one', { walletMode: wallet.mode  })}
                     </Table.Cell>
                 </Table.Row>
               ))}
@@ -143,6 +143,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(HomeUpgradeContainer);
