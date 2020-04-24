@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
 
 import AccountHeader from './Header';

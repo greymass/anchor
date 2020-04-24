@@ -3,11 +3,15 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
+
 import { Button, Header, Segment } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
 import SettingsActions from '../../../../../../shared/actions/settings';
 import EOSWallet from '../../../../../../shared/utils/Anchor/Wallet';
+
 
 const { ipcRenderer } = require('electron');
 
@@ -52,10 +56,10 @@ class OverviewSidebarBackupContainer extends Component<Props> {
     const {
       buttonOnly,
       settings,
+      t,
     } = this.props;
     const {
       lastBackupDate,
-      lastBackupInvalidated,
     } = settings;
     const button = (
       <Button
@@ -72,7 +76,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
         <Segment color="purple" textAlign="center">
           <Header size="tiny">
             <Header.Subheader>
-              Last Backup
+              {t('main_components_overview_sidebar_backup_subheader')}
             </Header.Subheader>
             {(lastBackupDate)
               ? (
@@ -80,7 +84,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
                   date={lastBackupDate}
                 />
               )
-              : 'Never'
+              : t('main_components_overview_sidebar_backup_header_never')
             }
           </Header>
           {button}
@@ -109,4 +113,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OverviewSidebarBackupContainer);
+export default compose(
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(OverviewSidebarBackupContainer);
