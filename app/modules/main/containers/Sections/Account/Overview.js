@@ -105,14 +105,14 @@ class AccountOverview extends Component<Props> {
           <Button
             basic
             color="grey"
-            content="Refresh"
+            content={t('main_components_overview_button_one')}
             floated="right"
             icon="refresh"
             onClick={this.refresh}
           />
           <Header
-            content="Resource Overview"
-            subheader="Overview of resources for the selected account."
+            content={t('main_components_overview_header_one')}
+            subheader={t('main_components_overview_subheader_one')}
             style={{ margin: 0 }}
           />
         </Container>
@@ -145,9 +145,9 @@ class AccountOverview extends Component<Props> {
                   loading
                   name="circle notched"
                 />
-                Loading Account Data...
+                {t('main_components_overview_header_two')}
                 <Header.Subheader
-                  content="The data for this account is being fetched from an API server."
+                  content={t('main_components_overview_subheader_two')}
                 />
               </Header>
             </Segment>
