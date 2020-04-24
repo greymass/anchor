@@ -68,6 +68,13 @@
   "main_components_overview_sidebar_backup_header_never": "Never",
   "main_components_overview_sidebar_header": "App Status",
   "main_components_overview_sidebar_subheader": "Important information and events for your Anchor wallet.",
+  "main_components_tools_display_header_one": "Anchor Display Properties",
+  "main_components_tools_display_header_two": "Window Settings",
+  "main_components_tools_display_button": "Reset Window Size",
+  "main_components_tools_home_button": "V1 Tools Interface",
+  "main_components_tools_home_paragraph_one": "This feature requires a one of the following types of wallets:",
+  "main_components_tools_home_paragraph_two": "Select a compatible wallet to continue.",
+
 
 
 

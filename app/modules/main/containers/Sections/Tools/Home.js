@@ -138,7 +138,7 @@ class ToolsHome extends Component<Props> {
         <Segment style={{ margin: '0 0 15px' }}>
           <p>
             <Button
-              content="V1 Tools Interface"
+              content={t('main_components_tools_home_button')}
               icon="external"
               name="tools/v1"
               onClick={this.onClick}
@@ -162,14 +162,18 @@ class ToolsHome extends Component<Props> {
                       const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
                       const reason = (
                         <div>
-                          <p>This feature requires a one of the following types of wallets:</p>
+                          <p>
+                            {t('main_components_tools_home_paragraph_one')}
+                          </p>
                           <List>
                             {item.modes
                               .filter((m) => !!m)
                               .map((type) =>
                                 <List.Item content={`${String(type).toUpperCase()} Wallet`} />)}
                           </List>
-                          <p>Select a compatible wallet to continue.</p>
+                          <p>
+                            {t('main_components_tools_home_paragraph_two')}
+                          </p>
                         </div>
                       );
                       return (isValidItem)
