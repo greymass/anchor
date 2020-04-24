@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
+import compose from 'lodash/fp/compose';
+
 import { Button, Container, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
 
 import AccountOverviewRamBuy from './Ram/Buy';
@@ -26,12 +29,13 @@ class AccountOverviewRam extends Component<Props> {
   }
   toggleExpand = () => this.setState({
     expanded: !this.state.expanded
-  })
+  });
   render() {
     const {
       account,
       connection,
       settings,
+      t,
     } = this.props;
     const resource = 'ram';
     const {
@@ -50,7 +54,11 @@ class AccountOverviewRam extends Component<Props> {
                       marginTop: '0.35em',
                     }}
                   >
-                    A <strong>size-based</strong> resource an account can use to <strong>store data</strong> within smart contracts.
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: t('main_components_overview_ram_subheader')
+                      }}
+                    />
                   </Header.Subheader>
                 </Header.Content>
               </Header>
@@ -129,7 +137,7 @@ class AccountOverviewRam extends Component<Props> {
                         account={account}
                       />
                       <Header.Subheader>
-                        RAM Owned
+                        {t('main_components_overview_ram_grid_subheader')}
                       </Header.Subheader>
                     </Header>
                     <Progress
@@ -147,7 +155,7 @@ class AccountOverviewRam extends Component<Props> {
                       unstackable
                     >
                       <Table.Row>
-                        <Table.Cell collapsing>Value in EOS</Table.Cell>
+                        <Table.Cell collapsing>{t('main_components_overview_ram_table_cell_one')}</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentRamValue
                             account={account}
@@ -157,7 +165,7 @@ class AccountOverviewRam extends Component<Props> {
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell collapsing>RAM Price</Table.Cell>
+                        <Table.Cell collapsing>{t('main_components_overview_ram_table_cell_two')}</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentRamPrice
                             precision={8}
@@ -205,4 +213,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountOverviewRam));
+export default compose(
+  withTranslation('main'),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountOverviewRam);
