@@ -29,8 +29,8 @@ class OverviewTableHeader extends Component<Props> {
         <Table.Row>
           <Table.HeaderCell collapsing textAlign="right">
             <Header
-              content="Accounts"
-              subheader="Overview"
+              content={t('main_components_overview_table_header')}
+              subheader={t('main_components_overview_table_subheader')}
               size="tiny"
             />
           </Table.HeaderCell>

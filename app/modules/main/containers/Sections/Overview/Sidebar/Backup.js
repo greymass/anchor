@@ -64,7 +64,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
     const button = (
       <Button
         color="purple"
-        content="Backup"
+        content={t('main_sections_overview_sidebar_backup_button')}
         icon="save"
         onClick={this.backup}
         size="tiny"
