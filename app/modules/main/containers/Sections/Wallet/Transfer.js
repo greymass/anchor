@@ -59,7 +59,7 @@ class WalletTransferContainer extends Component<Props> {
     if (!settings.account || !balances[settings.account]) {
       return (
         <p>
-          {t('main_components_wallet_transfer_select')}
+          {t('main_sections_wallet_transfer_select')}
         </p>
       );
     }
@@ -90,9 +90,9 @@ class WalletTransferContainer extends Component<Props> {
             <Grid.Column width={(hasTransaction || isConfirming) ? 16 : 10}>
               <Segment color="blue" piled>
                 <Header>
-                  {t('main_components_wallet_transfer_header')}
+                  {t('main_sections_wallet_transfer_header')}
                   <Header.Subheader>
-                    {t('main_components_wallet_transfer_subheader')}
+                    {t('main_sections_wallet_transfer_subheader')}
                   </Header.Subheader>
                 </Header>
                 <GlobalAccountRequired>
@@ -134,9 +134,9 @@ class WalletTransferContainer extends Component<Props> {
               width={6}
             >
               <Header
-                content={t('main_components_wallet_transfer_grid_header_one')}
+                content={t('main_sections_wallet_transfer_grid_header_one')}
                 size="small"
-                subheader={t('main_components_wallet_transfer_grid_header_one')}
+                subheader={t('main_sections_wallet_transfer_grid_header_one')}
               />
               <GlobalAccountDropdownSelect
                 account={settings.account}
@@ -148,16 +148,16 @@ class WalletTransferContainer extends Component<Props> {
                 onSelect={this.swapAccount}
               />
               <Header
-                content={t('main_components_wallet_transfer_grid_header_two')}
+                content={t('main_sections_wallet_transfer_grid_header_two')}
                 size="small"
-                subheader={t('main_components_wallet_transfer_grid_subheader_two')}
+                subheader={t('main_sections_wallet_transfer_grid_subheader_two')}
               />
               <Table definition>
                 {(!filteredTokens || !filteredTokens.length)
                   ? (
                     <Table.Row>
                       <Table.Cell textAlign="center">
-                        {t('main_components_wallet_transfer_table_cell')}
+                        {t('main_sections_wallet_transfer_table_cell')}
                       </Table.Cell>
                     </Table.Row>
                   )

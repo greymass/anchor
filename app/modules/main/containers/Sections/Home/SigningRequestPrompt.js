@@ -44,22 +44,22 @@ class HomeUpgradeContainer extends Component<Props> {
           <Modal.Content>
             <Segment basic size="huge">
               <p>
-                {t('main_components_home_signing_request_prompt_paragraph_one')}
+                {t('main_sections_home_signing_request_prompt_paragraph_one')}
               </p>
               <p style={{ fontSize: '0.85em' }}>
-                {t('main_components_home_signing_request_prompt_paragraph_two')}
+                {t('main_sections_home_signing_request_prompt_paragraph_two')}
               </p>
             </Segment>
           </Modal.Content>
           <Modal.Actions>
             <Button
-              content={t('main_components_home_signing_request_prompt_button_one')}
+              content={t('main_sections_home_signing_request_prompt_button_one')}
               floated="left"
               onClick={this.onDisable}
               size="large"
             />
             <Button
-              content={t('main_components_home_signing_request_prompt_button_two')}
+              content={t('main_sections_home_signing_request_prompt_button_two')}
               onClick={this.onEnable}
               primary
               size="large"

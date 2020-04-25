@@ -64,12 +64,12 @@ class HomeInitializeContainer extends Component<Props> {
               width: '192px',
             }}
           />
-          <p>{t('main_components_home_initialize_paragraph_one')}</p>
+          <p>{t('main_sections_home_initialize_paragraph_one')}</p>
         </Segment>
         <Segment basic textAlign="center" style={{ margin: 0 }}>
           <p style={{ margin: '1em auto 3em' }}>
             <Button
-              content={t('main_components_home_initialize_button_one')}
+              content={t('main_sections_home_initialize_button_one')}
               icon="sign-in"
               onClick={this.initialize}
               size="huge"
@@ -82,12 +82,12 @@ class HomeInitializeContainer extends Component<Props> {
           <Card centered raised style={{ marginTop: '1em' }}>
             <Card.Content>
               <Card.Description style={{ marginBottom: '1em' }}>
-                {t('main_components_home_initialize_card_description_one')}
+                {t('main_sections_home_initialize_card_description_one')}
               </Card.Description>
               <WelcomeImportContainer />
             </Card.Content>
             <Card.Content extra>
-              {t('main_components_home_initialize_card_content_one')}
+              {t('main_sections_home_initialize_card_content_one')}
             </Card.Content>
             <Card.Content>
               <Button
