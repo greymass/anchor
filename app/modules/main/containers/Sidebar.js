@@ -272,7 +272,7 @@ class SidebarContainer extends Component<Props> {
             }}
           />
           {(!settings.sidebarCollapsed)
-            ? <p>Minimize Menu</p>
+            ? <p>{t('minimize')}</p>
             : false
           }
         </Menu.Item>

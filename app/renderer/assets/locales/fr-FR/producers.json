@@ -45,7 +45,7 @@
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "Total des votes",
   "producer_voter_voting_as": "Voter à la place de:",
-  "producer_welcome_header": "Bienvenue sur eos-voter",
+  "producer_welcome_header": "Bienvenue sur Anchor",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
@@ -60,7 +60,7 @@
   "producers_form_proxy_cancel": "Annuler",
   "producers_form_proxy_confirm": "Confirmer",
   "producers_form_proxy_confirming_change_text_one": "Cette action procurera vos votes par procuration",
-  "producers_form_proxy_confirming_change_text_two": "Tous les votes des producteurs exprimés par le proxy ci-dessus bénéficieront désormais de l'avantage et du poids de ces comptes jalonnés {{chainSymbol}}. Vous ne pourrez plus voter par vous-même.",
+  "producers_form_proxy_confirming_change_text_two": "Tous les votes des producteurs exprimés par le proxy ci-dessus bénéficieront désormais de l'avantage et du poids de ces comptes délégués {{chainSymbol}}. Vous ne pourrez plus voter par vous-même.",
   "producers_form_proxy_confirming_remove_text_one": "Vous êtes sur le point de supprimer",
   "producers_form_proxy_confirming_remove_text_two": "en tant que votant mandataire. Ensuite, vous pourrez voter à nouveau ou définir un autre compte proxy.",
   "producers_form_proxy_current_votes": "Votes actuels",
@@ -118,5 +118,8 @@
   "producers_voter_preview_confirm_unselected": "Les producteurs de blocs suivants seront supprimés:",
   "producers_warning_have_unregistered_multiple": "Les producteurs de blocs ({{unregisteredBps}}) seront automatiquement supprimés de votre sélection car ils ne sont plus enregistrés.",
   "producers_warning_have_unregistered_single": "Le producteur de blocs ({{unregisteredBp}}) sera automatiquement supprimé de votre sélection car il n'est plus enregistré.",
-  "producers_warning_unregistered_producers_header": "Certains votes ont été automatiquement supprimés"
+  "producers_warning_unregistered_producers_header": "Certains votes ont été automatiquement supprimés",
+  "producers_header_vote_strength": "Poid de vote",
+  "producers_subheader_vote_strength": "Les votes décroissent avec le temps, rafraîchissez votre vote pour augmenter sa force.",
+  "producers_header_fio_address": "Une adresse FIO doit être enregistrée sur un nouveau compte avant de pouvoir voter."
 }
