@@ -10,7 +10,7 @@
   "draw_label_quantity ":" Quantité ",
   "remove_label_to": "{{type}} compte",
   "draw_label_token_and_quantity ":" Sélection de jeton + quantité ",
-  "draw_modal_title ":" Retirer / transférer les jetons de transfert ",
-  "draw_send_button_cta ":" Retirer des jetons ",
+  "draw_modal_title ":" Retirer / transférer les Tokens de transfert ",
+  "draw_send_button_cta ":" Retirer des Tokens ",
   "draw_send_button_cta_2 ":" Retrait / transfert de chaîne croisée de BEOS "
 }

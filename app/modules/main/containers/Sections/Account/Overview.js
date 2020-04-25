@@ -82,16 +82,15 @@ class AccountOverview extends Component<Props> {
     } = this.props;
     const {
       account,
-      expanded,
       loaded,
     } = this.state;
     if (!account || account === 'undefined') {
       return (
         <Segment>
           <Header>
-            No account selected!
+            {t('main_sections_overview_header_two')}
             <Header.Subheader>
-              Select an account to view its resources.
+              {t('main_sections_overview_subheader_two')}
             </Header.Subheader>
           </Header>
         </Segment>
@@ -178,6 +177,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(AccountOverview);
