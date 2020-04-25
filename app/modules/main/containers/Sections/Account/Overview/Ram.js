@@ -73,10 +73,14 @@ class AccountOverviewRam extends Component<Props> {
                       />
                       <Header.Subheader>
                         {(settings.displayResourcesAvailable)
-                          ? 'Available '
-                          : 'Used '
+                          ? t(
+                            'main_sections_overview_resource_grid_subheader_three_available',
+                            { resource: resource.toUpperCase() }
+                          ) : t(
+                            'main_sections_overview_resource_grid_subheader_three_used',
+                            { resource: resource.toUpperCase() }
+                          )
                         }
-                        {resource.toUpperCase()}
                       </Header.Subheader>
                     </Header>
                     <Segment basic style={{ padding: 0 }}>
@@ -96,7 +100,7 @@ class AccountOverviewRam extends Component<Props> {
                         unstackable
                       >
                         <Table.Row>
-                          <Table.Cell collapsing>Used</Table.Cell>
+                          <Table.Cell collapsing>{t('main_sections_overview_resource_used')}</Table.Cell>
                           <Table.Cell>
                             <GlobalAccountFragmentRamUsage
                               account={account}
@@ -104,7 +108,7 @@ class AccountOverviewRam extends Component<Props> {
                           </Table.Cell>
                         </Table.Row>
                         <Table.Row>
-                          <Table.Cell collapsing>Allowed</Table.Cell>
+                          <Table.Cell collapsing>{t('main_sections_overview_resource_allowed')}</Table.Cell>
                           <Table.Cell>
                             <GlobalAccountFragmentRamMax
                               account={account}

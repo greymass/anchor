@@ -49,7 +49,7 @@
   "wallet_mode_explain_undefined_2": "A 'Legacy Wallet' is a catch-all type for when the application isn't sure what kind of wallet this is. Either upgrade it or remove the account and reimport it to correct the problem.",
   "wallet_mode_explain_watch_2": "A 'Watch Wallet' refers to a wallet which has no Private Keys and cannot sign transactions, but can watch the account or create transaction files for signing in a 'Cold Wallet'.",
   "wallet_panel_form_account": "帐户名称",
-  "wallet_panel_form_create_wallet_body": "要使用eos-voter进行投票,请填写您的账户名称和私钥。",
+  "wallet_panel_form_create_wallet_body": "要使用Anchor进行投票,请填写您的账户名称和私钥。",
   "wallet_panel_form_create_wallet_header": "导入您的帐户",
   "wallet_panel_form_encrypt_wallet": "用密码保存/加密本地钱包？",
   "wallet_panel_form_key": "WIF /私钥",
