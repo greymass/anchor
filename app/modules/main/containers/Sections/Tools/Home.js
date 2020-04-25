@@ -86,7 +86,7 @@ const toolSections = {
     }
   },
   tools_menu_network_utilities_header: {
-    'API Performance Analysis': {
+    tools_menu_performance_header: {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_ping'
     },
@@ -138,7 +138,7 @@ class ToolsHome extends Component<Props> {
         <Segment style={{ margin: '0 0 15px' }}>
           <p>
             <Button
-              content={t('main_sections_tools_home_button')}
+              content={t('tools_menu_home_button')}
               icon="external"
               name="tools/v1"
               onClick={this.onClick}

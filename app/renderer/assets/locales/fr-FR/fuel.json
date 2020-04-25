@@ -1,0 +1,9 @@
+{
+  "fuel_paragraph_one": "Activez cette fonctionnalité pour profiter des transactions générées par Greymass Fuel.",
+  "fuel_paragraph_two": "Plus d'infos: {{linkComponent}}",
+  "fuel_button_one": "Désactiver le carburant",
+  "fuel_button_two": "Activer le carburant",
+  "fuel_paragraph_three": "Vos quotas restants sont les suivants:",
+  "fuel_progress_one": "Quota CPU",
+  "fuel_progress_two": "Quota NET"
+}
