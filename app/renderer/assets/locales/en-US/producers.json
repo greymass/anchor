@@ -48,7 +48,7 @@
   "producer_voter_unregistered_block_producers": "Unregistered Producers",
   "producer_voter_votes_used": "total votes cast",
   "producer_voter_voting_as": "Voting as:",
-  "producer_welcome_header": "Welcome to eos-voter",
+  "producer_welcome_header": "Welcome to Anchor",
   "producer_welcome_p1": "",
   "producer_welcome_p2": "",
   "producer_welcome_p3": "",
@@ -123,5 +123,8 @@
   "producers_voter_preview_confirm_unselected": "The following block producers will be removed:",
   "producers_warning_have_unregistered_multiple": "The block producers ({{unregisteredBps}}) will be automatically removed from your selection as they are now unregistered.",
   "producers_warning_have_unregistered_single": "The block producer ({{unregisteredBp}}) will be automatically removed from your selection as they are now unregistered.",
-  "producers_warning_unregistered_producers_header": "Some votes were automatically removed"
+  "producers_warning_unregistered_producers_header": "Some votes were automatically removed",
+  "producers_header_vote_strength": "Vote Strength",
+  "producers_subheader_vote_strength": "Votes decay over time, refresh your vote to increase its strength.",
+  "producers_header_fio_address": "A FIO address must be registered to a new account before voting is allowed."
 }

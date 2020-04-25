@@ -66,6 +66,7 @@ class OverviewTable extends Component<Props> {
         }
       });
     });
+
     return (
       <div style={{ overflowX: 'auto', maxWidth: '75vw' }}>
         <Table celled className="overview" compact size="small" striped unstackable>

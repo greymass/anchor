@@ -6,5 +6,6 @@
   "resources": "Resources",
   "home": "Home",
   "button_manage_wallets": "Manage Wallets",
-  "button_manage_blockchains": "Manage Blockchains"
+  "button_manage_blockchains": "Manage Blockchains",
+  "minimize": "Minimize Menu"
 }
