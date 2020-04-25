@@ -162,7 +162,6 @@ class Producers extends Component<Props> {
       system,
       t,
       tables,
-      validate,
       wallet
     } = this.props;
     const {
@@ -294,4 +293,4 @@ class Producers extends Component<Props> {
   }
 }
 
-export default withTranslation(['tools', 'producers'])(Producers);
+export default withTranslation('producers')(Producers);

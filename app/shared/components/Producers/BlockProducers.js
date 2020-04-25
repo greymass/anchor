@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Dimmer, Grid, Header, Loader, Placeholder, Segment, Visibility } from 'semantic-ui-react';
+import { Grid, Placeholder, Segment, Visibility } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 import { get } from 'dot-prop-immutable';
 
@@ -134,7 +134,6 @@ class BlockProducers extends Component<Props> {
     const {
       amount,
       display,
-      querying
     } = this.state;
 
     const account = accounts[settings.account];
