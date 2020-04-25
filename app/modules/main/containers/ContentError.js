@@ -23,7 +23,7 @@ class ContentErrorContainer extends Component<Props> {
       <Container fluid>
         <Segment size="large">
           <Header
-            content="Anchor has encountered an error"
+            content={t('main_content_error_header')}
             subheader=""
           />
           <p>
@@ -34,7 +34,7 @@ class ContentErrorContainer extends Component<Props> {
           </p>
           <Form>
             <Form.Field>
-              <label>Error Message</label>
+              <label>{t('main_content_error_label')}</label>
               <Form.TextArea
                 rows={12}
                 style={{ whiteSpace: 'nowrap' }}

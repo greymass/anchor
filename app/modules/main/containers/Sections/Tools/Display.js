@@ -19,13 +19,13 @@ class ToolsDisplay extends Component<Props> {
     return (
       <Segment>
         <Header>
-          {t('main_components_tools_display_header_one')}
+          {t('main_sections_tools_display_header_one')}
         </Header>
         <Button
-          content={t('main_components_tools_display_button')}
+          content={t('main_sections_tools_display_button')}
           onClick={this.reset}
         />
-        <Header attached="top" block content={t('main_components_tools_display_header_two')} size="small" />
+        <Header attached="top" block content={t('main_sections_tools_display_header_two')} size="small" />
         <Segment attached="bottom">
           <Form >
             <Form.Group>
