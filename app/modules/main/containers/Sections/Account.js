@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import AccountOverview from './Account/Overview';
-import NavigationWalletContainer from '../Navigation/Wallet';
+import { withTranslation } from "react-i18next";
 
 class AccountContainer extends Component<Props> {
   render() {
@@ -26,7 +26,7 @@ class AccountContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state, match) {
+function mapStateToProps() {
   return {
 
   };
@@ -34,10 +34,12 @@ function mapStateToProps(state, match) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({
-
-    }, dispatch)
+    actions: bindActionCreators({}, dispatch)
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountContainer));
+export default compose(
+  withRouter,
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountContainer);

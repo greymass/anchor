@@ -7,10 +7,8 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom';
-import { Button, Segment } from 'semantic-ui-react';
-import { connect } from 'react-redux';
 
-import GlobalBlockchainManage from '../../../../shared/containers/Global/Blockchain/Manage';
+import { connect } from 'react-redux';
 
 import ToolsAccounts from './Tools/Accounts';
 import ToolsAirgrabs from './Tools/Airgrabs';
@@ -36,7 +34,6 @@ import ToolsProxy from './Tools/Proxy';
 import ToolsRecommendations from './Tools/Recommendations';
 import ToolsResetApplication from './Tools/ResetApplication';
 import ToolsSmartContracts from './Tools/SmartContracts';
-import ToolsWallets from './Tools/Wallets';
 import ToolsWalletState from './Tools/WalletState';
 
 import Tools from '../../../../shared/containers/Tools';

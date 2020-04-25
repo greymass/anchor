@@ -17,14 +17,14 @@ const { store } = configureStore();
 export default class Root extends Component<Props> {
   state = {};
 
+  componentWillReceiveProps() {
+    this.setState({ error: null });
+  }
+
   componentDidCatch(error) {
     this.setState({
       error,
     });
-  }
-
-  componentWillReceiveProps() {
-    this.setState({ error: null });
   }
 
   render() {

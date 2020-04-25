@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Container, Form, Header, Segment } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
+
 import NavigationActions from '../actions/navigation';
 
 const { getCurrentWindow } = require('electron').remote;
@@ -12,8 +15,10 @@ class ContentErrorContainer extends Component<Props> {
   reset = () => {
     this.props.actions.changeModule('/');
     getCurrentWindow().reload();
-  }
+  };
   render = () => {
+    const { t } = this.props;
+
     return (
       <Container fluid>
         <Segment size="large">
@@ -22,13 +27,10 @@ class ContentErrorContainer extends Component<Props> {
             subheader=""
           />
           <p>
-            If this involved issuing a transaction on a blockchain, that action may have still
-            processed successfully - so before trying again, please check your account history to
-            verify whether or not the last operation succeeded.
+            {t('main_content_error_paragraph_one')}
           </p>
           <p>
-            To report this bug to the Anchor team, please use the Help > Report Bug feature and
-            let us know the contents of the error message below.
+            {t('main_content_error_paragraph_two')}
           </p>
           <Form>
             <Form.Field>
@@ -40,7 +42,7 @@ class ContentErrorContainer extends Component<Props> {
               />
             </Form.Field>
             <Form.Button
-              content="Reload Anchor"
+              content={t('main_content_error_button')}
               icon="refresh"
               onClick={this.reset}
               primary
@@ -68,4 +70,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContentErrorContainer);
+export default compose(
+  withRouter,
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(ContentErrorContainer);
