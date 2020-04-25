@@ -6,7 +6,6 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import { Segment } from 'semantic-ui-react';
 
 import NavigationGovernanceContainer from '../Navigation/Governance';
 import GovernanceProducersContainer from './Governance/Producers';
@@ -15,9 +14,6 @@ import GovernanceProxiesContainer from './Governance/Proxies';
 
 class ContentContainer extends Component<Props> {
   render = () => {
-    const {
-      settings,
-    } = this.props;
     return (
       <React.Fragment>
         <NavigationGovernanceContainer />

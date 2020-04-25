@@ -25,17 +25,13 @@ class WalletContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-
-  };
+function mapStateToProps() {
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({
-
-    }, dispatch)
+    actions: bindActionCreators({}, dispatch)
   };
 }
 

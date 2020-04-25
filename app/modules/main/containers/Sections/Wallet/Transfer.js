@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { filter, find } from 'lodash';
-import {
-  HashRouter,
-  Route,
-  Switch,
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import compose from 'lodash/fp/compose';
 
 import { Grid, Header, Segment, Table } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
 
 import GlobalAccountDropdownSelect from '../../../../../shared/containers/Global/Account/Dropdown/Select';
 import GlobalAccountFragmentTokenBalance from '../../../../../shared/containers/Global/Account/Fragment/TokenBalance';
@@ -27,19 +24,19 @@ import { useWallet } from '../../../../../shared/actions/wallets';
 class WalletTransferContainer extends Component<Props> {
   state = {
     isConfirming: false
-  }
+  };
   isConfirming = (value) => this.setState({ isConfirming: value })
   onClose = () => {
     this.props.actions.clearSystemState();
     this.setState({
       isConfirming: false
     });
-  }
+  };
   swapAccount = (e, { value }) => {
     const { actions } = this.props;
     const { chainId, account, authorization } = value;
     actions.useWallet(chainId, account, authorization);
-  }
+  };
   render() {
     const {
       isConfirming
@@ -53,14 +50,19 @@ class WalletTransferContainer extends Component<Props> {
       isLocked,
       settings,
       system,
+      t,
       wallet,
     } = this.props;
 
     if (!balances) return false;
 
-    if (!settings.account || !balances[settings.account]) return (
-      <p>Select an account</p>
-    );
+    if (!settings.account || !balances[settings.account]) {
+      return (
+        <p>
+          {t('main_components_wallet_transfer_select')}
+        </p>
+      );
+    }
 
     const transaction = system.TRANSFER_LAST_TRANSACTION;
     const tokens = Object.keys(balances[settings.account])
@@ -75,8 +77,8 @@ class WalletTransferContainer extends Component<Props> {
       const isSystemToken = (token === connection.chainSymbol);
       const isTracked = find(trackedTokens, { symbol: token });
       const hasBalance = balances[settings.account][token] > 0;
-      // console.log(token, isTracked, hasBalance, connection)
-      return ((isTracked || isSystemToken) && hasBalance)
+
+      return ((isTracked || isSystemToken) && hasBalance);
     });
 
     const hasTransaction = (transaction && transaction.transaction_id);
@@ -88,9 +90,9 @@ class WalletTransferContainer extends Component<Props> {
             <Grid.Column width={(hasTransaction || isConfirming) ? 16 : 10}>
               <Segment color="blue" piled>
                 <Header>
-                  Transfer Tokens
+                  {t('main_components_wallet_transfer_header')}
                   <Header.Subheader>
-                    Send tokens to another account, an exchange, or one of your contacts.
+                    {t('main_components_wallet_transfer_subheader')}
                   </Header.Subheader>
                 </Header>
                 <GlobalAccountRequired>
@@ -132,9 +134,9 @@ class WalletTransferContainer extends Component<Props> {
               width={6}
             >
               <Header
-                content="Selected Account"
+                content={t('main_components_wallet_transfer_grid_header_one')}
                 size="small"
-                subheader="The currently selected account will be used to perform the transfer."
+                subheader={t('main_components_wallet_transfer_grid_header_one')}
               />
               <GlobalAccountDropdownSelect
                 account={settings.account}
@@ -146,16 +148,16 @@ class WalletTransferContainer extends Component<Props> {
                 onSelect={this.swapAccount}
               />
               <Header
-                content="Tracked Balances"
+                content={t('main_components_wallet_transfer_grid_header_two')}
                 size="small"
-                subheader="Click any balance to automatically fill in the transfer form for that amount."
+                subheader={t('main_components_wallet_transfer_grid_subheader_two')}
               />
               <Table definition>
                 {(!filteredTokens || !filteredTokens.length)
                   ? (
                     <Table.Row>
                       <Table.Cell textAlign="center">
-                        No available balances being tracked.
+                        {t('main_components_wallet_transfer_table_cell')}
                       </Table.Cell>
                     </Table.Row>
                   )
@@ -165,7 +167,10 @@ class WalletTransferContainer extends Component<Props> {
                   <Table.Row>
                     <Table.Cell textAlign="right">{symbol}</Table.Cell>
                     <Table.Cell
-                      onClick={() => this.props.actions.transferSetAsset(balances[settings.account][symbol], symbol)}
+                      onClick={() => this.props.actions.transferSetAsset(
+                        balances[settings.account][symbol],
+                        symbol
+                      )}
                       style={{ cursor: 'pointer' }}
                     >
                       <GlobalAccountFragmentTokenBalance
@@ -214,4 +219,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletTransferContainer));
+export default compose(
+  withRouter,
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(WalletTransferContainer);

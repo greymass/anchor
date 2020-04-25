@@ -16,7 +16,7 @@ import OverviewTable from '../../components/Overview/Table';
 class OverviewContainer extends Component<Props> {
   state = {
     view: 'systemtokens'
-  }
+  };
   viewChange = (e, data) => this.setState({ view: data.name })
   render() {
     const {
