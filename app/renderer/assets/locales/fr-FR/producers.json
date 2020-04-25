@@ -37,7 +37,7 @@
   "producer_voter_preview_submit": "Soumissez vos Votes",
   "producer_voter_preview_transaction_successful_message": "Cette action a été enregistrée sur la Blockchain. Les identifiants de la transaction peuvent être trouvées ci-dessous.",
   "producer_voter_preview_transaction_successful_title": "Votes soumis avec succès",
-  "producer_voter_proxying_vote": "Currently selected proxy votes",
+  "producer_voter_proxying_vote": "Votes actuelles de votre proxy",
   "producer_voter_remove_all_votes_header": "Annuler tous les votes?",
   "producer_voter_remove_all_votes_subheader": "Si vous savegardez après avoir supprimé tous les votes existants, vous rejetez vos votes précédent.",
   "producer_voter_save_changes": "Submit votes for selected producers",

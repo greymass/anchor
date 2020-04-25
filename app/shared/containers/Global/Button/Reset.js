@@ -44,7 +44,7 @@ class GlobalButtonResetContainer extends Component<Props> {
           onClick={this.open}
         />
         <Confirm
-          content={t('tools_confirm_content_reset')}"This action will erase all private keys, settings, accounts and restore this application to its default state. Ensure you have a proper backup before proceeding."
+          content={t('tools_confirm_content_reset')}
           header={t('tools_confirm_header_reset')}
           open={this.state.open}
           onCancel={this.close}
