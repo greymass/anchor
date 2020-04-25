@@ -198,14 +198,14 @@ class Producers extends Component<Props> {
             ? (
               <Header block color="green" size="large">
                 <Header.Subheader style={{ marginBottom: '0.5em' }}>
-                  Vote Strength
+                  {t('producers_header_vote_strength')}
                 </Header.Subheader>
                 <GlobalAccountFragmentVoterInfoEffectiveness
                   account={account.account_name}
                 />
                 <Header.Subheader style={{ marginTop: '0.5em' }}>
                   <small>
-                    Votes decay over time, refresh your vote to increase its strength.
+                    {t('producers_subheader_vote_strength')}
                   </small>
                 </Header.Subheader>
               </Header>
@@ -273,12 +273,10 @@ class Producers extends Component<Props> {
     if (wallet.pubkey && wallet.pubkey.startsWith('FIO') && !wallet.address) {
       sidebar = (
         <Header block color="red" size="large" textAlign="center">
-          A FIO address must be registered to a new account before voting is allowed.
-          <Header.Subheader style={{ marginBottom: '0.5em' }}>
-
-          </Header.Subheader>
+          {t('producers_header_fio_address')}
+          <Header.Subheader style={{ marginBottom: '0.5em' }} />
         </Header>
-      )
+      );
     }
 
     return (

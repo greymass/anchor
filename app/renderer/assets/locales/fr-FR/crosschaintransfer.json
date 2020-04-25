@@ -9,7 +9,7 @@
   "crosschain_transfer_label_to": "{{type}} compte",
   "crosschain_transfer_label_from": "Compte d'origine",
   "crosschain_transfer_label_quantity": "Quantité",
-  "crosschain_transfer_label_token_and_quantity": "Sélection de jeton + quantité",
+  "crosschain_transfer_label_token_and_quantity": "Sélection de Token + quantité",
   "crosschain_transfer_account_validation_failed": "Validation du compte EOS Bitshares en cours de maintenance",
   "crosschain_transfer_label_memo": "Mémo de transfert entre chaînes (facultatif)"
 }

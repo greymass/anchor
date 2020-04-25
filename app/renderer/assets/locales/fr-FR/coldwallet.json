@@ -13,7 +13,7 @@
   "coldwallet_wallet_description": "Un mode hors ligne pour un stockage sécurisé",
   "coldwallet_wallet_workflow": "Exemple de workflow pour signer une transaction hors ligne:",
   "coldwallet_wallet_instructions_title": "Instructions d'utilisation",
-  "coldwallet_wallet_instructions_1": "Une Cold Wallet est conçu pour être utilisé en tandem avec une Watch Wallet. La Cold Wallet reste hors ligne à tout moment tandis que la Watch Wallet reste connecté au réseau. Les transactions sont créées sur la Watch Wallet, déplacées vers le Cold Portefeuille à signer, puis à nouveau dans la Watch Wallet pour diffuser. ",
+  "coldwallet_wallet_instructions_1": "Une Cold Wallet est conçu pour être utilisé en tandem avec une Watch Wallet. La Cold Wallet reste hors ligne à tout moment tandis que la Watch Wallet reste connecté au réseau. Les transactions sont créées sur la Watch Wallet, déplacées vers le Cold Wallet à signer, puis à nouveau dans la Watch Wallet pour diffuser. ",
   "coldwallet_wallet_instructions_2": "Configurez une Watch Wallet sur votre ordinateur principal qui sera utilisé pour créer des transactions. Vous n'importerez pas de clé privée dans cette Wallet.",
   "coldwallet_wallet_instructions_3": "Configurez une Cold Wallet sur un ordinateur secondaire qui ne sera JAMAIS connecté à Internet. Vos clés seront importées dans cette Wallet et cryptées avec votre mot de passe.",
   "coldwallet_wallet_instructions_4": "À l'aide de la Watch Wallet, créez une transaction comme vous le feriez normalement. Lorsque le flux de transactions vous invite à enregistrer la transaction en tant que fichier, faites-le et notez le nom du fichier.",
