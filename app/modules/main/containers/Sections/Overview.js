@@ -54,7 +54,7 @@ class OverviewContainer extends Component<Props> {
           <Header>
             {t('main_sections_overview_balances_header')}
             <Header.Subheader>
-              {t('main_sections_overview_balances_header')}
+              {t('main_sections_overview_balances_subheader')}
             </Header.Subheader>
           </Header>
         );

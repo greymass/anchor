@@ -1,6 +1,6 @@
 {
   "account_authority": "Account/Authority",
-  "application_name": "Настольное приложение для блокцепи EOS (eos-voter)",
+  "application_name": "Настольное приложение для блокцепи EOS (Anchor)",
   "application_version": "v1.0.3",
   "back": "Back",
   "block_height": "Номер Блока",
