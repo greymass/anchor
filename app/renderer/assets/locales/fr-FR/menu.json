@@ -4,5 +4,7 @@
   "wallet": "Portefeuille",
   "governance": "Governance",
   "resources": "Resources",
-  "home": "Accueil"
+  "home": "Accueil",
+  "button_manage_wallets": "Gérer les Wallets",
+  "button_manage_blockchains": "Gérer les Blockchains"
 }

@@ -37,6 +37,7 @@ class WalletPanelLocked extends Component<Props> {
             color="grey"
             name="lock"
           />
+          test
           {t('wallet_panel_locked')}
           <Header.Subheader>
             {t('wallet_panel_locked_subheader')}

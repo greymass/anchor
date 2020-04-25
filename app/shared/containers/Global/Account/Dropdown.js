@@ -38,9 +38,11 @@ class GlobalAccountDropdown extends PureComponent<Props> {
       selection,
       settings,
       style,
+      t,
       validate,
       wallet,
     } = this.props;
+
     const wallets = allwallets.filter(w => (w.chainId === settings.chainId));
     if (!wallets || wallets.length === 0) {
       return false;
@@ -86,7 +88,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
                 <Dropdown.Header>
                   <Button
                     basic
-                    content="Manage Wallets"
+                    content={t('button_manage_wallets')}
                     fluid
                     icon="users"
                     onClick={() => this.props.onNavigationChange('manage/wallets')}
@@ -146,7 +148,7 @@ class GlobalAccountDropdown extends PureComponent<Props> {
 }
 
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     allwallets: state.wallets,
     auths: state.auths,
@@ -166,6 +168,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('menu'),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalAccountDropdown);
