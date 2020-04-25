@@ -43,7 +43,7 @@ class HomeContainer extends Component<Props> {
     } else if (settings.walletMode === 'cold') {
       history.push('/home/coldwallet');
     }
-  }
+  };
   render() {
     const {
       settings,
@@ -99,9 +99,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({
-
-    }, dispatch)
+    actions: bindActionCreators({}, dispatch)
   };
 }
 
