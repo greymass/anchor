@@ -4,5 +4,7 @@
   "wallet": "Wallet",
   "governance": "Governance",
   "resources": "Resources",
-  "home": "Home"
+  "home": "Home",
+  "button_manage_wallets": "Manage Wallets",
+  "button_manage_blockchains": "Manage Blockchains"
 }

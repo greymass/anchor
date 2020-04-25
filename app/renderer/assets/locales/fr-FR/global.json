@@ -1,7 +1,7 @@
 {
   "account_registered_as_a_proxy_is_not_allowed_to_use_a_proxy": "Ce compte est actuellement enregistré en tant que proxy et ne peut pas définir un autre proxy sans d'abord se désinscrire en tant que proxy. Pour désinscrire ce compte, utilisez l'onglet Enregistrer le proxy de vote sur la page Outils.",
   "account_that_uses_a_proxy_is_not_allowed_to_become_a_proxy": "Ce compte a actuellement défini ses votes sur un autre proxy et ne peut pas s'enregistrer en tant que proxy. Pour supprimer le proxy défini, cliquez sur le bouton Modifier le proxy électeur sur la page de vote du producteur.",
-  "Can't_undelegate_bandwidth_until_the_chain_is_activated": "Cette blockchain doit encore avoir 15% de ses jetons jalonnés et par conséquent, le désengagement est actuellement désactivé. Une fois ce pourcentage atteint, vous pourrez retirer vos jetons.",
+  "Can't_undelegate_bandwidth_until_the_chain_is_activated": "Cette blockchain doit encore avoir 15% de ses Tokens jalonnés et par conséquent, le désengagement est actuellement désactivé. Une fois ce pourcentage atteint, vous pourrez retirer vos Tokens.",
   "erreur": "Erreur",
   "error_accountName_not_unique_in_contacts": "Ce nom de compte est déjà dans votre liste de contacts.",
   "error_account_does_not_exist": "Ce nom de compte n'existe pas.",
@@ -118,7 +118,7 @@
   "global_modal_settings_customtoken_confirm": "Confirmer l'ajout de jeton",
   "global_modal_settings_customtoken_confirm_issuer": "Token Issuer",
   "global_modal_settings_customtoken_confirm_maxsupply": "Token Maximum Supply",
-  "global_modal_settings_customtoken_confirm_supply": "Fourniture de jetons",
+  "global_modal_settings_customtoken_confirm_supply": "Fourniture de Tokens",
   "global_modal_settings_customtoken_description": "Entrez le compte de tout contrat de jeton personnalisé que vous souhaitez surveiller.",
   "global_modal_settings_customtoken_form_account_label": "Nom du compte du contrat",
   "global_modal_settings_customtoken_form_account_placeholder": "Entrez le nom du compte du contrat ...",

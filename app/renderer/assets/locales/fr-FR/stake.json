@@ -5,7 +5,7 @@
   "about_to_stake_units_to_net": "Vous êtes sur le point de mettre {{amount}} à la bande passante.",
   "about_to_unstake_from_cpu": "Vous êtes sur le point de désattribuer en CPU:",
   "about_to_unstake_from_net": "Vous êtes sur le point de désattribuer en bande passante:",
-  "about_to_unstake_tokens": "Vous êtes sur le point de retirer certains jetons, veuillez noter que tous les jetons qui ont été retirés devront être réclamés dans les 72 heures.",
+  "about_to_unstake_tokens": "Vous êtes sur le point de retirer certains Tokens, veuillez noter que tous les Tokens qui ont été retirés devront être réclamés dans les 72 heures.",
   "about_to_unstake_units_from_cpu": "Vous êtes sur le point de retirer {{amount}} du CPU.",
   "about_to_unstake_units_from_net": "Vous êtes sur le point de retirer {{amount}} de la bande passante.",
   "amount_in_cpu_after": "{{chainSymbol}} dans le CPU après",
