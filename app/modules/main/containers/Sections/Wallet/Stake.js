@@ -58,9 +58,9 @@ class WalletStakeContainer extends Component<Props> {
             <Grid.Column width={10}>
               <Segment color="blue" piled>
                 <Header>
-                  {t('main_components_wallet_stake_header')}
+                  {t('main_sections_wallet_stake_header')}
                   <Header.Subheader>
-                    {t('main_components_wallet_stake_subheader')}
+                    {t('main_sections_wallet_stake_subheader')}
                   </Header.Subheader>
                 </Header>
                 <GlobalAccountRequired>
@@ -85,7 +85,7 @@ class WalletStakeContainer extends Component<Props> {
                     )}
                     icon="microchip"
                     onClose={actions.clearSystemState}
-                    title={t('main_components_wallet_stake_transaction_title')}
+                    title={t('main_sections_wallet_stake_transaction_title')}
                     settings={settings}
                     system={system}
                     transaction={transaction}

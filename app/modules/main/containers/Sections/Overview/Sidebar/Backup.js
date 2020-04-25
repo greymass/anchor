@@ -76,7 +76,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
         <Segment color="purple" textAlign="center">
           <Header size="tiny">
             <Header.Subheader>
-              {t('main_components_overview_sidebar_backup_subheader')}
+              {t('main_sections_overview_sidebar_backup_subheader')}
             </Header.Subheader>
             {(lastBackupDate)
               ? (
@@ -84,7 +84,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
                   date={lastBackupDate}
                 />
               )
-              : t('main_components_overview_sidebar_backup_header_never')
+              : t('main_sections_overview_sidebar_backup_header_never')
             }
           </Header>
           {button}

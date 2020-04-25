@@ -85,7 +85,7 @@ class AccountHeader extends Component<Props> {
                       {' '}
                       {connection.chainSymbol}
                       <Header.Subheader>
-                        {t('main_components_header_header_available')}
+                        {t('main_sections_header_header_available')}
                       </Header.Subheader>
                     </Header>
                   </Grid.Column>
