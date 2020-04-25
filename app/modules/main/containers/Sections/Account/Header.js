@@ -69,7 +69,6 @@ class AccountHeader extends Component<Props> {
                         : 'OK'
                       }
                       <Header.Subheader>
-                        Status
                         {t('main_sections_header_subheader_one')}
                       </Header.Subheader>
                     </Header>

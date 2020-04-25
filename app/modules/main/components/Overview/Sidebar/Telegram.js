@@ -20,7 +20,7 @@ class OverviewSidebarTelegram extends PureComponent<Props> {
         </Header>
         <Button
           color="black"
-          content="Join Chat"
+          content={t('main_components_overview_sidebar_button')}
           icon="telegram"
           onClick={this.openLink}
           size="tiny"
