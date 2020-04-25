@@ -14,7 +14,7 @@ class VersionContainer extends Component<Props> {
 
     return (
       <Segment>
-        {t('main_components_disabled_segment')}
+        {t('main_sections_disabled_segment')}
       </Segment>
     );
   }

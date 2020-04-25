@@ -47,9 +47,9 @@ class WalletRamContainer extends Component<Props> {
           <Grid.Column width={10}>
             <Segment color="blue" piled>
               <Header>
-                {t('main_components_wallet_ram_header')}
+                {t('main_sections_wallet_ram_header')}
                 <Header.Subheader>
-                  {t('main_components_wallet_ram_subheader')}
+                  {t('main_sections_wallet_ram_subheader')}
                 </Header.Subheader>
               </Header>
               <GlobalAccountRequired>
