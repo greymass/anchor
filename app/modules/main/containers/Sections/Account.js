@@ -1,7 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+
 import { connect } from 'react-redux';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
+
 import {
   HashRouter,
   Route,
@@ -10,7 +14,6 @@ import {
 } from 'react-router-dom';
 
 import AccountOverview from './Account/Overview';
-import { withTranslation } from "react-i18next";
 
 class AccountContainer extends Component<Props> {
   render() {
@@ -27,9 +30,7 @@ class AccountContainer extends Component<Props> {
 }
 
 function mapStateToProps() {
-  return {
-
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

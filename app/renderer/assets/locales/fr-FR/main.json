@@ -102,7 +102,7 @@
   "main_sections_overview_governance_subheader": "Une ventilation de tous les comptes chargés et leur implication dans la gouvernance.",
   "main_sections_overview_resources_header": "Utilisation des ressources",
   "main_sections_overview_resources_subheader": "La répartition de l'utilisation des ressources pour tous les comptes chargés sur cette blockchain.",
-  "main_sections_overview_grid_header": "Présentation du ou des comptes",
+  "main_sections_overview_grid_header": "Présentation des comptes",
   "main_sections_overview_grid_subheader": "Présentation des comptes de cette blockchain.",
   "main_sections_overview_container_button": "Gérer les Wallets"
 }

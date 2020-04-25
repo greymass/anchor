@@ -1,11 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+
 import { connect } from 'react-redux';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
 
 import { Container, Form, Header, Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-import { withTranslation } from 'react-i18next';
 
 import NavigationActions from '../actions/navigation';
 
