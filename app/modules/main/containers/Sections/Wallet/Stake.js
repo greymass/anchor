@@ -4,12 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { get } from 'dot-prop-immutable';
 import { Decimal } from 'decimal.js';
-import {
-  HashRouter,
-  Route,
-  Switch,
-  withRouter
-} from 'react-router-dom';
+
+import { withRouter } from 'react-router-dom';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
 
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
@@ -27,13 +25,13 @@ class WalletStakeContainer extends Component<Props> {
     const {
       account,
       actions,
-      app,
       balances,
       blockExplorers,
       chain,
       connection,
       settings,
       system,
+      t,
       validate,
     } = this.props;
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
@@ -42,7 +40,7 @@ class WalletStakeContainer extends Component<Props> {
         <Segment
           content="disabled"
         />
-      )
+      );
     }
     const transaction = system.STAKE_LAST_TRANSACTION;
     let cpu_weight = 0;
@@ -60,9 +58,9 @@ class WalletStakeContainer extends Component<Props> {
             <Grid.Column width={10}>
               <Segment color="blue" piled>
                 <Header>
-                  Stake Tokens
+                  {t('main_components_wallet_stake_header')}
                   <Header.Subheader>
-                    Staking grants the accounts rights to resources on the network.
+                    {t('main_components_wallet_stake_subheader')}
                   </Header.Subheader>
                 </Header>
                 <GlobalAccountRequired>
@@ -87,7 +85,7 @@ class WalletStakeContainer extends Component<Props> {
                     )}
                     icon="microchip"
                     onClose={actions.clearSystemState}
-                    title="Update Staked"
+                    title={t('main_components_wallet_stake_transaction_title')}
                     settings={settings}
                     system={system}
                     transaction={transaction}
@@ -126,4 +124,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WalletStakeContainer));
+export default compose(
+  withRouter,
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(WalletStakeContainer);

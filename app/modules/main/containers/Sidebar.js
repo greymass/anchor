@@ -87,16 +87,16 @@ class SidebarContainer extends Component<Props> {
                 <p style={{
                   marginTop: '0.5rem',
                 }}>
-                <Image
-                  centered
-                  src={AnchorTextHorizontal}
-                  style={{
-                    fill: 'currentColor',
-                    marginTop: '1em',
-                    maxWidth: ((settings.sidebarCollapsed) ? '3em' : '6em'),
-                    width: ((settings.sidebarCollapsed) ? '3em' : '6em')
-                  }}
-                />
+                  <Image
+                    centered
+                    src={AnchorTextHorizontal}
+                    style={{
+                      fill: 'currentColor',
+                      marginTop: '1em',
+                      maxWidth: ((settings.sidebarCollapsed) ? '3em' : '6em'),
+                      width: ((settings.sidebarCollapsed) ? '3em' : '6em')
+                    }}
+                  />
                 </p>
               )
             : false

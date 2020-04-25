@@ -74,9 +74,23 @@
   "main_components_tools_home_button": "V1 Tools Interface",
   "main_components_tools_home_paragraph_one": "This feature requires a one of the following types of wallets:",
   "main_components_tools_home_paragraph_two": "Select a compatible wallet to continue.",
-
-
-
+  "main_components_wallet_ram_subheader": "Buy or Sell RAM into the automated market.",
+  "main_components_wallet_ram_header": "RAM Trading",
+  "main_components_wallet_transfer_header": "Transfer Tokens",
+  "main_components_wallet_transfer_subheader": "Send tokens to another account, an exchange, or one of your contacts.",
+  "main_components_wallet_transfer_select": "Select an account",
+  "main_components_wallet_transfer_grid_header_one": "Selected Account",
+  "main_components_wallet_transfer_grid_subheader_one": "The currently selected account will be used to perform the transfer.",
+  "main_components_wallet_transfer_grid_header_two": "Tracked Balances",
+  "main_components_wallet_transfer_grid_subheader_two": "Click any balance to automatically fill in the transfer form for that amount.",
+  "main_components_wallet_transfer_table_cell": "No available balances being tracked.",
+  "main_components_disabled_segment": "This section is not yet enabled.",
+  "main_content_error_paragraph_one": "If this involved issuing a transaction on a blockchain, that action may have still processed successfully - so before trying again, please check your account history to verify whether or not the last operation succeeded.",
+  "main_content_error_paragraph_two": "To report this bug to the Anchor team, please use the Help > Report Bug feature and let us know the contents of the error message below.",
+  "main_content_error_button":"Reload Anchor",
+  "main_components_wallet_stake_header": "Stake Tokens",
+  "main_components_wallet_stake_subheader": "Staking grants the accounts rights to resources on the network.",
+  "main_components_wallet_stake_transaction_title": "Update Staked",
 
 
   "main_sections_overview_header": "System Token: {{chainSymbol}}",
