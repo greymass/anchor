@@ -28,7 +28,6 @@ class WalletRamContainer extends Component<Props> {
     const {
       account,
       actions,
-      app,
       balances,
       blockExplorers,
       chain,
@@ -36,9 +35,8 @@ class WalletRamContainer extends Component<Props> {
       globals,
       settings,
       system,
-      validate,
+      t,
     } = this.props;
-    const transaction = system.STAKE_LAST_TRANSACTION;
     // Disable RAM markets on specific chains (Worbli)
     const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
     // Disable features based on distribution feature (BEOS)
@@ -49,9 +47,9 @@ class WalletRamContainer extends Component<Props> {
           <Grid.Column width={10}>
             <Segment color="blue" piled>
               <Header>
-                RAM Trading
+                {t('main_components_wallet_ram_header')}
                 <Header.Subheader>
-                  Buy or Sell RAM into the automated market.
+                  {t('main_components_wallet_ram_subheader')}
                 </Header.Subheader>
               </Header>
               <GlobalAccountRequired>
@@ -182,6 +180,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(WalletRamContainer);

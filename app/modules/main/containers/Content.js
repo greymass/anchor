@@ -7,7 +7,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { Container, Dimmer, Header, Loader } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import AccountContainer from './Sections/Account';
 import DevTestContainer from './Sections/DevTest';
