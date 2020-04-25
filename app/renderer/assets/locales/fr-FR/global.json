@@ -155,7 +155,7 @@
   "global_transaction_complete_warning_title": "La transaction n'est pas confirmée.",
   "global_transaction_full_details_content": "Les données complètes de cette transaction sont répertoriées ci-dessous.",
   "global_transaction_full_details_title": "Transaction complète",
-  "global_transaction_hardware_ledger_awaiting_device_header": "Confirmer la transaction sur le grand livre",
+  "global_transaction_hardware_ledger_awaiting_device_header": "Confirmer la transaction sur le Ledger",
   "global_transaction_hardware_ledger_awaiting_device_subheader": "Utilisez l'appareil lui-même pour confirmer les détails de la transaction.",
   "global_transaction_message_error_authorization_list_item_one": "La clé privée 'propriétaire' est actuellement importée, qui ne peut actuellement être utilisée que pour émettre la commande 'updateauth'.",
   "global_transaction_message_error_authorization_list_item_three": "Les autorisations de ce compte ne correspondent plus à la clé actuellement importée.",

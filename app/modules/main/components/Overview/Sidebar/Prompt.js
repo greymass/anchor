@@ -27,7 +27,9 @@ class OverviewSidebarPrompt extends PureComponent<Props> {
         </Header>
         <Button
           color={(settings.allowSigningRequests) ? 'orange' : 'green'}
-          content={(settings.allowSigningRequests) ? 'Disable' : 'Enable'}
+          content={(settings.allowSigningRequests) ?
+            t('main_components_overview_sidebar_prompt_button_disable') :
+            t('main_components_overview_sidebar_prompt_button_enable')}
           icon="power"
           onClick={this.toggleSigning}
           size="tiny"
