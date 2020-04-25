@@ -56,7 +56,7 @@ class AccountOverviewRam extends Component<Props> {
                   >
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: t('main_components_overview_ram_subheader')
+                        __html: t('main_sections_overview_ram_subheader')
                       }}
                     />
                   </Header.Subheader>
@@ -137,7 +137,7 @@ class AccountOverviewRam extends Component<Props> {
                         account={account}
                       />
                       <Header.Subheader>
-                        {t('main_components_overview_ram_grid_subheader')}
+                        {t('main_sections_overview_ram_grid_subheader')}
                       </Header.Subheader>
                     </Header>
                     <Progress
@@ -155,7 +155,7 @@ class AccountOverviewRam extends Component<Props> {
                       unstackable
                     >
                       <Table.Row>
-                        <Table.Cell collapsing>{t('main_components_overview_ram_table_cell_one')}</Table.Cell>
+                        <Table.Cell collapsing>{t('main_sections_overview_ram_table_cell_one')}</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentRamValue
                             account={account}
@@ -165,7 +165,7 @@ class AccountOverviewRam extends Component<Props> {
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell collapsing>{t('main_components_overview_ram_table_cell_two')}</Table.Cell>
+                        <Table.Cell collapsing>{t('main_sections_overview_ram_table_cell_two')}</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentRamPrice
                             precision={8}

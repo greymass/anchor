@@ -10,10 +10,10 @@ import { Segment } from 'semantic-ui-react';
 class GovernenceDisabled extends Component<Props> {
   render() {
     const { t } = this.props;
-    
+
     return (
       <Segment>
-        {t('main_components_governance_disabled_header')}
+        {t('main_sections_governance_disabled_header')}
       </Segment>
     );
   }

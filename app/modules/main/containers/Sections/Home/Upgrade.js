@@ -59,9 +59,9 @@ class HomeUpgradeContainer extends Component<Props> {
                   color: 'white'
                 }}
               >
-                {t('main_components_home_upgrade_subheader_one')}
+                {t('main_sections_home_upgrade_subheader_one')}
               </Header.Subheader>
-              {t('main_components_home_upgrade_header_one')}
+              {t('main_sections_home_upgrade_header_one')}
             </Header>
           </Loader>
         </Dimmer>
@@ -71,8 +71,8 @@ class HomeUpgradeContainer extends Component<Props> {
         >
           <Modal.Header>
             <Header
-              content={t('main_components_home_upgrade_header_two')}
-              subheader={t('main_components_home_upgrade_subheader_two')}
+              content={t('main_sections_home_upgrade_header_two')}
+              subheader={t('main_sections_home_upgrade_subheader_two')}
               style={{ marginTop: 0 }}
             />
           </Modal.Header>
@@ -82,7 +82,7 @@ class HomeUpgradeContainer extends Component<Props> {
                 onSuccess={(password) => this.onClick(password)}
                 trigger={(
                   <Button
-                    content={t('main_components_home_upgrade_button_one')}
+                    content={t('main_sections_home_upgrade_button_one')}
                     primary
                   />
                 )}
@@ -108,7 +108,7 @@ class HomeUpgradeContainer extends Component<Props> {
                       />
                     </Table.Cell>
                     <Table.Cell>
-                      {t('main_components_home_upgrade_table_cell_one', { walletMode: wallet.mode  })}
+                      {t('main_sections_home_upgrade_table_cell_one', { walletMode: wallet.mode  })}
                     </Table.Cell>
                 </Table.Row>
               ))}

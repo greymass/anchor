@@ -103,14 +103,14 @@ class AccountOverview extends Component<Props> {
           <Button
             basic
             color="grey"
-            content={t('main_components_overview_button_one')}
+            content={t('main_sections_overview_button_one')}
             floated="right"
             icon="refresh"
             onClick={this.refresh}
           />
           <Header
-            content={t('main_components_overview_header_one')}
-            subheader={t('main_components_overview_subheader_one')}
+            content={t('main_sections_overview_header_one')}
+            subheader={t('main_sections_overview_subheader_one')}
             style={{ margin: 0 }}
           />
         </Container>
@@ -143,9 +143,9 @@ class AccountOverview extends Component<Props> {
                   loading
                   name="circle notched"
                 />
-                {t('main_components_overview_header_two')}
+                {t('main_sections_overview_header_two')}
                 <Header.Subheader
-                  content={t('main_components_overview_subheader_two')}
+                  content={t('main_sections_overview_subheader_two')}
                 />
               </Header>
             </Segment>

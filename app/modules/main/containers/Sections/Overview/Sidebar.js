@@ -32,9 +32,9 @@ class OverviewSidebarContainer extends Component<Props> {
     return (
       <React.Fragment>
         <Header>
-          {t('main_components_overview_sidebar_header')}
+          {t('main_sections_overview_sidebar_header')}
           <Header.Subheader>
-            {t('main_components_overview_sidebar_subheader')}
+            {t('main_sections_overview_sidebar_subheader')}
           </Header.Subheader>
         </Header>
         <GlobalSidebarUpdate
