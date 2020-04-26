@@ -45,8 +45,8 @@ const fuelEndpoints = {
 
 function convertLegacyPublicKey(s) {
   let pubkey = s;
-  // Convert Alternative Legacy to EOS for this process
-  if (['FIO'].includes(s.substr(0, 3))) {
+  // Convert all legacy prefixes to EOS for this process
+  if (s.length === 53) {
     pubkey = pubkey.replace(/^.{3}/g, 'EOS');
   }
   // Convert Legacy Keys
