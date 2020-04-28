@@ -37,7 +37,7 @@
   "tools_blockchains_beos_crosschaintransfer_accept_subheader": "Avant de continuer, veuillez prendre un moment pour comprendre ce que cela signifie.",
   "tools_blockchains_beos_crosschaintransfer_explain_content": "Cet utilitaire vous permet de déposer / retirer des Tokens basés sur EOSIO d'une passerelle tierce. Actuellement, des échanges peuvent être effectués entre EOS (EOS Mainnet) et BEOS (BEOS Blockchain), permettant la transition entre EOS et BEOS . D'autres types d'échange seront ajoutés à mesure que la fonctionnalité de BEOS se développera et ces options seront disponibles ici. ",
   "tools_blockchains_beos_crosschaintransfer_explain_header": "Qu'est-ce qu'un transfert crosschain sur BEOS?",
-  "tools_blockchains_beos_crosschaintransfer_header": "Crosschain Transfer (BEOS)",
+  "tools_blockchains_beos_crosschaintransfer_header": "Transfert Inter-Blockchain (BEOS)",
   "tools_blockchains_beos_crosschaintransfer_instructions_understood": "Je comprends et j'accepte que cette application utilise des services de données tiers pour cette fonctionnalité.",
   "tools_blockchains_blockchain": "Blockchain",
   "tools_blockchains_chainid": "API du serveur / ID de chaîne attendue",
@@ -204,6 +204,7 @@
   "tools_keys_key_validator_subheader": "Convertit une clé privée en clé publique associée",
   "tools_menu_advanced_header": "Outils avancés",
   "tools_menu_airgrabs": "Liste de Airgrabs",
+  "tools_menu_managekeys": "Gérer Clefs",
   "tools_menu_beos_crosschaintransfer": "Crosschain Transfer (BEOS)",
   "tools_menu_blockchains": "Gérer les blockchains",
   "tools_menu_contacts": "Contacts",
@@ -335,5 +336,12 @@
   "tools_wallets_mode": "Mode de Wallet",
   "tools_wallets_remove": "Supprimer le Wallet",
   "tools_wallets_subheader": "Ajoutez, supprimez et échangez entre les différentes Wallets chargés dans l'application.",
-  "tools_wallets_swap": "Utiliser la Wallet"
+  "tools_wallets_swap": "Utiliser la Wallet",
+  "tools_keys_management_header": "Gestion des clés",
+  "tools_keys_management_button": "Importer la clé",
+  "tools_keys_management_confirm_content": "Ces clés n'ont PAS été enregistrées par Anchor et seront perdues à moins que vous ne les ayez sauvegardées ailleurs. Avant de les utiliser, assurez-vous qu'elles sont correctement sauvegardées.",
+  "tools_keys_management_confirm_header": "Êtes-vous sûr?",
+  "tools_keys_management_header_cell_one": "Clé publique",
+  "tools_keys_management_header_cell_two": "Chemin de dérivation",
+  "tools_keys_management_header_cell_three": "Comptes"
 }
