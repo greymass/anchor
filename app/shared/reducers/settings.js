@@ -1,5 +1,5 @@
 import { get, set } from 'dot-prop-immutable';
-
+import { pull, uniq } from 'lodash';
 import * as types from '../actions/types';
 
 const initialState = {
@@ -68,6 +68,8 @@ const initialState = {
   lastFilePath: '',
   // The node to connect to
   node: '',
+  // Blockchains pinned to the menu bar
+  pinnedBlockchains: [],
   // Whether or not the UI has prompted for enabling signing requests
   promptSigningRequests: false,
   // Recent names that the wallet has bid on.
@@ -175,6 +177,19 @@ export default function settings(state = initialState, action) {
     }
     case types.SET_CONNECTION_DFUSE_ENDPOINT: {
       return Object.assign({}, state, action.payload);
+    }
+    case types.SYSTEM_BLOCKCHAINS_PIN: {
+      return Object.assign({}, state, {
+        pinnedBlockchains: uniq([
+          ...state.pinnedBlockchains || [],
+          action.payload.chainId,
+        ]),
+      });
+    }
+    case types.SYSTEM_BLOCKCHAINS_UNPIN: {
+      return Object.assign({}, state, {
+        pinnedBlockchains: pull(state.pinnedBlockchains, action.payload.chainId),
+      });
     }
     default: {
       return state;
