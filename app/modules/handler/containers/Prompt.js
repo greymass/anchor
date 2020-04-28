@@ -148,7 +148,9 @@ class PromptContainer extends Component<Props> {
     } = prompt;
 
     const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
-    const shouldBroadcast = prompt.broadcast;
+    const shouldBroadcast = (prompt && prompt.resolved && prompt.resolved.request && prompt.resolved.request.shouldBroadcast)
+      ? prompt.resolved.request.shouldBroadcast()
+      : false;
     const hasBroadcast =
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
     const hasIssuedCallback = prompt.callbackExecuted;
