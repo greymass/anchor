@@ -1,6 +1,7 @@
 import * as types from './types';
 import eos from './helpers/eos';
 import { httpClient, httpQueue } from '../utils/http/generic';
+import { find } from 'lodash';
 
 export function downloadProgress(progress) {
   return (dispatch: () => void) => {
@@ -16,11 +17,24 @@ export const initApp = () => (dispatch: () => void) => dispatch({
 });
 
 export function getConstants() {
-  return async (dispatch: () => void) => {
+  return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GETCONSTANTS_PENDING
     });
 
+    // To ensure this works with wallets that haven't configured EOS, specify a default
+    let api = 'https://eos.greymass.com';
+
+    // Find the blockchain configuration for EOS
+    const { blockchains } = getState();
+    const blockchain = find(blockchains, { chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' });
+
+    // If the blockchain exists, and a node is specified, use that node for this call
+    if (blockchain && blockchain.node) {
+      api = blockchain.node;
+    }
+
+    // The query to perform to load the anchorwallet contract
     const query = {
       json: true,
       code: 'anchorwallet',
@@ -28,9 +42,10 @@ export function getConstants() {
       table: 'constants',
       limit: 1000,
     };
+
     httpQueue.add(() =>
       httpClient
-        .post('https://eos.greymass.com/v1/chain/get_table_rows', query)
+        .post(`${api}/v1/chain/get_table_rows`, query)
         .then((response) => {
           const { rows } = response.data;
           const data = rows.reduce((map, { key, value }) => {
@@ -45,6 +60,7 @@ export function getConstants() {
               [key]: parsed
             };
           }, {});
+          console.log(data)
           return dispatch({
             type: types.SYSTEM_GETCONSTANTS_SUCCESS,
             payload: { data }
