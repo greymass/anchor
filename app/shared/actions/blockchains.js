@@ -87,6 +87,24 @@ function importBlockchainFromBackup(blockchain) {
   };
 }
 
+function pinBlockchain(chainId) {
+  return (dispatch: () => void) => {
+    return dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_PIN,
+      payload: { chainId },
+    });
+  };
+}
+
+function unpinBlockchain(chainId) {
+  return (dispatch: () => void) => {
+    return dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_UNPIN,
+      payload: { chainId },
+    });
+  };
+}
+
 function setNodeGeneric() {
   return (dispatch: () => void) => {
     return dispatch({
@@ -107,9 +125,11 @@ function resyncBlockchains() {
 
 export default {
   importBlockchainFromBackup,
+  pinBlockchain,
   resyncBlockchains,
   setNodeGeneric,
   swapBlockchain,
+  unpinBlockchain,
   updateBlockchain,
   updateBlockchainSetting,
 };

@@ -39,12 +39,21 @@ class GlobalBlockchainDropdown extends Component<Props> {
       blockchain = find(blockchains, { chainId: selected });
     }
     const options = blockchains
-      .filter(b => (
-        (
-          settings.blockchains.includes(b.chainId)
-        )
-        && b.chainId !== blockchain.chainId
-      ))
+      .filter(b => {
+        const { pinnedBlockchains } = settings;
+        const hasPins = (pinnedBlockchains && pinnedBlockchains.length > 0);
+        const isEnabled = settings.blockchains.includes(b.chainId);
+        const isCurrent = b.chainId === blockchain.chainId;
+        const isPinned = (hasPins && pinnedBlockchains.includes(b.chainId));
+        return (
+          !isCurrent
+          && isEnabled
+          && (
+            !hasPins
+            || isPinned
+          )
+        );
+      })
       .sort((a, b) => a.name > b.name)
       .map((b) => {
         const image = <GlobalFragmentChainLogo avatar chainId={b.chainId} name={b.name} />;
