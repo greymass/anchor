@@ -62,7 +62,6 @@ class ToolsKeys extends Component<Props> {
   onSave = () => this.setState({ closable: true })
   render() {
     const {
-      connection,
       pubkeys,
       t,
       wallets,
@@ -70,10 +69,10 @@ class ToolsKeys extends Component<Props> {
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <Header>
-          Key Management
+          {t('tools_keys_management_header')}
         </Header>
         <Modal
-          closeIcon={true}
+          closeIcon
           closeOnDimmerClick={false}
           closeOnDocumentClick={false}
           content={(
@@ -97,7 +96,7 @@ class ToolsKeys extends Component<Props> {
           )}
         />
         <Modal
-          closeIcon={true}
+          closeIcon
           closeOnDimmerClick={false}
           closeOnDocumentClick={false}
           content={(
@@ -112,7 +111,7 @@ class ToolsKeys extends Component<Props> {
           open={this.state.openImport}
           trigger={(
             <Button
-              content="Import Key"
+              content={t('tools_keys_management_button')}
               icon="add"
               floated="right"
               onClick={this.onOpenImport}
@@ -121,8 +120,8 @@ class ToolsKeys extends Component<Props> {
           )}
         />
         <Confirm
-          content="These keys have NOT been saved by Anchor and will be lost unless you have backed them up elsewhere. Before using any of them, ensure they are appropriately backed up."
-          header="Are you sure?"
+          content={t('tools_keys_management_confirm_content')}
+          header={t('tools_keys_management_confirm_header')}
           open={this.state.confirm}
           onCancel={this.onCancelConfirm}
           onConfirm={this.onForceClose}
@@ -131,13 +130,13 @@ class ToolsKeys extends Component<Props> {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>
-                Public Key
+                {t('tools_keys_management_header_cell_one')}
               </Table.HeaderCell>
               <Table.HeaderCell>
-                Derivation Path
+                {t('tools_keys_management_header_cell_two')}
               </Table.HeaderCell>
               <Table.HeaderCell textAlign="center">
-                Accounts
+                {t('tools_keys_management_header_cell_three')}
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
