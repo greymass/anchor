@@ -95,8 +95,19 @@ function setNodeGeneric() {
   };
 }
 
+function resyncBlockchains() {
+  return (dispatch: () => void, getState) => {
+    const { app: { constants } } = getState();
+    return dispatch({
+      type: types.SYSTEM_BLOCKCHAINS_RESYNC,
+      payload: { constants }
+    });
+  };
+}
+
 export default {
   importBlockchainFromBackup,
+  resyncBlockchains,
   setNodeGeneric,
   swapBlockchain,
   updateBlockchain,
