@@ -51,10 +51,7 @@ class PromptStageCallback extends Component<Props> {
             <Header>
               <Icon name="info circle" />
               <Header.Content>
-                Further Action Required
-                <Header.Subheader>
-                  This signing request has requested you visit the following URL to complete this transaction.
-                </Header.Subheader>
+                Next Steps
               </Header.Content>
             </Header>
             <Segment size="large">
