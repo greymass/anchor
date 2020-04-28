@@ -50,8 +50,13 @@ const mapStateToProps = (state, ownProps) => {
   if (!ram || Object.keys(ram).length === 0) {
     return {};
   }
-  const quote = parseFloat(get(ram, 'quote_balance', '0').split(' ')[0]);
-  const base = parseFloat(get(ram, 'base_balance', '0').split(' ')[0]);
+  const quoteBalance = get(ram, 'quote_balance', '0');
+  const baseBalance = get(ram, 'base_balance', '0');
+  if (quoteBalance === null || baseBalance === null) {
+    return {};
+  }
+  const quote = parseFloat(quoteBalance.split(' ')[0]);
+  const base = parseFloat(baseBalance.split(' ')[0]);
   return {
     max: get(state.accounts, `${account}.ram_quota`),
     price: (quote / base),

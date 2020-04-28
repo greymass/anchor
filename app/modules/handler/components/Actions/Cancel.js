@@ -24,9 +24,9 @@ class PromptActionCancel extends Component<Props> {
             </Header.Content>
           </Header>
         )}
-        floated="left"
+        floated="right"
         onClick={onClick}
-        style={{ minHeight: '58px' }}
+        style={{ minHeight: '54px' }}
       />
     );
   }
