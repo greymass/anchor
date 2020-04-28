@@ -63,7 +63,7 @@ const supportedContracts = [
   },
   {
     // 'telos-testnet'
-    chainId: 'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3',
+    chainId: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
     supportedContracts: ['bidname'],
   },
   {
@@ -73,221 +73,185 @@ const supportedContracts = [
   },
 ];
 
+const defaultValues = {
+  keyPrefix: 'EOS',
+  testnet: false,
+};
+
+// Intentionally formatting with JSON styles for easy publishing.
+/* eslint-disable */
 const knownChains = [
   {
-    _id: 'beos-mainnet',
-    chainId: 'cbef47b0b26d2b8407ec6a6f91284100ec32d288a39d4b4bbd49655f7c484112',
-    keyPrefix: 'EOS',
-    name: 'BEOS',
-    node: 'https://api.beos.world',
-    symbol: 'BEOS',
-    testnet: false
+    "_id": "beos-mainnet",
+    "chainId": "cbef47b0b26d2b8407ec6a6f91284100ec32d288a39d4b4bbd49655f7c484112",
+    "name": "BEOS",
+    "node": "https://api.beos.world",
+    "symbol": "BEOS"
   },
   {
-    _id: 'beos-testnet-2',
-    chainId: 'b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4',
-    keyPrefix: 'EOS',
-    name: 'BEOS (Testnet)',
-    node: 'https://api.testnet.beos.world',
-    symbol: 'BEOS',
-    testnet: true
+    "_id": "beos-testnet-2",
+    "chainId": "b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4",
+    "name": "BEOS (Testnet)",
+    "node": "https://api.testnet.beos.world",
+    "symbol": "BEOS",
+    "testnet": true
   },
   {
-    _id: 'bos-mainnet',
-    chainId: 'd5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86',
-    keyPrefix: 'EOS',
-    name: 'BOS',
-    node: 'https://bos.eosn.io',
-    symbol: 'BOS',
-    testnet: false
+    "_id": "bos-mainnet",
+    "chainId": "d5a3d18fbb3c084e3b1f3fa98c21014b5f3db536cc15d08f9f6479517c6a3d86",
+    "name": "BOS",
+    "node": "https://bos.eosn.io",
+    "symbol": "BOS"
   },
   {
-    _id: 'eos-mainnet',
-    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    keyPrefix: 'EOS',
-    name: 'EOS',
-    node: 'https://eos.greymass.com',
-    symbol: 'EOS',
-    testnet: false
+    "_id": "eos-mainnet",
+    "chainId": "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+    "name": "EOS",
+    "node": "https://eos.greymass.com",
+    "symbol": "EOS"
   },
   {
-    _id: 'eos-testnet-jungle-2',
-    chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
-    keyPrefix: 'EOS',
-    name: 'Jungle (EOS Testnet)',
-    node: 'https://jungle.greymass.com',
-    symbol: 'EOS',
-    testnet: true
+    "_id": "eos-testnet-jungle-2",
+    "chainId": "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",
+    "name": "Jungle (EOS Testnet)",
+    "node": "https://jungle.greymass.com",
+    "symbol": "EOS",
+    "testnet": true
   },
   {
-    _id: 'eos-testnet-cryptokylin',
-    chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191',
-    keyPrefix: 'EOS',
-    name: 'CryptoKylin (EOS Testnet)',
-    node: 'https://kylin.eosn.io',
-    symbol: 'EOS',
-    testnet: true
-  },
-  // {
-  //   _id: 'eosforce-mainnet',
-  //   chainId: 'bd61ae3a031e8ef2f97ee3b0e62776d6d30d4833c8f7c1645c657b149151004b',
-  //   keyPrefix: 'EOS',
-  //   name: 'EOSForce',
-  //   node: 'https://w1.eosforce.cn',
-  //   ],
-  //   symbol: 'EOS',
-  //   testnet: false
-  // },
-  {
-    _id: 'fio',
-    chainId: '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c',
-    keyPrefix: 'FIO',
-    name: 'FIO',
-    node: 'https://fio.greymass.com',
-    voteDecay: false,
-    supportedContracts: [],
-    stakedResources: false,
-    symbol: 'FIO',
-    systemContract: 'fio',
-    testnet: false,
-    tokenContract: 'fio.token',
-    tokenPrecision: 8,
-    votePrecision: 9,
+    "_id": "eos-testnet-cryptokylin",
+    "chainId": "5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191",
+    "name": "CryptoKylin (EOS Testnet)",
+    "node": "https://kylin.eosn.io",
+    "symbol": "EOS",
+    "testnet": true
   },
   {
-    _id: 'fio-testnet-3',
-    chainId: 'b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e',
-    keyPrefix: 'FIO',
-    name: 'FIO (Testnet)',
-    node: 'https://fiotestnet.greymass.com',
-    voteDecay: false,
-    supportedContracts: [],
-    stakedResources: false,
-    symbol: 'FIO',
-    systemContract: 'fio',
-    testnet: true,
-    tokenContract: 'fio.token',
-    tokenPrecision: 8,
-    votePrecision: 9,
+    "_id": "fio",
+    "chainId": "21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c",
+    "keyPrefix": "FIO",
+    "name": "FIO",
+    "node": "https://fio.greymass.com",
+    "voteDecay": false,
+    "stakedResources": false,
+    "symbol": "FIO",
+    "systemContract": "fio",
+    "tokenContract": "fio.token",
+    "tokenPrecision": 8,
+    "votePrecision": 9
   },
   {
-    _id: 'insights-mainnet',
-    chainId: 'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664',
-    keyPrefix: 'EOS',
-    name: 'Insights',
-    node: 'https://instar.greymass.com',
-    supportedContracts: ['bidname'],
-    symbol: 'INSTAR',
-    testnet: false
+    "_id": "fio-testnet-3",
+    "chainId": "b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e",
+    "keyPrefix": "FIO",
+    "name": "FIO (Testnet)",
+    "node": "https://fiotestnet.greymass.com",
+    "voteDecay": false,
+    "stakedResources": false,
+    "symbol": "FIO",
+    "systemContract": "fio",
+    "testnet": true,
+    "tokenContract": "fio.token",
+    "tokenPrecision": 8,
+    "votePrecision": 9
   },
   {
-    _id: 'lynx-mainnet',
-    chainId: 'b62febe5aadff3d5399090b9565cb420387d3c66f2ccd7c7ac1f532c4f50f573',
-    keyPrefix: 'EOS',
-    name: 'Lynx',
-    node: 'https://lynx.greymass.com/',
-    symbol: 'LNX',
-    testnet: false
+    "_id": "insights-mainnet",
+    "chainId": "b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664",
+    "name": "Insights",
+    "node": "https://instar.greymass.com",
+    "symbol": "INSTAR"
   },
   {
-    _id: 'lynx-testnet',
-    chainId: '0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978',
-    keyPrefix: 'EOS',
-    name: 'Lynx (Testnet)',
-    node: 'https://lynxtestnet.greymass.com/',
-    symbol: 'SYS',
-    testnet: true
+    "_id": "lynx-mainnet",
+    "chainId": "b62febe5aadff3d5399090b9565cb420387d3c66f2ccd7c7ac1f532c4f50f573",
+    "name": "Lynx",
+    "node": "https://lynx.greymass.com/",
+    "symbol": "LNX"
   },
   {
-    _id: 'meetone-mainnet',
-    chainId: 'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422',
-    keyPrefix: 'EOS',
-    name: 'MEET.ONE',
-    node: 'https://meetone.eosn.io',
-    symbol: 'MEETONE',
-    testnet: false
+    "_id": "lynx-testnet",
+    "chainId": "0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978",
+    "name": "Lynx (Testnet)",
+    "node": "https://lynxtestnet.greymass.com/",
+    "symbol": "SYS",
+    "testnet": true
   },
   {
-    _id: 'remme-testnet',
-    chainId: '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7',
-    keyPrefix: 'EOS',
-    name: 'Remme (Testnet)',
-    node: 'https://testchain.remme.io/',
-    symbol: 'REM',
-    testnet: true
+    "_id": "meetone-mainnet",
+    "chainId": "cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422",
+    "name": "MEET.ONE",
+    "node": "https://meetone.eosn.io",
+    "symbol": "MEETONE"
   },
   {
-    _id: 'proton-mainnet',
-    chainId: '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
-    keyPrefix: 'EOS',
-    name: 'Proton',
-    node: 'https://proton.greymass.com/',
-    symbol: 'XPT',
-    testnet: false
+    "_id": "remme-testnet",
+    "chainId": "93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7",
+    "name": "Remme (Testnet)",
+    "node": "https://testchain.remme.io/",
+    "symbol": "REM",
+    "testnet": true
   },
   {
-    _id: 'proton-testnet',
-    chainId: 'e0a0743522e90db0a1802632b90fc48272957f9c32e4d35639d769546c10b763',
-    keyPrefix: 'EOS',
-    name: 'Proton (Testnet)',
-    node: 'https://protontestnet.greymass.com/',
-    symbol: 'XPT',
-    testnet: true
+    "_id": "proton-mainnet",
+    "chainId": "384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0",
+    "name": "Proton",
+    "node": "https://proton.greymass.com/",
+    "symbol": "XPR"
   },
   {
-    _id: 'telos-mainnet',
-    chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
-    keyPrefix: 'EOS',
-    name: 'Telos',
-    node: 'https://telos.greymass.com',
-    voteDecay: false,
-    symbol: 'TLOS',
-    testnet: false,
+    "_id": "proton-testnet",
+    "chainId": "71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd",
+    "name": "Proton (Testnet)",
+    "node": "https://protontestnet.greymass.com/",
+    "symbol": "XPT",
+    "testnet": true
   },
   {
-    _id: 'telos-testnet-2',
-    chainId: '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f',
-    keyPrefix: 'EOS',
-    name: 'Telos (Testnet)',
-    node: 'https://testnet.eos.miami',
-    voteDecay: false,
-    symbol: 'TLOS',
-    testnet: true
+    "_id": "telos-mainnet",
+    "chainId": "4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11",
+    "name": "Telos",
+    "node": "https://telos.greymass.com",
+    "voteDecay": false,
+    "symbol": "TLOS"
   },
   {
-    _id: 'worbli-mainnet',
-    chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
-    keyPrefix: 'EOS',
-    name: 'Worbli',
-    node: 'https://api.worbli.io',
-    symbol: 'WBI',
-    testnet: false
+    "_id": "telos-testnet-2",
+    "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
+    "name": "Telos (Testnet)",
+    "node": "https://testnet.eos.miami",
+    "voteDecay": false,
+    "symbol": "TLOS",
+    "testnet": true
   },
   {
-    _id: 'wax-mainnet',
-    chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-    keyPrefix: 'EOS',
-    name: 'WAX',
-    node: 'https://wax.greymass.com',
-    supportedContracts: [],
-    symbol: 'WAX',
-    testnet: false,
-    tokenPrecision: 8,
-    voteDecayPeriod: 13,
+    "_id": "worbli-mainnet",
+    "chainId": "73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f",
+    "name": "Worbli",
+    "node": "https://api.worbli.io",
+    "symbol": "WBI"
   },
   {
-    _id: 'wax-testnet',
-    chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
-    keyPrefix: 'EOS',
-    name: 'WAX (Testnet)',
-    node: 'https://waxtestnet.greymass.com',
-    supportedContracts: [],
-    symbol: 'WAX',
-    testnet: true,
-    tokenPrecision: 8,
-    voteDecayPeriod: 13,
+    "_id": "wax-mainnet",
+    "chainId": "1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4",
+    "name": "WAX",
+    "node": "https://wax.greymass.com",
+    "symbol": "WAX",
+    "tokenPrecision": 8,
+    "voteDecayPeriod": 13
+  },
+  {
+    "_id": "wax-testnet",
+    "chainId": "f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12",
+    "name": "WAX (Testnet)",
+    "node": "https://waxtestnet.greymass.com",
+    "symbol": "WAX",
+    "testnet": true,
+    "tokenPrecision": 8,
+    "voteDecayPeriod": 13
   }
 ];
+/* eslint-enable */
 
 const initialState = [...knownChains];
 
@@ -295,14 +259,16 @@ export default function blockchains(state = initialState, action) {
   switch (action.type) {
     case types.APP_INIT: {
       // When the app initializes, merge any unknown chains into state
-      const amendChains = unionBy(state, initialState, 'chainId');
-      const mergeContracts = _(amendChains).keyBy('chainId')
-        .merge(_.keyBy(supportedContracts, 'chainId'))
-        .values().value();
-      return mergeContracts;
+      const mergedChains = unionBy(state, initialState, 'chainId');
+      // Then merge contract support
+      const mergedContracts = mergeSupportedContracts(mergedChains);
+      return mergedContracts;
     }
     case types.RESET_ALL_STATES: {
-      return [...initialState];
+      return mergeSupportedContracts(initialState);
+    }
+    case types.SYSTEM_BLOCKCHAINS_RESYNC: {
+      return resync(state, action.payload.constants);
     }
     case types.SYSTEM_BLOCKCHAINS_SET_SETTING: {
       const [selected, others] = partition(state, {
@@ -384,4 +350,52 @@ export default function blockchains(state = initialState, action) {
       return state;
     }
   }
+}
+
+function mergeSupportedContracts(state) {
+  const merged = state.map((chain) => {
+    const matching = find(supportedContracts, { chainId: chain.chainId });
+    const merging = Object.assign({}, defaultValues, chain, {
+      supportedContracts: (matching) ? matching.supportedContracts : [],
+    });
+    return merging;
+  });
+  return merged;
+}
+
+function resync(state, constants = {}) {
+  const resynced = [];
+  // Resync all known chains
+  state.forEach((chain) =>
+    resynced.push(resyncMerge(chain, constants)));
+  // Resync all potential chains from constants
+  if (constants && constants.blockchains && constants.blockchains.length > 0) {
+    constants.blockchains
+      // Filter out chains we already have a definition for
+      .filter((b) => !find(resynced, { chainId: b.chainId }))
+      .forEach((chain) =>
+        resynced.push(resyncMerge(chain, constants)));
+  }
+  return mergeSupportedContracts(resynced);
+}
+
+function resyncMerge(chain, constants) {
+  // Loaded definition from on-chain contract
+  const loaded = (constants && constants.blockchains)
+    ? find(constants.blockchains, { chainId: chain.chainId })
+    : {};
+  // Predefined here in this file
+  const predefined = find(knownChains, { chainId: chain.chainId });
+  /*
+    Create a merged object with the following priority:
+
+      1st - Ensure the custom node specified is retained
+      2nd - Use any values found within the constants from the smart contract
+      3rd - Use any values predefined in this file from the known chain
+      4th - the default values of any chain
+  */
+  const merging = Object.assign({}, defaultValues, predefined, loaded, {
+    node: chain.node, // Retain any custom node settings for the chain
+  });
+  return merging;
 }

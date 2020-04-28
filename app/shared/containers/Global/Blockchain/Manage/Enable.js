@@ -7,6 +7,7 @@ import compose from 'lodash/fp/compose';
 import { find, sortBy } from 'lodash';
 import { Button, Form, Header, Icon, Label, Segment, Table } from 'semantic-ui-react';
 
+import GlobalBlockchainResync from './Resync';
 import GlobalFormFieldUrl from '../../../../components/Global/Form/Field/Url';
 import GlobalFragmentChainLogo from '../../../../components/Global/Fragment/ChainLogo';
 import * as BlockchainsActions from '../../../../actions/blockchains';
@@ -103,6 +104,7 @@ class GlobalBlockchainEnable extends Component<Props> {
           icon="circle plus"
           onClick={this.props.onEdit}
         />
+        <GlobalBlockchainResync />
         <Table verticalAlign="middle" unstackable>
           <Table.Header>
             <Table.Row>
