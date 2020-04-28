@@ -32,7 +32,7 @@ const logos = {
   '0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978': lynxLogo, // testnet (lynx)
   'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422': meetoneLogo, // mainnet (meetone)
   '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0': protonLogo, // mainnet (proton)
-  'e0a0743522e90db0a1802632b90fc48272957f9c32e4d35639d769546c10b763': protonTestnetLogo, // testnet (proton)
+  '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd': protonTestnetLogo, // testnet (proton)
   '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7': remmeLogo, // testnet (remme)
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': telosLogo, // mainnet (telos)
   'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3': telosLogo, // testnet (telos)
