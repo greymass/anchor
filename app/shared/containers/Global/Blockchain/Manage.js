@@ -7,9 +7,8 @@ import { Button, Card, Header, Icon, Label, Segment } from 'semantic-ui-react';
 import { sortBy } from 'lodash';
 
 import { setSetting } from '../../../actions/settings';
-import { swapBlockchain } from '../../../actions/blockchains';
+import { pinBlockchain, swapBlockchain, unpinBlockchain } from '../../../actions/blockchains';
 import { changeModule } from '../../../../modules/main/actions/navigation';
-
 
 import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
 import ToolsModalBlockchain from '../../../components/Tools/Modal/Blockchain';
@@ -34,6 +33,16 @@ class GlobalBlockchainManage extends Component<Props> {
     return false;
   }
   editBlockchainComplete = () => this.setState({ editing: false })
+  pinBlockchain = (e, { chainId }) => {
+    this.props.actions.pinBlockchain(chainId);
+    e.stopPropagation();
+    return false;
+  }
+  unpinBlockchain = (e, { chainId }) => {
+    this.props.actions.unpinBlockchain(chainId);
+    e.stopPropagation();
+    return false;
+  }
   swapBlockchain = (chainId) => {
     this.props.actions.swapBlockchain(chainId);
     // Route to homepage
@@ -85,6 +94,7 @@ class GlobalBlockchainManage extends Component<Props> {
         <Card.Group>
           {sorted.map((blockchain) => {
             const accounts = wallets.filter(w => (w.chainId === blockchain.chainId)).length;
+            const isPinned = (settings.pinnedBlockchains.includes(blockchain.chainId));
             return (
               <Card
                 onClick={() => this.swapBlockchain(blockchain.chainId)}
@@ -104,7 +114,17 @@ class GlobalBlockchainManage extends Component<Props> {
                     </span>
                   </Card.Meta>
                 </Card.Content>
-                <Card.Content extra>
+                <Card.Content
+                  extra
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Button
+                    color={(isPinned) ? 'blue' : undefined}
+                    chainId={blockchain.chainId}
+                    icon="pin"
+                    onClick={(!isPinned) ? this.pinBlockchain : this.unpinBlockchain}
+                    size="small"
+                  />
                   <Button
                     chainId={blockchain.chainId}
                     floated="right"
@@ -116,15 +136,17 @@ class GlobalBlockchainManage extends Component<Props> {
               </Card>
             );
           })}
+        </Card.Group>
+        <Card.Group>
           <Card
             onClick={this.enableBlockchains}
             raised
             style={{ width: '12em' }}
           >
-
             <Segment
               basic
               textAlign="center"
+              secondary
               style={{
                 height: '12em',
                 marginBottom: 0,
@@ -164,8 +186,10 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       changeModule,
+      pinBlockchain,
       setSetting,
       swapBlockchain,
+      unpinBlockchain,
     }, dispatch)
   };
 }
