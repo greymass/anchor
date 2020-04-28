@@ -370,5 +370,12 @@
   "tools_wallets_mode": "Wallet Mode",
   "tools_wallets_remove": "Remove Wallet",
   "tools_wallets_subheader": "Add, remove, and swap between the various wallets loaded within the app.",
-  "tools_wallets_swap": "Use Wallet"
+  "tools_wallets_swap": "Use Wallet",
+  "tools_keys_management_header": "Key Management",
+  "tools_keys_management_button": "Import Key",
+  "tools_keys_management_confirm_content": "These keys have NOT been saved by Anchor and will be lost unless you have backed them up elsewhere. Before using any of them, ensure they are appropriately backed up.",
+  "tools_keys_management_confirm_header": "Are you sure?",
+  "tools_keys_management_header_cell_one": "Public Key",
+  "tools_keys_management_header_cell_two": "Derivation Path",
+  "tools_keys_management_header_cell_three": "Accounts"
 }

@@ -21,7 +21,7 @@
   "error_invalid_delegatedBw": "Montant de la bande passante déléguée non valide, par exemple '12 .121 '.",
   "error_invalid_delegatedCpu": "Montant CPU non valide, par exemple '12 .121 '.",
   "error_invalid_logo_256": "URL du logo non valide, doit commencer par \"http://\" ou \"https://\".",
-"error_invalid_memo": "Mémo invalide, ne doit contenir aucune clé privée et doit être inférieur à 256 octets.",
+  "error_invalid_memo": "Mémo invalide, ne doit contenir aucune clé privée et doit être inférieur à 256 octets.",
   "error_invalid_name": "La valeur du nom n'est pas valide, doit être inférieure à 256 octets.",
   "error_invalid_ownerKey": "Clé de propriétaire non valide, assurez-vous qu'elle commence par \"EOS\"et qu'elle comprend 53 caractères.",
   "error_invalid_ownerKeyValue": "Clé de propriétaire non valide, assurez-vous qu'elle commence par '{{chainSymbol}}' et qu'elle comporte 50 caractères supplémentaires.",
@@ -177,5 +177,7 @@
   "global_transaction_view_is_signed": "Transaction signée",
   "global_transaction_view_is_unsigned": "Transaction non signée",
   "global_transaction_view_status": "Statut de la transaction",
+  "global_form_placeholder_exchange":  "Select an exchange",
+  "global_form_placeholder_contacts":  "Select a contact",
   "invalid_proxy_specified": "Le compte proxy spécifié n'existe pas. S'il s'agit d'un compte valide, assurez-vous qu'il s'est enregistré en tant que votant proxy."
 }
