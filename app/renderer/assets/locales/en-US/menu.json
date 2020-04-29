@@ -1,11 +1,12 @@
 {
-  "producer_voting": "Producer Voting",
-  "tools": "Tools",
-  "wallet": "Wallet",
-  "governance": "Governance",
-  "resources": "Resources",
-  "home": "Home",
-  "button_manage_wallets": "Manage Wallets",
   "button_manage_blockchains": "Manage Blockchains",
-  "minimize": "Minimize Menu"
+  "button_manage_wallets": "Manage Wallets",
+  "dropdown_select_blockchain": "Select a blockchain...",
+  "governance": "Governance",
+  "home": "Home",
+  "minimize": "Minimize Menu",
+  "producer_voting": "Producer Voting",
+  "resources": "Resources",
+  "tools": "Tools",
+  "wallet": "Wallet"
 }
