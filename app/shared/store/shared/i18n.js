@@ -37,6 +37,7 @@ const configureLocalization = (resourcePath, store) => {
       },
       overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,
       react: {
+        useSuspense: false,
         wait: true,
         withRef: true
       }
