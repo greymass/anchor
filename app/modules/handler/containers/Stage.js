@@ -42,7 +42,7 @@ import { unlockWalletByAuth } from '../../../shared/actions/wallet';
 
 const { ipcRenderer } = require('electron');
 
-const potentialSettings = ['esr_signbroadcast'];
+const potentialSettings = ['promptCloseOnComplete', 'promptSignAndBroadcast'];
 
 class PromptStage extends Component<Props> {
   onBroadcast = () => {
@@ -176,6 +176,7 @@ class PromptStage extends Component<Props> {
     let error = system.ESRURIBUILD_LAST_ERROR ||
       system.ESRURISIGN_LAST_ERROR ||
       system.ESRURIBROADCAST_LAST_ERROR ||
+      // system.ESRURICALLBACK_LAST_ERROR ||
       system.ESRURI_LAST_ERROR;
 
     const warning = system.ESRURIBUILD_LAST_WARNING;
@@ -205,6 +206,15 @@ class PromptStage extends Component<Props> {
 
     // Once a identity request has been sent, just close
     if (reqType === 'identity' && hasSignature) {
+      onClose();
+      return false;
+    }
+
+    // If promptCloseOnComplete is true and the transaction is successful, just close
+    if (hasSignature && settings.promptCloseOnComplete && (
+      system.ESRURIBROADCAST === 'SUCCESS'
+      || system.ESRURICALLBACK === 'SUCCESS'
+    )) {
       onClose();
       return false;
     }
