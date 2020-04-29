@@ -166,4 +166,4 @@ class GlobalFormFieldKeyPrivate extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(GlobalFormFieldKeyPrivate);
+export default withTranslation(['global', 'welcome'])(GlobalFormFieldKeyPrivate);

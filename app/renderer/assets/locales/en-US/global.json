@@ -200,5 +200,13 @@
   "global_transaction_view_is_signed": "Signed Transaction",
   "global_transaction_view_is_unsigned": "Unsigned Transaction",
   "global_transaction_view_status": "Transaction Status",
+  "global_keys_header_one": "Create new key pairs",
+  "global_keys_subheader_one": "Generate private keys locally using eosjs + Anchor, then encrypt and save them using your password.",
+  "global_keys_button_one": "Generate key pairs",
+  "global_keys_header_two": "Import keys from a Ledger device",
+  "global_keys_subheader_two": "Anchor will import the public keys from your Ledger device and then use the device for signing.",
+  "global_keys_button_two": "Import keys from Ledger",
+  "global_keys_message_content": "Use the tools below to establish a key pair within Anchor before continuing.",
+  "global_keys_message_header": "First: Setup Wallet + Key Pairs",
   "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter."
 }

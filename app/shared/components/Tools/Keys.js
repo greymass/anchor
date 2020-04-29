@@ -88,7 +88,7 @@ class ToolsKeys extends Component<Props> {
           open={this.state.open}
           trigger={(
             <Button
-              content="Generate Key Pairs"
+              content={t('tools_keys_key_generation_header_r2')}
               icon="random"
               onClick={this.onOpen}
               primary
