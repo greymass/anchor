@@ -134,14 +134,16 @@ export function callbackURIWithProcessed(callback) {
         type: types.SYSTEM_ESRURICALLBACK_SUCCESS,
         payload: {
           background,
-          s
+          payload,
+          s,
         }
       }))
-      .catch((error) => dispatch({
+      .catch((err) => dispatch({
         type: types.SYSTEM_ESRURICALLBACK_FAILURE,
         payload: {
+          err,
+          payload,
           s,
-          error,
         }
       }));
   };
@@ -378,6 +380,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             && prompt.resolved.request
             && prompt.resolved.request.shouldBroadcast
             && prompt.resolved.request.shouldBroadcast()
+            && broadcast
           );
           if (shouldBroadcast) {
             broadcasted = await signer.push(signed);
