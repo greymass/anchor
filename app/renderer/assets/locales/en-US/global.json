@@ -208,5 +208,18 @@
   "global_keys_button_two": "Import keys from Ledger",
   "global_keys_message_content": "Use the tools below to establish a key pair within Anchor before continuing.",
   "global_keys_message_header": "First: Setup Wallet + Key Pairs",
-  "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter."
+  "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter.",
+  "global_blockchain_enable_header": "Which blockchains do you plan on using?",
+  "global_blockchain_enable_subheader": "You can add/remove blockchains at any point in the future.",
+  "global_blockchain_enable_button_one_enable": "Enable {{chainCount}} blockchains.",
+  "global_blockchain_enable_button_one_choose": "Choose at least one blockchain.",
+  "global_blockchain_enable_button_two": "Custom Blockchain",
+  "global_blockchain_enable_header_cell_one": "Type",
+  "global_blockchain_enable_header_cell_two": "Blockchain Network",
+  "global_blockchain_enable_header_cell_three": "API Server",
+  "global_blockchain_manage_header": "Select which blockchain you'd like to start using",
+  "global_blockchain_manage_subheader": "You can easily switch between blockchains using the dropdown menu in the upper left menu.",
+  "global_blockchain_manage_card_one": "accounts",
+  "global_blockchain_manage_card_two_header": "Add/Remove",
+  "global_blockchain_manage_card_two_description": "Manage which blockchains Anchor is configured to interact with."
 }
