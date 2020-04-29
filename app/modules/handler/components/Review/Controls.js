@@ -70,7 +70,7 @@ class PromptReviewControls extends Component<Props> {
         </Form.Field>
         {(settings && ['ledger', 'hot'].includes(wallet.mode))
           ? (
-            <Form.Field style={{ display: 'none' }}>
+            <Form.Field>
               <label>
                 <Icon
                   name="cogs"
@@ -81,13 +81,24 @@ class PromptReviewControls extends Component<Props> {
                 Preferences
               </label>
               <Segment basic style={{ marginTop: 0 }}>
-                {(shouldBroadcast)
+                <Form.Checkbox
+                  checked={settings.promptCloseOnComplete}
+                  label="Close window when completed"
+                  name="promptCloseOnComplete"
+                  onChange={onCheck}
+                  toggle
+                />
+                {(
+                  shouldBroadcast
+                  // Disable this option for now, not production ready.
+                  && true === false
+                )
                   ? (
                     <Form.Checkbox
-                      checked={canBroadcast && settings.esr_signbroadcast}
+                      checked={canBroadcast && settings.promptSignAndBroadcast}
                       disabled={!canBroadcast}
                       label="Broadcast Transaction"
-                      name="esr_signbroadcast"
+                      name="promptSignAndBroadcast"
                       onChange={onCheck}
                       toggle
                     />
