@@ -16,7 +16,7 @@ class ToolsStateChain extends Component<Props> {
         <Header>
           {t('tools_state_chain_header')}
           <Header.Subheader>
-            {t('tools_state_chain_subheader')}
+            {t('tools_state_chain_subheader_message')}
           </Header.Subheader>
         </Header>
         <Segment basic>
