@@ -13,7 +13,7 @@
   "ram_form_button_buy": "Acheter de la RAM",
   "ram_form_button_sell": "Vendre de la RAM",
   "ram_form_label_amount_in_bytes": "Quantité de RAM (en octets)",
-  "ram_form_label_amount_in_chain_symbol": "Coût de la RAM (dans {{chainSymbol}})",
+  "ram_form_label_amount_in_chain_symbol": "Coût de la RAM (en {{chainSymbol}})",
   "ram_form_text_amount_estimate": "Le montant estimé est",
   "ram_form_text_estimate": "Le coût estimé est",
   "ram_sell_button_cta": "Vendre de la RAM",

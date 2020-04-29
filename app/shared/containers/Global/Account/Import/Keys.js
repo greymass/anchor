@@ -39,12 +39,12 @@ class GlobalModalAccountImportKeys extends Component<Props> {
       <React.Fragment>
         <Segment basic>
           <Header
-            content="Create new key pairs"
-            subheader="Generate private keys locally using eosjs + Anchor, then encrypt and save them using your password."
+            content={t('global_keys_header_one')}
+            subheader={t('global_keys_header_one')}
           />
           <Button
             color="blue"
-            content="Generate key pairs"
+            content={t('global_keys_button_one')}
             icon="usb"
             pane="generate"
             onClick={this.onClick}
@@ -52,12 +52,12 @@ class GlobalModalAccountImportKeys extends Component<Props> {
         </Segment>
         <Segment basic>
           <Header
-            content="Import keys from a Ledger device"
-            subheader="Anchor will import the public keys from your Ledger device and then use the device for signing."
+            content={t('global_keys_content_two')}
+            subheader={t('global_keys_subheader_two')}
           />
           <Button
             color="blue"
-            content="Import keys from Ledger"
+            content={t('global_keys_button_two')}
             icon="id card"
             pane="ledger"
             onClick={this.onClick}
@@ -72,7 +72,7 @@ class GlobalModalAccountImportKeys extends Component<Props> {
             <React.Fragment>
               <ToolsKeyGeneratorComponent
                 {...this.props}
-                closeable={true}
+                closeable
                 importing
                 onKeypair={this.onKeypair}
                 onSave={this.onSave}
@@ -94,8 +94,8 @@ class GlobalModalAccountImportKeys extends Component<Props> {
       <React.Fragment>
         <Message
           attached="top"
-          content="Use the tools below to establish a key pair within Anchor before continuing."
-          header="First: Setup Wallet + Key Pairs"
+          content={t('global_keys_message_content')}
+          header={t('global_keys_message_header')}
           info
           size="small"
         />
