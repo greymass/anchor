@@ -60,7 +60,6 @@ export function getConstants() {
               [key]: parsed
             };
           }, {});
-          console.log(data)
           return dispatch({
             type: types.SYSTEM_GETCONSTANTS_SUCCESS,
             payload: { data }
