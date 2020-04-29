@@ -31,4 +31,4 @@ class ProducersSelectorItemEmpty extends Component<Props> {
   }
 }
 
-export default withTranslation()(ProducersSelectorItemEmpty)
+export default withTranslation('producers')(ProducersSelectorItemEmpty);
