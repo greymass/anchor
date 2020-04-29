@@ -20,7 +20,7 @@
   "legend_unresponsive": "Ne répond pas",
   "loader_initializing": "Initialisation ...",
   "loader_message_1": "Cela peut prendre un moment.",
-  "loader_progress_text": "{{complete}} of {{total}} requêtes",
+  "loader_progress_text": "{{complete}} de {{total}} requêtes",
   "loader_validating": "Validation",
   "main_header": "API Recommender",
   "main_subheader": "Exécutez un test de performances directement depuis votre ordinateur pour déterminer quelles API EOS sont les plus rapides pour vous!",

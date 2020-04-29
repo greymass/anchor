@@ -159,6 +159,7 @@ class ToolsPermissions extends Component<Props> {
                     threshold: data.required_auth.threshold,
                     total: data.required_auth.keys.length + data.required_auth.accounts.length
                   })}
+                  {'  '}
                   {(data.parent)
                     ? t('tools_modal_permissions_auth_permission_child_of', { parent: data.parent })
                     : false
@@ -169,8 +170,8 @@ class ToolsPermissions extends Component<Props> {
             <Table>
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell textAlign="right">Weight</Table.HeaderCell>
-                  <Table.HeaderCell>Permission</Table.HeaderCell>
+                  <Table.HeaderCell textAlign="right">{t('tools_table_header_cell_one')}</Table.HeaderCell>
+                  <Table.HeaderCell>{t('tools_table_header_cell_two')}</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>

@@ -205,6 +205,19 @@
   "tools_governance_proposal_vote_ricardian_contract_six": "If I, {{ voter }}, am not the beneficial owner of these tokens, I stipulate I have proof that I’ve been authorized to vote these tokens by their beneficial owner(s).",
   "tools_governance_proposal_vote_ricardian_contract_three": "I acknowledge that using the `unvote` action after placing a `vote` will render my previous `vote` of {{ vote_value }} null and void.",
   "tools_governance_proposal_vote_ricardian_contract_two": "To change my vote, I may call another `vote` action, with only the most recent `vote` of {{ vote_value }} being the `vote` which I, {{ voter }}, intend to be considered as valid.",
+
+
+  "tools_keys_key_button_one": "Generate Key Pair (x2)",
+  "tools_keys_key_generation_copied_clipboard": "Copied!",
+  "tools_keys_key_generation_message_one_header": "Some/all of these keys have NOT been saved.",
+  "tools_keys_key_generation_message_one_content": "These key must either be saved externally or within your Anchor wallet using the controls above.",
+  "tools_keys_key_generation_message_two_header": "Keys Saved",
+  "tools_keys_key_generation_message_two_content": "Make sure to create a new backup of your wallet to save these keys.",
+  "tools_keys_key_generation_table_cell_one": "Public Key",
+  "tools_keys_key_generation_table_cell_two": "Private Key",
+  "tools_keys_key_generation_paragraph": "Click 'Generate Key' to create a new public/private key pair.",
+
+
   "tools_keys_key_generation_copy_clipboard": "Copy to Clipboard",
   "tools_keys_key_generation_header": "Key Pair Generation",
   "tools_keys_key_generation_new_key": "Generate Key",
@@ -377,5 +390,7 @@
   "tools_keys_management_confirm_header": "Are you sure?",
   "tools_keys_management_header_cell_one": "Public Key",
   "tools_keys_management_header_cell_two": "Derivation Path",
-  "tools_keys_management_header_cell_three": "Accounts"
+  "tools_keys_management_header_cell_three": "Accounts",
+  "tools_table_header_cell_one": "Weight",
+  "tools_table_header_cell_two": "Permission"
 }
