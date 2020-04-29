@@ -64,7 +64,7 @@
   "main_sections_header_subheader_one": "Status",
   "main_sections_header_subheader_two": "Disponible",
   "main_sections_home_initialize_paragraph_one": "Desktop EOSIO Wallet",
-  "main_sections_home_initialize_button_one": "Configurer un nouveau Wallet",
+  "main_sections_home_initialize_button_one": "Configurer une nouvelle Wallet",
   "main_sections_home_initialize_card_description_one": "Avez-vous un fichier de sauvegarde de Anchor ou Anchor?",
   "main_sections_home_initialize_card_content_one": "Pour les utilisateurs avancés:",
   "main_sections_home_signing_request_prompt_paragraph_one": "L'activation des intégrations d'application vous permettra de vous connecter à toute application prise en charge à l'aide de la version bureau de Anchor.",

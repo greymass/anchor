@@ -80,6 +80,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation('main'),
+  withTranslation(['main', 'producers', 'tools']),
   connect(mapStateToProps, mapDispatchToProps)
 )(NavigationGovernanceContainer);
