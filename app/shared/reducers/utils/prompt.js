@@ -37,6 +37,7 @@ export default function prompt(state = {}, action) {
       return Object.assign({}, state, {
         callbackExecuted: false,
         callbackURL: action.payload.s,
+        callbackPayload: action.payload.payload,
       });
     }
     case types.SYSTEM_ESRURICALLBACK_PENDING: {
@@ -50,6 +51,7 @@ export default function prompt(state = {}, action) {
         background: action.payload.background,
         callbackExecuted: true,
         callbackURL: action.payload.s,
+        callbackPayload: action.payload.payload,
       });
     }
     // case types.SET_CURRENT_WALLET: {

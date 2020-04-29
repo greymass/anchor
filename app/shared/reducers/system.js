@@ -22,6 +22,7 @@ export default function system(state = {}, action) {
       ESRURIBUILD_LAST_ERROR: false,
       ESRURIBROADCAST: false,
       ESRURICALLBACK: false,
+      ESRURICALLBACK_LAST_ERROR: false,
       ESRURISIGN: false,
       ESRURISIGN_LAST_ERROR: false,
     });
@@ -128,6 +129,7 @@ export default function system(state = {}, action) {
   if (action.type === types.SYSTEM_ESRURIBUILD_PENDING) {
     newState = del(newState, 'ESRURIBROADCAST_LAST_ERROR');
     newState = del(newState, 'ESRURIBUILD_LAST_ERROR');
+    newState = del(newState, 'ESRURICALLBACK_LAST_ERROR');
     newState = del(newState, 'ESRURISIGN_LAST_ERROR');
   }
 

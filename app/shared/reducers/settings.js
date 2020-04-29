@@ -72,6 +72,10 @@ const initialState = {
   pinnedBlockchains: [],
   // Whether or not the UI has prompted for enabling signing requests
   promptSigningRequests: false,
+  // Whether the prompt will close upon completion or display a success message
+  promptCloseOnComplete: false,
+  // Whether the prompt will combine the sign + broadcast steps into a single click
+  promptSignAndBroadcast: true,
   // Recent names that the wallet has bid on.
   recentBids: {},
   // Recent contracts/action combos the wallet has used
