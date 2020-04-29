@@ -163,7 +163,7 @@ class GlobalBlockchainEnable extends Component<Props> {
                 <Table.Cell collapsing>
                   <Header
                     content={b.name}
-                    subheader={`${b.chainId.substr(0, 6)}...${b.chainId.substr(-6)}`}
+                    subheader={(b.chainId) ? `${b.chainId.substr(0, 6)}...${b.chainId.substr(-6)}` : 'Unknown Chain ID'}
                     size="medium"
                     style={{
                       margin: 0,
