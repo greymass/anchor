@@ -146,6 +146,7 @@
   "global_settings_show_testnets": "Activez la prise en charge et affichez les testnets connus.",
   "global_settings_skip_link_modal_do_not_skip": "Afficher des avertissements lorsque vous cliquez sur des liens",
   "global_settings_skip_link_modal_skip": "Ne jamais afficher d'avertissements lorsque vous cliquez sur des liens",
+  "global_settings_disable_dangerous_transactions": "Désactiver les transactions dangereuses",
   "global_transaction_actions_details_content": "Chaque action de cette transaction est répertoriée ci-dessous.",
   "global_transaction_actions_details_title": "Détails de l'action",
   "global_transaction_complete_link_to": "Lien vers",
@@ -187,5 +188,18 @@
   "global_keys_button_two": "Importer des clés depuis Ledger",
   "global_keys_message_content": "Utilisez les outils ci-dessous pour établir une paire de clés dans Anchor avant de continuer.",
   "global_keys_message_header": "Premièrement: configurer la Wallet + les paires de clés",
-  "invalid_proxy_specified": "Le compte proxy spécifié n'existe pas. S'il s'agit d'un compte valide, assurez-vous qu'il s'est enregistré en tant que votant proxy."
+  "invalid_proxy_specified": "Le compte proxy spécifié n'existe pas. S'il s'agit d'un compte valide, assurez-vous qu'il s'est enregistré en tant que votant proxy.",
+  "global_blockchain_enable_header": "Quelles blockchains prévoyez-vous utiliser?",
+  "global_blockchain_enable_subheader": "Vous pouvez ajouter / supprimer des blockchains à tout moment.",
+  "global_blockchain_enable_button_one_enable": "Activer {{chainCount}} blockchains.",
+  "global_blockchain_enable_button_one_choose": "Choisissez au moins une blockchain.",
+  "global_blockchain_enable_button_two": "Blockchain personnalisée",
+  "global_blockchain_enable_header_cell_one": "Type",
+  "global_blockchain_enable_header_cell_two": "Réseau de Blockchain",
+  "global_blockchain_enable_header_cell_three": "Serveur API",
+  "global_blockchain_manage_header": "Sélectionnez la blockchain que vous souhaitez commencer à utiliser",
+  "global_blockchain_manage_subheader": "Vous pouvez facilement basculer entre les chaînes de blocs en utilisant le menu déroulant dans le menu supérieur gauche.",
+  "global_blockchain_manage_card_one": "comptes",
+  "global_blockchain_manage_card_two_header": "Ajouter / Supprimer",
+  "global_blockchain_manage_card_two_description": "Gérez les chaînes de blocs avec lesquelles Anchor est configuré pour interagir."
 }
