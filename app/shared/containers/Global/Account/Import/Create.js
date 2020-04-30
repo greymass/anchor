@@ -12,7 +12,7 @@ import GlobalModalAccountImportContractsSetupAccount from './Contracts';
 class GlobalModalAccountImportWelcome extends Component<Props> {
   state = {
     pane: false
-  }
+  };
   onClose = () => this.setState({ pane: false })
   onClick = (e, { pane }) => this.setState({ pane })
   render() {
@@ -20,7 +20,7 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
       t,
     } = this.props;
     const {
-      pane
+      pane,
     } = this.state;
     if (pane) {
       switch (pane) {
@@ -36,12 +36,12 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Create account via Smart Contract"
-            subheader="If you have EOS already, you can transfer a small amount to a smart contract to have an account created."
+            content={t('global_import_create_header_one')}
+            subheader={t('global_import_create_subheader_one')}
           />
           <Button
             color="blue"
-            content="Create via Smart Contract"
+            content={t('global_import_create_button_one')}
             icon="user"
             pane="contract"
             onClick={this.onClick}
@@ -49,12 +49,12 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
         </Segment>
         <Segment basic>
           <Header
-            content="Create account via Request Code"
-            subheader="A request code can be given to an untrusted party who is willing to create an account for you."
+            content={t('global_import_create_header_two')}
+            subheader={t('global_import_create_subheader_two')}
           />
           <Button
             color="blue"
-            content="Create via Request Code"
+            content={t('global_import_create_button_two')}
             icon="user"
             pane="request"
             onClick={this.onClick}

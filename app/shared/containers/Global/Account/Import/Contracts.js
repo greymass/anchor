@@ -53,7 +53,6 @@ class GlobalModalAccountImportContracts extends Component<Props> {
   }
   render() {
     const {
-      connection,
       pubkeys,
       t,
     } = this.props;
@@ -61,8 +60,8 @@ class GlobalModalAccountImportContracts extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Create account via Smart Contract"
-            subheader={`If you have ${connection.chain} already, you can transfer a small amount to a smart contract to have an account created.`}
+            content={t('global_import_contract_header_one')}
+            subheader={t('global_import_contract_subheader_one')}
           />
           {(!pubkeys.available.length) ? (
             <GlobalModalAccountImportKeys />
