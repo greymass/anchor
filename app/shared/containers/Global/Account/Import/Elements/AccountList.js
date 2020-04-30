@@ -106,7 +106,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
         {(!value)
           ? (
             <Segment>
-              <p>No accounts found</p>
+              <p>{t('welcome:welcome_account_lookup_no_accounts')}</p>
             </Segment>
           )
           : false

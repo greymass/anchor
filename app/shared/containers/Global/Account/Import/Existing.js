@@ -58,12 +58,12 @@ class GlobalModalAccountImportExisting extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Import an existing Private Key"
-            subheader={`Anchor will encrypt your private key locally and then find the ${connection.chain} accounts matching the public key.`}
+            content={t('global_account_import_exist_header_one')}
+            subheader={t('global_account_import_exist_subheader_one', { connectionChain: connection.chain })}
           />
           <Button
             color="blue"
-            content="Import Private Key"
+            content={t('global_account_import_exist_button_one')}
             icon="id card"
             pane="hot"
             onClick={this.onClick}
@@ -71,14 +71,14 @@ class GlobalModalAccountImportExisting extends Component<Props> {
         </Segment>
         <Segment basic>
           <Header
-            content="Import an existing Account using a Ledger device"
-            subheader={`Anchor will encrypt your private key locally and then find the ${connection.chain} accounts matching the public key.`}
+            content={t('global_account_import_exist_header_two')}
+            subheader={t('global_account_import_exist_subheader_two', { connectionChain: connection.chain })}
           />
           {(status === 'connected')
             ? (
               <Button
                 color="blue"
-                content="Load from Ledger"
+                content={t('global_account_import_exist_button_two')}
                 icon="usb"
                 pane="ledger"
                 onClick={this.onClick}
@@ -87,7 +87,7 @@ class GlobalModalAccountImportExisting extends Component<Props> {
             : (
               <Button
                 color="green"
-                content="Enable Ledger Support"
+                content={t('global_account_import_exist_button_three')}
                 icon="usb"
                 pane="ledger"
                 onClick={this.enableLedger}
@@ -97,12 +97,12 @@ class GlobalModalAccountImportExisting extends Component<Props> {
         </Segment>
         <Segment basic>
           <Header
-            content="Import an existing account as a Watch Wallet"
-            subheader="A watch wallet is a read-only wallet and doesn't require any key pairs. It can be used with a cold wallet setup for secure signing."
+            content={t('global_account_import_exist_header_three')}
+            subheader={t('global_account_import_exist_header_four')}
           />
           <Button
             color="blue"
-            content="Setup Watch Wallet"
+            content={t('global_account_import_exist_button_four')}
             icon="eye"
             pane="watch"
             onClick={this.onClick}

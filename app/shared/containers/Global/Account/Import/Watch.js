@@ -109,7 +109,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Watch an account"
+            content={t('global_account_import_watch_header')}
             subheader={t('global_account_import_watch_description')}
           />
           <Form>
@@ -140,7 +140,7 @@ class GlobalModalAccountImportWatch extends Component<Props> {
             ? (
               <Segment stacked color="blue">
                 <p>
-                  Select which account and permission type to watch.
+                  {t('global_account_import_watch_paragraph')}
                 </p>
                 <List divided relaxed>
                   {(loaded.map((account) => {

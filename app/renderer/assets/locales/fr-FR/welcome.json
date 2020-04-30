@@ -80,5 +80,6 @@
   "welcome_stage_connection": "Connexion",
   "welcome_stage_wallet": "Wallet",
   "welcome_stage_watchwallet": "Watch Wallet",
-  "welcome_use_coldwallet": "Configurer Cold Wallet"
+  "welcome_use_coldwallet": "Configurer Cold Wallet",
+  "welcome_account_lookup_no_accounts": "Aucun compte trouvé"
 }

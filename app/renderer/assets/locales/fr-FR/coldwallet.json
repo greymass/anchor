@@ -9,7 +9,7 @@
   "coldwallet_transaction_signature_request_content": "La liste ci-dessous répertorie tous les contrats / actions spécifiés dans cette transaction. Passez en revue la transaction ci-dessous et une fois la transaction vérifiée, signez-la à l'aide du bouton ci-dessous.",
   "collwallet_transaction_sign_confirm": "Signer cette transaction",
   "collwallet_transaction_sign_cancel": "Annuler",
-  "coldwallet_wallet_title": "Cold Storage Wallet",
+  "coldwallet_wallet_title": "Wallet Froide (Cold Storage Wallet)",
   "coldwallet_wallet_description": "Un mode hors ligne pour un stockage sécurisé",
   "coldwallet_wallet_workflow": "Exemple de workflow pour signer une transaction hors ligne:",
   "coldwallet_wallet_instructions_title": "Instructions d'utilisation",
