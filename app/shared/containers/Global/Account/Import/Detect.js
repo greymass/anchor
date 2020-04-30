@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Checkbox, Divider, Header, List, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Divider, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
@@ -23,7 +23,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
     publicKey: '',
     valid: false,
     value: ''
-  }
+  };
   componentDidMount() {
     this.fetchAccountsByKey();
   }
@@ -98,7 +98,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       const { accounts, wallets } = this.props;
       let matches = accounts.__lookups;
       if (Object.keys(accounts.__permissions).length) {
-        matches = accounts.__permissions
+        matches = accounts.__permissions;
       }
       if (matches[0].includes('@')) {
         const results = matches.filter((match) => {
@@ -133,7 +133,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
         });
       }
     }
-  }
+  };
   render() {
     const {
       accounts,
@@ -194,7 +194,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Automatically find available accounts"
+            content={t('global_account_import_detect_header_one')}
             subheader={t('global_account_import_existing_description')}
           />
           {(filtered.length > 0)
@@ -228,9 +228,9 @@ class GlobalModalAccountImportDetect extends Component<Props> {
             ? (
               <Segment stacked size="large" color="orange">
                 <Header>
-                  Failed to locate any additional accounts
+                  {t('global_account_import_detect_header_two')}
                 </Header>
-                All accounts for this blockchain that match your existing key pairs have already been imported. Import a new private key to detect new accounts.
+                {t('global_account_import_detect_subheader_two')}
               </Segment>
             )
             : false

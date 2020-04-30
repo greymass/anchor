@@ -31,8 +31,8 @@ class GlobalModalAccountImportPassword extends Component<Props> {
               <Header
                 color="orange"
                 icon="warning"
-                content="Backup your Anchor password"
-                subheader="Ensure you keep a copy of your password safely offline. This password cannot be recovered, and without this password, any private keys stored within Anchor cannot be decrypted."
+                content={t('global_account_import_password_header_one')}
+                subheader={t('global_account_import_password_subheader_one')}
               />
             </Segment>
           </Segment>

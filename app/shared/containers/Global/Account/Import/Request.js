@@ -60,8 +60,8 @@ class GlobalModalAccountImportRequest extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Create account via Request Code"
-            subheader="A request code can be given to an untrusted party who is willing to create an account for you."
+            content={t('global_account_import_request_header_one')}
+            subheader={t('global_account_import_request_subheader_one')}
           />
           {(!pubkeys.available.length) ? (
             <GlobalModalAccountImportKeys />
