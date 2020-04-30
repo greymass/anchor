@@ -108,11 +108,9 @@ class GlobalModalAccountImportHot extends Component<Props> {
   render() {
     const {
       accounts,
-      actions,
       connection,
       onClose,
       settings,
-      system,
       t,
       validate,
       wallets
@@ -123,8 +121,6 @@ class GlobalModalAccountImportHot extends Component<Props> {
       valid,
       value
     } = this.state;
-    const matches = accounts.__lookups;
-    const results = accounts.__results;
     const disabled = (!selected.length || !valid);
     let passwordPrompt = false;
     if (!settings.walletHash) {
@@ -142,8 +138,8 @@ class GlobalModalAccountImportHot extends Component<Props> {
           : (
             <Segment basic>
               <Header
-                content="Import a Private Key"
-                subheader={`Anchor will encrypt your private key locally and then find the ${connection.chain} accounts matching the public key.`}
+                content={t('global_account_import_hot_header_one')}
+                subheader={t('global_account_import_hot_subheader_one')}
               />
               <GlobalFormFieldKeyPrivate
                 autoFocus
