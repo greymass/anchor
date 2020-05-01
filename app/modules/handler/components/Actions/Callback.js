@@ -69,4 +69,4 @@ class PromptActionCallback extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionCallback);
+export default withTranslation('handler')(PromptActionCallback);

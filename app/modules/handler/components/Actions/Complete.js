@@ -34,4 +34,4 @@ class PromptActionComplete extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionComplete);
+export default withTranslation('handler')(PromptActionComplete);

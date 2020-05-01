@@ -2,9 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 

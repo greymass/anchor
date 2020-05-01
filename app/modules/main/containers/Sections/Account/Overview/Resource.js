@@ -159,7 +159,7 @@ class AccountOverviewResource extends Component<Props> {
                         <GlobalButtonRent
                           button={{
                             color: 'green',
-                            content: 'Rent',
+                            content: t('main_sections_overview_resource_button_rent'),
                             floated: 'right',
                             icon: 'exchange',
                             size: 'tiny'
@@ -303,7 +303,7 @@ class AccountOverviewResource extends Component<Props> {
                       <GlobalButtonStake
                         button={{
                           color: 'blue',
-                          content: 'Add',
+                          content: t('main_sections_overview_resource_button_add'),
                           floated: 'left',
                           icon: 'plus circle',
                           size: 'tiny'
@@ -313,7 +313,7 @@ class AccountOverviewResource extends Component<Props> {
                       <GlobalButtonUnstake
                         button={{
                           color: 'red',
-                          content: 'Remove',
+                          content: t('main_sections_overview_resource_button_remove'),
                           floated: 'right',
                           icon: 'minus circle',
                           size: 'tiny'
