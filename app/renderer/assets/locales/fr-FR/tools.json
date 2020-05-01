@@ -56,6 +56,8 @@
   "tools_change_block_explorer": "Changer l'explorateur de blocs",
   "tools_change_block_explorer2": "Explorateur de blocs par défaut",
   "tools_change_display_test_networks": "Activer la prise en charge de Testnet",
+  "tools_change_dfuse_api_key": "Clef d'API dfuse",
+  "tools_change_show_api_key": "Montrer la clef d'API",
   "tools_change_language": "Changer de langue",
   "tools_change_language2": "Langue affichée",
   "tools_change_node": "Changer le nœud de l'API",

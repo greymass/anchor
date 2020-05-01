@@ -60,6 +60,7 @@
   "tools_change_block_explorer2": "Default Block Explorer",
   "tools_change_display_test_networks": "Enable Testnet Support",
   "tools_change_dfuse_api_key": "dfuse API Key",
+  "tools_change_show_api_key": "Show API Key",
   "tools_change_language": "Change language",
   "tools_change_language2": "Displayed Language",
   "tools_change_node": "Change API node",
@@ -205,8 +206,6 @@
   "tools_governance_proposal_vote_ricardian_contract_six": "If I, {{ voter }}, am not the beneficial owner of these tokens, I stipulate I have proof that I’ve been authorized to vote these tokens by their beneficial owner(s).",
   "tools_governance_proposal_vote_ricardian_contract_three": "I acknowledge that using the `unvote` action after placing a `vote` will render my previous `vote` of {{ vote_value }} null and void.",
   "tools_governance_proposal_vote_ricardian_contract_two": "To change my vote, I may call another `vote` action, with only the most recent `vote` of {{ vote_value }} being the `vote` which I, {{ voter }}, intend to be considered as valid.",
-
-
   "tools_keys_key_button_one": "Generate Key Pair (x2)",
   "tools_keys_key_generation_copied_clipboard": "Copied!",
   "tools_keys_key_generation_message_one_header": "Some/all of these keys have NOT been saved.",
