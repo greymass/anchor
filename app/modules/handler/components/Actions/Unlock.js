@@ -67,4 +67,4 @@ class PromptActionUnlock extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionUnlock);
+export default withTranslation('handler')(PromptActionUnlock);

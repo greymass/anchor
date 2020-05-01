@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
 
 import { clearSystemState } from '../../../../../../../shared/actions/system/systemstate';
 import { getRamStats } from '../../../../../../../shared/actions/globals';
@@ -25,6 +25,7 @@ class AccountOverviewRamSell extends Component<Props> {
       globals,
       settings,
       system,
+      t,
       unlocked,
     } = this.props;
     if (!unlocked) return false;
@@ -41,7 +42,7 @@ class AccountOverviewRamSell extends Component<Props> {
         trigger={(
           <Button
             color="red"
-            content="Sell"
+            content={t('main_sections_overview_ram_buy_button')}
             floated="right"
             icon="minus circle"
             size="tiny"
@@ -75,4 +76,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountOverviewRamSell));
+export default compose(
+  withTranslation('main'),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountOverviewRamSell);

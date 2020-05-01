@@ -250,6 +250,7 @@
   "global_account_import_hot_subheader_one": "Anchor will encrypt your private key locally and then find the {{connectionChain}} accounts matching the public key.",
   "global_account_import_password_header_one": "Backup your Anchor password",
   "global_account_import_password_subheader_one": "Ensure you keep a copy of your password safely offline. This password cannot be recovered, and without this password, any private keys stored within Anchor cannot be decrypted.",
+  "global_account_import_private_paragraph": "Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.",
   "global_account_import_request_header_one": "Create account via Request Code",
   "global_account_import_request_subheader_one": "A request code can be given to an untrusted party who is willing to create an account for you.",
   "global_account_import_watch_header": "Watch an account",

@@ -62,4 +62,4 @@ class PromptActionSign extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionSign);
+export default withTranslation('handler')(PromptActionSign);

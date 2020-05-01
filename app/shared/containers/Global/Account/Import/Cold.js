@@ -100,7 +100,6 @@ class GlobalModalAccountImportCold extends Component<Props> {
                 </p>
                 <p>
                   {t('global_account_import_private_paragraph')}
-                  Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.
                 </p>
               </Grid.Column>
             </Grid.Row>

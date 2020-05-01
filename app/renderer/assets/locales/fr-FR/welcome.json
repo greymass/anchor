@@ -19,7 +19,7 @@
   "welcome_enter_account": "Confirmer le compte",
   "welcome_history_plugin_warning_content": "Ce nœud semble ne pas avoir le plugin d'historique activé, veuillez noter que certaines fonctionnalités de cette Wallet ne fonctionneront pas avec ce nœud. Vous pouvez utiliser 'https://eos.greymass.com', ' http://api.eossweden.se 'ou' http://eu.eosdac.io 'si vous souhaitez profiter pleinement de cette Wallet. ",
   "welcome_history_plugin_warning_title": "Ce nœud ne permet qu'une utilisation partielle de cette Wallet",
-  "welcome_import_wallets": "Restaurer la sauvegarde à partir d'un fichier",
+  "welcome_import_wallets": "Restaurer votre Wallet à partir d'un fichier",
   "welcome_instructions_2": "Entrez l'adresse du noeud à laquelle vous souhaitez vous connecter.",
   "welcome_instructions_3": "Entrez la clé publique ou le nom du compte.",
   "welcome_instructions_3_cold": "Entrez le nom du compte à utiliser.",
@@ -62,7 +62,7 @@
   "welcome_path_have_account_button": "Importer un compte existant",
   "welcome_path_have_account_header": "Importer un compte existant",
   "welcome_path_have_account_subheader": "Vous avez déjà un nom de compte et une clé privée?",
-  "welcome_restore_wallet_header": "Restaurer la sauvegarde de la Wallet",
+  "welcome_restore_wallet_header": "Restaurer votre Wallet à partir d'un fichier",
   "welcome_restore_wallet_subheader": "Restaurer cette Wallet à un état antérieur à l'aide d'un fichier de sauvegarde de Wallet. Tous les paramètres, réseaux et Wallets seront recréés.",
   "welcome_select_account": "Sélectionner un compte",
   "welcome_server_connection_fail_content": "Réessayez ou entrez un autre serveur.",
@@ -80,6 +80,6 @@
   "welcome_stage_connection": "Connexion",
   "welcome_stage_wallet": "Wallet",
   "welcome_stage_watchwallet": "Watch Wallet",
-  "welcome_use_coldwallet": "Configurer Cold Wallet",
+  "welcome_use_coldwallet": "Configurer une Cold Wallet",
   "welcome_account_lookup_no_accounts": "Aucun compte trouvé"
 }

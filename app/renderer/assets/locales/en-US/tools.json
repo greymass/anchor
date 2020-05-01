@@ -392,5 +392,6 @@
   "tools_keys_management_header_cell_two": "Derivation Path",
   "tools_keys_management_header_cell_three": "Accounts",
   "tools_table_header_cell_one": "Weight",
-  "tools_table_header_cell_two": "Permission"
+  "tools_table_header_cell_two": "Permission",
+  "tools_form_blockchain_advanced_configuration": "Advanced Configuration"
 }
