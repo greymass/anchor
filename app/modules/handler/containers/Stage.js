@@ -501,9 +501,9 @@ class PromptStage extends Component<Props> {
               size="big"
             >
               <Header>
-                {(broadcasting) ? 'Broadcasting Transaction' : false}
-                {(callbacking) ? 'Issuing Callback' : false}
-                {(signing) ? 'Signing Transaction' : false}
+                {(broadcasting) ? t('handler_containers_stage_header_broadcast') : false}
+                {(callbacking) ? t('handler_containers_stage_header_issue'): false}
+                {(signing) ? t('handler_containers_stage_header_sign') : false}
               </Header>
             </Loader>
           </Dimmer>
