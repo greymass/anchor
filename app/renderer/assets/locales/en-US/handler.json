@@ -90,5 +90,8 @@
   "handler_containers_stage_header": "Offline Signing & Transaction Expirations",
   "handler_containers_stage_subheader": "From the moment the unsigned transaction is saved as a file, a 2 hour countdown begins in which the transaction must be completed. Once 2 hours has passed, the transaction will become invalid and unable to perform the desired action.",
   "handler_containers_stage_message_paragraph": "Be cautious before proceeding, this action could cause damages to your account.",
-  "handler_containers_stage_message_header": "This transaction is potentially dangerous"
+  "handler_containers_stage_message_header": "This transaction is potentially dangerous",
+  "handler_containers_stage_header_broadcast": "Broadcasting Transaction",
+  "handler_containers_stage_header_sign": "Sign Transaction",
+  "handler_containers_stage_header_issue": "Broadcast Transaction"
 }
