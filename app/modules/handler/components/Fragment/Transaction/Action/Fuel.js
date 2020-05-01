@@ -42,4 +42,4 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptFragmentTransactionActionFuel);
+export default withTranslation('handler')(PromptFragmentTransactionActionFuel);

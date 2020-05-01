@@ -510,7 +510,7 @@ class PromptStage extends Component<Props> {
           {(shouldDisplayDangerousTransactionWarning) && (
             <Message
               icon="warning sign"
-              header="This transaction is potentially dangerous"
+              header={t('handler_containers_stage_message_header')}
               content={(
                 <React.Fragment>
                   <p>
@@ -614,6 +614,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps, mapDispatchToProps)
 )(PromptStage);

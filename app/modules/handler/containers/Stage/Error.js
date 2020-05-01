@@ -48,6 +48,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('handlers'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageError);
