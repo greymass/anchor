@@ -33,7 +33,7 @@ export class GlobalSettingsDfuse extends Component<Props> {
         </p>
         <p>
           <Checkbox
-            label="Show API Key"
+            label={t('tools_change_show_api_key')}
             onChange={this.onToggleKey}
             checked={visible}
           />
@@ -43,4 +43,4 @@ export class GlobalSettingsDfuse extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(GlobalSettingsDfuse);
+export default withTranslation('tools')(GlobalSettingsDfuse);

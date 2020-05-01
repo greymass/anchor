@@ -136,7 +136,7 @@ class WalletTransferContainer extends Component<Props> {
               <Header
                 content={t('main_sections_wallet_transfer_grid_header_one')}
                 size="small"
-                subheader={t('main_sections_wallet_transfer_grid_header_one')}
+                subheader={t('main_sections_wallet_transfer_grid_subheader_one')}
               />
               <GlobalAccountDropdownSelect
                 account={settings.account}
