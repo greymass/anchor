@@ -61,4 +61,4 @@ class PromptActionIdentity extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionIdentity);
+export default withTranslation('handler')(PromptActionIdentity);

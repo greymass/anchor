@@ -38,7 +38,7 @@ class HomeUpgradeContainer extends Component<Props> {
         >
           <Modal.Header>
             <Header
-              content="Allow Anchor to integrate with apps?"
+              content={t('main_sections_home_signing_request_prompt_header_one')}
             />
           </Modal.Header>
           <Modal.Content>

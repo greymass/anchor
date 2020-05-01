@@ -128,7 +128,7 @@
   "tools_form_blockchain_name_label": "Nom de la blockchain",
   "tools_form_blockchain_node_error_mismatch_chainid": "Le serveur spécifié ne correspond pas à l'identifiant de chaîne de la blockchain configurée.",
   "tools_form_blockchain_node_error_undefined": "Impossible de se connecter au serveur.",
-  "tools_form_blockchain_node_label": "Noeud par défaut pour cette blockchain",
+  "tools_form_blockchain_node_label": "Node par défaut pour cette blockchain",
   "tools_form_blockchain_symbol_label": "Symbole de Token par défaut (EOS / TLOS / etc)",
   "tools_form_blockchain_testnet_label": "Cette blockchain est un réseau de test (TESTNET).",
   "tools_form_contact_account_name": "Nom du compte",
@@ -340,7 +340,7 @@
   "tools_wallets_account": "Comptes",
   "tools_wallets_backup_button": "Enregistrer la sauvegarde",
   "tools_wallets_blockchain": "Blockchain",
-  "tools_wallets_controls": "Wallet Controls",
+  "tools_wallets_controls": "Contrôle de Wallet",
   "tools_wallets_header": "Gérer les Wallets",
   "tools_wallets_mode": "Mode de Wallet",
   "tools_wallets_remove": "Supprimer le Wallet",
@@ -363,5 +363,6 @@
   "tools_keys_management_header_cell_three": "Comptes",
   "tools_keys_management_header_cell_two": "Chemin de dérivation",
   "tools_table_header_cell_one": "Poid",
-  "tools_table_header_cell_two": "Autorisation"
+  "tools_table_header_cell_two": "Autorisation",
+  "tools_form_blockchain_advanced_configuration": "Configuration Avancé"
 }
