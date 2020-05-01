@@ -28,9 +28,6 @@ const configureLocalization = (resourcePath, store) => {
       defaultNS: 'common',
       fallbackNS: 'common',
       debug: (process.env.DEBUG_PROD === 'true'),
-      interpolation: {
-        escapeValue: false,
-      },
       backend: {
         loadPath: path.join(resourcePath, 'renderer/assets/locales/{{lng}}/{{ns}}.json'),
         jsonIndent: 2
