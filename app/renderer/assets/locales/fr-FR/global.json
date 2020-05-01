@@ -226,7 +226,7 @@
   "global_account_import_exist_header_two": "Importer un compte existant à l'aide d'un appareil Ledger",
   "global_account_import_exist_subheader_two": "Anchor cryptera votre clé privée localement, puis trouvera les comptes {{connection.chain}} correspondant à la clé publique.",
   "global_account_import_exist_button_two": "Charger depuis Ledger",
-  "global_account_import_exist_button_three": "Activer la prise en charge du grand livre",
+  "global_account_import_exist_button_three": "Activer la prise en charge de votre Ledger",
   "global_account_import_exist_header_three": "Importer un compte existant en tant que Watch Wallet",
   "global_account_import_exist_header_four": "Une Watch Wallet est une Wallet en lecture seule et ne nécessite aucune paire de clés. Il peut être utilisé avec une configuration de Cold Wallet pour une signature sécurisée.",
   "global_account_import_exist_button_four": "Configurer une Watch Wallet",
