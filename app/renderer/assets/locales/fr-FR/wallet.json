@@ -121,6 +121,7 @@
   "wallet_upgrade_watch_authorization_header": "Sélectionnez une autorité pour cette Wallet.",
   "wallet_welcome_connection_blockchain_message": "Vous êtes connecté au {{blockChainName}}.",
   "wallet_panel_button_broadcast_transaction": "Propager Transaction",
+  "wallet_lock_state_popup": "Cette Wallet (et possiblement d'autres) est/sont déverrouillée(s). Cliquez sur cette icône pour toutes les verrouiller.",
   "tools_button_reset": "Réinitialiser l'application",
   "tools_confirm_content_reset": "Cette action effacera toutes les clés privées, les paramètres et les comptes et restaurera cette application à son état par défaut. Assurez-vous de disposer d'une sauvegarde appropriée avant de continuer.",
   "tools_confirm_header_reset": "Avertissement"
