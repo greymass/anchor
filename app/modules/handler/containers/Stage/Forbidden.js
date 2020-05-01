@@ -57,6 +57,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageForbidden);

@@ -70,6 +70,7 @@
   "main_sections_home_initialize_button_one": "Setup New Wallet",
   "main_sections_home_initialize_card_description_one": "Do you have a backup file from either Anchor or Anchor?",
   "main_sections_home_initialize_card_content_one": "For Advanced Users:",
+  "main_sections_home_signing_request_prompt_header_one": "Allow Anchor to integrate with apps?",
   "main_sections_home_signing_request_prompt_paragraph_one": "Enabling app integrations will allow you to sign in to any supported application using this desktop Anchor wallet.",
   "main_sections_home_signing_request_prompt_paragraph_two": "This can be toggled on or off from the sidebar on the Home screen at any time.",
   "main_sections_home_signing_request_prompt_button_one": "No, remain disabled",
@@ -119,5 +120,10 @@
   "main_sections_overview_resources_subheader": "The resource usage breakdown for all loaded accounts on this blockchain.",
   "main_sections_overview_grid_header": "Account(s) Overview",
   "main_sections_overview_grid_subheader": "Overview of accounts for this blockchain.",
-  "main_sections_overview_container_button": "Manage Wallets"
+  "main_sections_overview_container_button": "Manage Wallets",
+  "main_sections_overview_ram_buy_button": "Purchase",
+  "main_sections_overview_ram_sell_button": "Sell",
+  "main_sections_overview_resource_button_add": "Add",
+  "main_sections_overview_resource_button_remove": "Remove",
+  "main_sections_overview_resource_button_rent": "Rent"
 }

@@ -80,4 +80,4 @@ class PromptActionDownload extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionDownload);
+export default withTranslation('handler')(PromptActionDownload);

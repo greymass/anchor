@@ -61,4 +61,4 @@ class PromptActionBroadcast extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionBroadcast);
+export default withTranslation('handler')(PromptActionBroadcast);

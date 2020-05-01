@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Grid, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
+import { Grid, Header, Icon, Message, Table } from 'semantic-ui-react';
 
 import PromptStageCallback from './Callback';
 import ExplorerLink from '../../../../shared/containers/Global/Blockchain/ExplorerLink';
@@ -100,7 +100,7 @@ class PromptStageSuccess extends Component<Props> {
                     : false
                   }
                   <Table.Row>
-                    <Table.Cell collapsing>Submitted via</Table.Cell>
+                    <Table.Cell collapsing>{t('handler_containers_stage_success_table_cell_two')}</Table.Cell>
                     <Table.Cell>
                       {(response && response.processed)
                         ? prompt.endpoint
@@ -115,11 +115,11 @@ class PromptStageSuccess extends Component<Props> {
                 content={(
                   <React.Fragment>
                     <p>
-                      The Transaction ID listed above can be used to monitor this transaction. The service it was submitted to is responsible for ensuring the transaction makes it into the greater blockchain network.
+                      {t('handler_containers_stage_success_message_one')}
                     </p>
                   </React.Fragment>
                 )}
-                header="Monitor your Transaction"
+                header={t('handler_containers_stage_success_message_one_header')}
                 icon="info circle"
                 size="large"
               />
@@ -139,6 +139,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageSuccess);

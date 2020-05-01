@@ -184,7 +184,7 @@ class GlobalBlockchainForm extends Component<Props> {
           <Accordion fluid styled>
             <Accordion.Title active={showAdvanced} index={0} onClick={this.showAdvanced}>
               <Icon name='dropdown' />
-              Advanced Configuration
+              {t('tools_form_blockchain_advanced_configuration')}
             </Accordion.Title>
             <Accordion.Content active={showAdvanced}>
               <GlobalFormFieldString
