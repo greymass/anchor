@@ -111,7 +111,6 @@ export function callbackURIWithProcessed(callback) {
       payload,
       url,
     } = callback;
-
     let s = url;
     esrParams.forEach((param) => {
       s = s.replace(`{{${param}}}`, payload[param]);
@@ -386,8 +385,20 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
           if (shouldBroadcast) {
             broadcasted = await signer.push(signed);
           }
+          let callbackParams;
+          if (
+            (callback && broadcast)
+            || (callback && !callback.broadcast)
+          ) {
+            const blockNum = (broadcasted) ? broadcasted.processed.block_num : null;
+            callbackParams =
+              prompt.resolved.getCallback &&
+              prompt.resolved.getCallback(signed.transaction.signatures, blockNum);
+            callbackParams && dispatch(callbackURIWithProcessed(callbackParams));
+          }
           dispatch({
             payload: {
+              callbackParams,
               response: broadcasted,
               signed: (broadcasted)
                 ? {
@@ -401,16 +412,6 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             },
             type: types.SYSTEM_ESRURISIGN_SUCCESS
           });
-          if (
-            (callback && broadcast)
-            || (callback && !callback.broadcast)
-          ) {
-            const blockNum = (broadcasted) ? broadcasted.processed.block_num : null;
-            const callbackParams =
-              prompt.resolved.getCallback &&
-              prompt.resolved.getCallback(signed.transaction.signatures, blockNum);
-            callbackParams && dispatch(callbackURIWithProcessed(callbackParams));
-          }
           if (broadcasted) {
             dispatch({
               payload: {
