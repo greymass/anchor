@@ -11,6 +11,8 @@ import ErrorMessage from '../../components/error';
 import PromptFragmentPlaceholderTransactionAction from '../../components/Fragment/Placeholder/Transaction/Action';
 import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
 
+import htmlDecode from '../../../../shared/utils/htmlDecode';
+
 class PromptStageReview extends Component<Props> {
   render() {
     const {
@@ -60,7 +62,7 @@ class PromptStageReview extends Component<Props> {
             {t('handler_containers_stage_review_header')}
             <Header.Subheader>
               <div dangerouslySetInnerHTML={{
-                __html: t(
+                __html: htmlDecode(t(
                   'handler_containers_stage_review_paragraph',
                   {
                     linkComponent: ReactDOMServer.renderToStaticMarkup(
@@ -69,8 +71,8 @@ class PromptStageReview extends Component<Props> {
                       </a>
                     )
                   }
-                )
-              }} />
+                ))
+              }} ></div>
 
             </Header.Subheader>
           </Header>
