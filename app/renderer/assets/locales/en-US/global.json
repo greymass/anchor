@@ -266,5 +266,10 @@
   "global_account_import_welcome_subheader_three": "Import new or existing key pairs and then have an account created.",
   "global_account_import_welcome_button_three": "Setup Account",
   "global_modal_account_import_existing_account": "Existing Account",
-  "global_modal_account_import_create_account": "Create Account"
+  "global_modal_account_import_create_account": "Create Account",
+  "global_blockchain_manage_resync_popup": "Resync Blockchains",
+  "global_blockchain_manage_resync_header": "Resync Blockchains & Settings",
+  "global_blockchain_manage_resync_paragraph_one": "This utility will fetch a more recent copy of available blockchains and update their configuration.",
+  "global_blockchain_manage_resync_paragraph_two": "Anchor will do this by fetching data from the \"anchorwallet\" smart contract on the EOS blockchain. It will fetch this data either from the custom EOS node you have specified or by accessing the public API at eos.greymass.com directly.",
+  "global_blockchain_manage_resync_button": "Resync"
 }
