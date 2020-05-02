@@ -126,7 +126,7 @@
     "detect-port": "^1.2.3",
     "devtron": "^1.4.0",
     "electron": "8.2.1",
-    "electron-builder": "^22.5.0",
+    "electron-builder": "^22.6.0",
     "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-log": "^2.2.14",
