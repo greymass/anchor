@@ -24,7 +24,8 @@ export default function prompt(state = {}, action) {
     }
     case types.SYSTEM_ESRURISIGN_SUCCESS: {
       return Object.assign({}, state, {
-        signed: action.payload.signed
+        callback: action.payload.callbackParams,
+        signed: action.payload.signed,
       });
     }
     case types.SYSTEM_ESRURIBROADCAST_SUCCESS: {
