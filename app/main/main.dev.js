@@ -109,11 +109,18 @@ app.on('uncaughtException', (error) => {
 const lock = process.mas || app.requestSingleInstanceLock();
 
 if (!lock) {
-  app.quit()
+  app.quit();
 } else {
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
-    if (process.platform === 'win32' || process.platform === 'linux') {
-      uri = argv.slice(1)[0];
+  app.on('second-instance', (event, argv) => {
+    if (
+      (
+        process.platform === 'win32'
+        || process.platform === 'linux'
+      )
+      && argv
+      && argv.length
+    ) {
+      uri = argv[argv.length - 1];
     }
     if (mainWindow !== null) {
       handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
