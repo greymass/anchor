@@ -23,6 +23,7 @@ class WalletModalContentBroadcast extends Component<Props> {
     super(props);
 
     this.state = {
+      importedESR: undefined,
       importedTransaction: false
     };
   }
@@ -44,6 +45,13 @@ class WalletModalContentBroadcast extends Component<Props> {
     } = actions;
     broadcastTransaction(transaction.data);
   }
+
+  onInputChange = (e, { value }) => {
+    this.setState({
+      importedESR: value
+    });
+  }
+
   onTextAreaChange = (e, { value }) => {
     this.setState({
       importedTransaction: value
@@ -66,6 +74,18 @@ class WalletModalContentBroadcast extends Component<Props> {
     }
   }
 
+  handleESR = () => {
+    const {
+      importedESR
+    } = this.state;
+    if (!importedESR) return false;
+    if (importedESR.startsWith('esr:') || importedESR.startsWith('eosio:')) {
+      ipcRenderer.send('openUri', importedESR);
+    } else {
+      ipcRenderer.send('openUri', `esr:${importedESR}`);
+    }
+  }
+
   render() {
     const {
       onClose,
@@ -76,6 +96,9 @@ class WalletModalContentBroadcast extends Component<Props> {
       data,
       signed
     } = transaction;
+    const {
+      importedESR
+    } = this.state;
     let actions = [];
     if (data) {
       ({ actions } = data.transaction.transaction);
@@ -190,6 +213,32 @@ class WalletModalContentBroadcast extends Component<Props> {
                             content={t('broadcast_transaction_import_json')}
                             icon="paste"
                             onClick={this.handleImport}
+                            size="large"
+                          />
+                        </Form>
+                      )
+                    }
+                  },
+                  {
+                    menuItem: {
+                      key: 'esr',
+                      icon: 'paste',
+                      content: t('broadcast_transaction_paste_esr_title')
+                    },
+                    pane: {
+                      key: 'esr',
+                      content: (
+                        <Form>
+                          <Form.Input
+                            onChange={this.onInputChange}
+                            placeholder={t('broadcast_transaction_import_esr_label')}
+                            value={importedESR}
+                          />
+                          <Button
+                            color="blue"
+                            content={t('broadcast_transaction_import_esr')}
+                            icon="paste"
+                            onClick={this.handleESR}
                             size="large"
                           />
                         </Form>
