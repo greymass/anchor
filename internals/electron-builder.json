@@ -128,6 +128,6 @@
     "include": "build/installer.nsh",
     "oneClick": false,
     "perMachine": true,
-    "shortcutName": "Anchor Desktop Dev"
+    "shortcutName": "Anchor Wallet"
   }
 }
