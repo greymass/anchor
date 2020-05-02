@@ -9,6 +9,9 @@
   "broadcast_transaction_import_json_label": "Paste the transaction JSON object here..",
   "broadcast_transaction_invalid_error": "The file or string that was uploaded is invalid.",
   "broadcast_transaction_not_signed": "서명 되지 않은 거래를 방송(브로드캐스트) 할수 없습니다.",
+  "broadcast_transaction_paste_esr_title": "Import ESR Payload",
+  "broadcast_transaction_import_esr_label": "Paste an ESR payload to trigger a signing request manually.",
+  "broadcast_transaction_import_esr": "Trigger Signing Request",
   "broadcast_transaction_note": "Please note that the transaction must be signed in order for it to be broadcasted.",
   "broadcast_transaction_paste_json_title": "Paste a Transaction String",
   "broadcast_transaction_signbroadcast": "거래 서명 + 방송(브로드캐스트) 하기"
