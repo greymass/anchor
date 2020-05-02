@@ -204,20 +204,6 @@ class PromptStage extends Component<Props> {
       ([reqType] = prompt.req);
     }
 
-    // Once a identity request has been sent, just close
-    if (reqType === 'identity' && hasSignature) {
-      onClose();
-      return false;
-    }
-
-    // If promptCloseOnComplete is true and the transaction is successful, just close
-    if (hasSignature && settings.promptCloseOnComplete && (
-      system.ESRURIBROADCAST === 'SUCCESS'
-      || system.ESRURICALLBACK === 'SUCCESS'
-    )) {
-      onClose();
-      return false;
-    }
 
     const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
     const hasCallback = !!(prompt && prompt.callback);
@@ -225,7 +211,7 @@ class PromptStage extends Component<Props> {
     const hasForegroundCallback = !!(
       prompt
       && prompt.callback
-      && prompt.background === false
+      && prompt.callback.background === false
     );
 
     // After this signature is added, does it meet the requirements to be able to broadcast?
@@ -234,6 +220,26 @@ class PromptStage extends Component<Props> {
     const canBroadcast = (canSign && authorizations.length === 1 && prompt.broadcast);
 
     const uriDigested = !!(prompt.transaction);
+
+    // Once a identity request has been sent, just close
+    if (reqType === 'identity' && hasSignature && !hasForegroundCallback) {
+      onClose();
+      return false;
+    }
+
+    // If promptCloseOnComplete is true and the transaction is successful, just close
+    if (
+      hasSignature
+      && !hasForegroundCallback
+      && settings.promptCloseOnComplete
+      && (
+        system.ESRURIBROADCAST === 'SUCCESS'
+        || system.ESRURICALLBACK === 'SUCCESS'
+      )
+    ) {
+      onClose();
+      return false;
+    }
 
     let stage = (
       <PromptStageReview

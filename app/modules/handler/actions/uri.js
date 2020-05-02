@@ -313,8 +313,10 @@ export function signIdentityRequest(prompt, blockchain, wallet) {
           requiredKeys: [signer.convert(wallet.pubkey)],
           serializedTransaction: prompt.resolved.serializedTransaction,
         });
+        const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
         dispatch({
           payload: {
+            callbackParams,
             response: signed,
             signed: {
               signatures: signed.signatures,
@@ -323,7 +325,6 @@ export function signIdentityRequest(prompt, blockchain, wallet) {
           },
           type: types.SYSTEM_ESRURISIGN_SUCCESS
         });
-        const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
         dispatch(callbackURIWithProcessed(callbackParams));
       } catch (err) {
         return dispatch({
