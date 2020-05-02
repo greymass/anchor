@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Grid, Header, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
+import { Button, Grid, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
 
 import * as FuelActions from '../../../actions/fuel';
 import * as SettingsActions from '../../../actions/settings';
@@ -14,6 +14,8 @@ import * as SettingsActions from '../../../actions/settings';
 import FuelFullLogo from '../../../../renderer/assets/images/fuel/greymassfuel-horizontal.png';
 import FuelLogo from '../../../../renderer/assets/images/fuel/fuel-square-logo.png';
 import FuelLogoDisabled from '../../../../renderer/assets/images/fuel/fuel-square-logo-grey.png';
+
+import htmlDecode from '../../../utils/htmlDecode';
 
 const { shell } = require('electron');
 
@@ -93,7 +95,7 @@ class GlobalFuelDropdown extends Component<Props> {
               <p>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: t(
+                    __html: htmlDecode(t(
                       'fuel_paragraph_two',
                       {
                         linkComponent: ReactDOMServer.renderToStaticMarkup(
@@ -102,7 +104,7 @@ class GlobalFuelDropdown extends Component<Props> {
                           </a>
                         ),
                       }
-                    )
+                    ))
                   }}
                 />
               </p>
