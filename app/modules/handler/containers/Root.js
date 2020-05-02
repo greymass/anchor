@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, Suspense } from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 
@@ -18,9 +18,7 @@ export default class Root extends Component<Props> {
   render = () => (
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <Suspense fallback={<div>Loading</div>}>
-          <Prompt />
-        </Suspense>
+        <Prompt />
       </Provider>
     </I18nextProvider>
   );
