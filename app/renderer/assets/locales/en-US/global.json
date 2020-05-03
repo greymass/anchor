@@ -271,5 +271,6 @@
   "global_blockchain_manage_resync_header": "Resync Blockchains & Settings",
   "global_blockchain_manage_resync_paragraph_one": "This utility will fetch a more recent copy of available blockchains and update their configuration.",
   "global_blockchain_manage_resync_paragraph_two": "Anchor will do this by fetching data from the \"anchorwallet\" smart contract on the EOS blockchain. It will fetch this data either from the custom EOS node you have specified or by accessing the public API at eos.greymass.com directly.",
-  "global_blockchain_manage_resync_button": "Resync"
+  "global_blockchain_manage_resync_button": "Resync",
+  "global_message_error_header": "An error occured while loading the app:"
 }

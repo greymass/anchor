@@ -9,11 +9,12 @@ class FormMessageError extends Component<Props> {
   render() {
     const {
       error,
+      t,
     } = this.props;
 
     return (
       <Segment>
-        <Header>An error occured while loading the app:</Header>
+        <Header>{t('global_message_error_header')}</Header>
         {typeof error === 'object'
           ? (
             <Message negative>
