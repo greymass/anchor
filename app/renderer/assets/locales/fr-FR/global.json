@@ -265,5 +265,6 @@
   "global_blockchain_manage_resync_header": "Resynchronisez les Blockchains et Paramètres",
   "global_blockchain_manage_resync_paragraph_one": "Cet outil récupérera une copie plus récente des chaînes de blocs disponibles et mettra à jour leur configuration.",
   "global_blockchain_manage_resync_ paragraph_two": "Anchor le fera en récupérant les données du contrat intelligent \"anchorwallet \"sur la blockchain EOS. Il récupérera ces données à partir de la node EOS personnalisé que vous avez spécifié ou en accédant à l'API publique à eos.greymass.com directement.",
-  "global_blockchain_manage_resync_button": "Resynchronisez"
+  "global_blockchain_manage_resync_button": "Resynchronisez",
+  "global_message_error_header": "Anchor a rencontré une erreur durant son initialisation:"
 }
