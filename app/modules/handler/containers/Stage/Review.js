@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Grid, Header, Segment } from 'semantic-ui-react';
 
@@ -10,8 +9,6 @@ import PromptReviewControls from '../../components/Review/Controls';
 import ErrorMessage from '../../components/error';
 import PromptFragmentPlaceholderTransactionAction from '../../components/Fragment/Placeholder/Transaction/Action';
 import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
-
-import htmlDecode from '../../../../shared/utils/htmlDecode';
 
 class PromptStageReview extends Component<Props> {
   render() {
@@ -61,19 +58,13 @@ class PromptStageReview extends Component<Props> {
           <Header>
             {t('handler_containers_stage_review_header')}
             <Header.Subheader>
-              <div dangerouslySetInnerHTML={{
-                __html: htmlDecode(t(
-                  'handler_containers_stage_review_paragraph',
-                  {
-                    linkComponent: ReactDOMServer.renderToStaticMarkup(
-                      <a onClick={onShareLink} style={{ cursor: 'pointer' }}>
-                        {t('handler_containers_stage_review_link')}
-                      </a>
-                    )
-                  }
-                ))
-              }} ></div>
-
+              <Trans i18nKey="handler_containers_stage_review_paragraph" t={t}>
+                Listed below are the actions to be performed.
+                If you are unsure of what this request does,
+                <a href="#" onClick={() => this.openLink('https://greymass.com/fuel')}>
+                  use a URI link to ask those you trust
+                </a>
+              </Trans>
             </Header.Subheader>
           </Header>
           {(loading)
