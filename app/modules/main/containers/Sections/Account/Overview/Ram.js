@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 
 import { Button, Container, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
@@ -52,11 +52,10 @@ class AccountOverviewRam extends Component<Props> {
                       marginTop: '0.35em',
                     }}
                   >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: t('main_sections_overview_ram_subheader')
-                      }}
-                    />
+                    <Trans i18nKey="handler_containers_stage_review_paragraph" t={t}>
+                      A <strong>size-based</strong> resource an account can use to
+                      <strong>store data</strong> within smart contracts.
+                    </Trans>
                   </Header.Subheader>
                 </Header.Content>
               </Header>
