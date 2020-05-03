@@ -36,7 +36,7 @@
   "main_navigation_wallet_menu_item_one": "Tokens de transfert",
   "main_navigation_wallet_menu_item_two": "Stake Tokens",
   "main_navigation_wallet_menu_item_three": "RAM Exchange",
-  "main_sections_overview_ram_subheader": "Une ressource <1> basée sur la taille </1> qu'un compte peut utiliser pour <1> stocker des données </1> dans des contrats intelligents.",
+  "main_sections_overview_ram_subheader": "Une ressource <1>basée sur la taille</1> qu'un compte peut utiliser pour <1>stocker des données</1> dans des contrats intelligents.",
   "main_sections_overview_ram_grid_subheader": "En RAM",
   "main_sections_overview_ram_table_cell_one": "Valeur en EOS",
   "main_sections_overview_ram_table_cell_two": "Prix de RAM",

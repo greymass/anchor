@@ -25,8 +25,6 @@ class OverviewTableHeader extends Component<Props> {
       );
     });
 
-    console.log({propsHeader: this.props})
-
     return (
       <Table.Header style={{ width: '100%' }}>
         <Table.Row>
