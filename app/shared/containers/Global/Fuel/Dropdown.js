@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import ReactDOMServer from 'react-dom/server';
 import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
@@ -14,8 +13,6 @@ import * as SettingsActions from '../../../actions/settings';
 import FuelFullLogo from '../../../../renderer/assets/images/fuel/greymassfuel-horizontal.png';
 import FuelLogo from '../../../../renderer/assets/images/fuel/fuel-square-logo.png';
 import FuelLogoDisabled from '../../../../renderer/assets/images/fuel/fuel-square-logo-grey.png';
-
-import htmlDecode from '../../../utils/htmlDecode';
 
 const { shell } = require('electron');
 
