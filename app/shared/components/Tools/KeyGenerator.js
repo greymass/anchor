@@ -77,7 +77,6 @@ class ToolsKeyGenerator extends Component<Props> {
   render() {
     const {
       actions,
-      connection,
       settings,
       t
     } = this.props;
@@ -110,7 +109,7 @@ class ToolsKeyGenerator extends Component<Props> {
                   />
                 </p>
                 <p>
-                  Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.
+                  {t('tools:tools_keys_key_generation_paragraph_one')}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -221,10 +220,11 @@ class ToolsKeyGenerator extends Component<Props> {
               </Segment>
 
             </React.Fragment>
-          ) : (
+          )
+          : (
             <Segment color="grey" secondary>
               <p>
-                {t('tools:tools_keys_key_generation_paragraph')}
+                {t('tools:tools_keys_key_generation_paragraph_two')}
               </p>
             </Segment>
           )
