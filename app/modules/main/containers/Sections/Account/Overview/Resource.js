@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import compose from 'lodash/fp/compose';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 
 import { Button, Container, Grid, Header, Icon, Popup, Progress, Segment, Table } from 'semantic-ui-react';
 
@@ -61,11 +61,9 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: t('main_sections_overview_resource_grid_subheader_one')
-                          }}
-                        />
+                        <Trans i18nKey="main_sections_overview_resource_grid_subheader_one" t={t}>
+                          A <strong>time-based</strong> resource an account uses while <strong>performing</strong> smart contract actions.
+                        </Trans>
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -80,11 +78,9 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: t('main_sections_overview_resource_grid_subheader_two')
-                          }}
-                        />
+                        <Trans i18nKey="main_sections_overview_resource_grid_subheader_two" t={t}>
+                          A <strong>size-based</strong> resource an account uses while <strong>sending data</strong> to the blockchain.
+                        </Trans>
                       </Header.Subheader>
                     </Header.Content>
                   )
