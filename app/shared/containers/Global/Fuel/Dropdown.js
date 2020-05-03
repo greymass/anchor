@@ -4,7 +4,7 @@ import ReactDOMServer from 'react-dom/server';
 import { bindActionCreators } from 'redux';
 
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Button, Grid, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
 
@@ -93,20 +93,12 @@ class GlobalFuelDropdown extends Component<Props> {
                 {t('fuel_paragraph_one')}
               </p>
               <p>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: htmlDecode(t(
-                      'fuel_paragraph_two',
-                      {
-                        linkComponent: ReactDOMServer.renderToStaticMarkup(
-                          <a href="#" onClick={() => this.openLink('https://greymass.com/fuel')}>
-                            https://greymass.com/fuel
-                          </a>
-                        ),
-                      }
-                    ))
-                  }}
-                />
+                <Trans i18nKey="fuel_paragraph_two" t={t}>
+                  More info:
+                  <a href="#" onClick={() => this.openLink('https://greymass.com/fuel')}>
+                    https://greymass.com/fuel
+                  </a>
+                </Trans>
               </p>
               {(enabled)
                 ? (
