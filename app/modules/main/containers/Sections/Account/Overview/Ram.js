@@ -52,9 +52,8 @@ class AccountOverviewRam extends Component<Props> {
                       marginTop: '0.35em',
                     }}
                   >
-                    <Trans i18nKey="handler_containers_stage_review_paragraph" t={t}>
-                      A <strong>size-based</strong> resource an account can use to
-                      <strong>store data</strong> within smart contracts.
+                    <Trans i18nKey="main_sections_overview_ram_subheader" t={t}>
+                      A <strong>size-based</strong> resource an account can use to <strong>store data</strong> within smart contracts.
                     </Trans>
                   </Header.Subheader>
                 </Header.Content>
