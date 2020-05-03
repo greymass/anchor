@@ -39,7 +39,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
           ? (
             <Divider horizontal size="large">
               <Header>
-                {t('handler_transaction_action_fuel_label_one', { index: index + 1, total })}
+                {t('handler_transaction_action_label_one', { index: index + 1, total })}
               </Header>
             </Divider>
           )
@@ -53,7 +53,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
           }}
         >
           <Divider horizontal style={{ marginTop: 0 }}>
-            {t('handler_transaction_action_fuel_label_divider_one')}
+            {t('handler_transaction_action_label_divider_one')}
           </Divider>
           <Label
             basic
@@ -67,7 +67,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             />
             {action.name}
           </Label>
-          <Divider horizontal style={{ marginTop: '1.5em' }}>{t('handler_transaction_action_fuel_label_divider_two')}</Divider>
+          <Divider horizontal style={{ marginTop: '1.5em' }}>{t('handler_transaction_action_label_divider_two')}</Divider>
           <List relaxed>
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false);
@@ -160,7 +160,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
             })}
           </List>
           <Divider horizontal style={{ marginTop: '1.5em' }}>
-            {t('handler_transaction_action_fuel_label_two')}
+            {t('handler_transaction_action_label_two')}
           </Divider>
           {action.authorization.map((auth) => (
             <Label
