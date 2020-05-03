@@ -214,9 +214,8 @@
   "tools_keys_key_generation_message_two_content": "Make sure to create a new backup of your wallet to save these keys.",
   "tools_keys_key_generation_table_cell_one": "Public Key",
   "tools_keys_key_generation_table_cell_two": "Private Key",
-  "tools_keys_key_generation_paragraph": "Click 'Generate Key' to create a new public/private key pair.",
-
-
+  "tools_keys_key_generation_paragraph_one": "Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.",
+  "tools_keys_key_generation_paragraph_two": "Click 'Generate Key' to create a new public/private key pair.",
   "tools_keys_key_generation_copy_clipboard": "Copy to Clipboard",
   "tools_keys_key_generation_header": "Key Pair Generation",
   "tools_keys_key_generation_new_key": "Generate Key",
@@ -232,6 +231,7 @@
   "tools_keys_key_validator_private_key": "Private Key",
   "tools_keys_key_validator_public_key": "Public Key",
   "tools_keys_key_validator_subheader": "Converts a Private Key into the associated Public Key",
+  "tools_keys_key_import_subheader": "Import a private key for use within this wallet.",
   "tools_menu_dfuse_connection": "API: dfuse",
   "tools_menu_advanced_header": "Advanced Tools",
   "tools_menu_airgrabs": "Airgrabs",
