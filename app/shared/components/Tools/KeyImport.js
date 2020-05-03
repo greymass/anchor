@@ -67,7 +67,7 @@ class ToolsKeyImport extends Component<Props> {
         <Header>
           {t('welcome:welcome_key_coldwallet')}
           <Header.Subheader>
-            Import a private key for use within this wallet.
+            {t('tools:tools_keys_key_import_subheader')}
           </Header.Subheader>
         </Header>
         <Segment basic padded textAlign="center">
