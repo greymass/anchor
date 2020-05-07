@@ -433,7 +433,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                 payload: {
                   account_name: account,
                   contract,
-                  precision: formatPrecisions(results),
+                  precision: formatPrecisions(results, connection),
                   symbol,
                   tokens: formatBalances(results, symbol)
                 }
