@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import { Button, Icon, Header, Label, List, Segment, Table } from 'semantic-ui-react';
 
 import ToolsHardwareLedgerStatus from './Ledger/Status';
-import HardwareLedger from '../../../utils/Hardware/Ledger';
 
 const { remote } = require('electron');
 
@@ -18,7 +17,6 @@ class ToolsHardwareLedger extends Component<Props> {
   };
   render() {
     const {
-      accounts,
       actions,
       connection,
       ledger,
@@ -26,9 +24,7 @@ class ToolsHardwareLedger extends Component<Props> {
       status,
       t,
     } = this.props;
-    const account = accounts[settings.account];
     const transport = global.hardwareLedger || remote.getGlobal('hardwareLedger');
-    if (!account) return false;
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsHardwareLedgerStatus
