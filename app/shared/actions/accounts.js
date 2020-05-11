@@ -578,11 +578,15 @@ export function getAccountByKey(key) {
       });
     }
     if (convertedKey && (settings.node || settings.node.length !== 0)) {
-      return eos(connection).rpc.history_get_key_accounts(convertedKey).then((accounts) => {
-        dispatch(getAccounts(accounts.account_names));
-        if (key.substr(0, 3) === 'FIO') {
-          return httpQueue.add(() =>
-            httpClient
+      return httpClient
+        .post(`${connection.httpEndpoint}/v1/history/get_key_accounts`, {
+          public_key: convertedKey
+        })
+        .then((results) => {
+          const accounts = results.data;
+          dispatch(getAccounts(accounts.account_names));
+          if (key.substr(0, 3) === 'FIO') {
+            return httpClient
               .post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
                 fio_public_key: key
               })
@@ -607,17 +611,16 @@ export function getAccountByKey(key) {
                 //   type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
                 //   payload: { err, key }
                 // })
-              })
-            );
-        }
-        return dispatch({
-          type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
-          payload: { accounts }
-        });
-      }).catch((err) => dispatch({
-        type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
-        payload: { err, key }
-      }));
+              });
+          }
+          return dispatch({
+            type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
+            payload: { accounts }
+          });
+        }).catch((err) => dispatch({
+          type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+          payload: { err, key }
+        }));
     }
     dispatch({
       type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
