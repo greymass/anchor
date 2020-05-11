@@ -5,7 +5,7 @@ const { ipcRenderer } = require('electron');
 
 const createHttpHandler = async (connection) => {
   const httpQueue = new PQueue({
-    concurrency: 1
+    concurrency: 2
   });
 
   const headers = {};
