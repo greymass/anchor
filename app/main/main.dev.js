@@ -190,7 +190,7 @@ app.on('quit', () => { log.info('anchor: quit'); });
 
 const initManager = (route = '/', closable = true) => {
   if (process.platform === 'win32' || process.platform === 'linux') {
-    uri = process.argv.slice(1)[0];
+    uri = process.argv && process.argv.slice(1)[0];
   }
   mainWindow = createInterface(resourcePath, route, closable, store, uri, pHandler);
   mainWindow.on('close', () => {
