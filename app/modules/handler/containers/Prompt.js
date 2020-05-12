@@ -39,6 +39,7 @@ class PromptContainer extends Component<Props> {
   state = initialState
   componentDidMount() {
     this.props.actions.clearSystemState();
+    window.addEventListener('keydown', this.onKeyPress, true);
     this.templateURI();
   }
   componentDidUpdate(prevProps) {
@@ -48,11 +49,21 @@ class PromptContainer extends Component<Props> {
       this.templateURI();
     }
   }
+  componentDidUnmount() {
+    window.removeEventListener('keydown', this.onKeyPress, true);
+  }
   modifyWhitelist = (e, { index, name }) => {
     const { whitelist } = this.state;
     const current = get(whitelist, `flexible.${index}.${name}`, false);
     const modified = set(whitelist, `flexible.${index}.${name}`, !current);
     this.setState({ whitelist: modified });
+  }
+  onKeyPress = (e) => {
+    if ((e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) && (e.target.nodeName === 'BODY')) {
+      this.onClose();
+      e.preventDefault();
+      return false;
+    }
   }
   onShareLink = () => this.setState({ displayShareLink: !this.state.displayShareLink })
   onClose = () => {
