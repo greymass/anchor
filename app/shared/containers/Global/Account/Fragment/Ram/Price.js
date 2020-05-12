@@ -29,8 +29,17 @@ class GlobalAccountFragmentRamPrice extends PureComponent<Props> {
 
 const mapStateToProps = (state, ownProps) => {
   const { ram } = state.globals;
-  const quote = parseFloat(get(ram, 'quote_balance', '0').split(' ')[0]);
-  const base = parseFloat(get(ram, 'base_balance', '0').split(' ')[0]);
+  if (!ram) {
+    return {
+      price: false
+    }
+  }
+  const {
+    base_balance,
+    quote_balance,
+  } = ram
+  const quote = parseFloat(quote_balance.split(' ')[0]);
+  const base = parseFloat(base_balance.split(' ')[0]);
   return {
     price: (quote / base),
   };
