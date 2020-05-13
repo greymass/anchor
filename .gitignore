@@ -44,6 +44,7 @@ app/main.prod.js
 app/main.prod.js.map
 app/renderer.prod.js
 app/renderer.prod.js.map
+app/main.prod.js.LICENSE.txt
 app/style.css
 app/style.css.map
 dist
