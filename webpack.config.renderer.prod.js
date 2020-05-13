@@ -7,7 +7,7 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
 
@@ -157,6 +157,11 @@ export default merge.smart(baseConfig, {
     ]
   },
 
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+
   plugins: [
     /**
      * Create global constants which can be configured at compile time.
@@ -170,11 +175,6 @@ export default merge.smart(baseConfig, {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production'
     }),
-
-    // new UglifyJSPlugin({
-    //   parallel: true,
-    //   sourceMap: true
-    // }),
 
     new ExtractTextPlugin('style.css'),
 
