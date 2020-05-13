@@ -62,7 +62,7 @@
     "eitherx": "^1.0.2",
     "electron-context-menu": "^0.10.0",
     "electron-store": "^2.0.0",
-    "electron-updater": "^2.21.10",
+    "electron-updater": "^4.3.1",
     "eosio-signing-request": "^1.1.5",
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
@@ -100,7 +100,8 @@
     "redux-persist": "^5.10.0",
     "redux-persist-electron-storage": "^1.1.2",
     "redux-thunk": "^2.3.0",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "terser-webpack-plugin": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -174,7 +175,6 @@
     "stylefmt": "6.0.3",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0",
-    "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
     "version-bump-prompt": "^5.0.4",
     "webpack": "^4.42.0",
