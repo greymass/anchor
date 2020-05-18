@@ -98,7 +98,9 @@ export default class EOSHandler {
           if (response.isAxiosError) {
             return {
               ok: false,
-              json: () => response.response.data
+              json: () => (response.response) ? response.response.data : {
+                message: response.message
+              }
             };
           }
           // Return a response immitating what eosjs expects
