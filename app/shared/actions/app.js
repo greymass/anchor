@@ -47,7 +47,7 @@ export function getConstants() {
       httpClient
         .post(`${api}/v1/chain/get_table_rows`, query)
         .then((response) => {
-          const { rows } = response.data;
+          const { rows } = (response && response.data) ? response.data : [];
           const data = rows.reduce((map, { key, value }) => {
             let parsed = value;
             try {
