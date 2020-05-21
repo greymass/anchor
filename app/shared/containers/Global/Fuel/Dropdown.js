@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Trans, withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Grid, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
+import { Button, Grid, Header, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
 
 import * as FuelActions from '../../../actions/fuel';
 import * as SettingsActions from '../../../actions/settings';
