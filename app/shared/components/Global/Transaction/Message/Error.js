@@ -8,6 +8,7 @@ import GlobalTransactionErrorDefault from './Error/Default';
 import GlobalTransactionErrorCpuUsage from './Error/CpuUsage';
 import GlobalTransactionErrorNetUsage from './Error/NetUsage';
 import GlobalTransactionErrorLedgerBusy from './Error/Ledger/Busy';
+import GlobalTransactionErrorLedgerData from './Error/Ledger/Data';
 import GlobalTransactionErrorLedgerError from '../../../../containers/Global/Hardware/Ledger/Error';
 
 const transactionErrorsMapping = {
@@ -20,6 +21,7 @@ const transactionErrorsMapping = {
 const transactionErrorMsgMapping = {
   'transport.decorateAppAPIMethods is not a function': GlobalTransactionErrorLedgerError,
   'Transport race condition': GlobalTransactionErrorLedgerBusy,
+  'Ledger device: Invalid data received (0x6a80)': GlobalTransactionErrorLedgerData,
 };
 
 export class GlobalTransactionMessageError extends Component<Props> {
@@ -34,7 +36,7 @@ export class GlobalTransactionMessageError extends Component<Props> {
       errorName = error.json && error.json.error && error.json.error.name;
     }
 
-    // Handle  case where it is greymassfuel error
+    // Handle case where it is greymassfuel error
     const isFuelError = error.error &&
       error.error.details &&
       JSON.stringify(error.error.details).includes('greymassfuel');
