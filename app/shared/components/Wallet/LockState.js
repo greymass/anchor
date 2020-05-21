@@ -1,15 +1,17 @@
 // @flow
 import React, { Component } from 'react';
 import { Icon, Menu, Popup } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
 
 import WalletLockStateLocked from './LockState/Locked';
 
-export default class WalletLockState extends Component<Props> {
+class WalletLockState extends Component<Props> {
   render() {
     const {
       actions,
       locked,
       pubkeys,
+      t,
       validate,
       wallet
     } = this.props;
@@ -23,7 +25,7 @@ export default class WalletLockState extends Component<Props> {
       />
     ) : (
       <Popup
-        content="This wallet (and potentially other wallets) is unlocked. Click this icon to lock all of your wallets."
+        content={t('wallet_lock_state_popup')}
         inverted
         trigger={(
           <Menu.Item
@@ -42,3 +44,5 @@ export default class WalletLockState extends Component<Props> {
     );
   }
 }
+
+export default withTranslation('wallet')(WalletLockState)

@@ -6,16 +6,12 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon, Popup } from 'semantic-ui-react';
 
-const prettyBytes = require('pretty-bytes');
-const humanizeDuration = require('humanize-duration')
-
 class GlobalAccountFragmentRamPrice extends PureComponent<Props> {
   render() {
     const {
       lng,
       precision,
       price,
-      settings,
     } = this.props;
     if (!price) return false;
     const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: precision });
@@ -27,7 +23,7 @@ class GlobalAccountFragmentRamPrice extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const { ram } = state.globals;
   if (!ram) {
     return {

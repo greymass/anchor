@@ -14,7 +14,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
   swapBlockchain = (chainId) => {
     const { actions } = this.props;
     actions.swapBlockchain(chainId);
-  }
+  };
   render() {
     const {
       blockchains,
@@ -25,6 +25,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
       settings,
       showName,
       style,
+      t,
     } = this.props;
     if (!settings.blockchains || settings.blockchains.length === 0 || !settings.walletInit) {
       return false;
@@ -82,7 +83,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
               }}
             />
           )
-          : 'Select a Blockchain'
+          : t('dropdown_select_blockchain')
         }
         {(blockchain.testnet)
           ? (
@@ -116,7 +117,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
         fluid={fluid}
         item
         labeled
-        placeholder={showName ? 'Select a blockchain...' : false}
+        placeholder={showName ? t('dropdown_select_blockchain') : false}
         selection={selection}
         style={style}
         trigger={trigger}
@@ -128,7 +129,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
                 <Dropdown.Header>
                   <Button
                     basic
-                    content="Manage Blockchains"
+                    content={t('button_manage_blockchains')}
                     fluid
                     icon="cubes"
                     onClick={() => this.props.onNavigationChange('manage/blockchains')}
@@ -176,6 +177,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('menu'),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalBlockchainDropdown);

@@ -1,10 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
+import { Trans, withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Grid, Header, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
+import { Button, Grid, Image, Menu, Popup, Progress, Segment } from 'semantic-ui-react';
 
 import * as FuelActions from '../../../actions/fuel';
 import * as SettingsActions from '../../../actions/settings';
@@ -42,6 +43,7 @@ class GlobalFuelDropdown extends Component<Props> {
       enabled,
       fuel,
       settings,
+      t,
     } = this.props;
     const {
       open
@@ -85,19 +87,22 @@ class GlobalFuelDropdown extends Component<Props> {
               }}
             />
             <Segment basic textAlign="center">
-              <p>Enable this feature to take advantage of transactions powered by Greymass Fuel.</p>
-                <p>
+              <p>
+                {t('fuel_paragraph_one')}
+              </p>
+              <p>
+                <Trans i18nKey="fuel_paragraph_two" t={t}>
                   More info:
-                  {' '}
                   <a href="#" onClick={() => this.openLink('https://greymass.com/fuel')}>
                     https://greymass.com/fuel
                   </a>
-                </p>
+                </Trans>
+              </p>
               {(enabled && settings.walletMode !== 'ledger')
                 ? (
                   <Button
                     basic
-                    content="Disable Fuel"
+                    content={t('fuel_button_one')}
                     color="orange"
                     onClick={this.disable}
                   />
@@ -107,7 +112,7 @@ class GlobalFuelDropdown extends Component<Props> {
               {(!enabled && settings.walletMode !== 'ledger')
                 ? (
                   <Button
-                    content="Enable Fuel"
+                    content={t('fuel_button_two')}
                     color="green"
                     onClick={this.enable}
                   />
@@ -138,7 +143,9 @@ class GlobalFuelDropdown extends Component<Props> {
                 <Grid>
                   <Grid.Row columns={1}>
                     <Grid.Column textAlign="center">
-                      <p>Your quotas remaining are as follows:</p>
+                      <p>
+                        {t('fuel_paragraph_three')}
+                      </p>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row columns={2}>
@@ -147,7 +154,7 @@ class GlobalFuelDropdown extends Component<Props> {
                         percent={cpupercent}
                         progress="percent"
                       >
-                        CPU Quota
+                        {t('fuel_progress_one')}
                       </Progress>
                     </Grid.Column>
                     <Grid.Column>
@@ -155,7 +162,7 @@ class GlobalFuelDropdown extends Component<Props> {
                         percent={netpercent}
                         progress="percent"
                       >
-                        NET Quota
+                        {t('fuel_progress_two')}
                       </Progress>
                     </Grid.Column>
                   </Grid.Row>
@@ -215,6 +222,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('fuel'),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalFuelDropdown);

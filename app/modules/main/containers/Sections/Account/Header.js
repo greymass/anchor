@@ -69,7 +69,7 @@ class AccountHeader extends Component<Props> {
                         : 'OK'
                       }
                       <Header.Subheader>
-                        Status
+                        {t('main_sections_header_subheader_one')}
                       </Header.Subheader>
                     </Header>
                   </Grid.Column>
@@ -85,7 +85,7 @@ class AccountHeader extends Component<Props> {
                       {' '}
                       {connection.chainSymbol}
                       <Header.Subheader>
-                        Available
+                        {t('main_sections_header_subheader_two')}
                       </Header.Subheader>
                     </Header>
                   </Grid.Column>
@@ -118,6 +118,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(AccountHeader);

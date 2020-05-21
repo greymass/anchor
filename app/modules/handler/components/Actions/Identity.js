@@ -29,7 +29,7 @@ class PromptActionIdentity extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                Prove Identity
+                {t('handler_action_identity_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
@@ -61,4 +61,4 @@ class PromptActionIdentity extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionIdentity);
+export default withTranslation('handler')(PromptActionIdentity);

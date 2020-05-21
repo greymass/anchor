@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { find, sortBy } from 'lodash';
-import { Button, Form, Header, Icon, Label, Segment, Table } from 'semantic-ui-react';
+import { sortBy } from 'lodash';
+import { Button, Form, Header, Icon, Label, Table } from 'semantic-ui-react';
 
 import GlobalBlockchainResync from './Resync';
 import GlobalFormFieldUrl from '../../../../components/Global/Form/Field/Url';
@@ -69,6 +69,7 @@ class GlobalBlockchainEnable extends Component<Props> {
     const {
       blockchains,
       settings,
+      t,
     } = this.props;
     const {
       enabledChains,
@@ -82,15 +83,15 @@ class GlobalBlockchainEnable extends Component<Props> {
     return (
       <Form>
         <Header
-          content="Which blockchains do you plan on using?"
-          subheader="You can add/remove blockchains at any point in the future."
+          content={t('global_blockchain_enable_header')}
+          subheader={t('global_blockchain_enable_subheader')}
           size="large"
           style={{ marginTop: 0 }}
         />
         <Button
           content={(chainCount !== 0)
-            ? `Enable ${chainCount} blockchains`
-            : 'Choose at least one blockchain'
+            ? t('global_blockchain_enable_button_one_enable', { chainCount })
+            : t('global_blockchain_enable_button_one_choose')
           }
           disabled={chainCount === 0}
           icon={chainCount === 0 ? 'warning sign' : 'checkmark'}
@@ -99,7 +100,7 @@ class GlobalBlockchainEnable extends Component<Props> {
         />
         <Button
           chainId="new"
-          content="Custom Blockchain"
+          content={t('global_blockchain_enable_button_two')}
           floated="right"
           icon="circle plus"
           onClick={this.props.onEdit}
@@ -112,12 +113,12 @@ class GlobalBlockchainEnable extends Component<Props> {
               <Table.HeaderCell></Table.HeaderCell>
               {(displayTestNetworks)
                 ? (
-                  <Table.HeaderCell>Type</Table.HeaderCell>
+                  <Table.HeaderCell>{t('global_blockchain_enable_header_cell_one')}</Table.HeaderCell>
                 )
                 : false
               }
-              <Table.HeaderCell>Blockchain&nbsp;Network</Table.HeaderCell>
-              <Table.HeaderCell>API Server</Table.HeaderCell>
+              <Table.HeaderCell>{t('global_blockchain_enable_header_cell_two')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('global_blockchain_enable_header_cell_three')}</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>

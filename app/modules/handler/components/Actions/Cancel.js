@@ -20,7 +20,7 @@ class PromptActionCancel extends Component<Props> {
               <Header.Subheader>
 
               </Header.Subheader>
-              Cancel
+              {t('cancel')}
             </Header.Content>
           </Header>
         )}
@@ -32,4 +32,4 @@ class PromptActionCancel extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionCancel);
+export default withTranslation()(PromptActionCancel);

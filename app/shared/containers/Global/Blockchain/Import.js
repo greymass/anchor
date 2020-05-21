@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { find, intersection, isEqual } from 'lodash';
-import { Button, Checkbox, Divider, Form, Header, Icon, Label, List, Modal, Segment, Tab } from 'semantic-ui-react';
+import { find, isEqual } from 'lodash';
+import { Button, Divider, Form, Icon, Segment } from 'semantic-ui-react';
 
 import * as AccountsActions from '../../../actions/accounts';
 import * as PingActions from '../../../actions/ping';
@@ -18,7 +18,7 @@ class GlobalBlockchainImport extends Component<Props> {
   state = {
     host: 'https://eos.greymass.com',
     result: {}
-  }
+  };
   static getDerivedStateFromProps(props, state) {
     let derived = {};
     const result = find(props.ping.results, { host: state.host });

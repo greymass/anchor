@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
 
 import AccountHeader from './Header';
@@ -84,16 +82,15 @@ class AccountOverview extends Component<Props> {
     } = this.props;
     const {
       account,
-      expanded,
       loaded,
     } = this.state;
     if (!account || account === 'undefined') {
       return (
         <Segment>
           <Header>
-            No account selected!
+            {t('main_sections_overview_header_two')}
             <Header.Subheader>
-              Select an account to view its resources.
+              {t('main_sections_overview_subheader_two')}
             </Header.Subheader>
           </Header>
         </Segment>
@@ -105,14 +102,14 @@ class AccountOverview extends Component<Props> {
           <Button
             basic
             color="grey"
-            content="Refresh"
+            content={t('main_sections_overview_button_one')}
             floated="right"
             icon="refresh"
             onClick={this.refresh}
           />
           <Header
-            content="Resource Overview"
-            subheader="Overview of resources for the selected account."
+            content={t('main_sections_overview_header_one')}
+            subheader={t('main_sections_overview_subheader_one')}
             style={{ margin: 0 }}
           />
         </Container>
@@ -145,9 +142,9 @@ class AccountOverview extends Component<Props> {
                   loading
                   name="circle notched"
                 />
-                Loading Account Data...
+                {t('main_sections_overview_header_two')}
                 <Header.Subheader
-                  content="The data for this account is being fetched from an API server."
+                  content={t('main_sections_overview_subheader_two')}
                 />
               </Header>
             </Segment>
@@ -180,6 +177,6 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withRouter,
-  withTranslation('global'),
+  withTranslation('main'),
   connect(mapStateToProps, mapDispatchToProps)
 )(AccountOverview);

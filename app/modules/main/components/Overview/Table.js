@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { Header, Table } from 'semantic-ui-react';
 import { isEmpty, map, sortBy, uniq } from 'lodash';
-import { Link } from 'react-router-dom';
 
-import ExplorerLink from '../../../../shared/containers/Global/Blockchain/ExplorerLink';
+import { withTranslation } from 'react-i18next';
+
 import OverviewTableHeader from './Table/Header';
-import GlobalAccountLink from '../../../../shared/containers/Global/Account/Link';
+
 import GlobalAccountFragmentRamPercent from '../../../../shared/containers/Global/Account/Fragment/Ram/Percent';
 import GlobalAccountFragmentResourcePercent from '../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
 import GlobalAccountFragmentREXBalance from '../../../../shared/containers/Global/Account/Fragment/REX/Balance';
@@ -26,10 +26,10 @@ class OverviewTable extends Component<Props> {
   render() {
     const {
       chainSymbol,
-      pricefeed,
       settings,
       stakedResources,
       supportedContracts,
+      t,
       view,
       wallets,
     } = this.props;
@@ -66,6 +66,7 @@ class OverviewTable extends Component<Props> {
         }
       });
     });
+
     return (
       <div style={{ overflowX: 'auto', maxWidth: '75vw' }}>
         <Table celled className="overview" compact size="small" striped unstackable>
@@ -81,7 +82,7 @@ class OverviewTable extends Component<Props> {
               const addresses = sortBy(
                 wallets.filter((wallet) => (wallet.address && wallet.account === accountName)),
                 (address) => address.address
-              )
+              );
               return (
                 <Table.Row>
                   <Table.Cell collapsing textAlign="right">
@@ -224,7 +225,7 @@ class OverviewTable extends Component<Props> {
                         {(isEmpty(accountBalances))
                           ? (
                             <Table.Cell>
-                              No token balances being tracked
+                              {t('main_components_overview_no_token_balances')}
                             </Table.Cell>
                           )
                           : accountBalances[accountName]
@@ -272,4 +273,4 @@ class OverviewTable extends Component<Props> {
   }
 }
 
-export default OverviewTable;
+export default withTranslation('main')(OverviewTable);

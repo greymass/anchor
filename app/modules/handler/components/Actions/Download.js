@@ -48,7 +48,7 @@ class PromptActionDownload extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                Save Unsigned Transaction
+                {t('handler_action_download_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
@@ -80,4 +80,4 @@ class PromptActionDownload extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionDownload);
+export default withTranslation('handler')(PromptActionDownload);

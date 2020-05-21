@@ -12,6 +12,7 @@ class PromptStageReview extends Component<Props> {
     const {
       blockchain,
       prompt,
+      t,
     } = this.props;
     const {
       signed,
@@ -25,9 +26,9 @@ class PromptStageReview extends Component<Props> {
       <Grid>
         <Grid.Column width={6}>
           <Header>
-            Broadcast Transaction
+            {t('handler_containers_stage_broadcast_header')}
             <Header.Subheader>
-              The API node and signature below will be used to broadcast this transaction.
+              {t('handler_containers_stage_broadcast_subheader')}
             </Header.Subheader>
           </Header>
           <Divider />
@@ -39,7 +40,7 @@ class PromptStageReview extends Component<Props> {
               />
             </Form.Field>
             <Form.Field>
-              <label>Raw Signature</label>
+              <label>{t('handler_containers_stage_broadcast_form_label')}</label>
               <Form.TextArea
                 rows={4}
                 value={signatures.join('\n')}
@@ -49,9 +50,9 @@ class PromptStageReview extends Component<Props> {
         </Grid.Column>
         <Grid.Column width={10}>
           <Header>
-            Final Review
+            {t('handler_containers_stage_broadcast_grid_header')}
             <Header.Subheader>
-              One final opportunity to review the actions in this transaction before broadcasting the transaction.
+              {t('handler_containers_stage_broadcast_grid_subheader')}
             </Header.Subheader>
           </Header>
           {transaction.actions.map((action, index) => (
@@ -74,6 +75,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withTranslation('global'),
+  withTranslation('handler'),
   connect(mapStateToProps)
 )(PromptStageReview);

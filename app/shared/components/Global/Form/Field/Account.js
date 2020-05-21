@@ -162,8 +162,8 @@ export class GlobalFormFieldAccount extends Component<Props> {
               options={dropdownOptions}
               placeholder={
                 fieldOption === 'exchanges' ?
-                  'Select an exchange' :
-                  'Select a contact'
+                  t('global_form_placeholder_exchange') :
+                  t('global_form_placeholder_contact')
               }
               selection
             />

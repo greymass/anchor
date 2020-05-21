@@ -43,7 +43,7 @@ class GlobalAccountImport extends Component<Props> {
       menuItem: {
         key: 'existing',
         icon: 'id card',
-        content: 'Existing Account',
+        content: t('global_modal_account_import_existing_account'),
       },
       render: () => <GlobalModalAccountImportExisting onTabChange={this.handleTabChange} onClose={this.props.onClose} />
     };
@@ -52,7 +52,7 @@ class GlobalAccountImport extends Component<Props> {
       menuItem: {
         key: 'create',
         icon: 'user plus',
-        content: 'Create Account',
+        content: t('global_modal_account_import_create_account'),
       },
       render: () => <GlobalModalAccountImportCreate onTabChange={this.handleTabChange} onClose={this.props.onClose} />
     };
@@ -93,10 +93,10 @@ class GlobalAccountImport extends Component<Props> {
     }
 
     return panes;
-  }
+  };
   render() {
     const { activeIndex } = this.state;
-    const { connection } = this.props;
+    const { connection, t } = this.props;
     const panes = this.getPanes();
     return (
       <React.Fragment>
@@ -116,16 +116,16 @@ class GlobalAccountImport extends Component<Props> {
               }}
             />
             <Header.Content>
-              {`Setup a wallet to use the ${connection.chain} blockchain.`}
+              {t('global_import_index_header_one', { connectionChain: connection.chain })}
               <Header.Subheader>
-                In order to interact with the blockchain a wallet need to be configured for each account.
+                {t('global_import_index_subheader_one')}
               </Header.Subheader>
               <Header.Subheader style={{
                 color: '#acacac',
                 marginTop: '0.25em',
               }}>
                 <small>
-                  Chain ID:
+                  {t('global_import_index_subheader_two')}
                   {connection.chainId}
                 </small>
               </Header.Subheader>

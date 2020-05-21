@@ -33,7 +33,7 @@ class PromptActionCallback extends Component<Props> {
               <Header textAlign="left">
                 <Header.Content>
                   <Header.Subheader style={{ fontWeight: 'bold' }}>
-                    Submit Callback
+                    {t('handler_action_callback_header')}
                   </Header.Subheader>
                   {wallet.account}@{wallet.authorization}
                 </Header.Content>
@@ -69,4 +69,4 @@ class PromptActionCallback extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionCallback);
+export default withTranslation('handler')(PromptActionCallback);

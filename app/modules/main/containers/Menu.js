@@ -74,7 +74,6 @@ class MenuContainer extends Component<Props> {
   tick() {
     const {
       actions,
-      connection,
       settings,
       validate,
     } = this.props;
@@ -116,10 +115,6 @@ class MenuContainer extends Component<Props> {
       >
         <GlobalBlockchainDropdown
           onNavigationChange={this.props.actions.changeModule}
-          style={{
-            // marginLeft: '107px',
-            // paddingLeft: '1.5rem'
-          }}
         />
         <GlobalAccountDropdown
           onNavigationChange={this.props.actions.changeModule}

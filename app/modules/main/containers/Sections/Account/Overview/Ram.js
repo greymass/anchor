@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  withRouter
-} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { Trans, withTranslation } from 'react-i18next';
+import compose from 'lodash/fp/compose';
+
 import { Button, Container, Grid, Header, Progress, Segment, Table } from 'semantic-ui-react';
 
 import AccountOverviewRamBuy from './Ram/Buy';
@@ -26,12 +27,13 @@ class AccountOverviewRam extends Component<Props> {
   }
   toggleExpand = () => this.setState({
     expanded: !this.state.expanded
-  })
+  });
   render() {
     const {
       account,
       connection,
       settings,
+      t,
     } = this.props;
     const resource = 'ram';
     const {
@@ -50,7 +52,9 @@ class AccountOverviewRam extends Component<Props> {
                       marginTop: '0.35em',
                     }}
                   >
-                    A <strong>size-based</strong> resource an account can use to <strong>store data</strong> within smart contracts.
+                    <Trans i18nKey="main_sections_overview_ram_subheader" t={t}>
+                      A <strong>size-based</strong> resource an account can use to <strong>store data</strong> within smart contracts.
+                    </Trans>
                   </Header.Subheader>
                 </Header.Content>
               </Header>
@@ -65,10 +69,14 @@ class AccountOverviewRam extends Component<Props> {
                       />
                       <Header.Subheader>
                         {(settings.displayResourcesAvailable)
-                          ? 'Available '
-                          : 'Used '
+                          ? t(
+                            'main_sections_overview_resource_grid_subheader_three_available',
+                            { resource: resource.toUpperCase() }
+                          ) : t(
+                            'main_sections_overview_resource_grid_subheader_three_used',
+                            { resource: resource.toUpperCase() }
+                          )
                         }
-                        {resource.toUpperCase()}
                       </Header.Subheader>
                     </Header>
                     <Segment basic style={{ padding: 0 }}>
@@ -88,7 +96,7 @@ class AccountOverviewRam extends Component<Props> {
                         unstackable
                       >
                         <Table.Row>
-                          <Table.Cell collapsing>Used</Table.Cell>
+                          <Table.Cell collapsing>{t('main_sections_overview_resource_used')}</Table.Cell>
                           <Table.Cell>
                             <GlobalAccountFragmentRamUsage
                               account={account}
@@ -96,7 +104,7 @@ class AccountOverviewRam extends Component<Props> {
                           </Table.Cell>
                         </Table.Row>
                         <Table.Row>
-                          <Table.Cell collapsing>Allowed</Table.Cell>
+                          <Table.Cell collapsing>{t('main_sections_overview_resource_allowed')}</Table.Cell>
                           <Table.Cell>
                             <GlobalAccountFragmentRamMax
                               account={account}
@@ -129,7 +137,7 @@ class AccountOverviewRam extends Component<Props> {
                         account={account}
                       />
                       <Header.Subheader>
-                        RAM Owned
+                        {t('main_sections_overview_ram_grid_subheader')}
                       </Header.Subheader>
                     </Header>
                     <Progress
@@ -147,7 +155,7 @@ class AccountOverviewRam extends Component<Props> {
                       unstackable
                     >
                       <Table.Row>
-                        <Table.Cell collapsing>Value in EOS</Table.Cell>
+                        <Table.Cell collapsing>{t('main_sections_overview_ram_table_cell_one')}</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentRamValue
                             account={account}
@@ -157,7 +165,7 @@ class AccountOverviewRam extends Component<Props> {
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell collapsing>RAM Price</Table.Cell>
+                        <Table.Cell collapsing>{t('main_sections_overview_ram_table_cell_two')}</Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentRamPrice
                             precision={8}
@@ -205,4 +213,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountOverviewRam));
+export default compose(
+  withTranslation('main'),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountOverviewRam);

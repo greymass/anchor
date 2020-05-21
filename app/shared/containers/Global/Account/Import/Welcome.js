@@ -17,21 +17,21 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
       <Tab.Pane>
         <Segment basic>
           <Header
-            content="Scan for accounts on this blockchain"
-            subheader={`Anchor will automatically query the ${connection.chain} blockchains for accounts matching your known public keys.`}
+            content={t('global_account_import_welcome_header_one')}
+            subheader={t('global_account_import_welcome_subheader_one', { connectionChain: connection.chain })}
           />
           {(!(storage.keys && storage.keys.length))
             ? (
               <p>
                 <Icon color="grey" name="info circle" />
-                Scanning will be enabled after one key pair is saved.
+                {t('global_account_import_welcome_paragraph')}
               </p>
             )
             : false
           }
           <Button
             color="blue"
-            content="Scan for Accounts"
+            content={t('global_account_import_welcome_button_one')}
             disabled={!(storage.keys && storage.keys.length)}
             icon="search"
             onClick={() => this.props.onTabChange(null, { activeIndex: 1 })}
@@ -39,24 +39,24 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
         </Segment>
         <Segment basic>
           <Header
-            content="Import an existing account"
-            subheader="Configure Anchor to use existing accounts on the EOS blockchain."
+            content={t('global_account_import_welcome_header_two')}
+            subheader={t('global_account_import_welcome_subheader_two')}
           />
           <Button
             color="blue"
-            content="Import Account"
+            content={t('global_account_import_welcome_button_two')}
             icon="id card"
             onClick={() => this.props.onTabChange(null, { activeIndex: 2 })}
           />
         </Segment>
         <Segment basic style={{ display: 'none' }}>
           <Header
-            content="Setup a new account"
-            subheader="Import new or existing key pairs and then have an account created."
+            content={t('global_account_import_welcome_header_three')}
+            subheader={t('global_account_import_welcome_subheader_three')}
           />
           <Button
             color="blue"
-            content="Setup Account"
+            content={t('global_account_import_welcome_button_three')}
             icon="user plus"
             onClick={() => this.props.onTabChange(null, { activeIndex: 3 })}
           />

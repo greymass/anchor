@@ -32,7 +32,7 @@ class PromptActionUnlock extends Component<Props> {
               <Header textAlign="left">
                 <Header.Content>
                   <Header.Subheader style={{ fontWeight: 'bold' }}>
-                    Unlock Wallet
+                    {t('handler_action_unlock_header')}
                   </Header.Subheader>
                   {wallet.account}@{wallet.authorization}
                 </Header.Content>
@@ -67,4 +67,4 @@ class PromptActionUnlock extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionUnlock);
+export default withTranslation('handler')(PromptActionUnlock);

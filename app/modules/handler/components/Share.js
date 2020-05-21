@@ -30,7 +30,7 @@ class PromptShare extends Component<Props> {
         open={open}
         style={{ marginTop: '130px', marginBottom: '110px' }}
       >
-        <Modal.Header>Share this Signing Request</Modal.Header>
+        <Modal.Header>{t('handler_share_header')}</Modal.Header>
         <Segment
           as={Modal.Content}
           padded="very"
@@ -54,33 +54,31 @@ class PromptShare extends Component<Props> {
                   content={(
                     <Button
                       color="blue"
-                      content="Open Link to EOSIO.TO"
+                      content={t('handler_share_grid_button_one')}
                       icon="external"
                     />
                   )}
                   link={link}
                 />
                 <Header>
-                  View on EOSIO.to
+                  {t('handler_share_grid_header_one')}
                 </Header>
                 <p>
-                  <p>
-                    EOSIO.to is a service that creates sharable website links for signing requests. Opening this signing request on EOSIO.to will display the transaction data for this request and allow you to share it with others.
-                  </p>
+                  {t('handler_share_grid_paragraph_one')}
                 </p>
               </Grid.Column>
               <Grid.Column textAlign="center">
                 <Button
                   color="blue"
-                  content="Copy Link to Clipboard"
+                  content={t('handler_share_grid_button_two')}
                   icon="clipboard"
                   onClick={this.onCopyLink}
                 />
                 <Header>
-                  Share with a link
+                  {t('handler_share_grid_header_two')}
                 </Header>
                 <p>
-                  This text box contains the raw link (URI) of this specific transaction. You can share this link with other users to ask questions or to just share the transaction.
+                  {t('handler_share_grid_paragraph_two')}
                 </p>
                 <Form>
                   <Form.TextArea
@@ -99,4 +97,4 @@ class PromptShare extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptShare);
+export default withTranslation('handler')(PromptShare);

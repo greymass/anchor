@@ -22,21 +22,21 @@ class NavigationWalletContainer extends PureComponent<Props> {
       <Menu pointing secondary size="small" style={{ marginTop: 0 }}>
         <Menu.Item
           active={module === 'wallet'}
-          content="Transfer Tokens"
+          content={t('main_navigation_wallet_menu_item_one')}
           icon="exchange"
           name="wallet"
           onClick={this.onClick}
         />
         <Menu.Item
           active={module === 'wallet/stake'}
-          content="Stake Tokens"
+          content={t('main_navigation_wallet_menu_item_two')}
           icon="warehouse"
           name="wallet/stake"
           onClick={this.onClick}
         />
         <Menu.Item
           active={module === 'wallet/ram'}
-          content="RAM Exchange"
+          content={t('main_navigation_wallet_menu_item_three')}
           icon="database"
           name="wallet/ram"
           onClick={this.onClick}

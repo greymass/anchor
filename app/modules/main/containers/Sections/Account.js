@@ -1,7 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+
 import { connect } from 'react-redux';
+import compose from 'lodash/fp/compose';
+import { withTranslation } from 'react-i18next';
+
 import {
   HashRouter,
   Route,
@@ -10,7 +14,6 @@ import {
 } from 'react-router-dom';
 
 import AccountOverview from './Account/Overview';
-import NavigationWalletContainer from '../Navigation/Wallet';
 
 class AccountContainer extends Component<Props> {
   render() {
@@ -26,18 +29,18 @@ class AccountContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state, match) {
-  return {
-
-  };
+function mapStateToProps() {
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({
-
-    }, dispatch)
+    actions: bindActionCreators({}, dispatch)
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountContainer));
+export default compose(
+  withRouter,
+  withTranslation('main'),
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountContainer);

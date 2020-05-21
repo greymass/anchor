@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import {
   withRouter
 } from 'react-router-dom';
+
+import compose from 'lodash/fp/compose';
+import { Trans, withTranslation } from 'react-i18next';
+
 import { Button, Container, Grid, Header, Icon, Popup, Progress, Segment, Table } from 'semantic-ui-react';
 
 import GlobalAccountFragmentResourcePercent from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
@@ -37,6 +41,7 @@ class AccountOverviewResource extends Component<Props> {
       connection,
       resource,
       settings,
+      t,
     } = this.props;
     const {
       expanded,
@@ -56,9 +61,9 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        A <strong>time-based</strong> resource an account uses
-                        {' '}
-                        while <strong>performing</strong> smart contract actions.
+                        <Trans i18nKey="main_sections_overview_resource_grid_subheader_one" t={t}>
+                          A <strong>time-based</strong> resource an account uses while <strong>performing</strong> smart contract actions.
+                        </Trans>
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -73,9 +78,9 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '0.35em',
                         }}
                       >
-                        A <strong>size-based</strong> resource an account uses
-                        {' '}
-                        while <strong>sending data</strong> to the blockchain.
+                        <Trans i18nKey="main_sections_overview_resource_grid_subheader_two" t={t}>
+                          A <strong>size-based</strong> resource an account uses while <strong>sending data</strong> to the blockchain.
+                        </Trans>
                       </Header.Subheader>
                     </Header.Content>
                   )
@@ -94,10 +99,14 @@ class AccountOverviewResource extends Component<Props> {
                       />
                       <Header.Subheader>
                         {(settings.displayResourcesAvailable)
-                          ? 'Available '
-                          : 'Used '
+                          ? t(
+                            'main_sections_overview_resource_grid_subheader_three_available',
+                            { resource: resource.toUpperCase() }
+                          ) : t(
+                            'main_sections_overview_resource_grid_subheader_three_used',
+                            { resource: resource.toUpperCase() }
+                          )
                         }
-                        {resource.toUpperCase()}
                       </Header.Subheader>
                     </Header>
                     <Segment basic style={{ padding: 0 }}>
@@ -118,7 +127,7 @@ class AccountOverviewResource extends Component<Props> {
                       >
                         <Table.Body>
                           <Table.Row>
-                            <Table.Cell collapsing>Used</Table.Cell>
+                            <Table.Cell collapsing>{t('main_sections_overview_resource_used')}</Table.Cell>
                             <Table.Cell>
                               <GlobalAccountFragmentResourceUsage
                                 account={account}
@@ -127,7 +136,7 @@ class AccountOverviewResource extends Component<Props> {
                             </Table.Cell>
                           </Table.Row>
                           <Table.Row>
-                            <Table.Cell collapsing>Allowed</Table.Cell>
+                            <Table.Cell collapsing>{t('main_sections_overview_resource_allowed')}</Table.Cell>
                             <Table.Cell>
                               <GlobalAccountFragmentResourceMax
                                 account={account}
@@ -146,7 +155,7 @@ class AccountOverviewResource extends Component<Props> {
                         <GlobalButtonRent
                           button={{
                             color: 'green',
-                            content: 'Rent',
+                            content: t('main_sections_overview_resource_button_rent'),
                             floated: 'right',
                             icon: 'exchange',
                             size: 'tiny'
@@ -179,7 +188,10 @@ class AccountOverviewResource extends Component<Props> {
                         type={resource}
                       />
                       <Header.Subheader>
-                        Allocated to {resource.toUpperCase()}
+                        {t(
+                          'main_sections_overview_resource_grid_subheader_four',
+                          { resource: resource.toUpperCase() }
+                        )}
                       </Header.Subheader>
                     </Header>
                     <Progress
@@ -199,12 +211,12 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content="Tokens this account has staked to itself that can be unstaked."
+                            content={t('main_sections_overview_resource_table_popup_one_content')}
                             inverted
                             position="center left"
                             trigger={(
                               <span>
-                                Staked Tokens
+                                {t('main_sections_overview_resource_table_popup_one_trigger')}
                                 <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
                               </span>
                             )}
@@ -223,12 +235,12 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content="Includes delegated tokens from other accounts and rentals from REX."
+                            content={t('main_sections_overview_resource_table_popup_two_content')}
                             inverted
                             position="center left"
                             trigger={(
                               <span>
-                                Other Tokens
+                                {t('main_sections_overview_resource_table_popup_two_trigger')}
                                 <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
                               </span>
                             )}
@@ -247,12 +259,12 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content="Tokens this account has staked previously which are now unstaking over the course of 3 days."
+                            content={t('main_sections_overview_resource_table_popup_three_content')}
                             inverted
                             position="center left"
                             trigger={(
                               <span>
-                                Unstaking
+                                {t('main_sections_overview_resource_table_popup_three_trigger')}
                                 <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
                               </span>
                             )}
@@ -287,7 +299,7 @@ class AccountOverviewResource extends Component<Props> {
                       <GlobalButtonStake
                         button={{
                           color: 'blue',
-                          content: 'Add',
+                          content: t('main_sections_overview_resource_button_add'),
                           floated: 'left',
                           icon: 'plus circle',
                           size: 'tiny'
@@ -297,7 +309,7 @@ class AccountOverviewResource extends Component<Props> {
                       <GlobalButtonUnstake
                         button={{
                           color: 'red',
-                          content: 'Remove',
+                          content: t('main_sections_overview_resource_button_remove'),
                           floated: 'right',
                           icon: 'minus circle',
                           size: 'tiny'
@@ -331,4 +343,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AccountOverviewResource));
+export default compose(
+  withTranslation('main'),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AccountOverviewResource);

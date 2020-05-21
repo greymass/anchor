@@ -77,7 +77,6 @@ class ToolsKeyGenerator extends Component<Props> {
   render() {
     const {
       actions,
-      connection,
       settings,
       t
     } = this.props;
@@ -110,7 +109,7 @@ class ToolsKeyGenerator extends Component<Props> {
                   />
                 </p>
                 <p>
-                  Ensure you keep a copy of both your password and your keys safely offline. This password cannot be recovered.
+                  {t('tools:tools_keys_key_generation_paragraph_one')}
                 </p>
               </Grid.Column>
             </Grid.Row>
@@ -128,37 +127,39 @@ class ToolsKeyGenerator extends Component<Props> {
         </Header>
         <Button
           color="blue"
-          content="Generate Key Pair (x2)"
+          content={t('tools:tools_keys_key_button_one')}
           icon="circle plus"
           count={2}
           onClick={this.generateKeyPairs}
         />
         <Button
           basic
-          color={(copied) ? "teal" : "blue"}
-          content={(copied) ? 'Copied!' : t('tools:tools_keys_key_generation_copy_clipboard')}
+          color={(copied) ? 'teal' : 'blue'}
+          content={(copied) ?
+            t('tools:tools_keys_key_generation_copied_clipboard') :
+            t('tools:tools_keys_key_generation_copy_clipboard')}
           disabled={keys.length === 0}
           floated="right"
           icon="clipboard"
           onClick={this.copyToClipboard}
         />
         <Message
-          header="Some/all of these keys have NOT been saved."
+          header={t('tools:tools_keys_key_generation_message_one_header')}
           hidden={this.props.importing || this.props.closable}
           icon="warning sign"
           negative
           size="large"
-          content="These key must either be saved externally or within your Anchor wallet using the controls above."
+          content={t('tools:tools_keys_key_generation_message_one_content')}
         />
         <Message
-          header="Keys Saved"
+          header={t('tools:tools_keys_key_generation_message_two_header')}
           hidden={!(keys.length > 0 && this.props.closable)}
           icon="circle checkmark"
           positive
           size="large"
           content={(
             <div>
-              Make sure to create a new backup of your wallet to save these keys.
+              {t('tools:tools_keys_key_generation_message_two_content')}
             </div>
           )}
         />
@@ -171,11 +172,11 @@ class ToolsKeyGenerator extends Component<Props> {
                   <Segment color="grey">
                     <Table definition>
                       <Table.Row>
-                        <Table.Cell collapsing>Public Key</Table.Cell>
+                        <Table.Cell collapsing>{t('tools:tools_keys_key_generation_table_cell_one')}</Table.Cell>
                         <Table.Cell>{key[0]}</Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell collapsing>Private Key</Table.Cell>
+                        <Table.Cell collapsing>{t('tools:tools_keys_key_generation_table_cell_two')}</Table.Cell>
                         <Table.Cell>
                           {(isRevealed)
                             ? (
@@ -202,7 +203,7 @@ class ToolsKeyGenerator extends Component<Props> {
                       </Table.Row>
                     </Table>
                   </Segment>
-                )
+                );
               })}
               <Segment basic textAlign="center">
                 <GlobalButtonElevate
@@ -223,7 +224,7 @@ class ToolsKeyGenerator extends Component<Props> {
           : (
             <Segment color="grey" secondary>
               <p>
-                Click 'Generate Key' to create a new public/private key pair.
+                {t('tools:tools_keys_key_generation_paragraph_two')}
               </p>
             </Segment>
           )

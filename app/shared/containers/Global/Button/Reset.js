@@ -38,14 +38,14 @@ class GlobalButtonResetContainer extends Component<Props> {
     return (
       <React.Fragment>
         <Button
-          content="Reset Application"
+          content={t('tools_button_reset')}
           floated="right"
           icon="trash"
           onClick={this.open}
         />
         <Confirm
-          content="This action will erase all private keys, settings, accounts and restore this application to its default state. Ensure you have a proper backup before proceeding."
-          header="Warning"
+          content={t('tools_confirm_content_reset')}
+          header={t('tools_confirm_header_reset')}
           open={this.state.open}
           onCancel={this.close}
           onConfirm={this.confirmRemoveWallet}

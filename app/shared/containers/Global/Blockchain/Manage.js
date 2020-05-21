@@ -2,8 +2,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { withRouter } from 'react-router-dom';
-import { Button, Card, Header, Icon, Label, Segment } from 'semantic-ui-react';
+import { withTranslation } from 'react-i18next';
+import compose from 'lodash/fp/compose';
+
+import { Button, Card, Header, Icon, Segment } from 'semantic-ui-react';
 import { sortBy } from 'lodash';
 
 import { setSetting } from '../../../actions/settings';
@@ -11,7 +15,6 @@ import { pinBlockchain, swapBlockchain, unpinBlockchain } from '../../../actions
 import { changeModule } from '../../../../modules/main/actions/navigation';
 
 import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
-import ToolsModalBlockchain from '../../../components/Tools/Modal/Blockchain';
 import GlobalBlockchainForm from './Form';
 import GlobalBlockchainEnable from './Manage/Enable';
 
@@ -52,6 +55,7 @@ class GlobalBlockchainManage extends Component<Props> {
     const {
       blockchains,
       settings,
+      t,
       wallets,
     } = this.props;
     const {
@@ -86,8 +90,8 @@ class GlobalBlockchainManage extends Component<Props> {
     return (
       <Segment style={{ marginTop: 0 }}>
         <Header
-          content="Select which blockchain you'd like to start using"
-          subheader="You can easily switch between blockchains using the dropdown menu in the upper left menu."
+          content={t('global_blockchain_manage_header')}
+          subheader={t('global_blockchain_manage_subheader')}
           size="large"
           style={{ marginTop: 0 }}
         />
@@ -110,7 +114,7 @@ class GlobalBlockchainManage extends Component<Props> {
                   <Card.Header>{blockchain.name}</Card.Header>
                   <Card.Meta>
                     <span>
-                      <strong>{accounts}</strong> accounts
+                      <strong>{accounts}</strong> {t('global_blockchain_manage_card_one')}
                     </span>
                   </Card.Meta>
                 </Card.Content>
@@ -161,9 +165,9 @@ class GlobalBlockchainManage extends Component<Props> {
               />
             </Segment>
             <Card.Content>
-              <Card.Header>Add/Remove</Card.Header>
+              <Card.Header>{t('global_blockchain_manage_card_two_header')}</Card.Header>
               <Card.Description>
-                Manage which blockchains Anchor is configured to interact with.
+                {t('global_blockchain_manage_card_two_description')}
               </Card.Description>
             </Card.Content>
           </Card>
@@ -194,4 +198,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GlobalBlockchainManage));
+export default compose(
+  withTranslation('global'),
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(GlobalBlockchainManage);

@@ -10,14 +10,12 @@ import ContentContainer from './Content';
 import ContentErrorContainer from './ContentError';
 import MenuContainer from './Menu';
 import SidebarContainer from './Sidebar';
-import Notifications from '../../../shared/components/Notifications';
-import WelcomeContainer from '../../../shared/containers/Welcome';
+
 import { setWalletMode } from '../../../shared/actions/wallet';
 import * as ValidateActions from '../../../shared/actions/validate';
 
 import anchorLogo from '../../../renderer/assets/images/anchor-logo.svg';
 import anchorText from '../../../renderer/assets/images/anchor-text.svg';
-import background from '../../../renderer/assets/images/geometric-background.svg';
 
 const { ipcRenderer } = require("electron");
 
@@ -53,9 +51,6 @@ class MainIndexContainer extends Component<Props> {
     }
   }
   render() {
-    const {
-      settings,
-    } = this.props;
     const {
       errorBoundaryKey,
       initialized,

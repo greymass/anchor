@@ -18,8 +18,9 @@ class GlobalBlockchainResync extends Component<Props> {
     const { actions } = this.props;
     actions.resyncBlockchains();
     this.onClose();
-  }
+  };
   render() {
+    const { t } = this.props;
     const { open } = this.state;
     return (
       <Modal
@@ -28,7 +29,7 @@ class GlobalBlockchainResync extends Component<Props> {
         size="small"
         trigger={(
           <Popup
-            content="Resync Blockchains"
+            content={t('global_blockchain_manage_resync_popup')}
             trigger={(
               <Button
                 floated="right"
@@ -40,23 +41,23 @@ class GlobalBlockchainResync extends Component<Props> {
         )}
       >
         <Modal.Header>
-          Resync Blockchains & Settings
+          {t('global_blockchain_manage_resync_header')}
         </Modal.Header>
         <Modal.Content>
           <p>
-            This utility will fetch a more recent copy of available blockchains and update their configuration.
+            {t('global_blockchain_manage_resync_paragraph_one')}
           </p>
           <p>
-            Anchor will do this by fetching data from the "anchorwallet" smart contract on the EOS blockchain. It will fetch this data either from the custom EOS node you have specified or by accessing the public API at eos.greymass.com directly.
+            {t('global_blockchain_manage_resync_paragraph_two')}
           </p>
         </Modal.Content>
         <Modal.Actions>
           <Button
-            content="Cancel"
+            content={t('cancel')}
             onClick={this.onClose}
           />
           <Button
-            content="Resync"
+            content={t('global_blockchain_manage_resync_button')}
             icon="refresh"
             onClick={this.resync}
             primary

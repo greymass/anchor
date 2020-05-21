@@ -19,10 +19,8 @@ class PromptActionHardwareLedger extends Component<Props> {
           >
             <Icon name="x" />
             <Header.Content>
-              <Header.Subheader>
-
-              </Header.Subheader>
-              Close
+              <Header.Subheader />
+              {t('handler_close')}
             </Header.Content>
           </Header>
         )}

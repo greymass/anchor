@@ -29,7 +29,7 @@ class PromptActionSign extends Component<Props> {
           <Header textAlign="left">
             <Header.Content>
               <Header.Subheader style={{ fontWeight: 'bold' }}>
-                Sign & Broadcast Transaction
+                {t('handler_action_sign_broadcast_header')}
               </Header.Subheader>
               {wallet.account}@{wallet.authorization}
             </Header.Content>
@@ -85,4 +85,4 @@ class PromptActionSign extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(PromptActionSign);
+export default withTranslation('handler')(PromptActionSign);
