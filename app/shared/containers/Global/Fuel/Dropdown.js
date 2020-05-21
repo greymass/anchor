@@ -41,11 +41,12 @@ class GlobalFuelDropdown extends Component<Props> {
       available,
       enabled,
       fuel,
+      settings,
     } = this.props;
     const {
       open
     } = this.state;
-    // Remove menu item for unsupported chains
+    // Remove menu item for unsupported chains and for Ledger wallets
     if (!available) {
       return false;
     }
@@ -92,7 +93,7 @@ class GlobalFuelDropdown extends Component<Props> {
                     https://greymass.com/fuel
                   </a>
                 </p>
-              {(enabled)
+              {(enabled && settings.walletMode !== 'ledger')
                 ? (
                   <Button
                     basic
@@ -100,42 +101,68 @@ class GlobalFuelDropdown extends Component<Props> {
                     color="orange"
                     onClick={this.disable}
                   />
-
                 )
-                : (
+                : ''
+              }
+              {(!enabled && settings.walletMode !== 'ledger')
+                ? (
                   <Button
                     content="Enable Fuel"
                     color="green"
                     onClick={this.enable}
                   />
                 )
+                : false
+              }
+              {(settings.walletMode === 'ledger')
+                ? (
+                  <Segment secondary>
+                    <Header>
+                      Fuel disabled while using a Ledger
+                      <Header.Subheader style={{ marginTop: '1em' }}>
+                        The combination of Fuel and Ledger devices is currently not working. An issue on the Ledger app itself prevents this feature from working.
+                      </Header.Subheader>
+                      <Header.Subheader style={{ marginTop: '1em' }}>
+                        <a href="#" onClick={() => this.openLink('https://github.com/tarassh/eos-ledger/issues/13')}>
+                          Technical information is available here.
+                        </a>
+                      </Header.Subheader>
+                    </Header>
+                  </Segment>
+                )
+                : false
               }
             </Segment>
-            <Grid>
-              <Grid.Row columns={1}>
-                <Grid.Column textAlign="center">
-                  <p>Your quotas remaining are as follows:</p>
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row columns={2}>
-                <Grid.Column>
-                  <Progress
-                    percent={cpupercent}
-                    progress="percent"
-                  >
-                    CPU Quota
-                  </Progress>
-                </Grid.Column>
-                <Grid.Column>
-                  <Progress
-                    percent={netpercent}
-                    progress="percent"
-                  >
-                    NET Quota
-                  </Progress>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            {(settings.walletMode !== 'ledger')
+              ? (
+                <Grid>
+                  <Grid.Row columns={1}>
+                    <Grid.Column textAlign="center">
+                      <p>Your quotas remaining are as follows:</p>
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row columns={2}>
+                    <Grid.Column>
+                      <Progress
+                        percent={cpupercent}
+                        progress="percent"
+                      >
+                        CPU Quota
+                      </Progress>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Progress
+                        percent={netpercent}
+                        progress="percent"
+                      >
+                        NET Quota
+                      </Progress>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              )
+              : false
+            }
           </Segment>
         )}
         flowing
