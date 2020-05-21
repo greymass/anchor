@@ -38,6 +38,7 @@ export class GlobalFragmentWalletType extends PureComponent<Props> {
         content={t(`wallet:wallet_mode_explain_${mode}_2`)}
         header={t('tools:tools_wallets_mode')}
         inverted
+        position="right center"
         trigger={(
           <Label
             basic
