@@ -52,6 +52,7 @@ export class GlobalFragmentAuthorization extends Component<Props> {
           header={t('public_key')}
           hoverable
           inverted
+          position="right center"
           trigger={element}
         />
       );

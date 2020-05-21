@@ -71,11 +71,10 @@ export class GlobalFragmentChainLogo extends PureComponent<Props> {
     if (noPopup) return image;
     return (
       <Popup
-        content={t('tools:tools_wallets_blockchain')}
+        content={chainId}
         header={name}
         inverted
-        position="left center"
-        style={{ textAlign: 'center' }}
+        position="right center"
         trigger={image}
       />
     );
