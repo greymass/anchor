@@ -2,7 +2,7 @@ import { find, forEach, partition, pluck, uniq } from 'lodash';
 
 import * as types from './types';
 import { getAccount } from './accounts';
-import { setSettings } from './settings';
+import { setSetting, setSettings } from './settings';
 import { decrypt, encrypt, setWalletMode } from './wallet';
 import { lookupFioNames } from './address';
 
@@ -357,6 +357,10 @@ export function useWallet(chainId, account, authorization) {
       walletQuery.authorization = authorization;
     }
     const newWallet = find(wallets, walletQuery);
+    // Temporary: Disable Fuel if the wallet is a ledger wallet (does not work)
+    if (connection.greymassFuel && newWallet.mode === 'ledger') {
+      dispatch(setSetting('greymassFuel', false));
+    }
     //  Reset the unregistered producers
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
