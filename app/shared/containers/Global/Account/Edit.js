@@ -93,7 +93,6 @@ class GlobalAccountEdit extends Component<Props> {
     return (
       <Modal
         closeIcon
-        closeOnDimmerClick={false}
         onClose={this.onClose}
         open
         size
@@ -145,8 +144,9 @@ class GlobalAccountEdit extends Component<Props> {
                   connection={connection}
                   label={t('global_account_import_private_key')}
                   name="key"
-                  placeholder={t('welcome:welcome_key_compare_placeholder')}
                   onChange={this.onChange}
+                  placeholder={t('welcome:welcome_key_compare_placeholder')}
+                  qr
                   value={wif}
                 />
               )
