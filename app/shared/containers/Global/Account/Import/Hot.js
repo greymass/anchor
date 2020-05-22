@@ -121,6 +121,8 @@ class GlobalModalAccountImportHot extends Component<Props> {
       valid,
       value
     } = this.state;
+    const matches = accounts.__lookups;
+
     const disabled = (!selected.length || !valid);
     let passwordPrompt = false;
     if (!settings.walletHash) {
