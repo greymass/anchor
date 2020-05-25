@@ -1,5 +1,12 @@
 {
+  "button_manage_blockchains": "Manage Blockchains",
+  "button_manage_wallets": "Manage Wallets",
+  "dropdown_select_blockchain": "Select a blockchain...",
+  "governance": "Governance",
+  "home": "Home",
+  "minimize": "Minimize Menu",
   "producer_voting": "Vote de Producteur",
+  "resources": "Resources",
   "tools": "Tools",
   "wallet": "Portefeuille"
 }
