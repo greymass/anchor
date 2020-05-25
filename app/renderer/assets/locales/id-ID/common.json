@@ -1,11 +1,12 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "Anchor",
-  "application_version": "v1.0.2",
+  "application_version": "v1.0.3",
   "back": "Kembali",
   "block_height": "Tinggi Block",
   "blockchain": "Blockchain",
   "cancel": "Batalkan",
+  "save": "Save",
   "close": "Tutup",
   "confirm": "Konfirmasi",
   "continue_setup": "Lanjutkan Mengatur Akun",
