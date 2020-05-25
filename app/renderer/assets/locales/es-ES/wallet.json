@@ -49,7 +49,7 @@
   "wallet_mode_explain_undefined_2": "A 'Legacy Wallet' is a catch-all type for when the application isn't sure what kind of wallet this is. Either upgrade it or remove the account and reimport it to correct the problem.",
   "wallet_mode_explain_watch_2": "A 'Watch Wallet' refers to a wallet which has no Private Keys and cannot sign transactions, but can watch the account or create transaction files for signing in a 'Cold Wallet'.",
   "wallet_panel_form_account": "Nombre de cuenta",
-  "wallet_panel_form_create_wallet_body": "To use eos-voter to vote, fill in your account name and private key.",
+  "wallet_panel_form_create_wallet_body": "To use Anchor to vote, fill in your account name and private key.",
   "wallet_panel_form_create_wallet_header": "Import your Account",
   "wallet_panel_form_encrypt_wallet": "Save/encrypt local wallet with password?",
   "wallet_panel_form_key": "WIF/Private Key",
@@ -120,5 +120,10 @@
   "wallet_upgrade_popup": "This wallet requires an upgrade to enable the newest features.",
   "wallet_upgrade_watch_authorization_description": "If you are using in conjunction with a cold wallet, please select the type of key you have imported into the cold wallet. If the account is just being watched, the selected authority doesn't matter.",
   "wallet_upgrade_watch_authorization_header": "Select an authority for this wallet.",
-  "wallet_welcome_connection_blockchain_message": "You are connected to the {{blockChainName}}."
+  "wallet_welcome_connection_blockchain_message": "You are connected to the {{blockChainName}}.",
+  "wallet_panel_button_broadcast_transaction": "Broadcast Transaction",
+  "wallet_lock_state_popup": "This wallet (and potentially other wallets) is unlocked. Click this icon to lock all of your wallets.",
+  "tools_button_reset": "Reset Application",
+  "tools_confirm_content_reset": "This action will erase all private keys, settings, accounts and restore this application to its default state. Ensure you have a proper backup before proceeding.",
+  "tools_confirm_header_reset": "Warning"
 }
