@@ -30,8 +30,8 @@
   "welcome_instructions_6": "暗号化してローカルウォレットを保存するか、一時的なアクセスで使用を続けるか選択して下さい。",
   "welcome_instructions_7": "既にアカウントを持っていますか？もしくは作成が必要ですか？",
   "welcome_instructions_8": "Connect your Ledger device and import an account that already exists on the device.",
-  "welcome_instructions_one": "To get started, eos-voter needs to connect to an EOSIO API node.",
-  "welcome_instructions_one_cold": "To get started, eos-voter needs to know which blockchain the first imported wallet will use.",
+  "welcome_instructions_one": "To get started, Anchor needs to connect to an EOSIO API node.",
+  "welcome_instructions_one_cold": "To get started, Anchor needs to know which blockchain the first imported wallet will use.",
   "welcome_instructions_sign_tx": "このウォレットをトランザクションの署名に使用しますか？",
   "welcome_key_coldwallet": "秘密鍵をインポート",
   "welcome_key_coldwallet_content": "コールドウォレットは秘密鍵がアカウントと合致するかどうかを検証できません。",
@@ -84,5 +84,6 @@
   "welcome_stage_wallet": "ウォレット",
   "welcome_stage_watchwallet": "ウォッチウォレット",
   "welcome_step": "Step",
-  "welcome_use_coldwallet": "コールドウォレットの設定"
+  "welcome_use_coldwallet": "コールドウォレットの設定",
+  "welcome_account_lookup_no_accounts": "No accounts found"
 }
