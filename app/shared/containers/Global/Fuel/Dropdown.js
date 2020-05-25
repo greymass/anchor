@@ -42,6 +42,7 @@ class GlobalFuelDropdown extends Component<Props> {
       available,
       enabled,
       fuel,
+      settings,
       t,
     } = this.props;
     const {
