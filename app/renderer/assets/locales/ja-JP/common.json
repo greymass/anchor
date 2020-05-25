@@ -1,11 +1,12 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "Anchor",
-  "application_version": "v1.0.2",
+  "application_version": "v1.0.3",
   "back": "戻る",
   "block_height": "ブロック高",
   "blockchain": "Blockchain",
   "cancel": "キャンセル",
+  "save": "Save",
   "close": "閉じる",
   "confirm": "確認",
   "continue_setup": "アカウント設定を続行する",
