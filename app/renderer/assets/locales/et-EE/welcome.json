@@ -30,8 +30,8 @@
   "welcome_instructions_6": "Vali, kas soovid krüpteerida ja salvestada kohaliku rahakoti või jätkata ajutise juurdepääsu kasutamist.",
   "welcome_instructions_7": "Kas sul on juba konto või soovid selle luua?",
   "welcome_instructions_8": "Connect your Ledger device and import an account that already exists on the device.",
-  "welcome_instructions_one": "To get started, eos-voter needs to connect to an EOSIO API node.",
-  "welcome_instructions_one_cold": "To get started, eos-voter needs to know which blockchain the first imported wallet will use.",
+  "welcome_instructions_one": "To get started, Anchor needs to connect to an EOSIO API node.",
+  "welcome_instructions_one_cold": "To get started, Anchor needs to know which blockchain the first imported wallet will use.",
   "welcome_instructions_sign_tx": "Kas soovid kasutada seda rahakotti tehingute allkirjastamiseks?",
   "welcome_key_coldwallet": "Impordi Salajane Võti",
   "welcome_key_coldwallet_content": "Külm rahakott ei saa kinnitada, kas sisestatud salajane võti sobib antud konto jaoks.",
@@ -84,5 +84,6 @@
   "welcome_stage_wallet": "Rahakott",
   "welcome_stage_watchwallet": "Vaatamisrahakott",
   "welcome_step": "Step",
-  "welcome_use_coldwallet": "Seadista Külm Rahakott"
+  "welcome_use_coldwallet": "Seadista Külm Rahakott",
+  "welcome_account_lookup_no_accounts": "No accounts found"
 }
