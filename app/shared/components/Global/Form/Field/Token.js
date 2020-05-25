@@ -19,14 +19,16 @@ export default class GlobalFormFieldToken extends Component<Props> {
     };
   }
   onChange = debounce((e, { name, value }) => {
-    let asset = (this.props.connection && this.props.connection.chainSymbol) || 'EOS';
+    const { connection } = this.props;
+    const precision = (connection) ? connection.tokenPrecision : 4;
+    let asset = (connection && connection.chainSymbol) || 'EOS';
     const { symbol } = this.props;
     if (symbol) {
       asset = symbol;
     }
-    const valid = !!(value.match(/^\d+(\.\d{1,4})?$/g));
-    const parsed = (value > 0) ? `${new Decimal(value).toFixed(4)} ${asset}` : `0.0000 ${asset}`;
-
+    const regex = `^\\d+(\\.\\d{1,${precision}})?$`;
+    const valid = !!(value.match(new RegExp(regex, 'g')));
+    const parsed = (value > 0) ? `${new Decimal(value).toFixed(precision)} ${asset}` : `0.0000 ${asset}`;
     this.setState({
       value: parsed
     }, () => {
