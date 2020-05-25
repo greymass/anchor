@@ -1,11 +1,12 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "Anchor",
-  "application_version": "v1.0.2",
+  "application_version": "v1.0.3",
   "back": "Back",
   "block_height": "区块高度",
   "blockchain": "Blockchain",
   "cancel": "取消",
+  "save": "Save",
   "close": "关闭",
   "confirm": "确认",
   "continue_setup": "Continue Account Setup",
