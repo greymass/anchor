@@ -211,7 +211,7 @@ class ContractInterfaceComponent extends Component<Props> {
           ? (
             <Segment secondary stacked>
               <Header>
-                Recently contract actions
+                Recently used contract actions
                 <Header.Subheader>
                   Click one of the recently used combinations below to load it.
                 </Header.Subheader>

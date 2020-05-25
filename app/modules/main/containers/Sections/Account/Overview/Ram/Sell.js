@@ -42,7 +42,7 @@ class AccountOverviewRamSell extends Component<Props> {
         trigger={(
           <Button
             color="red"
-            content={t('main_sections_overview_ram_buy_button')}
+            content={t('main_sections_overview_ram_sell_button')}
             floated="right"
             icon="minus circle"
             size="tiny"

@@ -14,7 +14,7 @@ class ToolsReset extends Component<Props> {
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
-          content={t('tools_reset_header_header')}
+          content={t('tools_reset')}
           subheader={t('tools_reset_header_subheader')}
         />
         <Segment basic size="large">
