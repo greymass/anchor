@@ -20,7 +20,7 @@ const toolSections = {
     },
     tools_menu_customtokens: {
       modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/custom_tokens'
+      path: 'tools/customtokens'
     },
     tools_menu_delegations: {
       modes: ['hot', 'ledger', 'watch'],
@@ -32,13 +32,13 @@ const toolSections = {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/contacts'
     },
-    tools_menu_contracts: {
+    tools_menu_smart_contracts: {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/smart_contracts'
     }
   },
   tools_menu_security_header: {
-    tools_menu_recommendation: {
+    tools_menu_recommendations: {
       modes: ['hot', 'ledger', 'watch'],
       path: 'tools/recommendations'
     },
@@ -50,7 +50,7 @@ const toolSections = {
       modes: ['hot', 'ledger', 'watch'],
       path: 'tools/permissions'
     },
-    tools_menu_keyvalidator: {
+    tools_menu_key_validator: {
       modes: ['all'],
       path: 'tools/key_validator'
     }
@@ -62,7 +62,7 @@ const toolSections = {
     },
     tools_menu_name_bidding: {
       modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/bid_name'
+      path: 'tools/name_bidding'
     },
     tools_menu_proxy: {
       modes: ['hot', 'ledger', 'watch'],
@@ -78,11 +78,11 @@ const toolSections = {
   tools_menu_third_party_services_header: {
     tools_menu_dfuse_connection: {
       modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/dfuse'
+      path: 'tools/dfuse_connection'
     },
     tools_menu_beos_crosschaintransfer: {
       modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/crosschain_transfer'
+      path: 'tools/beos_crosschaintransfer'
     }
   },
   tools_menu_network_utilities_header: {
@@ -90,10 +90,10 @@ const toolSections = {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_ping'
     },
-    tools_system_log_header: {
-      modes: [undefined, false, 'hot', 'ledger', 'watch'],
-      path: 'tools/api_traffic_log'
-    },
+    // tools_system_log_header: {
+    //   modes: [undefined, false, 'hot', 'ledger', 'watch'],
+    //   path: 'tools/api_traffic_log'
+    // },
   },
   tools_menu_advanced_header: {
     tools_menu_display: {
@@ -102,19 +102,15 @@ const toolSections = {
     },
     tools_menu_state_chain: {
       modes: ['all'],
-      path: 'tools/chain_state'
+      path: 'tools/state_chain'
     },
     tools_menu_state_globals: {
       modes: ['all'],
-      path: 'tools/global_state'
+      path: 'tools/state_globals'
     },
-    tools_menu_state: {
+    tools_menu_state_wallet: {
       modes: ['all'],
-      path: 'tools/wallet_state'
-    },
-    tools_reset_header_header: {
-      modes: ['all'],
-      path: 'tools/reset_application'
+      path: 'tools/state_wallet'
     },
   }
 };
