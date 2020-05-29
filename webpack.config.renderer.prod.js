@@ -7,7 +7,7 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
-import TerserPlugin from 'terser-webpack-plugin';
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
 
@@ -155,11 +155,6 @@ export default merge.smart(baseConfig, {
         use: 'url-loader',
       }
     ]
-  },
-
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin()],
   },
 
   plugins: [

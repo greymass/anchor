@@ -100,8 +100,7 @@
     "redux-persist": "^5.10.0",
     "redux-persist-electron-storage": "^1.1.2",
     "redux-thunk": "^2.3.0",
-    "regenerator-runtime": "^0.13.3",
-    "terser-webpack-plugin": "^3.0.1"
+    "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -175,6 +174,7 @@
     "stylefmt": "6.0.3",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
     "version-bump-prompt": "^5.0.4",
     "webpack": "^4.42.0",
