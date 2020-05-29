@@ -116,8 +116,16 @@ const knownChains = [
   {
     "_id": "eos-testnet-jungle-2",
     "chainId": "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",
-    "name": "Jungle (EOS Testnet)",
+    "name": "Jungle 2 (EOS Testnet)",
     "node": "https://jungle.greymass.com",
+    "symbol": "EOS",
+    "testnet": true
+  },
+  {
+    "_id": "eos-testnet-jungle-3",
+    "chainId": "2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840",
+    "name": "Jungle 3 (EOS Testnet)",
+    "node": "https://jungle3.greymass.com",
     "symbol": "EOS",
     "testnet": true
   },
