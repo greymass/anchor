@@ -3,6 +3,7 @@ import { find, forEach, partition, pluck, uniq } from 'lodash';
 import * as types from './types';
 import { getAccount } from './accounts';
 import { setSetting, setSettings } from './settings';
+import { setStorage } from './storage';
 import { decrypt, encrypt, setWalletMode } from './wallet';
 import { lookupFioNames } from './address';
 
@@ -124,14 +125,11 @@ export function importWalletFromBackup(wallet, settings = {}) {
       // Modify path storage to record where this key was accessed from
       const paths = { ...storage.paths };
       paths[wallet.pubkey] = wallet.path;
-      dispatch({
-        type: types.WALLET_STORAGE_UPDATE,
-        payload: {
-          data: storage.data,
-          keys,
-          paths,
-        }
-      });
+      dispatch(setStorage({
+        data: storage.data,
+        keys,
+        paths,
+      }));
     }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
@@ -160,14 +158,11 @@ function importPubkeyStorage(pubkey, path) {
     // Modify path storage to record where this key was accessed from
     const paths = { ...storage.paths };
     paths[pubkey] = path;
-    return dispatch({
-      type: types.WALLET_STORAGE_UPDATE,
-      payload: {
-        data: storage.data,
-        keys,
-        paths,
-      }
-    });
+    return dispatch(setStorage({
+      data: storage.data,
+      keys,
+      paths,
+    }));
   };
 }
 
@@ -199,13 +194,11 @@ function importKeyStorage(
     // Encrypt and store
     const keys = data.map(k => k.pubkey);
     const encrypted = encrypt(JSON.stringify(data), password);
-    return dispatch({
-      type: types.WALLET_STORAGE_UPDATE,
-      payload: {
-        data: encrypted,
-        keys,
-      }
-    });
+    dispatch(setStorage({
+      data: encrypted,
+      keys,
+      paths: storage.paths,
+    }));
   };
 }
 
@@ -236,13 +229,11 @@ export function importKeypairStorage(
     ]);
     // Encrypt and store
     const encrypted = encrypt(JSON.stringify(data), password);
-    return dispatch({
-      type: types.WALLET_STORAGE_UPDATE,
-      payload: {
-        data: encrypted,
-        keys,
-      }
-    });
+    dispatch(setStorage({
+      data: encrypted,
+      keys,
+      paths: storage.paths,
+    }));
   };
 }
 
@@ -540,13 +531,10 @@ export function upgradeV1Wallets(wallets, password) {
       const results = await Promise.all(requests);
       const keys = uniq(results.map(k => k.pubkey));
       const encrypted = encrypt(JSON.stringify(results), password);
-      dispatch({
-        type: types.WALLET_STORAGE_UPDATE,
-        payload: {
-          data: encrypted,
-          keys,
-        }
-      });
+      dispatch(setStorage({
+        data: encrypted,
+        keys,
+      }));
       // Dispatch success
       return dispatch({
         type: types.SYSTEM_V1UPGRADE_SUCCESS,
