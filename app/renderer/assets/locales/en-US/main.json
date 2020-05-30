@@ -22,7 +22,7 @@
   "main_components_overview_table_refunding": "Refunding",
   "main_components_overview_popup_one_content": "The strength of each vote, which is the sum of both staked CPU and NET of this account and any other account which has set this account as a proxy.",
   "main_components_overview_popup_one_trigger": "Vote Weight",
-  "main_components_overview_popup_two_content": "The relative strength of the current vote against the strength of a vote cast today. The strength can be increased to 100% simply by casting your vote again.",
+  "main_components_overview_popup_two_content": "The relative strength of the current vote against the strength of a vote cast today. The strength can be increased to 100%% simply by casting your vote again.",
   "main_components_overview_table_votes": "Votes",
   "main_components_overview_popup_three_content": "The proxy set by this account. The staked voting weight is transfered from the current account and given to the proxy.",
   "main_components_overview_popup_three_trigger": "Proxy",
