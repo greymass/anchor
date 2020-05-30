@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { map } from 'lodash';
 
 import ToolsDelegationsComponent from '../../../../../shared/components/Tools/Delegations';
 
@@ -13,6 +12,8 @@ import * as SystemStateActions from '../../../../../shared/actions/system/system
 import * as TableActions from '../../../../../shared/actions/table';
 import * as WalletActions from '../../../../../shared/actions/wallet';
 
+import makeGetKeysUnlocked from '../../../../../shared/selectors/getKeysUnlocked';
+
 class ToolsDelegations extends Component<Props> {
   render = () => (
     <ToolsDelegationsComponent
@@ -21,23 +22,22 @@ class ToolsDelegations extends Component<Props> {
   )
 }
 
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     accounts: state.accounts,
     allBlockExplorers: state.blockexplorers,
     balances: state.balances,
     connection: state.connection,
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     system: state.system,
     tables: state.tables,
     validate: state.validate,
     wallet: state.wallet,
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -51,4 +51,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsDelegations));
+export default withRouter(connect(makeMapStateToProps, mapDispatchToProps)(ToolsDelegations));
