@@ -100,7 +100,8 @@
     "redux-persist": "^5.10.0",
     "redux-persist-electron-storage": "^1.1.2",
     "redux-thunk": "^2.3.0",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

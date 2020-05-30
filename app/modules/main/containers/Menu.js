@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
-import { forEach, map, uniq } from 'lodash';
-import Blockies from 'react-blockies';
 
 import * as AccountsActions from '../../../shared/actions/accounts';
 import * as AppActions from '../../../shared/actions/app';
@@ -26,43 +24,19 @@ import GlobalHardwareLedgerStatus from '../../../shared/containers/Global/Hardwa
 import WalletLockState from '../../../shared/components/Wallet/LockState';
 import WalletMode from '../../../shared/components/Wallet/Mode';
 
+import makeGetKeysUnlocked from '../../../shared/selectors/getKeysUnlocked';
+
 class MenuContainer extends Component<Props> {
   componentDidMount() {
     const {
       actions,
-      history,
-      settings
     } = this.props;
-
     const {
       getBlockExplorers,
-      getCurrencyStats,
       initApp
     } = actions;
-
     initApp();
     getBlockExplorers();
-
-    // switch (settings.walletMode) {
-    //   case 'cold': {
-    //     history.push('/coldwallet');
-    //     break;
-    //   }
-    //   default: {
-    //     if (!settings.walletInit && !settings.skipImport && !settings.walletTemp) {
-    //       history.push('/');
-    //     } else {
-    //       // getCurrencyStats();
-    //
-    //       // forEach(settings.customTokens, (token) => {
-    //       //   const [chainId, contract, symbol] = token.split(':');
-    //       //   if (chainId === settings.chainId) {
-    //       //     getCurrencyStats(contract, symbol.toUpperCase());
-    //       //   }
-    //       // });
-    //     }
-    //   }
-    // }
     this.tick();
     this.interval = setInterval(this.tick.bind(this), 10000);
   }
@@ -130,7 +104,7 @@ class MenuContainer extends Component<Props> {
                 content={(
                   <Icon.Group size="large">
                     <Icon color="red" name="wifi" />
-                    <Icon color="red" corner='bottom right' name='exclamation' />
+                    <Icon color="red" corner="bottom right" name="exclamation" />
                   </Icon.Group>
                 )}
               />
@@ -169,23 +143,21 @@ class MenuContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     actions: state.actions,
     navigation: state.navigation,
     prompt: state.prompt,
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
-    system: state.system,
     validate: state.validate,
     wallet: state.wallet,
     wallets: state.wallets,
     unlocked: isUnlocked(state),
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -203,4 +175,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MenuContainer));
+export default withRouter(connect(
+  makeMapStateToProps,
+  mapDispatchToProps
+)(MenuContainer));
