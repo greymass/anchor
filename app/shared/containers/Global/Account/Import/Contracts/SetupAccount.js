@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { map } from 'lodash';
-import { Header, Segment, Tab } from 'semantic-ui-react';
+import { Segment, Tab } from 'semantic-ui-react';
 
 import GlobalFormFieldAccount from '../../../../../components/Global/Form/Field/Account';
 import GlobalFormFieldPublicKeys from '../../../../../components/Global/Form/Field/PublicKeys';
+
+import makeGetKeysUnlocked from '../../../../../selectors/getKeysUnlocked';
 
 class GlobalModalAccountImportContractsSetupAccount extends Component<Props> {
   state = {
@@ -38,7 +39,6 @@ class GlobalModalAccountImportContractsSetupAccount extends Component<Props> {
       && active && owner && account
       && isUnique
     );
-    console.log(isValid)
     return (
       <Tab.Pane>
         <Segment basic>
@@ -76,16 +76,14 @@ class GlobalModalAccountImportContractsSetupAccount extends Component<Props> {
   }
 }
 
-
-function mapStateToProps(state) {
-  return {
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -98,5 +96,5 @@ export default compose(
   withTranslation('global', {
     withRef: true
   }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(makeMapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportContractsSetupAccount);

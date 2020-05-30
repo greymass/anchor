@@ -17,6 +17,8 @@ import * as SettingsActions from '../../../../actions/settings';
 import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
 
+import makeGetKeysUnlocked from '../../../../selectors/getKeysUnlocked';
+
 class GlobalModalAccountImportDetect extends Component<Props> {
   state = {
     selected: [],
@@ -264,19 +266,19 @@ class GlobalModalAccountImportDetect extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     accounts: state.accounts,
     connection: state.connection,
-    pubkeys: {
-      available: state.storage.keys,
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     system: state.system,
     validate: state.validate,
     wallets: state.wallets
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -291,5 +293,5 @@ function mapDispatchToProps(dispatch) {
 
 export default compose(
   withTranslation('global'),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(makeMapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportDetect);

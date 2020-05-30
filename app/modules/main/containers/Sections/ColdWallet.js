@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { map } from 'lodash';
 
 import ColdWallet from '../../../../shared/components/ColdWallet/Wallet';
 import * as TransactionActions from '../../../../shared/actions/transaction';
+import makeGetKeysUnlocked from '../../../../shared/selectors/getKeysUnlocked';
 
 class ColdWalletContainer extends Component<Props> {
   render() {
@@ -16,19 +16,18 @@ class ColdWalletContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
     validate: state.validate,
     wallet: state.wallet,
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -38,4 +37,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ColdWalletContainer));
+export default withRouter(connect(makeMapStateToProps, mapDispatchToProps)(ColdWalletContainer));

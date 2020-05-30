@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { map } from 'lodash';
 
 import ToolsProxyComponent from '../../../../../shared/components/Tools/Proxy';
 
@@ -14,6 +13,7 @@ import * as UnregProxyActions from '../../../../../shared/actions/system/unregpr
 import * as RegProxyInfoActions from '../../../../../shared/actions/system/community/regproxyinfo';
 import * as WalletActions from '../../../../../shared/actions/wallet';
 
+import makeGetKeysUnlocked from '../../../../../shared/selectors/getKeysUnlocked';
 
 class ToolsProxy extends Component<Props> {
   render = () => (
@@ -23,23 +23,23 @@ class ToolsProxy extends Component<Props> {
   )
 }
 
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     accounts: state.accounts,
     allBlockExplorers: state.blockexplorers,
     connection: state.connection,
     contracts: state.contracts,
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     system: state.system,
     validate: state.validate,
     wallet: state.wallet,
-    tables: state.tables
-  };
-}
+    tables: state.tables,
+  });
+  return mapStateToProps;
+};
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -54,4 +54,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsProxy));
+export default withRouter(connect(makeMapStateToProps, mapDispatchToProps)(ToolsProxy));

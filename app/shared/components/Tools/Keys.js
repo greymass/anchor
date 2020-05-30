@@ -62,6 +62,7 @@ class ToolsKeys extends Component<Props> {
   onSave = () => this.setState({ closable: true })
   render() {
     const {
+      paths,
       pubkeys,
       t,
       wallets,
@@ -148,7 +149,7 @@ class ToolsKeys extends Component<Props> {
                   <Table.Cell>
                     <pre style={{ margin: 0 }}>{pubkey}</pre>
                   </Table.Cell>
-                  <Table.Cell>{pubkeys.paths[pubkey]}</Table.Cell>
+                  <Table.Cell>{paths[pubkey]}</Table.Cell>
                   <Popup
                     content={(
                       <Table definition size="small">

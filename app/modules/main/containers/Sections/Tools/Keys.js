@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { map } from 'lodash';
 
 import ToolsKeysComponent from '../../../../../shared/components/Tools/Keys';
 
 import * as WalletActions from '../../../../../shared/actions/wallet';
 import * as WalletsActions from '../../../../../shared/actions/wallets';
 import NavigationActions from '../../../actions/navigation';
+
+import makeGetKeysUnlocked from '../../../../../shared/selectors/getKeysUnlocked';
 
 class ToolsKeys extends Component<Props> {
   render = () => (
@@ -19,19 +20,18 @@ class ToolsKeys extends Component<Props> {
   )
 }
 
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     blockchains: state.blockchains,
     connection: state.connection,
-    pubkeys: {
-      available: state.storage.keys,
-      paths: state.storage.paths,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    paths: state.storage.paths,
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     wallets: state.wallets
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ToolsKeys));
+export default withRouter(connect(makeMapStateToProps, mapDispatchToProps)(ToolsKeys));
