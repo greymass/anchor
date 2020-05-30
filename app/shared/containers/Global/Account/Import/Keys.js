@@ -4,14 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { map } from 'lodash';
-import { Button, Header, Message, Segment, Tab } from 'semantic-ui-react';
+import { Button, Header, Message, Segment } from 'semantic-ui-react';
 
 import GlobalModalAccountImportPassword from './Password';
 import ToolsKeyGeneratorComponent from '../../../../components/Tools/KeyGenerator';
 
 import * as WalletActions from '../../../../actions/wallet';
 import * as WalletsActions from '../../../../actions/wallets';
+
+import makeGetKeysUnlocked from '../../../../selectors/getKeysUnlocked';
 
 class GlobalModalAccountImportKeys extends Component<Props> {
   state = {
@@ -105,22 +106,16 @@ class GlobalModalAccountImportKeys extends Component<Props> {
   }
 }
 
-
-function mapStateToProps(state) {
-  return {
-    // accounts: state.accounts,
-    // app: state.app,
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     connection: state.connection,
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     wallets: state.wallets,
-    // system: state.system,
-    // validate: state.validate
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -137,5 +132,5 @@ export default compose(
   withTranslation('global', {
     withRef: true
   }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(makeMapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportKeys);

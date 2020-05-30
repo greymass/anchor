@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { map } from 'lodash';
 import compose from 'lodash/fp/compose';
 
 import { Menu, Tab, Item } from 'semantic-ui-react';
@@ -63,6 +62,8 @@ import * as UpdateAuthActions from '../actions/system/updateauth';
 import * as WalletActions from '../actions/wallet';
 import * as WalletsActions from '../actions/wallets';
 import * as AppActions from '../actions/app';
+
+import makeGetKeysUnlocked from '../selectors/getKeysUnlocked';
 
 const paneMapping = [
   {
@@ -362,8 +363,9 @@ class ToolsContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     accounts: state.accounts,
     allBlockExplorers: state.blockexplorers,
     app: state.app,
@@ -378,10 +380,7 @@ function mapStateToProps(state) {
     keys: state.keys,
     ledger: state.ledger,
     proposals: state.proposals,
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
     system: state.system,
@@ -391,8 +390,9 @@ function mapStateToProps(state) {
     validate: state.validate,
     wallet: state.wallet,
     wallets: state.wallets,
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -431,5 +431,5 @@ function mapDispatchToProps(dispatch) {
 export default compose(
   withRouter,
   withTranslation('tools'),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(makeMapStateToProps, mapDispatchToProps)
 )(ToolsContainer);

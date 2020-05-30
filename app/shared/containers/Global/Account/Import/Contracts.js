@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { map } from 'lodash';
 import { Button, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalModalAccountImportKeys from './Keys';
 import GlobalModalAccountImportContractsSetupAccount from './Contracts/SetupAccount';
+
+import makeGetKeysUnlocked from '../../../../selectors/getKeysUnlocked';
 
 const defaultState = {
   confirming: false,
@@ -83,17 +84,15 @@ class GlobalModalAccountImportContracts extends Component<Props> {
   }
 }
 
-
-function mapStateToProps(state) {
-  return {
+const makeMapStateToProps = () => {
+  const getKeysUnlocked = makeGetKeysUnlocked();
+  const mapStateToProps = (state, props) => ({
     connection: state.connection,
-    pubkeys: {
-      available: state.storage.keys,
-      unlocked: map(state.auths.keystore, 'pubkey')
-    },
+    pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
-  };
-}
+  });
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -106,5 +105,5 @@ export default compose(
   withTranslation('global', {
     withRef: true
   }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(makeMapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportContracts);
