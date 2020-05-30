@@ -43,7 +43,7 @@ const configureStore = (initialState) => {
   const persistedReducer = persistReducer(persistConfig, rootReducer);
   const store = createStore(persistedReducer, initialState, enhancer);
   const persistor = persistStore(store);
-
+  window.persistor = persistor;
   if (module.hot) {
     module.hot.accept('../../reducers', () =>
       store.replaceReducer(require('../../reducers'))); // eslint-disable-line global-require
