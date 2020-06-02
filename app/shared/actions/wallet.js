@@ -126,11 +126,13 @@ export function validateHashPassword(password) {
       } catch (err) {
         return dispatch({
           err,
-          type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+          from: 'validateHashPassword',
+          type: types.VALIDATE_WALLET_PASSWORD_FAILURE,
         });
       }
       return dispatch({
-        type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+        from: 'validateHashPassword',
+        type: types.VALIDATE_WALLET_PASSWORD_FAILURE,
       });
     }, 10);
   };
@@ -158,10 +160,12 @@ export function validateWalletPassword(password, useWallet = false) {
       } catch (err) {
         return dispatch({
           err,
+          from: 'validateWalletPassword',
           type: types.VALIDATE_WALLET_PASSWORD_FAILURE
         });
       }
       return dispatch({
+        from: 'validateWalletPassword',
         type: types.VALIDATE_WALLET_PASSWORD_FAILURE
       });
     }, 10);
@@ -236,10 +240,12 @@ export function unlockWallet(password, useWallet = false) {
       } catch (err) {
         return dispatch({
           err,
+          from: 'unlockWallet',
           type: types.VALIDATE_WALLET_PASSWORD_FAILURE
         });
       }
       return dispatch({
+        from: 'unlockWallet',
         type: types.VALIDATE_WALLET_PASSWORD_FAILURE
       });
     }, 10);
@@ -302,18 +308,20 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
             type: types.SET_AUTH
           });
           return dispatch({
+            from: 'unlockWalletByAuth',
             type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
-            from: 'unlockWalletByAuth'
           });
         }
       } catch (err) {
         return dispatch({
           err,
-          type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+          from: 'unlockWalletByAuth',
+          type: types.VALIDATE_WALLET_PASSWORD_FAILURE,
         });
       }
       return dispatch({
-        type: types.VALIDATE_WALLET_PASSWORD_FAILURE
+        from: 'unlockWalletByAuth',
+        type: types.VALIDATE_WALLET_PASSWORD_FAILURE,
       });
     }, 10);
   };
