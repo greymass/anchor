@@ -55,11 +55,6 @@ class PromptStage extends Component<Props> {
       callback,
       signed,
     } = prompt;
-    // actions.callbackURIWithProcessed({
-    //   bn: 123456,
-    //   tx: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-    //   sig: ['ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'],
-    // }, callback);
     actions.broadcastURI(signed, blockchain, callback);
   }
   onCallback = () => {
@@ -101,9 +96,7 @@ class PromptStage extends Component<Props> {
     const { resolved } = prompt;
     // After this signature is added, does it meet the requirements to be able to broadcast?
     // TODO: Implement checks for existing signatures
-    const authorizations = get(resolved.transaction, 'actions.0.authorization', []);
-    const canBroadcast = (authorizations.length === 1);
-    const broadcast = !!(prompt.broadcast !== false && andBroadcast)
+    const broadcast = !!(prompt.broadcast !== false && andBroadcast);
     actions.signURI(resolved.transaction, blockchain, wallet, broadcast, prompt.callback);
   }
   onSignBroadcast = () => {
@@ -142,6 +135,40 @@ class PromptStage extends Component<Props> {
       wallet
     } = this.props;
     actions.unlockWalletByAuth(wallet.account, wallet.authorization, password, blockchain.chainId);
+  }
+  onUnlockAndSign = (password) => {
+    const {
+      actions,
+      blockchain,
+      prompt,
+      wallet
+    } = this.props;
+    const { resolved } = prompt;
+    const broadcast = !!(prompt.broadcast !== false);
+    actions.unlockWalletByAuth(
+      wallet.account,
+      wallet.authorization,
+      password,
+      blockchain.chainId,
+      // callback
+      () => actions.signURI(resolved.transaction, blockchain, wallet, broadcast, prompt.callback)
+    );
+  }
+  onUnlockAndSignIdentity= (password) => {
+    const {
+      actions,
+      blockchain,
+      prompt,
+      wallet
+    } = this.props;
+    actions.unlockWalletByAuth(
+      wallet.account,
+      wallet.authorization,
+      password,
+      blockchain.chainId,
+      // callback
+      () => actions.signIdentityRequest(prompt, blockchain, wallet)
+    );
   }
   render() {
     const {
@@ -392,7 +419,7 @@ class PromptStage extends Component<Props> {
           <PromptActionUnlock
             disabled={signing || validatingPassword}
             loading={validatingPassword}
-            onClick={this.onUnlock}
+            onClick={this.onUnlockAndSignIdentity}
             wallet={wallet}
           />
         );
@@ -411,7 +438,7 @@ class PromptStage extends Component<Props> {
         <PromptActionUnlock
           disabled={signing || validatingPassword}
           loading={validatingPassword}
-          onClick={this.onUnlock}
+          onClick={this.onUnlockAndSign}
           wallet={wallet}
         />
       );

@@ -252,7 +252,7 @@ export function unlockWallet(password, useWallet = false) {
   };
 }
 
-export function unlockWalletByAuth(account, authorization, password, chainId = false) {
+export function unlockWalletByAuth(account, authorization, password, chainId = false, callback = false) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -307,6 +307,10 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
             },
             type: types.SET_AUTH
           });
+          // if a callback was provided for after unlock, call it.
+          if (callback) {
+            callback();
+          }
           return dispatch({
             from: 'unlockWalletByAuth',
             type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
