@@ -112,7 +112,6 @@ export default class EOSHandler {
       }
     });
     this.api = new Api({
-      authorityProvider: this.getAuthorityProvider(),
       rpc: this.rpc,
       signatureProvider: this.signatureProvider,
       textDecoder: new TextDecoder(),
@@ -127,26 +126,6 @@ export default class EOSHandler {
         this.api.cachedAbis.set(abi.account_name, abi);
       }
     });
-  }
-  getAuthorityProvider() {
-    const { rpc } = this;
-    return {
-      async getRequiredKeys(args) {
-        const { transaction } = args;
-        const modified = cloneDeep(transaction);
-        modified.actions.forEach((action, ti) => {
-          action.authorization.forEach((auth, ai) => {
-            if (auth.actor === 'greymassfuel' && auth.permission === 'cosign') {
-              modified.actions[ti].authorization.splice(ai, 1);
-            }
-          });
-        });
-        return convertLegacyPublicKeys((await rpc.fetch('/v1/chain/get_required_keys', {
-          transaction: modified,
-          available_keys: convertLegacyPublicKeys(args.availableKeys),
-        })).required_keys);
-      }
-    };
   }
   sign(options) {
     return this.signatureProvider.sign(options);
