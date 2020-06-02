@@ -27,8 +27,8 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
     if (!connection.httpEndpoint) {
       return;
     }
-
-    const results = await eos(connection, false, true).rpc.get_table_rows(query)
+    const signer = eos(connection, false, true);
+    const results = await signer.rpc.get_table_rows(query);
     const { more } = results;
     let { rows } = results;
     // If previous rows were returned
@@ -38,12 +38,10 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
       // merge arrays
       rows = concat(previous, rows);
     }
-    const rpc = new JsonRpc('http://eos.greymass.com');
-    const api = new Api({ rpc });
     rows = rows.map(async (row) => {
       const original = row;
       if (row.packed_transaction) {
-        const data = await api.deserializeTransactionWithActions(row.packed_transaction);
+        const data = await signer.api.deserializeTransactionWithActions(row.packed_transaction);
         original.unpacked_transaction = data;
       }
       return original;
@@ -91,8 +89,8 @@ export function getTableByBounds(code, scope, table, lower_bound, upper_bound, l
     if (!connection.httpEndpoint) {
       return;
     }
-
-    const results = await eos(connection, false, true).rpc.get_table_rows(query)
+    const signer = eos(connection, false, true);
+    const results = await signer.rpc.get_table_rows(query);
     const { more } = results;
     let { rows } = results;
     // If previous rows were returned
@@ -102,12 +100,10 @@ export function getTableByBounds(code, scope, table, lower_bound, upper_bound, l
       // merge arrays
       rows = concat(previous, rows);
     }
-    const rpc = new JsonRpc('http://eos.greymass.com');
-    const api = new Api({ rpc });
     rows = rows.map(async (row) => {
       const original = row;
       if (row.packed_transaction) {
-        const data = await api.deserializeTransactionWithActions(row.packed_transaction);
+        const data = await signer.api.deserializeTransactionWithActions(row.packed_transaction);
         original.unpacked_transaction = data;
       }
       return original;
