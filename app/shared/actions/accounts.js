@@ -426,7 +426,9 @@ export function getCurrencyBalance(account, requestedTokens = false) {
           });
           forEach(selectedTokens, (namespace) => {
             const [, contract, symbol] = namespace.split(':');
-            dispatch(addCustomTokenBeos('eosio.token', symbol));
+            if (!settings.customTokens.includes(`${settings.chainId}:eosio.token:${symbol}`)) {
+              dispatch(addCustomTokenBeos('eosio.token', symbol));
+            }
             eos(connection, false, true).rpc.get_currency_balance(contract, account, symbol).then((results) =>
               dispatch({
                 type: types.GET_ACCOUNT_BALANCE_SUCCESS,
