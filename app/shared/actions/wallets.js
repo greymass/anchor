@@ -147,7 +147,7 @@ export function importWalletFromBackup(wallet, settings = {}) {
   };
 }
 
-function importPubkeyStorage(pubkey, path) {
+export function importPubkeyStorage(pubkey, path) {
   return (dispatch: () => void, getState) => {
     const { storage } = getState();
     // Add the pubkey to the keys array
@@ -167,7 +167,7 @@ function importPubkeyStorage(pubkey, path) {
 }
 
 
-function importKeyStorage(
+export function importKeyStorage(
   password = false,
   key = false,
   pubkey = undefined,
@@ -207,6 +207,7 @@ export function importKeypairStorage(
   keypairs = [],
 ) {
   return (dispatch: () => void, getState) => {
+    console.log(password, keypairs)
     const { storage } = getState();
     let data;
     // Generate the new records
@@ -550,6 +551,7 @@ export default {
   completeConvertToLedger,
   importKeyStorage,
   importKeypairStorage,
+  importPubkeyStorage,
   importWallet,
   importWalletFromBackup,
   importWallets,
