@@ -260,7 +260,7 @@
   "global_account_import_welcome_paragraph": "Scanning will be enabled after one key pair is saved.",
   "global_account_import_welcome_button_one": "Scan for Accounts",
   "global_account_import_welcome_header_two": "Import an existing account",
-  "global_account_import_welcome_subheader_two": "Configure Anchor to use existing accounts on the EOS blockchain.",
+  "global_account_import_welcome_subheader_two": "Configure Anchor to use existing accounts on this blockchain.",
   "global_account_import_welcome_button_two": "Import Account",
   "global_account_import_welcome_header_three": "Setup a new account",
   "global_account_import_welcome_subheader_three": "Import new or existing key pairs and then have an account created.",
