@@ -27,10 +27,10 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
-    new UglifyJSPlugin({
-      parallel: true,
-      sourceMap: true
-    }),
+    // new UglifyJSPlugin({
+    //   parallel: true,
+    //   sourceMap: true
+    // }),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
