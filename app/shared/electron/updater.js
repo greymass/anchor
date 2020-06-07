@@ -7,7 +7,7 @@ let updater;
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 autoUpdater.autoDownload = false;
-autoUpdater.allowPrerelease = true;
+autoUpdater.allowPrerelease = false;
 
 autoUpdater.on('error', (error) => {
   dialog.showErrorBox('Error: ', error == null ? 'unknown' : (error.stack || error).toString());

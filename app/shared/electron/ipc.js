@@ -74,7 +74,7 @@ const configureIPC = (ui, primary = false) => {
 
     ipcMain.on('anchor-resize', (event, size = defaultSize) => {
       ui.setSize(size.width, size.height);
-      ui.webContents.setZoomFactor(size.zoom)
+      ui.webContents.setZoomFactor(size.zoom);
     });
   }
 };

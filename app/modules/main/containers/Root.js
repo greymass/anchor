@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 
 import i18n from '../../../shared/i18n';
 import ScrollToTop from '../../../shared/components/Global/ScrollToTop';
+import UpdaterContainer from '../../../shared/containers/Root/Updater';
 
 import MessageAppError from '../../../shared/components/Global/Message/App/Error';
 
@@ -35,11 +36,13 @@ export default class Root extends Component<Props> {
     ) : (
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
-          <ConnectedRouter history={this.props.history} store={this.props.store}>
-            <ScrollToTop>
-              <Routes />
-            </ScrollToTop>
-          </ConnectedRouter>
+          <UpdaterContainer>
+            <ConnectedRouter history={this.props.history} store={this.props.store}>
+              <ScrollToTop>
+                <Routes />
+              </ScrollToTop>
+            </ConnectedRouter>
+          </UpdaterContainer>
         </I18nextProvider>
       </Provider>
     );

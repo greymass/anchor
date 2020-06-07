@@ -6,8 +6,10 @@ import { AppContainer } from 'react-hot-loader';
 import { configureStore, history } from '../../shared/store/renderer/configureStore';
 import Root from './containers/Root';
 import Routes from './routes';
+import { downloadProgress } from '../../shared/actions/app';
 
 const { store } = configureStore();
+const { ipcRenderer } = require('electron');
 
 class Index extends Component<Props> {
   render() {
@@ -42,3 +44,7 @@ if (module.hot) {
     renderApp(newRoutes);
   });
 }
+
+ipcRenderer.on('downloadProgress', (event, data) => {
+  store.dispatch(downloadProgress(data));
+});
