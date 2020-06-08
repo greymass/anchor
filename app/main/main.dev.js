@@ -16,6 +16,8 @@ const log = require('electron-log');
 const path = require('path');
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
+require('electron-context-menu')();
+
 let resourcePath = __dirname;
 let mainWindow = null;
 let menu = null;

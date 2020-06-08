@@ -10,8 +10,6 @@ const log = require('electron-log');
 const path = require('path');
 const isMac = () => process.platform === 'darwin';
 
-require('electron-context-menu')();
-
 let ui;
 
 const createProtocolHandlers = (resourcePath, store, request = false) => {

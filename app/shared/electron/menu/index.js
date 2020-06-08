@@ -30,18 +30,6 @@ export default class MenuBuilder {
 
   setupDevelopmentEnvironment() {
     this.mainWindow.openDevTools();
-    this.mainWindow.webContents.on('context-menu', (e, props) => {
-      const { x, y } = props;
-
-      Menu
-        .buildFromTemplate([{
-          label: 'Inspect element',
-          click: () => {
-            this.mainWindow.inspectElement(x, y);
-          }
-        }])
-        .popup(this.mainWindow);
-    });
   }
 
   buildDarwinTemplate() {

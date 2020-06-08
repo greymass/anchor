@@ -9,8 +9,6 @@ import handleUri from '../../../shared/utils/UriHandler';
 const log = require('electron-log');
 const path = require('path');
 
-require('electron-context-menu')();
-
 let ui;
 
 const createInterface = (resourcePath, route = '/', closable = true, store, uri = false, pHandler = false) => {
