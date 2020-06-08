@@ -171,6 +171,7 @@ export function setURI(uri) {
       const modified = uri.replace('eosio:', 'esr:');
       // Interpret the Signing Request
       const request = SigningRequest.from(modified, opts);
+      console.log(request)
       // Extract relevant information
       const {
         data,

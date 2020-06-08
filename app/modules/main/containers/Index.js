@@ -27,11 +27,13 @@ class MainIndexContainer extends Component<Props> {
     super(props);
     const { actions, connectionStatus, settings } = props;
     const { validateNode } = actions;
-    validateNode(settings.node, settings.chainId, false, true);
-    if (connectionStatus !== 'SUCCESS' && settings.node) {
-      this.state = {
-        initialized: true
-      };
+    if (settings.walletMode !== "cold") {
+      validateNode(settings.node, settings.chainId, false, true);
+      if (connectionStatus !== 'SUCCESS' && settings.node) {
+        this.state = {
+          initialized: true
+        };
+      }
     }
     if (settings.walletInit && settings.walletMode) {
       actions.setWalletMode(settings.walletMode);
