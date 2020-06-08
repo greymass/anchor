@@ -59,7 +59,8 @@ class GlobalModalAccountImportCold extends Component<Props> {
       onClose,
       settings,
       t,
-      validate
+      validate,
+      wallets,
     } = this.props;
     const {
       account,
@@ -165,12 +166,24 @@ class GlobalModalAccountImportCold extends Component<Props> {
           </Grid.Row>
         </Grid>
         <Segment basic clearing>
-          <Button
-            floated="left"
-            onClick={onClose}
-          >
-            <Icon name="x" /> {t('cancel')}
-          </Button>
+          {(wallets.length === 0)
+            ? (
+              <Header floated="left" size="small">
+                {t('global_button_account_import_required')}
+                <Header.Subheader>
+                  {t('global_button_account_import_required_cancel')}
+                </Header.Subheader>
+              </Header>
+            )
+            : (
+              <Button
+                floated="left"
+                onClick={onClose}
+              >
+                <Icon name="x" /> {t('cancel')}
+              </Button>
+            )
+          }
           <GlobalButtonElevate
             onSuccess={this.importAccounts}
             settings={settings}
@@ -197,7 +210,8 @@ function mapStateToProps(state) {
     accounts: state.accounts,
     settings: state.settings,
     system: state.system,
-    validate: state.validate
+    validate: state.validate,
+    wallets: state.wallets,
   };
 }
 
