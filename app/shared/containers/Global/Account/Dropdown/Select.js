@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Segment } from 'semantic-ui-react';
 
 import GlobalFragmentWallet from '../../../../components/Global/Fragment/Wallet';
 import * as WalletActions from '../../../../actions/wallet';
@@ -26,6 +26,7 @@ class GlobalAccountDropdownSelect extends Component<Props> {
       account,
       authorization,
       chainId,
+      disabled,
       fluid,
       mode,
       onSelect,
@@ -51,6 +52,13 @@ class GlobalAccountDropdownSelect extends Component<Props> {
         pubkey={pubkey}
       />
     );
+    if (disabled) {
+      return (
+        <Segment>
+          {trigger}
+        </Segment>
+      );
+    }
     const options = availableWallets.map((wallet) => ({
       key: `${wallet.account}@${wallet.authorization}`,
       text: `${wallet.account}@${wallet.authorization}`,

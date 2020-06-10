@@ -11,6 +11,13 @@ import PromptFragmentPlaceholderTransactionAction from '../../components/Fragmen
 import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
 
 class PromptStageReview extends Component<Props> {
+  getAuthorizers(resolvedRequest) {
+    // return if not yet resolved
+    if (!resolvedRequest || !resolvedRequest.transaction) return false;
+    // return simple list of authorizers for all actions
+    const { transaction } = resolvedRequest;
+    return transaction.actions.reduce((o, v) => o.concat(v.authorization), []);
+  }
   render() {
     const {
       canBroadcast,
@@ -29,9 +36,17 @@ class PromptStageReview extends Component<Props> {
     const {
       chainId,
       callback,
+      placeholders,
       resolved,
     } = prompt;
     if (!resolved) return false
+    const authorizers = this.getAuthorizers(prompt.resolved)
+    const matches = authorizers.filter(a => a.actor === wallet.account && a.permission === wallet.authorization)
+    const matching = matches.length > 0
+    const disabledSwap = !placeholders && matching;
+    const mismatch = (!placeholders && !matching)
+      ? `Could not load the expected accounts for this request: ${authorizers.map(a => [a.actor, a.permission].join('@')).join(', ')}`
+      : false;
     const {
       transaction
     } = resolved;
@@ -45,7 +60,9 @@ class PromptStageReview extends Component<Props> {
             canBroadcast={canBroadcast}
             chainId={chainId}
             couldSignWithDevice={couldSignWithDevice}
+            disabledSwap={disabledSwap}
             enableWhitelist={enableWhitelist}
+            mismatch={mismatch}
             onCheck={this.props.onCheck}
             onSelect={this.props.swapAccount}
             onWhitelist={this.props.onWhitelist}

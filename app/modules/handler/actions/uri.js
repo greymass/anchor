@@ -8,7 +8,7 @@ import { createHttpHandler } from '../../../shared/utils/http/handler';
 
 const { ipcRenderer } = require('electron');
 const transactionAbi = require('eosjs2/node_modules/eosjs/src/transaction.abi.json');
-const { SigningRequest } = require('eosio-signing-request');
+const { SigningRequest, PlaceholderName, PlaceholderPermission } = require('eosio-signing-request');
 const zlib = require('zlib');
 const util = require('util');
 
@@ -171,6 +171,7 @@ export function setURI(uri) {
       const modified = uri.replace('eosio:', 'esr:');
       // Interpret the Signing Request
       const request = SigningRequest.from(modified, opts);
+      const placeholders = detectPlaceholders(request);
       // Extract relevant information
       const {
         data,
@@ -189,6 +190,7 @@ export function setURI(uri) {
           broadcast,
           chainId,
           callback,
+          placeholders,
           req,
           uri,
           version,
@@ -204,6 +206,35 @@ export function setURI(uri) {
       });
     }
   };
+}
+
+function detectPlaceholders(request) {
+  const { req } = request.data;
+  const [reqType, reqData] = req;
+  switch (reqType) {
+    case 'action': {
+      const matching = reqData.authorization.filter((auth) =>
+        (auth.actor === PlaceholderName || auth.permission === PlaceholderPermission));
+      return matching.length > 0;
+    }
+    case 'action[]': {
+      const matching = reqData.filter((r) => r.authorization.filter((auth) =>
+        (auth.actor === PlaceholderName || auth.permission === PlaceholderPermission)).length > 0);
+      return matching.length > 0;
+    }
+    case 'transaction': {
+      const matching = reqData.actions.filter((r) => r.authorization.filter((auth) =>
+        (auth.actor === PlaceholderName || auth.permission === PlaceholderPermission)).length > 0);
+      return matching.length > 0;
+    }
+    case 'identity': {
+      // for now, always allow placeholders for identity
+      return true;
+    }
+    default: {
+      throw new Error('unrecognized request type');
+    }
+  }
 }
 
 const forbiddenActions = [

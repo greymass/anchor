@@ -11,6 +11,7 @@ class PromptReviewControls extends Component<Props> {
       canBroadcast,
       chainId,
       couldSignWithDevice,
+      disabledSwap,
       enableWhitelist,
       onCheck,
       onSelect,
@@ -62,6 +63,7 @@ class PromptReviewControls extends Component<Props> {
           <GlobalAccountDropdownSelect
             account={account}
             authorization={authorization}
+            disabled={disabledSwap}
             mode={mode}
             pubkey={pubkey}
             chainId={chainId}
