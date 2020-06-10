@@ -13,6 +13,7 @@ class PromptReviewControls extends Component<Props> {
       couldSignWithDevice,
       disabledSwap,
       enableWhitelist,
+      mismatch,
       onCheck,
       onSelect,
       onWhitelist,
@@ -51,6 +52,19 @@ class PromptReviewControls extends Component<Props> {
           </Header.Subheader>
         </Header>
         <Form.Field>
+          {(mismatch)
+            ? (
+              <Segment color="orange">
+                <Header>
+                  Account not found
+                  <Header.Subheader>
+                    {mismatch}
+                  </Header.Subheader>
+                </Header>
+              </Segment>
+            )
+            : false
+          }
           <label>
             <Icon
               name="user"
