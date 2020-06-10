@@ -106,14 +106,22 @@ class PromptContainer extends Component<Props> {
     // Set the blockchain for this network
     const blockchain = find(blockchains, { chainId });
     // Find the default wallet for this chain (defaults to first at the moment)
-    const account = get(prompt, 'transaction.actions.0.authorization.0.actor')
-      || get(prompt, 'req.1.actions.0.authorization.0.actor')
-      || get(prompt, 'req.1.authorization.0.actor');
-    const authorization = get(prompt, 'transaction.actions.0.authorization.0.permission')
-      || get(prompt, 'req.1.actions.0.authorization.0.permission')
-      || get(prompt, 'req.1.authorization.0.permission');
+    const firstAction = get(prompt, 'req.1.actions.0')
+      || get(prompt, 'req.1.0')
+      || get(prompt, 'req.1');
+    const secondAction = get(prompt, 'req.1.actions.1')
+      || get(prompt, 'req.1.1');
+    const firstAccount = get(firstAction, 'authorization.0.actor');
+    const firstAuthorization = get(firstAction, 'authorization.0.permission');
+    let secondAccount;
+    let secondAuthorization;
+    if (secondAction) {
+      secondAccount = get(secondAction, 'authorization.0.actor');
+      secondAuthorization = get(secondAction, 'authorization.0.permission');
+    }
     const defaultWallet =
-      find(wallets, { chainId, account, authorization }) ||
+      find(wallets, { chainId, account: firstAccount, authorization: firstAuthorization }) ||
+      find(wallets, { chainId, account: secondAccount, authorization: secondAuthorization }) ||
       find(wallets, { chainId });
     if (defaultWallet) {
       // If a default was found, set the blockchain and swap to it
