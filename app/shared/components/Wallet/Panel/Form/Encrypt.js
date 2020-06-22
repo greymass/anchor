@@ -23,6 +23,7 @@ class WalletPanelFormEncrypt extends Component<Props> {
         { encryptWallet
           ? (
             <Form.Field
+              autoFocus
               control={Input}
               fluid
               icon="lock"

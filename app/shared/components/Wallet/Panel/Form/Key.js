@@ -13,6 +13,7 @@ class WalletPanelKey extends Component<Props> {
     } = this.props;
     return (
       <Form.Field
+        autoFocus
         control={Input}
         fluid
         icon={(validate.NODE === 'SUCCESS' && validate.ACCOUNT === 'SUCCESS' && validate.KEY === 'SUCCESS') ? 'checkmark' : 'x'}
