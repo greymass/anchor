@@ -34,8 +34,16 @@ const supportedContracts = [
     ],
   },
   {
-    // 'eos-testnet-jungle'
+    // 'eos-testnet-jungle-2'
     chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
+    supportedContracts: [
+      'bidname',
+      'greymassfuel',
+    ],
+  },
+  {
+    // 'eos-testnet-jungle-3'
+    chainId: '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840',
     supportedContracts: [
       'bidname',
       'greymassfuel',
