@@ -72,13 +72,19 @@ export default function accounts(state = initialState, action) {
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS: {
+      const names = action.payload.accounts.map(a => a.account_name);
+      const perms = action.payload.accounts.map(a => `${a.account_name}@${a.permission_name}`);
+      const map = {};
+      action.payload.accounts.forEach(a => {
+        map[a.authorizing_key] = `${a.account_name}@${a.permission_name}`;
+      });
       return Object.assign({}, state, {
         __lookups: uniq([
-          ...action.payload.accounts.account_names,
+          ...names,
           ...state.__lookups,
         ]),
-        __permissions: action.payload.accounts.permissions,
-        __map: action.payload.accounts.map
+        __permissions: perms,
+        __map: map
       });
     }
     case types.SYSTEM_ACCOUNT_BY_KEY_PENDING:
