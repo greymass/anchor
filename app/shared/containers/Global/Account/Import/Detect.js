@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
-import { Button, Divider, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Divider, Header, Icon, Message, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
@@ -198,6 +198,10 @@ class GlobalModalAccountImportDetect extends Component<Props> {
           <Header
             content={t('global_account_import_detect_header_one')}
             subheader={t('global_account_import_existing_description')}
+          />
+          <Message
+            content="Depending on the number of keys you have loaded, it may take some time for all accounts to be found."
+            header="Accounts may take a minute to display"
           />
           {(filtered.length > 0)
             ? (
