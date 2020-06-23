@@ -117,6 +117,7 @@ class ContractInterfaceTabTables extends Component<Props> {
               key="ContractTable"
               onBottomVisible={this.load}
               onBottomPassedReverse={this.lastIndex}
+              style={{ width: '85vw', overflow: 'scroll hidden' }}
             >
               {(rows && rows.length > 0)
                 ? (
