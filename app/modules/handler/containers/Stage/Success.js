@@ -25,9 +25,10 @@ class PromptStageSuccess extends Component<Props> {
     } = prompt;
     const tx = response || signed;
     // Remove any UUID from callback URL
-    const callbackURL = (prompt && prompt.callbackURL)
-      ? prompt.callbackURL.replace(/[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}/ig, '')
-      : '';
+    const { callbackURL } = prompt;
+    // const callbackURL = (prompt && prompt.callbackURL)
+    //   ? prompt.callbackURL.replace(/[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}/ig, '')
+    //   : '';
     // Retrieve block number and transaction ID
     let block_num;
     let transaction_id;
@@ -60,7 +61,7 @@ class PromptStageSuccess extends Component<Props> {
               <Header
                 size="huge"
               >
-                <Icon color="green" name="check circle outline" />
+                <Icon color="yellow" name="clock outline" />
                 <Header.Content>
                   {t('handler_containers_stage_success_header')}
                   <Header.Subheader>
