@@ -53,6 +53,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
           ? (
             <Segment stacked color="blue">
               <p>The following accounts have matched the information provided.</p>
+              <p>Public Key: {publicKey}</p>
               <List divided relaxed>
                 {(matches.map((account) => {
                   if (authorizations[account]) {
