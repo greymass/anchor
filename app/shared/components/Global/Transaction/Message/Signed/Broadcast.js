@@ -31,6 +31,7 @@ export class GlobalTransactionMessageSignedBroadcast extends Component<Props> {
       ({ actions } = transaction.transaction.transaction);
     }
     const signed = (transaction.transaction.signatures.length > 0);
+    // console.log(this)
     return (
       <Segment basic>
         {(transaction)

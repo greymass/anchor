@@ -18,8 +18,10 @@ export default class GlobalTransactionHandler extends Component<Props> {
   };
 
   render() {
-    const {
+    let {
       actionName,
+    } = this.props;
+    const {
       actions,
       blockExplorers,
       contract,
@@ -35,7 +37,15 @@ export default class GlobalTransactionHandler extends Component<Props> {
     const hasSignature = !!(transaction && transaction.transaction && transaction.transaction.signatures.length > 0);
     const hasTransaction = !!(transaction && transaction.transaction_id);
     const broadcastTransaction = !!(hasTransaction && ((transaction.broadcast) || (transaction.processed && transaction.processed.receipt.status === 'executed')));
-    const hasError = (system[`${actionName}_LAST_ERROR`]);
+    let hasError = (system[`${actionName}_LAST_ERROR`]);
+    if (
+      !hasError
+      && actionName === 'TRANSACTION_BUILD'
+      && system.TRANSACTION_BROADCAST_LAST_ERROR
+    ) {
+      hasError = true;
+      actionName = 'TRANSACTION_BROADCAST';
+    }
 
     let { content } = this.props;
 

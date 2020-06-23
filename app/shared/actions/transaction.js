@@ -33,7 +33,6 @@ export function buildTransaction(contract, action, account, data) {
         sign: connection.sign
       })
       .then((tx) => {
-        console.log(contract, tx)
         // Dispatch transaction
         dispatch(setTransaction(JSON.stringify({
           contract,
