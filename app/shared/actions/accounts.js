@@ -1,4 +1,4 @@
-import { difference, find, forEach, intersection, map, orderBy, pick, reduce, sortBy, uniq } from 'lodash';
+import { chunk, difference, find, forEach, intersection, map, orderBy, pick, reduce, sortBy, uniq } from 'lodash';
 
 import * as types from './types';
 import eos from './helpers/eos';
@@ -560,8 +560,12 @@ export function getAccountByKey(key) {
   return async (dispatch: () => void, getState) => {
     const {
       connection,
+      features,
       settings
     } = getState();
+    const {
+      endpoints
+    } = features;
     const { httpClient, httpQueue } = await createHttpHandler(connection);
     const handler = new EOSHandler(connection);
     let convertedKey = handler.convert(key);
@@ -577,9 +581,32 @@ export function getAccountByKey(key) {
     if (ecc.isValidPrivate(key)) {
       return dispatch({
         type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+        key,
       });
     }
     if (convertedKey && (settings.node || settings.node.length !== 0)) {
+      if (endpoints && endpoints.includes('/v1/chain/get_accounts_by_authorizers')) {
+        return httpClient
+          .post(`${connection.httpEndpoint}/v1/chain/get_accounts_by_authorizers`, {
+            keys: [convertedKey]
+          })
+          .then((results) => {
+            const accounts = {
+              account_names: results.data.accounts.map(a => a.account_name)
+            };
+            dispatch(getAccounts(accounts.account_names));
+            return dispatch({
+              type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
+              payload: {
+                accounts,
+                key,
+              }
+            });
+          }).catch((err) => dispatch({
+            type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+            payload: { err, key }
+          }));
+      }
       return httpClient
         .post(`${connection.httpEndpoint}/v1/history/get_key_accounts`, {
           public_key: convertedKey
@@ -645,34 +672,29 @@ export function getAccountByKeys(keys) {
       endpoints
     } = features;
     if (filtered.length && (settings.node || settings.node.length !== 0)) {
-      if (true === false && endpoints && endpoints.includes('/v1/history/get_keys_accounts')) {
-        dispatch({
-          type: types.SYSTEM_ACCOUNT_BY_KEYS_PENDING,
-          payload: { filtered }
-        });
-        return httpQueue.add(() =>
+      if (endpoints && endpoints.includes('/v1/chain/get_accounts_by_authorizers')) {
+        const chunks = chunk(filtered, 10)
+        chunks.forEach((chunk) => {
           httpClient
-            .post(`${connection.httpEndpoint}/v1/history/get_keys_accounts`, {
-              public_keys: keys
+            .post(`${connection.httpEndpoint}/v1/chain/get_accounts_by_authorizers`, {
+              keys: chunk
             })
-            .then((results) => {
-              return dispatch({
-                type: types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS,
-                payload: {
-                  accounts: results.data,
-                }
-              });
-            })
+            .then((results) => dispatch({
+              type: types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS,
+              payload: results.data,
+            }))
             .catch((err) => dispatch({
-              type: types.GET_ACCOUNT_BALANCE_FAILURE,
-              payload: { err }
-            })));
-      } else {
-        dispatch({
-          type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
-          payload: { filtered }
+              type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+              payload: { err, chunk }
+            }));
         });
-        return filtered.forEach((key) => eos(connection, false, true).rpc.history_get_key_accounts(key).then((accounts) => {
+      }
+      dispatch({
+        type: types.SYSTEM_ACCOUNT_BY_KEY_PENDING,
+        payload: { filtered }
+      });
+      return filtered.forEach((key) =>
+        eos(connection, false, true).rpc.history_get_key_accounts(key).then((accounts) => {
           dispatch(getAccounts(accounts.account_names));
           dispatch(getControlledAccounts(accounts.account_names));
           return dispatch({
@@ -682,8 +704,7 @@ export function getAccountByKeys(keys) {
         }).catch((err) => dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
           payload: { err, filtered }
-        })))
-      }
+        })));
     }
     return dispatch({
       type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
