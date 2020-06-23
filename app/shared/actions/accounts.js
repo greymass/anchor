@@ -185,7 +185,7 @@ export function checkAccountExists(account = '', node) {
   };
 }
 
-export function getAccount(account = '') {
+export function getAccount(account = '', onlyAccount = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_ACCOUNT_REQUEST,
@@ -219,13 +219,13 @@ export function getAccount(account = '') {
               .then((result) => {
                 // overload the voter info with table results
                 response.voter_info = result.rows[0];
-                return dispatch(processLoadedAccount(connection.chainId, account, response));
+                return dispatch(processLoadedAccount(connection.chainId, account, response, onlyAccount));
               })
               .catch((err) => {
                 console.log(err)
               });
           }
-          return dispatch(processLoadedAccount(connection.chainId, account, response))
+          return dispatch(processLoadedAccount(connection.chainId, account, response, onlyAccount))
         })
         .catch((err) => dispatch({
           type: types.GET_ACCOUNT_FAILURE,
@@ -247,21 +247,23 @@ export function getDelegatedBalances(account) {
   };
 }
 
-export function processLoadedAccount(chainId, account, results) {
+export function processLoadedAccount(chainId, account, results, onlyAccount = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
-    // get currency balances
-    dispatch(getCurrencyBalance(account));
-    if (connection.stakedResources !== false) {
-      // get delegated balances
-      dispatch(getDelegatedBalances(account));
-    }
-    // get rex balances
-    if (connection.supportedContracts && connection.supportedContracts.includes('rex')) {
-      dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
-      dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
+    if (!onlyAccount) {
+      // get currency balances
+      dispatch(getCurrencyBalance(account));
+      if (connection.stakedResources !== false) {
+        // get delegated balances
+        dispatch(getDelegatedBalances(account));
+      }
+      // get rex balances
+      if (connection.supportedContracts && connection.supportedContracts.includes('rex')) {
+        dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
+        dispatch(getTableByBounds('eosio', 'eosio', 'rexfund', account, account));
+      }
     }
     // PATCH - Force in self_delegated_bandwidth if it doesn't exist
     const modified = Object.assign({}, results);
@@ -287,7 +289,7 @@ export function processLoadedAccount(chainId, account, results) {
   };
 }
 
-export function getAccounts(accounts = []) {
+export function getAccounts(accounts = [], onlyAccount = false) {
   return async (dispatch: () => void, getState) => {
     const { connection, features } = getState();
     const { endpoints } = features;
@@ -300,13 +302,13 @@ export function getAccounts(accounts = []) {
           })
           .then((response) =>
             forEach(response.data, (results) =>
-              dispatch(processLoadedAccount(connection.chainId, results.account_name, results))))
+              dispatch(processLoadedAccount(connection.chainId, results.account_name, results, onlyAccount))))
           .catch((err) => dispatch({
             type: types.GET_ACCOUNTS_FAILURE,
             payload: { err }
           })));
     } else {
-      return forEach(accounts, (account) => dispatch(getAccount(account)));
+      return forEach(accounts, (account) => dispatch(getAccount(account, onlyAccount)));
     }
   };
 }
@@ -594,7 +596,7 @@ export function getAccountByKey(key) {
             const accounts = {
               account_names: results.data.accounts.map(a => a.account_name)
             };
-            dispatch(getAccounts(accounts.account_names));
+            dispatch(getAccounts(accounts.account_names, true));
             return dispatch({
               type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
               payload: {
@@ -613,7 +615,7 @@ export function getAccountByKey(key) {
         })
         .then((results) => {
           const accounts = results.data;
-          dispatch(getAccounts(accounts.account_names));
+          dispatch(getAccounts(accounts.account_names, true));
           if (key.substr(0, 3) === 'FIO') {
             return httpClient
               .post(`${connection.httpEndpoint}/v1/chain/get_fio_names`, {
@@ -673,16 +675,20 @@ export function getAccountByKeys(keys) {
     } = features;
     if (filtered.length && (settings.node || settings.node.length !== 0)) {
       if (endpoints && endpoints.includes('/v1/chain/get_accounts_by_authorizers')) {
-        const chunks = chunk(filtered, 10)
-        chunks.forEach((chunk) => {
+        const chunks = chunk(filtered, 10);
+        return chunks.forEach((c) => {
           httpClient
             .post(`${connection.httpEndpoint}/v1/chain/get_accounts_by_authorizers`, {
-              keys: chunk
+              keys: c
             })
-            .then((results) => dispatch({
-              type: types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS,
-              payload: results.data,
-            }))
+            .then((results) => {
+              const accounts = results.data.accounts.map(a => a.account_name)
+              dispatch(getAccounts(accounts, true));
+              return dispatch({
+                type: types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS,
+                payload: results.data,
+              })
+            })
             .catch((err) => dispatch({
               type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
               payload: { err, chunk }
@@ -695,7 +701,7 @@ export function getAccountByKeys(keys) {
       });
       return filtered.forEach((key) =>
         eos(connection, false, true).rpc.history_get_key_accounts(key).then((accounts) => {
-          dispatch(getAccounts(accounts.account_names));
+          dispatch(getAccounts(accounts.account_names, true));
           dispatch(getControlledAccounts(accounts.account_names));
           return dispatch({
             type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
@@ -721,7 +727,7 @@ export function getControlledAccounts(accounts) {
     } = getState();
     accounts.forEach((account) => {
       eos(connection, false, true).rpc.history_get_controlled_accounts(account).then((results) => {
-        dispatch(getAccounts(results.controlled_accounts));
+        dispatch(getAccounts(results.controlled_accounts, true));
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
           payload: { accounts: { account_names: results.controlled_accounts }}
