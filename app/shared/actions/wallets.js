@@ -192,7 +192,10 @@ export function importKeyStorage(
       }];
     }
     // Encrypt and store
-    const keys = data.map(k => k.pubkey);
+    const keys = uniq([
+      ...storage.keys,
+      ...data.map(k => k.pubkey)
+    ]);
     const encrypted = encrypt(JSON.stringify(data), password);
     dispatch(setStorage({
       data: encrypted,
