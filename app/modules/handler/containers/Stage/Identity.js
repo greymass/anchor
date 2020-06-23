@@ -54,7 +54,7 @@ class PromptStageIdentity extends Component<Props> {
           </Grid.Row>
           <Grid.Row centered columns={1}>
             <Grid.Column width={8}>
-              <Form>
+              <Form style={{ zIndex: 9999 }}>
                 <Form.Field>
                   <label>{t('handler_containers_stage_identity_label')}</label>
                   <GlobalAccountDropdownSelect
@@ -66,26 +66,26 @@ class PromptStageIdentity extends Component<Props> {
                     onSelect={onSelect}
                   />
                 </Form.Field>
-                {(!canSign && couldSignWithDevice)
-                  ? (
-                    <Message
-                      content={t('handler_containers_stage_identity_message_one')}
-                      info
-                    />
-                  )
-                  : false
-                }
-                {(mode === 'watch')
-                  ? (
-                    <Message
-                      content={t('handler_containers_stage_identity_message_two')}
-                      color="red"
-                      icon="warning sign"
-                    />
-                  )
-                  : false
-                }
               </Form>
+              {(!canSign && couldSignWithDevice)
+                ? (
+                  <Message
+                    content={t('handler_containers_stage_identity_message_one')}
+                    info
+                  />
+                )
+                : false
+              }
+              {(mode === 'watch')
+                ? (
+                  <Message
+                    content={t('handler_containers_stage_identity_message_two')}
+                    color="red"
+                    icon="warning sign"
+                  />
+                )
+                : false
+              }
             </Grid.Column>
             {(!canSign && couldSignWithDevice)
               ? (
