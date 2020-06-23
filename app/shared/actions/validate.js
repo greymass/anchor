@@ -86,7 +86,7 @@ export function validateNode(
       }
     });
     // Ensure there's a value to test
-    if (node || node.length !== 0) {
+    if (node || (node && node.length !== 0)) {
       let { host, protocol } = new URL(node);
       const { pathname } = new URL(node);
 
