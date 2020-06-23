@@ -121,7 +121,7 @@
   "main_sections_overview_container_button": "Manage Wallets",
   "main_sections_overview_ram_buy_button": "Purchase",
   "main_sections_overview_ram_sell_button": "Sell",
-  "main_sections_overview_resource_button_add": "Add",
-  "main_sections_overview_resource_button_remove": "Remove",
+  "main_sections_overview_resource_button_add": "Stake",
+  "main_sections_overview_resource_button_remove": "Unstake",
   "main_sections_overview_resource_button_rent": "Rent"
 }
