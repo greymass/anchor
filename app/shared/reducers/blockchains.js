@@ -307,7 +307,7 @@ export default function blockchains(state = initialState, action) {
       });
       const known = find(knownChains, { chainId: action.payload.chainId });
       const blockchain = Object.assign({}, action.payload, known, {
-        node: action.payload.node
+        node: action.payload.node || known.node
       });
 
       return [blockchain, ...others];
