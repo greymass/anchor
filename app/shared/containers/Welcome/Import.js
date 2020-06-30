@@ -160,41 +160,36 @@ class WelcomeImportContainer extends Component<Props> {
       // Set the wallet hash based on the password to settings
       actions.setWalletHash(password);
       // convert key storage
-      const keyStore = [];
-      const keys = [];
-      const paths = {};
       keypairs.forEach(async (keypair) => {
         // this is a key from an external device
         if (keypair.external) {
           // Push pubkey into storage
           const pubkey = find(keypair.publicKeys, { blockchain: 'eos' }).key;
-          keys.push(pubkey);
           // ensure the path exists in storage
           const path = `44'/194'/0'/0/${keypair.external.addressIndex}`;
-          paths[pubkey] = path;
           // update storage
           actions.importPubkeyStorage(pubkey, path);
         } else {
           // this is just a key
           const decryptedKey = await this.decryptWithSeed(seed, keypair.privateKey);
           const privateKey = JSON.parse(decryptedKey);
-          switch (privateKey.type) {
-            case 'Buffer': {
-              // Push pubkey into storage
-              const pubkey = find(keypair.publicKeys, { blockchain: 'eos' }).key;
-              keys.push(pubkey);
-              // Push keypair into storage
-              const key = ecc.PrivateKey.fromBuffer(Buffer.from(privateKey.data)).toString();
-              keyStore.push({
-                key,
-                pubkey,
-              });
-              actions.importKeyStorage(password, key, pubkey);
-              break;
-            }
-            default: {
-              console.log('unknown format from scatter', privateKey.type);
-              break;
+          if (privateKey.type === undefined) {
+            // Push keypair into storage
+            const key = ecc.PrivateKey.fromBuffer(Buffer.from(privateKey)).toString();
+            const pubkey = ecc.privateToPublic(key);
+            actions.importKeyStorage(password, key, pubkey);
+          } else {
+            switch (privateKey.type) {
+              case 'Buffer': {
+                const key = ecc.PrivateKey.fromBuffer(Buffer.from(privateKey.data)).toString();
+                const pubkey = ecc.privateToPublic(key);
+                actions.importKeyStorage(password, key, pubkey);
+                break;
+              }
+              default: {
+                console.log('unknown format from scatter', privateKey.type);
+                break;
+              }
             }
           }
         }
