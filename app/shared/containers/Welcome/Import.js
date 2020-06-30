@@ -204,6 +204,7 @@ class WelcomeImportContainer extends Component<Props> {
       networks.forEach((network) => {
         if (network.blockchain === 'eos') {
           const node = blockchains[network.chainId];
+          chainIds.push(network.chainId);
           config = {
             _id: network.id,
             chainId: network.chainId,
@@ -228,7 +229,6 @@ class WelcomeImportContainer extends Component<Props> {
           pubkey: account.publicKey,
           type: (keypair.external) ? 'ledger' : 'key',
         };
-        chainIds.push(chainId);
         // commit to storage
         actions.importWalletFromBackup(converted);
       });
@@ -237,13 +237,7 @@ class WelcomeImportContainer extends Component<Props> {
       // Initialize Anchor
       actions.setSetting('walletInit', true);
       actions.setSetting('blockchains', chainIds);
-      let { chainId } = recentAccount;
-      if (!chainId && recentAccount.networkUnique) {
-        const [networkType, , networkId] = recentAccount.networkUnique.split(':');
-        if (networkType === 'eos') {
-          chainId = networkId;
-        }
-      }
+      const [chainId] = chainIds;
       const auth = recentAccount.authorization || recentAccount.authority;
       const node = blockchains[chainId];
       actions.validateNode(node, chainId, true, true);
