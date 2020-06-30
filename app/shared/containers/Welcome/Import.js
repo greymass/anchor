@@ -230,8 +230,16 @@ class WelcomeImportContainer extends Component<Props> {
             pubkey: account.publicKey,
             type: (keypair.external) ? 'ledger' : 'key',
           };
-          // commit to storage
-          actions.importWalletFromBackup(converted);
+          // ensure data existed for this account before importing it
+          if (
+            converted.account
+            && converted.authority
+            && chainId
+            && converted.pubkey
+          ) {
+            // commit to storage
+            actions.importWalletFromBackup(converted);
+          }
         }
       });
       // grab the first account as the most recent
