@@ -219,18 +219,20 @@ class WelcomeImportContainer extends Component<Props> {
       // Restore all accounts
       accounts.forEach((account) => {
         const keypair = find(keypairs, { id: account.keypairUnique });
-        const [, , chainId] = account.networkUnique.split(':');
-        const converted = {
-          account: account.name,
-          authority: account.authority,
-          chainId,
-          mode: (keypair.external) ? 'ledger' : 'hot',
-          path: (keypair.external) ? `44'/194'/0'/0/${keypair.external.addressIndex}` : undefined,
-          pubkey: account.publicKey,
-          type: (keypair.external) ? 'ledger' : 'key',
-        };
-        // commit to storage
-        actions.importWalletFromBackup(converted);
+        const [networkType, , chainId] = account.networkUnique.split(':');
+        if (networkType === 'eos') {
+          const converted = {
+            account: account.name,
+            authority: account.authority,
+            chainId,
+            mode: (keypair.external) ? 'ledger' : 'hot',
+            path: (keypair.external) ? `44'/194'/0'/0/${keypair.external.addressIndex}` : undefined,
+            pubkey: account.publicKey,
+            type: (keypair.external) ? 'ledger' : 'key',
+          };
+          // commit to storage
+          actions.importWalletFromBackup(converted);
+        }
       });
       // grab the first account as the most recent
       const [recentAccount] = accounts;
