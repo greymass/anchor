@@ -76,7 +76,10 @@ export default function accounts(state = initialState, action) {
       const perms = action.payload.accounts.map(a => `${a.account_name}@${a.permission_name}`);
       const map = {};
       action.payload.accounts.forEach(a => {
-        map[a.authorizing_key] = `${a.account_name}@${a.permission_name}`;
+        if (!map[a.authorizing_key]) {
+          map[a.authorizing_key] = [];
+        }
+        map[a.authorizing_key].push(`${a.account_name}@${a.permission_name}`);
       });
       return Object.assign({}, state, {
         __lookups: uniq([
