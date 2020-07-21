@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import beosLogo from '../../../../renderer/assets/images/beos-logo.svg';
 import bosLogo from '../../../../renderer/assets/images/bos.png';
 import eosLogo from '../../../../renderer/assets/images/eos.png';
+import europechainLogo from '../../../../renderer/assets/images/europechain.png';
 import fioLogo from '../../../../renderer/assets/images/fio.svg';
 import insightsLogo from '../../../../renderer/assets/images/insights.svg';
 import lynxLogo from '../../../../renderer/assets/images/lynx.png';
@@ -25,6 +26,7 @@ const logos = {
   'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906': eosLogo, // mainnet (eos)
   'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473': eosLogo, // testnet - jungle (eos)
   '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191': eosLogo, // testnet - kylin (eos)
+  'f778f7d2f124b110e0a71245b310c1d0ac1a0edd21f131c5ecb2e2bc03e8fe2e': europechainLogo, // mainnet (europechain)
   '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c': fioLogo, // mainnet (fio)
   'b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e': fioLogo, // testnet (fio)
   'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664': insightsLogo, // mainnet (insights)
