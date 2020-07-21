@@ -65,11 +65,16 @@ span.nil {
 }
 
 .ui.vertical.menu.nav-sidebar {
-  background: #383633 !important;
+  background: #131B33 !important;
   border: none;
   border-right: 1px solid rgba(34, 36, 38, 0.15);
   border-radius: 0;
+  color: rgba(255, 255, 255, 0.7);
   height: 100vh;
+}
+
+.ui.vertical.menu.nav-sidebar .item:before {
+  background: none;
 }
 
 .ui.vertical.menu.nav-sidebar > .item {

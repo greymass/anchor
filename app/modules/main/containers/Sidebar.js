@@ -8,7 +8,7 @@ import { withTranslation } from 'react-i18next';
 import { Header, Icon, Image, Menu } from 'semantic-ui-react';
 import { find } from 'lodash';
 
-import Logo from '../../../renderer/assets/images/anchor-logo-white.svg';
+import Logo from '../../../renderer/assets/images/anchor-logo-blue.svg';
 import AnchorTextHorizontal from '../../../renderer/assets/images/anchor-text-white.svg';
 
 import packageJson from '../../../package.json';
@@ -43,8 +43,8 @@ class SidebarContainer extends Component<Props> {
     const {
       module
     } = navigation;
-    const background = '#5169B1';
-    const color = '#d1d5d8';
+    const background = '#131B33';
+    const color = 'rgba(255, 255, 255, 0.7)';
     const devMode = false;
     return (
       <Menu
@@ -55,7 +55,7 @@ class SidebarContainer extends Component<Props> {
         pointing
         style={{
           display: 'flex',
-          background: '#1E2229',
+          background: '#131B33',
           borderRadius: 0,
           borderRight: 'none',
           minHeight: '100vh',
@@ -67,7 +67,6 @@ class SidebarContainer extends Component<Props> {
           onClick={this.onClick}
           name=""
           style={{
-            backgroundColor: '#3650A2',
             backgroundSize: 'contain',
             borderRadius: 0,
             color,
@@ -75,30 +74,25 @@ class SidebarContainer extends Component<Props> {
           }}
         >
           <Image
-            centered
             src={Logo}
-            size="large"
             style={{
-              width: ((settings.sidebarCollapsed) ? '3em' : '7em'),
+              display: 'inline-block',
+              width: ((settings.sidebarCollapsed) ? '2.5em' : '2.5em'),
             }}
           />
           {(!settings.sidebarCollapsed)
             ? (
-                <p style={{
-                  marginTop: '0.5rem',
-                }}>
-                  <Image
-                    centered
-                    src={AnchorTextHorizontal}
-                    style={{
-                      fill: 'currentColor',
-                      marginTop: '1em',
-                      maxWidth: ((settings.sidebarCollapsed) ? '3em' : '6em'),
-                      width: ((settings.sidebarCollapsed) ? '3em' : '6em')
-                    }}
-                  />
-                </p>
-              )
+              <Image
+                src={AnchorTextHorizontal}
+                style={{
+                  display: 'inline-block',
+                  fill: 'currentColor',
+                  marginLeft: '0.5em',
+                  maxWidth: ((settings.sidebarCollapsed) ? '3em' : '7em'),
+                  width: ((settings.sidebarCollapsed) ? '3em' : '7em')
+                }}
+              />
+            )
             : false
           }
         </Menu.Item>
@@ -112,7 +106,7 @@ class SidebarContainer extends Component<Props> {
             color,
           }}
         >
-          <Icon name="home" size="large" />
+          <Icon name="home" />
           {(!settings.sidebarCollapsed)
             ? <p>{t('home')}</p>
             : false
@@ -136,7 +130,7 @@ class SidebarContainer extends Component<Props> {
                   color,
                 }}
               >
-                <Icon name="id card" size="large" />
+                <Icon name="id card" />
                 {(!settings.sidebarCollapsed)
                   ? <p>{t('wallet')}</p>
                   : false
@@ -154,7 +148,7 @@ class SidebarContainer extends Component<Props> {
                       color,
                     }}
                   >
-                    <Icon name="tachometer alternate" size="large" />
+                    <Icon name="tachometer alternate" />
                     {(!settings.sidebarCollapsed)
                       ? <p>{t('resources')}</p>
                       : false
@@ -173,7 +167,7 @@ class SidebarContainer extends Component<Props> {
                   color,
                 }}
               >
-                <Icon name="balance" size="large" />
+                <Icon name="balance" />
                 {(!settings.sidebarCollapsed)
                   ? <p>{t('governance')}</p>
                   : false
@@ -230,7 +224,7 @@ class SidebarContainer extends Component<Props> {
         >
           <Icon
             name="wrench"
-            size="large"
+
           />
           {(!settings.sidebarCollapsed)
             ? <p>{t('tools')}</p>
