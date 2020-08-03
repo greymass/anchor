@@ -514,7 +514,11 @@ export function templateURI(blockchain, wallet) {
       // Retrieve ABIs for this request
       const abis = await request.fetchAbis();
       // Resolve the transaction
-      const resolved = request.resolve(abis, authorization, await EOS.getTransactionHeader(connection.expireSeconds));
+      let header = {};
+      if (!request.isIdentity()) {
+        header = await EOS.getTransactionHeader(connection.expireSeconds);
+      }
+      const resolved = request.resolve(abis, authorization, header);
       const detectedForbiddenActions = checkRequest(resolved);
       if (detectedForbiddenActions && detectedForbiddenActions.length > 0) {
         if (settings.allowDangerousTransactions) {
