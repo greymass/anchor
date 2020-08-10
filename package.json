@@ -1,7 +1,7 @@
 {
   "name": "anchor-wallet",
   "productName": "Anchor Wallet",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "repository": {
     "type": "git",
