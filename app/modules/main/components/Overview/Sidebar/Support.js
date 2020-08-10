@@ -5,8 +5,8 @@ import { withTranslation } from 'react-i18next';
 
 const { shell } = require('electron');
 
-class OverviewSidebarTelegram extends PureComponent<Props> {
-  openLink = () => shell.openExternal('https://t.me/anchorwallet')
+class OverviewSidebarSupport extends PureComponent<Props> {
+  openLink = () => shell.openExternal('https://forums.greymass.com')
   render() {
     const { t } = this.props;
 
@@ -14,14 +14,14 @@ class OverviewSidebarTelegram extends PureComponent<Props> {
       <Segment attached="top" color="grey" textAlign="center">
         <Header size="tiny">
           <Header.Subheader>
-            {t('main_components_overview_sidebar_telegram_subheader')}
+            {t('main_components_overview_sidebar_support_subheader')}
           </Header.Subheader>
-          {t('main_components_overview_sidebar_telegram_header')}
+          {t('main_components_overview_sidebar_support_header')}
         </Header>
         <Button
           color="black"
           content={t('main_components_overview_sidebar_button')}
-          icon="telegram"
+          icon="external"
           onClick={this.openLink}
           size="tiny"
         />
@@ -30,4 +30,4 @@ class OverviewSidebarTelegram extends PureComponent<Props> {
   }
 }
 
-export default withTranslation('main')(OverviewSidebarTelegram);
+export default withTranslation('main')(OverviewSidebarSupport);
