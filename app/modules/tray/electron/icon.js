@@ -6,16 +6,12 @@ const log = require('electron-log');
 const createTrayIcon = (resourcePath, menu) => {
   log.info('creating tray menu');
 
-  const trayIcon = path.join(resourcePath, 'renderer/assets/icons/png/32x32.png');
+  const trayIcon = path.join(resourcePath, 'renderer/assets/icons/png/32x32@2x.png');
   log.info(trayIcon);
 
   const tray = new Tray(trayIcon);
 
-  // tray.on('right-click', () => {
-  //   toggleMenu(menu, tray);
-  // });
-
-  tray.on('click', () => {
+  tray.on('right-click', () => {
     const contextMenu = Menu.buildFromTemplate([
       {
         label: 'Debug',
@@ -32,6 +28,10 @@ const createTrayIcon = (resourcePath, menu) => {
       }
     ]);
     tray.popUpContextMenu(contextMenu);
+  });
+
+  tray.on('click', () => {
+    global.showManager();
   });
 
   return tray;
