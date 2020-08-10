@@ -147,7 +147,7 @@ app.on('ready', async () => {
   }
 
   // Establish tray menu
-  // initMenu();
+  initMenu();
 
   // Establish the main window
   initManager('/');
@@ -164,11 +164,6 @@ app.on('ready', async () => {
       handleUri(resourcePath, store, mainWindow, pHandler, uri);
     }, 2000);
   }
-});
-
-app.on('window-all-closed', () => {
-  log.info('anchor: window-all-closed');
-  app.quit();
 });
 app.on('open-url', (e, url) => {
   if (pHandler) {
@@ -197,8 +192,6 @@ const initManager = (route = '/', closable = true) => {
   mainWindow = createInterface(resourcePath, route, closable, store, uri, pHandler);
   mainWindow.on('close', () => {
     mainWindow = null;
-    pHandler = null;
-    app.quit();
   });
 };
 
@@ -215,7 +208,10 @@ const initProtocolHandler = (request = false) => {
 
 const showManager = () => {
   if (!mainWindow) {
-    mainWindow = initManager();
+    initManager();
+  }
+  if (mainWindow && !mainWindow.isVisible()) {
+    mainWindow.show();
   }
 };
 
