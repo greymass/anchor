@@ -12,6 +12,9 @@ export default function auths(state = initialState, action) {
     case types.WALLET_LOCK: {
       return Object.assign({}, initialState);
     }
+    case types.SET_AUTHS: {
+      return Object.assign({}, state, { keystore: action.payload.hashed });
+    }
     case types.SET_AUTH:
     case types.SET_CURRENT_KEY: {
       const partitionQuery = {

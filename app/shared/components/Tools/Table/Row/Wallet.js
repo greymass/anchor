@@ -254,21 +254,6 @@ class ToolsTableRowWallet extends Component<Props> {
             mode={mode}
           />
         </Table.Cell>
-        <Table.Cell collapsing textAlign="center">
-          {(mode === 'hot')
-            ? (
-              <WalletLockState
-                actions={this.props.actions}
-                key="lockstate"
-                locked={!unlocked}
-                pubkeys={pubkeys}
-                validate={validate}
-                wallet={wallet}
-              />
-            )
-            : false
-          }
-        </Table.Cell>
         <Table.Cell collapsing textAlign="right">
           <GlobalButtonWalletUpgrade
             wallet={wallet}
