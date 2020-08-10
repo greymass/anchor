@@ -282,21 +282,14 @@ class SidebarContainer extends Component<Props> {
           }}
         >
           <Header
-            content={packageJson.version}
+            content={(!settings.sidebarCollapsed)
+              ? `Version ${packageJson.version}`
+              : packageJson.version
+            }
             size="small"
             style={{
               color,
               margin: 0,
-            }}
-          />
-          <Image
-            centered
-            src={AnchorTextHorizontal}
-            style={{
-              fill: 'currentColor',
-              marginTop: '0.25em',
-              maxWidth: ((settings.sidebarCollapsed) ? '3em' : '4em'),
-              width: ((settings.sidebarCollapsed) ? '3em' : '4em')
             }}
           />
         </Menu.Item>
