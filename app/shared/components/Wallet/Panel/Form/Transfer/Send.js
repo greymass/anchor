@@ -355,8 +355,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
                     app={app}
                     autoFocus
                     contacts={settings.contacts}
-                    enableContacts
-                    enableExchanges
+                    enableContacts={false}
+                    enableExchanges={false}
                     chainId={connection.chainId}
                     fluid
                     label={t('transfer_label_to')}
