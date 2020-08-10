@@ -278,7 +278,10 @@ const disableSigningRequests = () => {
 // Allow ESR Requests from the UI
 ipcMain.on('openUri', (event, data) => {
   pHandler.webContents.send('openUri', data);
+  pHandler.setVisibleOnAllWorkspaces(true); // put the window on all screens
   pHandler.show();
+  pHandler.focus(); // focus the window up front on the active screen
+  pHandler.setVisibleOnAllWorkspaces(false); // disable all screen behavior
 });
 
 // Allow for configuration of ESR from the UI
