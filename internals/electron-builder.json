@@ -108,9 +108,9 @@
     ]
   },
   "win": {
-    "certificateFile": "aaroncox.p12",
+    "certificateFile": "greymass.pfx",
     "icon": "app/renderer/assets/icons/win/icon.ico",
-    "publisherName": "Aaron Cox",
+    "publisherName": "Greymass Inc.",
     "target": [
       {
         "target": "nsis",
