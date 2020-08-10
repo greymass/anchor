@@ -172,7 +172,7 @@ export function validateWalletPassword(password, useWallet = false) {
   };
 }
 
-export function unlockWallet(password, useWallet = false) {
+export function unlockWallet(password, useWallet = false, unlockAll = true) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -203,7 +203,8 @@ export function unlockWallet(password, useWallet = false) {
         const data = decrypt(storage.data, password).toString(CryptoJS.enc.Utf8);
         // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (!isError(attempt(JSON.parse, data))) {
-          const keypair = find(JSON.parse(data), { pubkey: wallet.pubkey });
+          const keypairs = JSON.parse(data);
+          const keypair = find(keypairs, { pubkey: wallet.pubkey });
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
           const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the active wallet
@@ -228,6 +229,18 @@ export function unlockWallet(password, useWallet = false) {
             },
             type: types.SET_CURRENT_KEY
           });
+          if (unlockAll) {
+            // If unlocking all accounts, set all auths
+            const hashed = keypairs.map((k) => ({
+              hash: encrypt(password, password, 1).toString(CryptoJS.enc.Utf8),
+              key: encrypt(k.key, hash, 1).toString(CryptoJS.enc.Utf8),
+              pubkey: k.pubkey,
+            }));
+            dispatch({
+              payload: { hashed },
+              type: types.SET_AUTHS
+            });
+          }
           // If the wallet hash hasn't been established, create it
           if (!settings.walletHash) {
             dispatch(setWalletHash(password));

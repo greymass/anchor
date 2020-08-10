@@ -6,11 +6,13 @@ import WalletModalUnlock from '../Modal/Unlock';
 
 export default class WalletLockStateLocked extends Component<Props> {
   state = {
+    all: true,
     password: '',
     open: false
   }
 
   onChange = (e, { value }) => this.setState({ password: value })
+  onChangeAll = (e, { checked }) => this.setState({ all: checked })
 
   onKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -26,20 +28,28 @@ export default class WalletLockStateLocked extends Component<Props> {
       actions
     } = this.props;
     const {
+      all,
       password
     } = this.state;
-    actions.unlockWallet(password);
+    actions.unlockWallet(
+      password, // password
+      false, // use immediately?
+      all, // unlock all?
+    );
   };
   render() {
     const {
       validate
     } = this.props;
     const {
-      open
+      all,
+      open,
     } = this.state;
     return (
       <WalletModalUnlock
+        all={all}
         onChange={this.onChange}
+        onChangeAll={this.onChangeAll}
         onKeyPress={this.onKeyPress}
         onClose={this.onClose}
         onSubmit={this.onSubmit}
