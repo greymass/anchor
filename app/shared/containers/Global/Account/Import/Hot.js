@@ -4,13 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Divider, Grid, Header, Icon, Message, Segment, Tab } from 'semantic-ui-react';
+import { Button, Header, Icon, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
 import GlobalFormFieldKeyPrivate from '../../../../components/Global/Form/Field/Key/Private';
-import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
-import GlobalModalAccountImportPassword from './Password';
 
 import EOSAccount from '../../../../utils/EOS/Account';
 
@@ -124,76 +122,62 @@ class GlobalModalAccountImportHot extends Component<Props> {
     const matches = accounts.__lookups;
 
     const disabled = (!selected.length || !valid);
-    let passwordPrompt = false;
-    if (!settings.walletHash) {
-      const hotWalletExists = wallets.some(o => o.mode === 'hot');
-      if (!hotWalletExists) {
-        passwordPrompt = true;
-      }
-    }
     return (
       <Tab.Pane>
-        {(passwordPrompt)
-          ? (
-            <GlobalModalAccountImportPassword onClose={this.props.onClose} />
-          )
-          : (
-            <Segment basic>
-              <Header
-                content={t('global_account_import_hot_header_one')}
-                subheader={t('global_account_import_hot_subheader_one')}
+        <Segment basic>
+          <Header
+            content={t('global_account_import_hot_header_one')}
+            subheader={t('global_account_import_hot_subheader_one')}
+          />
+          <GlobalFormFieldKeyPrivate
+            autoFocus
+            connection={connection}
+            label={t('global_account_import_private_key')}
+            name="key"
+            placeholder={t('welcome:welcome_key_compare_placeholder')}
+            onChange={this.onChange}
+            value={value}
+          />
+          {(value && matches.length > 0)
+            ? (
+              <Button
+                content="Toggle All"
+                color="blue"
+                onClick={this.toggleAll}
+                size="small"
               />
-              <GlobalFormFieldKeyPrivate
-                autoFocus
-                connection={connection}
-                label={t('global_account_import_private_key')}
-                name="key"
-                placeholder={t('welcome:welcome_key_compare_placeholder')}
-                onChange={this.onChange}
-                value={value}
-              />
-              {(value && matches.length > 0)
-                ? (
-                  <Button
-                    content="Toggle All"
-                    color="blue"
-                    onClick={this.toggleAll}
-                    size="small"
-                  />
-                )
-                : false
-              }
-              <GlobalAccountImportElementsAccountList
-                publicKey={publicKey}
-                selected={selected}
-                toggleAccount={this.toggleAccount}
-                value={value}
-              />
-              <Segment basic clearing>
+            )
+            : false
+          }
+          <GlobalAccountImportElementsAccountList
+            publicKey={publicKey}
+            selected={selected}
+            toggleAccount={this.toggleAccount}
+            value={value}
+          />
+          <Segment basic clearing>
+            <Button
+              floated="left"
+              onClick={onClose}
+            >
+              <Icon name="x" /> {t('cancel')}
+            </Button>
+            <GlobalButtonElevate
+              onSuccess={this.importAccounts}
+              settings={settings}
+              trigger={(
                 <Button
-                  floated="left"
-                  onClick={onClose}
-                >
-                  <Icon name="x" /> {t('cancel')}
-                </Button>
-                <GlobalButtonElevate
-                  onSuccess={this.importAccounts}
-                  settings={settings}
-                  trigger={(
-                    <Button
-                      color="green"
-                      content={t('global_button_account_import_action')}
-                      disabled={disabled}
-                      floated="right"
-                      icon="circle plus"
-                    />
-                  )}
-                  validate={validate}
+                  color="green"
+                  content={t('global_button_account_import_action')}
+                  disabled={disabled}
+                  floated="right"
+                  icon="circle plus"
                 />
-              </Segment>
-            </Segment>
-          )
-        }
+              )}
+              validate={validate}
+            />
+          </Segment>
+        </Segment>
       </Tab.Pane>
     );
   }
@@ -222,6 +206,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default compose(
-  withTranslation(['global','welcome']),
+  withTranslation(['global', 'welcome']),
   connect(mapStateToProps, mapDispatchToProps)
 )(GlobalModalAccountImportHot);
