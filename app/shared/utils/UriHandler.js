@@ -16,7 +16,10 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
   // For the current version, just prompt and don't process whitelist
   // The code below the return is not yet production ready.
   pHandler.webContents.send('openUri', url);
+  pHandler.setVisibleOnAllWorkspaces(true);
   pHandler.show();
+  pHandler.focus();
+  pHandler.setVisibleOnAllWorkspaces(false);
   return;
 
   log.info('app: open-url', url);
