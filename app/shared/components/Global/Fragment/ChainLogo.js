@@ -9,6 +9,7 @@ import eosLogo from '../../../../renderer/assets/images/eos.png';
 import europechainLogo from '../../../../renderer/assets/images/europechain.png';
 import fioLogo from '../../../../renderer/assets/images/fio.svg';
 import insightsLogo from '../../../../renderer/assets/images/insights.svg';
+import jungleLogo from '../../../../renderer/assets/images/jungle.png';
 import lynxLogo from '../../../../renderer/assets/images/lynx.png';
 import meetoneLogo from '../../../../renderer/assets/images/meetone.png';
 import placeholder from '../../../../renderer/assets/images/placeholder.png';
@@ -30,6 +31,7 @@ const logos = {
   '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c': fioLogo, // mainnet (fio)
   'b20901380af44ef59c5918439a1f9a41d83669020319a80574b804a5f95cbd7e': fioLogo, // testnet (fio)
   'b042025541e25a472bffde2d62edd457b7e70cee943412b1ea0f044f88591664': insightsLogo, // mainnet (insights)
+  '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': jungleLogo, // testnet - jungle 3
   'b62febe5aadff3d5399090b9565cb420387d3c66f2ccd7c7ac1f532c4f50f573': lynxLogo, // mainnet (lynx)
   '0fea517bbfb5b51c564b5c59bcf7f02cf934cfff895f59d0d5cd7079c06fd978': lynxLogo, // testnet (lynx)
   'cfe6486a83bad4962f232d48003b1824ab5665c36778141034d75e57b956e422': meetoneLogo, // mainnet (meetone)
