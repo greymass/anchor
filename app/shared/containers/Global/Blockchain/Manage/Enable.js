@@ -12,6 +12,7 @@ import GlobalFormFieldUrl from '../../../../components/Global/Form/Field/Url';
 import GlobalFragmentChainLogo from '../../../../components/Global/Fragment/ChainLogo';
 import * as BlockchainsActions from '../../../../actions/blockchains';
 import { setSetting } from '../../../../actions/settings';
+import GlobalModalAccountImportPassword from '../../Account/Import/Password';
 
 class GlobalBlockchainEnable extends Component<Props> {
   constructor(props) {
@@ -76,10 +77,17 @@ class GlobalBlockchainEnable extends Component<Props> {
       invalidEndpoints,
     } = this.state;
     if (!blockchains) return false;
+    let passwordPrompt = false;
+    if (!settings.walletHash) {
+      passwordPrompt = true;
+    }
     const { displayTestNetworks } = settings;
     const filtered = blockchains.filter(b => (((displayTestNetworks && b.testnet) || !b.testnet)));
     const sorted = sortBy(filtered, ['testnet', 'name'], ['asc', 'asc']);
     const chainCount = enabledChains.length;
+    if (passwordPrompt) {
+      return <GlobalModalAccountImportPassword onClose={this.props.onClose} />;
+    }
     return (
       <Form>
         <Header
@@ -109,8 +117,8 @@ class GlobalBlockchainEnable extends Component<Props> {
         <Table verticalAlign="middle" unstackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell></Table.HeaderCell>
-              <Table.HeaderCell></Table.HeaderCell>
+              <Table.HeaderCell />
+              <Table.HeaderCell />
               {(displayTestNetworks)
                 ? (
                   <Table.HeaderCell>{t('global_blockchain_enable_header_cell_one')}</Table.HeaderCell>
