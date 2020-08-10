@@ -275,7 +275,7 @@ export function processLoadedAccount(chainId, account, results, onlyAccount = fa
     }
     // If a proxy voter is set, cache it's data for vote referencing
     if (modified.voter_info && modified.voter_info.proxy) {
-      dispatch(getAccount(modified.voter_info.proxy));
+      dispatch(getAccount(modified.voter_info.proxy, true));
     }
     // Dispatch the results of the account itself
     return dispatch({
@@ -437,7 +437,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                 payload: {
                   account_name: account,
                   contract,
-                  precision: formatPrecisions(results, connection),
+                  precision: formatPrecisions(results, symbol, connection),
                   symbol,
                   tokens: formatBalances(results, symbol)
                 }
@@ -510,7 +510,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                 payload: {
                   account_name: account,
                   contract,
-                  precision: formatPrecisions(results.data, connection),
+                  precision: formatPrecisions(results.data, symbol, connection),
                   symbol,
                   tokens: formatBalances(results.data, symbol)
                 }
@@ -526,12 +526,12 @@ export function getCurrencyBalance(account, requestedTokens = false) {
 }
 
 // Expects array of balance strings, e.g. ['1.2345 EOS']
-function formatPrecisions(balances, connection = undefined) {
+function formatPrecisions(balances, symbol, connection = undefined) {
   const precision = {
-    [connection.chainSymbol]: connection.tokenPrecision
+    [symbol]: connection.tokenPrecision
   };
   for (let i = 0; i < balances.length; i += 1) {
-    const [amount, symbol] = balances[i].split(' ');
+    const [amount] = balances[i].split(' ');
     precision[symbol] = getSuffixLength(amount);
   }
   return precision;
