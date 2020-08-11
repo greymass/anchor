@@ -69,7 +69,6 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       const [auth, publicKey] = data.split('|');
       const [account, authorization] = auth.split('@');
       const mapped = this.props.accounts.__map;
-      console.log(mapped)
       if (Object.keys(mapped).length) {
         Object.keys(mapped).forEach((key) => {
           if (mapped[key].includes(auth) && key === publicKey) {
