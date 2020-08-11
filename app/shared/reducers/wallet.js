@@ -8,6 +8,16 @@ export default function wallet(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
+    case types.REMOVE_WALLET: {
+      if (
+        action.payload.account === state.account
+        && action.payload.authorization === state.authorization
+        && action.payload.chainId === state.chainId
+      ) {
+        return initialState;
+      }
+      return state;
+    }
     case types.PREPARE_WALLET_CONVERT_LEDGER: {
       if (
         action.payload.account === state.account
