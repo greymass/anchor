@@ -173,6 +173,19 @@ export default function settings(state = initialState, action) {
         recentWallets: set(state.recentWallets, action.payload.chainId, wallet),
       });
     }
+    case types.REMOVE_WALLET: {
+      if (
+        action.payload.account === state.account
+        && action.payload.authorization === state.authorization
+        && action.payload.chainId === state.chainId
+      ) {
+        return Object.assign({}, state, {
+          account: '',
+          authorization: undefined,
+        });
+      }
+      return state;
+    }
     case types.RESET_INVALID_SETTINGS: {
       return Object.assign({}, validSettings.reduce((o, setting) => ({
         ...o,
