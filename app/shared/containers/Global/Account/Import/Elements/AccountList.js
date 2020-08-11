@@ -70,6 +70,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
                             label={auth}
                             name={auth}
                             onChange={this.props.toggleAccount}
+                            publicKey={publicKey}
                           />
                           {(results[publicKey] && results[publicKey].addresses && results[publicKey].addresses.length > 0)
                             ? (

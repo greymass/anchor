@@ -59,18 +59,26 @@ class GlobalModalAccountImportDetect extends Component<Props> {
     } = this.state;
     const {
       actions,
+      paths,
       settings
     } = this.props;
     const {
       chainId
     } = settings;
-    selected.forEach((auth) => {
+    selected.forEach((data) => {
+      const [auth, publicKey] = data.split('|');
       const [account, authorization] = auth.split('@');
       const mapped = this.props.accounts.__map;
+      console.log(mapped)
       if (Object.keys(mapped).length) {
         Object.keys(mapped).forEach((key) => {
-          if (mapped[key].includes(auth)) {
-            actions.importWallet(chainId, account, authorization, value, password, 'unknown', key);
+          if (mapped[key].includes(auth) && key === publicKey) {
+            let walletType = 'unknown';
+            if (paths[key]) {
+              actions.importWallet(chainId, account, authorization, null, password, 'ledger', key, paths[key]);
+            } else {
+              actions.importWallet(chainId, account, authorization, value, password, 'unknown', key);
+            }
           }
         });
       } else {
@@ -79,11 +87,12 @@ class GlobalModalAccountImportDetect extends Component<Props> {
     });
     this.props.onClose();
   }
-  toggleAccount = (e, { checked, name }) => {
+  toggleAccount = (e, { checked, name, publicKey }) => {
+    const combined = `${name}|${publicKey}`
     const selected = [...this.state.selected];
-    const existing = selected.indexOf(name);
+    const existing = selected.indexOf(combined);
     if (checked && existing < 0) {
-      selected.push(name);
+      selected.push(combined);
     } else if (!checked && existing >= 0) {
       selected.splice(existing, 1);
     }
@@ -275,6 +284,7 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, props) => ({
     accounts: state.accounts,
     connection: state.connection,
+    paths: state.storage.paths,
     pubkeys: getKeysUnlocked(state, props),
     settings: state.settings,
     system: state.system,
