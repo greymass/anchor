@@ -1,7 +1,7 @@
 /* eslint global-require: 0, flowtype-errors/show-errors: 0 */
 
+import '@babel/polyfill';
 import { app, crashReporter, ipcMain, protocol } from 'electron';
-import "@babel/polyfill";
 import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from '../modules/main/electron';
 import { createTray } from '../modules/tray/electron';
@@ -9,6 +9,8 @@ import { createTrayIcon } from '../modules/tray/electron/icon';
 import { createProtocolHandlers } from '../modules/handler/electron';
 import HardwareLedger from '../shared/utils/Hardware/Ledger';
 import handleUri from '../shared/utils/UriHandler';
+import SessionManager from '../shared/utils/SessionManager';
+
 import * as types from '../shared/actions/types';
 import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardware/ledger';
 
@@ -22,6 +24,7 @@ let resourcePath = __dirname;
 let mainWindow = null;
 let menu = null;
 let tray = null;
+let sHandler = null;
 let pHandler = null;
 let uri = null;
 
@@ -217,6 +220,10 @@ const showManager = () => {
 
 let initHardwareRetry;
 
+const initSessionManager = () => {
+  sHandler = new SessionManager(store, pHandler);
+};
+
 const initHardwareLedger = (e, signPath, devicePath) => {
   if (initHardwareRetry) {
     clearInterval(initHardwareRetry);
@@ -252,6 +259,7 @@ const initHardwareLedger = (e, signPath, devicePath) => {
 };
 
 ipcMain.on('connectHardwareLedger', initHardwareLedger);
+ipcMain.on('connectSessionManager', initSessionManager);
 
 const enableSigningRequests = () => {
   log.info('enableSigningRequests');
@@ -278,11 +286,15 @@ const disableSigningRequests = () => {
 // Allow ESR Requests from the UI
 ipcMain.on('openUri', (event, data) => {
   pHandler.webContents.send('openUri', data);
-  pHandler.setVisibleOnAllWorkspaces(true); // put the window on all screens
+  pHandler.setVisibleOnAllWorkspaces(true);
   pHandler.show();
-  pHandler.focus(); // focus the window up front on the active screen
-  pHandler.setVisibleOnAllWorkspaces(false); // disable all screen behavior
+  pHandler.focus();
+  pHandler.setVisibleOnAllWorkspaces(false);
 });
+
+// Session management IPC handlers
+ipcMain.on('addSession', (event, data) => sHandler.addSession(data));
+ipcMain.on('removeSession', (event, data) => sHandler.removeSession(data));
 
 // Allow for configuration of ESR from the UI
 ipcMain.on('enableSigningRequests', enableSigningRequests);
@@ -301,5 +313,6 @@ ipcMain.on('setAuthorizationHeader', (e, token, expires) => {
 });
 
 global.hardwareLedger = new HardwareLedger();
+global.initSessionManager = initSessionManager;
 global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;

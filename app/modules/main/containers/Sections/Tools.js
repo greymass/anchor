@@ -35,6 +35,7 @@ import ToolsPermissions from './Tools/Permissions';
 import ToolsProxy from './Tools/Proxy';
 import ToolsRecommendations from './Tools/Recommendations';
 import ToolsResetApplication from './Tools/ResetApplication';
+import ToolsSessions from './Tools/Sessions';
 import ToolsSmartContracts from './Tools/SmartContracts';
 import ToolsWalletState from './Tools/WalletState';
 
@@ -101,6 +102,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/proxy" component={ToolsProxy} />
             <Route path="/tools/recommendations" component={ToolsRecommendations} />
             <Route path="/tools/reset" component={ToolsResetApplication} />
+            <Route path="/tools/sessions" component={ToolsSessions} />
             <Route path="/tools/smart_contracts" component={ToolsSmartContracts} />
             <Route path="/tools/state_chain" component={ToolsChainState} />
             <Route path="/tools/state_globals" component={ToolsGlobalState} />

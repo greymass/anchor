@@ -32,6 +32,10 @@ const toolSections = {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/contacts'
     },
+    tools_menu_sessions: {
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
+      path: 'tools/sessions'
+    },
     tools_menu_smart_contracts: {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/smart_contracts'
