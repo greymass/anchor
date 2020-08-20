@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
+    "@greymass/eosio": "^0.0.3",
     "asn1-ber": "^1.0.9",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
@@ -64,7 +65,7 @@
     "electron-context-menu": "2.0.1",
     "electron-store": "^2.0.0",
     "electron-updater": "^4.3.1",
-    "eosio-signing-request": "^1.1.5",
+    "eosio-signing-request": "^1.2.0",
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",
@@ -103,7 +104,8 @@
     "regenerator-runtime": "^0.13.3",
     "reselect": "4.0.0",
     "scrypt-async": "2.0.1",
-    "sjcl": "1.0.7"
+    "sjcl": "1.0.7",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

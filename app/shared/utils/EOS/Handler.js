@@ -7,9 +7,9 @@ import { createHttpHandler } from '../http/handler';
 import serialize from '../../actions/helpers/ledger/serialize';
 
 const eosjs1 = require('eosjs');
-const { transactionHeader } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-serialize');
-const { stringToPublicKey, publicKeyToString } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-numeric');
-const { JsSignatureProvider } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-jssig');
+const { transactionHeader } = require('eosjs2/node_modules/eosjs/dist/eosjs-serialize');
+const { stringToPublicKey, publicKeyToString } = require('eosjs2/node_modules/eosjs/dist/eosjs-numeric');
+const { JsSignatureProvider } = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig');
 const { remote } = require('electron');
 
 const LedgerApi = require('../../actions/helpers/hardware/ledger').default;

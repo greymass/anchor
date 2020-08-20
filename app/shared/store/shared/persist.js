@@ -11,6 +11,7 @@ const persistConfig = {
   timeout: 0, // The code base checks for falsy, so 0 disables
   whitelist: [
     'blockchains',
+    'sessions',
     'settings',
     'storage',
     'wallet',
