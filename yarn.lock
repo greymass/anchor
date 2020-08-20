@@ -346,6 +346,15 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
+"@greymass/eosio@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.3.tgz#62d1521dc0d40fdc391ae44ba8722fca908b84f4"
+  integrity sha512-M0I32H9OHiz91Ubke+2SqxFUx4Uzd/mjabc1s5WwM8/jUtAH3l5DsmWb6kmr3sr3hH6H1kjiVNE8SNMg/BUqgQ==
+  dependencies:
+    bn.js "^4.4.0"
+    elliptic "^6.5.2"
+    hash.js "^1.0.0"
+
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.9.0.tgz#79b1bc06fb74a8cfb01cbdedf945584b1b9707f0"
@@ -4986,6 +4995,19 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+elliptic@^6.5.2:
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
+  integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
+  dependencies:
+    bn.js "^4.4.0"
+    brorand "^1.0.1"
+    hash.js "^1.0.0"
+    hmac-drbg "^1.0.0"
+    inherits "^2.0.1"
+    minimalistic-assert "^1.0.0"
+    minimalistic-crypto-utils "^1.0.0"
+
 emoji-regex@^7.0.1, emoji-regex@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -5143,10 +5165,10 @@ enzyme@^3.10.0:
     rst-selector-parser "^2.2.3"
     string.prototype.trim "^1.2.1"
 
-eosio-signing-request@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-1.1.5.tgz#29aa237b13801788858c08d5952a116769bf37bc"
-  integrity sha512-PSGHRgMTdiNQXqWHlZyjfH8LmKtFFnV3iH9RKJQIUpMcJAP9daZ/JzoiUVAcMbD7kbMWthg+P57FCLm01hrhug==
+eosio-signing-request@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-1.2.0.tgz#543922b4bfb60c5b07e350c5391e1599555fb0fa"
+  integrity sha512-1sINQYrj5MkLg8MEPdBPOU/opJEZVGL4xF29ph1htvb6C6kpE+CZx5tEvBBwYWL5PK4T8VRZzhi8xSQg5j7sZw==
   dependencies:
     eosjs "^20.0.0"
     fast-sha256 "^1.1.1"
@@ -11448,7 +11470,12 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4:
+regenerator-runtime@^0.13.2:
+  version "0.13.7"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
+  integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
+
+regenerator-runtime@^0.13.3, regenerator-runtime@^0.13.4:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
   integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
@@ -13906,6 +13933,11 @@ uuid@^3.0.1, uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+
+uuid@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
+  integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
 
 v8-compile-cache@2.0.3:
   version "2.0.3"

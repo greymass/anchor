@@ -23,6 +23,7 @@ import ping from './utils/ping';
 import producers from './producers';
 import prompt from './utils/prompt';
 import proposals from './proposals';
+import sessions from './sessions';
 import settings from './settings';
 import storage from './storage';
 import system from './system';
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   prompt,
   proposals,
   router,
+  sessions,
   settings,
   storage,
   system,

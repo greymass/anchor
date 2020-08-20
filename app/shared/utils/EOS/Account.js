@@ -2,7 +2,7 @@ import { filter, find, flatten } from 'lodash';
 
 import EOSAccountStats from './Account/Stats';
 
-const { stringToPublicKey, publicKeyToString } = require('eosio-signing-request/node_modules/eosjs/dist/eosjs-numeric');
+const { stringToPublicKey, publicKeyToString } = require('eosjs2/node_modules/eosjs/dist/eosjs-numeric');
 
 function convertLegacyPublicKey(s) {
   let pubkey = s;
