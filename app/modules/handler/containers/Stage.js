@@ -534,8 +534,9 @@ class PromptStage extends Component<Props> {
           }}
         >
           <Dimmer
-            active={signing || broadcasting || callbacking}
+            active={signing || broadcasting || callbacking || validatingPassword}
             inverted
+            style={{ zIndex: 1001 }}
           >
             <Loader
               size="big"
@@ -544,6 +545,7 @@ class PromptStage extends Component<Props> {
                 {(broadcasting) ? t('handler_containers_stage_header_broadcast') : false}
                 {(callbacking) ? t('handler_containers_stage_header_issue'): false}
                 {(signing) ? t('handler_containers_stage_header_sign') : false}
+                {(validatingPassword) ? t('handler_containers_stage_header_password') : false}
               </Header>
             </Loader>
           </Dimmer>
