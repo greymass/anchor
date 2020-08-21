@@ -94,8 +94,51 @@ class DevTest extends Component<Props> {
       settings,
       system,
     } = this.props;
+    console.log(this.props)
     const { actionName } = this.state;
     const transaction = system[`${actionName}_LAST_TRANSACTION`] || {};
+    return (
+      <Segment style={{ overflow: 'scroll', maxWidth: '90vw' }}>
+        <ReactJson
+          enableClipboard={false}
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={this.props.sessions}
+          style={{ padding: '1em' }}
+        />
+        <ReactJson
+          enableClipboard={false}
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={this.props.auths}
+          style={{ padding: '1em' }}
+        />
+        <ReactJson
+          enableClipboard={false}
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={this.props.storage}
+          style={{ padding: '1em' }}
+        />
+        <ReactJson
+          collapsed={1}
+          enableClipboard={false}
+          displayDataTypes={false}
+          displayObjectSize={false}
+          iconStyle="square"
+          name={null}
+          src={this.props.wallet}
+          style={{ padding: '1em' }}
+        />
+
+      </Segment>
+    )
     return (
       <Grid>
         <Grid.Column width={4}>
