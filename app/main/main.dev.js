@@ -266,11 +266,15 @@ const enableSigningRequests = () => {
   // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
   app.setAsDefaultProtocolClient('eosio');
   protocol.registerHttpProtocol('eosio', (req, cb) => {
-    log.info('protocol handler: register', req, cb);
+    log.info('legacy protocol handler: register', req, cb);
   });
   app.setAsDefaultProtocolClient('esr');
   protocol.registerHttpProtocol('esr', (req, cb) => {
     log.info('protocol handler: register', req, cb);
+  });
+  app.setAsDefaultProtocolClient('anchorwallet');
+  protocol.registerHttpProtocol('anchorwallet', (req, cb) => {
+    log.info('app handler: register', req, cb);
   });
 };
 
