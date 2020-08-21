@@ -240,7 +240,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       asset
     } = this.state;
     const balance = balances[settings.account];
-    const { precision } = balances.__contracts[asset.toUpperCase()]
+    const { precision } = balances.__contracts[asset.toUpperCase()];
     let precisionValue = connection.tokenPrecision;
     if (precision) {
       precisionValue = precision[asset.toUpperCase()];
@@ -283,6 +283,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
+    const { precision } = balances.__contracts[asset.toUpperCase()];
 
     if (!balance) return false;
 
@@ -384,7 +385,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                         onClick={this.fillMax}
                         style={{ cursor: 'pointer' }}
                       >
-                        {(balance[asset] && balance[asset].toFixed(connection.tokenPrecision)) || '0.0000'}
+                        {(balance[asset] && balance[asset].toFixed(precision[asset.toUpperCase()])) || '0.0000'}
                         {' '}
                         {asset}
                       </a>
