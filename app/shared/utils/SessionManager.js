@@ -50,7 +50,6 @@ export default class SessionManager {
     this.handler = {
       onStorageUpdate(json) {
         const storage = JSON.parse(json);
-        console.log('received storage update', storage);
         store.dispatch({
           type: types.SYSTEM_SESSIONS_SYNC,
           payload: storage
