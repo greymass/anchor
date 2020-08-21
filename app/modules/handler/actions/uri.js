@@ -1,6 +1,7 @@
 import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import { Serialize } from 'eosjs2';
+import { PrivateKey } from '@greymass/eosio';
 
 import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
@@ -310,12 +311,19 @@ function unpackTransaction(bytes) {
   return {};
 }
 
-export function signIdentityRequest(prompt, blockchain, wallet) {
+export function signIdentityRequest(
+  prompt,
+  blockchain,
+  wallet,
+) {
   return (dispatch: () => void, getState) => {
     const {
       auths,
       connection,
+      settings,
+      sessions,
     } = getState();
+    const { enableSessions } = settings;
     dispatch({
       type: types.SYSTEM_ESRURISIGN_PENDING
     });
@@ -344,6 +352,21 @@ export function signIdentityRequest(prompt, blockchain, wallet) {
           serializedTransaction: prompt.resolved.serializedTransaction,
         });
         const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
+        if (enableSessions && prompt.resolved.request.isIdentity()) {
+          callbackParams.payload = {
+            ...callbackParams.payload,
+            link_ch: `https://${sessions.linkUrl}/${sessions.linkId}`,
+            link_key: PrivateKey.from(sessions.requestKey).toPublic().toString(),
+            link_name: 'Anchor Desktop',
+          };
+          const session = {
+            network: blockchain.chainId,
+            actor: callbackParams.payload.sa,
+            permission: callbackParams.payload.sp,
+            payload: prompt.resolved.request.toString(),
+          };
+          ipcRenderer.send('addSession', session);
+        }
         dispatch({
           payload: {
             callbackParams,
