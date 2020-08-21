@@ -10,6 +10,8 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
       account,
       address,
       authorization,
+      authAccount,
+      authAuthorization,
       disableAvatar,
       mode,
       size,
@@ -30,13 +32,15 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
           )
           : false
         }
-        <Header.Content style={{ minWidth: (disableAvatar) ? 'none' : '10em' }}>
+        <Header.Content style={{ minWidth: (disableAvatar) ? 'none' : '15em' }}>
           <React.Fragment>
             {address || account}
             <Header.Subheader>
               <React.Fragment>
                 {(address) ? `${account} / ` : false}
-                {authorization} / {mode}
+                {authorization}
+                {' / '}
+                {(mode === 'auth') ? `${authAccount}@${authAuthorization}` : mode}
               </React.Fragment>
             </Header.Subheader>
           </React.Fragment>

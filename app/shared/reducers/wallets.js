@@ -21,6 +21,22 @@ export default function wallets(state = initialState, action) {
         ...other
       ];
     }
+    case types.IMPORT_WALLET_AUTH: {
+      const partitionParams = {
+        account: action.payload.account,
+        authorization: action.payload.authorization,
+        chainId: action.payload.chainId || false,
+      };
+      const [, other] = partition(state, partitionParams);
+      console.log([
+        action.payload,
+        ...other
+      ])
+      return [
+        action.payload,
+        ...other
+      ];
+    }
     case types.SET_CURRENT_WALLET:
     case types.IMPORT_WALLET_KEY: {
       const partitionParams = {

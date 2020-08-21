@@ -316,6 +316,28 @@ export function importWallet(
   };
 }
 
+export function importWalletAuth(
+  chainId,
+  account,
+  authorization,
+  authAccount,
+  authAuthorization,
+) {
+  return (dispatch: () => void) => {
+    return dispatch({
+      type: types.IMPORT_WALLET_AUTH,
+      payload: {
+        account,
+        authorization,
+        authAccount,
+        authAuthorization,
+        chainId,
+        mode: 'auth',
+      }
+    });
+  };
+}
+
 export function importWallets(
   chainId,
   accounts,
@@ -560,6 +582,7 @@ export default {
   importKeypairStorage,
   importPubkeyStorage,
   importWallet,
+  importWalletAuth,
   importWalletFromBackup,
   importWallets,
   prepareConvertToLedger,
