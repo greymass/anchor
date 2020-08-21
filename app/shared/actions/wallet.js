@@ -187,8 +187,17 @@ export function unlockWallet(password, useWallet = false, unlockAll = true) {
       wallet = useWallet;
     }
     let account = accounts[wallet.account];
+    let authAccount = accounts[wallet.authAccount];
     if (settings.walletMode === 'hot' && !account) {
       account = await eos(connection, false, true).rpc.get_account(wallet.account);
+    }
+    const isAuthAuthority = (wallet.authAccount && wallet.authAuthorization);
+    // If using an account authority and not loaded, load
+    if (
+      !authAccount
+      && isAuthAuthority
+    ) {
+      authAccount = await eos(connection, false, true).rpc.get_account(wallet.authAccount);
     }
     const { address } = wallet;
     // Determine if a FIO address needs to be retrieved for usage purposes
@@ -204,7 +213,18 @@ export function unlockWallet(password, useWallet = false, unlockAll = true) {
         // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
         if (!isError(attempt(JSON.parse, data))) {
           const keypairs = JSON.parse(data);
-          const keypair = find(keypairs, { pubkey: wallet.pubkey });
+          let keypair = find(keypairs, { pubkey: wallet.pubkey });
+          // If this is an account-auth, load the appropriate key
+          if (isAuthAuthority) {
+            const auths = new EOSAccount(authAccount)
+              .getKeysForAuthorization(wallet.authAuthorization);
+            auths.forEach((auth) => {
+              const keyauth = find(keypairs, { pubkey: auth.pubkey });
+              if (keyauth) {
+                keypair = keyauth;
+              }
+            });
+          }
           const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
           const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
           // Set the active wallet
@@ -213,7 +233,7 @@ export function unlockWallet(password, useWallet = false, unlockAll = true) {
               ...wallet,
               accountData: account,
               address,
-              pubkey: wallet.pubkey
+              pubkey: (isAuthAuthority) ? keypair.pubkey : wallet.pubkey
             },
             type: types.SET_CURRENT_WALLET
           });
@@ -231,11 +251,15 @@ export function unlockWallet(password, useWallet = false, unlockAll = true) {
           });
           if (unlockAll) {
             // If unlocking all accounts, set all auths
-            const hashed = keypairs.map((k) => ({
-              hash: encrypt(password, password, 1).toString(CryptoJS.enc.Utf8),
-              key: encrypt(k.key, hash, 1).toString(CryptoJS.enc.Utf8),
-              pubkey: k.pubkey,
-            }));
+            const hashed = keypairs.map((c) => {
+              const h = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+              const k = encrypt(c.key, h, 1).toString(CryptoJS.enc.Utf8);
+              return {
+                hash: h,
+                key: k,
+                pubkey: c.pubkey,
+              };
+            });
             dispatch({
               payload: { hashed },
               type: types.SET_AUTHS
