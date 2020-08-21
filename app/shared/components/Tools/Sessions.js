@@ -1,9 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Button, Grid, Header, Segment, Table } from 'semantic-ui-react';
+import { Button, Grid, Header, Popup, Segment, Table } from 'semantic-ui-react';
 
 import GlobalFragmentChainLogo from '../Global/Fragment/ChainLogo';
+
 class ToolsSessions extends Component<Props> {
   render() {
     const {
@@ -11,12 +12,11 @@ class ToolsSessions extends Component<Props> {
       sessions,
       t,
     } = this.props;
-    console.log(sessions)
     return (
       <Segment style={{ marginTop: 0 }}>
         <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column>
+          <Grid.Row>
+            <Grid.Column width={12}>
               <Header>
                 {t('tools_sessions_header')}
                 <Header.Subheader>
@@ -24,15 +24,23 @@ class ToolsSessions extends Component<Props> {
                 </Header.Subheader>
               </Header>
             </Grid.Column>
-            <Grid.Column textAlign="right">
-
+            <Grid.Column textAlign="right" width={4}>
+              <Popup
+                content={t('tools_sessions_removeall_description')}
+                trigger={(
+                  <Button
+                    content={t('tools_sessions_removeall_button')}
+                    onClick={this.props.actions.clearSessions}
+                  />
+                )}
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>
         <Table definition striped unstackable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell collapsing>{t('tools_sessions_application')}</Table.HeaderCell>
+              <Table.HeaderCell width={3}>{t('tools_sessions_application')}</Table.HeaderCell>
               <Table.HeaderCell>{t('tools_sessions_authority')}</Table.HeaderCell>
               <Table.HeaderCell></Table.HeaderCell>
             </Table.Row>

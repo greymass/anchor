@@ -6,6 +6,13 @@ export function removeSession(session) {
   };
 }
 
+export function clearSessions() {
+  return async (dispatch: () => void) => {
+    ipcRenderer.send('clearSessions');
+  };
+}
+
 export default {
-  removeSession
+  clearSessions,
+  removeSession,
 };

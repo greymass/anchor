@@ -48,6 +48,8 @@ const initialState = {
   displayResourcesAvailable: true,
   // Whether or not to display known testnets for the various networks
   displayTestNetworks: true,
+  // Whether or not to establish sessions with apps
+  enableSessions: true,
   // Default filter spam transfers to false
   filterSpamTransfersUnder: 0.0000,
   // If Greymass Fuel is enabled or not

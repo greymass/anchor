@@ -147,9 +147,13 @@ class PromptContainer extends Component<Props> {
       wallet
     }, () => actions.templateURI(blockchain, wallet));
   };
+  toggleSessions = () => {
+    this.props.actions.setSetting('enableSessions', !this.props.settings.enableSessions);
+  }
   render() {
     const {
       prompt,
+      settings,
       system,
       wallets,
     } = this.props;
@@ -160,7 +164,9 @@ class PromptContainer extends Component<Props> {
       wallet,
       whitelist,
     } = this.state;
-
+    const {
+      enableSessions
+    } = settings;
     const {
       response
     } = prompt;
@@ -196,6 +202,7 @@ class PromptContainer extends Component<Props> {
         />
         <PromptStage
           blockchain={blockchain}
+          enableSessions={enableSessions}
           enableWhitelist={enableWhitelist}
           hasBroadcast={hasBroadcast}
           hasExpired={hasExpired}
@@ -207,6 +214,7 @@ class PromptContainer extends Component<Props> {
           requestedActorMissing={requestedActorMissing}
           shouldBroadcast={shouldBroadcast}
           swapAccount={this.swapAccount}
+          toggleSessions={this.toggleSessions}
           wallet={wallet}
           whitelist={whitelist}
         />
@@ -219,6 +227,7 @@ function mapStateToProps(state) {
   return {
     blockchains: state.blockchains,
     prompt: state.prompt,
+    settings: state.settings,
     system: state.system,
     wallets: state.wallets,
   };
