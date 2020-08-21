@@ -46,9 +46,12 @@ class DevTestContainer extends Component<Props> {
 function mapStateToProps(state) {
   const blockchain = find(state.blockchains, { chainId: state.settings.chainId });
   return {
+    auths: state.auths,
     blockExplorers: state.blockexplorers[blockchain._id],
     connection: state.connection,
+    sessions: state.sessions,
     settings: state.settings,
+    storage: state.storage,
     system: state.system,
     wallet: state.wallet,
   };
