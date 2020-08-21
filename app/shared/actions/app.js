@@ -1,7 +1,8 @@
-import * as types from './types';
-import eos from './helpers/eos';
-import { httpClient, httpQueue } from '../utils/http/generic';
 import { find } from 'lodash';
+import * as types from './types';
+import { httpClient, httpQueue } from '../utils/http/generic';
+
+const { ipcRenderer } = require('electron');
 
 export function downloadProgress(progress) {
   return (dispatch: () => void) => {
@@ -12,9 +13,17 @@ export function downloadProgress(progress) {
   };
 }
 
-export const initApp = () => (dispatch: () => void) => dispatch({
-  type: types.APP_INIT
-});
+export const initApp = () => (dispatch: () => void) => {
+  if (global && global.initSessionManager) {
+    global.initSessionManager();
+  }
+  if (ipcRenderer) {
+    ipcRenderer.send('connectSessionManager');
+  }
+  return dispatch({
+    type: types.APP_INIT
+  });
+};
 
 export function getConstants() {
   return async (dispatch: () => void, getState) => {
