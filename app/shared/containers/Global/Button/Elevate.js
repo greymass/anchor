@@ -78,7 +78,6 @@ class GlobalButtonElevate extends Component<Props> {
     const pending = (validate.WALLET_PASSWORD === 'PENDING');
     return (
       <Modal
-        centered={false}
         trigger={trigger}
         onClose={this.onClose}
         onOpen={this.onOpen}

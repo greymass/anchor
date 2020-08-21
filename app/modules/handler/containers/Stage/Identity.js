@@ -54,8 +54,8 @@ class PromptStageIdentity extends Component<Props> {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered columns={1}>
-            <Grid.Column width={8}>
-              <Form style={{ zIndex: 9999 }}>
+            <Grid.Column width={10}>
+              <Form style={{ zIndex: 1000 }}>
                 <Form.Field>
                   <label>{t('handler_containers_stage_identity_label')}</label>
                   <GlobalAccountDropdownSelect
