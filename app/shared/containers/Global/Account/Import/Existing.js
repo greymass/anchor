@@ -8,6 +8,7 @@ import { Button, Header, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalModalAccountImportHot from './Hot';
 import GlobalModalAccountImportLedgerAccounts from './Ledger/Accounts';
+import GlobalModalAccountImportManual from './Manual';
 import GlobalModalAccountImportWatch from './Watch';
 
 import * as SettingsActions from '../../../../actions/settings';
@@ -50,6 +51,8 @@ class GlobalModalAccountImportExisting extends Component<Props> {
           );
         case 'watch':
           return <GlobalModalAccountImportWatch onClose={this.onClose} />;
+        case 'manual':
+          return <GlobalModalAccountImportManual onClose={this.onClose} />;
         default:
           break;
       }
@@ -105,6 +108,19 @@ class GlobalModalAccountImportExisting extends Component<Props> {
             content={t('global_account_import_exist_button_four')}
             icon="eye"
             pane="watch"
+            onClick={this.onClick}
+          />
+        </Segment>
+        <Segment basic>
+          <Header
+            content={t('global_account_import_exist_header_five')}
+            subheader={t('global_account_import_exist_subheader_five')}
+          />
+          <Button
+            color="blue"
+            content={t('global_account_import_exist_button_five')}
+            icon="write"
+            pane="manual"
             onClick={this.onClick}
           />
         </Segment>

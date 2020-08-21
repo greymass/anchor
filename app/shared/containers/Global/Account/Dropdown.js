@@ -57,6 +57,8 @@ class GlobalAccountDropdown extends PureComponent<Props> {
       <GlobalFragmentWallet
         account={wallet.account}
         address={wallet.address}
+        authAccount={wallet.authAccount}
+        authAuthorization={wallet.authAuthorization}
         authorization={wallet.authorization}
         mode={wallet.mode}
         pubkey={wallet.pubkey}
@@ -112,6 +114,8 @@ class GlobalAccountDropdown extends PureComponent<Props> {
                         account={w.account}
                         address={w.address}
                         authorization={w.authorization}
+                        authAccount={w.authAccount}
+                        authAuthorization={w.authAuthorization}
                         mode={w.mode}
                         pubkey={w.pubkey}
                       />
@@ -128,6 +132,8 @@ class GlobalAccountDropdown extends PureComponent<Props> {
                           account={w.account}
                           address={w.address}
                           authorization={w.authorization}
+                          authAccount={w.authAccount}
+                          authAuthorization={w.authAuthorization}
                           mode={w.mode}
                           pubkey={w.pubkey}
                         />

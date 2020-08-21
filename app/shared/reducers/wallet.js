@@ -64,6 +64,8 @@ export default function wallet(state = initialState, action) {
         accountData: action.payload.accountData,
         address: action.payload.address,
         authorization: action.payload.authorization,
+        authAccount: action.payload.authAccount || false,
+        authAuthorization: action.payload.authAuthorization || false,
         chainId: action.payload.chainId || false,
         convertParameters: action.payload.convertParameters,
         data: action.payload.data,

@@ -255,10 +255,7 @@ class ToolsTableRowWallet extends Component<Props> {
           />
         </Table.Cell>
         <Table.Cell collapsing textAlign="right">
-          <GlobalButtonWalletUpgrade
-            wallet={wallet}
-          />
-          {(!unlocked && (mode === 'hot' || mode === 'cold'))
+          {(!unlocked && (mode === 'hot' || mode === 'cold' || mode === 'auth'))
             ? (
               <GlobalButtonElevate
                 onSuccess={(password) => this.swapWallet(account, authorization, password)}
