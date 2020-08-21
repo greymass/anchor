@@ -1,7 +1,7 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "Настольное приложение для блокцепи EOS (Anchor)",
-  "application_version": "v1.0.6",
+  "application_version": "v1.1.0-beta.1",
   "back": "Back",
   "block_height": "Номер Блока",
   "blockchain": "Blockchain",
