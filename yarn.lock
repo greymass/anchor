@@ -346,7 +346,18 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/eosio@^0.0.3":
+"@greymass/anchor-link-session-manager@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.1.tgz#0f6a86f4d1c049caf6fdb3e02312bf15c8a9d646"
+  integrity sha512-8g708P1GRj55sj5GIBS8AdjGZvaWxKGWJMA3xMqTRiaJP9GzdNWJ0XOsC1eKg8WXVa9nsRryksg85nWN0PlK7A==
+  dependencies:
+    "@greymass/eosio" "^0.0.3"
+    eosio-signing-request "^2.0.0-beta5"
+    isomorphic-ws "^4.0.1"
+    pako "^1.0.11"
+    uuid "^8.3.0"
+
+"@greymass/eosio@0.0.3", "@greymass/eosio@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.3.tgz#62d1521dc0d40fdc391ae44ba8722fca908b84f4"
   integrity sha512-M0I32H9OHiz91Ubke+2SqxFUx4Uzd/mjabc1s5WwM8/jUtAH3l5DsmWb6kmr3sr3hH6H1kjiVNE8SNMg/BUqgQ==
@@ -5173,6 +5184,13 @@ eosio-signing-request@^1.2.0:
     eosjs "^20.0.0"
     fast-sha256 "^1.1.1"
 
+eosio-signing-request@^2.0.0-beta5:
+  version "2.0.0-beta5"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-beta5.tgz#8eca40c19d02e5652839ee2789484cc0af5fbc84"
+  integrity sha512-t5CPk8SOXVF0L0Wj44NaSAD+OAgOBtAaiqV4aY4r9+wqJildc5YOGzoK3iVDNF+X+rqgYuYBXO6yjI887v3ELw==
+  dependencies:
+    "@greymass/eosio" "0.0.3"
+
 eosjs-api@7.0.4:
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-7.0.4.tgz#dc3a7206d4ac3e6818f0a950b8d24333175ac7c9"
@@ -7902,6 +7920,11 @@ isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
     node-fetch "^1.0.1"
     whatwg-fetch ">=0.10.0"
 
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
+
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -10141,7 +10164,7 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-pako@~1.0.5:
+pako@^1.0.11, pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==

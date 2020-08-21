@@ -126,7 +126,11 @@ class PromptStage extends Component<Props> {
       prompt,
       wallet
     } = this.props;
-    actions.signIdentityRequest(prompt, blockchain, wallet);
+    actions.signIdentityRequest(
+      prompt,
+      blockchain,
+      wallet,
+    );
   }
   onUnlock = (password) => {
     const {
@@ -167,13 +171,18 @@ class PromptStage extends Component<Props> {
       password,
       blockchain.chainId,
       // callback
-      () => actions.signIdentityRequest(prompt, blockchain, wallet)
+      () => actions.signIdentityRequest(
+        prompt,
+        blockchain,
+        wallet,
+      )
     );
   }
   render() {
     const {
       auths,
       blockchain,
+      enableSessions,
       enableWhitelist,
       hasBroadcast,
       hasExpired,
@@ -189,6 +198,7 @@ class PromptStage extends Component<Props> {
       status,
       system,
       t,
+      toggleSessions,
       validate,
       wallet,
       whitelist,
@@ -212,7 +222,7 @@ class PromptStage extends Component<Props> {
       error = { message: t('error_requested_actor_missing') };
     }
 
-    const couldSignWithKey = ['cold', 'hot'].includes(wallet.mode);
+    const couldSignWithKey = ['cold', 'hot', 'auth'].includes(wallet.mode);
     const canSignWithKey = (couldSignWithKey && availableKeys.includes(wallet.pubkey));
     const couldSignWithDevice = ['ledger'].includes(wallet.mode);
     const canSignWithDevice = (wallet.mode === 'ledger' && status === 'connected');
@@ -410,7 +420,9 @@ class PromptStage extends Component<Props> {
         <PromptStageIdentity
           canSign={canSign}
           couldSignWithDevice={couldSignWithDevice}
+          enableSessions={enableSessions}
           onSelect={this.props.swapAccount}
+          toggleSessions={toggleSessions}
           wallet={wallet}
         />
       )
@@ -427,6 +439,7 @@ class PromptStage extends Component<Props> {
         nextAction = (
           <PromptActionIdentity
             disabled={signing || !canSign}
+            enableSessions={enableSessions}
             loading={signing}
             onClick={this.onSignIdentity}
             wallet={wallet}

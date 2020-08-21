@@ -298,6 +298,7 @@ ipcMain.on('openUri', (event, data) => {
 
 // Session management IPC handlers
 ipcMain.on('addSession', (event, data) => sHandler.addSession(data));
+ipcMain.on('clearSessions', () => sHandler.manager.clearSessions());
 ipcMain.on('removeSession', (event, data) => sHandler.removeSession(data));
 
 // Allow for configuration of ESR from the UI
