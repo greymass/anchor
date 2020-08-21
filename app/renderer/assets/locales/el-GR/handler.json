@@ -93,5 +93,6 @@
   "handler_containers_stage_message_header": "This transaction is potentially dangerous",
   "handler_containers_stage_header_broadcast": "Broadcasting Transaction",
   "handler_containers_stage_header_sign": "Sign Transaction",
-  "handler_containers_stage_header_issue": "Broadcast Transaction"
+  "handler_containers_stage_header_issue": "Broadcast Transaction",
+  "handler_containers_stage_header_password": "Validating Password"
 }
