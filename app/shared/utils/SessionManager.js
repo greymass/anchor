@@ -66,7 +66,7 @@ export default class SessionManager {
   }
   createStorage() {
     const { sessions } = this.store.getState();
-    if (sessions) {
+    if (sessions && sessions.requestKey && sessions.linkId) {
       const json = JSON.stringify(sessions);
       this.storage = AnchorLinkSessionManagerStorage.unserialize(json);
     }
