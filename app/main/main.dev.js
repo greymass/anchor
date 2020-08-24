@@ -221,6 +221,11 @@ const showManager = () => {
 let initHardwareRetry;
 
 const initSessionManager = () => {
+  // Disconnect if an existing handler is already running
+  if (sHandler && sHandler.manager && sHandler.manager.ready) {
+    sHandler.manager.disconnect();
+  }
+  // Create new Session Manager
   sHandler = new SessionManager(store, pHandler);
 };
 
