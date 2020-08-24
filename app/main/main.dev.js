@@ -210,11 +210,11 @@ const initProtocolHandler = (request = false) => {
 };
 
 const showManager = () => {
+  if (mainWindow) {
+    mainWindow.show();
+  }
   if (!mainWindow) {
     initManager();
-  }
-  if (mainWindow && !mainWindow.isVisible()) {
-    mainWindow.show();
   }
 };
 
