@@ -180,6 +180,9 @@ app.on('before-quit', () => {
   if (initHardwareRetry) {
     clearInterval(initHardwareRetry);
   }
+  if (sHandler && sHandler.manager) {
+    sHandler.manager.disconnect();
+  }
   pHandler.close();
 });
 app.on('will-quit', () => {
