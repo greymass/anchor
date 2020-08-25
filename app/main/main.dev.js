@@ -177,6 +177,9 @@ app.on('open-url', (e, url) => {
 });
 app.on('before-quit', () => {
   log.info('anchor: before-quit');
+  if (initHardwareRetry) {
+    clearInterval(initHardwareRetry);
+  }
   pHandler.close();
 });
 app.on('will-quit', () => {
