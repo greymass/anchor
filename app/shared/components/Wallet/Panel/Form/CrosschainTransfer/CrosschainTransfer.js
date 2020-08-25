@@ -100,15 +100,19 @@ class WalletPanelCrosschainTransfer extends Component<Props> {
       waiting: true,
       waitingStarted: new Date()
     });
-    const tick = setInterval(this.tick, 250);
+    this.interval = setInterval(this.tick, 250);
     // Make the user wait 3 seconds before they can confirm
     setTimeout(() => {
-      clearInterval(tick);
+      clearInterval(this.interval);
       this.setState({
         waiting: false
       });
     }, 3000);
   };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   tick = () => this.setState({ waiting: true });
 
