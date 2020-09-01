@@ -184,7 +184,7 @@ export function setURI(uri) {
         req,
       } = data;
       // Pull chainId requested
-      const chainId = request.getChainId().toLowerCase();
+      const chainId = request.getChainId().toString().toLowerCase();
       return dispatch({
         type: types.SYSTEM_ESRURI_SUCCESS,
         payload: {
@@ -192,7 +192,7 @@ export function setURI(uri) {
           chainId,
           callback,
           placeholders,
-          req,
+          req: req.toJSON(),
           uri,
           version,
         }
@@ -211,7 +211,7 @@ export function setURI(uri) {
 
 function detectPlaceholders(request) {
   const { req } = request.data;
-  const [reqType, reqData] = req;
+  const [reqType, reqData] = req.toJSON();
   switch (reqType) {
     case 'action': {
       const matching = reqData.authorization.filter((auth) =>
@@ -529,7 +529,7 @@ export function templateURI(blockchain, wallet) {
           inflateRaw: (data) => new Uint8Array(zlib.inflateRawSync(Buffer.from(data))),
         },
         abiProvider: {
-          getAbi: async (account) => (await EOS.getAbi(account)).abi
+          getAbi: async (account) => (await EOS.getAbi(account.toString())).abi
         }
       };
       // Interpret the Signing Request

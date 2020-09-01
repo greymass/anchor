@@ -17,12 +17,12 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
       <div key={index}>
         <Segment basic style={{ marginBottom: '0.5em' }}>
           <Label basic>
-            {action.account}
+            {action.account.toString()}
             <Icon
               name="caret right"
               style={{ marginLeft: '1em' }}
             />
-            {action.name}
+            {action.name.toString()}
           </Label>
           <Label>
             {t('handler_transaction_action_fuel_label_one', { index: index + 1, total })}
