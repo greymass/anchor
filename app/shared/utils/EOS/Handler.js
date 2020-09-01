@@ -321,10 +321,12 @@ export default class EOSHandler {
   getBlock = (height) => this.rpc.get_block(height)
   getAbi = async (account) => {
     // Escape for dot notation
-    const escapedAccount = account.replace('.', '\\.');
-    if (store.has(escapedAccount)) {
+    const escapedAccount = String(account).replace('.', '\\.');
+    // Combine the chainId + escaped name for the storage key
+    const storageKey = [this.config.chainId, escapedAccount].join('|');
+    if (store.has(storageKey)) {
       // Check local store for abi
-      const abi = store.get(escapedAccount);
+      const abi = store.get(storageKey);
       // Set cache stale for 15 minutes
       const expires = Date.now() - (1000 * 60 * abiCacheMinutes);
       // If cache is not stale, use it
@@ -341,7 +343,7 @@ export default class EOSHandler {
     // If no cache, retrieve
     const abi = await this.rpc.get_abi(account);
     // Save in local store
-    store.set(escapedAccount, {
+    store.set(storageKey, {
       ...abi,
       ts: Date.now(),
     });
@@ -352,7 +354,8 @@ export default class EOSHandler {
   getRequiredAbis = async (request) => {
     const abis = new Map();
     await Promise.all(request.getRequiredAbis().map(async (account) => {
-      abis.set(account, (await this.getAbi(account)).abi);
+      const { abi } = await this.getAbi(account)
+      abis.set(account, abi);
     }));
     return abis;
   }
