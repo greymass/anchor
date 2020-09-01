@@ -39,17 +39,16 @@ class PromptStageReview extends Component<Props> {
       placeholders,
       resolved,
     } = prompt;
-    if (!resolved) return false
-    const authorizers = this.getAuthorizers(prompt.resolved)
-    const matches = authorizers.filter(a => a.actor === wallet.account && a.permission === wallet.authorization)
-    const matching = matches.length > 0
+    if (!resolved) return false;
+    const authorizers = this.getAuthorizers(prompt.resolved);
+    const matches = authorizers.filter(a => a.actor.toString() === wallet.account
+      && a.permission.toString() === wallet.authorization);
+    const matching = matches.length > 0;
     const disabledSwap = !placeholders && matching;
     const mismatch = (!placeholders && !matching)
       ? `Could not load the expected accounts for this request: ${authorizers.map(a => [a.actor, a.permission].join('@')).join(', ')}`
       : false;
-    const {
-      transaction
-    } = resolved;
+    const transaction = resolved.resolvedTransaction;
     const error = system.ESRURIBUILD_LAST_ERROR;
     const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
     return (

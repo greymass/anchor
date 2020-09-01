@@ -2,6 +2,14 @@ import { Api, JsonRpc, Serialize } from 'eosjs2';
 import ecc from 'eosjs-ecc';
 import sha256 from 'fast-sha256';
 import { cloneDeep, isObject } from 'lodash';
+import {
+  APIClient,
+  Checksum256,
+  PrivateKey,
+  Serializer,
+  SignedTransaction,
+  Transaction
+} from '@greymass/eosio';
 
 import { createHttpHandler } from '../http/handler';
 import serialize from '../../actions/helpers/ledger/serialize';
@@ -82,6 +90,9 @@ export default class EOSHandler {
     return convertLegacyPublicKey(pubkey);
   }
   initEOSJS(endpoint) {
+    this.client = new APIClient({
+      url: endpoint
+    });
     this.rpc = new JsonRpc(endpoint, {
       fetch: async (path, request) => {
         const { httpClient, httpQueue } = await createHttpHandler(this.config);
@@ -217,36 +228,54 @@ export default class EOSHandler {
       }
     };
   }
-  customTransact = async (transaction, { broadcast = true, sign = true, blocksBehind, expireSeconds }) => {
-    let tx = transaction;
+  customTransact = async (transaction, {
+    broadcast = true,
+    sign = true,
+    blocksBehind,
+    expireSeconds
+  }) => {
+    let tx;
+    const abis = await Promise.all(transaction.actions.map(async (action) => {
+      const { abi } = await this.getAbi(action.account);
+      return {
+        contract: action.account,
+        abi,
+      };
+    }));
     if (
       !this.hasRequiredTaposFields(transaction)
       && typeof blocksBehind === 'number'
       && expireSeconds
     ) {
-      tx = {
-        ...(await this.getTransactionHeader(expireSeconds)),
-        ...transaction
-      };
+      const info = await this.client.v1.chain.get_info();
+      const header = info.getTransactionHeader();
+      tx = Transaction.from({
+        ...header,
+        ...transaction,
+      }, abis);
+    } else {
+      tx = Transaction.from(transaction, abis);
     }
     if (!this.hasRequiredTaposFields(tx)) {
       throw new Error('Required configuration or TAPOS fields are not present');
     }
-    const abis = await this.api.getTransactionAbis(tx);
-    tx = { ...tx, actions: await this.api.serializeActions(tx.actions) };
-    const serializedTransaction = this.api.serializeTransaction(tx);
-    let pushTransactionArgs = { serializedTransaction, signatures: [] };
+    const pushTransactionArgs = {
+      serializedTransaction: Serializer.encode({ object: tx }).array,
+      signatures: []
+    };
     if (sign) {
-      const availableKeys = await this.signatureProvider.getAvailableKeys();
-      pushTransactionArgs = await this.signatureProvider.sign({
-        chainId: this.config.chainId,
-        requiredKeys: availableKeys,
-        serializedTransaction,
-        abis,
-      });
+      const privateKey = PrivateKey.from(this.config.keyProvider[0]);
+      const digest = tx.signingDigest(Checksum256.from(this.config.chainId));
+      const signature = privateKey.signDigest(digest);
+      pushTransactionArgs.signatures = [signature.toString()];
     }
     if (broadcast) {
-      return this.api.pushSignedTransaction(pushTransactionArgs);
+      const signedTransaction = SignedTransaction.from({
+        ...tx,
+        signatures: pushTransactionArgs.signatures,
+      });
+      const result = await this.client.v1.chain.push_transaction(signedTransaction);
+      return result;
     }
     return pushTransactionArgs;
   }
