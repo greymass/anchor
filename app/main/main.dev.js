@@ -127,6 +127,7 @@ if (!lock) {
     ) {
       uri = argv[argv.length - 1];
     }
+    showMain();
     if (mainWindow !== null) {
       handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
     }
@@ -298,13 +299,24 @@ const disableSigningRequests = () => {
   protocol.unregisterProtocol('esr');
 };
 
-// Allow ESR Requests from the UI
-ipcMain.on('openUri', (event, data) => {
-  pHandler.webContents.send('openUri', data);
+function showMain() {
+  mainWindow.setVisibleOnAllWorkspaces(true);
+  mainWindow.show();
+  mainWindow.focus();
+  mainWindow.setVisibleOnAllWorkspaces(false);
+}
+
+function showHandler() {
   pHandler.setVisibleOnAllWorkspaces(true);
   pHandler.show();
   pHandler.focus();
   pHandler.setVisibleOnAllWorkspaces(false);
+}
+
+// Allow ESR Requests from the UI
+ipcMain.on('openUri', (event, data) => {
+  pHandler.webContents.send('openUri', data);
+  showHandler();
 });
 
 // Session management IPC handlers
