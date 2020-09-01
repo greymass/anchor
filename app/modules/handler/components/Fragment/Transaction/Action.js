@@ -23,7 +23,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
     if (
       action.account
       && action.name
-      && fuelActions.includes([action.account, action.name].join(':'))
+      && fuelActions.includes([action.account.toString(), action.name.toString()].join(':'))
     ) {
       return (
         <PromptFragmentTransactionActionFuel
@@ -60,12 +60,12 @@ class PromptFragmentTransactionAction extends Component<Props> {
             color="blue"
             size="large"
           >
-            {action.account}
+            {action.account.toString()}
             <Icon
               name="caret right"
               style={{ marginLeft: '1em' }}
             />
-            {action.name}
+            {action.name.toString()}
           </Label>
           <Divider horizontal style={{ marginTop: '1.5em' }}>{t('handler_transaction_action_label_divider_two')}</Divider>
           <List relaxed>
@@ -165,10 +165,10 @@ class PromptFragmentTransactionAction extends Component<Props> {
           {action.authorization.map((auth) => (
             <Label
               basic
-              key={`${auth.actor}@${auth.permission}`}
+              key={`${auth.actor.toString()}@${auth.permission.toString()}`}
               size="large"
             >
-              {auth.actor}@{auth.permission}
+              {auth.actor.toString()}@{auth.permission.toString()}
             </Label>
           ))}
         </Segment>
