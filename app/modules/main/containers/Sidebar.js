@@ -173,41 +173,41 @@ class SidebarContainer extends Component<Props> {
                   : false
                 }
               </Menu.Item>
-              {(devMode === true)
-                ? (
-                  <React.Fragment>
-                    <Menu.Item
-                      as="a"
-                      active={module === 'tests'}
-                      onClick={this.onClick}
-                      name="tests"
-                      color="red"
-                      style={{ color }}
-                    >
-                      <Icon name="external" />
-                      {(!settings.sidebarCollapsed)
-                        ? 'URI TESTS'
-                        : false
-                      }
-                    </Menu.Item>
-                    <Menu.Item
-                      as="a"
-                      active={module === 'devtest'}
-                      onClick={this.onClick}
-                      name="devtest"
-                      color="orange"
-                      style={{ color }}
-                    >
-                      <Icon name="lab" />
-                      {(!settings.sidebarCollapsed)
-                        ? 'DevTests'
-                        : false
-                      }
-                    </Menu.Item>
-                  </React.Fragment>
-                )
-                : false
-              }
+            </React.Fragment>
+          )
+          : false
+        }
+        {(devMode === true)
+          ? (
+            <React.Fragment>
+              <Menu.Item
+                as="a"
+                active={module === 'tests'}
+                onClick={this.onClick}
+                name="tests"
+                color="red"
+                style={{ color }}
+              >
+                <Icon name="external" />
+                {(!settings.sidebarCollapsed)
+                  ? 'URI TESTS'
+                  : false
+                }
+              </Menu.Item>
+              <Menu.Item
+                as="a"
+                active={module === 'devtest'}
+                onClick={this.onClick}
+                name="devtest"
+                color="orange"
+                style={{ color }}
+              >
+                <Icon name="lab" />
+                {(!settings.sidebarCollapsed)
+                  ? 'DevTests'
+                  : false
+                }
+              </Menu.Item>
             </React.Fragment>
           )
           : false
