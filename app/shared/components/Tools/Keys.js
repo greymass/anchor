@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import {
   Button,
   Confirm,
+  Dropdown,
   Header,
   Icon,
   List,
@@ -19,17 +20,16 @@ import ReactJson from 'react-json-view';
 import ToolsKeyGeneratorComponent from './KeyGenerator';
 import ToolsKeyImportComponent from './KeyImport';
 import GlobalFragmentChainLogo from '../Global/Fragment/ChainLogo';
+import GlobalAccountKey from '../../containers/Global/Account/Key';
 
-const { clipboard } = require('electron');
-const ecc = require('eosjs-ecc');
-
-const defaultState =  {
+const defaultState = {
   closable: true,
   confirm: false,
   open: false,
   openImport: false,
+  openKey: false,
   pubkeys: [],
-}
+};
 
 class ToolsKeys extends Component<Props> {
   constructor(props) {
@@ -59,6 +59,8 @@ class ToolsKeys extends Component<Props> {
   }
   onOpen = () => this.setState({ open: true })
   onOpenImport = () => this.setState({ openImport: true })
+  onHideKey = () => this.setState({ openKey: false })
+  onShowKey = (pubkey) => this.setState({ openKey: pubkey })
   onSave = () => this.setState({ closable: true })
   render() {
     const {
@@ -67,8 +69,20 @@ class ToolsKeys extends Component<Props> {
       t,
       wallets,
     } = this.props;
+    const {
+      openKey
+    } = this.state;
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
+        {(openKey)
+          ? (
+            <GlobalAccountKey
+              onClose={this.onHideKey}
+              pubkey={openKey}
+            />
+          )
+          : false
+        }
         <Header>
           {t('tools_keys_management_header')}
         </Header>
@@ -147,42 +161,60 @@ class ToolsKeys extends Component<Props> {
               return (
                 <Table.Row>
                   <Table.Cell>
-                    <pre style={{ margin: 0 }}>{pubkey}</pre>
+                    <pre style={{ display: 'inline', margin: 0 }}>
+                      {pubkey}
+                    </pre>
+                    <Dropdown>
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => this.onShowKey(pubkey)}
+                          text={t('global:global_account_key_modal_header')}
+                        />
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Table.Cell>
                   <Table.Cell>{paths[pubkey]}</Table.Cell>
-                  <Popup
-                    content={(
-                      <Table definition size="small">
-                        {matching.map((wallet) => (
-                          <Table.Row>
-                            <Table.Cell collapsing>
-                              <GlobalFragmentChainLogo
-                                chainId={wallet.chainId}
-                                noPopup
-                                size="avatar"
-                              />
-                            </Table.Cell>
-                            <Table.Cell>
-                              {wallet.account}@{wallet.authorization}
-                            </Table.Cell>
-                          </Table.Row>
-                        ))}
-                      </Table>
-                    )}
-                    hoverable
-                    position="left center"
-                    trigger={(
+                  {(matching.length)
+                    ? (
+                      <Popup
+                        content={(
+                          <Table definition size="small">
+                            {matching.map((wallet) => (
+                              <Table.Row>
+                                <Table.Cell collapsing>
+                                  <GlobalFragmentChainLogo
+                                    chainId={wallet.chainId}
+                                    noPopup
+                                    size="avatar"
+                                  />
+                                </Table.Cell>
+                                <Table.Cell>
+                                  {wallet.account}@{wallet.authorization}
+                                </Table.Cell>
+                              </Table.Row>
+                            ))}
+                          </Table>
+                        )}
+                        hoverable
+                        position="left center"
+                        trigger={(
+                          <Table.Cell textAlign="center">
+                            {matching.length}
+                          </Table.Cell>
+                        )}
+                      />
+                    )
+                    : (
                       <Table.Cell textAlign="center">
                         {matching.length}
                       </Table.Cell>
-                    )}
-                  />
+                    )
+                  }
                 </Table.Row>
               );
             })}
           </Table.Body>
         </Table>
-
       </Segment>
     );
   }

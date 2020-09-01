@@ -368,6 +368,52 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
   };
 }
 
+export function unlockByKey(pubkey, password) {
+  return async (dispatch: () => void, getState) => {
+    const state = getState();
+    const {
+      storage,
+    } = state;
+    dispatch({
+      type: types.VALIDATE_WALLET_PASSWORD_PENDING
+    });
+    setTimeout(() => {
+      try {
+        const data = decrypt(storage.data, password).toString(CryptoJS.enc.Utf8);
+        // let key = decrypt(wallet.data, password).toString(CryptoJS.enc.Utf8);
+        if (!isError(attempt(JSON.parse, data))) {
+          const keypair = find(JSON.parse(data), { pubkey });
+          const hash = encrypt(password, password, 1).toString(CryptoJS.enc.Utf8);
+          const key = encrypt(keypair.key, hash, 1).toString(CryptoJS.enc.Utf8);
+          // Set the keys for use
+          dispatch({
+            payload: {
+              hash,
+              key,
+              pubkey
+            },
+            type: types.SET_AUTH
+          });
+          return dispatch({
+            from: 'unlockByKey',
+            type: types.VALIDATE_WALLET_PASSWORD_SUCCESS,
+          });
+        }
+      } catch (err) {
+        return dispatch({
+          err,
+          from: 'unlockByKey',
+          type: types.VALIDATE_WALLET_PASSWORD_FAILURE,
+        });
+      }
+      return dispatch({
+        from: 'unlockByKey',
+        type: types.VALIDATE_WALLET_PASSWORD_FAILURE,
+      });
+    }, 10);
+  };
+}
+
 export function clearWallet() {
   return (dispatch: () => void) => {
     dispatch({
@@ -448,6 +494,7 @@ export default {
   setTemporaryKey,
   setWalletKey,
   setWalletMode,
+  unlockByKey,
   unlockWallet,
   unlockWalletByAuth,
   validateWalletPassword
