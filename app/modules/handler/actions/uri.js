@@ -172,7 +172,8 @@ export function setURI(uri) {
       const modified = uri.replace('eosio:', 'esr:');
       // Interpret the Signing Request
       const request = SigningRequest.from(modified, opts);
-      const placeholders = detectPlaceholders(request);
+      const req = JSON.parse(JSON.stringify(request.data.req));
+      const placeholders = detectPlaceholders(req);
       // Extract relevant information
       const {
         data,
@@ -181,7 +182,6 @@ export function setURI(uri) {
       const {
         broadcast,
         callback,
-        req,
       } = data;
       // Pull chainId requested
       const chainId = request.getChainId().toString().toLowerCase();
@@ -192,7 +192,7 @@ export function setURI(uri) {
           chainId,
           callback,
           placeholders,
-          req: req.toJSON(),
+          req,
           uri,
           version,
         }
@@ -209,9 +209,8 @@ export function setURI(uri) {
   };
 }
 
-function detectPlaceholders(request) {
-  const { req } = request.data;
-  const [reqType, reqData] = req.toJSON();
+function detectPlaceholders(req) {
+  const [reqType, reqData] = req;
   switch (reqType) {
     case 'action': {
       const matching = reqData.authorization.filter((auth) =>
