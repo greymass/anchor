@@ -46,6 +46,16 @@ class ToolsSessions extends Component<Props> {
             </Table.Row>
           </Table.Header>
           <Table.Body>
+            {(sessions.sessions.length === 0)
+              ? (
+                <Table.Row>
+                  <Table.Cell colSpan={10}>
+                    {t('tools_sessions_nosessions')}
+                  </Table.Cell>
+                </Table.Row>
+              )
+              : false
+            }
             {([].concat(sessions.sessions)
                 // .filter((w) => (w.chainId === settings.chainId))
                 // .sort((a, b) => {
