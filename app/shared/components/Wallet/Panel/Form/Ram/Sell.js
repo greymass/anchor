@@ -232,7 +232,7 @@ class WalletPanelFormRamSell extends Component<Props> {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <WalletPanelFormRamStats
-                        chainSymbolBalance={balances[settings.account][connection.chainSymbol || 'EOS']}
+                        chainSymbolBalance={balances[settings.account][connection.chainRamSymbol || connection.chainSymbol || 'EOS']}
                         connection={connection}
                         ramQuota={ramQuota}
                         ramUsage={ramUsage}

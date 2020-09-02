@@ -8,6 +8,7 @@ const initialState = {
   chain: 'EOS',
   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
   chainKey: 'eos-mainnet',
+  chainRamSymbol: 'EOS',
   chainSymbol: 'EOS',
   eosioEndpoint: true,
   // dfuse configuration
@@ -91,6 +92,7 @@ export default function connection(state = initialState, action) {
         chain: (blockchain && blockchain.name) || 'EOS Mainnet',
         chainId: (action.payload.info) ? action.payload.info.chain_id : settings.chainId,
         chainKey: (blockchain && blockchain._id) || 'eos-mainnet',
+        chainRamSymbol: (blockchain && blockchain.chainRamSymbol) || 'EOS',
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         err,
         greymassFuel: settings.greymassFuel,
