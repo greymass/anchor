@@ -161,7 +161,7 @@ class AccountOverviewRam extends Component<Props> {
                             account={account}
                             precision={4}
                           />
-                          {` ${connection.chainSymbol}`}
+                          {` ${connection.chainRamSymbol || connection.chainSymbol}`}
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
@@ -170,7 +170,7 @@ class AccountOverviewRam extends Component<Props> {
                           <GlobalAccountFragmentRamPrice
                             precision={8}
                           />
-                          {` ${connection.chainSymbol}`}/byte
+                          {` ${connection.chainRamSymbol || connection.chainSymbol}`}/byte
                         </Table.Cell>
                       </Table.Row>
                     </Table>
