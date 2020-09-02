@@ -61,6 +61,15 @@ export default class SessionManager {
         pHandler.show();
         pHandler.focus();
         pHandler.setVisibleOnAllWorkspaces(false);
+      },
+      onSocketEvent(type, event) {
+        store.dispatch({
+          type: types.SYSTEM_SESSIONS_EVENT,
+          payload: {
+            type,
+            event
+          }
+        });
       }
     };
   }

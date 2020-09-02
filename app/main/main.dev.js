@@ -151,7 +151,7 @@ app.on('ready', async () => {
   }
 
   // Establish tray menu
-  initMenu();
+  initMenu(settings);
 
   // Establish the main window
   initManager('/');
@@ -168,6 +168,10 @@ app.on('ready', async () => {
       handleUri(resourcePath, store, mainWindow, pHandler, uri);
     }, 2000);
   }
+});
+app.on('activate', (e, hasVisibleWindows) => {
+  showManager();
+  showMain();
 });
 app.on('open-url', (e, url) => {
   if (pHandler) {
