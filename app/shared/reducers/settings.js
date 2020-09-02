@@ -19,6 +19,8 @@ const initialState = {
   allowDangerousTransactions: false,
   // Whether or not to enable the handling of EEP-7 Signing Requests
   allowSigningRequests: false,
+  // The service URL used to subscribe to requests via Anchor Link sessions
+  anchorLinkServiceUrl: 'cb.anchor.link',
   // The loaded authorization
   authorization: undefined,
   // The mode which Anchor operates in the background (macOS only)
