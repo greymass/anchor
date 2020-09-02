@@ -528,7 +528,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
 // Expects array of balance strings, e.g. ['1.2345 EOS']
 function formatPrecisions(balances, symbol, connection = undefined) {
   const precision = {
-    // [symbol]: connection.tokenPrecision
+    [symbol]: connection.tokenPrecision
   };
   for (let i = 0; i < balances.length; i += 1) {
     const [amount] = balances[i].split(' ');
