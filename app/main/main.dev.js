@@ -159,6 +159,8 @@ app.on('ready', async () => {
   // Establish the protocol handler window
   initProtocolHandler();
 
+  initSessionManager();
+
   if (process.platform === 'win32' || process.platform === 'linux') {
     uri = process.argv && process.argv.slice(1)[0];
   }
