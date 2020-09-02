@@ -78,6 +78,11 @@ const supportedContracts = [
     supportedContracts: ['bidname'],
   },
   {
+    // 'uxnetwork-mainnet'
+    chainId: '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02',
+    supportedContracts: [],
+  },
+  {
     // 'worbli-mainnet'
     chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
     supportedContracts: [],
@@ -252,6 +257,14 @@ const knownChains = [
     "voteDecay": false,
     "symbol": "TLOS",
     "testnet": true
+  },
+  {
+    "_id": "uxnetwork-mainnet",
+    "chainId": "8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02",
+    "chainRamSymbol": "UXRAM",
+    "name": "UX Network",
+    "node": "https://explorer.uxnetwork.io/",
+    "symbol": "UX"
   },
   {
     "_id": "worbli-mainnet",

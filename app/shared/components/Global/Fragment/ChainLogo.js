@@ -17,6 +17,7 @@ import protonLogo from '../../../../renderer/assets/images/proton.png';
 import protonTestnetLogo from '../../../../renderer/assets/images/proton-testnet.png';
 import remmeLogo from '../../../../renderer/assets/images/remme.png';
 import telosLogo from '../../../../renderer/assets/images/telos.png';
+import uxLogo from '../../../../renderer/assets/images/ux.png';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
 import waxLogo from '../../../../renderer/assets/images/wax.png';
 
@@ -40,6 +41,7 @@ const logos = {
   '93ece941df27a5787a405383a66a7c26d04e80182adf504365710331ac0625a7': remmeLogo, // testnet (remme)
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': telosLogo, // mainnet (telos)
   'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3': telosLogo, // testnet (telos)
+  '8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02': uxLogo, // mainnet (uxnetwork)
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
   '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f': worbliLogo, // mainnet (worbli)
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
