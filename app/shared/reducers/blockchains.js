@@ -264,7 +264,8 @@ const knownChains = [
     "chainRamSymbol": "UXRAM",
     "name": "UX Network",
     "node": "https://explorer.uxnetwork.io/",
-    "symbol": "UX"
+    "symbol": "UTX",
+    "tokenPrecision": 4,
   },
   {
     "_id": "worbli-mainnet",

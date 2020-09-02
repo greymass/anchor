@@ -27,6 +27,7 @@ class Tools extends Component<Props> {
       settings,
       t
     } = this.props;
+    const platform = os.platform();
     return (
       <React.Fragment>
         <Segment>
