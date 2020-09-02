@@ -40,7 +40,7 @@
   "main_sections_overview_resource_used": "Used",
   "main_sections_overview_ram_subheader": "A <1>size-based</1> resource an account can use to <3>store data</3> within smart contracts.",
   "main_sections_overview_ram_grid_subheader": "RAM Owned",
-  "main_sections_overview_ram_table_cell_one": "Value in EOS",
+  "main_sections_overview_ram_table_cell_one": "Value",
   "main_sections_overview_ram_table_cell_two": "RAM Price",
   "main_sections_overview_resource_grid_subheader_one": "A <1>time-based</1> resource an account uses while <3>performing</3> smart contract actions.",
   "main_sections_overview_resource_grid_subheader_two": "A <1>size-based</1> resource an account uses while <3>sending data</3> to the blockchain.",

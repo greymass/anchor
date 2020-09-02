@@ -29,7 +29,7 @@ export function buyram(amount) {
           data: {
             payer: account,
             receiver: account,
-            quant: `${amount.toFixed(connection.tokenPrecision || 4)} ${connection.chainSymbol || 'EOS'}`
+            quant: `${amount.toFixed(connection.tokenPrecision || 4)} ${connection.chainRamSymbol || connection.chainSymbol || 'EOS'}`
           }
         }
       ]
