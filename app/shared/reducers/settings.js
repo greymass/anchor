@@ -21,6 +21,8 @@ const initialState = {
   allowSigningRequests: false,
   // The loaded authorization
   authorization: undefined,
+  // The mode which Anchor operates in the background (macOS only)
+  backgroundMode: 'both',
   // The enabled blockchains (array of chain ids)
   blockchains: [],
   // The block explorer used

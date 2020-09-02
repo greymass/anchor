@@ -209,11 +209,11 @@ const initManager = (route = '/', closable = true) => {
   });
 };
 
-const initMenu = () => {
+const initMenu = (settings) => {
   // Initialize the menu
   menu = createTray(resourcePath);
-  // Initialize the tray icon
-  tray = createTrayIcon(resourcePath, menu);
+  // Set the tray/dock based on settings
+  setBackgroundMode(settings.backgroundMode);
 };
 
 const initProtocolHandler = (request = false) => {
@@ -304,10 +304,12 @@ const disableSigningRequests = () => {
 };
 
 function showMain() {
-  mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.show();
-  mainWindow.focus();
-  mainWindow.setVisibleOnAllWorkspaces(false);
+  if (mainWindow) {
+    mainWindow.setVisibleOnAllWorkspaces(true);
+    mainWindow.show();
+    mainWindow.focus();
+    mainWindow.setVisibleOnAllWorkspaces(false);
+  }
 }
 
 function showHandler() {
@@ -342,6 +344,38 @@ ipcMain.on('setAuthorizationHeader', (e, token, expires) => {
       dfuseAuthorizationExpires: expires,
     }
   });
+});
+
+function setBackgroundMode(mode) {
+  switch (mode) {
+    default:
+    case 'both': {
+      app.dock.show();
+      if (tray.isDestroyed()) {
+        tray = createTrayIcon(resourcePath, menu);
+      }
+      break;
+    }
+    case 'tray': {
+      app.dock.hide();
+      showMain();
+      if (!tray || (tray && tray.isDestroyed())) {
+        tray = createTrayIcon(resourcePath, menu);
+      }
+      break;
+    }
+    case 'dock': {
+      app.dock.show();
+      if (tray) {
+        tray.destroy();
+      }
+      break;
+    }
+  }
+}
+
+ipcMain.on('setBackgroundMode', (e, mode) => {
+  setBackgroundMode(mode);
 });
 
 global.hardwareLedger = new HardwareLedger();

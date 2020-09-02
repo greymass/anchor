@@ -4,6 +4,7 @@ import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
 import GlobalSettingsLanguage from './Global/Settings/Language';
+import GlobalSettingsBackground from './Global/Settings/Background';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 import GlobalSettingsDfuse from './Global/Settings/Dfuse';
 import GlobalSettingsShowTestnets from './Global/Settings/ShowTestnets';
@@ -12,6 +13,8 @@ import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
 import GlobalSettingsFilterSpamTransfers from './Global/Settings/FilterSpamTransfers';
 import GlobalSettingsAllowDangerousTransactions from './Global/Settings/AllowDangerousTransactions';
+
+const os = require('os');
 
 class Tools extends Component<Props> {
   render() {
@@ -33,6 +36,18 @@ class Tools extends Component<Props> {
             />
           </Header>
           <Form>
+            {(platform === 'darwin')
+              ? (
+                <Form.Field>
+                  <label>{t('tools_change_background_process')}</label>
+                  <GlobalSettingsBackground
+                    actions={actions}
+                    value={settings.backgroundMode}
+                  />
+                </Form.Field>
+              )
+              : false
+            }
             <Form.Field>
               <label>{t('tools_change_language2')}</label>
               <GlobalSettingsLanguage
@@ -55,19 +70,6 @@ class Tools extends Component<Props> {
                 </Form.Field>
               ) : false
             }
-            {(settings.walletMode !== 'cold')
-              ? (
-                <Form.Field>
-                  <label>{t('tools_change_dfuse_api_key')}</label>
-                  <GlobalSettingsDfuse
-                    actions={actions}
-                    value={settings.dfuseKey}
-                  />
-                </Form.Field>
-              )
-              : false
-            }
-
             <Form.Field>
               <label>{t('tools_change_timeout')}</label>
               <GlobalSettingsIdleTimeout
@@ -115,14 +117,35 @@ class Tools extends Component<Props> {
                 selection
               />
             </Form.Field>
-            <Form.Field>
-              <label>{t('tools_change_allow_dangerous_transactions')}</label>
-              <GlobalSettingsAllowDangerousTransactions
-                actions={actions}
-                defaultValue={settings.allowDangerousTransactions}
-                selection
-              />
-            </Form.Field>
+            {(settings.walletMode !== 'cold')
+              ? (
+                <React.Fragment>
+                  <Form.Field>
+                    <label>{t('tools_change_allow_dangerous_transactions')}</label>
+                    <GlobalSettingsAllowDangerousTransactions
+                      actions={actions}
+                      defaultValue={settings.allowDangerousTransactions}
+                      selection
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{t('tools_settings_anchorlink_service')}</label>
+                    <GlobalSettingsAnchorLinkService
+                      actions={actions}
+                      defaultValue={settings.anchorLinkServiceUrl}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>{t('tools_change_dfuse_api_key')}</label>
+                    <GlobalSettingsDfuse
+                      actions={actions}
+                      value={settings.dfuseKey}
+                    />
+                  </Form.Field>
+                </React.Fragment>
+              )
+              : false
+            }
           </Form>
         </Segment>
       </React.Fragment>
