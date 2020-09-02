@@ -14,12 +14,6 @@ export function downloadProgress(progress) {
 }
 
 export const initApp = () => (dispatch: () => void) => {
-  if (global && global.initSessionManager) {
-    global.initSessionManager();
-  }
-  if (ipcRenderer) {
-    ipcRenderer.send('connectSessionManager');
-  }
   return dispatch({
     type: types.APP_INIT
   });
