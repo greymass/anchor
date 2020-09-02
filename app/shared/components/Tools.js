@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
+import GlobalSettingsAnchorLinkService from './Global/Settings/AnchorLinkService';
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBackground from './Global/Settings/Background';
 import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
