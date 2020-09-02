@@ -4,6 +4,8 @@ import * as validate from './validate';
 import { setWalletMode } from './wallet';
 import { removeWallet } from './wallets';
 
+const { ipcRenderer } = require('electron');
+
 export function clearSettingsCache() {
   return (dispatch: () => void) => {
     dispatch({
@@ -28,6 +30,9 @@ export function resetApp() {
     dispatch(removeWallet());
     dispatch(setSetting('skipImport', false));
     dispatch(setWalletMode('hot'));
+    if (ipcRenderer) {
+      ipcRenderer.send('connectSessionManager');
+    }
   };
 }
 
