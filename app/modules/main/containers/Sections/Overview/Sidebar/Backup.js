@@ -49,7 +49,10 @@ class OverviewSidebarBackupContainer extends Component<Props> {
       JSON.stringify(backup),
       'wallet'
     );
-    ipcRenderer.once('lastFileSuccess', () => actions.setSetting('lastBackupDate', Date.now()));
+    ipcRenderer.once('lastFileSuccess', (event, file) => {
+      actions.setSetting('lastFilePath', file.substring(0, file.lastIndexOf('/')));
+      actions.setSetting('lastBackupDate', Date.now());
+    });
   };
 
   render() {
