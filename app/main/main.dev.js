@@ -353,7 +353,7 @@ function setBackgroundMode(mode) {
     default:
     case 'both': {
       app.dock.show();
-      if (tray && tray.isDestroyed()) {
+      if (!tray || (tray && tray.isDestroyed())) {
         tray = createTrayIcon(resourcePath, menu);
       }
       break;
