@@ -147,12 +147,27 @@ class OverviewContainer extends Component<Props> {
                   style={{ marginTop: '1em' }}
                   textAlign="center"
                 >
-                  <Button
-                    basic
-                    content={t('main_sections_overview_container_button')}
-                    icon="users"
-                    onClick={() => this.props.actions.changeModule('manage/wallets')}
-                  />
+
+                  {(view === 'balances')
+                    ? (
+                      <Button
+                        basic
+                        content={t('main_sections_overview_container_button_tokens')}
+                        icon="users"
+                        onClick={() => this.props.actions.changeModule('tools/customtokens')}
+                        primary
+                      />
+                    )
+                    : (
+                      <Button
+                        basic
+                        content={t('main_sections_overview_container_button')}
+                        icon="users"
+                        onClick={() => this.props.actions.changeModule('manage/wallets')}
+                        primary
+                      />
+                    )
+                  }
                 </Container>
               </Segment>
             </Grid.Column>
