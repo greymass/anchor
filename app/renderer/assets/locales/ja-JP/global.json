@@ -55,6 +55,8 @@
   "error_transferring_to_exchange_without_memo": "付与されたメモを渡さずに取引所へ資金を送ることはできません。",
   "error_wallet_already_exists": "The wallet already exists on the selected chain.",
   "error_withdraw_account_validation_failed": "Unexpected error. Cannot validate withdraw account.",
+  "global_account_key_modal_header": "Export Private Key",
+  "global_account_key_modal_subheader": "Unlock, show, and export the private key for this public key.",
   "global_account_edit_modal_header": "Wallet/Account Details",
   "global_account_edit_modal_subheader": "The internal details used in this application for this Wallet/Account.",
   "global_account_import_existing_accounts": "Accounts found using existing key pairs.",
