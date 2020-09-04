@@ -17,6 +17,7 @@ import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardwa
 const log = require('electron-log');
 const path = require('path');
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
+const isMac = () => process.platform === 'darwin';
 
 require('electron-context-menu')();
 
@@ -315,10 +316,12 @@ function showMain() {
 }
 
 function showHandler() {
-  pHandler.setVisibleOnAllWorkspaces(true);
-  pHandler.show();
-  pHandler.focus();
-  pHandler.setVisibleOnAllWorkspaces(false);
+  if (pHandler) {
+    pHandler.setVisibleOnAllWorkspaces(true);
+    pHandler.show();
+    pHandler.focus();
+    pHandler.setVisibleOnAllWorkspaces(false);
+  }
 }
 
 // Allow ESR Requests from the UI
@@ -352,14 +355,18 @@ function setBackgroundMode(mode) {
   switch (mode) {
     default:
     case 'both': {
-      app.dock.show();
+      if (isMac) {
+        app.dock.show();
+      }
       if (!tray || (tray && tray.isDestroyed())) {
         tray = createTrayIcon(resourcePath, menu);
       }
       break;
     }
     case 'tray': {
-      app.dock.hide();
+      if (isMac) {
+        app.dock.hide();
+      }
       showMain();
       if (!tray || (tray && tray.isDestroyed())) {
         tray = createTrayIcon(resourcePath, menu);
@@ -367,7 +374,9 @@ function setBackgroundMode(mode) {
       break;
     }
     case 'dock': {
-      app.dock.show();
+      if (isMac) {
+        app.dock.show();
+      }
       if (tray) {
         tray.destroy();
       }
