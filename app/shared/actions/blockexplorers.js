@@ -115,6 +115,13 @@ export function getBlockExplorers() {
       ],
       'telos-mainnet': [
         {
+          name: 'bloks.io',
+          patterns: {
+            account: 'https://telos.bloks.io/account/{account}',
+            txid: 'https://telos.bloks.io/transaction/{txid}'
+          }
+        },
+        {
           name: 'eosx.io',
           patterns: {
             account: 'https://telos.eosx.io/account/{account}',
@@ -124,10 +131,10 @@ export function getBlockExplorers() {
       ],
       'telos-testnet': [
         {
-          name: 'telosfoundation.net',
+          name: 'telos-test.bloks.io',
           patterns: {
-            account: 'http://testnet.telosfoundation.net/account/{account}',
-            txid: 'http://testnet.telosfoundation.net/transaction/{txid}'
+            account: 'http://telos-test.bloks.io/account/{account}',
+            txid: 'http://telos-test.bloks.io/transaction/{txid}'
           }
         },
         {
