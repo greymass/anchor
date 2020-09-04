@@ -36,46 +36,52 @@ class WalletPanelFormRamBuyConfirming extends Component<Props> {
               {t('ram_confirming_message_price_estimate_subheader')}
             </Header.Subheader>
           </Header>
-          <Header>
-            {(buying)
-              ? (
-                <span>{t('ram_buy_confirming_message_one')}</span>
-              ) : (
-                <span>{t('ram_sell_confirming_message_one')}</span>
-              )}
+          {(connection.chainSymbol !== 'UTX')
+            ? (
+                <React.Fragment>
+                  <Header>
+                    {(buying)
+                      ? (
+                        <span>{t('ram_buy_confirming_message_one')}</span>
+                      ) : (
+                        <span>{t('ram_sell_confirming_message_one')}</span>
+                      )}
 
-            <font color="green">
-              <GlobalDataBytes
-                bytes={Number(ramAmount)}
-              />
-            </font>
+                    <font color="green">
+                      <GlobalDataBytes
+                        bytes={Number(ramAmount)}
+                      />
+                    </font>
 
 
-            {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} ${connection.chainRamSymbol || connection.chainSymbol || 'EOS'}.`}
-          </Header>
-          <Header>
-            {t('ram_confirming_message_will_have')}
-            <GlobalDataBytes
-              bytes={newRamAmount}
-            />
-            {t('ram_confirming_message_in_ram_left')}
-          </Header>
+                    {` ${t('ram_confirming_message_in_ram_for')} ~${priceOfRam.toFixed(4)} ${connection.chainRamSymbol || connection.chainSymbol || 'EOS'}.`}
+                  </Header>
+                  <Header>
+                    {t('ram_confirming_message_will_have')}
+                    <GlobalDataBytes
+                      bytes={newRamAmount}
+                    />
+                    {t('ram_confirming_message_in_ram_left')}
+                  </Header>
+                  <Message warning>
+                    {t('ram_confirming_message_price_includes_chain_fee', { chainSymbol: connection.chainRamSymbol || connection.chainSymbol })}
+                  </Message>
+                  {(buying) ?
+                    (
+                      <WalletMessageContractBuyRamBytes
+                        data={{
+                          buyer: settings.account,
+                          bytes: `${ramAmount} B`,
+                          chainSymbol: connection.chainRamSymbol || connection.chainSymbol
+                        }}
+                      />
+                    ) : ''}
+                </React.Fragment>
+            )
+            : false
+          }
         </Segment>
 
-        <Message warning>
-          {t('ram_confirming_message_price_includes_chain_fee', { chainSymbol: connection.chainRamSymbol || connection.chainSymbol })}
-        </Message>
-
-        {(buying) ?
-          (
-            <WalletMessageContractBuyRamBytes
-              data={{
-                buyer: settings.account,
-                bytes: `${ramAmount} B`,
-                chainSymbol: connection.chainRamSymbol || connection.chainSymbol
-              }}
-            />
-          ) : ''}
 
         <Button
           floated="left"
