@@ -56,5 +56,7 @@ main.js.map
 npm-debug.log.*
 .env
 
+aaroncox.p12
 all-certs.p12
+greymass.pfx
 embedded.provisionprofile
