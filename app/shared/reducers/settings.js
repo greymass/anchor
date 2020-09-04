@@ -29,6 +29,8 @@ const initialState = {
   blockchains: [],
   // The block explorer used
   blockExplorer: 'bloks.io',
+  // The block explorer to be used per chain
+  blockExplorers: {},
   // Current chain_id
   chainId: false,
   // Additional settings per blockchain
