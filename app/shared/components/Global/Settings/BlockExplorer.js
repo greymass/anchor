@@ -11,9 +11,8 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
   }
 
   onChange = (e, { value }) => {
-    const { actions } = this.props;
-
-    actions.setSetting('blockExplorer', value);
+    const { actions, chainId } = this.props;
+    actions.setSetting('blockExplorer', value, chainId);
   };
 
   render() {
@@ -30,7 +29,10 @@ export default class GlobalSettingsBlockExplorer extends Component<Props> {
     const blockExplorerKeys = Object.keys(blockExplorers || {});
 
     const blockExplorerOptions = blockExplorerKeys.map((blockExplorer) => {
-      return { value: blockExplorer, text: blockExplorer };
+      return {
+        value: blockExplorer,
+        text: blockExplorer
+      };
     });
 
     if (!blockExplorerKeys.includes(value)) {
