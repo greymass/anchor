@@ -355,7 +355,7 @@ function setBackgroundMode(mode) {
   switch (mode) {
     default:
     case 'both': {
-      if (isMac) {
+      if (isMac && app.dock) {
         app.dock.show();
       }
       if (!tray || (tray && tray.isDestroyed())) {
@@ -364,7 +364,7 @@ function setBackgroundMode(mode) {
       break;
     }
     case 'tray': {
-      if (isMac) {
+      if (isMac && app.dock) {
         app.dock.hide();
       }
       showMain();
@@ -374,7 +374,7 @@ function setBackgroundMode(mode) {
       break;
     }
     case 'dock': {
-      if (isMac) {
+      if (isMac && app.dock) {
         app.dock.show();
       }
       if (tray) {
