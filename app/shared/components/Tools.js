@@ -66,6 +66,7 @@ class Tools extends Component<Props> {
                   <GlobalSettingsBlockExplorer
                     actions={actions}
                     blockExplorers={allBlockExplorers[connection.chainKey]}
+                    chainId={connection.chainId}
                     defaultValue={settings.blockExplorer}
                     selection
                   />
