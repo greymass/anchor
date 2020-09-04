@@ -29,7 +29,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
     const { account } = props;
 
     this.state = {
-      activeTab: 'byAmount',
+      activeTab: (props.connection.chainSymbol === 'UTX') ? 'byRAMAmount' : 'byAmount',
       ramUsage: account.ram_usage,
       ramQuota: account.ram_quota,
       ramToBuy: null,
@@ -111,11 +111,15 @@ class WalletPanelFormRamBuy extends Component<Props> {
       return 'ram_not_valid_amount';
     }
 
-    if (!(Number(ramToBuy) > 2)) {
+    if (!(Number(ramToBuy) >= 3)) {
       return 'ram_has_to_be_over_minimum_amount';
     }
 
-    const chainSymbolBalance = balance[connection.chainSymbol || 'EOS'];
+    if (connection.chainSymbol === 'UTX' && !(Number(ramToBuy) >= 1024)) {
+      return 'ram_has_to_be_over_minimum_amount_utx';
+    }
+
+    const chainSymbolBalance = balance[connection.chainRamSymbol || connection.chainSymbol || 'EOS'];
 
     if (!chainSymbolBalance || Decimal(chainSymbolBalance).lessThan(priceOfRam)) {
       return 'insufficient_balance';
@@ -149,12 +153,12 @@ class WalletPanelFormRamBuy extends Component<Props> {
     } = this.props;
 
     const {
+      activeTab,
       priceOfRam,
       ramToBuy
     } = this.state;
 
     const {
-      activeTab,
       buyrambytes,
       buyram
     } = actions;
@@ -199,7 +203,12 @@ class WalletPanelFormRamBuy extends Component<Props> {
     return (
       <React.Fragment>
         <Menu attached tabular>
-          <Menu.Item name="byAmount" active={activeTab === 'byAmount'} onClick={this.handleTabClick} />
+          {(connection.chainSymbol !== 'UTX')
+            ? (
+              <Menu.Item name="byAmount" active={activeTab === 'byAmount'} onClick={this.handleTabClick} />
+            )
+            : false
+          }
           <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
         </Menu>
         <Segment
@@ -241,7 +250,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <WalletPanelFormRamStats
-                        chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
+                        chainSymbolBalance={balance[connection.chainRamSymbol || connection.chainSymbol || 'EOS']}
                         connection={connection}
                         ramQuota={ramQuota}
                         ramUsage={ramUsage}
@@ -277,7 +286,7 @@ class WalletPanelFormRamBuy extends Component<Props> {
                 connection={connection}
                 ramAmount={ramToBuy}
                 newRamAmount={ramQuota + Number(ramToBuy)}
-                chainSymbolBalance={balance[connection.chainSymbol || 'EOS']}
+                chainSymbolBalance={balance[connection.chainRamSymbol || connection.chainSymbol || 'EOS']}
                 onBack={this.onBack}
                 onConfirm={this.onConfirm}
                 priceOfRam={priceOfRam}

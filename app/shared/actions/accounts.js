@@ -419,9 +419,10 @@ export function getCurrencyBalance(account, requestedTokens = false) {
         }
       });
 
-      if (connection.chainSymbol === 'BEOS') {
+      if (connection.chainSymbol === 'BEOS' || connection.chainSymbol === 'UTX') {
         selectedTokens = [];
-        return eos(connection, false, true).rpc.get_currency_stats('eosio.token', '').then((data) => {
+        const token = (connection.chainSymbol === 'UTX') ? 'UTXRAM' : '';
+        return eos(connection, false, true).rpc.get_currency_stats('eosio.token', token).then((data) => {
           const allTokens = Object.keys(data);
           allTokens.forEach((token) => {
             selectedTokens.push(`${connection.chainId}:eosio.token:${token}`);

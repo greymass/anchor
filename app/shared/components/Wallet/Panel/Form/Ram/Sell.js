@@ -31,7 +31,7 @@ class WalletPanelFormRamSell extends Component<Props> {
     const { account } = props;
 
     this.state = {
-      activeTab: 'byAmount',
+      activeTab: (props.connection.chainSymbol === 'UTX') ? 'byRAMAmount' : 'byAmount',
       confirming: false,
       formError: null,
       ramQuota: Number(account.ram_quota),
@@ -191,7 +191,12 @@ class WalletPanelFormRamSell extends Component<Props> {
     return (
       <React.Fragment>
         <Menu attached="top" tabular>
-          <Menu.Item name="byAmount" active={activeTab === 'byAmount'} onClick={this.handleTabClick} />
+          {(connection.chainSymbol !== 'UTX')
+            ? (
+              <Menu.Item name="byAmount" active={activeTab === 'byAmount'} onClick={this.handleTabClick} />
+            )
+            : false
+          }
           <Menu.Item name="byRAMAmount" active={activeTab === 'byRAMAmount'} onClick={this.handleTabClick} />
         </Menu>
         <Segment

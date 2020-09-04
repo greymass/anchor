@@ -261,7 +261,7 @@ const knownChains = [
   {
     "_id": "uxnetwork-mainnet",
     "chainId": "8fc6dce7942189f842170de953932b1f66693ad3788f766e777b6f9d22335c02",
-    "chainRamSymbol": "UXRAM",
+    "chainRamSymbol": "UTXRAM",
     "name": "UX Network",
     "node": "https://explorer.uxnetwork.io/",
     "symbol": "UTX",
