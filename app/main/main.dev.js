@@ -129,7 +129,7 @@ if (!lock) {
       uri = argv[argv.length - 1];
     }
     showMain();
-    if (mainWindow !== null) {
+    if (pHandler !== null) {
       handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
     }
   });
