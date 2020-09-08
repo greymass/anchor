@@ -259,15 +259,26 @@ export default class EOSHandler {
     if (!this.hasRequiredTaposFields(tx)) {
       throw new Error('Required configuration or TAPOS fields are not present');
     }
-    const pushTransactionArgs = {
-      serializedTransaction: Serializer.encode({ object: tx }).array,
+    const serializedTransaction = Serializer.encode({ object: tx }).array;
+    let pushTransactionArgs = {
+      serializedTransaction,
       signatures: []
     };
     if (sign) {
-      const privateKey = PrivateKey.from(this.config.keyProvider[0]);
-      const digest = tx.signingDigest(Checksum256.from(this.config.chainId));
-      const signature = privateKey.signDigest(digest);
-      pushTransactionArgs.signatures = [signature.toString()];
+      if (this.config.signMethod === 'ledger') {
+        const availableKeys = await this.signatureProvider.getAvailableKeys();
+        pushTransactionArgs = await this.signatureProvider.sign({
+          chainId: this.config.chainId,
+          requiredKeys: availableKeys,
+          serializedTransaction,
+          abis,
+        });
+      } else {
+        const privateKey = PrivateKey.from(this.config.keyProvider[0]);
+        const digest = tx.signingDigest(Checksum256.from(this.config.chainId));
+        const signature = privateKey.signDigest(digest);
+        pushTransactionArgs.signatures = [signature.toString()];
+      }
     }
     if (broadcast) {
       const signedTransaction = SignedTransaction.from({
