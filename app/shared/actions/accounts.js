@@ -2,7 +2,7 @@ import { chunk, difference, find, forEach, intersection, map, orderBy, pick, red
 
 import * as types from './types';
 import eos from './helpers/eos';
-import { addCustomTokenBeos } from './settings';
+import { addCustomToken, addCustomTokenBeos } from './settings';
 import { getTable, getTableByBounds } from './table';
 import { createHttpHandler } from '../utils/http/handler';
 import EOSHandler from '../utils/EOS/Handler';
@@ -419,10 +419,17 @@ export function getCurrencyBalance(account, requestedTokens = false) {
         }
       });
 
-      if (connection.chainSymbol === 'BEOS' || connection.chainSymbol === 'UTX') {
+      if (
+        connection.chainSymbol === 'UTX'
+        && !settings.customTokens.includes(`${settings.chainId}:eosio.token:UTXRAM`)
+      ) {
+        dispatch(addCustomToken('eosio.token', 'UTXRAM'));
+      }
+
+
+      if (connection.chainSymbol === 'BEOS') {
         selectedTokens = [];
-        const token = (connection.chainSymbol === 'UTX') ? 'UTXRAM' : '';
-        return eos(connection, false, true).rpc.get_currency_stats('eosio.token', token).then((data) => {
+        return eos(connection, false, true).rpc.get_currency_stats('eosio.token', '').then((data) => {
           const allTokens = Object.keys(data);
           allTokens.forEach((token) => {
             selectedTokens.push(`${connection.chainId}:eosio.token:${token}`);
