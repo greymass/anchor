@@ -49,7 +49,11 @@ class WalletPanelFormTransferSend extends Component<Props> {
     }
     if (TRANSFER_SET_ASSET_DATA) {
       const { amount, asset } = TRANSFER_SET_ASSET_DATA;
-      const { precision } = balances.__contracts[asset.toUpperCase()];
+      const assetContract = balances.__contracts[asset.toUpperCase()];
+      let precision;
+      if (assetContract) {
+        ({ precision } = assetContract);
+      }
       let precisionValue = connection.tokenPrecision;
       if (precision) {
         precisionValue = precision[asset.toUpperCase()];
@@ -287,7 +291,11 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
-    const { precision } = balances.__contracts[asset.toUpperCase()];
+    const assetContract = balances.__contracts[asset.toUpperCase()]
+    let precision;
+    if (assetContract) {
+      ({ precision } = assetContract)
+    }
 
     if (!balance) return false;
 
