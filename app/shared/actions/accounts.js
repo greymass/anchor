@@ -579,8 +579,8 @@ export function getAccountByKey(key) {
     const { httpClient, httpQueue } = await createHttpHandler(connection);
     const handler = new EOSHandler(connection);
     let convertedKey = handler.convert(key);
-    // Don't allow conversion with dfuse endpoints
-    if (connection.dfuseEndpoint) {
+    // Don't allow conversion with dfuse endpoints or UX endpoints (which are dfuse)
+    if (connection.dfuseEndpoint || connection.chainSymbol === 'UTX') {
       convertedKey = key;
     }
     dispatch({
