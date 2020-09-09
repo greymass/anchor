@@ -140,7 +140,7 @@ class PromptFragmentTransactionAction extends Component<Props> {
                           ))
                           : false
                         }
-                        {(isData && !isList)
+                        {(isData && !isList && !isJSON)
                           ? JSON.stringify(action.data[k])
                           : false
                         }
