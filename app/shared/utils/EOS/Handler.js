@@ -254,7 +254,10 @@ export default class EOSHandler {
         ...transaction,
       }, abis);
     } else {
-      tx = Transaction.from(transaction, abis);
+      tx = Transaction.from(
+        JSON.parse(JSON.stringify(transaction)),
+        JSON.parse(JSON.stringify(abis))
+      );
     }
     if (!this.hasRequiredTaposFields(tx)) {
       throw new Error('Required configuration or TAPOS fields are not present');
