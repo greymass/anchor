@@ -83,6 +83,10 @@ const supportedContracts = [
     supportedContracts: [],
   },
   {
+    chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+    supportedContracts: ['producerinfo'],
+  },
+  {
     // 'worbli-mainnet'
     chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
     supportedContracts: [],
