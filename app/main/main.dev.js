@@ -129,8 +129,10 @@ if (!lock) {
       uri = argv[argv.length - 1];
     }
     showMain();
-    if (pHandler !== null) {
+    if (pHandler !== null && uri && !uri.startsWith('--')) {
       handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
+    } else {
+      showManager();
     }
   });
 }
