@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
-    "@greymass/anchor-link-session-manager": "^0.0.1",
+    "@greymass/anchor-link-session-manager": "0.0.2",
     "@greymass/eosio": "^0.0.4",
     "asn1-ber": "^1.0.9",
     "axios": "^0.19.0",
@@ -66,7 +66,7 @@
     "electron-context-menu": "2.0.1",
     "electron-store": "^2.0.0",
     "electron-updater": "^4.3.1",
-    "eosio-signing-request": "^2.0.0-beta5",
+    "eosio-signing-request": "2.0.0-beta6",
     "eosjs": "16.0.8",
     "eosjs2": "git://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",

@@ -334,25 +334,16 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/anchor-link-session-manager@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.1.tgz#0f6a86f4d1c049caf6fdb3e02312bf15c8a9d646"
-  integrity sha512-8g708P1GRj55sj5GIBS8AdjGZvaWxKGWJMA3xMqTRiaJP9GzdNWJ0XOsC1eKg8WXVa9nsRryksg85nWN0PlK7A==
+"@greymass/anchor-link-session-manager@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.2.tgz#c1cc0c22085b8b0560a869e9bf222967289a8cc3"
+  integrity sha512-ssygJmNEmyFf/DrVB0PE/QAtqQb6dY54nCKg1rtDF1MqPgaFmD9o6tcZSvk8ZLG5M4P3AWe6J4OxJOVr6t1pNg==
   dependencies:
-    "@greymass/eosio" "^0.0.3"
-    eosio-signing-request "^2.0.0-beta5"
+    "@greymass/eosio" "^0.0.4"
+    eosio-signing-request "2.0.0-beta6"
     isomorphic-ws "^4.0.1"
     pako "^1.0.11"
     uuid "^8.3.0"
-
-"@greymass/eosio@0.0.3", "@greymass/eosio@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.3.tgz#62d1521dc0d40fdc391ae44ba8722fca908b84f4"
-  integrity sha512-M0I32H9OHiz91Ubke+2SqxFUx4Uzd/mjabc1s5WwM8/jUtAH3l5DsmWb6kmr3sr3hH6H1kjiVNE8SNMg/BUqgQ==
-  dependencies:
-    bn.js "^4.4.0"
-    elliptic "^6.5.2"
-    hash.js "^1.0.0"
 
 "@greymass/eosio@^0.0.4":
   version "0.0.4"
@@ -5127,12 +5118,12 @@ enzyme@^3.10.0:
     rst-selector-parser "^2.2.3"
     string.prototype.trim "^1.2.1"
 
-eosio-signing-request@^2.0.0-beta5:
-  version "2.0.0-beta5"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-beta5.tgz#8eca40c19d02e5652839ee2789484cc0af5fbc84"
-  integrity sha512-t5CPk8SOXVF0L0Wj44NaSAD+OAgOBtAaiqV4aY4r9+wqJildc5YOGzoK3iVDNF+X+rqgYuYBXO6yjI887v3ELw==
+eosio-signing-request@2.0.0-beta6:
+  version "2.0.0-beta6"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-beta6.tgz#2483d252067414827e436e42ac90b540a3bc01ed"
+  integrity sha512-QgAeqnrwAJZw2+OJRpSWirW5C16hX033Tpt3le4uG0gJhoM+ewTnpB7QALch/pkT7HI55fUWGBamJ8ZwsYGtVA==
   dependencies:
-    "@greymass/eosio" "0.0.3"
+    "@greymass/eosio" "^0.0.4"
 
 eosjs-api@7.0.4:
   version "7.0.4"
