@@ -15,7 +15,6 @@ import ToolsPingResult from './Result';
 class ToolsPingResults extends Component<Props> {
   render() {
     const {
-      maxSequence,
       node,
       onStop,
       results,
@@ -60,24 +59,6 @@ class ToolsPingResults extends Component<Props> {
             basic
           >
             <Icon
-              color="grey"
-              name="circle"
-            />
-            {t('legend_limited_history')}
-          </Label>
-          <Label
-            basic
-          >
-            <Icon
-              color="black"
-              name="circle"
-            />
-            {t('legend_no_history')}
-          </Label>
-          <Label
-            basic
-          >
-            <Icon
               color="red"
               name="circle"
             />
@@ -89,11 +70,6 @@ class ToolsPingResults extends Component<Props> {
             <Table.Row>
               <Table.HeaderCell collapsing width={3}>
                 {t('column_ms')}
-              </Table.HeaderCell>
-              <Table.HeaderCell collapsing>
-                {t('column_coverage_1')}
-                <br />
-                <small>{t('column_coverage_2')}</small>
               </Table.HeaderCell>
               <Table.HeaderCell>
                 {t('column_producer_1')}
@@ -115,7 +91,6 @@ class ToolsPingResults extends Component<Props> {
                 return (
                   <ToolsPingResult
                     isCurrentNode={isCurrentNode}
-                    maxSequence={maxSequence}
                     onStop={onStop}
                     result={result}
                     run={run}

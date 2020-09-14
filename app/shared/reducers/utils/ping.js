@@ -12,7 +12,6 @@ const initialState = {
   pending: 0,
   producer: 'Unknown',
   results: [],
-  maxSequence: 0,
 };
 
 function splitResultsByHost(host, results) {
@@ -73,14 +72,13 @@ export default function ping(state = initialState, action) {
         response,
       } = action.payload;
       const { current, others } = splitResultsByHost(host, state.results);
-      let newMaxSequence = state.maxSequence;
       // Tell the UI it's no longer loading
       current.loading = false;
       // Set the last request as not failed
       current.failed = false;
       // Determine if this endpoint uses a proxy
       const { knownproxies } = app.constants;
-      current.proxy = response.headers['x-selected-node'] || knownproxies[host] || false;
+      current.proxy = response.headers['x-selected-node'] || (knownproxies && knownproxies[host]) || false;
       current.producer = producer;
       // Compatible, save the latest response time
       const ms = parseInt(response.ms, 10);
@@ -102,7 +100,6 @@ export default function ping(state = initialState, action) {
             response.data
             && response.data.actions
             && response.data.actions.length > 0
-            && !response.data.actions[0].account_action_seq <= 0
           );
           break;
         }
@@ -127,18 +124,9 @@ export default function ping(state = initialState, action) {
         if (current.success >= 4) {
           current.available = true;
         }
-        // Set the sequence number for this latest action
-        if (response.data.actions) {
-          current.seq = response.data.actions[0].account_action_seq;
-        }
-        // Determine if this number is a new higher sequence number from what's known
-        if (current.seq > newMaxSequence) {
-          newMaxSequence = current.seq;
-        }
       }
       return Object.assign({}, state, {
         data,
-        maxSequence: newMaxSequence,
         path,
         pending: state.pending - 1,
         results: [current, ...others],

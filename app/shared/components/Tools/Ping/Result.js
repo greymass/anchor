@@ -8,8 +8,7 @@ import { Button, Header, Icon, Label, Popup, Table } from 'semantic-ui-react';
 
 class ToolsPingResult extends Component<Props> {
   shouldComponentUpdate = (nextProps) =>
-    !isEqual(this.props.maxSequence, nextProps.maxSequence)
-    || !isEqual(this.props.isCurrentNode, nextProps.isCurrentNode)
+    !isEqual(this.props.isCurrentNode, nextProps.isCurrentNode)
     || !isEqual(this.props.run, nextProps.run)
     || !isEqual(this.props.result.host, nextProps.result.host)
     || !isEqual(this.props.result.loading, nextProps.result.loading)
@@ -19,22 +18,20 @@ class ToolsPingResult extends Component<Props> {
   render() {
     const {
       isCurrentNode,
-      maxSequence,
       result,
       run,
       t,
     } = this.props;
-    const coverage = Math.round((result.seq / maxSequence) * 100);
     let color = 'black';
     if (result.failing) {
       color = 'red';
-    } else if (coverage === 100 && result.median <= 400) {
+    } else if (result.median <= 400) {
       color = 'green';
-    } else if (coverage === 100 && result.median <= 1000) {
+    } else if (result.median <= 1000) {
       color = 'yellow';
-    } else if (coverage === 100 && result.median < 99999) {
+    } else if (result.median < 99999) {
       color = 'orange';
-    } else if (coverage > 0 && result.median < 99999) {
+    } else if (result.median < 99999) {
       color = 'grey';
     }
     let failureMessage = false;
@@ -128,28 +125,6 @@ class ToolsPingResult extends Component<Props> {
           }
           <br />
         </Table.Cell>
-        <Table.Cell textAlign="center">
-          {(coverage > 0 && coverage < 100)
-            ? (
-              <Label
-                basic
-                color="orange"
-                content={`${coverage}%`}
-              />
-            )
-            : false
-          }
-          {(coverage === 100)
-            ? (
-              <Label
-                basic
-                color="green"
-                content={`${coverage}%`}
-              />
-            )
-            : false
-          }
-        </Table.Cell>
         <Table.Cell>
           <Header
             content={result.producer}
@@ -242,7 +217,7 @@ class ToolsPingResult extends Component<Props> {
             )
             : false
           }
-          {(!run && result.success > 0 && !isCurrentNode && coverage === 100)
+          {(!run && result.success > 0 && !isCurrentNode)
             ? (
               <Button
                 color="green"
@@ -257,8 +232,6 @@ class ToolsPingResult extends Component<Props> {
             !run
             && (
               result.failing === 'nohistory'
-              || (!result.failing && coverage < 100)
-              || (result.failing === 'nohistory' && coverage < 100)
             )
 
           )
