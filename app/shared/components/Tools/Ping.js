@@ -33,7 +33,6 @@ class ToolsPing extends Component<Props> {
     }
     this.state = Object.assign({}, initialState, {
       estimatedRequests: props.ping.estimated,
-      maxSequence: props.ping.maxSequence,
       results: props.ping.results,
     });
   }
@@ -51,7 +50,6 @@ class ToolsPing extends Component<Props> {
       if (attempts !== state.actualRequests) {
         derived = Object.assign({}, derived, {
           actualRequests: attempts,
-          maxSequence: props.ping.maxSequence,
           estimatedPercent: parseInt((attempts / state.estimatedRequests) * 100, 10),
           results: props.ping.results
         });
@@ -192,7 +190,6 @@ class ToolsPing extends Component<Props> {
       actualRequests,
       estimatedRequests,
       estimatedPercent,
-      maxSequence,
       node,
       results,
       run,
@@ -219,6 +216,9 @@ class ToolsPing extends Component<Props> {
       remove(data, (result) => result.failing);
     }
     const ordered = orderBy(data, ['seq', 'median'], ['desc', 'asc']);
+    if (results.host === 'https://wax.greymass.com') {
+      console.log(results)
+    }
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsPingHeader
@@ -251,7 +251,6 @@ class ToolsPing extends Component<Props> {
         {(ordered.length > 0)
           ? (
             <ToolsPingResults
-              maxSequence={maxSequence}
               onStop={this.stop}
               node={node}
               results={ordered}
