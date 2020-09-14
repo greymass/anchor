@@ -77,7 +77,7 @@ export default class EOSHandler {
     } else {
       this.signatureProvider = new JsSignatureProvider(config.keyProvider || []);
     }
-    this.initEOSJS(config.httpEndpoint)
+    this.initEOSJS(config.httpEndpoint);
     this.options = {
       blocksBehind: 3,
       broadcast: config.broadcast,
@@ -90,9 +90,12 @@ export default class EOSHandler {
     return convertLegacyPublicKey(pubkey);
   }
   initEOSJS(endpoint) {
-    this.client = new APIClient({
-      url: endpoint
-    });
+    // If no endpoint, don't initialize the core APIClient
+    if (endpoint) {
+      this.client = new APIClient({
+        url: endpoint
+      });
+    }
     this.rpc = new JsonRpc(endpoint, {
       fetch: async (path, request) => {
         const { httpClient, httpQueue } = await createHttpHandler(this.config);
@@ -186,7 +189,18 @@ export default class EOSHandler {
     // no broadcast + sign = create a v16 format transaction
     //   should likely be converted to use esr payloads
     if (!combinedOptions.broadcast && !combinedOptions.sign) {
-      return this.createTransaction(transaction, combinedOptions);
+      const abis = await Promise.all(transaction.actions.map(async (action) => {
+        const { abi } = await this.getAbi(action.account);
+        return {
+          contract: action.account,
+          abi,
+        };
+      }));
+      const unsigned = await this.createTransaction(transaction, combinedOptions);
+      return {
+        contract: abis[0],
+        transaction: unsigned
+      };
     }
     // issue the transaction with options and config
     const processed = await this.customTransact(transaction, combinedOptions);
@@ -333,6 +347,14 @@ export default class EOSHandler {
     : actions)
   getInfo = () => this.rpc.get_info()
   getBlock = (height) => this.rpc.get_block(height)
+  setAbi = (account, abi) => {
+    // Escape for dot notation
+    const escapedAccount = String(account).replace('.', '\\.');
+    // Combine the chainId + escaped name for the storage key
+    const storageKey = [this.config.chainId, escapedAccount].join('|');
+    // Store in eosjs
+    this.api.cachedAbis.set(storageKey, abi);
+  }
   getAbi = async (account) => {
     // Escape for dot notation
     const escapedAccount = String(account).replace('.', '\\.');
