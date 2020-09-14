@@ -88,7 +88,13 @@ export default function system(state = {}, action) {
     }
     // Attach any returned transactions
     if (action.payload.tx) {
-      newState = set(newState, txField, action.payload.tx);
+      if (action.payload.tx.transaction && action.payload.tx.contract) {
+        const { abi, contract } = action.payload.tx.contract;
+        newState = set(newState, contractField, new EOSContract(abi, contract));
+        newState = set(newState, txField, action.payload.tx.transaction);
+      } else {
+        newState = set(newState, txField, action.payload.tx);
+      }
     }
     // Attach any returned ABIs
     if (action.payload.contract) {

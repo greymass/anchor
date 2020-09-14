@@ -70,7 +70,10 @@ export default class GlobalTransactionHandler extends Component<Props> {
       );
     } else if (hasTransaction && settings.walletMode === 'watch') {
       content = (
-        <GlobalTransactionMessageUnsignedDownload settings={settings} />
+        <GlobalTransactionMessageUnsignedDownload
+          contract={contract}
+          settings={settings}
+        />
       );
     } else if (awaitingDevice && settings.walletMode === 'ledger') {
       content = (
