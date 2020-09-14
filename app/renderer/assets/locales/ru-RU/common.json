@@ -1,7 +1,7 @@
 {
   "account_authority": "Account/Authority",
   "application_name": "Anchor",
-  "application_version": "v1.1.2",
+  "application_version": "v1.1.3",
   "back": "Back",
   "block_height": "Номер Блока",
   "blockchain": "Blockchain",
