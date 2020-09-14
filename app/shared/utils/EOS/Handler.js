@@ -368,7 +368,7 @@ export default class EOSHandler {
       // If cache is not stale, use it
       if (abi.ts > expires) {
         // Cache in our eosjs instance
-        this.api.cachedAbis.set(abi.account, abi);
+        this.api.cachedAbis.set(storageKey, abi);
         // Return cached data
         return {
           account_name: abi.account,
