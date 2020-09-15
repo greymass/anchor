@@ -2,7 +2,7 @@
   "about_opensource_title": "Questa applicazione è open source",
   "about_opensource_message": "I contributi a questa applicazione sono benvenuti. Se sei interessato, visita il nostro account github",
   "about_opensource_link": "https://github.com/greymass/anchor",
-  "about_message_1": "Anchor is a standalone desktop application that connects directly to the EOS blockchain through the API endpoint of your choice.",
+  "about_message_1": "Anchor is a standalone desktop application that connects directly to the Blockchain through the API endpoint of your choice.",
   "about_message_2": "Le tue key non escono mai dall'applicazione e sono conservate sempre e soltantostored in forma criptata, dando così il più alto livello di sicurezza che un wallet possa offrire.",
   "about_more": "Visita  https://greymass.com per saperne di più.",
   "about_issues": "Se hai avuto problemi con l'applicazione, apri per favore una istanza su github:",
