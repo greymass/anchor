@@ -23,6 +23,19 @@ class ToolsPermissions extends Component<Props> {
       wallet
     } = this.props;
 
+    if (connection.chainSymbol === 'FIO') {
+      return (
+        <Segment>
+          <Header>
+            FIO Permission Management is disabled.
+          </Header>
+          <p>Changing permissions on a FIO account can cause problems with your account.</p>
+        </Segment>
+      );
+    }
+
+    console.log(connection)
+
     if (!['watch', 'ledger'].includes(settings.walletMode) && !pubkeys.unlocked.includes(wallet.pubkey)) {
       return (
         <WalletPanelLocked
