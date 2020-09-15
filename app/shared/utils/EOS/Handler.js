@@ -447,16 +447,17 @@ class LedgerSignatureProvider {
   }
 }
 
-const convertSignatures = (sigs) => {
-  if (!Array.isArray(sigs)) {
-    sigs = [sigs];
+const convertSignatures = sigs => {
+  let s = sigs
+  if (!Array.isArray(s)) {
+    s = [s];
   }
-  sigs = [].concat.apply([], sigs);
-  for (let i = 0; i < sigs.length; i++) {
-    const sig = sigs[i];
+  s = [].concat.apply([], s);
+  for (let i = 0; i < s.length; i + 1) {
+    const sig = s[i];
     if (typeof sig === 'string' && sig.length === 130) {
-      sigs[i] = ecc.Signature.from(sig).toString();
+      s[i] = ecc.Signature.from(sig).toString();
     }
   }
-  return sigs;
+  return s;
 };
