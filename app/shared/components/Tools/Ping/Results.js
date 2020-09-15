@@ -65,7 +65,7 @@ class ToolsPingResults extends Component<Props> {
             {t('legend_unresponsive')}
           </Label>
         </Segment>
-        <Table attached="bottom" striped>
+        <Table attached="bottom" size="small" striped>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell collapsing width={3}>

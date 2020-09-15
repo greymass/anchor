@@ -2,7 +2,7 @@ import { find } from 'lodash';
 import { httpQueue, httpClient } from '../utils/http/generic';
 import * as types from './types';
 
-export function pingNode(endpoint, data = {}, path = '/v1/history/get_actions') {
+export function pingNode(endpoint, data = {}, path = '/v1/chain/get_account') {
   return (dispatch: () => void, getState) => {
     const { app } = getState();
     const { host, producer } = endpoint;
@@ -42,7 +42,7 @@ export function pingNode(endpoint, data = {}, path = '/v1/history/get_actions') 
   };
 }
 
-export function pingNodes(endpoints, data = {}, path = '/v1/history/get_actions') {
+export function pingNodes(endpoints, data = {}, path = '/v1/chain/get_account') {
   return (dispatch: () => void, getState) => {
     const { ping } = getState();
     const { results } = ping;
