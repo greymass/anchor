@@ -7,7 +7,7 @@ const contractBasedFeatures = [
   // Used to retrieve USD price feeds
   // https://github.com/eostitan/delphioracle
   'delphioracle',
-  // Used in retrieval of EOS Block Producer information
+  // Used in retrieval of Block Producer information
   // https://github.com/greymass/producerjson
   'producerinfo',
   // Used in retrieval of EOS Referendum Proposals

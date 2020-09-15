@@ -10,7 +10,7 @@
   "error_bid_is_too_low": "Bid must be 10 percent higher than the current highest bid.",
   "error_bitshares_error": "Bitshares fee exceeds the quantity.",
   "error_cannot_transfer_to_self": "Invalid recipient, cannot transfer funds to self.",
-  "error_eosio_assert_message_exception": "The EOS blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
+  "error_eosio_assert_message_exception": "The Blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
   "error_insufficient_balance": "Insufficient available balance to complete transaction.",
   "error_invalid_accountName": "Nombre de cuenta no válido, asegúrate de que contiene de 1 a 12 letras.",
   "error_invalid_activeKeyValue": "Invalid Active Key, make sure it starts with '{{chainSymbol}}' and has an additional 50 characters.",
