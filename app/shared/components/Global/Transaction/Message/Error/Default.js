@@ -28,8 +28,12 @@ export class GlobalTransactionMessageErrorDefault extends Component<Props> {
     return (
       <Message negative>
         <Header>{t('error')}</Header>
-        <p key={error}>{t(errorMessage || error.message)}</p>
-
+        <p key={error}>
+          {(errorMessage)
+            ? t(errorMessage)
+            : error.message
+          }
+        </p>
         {(typeof error === 'object' && !(error instanceof Error)) ? (
           <ReactJson
             collapsed={1}
