@@ -17,7 +17,7 @@
   "producer_info_description_more": "소개 게시물 읽기",
   "producer_info_menu_item_one": "Producer Details",
   "producer_info_menu_item_two": "Producer JSON",
-  "producer_json_unavailable_content": "이 블록 생산자는 EOS 블록 체인의 'producerjson` 스마트 계약에 정보를 게시하지 않았습니다.",
+  "producer_json_unavailable_content": "This block producer has not yet published their candicacy information to the `producerjson` smart contract on the Blockchain.",
   "producer_json_unavailable_header": "정보 없음",
   "producer_none_loaded": "프로듀서 정보를 가져오지 못했습니다",
   "producer_none_match": "일치하는 프로듀서 없습니다.",
