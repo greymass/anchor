@@ -11,7 +11,7 @@
   "error_bitshares_error": "Bitshares fee exceeds the quantity.",
   "error_cannot_transfer_to_self": "受信者が不正です。自分自身に資金を送ることはできません。",
   "error_defunding_amount_invalid": "Defunding Amount Invalid",
-  "error_eosio_assert_message_exception": "EOSブロックチェーンはあなたのリクエストに一般的なエラーを返しました。情報が正しいか確認し、再試行して下さい。",
+  "error_eosio_assert_message_exception": "The Blockchain returned a generic error based on your request. Please check that the information is valid and try again.",
   "error_funding_amount_invalid": "Funding Amount Invalid, eg. '12.1212'",
   "error_insufficient_balance": "Insufficient available balance to complete transaction.",
   "error_insufficient_balance_matured": "Insufficient available matured balance to complete transaction. REX balances must mature for ~4 days before transactions may be created to sell.",
@@ -288,7 +288,7 @@
   "global_blockchain_manage_resync_popup": "Resync Blockchains",
   "global_blockchain_manage_resync_header": "Resync Blockchains & Settings",
   "global_blockchain_manage_resync_paragraph_one": "This utility will fetch a more recent copy of available blockchains and update their configuration.",
-  "global_blockchain_manage_resync_paragraph_two": "Anchor will do this by fetching data from the \"anchorwallet\" smart contract on the EOS blockchain. It will fetch this data either from the custom EOS node you have specified or by accessing the public API at eos.greymass.com directly.",
+  "global_blockchain_manage_resync_paragraph_two": "Anchor will do this by fetching data from the \"anchorwallet\" smart contract on the Blockchain. It will fetch this data either from the custom EOS node you have specified or by accessing the public API at eos.greymass.com directly.",
   "global_blockchain_manage_resync_button": "Resync",
   "global_message_error_header": "An error occured while loading the app:"
 }
