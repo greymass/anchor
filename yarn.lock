@@ -345,6 +345,15 @@
     pako "^1.0.11"
     uuid "^8.3.0"
 
+"@greymass/eosio@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.5.tgz#34b827ca527196c4e9b7a9293c0c70e881b06d30"
+  integrity sha512-eYToZAsARnOnlKST/eeJIDBHCHj1hVfjDNZY1/0KCRD8zkkHQPsQDfkgzR/IWZ/Cqrc2efFmYMqJCiRGzUYjzw==
+  dependencies:
+    bn.js "^4.4.0"
+    elliptic "^6.5.2"
+    hash.js "^1.0.0"
+
 "@greymass/eosio@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.4.tgz#af7fc2d3295cc5c243ac113dbfc9ff513d1b2448"
