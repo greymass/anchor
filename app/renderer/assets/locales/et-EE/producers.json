@@ -17,7 +17,7 @@
   "producer_info_description_more": "loe tutvustavat postitust",
   "producer_info_menu_item_one": "Producer Details",
   "producer_info_menu_item_two": "Producer JSON",
-  "producer_json_unavailable_content": "See plokitootja ei ole veel avaldanud oma kandideerimisteavet \"producerjson\" tarka lepingusse EOS plokiahelas.",
+  "producer_json_unavailable_content": "This block producer has not yet published their candicacy information to the `producerjson` smart contract on the Blockchain.",
   "producer_json_unavailable_header": "Teave pole saadaval",
   "producer_none_loaded": "Tootja andmeid pole laetud...",
   "producer_none_match": "Ükski tootja ei vasta otsingule.",
