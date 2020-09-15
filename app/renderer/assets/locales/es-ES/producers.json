@@ -17,7 +17,7 @@
   "producer_info_description_more": "read the introduction post",
   "producer_info_menu_item_one": "Producer Details",
   "producer_info_menu_item_two": "Producer JSON",
-  "producer_json_unavailable_content": "This block producer has not yet published their candicacy information to the `producerjson` smart contract on the EOS blockchain.",
+  "producer_json_unavailable_content": "This block producer has not yet published their candicacy information to the `producerjson` smart contract on the Blockchain.",
   "producer_json_unavailable_header": "Information Unavailable",
   "producer_none_loaded": "No hay datos de productores cargados...",
   "producer_none_match": "Ningún productor coincide con la consulta de búsqueda.",
