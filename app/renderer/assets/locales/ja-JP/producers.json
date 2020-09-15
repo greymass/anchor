@@ -17,7 +17,7 @@
   "producer_info_description_more": "紹介記事を読む",
   "producer_info_menu_item_one": "Producer Details",
   "producer_info_menu_item_two": "Producer JSON",
-  "producer_json_unavailable_content": "このブロックプロデューサはEOSブロックチェーン上の「producerjson」スマートコントラクトに立候補情報をまだ公開していません。",
+  "producer_json_unavailable_content": "This block producer has not yet published their candicacy information to the `producerjson` smart contract on the Blockchain.",
   "producer_json_unavailable_header": "情報が利用できません",
   "producer_none_loaded": "プロデューサデータがありません...",
   "producer_none_match": "検索条件に一致するプロデューサがありません。",
