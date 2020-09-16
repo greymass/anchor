@@ -334,13 +334,13 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/anchor-link-session-manager@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.2.tgz#c1cc0c22085b8b0560a869e9bf222967289a8cc3"
-  integrity sha512-ssygJmNEmyFf/DrVB0PE/QAtqQb6dY54nCKg1rtDF1MqPgaFmD9o6tcZSvk8ZLG5M4P3AWe6J4OxJOVr6t1pNg==
+"@greymass/anchor-link-session-manager@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.3.tgz#fc8030b34378fd68f8c4284c1452c8505fea02db"
+  integrity sha512-pQAv/GnVoJ8VIpcq6N14IwJAthVmGbcIRFQZOJNYKLPzlW3siREbjso+Lg2CQjEBoRJ4FoFkzNypG6Z9YB6oHg==
   dependencies:
-    "@greymass/eosio" "^0.0.4"
-    eosio-signing-request "2.0.0-beta6"
+    "@greymass/eosio" "0.0.5"
+    eosio-signing-request "2.0.0-beta7"
     isomorphic-ws "^4.0.1"
     pako "^1.0.11"
     uuid "^8.3.0"
@@ -349,15 +349,6 @@
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.5.tgz#34b827ca527196c4e9b7a9293c0c70e881b06d30"
   integrity sha512-eYToZAsARnOnlKST/eeJIDBHCHj1hVfjDNZY1/0KCRD8zkkHQPsQDfkgzR/IWZ/Cqrc2efFmYMqJCiRGzUYjzw==
-  dependencies:
-    bn.js "^4.4.0"
-    elliptic "^6.5.2"
-    hash.js "^1.0.0"
-
-"@greymass/eosio@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.4.tgz#af7fc2d3295cc5c243ac113dbfc9ff513d1b2448"
-  integrity sha512-jlMIJygiUiu4yWnFK192Ek0tx5V+X4aZ9If4rxc4BSLNak+IQeifo/5KjLuehQzwO82g6CsUPMQKHN3Y+WPKxg==
   dependencies:
     bn.js "^4.4.0"
     elliptic "^6.5.2"
@@ -5127,12 +5118,12 @@ enzyme@^3.10.0:
     rst-selector-parser "^2.2.3"
     string.prototype.trim "^1.2.1"
 
-eosio-signing-request@2.0.0-beta6:
-  version "2.0.0-beta6"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-beta6.tgz#2483d252067414827e436e42ac90b540a3bc01ed"
-  integrity sha512-QgAeqnrwAJZw2+OJRpSWirW5C16hX033Tpt3le4uG0gJhoM+ewTnpB7QALch/pkT7HI55fUWGBamJ8ZwsYGtVA==
+eosio-signing-request@2.0.0-beta7:
+  version "2.0.0-beta7"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-beta7.tgz#c9525353e3c8e10ddff3b6d48a77df57972f152d"
+  integrity sha512-uJXy4Ity1HHNPZHfSSe3pLJMvQ6UCF+PFNleG3x7zDPRhQk3cNpeL2DYaKQQ7KooerJyqtHjc7USug1sKJL2XQ==
   dependencies:
-    "@greymass/eosio" "^0.0.4"
+    "@greymass/eosio" "0.0.5"
 
 eosjs-api@7.0.4:
   version "7.0.4"
