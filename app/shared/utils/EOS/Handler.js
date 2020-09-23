@@ -365,8 +365,8 @@ export default class EOSHandler {
       const abi = store.get(storageKey);
       // Set cache stale for 15 minutes
       const expires = Date.now() - (1000 * 60 * abiCacheMinutes);
-      // If cache is not stale, use it
-      if (abi.ts > expires) {
+      // If using cold wallet or cache is not stale, use it
+      if (!this.config.httpEndpoint || abi.ts > expires) {
         // Cache in our eosjs instance
         this.api.cachedAbis.set(storageKey, abi);
         // Return cached data
