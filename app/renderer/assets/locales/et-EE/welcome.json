@@ -19,7 +19,7 @@
   "welcome_enter_account": "Kinnita Konto",
   "welcome_history_plugin_warning_content": "This node appears to not have the history plugin enabled, please note that some of the features of this wallet won't work with this node. You can use 'https://eos.greymass.com', 'http://api.eossweden.se' or 'http://eu.eosdac.io' if you want to take full advantage of this wallet.",
   "welcome_history_plugin_warning_title": "This node only allows partial use of this wallet",
-  "welcome_import_wallets": "Restore Backup from File",
+  "welcome_import_wallets": "Restore Wallet Backup",
   "welcome_import_wallets_scatter": "Import Scatter Backup",
   "welcome_import_wallets_scatter_header": "Import a backup from Scatter",
   "welcome_import_wallets_scatter_subheader": "The backup you have selected appears to be from Scatter. To import this backup, please enter the password you set within your Scatter wallet.",
