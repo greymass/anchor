@@ -46,6 +46,12 @@ class SidebarContainer extends Component<Props> {
     const background = '#131B33';
     const color = 'rgba(255, 255, 255, 0.7)';
     const devMode = false;
+    const inSetup = (
+      !settings.walletInit
+      || !settings.walletHash
+      || !settings.blockchains
+      || !wallets
+    );
     return (
       <Menu
         animation="overlay"
@@ -108,7 +114,7 @@ class SidebarContainer extends Component<Props> {
         >
           <Icon name="home" />
           {(!settings.sidebarCollapsed)
-            ? <p>{t('home')}</p>
+            ? <p>{t(inSetup ? 'setup' : 'home')}</p>
             : false
           }
         </Menu.Item>
@@ -239,6 +245,7 @@ class SidebarContainer extends Component<Props> {
         {(
           settings.walletInit
           && settings.chainId
+          && !inSetup
         )
           ? (
             <WalletPanelButtonBroadcast
