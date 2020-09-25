@@ -110,8 +110,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
       onClose,
       settings,
       t,
-      validate,
-      wallets
+      validate
     } = this.props;
     const {
       publicKey,

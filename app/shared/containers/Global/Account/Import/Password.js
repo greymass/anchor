@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Header, Icon, Modal, Segment, Tab } from 'semantic-ui-react';
+import { Header, Icon, Modal, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormHash from '../../../../components/Wallet/Panel/Form/Hash';
 
@@ -26,15 +26,8 @@ class GlobalModalAccountImportPassword extends Component<Props> {
             <WalletPanelFormHash
               actions={actions}
               onClose={this.props.onClose}
+              onComplete={this.props.onComplete}
             />
-            <Segment color="orange">
-              <Header
-                color="orange"
-                icon="warning"
-                content={t('global_account_import_password_header_one')}
-                subheader={t('global_account_import_password_subheader_one')}
-              />
-            </Segment>
           </Segment>
         )}
         header={(
@@ -50,9 +43,7 @@ class GlobalModalAccountImportPassword extends Component<Props> {
         )}
         open
         size="small"
-      >
-
-      </Modal>
+      />
     );
   }
 }

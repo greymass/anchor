@@ -25,7 +25,7 @@ class HomeInitializeContainer extends Component<Props> {
     actions.initApp();
     actions.setSetting('walletInit', true);
     e.preventDefault();
-    history.push('/home/blockchains');
+    history.push('/home/password');
     return false;
   }
   useColdWallet = (e) => {
@@ -70,7 +70,6 @@ class HomeInitializeContainer extends Component<Props> {
           <p style={{ margin: '1em auto 3em' }}>
             <Button
               content={t('main_sections_home_initialize_button_one')}
-              icon="sign-in"
               onClick={this.initialize}
               size="huge"
               style={{
@@ -91,7 +90,7 @@ class HomeInitializeContainer extends Component<Props> {
             </Card.Content>
             <Card.Content>
               <Button
-                color="teal"
+                basic
                 content={t('welcome:welcome_use_coldwallet')}
                 icon="snowflake"
                 onClick={this.useColdWallet}

@@ -14,20 +14,32 @@ class GlobalBlockchainDropdown extends Component<Props> {
   swapBlockchain = (chainId) => {
     const { actions } = this.props;
     actions.swapBlockchain(chainId);
+    if (this.props.onSwap) {
+      this.props.onSwap(chainId);
+    }
   };
   render() {
     const {
       blockchains,
       disabled,
       fluid,
+      initialize,
       selected,
       selection,
       settings,
       showName,
+      showTestnets,
       style,
       t,
     } = this.props;
-    if (!settings.blockchains || settings.blockchains.length === 0 || !settings.walletInit) {
+    if (
+      !initialize
+      && (
+        !settings.blockchains
+        || settings.blockchains.length === 0
+        || !settings.walletInit
+      )
+    ) {
       return false;
     }
     const { chainId } = settings;
@@ -46,6 +58,12 @@ class GlobalBlockchainDropdown extends Component<Props> {
         const isEnabled = settings.blockchains.includes(b.chainId);
         const isCurrent = b.chainId === blockchain.chainId;
         const isPinned = (hasPins && pinnedBlockchains.includes(b.chainId));
+        // Return all chains while initializing
+        if (
+          initialize
+          && (!b.testnet || showTestnets)
+        ) return true;
+        // Otherwies return based on user preference
         return (
           !isCurrent
           && isEnabled
@@ -112,6 +130,39 @@ class GlobalBlockchainDropdown extends Component<Props> {
         />
       );
     }
+    const content = (
+      <Dropdown.Menu key="menu" scrolling={!selection} style={{ minWidth: '200px', marginTop: 0 }}>
+        {(this.props.onNavigationChange)
+          ? (
+            <Dropdown.Header>
+              <Button
+                basic
+                content={t('button_manage_blockchains')}
+                fluid
+                icon="cubes"
+                onClick={() => this.props.onNavigationChange('manage/blockchains')}
+                size="small"
+              />
+            </Dropdown.Header>
+          )
+          : false
+        }
+        {options.map(option => {
+          const {
+            props,
+          } = option;
+          return (
+            <Dropdown.Item {...props} />
+          );
+        })
+        }
+      </Dropdown.Menu>
+    );
+    const wrapper = (
+      <Dropdown.Menu key="parent">
+        {content}
+      </Dropdown.Menu>
+    );
     return (
       <Dropdown
         fluid={fluid}
@@ -122,34 +173,10 @@ class GlobalBlockchainDropdown extends Component<Props> {
         style={style}
         trigger={trigger}
       >
-        <Dropdown.Menu key="parent">
-          <Dropdown.Menu key="menu" scrolling style={{ minWidth: '200px', marginTop: 0 }}>
-            {(this.props.onNavigationChange)
-              ? (
-                <Dropdown.Header>
-                  <Button
-                    basic
-                    content={t('button_manage_blockchains')}
-                    fluid
-                    icon="cubes"
-                    onClick={() => this.props.onNavigationChange('manage/blockchains')}
-                    size="small"
-                  />
-                </Dropdown.Header>
-              )
-              : false
-            }
-            {options.map(option => {
-              const {
-                props,
-              } = option;
-              return (
-                <Dropdown.Item {...props} />
-              );
-            })
-            }
-          </Dropdown.Menu>
-        </Dropdown.Menu>
+        {(selection)
+          ? content
+          : wrapper
+        }
       </Dropdown>
     );
   }
