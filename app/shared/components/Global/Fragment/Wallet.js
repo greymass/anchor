@@ -32,7 +32,7 @@ export class GlobalFragmentWallet extends PureComponent<Props> {
           )
           : false
         }
-        <Header.Content style={{ minWidth: (disableAvatar) ? 'none' : '15em' }}>
+        <Header.Content style={{ minWidth: (disableAvatar) ? 'none' : '10em' }}>
           <React.Fragment>
             {address || account}
             <Header.Subheader>

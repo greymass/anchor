@@ -19,11 +19,10 @@ class GlobalModalAccountImportExisting extends Component<Props> {
     pane: false
   }
   onClose = () => {
-    this.setState({ pane: false }, () => {
-      if (this.props.onClose) {
-        this.props.onClose();
-      }
-    });
+    this.setState({ pane: false });
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   }
   onClick = (e, { pane }) => this.setState({ pane })
   enableLedger = () => {

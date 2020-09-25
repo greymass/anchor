@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Button, Form, Icon, Segment } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import WalletPanelFormModalConfirm from './Modal/Confirm';
 
@@ -16,6 +16,9 @@ class WalletPanelFormHash extends Component<Props> {
     const { actions } = this.props;
     const { password } = this.state;
     actions.setWalletHash(password);
+    if (this.props.onComplete) {
+      this.props.onComplete();
+    }
   }
   onConfirm = () => this.setState({ confirming: true });
   onKeyPress = (e) => {
@@ -46,6 +49,14 @@ class WalletPanelFormHash extends Component<Props> {
           type="password"
           onChange={this.onChange}
         />
+        <Segment color="orange">
+          <Header
+            color="orange"
+            icon="warning"
+            content={t('global:global_account_import_password_header_one')}
+            subheader={t('global:global_account_import_password_subheader_one')}
+          />
+        </Segment>
         <Segment basic clearing>
           {(this.props.onClose)
             ? (
@@ -74,4 +85,4 @@ class WalletPanelFormHash extends Component<Props> {
   }
 }
 
-export default withTranslation('wallet')(WalletPanelFormHash);
+export default withTranslation(['wallet', 'global'])(WalletPanelFormHash);

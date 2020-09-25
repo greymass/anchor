@@ -10,9 +10,11 @@ import {
 } from 'react-router-dom';
 
 import ColdWalletContainer from './ColdWallet';
+import GlobalBlockchainChoose from '.../../../shared/containers/Global/Blockchain/Choose';
 import GlobalBlockchainManage from '.../../../shared/containers/Global/Blockchain/Manage';
 import HomeAccountsContainer from './Home/Accounts';
 import HomeInitializeContainer from './Home/Initialize';
+import HomePasswordContainer from './Home/Password';
 import HomeSigningRequestPrompt from './Home/SigningRequestPrompt';
 import HomeUpgradeContainer from './Home/Upgrade';
 import OverviewContainer from './Overview';
@@ -36,8 +38,10 @@ class HomeContainer extends Component<Props> {
     const matchingWallets = wallets.filter(w => (w.chainId === settings.chainId));
     if (!settings.walletInit) {
       history.push('/home/init');
-    } else if (!settings.chainId || settings.blockchains.length === 0) {
-      history.push('/home/blockchains');
+    } else if (!settings.walletHash) {
+      history.push('/home/password');
+    } else if (settings.walletHash && (!settings.chainId || settings.blockchains.length === 0)) {
+      history.push('/home/blockchain');
     } else if (!matchingWallets || matchingWallets.length === 0) {
       history.push('/home/accounts');
     } else if (settings.walletMode === 'cold') {
@@ -76,9 +80,11 @@ class HomeContainer extends Component<Props> {
             <Route exact path="/" component={OverviewContainer} />
             <Route path="/home/accounts" component={HomeAccountsContainer} />
             <Route path="/home/blockchains/:chain_id" component={GlobalBlockchainManage} />
+            <Route path="/home/blockchain" component={GlobalBlockchainChoose} />
             <Route path="/home/blockchains" component={GlobalBlockchainManage} />
             <Route path="/home/coldwallet" component={ColdWalletContainer} />
             <Route path="/home/init" component={HomeInitializeContainer} />
+            <Route path="/home/password" component={HomePasswordContainer} />
             <Route path="/home/upgrade" component={HomeUpgradeContainer} />
           </Switch>
         </HashRouter>

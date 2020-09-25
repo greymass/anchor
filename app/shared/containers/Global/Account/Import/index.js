@@ -24,6 +24,7 @@ class GlobalAccountImport extends Component<Props> {
   handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex })
   getPanes = () => {
     const {
+      initializing,
       settings,
       storage,
       t
@@ -82,12 +83,19 @@ class GlobalAccountImport extends Component<Props> {
         break;
       }
       default: {
-        panes.push(
-          welcome,
-          detect,
-          existing,
-          // create,
-        );
+        if (initializing) {
+          panes.push(
+            existing,
+            // create,
+          );
+        } else {
+          panes.push(
+            welcome,
+            detect,
+            existing,
+            // create,
+          );
+        }
         break;
       }
     }
@@ -120,15 +128,6 @@ class GlobalAccountImport extends Component<Props> {
               <Header.Subheader>
                 {t('global_import_index_subheader_one')}
               </Header.Subheader>
-              <Header.Subheader style={{
-                color: '#acacac',
-                marginTop: '0.25em',
-              }}>
-                <small>
-                  {t('global_import_index_subheader_two')}
-                  {connection.chainId}
-                </small>
-              </Header.Subheader>
             </Header.Content>
           </Header>
         </Segment>
@@ -157,6 +156,7 @@ class GlobalAccountImport extends Component<Props> {
 function mapStateToProps(state) {
   return {
     connection: state.connection,
+    initializing: !(state.storage.keys && state.storage.keys.length),
     settings: state.settings,
     storage: state.storage,
   };
