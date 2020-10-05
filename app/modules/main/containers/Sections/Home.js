@@ -63,7 +63,7 @@ class HomeContainer extends Component<Props> {
       wallets.length > 0
       && settings.walletHash
       && wallets.filter((w) => w.version === 1).length > 0
-      && !storage.data
+      && !storage.keys
     );
     let interrupt;
     if (esrPromptReady) {
