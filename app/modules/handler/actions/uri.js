@@ -273,7 +273,8 @@ const forbiddenActions = [
 function checkRequest(data) {
   const errors = forbiddenActions.map((prevent) => {
     const { action, contract, error } = prevent;
-    const matches = find(data.transaction.actions, { name: action, account: contract });
+    const actions = JSON.parse(JSON.stringify(data.transaction.actions));
+    const matches = find(actions, { name: action, account: contract });
     if (matches) {
       if (prevent.forbiddenData) {
         const act = matches.data;
