@@ -55,7 +55,7 @@ export function voteproducers(producers = [], proxy = '') {
     const actions = [await getAction(connection, account, authorization, producers, proxy, connection.keyPrefix, wallet)];
     return eos(connection, true, true)
       .transact({ actions }, {
-        blocksBehind: 3,
+        useLastIrreversible: true,
         broadcast: connection.broadcast,
         expireSeconds: connection.expireSeconds,
         sign: connection.sign,
