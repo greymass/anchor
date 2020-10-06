@@ -45,7 +45,7 @@ describe('eos()', () => {
     const eosobj = eos(connection, true, true);
     const method = 'transact';
     const params = {
-      blocksBehind: 3,
+      useLastIrreversible: true,
       expireSeconds: 30,
     };
     eosobj[method]({

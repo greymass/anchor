@@ -79,7 +79,7 @@ export default class EOSHandler {
     }
     this.initEOSJS(config.httpEndpoint);
     this.options = {
-      blocksBehind: 3,
+      useLastIrreversible: true,
       broadcast: config.broadcast,
       expireSeconds: config.expireSeconds,
       sign: config.sign,
