@@ -217,7 +217,10 @@ export default class EOSHandler {
     let transaction = tx;
     if (!tx.ref_block_num || !tx.ref_block_prefix) {
       const info = await this.rpc.get_info();
-      const height = info.last_irreversible_block_num - combinedOptions.blocksBehind;
+      let height = info.last_irreversible_block_num;
+      if (combinedOptions.blocksBehind) {
+        height -= combinedOptions.blocksBehind;
+      }
       const blockInfo = await this.rpc.get_block(height);
       transaction = Object.assign({}, cloneDeep(tx), {
         actions: await this.ensureSerializedActions(tx.actions),
