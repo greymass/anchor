@@ -334,10 +334,10 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/anchor-link-session-manager@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.5.tgz#250f1b96db7fcbed39f70fa534446bf056d637e9"
-  integrity sha512-2xLIm4BosWaGGKV/9/sOkXSvVSLFhj76mz/Fhg2maTBZDSf9YKB2ZYBd8MbM1kio752Q9IwYbffbxUf8hl8tCA==
+"@greymass/anchor-link-session-manager@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.6.tgz#5c4a56ec4eefc12ae9ac8d64ccc2fda0d152440a"
+  integrity sha512-UXFSsV4O8skb4da+XxFF45PBzIK9DUaVO7ViFNLYBq4Gna2lSb6u6Zh8nhLnRWXcVroJ5wTAL95t9wLM4yObbA==
   dependencies:
     "@greymass/eosio" "0.0.7"
     eosio-signing-request "2.0.0-beta9"
