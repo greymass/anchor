@@ -42,6 +42,7 @@ class WalletStakeContainer extends Component<Props> {
         />
       );
     }
+    const contract = system.STAKE_LAST_CONTRACT;
     const transaction = system.STAKE_LAST_TRANSACTION;
     let cpu_weight = 0;
     let net_weight = 0;
@@ -83,6 +84,7 @@ class WalletStakeContainer extends Component<Props> {
                         validate={validate}
                       />
                     )}
+                    contract={contract}
                     icon="microchip"
                     onClose={actions.clearSystemState}
                     title={t('main_sections_wallet_stake_transaction_title')}
