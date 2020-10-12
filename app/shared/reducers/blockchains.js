@@ -47,6 +47,7 @@ const supportedContracts = [
     supportedContracts: [
       'bidname',
       'greymassfuel',
+      'rex',
     ],
   },
   {
