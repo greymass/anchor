@@ -82,6 +82,10 @@ class WalletTransferContainer extends Component<Props> {
     });
 
     const hasTransaction = (transaction && transaction.transaction_id);
+    let contract;
+    if (system.TRANSFER_LAST_CONTRACT) {
+      contract = system.TRANSFER_LAST_CONTRACT;
+    }
 
     return (
       <React.Fragment>
@@ -116,6 +120,7 @@ class WalletTransferContainer extends Component<Props> {
                             system={system}
                           />
                         )}
+                        contract={contract}
                         icon="arrow circle up"
                         onClose={this.onClose}
                         settings={settings}

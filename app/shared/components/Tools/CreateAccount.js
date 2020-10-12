@@ -32,6 +32,7 @@ class ToolsCreateAccount extends Component<Props> {
 
     const account = accounts[settings.account];
 
+    const contract = system && system.CREATEACCOUNT_LAST_CONTRACT;
     const transaction = system && system.CREATEACCOUNT_LAST_TRANSACTION;
 
     return (
@@ -74,6 +75,7 @@ class ToolsCreateAccount extends Component<Props> {
                   settings={settings}
                 />
               )}
+              contract={contract}
               onClose={this.onClose}
               settings={settings}
               system={system}

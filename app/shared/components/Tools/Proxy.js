@@ -38,6 +38,7 @@ class ToolsProxy extends Component<Props> {
       isProxy = account.voter_info.is_proxy;
     }
 
+    const contract = system && system.SET_REGPROXYINFO_LAST_CONTRACT;
     const transaction = system && system.SET_REGPROXYINFO_LAST_TRANSACTION;
 
     return (pubkeys.unlocked.includes(wallet.pubkey) || ['watch', 'ledger'].includes(settings.walletMode))
@@ -94,6 +95,7 @@ class ToolsProxy extends Component<Props> {
                     transaction={transaction}
                   />
                 )}
+                contract={contract}
                 hideClose
                 onClose={this.onClose}
                 settings={settings}
