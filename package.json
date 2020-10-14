@@ -78,7 +78,7 @@
     "i18next-sprintf-postprocessor": "^0.2.2",
     "i18next-sync-fs-backend": "^1.1.1",
     "node-notifier": "^5.4.3",
-    "p-queue": "^3.0.0",
+    "p-queue": "^6.6.2",
     "pretty-bytes": "^5.1.0",
     "qrcode": "^1.4.4",
     "react": "^16.4.0",
