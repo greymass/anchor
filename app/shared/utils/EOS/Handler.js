@@ -259,11 +259,7 @@ export default class EOSHandler {
         abi,
       };
     }));
-    if (
-      !this.hasRequiredTaposFields(transaction)
-      && typeof blocksBehind === 'number'
-      && expireSeconds
-    ) {
+    if (!this.hasRequiredTaposFields(transaction)) {
       const info = await this.client.v1.chain.get_info();
       const header = info.getTransactionHeader();
       tx = Transaction.from({
