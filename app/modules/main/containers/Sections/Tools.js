@@ -31,6 +31,7 @@ import ToolsKeys from './Tools/Keys';
 import ToolsKeyGenerator from './Tools/KeyGenerator';
 import ToolsKeyValidator from './Tools/KeyValidator';
 import ToolsLedger from './Tools/Ledger';
+import ToolsLinkService from './Tools/LinkService';
 import ToolsPermissions from './Tools/Permissions';
 import ToolsProxy from './Tools/Proxy';
 import ToolsRecommendations from './Tools/Recommendations';
@@ -97,6 +98,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
             <Route path="/tools/key_validator" component={ToolsKeyValidator} />
             <Route path="/tools/ledger" component={ToolsLedger} />
+            <Route path="/tools/link_service" component={ToolsLinkService} />
             <Route path="/tools/name_bidding" component={ToolsBidName} />
             <Route path="/tools/permissions" component={ToolsPermissions} />
             <Route path="/tools/proxy" component={ToolsProxy} />

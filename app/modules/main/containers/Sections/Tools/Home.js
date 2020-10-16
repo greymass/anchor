@@ -94,6 +94,10 @@ const toolSections = {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_ping'
     },
+    tools_menu_linkservice_header: {
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
+      path: 'tools/link_service'
+    },
     // tools_system_log_header: {
     //   modes: [undefined, false, 'hot', 'ledger', 'watch'],
     //   path: 'tools/api_traffic_log'
