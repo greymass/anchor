@@ -47,6 +47,7 @@ export default class SessionManager {
       pHandler,
       store,
     } = this;
+    pHandler.webContents.send('sessionEvent', 'oncreate');
     this.handler = {
       onStorageUpdate(json) {
         const storage = JSON.parse(json);
@@ -63,13 +64,7 @@ export default class SessionManager {
         pHandler.setVisibleOnAllWorkspaces(false);
       },
       onSocketEvent(type, event) {
-        store.dispatch({
-          type: types.SYSTEM_SESSIONS_EVENT,
-          payload: {
-            type,
-            event
-          }
-        });
+        pHandler.webContents.send('sessionEvent', type, event);
       }
     };
   }

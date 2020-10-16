@@ -25,3 +25,17 @@ export default class Root extends Component<Props> {
 }
 
 ipcRenderer.on('openUri', (event, data) => store.dispatch(setURI(data)));
+ipcRenderer.on('sessionEvent', (event, type, data) => {
+  store.dispatch({
+    type: types.SYSTEM_SESSIONS_EVENT,
+    payload: {
+      type,
+      event: data
+    }
+  });
+});
+
+const networkStatus = () => ipcRenderer.send('networkStatusChanged', navigator.onLine ? 'online' : 'offline');
+window.addEventListener('online', networkStatus);
+window.addEventListener('offline', networkStatus);
+networkStatus();
