@@ -8,6 +8,8 @@ import i18n from '../../../shared/i18n';
 import { setURI } from '../actions/uri';
 import Prompt from './Prompt';
 
+import * as types from '../../../shared/actions/types';
+
 import '../../../shared/app.global.css';
 
 const { ipcRenderer } = require('electron');
