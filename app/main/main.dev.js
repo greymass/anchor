@@ -393,6 +393,31 @@ ipcMain.on('setBackgroundMode', (e, mode) => {
   setBackgroundMode(mode);
 });
 
+let networkStatus = 'online';
+ipcMain.on('networkStatusChanged', (e, status) => {
+  console.log('networkStatusChanged', status)
+  if (status === 'online' && networkStatus === 'offline') {
+    console.log('networkStatusChanged changing to ', status)
+    networkStatus = status;
+    initSessionManager();
+  }
+  if (status === 'offline') {
+    networkStatus = status;
+  }
+});
+
+ipcMain.on('linkConnect', () => {
+  sHandler.manager.connect();
+});
+
+ipcMain.on('linkDisconnect', () => {
+  sHandler.manager.disconnect();
+});
+
+ipcMain.on('linkRestart', () => {
+  initSessionManager();
+});
+
 global.hardwareLedger = new HardwareLedger();
 global.initSessionManager = initSessionManager;
 global.initHardwareLedger = initHardwareLedger;
