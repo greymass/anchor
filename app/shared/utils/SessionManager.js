@@ -15,13 +15,16 @@ export default class SessionManager {
   constructor(store, pHandler) {
     this.pHandler = pHandler;
     this.store = store;
-    this.createHandler();
-    this.createStorage();
-    this.manager = new AnchorLinkSessionManager({
-      handler: this.handler,
-      storage: this.storage,
-    });
-    this.manager.connect();
+    const { settings } = this.store.getState();
+    if (settings.walletMode !== 'cold') {
+      this.createHandler();
+      this.createStorage();
+      this.manager = new AnchorLinkSessionManager({
+        handler: this.handler,
+        storage: this.storage,
+      });
+      this.manager.connect();
+    }
   }
   addSession(data) {
     const session = AnchorLinkSessionManagerSession.fromIdentityRequest(
