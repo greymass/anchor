@@ -25,7 +25,7 @@ const initialState = {
   keyPrefix: 'EOS',
   keyProvider: [],
   keyProviderObfuscated: {},
-  sign: false,
+  sign: true,
   signMethod: false,
   signPath: false,
   supportedContracts: [],
@@ -192,6 +192,7 @@ export default function connection(state = initialState, action) {
       return Object.assign({}, state, {
         broadcast: true,
         expireSeconds: 120,
+        sign: true,
         signMethod: false
       });
     }
