@@ -78,7 +78,11 @@ class WelcomeImportContainer extends Component<Props> {
       wallets.forEach((wallet) => {
         if (wallet && ['anchor.v1.wallet', 'anchor.v2.wallet'].includes(wallet.schema)) {
           chainIds.push(wallet.data.chainId);
-          actions.importWalletFromBackup(wallet.data, settings.data);
+          const versioned = { ...wallet.data };
+          if (!versioned.version && wallet.schema === 'anchor.v1.wallet') {
+            versioned.version = 1;
+          }
+          actions.importWalletFromBackup(versioned, settings.data);
         } else {
           // unable to import settings
         }
