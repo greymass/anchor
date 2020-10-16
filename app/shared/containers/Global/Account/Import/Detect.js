@@ -87,7 +87,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
     this.props.onClose();
   }
   toggleAccount = (e, { checked, name, publicKey }) => {
-    const combined = `${name}|${publicKey}`
+    const combined = `${name}|${publicKey}`;
     const selected = [...this.state.selected];
     const existing = selected.indexOf(combined);
     if (checked && existing < 0) {
