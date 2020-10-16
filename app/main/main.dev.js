@@ -129,7 +129,7 @@ if (!lock) {
       uri = argv[argv.length - 1];
     }
     showMain();
-    if (pHandler !== null && uri && !uri.startsWith('--')) {
+    if (pHandler !== null && uri && uri.startsWith('esr:')) {
       handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
     } else {
       showManager();
