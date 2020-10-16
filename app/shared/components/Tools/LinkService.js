@@ -22,16 +22,25 @@ class ToolsLinkService extends Component<Props> {
           subheader={t('tools_link_service_subheader')}
         />
         <Button
+          color="green"
           content={t('connect')}
+          icon="play"
           onClick={this.linkConnect}
+          size="tiny"
         />
         <Button
+          color="red"
           content={t('disconnect')}
+          icon="stop"
           onClick={this.linkDisconnect}
+          size="tiny"
         />
         <Button
+          color="blue"
           content={t('restart')}
+          icon="refresh"
           onClick={this.linkRestart}
+          size="tiny"
         />
         <Segment basic size="large">
           <Table definition>
