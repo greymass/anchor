@@ -3,11 +3,18 @@ import PQueue from 'p-queue';
 
 const { ipcRenderer } = require('electron');
 
-const createHttpHandler = async (connection) => {
-  const httpQueue = new PQueue({
-    concurrency: 2
-  });
+const httpQueue = new PQueue({
+  concurrency: 2,
+  timeout: 3000,
+});
 
+setInterval(() => {
+  if (httpQueue.size > 100) {
+    httpQueue.clear();
+  }
+}, 1000);
+
+const createHttpHandler = async (connection) => {
   const headers = {};
   if (connection.dfuseEndpoint) {
     headers.Authorization = await dfuseToken(connection);
