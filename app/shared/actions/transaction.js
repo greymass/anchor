@@ -55,7 +55,7 @@ export function broadcastTransaction(tx, actionName = false, actionPayload = {})
     const {
       connection
     } = getState();
-    const signer = eos(connection, false, true)
+    const signer = eos(connection, false, true);
     const serializedTransaction = signer.api.serializeTransaction(tx.transaction.transaction);
     const { signatures } = tx.transaction;
     signer.rpc.push_transaction({ serializedTransaction, signatures })
@@ -118,7 +118,7 @@ export function signTransaction(tx, contract = false) {
     const signer = eos(connection, true, true);
     // If a contract was specified along with the transaction, load it.
     if (contract && contract.account && contract.abi) {
-      signer.setAbi(contract.account, contract.abi)
+      signer.setAbi(contract.account, contract.abi);
     }
     // Sign the transaction
     signer
