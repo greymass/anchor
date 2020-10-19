@@ -132,14 +132,23 @@ export default class EOSHandler {
       textDecoder: new TextDecoder(),
       textEncoder: new TextEncoder()
     });
-    Object.keys(store.store).forEach((account) => {
-      const escapedAccount = account.replace('.', '\\.');
-      const expires = Date.now() - (1000 * 60 * abiCacheMinutes);
-      const abi = store.get(escapedAccount);
-      // If local cache is not stale, cache it within eosjs
-      if (abi.ts > expires) {
-        this.api.cachedAbis.set(abi.account_name, abi);
+    Object.keys(store.store).forEach((key) => {
+      // Escape storage key
+      const storageKey = key.replace('.', '\\.');
+      // Load the ABI from localstorage
+      const abi = store.get(storageKey);
+      if (abi && abi.ts) {
+        // Determine if the cache is expired
+        const expiredAt = abi.ts + (1000 * 60 * abiCacheMinutes);
+        const expired = expiredAt < Date.now();
+        // If local cache is not stale, cache it within eosjs
+        if (!expired) {
+          this.api.cachedAbis.set(abi.account_name, abi);
+          return;
+        }
       }
+      // If no ABI or expired, delete localstorage
+      store.delete(storageKey);
     });
   }
   sign(options) {
@@ -353,6 +362,11 @@ export default class EOSHandler {
     const storageKey = [this.config.chainId, escapedAccount].join('|');
     // Store in eosjs
     this.api.cachedAbis.set(storageKey, abi);
+    // Store in localstorage
+    store.set(storageKey, {
+      ...abi,
+      ts: Date.now(),
+    });
   }
   getAbi = async (account) => {
     // Escape for dot notation
@@ -363,9 +377,10 @@ export default class EOSHandler {
       // Check local store for abi
       const abi = store.get(storageKey);
       // Set cache stale for 15 minutes
-      const expires = Date.now() - (1000 * 60 * abiCacheMinutes);
+      const expiredAt = abi.ts + (1000 * 60 * abiCacheMinutes);
+      const expired = expiredAt < Date.now();
       // If using cold wallet or cache is not stale, use it
-      if (!this.config.httpEndpoint || abi.ts > expires) {
+      if (!this.config.httpEndpoint || !expired) {
         // Cache in our eosjs instance
         this.api.cachedAbis.set(storageKey, abi);
         // Return cached data
@@ -374,6 +389,8 @@ export default class EOSHandler {
           abi: abi.abi,
         };
       }
+      // otherwise delete it
+      store.delete(storageKey);
     }
     // If no cache, retrieve
     const abi = await this.rpc.get_abi(account);
@@ -389,7 +406,7 @@ export default class EOSHandler {
   getRequiredAbis = async (request) => {
     const abis = new Map();
     await Promise.all(request.getRequiredAbis().map(async (account) => {
-      const { abi } = await this.getAbi(account)
+      const { abi } = await this.getAbi(account);
       abis.set(account, abi);
     }));
     return abis;
