@@ -58,9 +58,9 @@ export function transfer(from, to, quantity, memo, symbol) {
     });
     try {
       const contracts = balances.__contracts;
-      const contractAccount = contracts[currentSymbol].contract;
+      const contractAccount = contracts[currentSymbol].contract || 'eosio.token';
       const actions = [await getAction(contractAccount, account, authorization, from, to, quantity, memo, connection.keyPrefix, connection, wallet)];
-      const signer = eos(connection, true, true)
+      const signer = eos(connection, true, true);
       return signer.transact({ actions }, {
         broadcast: connection.broadcast,
         expireSeconds: connection.expireSeconds,
