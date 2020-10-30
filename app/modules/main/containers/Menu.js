@@ -30,6 +30,7 @@ class MenuContainer extends Component<Props> {
   componentDidMount() {
     const {
       actions,
+      settings,
     } = this.props;
     const {
       getBlockExplorers,
@@ -38,7 +39,25 @@ class MenuContainer extends Component<Props> {
     initApp();
     getBlockExplorers();
     this.tick();
-    this.interval = setInterval(this.tick.bind(this), 10000);
+    if (parseInt(settings.refreshRate, 10) > 0) {
+      this.interval = setInterval(
+        this.tick.bind(this),
+        (settings.refreshRate || 15) * 1000
+      );
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { settings } = this.props;
+    if (settings.refreshRate !== nextProps.refreshRate) {
+      clearInterval(this.interval);
+      if (parseInt(nextProps.settings.refreshRate, 10) > 0) {
+        this.interval = setInterval(
+          this.tick.bind(this),
+          (nextProps.settings.refreshRate) * 1000
+        );
+      }
+    }
   }
 
   componentWillUnmount() {

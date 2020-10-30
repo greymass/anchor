@@ -94,6 +94,8 @@ const initialState = {
   recentProposalsScopes: [],
   // The most recently used wallets. Key is the chainId and property is the account/authority.
   recentWallets: {},
+  // The interval which the wallet updates account data (in seconds, false = disabled)
+  refreshRate: 15,
   // If the sidebar is collapsed
   sidebarCollapsed: false,
   // Allows the UI to start with only a connected node
@@ -138,7 +140,7 @@ export default function settings(state = initialState, action) {
     }
     case types.SET_RECENT_CONTRACT_ACTION: {
       const recentContractActions = (state.recentContractActions) ? [...state.recentContractActions] : [];
-      const { contractName, actionName } = action.payload
+      const { contractName, actionName } = action.payload;
       const contractActionCombo = `${contractName}:${actionName}`;
       if (!recentContractActions.includes(contractActionCombo)) {
         recentContractActions.unshift(contractActionCombo);
