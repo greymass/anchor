@@ -11,7 +11,6 @@ const zlib = require('zlib');
 const { clipboard, ipcRenderer } = require('electron');
 const { SigningRequest } = require('eosio-signing-request');
 
-
 const opts = {
   zlib: {
     deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
@@ -38,7 +37,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       transaction: transaction.transaction.transaction
     }, opts);
     const uri = req.encode();
-    this.setState({ uri })
+    this.setState({ uri });
     const { canvas } = this;
     QRCode.toCanvas(canvas, uri, {
       scale: 6
@@ -79,9 +78,9 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
       copiedTransaction,
       uri
     } = this.state;
-    let uriParts = []
+    let uriParts = [];
     if (uri) {
-      uriParts = uri.split('://')
+      uriParts = uri.split('://');
     }
     const panes = [
       {
