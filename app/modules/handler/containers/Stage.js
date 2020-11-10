@@ -328,11 +328,11 @@ class PromptStage extends Component<Props> {
       />
     );
 
-    let helpAction = (
+    const helpAction = (
       <PromptActionShare
         onClick={onShareLink}
       />
-    )
+    );
 
     if (wallet.mode === 'watch') {
       nextAction = (
@@ -426,7 +426,7 @@ class PromptStage extends Component<Props> {
           toggleSessions={toggleSessions}
           wallet={wallet}
         />
-      )
+      );
       if (couldSignWithKey && !canSign) {
         nextAction = (
           <PromptActionUnlock
@@ -544,7 +544,7 @@ class PromptStage extends Component<Props> {
             >
               <Header>
                 {(broadcasting) ? t('handler_containers_stage_header_broadcast') : false}
-                {(callbacking) ? t('handler_containers_stage_header_issue'): false}
+                {(callbacking) ? t('handler_containers_stage_header_issue') : false}
                 {(signing) ? t('handler_containers_stage_header_sign') : false}
                 {(validatingPassword) ? t('handler_containers_stage_header_password') : false}
               </Header>

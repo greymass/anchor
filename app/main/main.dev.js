@@ -17,6 +17,7 @@ import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardwa
 const log = require('electron-log');
 const path = require('path');
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
+
 const isMac = () => process.platform === 'darwin';
 
 require('electron-context-menu')();
@@ -90,7 +91,7 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
 
-  log.info('anchor: starting with development mode settings')
+  log.info('anchor: starting with development mode settings');
 
   const p = path.join(resourcePath, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
@@ -395,9 +396,9 @@ ipcMain.on('setBackgroundMode', (e, mode) => {
 
 let networkStatus = 'online';
 ipcMain.on('networkStatusChanged', (e, status) => {
-  console.log('networkStatusChanged', status)
+  console.log('networkStatusChanged', status);
   if (status === 'online' && networkStatus === 'offline') {
-    console.log('networkStatusChanged changing to ', status)
+    console.log('networkStatusChanged changing to ', status);
     networkStatus = status;
     initSessionManager();
   }
