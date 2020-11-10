@@ -12,6 +12,8 @@ import TransactionActions from '../../../shared/actions/transaction';
 import ValidateActions from '../../../shared/actions/validate';
 import WalletActions from '../../../shared/actions/wallet';
 
+import { createHttpHandler } from '../../../shared/utils/http/handler';
+
 import PromptStage from './Stage';
 import PromptHeader from '../components/Header';
 import PromptShare from '../components/Share';
@@ -72,6 +74,16 @@ class PromptContainer extends Component<Props> {
     w.close();
     this.setState(initialState);
   };
+  onCancel = async () => {
+    const { prompt } = this.props;
+    if (prompt.callback) {
+      const { httpClient } = await createHttpHandler({});
+      httpClient.post(prompt.callback, {
+        rejected: 'Request cancelled from within Anchor.'
+      });
+    }
+    this.onClose();
+  }
   onSign = () => {
     const { wallet } = this.state;
     const { actions, blockchains, prompt } = this.props;
@@ -208,6 +220,7 @@ class PromptContainer extends Component<Props> {
           hasExpired={hasExpired}
           hasIssuedCallback={hasIssuedCallback}
           modifyWhitelist={this.modifyWhitelist}
+          onCancel={this.onCancel}
           onClose={this.onClose}
           onShareLink={this.onShareLink}
           onWhitelist={this.onWhitelist}
