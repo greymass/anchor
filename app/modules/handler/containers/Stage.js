@@ -188,6 +188,7 @@ class PromptStage extends Component<Props> {
       hasExpired,
       hasIssuedCallback,
       modifyWhitelist,
+      onCancel,
       onClose,
       onShareLink,
       onWhitelist,
@@ -323,7 +324,7 @@ class PromptStage extends Component<Props> {
 
     let cancelAction = (
       <PromptActionCancel
-        onClick={onClose}
+        onClick={onCancel}
       />
     );
 
