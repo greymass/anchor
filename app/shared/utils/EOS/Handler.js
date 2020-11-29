@@ -454,8 +454,8 @@ class LedgerSignatureProvider {
       const [actor, permission] = this.config.authorization.split('@');
       tx.actions[0].authorization = [{ actor, permission }];
     }
-    const buffer = serialize(chainId, tx, fc.types);
-    const response = await ledgerApi.signTransaction(this.config.signPath, buffer.toString('hex'));
+    const chunks = serialize(chainId, tx, fc.types);
+    const response = await ledgerApi.signTransaction(this.config.signPath, chunks);
     return {
       signatures: convertSignatures(response.v + response.r + response.s),
       serializedTransaction: this.api.serializeTransaction(tx),
