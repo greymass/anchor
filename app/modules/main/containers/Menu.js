@@ -42,7 +42,7 @@ class MenuContainer extends Component<Props> {
     if (parseInt(settings.refreshRate, 10) > 0) {
       this.interval = setInterval(
         this.tick.bind(this),
-        (settings.refreshRate || 15) * 1000
+        settings.refreshRate * 1000
       );
     }
   }

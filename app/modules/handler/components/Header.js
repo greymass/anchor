@@ -91,7 +91,12 @@ class PromptHeader extends Component<Props> {
                       ? (
                         <Statistic size="small">
                           <Statistic.Value>
-                            <Icon color="orange" name="warning sign" />
+                            <Icon
+                              color="orange"
+                              name="warning sign"
+                              size="small"
+                              style={{ marginBottom: '0.15em' }}
+                            />
                           </Statistic.Value>
                           <Statistic.Label>{t('handler_header_statistic_one')}</Statistic.Label>
                         </Statistic>

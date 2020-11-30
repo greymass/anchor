@@ -184,6 +184,7 @@ class PromptStage extends Component<Props> {
       blockchain,
       enableSessions,
       enableWhitelist,
+      expiration,
       hasBroadcast,
       hasExpired,
       hasIssuedCallback,
@@ -284,6 +285,7 @@ class PromptStage extends Component<Props> {
         canBroadcast={canBroadcast}
         couldSignWithDevice={couldSignWithDevice}
         enableWhitelist={enableWhitelist}
+        expiration={expiration}
         modifyWhitelist={modifyWhitelist}
         onCheck={this.onCheck}
         onShareLink={onShareLink}
@@ -299,7 +301,7 @@ class PromptStage extends Component<Props> {
     let nextAction = (
       <PromptActionSign
         broadcast
-        disabled={!hasTransaction || signing || !canSign}
+        disabled={hasExpired || !hasTransaction || signing || !canSign}
         loading={signing}
         onClick={this.onSign}
         wallet={wallet}
@@ -430,7 +432,7 @@ class PromptStage extends Component<Props> {
       if (couldSignWithKey && !canSign) {
         nextAction = (
           <PromptActionUnlock
-            disabled={signing || validatingPassword}
+            disabled={hasExpired || signing || validatingPassword}
             loading={validatingPassword}
             onClick={this.onUnlockAndSignIdentity}
             wallet={wallet}
@@ -447,10 +449,14 @@ class PromptStage extends Component<Props> {
           />
         );
       }
-    } else if (couldSignWithKey && !canSign) {
+    } else if (
+      couldSignWithKey
+      // && !hasExpired
+      && !canSign
+    ) {
       nextAction = (
         <PromptActionUnlock
-          disabled={signing || validatingPassword}
+          disabled={hasExpired || signing || validatingPassword}
           loading={validatingPassword}
           onClick={this.onUnlockAndSign}
           wallet={wallet}
@@ -460,12 +466,6 @@ class PromptStage extends Component<Props> {
       stage = (
         <PromptStageExpired
           uri={prompt.uri}
-        />
-      );
-      nextAction = (
-        <PromptActionRecreate
-          onClick={this.onRecreate}
-          wallet={wallet}
         />
       );
     } else if (hasTransaction && !hasSignature && !includes(['watch', 'ledger'], settings.walletMode)) {
@@ -529,8 +529,7 @@ class PromptStage extends Component<Props> {
           padded
           style={{
             marginBottom: 0,
-            paddingBottom: '100px',
-            paddingTop: '130px',
+            padding: '115px 15px 100px',
             minHeight: '100vh',
           }}
         >
