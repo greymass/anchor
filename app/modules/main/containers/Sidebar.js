@@ -188,6 +188,20 @@ class SidebarContainer extends Component<Props> {
             <React.Fragment>
               <Menu.Item
                 as="a"
+                active={module === 'rps'}
+                onClick={this.onClick}
+                name="rps"
+                color="green"
+                style={{ color }}
+              >
+                <Icon name="battery full" />
+                {(!settings.sidebarCollapsed)
+                  ? 'Resources'
+                  : false
+                }
+              </Menu.Item>
+              <Menu.Item
+                as="a"
                 active={module === 'tests'}
                 onClick={this.onClick}
                 name="tests"
