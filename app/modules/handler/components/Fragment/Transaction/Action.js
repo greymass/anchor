@@ -6,8 +6,10 @@ import { get } from 'dot-prop-immutable';
 import { attempt, isArray, isError, isObject } from 'lodash';
 
 import PromptFragmentTransactionActionFuel from './Action/Fuel';
+import PromptFragmentTransactionActionFuelFee from './Action/Fuel/Fee';
 
 const fuelActions = ['greymassfuel:cosign', 'greymassnoop:noop'];
+const fuelFee = ['eosio.token:transfer'];
 
 class PromptFragmentTransactionAction extends Component<Props> {
   render() {
@@ -16,21 +18,47 @@ class PromptFragmentTransactionAction extends Component<Props> {
       enableWhitelist,
       index,
       modifyWhitelist,
+      showAll,
       t,
       total,
       whitelist,
     } = this.props;
-    if (
+    // Determine if Fuel is covering the resources of this transaction
+    const isFuelAction = (
       action.account
       && action.name
       && fuelActions.includes([action.account.toString(), action.name.toString()].join(':'))
-    ) {
+    );
+    // Determine if the user is paying for Fuel during this transaction
+    const isFuelPaidAction = (
+      action.data
+      && action.data.to
+      && action.data.to.toString() === 'fuel.gm'
+      && action.data.memo
+      && action.data.memo.includes('ref=')
+    );
+    if (!showAll && (isFuelAction || isFuelPaidAction)) {
+      return false;
+    }
+    if (!showAll && isFuelAction) {
       return (
-        <PromptFragmentTransactionActionFuel
-          action={action}
-          index={index}
-          total={total}
-        />
+        <Segment stacked>
+          <PromptFragmentTransactionActionFuel
+            action={action}
+            index={index}
+            total={total}
+          />
+          {(isFuelPaidAction)
+            ? (
+              <PromptFragmentTransactionActionFuelFee
+                action={action}
+                index={index}
+                total={total}
+              />
+            )
+            : false
+          }
+        </Segment>
       );
     }
     return (
@@ -69,6 +97,12 @@ class PromptFragmentTransactionAction extends Component<Props> {
           </Label>
           <Divider horizontal style={{ marginTop: '1.5em' }}>{t('handler_transaction_action_label_divider_two')}</Divider>
           <List relaxed>
+            {(Object.keys(action.data).length === 0)
+              ? (
+                <List.Item>No data included in transaction.</List.Item>
+              )
+              : false
+            }
             {Object.keys(action.data).sort().map((k) => {
               const isFlexible = get(whitelist, `flexible.${index}.${k}`, false);
               const isList = isArray(action.data[k]);

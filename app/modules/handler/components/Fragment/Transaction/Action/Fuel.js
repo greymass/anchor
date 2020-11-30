@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
-import { Icon, Image, Label, Segment } from 'semantic-ui-react';
+import { Grid, Header, Icon, Image, Label, Segment } from 'semantic-ui-react';
 
 import FuelFullLogo from '../../../../../../renderer/assets/images/fuel/greymassfuel-horizontal.png';
 
@@ -14,30 +14,37 @@ class PromptFragmentTransactionActionFuel extends Component<Props> {
       t,
     } = this.props;
     return (
-      <div key={index}>
-        <Segment basic style={{ marginBottom: '0.5em' }}>
-          <Label basic>
-            {action.account.toString()}
-            <Icon
-              name="caret right"
-              style={{ marginLeft: '1em' }}
-            />
-            {action.name.toString()}
-          </Label>
-          <Label>
-            {t('handler_transaction_action_fuel_label_one', { index: index + 1, total })}
-          </Label>
-          <Image
-            centered
-            floated="right"
-            src={FuelFullLogo}
-            style={{
-              height: '32px',
-              margin: 0
-            }}
-          />
-        </Segment>
-      </div>
+      <Grid key={index}>
+        <Grid.Row columns={2}>
+          <Grid.Column>
+            <Label basic>
+              {action.account.toString()}
+              <Icon
+                name="caret right"
+                style={{ marginLeft: '1em' }}
+              />
+              {action.name.toString()}
+            </Label>
+            <Label>
+              {t('handler_transaction_action_fuel_label_one', { index: index + 1, total })}
+            </Label>
+          </Grid.Column>
+          <Grid.Column textAlign="center">
+            <Header block>
+              Network Resources Provided by...
+            </Header>
+            <Segment basic>
+              <Image
+                centered
+                src={FuelFullLogo}
+                style={{
+                  height: '48px',
+                }}
+              />
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }

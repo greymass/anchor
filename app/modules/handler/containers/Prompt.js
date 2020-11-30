@@ -61,7 +61,7 @@ class PromptContainer extends Component<Props> {
   }
   onKeyPress = (e) => {
     if ((e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) && (e.target.nodeName === 'BODY')) {
-      this.onClose();
+      this.onCancel();
       e.preventDefault();
       return false;
     }
@@ -190,8 +190,11 @@ class PromptContainer extends Component<Props> {
     const hasBroadcast =
       !!(response && (response.processed && response.processed.receipt.status === 'executed'));
     const hasIssuedCallback = prompt.callbackExecuted;
-    const hasExpired =
-      !!(prompt.transaction && !hasBroadcast && Date.now() > Date.parse(`${prompt.transaction.expiration}z`));
+    const expiration = prompt.resolved
+      && prompt.resolved.transaction
+      && Date.parse(`${prompt.resolved.transaction.expiration.toString()}z`);
+    const now = Date.now();
+    const hasExpired = !!(expiration && !hasBroadcast && now > expiration);
     const requestedActor = get(prompt, 'transaction.actions.0.authorization.0.actor');
     const requestedActorMissing =
       requestedActor &&
@@ -216,6 +219,7 @@ class PromptContainer extends Component<Props> {
           blockchain={blockchain}
           enableSessions={enableSessions}
           enableWhitelist={enableWhitelist}
+          expiration={expiration}
           hasBroadcast={hasBroadcast}
           hasExpired={hasExpired}
           hasIssuedCallback={hasIssuedCallback}
