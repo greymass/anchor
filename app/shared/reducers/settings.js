@@ -199,7 +199,7 @@ export default function settings(state = initialState, action) {
     case types.RESET_INVALID_SETTINGS: {
       return Object.assign({}, validSettings.reduce((o, setting) => ({
         ...o,
-        [setting]: (state[setting]) ? state[setting] : initialState[setting]
+        [setting]: (state[setting] !== undefined) ? state[setting] : initialState[setting]
       }), {}));
     }
     case types.SET_CONNECTION_DFUSE_ENDPOINT: {

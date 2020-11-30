@@ -3,12 +3,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Trans, withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment, Tab } from 'semantic-ui-react';
 
 import PromptReviewControls from '../../components/Review/Controls';
 import ErrorMessage from '../../components/error';
 import PromptFragmentPlaceholderTransactionAction from '../../components/Fragment/Placeholder/Transaction/Action';
 import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
+import PromptFragmentReviewActions from '../../components/Fragment/Review/Actions';
+import PromptFragmentReviewOverview from '../../components/Fragment/Review/Overview';
+import GlobalTransactionViewFull from '../../../../shared/components/Global/Transaction/View/Full';
+import PromptFragmentTransactionActionResourceProvider from '../../components/Fragment/Transaction/Action/ResourceProvider';
 
 class PromptStageReview extends Component<Props> {
   getAuthorizers(resolvedRequest) {
@@ -23,6 +27,8 @@ class PromptStageReview extends Component<Props> {
       canBroadcast,
       couldSignWithDevice,
       enableWhitelist,
+      expiration,
+      globals,
       modifyWhitelist,
       onShareLink,
       prompt,
@@ -51,9 +57,81 @@ class PromptStageReview extends Component<Props> {
     const transaction = resolved.resolvedTransaction;
     const error = system.ESRURIBUILD_LAST_ERROR;
     const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
+    const fuelActions = ['greymassfuel:cosign', 'greymassnoop:noop'];
+    // Determine if the user is using a resource provider
+    const usingResourceProvider = (
+      transaction
+      && transaction.actions
+      && transaction.actions.length
+      && transaction.actions.filter((action) => (
+        action.account
+        && action.name
+        && fuelActions.includes([action.account.toString(), action.name.toString()].join(':'))
+      )).length > 0
+    );
+    // Determine if the user is paying for Fuel during this transaction
+    const hasResourceProviderFee = (
+      transaction
+      && transaction.actions
+      && transaction.actions.length
+      && transaction.actions.filter((action) => (
+        action.data
+        && action.data.to
+        && action.data.to.toString() === 'fuel.gm'
+        && action.data.memo
+        && action.data.memo.includes('ref=')
+      )).length > 0
+    );
+    const panes = [
+      {
+        menuItem: 'Transaction Overview',
+        render: () => (
+          <Tab.Pane attached="bottom">
+            <PromptFragmentReviewOverview
+              enableWhitelist={enableWhitelist}
+              error={error}
+              globals={globals}
+              hasResourceProviderFee={hasResourceProviderFee}
+              loading={loading}
+              modifyWhitelist={modifyWhitelist}
+              transaction={transaction}
+              usingResourceProvider={usingResourceProvider}
+              whitelist={whitelist}
+            />
+          </Tab.Pane>
+        )
+      },
+      {
+        menuItem: 'Action Details',
+        render: () => (
+          <Tab.Pane attached="bottom">
+            <PromptFragmentReviewActions
+              enableWhitelist={enableWhitelist}
+              error={error}
+              hasResourceProviderFee={hasResourceProviderFee}
+              loading={loading}
+              modifyWhitelist={modifyWhitelist}
+              transaction={transaction}
+              usingResourceProvider={usingResourceProvider}
+              whitelist={whitelist}
+            />
+          </Tab.Pane>
+        )
+      },
+      {
+        menuItem: 'Raw Transaction',
+        render: () => (
+          <Tab.Pane attached="bottom">
+            <GlobalTransactionViewFull
+              transaction={JSON.parse(JSON.stringify(transaction))}
+            />
+          </Tab.Pane>
+        )
+      },
+    ];
     return (
       <Grid stackable>
-        <Grid.Column width={6}>
+        <Grid.Column width={5} style={{ background: '#f3f4f5' }}>
           <PromptReviewControls
             callback={callback}
             canBroadcast={canBroadcast}
@@ -61,6 +139,7 @@ class PromptStageReview extends Component<Props> {
             couldSignWithDevice={couldSignWithDevice}
             disabledSwap={disabledSwap}
             enableWhitelist={enableWhitelist}
+            expiration={expiration}
             mismatch={mismatch}
             onCheck={this.props.onCheck}
             onSelect={this.props.swapAccount}
@@ -70,45 +149,24 @@ class PromptStageReview extends Component<Props> {
             wallet={wallet}
           />
         </Grid.Column>
-        <Grid.Column width={10}>
-          <Header>
-            {t('handler_containers_stage_review_header')}
-            <Header.Subheader>
-              <Trans i18nKey="handler_containers_stage_review_paragraph" t={t}>
-                Listed below are the actions to be performed.
-                If you are unsure of what this request does,
-                <a href="#" onClick={() => this.openLink('https://greymass.com/fuel')}>
-                  use a URI link to ask those you trust
-                </a>
-              </Trans>
-            </Header.Subheader>
-          </Header>
-          {(loading)
-            ? <PromptFragmentPlaceholderTransactionAction />
-            : false
-          }
-          {(transaction)
-            ? transaction.actions.map((action, index) => (
-              <PromptFragmentTransactionAction
-                action={action}
-                enableWhitelist={enableWhitelist}
-                modifyWhitelist={modifyWhitelist}
-                index={index}
-                total={transaction.actions.length}
-                whitelist={whitelist}
-              />
-            ))
-            : false
-          }
+        <Grid.Column width={11}>
           {(error)
             ? (
-              <Segment attached>
+              <Segment attached="bottom">
                 <ErrorMessage
                   error={error}
                 />
               </Segment>
             )
-            : false
+            : (
+              <Tab
+                menu={{
+                  attached: 'top',
+                  size: 'large'
+                }}
+                panes={panes}
+              />
+            )
           }
         </Grid.Column>
       </Grid>
@@ -118,6 +176,7 @@ class PromptStageReview extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    globals: state.globals,
     prompt: state.prompt,
     settings: state.settings,
     system: state.system,
