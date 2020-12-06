@@ -139,7 +139,7 @@ export default class Eos {
           ? rawTxChunk.length - offset
           : maxChunkSize;
 
-        const buffer = Buffer.alloc(offset === 0 ? 1 + (paths.length * 4) + chunkSize : chunkSize);
+        const buffer = Buffer.alloc(first ? 1 + (paths.length * 4) + chunkSize : chunkSize);
         if (first) {
           buffer[0] = paths.length;
           paths.forEach((element, index) => {
