@@ -111,39 +111,48 @@ export default class Eos {
   * You can sign a transaction and retrieve v, r, s given the raw transaction
   * and the BIP 32 path of the account to sign
   * @example
-  eth.signTransaction("44'/194'/0'/0'/0", "....").then(result => ...)
+  eth.signTransaction("44'/194'/0'/0'/0", [...]).then(result => ...)
   */
   signTransaction(
     path: string,
-    rawTxHex: string
+    rawTxChunks: [Buffer]
   ): Promise<{
     s: string,
     v: string,
     r: string
   }> {
     const paths = bippath.fromString(path).toPathArray();
-    let offset = 0;
-    const rawTx = Buffer.from(rawTxHex, 'hex');
     const toSend = [];
     let response;
-    while (offset !== rawTx.length) {
-      const maxChunkSize = offset === 0 ? 150 - 1 - (paths.length * 4) : 150;
-      const chunkSize =
-      offset + maxChunkSize > rawTx.length
-        ? rawTx.length - offset
-        : maxChunkSize;
-      const buffer = Buffer.alloc(offset === 0 ? 1 + (paths.length * 4) + chunkSize : chunkSize);
-      if (offset === 0) {
-        buffer[0] = paths.length;
-        paths.forEach((element, index) => {
-          buffer.writeUInt32BE(element, 1 + (4 * index));
-        });
-        rawTx.copy(buffer, 1 + (4 * paths.length), offset, offset + chunkSize);
-      } else {
-        rawTx.copy(buffer, 0, offset, offset + chunkSize);
+
+    let first = true;
+    let sliceSize = 150;
+
+    for (var i=0; i < rawTxChunks.length; ++i) {
+      let offset = 0;
+      const rawTxChunk = rawTxChunks[i];
+
+      while (offset !== rawTxChunk.length) {
+        const maxChunkSize = first ? sliceSize - 1 - (paths.length * 4) : sliceSize;
+        const chunkSize =
+        offset + maxChunkSize > rawTxChunk.length
+          ? rawTxChunk.length - offset
+          : maxChunkSize;
+
+        const buffer = Buffer.alloc(first ? 1 + (paths.length * 4) + chunkSize : chunkSize);
+        if (first) {
+          buffer[0] = paths.length;
+          paths.forEach((element, index) => {
+            buffer.writeUInt32BE(element, 1 + (4 * index));
+          });
+          rawTxChunk.copy(buffer, 1 + (4 * paths.length), offset, offset + chunkSize);
+          first = false;
+        } else {
+          rawTxChunk.copy(buffer, 0, offset, offset + chunkSize);
+        }
+        toSend.push(buffer);
+        offset += chunkSize;
       }
-      toSend.push(buffer);
-      offset += chunkSize;
     }
     return foreach(toSend, (data, i) =>
       this.transport
