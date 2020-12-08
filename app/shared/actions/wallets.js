@@ -378,10 +378,6 @@ export function useWallet(chainId, account, authorization) {
       console.log('cannot use wallet, not found', chainId, account, authorization);
       return;
     }
-    // Temporary: Disable Fuel if the wallet is a ledger wallet (does not work)
-    if (connection.greymassFuel && newWallet.mode === 'ledger') {
-      dispatch(setSetting('greymassFuel', false));
-    }
     //  Reset the unregistered producers
     dispatch({
       type: types.SET_UNREGISTERED_PRODUCERS,
