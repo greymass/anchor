@@ -109,31 +109,13 @@ class GlobalFuelDropdown extends Component<Props> {
                 )
                 : ''
               }
-              {(!enabled && settings.walletMode !== 'ledger')
+              {(!enabled)
                 ? (
                   <Button
                     content={t('fuel_button_two')}
                     color="green"
                     onClick={this.enable}
                   />
-                )
-                : false
-              }
-              {(settings.walletMode === 'ledger')
-                ? (
-                  <Segment secondary>
-                    <Header>
-                      Fuel disabled while using a Ledger
-                      <Header.Subheader style={{ marginTop: '1em' }}>
-                        The combination of Fuel and Ledger devices is currently not working. An issue on the Ledger app itself prevents this feature from working.
-                      </Header.Subheader>
-                      <Header.Subheader style={{ marginTop: '1em' }}>
-                        <a href="#" onClick={() => this.openLink('https://github.com/tarassh/eos-ledger/issues/13')}>
-                          Technical information is available here.
-                        </a>
-                      </Header.Subheader>
-                    </Header>
-                  </Segment>
                 )
                 : false
               }
