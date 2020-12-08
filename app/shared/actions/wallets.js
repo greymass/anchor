@@ -10,7 +10,7 @@ import { lookupFioNames } from './address';
 import EOSAccount from '../utils/EOS/Account';
 import eos from './helpers/eos';
 
-const async = require("async");
+const async = require('async');
 const ecc = require('eosjs-ecc');
 const CryptoJS = require('crypto-js');
 
@@ -210,7 +210,7 @@ export function importKeypairStorage(
   keypairs = [],
 ) {
   return (dispatch: () => void, getState) => {
-    console.log(password, keypairs)
+    console.log(password, keypairs);
     const { storage } = getState();
     let data;
     // Generate the new records
@@ -252,7 +252,9 @@ export function importWallet(
   path = undefined,
 ) {
   return (dispatch: () => void, getState) => {
-    const { accounts, connection, storage, settings } = getState();
+    const {
+      accounts, connection, storage, settings
+    } = getState();
     const accountData = accounts[account];
     let pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : publicKey;
     if (!pubkey) {
@@ -298,7 +300,7 @@ export function importWallet(
       && settings.authorization === authorization
     ) {
       dispatch(setSettings(Object.assign({}, settings, {
-        walletMode: (modeChange) ? modeChange : mode,
+        walletMode: (modeChange) || mode,
       })));
     }
     return dispatch({
@@ -308,7 +310,7 @@ export function importWallet(
         accountData,
         authorization,
         chainId,
-        mode: (modeChange) ? modeChange : mode,
+        mode: (modeChange) || mode,
         path: detectedPath,
         pubkey
       }
@@ -323,19 +325,17 @@ export function importWalletAuth(
   authAccount,
   authAuthorization,
 ) {
-  return (dispatch: () => void) => {
-    return dispatch({
-      type: types.IMPORT_WALLET_AUTH,
-      payload: {
-        account,
-        authorization,
-        authAccount,
-        authAuthorization,
-        chainId,
-        mode: 'auth',
-      }
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.IMPORT_WALLET_AUTH,
+    payload: {
+      account,
+      authorization,
+      authAccount,
+      authAuthorization,
+      chainId,
+      mode: 'auth',
+    }
+  });
 }
 
 export function importWallets(
@@ -366,7 +366,9 @@ export function removeWallet(chainId, account, authorization) {
 
 export function useWallet(chainId, account, authorization) {
   return async (dispatch: () => void, getState) => {
-    const { auths, connection, wallet, wallets } = getState();
+    const {
+      auths, connection, wallet, wallets
+    } = getState();
     // Find the wallet by account name + authorization when possible
     const walletQuery = { account, chainId };
     if (authorization) {
@@ -424,7 +426,7 @@ export function useWallet(chainId, account, authorization) {
       });
     }
   };
-};
+}
 
 // Upgrades a legacy hot wallet to the newest version
 export function upgradeWallet(chainId, account, authorization, password = false, swap = false) {
