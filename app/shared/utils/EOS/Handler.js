@@ -46,8 +46,8 @@ const fuelTransaction = {
 };
 
 const fuelEndpoints = {
-  'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906': 'http://eos.greymass.com',
-  'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473': 'http://jungle.greymass.com',
+  aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'http://eos.greymass.com',
+  e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473: 'http://jungle.greymass.com',
   '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': 'http://jungle3.greymass.com',
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'http://telos.greymass.com',
 };
@@ -113,9 +113,9 @@ export default class EOSHandler {
           if (response.isAxiosError) {
             return {
               ok: false,
-              json: () => (response.response) ? response.response.data : {
+              json: () => ((response.response) ? response.response.data : {
                 message: response.message
-              }
+              })
             };
           }
           // Return a response immitating what eosjs expects
@@ -319,9 +319,7 @@ export default class EOSHandler {
     expiration,
     ref_block_num,
     ref_block_prefix,
-  }) => {
-    return !!(expiration && ref_block_num && ref_block_prefix);
-  }
+  }) => !!(expiration && ref_block_num && ref_block_prefix)
   reverseNibbles = (hex) => {
     const rv = [];
     for (let i = hex.length - 1; i > 0; i -= 2) {
