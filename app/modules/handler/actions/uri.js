@@ -161,7 +161,7 @@ export function setURI(uri) {
       type: types.SYSTEM_ESRURI_PENDING
     });
     try {
-      // Setup decompression
+    // Setup decompression
       const opts = {
         zlib: {
           deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
@@ -293,7 +293,7 @@ function checkRequest(data) {
 function arrayToHex(data) {
   let result = '';
   for (const x of data) {
-    result += ('00' + x.toString(16)).slice(-2);
+    result += (`00${x.toString(16)}`).slice(-2);
   }
   return result;
 }
@@ -303,7 +303,7 @@ function unpackTransaction(bytes) {
     array: bytes,
     textDecoder,
     textEncoder,
-  })
+  });
   const type = transactionTypes.get('transaction');
   if (type) {
     return type.deserialize(buffer);
@@ -574,7 +574,7 @@ export function templateURI(blockchain, wallet) {
         contract = {
           account_name: contracts[0][0],
           abi: contracts[0][1],
-        }
+        };
       }
       return dispatch({
         type: types.SYSTEM_ESRURIBUILD_SUCCESS,
