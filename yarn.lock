@@ -334,25 +334,27 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/anchor-link-session-manager@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.7.tgz#24416e5f638209c0b36ada92554b28b1411cd72a"
-  integrity sha512-VYh42TMdq7uWfjBaB6WHdejS5ffYOAzPagcUfiPo1HmD7asbZsQSgPQ2lGZO88TFBr/mx1SjDiBZCdPfl2vxHA==
+"@greymass/anchor-link-session-manager@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.0.8.tgz#309812b2fafd23c0bb8ca3060fb39b6b7ba241ff"
+  integrity sha512-+Dg/U+9prwEFm6VPG4DUXBI7LEGY3ty/ShmEEWGuKEK/H0x2209gQlNTaPOOsU9DDsdjN0DnBz1Wwx1M7YCLbQ==
   dependencies:
-    "@greymass/eosio" "0.0.7"
-    eosio-signing-request "2.0.0-beta9"
+    "@greymass/eosio" "0.1.8"
+    eosio-signing-request "2.0.0-rc.1"
     isomorphic-ws "^4.0.1"
     pako "^1.0.11"
     uuid "^8.3.0"
 
-"@greymass/eosio@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.0.7.tgz#a6bac7136c66cd3189c67661016eea07196b8d7a"
-  integrity sha512-bxsRnV/DvirhkACLTlZ0SaNOJyhJGJgwSsv6P+qBGTkNTBXvXUkJNfsNVua1HrmhxRw8KWi4jQkC5o8U0bNBSg==
+"@greymass/eosio@0.1.8", "@greymass/eosio@^0.1.5":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.1.8.tgz#be2794efebc2c0bed078a275e53dcc7929786ef3"
+  integrity sha512-OotCpFZjVUj/CKgY14M/5VsS2Na+lysNF4nThGqdVNAPO1CaSZUPLpPoVAdOKS0I6p0rBD3TxarPp2s8OdmR+Q==
   dependencies:
     bn.js "^4.4.0"
-    elliptic "^6.5.2"
+    brorand "^1.0.1"
+    elliptic "^6.5.3"
     hash.js "^1.0.0"
+    tslib "^2.0.3"
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -4948,7 +4950,7 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-elliptic@^6.5.2:
+elliptic@^6.5.3:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
   integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
@@ -5118,12 +5120,13 @@ enzyme@^3.10.0:
     rst-selector-parser "^2.2.3"
     string.prototype.trim "^1.2.1"
 
-eosio-signing-request@2.0.0-beta9:
-  version "2.0.0-beta9"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-beta9.tgz#cd1d11fd09a50ca26a87f85a3cb1ec2fa842515f"
-  integrity sha512-sluUwA6xbk7Ynf2v/dnHmLQzNE/MH5a24RdF3yUr6w1adrKK+z8Be5i4nH+BxJkOkrPGa7MCAcmnD2hibUPkeQ==
+eosio-signing-request@2.0.0-rc.1:
+  version "2.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.0.0-rc.1.tgz#6ec559fdae0aafe712490cf0966486ad48f540c4"
+  integrity sha512-qY7X5PJBgLSJ91f4wTwhdOxiTHTuHtrgqHN+ySGW0PwTlAyOMRfSOXRw2KorKOwEoQ6dDB4gUfX6tu+D42wmMw==
   dependencies:
-    "@greymass/eosio" "0.0.7"
+    "@greymass/eosio" "^0.1.5"
+    tslib "^2.0.3"
 
 eosjs-api@7.0.4:
   version "7.0.4"
@@ -13502,6 +13505,11 @@ tslib@^1.9.0:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+
+tslib@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
 
 tty-browserify@0.0.0:
   version "0.0.0"

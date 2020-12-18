@@ -182,6 +182,7 @@ class PromptStage extends Component<Props> {
     const {
       auths,
       blockchain,
+      blockchains,
       enableSessions,
       enableWhitelist,
       expiration,
@@ -421,10 +422,12 @@ class PromptStage extends Component<Props> {
     } else if (reqType === 'identity' && !hasSignature) {
       stage = (
         <PromptStageIdentity
+          blockchains={blockchains}
           canSign={canSign}
           couldSignWithDevice={couldSignWithDevice}
           enableSessions={enableSessions}
           onSelect={this.props.swapAccount}
+          onSelectChain={this.props.swapChain}
           toggleSessions={toggleSessions}
           wallet={wallet}
         />

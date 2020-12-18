@@ -8,6 +8,8 @@ import { Container, Form, Grid, Header, Message, Segment } from 'semantic-ui-rea
 
 import ErrorMessage from '../../components/error';
 import GlobalAccountDropdownSelect from '../../../../shared/containers/Global/Account/Dropdown/Select';
+import GlobalBlockchainDropdown from '../../../../shared/containers/Global/Blockchain/Dropdown';
+
 import ToolsHardwareLedgerStatus from '../../../../shared/components/Tools/Hardware/Ledger/Status';
 
 import * as HardwareLedgerActions from '../../../../shared/actions/hardware/ledger';
@@ -21,17 +23,35 @@ class PromptStageIdentity extends Component<Props> {
       enableSessions,
       ledger,
       onSelect,
+      onSelectChain,
       prompt,
       settings,
       status,
       wallet,
+      wallets,
       t,
     } = this.props;
     const {
       chainId,
       resolved,
     } = prompt;
-    if (!resolved) return false
+    if (!resolved) return false;
+    let chainIds = [];
+    let multiChain = false;
+    if (
+      resolved.request
+      && resolved.request.isMultiChain
+      && resolved.request.isMultiChain()
+    ) {
+      chainIds = JSON.parse(JSON.stringify(resolved.request.getChainIds()));
+      const { blockchains } = this.props;
+      multiChain = blockchains.filter(b => {
+        const hasWallet = wallets.filter(w => w.chainId === b.chainId).length > 0;
+        const isEnabled = settings.blockchains.includes(b.chainId);
+        const isSelectable = chainIds.includes(b.chainId);
+        return (isEnabled && isSelectable && hasWallet);
+      }).length > 1;
+    }
     const {
       account,
       authorization,
@@ -56,6 +76,21 @@ class PromptStageIdentity extends Component<Props> {
           <Grid.Row centered columns={1}>
             <Grid.Column width={10}>
               <Form style={{ zIndex: 1000 }}>
+                {(multiChain)
+                  ? (
+                    <Form.Field>
+                      <label>{t('handler_containers_stage_identity_chain_label')}</label>
+                      <GlobalBlockchainDropdown
+                        chainIds={chainIds}
+                        onSelect={onSelectChain}
+                        selected={chainId}
+                        selection
+                        showName
+                      />
+                    </Form.Field>
+                  )
+                  : false
+                }
                 <Form.Field>
                   <label>{t('handler_containers_stage_identity_label')}</label>
                   <GlobalAccountDropdownSelect
@@ -68,14 +103,14 @@ class PromptStageIdentity extends Component<Props> {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <Segment basic>
+                  <Segment basic textAlign="center">
                     <Header
-                      content={"Options"}
+                      content="Options"
                       size="small"
                     />
                     <Form.Checkbox
                       checked={enableSessions}
-                      label={"Create a session for future use with this app"}
+                      label="Create a session for future use with this app"
                       onChange={this.props.toggleSessions}
                       toggle
                     />
@@ -128,6 +163,7 @@ function mapStateToProps(state) {
     prompt: state.prompt,
     settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
+    wallets: state.wallets,
   };
 }
 
