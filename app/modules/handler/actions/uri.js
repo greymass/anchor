@@ -17,7 +17,7 @@ const textEncoder = new util.TextEncoder();
 const textDecoder = new util.TextDecoder();
 
 const transactionTypes: Map<string, Serialize.Type> = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), transactionAbi);
-const esrParams = ['bn', 'ex', 'rbn', 'req', 'rid', 'sa', 'sig', 'sp', 'tx']
+const esrParams = ['bn', 'ex', 'rbn', 'req', 'rid', 'sa', 'sig', 'sp', 'tx'];
 
 export function broadcastURI(tx, blockchain, callback = false) {
   return (dispatch: () => void, getState) => {
@@ -183,13 +183,18 @@ export function setURI(uri) {
         broadcast,
         callback,
       } = data;
-      // Pull chainId requested
-      const chainId = request.getChainId().toString().toLowerCase();
+      // Get the requested chain(s)
+      let chainId;
+      if (request.isMultiChain()) {
+        [chainId] = request.getChainIds();
+      } else {
+        chainId = request.getChainId();
+      }
       return dispatch({
         type: types.SYSTEM_ESRURI_SUCCESS,
         payload: {
           broadcast,
-          chainId,
+          chainId: chainId.toString().toLowerCase(),
           callback,
           placeholders,
           req,
@@ -504,7 +509,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
   };
 }
 
-export function templateURI(blockchain, wallet) {
+export function templateURI(blockchain, wallet, chainId = false) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURIBUILD_PENDING,
@@ -540,6 +545,9 @@ export function templateURI(blockchain, wallet) {
       let header = {};
       if (!request.isIdentity()) {
         header = await EOS.getTransactionHeader(connection.expireSeconds);
+      }
+      if (request.isMultiChain()) {
+        header.chainId = blockchain.chainId;
       }
       const resolved = request.resolve(abis, authorization, header);
       const detectedForbiddenActions = checkRequest(resolved);
@@ -579,6 +587,7 @@ export function templateURI(blockchain, wallet) {
       return dispatch({
         type: types.SYSTEM_ESRURIBUILD_SUCCESS,
         payload: {
+          chainId: header.chainId,
           contract,
           resolved,
         }

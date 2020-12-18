@@ -112,12 +112,10 @@ class PromptContainer extends Component<Props> {
         : {}
     });
   }
-  templateURI = () => {
-    const { blockchains, prompt, wallets } = this.props;
-    const { chainId } = prompt;
-    // Set the blockchain for this network
-    const blockchain = find(blockchains, { chainId });
-    // Find the default wallet for this chain (defaults to first at the moment)
+  getDefaultWallet = () => {
+    const { blockchain } = this.state;
+    const { prompt, wallets } = this.props;
+    const { chainId } = (blockchain && blockchain.chainId) ? blockchain : prompt;
     const firstAction = get(prompt, 'req.1.actions.0')
       || get(prompt, 'req.1.0')
       || get(prompt, 'req.1');
@@ -135,6 +133,15 @@ class PromptContainer extends Component<Props> {
       find(wallets, { chainId, account: firstAccount, authorization: firstAuthorization }) ||
       find(wallets, { chainId, account: secondAccount, authorization: secondAuthorization }) ||
       find(wallets, { chainId });
+    return defaultWallet;
+  }
+  templateURI = () => {
+    const { blockchains, prompt } = this.props;
+    const { chainId } = prompt;
+    // Set the blockchain for this network
+    const blockchain = find(blockchains, { chainId });
+    const defaultWallet = this.getDefaultWallet();
+    // Find the default wallet for this chain (defaults to first at the moment)
     if (defaultWallet) {
       // If a default was found, set the blockchain and swap to it
       this.setState({ blockchain }, () => {
@@ -158,6 +165,23 @@ class PromptContainer extends Component<Props> {
       whitelist: initialState.whitelist,
       wallet
     }, () => actions.templateURI(blockchain, wallet));
+  };
+  swapChain = (chainId) => {
+    const { actions, blockchains } = this.props;
+    const blockchain = find(blockchains, { chainId });
+    this.setState({
+      blockchain,
+      displayShareLink: initialState.displayShareLink,
+      enableWhitelist: initialState.enableWhitelist,
+      whitelist: initialState.whitelist,
+    }, () => {
+      const wallet = this.getDefaultWallet();
+      if (wallet) {
+        this.setState({ wallet }, () => actions.templateURI(blockchain, wallet));
+      } else {
+        actions.templateURI(blockchain, wallet);
+      }
+    });
   };
   toggleSessions = () => {
     this.props.actions.setSetting('enableSessions', !this.props.settings.enableSessions);
@@ -231,6 +255,7 @@ class PromptContainer extends Component<Props> {
           requestedActorMissing={requestedActorMissing}
           shouldBroadcast={shouldBroadcast}
           swapAccount={this.swapAccount}
+          swapChain={this.swapChain}
           toggleSessions={this.toggleSessions}
           wallet={wallet}
           whitelist={whitelist}
