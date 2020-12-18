@@ -21,9 +21,11 @@ class GlobalBlockchainDropdown extends Component<Props> {
   render() {
     const {
       blockchains,
+      chainIds,
       disabled,
       fluid,
       initialize,
+      onSelect,
       selected,
       selection,
       settings,
@@ -58,6 +60,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
         const isEnabled = settings.blockchains.includes(b.chainId);
         const isCurrent = b.chainId === blockchain.chainId;
         const isPinned = (hasPins && pinnedBlockchains.includes(b.chainId));
+        const isSelectable = (!chainIds || chainIds.includes(b.chainId));
         // Return all chains while initializing
         if (
           initialize
@@ -67,6 +70,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
         return (
           !isCurrent
           && isEnabled
+          && isSelectable
           && (
             !hasPins
             || isPinned
@@ -80,7 +84,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
           props: {
             image,
             key: b.chainId,
-            onClick: () => this.swapBlockchain(b.chainId),
+            onClick: () => ((onSelect) ? onSelect(b.chainId) : this.swapBlockchain(b.chainId)),
             text: b.name,
             value: b.chainId,
           },
@@ -103,7 +107,7 @@ class GlobalBlockchainDropdown extends Component<Props> {
           )
           : t('dropdown_select_blockchain')
         }
-        {(blockchain.testnet)
+        {(blockchain.testnet && !chainIds)
           ? (
             <Label color="orange" content="Testnet" size="large" />
           )
