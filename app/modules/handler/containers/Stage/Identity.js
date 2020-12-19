@@ -32,9 +32,9 @@ class PromptStageIdentity extends Component<Props> {
       t,
     } = this.props;
     const {
-      chainId,
       resolved,
     } = prompt;
+    let { chainId } = prompt;
     if (!resolved) return false;
     let chainIds = [];
     let multiChain = false;
@@ -58,6 +58,9 @@ class PromptStageIdentity extends Component<Props> {
       mode,
       pubkey,
     } = wallet;
+    if (!chainId && chainIds.length > 0) {
+      [chainId] = chainIds;
+    }
     return (
       <Container>
         <Grid>
