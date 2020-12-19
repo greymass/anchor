@@ -587,7 +587,7 @@ export function templateURI(blockchain, wallet, chainId = false) {
       return dispatch({
         type: types.SYSTEM_ESRURIBUILD_SUCCESS,
         payload: {
-          chainId: header.chainId,
+          chainId: header.chainId || blockchain.chainId,
           contract,
           resolved,
         }
