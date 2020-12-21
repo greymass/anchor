@@ -66,7 +66,9 @@ export default function connection(state = initialState, action) {
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_FAILURE:
     case types.VALIDATE_NODE_SUCCESS: {
-      const { blockchain, err, settings, useImmediately } = action.payload;
+      const {
+        blockchain, err, settings, useImmediately
+      } = action.payload;
       const { account, authorization } = settings;
       // Prevent connection from changing if this was just a validation call
       if (!useImmediately) {
@@ -76,13 +78,13 @@ export default function connection(state = initialState, action) {
         dfuseKey: false,
         dfuseAuthorization: false,
         dfuseAuthorizationExpires: false,
-      }
+      };
       if (state.dfuseEndpoint) {
         dfuseSettings = {
           dfuseKey: settings.dfuseKey,
           dfuseAuthorization: settings.dfuseAuthorization,
           dfuseAuthorizationExpires: settings.dfuseAuthorizationExpires,
-        }
+        };
       }
       return Object.assign({}, state, dfuseSettings, {
         authorization: [
