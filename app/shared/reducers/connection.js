@@ -92,7 +92,7 @@ export default function connection(state = initialState, action) {
         chain: (blockchain && blockchain.name) || 'EOS Mainnet',
         chainId: (action.payload.info) ? action.payload.info.chain_id : settings.chainId,
         chainKey: (blockchain && blockchain._id) || 'eos-mainnet',
-        chainRamSymbol: (blockchain && blockchain.chainRamSymbol) || 'EOS',
+        chainRamSymbol: (blockchain && blockchain.chainRamSymbol) || ((blockchain && blockchain.symbol) || 'EOS'),
         chainSymbol: (blockchain && blockchain.symbol) || 'EOS',
         err,
         greymassFuel: settings.greymassFuel,
