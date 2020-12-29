@@ -23,7 +23,6 @@ export default class SessionManager {
         handler: this.handler,
         storage: this.storage,
       });
-      this.manager.connect();
     }
   }
   addSession(data) {

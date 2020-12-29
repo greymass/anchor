@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import TimeAgo from 'react-timeago';
 
 import { Button, Header, Segment, Table } from 'semantic-ui-react';
+
 const { ipcRenderer } = require('electron');
 
 class ToolsLinkService extends Component<Props> {
@@ -51,6 +52,14 @@ class ToolsLinkService extends Component<Props> {
               </Table.Row>
             </Table.Header>
             <Table.Body>
+              <Table.Row>
+                <Table.Cell>
+                  Link ID
+                </Table.Cell>
+                <Table.Cell key={sessions.linkId}>
+                  {sessions.linkId}
+                </Table.Cell>
+              </Table.Row>
               <Table.Row>
                 <Table.Cell>
                   Initialized
