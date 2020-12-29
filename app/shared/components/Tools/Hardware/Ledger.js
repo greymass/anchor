@@ -2,19 +2,25 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
-import { Button, Icon, Header, Label, List, Segment, Table } from 'semantic-ui-react';
+import { Button, Icon, Input, Header, Label, List, Segment, Table } from 'semantic-ui-react';
 
 import ToolsHardwareLedgerStatus from './Ledger/Status';
 
 const { remote } = require('electron');
 
 class ToolsHardwareLedger extends Component<Props> {
+  state = {
+    index: 0,
+    loaded: 0,
+  }
   displayPublicKey = () => {
-    this.props.actions.ledgerGetPublicKey(0, true);
+    this.props.actions.ledgerGetPublicKey(this.state.index, true);
   };
   getPublicKey = () => {
-    this.props.actions.ledgerGetPublicKey(0);
+    this.setState({ loaded: this.state.index });
+    this.props.actions.ledgerGetPublicKey(this.state.index);
   };
+  onChange = (e, { value }) => this.setState({ index: parseInt(value, 10) || 0 })
   render() {
     const {
       actions,
@@ -102,28 +108,45 @@ class ToolsHardwareLedger extends Component<Props> {
                   ? false
                   : <Label basic color="yellow" content={t('ledger_row_connected_false')} horizontal />
                 }
-                {(transport && ledger.publicKey)
+                {(transport)
                   ? (
                     <React.Fragment>
-                      <p>{`${connection.keyPrefix}${ledger.publicKey.wif.slice(3)}`}</p>
+                      <p>
+                        {t('ledger_row_public_key_input')}
+                      </p>
+                      <Input
+                        onChange={this.onChange}
+                        value={this.state.index}
+                        style={{
+                          width: '50px'
+                        }}
+                      />
                       <Button
-                        content={t('ledger_confirm_public_key')}
-                        onClick={this.displayPublicKey}
+                        content={`${t('ledger_retrieve_public_key')} [${this.state.index}]`}
+                        onClick={this.getPublicKey}
                         primary
                       />
                     </React.Fragment>
                   )
                   : false
                 }
-                {(transport && !ledger.publicKey)
+                {(transport && ledger.publicKey)
                   ? (
-                    <React.Fragment>
+                    <Segment>
+                      <p>
+                        {t('ledger_public_key_at_index')} {this.state.loaded}:
+                      </p>
+                      <Input
+                        fluid
+                        style={{ marginBottom: '0.5em' }}
+                        value={`${connection.keyPrefix}${ledger.publicKey.wif.slice(3)}`}
+                      />
                       <Button
-                        content={t('ledger_retrieve_public_key')}
-                        onClick={this.getPublicKey}
+                        content={t('ledger_confirm_public_key')}
+                        onClick={this.displayPublicKey}
                         primary
                       />
-                    </React.Fragment>
+                    </Segment>
                   )
                   : false
                 }
