@@ -36,6 +36,8 @@
   "ledger_row_connected_false": "Device not connected or locked",
   "ledger_row_connected_true": "Connected and Unlocked",
   "ledger_row_public_key": "Ledger - Public Key",
+  "ledger_row_public_key_input": "Specify an index (defaults to 0) to display the public key for:",
+  "ledger_public_key_at_index": "Public Key at Index",
   "ledger_row_software_version": "Ledger - Software Version",
   "ledger_row_waiting_device": "Wallet - Waiting for Device",
   "ledger_service_automatic": "Automatically enable Ledger Support at Launch",
