@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Button, Grid, Header, Popup, Segment, Table } from 'semantic-ui-react';
+import TimeAgo from 'react-timeago';
 
 import GlobalFragmentChainLogo from '../Global/Fragment/ChainLogo';
 
@@ -42,7 +43,8 @@ class ToolsSessions extends Component<Props> {
             <Table.Row>
               <Table.HeaderCell width={3}>{t('tools_sessions_application')}</Table.HeaderCell>
               <Table.HeaderCell>{t('tools_sessions_authority')}</Table.HeaderCell>
-              <Table.HeaderCell></Table.HeaderCell>
+              <Table.HeaderCell>{t('tools_sessions_usage')}</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -76,6 +78,20 @@ class ToolsSessions extends Component<Props> {
                     </Table.Cell>
                     <Table.Cell>
                       {s.actor}@{s.permission}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Header
+                        size="small"
+                      >
+                        {t('tools_sessions_used')}: <TimeAgo
+                          date={s.lastUsed}
+                        />
+                        <Header.Subheader>
+                          {t('tools_sessions_created')}: <TimeAgo
+                            date={s.created}
+                          />
+                        </Header.Subheader>
+                      </Header>
                     </Table.Cell>
                     <Table.Cell collapsing textAlign="right">
                       <Button
