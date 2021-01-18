@@ -94,6 +94,7 @@ class WalletModalContentBroadcast extends Component<Props> {
     } = this.props;
     const {
       data,
+      decoded,
       signed
     } = transaction;
     const {
@@ -102,6 +103,9 @@ class WalletModalContentBroadcast extends Component<Props> {
     let actions = [];
     if (data) {
       ({ actions } = data.transaction.transaction);
+    }
+    if (decoded) {
+      ({ actions } = decoded);
     }
     const broadcastable = (signed);
     return (
@@ -151,7 +155,7 @@ class WalletModalContentBroadcast extends Component<Props> {
                 />
                 <Divider />
                 <GlobalTransactionViewFull
-                  transaction={data}
+                  transaction={decoded || data}
                 />
               </Segment>
             </React.Fragment>
