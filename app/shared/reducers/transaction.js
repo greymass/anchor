@@ -20,6 +20,7 @@ export default function transaction(state = initialState, action) {
       return Object.assign({}, state, {
         contract: action.payload.contract,
         data: action.payload.transaction,
+        decoded: action.payload.decoded,
         signed: !!(
           action.payload.transaction.transaction
           && action.payload.transaction
