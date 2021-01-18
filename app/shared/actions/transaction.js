@@ -1,3 +1,5 @@
+import { Transaction } from '@greymass/eosio';
+
 import * as types from './types';
 import eos from './helpers/eos';
 
@@ -95,11 +97,25 @@ export function clearTransaction() {
 }
 
 export function setTransaction(data) {
+  const raw = JSON.parse(data);
+  const abiDef = {
+    contract: raw.contract.account,
+    abi: raw.contract.abi,
+  };
+  const tx = Transaction.from(raw.transaction.transaction.transaction, abiDef);
+  const decoded = JSON.parse(JSON.stringify(tx));
+  decoded.actions.forEach((action, index) => {
+    const decodedAction = tx.actions[index].decodeData(abiDef.abi);
+    decoded.actions[index].data = JSON.parse(JSON.stringify(decodedAction));
+  });
   return (dispatch: () => void) => {
     try {
       dispatch({
         type: types.SET_TRANSACTION,
-        payload: JSON.parse(data)
+        payload: {
+          ...raw,
+          decoded,
+        },
       });
     } catch (err) {
       dispatch({
