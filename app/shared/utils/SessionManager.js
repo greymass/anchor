@@ -66,7 +66,9 @@ export default class SessionManager {
         pHandler.setVisibleOnAllWorkspaces(false);
       },
       onSocketEvent(type, event) {
-        pHandler.webContents.send('sessionEvent', type, event);
+        if (pHandler && pHandler.webContents) {
+          pHandler.webContents.send('sessionEvent', type, event);
+        }
       }
     };
   }
