@@ -38,11 +38,11 @@ export default class MenuBuilder {
       submenu: [
         { role: 'about' },
         { type: 'separator' },
-        { label: 'Hide anchor', accelerator: 'Command+H', selector: 'hide:' },
+        { label: 'Hide Anchor Window', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
-        { label: 'Quit', accelerator: 'Command+Q', click: () => { app.quit(); } }
+        { label: 'Quit Anchor', accelerator: 'Command+Q', click: () => { app.quit(); } }
       ]
     };
     const subMenuEdit = {
@@ -107,8 +107,14 @@ export default class MenuBuilder {
         label: '&Open',
         accelerator: 'Ctrl+O'
       }, {
-        label: '&Close',
+        label: '&Close Window',
         accelerator: 'Ctrl+W',
+        click: () => {
+          app.quit();
+        }
+      }, {
+        label: '&Exit Anchor',
+        accelerator: 'Ctrl+Q',
         click: () => {
           this.mainWindow.close();
         }
