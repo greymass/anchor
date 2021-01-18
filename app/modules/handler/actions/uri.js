@@ -156,7 +156,7 @@ export function clearURI() {
 }
 
 export function setURI(uri) {
-  return (dispatch: () => void) => {
+  return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURI_PENDING
     });
@@ -186,7 +186,12 @@ export function setURI(uri) {
       // Get the requested chain(s)
       let chainId;
       if (request.isMultiChain()) {
-        [chainId] = request.getChainIds();
+        const { settings } = getState();
+        const chainIds = request.getChainIds();
+        // Find the first chainId matching the request that is enabled
+        const matchingRequest = chainIds.filter((chain) =>
+          settings.blockchains.includes(chain.toString()));
+        [chainId] = matchingRequest;
       } else {
         chainId = request.getChainId();
       }
