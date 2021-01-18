@@ -134,7 +134,10 @@ export function signTransaction(tx, contract = false) {
     const signer = eos(connection, true, true);
     // If a contract was specified along with the transaction, load it.
     if (contract && contract.account && contract.abi) {
-      signer.setAbi(contract.account, contract.abi);
+      signer.setAbi(contract.account, {
+        account_name: contract.account,
+        abi: contract.abi
+      });
     }
     // Sign the transaction
     signer

@@ -398,7 +398,7 @@ export default class EOSHandler {
       ts: Date.now(),
     });
     // Cache in eosjs instance
-    this.api.cachedAbis.set(abi.account_name, abi.abi);
+    this.api.cachedAbis.set(abi.account_name, abi);
     return abi;
   }
   getRequiredAbis = async (request) => {
