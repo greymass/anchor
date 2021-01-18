@@ -51,6 +51,7 @@ class ColdWalletTransaction extends Component<Props> {
     } = this.props;
     const {
       data,
+      decoded,
       signed
     } = transaction;
     const expiration = get(data, 'transaction.transaction.expiration');
@@ -59,7 +60,7 @@ class ColdWalletTransaction extends Component<Props> {
       actor: 'undefined',
       permission: 'undefined',
     });
-    const matchingAuthorization = (account === auth.actor && authorization === auth.permission)
+    const matchingAuthorization = (account === auth.actor && authorization === auth.permission);
     const expires = new Date(`${expiration}z`);
     const now = new Date();
     const expired = (now > expires);
@@ -135,12 +136,12 @@ class ColdWalletTransaction extends Component<Props> {
         </Segment>
         <Segment attached>
           <GlobalTransactionViewActions
-            actions={get(data, 'transaction.transaction.actions', [])}
+            actions={get(decoded, 'actions', [])}
           />
         </Segment>
         <Segment attached>
           <GlobalTransactionViewFull
-            transaction={get(data, 'transaction.transaction', {})}
+            transaction={decoded}
           />
         </Segment>
       </React.Fragment>
