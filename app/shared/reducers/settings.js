@@ -18,7 +18,7 @@ const initialState = {
   // Allow dangerous transactions via EEP-7 Signing Requests
   allowDangerousTransactions: false,
   // Whether or not to enable the handling of EEP-7 Signing Requests
-  allowSigningRequests: false,
+  allowSigningRequests: true,
   // The service URL used to subscribe to requests via Anchor Link sessions
   anchorLinkServiceUrl: 'cb.anchor.link',
   // The loaded authorization
@@ -81,7 +81,7 @@ const initialState = {
   // Whether or not the UI has prompted for enabling signing requests
   promptSigningRequests: false,
   // Whether the prompt will close upon completion or display a success message
-  promptCloseOnComplete: false,
+  promptCloseOnComplete: true,
   // Whether the prompt will combine the sign + broadcast steps into a single click
   promptSignAndBroadcast: true,
   // Recent names that the wallet has bid on.
