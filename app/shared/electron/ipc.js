@@ -17,6 +17,8 @@ const getDateString = () => {
   return `${year}${month}${day}-${hour}${min}${sec}`;
 };
 
+let saveFileLock = false;
+
 const configureIPC = (ui, primary = false) => {
   if (primary) {
     ipcMain.on('openFile', (event, openPath = false) => {
@@ -46,6 +48,10 @@ const configureIPC = (ui, primary = false) => {
     });
 
     ipcMain.on('saveFile', async (event, savePath = false, data, prefix = 'tx') => {
+      // Check to ensure no other saveFile dialogs are awaiting
+      if (saveFileLock) return false;
+      // Set the lock
+      saveFileLock = true;
       const defaultPath = (savePath || app.getPath('documents'));
       const defaultFilename = `${prefix}-${getDateString()}.json`;
       const { canceled, filePath } = await dialog.showSaveDialog({
@@ -55,7 +61,8 @@ const configureIPC = (ui, primary = false) => {
           { name: 'JSON', extensions: ['json'] }
         ]
       });
-
+      // Unset the lock
+      saveFileLock = false;
       if (canceled || !filePath) return;
 
       fs.writeFileSync(filePath, data);
