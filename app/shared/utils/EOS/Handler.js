@@ -383,8 +383,8 @@ export default class EOSHandler {
         this.api.cachedAbis.set(storageKey, abi);
         // Return cached data
         return {
-          account_name: abi.account,
-          abi: abi.abi,
+          account_name: account,
+          abi,
         };
       }
       // otherwise delete it
