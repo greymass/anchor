@@ -65,7 +65,7 @@ class WalletTransferContainer extends Component<Props> {
     }
 
     const transaction = system.TRANSFER_LAST_TRANSACTION;
-    const tokens = Object.keys(balances[settings.account])
+    const tokens = Object.keys(balances[settings.account]);
 
     // Determine which tokens are being tracked
     const trackedTokens = (settings.customTokens || []).map((tokenName) => {
@@ -118,6 +118,7 @@ class WalletTransferContainer extends Component<Props> {
                             isConfirming={this.isConfirming}
                             settings={settings}
                             system={system}
+                            wallet={wallet}
                           />
                         )}
                         contract={contract}
