@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Divider, Form, Message, Icon, Segment } from 'semantic-ui-react';
+import { Button, Divider, Form, Message, Icon, Segment, Table } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 import { findIndex } from 'lodash';
 import { get } from 'dot-prop-immutable';
-
 import debounce from 'lodash/debounce';
+
+import { createHttpHandler } from '../../../../../utils/http/handler';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
 import FormMessageError from '../../../../Global/Form/Message/Error';
 import GlobalFormFieldAccount from '../../../../Global/Form/Field/Account';
@@ -15,6 +16,7 @@ import WalletPanelFormTransferSendConfirming from './Send/Confirming';
 
 const initialState = {
   confirming: false,
+  fioFee: false,
   formError: false,
   formId: false,
   memo: '',
@@ -41,11 +43,23 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const {
       balances,
       connection,
-      system
+      system,
+      wallet
     } = nextProps;
     const { TRANSFER_SET_ASSET_DATA } = system;
     if (this.state.from !== nextProps.settings.account) {
       this.setState({ from: nextProps.settings.account });
+    }
+    if (
+      connection.chainSymbol === 'FIO'
+      && (
+        this.props.connection.chainSymbol !== 'FIO'
+        || this.state.fioFee === false
+      )
+    ) {
+      this.setState({ fioFee: 'loading' }, () => {
+        this.loadFIOFee();
+      });
     }
     if (TRANSFER_SET_ASSET_DATA) {
       const { amount, asset } = TRANSFER_SET_ASSET_DATA;
@@ -245,7 +259,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
       settings,
     } = this.props;
     const {
-      asset
+      asset,
+      fioFee,
     } = this.state;
     const balance = balances[settings.account];
     const { precision } = balances.__contracts[asset.toUpperCase()];
@@ -253,7 +268,10 @@ class WalletPanelFormTransferSend extends Component<Props> {
     if (precision) {
       precisionValue = precision[asset.toUpperCase()];
     }
-    const quantity = `${balance[asset].toFixed(precisionValue)} ${asset}`;
+    let quantity = `${balance[asset].toFixed(precisionValue)} ${asset}`;
+    if (fioFee) {
+      quantity = `${(balance[asset] - (fioFee / 1000000000)).toFixed(precisionValue)} ${asset}`;
+    }
     this.setState({
       quantity,
       quantitySet: Date.now(),
@@ -264,6 +282,17 @@ class WalletPanelFormTransferSend extends Component<Props> {
         valid: true,
       });
     });
+  }
+
+  loadFIOFee = async () => {
+    const { connection, wallet } = this.props;
+    const { httpClient } = await createHttpHandler(connection);
+    const fees = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_fee`, {
+      end_point: 'transfer_tokens_pub_key',
+      fio_address: wallet.address,
+    });
+    const { fee } = fees.data;
+    this.setState({ fioFee: fee });
   }
 
   render() {
@@ -278,6 +307,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const {
       asset,
       confirming,
+      fioFee,
       formError,
       formId,
       from,
@@ -291,11 +321,13 @@ class WalletPanelFormTransferSend extends Component<Props> {
     } = this.state;
 
     const balance = balances[settings.account];
-    const assetContract = balances.__contracts[asset.toUpperCase()]
+    const assetContract = balances.__contracts[asset.toUpperCase()];
     let precision;
     if (assetContract) {
-      ({ precision } = assetContract)
+      ({ precision } = assetContract);
     }
+
+    const quantityValue = quantity ? parseFloat(quantity.split(' ')[0]) : 0;
 
     if (!balance) return false;
 
@@ -413,6 +445,27 @@ class WalletPanelFormTransferSend extends Component<Props> {
                 settings={settings}
                 value={quantity}
               />
+              {(connection.keyPrefix === 'FIO')
+                ? (
+                  <Table size="small">
+                    <Table.Row>
+                      <Table.Cell textAlign="right">Tokens to Send</Table.Cell>
+                      <Table.Cell>{quantity || '0'}</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell textAlign="right">Transaction Fee</Table.Cell>
+                      <Table.Cell>{fioFee / 1000000000} FIO</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell textAlign="right">Total</Table.Cell>
+                      <Table.Cell>
+                        {(quantityValue + (fioFee / 1000000000)).toFixed(9)} FIO
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table>
+                )
+                : false
+              }
               <GlobalFormFieldMemo
                 icon="x"
                 label={t('transfer_label_memo')}
