@@ -263,6 +263,7 @@ export default class EOSHandler {
     let tx;
     const abis = await Promise.all(transaction.actions.map(async (action) => {
       const { abi } = await this.getAbi(action.account);
+      console.log('customTransact', action.account, abi);
       return {
         contract: action.account,
         abi,
@@ -359,8 +360,10 @@ export default class EOSHandler {
     // Combine the chainId + escaped name for the storage key
     const storageKey = [this.config.chainId, escapedAccount].join('|');
     // Store in eosjs
+    console.log('setting cache from setAbi', storageKey, abi);
     this.api.cachedAbis.set(storageKey, abi);
     // Store in localstorage
+    console.log('saving cache from setAbi', storageKey, abi);
     store.set(storageKey, {
       ...abi,
       ts: Date.now(),
@@ -380,7 +383,7 @@ export default class EOSHandler {
       // If using cold wallet or cache is not stale, use it
       if (!this.config.httpEndpoint || !expired) {
         // Cache in our eosjs instance
-        this.api.cachedAbis.set(storageKey, abi);
+        this.api.cachedAbis.set(account, abi);
         // Return cached data
         return {
           account_name: account,
@@ -405,6 +408,7 @@ export default class EOSHandler {
     const abis = new Map();
     await Promise.all(request.getRequiredAbis().map(async (account) => {
       const { abi } = await this.getAbi(account);
+      console.log('getRequiredAbis', account, abi);
       abis.set(account, abi);
     }));
     return abis;
