@@ -384,7 +384,7 @@ export default class EOSHandler {
         // Return cached data
         return {
           account_name: account,
-          abi,
+          abi: abi.abi,
         };
       }
       // otherwise delete it
