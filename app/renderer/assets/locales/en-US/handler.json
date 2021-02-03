@@ -70,6 +70,7 @@
   "handler_containers_stage_identity_header": "Identity Request",
   "handler_containers_stage_identity_subheader": "An application has requested you provide an identity for one of your accounts.",
   "handler_containers_stage_identity_label": "Select an account... ",
+  "handler_containers_stage_identity_chain_label": "Select a blockchain...",
   "handler_containers_stage_identity_message_one": "The Ledger device associated to this account must be connected and the Ledger service enabled to complete this request.",
   "handler_containers_stage_identity_message_two": "A 'watch' mode wallet is currently unable to complete identity requests. Select a different account.",
   "handler_containers_stage_not_configured_header": "Blockchain not configured",
