@@ -27,7 +27,8 @@ const initialState = {
   constants: {},
   download: undefined,
   init: false,
-  features: contractBasedFeatures
+  features: contractBasedFeatures,
+  online: true
 };
 
 export default function app(state = initialState, action) {
@@ -50,6 +51,12 @@ export default function app(state = initialState, action) {
     case types.SYSTEM_GETCONSTANTS_FAILURE: {
       return Object.assign({}, initialState);
     }
+    case types.SYSTEM_NETWORK_STATUS: {
+      return Object.assign({}, state, {
+        online: (action.payload === 'online')
+      });
+    }
+
     default: {
       return state;
     }
