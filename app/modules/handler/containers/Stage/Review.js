@@ -1,27 +1,26 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Trans, withTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Grid, Header, Segment, Tab } from 'semantic-ui-react';
+import { Grid, Segment, Tab } from 'semantic-ui-react';
 
 import PromptReviewControls from '../../components/Review/Controls';
 import ErrorMessage from '../../components/error';
-import PromptFragmentPlaceholderTransactionAction from '../../components/Fragment/Placeholder/Transaction/Action';
-import PromptFragmentTransactionAction from '../../components/Fragment/Transaction/Action';
 import PromptFragmentReviewActions from '../../components/Fragment/Review/Actions';
 import PromptFragmentReviewOverview from '../../components/Fragment/Review/Overview';
+import PromptFragmentReviewFee from '../../components/Fragment/Review/Fee';
 import GlobalTransactionViewFull from '../../../../shared/components/Global/Transaction/View/Full';
-import PromptFragmentTransactionActionResourceProvider from '../../components/Fragment/Transaction/Action/ResourceProvider';
+
+function getAuthorizers(resolvedRequest) {
+  // return if not yet resolved
+  if (!resolvedRequest || !resolvedRequest.transaction) return false;
+  // return simple list of authorizers for all actions
+  const { transaction } = resolvedRequest;
+  return transaction.actions.reduce((o, v) => o.concat(v.authorization), []);
+}
 
 class PromptStageReview extends Component<Props> {
-  getAuthorizers(resolvedRequest) {
-    // return if not yet resolved
-    if (!resolvedRequest || !resolvedRequest.transaction) return false;
-    // return simple list of authorizers for all actions
-    const { transaction } = resolvedRequest;
-    return transaction.actions.reduce((o, v) => o.concat(v.authorization), []);
-  }
   render() {
     const {
       canBroadcast,
@@ -30,7 +29,6 @@ class PromptStageReview extends Component<Props> {
       expiration,
       globals,
       modifyWhitelist,
-      onShareLink,
       prompt,
       settings,
       shouldBroadcast,
@@ -46,7 +44,7 @@ class PromptStageReview extends Component<Props> {
       resolved,
     } = prompt;
     if (!resolved) return false;
-    const authorizers = this.getAuthorizers(prompt.resolved);
+    const authorizers = getAuthorizers(prompt.resolved);
     const matches = authorizers.filter(a => a.actor.toString() === wallet.account
       && a.permission.toString() === wallet.authorization);
     const matching = matches.length > 0;
@@ -129,9 +127,22 @@ class PromptStageReview extends Component<Props> {
         )
       },
     ];
+    if (hasResourceProviderFee && prompt.costs && prompt.costs.cpu) {
+      panes.splice(1, 0, {
+        menuItem: 'Transaction Fee',
+        render: () => (
+          <Tab.Pane attached="bottom">
+            <PromptFragmentReviewFee
+              globals={globals}
+              prompt={prompt}
+            />
+          </Tab.Pane>
+        )
+      });
+    }
     return (
       <Grid stackable>
-        <Grid.Column width={5} style={{ background: '#f3f4f5' }}>
+        <Grid.Column width={5} style={{ background: '#f3f4f5', height: '100vh' }}>
           <PromptReviewControls
             callback={callback}
             canBroadcast={canBroadcast}
