@@ -37,7 +37,15 @@ class PromptFragmentTransactionAction extends Component<Props> {
       && action.data.memo
       && action.data.memo.includes('ref=')
     );
-    if (!showAll && (isFuelAction || isFuelPaidAction)) {
+    // Determine if the user is having RAM bought for it using Fuel during the transaction
+    const isFuelBuyingRAMAction = (
+      action.name
+      && ['buyram', 'buyrambytes'].includes(String(action.name))
+      && action.data
+      && action.data.payer
+      && action.data.payer.toString() === 'greymassfuel'
+    );
+    if (!showAll && (isFuelAction || isFuelPaidAction || isFuelBuyingRAMAction)) {
       return false;
     }
     if (!showAll && isFuelAction) {
@@ -63,16 +71,6 @@ class PromptFragmentTransactionAction extends Component<Props> {
     }
     return (
       <Segment basic key={index}>
-        {(total > 1)
-          ? (
-            <Divider horizontal size="large">
-              <Header>
-                {t('handler_transaction_action_label_one', { index: index + 1, total })}
-              </Header>
-            </Divider>
-          )
-          : false
-        }
         <Segment
           basic
           secondary

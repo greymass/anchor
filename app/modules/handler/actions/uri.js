@@ -544,6 +544,11 @@ export function templateURI(blockchain, wallet, chainId = false) {
       };
       // Interpret the Signing Request
       const request = SigningRequest.from(uri, opts);
+      const costs = {
+        cpu: request.getInfoKey('txfeecpu'),
+        net: request.getInfoKey('txfeenet'),
+        ram: request.getInfoKey('txfeeram'),
+      };
       // Retrieve ABIs for this request
       const abis = await request.fetchAbis();
       // Resolve the transaction
@@ -592,6 +597,7 @@ export function templateURI(blockchain, wallet, chainId = false) {
       return dispatch({
         type: types.SYSTEM_ESRURIBUILD_SUCCESS,
         payload: {
+          costs,
           chainId: header.chainId || blockchain.chainId,
           contract,
           resolved,
