@@ -245,12 +245,12 @@ let initializingSessionManager = false;
 const initSessionManager = async () => {
   // Only run if the lock isn't true
   if (!initializingSessionManager) {
-    // Disconnect if an existing handler is already running
-    if (sHandler && sHandler.manager && sHandler.manager.ready) {
-      sHandler.manager.disconnect();
-    }
     // Enable the lock indicating a connection is in progress
     initializingSessionManager = true;
+    // Disconnect if an existing handler is already running
+    if (sHandler && sHandler.manager && sHandler.manager.disconnect) {
+      sHandler.manager.disconnect();
+    }
     // Create new Session Manager
     sHandler = new SessionManager(store, pHandler);
     // Connect the session manager

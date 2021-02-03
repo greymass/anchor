@@ -67,7 +67,7 @@ export default class SessionManager {
       },
       onSocketEvent(type, event) {
         if (pHandler && pHandler.webContents) {
-          pHandler.webContents.send('sessionEvent', type, event);
+          pHandler.webContents.send('sessionEvent', type, JSON.stringify(event));
         }
       }
     };
