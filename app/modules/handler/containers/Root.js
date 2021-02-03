@@ -37,7 +37,15 @@ ipcRenderer.on('sessionEvent', (event, type, data) => {
   });
 });
 
-const networkStatus = () => ipcRenderer.send('networkStatusChanged', navigator.onLine ? 'online' : 'offline');
+const networkStatus = () => {
+  const payload = navigator.onLine ? 'online' : 'offline';
+  store.dispatch({
+    type: types.SYSTEM_NETWORK_STATUS,
+    payload,
+  });
+  ipcRenderer.send('networkStatusChanged', payload);
+};
+
 window.addEventListener('online', networkStatus);
 window.addEventListener('offline', networkStatus);
 networkStatus();
