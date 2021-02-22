@@ -62,7 +62,7 @@
   "welcome_path_have_account_button": "既存のアカウントをインポート",
   "welcome_path_have_account_header": "既存のアカウントをインポート",
   "welcome_path_have_account_subheader": "既にアカウント名または秘密鍵を持っていますか？",
-  "welcome_restore_wallet_header": "Restore Wallet Backup",
+  "welcome_restore_wallet_header": "Import Anchor Backup",
   "welcome_restore_wallet_subheader": "Restore this wallet to a previous state using a wallet backup file. All settings, networks, and wallets will be recreated.",
   "welcome_select_account": "アカウントを選択",
   "welcome_server_connection_fail_content": "再試行するか、別のサーバーを入力して下さい。",

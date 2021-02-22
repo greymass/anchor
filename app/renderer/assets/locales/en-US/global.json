@@ -231,7 +231,7 @@
   "global_keys_message_content": "Use the tools below to establish a key pair within Anchor before continuing.",
   "global_keys_message_header": "First: Setup Wallet + Key Pairs",
   "invalid_proxy_specified": "The proxy account that was specified does not exist. If it is a valid account make sure that it has registered as a proxy voter.",
-  "global_blockchain_choose_header": "Choose a blockchain",
+  "global_blockchain_choose_header": "Blockchains",
   "global_blockchain_choose_subheader": "Select a blockchain to get started with. You will be able to add more later.",
   "global_blockchain_choose_show_testnets": "Show blockchain test networks",
   "global_blockchain_enable_header": "Which blockchains do you plan on using?",
