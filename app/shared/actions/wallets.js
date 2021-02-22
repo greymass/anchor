@@ -210,7 +210,6 @@ export function importKeypairStorage(
   keypairs = [],
 ) {
   return (dispatch: () => void, getState) => {
-    console.log(password, keypairs);
     const { storage } = getState();
     let data;
     // Generate the new records
