@@ -3,18 +3,36 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 
 import { Header, Label, List, Message, Segment } from 'semantic-ui-react';
+import { PrivateKey } from '@greymass/eosio';
 
 import GlobalFormFieldKeyPrivate from '../../Global/Form/Field/Key/Private';
 
 class ToolsKeysValidator extends Component<Props> {
   state = {
+    checksum: false,
     valid: false,
     publicKey: ''
   };
-  onChange = (e, { publicKey, valid }) => this.setState({ publicKey, valid })
+  onChange = (e, { publicKey, valid, value }) => {
+    try {
+      PrivateKey.from(value);
+      this.setState({
+        checksum: true,
+        publicKey,
+        valid
+      });
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        checksum: false,
+        publicKey,
+        valid
+      });
+    }
+  }
   render() {
     const { connection, t } = this.props;
-    const { publicKey, valid } = this.state;
+    const { checksum, publicKey, valid } = this.state;
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
@@ -48,11 +66,22 @@ class ToolsKeysValidator extends Component<Props> {
                   <List.Item>
                     <List.Icon name="checkmark" />
                     <List.Content>
-                      <Label
-                        color="green"
-                        content={t('tools_keys_key_validator_key_valid')}
-                        horizontal
-                      />
+                      {(checksum)
+                        ? (
+                          <Label
+                            color="green"
+                            content={t('tools_keys_key_validator_key_valid')}
+                            horizontal
+                          />
+                        )
+                        : (
+                          <Label
+                            color="yellow"
+                            content="Key valid, checksum invalid"
+                            horizontal
+                          />
+                        )
+                      }
                     </List.Content>
                   </List.Item>
                   <List.Item>
