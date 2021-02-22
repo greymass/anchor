@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import ToolsKeysComponent from '../../../../../shared/components/Tools/Keys';
 
+import * as StorageActions from '../../../../../shared/actions/storage';
 import * as WalletActions from '../../../../../shared/actions/wallet';
 import * as WalletsActions from '../../../../../shared/actions/wallets';
 import NavigationActions from '../../../actions/navigation';
@@ -37,6 +38,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...NavigationActions,
+      ...StorageActions,
       ...WalletActions,
       ...WalletsActions,
     }, dispatch)
