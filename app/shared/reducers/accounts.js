@@ -35,8 +35,8 @@ export default function accounts(state = initialState, action) {
             // Skip any staked balances to avoid duplicate data
             if (row.from === row.to) return 0;
             // Return sum of both CPU + NET
-            const cpu = Decimal(row.cpu_weight.split(' ')[0])
-            const net = Decimal(row.net_weight.split(' ')[0])
+            const cpu = Decimal(row.cpu_weight.split(' ')[0]);
+            const net = Decimal(row.net_weight.split(' ')[0]);
             const value = parseFloat(cpu.add(net));
             return value;
           }),

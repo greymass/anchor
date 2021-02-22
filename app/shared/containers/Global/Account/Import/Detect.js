@@ -45,9 +45,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       connection,
       pubkeys
     } = this.props;
-    const pubkeysToLookup = pubkeys.available.filter(pubkey => {
-      return pubkey.includes(connection.keyPrefix);
-    });
+    const pubkeysToLookup = pubkeys.available.filter(pubkey => pubkey.includes(connection.keyPrefix));
     this.props.actions.clearAccountByKey();
     this.props.actions.getAccountByKeys(pubkeysToLookup);
   };
@@ -72,7 +70,6 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       if (Object.keys(mapped).length) {
         Object.keys(mapped).forEach((key) => {
           if (mapped[key].includes(auth) && key === publicKey) {
-            let walletType = 'unknown';
             if (paths[key]) {
               actions.importWallet(chainId, account, authorization, null, password, 'ledger', key, paths[key]);
             } else {
@@ -232,7 +229,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
             : false
           }
           {(filtered.length === 0 && (system.ACCOUNT_BY_KEYS === 'PENDING' || system.ACCOUNT_BY_KEY === 'PENDING'))
-            ? <Segment loading style={{ minHeight: '150px' }}/>
+            ? <Segment loading style={{ minHeight: '150px' }} />
             : false
           }
           {(filtered.length === 0
