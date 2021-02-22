@@ -50,6 +50,7 @@ const fuelEndpoints = {
   e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473: 'http://jungle.greymass.com',
   '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': 'http://jungle3.greymass.com',
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'http://telos.greymass.com',
+  '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': 'http://wax.greymass.com',
 };
 
 function convertLegacyPublicKey(s) {
