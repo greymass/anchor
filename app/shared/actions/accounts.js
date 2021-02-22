@@ -222,10 +222,10 @@ export function getAccount(account = '', onlyAccount = false) {
                 return dispatch(processLoadedAccount(connection.chainId, account, response, onlyAccount));
               })
               .catch((err) => {
-                console.log(err)
+                console.log(err);
               });
           }
-          return dispatch(processLoadedAccount(connection.chainId, account, response, onlyAccount))
+          return dispatch(processLoadedAccount(connection.chainId, account, response, onlyAccount));
         })
         .catch((err) => dispatch({
           type: types.GET_ACCOUNT_FAILURE,
@@ -452,7 +452,9 @@ export function getCurrencyBalance(account, requestedTokens = false) {
               }))
               .catch((err) => dispatch({
                 type: types.GET_ACCOUNT_BALANCE_FAILURE,
-                payload: { err, account_name: account, contract, symbol }
+                payload: {
+                  err, account_name: account, contract, symbol
+                }
               }));
           });
           return selectedTokens;
@@ -527,7 +529,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
               type: types.GET_ACCOUNT_BALANCE_FAILURE,
               payload: { err }
             })));
-        });
+      });
       // }
     }
   };
@@ -593,6 +595,7 @@ export function getAccountByKey(key) {
     if (ecc.isValidPrivate(key)) {
       return dispatch({
         type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
+        reason: 'invalid key',
         key,
       });
     }
@@ -673,7 +676,7 @@ export function getAccountByKey(key) {
 export function getAccountByKeys(keys) {
   return async (dispatch: () => void, getState) => {
     // Prevent private keys from submitting if they somehow were saved as a public key
-    const filtered = keys.filter((key) => !ecc.isValidPrivate(key))
+    const filtered = keys.filter((key) => !ecc.isValidPrivate(key));
     const {
       connection,
       features,
@@ -692,12 +695,12 @@ export function getAccountByKeys(keys) {
               keys: c
             })
             .then((results) => {
-              const accounts = results.data.accounts.map(a => a.account_name)
+              const accounts = results.data.accounts.map(a => a.account_name);
               dispatch(getAccounts(accounts, true));
               return dispatch({
                 type: types.SYSTEM_ACCOUNT_BY_KEYS_SUCCESS,
                 payload: results.data,
-              })
+              });
             })
             .catch((err) => dispatch({
               type: types.SYSTEM_ACCOUNT_BY_KEY_FAILURE,
@@ -740,11 +743,11 @@ export function getControlledAccounts(accounts) {
         dispatch(getAccounts(results.controlled_accounts, true));
         return dispatch({
           type: types.SYSTEM_ACCOUNT_BY_KEY_SUCCESS,
-          payload: { accounts: { account_names: results.controlled_accounts }}
+          payload: { accounts: { account_names: results.controlled_accounts } }
         });
-      })
-    })
-  }
+      });
+    });
+  };
 }
 
 export function clearAccountByKey() {
@@ -779,8 +782,8 @@ export function syncAccounts() {
       existingAccounts.push({
         account_name: account,
         head_block_num: 0,
-      })
-    })
+      });
+    });
     // If any exist
     if (existingAccounts.length > 0) {
       // Determine the oldest account

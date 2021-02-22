@@ -59,9 +59,7 @@ class HomeContainer extends Component<Props> {
       && settings.walletMode !== 'cold'
       && !settings.promptSigningRequests
     );
-    const earlierVersion = wallets.filter(w => {
-      return w.data && w.version === 1 && w.mode === 'hot'
-    }).length > 0
+    const earlierVersion = wallets.filter(w => w.data && w.version === 1 && w.mode === 'hot').length > 0;
     const upgradable = (
       wallets.length > 0
       && settings.walletHash
