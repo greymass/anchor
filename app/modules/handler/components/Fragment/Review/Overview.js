@@ -20,6 +20,7 @@ class PromptFragmentReviewOverview extends Component<Props> {
       hasResourceProviderFee,
       loading,
       modifyWhitelist,
+      pair,
       t,
       transaction,
       usingResourceProvider,
@@ -38,6 +39,7 @@ class PromptFragmentReviewOverview extends Component<Props> {
               enableWhitelist={enableWhitelist}
               hasResourceProviderFee={hasResourceProviderFee}
               modifyWhitelist={modifyWhitelist}
+              pair={pair}
               pricefeed={pricefeed}
               total={transaction.actions.length}
               transaction={transaction}
