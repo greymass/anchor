@@ -137,22 +137,10 @@ class GlobalModalAccountImportHot extends Component<Props> {
             onChange={this.onChange}
             value={value}
           />
-          {(value && matches.length > 0)
-            ? (
-              <Button
-                content="Toggle All"
-                color="blue"
-                onClick={this.toggleAll}
-                size="small"
-              />
-            )
-            : false
-          }
           <GlobalAccountImportElementsAccountList
             publicKey={publicKey}
             selected={selected}
             toggleAccount={this.toggleAccount}
-            value={value}
           />
           <Segment basic clearing>
             <Button
@@ -175,6 +163,18 @@ class GlobalModalAccountImportHot extends Component<Props> {
               )}
               validate={validate}
             />
+            {(matches.length > 1)
+              ? (
+                <Button
+                  content="Select All"
+                  color="blue"
+                  floated="right"
+                  onClick={this.toggleAll}
+                />
+              )
+              : false
+            }
+
           </Segment>
         </Segment>
       </Tab.Pane>
