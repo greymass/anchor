@@ -62,7 +62,7 @@
   "welcome_path_have_account_button": "Import Existing Account",
   "welcome_path_have_account_header": "Import Existing Account",
   "welcome_path_have_account_subheader": "Already have an account name and private key?",
-  "welcome_restore_wallet_header": "Restore Wallet Backup",
+  "welcome_restore_wallet_header": "Import Anchor Backup",
   "welcome_restore_wallet_subheader": "Restore this wallet to a previous state using a wallet backup file. All settings, networks, and wallets will be recreated.",
   "welcome_select_account": "Select Account",
   "welcome_server_connection_fail_content": "Try again or enter a different server.",
