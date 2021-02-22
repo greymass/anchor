@@ -56,6 +56,16 @@ class PromptStageReview extends Component<Props> {
     const error = system.ESRURIBUILD_LAST_ERROR;
     const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
     const fuelActions = ['greymassfuel:cosign', 'greymassnoop:noop'];
+    let pair = 'eosusd';
+    switch (settings.chainId) {
+      case '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': {
+        pair = 'waxpusd';
+        break;
+      }
+      default: {
+        break;
+      }
+    }
     // Determine if the user is using a resource provider
     const usingResourceProvider = (
       transaction
@@ -92,6 +102,7 @@ class PromptStageReview extends Component<Props> {
               hasResourceProviderFee={hasResourceProviderFee}
               loading={loading}
               modifyWhitelist={modifyWhitelist}
+              pair={pair}
               transaction={transaction}
               usingResourceProvider={usingResourceProvider}
               whitelist={whitelist}
@@ -134,6 +145,7 @@ class PromptStageReview extends Component<Props> {
           <Tab.Pane attached="bottom">
             <PromptFragmentReviewFee
               globals={globals}
+              pair={pair}
               prompt={prompt}
             />
           </Tab.Pane>

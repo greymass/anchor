@@ -83,6 +83,16 @@ class OverviewContainer extends Component<Props> {
         break;
       }
     }
+    let pair = 'eosusd';
+    switch (settings.chainId) {
+      case '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': {
+        pair = 'waxpusd';
+        break;
+      }
+      default: {
+        break;
+      }
+    }
     return (
       <React.Fragment>
         <Grid stackable>
@@ -112,14 +122,16 @@ class OverviewContainer extends Component<Props> {
                               <span style={{
                                 display: 'block',
                                 textAlign: 'center',
-                              }}>
-                                ${(pricefeed.eosusd / 10000).toFixed(2)}
+                              }}
+                              >
+                                ${(pricefeed[pair] / 10000).toFixed(2)}
                                 {' '}
                                 <span style={{
                                   display: 'block',
                                   marginTop: '0.25em',
                                   fontSize: '0.70em',
-                                }}>
+                                }}
+                                >
                                   USD/EOS
                                 </span>
 

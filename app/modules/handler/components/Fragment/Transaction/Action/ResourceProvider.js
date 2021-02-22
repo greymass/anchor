@@ -9,6 +9,7 @@ class PromptFragmentTransactionActionResourceProvider extends Component<Props> {
   render() {
     const {
       hasResourceProviderFee,
+      pair,
       pricefeed,
       transaction,
       total,
@@ -17,7 +18,7 @@ class PromptFragmentTransactionActionResourceProvider extends Component<Props> {
     } = this.props;
     const index = 0;
     const [providerAction, potentialFee] = transaction.actions;
-    const price = (pricefeed && pricefeed.eosusd) ? pricefeed.eosusd / 10000 : undefined;
+    const price = (pricefeed && pricefeed[pair]) ? pricefeed[pair] / 10000 : undefined;
     return (
       <Grid
         as={Segment}

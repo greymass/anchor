@@ -81,7 +81,7 @@ class MenuContainer extends Component<Props> {
       sync();
       getConstants();
       getGlobals();
-      getPriceFeed();
+      getPriceFeed(settings.chainId);
       getRamStats();
     }
   }
