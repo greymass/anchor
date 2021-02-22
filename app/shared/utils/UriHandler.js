@@ -1,6 +1,8 @@
 import { clone, find, keys, map, omit, pickBy } from 'lodash';
 import eos from '../actions/helpers/eos';
 
+const { screen } = require('electron');
+
 const { SigningRequest } = require('eosio-signing-request');
 const notifier = require('node-notifier');
 const path = require('path');
@@ -15,6 +17,20 @@ const textDecoder = new util.TextDecoder();
 export default async function handleUri(resourcePath, store, mainWindow, pHandler, url) {
   // For the current version, just prompt and don't process whitelist
   // The code below the return is not yet production ready.
+
+  // Create the prompt in the center of whichever screen is clicked on from.
+  const cursor = screen.getCursorScreenPoint();
+  const promptBounds = pHandler.getBounds();
+  const currentScreen = screen.getDisplayNearestPoint({ x: cursor.x, y: cursor.y });
+  const x = parseInt(currentScreen.workArea.x + ((currentScreen.workArea.width - promptBounds.width) / 2), 10);
+  const y = parseInt(currentScreen.workArea.y + ((currentScreen.workArea.height - promptBounds.height) / 2), 10);
+  pHandler.setBounds({
+    x,
+    y,
+    width: promptBounds.width,
+    height: promptBounds.height,
+  });
+
   pHandler.webContents.send('openUri', url);
   pHandler.setVisibleOnAllWorkspaces(true);
   pHandler.show();
