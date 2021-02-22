@@ -17,11 +17,12 @@ class PromptFragmentReviewFee extends Component<Props> {
   render() {
     const {
       globals,
+      pair,
       prompt
     } = this.props;
     const { pricefeed } = globals;
     const { costs } = prompt;
-    const price = (pricefeed && pricefeed.eosusd) ? pricefeed.eosusd / 10000 : undefined;
+    const price = (pricefeed && pricefeed[pair]) ? pricefeed[pair] / 10000 : undefined;
     const cpu = Asset.from(costs.cpu);
     const net = Asset.from(costs.net);
     const ram = Asset.from(costs.ram);

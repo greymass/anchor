@@ -50,14 +50,25 @@ const mapStateToProps = (state, ownProps) => {
   const tokens = sum([
     parseFloat(liquid),
     parseFloat(delegated),
-    parseFloat((cpuWeight) ? cpuWeight : 0),
-    parseFloat((netWeight) ? netWeight : 0),
+    parseFloat((cpuWeight) || 0),
+    parseFloat((netWeight) || 0),
     parseFloat(netRefunding),
     parseFloat(cpuRefunding),
     parseFloat(sumBy(rows, 'vote_stake')),
   ]);
   // Retrieve price from oracle
-  const price = get(state, 'globals.pricefeed.eosusd');
+  const { settings } = state;
+  let pair = 'eosusd';
+  switch (settings.chainId) {
+    case '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': {
+      pair = 'waxpusd';
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+  const price = get(state, `globals.pricefeed.${pair}`);
   const balance = (price) ? (price / 10000) * tokens : false;
   return ({
     balance,
