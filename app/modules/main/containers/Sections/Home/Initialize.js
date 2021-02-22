@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Button, Card, Divider, Icon, Image, Message, Segment } from 'semantic-ui-react';
+import { Accordion, Button, Card, Divider, Icon, Image, Message, Segment } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
 
 import { clearValidationState } from '../../../../../shared/actions/validate';
@@ -17,6 +17,10 @@ import WelcomeImportContainer from '../../../../../shared/containers/Welcome/Imp
 import LogoText from '../../../../../renderer/assets/images/anchor-text-blue.svg';
 
 class HomeInitializeContainer extends Component<Props> {
+  state = {
+    advancedOptions: false
+  }
+  toggleAdvanced = () => this.setState({ advancedOptions: !this.state.advancedOptions })
   initialize = (e) => {
     const {
       actions,
@@ -48,6 +52,9 @@ class HomeInitializeContainer extends Component<Props> {
     const {
       t,
     } = this.props;
+    const {
+      advancedOptions
+    } = this.state;
     return (
       <React.Fragment>
         <Segment
@@ -85,18 +92,28 @@ class HomeInitializeContainer extends Component<Props> {
               </Card.Description>
               <WelcomeImportContainer />
             </Card.Content>
-            <Card.Content extra>
-              {t('main_sections_home_initialize_card_content_one')}
-            </Card.Content>
             <Card.Content>
-              <Button
-                basic
-                content={t('welcome:welcome_use_coldwallet')}
-                icon="snowflake"
-                onClick={this.useColdWallet}
-                size="small"
-              />
+              <Accordion>
+                <Accordion.Title
+                  active={advancedOptions}
+                  index={1}
+                  onClick={this.toggleAdvanced}
+                >
+                  <Icon name="dropdown" />
+                  {t('main_sections_home_initialize_card_content_one')}
+                </Accordion.Title>
+                <Accordion.Content active={advancedOptions}>
+                  <Button
+                    basic
+                    content={t('welcome:welcome_use_coldwallet')}
+                    icon="snowflake"
+                    onClick={this.useColdWallet}
+                    size="small"
+                  />
+                </Accordion.Content>
+              </Accordion>
             </Card.Content>
+
           </Card>
         </Segment>
       </React.Fragment>
