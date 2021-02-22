@@ -81,7 +81,7 @@ class GlobalModalAccountImportDetect extends Component<Props> {
           }
         });
       } else {
-        actions.importWallet(chainId, account, authorization, value, password, 'unknown');
+        actions.importWallet(chainId, account, authorization, value, password, 'unknown', publicKey);
       }
     });
     this.props.onClose();
