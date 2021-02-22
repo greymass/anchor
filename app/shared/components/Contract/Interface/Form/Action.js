@@ -215,7 +215,7 @@ class ContractInterfaceFormAction extends Component<Props> {
                 name={field.name}
                 onChange={this.onFormToggleName}
               />
-            ))
+            ));
           }
         }
       }
@@ -236,7 +236,6 @@ class ContractInterfaceFormAction extends Component<Props> {
     if (system.TRANSACTION_SIGN === 'FAILURE'
       && transaction
       && transaction.data
-      && transaction.data.transaction_id
     ) {
       modal = (
         <GlobalTransactionModal
@@ -261,7 +260,6 @@ class ContractInterfaceFormAction extends Component<Props> {
     } else if (system.TRANSACTION_BROADCAST === 'SUCCESS'
       && transaction
       && transaction.data
-      && transaction.data.transaction_id
     ) {
       modal = (
         <GlobalTransactionModal
@@ -286,7 +284,6 @@ class ContractInterfaceFormAction extends Component<Props> {
     } else if (system.TRANSACTION_BUILD
       && transaction
       && transaction.data
-      && transaction.data.transaction_id
     ) {
       modal = (
         <GlobalTransactionModal
