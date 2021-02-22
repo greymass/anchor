@@ -102,7 +102,13 @@ export function setTransaction(data) {
     contract: raw.contract.account,
     abi: raw.contract.abi,
   };
-  const tx = Transaction.from(raw.transaction.transaction.transaction, abiDef);
+  let tx;
+  try {
+    tx = Transaction.from(raw.transaction.transaction.transaction, abiDef);
+  } catch (e) {
+    // watch wallet format from legacy
+    tx = Transaction.from(raw.transaction.transaction.transaction.transaction, abiDef);
+  }
   const decoded = JSON.parse(JSON.stringify(tx));
   decoded.actions.forEach((action, index) => {
     const decodedAction = tx.actions[index].decodeData(abiDef.abi);
@@ -114,6 +120,7 @@ export function setTransaction(data) {
         type: types.SET_TRANSACTION,
         payload: {
           ...raw,
+          transaction: tx,
           decoded,
         },
       });
