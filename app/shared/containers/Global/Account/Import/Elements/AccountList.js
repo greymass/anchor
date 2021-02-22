@@ -17,7 +17,6 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
       selected,
       system,
       t,
-      value,
       wallets,
     } = this.props;
     const matches = accounts.__lookups;
@@ -30,11 +29,9 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
       if (data) {
         const authorizationList = new EOSAccount(data).getAuthorizations(publicKey);
         authorizationList.forEach((authorization) => {
-          const existingWallet = wallets.find(wallet => {
-            return authorization.perm_name === wallet.authorization &&
+          const existingWallet = wallets.find(wallet => authorization.perm_name === wallet.authorization &&
               account === wallet.account &&
-              connection.chainId === wallet.chainId;
-          });
+              connection.chainId === wallet.chainId);
           if (!existingWallet) {
             authorizations[account] = authorizations[account] || [];
             authorizations[account].push(authorization);
@@ -43,13 +40,11 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
       }
     });
 
-    const hasAuthorizationsToDisplay = Object.values(authorizations).filter(authorizationList => {
-      return authorizationList.length > 0;
-    }).length > 0;
+    const hasAuthorizationsToDisplay = Object.values(authorizations).filter(authorizationList => authorizationList.length > 0).length > 0;
 
     return (
       <React.Fragment>
-        {(value && matches.length > 0 && hasAuthorizationsToDisplay)
+        {(publicKey && matches.length > 0 && hasAuthorizationsToDisplay)
           ? (
             <Segment stacked color="blue">
               <Header size="small">
@@ -94,11 +89,11 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
           )
           : false
         }
-        {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
+        {(publicKey && matches.length === 0 && system.ACCOUNT_BY_KEY === 'PENDING')
           ? <Segment loading />
           : false
         }
-        {(value && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
+        {(publicKey && matches.length === 0 && system.ACCOUNT_BY_KEY === 'SUCCESS')
           ? (
             <Segment stacked color="red">
               <Header>
@@ -109,7 +104,7 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
           )
           : false
         }
-        {(!value)
+        {(!publicKey)
           ? (
             <Segment>
               <p>{t('welcome:welcome_account_lookup_no_accounts')}</p>
