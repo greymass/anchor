@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Container, Dimmer, Grid, Header, Image, Loader, Segment } from 'semantic-ui-react';
-import Either from 'eitherx'
+import Either from 'eitherx';
 
 import ContentContainer from './Content';
 import ContentErrorContainer from './ContentError';
@@ -17,7 +17,7 @@ import * as ValidateActions from '../../../shared/actions/validate';
 import anchorLogo from '../../../renderer/assets/images/anchor-logo.svg';
 import anchorText from '../../../renderer/assets/images/anchor-text.svg';
 
-const { ipcRenderer } = require("electron");
+const { ipcRenderer } = require('electron');
 
 // Stupid hack to get electron handlers set
 ipcRenderer.send('setHttpHandler');
@@ -97,27 +97,32 @@ class MainIndexContainer extends Component<Props> {
         flexDirection: 'row',
         // alignContent: 'stretch',
         alignItems: 'flex-start',
-      }}>
+      }}
+      >
         <div style={{
           flex: '0 1 auto',
           position: 'sticky',
           top: 0,
-        }}>
+        }}
+        >
           <SidebarContainer />
         </div>
         <div style={{
           flex: '1 1 auto',
-        }}>
+        }}
+        >
           <div style={{
             position: 'sticky',
             top: 0,
             zIndex: 999
-          }}>
+          }}
+          >
             <MenuContainer />
           </div>
           <div style={{
             padding: '1.25em'
-          }}>
+          }}
+          >
             <Either
               catchError={({ error, info }) => {
                 console.log(info);
