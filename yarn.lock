@@ -347,7 +347,26 @@
     tslib "^2.1.0"
     uuid "^8.3.0"
 
-"@greymass/eosio@0.1.8", "@greymass/eosio@^0.1.5":
+"@greymass/eosio-resources@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio-resources/-/eosio-resources-0.1.1.tgz#20cf19e01c6411c5a14e63d0201165bd5d416859"
+  integrity sha512-2rJ0g12XloU1Rgld0oPd3llQ5AD/I5dl1epZ4B6y2y8Pl0OhycjmXDbmFMkWs9O/1ERBGhR6NkkXwRq5xZKerw==
+  dependencies:
+    "@greymass/eosio" "^0.3.2"
+    tslib "^2.1.0"
+
+"@greymass/eosio@0.3.2", "@greymass/eosio@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.3.2.tgz#2915a6687af0450b5a201b8f2f978e4a94c1671b"
+  integrity sha512-9nHuXMwg2QYB4TAO35zD/zObik5CAqas439kQEuljRwn7QQUsISDX+txICaJmKuBCmbnhHSWXwpDxib3f2m9jQ==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
+    hash.js "^1.0.0"
+    tslib "^2.0.3"
+
+"@greymass/eosio@^0.1.5":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.1.8.tgz#be2794efebc2c0bed078a275e53dcc7929786ef3"
   integrity sha512-OotCpFZjVUj/CKgY14M/5VsS2Na+lysNF4nThGqdVNAPO1CaSZUPLpPoVAdOKS0I6p0rBD3TxarPp2s8OdmR+Q==
@@ -2835,7 +2854,12 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.8:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
 
-bn.js@^4.11.9, bn.js@^4.4.0:
+bn.js@^4.11.9:
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
+  integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
+
+bn.js@^4.4.0:
   version "4.11.9"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
   integrity sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==
@@ -4984,7 +5008,7 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-elliptic@^6.5.3:
+elliptic@^6.5.3, elliptic@^6.5.4:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
   integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
