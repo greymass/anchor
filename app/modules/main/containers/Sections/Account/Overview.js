@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { withRouter } from 'react-router-dom';
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
-
+import { Resources } from '@greymass/eosio-resources';
 import AccountHeader from './Header';
 import AccountOverviewRam from './Overview/Ram';
 import AccountOverviewResource from './Overview/Resource';
@@ -25,13 +25,17 @@ class AccountOverview extends Component<Props> {
     this.state = {
       account,
       expanded: {},
+      features: [],
       loaded,
+      rex: false,
+      rstate: false,
+      powerup: false,
+      pstate: false,
     };
   }
   componentDidMount() {
     const { settings } = this.props;
     const { account } = settings;
-
     if (
       // Missing account
       !Object.keys(this.props.accounts).includes(account)
@@ -40,10 +44,14 @@ class AccountOverview extends Component<Props> {
     ) {
       this.props.actions.getAccount(account);
     }
+    this.initProviders();
   }
   componentDidUpdate(prevProps) {
-    const { settings } = this.props;
+    const { connection, settings } = this.props;
     // If the user changes the current account, change the UI
+    if (connection.httpEndpoint !== prevProps.connection.httpEndpoint) {
+      this.initProviders();
+    }
     if (
       settings.account !== prevProps.settings.account
       || settings.chainId !== prevProps.settings.chainId
@@ -65,6 +73,36 @@ class AccountOverview extends Component<Props> {
       }
     }
   }
+  initProviders = async () => {
+    const { connection } = this.props;
+    const features = [];
+    if (connection.supportedContracts.includes('rex')) {
+      features.push('rex');
+    }
+    if (connection.supportedContracts.includes('powerup')) {
+      features.push('powerup');
+    }
+    this.resources = new Resources({ url: connection.httpEndpoint });
+    this.setState({
+      features,
+      rex: false,
+      powerup: false,
+      pstate: false,
+    }, async () => {
+      const ms = 1;
+      if (features.includes('rex')) {
+        const rstate = await this.resources.v1.rex.get_state();
+        const sample = await this.resources.getSampledUsage();
+        const rex = rstate.price_per_ms(sample, ms);
+        this.setState({ rex, rstate });
+      }
+      if (features.includes('powerup')) {
+        const pstate = await this.resources.v1.powerup.get_state();
+        const powerup = pstate.cpu.price_per_ms(ms);
+        this.setState({ powerup, pstate });
+      }
+    });
+  }
   toggleExpand = (e, { name }) => {
     this.setState({
       expanded: Object.assign({}, this.state.expanded, {
@@ -82,7 +120,11 @@ class AccountOverview extends Component<Props> {
     } = this.props;
     const {
       account,
+      features,
       loaded,
+      rex,
+      powerup,
+      pstate,
     } = this.state;
     if (!account || account === 'undefined') {
       return (
@@ -94,7 +136,7 @@ class AccountOverview extends Component<Props> {
             </Header.Subheader>
           </Header>
         </Segment>
-      )
+      );
     }
     return (
       <React.Fragment>
@@ -124,11 +166,17 @@ class AccountOverview extends Component<Props> {
               />
               <AccountOverviewResource
                 account={account}
+                powerup={powerup}
+                pstate={pstate}
                 resource="cpu"
+                rex={rex}
               />
               <AccountOverviewResource
                 account={account}
+                powerup={powerup}
+                pstate={pstate}
                 resource="net"
+                rex={rex}
               />
             </React.Fragment>
           )
