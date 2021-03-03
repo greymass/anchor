@@ -347,10 +347,10 @@
     tslib "^2.1.0"
     uuid "^8.3.0"
 
-"@greymass/eosio-resources@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio-resources/-/eosio-resources-0.1.1.tgz#20cf19e01c6411c5a14e63d0201165bd5d416859"
-  integrity sha512-2rJ0g12XloU1Rgld0oPd3llQ5AD/I5dl1epZ4B6y2y8Pl0OhycjmXDbmFMkWs9O/1ERBGhR6NkkXwRq5xZKerw==
+"@greymass/eosio-resources@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio-resources/-/eosio-resources-0.2.0.tgz#ad493f7e8af42ea038918d565238f1983c401469"
+  integrity sha512-t7BEcZ71zkxihKrHOAGvY+rSMESZhvvPOambSJY17B/06w++ilPH1OLQAqGe6t83wD1TeIjUrxv8IPZ4zGUZNg==
   dependencies:
     "@greymass/eosio" "^0.3.2"
     tslib "^2.1.0"

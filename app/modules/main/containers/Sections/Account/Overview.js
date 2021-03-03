@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { withRouter } from 'react-router-dom';
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
+import { Asset } from '@greymass/eosio';
 import { Resources } from '@greymass/eosio-resources';
 import AccountHeader from './Header';
 import AccountOverviewRam from './Overview/Ram';
@@ -90,15 +91,16 @@ class AccountOverview extends Component<Props> {
       pstate: false,
     }, async () => {
       const ms = 1;
+      const symbol = `${connection.tokenPrecision},${connection.chainSymbol}`;
       if (features.includes('rex')) {
         const rstate = await this.resources.v1.rex.get_state();
         const sample = await this.resources.getSampledUsage();
-        const rex = rstate.price_per_ms(sample, ms);
+        const rex = Asset.from(rstate.price_per_ms(sample, ms), symbol);
         this.setState({ rex, rstate });
       }
       if (features.includes('powerup')) {
         const pstate = await this.resources.v1.powerup.get_state();
-        const powerup = pstate.cpu.price_per_ms(ms);
+        const powerup = Asset.from(pstate.cpu.price_per_ms(ms), symbol);
         this.setState({ powerup, pstate });
       }
     });
