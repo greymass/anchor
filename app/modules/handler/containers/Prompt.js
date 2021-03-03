@@ -206,7 +206,9 @@ class PromptContainer extends Component<Props> {
     const {
       response
     } = prompt;
-
+    if (Object.keys(prompt).length === 0) {
+      return false;
+    }
     const loading = (system.ESRURI === 'PENDING' || system.ESRURIBUILD === 'PENDING');
     const shouldBroadcast = (prompt && prompt.resolved && prompt.resolved.request && prompt.resolved.request.shouldBroadcast)
       ? prompt.resolved.request.shouldBroadcast()
@@ -218,7 +220,7 @@ class PromptContainer extends Component<Props> {
       && prompt.resolved.transaction
       && Date.parse(`${prompt.resolved.transaction.expiration.toString()}z`);
     const now = Date.now();
-    const hasExpired = !!(expiration && !hasBroadcast && now > expiration);
+    const hasExpired = false; //! !(expiration && !hasBroadcast && now > expiration);
     const requestedActor = get(prompt, 'transaction.actions.0.authorization.0.actor');
     const requestedActorMissing =
       requestedActor &&
