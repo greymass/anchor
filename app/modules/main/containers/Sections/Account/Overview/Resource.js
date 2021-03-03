@@ -20,6 +20,7 @@ import GlobalAccountFragmentTokenRefunding from '../../../../../../shared/contai
 import GlobalAccountFragmentTokenRefundingClaim from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefundingClaim';
 
 import GlobalButtonRent from '../../../../../../shared/containers/Global/Button/Rent';
+import GlobalButtonPowerUp from '../../../../../../shared/containers/Global/Button/PowerUp';
 import GlobalButtonStake from '../../../../../../shared/containers/Global/Button/Stake';
 import GlobalButtonUnstake from '../../../../../../shared/containers/Global/Button/Unstake';
 
@@ -37,13 +38,18 @@ class AccountOverviewResource extends Component<Props> {
     const {
       account,
       connection,
+      powerup,
+      pstate,
       resource,
+      rex,
       settings,
       t,
     } = this.props;
     const {
       expanded,
     } = this.state;
+    const useRex = (rex.value <= powerup.value);
+    const usePowerup = (rex.value > powerup.value);
     return (
       <Segment>
         <Grid divided fluid stackable>
@@ -150,16 +156,38 @@ class AccountOverviewResource extends Component<Props> {
                           marginTop: '1em'
                         }}
                       >
-                        <GlobalButtonRent
-                          button={{
-                            color: 'green',
-                            content: t('main_sections_overview_resource_button_rent'),
-                            floated: 'right',
-                            icon: 'exchange',
-                            size: 'tiny'
-                          }}
-                          resource={resource}
-                        />
+                        {(useRex)
+                          ? (
+                            <GlobalButtonRent
+                              button={{
+                                color: 'green',
+                                content: t('main_sections_overview_resource_button_rent'),
+                                floated: 'right',
+                                icon: 'exchange',
+                                size: 'tiny'
+                              }}
+                              resource={resource}
+                            />
+                          )
+                          : false
+                        }
+                        {(usePowerup)
+                          ? (
+                            <GlobalButtonPowerUp
+                              button={{
+                                color: 'green',
+                                content: t('main_sections_overview_resource_button_rent'),
+                                floated: 'right',
+                                icon: 'exchange',
+                                size: 'tiny'
+                              }}
+                              powerup={powerup}
+                              pstate={pstate}
+                              resource={resource}
+                            />
+                          )
+                          : false
+                        }
                       </Container>
                     </Segment>
                   </Grid.Column>
