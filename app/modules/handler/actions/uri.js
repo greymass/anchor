@@ -186,11 +186,12 @@ export function setURI(uri) {
       // Get the requested chain(s)
       let chainId;
       if (request.isMultiChain()) {
-        const { settings } = getState();
+        const { wallets } = getState();
         const chainIds = request.getChainIds();
+        const accountChains = wallets.map(w => w.chainId);
         // Find the first chainId matching the request that is enabled
         const matchingRequest = chainIds.filter((chain) =>
-          settings.blockchains.includes(chain.toString()));
+          accountChains.includes(chain.toString()));
         [chainId] = matchingRequest;
       } else {
         chainId = request.getChainId();
