@@ -132,12 +132,6 @@ class MenuContainer extends Component<Props> {
           <WalletMode
             settings={settings}
           />
-          {(validate.NODE === 'SUCCESS' && settings.walletMode !== 'cold')
-            ? (
-              <GlobalFuelDropdown />
-            )
-            : false
-          }
           <WalletLockState
             actions={actions}
             key="lockstate"
