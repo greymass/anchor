@@ -29,8 +29,11 @@ const supportedContracts = [
       'greymassfuel',
       'producerinfo',
       'proposals',
+      'powerup',
       'rex',
-      'regproxyinfo'
+      'regproxyinfo',
+      'test',
+
     ],
   },
   {
@@ -47,6 +50,7 @@ const supportedContracts = [
     supportedContracts: [
       'bidname',
       'greymassfuel',
+      'powerup',
       'rex',
     ],
   },
@@ -71,6 +75,7 @@ const supportedContracts = [
     supportedContracts: [
       'bidname',
       'greymassfuel',
+      'rex',
     ],
   },
   {
