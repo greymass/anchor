@@ -5,14 +5,26 @@ import { cloneDeep, isObject } from 'lodash';
 import {
   APIClient,
   Checksum256,
+  PermissionLevel,
   PrivateKey,
   Serializer,
   SignedTransaction,
   Transaction
 } from '@greymass/eosio';
 
+import * as ValidateFuel from './ValidateFuel';
 import { createHttpHandler } from '../http/handler';
 import serialize from '../../actions/helpers/ledger/serialize';
+
+const { SigningRequest } = require('eosio-signing-request');
+const zlib = require('zlib');
+
+const opts = {
+  zlib: {
+    deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
+    inflateRaw: (data) => new Uint8Array(zlib.inflateRawSync(Buffer.from(data))),
+  }
+};
 
 const eosjs1 = require('eosjs');
 const { transactionHeader } = require('eosjs2/node_modules/eosjs/dist/eosjs-serialize');
@@ -31,19 +43,6 @@ const store = new Store({
 
 // Number of minutes to cache the ABI
 const abiCacheMinutes = 15;
-
-// Fuel action template
-const fuelTransaction = {
-  account: 'greymassnoop',
-  name: 'noop',
-  authorization: [{
-    actor: 'greymassfuel',
-    permission: 'cosign',
-  }],
-  data: {
-    // referrer: 'anchorwallet'
-  }
-};
 
 const fuelEndpoints = {
   aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'http://eos.greymass.com',
@@ -109,7 +108,7 @@ export default class EOSHandler {
             headers: {
               'content-type': 'application/json',
             },
-            timeout: 10000,
+            timeout: 20000,
           }).catch((e) => e);
           if (response.isAxiosError) {
             return {
@@ -158,42 +157,65 @@ export default class EOSHandler {
   push(signedTransaction) {
     let { serializedTransaction, signatures } = signedTransaction;
     if (!serializedTransaction && signedTransaction.transaction) {
-      serializedTransaction = this.api.serializeTransaction(signedTransaction.transaction.transaction);
+      serializedTransaction =
+        this.api.serializeTransaction(signedTransaction.transaction.transaction);
     }
     if (!signatures && signedTransaction.transaction && signedTransaction.transaction.signatures) {
       ({ signatures } = signedTransaction.transaction);
     }
     return this.api.pushSignedTransaction({ signatures, serializedTransaction });
   }
+  async checkResources(chainId, tx, signer) {
+    const endpoint = fuelEndpoints[chainId];
+    if (endpoint) {
+      const unsigned = await this.createTransaction(tx, { sign: false, broadcast: false });
+      const req = await SigningRequest.create({
+        transaction: unsigned.transaction.transaction,
+        chainId,
+      }, opts);
+      const { httpClient } = await createHttpHandler({});
+      const response = await httpClient.post(`${endpoint}/v1/resource_provider/request_transaction`, {
+        request: req.encode(),
+        signer,
+      });
+      if (response && response.data) {
+        switch (response.data.code) {
+          // Free Transaction
+          case 200: {
+            const [, requestData] = response.data.data.request;
+            // Validate the returned data against the requested data
+            await ValidateFuel.validateTransaction(
+              signer,
+              requestData,
+              JSON.parse(JSON.stringify(unsigned.transaction.transaction))
+            );
+            // So long as the validation doesn't throw an exception, sign the new transaction
+            return {
+              signatures: response.data.data.signatures,
+              transaction: requestData,
+            };
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+    return tx;
+  }
   async transact(tx, options = false) {
-    const transaction = cloneDeep(tx);
+    let transaction = cloneDeep(tx);
+    let signatures = [];
     const combinedOptions = Object.assign({}, this.options, options);
     const { chainId } = this.config;
-    if (
-      // is Fuel enabled?
-      this.config.greymassFuel
-      // are using an endpoint where fuel is supported?
-      && fuelEndpoints[chainId]
-      // is this a broadcast transaction?
-      && combinedOptions.broadcast
-      // Ensure if it's an ESR request to only allow specific types
-      && (
-        !combinedOptions.esrReqType
-        || ['action', 'action[]'].includes(combinedOptions.esrReqType)
-      )
-    ) {
-      // If a Fuel endpoint exists, reinit and force its usage
-      if (fuelEndpoints[chainId]) {
-        this.initEOSJS(fuelEndpoints[chainId]);
-        // Check to see if this is already being cosigned by Fuel
-        const [firstAction] = transaction.actions;
-        if (
-          !['greymassfuel', 'greymassnoop'].includes(firstAction.account)
-          && !['cosign', 'noop'].includes(firstAction.name)
-        ) {
-          // prepend Fuel action data
-          transaction.actions.unshift(cloneDeep(fuelTransaction));
-        }
+    const signer = PermissionLevel.from(this.config.authorization);
+    // If this is not a cold wallet, check to see if Fuel is required.
+    if (this.config.httpEndpoint) {
+      try {
+        ({ signatures, transaction } = await this.checkResources(chainId, transaction, signer));
+      } catch (e) {
+        // no catch, proceed with original transaction
+        console.log('cosigning error', e);
       }
     }
     // no broadcast + sign = create a v16 format transaction
@@ -213,10 +235,11 @@ export default class EOSHandler {
       };
     }
     // issue the transaction with options and config
-    const processed = await this.customTransact(transaction, combinedOptions);
+    const processed = await this.customTransact(transaction, combinedOptions, signatures);
     // no broadcast = create and return the transaction itself
     if (!combinedOptions.broadcast) {
-      const deserializedTransaction = this.api.deserializeTransaction(processed.serializedTransaction);
+      const deserializedTransaction =
+        this.api.deserializeTransaction(processed.serializedTransaction);
       return this.createTransaction(deserializedTransaction, combinedOptions, processed.signatures);
     }
     // otherwise return processed tx like the normal transact does
@@ -260,11 +283,10 @@ export default class EOSHandler {
     sign = true,
     blocksBehind,
     expireSeconds
-  }) => {
+  }, extraSignatures = []) => {
     let tx;
     const abis = await Promise.all(transaction.actions.map(async (action) => {
       const { abi } = await this.getAbi(action.account);
-      console.log('customTransact', action.account, abi);
       return {
         contract: action.account,
         abi,
@@ -306,6 +328,12 @@ export default class EOSHandler {
         const signature = privateKey.signDigest(digest);
         pushTransactionArgs.signatures = [signature.toString()];
       }
+    }
+    if (extraSignatures.length) {
+      pushTransactionArgs.signatures = [
+        ...pushTransactionArgs.signatures,
+        ...extraSignatures,
+      ];
     }
     if (broadcast) {
       const signedTransaction = SignedTransaction.from({
@@ -361,10 +389,8 @@ export default class EOSHandler {
     // Combine the chainId + escaped name for the storage key
     const storageKey = [this.config.chainId, escapedAccount].join('|');
     // Store in eosjs
-    console.log('setting cache from setAbi', storageKey, abi);
     this.api.cachedAbis.set(storageKey, abi);
     // Store in localstorage
-    console.log('saving cache from setAbi', storageKey, abi);
     store.set(storageKey, {
       ...abi,
       ts: Date.now(),
@@ -409,7 +435,6 @@ export default class EOSHandler {
     const abis = new Map();
     await Promise.all(request.getRequiredAbis().map(async (account) => {
       const { abi } = await this.getAbi(account);
-      console.log('getRequiredAbis', account, abi);
       abis.set(account, abi);
     }));
     return abis;
