@@ -46,7 +46,7 @@
   "main_sections_overview_resource_grid_subheader_two": "A <1>size-based</1> resource an account uses while <3>sending data</3> to the blockchain.",
   "main_sections_overview_resource_grid_subheader_three_available": "{{resource}} Available",
   "main_sections_overview_resource_grid_subheader_three_used": "{{resource}} Used",
-  "main_sections_overview_resource_grid_subheader_four": "Allocated to {{resource}}",
+  "main_sections_overview_resource_grid_subheader_four": "Staked to {{resource}}",
   "main_sections_overview_resource_table_popup_one_content": "Tokens this account has staked to itself that can be unstaked.",
   "main_sections_overview_resource_table_popup_one_trigger": "Staked Tokens",
   "main_sections_overview_resource_table_popup_two_content": "Includes delegated tokens from other accounts and rentals from REX.",
@@ -124,5 +124,7 @@
   "main_sections_overview_ram_sell_button": "Sell",
   "main_sections_overview_resource_button_add": "Stake",
   "main_sections_overview_resource_button_remove": "Unstake",
-  "main_sections_overview_resource_button_rent": "Rent"
+  "main_sections_overview_resource_button_rent": "Rent",
+  "main_sections_overview_resource_button_rent_powerup": "Rent via PowerUp (1 day)",
+  "main_sections_overview_resource_button_rent_rex": "Rent via REX (30 days)"
 }
