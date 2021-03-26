@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 
 export default class GlobalFormFieldGeneric extends Component<Props> {
   onChange = debounce((e, { name, value }) => {
-    this.props.onChange(e, { name, value });
+    this.props.onChange(e, { name, valid: true, value });
   }, 300);
   render() {
     const {
@@ -31,7 +31,7 @@ export default class GlobalFormFieldGeneric extends Component<Props> {
         name={name}
         onChange={this.onChange}
         defaultValue={value}
-        value={(forcedValue) ? forcedValue : undefined}
+        value={(forcedValue) || undefined}
       />
     );
   }
