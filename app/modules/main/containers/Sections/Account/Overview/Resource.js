@@ -9,11 +9,9 @@ import { Trans, withTranslation } from 'react-i18next';
 
 import { Button, Container, Grid, Header, Icon, Popup, Progress, Segment, Table } from 'semantic-ui-react';
 
-import GlobalAccountFragmentResourcePercent from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
 import GlobalAccountFragmentResourceProgress from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Progress';
-import GlobalAccountFragmentResourceStaked from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked';
 import GlobalAccountFragmentResourceStakedSelf from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Self';
-import GlobalAccountFragmentResourceStakedDelegated from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Staked/Delegated';
+import GlobalAccountFragmentResourceUnits from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Units';
 import GlobalAccountFragmentResourceUsage from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Usage';
 import GlobalAccountFragmentResourceMax from '../../../../../../shared/containers/Global/Account/Fragment/Resource/Max';
 import GlobalAccountFragmentTokenRefunding from '../../../../../../shared/containers/Global/Account/Fragment/TokenRefunding';
@@ -38,18 +36,17 @@ class AccountOverviewResource extends Component<Props> {
     const {
       account,
       connection,
-      powerup,
       pstate,
       resource,
-      rex,
+      sample,
+      rstate,
       settings,
       t,
     } = this.props;
     const {
       expanded,
     } = this.state;
-    const useRex = (rex.value <= powerup.value);
-    const usePowerup = (rex.value > powerup.value);
+    const enablePowerup = (connection.supportedContracts && connection.supportedContracts.includes('powerup'));
     return (
       <Segment>
         <Grid divided fluid stackable>
@@ -97,7 +94,7 @@ class AccountOverviewResource extends Component<Props> {
                 <Grid.Row>
                   <Grid.Column width={7}>
                     <Header textAlign="center">
-                      <GlobalAccountFragmentResourcePercent
+                      <GlobalAccountFragmentResourceUnits
                         account={account}
                         type={resource}
                       />
@@ -153,37 +150,33 @@ class AccountOverviewResource extends Component<Props> {
                       <Container
                         fluid
                         style={{
-                          marginTop: '1em'
+                          marginTop: '1em',
+                          textAlign: 'center'
                         }}
                       >
-                        {(useRex)
+                        <GlobalButtonPowerUp
+                          button={{
+                            color: 'green',
+                            content: t('main_sections_overview_resource_button_rent_powerup'),
+                            size: 'tiny',
+                            style: { padding: '0.78571429em' },
+                          }}
+                          sample={sample}
+                          pstate={pstate}
+                          resource={resource}
+                        />
+                        {(expanded || !enablePowerup)
                           ? (
                             <GlobalButtonRent
                               button={{
                                 color: 'green',
-                                content: t('main_sections_overview_resource_button_rent'),
-                                floated: 'right',
-                                icon: 'exchange',
-                                size: 'tiny'
+                                content: t('main_sections_overview_resource_button_rent_rex'),
+                                size: 'tiny',
+                                style: { margin: '0.78571429em', padding: '0.78571429em' },
                               }}
+                              sample={sample}
                               resource={resource}
-                            />
-                          )
-                          : false
-                        }
-                        {(usePowerup)
-                          ? (
-                            <GlobalButtonPowerUp
-                              button={{
-                                color: 'green',
-                                content: t('main_sections_overview_resource_button_rent'),
-                                floated: 'right',
-                                icon: 'exchange',
-                                size: 'tiny'
-                              }}
-                              powerup={powerup}
-                              pstate={pstate}
-                              resource={resource}
+                              rstate={rstate}
                             />
                           )
                           : false
@@ -209,7 +202,7 @@ class AccountOverviewResource extends Component<Props> {
                   </Grid.Column>
                   <Grid.Column width={7}>
                     <Header textAlign="center">
-                      <GlobalAccountFragmentResourceStaked
+                      <GlobalAccountFragmentResourceStakedSelf
                         account={account}
                         type={resource}
                       />
@@ -237,54 +230,6 @@ class AccountOverviewResource extends Component<Props> {
                       <Table.Row>
                         <Table.Cell collapsing textAlign="right">
                           <Popup
-                            content={t('main_sections_overview_resource_table_popup_one_content')}
-                            inverted
-                            position="center left"
-                            trigger={(
-                              <span>
-                                {t('main_sections_overview_resource_table_popup_one_trigger')}
-                                <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
-                              </span>
-                            )}
-                          />
-                        </Table.Cell>
-                        <Table.Cell>
-                          <GlobalAccountFragmentResourceStakedSelf
-                            account={account}
-                            chainId={connection.chainId}
-                            contract="eosio"
-                            token={connection.chainSymbol}
-                            type={resource}
-                          />
-                        </Table.Cell>
-                      </Table.Row>
-                      <Table.Row>
-                        <Table.Cell collapsing textAlign="right">
-                          <Popup
-                            content={t('main_sections_overview_resource_table_popup_two_content')}
-                            inverted
-                            position="center left"
-                            trigger={(
-                              <span>
-                                {t('main_sections_overview_resource_table_popup_two_trigger')}
-                                <Icon color="grey" name="circle help" style={{ margin: '0 0 0 0.5em' }} />
-                              </span>
-                            )}
-                          />
-                        </Table.Cell>
-                        <Table.Cell>
-                          <GlobalAccountFragmentResourceStakedDelegated
-                            account={account}
-                            chainId={connection.chainId}
-                            contract="eosio"
-                            token={connection.chainSymbol}
-                            type={resource}
-                          />
-                        </Table.Cell>
-                      </Table.Row>
-                      <Table.Row>
-                        <Table.Cell collapsing textAlign="right">
-                          <Popup
                             content={t('main_sections_overview_resource_table_popup_three_content')}
                             inverted
                             position="center left"
@@ -295,7 +240,6 @@ class AccountOverviewResource extends Component<Props> {
                               </span>
                             )}
                           />
-
                         </Table.Cell>
                         <Table.Cell>
                           <GlobalAccountFragmentTokenRefunding

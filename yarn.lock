@@ -347,15 +347,16 @@
     tslib "^2.1.0"
     uuid "^8.3.0"
 
-"@greymass/eosio-resources@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio-resources/-/eosio-resources-0.2.0.tgz#ad493f7e8af42ea038918d565238f1983c401469"
-  integrity sha512-t7BEcZ71zkxihKrHOAGvY+rSMESZhvvPOambSJY17B/06w++ilPH1OLQAqGe6t83wD1TeIjUrxv8IPZ4zGUZNg==
+"@greymass/eosio-resources@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio-resources/-/eosio-resources-0.6.0.tgz#273e46bb7c72f04873c67a7532a61449159165ca"
+  integrity sha512-3+3BOrAecmOYxmAkL0agbzgtFweKnwDba7kaSazcedBHPt6S61+Q5UGAWWPV0Awxzfd47WWtEgZyr1f0BAMdBw==
   dependencies:
-    "@greymass/eosio" "^0.3.2"
+    "@greymass/eosio" "^0.4.0"
+    bn.js "^4.11.9"
     tslib "^2.1.0"
 
-"@greymass/eosio@0.3.2", "@greymass/eosio@^0.3.2":
+"@greymass/eosio@0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.3.2.tgz#2915a6687af0450b5a201b8f2f978e4a94c1671b"
   integrity sha512-9nHuXMwg2QYB4TAO35zD/zObik5CAqas439kQEuljRwn7QQUsISDX+txICaJmKuBCmbnhHSWXwpDxib3f2m9jQ==
@@ -396,6 +397,17 @@
     bn.js "^4.4.0"
     brorand "^1.0.1"
     elliptic "^6.5.3"
+    hash.js "^1.0.0"
+    tslib "^2.0.3"
+
+"@greymass/eosio@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.4.0.tgz#ec39ef3b4710b3398d382620ec3f80c2f89124c0"
+  integrity sha512-l3v39H35xW0Juox3dnC2/qpi1g87RbaittgBTDKJTpopy/zdZMe50Cz4VSldKvAu0rx+o9LdRGQVQk23sSWbsg==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
     hash.js "^1.0.0"
     tslib "^2.0.3"
 
