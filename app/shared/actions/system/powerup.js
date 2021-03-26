@@ -3,7 +3,7 @@ import { Asset } from '@greymass/eosio';
 import * as types from '../types';
 import eos from '../helpers/eos';
 
-export function powerup(pstate, amount, resource, rentBoth = false) {
+export function powerup(sample, pstate, amount, resource, rentBoth = false) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
 
@@ -13,22 +13,35 @@ export function powerup(pstate, amount, resource, rentBoth = false) {
       days: Number(pstate.powerup_days),
       net_frac: 0,
       cpu_frac: 0,
-      max_payment: String(amount)
+      max_payment: 0
     };
 
-    const frac = pstate.cpu.frac(Asset.from(amount));
-    const fracPrimary = Math.floor(frac * 0.95);
-    const fracSecondary = Math.floor(frac * 0.05);
+    const secondaryResource = (resource === 'cpu') ? 'net' : 'cpu';
+
+    const price = pstate[resource].price_per(sample, amount * 1000);
+    const frac = pstate[resource].frac(sample, amount * 1000);
+
+    const sampleSize = 1000000000;
+    const sampleSecondary = pstate[secondaryResource].price_per(sample, sampleSize);
+    const amountSecondary = 0.0001 / (sampleSecondary / sampleSize);
+    const fracSecondary = pstate[secondaryResource].frac(sample, amountSecondary);
+    const priceSecondary = pstate[secondaryResource].price_per(sample, amountSecondary);
+
+    if (rentBoth) {
+      data.max_payment = String(Asset.from(price + priceSecondary, `${connection.tokenPrecision},${connection.chainSymbol}`));
+    } else {
+      data.max_payment = String(Asset.from(price, `${connection.tokenPrecision},${connection.chainSymbol}`));
+    }
 
     switch (resource) {
       case 'net': {
         data.cpu_frac = (rentBoth) ? fracSecondary : 0;
-        data.net_frac = (rentBoth) ? fracPrimary : frac;
+        data.net_frac = frac;
         break;
       }
       default:
       case 'cpu': {
-        data.cpu_frac = (rentBoth) ? fracPrimary : frac;
+        data.cpu_frac = frac;
         data.net_frac = (rentBoth) ? fracSecondary : 0;
         break;
       }

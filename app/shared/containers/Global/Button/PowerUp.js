@@ -23,18 +23,19 @@ class GlobalButtonPowerUp extends Component<Props> {
       actions,
       blockExplorers,
       button,
+      chain,
       connection,
-      powerup,
       pstate,
       resource,
+      sample,
       settings,
       system,
       t,
       unlocked,
     } = this.props;
-    if (!unlocked) return false;
     const { open } = this.state;
-    if (!connection.supportedContracts || !connection.supportedContracts.includes('rex')) {
+    if (!unlocked) return false;
+    if (!connection.supportedContracts || !connection.supportedContracts.includes('powerup')) {
       return false;
     }
     const processing = !!(system
@@ -50,18 +51,20 @@ class GlobalButtonPowerUp extends Component<Props> {
           <GlobalFormTokenPowerUp
             account={settings.account}
             actions={actions}
+            chain={chain}
             connection={connection}
             onClose={this.close}
-            powerup={powerup}
             processing={processing}
             pstate={pstate}
+            sample={sample}
             resource={resource}
             settings={settings}
           />
         )}
+        open={open}
         title={(
           <Header size="small">
-            {resource.toUpperCase()} - Rent Tokens
+            {resource.toUpperCase()} - Rent Resources
           </Header>
         )}
         settings={settings}
@@ -75,6 +78,7 @@ function mapStateToProps(state) {
   return {
     blockExplorers: state.blockExplorers,
     connection: state.connection,
+    chain: state.chain,
     settings: state.settings,
     system: state.system,
     unlocked: isUnlocked(state),

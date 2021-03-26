@@ -16,15 +16,13 @@ export class GlobalTransactionMessageErrorCpuUsage extends Component<Props> {
           <Header.Content>
             Insufficient Network Resources (CPU)
             <Header.Subheader>
-              This account currently lacks the required staked EOS to perform this transaction.
+              This account currently lacks the required network resources to perform this transaction.
             </Header.Subheader>
           </Header.Content>
         </Header>
-        <p>Before trying this transaction again, address this issue by taking one or more of the following steps:</p>
+        <p>Address this issue by performing one of the following, then try again:</p>
         <List relaxed bulleted>
-          <List.Item>Enable Greymass Fuel from the upper right menu in the main window and try again.</List.Item>
-          <List.Item>Rent more CPU via REX using the Resources interface in the main window and try again.</List.Item>
-          <List.Item>Stake more EOS as CPU using the Resources interface in the main window and try again.</List.Item>
+          <List.Item>Rent more CPU using the Resources interface and try again.</List.Item>
           <List.Item>Wait for your existing CPU to replenish within the next 24 hours.</List.Item>
         </List>
         {(typeof error === 'object' && error.json) ? (

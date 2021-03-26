@@ -3,17 +3,18 @@ import React, { Component } from 'react';
 import { Button, Checkbox, Header, Form, Grid, Table } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
-import GlobalAccountFragmentResourceStakedDelegated from '../../../../containers/Global/Account/Fragment/Resource/Staked/Delegated';
-import GlobalAccountFragmentResourceStakedSelf from '../../../../containers/Global/Account/Fragment/Resource/Staked/Self';
 import GlobalAccountFragmentPowerUpPrice from '../../../../containers/Global/Account/Fragment/PowerUp/Price';
 import GlobalAccountFragmentTokenBalance from '../../../../containers/Global/Account/Fragment/TokenBalance';
-import GlobalFormFieldToken from '../../../../components/Global/Form/Field/Token';
+import GlobalFormFieldGeneric from '../../../../components/Global/Form/Field/Generic';
 
 export class GlobalFormTokenPowerUp extends Component<Props> {
-  state = {
-    rentBoth: false,
-    value: false,
-    valid: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      rentBoth: true,
+      value: false,
+      valid: false,
+    };
   }
   onChange = (e, { value, valid }) => {
     this.setState({ value, valid });
@@ -31,11 +32,11 @@ export class GlobalFormTokenPowerUp extends Component<Props> {
     }
   }
   onSubmit = () => {
-    const { resource, pstate } = this.props;
+    const { sample, resource, pstate } = this.props;
     const { actions } = this.props;
     const { rentBoth, valid, value } = this.state;
     if (valid) {
-      actions.powerup(pstate, value, resource, rentBoth);
+      actions.powerup(sample, pstate, value, resource, rentBoth);
     }
   }
   toggleRentBoth = () => this.setState({ rentBoth: !this.state.rentBoth })
@@ -44,8 +45,9 @@ export class GlobalFormTokenPowerUp extends Component<Props> {
       account,
       connection,
       resource,
-      powerup,
       processing,
+      sample,
+      pstate,
       settings,
     } = this.props;
     const {
@@ -53,12 +55,13 @@ export class GlobalFormTokenPowerUp extends Component<Props> {
       valid,
       value,
     } = this.state;
+    const unit = resource === 'cpu' ? 'ms' : 'kb';
     return (
       <Form loading={processing} onKeyPress={this.onKeyPress}>
         <Grid padded="horizontally">
           <Grid.Row columns={2}>
             <Grid.Column>
-              <GlobalFormFieldToken
+              <GlobalFormFieldGeneric
                 autoFocus
                 connection={connection}
                 key="amount"
@@ -67,9 +70,9 @@ export class GlobalFormTokenPowerUp extends Component<Props> {
                     <Header>
                       Rent {resource.toUpperCase()} via PowerUp
                       <Header.Subheader>
-                        Enter the amount of {connection.chainSymbol} tokens you would like to pay to rent
+                        Enter the amount of {unit} you would like to rent.
                         {' '}
-                        {resource.toUpperCase()} resources for a period of 24-hours.
+                        The rental will expire after 24 hours.
                       </Header.Subheader>
                     </Header>
                   </div>
@@ -79,7 +82,7 @@ export class GlobalFormTokenPowerUp extends Component<Props> {
               />
               <Checkbox
                 checked={rentBoth}
-                label={`Use 5% of amount to also rent ${(resource === 'cpu') ? 'NET' : 'CPU'} resources.`}
+                label={`Include a small amount of ${(resource === 'cpu') ? 'NET' : 'CPU'} resources.`}
                 onChange={this.toggleRentBoth}
               />
             </Grid.Column>
@@ -107,18 +110,18 @@ export class GlobalFormTokenPowerUp extends Component<Props> {
                 </Table.Body>
               </Table>
               <Header size="small">
-                Resource Estimate
+                Estimate
                 <Header.Subheader>
                   <GlobalAccountFragmentPowerUpPrice
-                    amount={valid ? value : 0.1}
+                    amount={value || 1}
                     detailed
-                    powerup={powerup}
+                    pstate={pstate}
+                    rentBoth={rentBoth}
                     resource={resource}
-                    symbol={connection.chainSymbol}
+                    sample={sample}
+                    symbol={[connection.tokenPrecision, connection.chainSymbol].join(',')}
+                    unit={unit}
                   />
-                </Header.Subheader>
-                <Header.Subheader style={{ marginTop: '1em' }}>
-                  <p>Based on an estimated price of {String(powerup)}/{resource === 'cpu' ? '1ms' : '1kb'}</p>
                 </Header.Subheader>
               </Header>
             </Grid.Column>

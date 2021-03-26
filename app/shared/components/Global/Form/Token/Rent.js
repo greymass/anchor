@@ -2,20 +2,31 @@
 import React, { Component } from 'react';
 import { Button, Header, Form, Grid, Table } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
+import { Asset } from '@greymass/eosio';
 
-import GlobalAccountFragmentResourceStakedDelegated from '../../../../containers/Global/Account/Fragment/Resource/Staked/Delegated';
-import GlobalAccountFragmentResourceStakedSelf from '../../../../containers/Global/Account/Fragment/Resource/Staked/Self';
 import GlobalAccountFragmentREXPrice from '../../../../containers/Global/Account/Fragment/REX/Price';
 import GlobalAccountFragmentTokenBalance from '../../../../containers/Global/Account/Fragment/TokenBalance';
-import GlobalFormFieldToken from '../../../../components/Global/Form/Field/Token';
+import GlobalFormFieldGeneric from '../../../../components/Global/Form/Field/Generic';
 
 export class GlobalFormTokenRent extends Component<Props> {
   state = {
     value: false,
     valid: false,
   }
-  onChange = (e, { value, valid }) => {
-    this.setState({ value, valid });
+  onChange = (e, { value }) => {
+    const { connection, rstate, sample } = this.props;
+    let valid = false;
+    if (value > 0) {
+      const price = rstate.price_per(sample, Number(value) * 1000);
+      const asset = Asset.from(price, `${connection.tokenPrecision},${connection.chainSymbol}`);
+      if (asset.value > 0) {
+        valid = true;
+      }
+    }
+    this.setState({
+      value,
+      valid
+    });
   }
   onCancel = () => {
     if (this.props.onClose) {
@@ -30,17 +41,17 @@ export class GlobalFormTokenRent extends Component<Props> {
     }
   }
   onSubmit = () => {
-    const { resource } = this.props;
+    const { resource, rstate, sample } = this.props;
     const { depositrentcpu, depositrentnet } = this.props.actions;
     const { valid, value } = this.state;
     if (valid) {
       switch (resource) {
         default:
         case 'cpu':
-          depositrentcpu(value);
+          depositrentcpu(value, rstate, sample);
           break;
         case 'net':
-          depositrentnet(value);
+          depositrentnet(value, rstate, sample);
           break;
       }
     }
@@ -50,19 +61,22 @@ export class GlobalFormTokenRent extends Component<Props> {
       account,
       connection,
       resource,
+      rstate,
       processing,
+      sample,
       settings,
     } = this.props;
     const {
       valid,
       value,
     } = this.state;
+    const unit = resource === 'cpu' ? 'ms' : 'kb';
     return (
       <Form loading={processing} onKeyPress={this.onKeyPress}>
         <Grid padded="horizontally">
           <Grid.Row columns={2}>
             <Grid.Column>
-              <GlobalFormFieldToken
+              <GlobalFormFieldGeneric
                 autoFocus
                 connection={connection}
                 key="amount"
@@ -70,26 +84,15 @@ export class GlobalFormTokenRent extends Component<Props> {
                   <Header>
                     Rent {resource.toUpperCase()} via REX
                     <Header.Subheader>
-                      Enter the amount of {connection.chainSymbol} to pay in order to rent
+                      Enter the amount of {unit} you would like to rent.
                       {' '}
-                      {resource.toUpperCase()} resources for a period of 30-days.
+                      This amount will be usable each day for a period of 30-days.
                     </Header.Subheader>
                   </Header>
                 )}
                 name="amount"
                 onChange={this.onChange}
               />
-              <Header size="small">
-                Cost Estimate
-                <Header.Subheader>
-                  <GlobalAccountFragmentREXPrice
-                    amount={valid ? value : 0.1}
-                    detailed
-                    resource={resource}
-                    symbol={connection.chainSymbol}
-                  />
-                </Header.Subheader>
-              </Header>
             </Grid.Column>
             <Grid.Column>
               <Table definition textAlign="right">
@@ -112,32 +115,22 @@ export class GlobalFormTokenRent extends Component<Props> {
                       {` ${connection.chainSymbol}`}
                     </Table.Cell>
                   </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Staked {resource.toUpperCase()} Tokens</Table.Cell>
-                    <Table.Cell>
-                      <GlobalAccountFragmentResourceStakedSelf
-                        account={account}
-                        chainId={connection.chainId}
-                        contract="eosio"
-                        token={connection.chainSymbol}
-                        type={resource}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>Other {resource.toUpperCase()} Tokens</Table.Cell>
-                    <Table.Cell>
-                      <GlobalAccountFragmentResourceStakedDelegated
-                        account={account}
-                        chainId={connection.chainId}
-                        contract="eosio"
-                        token={connection.chainSymbol}
-                        type={resource}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
                 </Table.Body>
               </Table>
+              <Header size="small">
+                Cost Estimate
+                <Header.Subheader>
+                  <GlobalAccountFragmentREXPrice
+                    amount={value || 1}
+                    detailed
+                    resource={resource}
+                    rstate={rstate}
+                    sample={sample}
+                    symbol={[connection.tokenPrecision, connection.chainSymbol].join(',')}
+                    unit={unit}
+                  />
+                </Header.Subheader>
+              </Header>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={2}>

@@ -6,7 +6,6 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { withRouter } from 'react-router-dom';
 import { Button, Container, Header, Icon, Segment } from 'semantic-ui-react';
-import { Asset } from '@greymass/eosio';
 import { Resources } from '@greymass/eosio-resources';
 import AccountHeader from './Header';
 import AccountOverviewRam from './Overview/Ram';
@@ -26,11 +25,9 @@ class AccountOverview extends Component<Props> {
     this.state = {
       account,
       expanded: {},
-      features: [],
       loaded,
-      rex: false,
+      sample: false,
       rstate: false,
-      powerup: false,
       pstate: false,
     };
   }
@@ -85,23 +82,23 @@ class AccountOverview extends Component<Props> {
     }
     this.resources = new Resources({ url: connection.httpEndpoint });
     this.setState({
-      features,
-      rex: false,
-      powerup: false,
+      sample: false,
       pstate: false,
+      rstate: false,
     }, async () => {
-      const ms = 1;
-      const symbol = `${connection.tokenPrecision},${connection.chainSymbol}`;
-      if (features.includes('rex')) {
-        const rstate = await this.resources.v1.rex.get_state();
+      const rexEnabled = features.includes('rex');
+      const powerupEnabled = features.includes('powerup');
+      if (rexEnabled || powerupEnabled) {
         const sample = await this.resources.getSampledUsage();
-        const rex = Asset.from(rstate.price_per_ms(sample, ms), symbol);
-        this.setState({ rex, rstate });
+        this.setState({ sample });
       }
-      if (features.includes('powerup')) {
+      if (rexEnabled) {
+        const rstate = await this.resources.v1.rex.get_state();
+        this.setState({ rstate });
+      }
+      if (powerupEnabled) {
         const pstate = await this.resources.v1.powerup.get_state();
-        const powerup = Asset.from(pstate.cpu.price_per_ms(ms), symbol);
-        this.setState({ powerup, pstate });
+        this.setState({ pstate });
       }
     });
   }
@@ -122,11 +119,10 @@ class AccountOverview extends Component<Props> {
     } = this.props;
     const {
       account,
-      features,
       loaded,
-      rex,
-      powerup,
+      sample,
       pstate,
+      rstate,
     } = this.state;
     if (!account || account === 'undefined') {
       return (
@@ -168,17 +164,17 @@ class AccountOverview extends Component<Props> {
               />
               <AccountOverviewResource
                 account={account}
-                powerup={powerup}
                 pstate={pstate}
+                sample={sample}
                 resource="cpu"
-                rex={rex}
+                rstate={rstate}
               />
               <AccountOverviewResource
                 account={account}
-                powerup={powerup}
                 pstate={pstate}
+                sample={sample}
                 resource="net"
-                rex={rex}
+                rstate={rstate}
               />
             </React.Fragment>
           )
