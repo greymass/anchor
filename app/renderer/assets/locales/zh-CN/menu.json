@@ -1,5 +1,13 @@
 {
-  "producer_voting": "生产者投票",
-  "tools": "Tools",
+  "button_manage_blockchains": "管理区块链",
+  "button_manage_wallets": "管理钱包",
+  "dropdown_select_blockchain": "选择一个区块链...",
+  "governance": "治理",
+  "home": "概览",
+  "setup": "新建钱包",
+  "minimize": "隐藏",
+  "producer_voting": "超级节点投票",
+  "resources": "资源",
+  "tools": "工具",
   "wallet": "钱包"
 }
