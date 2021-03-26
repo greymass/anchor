@@ -271,7 +271,7 @@
   "global_account_import_exist_subheader_one": "Anchor will encrypt your private key locally and then find the {{connectionChain}} accounts matching the public key.",
   "global_account_import_exist_button_one": "Import Private Key",
   "global_account_import_exist_header_two": "Import an existing Account using a Ledger device",
-  "global_account_import_exist_subheader_two": "Anchor will encrypt your private key locally and then find the {{connection.chain}} accounts matching the public key.",
+  "global_account_import_exist_subheader_two": "Anchor will load the public key from your Ledger and then find the {{connection.chain}} accounts it matches.",
   "global_account_import_exist_button_two": "Load from Ledger",
   "global_account_import_exist_button_three": "Enable Ledger Support",
   "global_account_import_exist_header_three": "Import an existing account as a Watch Wallet",
