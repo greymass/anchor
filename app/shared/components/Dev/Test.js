@@ -37,7 +37,7 @@ class DevTest extends Component<Props> {
   }
   testTransfer = () => {
     const { actions, wallet } = this.props;
-    actions.transfer(wallet.account, 'jestaaaaaaaa', '0.0001 EOS', '');
+    actions.transfer(wallet.account, 'teamgreymass', '0.0001 EOS', '');
     this.setState({ actionName: 'TRANSFER' });
   }
   testVote = () => {
@@ -75,16 +75,16 @@ class DevTest extends Component<Props> {
     // Create an empty model
     const model1 = new EOSWallet();
     // Import the current wallet from props (which should always be the curren anchor version)
-    model1.importProps(wallet, connection.chainId)
+    model1.importProps(wallet, connection.chainId);
     // Export as a single wallet JSON format
-    const json = JSON.parse(model1.json())
+    const json = JSON.parse(model1.json());
     // Create a new model loading the exported format
     const model2 = new EOSWallet(json);
     // Log the two models to compare
-    console.log(model1.json())
-    console.log(model2.json())
+    console.log(model1.json());
+    console.log(model2.json());
     // Log the props export format
-    console.log(model2.exportProps())
+    console.log(model2.exportProps());
   }
   render() {
     const {
@@ -94,51 +94,51 @@ class DevTest extends Component<Props> {
       settings,
       system,
     } = this.props;
-    console.log(this.props)
+    // console.log(this.props);
     const { actionName } = this.state;
     const transaction = system[`${actionName}_LAST_TRANSACTION`] || {};
-    return (
-      <Segment style={{ overflow: 'scroll', maxWidth: '90vw' }}>
-        <ReactJson
-          enableClipboard={false}
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name={null}
-          src={this.props.sessions}
-          style={{ padding: '1em' }}
-        />
-        <ReactJson
-          enableClipboard={false}
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name={null}
-          src={this.props.auths}
-          style={{ padding: '1em' }}
-        />
-        <ReactJson
-          enableClipboard={false}
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name={null}
-          src={this.props.storage}
-          style={{ padding: '1em' }}
-        />
-        <ReactJson
-          collapsed={1}
-          enableClipboard={false}
-          displayDataTypes={false}
-          displayObjectSize={false}
-          iconStyle="square"
-          name={null}
-          src={this.props.wallet}
-          style={{ padding: '1em' }}
-        />
-
-      </Segment>
-    )
+    // return (
+    //   <Segment style={{ overflow: 'scroll', maxWidth: '90vw' }}>
+    //     <ReactJson
+    //       enableClipboard={false}
+    //       displayDataTypes={false}
+    //       displayObjectSize={false}
+    //       iconStyle="square"
+    //       name={null}
+    //       src={this.props.sessions}
+    //       style={{ padding: '1em' }}
+    //     />
+    //     <ReactJson
+    //       enableClipboard={false}
+    //       displayDataTypes={false}
+    //       displayObjectSize={false}
+    //       iconStyle="square"
+    //       name={null}
+    //       src={this.props.auths}
+    //       style={{ padding: '1em' }}
+    //     />
+    //     <ReactJson
+    //       enableClipboard={false}
+    //       displayDataTypes={false}
+    //       displayObjectSize={false}
+    //       iconStyle="square"
+    //       name={null}
+    //       src={this.props.storage}
+    //       style={{ padding: '1em' }}
+    //     />
+    //     <ReactJson
+    //       collapsed={1}
+    //       enableClipboard={false}
+    //       displayDataTypes={false}
+    //       displayObjectSize={false}
+    //       iconStyle="square"
+    //       name={null}
+    //       src={this.props.wallet}
+    //       style={{ padding: '1em' }}
+    //     />
+    //
+    //   </Segment>
+    // )
     return (
       <Grid>
         <Grid.Column width={4}>
