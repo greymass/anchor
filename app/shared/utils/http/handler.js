@@ -5,7 +5,7 @@ const { ipcRenderer } = require('electron');
 
 const httpQueue = new PQueue({
   concurrency: 2,
-  timeout: 3000,
+  timeout: 30000,
 });
 
 setInterval(() => {
