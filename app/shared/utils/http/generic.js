@@ -6,7 +6,7 @@ const httpQueue = new PQueue({
 });
 
 const httpClient = axios.create({
-  timeout: 3000,
+  timeout: 30000,
 });
 
 httpClient.interceptors.request.use(async (config) => {
