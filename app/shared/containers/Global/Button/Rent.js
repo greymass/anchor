@@ -25,6 +25,8 @@ class GlobalButtonRent extends Component<Props> {
       button,
       connection,
       resource,
+      rstate,
+      sample,
       settings,
       system,
       t,
@@ -52,13 +54,15 @@ class GlobalButtonRent extends Component<Props> {
             onClose={this.close}
             processing={processing}
             resource={resource}
+            rstate={rstate}
+            sample={sample}
             settings={settings}
           />
         )}
         open={open}
         title={(
           <Header size="small">
-            {resource.toUpperCase()} - Rent Tokens
+            {resource.toUpperCase()} - Rent Resources
           </Header>
         )}
         settings={settings}

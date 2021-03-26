@@ -1,38 +1,44 @@
+import { Asset } from '@greymass/eosio';
+
 import * as types from '../types';
 import { getAccount, getCurrencyBalance } from '../accounts';
 import { getTableByBounds } from '../table';
 import { getCPULoans, getNETLoans } from '../rex';
 import eos from '../helpers/eos';
 
-export function depositrentcpu(amount) {
+export function depositrentcpu(amount, rstate, usage) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
+    const price = rstate.price_per(usage, amount * 1000);
+    const asset = Asset.from(price, '4,EOS');
     const data = {
       from: settings.account,
-      loan_payment: amount,
+      loan_payment: String(asset),
       receiver: settings.account,
       loan_fund: `0.0000 ${connection.chainSymbol}`,
     };
     const deposit = {
       owner: settings.account,
-      amount,
+      amount: String(asset),
     };
     rexAction('rentcpu', 'RENTCPUREX', data, deposit, dispatch, getState);
   };
 }
 
-export function depositrentnet(amount) {
+export function depositrentnet(amount, rstate, usage) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
+    const price = rstate.price_per(usage, amount * 1000);
+    const asset = Asset.from(price, '4,EOS');
     const data = {
       from: settings.account,
-      loan_payment: amount,
+      loan_payment: String(asset),
       receiver: settings.account,
       loan_fund: `0.0000 ${connection.chainSymbol}`,
     };
     const deposit = {
       owner: settings.account,
-      amount,
+      amount: String(asset),
     };
     rexAction('rentnet', 'RENTNETREX', data, deposit, dispatch, getState);
   };
@@ -92,12 +98,10 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
       },
       type: types[`SYSTEM_${actionVariable}_SUCCESS`]
     });
-  }).catch((err) => {
-    return dispatch({
-      payload: { connection, err },
-      type: types[`SYSTEM_${actionVariable}_FAILURE`]
-    });
-  });
+  }).catch((err) => dispatch({
+    payload: { connection, err },
+    type: types[`SYSTEM_${actionVariable}_FAILURE`]
+  }));
 }
 
 export default {

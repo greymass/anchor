@@ -4,36 +4,28 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Icon, Popup } from 'semantic-ui-react';
-
-const prettyBytes = require('pretty-bytes');
-const humanizeDuration = require('humanize-duration')
+import { Popup } from 'semantic-ui-react';
 
 class GlobalAccountFragmentResourceUsage extends PureComponent<Props> {
   render() {
     const {
       resource,
-      settings,
     } = this.props;
     if (!resource) return false;
     const percent = ((resource.available / resource.max) * 100).toFixed(2);
     let el = false;
-    const options = {
-      maxDecimalPoints: 3,
-      largest: 2,
-    }
     switch (this.props.type) {
       case 'cpu':
         el = (
           <span>
-            {humanizeDuration(((resource.max - resource.available) / 1000), options)}
+            {((resource.max - resource.available) / 1000)}
           </span>
         );
         break;
       case 'net':
         el = (
           <span>
-            {prettyBytes(resource.max - resource.available)}
+            {(resource.max - resource.available) / 1000}
           </span>
         );
         break;

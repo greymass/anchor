@@ -1,49 +1,60 @@
 // @flow
-import { get } from 'dot-prop-immutable';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Icon } from 'semantic-ui-react';
-import { isEmpty } from 'lodash';
+
+import { Asset } from '@greymass/eosio';
 
 class GlobalAccountFragmentPowerUpPrice extends PureComponent<Props> {
   render() {
     const {
       amount,
-      rate,
-      lng,
+      pstate,
+      sample,
+      rentBoth,
       resource,
       symbol,
+      unit,
     } = this.props;
-    if (rate === false) return <Icon color="grey" name="clock outline" />;
-    const formatter = new Intl.NumberFormat(lng, { minimumFractionDigits: 4 });
-    const formatter2 = new Intl.NumberFormat(lng, { minimumFractionDigits: 2 });
+    if (!pstate || !sample || !amount) return <Icon color="grey" name="clock outline" />;
+    const cost = pstate[resource].price_per(sample, amount * 1000);
     return (
-      <span className={(!rate) ? 'nil' : false}>
-        {'Spending '}
-        {formatter.format(amount.toFixed(4))} {symbol}
-        {' will rent approximately '}
-        {formatter2.format(rate)}{(resource === 'cpu') ? 'ms' : 'kb'}
-        {' worth of '}
-        {resource.toUpperCase()}
-        {' resources to your account for 24 hours.'}
-      </span>
+      <React.Fragment>
+        <p>
+          {'Renting '}
+          {Number(amount)} {unit}
+          {` of ${resource.toUpperCase()} `}
+          {' will cost ~'}
+          {String(Asset.from(cost, symbol))}.
+        </p>
+        {(rentBoth)
+          ? (
+            <p>
+              An additional rental of {(resource === 'cpu') ? 'NET' : 'CPU'} will be added at a cost of 0.0001.
+            </p>
+          )
+          : false
+        }
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   const amount = parseFloat(ownProps.amount);
-  const { powerup, resource, symbol } = ownProps;
-  const rate = amount / powerup.value;
-  return ({
+  const {
+    pstate, rentBoth, resource, sample, unit
+  } = ownProps;
+  return {
     amount,
-    price: powerup,
-    rate,
+    pstate,
+    rentBoth,
     resource,
-    symbol,
-  });
+    sample,
+    unit,
+  };
 };
 
 export default compose(
