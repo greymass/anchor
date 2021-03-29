@@ -252,7 +252,7 @@ const knownChains = [
     "name": "Proton (Testnet)",
     "node": "https://protontestnet.greymass.com/",
     "stakedResources": false,
-    "symbol": "XPT",
+    "symbol": "XPR",
     "testnet": true
   },
   {
