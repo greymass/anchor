@@ -1,6 +1,8 @@
-import * as types from '../actions/types';
 import { get, set } from 'dot-prop-immutable';
 import { map, reduce } from 'lodash';
+import { Asset } from '@greymass/eosio';
+
+import * as types from '../actions/types';
 
 const initialState = {
   __contracts: {
@@ -14,6 +16,23 @@ export default function balances(state = initialState, action) {
     case types.CLEAR_BALANCE_CACHE:
     case types.RESET_ALL_STATES: {
       return initialState;
+    }
+    case types.GET_ACCOUNT_SUCCESS: {
+      let modified;
+      const { connection, results } = action.payload;
+      if (results && results.core_liquid_balance) {
+        const account = action.payload.account.replace('.', '\\.');
+        const newBalances = Object.assign({}, state[account]);
+        const tokenSymbol = `${connection.tokenPrecision || 4},${connection.chainSymbol}`;
+        newBalances[connection.chainSymbol] = Asset.from(results.core_liquid_balance, tokenSymbol).value;
+        modified = set(state, account, newBalances);
+        modified = set(modified, `__contracts.${connection.chainSymbol.toUpperCase()}`, {
+          contract: connection.tokenContract,
+          precision: connection.tokenPrecision,
+        });
+        return modified;
+      }
+      return state;
     }
     case types.GET_ACCOUNT_BALANCES_SUCCESS: {
       let modified;

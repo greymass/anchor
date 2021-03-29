@@ -6,7 +6,7 @@ import { filter, find } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
-import { Grid, Header, Segment, Table } from 'semantic-ui-react';
+import { Button, Grid, Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
 import GlobalAccountDropdownSelect from '../../../../../shared/containers/Global/Account/Dropdown/Select';
@@ -50,6 +50,9 @@ class WalletTransferContainer extends Component<Props> {
     const { chainId, account, authorization } = value;
     actions.useWallet(chainId, account, authorization);
   };
+  refresh = () => {
+    this.props.actions.getAccount(this.props.settings.account, false);
+  }
   render() {
     const {
       isConfirming
@@ -71,9 +74,18 @@ class WalletTransferContainer extends Component<Props> {
 
     if (!settings.account || !balances[settings.account]) {
       return (
-        <p>
-          {t('main_sections_wallet_transfer_select')}
-        </p>
+        <Segment>
+          <Header icon size="large" textAlign="center">
+            <Icon
+              loading
+              name="circle notched"
+            />
+            {t('main_sections_overview_header_two')}
+            <Header.Subheader
+              content={t('main_sections_overview_subheader_two')}
+            />
+          </Header>
+        </Segment>
       );
     }
 
@@ -170,6 +182,13 @@ class WalletTransferContainer extends Component<Props> {
                 content={t('main_sections_wallet_transfer_grid_header_two')}
                 size="small"
                 subheader={t('main_sections_wallet_transfer_grid_subheader_two')}
+              />
+              <Button
+                content={t('main_sections_wallet_transfer_button_refresh')}
+                fluid
+                icon="refresh"
+                onClick={this.refresh}
+                primary
               />
               <Table definition>
                 {(!filteredTokens || !filteredTokens.length)
