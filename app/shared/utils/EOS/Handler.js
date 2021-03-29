@@ -210,9 +210,15 @@ export default class EOSHandler {
     const { chainId } = this.config;
     const signer = PermissionLevel.from(this.config.authorization);
     // If this is not a cold wallet, check to see if Fuel is required.
-    if (this.config.httpEndpoint && fuelEndpoints[this.config.chainId]) {
+    if (
+      this.config.httpEndpoint
+      && fuelEndpoints[this.config.chainId]
+    ) {
       try {
-        ({ signatures, transaction } = await this.checkResources(chainId, transaction, signer));
+        const response = await this.checkResources(chainId, transaction, signer);
+        if (response && response.signatures && response.transaction) {
+          ({ signatures, transaction } = response);
+        }
       } catch (e) {
         // no catch, proceed with original transaction
         console.log('cosigning error', e);
