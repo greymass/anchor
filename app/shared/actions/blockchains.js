@@ -25,9 +25,9 @@ function swapBlockchain(chainId) {
       dispatch(clearActionsCache());
       dispatch(clearProducerInfo());
       // Set the wallet for this blockchain
-      let account = undefined;
-      let authorization = undefined;
-      let mode = undefined;
+      let account;
+      let authorization;
+      let mode;
       if (settings.recentWallets && settings.recentWallets[chainId]) {
         ({ account, authorization, mode } = settings.recentWallets[chainId]);
         if (account && authorization && chainId) {
@@ -70,47 +70,37 @@ function updateBlockchain(payload) {
 }
 
 function updateBlockchainSetting(chainId, key, value) {
-  return (dispatch: () => void) => {
-    return dispatch({
-      type: types.SYSTEM_BLOCKCHAINS_SET_SETTING,
-      payload: { chainId, key, value }
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.SYSTEM_BLOCKCHAINS_SET_SETTING,
+    payload: { chainId, key, value }
+  });
 }
 
 function importBlockchainFromBackup(blockchain) {
-  return (dispatch: () => void) => {
-    return dispatch({
-      type: types.SYSTEM_BLOCKCHAINS_UPDATE,
-      payload: blockchain
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.SYSTEM_BLOCKCHAINS_UPDATE,
+    payload: blockchain
+  });
 }
 
 function pinBlockchain(chainId) {
-  return (dispatch: () => void) => {
-    return dispatch({
-      type: types.SYSTEM_BLOCKCHAINS_PIN,
-      payload: { chainId },
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.SYSTEM_BLOCKCHAINS_PIN,
+    payload: { chainId },
+  });
 }
 
 function unpinBlockchain(chainId) {
-  return (dispatch: () => void) => {
-    return dispatch({
-      type: types.SYSTEM_BLOCKCHAINS_UNPIN,
-      payload: { chainId },
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.SYSTEM_BLOCKCHAINS_UNPIN,
+    payload: { chainId },
+  });
 }
 
 function setNodeGeneric() {
-  return (dispatch: () => void) => {
-    return dispatch({
-      type: types.SET_CONNECTION_GENERIC_ENDPOINT
-    });
-  };
+  return (dispatch: () => void) => dispatch({
+    type: types.SET_CONNECTION_GENERIC_ENDPOINT
+  });
 }
 
 function resyncBlockchains() {
