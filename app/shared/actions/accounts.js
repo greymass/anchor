@@ -202,7 +202,13 @@ export function getAccount(account = '', onlyAccount = true) {
     } = getState();
     if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
       eos(connection, false, true).rpc.get_account(account)
-        .then((response) => {
+        .then(async (response) => {
+          if (!response.core_liquid_balance) {
+            const balance = await eos(connection, false, true).rpc.get_currency_balance(connection.tokenContract, account, connection.chainSymbol);
+            if (balance) {
+              response.core_liquid_balance = balance[0];
+            }
+          }
           if (response.voter_info === null) {
             const query = {
               json: true,
