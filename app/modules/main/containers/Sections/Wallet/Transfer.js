@@ -17,14 +17,27 @@ import GlobalTransactionHandler from '../../../../../shared/components/Global/Tr
 import WalletPanelFormTransferSend from '../../../../../shared/components/Wallet/Panel/Form/Transfer/Send';
 
 import { clearSystemState } from '../../../../../shared/actions/system/systemstate';
-import { getActions, getContractHash } from '../../../../../shared/actions/accounts';
+import { getActions, getContractHash, getAccount } from '../../../../../shared/actions/accounts';
 import { transfer, transferSetAsset } from '../../../../../shared/actions/transfer';
 import { useWallet } from '../../../../../shared/actions/wallets';
+
 
 class WalletTransferContainer extends Component<Props> {
   state = {
     isConfirming: false
   };
+  componentDidMount() {
+    const { settings } = this.props;
+    const { account } = settings;
+    if (
+      // Missing account
+      !Object.keys(this.props.accounts).includes(account)
+      // Missing balance
+      || !Object.keys(this.props.balances).includes(account)
+    ) {
+      this.props.actions.getAccount(account);
+    }
+  }
   isConfirming = (value) => this.setState({ isConfirming: value })
   onClose = () => {
     this.props.actions.clearSystemState();
@@ -199,6 +212,7 @@ class WalletTransferContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    accounts: state.accounts,
     actionHistory: state.actions[state.settings.account],
     app: state.app,
     auths: state.auths,
@@ -216,6 +230,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       clearSystemState,
+      getAccount,
       getActions,
       getContractHash,
       transfer,
