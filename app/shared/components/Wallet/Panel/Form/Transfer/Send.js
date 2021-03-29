@@ -5,6 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { findIndex } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import debounce from 'lodash/debounce';
+import { Asset } from '@greymass/eosio';
 
 import { createHttpHandler } from '../../../../../utils/http/handler';
 import FormFieldMultiToken from '../../../../Global/Form/Field/MultiToken';
@@ -268,17 +269,17 @@ class WalletPanelFormTransferSend extends Component<Props> {
     if (precision) {
       precisionValue = precision[asset.toUpperCase()];
     }
-    let quantity = `${balance[asset].toFixed(precisionValue)} ${asset}`;
+    const quantity = Asset.from(balance[asset], `${precisionValue},${asset}`);
     if (fioFee) {
-      quantity = `${(balance[asset] - (fioFee / 1000000000)).toFixed(precisionValue)} ${asset}`;
+      quantity.value -= fioFee / 1000000000;
     }
     this.setState({
-      quantity,
+      quantity: String(quantity),
       quantitySet: Date.now(),
     }, () => {
       this.onChange(null, {
         name: 'quantity',
-        value: quantity,
+        value: String(quantity),
         valid: true,
       });
     });
@@ -322,9 +323,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
 
     const balance = balances[settings.account];
     const assetContract = balances.__contracts[asset.toUpperCase()];
-    let precision;
-    if (assetContract) {
-      ({ precision } = assetContract);
+    let precision = connection.tokenPrecision;
+    if (assetContract && assetContract.precision && assetContract.precision[asset]) {
+      precision = assetContract.precision[asset];
     }
 
     const quantityValue = quantity ? parseFloat(quantity.split(' ')[0]) : 0;
@@ -354,6 +355,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
       system.ACCOUNT_HAS_CONTRACT_LAST_CONTRACT_HASH !== '0000000000000000000000000000000000000000000000000000000000000000';
 
     const hasWarnings = exchangeWarning || shouldDisplayTransferingToContractMessage;
+
     return (
       <Form
         key={formId}
@@ -429,9 +431,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                         onClick={this.fillMax}
                         style={{ cursor: 'pointer' }}
                       >
-                        {(balance[asset] && balance[asset].toFixed(precision[asset.toUpperCase()])) || '0.0000'}
-                        {' '}
-                        {asset}
+                        {String(Asset.from(balance[asset], `${precision},${asset}`))}
                       </a>
                     </span>
                     {t('transfer_label_token_and_quantity')}
