@@ -6,9 +6,11 @@ import { Button, Container, Grid, Header, Label, Segment } from 'semantic-ui-rea
 
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
+import { uniq } from 'lodash';
 
 import OverviewSidebarContainer from './Overview/Sidebar';
 
+import { getAccount } from '../../../../shared/actions/accounts';
 import NavigationActions from '../../actions/navigation';
 import OverviewMenu from '../../components/Overview/Menu';
 import OverviewTable from '../../components/Overview/Table';
@@ -18,6 +20,11 @@ class OverviewContainer extends Component<Props> {
     view: 'systemtokens'
   };
   viewChange = (e, data) => this.setState({ view: data.name })
+  refreshAccounts = (accountOnly = true) => {
+    const { settings, wallets } = this.props;
+    const accounts = uniq(wallets.filter((wallet) => wallet.chainId === settings.chainId).map((wallet) => wallet.account));
+    accounts.forEach((account) => this.props.actions.getAccount(account, accountOnly));
+  }
   render() {
     const {
       chainSymbol,
@@ -110,10 +117,10 @@ class OverviewContainer extends Component<Props> {
               <Segment color="green" style={{ marginTop: 0 }}>
                 <Grid style={{ marginBottom: 0 }}>
                   <Grid.Row>
-                    <Grid.Column width={10}>
+                    <Grid.Column width={13}>
                       {header}
                     </Grid.Column>
-                    <Grid.Column textAlign="right" width={6}>
+                    <Grid.Column textAlign="right" width={3}>
                       {(['systemtokens'].includes(view) && (supportedContracts && supportedContracts.includes('delphioracle')))
                         ? (
                           <Label
@@ -162,22 +169,38 @@ class OverviewContainer extends Component<Props> {
 
                   {(view === 'balances')
                     ? (
-                      <Button
-                        basic
-                        content={t('main_sections_overview_container_button_tokens')}
-                        icon="users"
-                        onClick={() => this.props.actions.changeModule('tools/customtokens')}
-                        primary
-                      />
+                      <React.Fragment>
+                        <Button
+                          content={t('main_sections_wallet_transfer_button_refresh')}
+                          icon="cubes"
+                          onClick={() => this.refreshAccounts(false)}
+                          primary
+                        />
+                        <Button
+                          basic
+                          content={t('main_sections_overview_container_button_tokens')}
+                          icon="cubes"
+                          onClick={() => this.props.actions.changeModule('tools/customtokens')}
+                          primary
+                        />
+                      </React.Fragment>
                     )
                     : (
-                      <Button
-                        basic
-                        content={t('main_sections_overview_container_button')}
-                        icon="users"
-                        onClick={() => this.props.actions.changeModule('manage/wallets')}
-                        primary
-                      />
+                      <React.Fragment>
+                        <Button
+                          content={t('main_sections_overview_container_button_accounts')}
+                          icon="users"
+                          onClick={() => this.refreshAccounts(true)}
+                          primary
+                        />
+                        <Button
+                          basic
+                          content={t('main_sections_overview_container_button')}
+                          icon="users"
+                          onClick={() => this.props.actions.changeModule('manage/wallets')}
+                          primary
+                        />
+                      </React.Fragment>
                     )
                   }
                 </Container>
@@ -195,7 +218,9 @@ class OverviewContainer extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    balances: state.balances,
     chainSymbol: state.connection.chainSymbol,
+    connection: state.connection,
     pricefeed: state.globals.pricefeed,
     navigation: state.navigation,
     settings: state.settings,
@@ -208,6 +233,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      getAccount,
       ...NavigationActions,
     }, dispatch)
   };

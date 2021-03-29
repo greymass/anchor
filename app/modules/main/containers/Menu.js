@@ -79,10 +79,6 @@ class MenuContainer extends Component<Props> {
     } = actions;
     if (settings.walletMode !== 'cold' && validate.NODE === 'SUCCESS') {
       sync();
-      getConstants();
-      getGlobals();
-      getPriceFeed(settings.chainId);
-      getRamStats();
     }
   }
   render() {

@@ -9,7 +9,7 @@ const httpQueue = new PQueue({
 });
 
 setInterval(() => {
-  if (httpQueue.size > 100) {
+  if (httpQueue.size > 10000) {
     httpQueue.clear();
   }
 }, 1000);

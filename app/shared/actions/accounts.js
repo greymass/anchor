@@ -185,7 +185,7 @@ export function checkAccountExists(account = '', node) {
   };
 }
 
-export function getAccount(account = '', onlyAccount = false) {
+export function getAccount(account = '', onlyAccount = true) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_ACCOUNT_REQUEST,
@@ -247,7 +247,7 @@ export function getDelegatedBalances(account) {
   };
 }
 
-export function processLoadedAccount(chainId, account, results, onlyAccount = false) {
+export function processLoadedAccount(chainId, account, results, onlyAccount = true) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -283,6 +283,7 @@ export function processLoadedAccount(chainId, account, results, onlyAccount = fa
       payload: {
         account,
         chainId,
+        connection,
         results: modified
       }
     });
@@ -439,17 +440,18 @@ export function getCurrencyBalance(account, requestedTokens = false) {
             if (!settings.customTokens.includes(`${settings.chainId}:eosio.token:${symbol}`)) {
               dispatch(addCustomTokenBeos('eosio.token', symbol));
             }
-            eos(connection, false, true).rpc.get_currency_balance(contract, account, symbol).then((results) =>
-              dispatch({
-                type: types.GET_ACCOUNT_BALANCE_SUCCESS,
-                payload: {
-                  account_name: account,
-                  contract,
-                  precision: formatPrecisions(results, symbol, connection),
-                  symbol,
-                  tokens: formatBalances(results, symbol)
-                }
-              }))
+            eos(connection, false, true).rpc.get_currency_balance(contract, account, symbol)
+              .then((results) =>
+                dispatch({
+                  type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+                  payload: {
+                    account_name: account,
+                    contract,
+                    precision: formatPrecisions(results, symbol, connection),
+                    symbol,
+                    tokens: formatBalances(results, symbol)
+                  }
+                }))
               .catch((err) => dispatch({
                 type: types.GET_ACCOUNT_BALANCE_FAILURE,
                 payload: {
