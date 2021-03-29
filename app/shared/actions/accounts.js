@@ -1,4 +1,5 @@
 import { chunk, difference, find, forEach, intersection, map, orderBy, pick, reduce, sortBy, uniq } from 'lodash';
+import { Asset } from '@greymass/eosio';
 
 import * as types from './types';
 import eos from './helpers/eos';
@@ -203,10 +204,12 @@ export function getAccount(account = '', onlyAccount = true) {
     if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
       eos(connection, false, true).rpc.get_account(account)
         .then(async (response) => {
-          if (!response.core_liquid_balance) {
+          if (!('core_liquid_balance' in response)) {
             const balance = await eos(connection, false, true).rpc.get_currency_balance(connection.tokenContract, account, connection.chainSymbol);
-            if (balance) {
+            if (balance.length) {
               response.core_liquid_balance = balance[0];
+            } else {
+              response.core_liquid_balance = String(Asset.from(0, `${connection.tokenPrecision},${connection.chainSymbol}`));
             }
           }
           if (response.voter_info === null) {
