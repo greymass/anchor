@@ -299,7 +299,7 @@ export function processLoadedAccount(chainId, account, results, onlyAccount = tr
   };
 }
 
-export function getAccounts(accounts = [], onlyAccount = false) {
+export function getAccounts(accounts = [], onlyAccount = true) {
   return async (dispatch: () => void, getState) => {
     const { connection, features } = getState();
     const { endpoints } = features;
