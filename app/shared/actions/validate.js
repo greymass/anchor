@@ -1,10 +1,11 @@
 import { find, map, uniq } from 'lodash';
 
-import { getAccounts, getCurrencyBalance } from './accounts';
 import * as types from './types';
 import * as chain from './chain';
-import { getGlobals } from './globals';
+
+import { getAccounts, getCurrencyBalance } from './accounts';
 import { getSupportedCalls } from './connection';
+import { sync } from './sync';
 
 import eos from './helpers/eos';
 
@@ -134,11 +135,12 @@ export function validateNode(
               },
               type: types.VALIDATE_NODE_SUCCESS
             });
-            // Check if the new node supports the History Plugin
-            dispatch(getSupportedCalls());
-            // Grab globals
-            dispatch(getGlobals());
             setTimeout(() => {
+              // Kick off a sync call
+              dispatch(sync());
+              // Check which calls the new API supports
+              dispatch(getSupportedCalls());
+              // Are we requesting all accounts be refreshed?
               if (refreshAllAccounts) {
                 // Filter wallet data down to the current chain
                 const chainWallets = wallets.filter((w) => (w.chainId === blockchain.chainId));
@@ -198,7 +200,7 @@ export function validateNode(
               useImmediately,
             },
             type: types.VALIDATE_NODE_FAILURE
-          })
+          });
         });
       } catch (error) {
         return dispatch({
