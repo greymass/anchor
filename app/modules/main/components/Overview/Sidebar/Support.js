@@ -6,10 +6,9 @@ import { withTranslation } from 'react-i18next';
 const { shell } = require('electron');
 
 class OverviewSidebarSupport extends PureComponent<Props> {
-  openLink = () => shell.openExternal('https://forums.greymass.com')
+  openLink = () => shell.openExternal('https://eoscommunity.org/c/greymass/anchor-wallet/5')
   render() {
     const { t } = this.props;
-
     return (
       <Segment attached="top" color="grey" textAlign="center">
         <Header size="tiny">
