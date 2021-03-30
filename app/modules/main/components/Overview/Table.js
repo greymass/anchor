@@ -98,6 +98,11 @@ class OverviewTable extends Component<Props> {
                       : false
                     }
                   </Table.Cell>
+                  <Table.Cell collapsing>
+                    <GlobalAccountFragmentStaleness
+                      account={accountName}
+                    />
+                  </Table.Cell>
                   {(view === 'systemtokens')
                     ? (
                       <React.Fragment>
@@ -258,13 +263,8 @@ class OverviewTable extends Component<Props> {
                     )
                     : false
                   }
-                  <Table.Cell collapsing>
-                    <GlobalAccountFragmentStaleness
-                      account={accountName}
-                    />
-                  </Table.Cell>
                 </Table.Row>
-              )
+              );
             })}
           </Table.Body>
         </Table>
