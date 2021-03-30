@@ -28,7 +28,7 @@ class MainIndexContainer extends Component<Props> {
     const { actions, connectionStatus, settings } = props;
     const { validateNode } = actions;
     if (settings.walletMode !== 'cold') {
-      validateNode(settings.node, settings.chainId, false, true);
+      validateNode(settings.node, settings.chainId, false, true, true);
       if (connectionStatus !== 'SUCCESS' && settings.node) {
         this.state = {
           initialized: true
