@@ -28,7 +28,7 @@ class OverviewTableHeader extends Component<Props> {
     return (
       <Table.Header style={{ width: '100%' }}>
         <Table.Row>
-          <Table.HeaderCell collapsing textAlign="right">
+          <Table.HeaderCell collapsing colSpan="2" textAlign="right">
             <Header
               content={t('main_components_overview_table_header')}
               subheader={t('main_components_overview_table_subheader')}
@@ -176,7 +176,6 @@ class OverviewTableHeader extends Component<Props> {
             )
             : false
           }
-          <Table.HeaderCell collapsing />
         </Table.Row>
       </Table.Header>
     );
