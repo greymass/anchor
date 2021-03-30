@@ -12,6 +12,7 @@ import {
   Transaction
 } from '@greymass/eosio';
 
+import { configureStore } from '../../store/main/configureStore';
 import * as ValidateFuel from './ValidateFuel';
 import { createHttpHandler } from '../http/handler';
 import serialize from '../../actions/helpers/ledger/serialize';
@@ -37,7 +38,7 @@ const LedgerApi = require('../../actions/helpers/hardware/ledger').default;
 // Local store for ABIs
 const Store = require('electron-store');
 
-const store = new Store({
+const abiCache = new Store({
   name: 'abis'
 });
 
@@ -47,7 +48,8 @@ const abiCacheMinutes = 15;
 const fuelEndpoints = {
   aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'http://eos.greymass.com',
   e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473: 'http://jungle.greymass.com',
-  '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': 'http://jungle3.greymass.com',
+  // '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': 'http://jungle3.greymass.com',
+  '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': 'http://localhost:8080',
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'http://telos.greymass.com',
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': 'http://wax.greymass.com',
 };
@@ -72,6 +74,9 @@ function convertLegacyPublicKeys(keys) {
 export default class EOSHandler {
   constructor(config) {
     this.config = config;
+    if (config.setAlternativePayment) {
+      this.setAlternativePayment = config.setAlternativePayment;
+    }
     if (config.signMethod === 'ledger') {
       this.signatureProvider = new LedgerSignatureProvider(config);
     } else {
@@ -132,11 +137,11 @@ export default class EOSHandler {
       textDecoder: new TextDecoder(),
       textEncoder: new TextEncoder()
     });
-    Object.keys(store.store).forEach((key) => {
+    Object.keys(abiCache.store).forEach((key) => {
       // Escape storage key
       const storageKey = key.replace('.', '\\.');
       // Load the ABI from localstorage
-      const abi = store.get(storageKey);
+      const abi = abiCache.get(storageKey);
       if (abi && abi.ts) {
         // Determine if the cache is expired
         const expiredAt = abi.ts + (1000 * 60 * abiCacheMinutes);
@@ -148,7 +153,7 @@ export default class EOSHandler {
         }
       }
       // If no ABI or expired, delete localstorage
-      store.delete(storageKey);
+      abiCache.delete(storageKey);
     });
   }
   sign(options) {
@@ -174,29 +179,45 @@ export default class EOSHandler {
         chainId,
       }, opts);
       const { httpClient } = await createHttpHandler({});
-      const response = await httpClient.post(`${endpoint}/v1/resource_provider/request_transaction`, {
-        request: req.encode(),
-        signer,
-      });
-      if (response && response.data) {
-        switch (response.data.code) {
-          // Free Transaction
-          case 200: {
-            const [, requestData] = response.data.data.request;
-            // Validate the returned data against the requested data
-            await ValidateFuel.validateTransaction(
-              signer,
-              requestData,
-              JSON.parse(JSON.stringify(unsigned.transaction.transaction))
-            );
-            // So long as the validation doesn't throw an exception, sign the new transaction
-            return {
-              signatures: response.data.data.signatures,
-              transaction: requestData,
-            };
+      try {
+        const response = await httpClient.post(`${endpoint}/v1/resource_provider/request_transaction`, {
+          request: req.encode(),
+          signer,
+        });
+        if (response && response.data) {
+          switch (response.data.code) {
+            // Free Transaction
+            case 200: {
+              const [, requestData] = response.data.data.request;
+              // Validate the returned data against the requested data
+              await ValidateFuel.validateTransaction(
+                signer,
+                requestData,
+                JSON.parse(JSON.stringify(unsigned.transaction.transaction))
+              );
+              // So long as the validation doesn't throw an exception, sign the new transaction
+              return {
+                signatures: response.data.data.signatures,
+                transaction: requestData,
+              };
+            }
+            default: {
+              break;
+            }
           }
-          default: {
-            break;
+        }
+      } catch (error) {
+        const { response } = error;
+        if (response && response.data && response.data.code) {
+          switch (response.data.code) {
+            case 402: {
+              console.log('dispatching', response.data);
+              this.setAlternativePayment(response.data);
+              break;
+            }
+            default: {
+              break;
+            }
           }
         }
       }
@@ -211,8 +232,12 @@ export default class EOSHandler {
     const signer = PermissionLevel.from(this.config.authorization);
     // If this is not a cold wallet, check to see if Fuel is required.
     if (
+      // Ensure we have an endpoint
       this.config.httpEndpoint
+      // Ensure the chain is compatible
       && fuelEndpoints[this.config.chainId]
+      // Don't try if it's already cosigned
+      && String(transaction.actions[0].account) !== 'greymassnoop'
     ) {
       try {
         const response = await this.checkResources(chainId, transaction, signer);
@@ -397,7 +422,7 @@ export default class EOSHandler {
     // Store in eosjs
     this.api.cachedAbis.set(storageKey, abi);
     // Store in localstorage
-    store.set(storageKey, {
+    abiCache.set(storageKey, {
       ...abi,
       ts: Date.now(),
     });
@@ -407,9 +432,9 @@ export default class EOSHandler {
     const escapedAccount = String(account).replace('.', '\\.');
     // Combine the chainId + escaped name for the storage key
     const storageKey = [this.config.chainId, escapedAccount].join('|');
-    if (store.has(storageKey)) {
+    if (abiCache.has(storageKey)) {
       // Check local store for abi
-      const abi = store.get(storageKey);
+      const abi = abiCache.get(storageKey);
       // Set cache stale for 15 minutes
       const expiredAt = abi.ts + (1000 * 60 * abiCacheMinutes);
       const expired = expiredAt < Date.now();
@@ -424,12 +449,12 @@ export default class EOSHandler {
         };
       }
       // otherwise delete it
-      store.delete(storageKey);
+      abiCache.delete(storageKey);
     }
     // If no cache, retrieve
     const abi = await this.rpc.get_abi(account);
     // Save in local store
-    store.set(storageKey, {
+    abiCache.set(storageKey, {
       ...abi,
       ts: Date.now(),
     });

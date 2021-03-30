@@ -1,8 +1,31 @@
+import { SigningRequest } from 'eosio-signing-request';
+import { Signature, Transaction } from '@greymass/eosio';
+
 import * as types from './types';
 
 import { httpQueue, httpClient } from '../utils/http/generic';
 
-const host = 'https://eos.greymass.com'
+const host = 'https://eos.greymass.com';
+const { ipcRenderer } = require('electron');
+
+// import eos from './helpers/eos';
+
+export function retryWithFee(actionType, request) {
+  return async (dispatch: () => void, getState) => {
+    const { settings } = getState();
+    dispatch({
+      type: `SYSTEM_${actionType.requestName}_PENDING`
+    });
+    const tx = Transaction.from(request.data.request[1]);
+    const payload = await SigningRequest.create({
+      chainId: settings.chainId,
+      transaction: tx
+    });
+    payload.setInfoKey('onSuccess', `SYSTEM_${actionType.requestName}_SUCCESS`);
+    payload.setInfoKey('cosig', request.data.signatures, { type: Signature, array: true });
+    ipcRenderer.send('openUri', payload.encode());
+  };
+}
 
 export function getFuelQuotaStatus(account = null) {
   return (dispatch: () => void, getState) => {
@@ -37,5 +60,6 @@ export function getFuelQuotaStatus(account = null) {
 
 
 export default {
-  getFuelQuotaStatus
+  getFuelQuotaStatus,
+  retryWithFee
 };

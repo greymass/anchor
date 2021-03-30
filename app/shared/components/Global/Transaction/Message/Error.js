@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
+import compose from 'lodash/fp/compose';
 
 import GlobalTransactionErrorAuthorization from './Error/Authorization';
 import GlobalTransactionErrorDefault from './Error/Default';
@@ -10,12 +12,14 @@ import GlobalTransactionErrorNetUsage from './Error/NetUsage';
 import GlobalTransactionErrorLedgerBusy from './Error/Ledger/Busy';
 import GlobalTransactionErrorLedgerData from './Error/Ledger/Data';
 import GlobalTransactionErrorLedgerError from '../../../../containers/Global/Hardware/Ledger/Error';
+import GlobalTransactionErrorResourceUsage from './Error/ResourceUsage';
 
 const transactionErrorsMapping = {
   unsatisfied_authorization: GlobalTransactionErrorAuthorization,
   leeway_deadline_exception: GlobalTransactionErrorCpuUsage,
   tx_net_usage_exceeded: GlobalTransactionErrorNetUsage,
   tx_cpu_usage_exceeded: GlobalTransactionErrorCpuUsage,
+  resource_usage: GlobalTransactionErrorResourceUsage,
 };
 
 const transactionErrorMsgMapping = {
@@ -28,7 +32,8 @@ export class GlobalTransactionMessageError extends Component<Props> {
   constructor(props) {
     super(props);
     const {
-      error
+      error,
+      fuel,
     } = this.props;
 
     let errorName = error.error && error.error.name;
@@ -52,8 +57,13 @@ export class GlobalTransactionMessageError extends Component<Props> {
       component = transactionErrorMsgMapping[error.message];
     }
 
+    const canProceedWithFee = (fuel && fuel.alternative && fuel.alternative.request && fuel.alternative.request.code === 402);
+    if (canProceedWithFee) {
+      component = transactionErrorsMapping.resource_usage;
+    }
 
     this.state = {
+      canProceedWithFee,
       ComponentType: component
     };
   }
@@ -67,6 +77,7 @@ export class GlobalTransactionMessageError extends Component<Props> {
     } = this.props;
 
     const {
+      canProceedWithFee,
       ComponentType
     } = this.state;
 
@@ -77,7 +88,7 @@ export class GlobalTransactionMessageError extends Component<Props> {
           onClose={onClose}
           style={style}
         />
-        {(onClose) ? (
+        {(onClose && !canProceedWithFee) ? (
           <Button
             color="red"
             content={t('close')}
@@ -89,4 +100,11 @@ export class GlobalTransactionMessageError extends Component<Props> {
   }
 }
 
-export default withTranslation('global')(GlobalTransactionMessageError);
+const mapStateToProps = (state) => ({
+  fuel: state.fuel,
+});
+
+export default compose(
+  withTranslation('global'),
+  connect(mapStateToProps)
+)(GlobalTransactionMessageError);

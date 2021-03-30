@@ -1,7 +1,7 @@
 import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import { Serialize } from 'eosjs2';
-import { PrivateKey } from '@greymass/eosio';
+import { PrivateKey, Signature } from '@greymass/eosio';
 
 import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
@@ -448,6 +448,13 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
             && broadcast
           );
           if (shouldBroadcast) {
+            const cosignerSig = prompt.resolved.request.getInfoKey('cosig', {
+              type: Signature,
+              array: true,
+            });
+            if (cosignerSig) {
+              signed.transaction.signatures.unshift(...cosignerSig);
+            }
             broadcasted = await signer.push(signed);
           }
           let callbackParams;
@@ -613,11 +620,21 @@ export function templateURI(blockchain, wallet, chainId = false) {
   };
 }
 
+export function mockDispatch(typeName, payload = {}) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types[typeName],
+      payload
+    });
+  };
+}
+
 export default {
   broadcastURI,
   callbackURI,
   callbackURIWithProcessed,
   clearURI,
+  mockDispatch,
   setURI,
   signURI,
   signIdentityRequest,
