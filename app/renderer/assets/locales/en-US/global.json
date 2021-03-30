@@ -254,7 +254,7 @@
   "global_blockchain_manage_card_two_header": "Add/Remove",
   "global_blockchain_manage_card_two_description": "Manage which blockchains Anchor is configured to interact with.",
   "global_import_index_header_one": "Setup a wallet to use the {{connectionChain}} blockchain.",
-  "global_import_index_subheader_one": "In order to interact with the blockchain a wallet need to be configured for each account.",
+  "global_import_index_subheader_one": "In order to interact with the blockchain, a wallet needs to be configured for each account.",
   "global_import_index_subheader_two": "Chain ID:",
   "global_import_contract_header_one": "Create account via Smart Contract",
   "global_import_contract_subheader_one": "If you have ${connection.chain} already, you can transfer a small amount to a smart contract to have an account created.",
