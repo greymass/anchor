@@ -431,7 +431,17 @@ ipcMain.on('linkRestart', () => {
   initSessionManager();
 });
 
+function setAlternativePayment(request) {
+  store.dispatch({
+    payload: {
+      request,
+    },
+    type: types.SET_ALTERNATIVE_RESOURCE_PAYMENT
+  });
+}
+
 global.hardwareLedger = new HardwareLedger();
+global.setAlternativePayment = setAlternativePayment;
 global.initSessionManager = initSessionManager;
 global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;

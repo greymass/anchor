@@ -9,6 +9,10 @@ const Eos = require('eosjs');
 
 export default function eos(connection, signing = false, v2 = false) {
   const decrypted = Object.assign({}, connection);
+
+  // Add the global dispatch for alternative payments
+  decrypted.setAlternativePayment = remote.getGlobal('setAlternativePayment');
+
   if (signing && decrypted.keyProviderObfuscated) {
     const {
       hash,

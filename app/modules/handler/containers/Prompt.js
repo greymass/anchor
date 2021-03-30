@@ -68,10 +68,14 @@ class PromptContainer extends Component<Props> {
   }
   onShareLink = () => this.setState({ displayShareLink: !this.state.displayShareLink })
   onClose = () => {
-    const { actions } = this.props;
+    const { actions, prompt } = this.props;
     actions.clearURI();
     const w = remote.getCurrentWindow();
-    w.close();
+    if (prompt.callback) {
+      w.close();
+    } else {
+      w.hide();
+    }
     this.setState(initialState);
   };
   onCancel = async () => {

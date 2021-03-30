@@ -130,6 +130,10 @@ export default function system(state = {}, action) {
 
   if (requestState === 'FAILURE') {
     newState = del(newState, txField);
+    newState = set(newState, 'latestFailure', {
+      requestName,
+      type
+    });
   }
 
   if (action.type === types.SYSTEM_ESRURIBUILD_PENDING) {

@@ -45,6 +45,24 @@ const { ipcRenderer } = require('electron');
 const potentialSettings = ['promptCloseOnComplete', 'promptSignAndBroadcast'];
 
 class PromptStage extends Component<Props> {
+  componentDidUpdate() {
+    const { hasBroadcast, prompt, system } = this.props;
+    if (
+      hasBroadcast
+      && prompt
+      && prompt.resolved
+      && prompt.resolved.request
+      && prompt.resolved.request.getInfoKey
+    ) {
+      const onSuccess = prompt.resolved.request.getInfoKey('onSuccess');
+      const [actionType, actionName, actionResult] = onSuccess.split('_');
+      if (onSuccess && !system[actionName] && !system[`${actionName}_LAST_TRANSACTION`] && prompt.response) {
+        this.props.actions.mockDispatch(onSuccess, {
+          tx: prompt.response
+        });
+      }
+    }
+  }
   onBroadcast = () => {
     const {
       actions,
@@ -267,7 +285,8 @@ class PromptStage extends Component<Props> {
       return false;
     }
 
-    // If promptCloseOnComplete is true and the transaction is successful, just close
+    // If promptCloseOnComplete is true
+    // and the transaction is successful and wasn't broadcast, just close
     if (
       hasSignature
       && !hasForegroundCallback
