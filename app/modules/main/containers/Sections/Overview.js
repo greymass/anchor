@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Container, Grid, Header, Label, Segment } from 'semantic-ui-react';
+import { Button, Container, Grid, Header, Icon, Label, Segment } from 'semantic-ui-react';
 
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
@@ -131,7 +131,15 @@ class OverviewContainer extends Component<Props> {
                                 textAlign: 'center',
                               }}
                               >
-                                ${(pricefeed[pair] / 10000).toFixed(2)}
+                                {(pricefeed && pricefeed[pair])
+                                  ? (
+                                    <span>${(pricefeed[pair] / 10000).toFixed(2)}</span>
+                                  )
+                                  : (
+                                    <Icon name="clock" />
+                                  )
+                                }
+
                                 {' '}
                                 <span style={{
                                   display: 'block',
@@ -139,7 +147,7 @@ class OverviewContainer extends Component<Props> {
                                   fontSize: '0.70em',
                                 }}
                                 >
-                                  USD/EOS
+                                  USD/{chainSymbol}
                                 </span>
 
                               </span>
