@@ -15,6 +15,8 @@ const initialState = {
   advancedPermissions: false,
   // The loaded account
   account: '',
+  // Whether or not to display advanced user options in various parts of the app
+  advancedOptions: false,
   // Allow dangerous transactions via EEP-7 Signing Requests
   allowDangerousTransactions: false,
   // Whether or not to enable the handling of EEP-7 Signing Requests

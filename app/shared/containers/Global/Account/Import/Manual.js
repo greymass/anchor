@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Checkbox, Form, Header, Icon, Segment, Tab } from 'semantic-ui-react';
+import { Button, Checkbox, Form, Header, Icon, Message, Segment, Tab } from 'semantic-ui-react';
 
 import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
@@ -55,7 +55,7 @@ class GlobalModalAccountImportManual extends Component<Props> {
       chainId
     } = settings;
     console.log(
-      "import",
+      'import',
       account,
       authAccount,
       authPermission,
@@ -63,7 +63,7 @@ class GlobalModalAccountImportManual extends Component<Props> {
       disabled,
       permission,
       key,
-    )
+    );
     switch (authType) {
       default:
       case 'key': {
@@ -134,44 +134,50 @@ class GlobalModalAccountImportManual extends Component<Props> {
             subheader={t('global_account_import_manual_subheader_one')}
           />
           <Segment>
-          <Form>
-            <GlobalFormFieldAccount
-              autofocus
-              label={t('tools:tools_form_create_account_account_name')}
-              name="account"
-              onChange={this.onChange}
-              value={account}
+            <Message
+              icon="warning sign"
+              header={t('global_account_import_manual_warning_header')}
+              content={t('global_account_import_manual_warning_content')}
+              warning
             />
-            <GlobalFormFieldString
-              label={t('tools:tools_form_permissions_auth_permission')}
-              name="permission"
-              onChange={this.onChange}
-              value={permission}
-            />
-            <Form.Field>
-              <label>{t('global_account_import_manual_by_label')}</label>
-            </Form.Field>
-            <Form.Field>
-              <Checkbox
-                radio
-                label={t('global_account_import_manual_by_key')}
-                name="authType"
-                value="key"
-                checked={authType === 'key'}
-                onChange={this.onChangeType}
+            <Form>
+              <GlobalFormFieldAccount
+                autofocus
+                label={t('tools:tools_form_create_account_account_name')}
+                name="account"
+                onChange={this.onChange}
+                value={account}
               />
-            </Form.Field>
-            <Form.Field>
-              <Checkbox
-                radio
-                label={t('global_account_import_manual_by_auth')}
-                name="authType"
-                value="account"
-                checked={authType === 'account'}
-                onChange={this.onChangeType}
+              <GlobalFormFieldString
+                label={t('tools:tools_form_permissions_auth_permission')}
+                name="permission"
+                onChange={this.onChange}
+                value={permission}
               />
-            </Form.Field>
-            {(authType === 'key')
+              <Form.Field>
+                <label>{t('global_account_import_manual_by_label')}</label>
+              </Form.Field>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label={t('global_account_import_manual_by_key')}
+                  name="authType"
+                  value="key"
+                  checked={authType === 'key'}
+                  onChange={this.onChangeType}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  label={t('global_account_import_manual_by_auth')}
+                  name="authType"
+                  value="account"
+                  checked={authType === 'account'}
+                  onChange={this.onChangeType}
+                />
+              </Form.Field>
+              {(authType === 'key')
               ? (
                 <Segment>
                   <Header
@@ -191,7 +197,7 @@ class GlobalModalAccountImportManual extends Component<Props> {
               )
               : false
             }
-            {(authType === 'account')
+              {(authType === 'account')
               ? (
                 <Segment>
                   <Header
@@ -217,7 +223,7 @@ class GlobalModalAccountImportManual extends Component<Props> {
               : false
             }
 
-          </Form>
+            </Form>
           </Segment>
           <Segment basic clearing>
             <Button
