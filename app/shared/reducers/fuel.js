@@ -7,6 +7,13 @@ export default function fuel(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
+    case types.SYSTEM_ESRURI_RESET:
+    case types.SYSTEM_BLOCKCHAIN_SWAP:
+    case types.CLEAR_ALTERNATIVE_RESOURCE_PAYMENT: {
+      return Object.assign({}, state, {
+        alternative: undefined
+      });
+    }
     case types.SET_ALTERNATIVE_RESOURCE_PAYMENT: {
       return Object.assign({}, state, {
         alternative: action.payload
