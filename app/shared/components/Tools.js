@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
+import GlobalSettingsAdvancedOptions from './Global/Settings/AdvancedOptions';
 import GlobalSettingsAnchorLinkService from './Global/Settings/AnchorLinkService';
 import GlobalSettingsLanguage from './Global/Settings/Language';
 import GlobalSettingsBackground from './Global/Settings/Background';
@@ -180,6 +181,14 @@ class Tools extends Component<Props> {
                 <GlobalSettingsAllowDangerousTransactions
                   actions={actions}
                   defaultValue={settings.allowDangerousTransactions}
+                  selection
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>{t('tools_change_advanced_options')}</label>
+                <GlobalSettingsAdvancedOptions
+                  actions={actions}
+                  defaultValue={settings.advancedOptions}
                   selection
                 />
               </Form.Field>

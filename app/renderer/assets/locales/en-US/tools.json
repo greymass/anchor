@@ -58,6 +58,7 @@
     "tools_change_background_dock": "Only in the Dock.",
     "tools_change_background_process": "Display Anchor Icon in...",
     "tools_change_background_tray": "Only in the Tray.",
+    "tools_change_advanced_options": "Advanced User Options",
     "tools_change_block_explorer": "Change Block Explorer",
     "tools_change_block_explorer2": "Default Block Explorer",
     "tools_change_dfuse_api_key": "dfuse API Key",

@@ -32,6 +32,7 @@ class GlobalModalAccountImportExisting extends Component<Props> {
   render() {
     const {
       connection,
+      settings,
       status,
       t,
     } = this.props;
@@ -110,19 +111,24 @@ class GlobalModalAccountImportExisting extends Component<Props> {
             onClick={this.onClick}
           />
         </Segment>
-        <Segment basic>
-          <Header
-            content={t('global_account_import_exist_header_five')}
-            subheader={t('global_account_import_exist_subheader_five')}
-          />
-          <Button
-            color="blue"
-            content={t('global_account_import_exist_button_five')}
-            icon="write"
-            pane="manual"
-            onClick={this.onClick}
-          />
-        </Segment>
+        {(settings.advancedOptions)
+          ? (
+            <Segment basic>
+              <Header
+                content={t('global_account_import_exist_header_five')}
+                subheader={t('global_account_import_exist_subheader_five')}
+              />
+              <Button
+                color="blue"
+                content={t('global_account_import_exist_button_five')}
+                icon="write"
+                pane="manual"
+                onClick={this.onClick}
+              />
+            </Segment>
+          )
+          : false
+        }
       </Tab.Pane>
     );
   }
@@ -132,13 +138,10 @@ class GlobalModalAccountImportExisting extends Component<Props> {
 function mapStateToProps(state) {
   return {
     storage: state.storage,
-    // accounts: state.accounts,
     connection: state.connection,
     ledger: state.ledger,
-    // settings: state.settings,
+    settings: state.settings,
     status: HardwareLedgerActions.ledgerGetStatus(state.ledger),
-    // system: state.system,
-    // validate: state.validate
   };
 }
 
