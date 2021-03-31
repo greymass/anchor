@@ -106,6 +106,8 @@ const initialState = {
   setupData: {},
   // Window State Management
   signingWindowsetupData: {},
+  // Whether or not to use Fuel-based Transaction Fees
+  transactionFees: false,
   // Wallet Password Validity Hash
   walletHash: false,
   // Wallet Status
