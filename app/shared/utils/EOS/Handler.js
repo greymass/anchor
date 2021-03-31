@@ -72,6 +72,9 @@ function convertLegacyPublicKeys(keys) {
 export default class EOSHandler {
   constructor(config) {
     this.config = config;
+    if (config.clearAlternativePayment) {
+      this.clearAlternativePayment = config.clearAlternativePayment;
+    }
     if (config.setAlternativePayment) {
       this.setAlternativePayment = config.setAlternativePayment;
     }
@@ -214,6 +217,7 @@ export default class EOSHandler {
               break;
             }
             default: {
+              this.clearAlternativePayment();
               break;
             }
           }

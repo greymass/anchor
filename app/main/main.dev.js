@@ -440,7 +440,14 @@ function setAlternativePayment(request) {
   });
 }
 
+function clearAlternativePayment() {
+  store.dispatch({
+    type: types.CLEAR_ALTERNATIVE_RESOURCE_PAYMENT
+  });
+}
+
 global.hardwareLedger = new HardwareLedger();
+global.clearAlternativePayment = clearAlternativePayment;
 global.setAlternativePayment = setAlternativePayment;
 global.initSessionManager = initSessionManager;
 global.initHardwareLedger = initHardwareLedger;
