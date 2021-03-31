@@ -13,6 +13,7 @@ import GlobalSettingsRefreshRate from './Global/Settings/RefreshRate';
 import GlobalSettingsShowTestnets from './Global/Settings/ShowTestnets';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
+import GlobalSettingsTransactionFees from './Global/Settings/TransactionFees';
 import GlobalSettingsFilterSpamTransfers from './Global/Settings/FilterSpamTransfers';
 import GlobalSettingsAllowDangerousTransactions from './Global/Settings/AllowDangerousTransactions';
 
@@ -95,6 +96,14 @@ class Tools extends Component<Props> {
               <Header dividing>
                 {t('tools_settings_header_wallet')}
               </Header>
+              <Form.Field>
+                <label>{t('tools_change_fees')}</label>
+                <GlobalSettingsTransactionFees
+                  actions={actions}
+                  defaultValue={settings.transactionFees}
+                  selection
+                />
+              </Form.Field>
               <Form.Field>
                 <label>{t('tools_change_timeout')}</label>
                 <GlobalSettingsIdleTimeout
