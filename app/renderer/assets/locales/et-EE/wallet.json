@@ -84,7 +84,7 @@
   "wallet_requires_upgrade_subheader": "This currently loaded account is out of sync and needs to be updated. Click update to the left and enter your password to automatically complete this process.",
   "wallet_status_add_custom_token_action": "Lisa Kohandatud Osak",
   "wallet_status_add_custom_token_action_header": "See funktsioon on kolinud!",
-  "wallet_status_add_custom_token_action_subheader": "Kohandatud Osakute haldamiseks selles rahakotis, klõpsa Tööriistad sektsioonile ja otsi 'Airdropid / Kohandatud Osakud' sektsioonist.",
+  "wallet_status_add_custom_token_action_subheader": "To manage the tokens tracked in this wallet, click on the Tools section, and look under the 'Manage Tracked Tokens' section.",
   "wallet_status_add_custom_token_header": "Osakute Saldod",
   "wallet_status_add_custom_token_subheader": "Selle konto kõikide jälgitavate lepingute osakute saldod (vaikimisi ainult 'eosio.token').",
   "wallet_status_balances": "Rahakoti Saldod",
