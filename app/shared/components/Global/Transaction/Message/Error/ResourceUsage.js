@@ -5,13 +5,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { Button, Icon, Header, List, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Icon, Header, List, Segment } from 'semantic-ui-react';
 import { isEmpty, sum, sumBy } from 'lodash';
 
 import { retryWithFee } from '../../../../../actions/fuel';
+import { setSetting } from '../../../../../actions/settings';
 
 class GlobalTransactionMessageErrorResourceUsage extends PureComponent<Props> {
-  tryWithFee = () => {
+  componentDidMount = () => {
+    const { fuel, settings, system } = this.props;
+    if (settings.transactionFees) {
+      this.props.actions.retryWithFee(system.latestFailure, fuel.alternative.request);
+    }
+  }
+  toggle = (e, { checked }) => {
+    this.props.actions.setSetting('transactionFees', checked);
+  }
+  prompt = () => {
     const { fuel, system } = this.props;
     this.props.actions.retryWithFee(system.latestFailure, fuel.alternative.request);
   }
@@ -28,16 +38,27 @@ class GlobalTransactionMessageErrorResourceUsage extends PureComponent<Props> {
           content="Transaction Fee"
           icon="stop"
           size="large"
-          subheader="Your account lacks the network resources for this transaction and it cannot be covered for free."
+          subheader="Your account lacks the network resources for this transaction to succeed."
         />
-        <Segment basic size="large" textAlign="center">
-          <p>To perform this transaction you will either need to pay a fee or visit the Resources section of the wallet to manage your own resources.</p>
+        <Segment stacked size="large" textAlign="center">
+          <p>To perform this transaction, you will either need to pay a fee or use the Resources section of the wallet to manage your account resources.</p>
+          <Header
+            content={fuel.alternative.request.data.fee}
+            subheader="Transaction Fee"
+          />
           <Button
-            content={`Accept Fee of ${fuel.alternative.request.data.fee}`}
-            onClick={this.tryWithFee}
+            content={`Proceed with ${fuel.alternative.request.data.fee} fee`}
+            onClick={this.prompt}
             primary
             size="large"
           />
+          <div style={{ margin: '1em 0' }}>
+            <Checkbox
+              label="Automatically display fee-based transactions."
+              onChange={this.toggle}
+              size="large"
+            />
+          </div>
         </Segment>
       </Segment>
     );
@@ -46,13 +67,15 @@ class GlobalTransactionMessageErrorResourceUsage extends PureComponent<Props> {
 
 const mapStateToProps = (state) => ({
   fuel: state.fuel,
+  settings: state.settings,
   system: state.system,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      retryWithFee
+      retryWithFee,
+      setSetting,
     }, dispatch)
   };
 }

@@ -34,6 +34,7 @@ export class GlobalTransactionMessageError extends Component<Props> {
     const {
       error,
       fuel,
+      settings,
     } = this.props;
 
     let errorName = error.error && error.error.name;
@@ -102,6 +103,7 @@ export class GlobalTransactionMessageError extends Component<Props> {
 
 const mapStateToProps = (state) => ({
   fuel: state.fuel,
+  settings: state.settings,
 });
 
 export default compose(
