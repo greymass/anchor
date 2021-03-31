@@ -12,6 +12,7 @@ export default function eos(connection, signing = false, v2 = false) {
 
   // Add the global dispatch for alternative payments
   decrypted.setAlternativePayment = remote.getGlobal('setAlternativePayment');
+  decrypted.clearAlternativePayment = remote.getGlobal('clearAlternativePayment');
 
   if (signing && decrypted.keyProviderObfuscated) {
     const {
