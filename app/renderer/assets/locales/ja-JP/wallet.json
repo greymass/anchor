@@ -84,7 +84,7 @@
   "wallet_requires_upgrade_subheader": "This currently loaded account is out of sync and needs to be updated. Click update to the left and enter your password to automatically complete this process.",
   "wallet_status_add_custom_token_action": "カスタムトークンを追加",
   "wallet_status_add_custom_token_action_header": "この機能は移動しました！",
-  "wallet_status_add_custom_token_action_subheader": "ウォレットのカスタムトークンを管理するには、ツールをクリックし、「エアドロップ / カスタムトークン」を見てください。",
+  "wallet_status_add_custom_token_action_subheader": "To manage the tokens tracked in this wallet, click on the Tools section, and look under the 'Manage Tracked Tokens' section.",
   "wallet_status_add_custom_token_header": "トークン残高",
   "wallet_status_add_custom_token_subheader": "監視中のすべてのコントラクトのこのアカウントのトークン残高 (既定では'eosio.token'のみ)。",
   "wallet_status_balances": "ウォレット残高",
