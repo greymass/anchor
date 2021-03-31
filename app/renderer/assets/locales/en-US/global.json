@@ -169,6 +169,8 @@
   "global_resource_status_net_low": "Low NET",
   "global_resource_status_ram_low": "Low RAM",
   "global_select_language": "Select Language",
+  "global_settings_transaction_fees_on": "Automatically display request with transaction fee applied.",
+  "global_settings_transaction_fees_off": "Show the resource warning with an option to apply the fee.",
   "global_settings_allow_dangerous_transactions": "Allow dangerous transactions",
   "global_settings_disable_dangerous_transactions": "Disable dangerous transactions",
   "global_settings_display_resources_available": "Display Resources Available",
