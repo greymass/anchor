@@ -84,7 +84,7 @@
   "wallet_requires_upgrade_subheader": "This currently loaded account is out of sync and needs to be updated. Click update to the left and enter your password to automatically complete this process.",
   "wallet_status_add_custom_token_action": "Add Custom Token",
   "wallet_status_add_custom_token_action_header": "This feature has moved!",
-  "wallet_status_add_custom_token_action_subheader": "To manage Custom Tokens in this wallet, click on the Tools section, and look under the 'Airdrops / Custom Tokens' section.",
+  "wallet_status_add_custom_token_action_subheader": "To manage the tokens tracked in this wallet, click on the Tools section, and look under the 'Manage Tracked Tokens' section.",
   "wallet_status_add_custom_token_header": "Token Balances",
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_status_balances": "电子钱包余额",
