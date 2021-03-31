@@ -84,7 +84,7 @@
   "wallet_requires_upgrade_subheader": "This currently loaded account is out of sync and needs to be updated. Click update to the left and enter your password to automatically complete this process.",
   "wallet_status_add_custom_token_action": "사용자 지정 토큰 추가",
   "wallet_status_add_custom_token_action_header": "이 기능은 이동 했습니다!",
-  "wallet_status_add_custom_token_action_subheader": "이 지갑에서 사용자 지정 토큰을 관리하려면 도구 섹션을 클릭하고 'Airdrops / 사용자 지정 토큰' 보세요.",
+  "wallet_status_add_custom_token_action_subheader": "To manage the tokens tracked in this wallet, click on the Tools section, and look under the 'Manage Tracked Tokens' section.",
   "wallet_status_add_custom_token_header": "토큰 잔액",
   "wallet_status_add_custom_token_subheader": "이 계정의 추적 중인 계약에 토큰 잔액들 (기본적으로 'eosio.token').",
   "wallet_status_balances": "지갑 잔액",
