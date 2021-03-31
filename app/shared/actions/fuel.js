@@ -23,6 +23,14 @@ export function retryWithFee(actionType, request) {
     });
     payload.setInfoKey('onSuccess', `SYSTEM_${actionType.requestName}_SUCCESS`);
     payload.setInfoKey('cosig', request.data.signatures, { type: Signature, array: true });
+    // Add the fee itself to the payload
+    payload.setInfoKey('txfee', request.data.fee);
+    // If the fee costs exist, set them on the request for the prompt to display
+    if (request.data.costs) {
+      payload.setInfoKey('txfeecpu', request.data.costs.cpu);
+      payload.setInfoKey('txfeenet', request.data.costs.net);
+      payload.setInfoKey('txfeeram', request.data.costs.ram);
+    }
     ipcRenderer.send('openUri', payload.encode());
   };
 }
