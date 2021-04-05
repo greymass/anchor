@@ -11,6 +11,15 @@ export default function tables(state = initialState, action) {
     case types.CLEAR_TABLES: {
       return initialState;
     }
+    case types.GET_ACCOUNT_SUCCESS: {
+      let modified;
+      if (action.payload && action.payload.results && action.payload.results.rex_info) {
+        const account = action.payload.results.account_name.replace('.', '\\.');
+        modified = set(state, `eosio.eosio.rexbal.${account}.rows`, [action.payload.results.rex_info]);
+        return modified;
+      }
+      return state;
+    }
     case types.SYSTEM_GETTABLE_SUCCESS: {
       const {
         code,
