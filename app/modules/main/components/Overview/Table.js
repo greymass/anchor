@@ -7,8 +7,8 @@ import { withTranslation } from 'react-i18next';
 
 import OverviewTableHeader from './Table/Header';
 
-import GlobalAccountFragmentRamPercent from '../../../../shared/containers/Global/Account/Fragment/Ram/Percent';
-import GlobalAccountFragmentResourcePercent from '../../../../shared/containers/Global/Account/Fragment/Resource/Percent';
+import GlobalAccountFragmentRamUnits from '../../../../shared/containers/Global/Account/Fragment/Ram/Units';
+import GlobalAccountFragmentResourceUnits from '../../../../shared/containers/Global/Account/Fragment/Resource/Units';
 import GlobalAccountFragmentREXBalance from '../../../../shared/containers/Global/Account/Fragment/REX/Balance';
 import GlobalAccountFragmentStaleness from '../../../../shared/containers/Global/Account/Fragment/Staleness';
 import GlobalAccountFragmentSystemTokenBalance from '../../../../shared/containers/Global/Account/Fragment/SystemTokenBalance';
@@ -243,19 +243,19 @@ class OverviewTable extends Component<Props> {
                     ? (
                       <React.Fragment>
                         <Table.Cell textAlign="right">
-                          <GlobalAccountFragmentResourcePercent
+                          <GlobalAccountFragmentResourceUnits
                             account={accountName}
                             type="cpu"
                           />
                         </Table.Cell>
                         <Table.Cell textAlign="right">
-                          <GlobalAccountFragmentResourcePercent
+                          <GlobalAccountFragmentResourceUnits
                             account={accountName}
                             type="net"
                           />
                         </Table.Cell>
                         <Table.Cell textAlign="right">
-                          <GlobalAccountFragmentRamPercent
+                          <GlobalAccountFragmentRamUnits
                             account={accountName}
                           />
                         </Table.Cell>
