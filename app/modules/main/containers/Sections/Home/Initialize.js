@@ -18,7 +18,7 @@ import LogoText from '../../../../../renderer/assets/images/anchor-text-blue.svg
 
 class HomeInitializeContainer extends Component<Props> {
   state = {
-    advancedOptions: false
+    advancedOptions: true
   }
   toggleAdvanced = () => this.setState({ advancedOptions: !this.state.advancedOptions })
   initialize = (e) => {
@@ -50,6 +50,7 @@ class HomeInitializeContainer extends Component<Props> {
 
   render() {
     const {
+      settings,
       t,
     } = this.props;
     const {
@@ -92,28 +93,32 @@ class HomeInitializeContainer extends Component<Props> {
               </Card.Description>
               <WelcomeImportContainer />
             </Card.Content>
-            <Card.Content>
-              <Accordion>
-                <Accordion.Title
-                  active={advancedOptions}
-                  index={1}
-                  onClick={this.toggleAdvanced}
-                >
-                  <Icon name="dropdown" />
-                  {t('main_sections_home_initialize_card_content_one')}
-                </Accordion.Title>
-                <Accordion.Content active={advancedOptions}>
-                  <Button
-                    basic
-                    content={t('welcome:welcome_use_coldwallet')}
-                    icon="snowflake"
-                    onClick={this.useColdWallet}
-                    size="small"
-                  />
-                </Accordion.Content>
-              </Accordion>
-            </Card.Content>
-
+            {(settings.advancedOptions)
+              ? (
+                <Card.Content>
+                  <Accordion>
+                    <Accordion.Title
+                      active={advancedOptions}
+                      index={1}
+                      onClick={this.toggleAdvanced}
+                    >
+                      <Icon name="dropdown" />
+                      {t('main_sections_home_initialize_card_content_one')}
+                    </Accordion.Title>
+                    <Accordion.Content active={advancedOptions}>
+                      <Button
+                        basic
+                        content={t('welcome:welcome_use_coldwallet')}
+                        icon="snowflake"
+                        onClick={this.useColdWallet}
+                        size="small"
+                      />
+                    </Accordion.Content>
+                  </Accordion>
+                </Card.Content>
+              )
+              : false
+            }
           </Card>
         </Segment>
       </React.Fragment>
