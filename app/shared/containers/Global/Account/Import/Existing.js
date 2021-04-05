@@ -98,19 +98,24 @@ class GlobalModalAccountImportExisting extends Component<Props> {
             )
           }
         </Segment>
-        <Segment basic>
-          <Header
-            content={t('global_account_import_exist_header_three')}
-            subheader={t('global_account_import_exist_header_four')}
-          />
-          <Button
-            color="blue"
-            content={t('global_account_import_exist_button_four')}
-            icon="eye"
-            pane="watch"
-            onClick={this.onClick}
-          />
-        </Segment>
+        {(settings.advancedOptions)
+          ? (
+            <Segment basic>
+              <Header
+                content={t('global_account_import_exist_header_three')}
+                subheader={t('global_account_import_exist_header_four')}
+              />
+              <Button
+                color="blue"
+                content={t('global_account_import_exist_button_four')}
+                icon="eye"
+                pane="watch"
+                onClick={this.onClick}
+              />
+            </Segment>
+          )
+          : false
+        }
         {(settings.advancedOptions)
           ? (
             <Segment basic>
