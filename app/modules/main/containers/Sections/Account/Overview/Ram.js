@@ -11,7 +11,7 @@ import { Button, Container, Grid, Header, Progress, Segment, Table } from 'seman
 import AccountOverviewRamBuy from './Ram/Buy';
 import AccountOverviewRamSell from './Ram/Sell';
 
-import GlobalAccountFragmentRamPercent from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Percent';
+import GlobalAccountFragmentRamUnits from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Units';
 import GlobalAccountFragmentRamPrice from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Price';
 import GlobalAccountFragmentRamProgress from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Progress';
 import GlobalAccountFragmentRamUsage from '../../../../../../shared/containers/Global/Account/Fragment/Ram/Usage';
@@ -64,7 +64,7 @@ class AccountOverviewRam extends Component<Props> {
                 <Grid.Row>
                   <Grid.Column width={7}>
                     <Header textAlign="center">
-                      <GlobalAccountFragmentRamPercent
+                      <GlobalAccountFragmentRamUnits
                         account={account}
                       />
                       <Header.Subheader>
