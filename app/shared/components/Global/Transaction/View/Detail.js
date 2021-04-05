@@ -13,9 +13,7 @@ export class GlobalTransactionViewDetail extends Component<Props> {
       t,
       transaction
     } = this.props;
-    const {
-      data,
-    } = transaction;
+    const data = JSON.parse(JSON.stringify(transaction.data));
     return (
       <Table definition size="small">
         <Table.Header>

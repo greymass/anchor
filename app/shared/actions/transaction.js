@@ -58,7 +58,8 @@ export function broadcastTransaction(tx, actionName = false, actionPayload = {})
       connection
     } = getState();
     const signer = eos(connection, false, true);
-    const serializedTransaction = signer.api.serializeTransaction(tx.transaction.transaction);
+    const plaintx = JSON.parse(JSON.stringify(tx.transaction.transaction));
+    const serializedTransaction = signer.api.serializeTransaction(plaintx);
     const { signatures } = tx.transaction;
     signer.rpc.push_transaction({ serializedTransaction, signatures })
       .then((response) => {
@@ -120,7 +121,13 @@ export function setTransaction(data) {
         type: types.SET_TRANSACTION,
         payload: {
           ...raw,
-          transaction: tx,
+          transaction: {
+            ...raw.transaction,
+            transaction: {
+              ...raw.transaction.transaction,
+              transaction: tx
+            },
+          },
           decoded,
         },
       });
