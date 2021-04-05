@@ -75,7 +75,7 @@ const toolSections = {
   },
   tools_menu_hardware_header: {
     tools_menu_ledger: {
-      modes: [undefined, false, 'hot', 'ledger', 'watch'],
+      modes: ['all'],
       path: 'tools/ledger'
     }
   },
@@ -139,74 +139,66 @@ class ToolsHome extends Component<Props> {
     };
     return (
       <React.Fragment>
-        <Segment style={{ margin: '0 0 15px' }}>
+        <Segment clearing style={{ margin: '0 0 15px' }}>
           <p>
-            <Button
-              content={t('tools_menu_home_button')}
-              icon="external"
-              name="tools/v1"
-              onClick={this.onClick}
-              primary
-            />
+            {(settings.advancedOptions)
+              ? (
+                <Button
+                  content={t('tools_menu_home_button')}
+                  icon="external"
+                  name="tools/v1"
+                  onClick={this.onClick}
+                  primary
+                />
+              )
+              : false
+            }
             &nbsp;
             <GlobalButtonResetContainer />
           </p>
         </Segment>
         <Grid columns={4} stackable>
-          {Object.keys(toolSections).map(sectionGroupTitle => (
-            <Grid.Column>
-              <Segment.Group vertical>
-                <Header attached="top">
-                  {t(sectionGroupTitle)}
-                </Header>
-                <Segment attached="bottom" secondary>
-                  <List divided relaxed="very">
-                    {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
+          {Object.keys(toolSections).map(sectionGroupTitle => {
+            const validItems = Object.keys(toolSections[sectionGroupTitle]).filter(sectionTitle => {
+              const item = toolSections[sectionGroupTitle][sectionTitle];
+              return (
+                (item.modes.includes(settings.walletMode) && settings.account)
+                || item.modes.includes('all')
+              );
+            });
+            if (validItems.length === 0) return false;
+            return (
+              <Grid.Column>
+                <Segment.Group vertical>
+                  <Header attached="top">
+                    {t(sectionGroupTitle)}
+                  </Header>
+                  <Segment attached="bottom" secondary>
+                    <List divided relaxed="very">
+                      {Object.keys(toolSections[sectionGroupTitle]).map(sectionTitle => {
                         const item = toolSections[sectionGroupTitle][sectionTitle];
-                      const isValidItem = (item.modes.includes(settings.walletMode) || item.modes.includes('all'));
-                      const reason = (
-                        <div>
-                          <p>
-                            {t('main_sections_tools_home_paragraph_one')}
-                          </p>
-                          <List>
-                            {item.modes
-                              .filter((m) => !!m)
-                              .map((type) =>
-                                <List.Item content={`${String(type).toUpperCase()} Wallet`} />)}
-                          </List>
-                          <p>
-                            {t('main_sections_tools_home_paragraph_two')}
-                          </p>
-                        </div>
-                      );
-                      return (isValidItem)
-                        ? (
+                        const isValidItem = (
+                          (item.modes.includes(settings.walletMode) && settings.account)
+                          || item.modes.includes('all')
+                        );
+                        if (!isValidItem) {
+                          return false;
+                        }
+                        return (
                           <List.Item
                             content={t(sectionTitle)}
                             name={item.path}
                             onClick={this.onClick}
                             style={linkStyle}
                           />
-                        )
-                        : (
-                          <Popup
-                            content={reason}
-                            position="right center"
-                            trigger={(
-                              <List.Item
-                                content={t(sectionTitle)}
-                                style={{ color: 'grey' }}
-                              />
-                            )}
-                          />
                         );
-                    })}
-                  </List>
-                </Segment>
-              </Segment.Group>
-            </Grid.Column>
-          ))}
+                      })}
+                    </List>
+                  </Segment>
+                </Segment.Group>
+              </Grid.Column>
+            );
+          })}
         </Grid>
       </React.Fragment>
     );
