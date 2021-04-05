@@ -22,7 +22,7 @@ export default function balances(state = initialState, action) {
       const { connection, results } = action.payload;
       if (results && results.core_liquid_balance) {
         const account = action.payload.account.replace('.', '\\.');
-        const newBalances = Object.assign({}, state[account]);
+        const newBalances = Object.assign({}, state[action.payload.account]);
         const tokenSymbol = `${connection.tokenPrecision || 4},${connection.chainSymbol}`;
         newBalances[connection.chainSymbol] = Asset.from(results.core_liquid_balance, tokenSymbol).value;
         modified = set(state, account, newBalances);
