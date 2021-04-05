@@ -24,10 +24,7 @@ class GlobalAccountFragmentResourcePercent extends PureComponent<Props> {
     const unit = resourceType === 'cpu' ? 'ms' : 'kb';
     return (
       <React.Fragment>
-        {(
-          (settings.displayResourcesAvailable && units < 5)
-          || (!settings.displayResourcesAvailable && units > 95)
-        )
+        {(units < 5)
           ? (
             <Popup
               content="This resource is running low. Consider staking more tokens in order to increase the resources made available to this account."
