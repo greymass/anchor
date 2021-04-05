@@ -261,13 +261,13 @@ export function processLoadedAccount(chainId, account, results, onlyAccount = tr
     const {
       connection
     } = getState();
+    // get delegated balances since it's part of total balance
+    if (connection.stakedResources !== false) {
+      dispatch(getDelegatedBalances(account));
+    }
     if (!onlyAccount) {
       // get currency balances
       dispatch(getCurrencyBalance(account));
-      if (connection.stakedResources !== false) {
-        // get delegated balances
-        dispatch(getDelegatedBalances(account));
-      }
       // get rex balances
       if (connection.supportedContracts && connection.supportedContracts.includes('rex')) {
         dispatch(getTableByBounds('eosio', 'eosio', 'rexbal', account, account));
