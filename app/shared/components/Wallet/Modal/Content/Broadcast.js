@@ -101,7 +101,7 @@ class WalletModalContentBroadcast extends Component<Props> {
       importedESR
     } = this.state;
     let actions = [];
-    if (data) {
+    if (data && data.transaction) {
       ({ actions } = data.transaction.transaction);
     }
     if (decoded) {
