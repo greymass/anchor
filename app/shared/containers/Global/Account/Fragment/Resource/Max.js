@@ -39,7 +39,7 @@ class GlobalAccountFragmentResourceMax extends PureComponent<Props> {
         {(percent < 5)
           ? (
             <Popup
-              content="This resource is running low. Consider staking more tokens in order to increase the resources made available to this account."
+              content="This resource is running low. Consider renting more if you plan to use this account soon."
               trigger={el}
             />
           )
