@@ -115,7 +115,8 @@ class AccountOverview extends Component<Props> {
   }
   render() {
     const {
-      t
+      system,
+      t,
     } = this.props;
     const {
       account,
@@ -136,6 +137,7 @@ class AccountOverview extends Component<Props> {
         </Segment>
       );
     }
+    const refreshing = (system.GET_ACCOUNT_LAST_ACCOUNT === account && system.GET_ACCOUNT === 'PENDING');
     return (
       <React.Fragment>
         <Container fluid clearing>
@@ -145,6 +147,7 @@ class AccountOverview extends Component<Props> {
             content={t('main_sections_overview_button_one')}
             floated="right"
             icon="refresh"
+            loading={refreshing}
             onClick={this.refresh}
           />
           <Header
@@ -209,6 +212,7 @@ function mapStateToProps(state) {
     connection: state.connection,
     resources: state.resources,
     settings: state.settings,
+    system: state.system,
   };
 }
 
