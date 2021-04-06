@@ -62,10 +62,10 @@ describe('accounts actions', () => {
           account_name: 'teamgreymass',
           tokens: ['EOS_CHAIN_ID:eosio.token:EOS']
         },
-        type: 'GET_ACCOUNT_BALANCE_REQUEST'
+        type: 'SYSTEM_GET_ACCOUNT_BALANCE_REQUEST'
       },
       {
-        type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+        type: types.SYSTEM_GET_ACCOUNT_BALANCE_SUCCESS,
         payload: {
           account_name: 'teamgreymass',
           contract: 'eosio.token',
