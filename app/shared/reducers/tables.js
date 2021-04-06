@@ -11,7 +11,7 @@ export default function tables(state = initialState, action) {
     case types.CLEAR_TABLES: {
       return initialState;
     }
-    case types.GET_ACCOUNT_SUCCESS: {
+    case types.SYSTEM_GET_ACCOUNT_SUCCESS: {
       let modified;
       if (action.payload && action.payload.results && action.payload.results.rex_info) {
         const account = action.payload.results.account_name.replace('.', '\\.');

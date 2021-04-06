@@ -17,7 +17,7 @@ export default function balances(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return initialState;
     }
-    case types.GET_ACCOUNT_SUCCESS: {
+    case types.SYSTEM_GET_ACCOUNT_SUCCESS: {
       let modified;
       const { connection, results } = action.payload;
       if (results && results.core_liquid_balance) {
@@ -34,7 +34,7 @@ export default function balances(state = initialState, action) {
       }
       return state;
     }
-    case types.GET_ACCOUNT_BALANCES_SUCCESS: {
+    case types.SYSTEM_GET_ACCOUNT_BALANCES_SUCCESS: {
       let modified;
       const newBalances = Object.assign({}, state[action.payload.account], action.payload.tokens);
       const newPrecisions = Object.assign({}, state.__contracts, reduce(
@@ -56,7 +56,7 @@ export default function balances(state = initialState, action) {
       modified = set(modified, '__contracts', newPrecisions);
       return modified;
     }
-    case types.GET_ACCOUNT_BALANCE_SUCCESS: {
+    case types.SYSTEM_GET_ACCOUNT_BALANCE_SUCCESS: {
       const {
         account_name,
         contract,

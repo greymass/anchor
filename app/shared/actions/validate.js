@@ -41,7 +41,7 @@ export function validateAccount(account) {
         }
         // Dispatch the results of the account itself
         dispatch({
-          type: types.GET_ACCOUNT_SUCCESS,
+          type: types.SYSTEM_GET_ACCOUNT_SUCCESS,
           payload: { results: modified }
         });
         // Fetch balances
