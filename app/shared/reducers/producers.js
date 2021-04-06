@@ -80,7 +80,7 @@ export default function producers(state = initialState, action) {
         selected: action.payload.producers
       });
     }
-    case types.GET_ACCOUNT_SUCCESS: {
+    case types.SYSTEM_GET_ACCOUNT_SUCCESS: {
       const account = action.payload.results;
       if (account && account.voter_info) {
         const selected = account.voter_info.producers;

@@ -466,7 +466,7 @@ export function upgradeWallet(chainId, account, authorization, password = false,
         }
         return false;
       }).catch((err) => dispatch({
-        type: types.GET_ACCOUNT_FAILURE,
+        type: types.SYSTEM_GET_ACCOUNT_FAILURE,
         payload: { err, account_name: account },
       }));
     }
@@ -510,7 +510,7 @@ export function upgradeWatchWallet(chainId, account, authorization, swap = false
         }
         return false;
       }).catch((err) => dispatch({
-        type: types.GET_ACCOUNT_FAILURE,
+        type: types.SYSTEM_GET_ACCOUNT_FAILURE,
         payload: { err, account_name: account },
       }));
     }

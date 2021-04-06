@@ -44,7 +44,7 @@ export default function accounts(state = initialState, action) {
       }
       return state;
     }
-    case types.GET_ACCOUNT_SUCCESS: {
+    case types.SYSTEM_GET_ACCOUNT_SUCCESS: {
       const account = action.payload.results.account_name.replace('.', '\\.');
       // Retain previous delegated state if it exists
       const delegated = Object.assign({}, {

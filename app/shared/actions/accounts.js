@@ -148,7 +148,7 @@ export function checkAccountAvailability(account = '') {
       return;
     }
     dispatch({
-      type: types.GET_ACCOUNT_AVAILABLE_FAILURE,
+      type: types.SYSTEM_GET_ACCOUNT_AVAILABLE_FAILURE,
       payload: { account_name: account },
     });
   };
@@ -189,7 +189,7 @@ export function checkAccountExists(account = '', node) {
 export function getAccount(account = '', onlyAccount = true) {
   return (dispatch: () => void, getState) => {
     dispatch({
-      type: types.GET_ACCOUNT_REQUEST,
+      type: types.SYSTEM_GET_ACCOUNT_PENDING,
       payload: { account_name: account }
     });
     // Prevent private keys from submitting
@@ -237,13 +237,13 @@ export function getAccount(account = '', onlyAccount = true) {
           return dispatch(processLoadedAccount(connection.chainId, account, response, onlyAccount));
         })
         .catch((err) => dispatch({
-          type: types.GET_ACCOUNT_FAILURE,
+          type: types.SYSTEM_GET_ACCOUNT_FAILURE,
           payload: { err, account_name: account },
         }));
       return;
     }
     dispatch({
-      type: types.GET_ACCOUNT_FAILURE,
+      type: types.SYSTEM_GET_ACCOUNT_FAILURE,
       payload: { account_name: account },
     });
   };
@@ -288,7 +288,7 @@ export function processLoadedAccount(chainId, account, results, onlyAccount = tr
     }
     // Dispatch the results of the account itself
     return dispatch({
-      type: types.GET_ACCOUNT_SUCCESS,
+      type: types.SYSTEM_GET_ACCOUNT_SUCCESS,
       payload: {
         account,
         chainId,
@@ -422,7 +422,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
     if (account && (settings.node || settings.node.length !== 0)) {
       let selectedTokens = getSelectedTokens(connection, requestedTokens, settings);
       dispatch({
-        type: types.GET_ACCOUNT_BALANCE_REQUEST,
+        type: types.SYSTEM_GET_ACCOUNT_BALANCE_REQUEST,
         payload: {
           account_name: account,
           tokens: selectedTokens
@@ -452,7 +452,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
             eos(connection, false, true).rpc.get_currency_balance(contract, account, symbol)
               .then((results) =>
                 dispatch({
-                  type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+                  type: types.SYSTEM_GET_ACCOUNT_BALANCE_SUCCESS,
                   payload: {
                     account_name: account,
                     contract,
@@ -462,7 +462,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                   }
                 }))
               .catch((err) => dispatch({
-                type: types.GET_ACCOUNT_BALANCE_FAILURE,
+                type: types.SYSTEM_GET_ACCOUNT_BALANCE_FAILURE,
                 payload: {
                   err, account_name: account, contract, symbol
                 }
@@ -470,7 +470,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
           });
           return selectedTokens;
         }).catch((err) => dispatch({
-          type: types.GET_ACCOUNT_BALANCE_FAILURE,
+          type: types.SYSTEM_GET_ACCOUNT_BALANCE_FAILURE,
           payload: { err, account_name: account }
         }));
       }
@@ -491,7 +491,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       //       })
       //       .then((results) =>
       //         dispatch({
-      //           type: types.GET_ACCOUNT_BALANCES_SUCCESS,
+      //           type: types.SYSTEM_GET_ACCOUNT_BALANCES_SUCCESS,
       //           payload: {
       //             account,
       //             precisions: reduce(
@@ -512,7 +512,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
       //           }
       //         }))
       //       .catch((err) => dispatch({
-      //         type: types.GET_ACCOUNT_BALANCE_FAILURE,
+      //         type: types.SYSTEM_GET_ACCOUNT_BALANCE_FAILURE,
       //         payload: { err }
       //       })));
       // } else {
@@ -527,7 +527,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
             })
             .then((results) =>
               dispatch({
-                type: types.GET_ACCOUNT_BALANCE_SUCCESS,
+                type: types.SYSTEM_GET_ACCOUNT_BALANCE_SUCCESS,
                 payload: {
                   account_name: account,
                   contract,
@@ -537,7 +537,7 @@ export function getCurrencyBalance(account, requestedTokens = false) {
                 }
               }))
             .catch((err) => dispatch({
-              type: types.GET_ACCOUNT_BALANCE_FAILURE,
+              type: types.SYSTEM_GET_ACCOUNT_BALANCE_FAILURE,
               payload: { err }
             })));
       });
