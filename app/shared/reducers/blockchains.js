@@ -32,8 +32,6 @@ const supportedContracts = [
       'powerup',
       'rex',
       'regproxyinfo',
-      'test',
-
     ],
   },
   {
