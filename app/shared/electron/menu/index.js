@@ -110,13 +110,13 @@ export default class MenuBuilder {
         label: '&Close Window',
         accelerator: 'Ctrl+W',
         click: () => {
-          app.quit();
+          this.mainWindow.close();
         }
       }, {
         label: '&Exit Anchor',
         accelerator: 'Ctrl+Q',
         click: () => {
-          this.mainWindow.close();
+          app.quit();
         }
       }]
     }, {
