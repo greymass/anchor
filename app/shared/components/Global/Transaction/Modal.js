@@ -60,7 +60,10 @@ class GlobalTransactionModal extends Component<Props> {
     // Load the transaction from props by default, but overwrite
     //   with last transaction from the system if exists
     if (system && system[`${actionName}_LAST_TRANSACTION`]) {
-      transaction = system[`${actionName}_LAST_TRANSACTION`];
+      transaction = {
+        ...transaction,
+        ...system[`${actionName}_LAST_TRANSACTION`]
+      };
     }
     // Load the contract from props by default, but overwrite
     //   with last contract from the system if exists

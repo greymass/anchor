@@ -254,7 +254,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           title={t('wallet:wallet_panel_wallet_signbroadcast')}
           settings={settings}
           system={system}
-          transaction={transaction.data}
+          transaction={transaction}
         />
       );
     } else if (system.TRANSACTION_BROADCAST === 'SUCCESS'
@@ -278,7 +278,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           title={t('wallet:wallet_panel_wallet_signbroadcast')}
           settings={settings}
           system={system}
-          transaction={transaction.data}
+          transaction={transaction}
         />
       );
     } else if (system.TRANSACTION_BUILD
@@ -302,7 +302,7 @@ class ContractInterfaceFormAction extends Component<Props> {
           title={t('wallet:wallet_panel_wallet_signbroadcast')}
           settings={settings}
           system={system}
-          transaction={transaction.data}
+          transaction={transaction}
         />
       );
     }
