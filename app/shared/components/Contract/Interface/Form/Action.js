@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Button, Divider, Form, Header, Message } from 'semantic-ui-react';
 import { attempt, isError } from 'lodash';
+import { Transaction } from '@greymass/eosio';
 
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
@@ -110,7 +111,14 @@ class ContractInterfaceFormAction extends Component<Props> {
       settings
     } = this.props;
     const { form } = this.state;
-    actions.buildTransaction(contract, contractAction, settings.account, form);
+    const fields = contract.getFields(contractAction);
+    const modified = Object.assign({}, form);
+    fields.forEach((field) => {
+      if (field.type === 'transaction') {
+        modified[field.name] = JSON.parse(JSON.stringify(Transaction.from(modified[field.name], contract.abi)));
+      }
+    });
+    actions.buildTransaction(contract, contractAction, settings.account, modified);
   };
   resetForm = (contractAction) => {
     const {
