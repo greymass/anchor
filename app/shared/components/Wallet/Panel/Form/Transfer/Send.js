@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Button, Divider, Form, Message, Icon, Segment, Table } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
-import { findIndex } from 'lodash';
+import { findIndex, isObject } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import debounce from 'lodash/debounce';
 import { Asset } from '@greymass/eosio';
@@ -71,7 +71,12 @@ class WalletPanelFormTransferSend extends Component<Props> {
       }
       let precisionValue = connection.tokenPrecision;
       if (precision) {
-        precisionValue = precision[asset.toUpperCase()];
+        if (isObject(precision)) {
+          precisionValue = precision[asset.toUpperCase()];
+        }
+        if (precision > 0) {
+          precisionValue = precision;
+        }
       }
       const quantity = `${amount.toFixed(precisionValue)} ${asset}`;
       if (
@@ -267,7 +272,12 @@ class WalletPanelFormTransferSend extends Component<Props> {
     const { precision } = balances.__contracts[asset.toUpperCase()];
     let precisionValue = connection.tokenPrecision;
     if (precision) {
-      precisionValue = precision[asset.toUpperCase()];
+      if (isObject(precision)) {
+        precisionValue = precision[asset.toUpperCase()];
+      }
+      if (precision > 0) {
+        precisionValue = precision;
+      }
     }
     const quantity = Asset.from(balance[asset], `${precisionValue},${asset}`);
     if (fioFee) {
