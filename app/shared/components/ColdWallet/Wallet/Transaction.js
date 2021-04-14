@@ -25,9 +25,12 @@ class ColdWalletTransaction extends Component<Props> {
   }
 
   saveFile = (tx = false) => {
-    const { settings, transaction } = this.props;
-    const data = new EOSTransaction(tx || transaction);
-    ipcRenderer.send('saveFile', settings.lastFilePath, data.json(), 'signed');
+    const { settings } = this.props;
+    const data = JSON.stringify({
+      contracts: tx.contracts,
+      transaction: tx.data,
+    }, null, 2);
+    ipcRenderer.send('saveFile', settings.lastFilePath, data, 'signed');
   }
 
   clearTransaction = () => {
@@ -38,7 +41,7 @@ class ColdWalletTransaction extends Component<Props> {
     const {
       transaction
     } = this.props;
-    this.props.actions.signTransaction(transaction.data, transaction.contract);
+    this.props.actions.signTransaction(transaction.data, transaction.contracts);
   }
 
   render() {
@@ -56,17 +59,26 @@ class ColdWalletTransaction extends Component<Props> {
     } = transaction;
     const expiration = get(data, 'transaction.transaction.expiration');
     const { account, authorization } = settings;
-    const auth = get(data, 'transaction.transaction.actions.0.authorization.0', {
+    const firstAuth = get(data, 'transaction.transaction.actions.0.authorization.0', {
       actor: 'undefined',
       permission: 'undefined',
     });
-    const matchingAuthorization = (account === auth.actor && authorization === auth.permission);
+    const lastAuth = get(data, 'transaction.transaction.actions.$end.authorization.0', {
+      actor: 'undefined',
+      permission: 'undefined',
+    });
+    const isSigned = (
+      (String(firstAuth.actor) === String(lastAuth.actor) && signed)
+      || (String(firstAuth.actor === 'greymassfuel') && transaction.data.transaction.signatures.length > 1)
+    );
+    const matchingAuthorization = (account === String(lastAuth.actor)
+      && authorization === String(lastAuth.permission));
     const expires = new Date(`${expiration}z`);
     const now = new Date();
     const expired = (now > expires);
     const locked = !pubkeys.unlocked.includes(wallet.pubkey);
-    const disabled = (signed);
-    if (!signed && locked && matchingAuthorization) {
+    const disabled = (isSigned);
+    if (!isSigned && locked && matchingAuthorization) {
       return <GlobalUnlock />;
     }
     return (
@@ -80,7 +92,7 @@ class ColdWalletTransaction extends Component<Props> {
           </Header>
           <GlobalTransactionViewDetail
             expired={expired}
-            signed={signed}
+            signed={isSigned}
             transaction={transaction}
           />
           {(expired)
@@ -94,13 +106,13 @@ class ColdWalletTransaction extends Component<Props> {
           {(!matchingAuthorization)
             ? (
               <Message error>
-                {t('coldwallet_transaction_invalid_authorization', auth)}
+                {t('coldwallet_transaction_invalid_authorization', lastAuth)}
               </Message>
             )
             : false
           }
           <Container fluid textAlign="center">
-            {(!signed && !locked && matchingAuthorization)
+            {(!isSigned && !locked && matchingAuthorization)
               ? (
                 <Button
                   color="orange"
@@ -113,7 +125,7 @@ class ColdWalletTransaction extends Component<Props> {
               )
               : false
             }
-            {(signed)
+            {(isSigned)
               ? (
                 <Button
                   color="green"

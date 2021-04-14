@@ -38,7 +38,8 @@ export function buildTransaction(contract, action, account, data) {
         // Dispatch transaction
         dispatch(setTransaction(JSON.stringify({
           contract,
-          transaction: tx
+          contracts: tx.contracts,
+          transaction: tx.transaction
         })));
         return dispatch({
           payload: { tx },
@@ -99,19 +100,29 @@ export function clearTransaction() {
 
 export function setTransaction(data) {
   const raw = JSON.parse(data);
-  const abiDef = {
-    contract: raw.contract.account,
-    abi: raw.contract.abi,
-  };
+  const abiDefs = [];
+  if (raw.contract) {
+    abiDefs.push({
+      contract: raw.contract.account,
+      abi: raw.contract.abi,
+    });
+  }
+  if (raw.contracts) {
+    raw.contracts.forEach((c) => abiDefs.push({
+      contract: c.contract,
+      abi: c.abi
+    }));
+  }
   let tx;
   try {
-    tx = Transaction.from(raw.transaction.transaction.transaction, abiDef);
+    tx = Transaction.from(raw.transaction.transaction.transaction, abiDefs);
   } catch (e) {
     // watch wallet format from legacy
-    tx = Transaction.from(raw.transaction.transaction.transaction.transaction, abiDef);
+    tx = Transaction.from(raw.transaction.transaction.transaction.transaction, abiDefs);
   }
   const decoded = JSON.parse(JSON.stringify(tx));
   decoded.actions.forEach((action, index) => {
+    const [abiDef] = abiDefs.filter((def) => def.contract === action.account);
     const decodedAction = tx.actions[index].decodeData(abiDef.abi);
     decoded.actions[index].data = JSON.parse(JSON.stringify(decodedAction));
   });
@@ -140,17 +151,20 @@ export function setTransaction(data) {
   };
 }
 
-export function signTransaction(tx, contract = false) {
+export function signTransaction(tx, contracts = []) {
   return (dispatch: () => void, getState) => {
     const {
       connection
     } = getState();
     const signer = eos(connection, true, true);
     // If a contract was specified along with the transaction, load it.
-    if (contract && contract.account && contract.abi) {
-      signer.setAbi(contract.account, {
-        account_name: contract.account,
-        abi: contract.abi
+    if (contracts && contracts.length) {
+      contracts.forEach((contract) => {
+        console.log(contract);
+        signer.setAbi(contract.contract, {
+          account_name: contract.contract,
+          abi: contract.abi
+        });
       });
     }
     // Sign the transaction
@@ -161,15 +175,23 @@ export function signTransaction(tx, contract = false) {
         sign: connection.sign
       })
       .then((signed) => {
-        if (signed.broadcast) {
+        const modified = Object.assign({}, signed);
+        if (tx.transaction.signatures && tx.transaction.signatures.length) {
+          // Merge signatures
+          modified.transaction.signatures = [
+            ...signed.transaction.signatures,
+            ...tx.transaction.signatures
+          ];
+        }
+        if (modified.broadcast) {
           return dispatch({
-            payload: { tx: signed },
+            payload: { tx: modified },
             type: types.SYSTEM_TRANSACTION_BROADCAST_SUCCESS
           });
         }
         return dispatch(setTransaction(JSON.stringify({
-          contract,
-          transaction: signed
+          contracts,
+          transaction: modified
         })));
       })
       .catch((err) => dispatch({
