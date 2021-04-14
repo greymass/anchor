@@ -113,18 +113,30 @@ export function setTransaction(data) {
       abi: c.abi
     }));
   }
-  let tx;
-  try {
-    tx = Transaction.from(raw.transaction.transaction.transaction, abiDefs);
-  } catch (e) {
-    // watch wallet format from legacy
-    tx = Transaction.from(raw.transaction.transaction.transaction.transaction, abiDefs);
+  let root;
+  // This witchcraft needs to be tracked down and standardized with an interface
+  if (raw.transaction) {
+    root = raw.transaction;
   }
+  if (raw.transaction && raw.transaction.transaction) {
+    root = raw.transaction.transaction;
+  }
+  if (raw.transaction && raw.transaction.transaction && raw.transaction.transaction.transaction) {
+    root = raw.transaction.transaction.transaction;
+  }
+  if (raw.transaction && raw.transaction.transaction && raw.transaction.transaction.transaction && raw.transaction.transaction.transaction.transaction) {
+    root = raw.transaction.transaction.transaction.transaction;
+  }
+
+  const tx = Transaction.from(root, abiDefs);
+
   const decoded = JSON.parse(JSON.stringify(tx));
   decoded.actions.forEach((action, index) => {
     const [abiDef] = abiDefs.filter((def) => def.contract === action.account);
-    const decodedAction = tx.actions[index].decodeData(abiDef.abi);
-    decoded.actions[index].data = JSON.parse(JSON.stringify(decodedAction));
+    if (abiDef) {
+      const decodedAction = tx.actions[index].decodeData(abiDef.abi);
+      decoded.actions[index].data = JSON.parse(JSON.stringify(decodedAction));
+    }
   });
   return (dispatch: () => void) => {
     try {
