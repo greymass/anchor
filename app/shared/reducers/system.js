@@ -97,7 +97,7 @@ export default function system(state = {}, action) {
       }
     }
     // Attach any returned ABIs
-    if (action.payload.contract) {
+    if (action.payload.contract && action.payload.contract.abi && action.payload.contract.account_name) {
       const { abi, account_name } = action.payload.contract;
       newState = set(newState, contractField, new EOSContract(abi, account_name));
     }
