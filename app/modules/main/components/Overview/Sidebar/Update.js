@@ -5,7 +5,7 @@ import { Button, Container, Form, Header, Icon, Image, Modal, Segment } from 'se
 import DangerLink from '../../../../../shared/containers/Global/DangerLink';
 import Logo from '../../../../../renderer/assets/images/anchor-logo-blue.svg';
 import packageJson from '../../../../../../package.json';
-import { withTranslation } from "react-i18next";
+import { withTranslation } from 'react-i18next';
 
 const { ipcRenderer } = require('electron');
 
@@ -52,7 +52,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
       // }
     }
 
-    if (!upgradeAvailable) return false;
+    // if (!upgradeAvailable) return false;
 
     const update = constants.desktoplog;
     if (!update) return false;
@@ -75,7 +75,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
             trigger={(
               <Button
                 centered
-                content="Details"
+                content="View"
                 icon="external"
                 primary
               />
@@ -127,11 +127,11 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
               <Header size="small">
                 {t('main_components_overview_sidebar_modal_action_header')}
               </Header>
-              <Button basic color='red' onClick={this.toggle}>
-                <Icon name='remove' /> {t('main_components_overview_sidebar_modal_action_no')}
+              <Button basic color="red" onClick={this.toggle}>
+                <Icon name="remove" /> {t('main_components_overview_sidebar_modal_action_no')}
               </Button>
-              <Button color='green' onClick={this.checkForUpdates}>
-                <Icon name='checkmark' /> {t('main_components_overview_sidebar_modal_action_yes')}
+              <Button color="green" onClick={this.checkForUpdates}>
+                <Icon name="checkmark" /> {t('main_components_overview_sidebar_modal_action_yes')}
               </Button>
             </Modal.Actions>
           </Modal>
