@@ -9,7 +9,6 @@ import compose from 'lodash/fp/compose';
 import { Button, Grid, Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
-import GlobalAccountDropdownSelect from '../../../../../shared/containers/Global/Account/Dropdown/Select';
 import GlobalAccountFragmentTokenBalance from '../../../../../shared/containers/Global/Account/Fragment/TokenBalance';
 import GlobalAccountRequired from '../../../../../shared/containers/Global/Account/Required';
 import GlobalUnlock from '../../../../../shared/containers/Global/Unlock';
@@ -164,20 +163,6 @@ class WalletTransferContainer extends Component<Props> {
               }}
               width={6}
             >
-              <Header
-                content={t('main_sections_wallet_transfer_grid_header_one')}
-                size="small"
-                subheader={t('main_sections_wallet_transfer_grid_subheader_one')}
-              />
-              <GlobalAccountDropdownSelect
-                account={settings.account}
-                authorization={settings.authorization}
-                fluid
-                mode={settings.walletMode}
-                pubkey={settings.pubkey}
-                chainId={settings.chainId}
-                onSelect={this.swapAccount}
-              />
               <Header
                 content={t('main_sections_wallet_transfer_grid_header_two')}
                 size="small"
