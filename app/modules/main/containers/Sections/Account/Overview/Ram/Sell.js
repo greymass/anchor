@@ -13,6 +13,7 @@ import * as SellRamActions from '../../../../../../../shared/actions/system/sell
 
 import isUnlocked from '../../../../../../../shared/utils/Anchor/Unlocked';
 import WalletPanelButtonRamSell from '../../../../../../../shared/components/Wallet/Panel/Button/Ram/Sell';
+import GlobalUnlock from '../../../../../../../shared/containers/Global/Unlock';
 
 class AccountOverviewRamSell extends Component<Props> {
   render() {
@@ -28,7 +29,18 @@ class AccountOverviewRamSell extends Component<Props> {
       t,
       unlocked,
     } = this.props;
-    if (!unlocked) return false;
+    const button = {
+      color: 'red',
+      content: t('main_sections_overview_ram_sell_button'),
+      floated: 'right',
+      icon: 'minus circle',
+      size: 'tiny',
+    };
+    if (!unlocked) {
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
+    }
     return (
       <WalletPanelButtonRamSell
         account={account}
@@ -41,11 +53,14 @@ class AccountOverviewRamSell extends Component<Props> {
         system={system}
         trigger={(
           <Button
-            color="red"
-            content={t('main_sections_overview_ram_sell_button')}
-            floated="right"
-            icon="minus circle"
-            size="tiny"
+            color={button.color}
+            content={button.content}
+            fluid={button.fluid}
+            floated={button.floated}
+            icon={button.icon}
+            onClick={this.onOpen}
+            size={button.size}
+            style={button.style}
           />
         )}
       />

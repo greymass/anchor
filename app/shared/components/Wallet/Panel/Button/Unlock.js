@@ -34,10 +34,16 @@ class WalletPanelButtonUnlock extends Component<Props> {
 
   render() {
     const {
+      buttonStyles,
       settings,
       t,
       validate
     } = this.props;
+    const styles = Object.assign({}, {
+      color: 'purple',
+      content: t('wallet_panel_wallet_unlock'),
+      icon: 'unlock',
+    }, buttonStyles);
     const {
       open
     } = this.state;
@@ -52,10 +58,13 @@ class WalletPanelButtonUnlock extends Component<Props> {
         trigger={(
           <Button
             color="purple"
-            content={t('wallet_panel_wallet_unlock')}
-            fluid
+            content={styles.content}
+            fluid={styles.fluid}
+            floated={styles.floated}
             icon="unlock"
             onClick={this.onOpen}
+            size={styles.size}
+            style={styles.style}
           />
         )}
         validate={validate}

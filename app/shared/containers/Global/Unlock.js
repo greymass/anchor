@@ -14,15 +14,26 @@ class GlobalUnlock extends Component<Props> {
   render() {
     const {
       actions,
+      buttonOnly,
+      buttonStyles,
       settings,
       validate,
       wallet,
       style,
       t
     } = this.props;
-    const {
-      unlockWallet
-    } = actions;
+    const button = (
+      <WalletPanelButtonUnlock
+        buttonStyles={buttonStyles}
+        settings={settings}
+        unlockWallet={actions.unlockWallet}
+        validate={validate}
+        wallet={wallet}
+      />
+    );
+    if (buttonOnly) {
+      return button;
+    }
     return (
       <Dimmer.Dimmable
         as={Segment}
@@ -33,6 +44,7 @@ class GlobalUnlock extends Component<Props> {
         padded
         stacked
         style={style}
+        textAlign="center"
       >
         <Header
           icon
@@ -49,12 +61,7 @@ class GlobalUnlock extends Component<Props> {
             {t('wallet_panel_locked_subheader')}
           </Header.Subheader>
         </Header>
-        <WalletPanelButtonUnlock
-          settings={settings}
-          unlockWallet={unlockWallet}
-          validate={validate}
-          wallet={wallet}
-        />
+        {button}
       </Dimmer.Dimmable>
     );
   }
