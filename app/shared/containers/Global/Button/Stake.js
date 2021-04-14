@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Header } from 'semantic-ui-react';
+import { Button, Header, Popup } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 
@@ -13,6 +13,7 @@ import * as SystemStateActions from '../../../actions/system/systemstate';
 import isUnlocked from '../../../utils/Anchor/Unlocked';
 import GlobalFormTokenStake from '../../../components/Global/Form/Token/Stake';
 import GlobalTransactionModal from '../../../components/Global/Transaction/Modal';
+import GlobalUnlock from '../../../containers/Global/Unlock';
 
 class GlobalButtonStake extends Component<Props> {
   state = { open: false }
@@ -31,7 +32,11 @@ class GlobalButtonStake extends Component<Props> {
       t,
       unlocked,
     } = this.props;
-    if (!unlocked) return false;
+    if (!unlocked) {
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
+    }
     const { open } = this.state;
     const processing = !!(system && system.DELEGATEBW && system.DELEGATEBW === 'PENDING');
     return (

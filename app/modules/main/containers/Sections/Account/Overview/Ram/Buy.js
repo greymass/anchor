@@ -14,6 +14,7 @@ import * as BuyRamActions from '../../../../../../../shared/actions/system/buyra
 
 import isUnlocked from '../../../../../../../shared/utils/Anchor/Unlocked';
 import WalletPanelButtonRamBuy from '../../../../../../../shared/components/Wallet/Panel/Button/Ram/Buy';
+import GlobalUnlock from '../../../../../../../shared/containers/Global/Unlock';
 
 class AccountOverviewRamBuy extends Component<Props> {
   render() {
@@ -29,7 +30,17 @@ class AccountOverviewRamBuy extends Component<Props> {
       t,
       unlocked,
     } = this.props;
-    if (!unlocked) return false;
+    const button = {
+      color: 'blue',
+      content: t('main_sections_overview_ram_buy_button'),
+      icon: 'plus circle',
+      size: 'tiny',
+    };
+    if (!unlocked) {
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
+    }
     return (
       <WalletPanelButtonRamBuy
         account={account}
@@ -42,10 +53,14 @@ class AccountOverviewRamBuy extends Component<Props> {
         system={system}
         trigger={(
           <Button
-            color="blue"
-            content={t('main_sections_overview_ram_buy_button')}
-            icon="plus circle"
-            size="tiny"
+            color={button.color}
+            content={button.content}
+            fluid={button.fluid}
+            floated={button.floated}
+            icon={button.icon}
+            onClick={this.onOpen}
+            size={button.size}
+            style={button.style}
           />
         )}
       />

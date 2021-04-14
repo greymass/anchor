@@ -13,6 +13,7 @@ import * as SystemStateActions from '../../../actions/system/systemstate';
 import isUnlocked from '../../../utils/Anchor/Unlocked';
 import GlobalFormTokenUnstake from '../../../components/Global/Form/Token/Unstake';
 import GlobalTransactionModal from '../../../components/Global/Transaction/Modal';
+import GlobalUnlock from '../../../containers/Global/Unlock';
 
 class GlobalButtonUnstake extends Component<Props> {
   state = { open: false }
@@ -31,7 +32,11 @@ class GlobalButtonUnstake extends Component<Props> {
       t,
       unlocked,
     } = this.props;
-    if (!unlocked) return false;
+    if (!unlocked) {
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
+    }
     const { open } = this.state;
     const processing = !!(system && system.UNDELEGATEBW && system.UNDELEGATEBW === 'PENDING');
     return (
