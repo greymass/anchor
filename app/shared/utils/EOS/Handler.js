@@ -261,9 +261,10 @@ export default class EOSHandler {
           abi,
         };
       }));
-      const unsigned = await this.createTransaction(transaction, combinedOptions);
+      const unsigned = await this.createTransaction(transaction, combinedOptions, signatures);
       return {
-        contract: abis[0],
+        // contract: abis[0],
+        contracts: abis,
         transaction: unsigned
       };
     }

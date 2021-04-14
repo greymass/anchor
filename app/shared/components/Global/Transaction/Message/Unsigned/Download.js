@@ -34,7 +34,7 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
     const { chainId } = settings;
     const req = await SigningRequest.create({
       chainId,
-      transaction: transaction.transaction.transaction
+      transaction: transaction.transaction.transaction.transaction
     }, opts);
     const uri = req.encode();
     this.setState({ uri });
@@ -48,8 +48,8 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   promptSave = () => {
     const { contract, settings, transaction } = this.props;
     const data = JSON.stringify({
-      contract,
-      transaction
+      contracts: transaction.contracts,
+      transaction: transaction.transaction,
     }, null, 2);
     ipcRenderer.send('saveFile', settings.lastFilePath, data);
   };
@@ -57,9 +57,12 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
     const {
       transaction
     } = this.props;
-
+    const data = JSON.stringify({
+      contracts: transaction.contracts,
+      transaction: transaction.transaction,
+    }, null, 2);
     this.setState({ copiedTransaction: true }, () => {
-      clipboard.writeText(JSON.stringify(transaction));
+      clipboard.writeText(data);
       setTimeout(() => { this.setState({ copiedTransaction: false }); }, 5000);
     });
   };
