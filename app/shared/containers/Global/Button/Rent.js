@@ -13,6 +13,7 @@ import * as SystemStateActions from '../../../actions/system/systemstate';
 import isUnlocked from '../../../utils/Anchor/Unlocked';
 import GlobalFormTokenRent from '../../../components/Global/Form/Token/Rent';
 import GlobalTransactionModal from '../../../components/Global/Transaction/Modal';
+import GlobalUnlock from '../../../containers/Global/Unlock';
 
 class GlobalButtonRent extends Component<Props> {
   state = { open: false }
@@ -32,7 +33,10 @@ class GlobalButtonRent extends Component<Props> {
       t,
       unlocked,
     } = this.props;
-    if (!unlocked) return false;
+    if (!unlocked) {
+      console.log(button);
+      return button;
+    }
     const { open } = this.state;
     if (!connection.supportedContracts || !connection.supportedContracts.includes('rex')) {
       return false;

@@ -13,6 +13,7 @@ import * as SystemStateActions from '../../../actions/system/systemstate';
 import isUnlocked from '../../../utils/Anchor/Unlocked';
 import GlobalFormTokenPowerUp from '../../../components/Global/Form/Token/PowerUp';
 import GlobalTransactionHandler from '../../../components/Global/Transaction/Modal';
+import GlobalUnlock from '../../../containers/Global/Unlock';
 
 class GlobalButtonPowerUp extends Component<Props> {
   state = { open: false }
@@ -34,7 +35,11 @@ class GlobalButtonPowerUp extends Component<Props> {
       unlocked,
     } = this.props;
     const { open } = this.state;
-    if (!unlocked) return false;
+    if (!unlocked) {
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
+    }
     if (!connection.supportedContracts || !connection.supportedContracts.includes('powerup')) {
       return false;
     }
