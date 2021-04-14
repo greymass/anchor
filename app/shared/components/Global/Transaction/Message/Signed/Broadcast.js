@@ -68,10 +68,6 @@ export class GlobalTransactionMessageSignedBroadcast extends Component<Props> {
                 <GlobalTransactionViewActions
                   actions={actions}
                 />
-                <Divider />
-                <GlobalTransactionViewFull
-                  transaction={transaction}
-                />
               </Segment>
             </React.Fragment>
           )
