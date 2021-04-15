@@ -48,8 +48,8 @@ class ContractInterfaceComponent extends Component<Props> {
       contractName: contract,
       contractAction: action,
     }, () => {
-      this.onSubmit()
-    })
+      this.onSubmit();
+    });
   }
   // Reset table scope to prevent visibility element from retriggering constantly
   onTabChange = () => this.setState({
@@ -61,6 +61,7 @@ class ContractInterfaceComponent extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      connection,
       contracts,
       settings,
       system,
@@ -95,6 +96,7 @@ class ContractInterfaceComponent extends Component<Props> {
             <ContractInterfaceTabActions
               actions={actions}
               blockExplorers={blockExplorers}
+              connection={connection}
               contract={contract}
               contractAction={contractAction}
               onChange={this.onChange}
@@ -228,7 +230,7 @@ class ContractInterfaceComponent extends Component<Props> {
                     {recentContractName}
                     <Label.Detail>{recentContractAction}</Label.Detail>
                   </Label>
-                )
+                );
               })}
             </Segment>
           )

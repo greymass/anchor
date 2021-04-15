@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Button, Divider, Form, Header, Message } from 'semantic-ui-react';
 import { attempt, isError } from 'lodash';
-import { Transaction } from '@greymass/eosio';
+import { Bytes, Name, Transaction } from '@greymass/eosio';
 
+import { createHttpHandler } from '../../../../utils/http/handler';
 import GlobalTransactionModal from '../../../Global/Transaction/Modal';
 import GlobalFormFieldGeneric from '../../../Global/Form/Field/Generic';
 import WalletModalContentBroadcast from '../../../Wallet/Modal/Content/Broadcast';
@@ -103,21 +104,37 @@ class ContractInterfaceFormAction extends Component<Props> {
       )
     });
   };
-  onSubmit = () => {
+  onSubmit = async () => {
     const {
       actions,
+      connection,
       contract,
       contractAction,
       settings
     } = this.props;
+    const { httpClient } = await createHttpHandler(connection);
     const { form } = this.state;
     const fields = contract.getFields(contractAction);
     const modified = Object.assign({}, form);
-    fields.forEach((field) => {
+    for (const field of fields) {
       if (field.type === 'transaction') {
-        modified[field.name] = JSON.parse(JSON.stringify(Transaction.from(modified[field.name], contract.abi)));
+        const requiredAbis = modified[field.name].actions
+          .filter((action) =>
+            !Bytes.isBytes(action.data) && action.data.constructor.abiName === undefined)
+          .map((action) => Name.from(action.account));
+        const abis = await Promise.all(requiredAbis.map(async (account) => {
+          const result = await httpClient.post(`${connection.httpEndpoint}/v1/chain/get_abi`, {
+            account_name: String(account)
+          });
+          return {
+            contract: account,
+            abi: result.data.abi
+          };
+        }));
+        const tx = Transaction.from(modified[field.name], abis);
+        modified[field.name] = JSON.parse(JSON.stringify(tx));
       }
-    });
+    }
     actions.buildTransaction(contract, contractAction, settings.account, modified);
   };
   resetForm = (contractAction) => {
