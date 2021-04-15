@@ -151,8 +151,8 @@ class ToolsAirgrabs extends PureComponent<Props> {
                 {t('tools_airgrab_anything_missing')}
                 &nbsp;
                 <DangerLink
-                  content={'https://t.me/eoswalletgreymass'}
-                  link={'https://t.me/eoswalletgreymass'}
+                  content={'https://t.me/anchorwallet'}
+                  link={'https://t.me/anchorwallet'}
                   settings={settings}
                 />
               </React.Fragment>
