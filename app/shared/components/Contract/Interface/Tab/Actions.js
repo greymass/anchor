@@ -12,6 +12,7 @@ class ContractInterfaceTabActions extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      connection,
       contract,
       contractAction,
       onChange,
@@ -36,6 +37,7 @@ class ContractInterfaceTabActions extends Component<Props> {
               <ContractInterfaceFormAction
                 actions={actions}
                 blockExplorers={blockExplorers}
+                connection={connection}
                 contract={contract}
                 contractAction={contractAction}
                 settings={settings}

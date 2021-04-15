@@ -31,6 +31,7 @@ function mapStateToProps(state) {
     new EOSContract(contract.abi, contract.account_name));
   return {
     blockExplorers: state.blockexplorers[state.connection.chainKey],
+    connection: state.connection,
     contracts,
     keys: state.keys,
     settings: state.settings,
