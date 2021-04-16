@@ -52,7 +52,7 @@ class OverviewSidebarUpdate extends PureComponent<Props> {
       // }
     }
 
-    // if (!upgradeAvailable) return false;
+    if (!upgradeAvailable) return false;
 
     const update = constants.desktoplog;
     if (!update) return false;
