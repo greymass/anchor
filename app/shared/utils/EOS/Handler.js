@@ -212,9 +212,8 @@ export default class EOSHandler {
         if (response && response.data && response.data.code) {
           switch (response.data.code) {
             case 402: {
-              console.log('dispatching', response.data);
               this.setAlternativePayment(response.data);
-              break;
+              return 'fee_required';
             }
             default: {
               this.clearAlternativePayment();
@@ -243,12 +242,21 @@ export default class EOSHandler {
     ) {
       try {
         const response = await this.checkResources(chainId, transaction, signer);
+        if (response === 'fee_required') {
+          throw new Error('fee_required');
+        }
         if (response && response.signatures && response.transaction) {
           ({ signatures, transaction } = response);
         }
       } catch (e) {
-        // no catch, proceed with original transaction
-        console.log('cosigning error', e);
+        // if a fee was required to complete, throw a resource usage error
+        if (e.message === 'fee_required') {
+          const error = new Error('resource_usage');
+          error.error = {
+            name: 'resource_usage'
+          };
+          throw error;
+        }
       }
     }
     // no broadcast + sign = create a v16 format transaction
