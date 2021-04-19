@@ -22,9 +22,7 @@ const persistConfig = {
 export default persistConfig;
 
 function updateBlockchainData(blockchains, chainId, keysToUpdate) {
-  const chainToUpdate = blockchains.find((blockchain) => {
-    return blockchain._id === chainId;
-  });
+  const chainToUpdate = blockchains.find((blockchain) => blockchain._id === chainId);
 
   if (!chainToUpdate) {
     return blockchains;
@@ -35,9 +33,7 @@ function updateBlockchainData(blockchains, chainId, keysToUpdate) {
     ...keysToUpdate,
   };
 
-  const allOtherChains = blockchains.filter((blockchain) => {
-    return blockchain._id !== chainId;
-  });
+  const allOtherChains = blockchains.filter((blockchain) => blockchain._id !== chainId);
 
   return allOtherChains.concat(updatedBlockchain);
 }
