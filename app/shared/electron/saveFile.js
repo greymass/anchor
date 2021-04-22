@@ -15,9 +15,13 @@ const getDateString = () => {
   return `${year}${month}${day}-${hour}${min}${sec}`;
 };
 
-export function saveFile(event, data, prefix = 'tx') {
+export function saveFile(event, data, prefix = 'tx', appendDate = true, ext = 'json') {
   const defaultPath = app.getPath('documents');
-  const defaultFilename = `${prefix}-${getDateString()}.json`;
+  let defaultFilename = prefix;
+  if (appendDate) {
+    defaultFilename += `-${getDateString()}`;
+  }
+  defaultFilename += `.${ext}`;
   const fileName = dialog.showSaveDialog({
     title: 'Save File',
     defaultPath: `${defaultPath}/${defaultFilename}`,

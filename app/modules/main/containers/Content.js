@@ -13,6 +13,7 @@ import AccountContainer from './Sections/Account';
 import DevTestContainer from './Sections/DevTest';
 import GovernanceContainer from './Sections/Governance';
 import HomeContainer from './Sections/Home';
+import PendingContainer from './Sections/Pending';
 import ResourceProvidersContainer from './Sections/ResourceProviders';
 import TestsContainer from './Sections/Tests';
 import ToolsContainer from './Sections/Tools';
@@ -30,6 +31,7 @@ class ContentContainer extends Component<Props> {
           <Route exact path="/" component={HomeContainer} />
           <Route path="/account" component={AccountContainer} />
           <Route path="/home" component={HomeContainer} />
+          <Route path="/pending" component={PendingContainer} />
           <Route path="/devtest" component={DevTestContainer} />
           <Route path="/tests" component={TestsContainer} />
           <Route path="/wallet" component={WalletContainer} />
