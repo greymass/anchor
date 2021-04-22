@@ -85,15 +85,16 @@ class GlobalAccountImport extends Component<Props> {
       default: {
         if (initializing) {
           panes.push(
+            welcome,
+            create,
             existing,
-            // create,
           );
         } else {
           panes.push(
             welcome,
-            detect,
+            create,
             existing,
-            // create,
+            detect,
           );
         }
         break;

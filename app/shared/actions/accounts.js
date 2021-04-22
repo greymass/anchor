@@ -133,7 +133,7 @@ export function checkAccountAvailability(account = '') {
         type: types.SYSTEM_ACCOUNT_AVAILABLE_FAILURE,
         payload: { account_name: account, response }
       })).catch((err) => {
-        if (err.response.status === 500) {
+        if (err.json.code === 500) {
           dispatch({
             type: types.SYSTEM_ACCOUNT_AVAILABLE_SUCCESS,
             payload: { account_name: account }
