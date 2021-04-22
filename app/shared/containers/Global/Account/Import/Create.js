@@ -24,29 +24,16 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
     } = this.state;
     if (pane) {
       switch (pane) {
-        case 'contract':
-          return <GlobalModalAccountImportContractsSetupAccount onClose={this.onClose} />;
         case 'request':
           return <GlobalModalAccountImportRequest onClose={this.onClose} />;
+        case 'contract':
+          return <GlobalModalAccountImportContractsSetupAccount onClose={this.onClose} />;
         default:
           break;
       }
     }
     return (
       <Tab.Pane>
-        <Segment basic>
-          <Header
-            content={t('global_import_create_header_one')}
-            subheader={t('global_import_create_subheader_one')}
-          />
-          <Button
-            color="blue"
-            content={t('global_import_create_button_one')}
-            icon="user"
-            pane="contract"
-            onClick={this.onClick}
-          />
-        </Segment>
         <Segment basic>
           <Header
             content={t('global_import_create_header_two')}
@@ -57,6 +44,19 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
             content={t('global_import_create_button_two')}
             icon="user"
             pane="request"
+            onClick={this.onClick}
+          />
+        </Segment>
+        <Segment basic style={{ display: 'none' }}>
+          <Header
+            content={t('global_import_create_header_one')}
+            subheader={t('global_import_create_subheader_one')}
+          />
+          <Button
+            color="blue"
+            content={t('global_import_create_button_one')}
+            icon="user"
+            pane="contract"
             onClick={this.onClick}
           />
         </Segment>

@@ -317,6 +317,27 @@ export function importWallet(
   };
 }
 
+export function importWalletPending(data) {
+  return (dispatch: () => void, getState) => {
+    // If no wallet is currently selected, select this one
+    const { settings } = getState();
+    if (!settings.account) {
+      setTimeout(() => dispatch(useWallet(data.chainId, data.account, data.permission)), 500);
+    }
+    // Detect if the current account/authorization is being reimported/replaced, and set mode
+    return dispatch({
+      type: types.IMPORT_WALLET_KEY,
+      payload: {
+        account: data.account,
+        authorization: data.permission,
+        chainId: data.chainId,
+        mode: 'hot',
+        pubkey: data.active
+      }
+    });
+  };
+}
+
 export function importWalletAuth(
   chainId,
   account,
@@ -581,6 +602,7 @@ export default {
   importWallet,
   importWalletAuth,
   importWalletFromBackup,
+  importWalletPending,
   importWallets,
   prepareConvertToLedger,
   prepareConvertToLedgerAbort,

@@ -19,6 +19,7 @@ import globals from './globals';
 import keys from './keys';
 import ledger from './hardware/ledger';
 import navigation from './system/navigation';
+import pending from './pending';
 import ping from './utils/ping';
 import producers from './producers';
 import prompt from './utils/prompt';
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   keys,
   ledger,
   navigation,
+  pending,
   ping,
   producers,
   prompt,

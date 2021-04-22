@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import { withTranslation } from 'react-i18next';
-import { Header, Icon, Image, Menu } from 'semantic-ui-react';
+import { Header, Icon, Image, Label, Menu } from 'semantic-ui-react';
 import { find } from 'lodash';
 
 import Logo from '../../../renderer/assets/images/anchor-logo-blue.svg';
@@ -34,6 +34,7 @@ class SidebarContainer extends Component<Props> {
       blockExplorers,
       connection,
       navigation,
+      pending,
       settings,
       system,
       t,
@@ -52,6 +53,15 @@ class SidebarContainer extends Component<Props> {
       || !settings.blockchains
       || !wallets
     );
+    const pendingAccountRequests = pending && pending.accounts && pending.accounts.length > 0;
+    const pendingSigningRequest = pending && pending.request && pending.request.uri;
+    let pendingRequests = 0;
+    if (pendingAccountRequests) {
+      pendingRequests += pending.accounts.length;
+    }
+    if (pendingSigningRequest) {
+      pendingRequests += 1;
+    }
     return (
       <Menu
         animation="overlay"
@@ -118,9 +128,39 @@ class SidebarContainer extends Component<Props> {
             : false
           }
         </Menu.Item>
+        {(pendingAccountRequests || pendingSigningRequest)
+          ? (
+            <Menu.Item
+              as="a"
+              active={(module && module.startsWith('pending'))}
+              onClick={this.onClick}
+              name="pending"
+              style={{
+                backgroundColor: (!module) ? background : '',
+                color,
+              }}
+            >
+              <Label
+                color="orange"
+                style={{
+                  float: (settings.sidebarCollapsed) ? 'none' : 'right',
+                  margin: 0,
+                }}
+              >
+                {pendingRequests}
+              </Label>
+              {(!settings.sidebarCollapsed)
+                ? <p>Pending Requests</p>
+                : false
+              }
+            </Menu.Item>
+          )
+          : false
+        }
         {(
           settings.walletMode !== 'cold'
           && settings.walletInit
+          && settings.account
           && settings.chainId
           && wallets > 0
         )
@@ -325,6 +365,7 @@ function mapStateToProps(state) {
     blockExplorers: (blockchain) ? state.blockexplorers[blockchain._id] : false,
     connection: state.connection,
     navigation: state.navigation,
+    pending: state.pending,
     settings: state.settings,
     system: state.system,
     transaction: state.transaction,
