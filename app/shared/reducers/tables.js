@@ -8,6 +8,7 @@ export default function tables(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return initialState;
     }
+    case types.SYSTEM_BLOCKCHAIN_SWAP:
     case types.CLEAR_TABLES: {
       return initialState;
     }
