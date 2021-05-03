@@ -81,7 +81,7 @@ const initialState = {
   // Blockchains pinned to the menu bar
   pinnedBlockchains: [],
   // Whether or not the UI has prompted for enabling signing requests
-  promptSigningRequests: false,
+  promptSigningRequests: true,
   // Whether the prompt will close upon completion or display a success message
   promptCloseOnComplete: true,
   // Whether the prompt will combine the sign + broadcast steps into a single click
