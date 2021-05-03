@@ -49,6 +49,14 @@ class Tools extends Component<Props> {
                   selection
                 />
               </Form.Field>
+              <Form.Field>
+                <label>{t('tools_change_advanced_options')}</label>
+                <GlobalSettingsAdvancedOptions
+                  actions={actions}
+                  defaultValue={settings.advancedOptions}
+                  selection
+                />
+              </Form.Field>
               {(settings.walletMode !== 'cold')
                 ? (
                   <Form.Field>
@@ -181,14 +189,6 @@ class Tools extends Component<Props> {
                 <GlobalSettingsAllowDangerousTransactions
                   actions={actions}
                   defaultValue={settings.allowDangerousTransactions}
-                  selection
-                />
-              </Form.Field>
-              <Form.Field>
-                <label>{t('tools_change_advanced_options')}</label>
-                <GlobalSettingsAdvancedOptions
-                  actions={actions}
-                  defaultValue={settings.advancedOptions}
                   selection
                 />
               </Form.Field>
