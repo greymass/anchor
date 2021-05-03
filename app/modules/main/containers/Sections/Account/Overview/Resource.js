@@ -47,6 +47,7 @@ class AccountOverviewResource extends Component<Props> {
       expanded,
     } = this.state;
     const enablePowerup = (connection.supportedContracts && connection.supportedContracts.includes('powerup'));
+    const enableRex = (connection.supportedContracts && connection.supportedContracts.includes('rex'));
     return (
       <Segment>
         <Grid divided fluid stackable>
@@ -154,18 +155,23 @@ class AccountOverviewResource extends Component<Props> {
                           textAlign: 'center'
                         }}
                       >
-                        <GlobalButtonPowerUp
-                          button={{
-                            color: 'green',
-                            content: t('main_sections_overview_resource_button_rent_powerup'),
-                            size: 'tiny',
-                            style: { padding: '0.78571429em' },
-                          }}
-                          sample={sample}
-                          pstate={pstate}
-                          resource={resource}
-                        />
-                        {(expanded || !enablePowerup)
+                        {(enablePowerup)
+                          ? (
+                            <GlobalButtonPowerUp
+                              button={{
+                                color: 'green',
+                                content: t('main_sections_overview_resource_button_rent_powerup'),
+                                size: 'tiny',
+                                style: { padding: '0.78571429em' },
+                              }}
+                              sample={sample}
+                              pstate={pstate}
+                              resource={resource}
+                            />
+                          )
+                          : false
+                        }
+                        {(enableRex && (expanded || !enablePowerup))
                           ? (
                             <GlobalButtonRent
                               button={{
