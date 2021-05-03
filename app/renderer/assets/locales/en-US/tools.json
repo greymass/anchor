@@ -17,6 +17,7 @@
     "tools_airgrabs_unclaimed": "Unclaimed",
     "tools_airgrabs_unknown_date": "Unknown Date",
     "tools_change_fees": "Automatically display requests with applied transaction fee when resources run out?",
+    "tools_change_signing_requests": "Allow Signing Requests from External Applications",
     "tools_airgrabs_until": "Available Until",
     "tools_beos_account_taken_error": "BEOS account is taken.",
     "tools_beos_account_validation_error": "Illegal BEOS account name: account must have 12 symbols (a-z lower case only, 1-5 and . not at the end are allowed). The creation of the account will fail unless the creating account has access to a premium namespace.",
