@@ -272,25 +272,34 @@ class SidebarContainer extends Component<Props> {
           )
           : false
         }
-        <Menu.Item
-          as="a"
-          active={module && module.startsWith('tools')}
-          onClick={this.onClick}
-          name="tools"
-          style={{
-            backgroundColor: (module && module.startsWith('tools')) ? background : '',
-            color,
-          }}
-        >
-          <Icon
-            name="wrench"
+        {(settings.advancedOptions
+         || (settings.walletInit
+         && settings.account
+         && settings.chainId))
+          ? (
+            <Menu.Item
+              as="a"
+              active={module && module.startsWith('tools')}
+              onClick={this.onClick}
+              name="tools"
+              style={{
+                backgroundColor: (module && module.startsWith('tools')) ? background : '',
+                color,
+              }}
+            >
+              <Icon
+                name="wrench"
 
-          />
-          {(!settings.sidebarCollapsed)
-            ? <p>{t('tools')}</p>
-            : false
-          }
-        </Menu.Item>
+              />
+              {(!settings.sidebarCollapsed)
+                ? <p>{t('tools')}</p>
+                : false
+              }
+            </Menu.Item>
+          )
+          : false
+        }
+
         <Menu.Header
           style={{
             flexGrow: 1
