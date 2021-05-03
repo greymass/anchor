@@ -175,6 +175,8 @@
   "global_settings_transaction_fees_off": "Show the resource warning with an option to apply the fee.",
   "global_settings_advanced_options_on": "Display advanced options.",
   "global_settings_advanced_options_off": "Do not display advanced options.",
+  "global_settings_enable_signingrequests": "Allow signing requests",
+  "global_settings_disable_signingrequests": "Do not allow any signing requests",
   "global_settings_allow_dangerous_transactions": "Allow dangerous transactions",
   "global_settings_disable_dangerous_transactions": "Disable dangerous transactions",
   "global_settings_display_resources_available": "Display Resources Available",
