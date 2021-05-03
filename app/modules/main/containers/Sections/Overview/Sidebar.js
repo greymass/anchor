@@ -10,7 +10,6 @@ import { withTranslation } from 'react-i18next';
 
 import { setSetting } from '../../../../../shared/actions/settings';
 import OverviewSidebarBackupContainer from './Sidebar/Backup';
-import GlobalSidebarPrompt from '../../../components/Overview/Sidebar/Prompt';
 import GlobalSidebarSupport from '../../../components/Overview/Sidebar/Support';
 import GlobalSidebarUpdate from '../../../components/Overview/Sidebar/Update';
 
@@ -42,10 +41,6 @@ class OverviewSidebarContainer extends Component<Props> {
           settings={settings}
         />
         <OverviewSidebarBackupContainer />
-        <GlobalSidebarPrompt
-          actions={actions}
-          settings={settings}
-        />
         <GlobalSidebarSupport />
       </React.Fragment>
     );

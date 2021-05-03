@@ -11,6 +11,7 @@ import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 import GlobalSettingsDfuse from './Global/Settings/Dfuse';
 import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 import GlobalSettingsRefreshRate from './Global/Settings/RefreshRate';
+import GlobalSettingsSigningRequests from './Global/Settings/SigningRequests';
 import GlobalSettingsShowTestnets from './Global/Settings/ShowTestnets';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
@@ -57,6 +58,18 @@ class Tools extends Component<Props> {
                   selection
                 />
               </Form.Field>
+              {(settings.walletMode !== 'cold')
+                ? (
+                  <Form.Field>
+                    <label>{t('tools_change_signing_requests')}</label>
+                    <GlobalSettingsSigningRequests
+                      actions={actions}
+                      defaultValue={settings.allowSigningRequests}
+                      selection
+                    />
+                  </Form.Field>
+                ) : false
+              }
               {(settings.walletMode !== 'cold')
                 ? (
                   <Form.Field>
