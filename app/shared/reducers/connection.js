@@ -209,6 +209,15 @@ export default function connection(state = initialState, action) {
         signPath: action.payload.path
       });
     }
+    // Set connection parameters related to the wallet
+    case types.SET_AUTH: {
+      return Object.assign({}, state, {
+        authorization: [
+          action.payload.account,
+          action.payload.authorization || 'active',
+        ].join('@'),
+      });
+    }
     // Add key to connection if wallet is set or unlocked
     case types.SET_CURRENT_KEY:
     case types.SET_CURRENT_KEY_TEMPORARY: {
