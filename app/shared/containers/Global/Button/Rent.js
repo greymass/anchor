@@ -34,8 +34,9 @@ class GlobalButtonRent extends Component<Props> {
       unlocked,
     } = this.props;
     if (!unlocked) {
-      console.log(button);
-      return button;
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
     }
     const { open } = this.state;
     if (!connection.supportedContracts || !connection.supportedContracts.includes('rex')) {

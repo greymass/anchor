@@ -7,11 +7,13 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Button, Segment } from 'semantic-ui-react';
 import { isEmpty } from 'lodash';
+import isUnlocked from '../../../../utils/Anchor/Unlocked';
 
 import * as AccountsAction from '../../../../actions/accounts';
 import * as SystemStateActions from '../../../../actions/system/systemstate';
 
 import GlobalTransactionModal from '../../../../components/Global/Transaction/Modal';
+import GlobalUnlock from '../../../../containers/Global/Unlock';
 
 class GlobalAccountFragmentTokenRefundingClaim extends PureComponent<Props> {
   claimUnstaked = () => {
@@ -35,20 +37,27 @@ class GlobalAccountFragmentTokenRefundingClaim extends PureComponent<Props> {
       system,
       t,
       transaction,
+      unlocked,
     } = this.props;
+    const button = {
+      color: 'blue',
+      content: 'Claim',
+      floated: 'right',
+      fluid: false,
+      size: 'mini'
+    };
     if (!hasRefund) return false;
+    if (!unlocked) {
+      return (
+        <GlobalUnlock buttonOnly buttonStyles={button} />
+      );
+    }
     return (
       <GlobalTransactionModal
         actionName="REFUND"
         actions={actions}
         blockExplorers={blockExplorers}
-        button={{
-          color: 'blue',
-          content: 'Claim',
-          floated: 'right',
-          fluid: false,
-          size: 'mini'
-        }}
+        button={button}
         content={(
           <Segment
             basic
@@ -93,6 +102,7 @@ const mapStateToProps = (state, ownProps) => {
     system: state.system,
     allBlockExplorers: state.blockexplorers,
     transaction: state.transaction,
+    unlocked: isUnlocked(state),
   };
 };
 
