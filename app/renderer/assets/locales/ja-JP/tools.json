@@ -1,6 +1,10 @@
 {
     "tools_account_creation_header": "Confirm account creation",
     "tools_airgrab_anything_missing": "Is an airdrop missing from this list? If so, let us know by dropping by the Greymass Wallet telegram channel: ",
+    "main_sections_pending_grid_header": "Pending Requests",
+    "main_sections_pending_grid_subheader": "Listed below are the active requests you have made that are still pending.",
+    "main_sections_pending_accounts_header": "Account Creation Requests",
+    "main_sections_pending_accounts_subheader": "The accounts listed below are ones which you have requested be created. Share the Request URL with an existing account holder or a 3rd party service to have them create your new account.",
     "tools_airgrabs_account": "Account",
     "tools_airgrabs_already_claimed": "Already Claimed",
     "tools_airgrabs_claim": "Claim",
@@ -13,6 +17,7 @@
     "tools_airgrabs_unclaimed": "Unclaimed",
     "tools_airgrabs_unknown_date": "Unknown Date",
     "tools_change_fees": "Automatically display requests with applied transaction fee when resources run out?",
+    "tools_change_signing_requests": "Allow Signing Requests from External Applications",
     "tools_airgrabs_until": "Available Until",
     "tools_beos_account_taken_error": "BEOS account is taken.",
     "tools_beos_account_validation_error": "Illegal BEOS account name: account must have 12 symbols (a-z lower case only, 1-5 and . not at the end are allowed). The creation of the account will fail unless the creating account has access to a premium namespace.",
