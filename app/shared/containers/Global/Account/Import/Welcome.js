@@ -15,7 +15,7 @@ class GlobalModalAccountImportWelcome extends Component<Props> {
     } = this.props;
     return (
       <Tab.Pane>
-        <Segment basic>
+        <Segment basic style={{ display: 'none' }}>
           <Header
             content={t('global_account_import_welcome_header_three')}
             subheader={t('global_account_import_welcome_subheader_three')}
