@@ -343,8 +343,7 @@ function showHandler() {
 
 // Allow ESR Requests from the UI
 ipcMain.on('openUri', (event, data) => {
-  pHandler.webContents.send('openUri', data);
-  showHandler();
+  handleUri(resourcePath, store, mainWindow, pHandler, data, pHandler);
 });
 
 // Session management IPC handlers

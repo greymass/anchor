@@ -47,18 +47,22 @@ const configureIPC = (ui, primary = false) => {
       });
     });
 
-    ipcMain.on('saveFile', async (event, savePath = false, data, prefix = 'tx') => {
+    ipcMain.on('saveFile', async (event, savePath = false, data, prefix = 'tx', appendDate = true, ext = 'json') => {
       // Check to ensure no other saveFile dialogs are awaiting
       if (saveFileLock) return false;
       // Set the lock
       saveFileLock = true;
       const defaultPath = (savePath || app.getPath('documents'));
-      const defaultFilename = `${prefix}-${getDateString()}.json`;
+      let defaultFilename = prefix;
+      if (appendDate) {
+        defaultFilename += `-${getDateString()}`;
+      }
+      defaultFilename += `.${ext}`;
       const { canceled, filePath } = await dialog.showSaveDialog({
         title: 'Save File',
         defaultPath: `${defaultPath}/${defaultFilename}`,
         filters: [
-          { name: 'JSON', extensions: ['json'] }
+          { name: ext, extensions: [ext] }
         ]
       });
       // Unset the lock

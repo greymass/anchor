@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
+import GlobalButtonResetContainer from '../containers/Global/Button/Reset';
 import GlobalSettingsAdvancedOptions from './Global/Settings/AdvancedOptions';
 import GlobalSettingsAnchorLinkService from './Global/Settings/AnchorLinkService';
 import GlobalSettingsLanguage from './Global/Settings/Language';
@@ -11,6 +12,7 @@ import GlobalSettingsBlockExplorer from './Global/Settings/BlockExplorer';
 import GlobalSettingsDfuse from './Global/Settings/Dfuse';
 import GlobalSettingsIdleTimeout from './Global/Settings/IdleTimeout';
 import GlobalSettingsRefreshRate from './Global/Settings/RefreshRate';
+import GlobalSettingsSigningRequests from './Global/Settings/SigningRequests';
 import GlobalSettingsShowTestnets from './Global/Settings/ShowTestnets';
 import GlobalSettingsSkipLinkModal from './Global/Settings/SkipLinkModal';
 import GlobalSettingsResourceDisplayFormat from './Global/Settings/ResourceDisplayFormat';
@@ -31,7 +33,6 @@ class Tools extends Component<Props> {
       t
     } = this.props;
     const platform = os.platform();
-    console.log(settings.refreshRate);
     return (
       <React.Fragment>
         <Segment basic>
@@ -49,6 +50,26 @@ class Tools extends Component<Props> {
                   selection
                 />
               </Form.Field>
+              <Form.Field>
+                <label>{t('tools_change_advanced_options')}</label>
+                <GlobalSettingsAdvancedOptions
+                  actions={actions}
+                  defaultValue={settings.advancedOptions}
+                  selection
+                />
+              </Form.Field>
+              {(settings.walletMode !== 'cold')
+                ? (
+                  <Form.Field>
+                    <label>{t('tools_change_signing_requests')}</label>
+                    <GlobalSettingsSigningRequests
+                      actions={actions}
+                      defaultValue={settings.allowSigningRequests}
+                      selection
+                    />
+                  </Form.Field>
+                ) : false
+              }
               {(settings.walletMode !== 'cold')
                 ? (
                   <Form.Field>
@@ -185,14 +206,6 @@ class Tools extends Component<Props> {
                 />
               </Form.Field>
               <Form.Field>
-                <label>{t('tools_change_advanced_options')}</label>
-                <GlobalSettingsAdvancedOptions
-                  actions={actions}
-                  defaultValue={settings.advancedOptions}
-                  selection
-                />
-              </Form.Field>
-              <Form.Field>
                 <label>{t('tools_change_display_test_networks')}</label>
                 <GlobalSettingsShowTestnets
                   actions={actions}
@@ -201,6 +214,13 @@ class Tools extends Component<Props> {
                 />
               </Form.Field>
             </Form>
+          </Segment>
+          <Segment clearing padded color="orange">
+            <Header dividing>
+              Danger Zone!
+            </Header>
+            <p>Delete everything and completely reset Anchor.</p>
+            <GlobalButtonResetContainer />
           </Segment>
         </Segment>
       </React.Fragment>

@@ -54,16 +54,6 @@ class GlobalModalAccountImportManual extends Component<Props> {
     const {
       chainId
     } = settings;
-    console.log(
-      'import',
-      account,
-      authAccount,
-      authPermission,
-      authType,
-      disabled,
-      permission,
-      key,
-    );
     switch (authType) {
       default:
       case 'key': {

@@ -74,7 +74,7 @@ class ToolsContainer extends Component<Props> {
               : (
                 <React.Fragment>
                   <Breadcrumb.Divider />
-                  <Breadcrumb.Section>{t(`tools_menu_index`)}</Breadcrumb.Section>
+                  <Breadcrumb.Section>{t('tools_menu_index')}</Breadcrumb.Section>
                 </React.Fragment>
               )
             }
