@@ -196,7 +196,6 @@ class PendingContainer extends Component<Props> {
                 </Table.Header>
                 <Table.Body>
                   {pending.accounts.map((account) => {
-                    console.log(account);
                     const isReady = ready[this.accountKey(account)];
                     const isLoading = loading[this.accountKey(account)];
                     const hasWarning = warning[this.accountKey(account)];
@@ -309,7 +308,6 @@ class PendingContainer extends Component<Props> {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
   return {
     actions: state.actions,
     blockchains: state.blockchains,
