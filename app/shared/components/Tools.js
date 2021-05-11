@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { withTranslation } from 'react-i18next';
 
+import GlobalButtonResetContainer from '../containers/Global/Button/Reset';
 import GlobalSettingsAdvancedOptions from './Global/Settings/AdvancedOptions';
 import GlobalSettingsAnchorLinkService from './Global/Settings/AnchorLinkService';
 import GlobalSettingsLanguage from './Global/Settings/Language';
@@ -32,7 +33,6 @@ class Tools extends Component<Props> {
       t
     } = this.props;
     const platform = os.platform();
-    console.log(settings.refreshRate);
     return (
       <React.Fragment>
         <Segment basic>
@@ -214,6 +214,13 @@ class Tools extends Component<Props> {
                 />
               </Form.Field>
             </Form>
+          </Segment>
+          <Segment clearing padded color="orange">
+            <Header dividing>
+              Danger Zone!
+            </Header>
+            <p>Delete everything and completely reset Anchor.</p>
+            <GlobalButtonResetContainer />
           </Segment>
         </Segment>
       </React.Fragment>
