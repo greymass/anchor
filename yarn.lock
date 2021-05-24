@@ -334,10 +334,10 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/anchor-link-session-manager@^0.2.0":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.2.1.tgz#79427dcdc104f885ef5454dd6ddd9f01959de815"
-  integrity sha512-eN8Y6XodDEV5fM4NG7UbV17g5/kBsxM0jCLNusiNlMVP0BQZPDbF+eUtn4frlKKrbnBsNs4W4aWdcuzo1YjBHw==
+"@greymass/anchor-link-session-manager@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.2.4.tgz#bcb4a4d718c0a3e45c75b5b54524c30cff6ea376"
+  integrity sha512-5H2f4ItirTiWAOdrw8aypXgciBzyxL1wSwXmUPGUWdisy4N7pTlTQ49i3NtgRTfZDHiSOiGpnC7mS1sLzwLoPA==
   dependencies:
     "@greymass/eosio" "^0.1.9"
     asmcrypto.js "^2.3.2"
