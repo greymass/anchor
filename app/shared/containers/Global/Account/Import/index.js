@@ -54,6 +54,9 @@ class GlobalAccountImport extends Component<Props> {
         key: 'create',
         icon: 'user plus',
         content: t('global_modal_account_import_create_account'),
+        style: {
+          display: 'none'
+        }
       },
       render: () => <GlobalModalAccountImportCreate onTabChange={this.handleTabChange} onClose={this.props.onClose} />
     };
@@ -86,13 +89,13 @@ class GlobalAccountImport extends Component<Props> {
         if (initializing) {
           panes.push(
             welcome,
-            // create,
+            create,
             existing,
           );
         } else {
           panes.push(
             welcome,
-            // create,
+            create,
             existing,
             detect,
           );
