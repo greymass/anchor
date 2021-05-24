@@ -1,0 +1,9 @@
+{
+  "fuel_paragraph_one": "Enable this feature to take advantage of transactions powered by Greymass Fuel.",
+  "fuel_paragraph_two": "More info: <1>https://greymass.com/fuel</1>",
+  "fuel_button_one": "Disable Fuel",
+  "fuel_button_two": "Enable Fuel",
+  "fuel_paragraph_three": "Your quotas remaining are as follows:",
+  "fuel_progress_one": "CPU Quota",
+  "fuel_progress_two": "NET Quota"
+}
