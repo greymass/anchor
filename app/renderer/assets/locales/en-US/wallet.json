@@ -49,7 +49,7 @@
   "wallet_mode_explain_undefined_2": "A 'Legacy Wallet' is a catch-all type for when the application isn't sure what kind of wallet this is. Either upgrade it or remove the account and reimport it to correct the problem.",
   "wallet_mode_explain_watch_2": "A 'Watch Wallet' refers to a wallet which has no Private Keys and cannot sign transactions, but can watch the account or create transaction files for signing in a 'Cold Wallet'.",
   "wallet_panel_form_account": "Account Name",
-  "wallet_panel_form_create_wallet_body": "To use eos-voter to vote, fill in your account name and private key.",
+  "wallet_panel_form_create_wallet_body": "To use Anchor to vote, fill in your account name and private key.",
   "wallet_panel_form_create_wallet_header": "Import your Account",
   "wallet_panel_form_encrypt_wallet": "Save/encrypt local wallet with password?",
   "wallet_panel_form_key": "WIF/Private Key",
@@ -64,6 +64,8 @@
   "wallet_panel_password_confirm_description": "Re-enter the local wallet password to proceed.",
   "wallet_panel_password_confirm_title": "Confirm Password",
   "wallet_panel_password_label": "Local Wallet Password",
+  "wallet_panel_password_label_r2": "Anchor Password",
+  "wallet_panel_unlock_all_label": "Unlock all accounts",
   "wallet_panel_waiting_header": "Awaiting Creation",
   "wallet_panel_waiting_instructions": "The application will monitor for the creation of this new account. Once the new account has been created, the application will prompt you to enter your backup password once more, and then establish a local hot wallet.",
   "wallet_panel_waiting_subheader": "This account has not yet been created.",
@@ -82,7 +84,7 @@
   "wallet_requires_upgrade_subheader": "This currently loaded account is out of sync and needs to be updated. Click update to the left and enter your password to automatically complete this process.",
   "wallet_status_add_custom_token_action": "Add Custom Token",
   "wallet_status_add_custom_token_action_header": "This feature has moved!",
-  "wallet_status_add_custom_token_action_subheader": "To manage Custom Tokens in this wallet, click on the Tools section, and look under the 'Airdrops / Custom Tokens' section.",
+  "wallet_status_add_custom_token_action_subheader": "To manage the tokens tracked in this wallet, click on the Tools section, and look under the 'Manage Tracked Tokens' section.",
   "wallet_status_add_custom_token_header": "Token Balances",
   "wallet_status_add_custom_token_subheader": "The token balances of this account for all tracked contracts ('eosio.token' only by default).",
   "wallet_status_balances": "Wallet Balances",
@@ -119,5 +121,10 @@
   "wallet_upgrade_popup": "This wallet requires an upgrade to enable the newest features.",
   "wallet_upgrade_watch_authorization_description": "If you are using in conjunction with a cold wallet, please select the type of key you have imported into the cold wallet. If the account is just being watched, the selected authority doesn't matter.",
   "wallet_upgrade_watch_authorization_header": "Select an authority for this wallet.",
-  "wallet_welcome_connection_blockchain_message": "You are connected to the {{blockChainName}}."
+  "wallet_welcome_connection_blockchain_message": "You are connected to the {{blockChainName}}.",
+  "wallet_panel_button_broadcast_transaction": "Broadcast Transaction",
+  "wallet_lock_state_popup": "This wallet (and potentially other wallets) is unlocked. Click this icon to lock all of your wallets.",
+  "tools_button_reset": "Reset Application",
+  "tools_confirm_content_reset": "This action will erase all private keys, settings, accounts and restore this application to its default state. Ensure you have a proper backup before proceeding.",
+  "tools_confirm_header_reset": "Warning"
 }
