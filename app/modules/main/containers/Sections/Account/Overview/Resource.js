@@ -47,7 +47,10 @@ class AccountOverviewResource extends Component<Props> {
       expanded,
     } = this.state;
     const enablePowerup = (connection.supportedContracts && connection.supportedContracts.includes('powerup'));
-    const enableRex = (connection.supportedContracts && connection.supportedContracts.includes('rex'));
+    let enableRex = (connection.supportedContracts && connection.supportedContracts.includes('rex'));
+    if (connection.chainId === 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' && !settings.advancedOptions) {
+      enableRex = false;
+    }
     return (
       <Segment>
         <Grid divided fluid stackable>
