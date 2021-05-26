@@ -26,7 +26,7 @@ class GlobalAccountFragmentRamPercent extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   return {
     used: get(state.accounts, `${account}.ram_usage`),
     max: get(state.accounts, `${account}.ram_quota`),

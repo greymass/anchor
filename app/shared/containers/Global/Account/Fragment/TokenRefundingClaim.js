@@ -91,7 +91,7 @@ class GlobalAccountFragmentTokenRefundingClaim extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   const refundRequest = get(state, `accounts.${account}.refund_request`);
   const hasRefund = !isEmpty(refundRequest);
   const claimable = (hasRefund && new Date() > new Date(`${refundRequest.request_time}z`));

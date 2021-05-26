@@ -23,7 +23,7 @@ class GlobalAccountFragmentResourceDelegated extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   const staked = get(state, `accounts.${account}.self_delegated_bandwidth`, {});
   const total = get(state, `accounts.${account}.total_resources`, {});
   let balance = 0;

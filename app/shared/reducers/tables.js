@@ -15,7 +15,7 @@ export default function tables(state = initialState, action) {
     case types.SYSTEM_GET_ACCOUNT_SUCCESS: {
       let modified;
       if (action.payload && action.payload.results && action.payload.results.rex_info) {
-        const account = action.payload.results.account_name.replace('.', '\\.');
+        const account = action.payload.results.account_name.replace(/\./g, '\\.');
         modified = set(state, `eosio.eosio.rexbal.${account}.rows`, [action.payload.results.rex_info]);
         return modified;
       }
@@ -29,9 +29,9 @@ export default function tables(state = initialState, action) {
         scope,
         table,
       } = action.payload;
-      const codeEscaped = code.replace('.', '\\.');
-      const scopeEscaped = scope.replace('.', '\\.');
-      const tableEscaped = table.replace('.', '\\.');
+      const codeEscaped = code.replace(/\./g, '\\.');
+      const scopeEscaped = scope.replace(/\./g, '\\.');
+      const tableEscaped = table.replace(/\./g, '\\.');
       return set(state, `${codeEscaped}.${scopeEscaped}.${tableEscaped}`, { more, rows });
     }
     case types.SYSTEM_GETTABLEBYBOUNDS_SUCCESS: {
@@ -43,10 +43,10 @@ export default function tables(state = initialState, action) {
         scope,
         table,
       } = action.payload;
-      const codeEscaped = code.replace('.', '\\.');
-      const scopeEscaped = scope.replace('.', '\\.');
-      const tableEscaped = table.replace('.', '\\.');
-      const boundsEscaped = bounds.replace('.', '\\.');
+      const codeEscaped = code.replace(/\./g, '\\.');
+      const scopeEscaped = scope.replace(/\./g, '\\.');
+      const tableEscaped = table.replace(/\./g, '\\.');
+      const boundsEscaped = bounds.replace(/\./g, '\\.');
       return set(state, `${codeEscaped}.${scopeEscaped}.${tableEscaped}.${boundsEscaped}`, { more, rows });
     }
     default: {

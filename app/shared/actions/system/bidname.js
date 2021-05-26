@@ -39,7 +39,7 @@ export function bidname(data) {
 
       currentRecentBids.push({ newname: data.newname, bid: data.bid });
 
-      const accountName = settings.account.replace('.', '\\.');
+      const accountName = settings.account.replace(/\./g, '\\.');
       const newRecentBidsState = set(settings.recentBids, `${settings.chainId}.${accountName}`, currentRecentBids);
 
       dispatch(setSetting('recentBids', newRecentBidsState));
