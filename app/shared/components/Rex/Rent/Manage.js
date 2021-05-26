@@ -67,7 +67,7 @@ class RexInterfaceFund extends PureComponent<Props> {
 
       const { settings, tables } = this.props;
 
-      const escapedAccountName = settings.account.replace('.', '\\.');
+      const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
       const rexFundBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 
@@ -132,7 +132,7 @@ class RexInterfaceFund extends PureComponent<Props> {
 
     const saveDisabled = error || !resourceAmount;
 
-    const escapedAccountName = settings.account.replace('.', '\\.');
+    const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
     const rexFundBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
     const confirmationPage = confirming ? (

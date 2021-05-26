@@ -68,7 +68,7 @@ class RexLendSavings extends PureComponent<Props> {
 
       const { tables, settings } = this.props;
 
-      const escapedAccountName = settings.account.replace('.', '\\.');
+      const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
       const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');
       const rexMaturities = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_maturities`, []);
@@ -104,7 +104,7 @@ class RexLendSavings extends PureComponent<Props> {
   };
   getSavingsValue = () => {
     const { settings, tables } = this.props;
-    const escapedAccountName = settings.account.replace('.', '\\.');
+    const escapedAccountName = settings.account.replace(/\./g, '\\.');
     const matured = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_maturities`, []);
     // Find savings value
     let savings = find(matured, {
@@ -169,7 +169,7 @@ class RexLendSavings extends PureComponent<Props> {
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
-    const escapedAccountName = settings.account.replace('.', '\\.');
+    const escapedAccountName = settings.account.replace(/\./g, '\\.');
     const maturedRex = fetchMaturedBalance(tables, escapedAccountName);
 
     const rexBalance = get(tables, `eosio.eosio.rexbal.${escapedAccountName}.rows.0.rex_balance`, '0.0000 REX');

@@ -33,7 +33,7 @@ class GlobalAccountFragmentResourceStaked extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   return {
     account: ownProps.account,
     resource: get(state.accounts, `${account}.total_resources.${ownProps.type}_weight`),
