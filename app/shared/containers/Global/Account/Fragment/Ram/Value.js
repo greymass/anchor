@@ -45,7 +45,7 @@ class GlobalAccountFragmentRamValue extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   const { ram } = state.globals;
   if (!ram || Object.keys(ram).length === 0) {
     return {};

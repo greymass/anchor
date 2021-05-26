@@ -31,7 +31,7 @@ const mapStateToProps = (state, ownProps) => {
       balance: false
     };
   }
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   const loaded = !isEmpty(get(state, `balances.${account}.${ownProps.token}`));
   const defaultValue = loaded ? 0 : false;
   // Allow override as prop to use formatting

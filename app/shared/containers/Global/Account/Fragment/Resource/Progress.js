@@ -35,7 +35,7 @@ class GlobalAccountFragmentResourceProgress extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   return {
     resource: get(state.accounts, `${account}.${ownProps.type}_limit`),
     settings: state.settings,

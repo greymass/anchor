@@ -73,7 +73,7 @@ class RexLendManage extends PureComponent<Props> {
 
       const { accounts, tables, settings } = this.props;
 
-      const escapedAccountName = settings.account.replace('.', '\\.');
+      const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
       const maturedRex = fetchMaturedBalance(tables, escapedAccountName);
       const fundedBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
@@ -162,7 +162,7 @@ class RexLendManage extends PureComponent<Props> {
 
     if (!tables.eosio || !tables.eosio.eosio) return false;
 
-    const escapedAccountName = settings.account.replace('.', '\\.');
+    const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
     const maturedRex = fetchMaturedBalance(tables, escapedAccountName);
 

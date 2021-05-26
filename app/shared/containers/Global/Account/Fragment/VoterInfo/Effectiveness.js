@@ -65,7 +65,7 @@ class GlobalAccountFragmentVoterInfoEffectiveness extends Component<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   // const epoch = Date.parse(get(state, 'globals.current')) / 1000;
   let voter = get(state, `accounts.${account}.voter_info`, {});
   const voteDecayPeriod = get(state, 'connection.voteDecayPeriod');

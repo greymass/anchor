@@ -82,7 +82,7 @@ class RexInterfaceFund extends PureComponent<Props> {
           this.setState({ error: 'insufficient_balance' });
         }
       } else {
-        const escapedAccountName = settings.account.replace('.', '\\.');
+        const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
         const rexFundBalance =
           get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
@@ -136,7 +136,7 @@ class RexInterfaceFund extends PureComponent<Props> {
       contract = system[`${actionName}_LAST_CONTRACT`];
     }
 
-    const escapedAccountName = settings.account.replace('.', '\\.');
+    const escapedAccountName = settings.account.replace(/\./g, '\\.');
 
     const rexFundBalance = get(tables, `eosio.eosio.rexfund.${escapedAccountName}.rows.0.balance`, '0.0000 EOS');
 

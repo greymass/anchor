@@ -24,7 +24,7 @@ class GlobalAccountFragmentREXBalance extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   const loaded = !isEmpty(get(state, `tables.eosio.eosio.rexbal.${account}`));
   const defaultValue = loaded ? 0 : false;
   const rows = get(state, `tables.eosio.eosio.rexbal.${account}.rows`, defaultValue);

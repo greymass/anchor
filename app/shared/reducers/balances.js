@@ -21,7 +21,7 @@ export default function balances(state = initialState, action) {
       let modified;
       const { connection, results } = action.payload;
       if (results && results.core_liquid_balance) {
-        const account = action.payload.account.replace('.', '\\.');
+        const account = action.payload.account.replace(/\./g, '\\.');
         const newBalances = Object.assign({}, state[action.payload.account]);
         const tokenSymbol = `${connection.tokenPrecision || 4},${connection.chainSymbol}`;
         newBalances[connection.chainSymbol] = Asset.from(results.core_liquid_balance, tokenSymbol).value;
@@ -51,7 +51,7 @@ export default function balances(state = initialState, action) {
           }
         }), {}
       ));
-      const account = action.payload.account.replace('.', '\\.');
+      const account = action.payload.account.replace(/\./g, '\\.');
       modified = set(state, account, newBalances);
       modified = set(modified, '__contracts', newPrecisions);
       return modified;
@@ -65,7 +65,7 @@ export default function balances(state = initialState, action) {
         tokens
       } = action.payload;
       let modified;
-      const account = account_name.replace('.', '\\.');
+      const account = account_name.replace(/\./g, '\\.');
       modified = set(state, account, Object.assign({}, state[account_name], tokens));
       if (precision[symbol.toUpperCase()] !== undefined) {
         modified = set(modified, `__contracts.${symbol.toUpperCase()}`, { contract, precision });
