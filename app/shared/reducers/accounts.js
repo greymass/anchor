@@ -23,7 +23,7 @@ export default function accounts(state = initialState, action) {
       return Object.assign({}, initialState);
     }
     case types.SYSTEM_GETTABLE_SUCCESS: {
-      const account = action.payload.scope.replace('.', '\\.');
+      const account = action.payload.scope.replace(/\./g, '\\.');
       if (
         action.payload.code === 'eosio'
         && action.payload.table === 'delband'
@@ -45,7 +45,7 @@ export default function accounts(state = initialState, action) {
       return state;
     }
     case types.SYSTEM_GET_ACCOUNT_SUCCESS: {
-      const account = action.payload.results.account_name.replace('.', '\\.');
+      const account = action.payload.results.account_name.replace(/\./g, '\\.');
       // Retain previous delegated state if it exists
       const delegated = Object.assign({}, {
         rows: [],

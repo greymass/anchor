@@ -53,7 +53,7 @@ class GlobalAccountFragmentDataStaleness extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   return {
     currentHeight: get(state, 'chain.head_block_num'),
     lastHeight: get(state, `accounts.${account}.head_block_num`),

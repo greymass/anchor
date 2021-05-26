@@ -140,7 +140,7 @@ export default class EOSHandler {
     });
     Object.keys(abiCache.store).forEach((key) => {
       // Escape storage key
-      const storageKey = key.replace('.', '\\.');
+      const storageKey = key.replace(/\./g, '\\.');
       // Load the ABI from localstorage
       const abi = abiCache.get(storageKey);
       if (abi && abi.ts) {
@@ -427,7 +427,7 @@ export default class EOSHandler {
   getBlock = (height) => this.rpc.get_block(height)
   setAbi = (account, abi) => {
     // Escape for dot notation
-    const escapedAccount = String(account).replace('.', '\\.');
+    const escapedAccount = String(account).replace(/\./g, '\\.');
     // Combine the chainId + escaped name for the storage key
     const storageKey = [this.config.chainId, escapedAccount].join('|');
     // Store in eosjs
@@ -440,7 +440,7 @@ export default class EOSHandler {
   }
   getAbi = async (account) => {
     // Escape for dot notation
-    const escapedAccount = String(account).replace('.', '\\.');
+    const escapedAccount = String(account).replace(/\./g, '\\.');
     // Combine the chainId + escaped name for the storage key
     const storageKey = [this.config.chainId, escapedAccount].join('|');
     if (abiCache.has(storageKey)) {

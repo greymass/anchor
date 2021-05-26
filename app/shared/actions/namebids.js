@@ -30,7 +30,7 @@ export function getBidForName(name) {
       const bidIndex = findIndex(currentBids, { newname: namebid.newname });
 
       if (bidIndex > -1) {
-        const account = settings.account.replace('.', '\\.');
+        const account = settings.account.replace(/\./g, '\\.');
         const newRecentBids = set(recentBids, `${settings.chainId}.${account}.${bidIndex}`, {
           newname: namebid.newname,
           bid: recentBids[settings.chainId][settings.account][bidIndex].bid,
@@ -81,7 +81,7 @@ export function getBidsForAccount(previous = false) {
         const bidIndex = findIndex(currentBids, { newname: namebid.newname });
 
         if (bidIndex === -1 && namebid.high_bidder === settings.account) {
-          const account = settings.account.replace('.', '\\.');
+          const account = settings.account.replace(/\./g, '\\.');
           recentBids = set(recentBids, `${settings.chainId}.${account}`, currentBids.concat({
             newname: namebid.newname,
             highestBid: `${(namebid.high_bid / 10000).toFixed(4)} EOS`

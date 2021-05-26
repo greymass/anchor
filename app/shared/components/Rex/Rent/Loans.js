@@ -65,7 +65,7 @@ class RexInterfaceLoans extends PureComponent<Props> {
       refundingLoan,
     } = this.state;
 
-    const escapedAccount = settings.account.replace('.', '\\.');
+    const escapedAccount = settings.account.replace(/\./g, '\\.');
     const cpuLoans =
       get(tables, `eosio.${escapedAccount}.cpuloan.rows`, [])
         .map(loan => ({ ...loan, type: 'cpu' }));

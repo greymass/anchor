@@ -23,7 +23,7 @@ class GlobalAccountFragmentTokenDelegated extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   return {
     balance: get(state, `accounts.${account}.delegated.total`, false)
   };

@@ -25,7 +25,7 @@ class GlobalAccountFragmentTokenRefunding extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const account = ownProps.account.replace('.', '\\.');
+  const account = ownProps.account.replace(/\./g, '\\.');
   const { resource } = ownProps;
   const loaded = !isEmpty(get(state, `accounts.${account}`));
   const defaultValue = loaded ? 0 : false;
