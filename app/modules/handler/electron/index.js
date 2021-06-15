@@ -8,6 +8,7 @@ import { windowStateKeeper } from '../../../shared/electron/windowStateKeeper';
 const { exec } = require('child_process');
 const log = require('electron-log');
 const path = require('path');
+
 const isMac = () => process.platform === 'darwin';
 
 let ui;
@@ -51,11 +52,6 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
       ui.openDevTools({ mode: 'detach' });
     }
   });
-
-  // macOS: Tell Chrome it should enable the "Always open" checkbox for the first ESR link
-  if (isMac) {
-    exec('defaults write com.google.Chrome ExternalProtocolDialogShowAlwaysOpenCheckbox -bool true');
-  }
 
   // TODO: Needs proper hide/close logic independent of the primary ui
   ui.on('close', (e) => {
