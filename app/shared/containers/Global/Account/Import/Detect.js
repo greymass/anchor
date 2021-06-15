@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
 import { Button, Divider, Header, Icon, Message, Segment, Tab } from 'semantic-ui-react';
+import { PublicKey } from '@greymass/eosio';
 
 import GlobalAccountImportElementsAccountList from './Elements/AccountList';
 import GlobalButtonElevate from '../../Button/Elevate';
@@ -45,7 +46,10 @@ class GlobalModalAccountImportDetect extends Component<Props> {
       connection,
       pubkeys
     } = this.props;
-    const pubkeysToLookup = pubkeys.available.filter(pubkey => pubkey.includes(connection.keyPrefix));
+    const pubkeysToLookup = pubkeys.available.map(pubkey => {
+      const publicKey = PublicKey.from(pubkey);
+      return publicKey.toLegacyString(connection.keyPrefix);
+    });
     this.props.actions.clearAccountByKey();
     this.props.actions.getAccountByKeys(pubkeysToLookup);
   };
