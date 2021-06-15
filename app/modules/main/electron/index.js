@@ -20,8 +20,6 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
 
   ui = new BrowserWindow({
     closable,
-    x: uiStateKeeper.x,
-    y: uiStateKeeper.y,
     width: uiStateKeeper.width,
     height: uiStateKeeper.height,
     title,
