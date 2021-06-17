@@ -364,19 +364,22 @@ export function signIdentityRequest(
         });
         const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
         if (enableSessions && prompt.resolved.request.isIdentity()) {
-          callbackParams.payload = {
-            ...callbackParams.payload,
-            link_ch: `https://${sessions.linkUrl}/${sessions.linkId}`,
-            link_key: PrivateKey.from(sessions.requestKey).toPublic().toString(),
-            link_name: 'Anchor Desktop',
-          };
-          const session = {
-            network: blockchain.chainId,
-            actor: callbackParams.payload.sa,
-            permission: callbackParams.payload.sp,
-            payload: prompt.resolved.request.toString(),
-          };
-          ipcRenderer.send('addSession', session);
+          const { info } = prompt.resolved.request.data;
+          if (info && info.length) {
+            callbackParams.payload = {
+              ...callbackParams.payload,
+              link_ch: `https://${sessions.linkUrl}/${sessions.linkId}`,
+              link_key: PrivateKey.from(sessions.requestKey).toPublic().toString(),
+              link_name: 'Anchor Desktop',
+            };
+            const session = {
+              network: blockchain.chainId,
+              actor: callbackParams.payload.sa,
+              permission: callbackParams.payload.sp,
+              payload: prompt.resolved.request.toString(),
+            };
+            ipcRenderer.send('addSession', session);
+          }
         }
         dispatch({
           payload: {
