@@ -365,7 +365,8 @@ export function signIdentityRequest(
         const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
         if (enableSessions && prompt.resolved.request.isIdentity()) {
           const { info } = prompt.resolved.request.data;
-          if (info && info.length) {
+          const isLinkSession = info.some((i) => i.key === 'link');
+          if (isLinkSession) {
             callbackParams.payload = {
               ...callbackParams.payload,
               link_ch: `https://${sessions.linkUrl}/${sessions.linkId}`,
