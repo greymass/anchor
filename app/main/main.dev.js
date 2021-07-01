@@ -130,8 +130,10 @@ if (!lock) {
       uri = argv[argv.length - 1];
     }
     showMain();
-    if (pHandler !== null && uri && uri.startsWith('esr:')) {
-      handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
+    if (pHandler !== null && uri) {
+      if (uri.startsWith('esr:')) {
+        handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
+      }
     } else {
       showManager();
     }
@@ -170,11 +172,12 @@ app.on('ready', async () => {
   if (process.platform === 'win32' || process.platform === 'linux') {
     uri = process.argv && process.argv.slice(1)[0];
   }
-
-  if (uri && uri.startsWith('esr')) {
-    setTimeout(() => {
-      handleUri(resourcePath, store, mainWindow, pHandler, uri);
-    }, 2000);
+  if (uri) {
+    if (uri.startsWith('esr')) {
+      setTimeout(() => {
+        handleUri(resourcePath, store, mainWindow, pHandler, uri);
+      }, 2000);
+    }
   }
 });
 app.on('activate', (e, hasVisibleWindows) => {
@@ -183,7 +186,9 @@ app.on('activate', (e, hasVisibleWindows) => {
 });
 app.on('open-url', (e, url) => {
   if (pHandler) {
-    handleUri(resourcePath, store, mainWindow, pHandler, url);
+    if (url.startsWith('esr')) {
+      handleUri(resourcePath, store, mainWindow, pHandler, url);
+    }
   } else {
     uri = url;
   }
@@ -312,6 +317,10 @@ const enableSigningRequests = () => {
   protocol.registerHttpProtocol('anchorwallet', (req, cb) => {
     log.info('app handler: register', req, cb);
   });
+  app.setAsDefaultProtocolClient('anchor');
+  protocol.registerHttpProtocol('anchor', (req, cb) => {
+    log.info('app handler: register', req, cb);
+  });
 };
 
 const disableSigningRequests = () => {
@@ -407,9 +416,7 @@ ipcMain.on('setBackgroundMode', (e, mode) => {
 
 let networkStatus = 'online';
 ipcMain.on('networkStatusChanged', (e, status) => {
-  console.log('networkStatusChanged', status);
   if (status === 'online' && networkStatus === 'offline') {
-    console.log('networkStatusChanged changing to ', status);
     networkStatus = status;
     initSessionManager();
   }
