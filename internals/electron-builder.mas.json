@@ -24,7 +24,7 @@
       "name": "esr",
       "role": "Viewer",
       "schemes": [
-        "esr"
+        "anchor", "esr"
       ]
     }
   ],
