@@ -20,6 +20,7 @@ class ToolsKeyGenerator extends Component<Props> {
 
   onClick = () => {
     const { connection } = this.props;
+    console.log(connection);
     const { key } = this.state;
     try {
       const pk = PrivateKey.from(key);
@@ -27,7 +28,7 @@ class ToolsKeyGenerator extends Component<Props> {
         currentPrivate: String(pk),
         currentPublic: String(pk.toPublic()),
         legacyPrivate: pk.toWif(),
-        legacyPublic: pk.toPublic().toLegacyString(),
+        legacyPublic: pk.toPublic().toLegacyString(connection.keyPrefix),
       });
     } catch (e) {
       this.setState({
