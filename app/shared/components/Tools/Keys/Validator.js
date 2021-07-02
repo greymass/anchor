@@ -11,14 +11,17 @@ class ToolsKeysValidator extends Component<Props> {
   state = {
     checksum: false,
     valid: false,
-    publicKey: ''
+    publicKey: '',
+    legacyPublicKey: '',
   };
   onChange = (e, { publicKey, valid, value }) => {
     try {
-      PrivateKey.from(value);
+      const { connection } = this.props;
+      const pk = PrivateKey.from(value);
       this.setState({
         checksum: true,
-        publicKey,
+        publicKey: String(pk.toPublic()),
+        legacyPublicKey: pk.toPublic().toLegacyString(connection.keyPrefix),
         valid
       });
     } catch (err) {
@@ -32,7 +35,9 @@ class ToolsKeysValidator extends Component<Props> {
   }
   render() {
     const { connection, t } = this.props;
-    const { checksum, publicKey, valid } = this.state;
+    const {
+      checksum, publicKey, legacyPublicKey, valid
+    } = this.state;
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
@@ -88,6 +93,12 @@ class ToolsKeysValidator extends Component<Props> {
                     <List.Icon name="key" />
                     <List.Content>
                       {t('tools_keys_key_validator_public_key')}: {publicKey}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Icon name="key" />
+                    <List.Content>
+                      {t('tools_keys_key_validator_public_key')} (Legacy): {legacyPublicKey}
                     </List.Content>
                   </List.Item>
                 </React.Fragment>
