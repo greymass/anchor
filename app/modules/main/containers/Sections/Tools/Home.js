@@ -42,10 +42,10 @@ const toolSections = {
     }
   },
   tools_menu_security_header: {
-    tools_menu_recommendations: {
-      modes: ['hot', 'ledger', 'watch'],
-      path: 'tools/recommendations'
-    },
+    // tools_menu_recommendations: {
+    //   modes: ['hot', 'ledger', 'watch'],
+    //   path: 'tools/recommendations'
+    // },
     tools_menu_managekeys: {
       modes: ['all'],
       path: 'tools/keys'
@@ -53,6 +53,10 @@ const toolSections = {
     tools_menu_permissions: {
       modes: ['hot', 'ledger', 'watch'],
       path: 'tools/permissions'
+    },
+    tools_menu_key_converter: {
+      modes: ['all'],
+      path: 'tools/key_converter'
     },
     tools_menu_key_validator: {
       modes: ['all'],

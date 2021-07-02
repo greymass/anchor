@@ -28,6 +28,7 @@ import ToolsDelegations from './Tools/Delegations';
 import ToolsGlobalState from './Tools/GlobalState';
 import ToolsHome from './Tools/Home';
 import ToolsKeys from './Tools/Keys';
+import ToolsKeyConverter from './Tools/KeyConverter';
 import ToolsKeyGenerator from './Tools/KeyGenerator';
 import ToolsKeyValidator from './Tools/KeyValidator';
 import ToolsLedger from './Tools/Ledger';
@@ -95,6 +96,7 @@ class ToolsContainer extends Component<Props> {
             <Route path="/tools/display" component={ToolsDisplay} />
             <Route path="/tools/delegations" component={ToolsDelegations} />
             <Route path="/tools/keys" component={ToolsKeys} />
+            <Route path="/tools/key_converter" component={ToolsKeyConverter} />
             <Route path="/tools/key_generator" component={ToolsKeyGenerator} />
             <Route path="/tools/key_validator" component={ToolsKeyValidator} />
             <Route path="/tools/ledger" component={ToolsLedger} />
