@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
-    "@greymass/anchor-link-session-manager": "0.2.7",
+    "@greymass/anchor-link-session-manager": "^0.3.0-rc1",
     "@greymass/eosio": "0.4.7",
     "@greymass/eosio-resources": "0.6.0",
     "anchor-link": "^3.3.2",
