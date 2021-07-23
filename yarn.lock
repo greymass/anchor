@@ -334,18 +334,28 @@
     global-agent "^2.0.2"
     global-tunnel-ng "^2.7.1"
 
-"@greymass/anchor-link-session-manager@0.2.7":
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.2.7.tgz#6abda6bea3b91eda12eeb2fcfd8f16747c61c28a"
-  integrity sha512-reGwZPIOfJ/TC5vaWPWwz33hOardahL1wGpjzPWmtl2tU5qg/XGTmd+eLYZ7vkrjoJ/3PQXXEbjxiWesdhjmfA==
+"@greymass/anchor-link-session-manager@^0.3.0-rc1":
+  version "0.3.0-rc1"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.0-rc1.tgz#1bc6a6d1084ee2bf61f5564a1b634efedbe04728"
+  integrity sha512-BsDvQ6hU8kG1wJg6/EbpP7C1GZW93kFYtokyLeh7fok793XUPAnWOxgieIf9iaX2UFeecA1g8YmeeOn3WMyc8w==
   dependencies:
-    "@greymass/eosio" "^0.1.9"
+    "@greymass/buoy" "^1.0.0"
+    "@greymass/eosio" "^0.4.7"
     asmcrypto.js "^2.3.2"
-    eosio-signing-request "^2.0.0-rc"
+    cross-fetch "^3.1.4"
+    eosio-signing-request "^2.2.2"
     isomorphic-ws "^4.0.1"
-    pako "^1.0.11"
-    tslib "^2.1.0"
+    pako "^2.0.3"
+    tslib "^2.3.0"
     uuid "^8.3.0"
+
+"@greymass/buoy@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@greymass/buoy/-/buoy-1.0.0.tgz#a5c4e6475600b04c5aa8c56f263979f1dd5d463b"
+  integrity sha512-oko8Fb+s6Y+JsTUTf1XtPeiY8a8PopakoR0eB/KDPbpyoDM2y6gdINccY1Fzc26ooGusWcczZYalwrGTEoh3Mg==
+  dependencies:
+    eventemitter3 "^4.0.7"
+    tslib "^2.1.0"
 
 "@greymass/eosio-resources@0.6.0":
   version "0.6.0"
@@ -356,7 +366,7 @@
     bn.js "^4.11.9"
     tslib "^2.1.0"
 
-"@greymass/eosio@0.4.7":
+"@greymass/eosio@0.4.7", "@greymass/eosio@^0.4.7":
   version "0.4.7"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.4.7.tgz#157811fce097e442a716f8c6cee53ee20014db2b"
   integrity sha512-vIioXD1MMdajDFsZ6PL/J6FxcrVckre4khzvKTwfJQGBeEiv2yhC9uITYgt7prvaZhxytu5Z3JU6wYhQED/mVw==
@@ -371,17 +381,6 @@
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.1.8.tgz#be2794efebc2c0bed078a275e53dcc7929786ef3"
   integrity sha512-OotCpFZjVUj/CKgY14M/5VsS2Na+lysNF4nThGqdVNAPO1CaSZUPLpPoVAdOKS0I6p0rBD3TxarPp2s8OdmR+Q==
-  dependencies:
-    bn.js "^4.4.0"
-    brorand "^1.0.1"
-    elliptic "^6.5.3"
-    hash.js "^1.0.0"
-    tslib "^2.0.3"
-
-"@greymass/eosio@^0.1.9":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.1.10.tgz#7d5922a476f2121d0d75f3883167a8373187b88f"
-  integrity sha512-HIM5nyEmah+pPlQEgpof9gizY8dIfYYkIDVkLSfSfw8HsbH0MApDfnkXgfN4DU3CesId5wkAcgjfa5fo3S49Aw==
   dependencies:
     bn.js "^4.4.0"
     brorand "^1.0.1"
@@ -4070,6 +4069,13 @@ cross-fetch@^2.2.2:
     node-fetch "2.1.2"
     whatwg-fetch "2.0.4"
 
+cross-fetch@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
+  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
+  dependencies:
+    node-fetch "2.6.1"
+
 cross-spawn@6.0.5, cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -5204,7 +5210,7 @@ eosio-signing-request@2.0.0-rc.1:
     "@greymass/eosio" "^0.1.5"
     tslib "^2.0.3"
 
-eosio-signing-request@^2.0.0-rc, eosio-signing-request@^2.2.0:
+eosio-signing-request@^2.2.0, eosio-signing-request@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.2.2.tgz#281cfe0843dc80205c89003d5638baf70fdcc449"
   integrity sha512-lxRBHYkk2rAnnZrFnTqweD1FLH3usL5oE24m3+1zNK2vJHRVlIyUk7tlUlmax78j8+FE54Po8LQCQ8TrCSSFGg==
@@ -5610,7 +5616,7 @@ eventemitter3@^4.0.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.0.tgz#d65176163887ee59f386d64c82610b696a4a74eb"
   integrity sha512-qerSRB0p+UDEssxTtm6EDKcE7W4OaoisfIMl4CngyEhjpYglocpNg6UEqCvemdGhosAsg4sO2dXJOdyBifPGCg==
 
-eventemitter3@^4.0.4:
+eventemitter3@^4.0.4, eventemitter3@^4.0.7:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
@@ -9577,6 +9583,11 @@ node-fetch@2.1.2:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
   integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
 
+node-fetch@2.6.1, node-fetch@~2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -9589,11 +9600,6 @@ node-fetch@^2.3.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
-
-node-fetch@~2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-forge@0.9.0:
   version "0.9.0"
@@ -10230,15 +10236,15 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-pako@^1.0.11, pako@~1.0.2, pako@~1.0.5:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
-  integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
-
 pako@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.3.tgz#cdf475e31b678565251406de9e759196a0ea7a43"
   integrity sha512-WjR1hOeg+kki3ZIOjaf4b5WVcay1jaliKSYiEaB1XzwhMQZJxRdQRv0V31EKBYlxb4T7SK3hjfc/jxyU64BoSw==
+
+pako@~1.0.2, pako@~1.0.5:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
 parallel-transform@^1.1.0:
   version "1.2.0"
@@ -13627,7 +13633,7 @@ tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
 
-tslib@^2.0.3, tslib@^2.1.0:
+tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
