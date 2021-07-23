@@ -53,8 +53,9 @@
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
     "@greymass/anchor-link-session-manager": "0.2.7",
-    "@greymass/eosio": "0.3.2",
+    "@greymass/eosio": "0.4.7",
     "@greymass/eosio-resources": "0.6.0",
+    "anchor-link": "^3.3.2",
     "asn1-ber": "^1.0.9",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
