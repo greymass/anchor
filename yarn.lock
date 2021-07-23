@@ -356,10 +356,10 @@
     bn.js "^4.11.9"
     tslib "^2.1.0"
 
-"@greymass/eosio@0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.3.2.tgz#2915a6687af0450b5a201b8f2f978e4a94c1671b"
-  integrity sha512-9nHuXMwg2QYB4TAO35zD/zObik5CAqas439kQEuljRwn7QQUsISDX+txICaJmKuBCmbnhHSWXwpDxib3f2m9jQ==
+"@greymass/eosio@0.4.7":
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.4.7.tgz#157811fce097e442a716f8c6cee53ee20014db2b"
+  integrity sha512-vIioXD1MMdajDFsZ6PL/J6FxcrVckre4khzvKTwfJQGBeEiv2yhC9uITYgt7prvaZhxytu5Z3JU6wYhQED/mVw==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -1182,6 +1182,21 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
+
+anchor-link@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.3.2.tgz#7165b7d28cfe26ce2f7db959e8971bb13c029c20"
+  integrity sha512-JDsI2Xwy4Y4D1AzfgSOioOBb5GfDPteQZOSu+cs2hT8gdRg4Asfhnxj8qDwpZX5RWdxP2NyHJEqBW5xDWH93kw==
+  dependencies:
+    "@greymass/eosio" "^0.4.0"
+    asmcrypto.js "^2.3.2"
+    eosio-signing-request "^2.2.0"
+    fetch-ponyfill "^7.1.0"
+    isomorphic-ws "^4.0.1"
+    pako "^2.0.3"
+    tslib "^2.1.0"
+    uuid "^8.3.2"
+    ws "^7.4.3"
 
 ansi-align@^3.0.0:
   version "3.0.0"
@@ -5189,7 +5204,7 @@ eosio-signing-request@2.0.0-rc.1:
     "@greymass/eosio" "^0.1.5"
     tslib "^2.0.3"
 
-eosio-signing-request@^2.0.0-rc:
+eosio-signing-request@^2.0.0-rc, eosio-signing-request@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.2.2.tgz#281cfe0843dc80205c89003d5638baf70fdcc449"
   integrity sha512-lxRBHYkk2rAnnZrFnTqweD1FLH3usL5oE24m3+1zNK2vJHRVlIyUk7tlUlmax78j8+FE54Po8LQCQ8TrCSSFGg==
@@ -5996,6 +6011,13 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
+
+fetch-ponyfill@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/fetch-ponyfill/-/fetch-ponyfill-7.1.0.tgz#4266ed48b4e64663a50ab7f7fcb8e76f990526d0"
+  integrity sha512-FhbbL55dj/qdVO3YNK7ZEkshvj3eQ7EuIGV2I6ic/2YiocvyWv+7jg2s4AyS0wdRU75s3tA8ZxI/xPigb0v5Aw==
+  dependencies:
+    node-fetch "~2.6.1"
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
@@ -9568,6 +9590,11 @@ node-fetch@^2.3.0:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
+node-fetch@~2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+
 node-forge@0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.0.tgz#d624050edbb44874adca12bb9a52ec63cb782579"
@@ -10207,6 +10234,11 @@ pako@^1.0.11, pako@~1.0.2, pako@~1.0.5:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
+
+pako@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.3.tgz#cdf475e31b678565251406de9e759196a0ea7a43"
+  integrity sha512-WjR1hOeg+kki3ZIOjaf4b5WVcay1jaliKSYiEaB1XzwhMQZJxRdQRv0V31EKBYlxb4T7SK3hjfc/jxyU64BoSw==
 
 parallel-transform@^1.1.0:
   version "1.2.0"
@@ -14020,6 +14052,11 @@ uuid@^8.3.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
   integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
 
+uuid@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
 v8-compile-cache@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.0.3.tgz#00f7494d2ae2b688cfe2899df6ed2c54bef91dbe"
@@ -14558,6 +14595,11 @@ ws@^6.0.0, ws@^6.2.1:
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
   dependencies:
     async-limiter "~1.0.0"
+
+ws@^7.4.3:
+  version "7.5.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.3.tgz#160835b63c7d97bfab418fc1b8a9fced2ac01a74"
+  integrity sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==
 
 x-is-string@^0.1.0:
   version "0.1.0"

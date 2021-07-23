@@ -3,6 +3,7 @@ import {
   AnchorLinkSessionManagerSession,
   AnchorLinkSessionManagerStorage
 } from '@greymass/anchor-link-session-manager';
+import WebSocket from 'ws';
 
 import * as types from '../actions/types';
 
@@ -22,6 +23,7 @@ export default class SessionManager {
       this.manager = new AnchorLinkSessionManager({
         handler: this.handler,
         storage: this.storage,
+        WebSocket,
       });
     }
   }
