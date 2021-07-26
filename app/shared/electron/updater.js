@@ -5,7 +5,7 @@ const log = require('electron-log');
 
 let updater;
 autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = "info";
+autoUpdater.logger.transports.file.level = 'info';
 autoUpdater.autoDownload = false;
 autoUpdater.allowPrerelease = false;
 
@@ -14,34 +14,7 @@ autoUpdater.on('error', (error) => {
 });
 
 autoUpdater.on('update-available', () => {
-  dialog.showMessageBox({
-    type: 'warning',
-    title: 'Update Found',
-    checkboxLabel: 'I understand the risks and want to update automatically.',
-    message: 'The most secure way to update is to download the latest release from GitHub, verify, and install. This update process will attempt to do that automatically.',
-    detail: 'Be careful not to perform any kind of update on a malware-infected computer, public wi-fi, or an insecure network. Doing so may increase the possible risk of a man-in-the-middle attack.',
-    buttons: ['Upgrade', 'Cancel']
-  }).then(({ response, checkboxChecked }) => {
-    if (response === 0) {
-      if (checkboxChecked) {
-        autoUpdater.downloadUpdate();
-      } else {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Aborted',
-          message: 'The automatic upgrade was cancelled.',
-          detail: 'If you would like to update, please try again and check the checkbox stating you understand the risks involved.',
-          buttons: ['Close']
-        }, () => {
-          updater.enabled = true;
-          updater = null;
-        });
-      }
-    } else {
-      updater.enabled = true;
-      updater = null;
-    }
-  });
+  autoUpdater.downloadUpdate();
 });
 
 autoUpdater.on('update-not-available', () => {
