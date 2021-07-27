@@ -21,15 +21,15 @@ export default merge.smart(baseConfig, {
 
   entry: {
     basic: [
-      'babel-polyfill',
+      '@babel/polyfill',
       path.join(__dirname, 'app/modules/basic/index'),
     ],
     handler: [
-      'babel-polyfill',
+      '@babel/polyfill',
       path.join(__dirname, 'app/modules/handler/index'),
     ],
     main: [
-      'babel-polyfill',
+      '@babel/polyfill',
       path.join(__dirname, 'app/modules/main/index'),
     ],
   },
