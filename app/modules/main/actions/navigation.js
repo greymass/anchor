@@ -2,7 +2,7 @@ import { push } from 'react-router-redux';
 
 import * as types from '../../../shared/actions/types';
 
-export function changeModule(module) {
+function changeModule(module) {
   return (dispatch: () => void) => {
     dispatch(push(`/${module}`));
     return dispatch({
@@ -12,6 +12,6 @@ export function changeModule(module) {
   };
 }
 
-export default {
+export {
   changeModule
 };

@@ -19,7 +19,7 @@ const textDecoder = new util.TextDecoder();
 const transactionTypes: Map<string, Serialize.Type> = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), transactionAbi);
 const esrParams = ['bn', 'ex', 'rbn', 'req', 'rid', 'sa', 'sig', 'sp', 'tx'];
 
-export function broadcastURI(tx, blockchain, callback = false) {
+function broadcastURI(tx, blockchain, callback = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURIBROADCAST_PENDING
@@ -67,7 +67,7 @@ export function broadcastURI(tx, blockchain, callback = false) {
   };
 }
 
-export function callbackURI(tx, blockchain, callback = false) {
+function callbackURI(tx, blockchain, callback = false) {
   return async (dispatch: () => void, getState) => {
     const { connection } = getState();
     dispatch({
@@ -101,7 +101,7 @@ export function callbackURI(tx, blockchain, callback = false) {
   };
 }
 
-export function callbackURIWithProcessed(callback) {
+function callbackURIWithProcessed(callback) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURICALLBACK_PENDING
@@ -149,13 +149,13 @@ export function callbackURIWithProcessed(callback) {
   };
 }
 
-export function clearURI() {
+function clearURI() {
   return (dispatch: () => void) => dispatch({
     type: types.SYSTEM_ESRURI_RESET
   });
 }
 
-export function setURI(uri) {
+function setURI(uri) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURI_PENDING
@@ -322,7 +322,7 @@ function unpackTransaction(bytes) {
   return {};
 }
 
-export function signIdentityRequest(
+function signIdentityRequest(
   prompt,
   blockchain,
   wallet,
@@ -404,7 +404,7 @@ export function signIdentityRequest(
   };
 }
 
-export function signURI(tx, blockchain, wallet, broadcast = false, callback = false) {
+function signURI(tx, blockchain, wallet, broadcast = false, callback = false) {
   return (dispatch: () => void, getState) => {
     const {
       auths,
@@ -526,7 +526,7 @@ export function signURI(tx, blockchain, wallet, broadcast = false, callback = fa
   };
 }
 
-export function templateURI(blockchain, wallet, chainId = false) {
+function templateURI(blockchain, wallet, chainId = false) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ESRURIBUILD_PENDING,
@@ -624,7 +624,7 @@ export function templateURI(blockchain, wallet, chainId = false) {
   };
 }
 
-export function mockDispatch(typeName, payload = {}) {
+function mockDispatch(typeName, payload = {}) {
   return (dispatch: () => void) => {
     dispatch({
       type: types[typeName],
@@ -633,7 +633,7 @@ export function mockDispatch(typeName, payload = {}) {
   };
 }
 
-export default {
+export {
   broadcastURI,
   callbackURI,
   callbackURIWithProcessed,

@@ -2,7 +2,7 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { createHttpHandler } from '../utils/http/handler';
 
-export function setConnectionBroadcast(enable = true) {
+function setConnectionBroadcast(enable = true) {
   return (dispatch: () => void) => {
     dispatch({
       payload: { enable },
@@ -11,7 +11,7 @@ export function setConnectionBroadcast(enable = true) {
   };
 }
 
-export function setConnectionSign(enable = true) {
+function setConnectionSign(enable = true) {
   return (dispatch: () => void) => {
     dispatch({
       payload: { enable },
@@ -20,14 +20,14 @@ export function setConnectionSign(enable = true) {
   };
 }
 
-export function getSupportedCalls() {
+function getSupportedCalls() {
   return (dispatch: () => void, getState) => {
     dispatch(getAvailableEndpoints());
     dispatch(historyPluginCheck());
   };
 }
 
-export function getAvailableEndpoints() {
+function getAvailableEndpoints() {
   return async (dispatch: () => void, getState) => {
     const { connection } = getState();
     const { httpEndpoint } = connection;
@@ -53,7 +53,7 @@ export function getAvailableEndpoints() {
   };
 }
 
-export function historyPluginCheck() {
+function historyPluginCheck() {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -83,7 +83,7 @@ export function historyPluginCheck() {
   };
 }
 
-export function setChainId(chainId) {
+function setChainId(chainId) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SET_CHAIN_ID,
@@ -92,7 +92,7 @@ export function setChainId(chainId) {
   };
 }
 
-export default {
+export {
   getSupportedCalls,
   historyPluginCheck,
   setChainId,

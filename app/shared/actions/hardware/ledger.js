@@ -15,7 +15,7 @@ function handleError(error) {
   console.log('handleError', error);
 }
 
-export function getAppConfiguration() {
+function getAppConfiguration() {
   return (dispatch: () => void) => {
     const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     // console.log(hardwareLedger)
@@ -85,7 +85,7 @@ function handleEvent(event) {
   };
 }
 
-export function ledgerStartListen() {
+function ledgerStartListen() {
   return (dispatch: () => void, getState) => {
     const hardwareLedger = global.hardwareLedger || remote.getGlobal('hardwareLedger');
     hardwareLedger.destroy();
@@ -116,7 +116,7 @@ export function ledgerStartListen() {
   };
 }
 
-export function ledgerStopListen() {
+function ledgerStopListen() {
   return (dispatch: () => void, getState) => {
     const { ledger } = getState();
     const {
@@ -140,7 +140,7 @@ export function ledgerStopListen() {
   };
 }
 
-export function ledgerGetPublicKey(index = 0, display = false) {
+function ledgerGetPublicKey(index = 0, display = false) {
   return (dispatch: () => void, getState) => {
     const { ledger } = getState();
     dispatch({
@@ -177,7 +177,7 @@ export function ledgerGetPublicKey(index = 0, display = false) {
   };
 }
 
-export function ledgerResetPublicKey() {
+function ledgerResetPublicKey() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_PUBLIC_KEY_SUCCESS
@@ -185,7 +185,7 @@ export function ledgerResetPublicKey() {
   };
 }
 
-export function ledgerGetStatus(state) {
+function ledgerGetStatus(state) {
   let status = false;
   // If the wallet is looking for a Ledger
   if (state.listening) {
@@ -233,7 +233,7 @@ export function ledgerGetStatus(state) {
   return status;
 }
 
-export default {
+export {
   getAppConfiguration,
   ledgerGetPublicKey,
   ledgerGetStatus,
