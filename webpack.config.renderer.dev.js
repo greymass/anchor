@@ -70,7 +70,6 @@ export default merge.smart(baseConfig, {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -79,8 +78,8 @@ export default merge.smart(baseConfig, {
               // Here, we include babel plugins that are only required for the
               // renderer process. The 'transform-*' plugins must be included
               // before react-hot-loader/babel
-              'transform-class-properties',
-              'transform-es2015-classes',
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-transform-classes',
               'react-hot-loader/babel'
             ],
           }
@@ -215,10 +214,10 @@ export default merge.smart(baseConfig, {
     requiredByDLLConfig
       ? null
       : new webpack.DllReferencePlugin({
-          context: process.cwd(),
-          manifest: require(manifest),
-          sourceType: 'var',
-        }),
+        context: process.cwd(),
+        manifest: require(manifest),
+        sourceType: 'var',
+      }),
 
     new webpack.HotModuleReplacementPlugin(),
 
