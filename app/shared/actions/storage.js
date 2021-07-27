@@ -5,7 +5,7 @@ import { decrypt, encrypt } from './wallet';
 
 const CryptoJS = require('crypto-js');
 
-export function setStorage(data) {
+function setStorage(data) {
   return async (dispatch: () => void) => {
     // flush to disk
     if (window && window.persistor) {
@@ -19,7 +19,7 @@ export function setStorage(data) {
   };
 }
 
-export function removeKeyFromStorageByPublic(password, pubkey) {
+function removeKeyFromStorageByPublic(password, pubkey) {
   return async (dispatch: () => void, getState) => {
     const { storage } = getState();
     if (storage.data) {
@@ -52,7 +52,7 @@ export function removeKeyFromStorageByPublic(password, pubkey) {
   };
 }
 
-export default {
+export {
   removeKeyFromStorageByPublic,
   setStorage
 };

@@ -2,7 +2,7 @@ import * as types from '../../types';
 import * as AccountActions from '../../accounts';
 import eos from '../../helpers/eos';
 
-export function claimgbmrewards() {
+function claimgbmrewards() {
   return async (dispatch: () => void, getState) => {
     const {
       connection,
@@ -70,6 +70,6 @@ export function claimgbmrewards() {
   };
 }
 
-export default {
+export {
   claimgbmrewards
 };

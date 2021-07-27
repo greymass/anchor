@@ -2,7 +2,7 @@ import * as types from '../types';
 import * as AccountActions from '../accounts';
 import eos from '../helpers/eos';
 
-export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
+function delegatebw(delegator, receiver, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -54,7 +54,7 @@ export function delegatebw(delegator, receiver, netAmount, cpuAmount) {
   };
 }
 
-export function delegatebwParams(chainSymbol, delegator, receiver, netAmount, cpuAmount, transferTokens, precision = 4) {
+function delegatebwParams(chainSymbol, delegator, receiver, netAmount, cpuAmount, transferTokens, precision = 4) {
   const stakeNetAmount = parseFloat(netAmount) || 0;
   const stakeCpuAmount = parseFloat(cpuAmount) || 0;
 
@@ -67,6 +67,6 @@ export function delegatebwParams(chainSymbol, delegator, receiver, netAmount, cp
   };
 }
 
-export default {
+export {
   delegatebw
 };

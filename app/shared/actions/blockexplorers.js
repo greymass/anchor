@@ -3,7 +3,7 @@ import sortBy from 'lodash/sortBy';
 import * as types from './types';
 import eos from './helpers/eos';
 
-export function getBlockExplorers() {
+function getBlockExplorers() {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_BLOCKEXPLORERS_PENDING
@@ -200,6 +200,6 @@ export function getBlockExplorers() {
   };
 }
 
-export default {
+export {
   getBlockExplorers
 };

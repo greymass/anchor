@@ -1,18 +1,18 @@
 const { ipcRenderer } = require('electron');
 
-export function removeSession(session) {
+function removeSession(session) {
   return async (dispatch: () => void) => {
     ipcRenderer.send('removeSession', session);
   };
 }
 
-export function clearSessions() {
+function clearSessions() {
   return async (dispatch: () => void) => {
     ipcRenderer.send('clearSessions');
   };
 }
 
-export default {
+export {
   clearSessions,
   removeSession,
 };

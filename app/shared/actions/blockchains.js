@@ -113,7 +113,7 @@ function resyncBlockchains() {
   };
 }
 
-export default {
+export {
   importBlockchainFromBackup,
   pinBlockchain,
   resyncBlockchains,
