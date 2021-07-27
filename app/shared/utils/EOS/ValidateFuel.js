@@ -120,7 +120,7 @@ function validateNoop(modifiedTransaction) {
   }
 }
 
-export {
+export default {
   validateTransaction,
   validateActions,
   determineExpectedActionsLength,

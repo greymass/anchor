@@ -14,7 +14,7 @@ const async = require('async');
 const ecc = require('eosjs-ecc');
 const CryptoJS = require('crypto-js');
 
-function completeConvertToLedger(
+export function completeConvertToLedger(
   account,
   authorization,
   publicKey,
@@ -54,7 +54,7 @@ function completeConvertToLedger(
   };
 }
 
-function duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom) {
+export function duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplicatingFrom) {
   return (dispatch: () => void, getState) => {
     const { wallets } = getState();
     const currentWallet = find(wallets, { chainId: chainDuplicatingFrom, authorization, account });
@@ -67,7 +67,7 @@ function duplicateWallet(account, authorization, chainDuplicatingTo, chainDuplic
   };
 }
 
-function prepareConvertToLedger(
+export function prepareConvertToLedger(
   account,
   authorization,
   path,
@@ -90,7 +90,7 @@ function prepareConvertToLedger(
   };
 }
 
-function prepareConvertToLedgerAbort(
+export function prepareConvertToLedgerAbort(
   account,
   authorization
 ) {
@@ -109,7 +109,7 @@ function prepareConvertToLedgerAbort(
   };
 }
 
-function importWalletFromBackup(wallet, settings = {}) {
+export function importWalletFromBackup(wallet, settings = {}) {
   return (dispatch: () => void, getState) => {
     let mode = wallet.mode || 'watch';
     if (wallet.path) mode = 'ledger';
@@ -147,7 +147,7 @@ function importWalletFromBackup(wallet, settings = {}) {
   };
 }
 
-function importPubkeyStorage(pubkey, path) {
+export function importPubkeyStorage(pubkey, path) {
   return (dispatch: () => void, getState) => {
     const { storage } = getState();
     // Add the pubkey to the keys array
@@ -167,7 +167,7 @@ function importPubkeyStorage(pubkey, path) {
 }
 
 
-function importKeyStorage(
+export function importKeyStorage(
   password = false,
   key = false,
   pubkey = undefined,
@@ -205,7 +205,7 @@ function importKeyStorage(
   };
 }
 
-function importKeypairStorage(
+export function importKeypairStorage(
   password = false,
   keypairs = [],
 ) {
@@ -240,7 +240,7 @@ function importKeypairStorage(
   };
 }
 
-function importWallet(
+export function importWallet(
   chainId,
   account,
   authorization = false,
@@ -317,7 +317,7 @@ function importWallet(
   };
 }
 
-function importWalletPending(data) {
+export function importWalletPending(data) {
   return (dispatch: () => void, getState) => {
     // If no wallet is currently selected, select this one
     const { settings } = getState();
@@ -338,7 +338,7 @@ function importWalletPending(data) {
   };
 }
 
-function importWalletAuth(
+export function importWalletAuth(
   chainId,
   account,
   authorization,
@@ -358,7 +358,7 @@ function importWalletAuth(
   });
 }
 
-function importWallets(
+export function importWallets(
   chainId,
   accounts,
   authorization = false,
@@ -371,7 +371,7 @@ function importWallets(
       dispatch(importWallet(chainId, account, authorization, key, password, mode)));
 }
 
-function removeWallet(chainId, account, authorization) {
+export function removeWallet(chainId, account, authorization) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.REMOVE_WALLET,
@@ -384,7 +384,7 @@ function removeWallet(chainId, account, authorization) {
   };
 }
 
-function useWallet(chainId, account, authorization) {
+export function useWallet(chainId, account, authorization) {
   return async (dispatch: () => void, getState) => {
     const {
       auths, connection, wallet, wallets
@@ -449,7 +449,7 @@ function useWallet(chainId, account, authorization) {
 }
 
 // Upgrades a legacy hot wallet to the newest version
-function upgradeWallet(chainId, account, authorization, password = false, swap = false) {
+export function upgradeWallet(chainId, account, authorization, password = false, swap = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -495,7 +495,7 @@ function upgradeWallet(chainId, account, authorization, password = false, swap =
 }
 
 // Upgrades a legacy watch wallet (with no authorization) to a watch wallet with set authorization
-function upgradeWatchWallet(chainId, account, authorization, swap = false) {
+export function upgradeWatchWallet(chainId, account, authorization, swap = false) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -566,7 +566,7 @@ async function upgradeV1Wallet(wallet, password, dispatch) {
   };
 }
 
-function upgradeV1Wallets(wallets, password) {
+export function upgradeV1Wallets(wallets, password) {
   return async (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_V1UPGRADE_PENDING,
@@ -594,7 +594,7 @@ function upgradeV1Wallets(wallets, password) {
   };
 }
 
-export {
+export default {
   completeConvertToLedger,
   importKeyStorage,
   importKeypairStorage,

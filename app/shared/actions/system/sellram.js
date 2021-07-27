@@ -3,7 +3,7 @@ import * as types from '../types';
 import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
-function sellram(amount) {
+export function sellram(amount) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -55,6 +55,6 @@ function sellram(amount) {
   };
 }
 
-export {
+export default {
   sellram
 };

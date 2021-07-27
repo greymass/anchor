@@ -1,7 +1,7 @@
 import eos from './helpers/eos';
 import * as types from './types';
 
-function getREXRates() {
+export function getREXRates() {
   return (dispatch: () => void, getState) => {
     dispatch({ type: types.SYSTEM_GETTABLE_REQUEST });
     const { connection } = getState();
@@ -32,13 +32,13 @@ function getREXRates() {
   };
 }
 
-function getCPULoans() {
+export function getCPULoans() {
   return (dispatch: () => void, getState) => {
     getLoans('cpuloan', dispatch, getState);
   };
 }
 
-function getNETLoans() {
+export function getNETLoans() {
   return (dispatch: () => void, getState) => {
     getLoans('netloan', dispatch, getState);
   };
@@ -74,7 +74,7 @@ function getLoans(tableName, dispatch, getState) {
   }));
 }
 
-export {
+export default {
   getCPULoans,
   getNETLoans,
   getREXRates,

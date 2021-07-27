@@ -8,7 +8,7 @@ import EOSContract from '../../../utils/EOS/Contract';
 import eos from '../../helpers/eos';
 import { getCurrencyBalance } from '../../accounts';
 
-function beoswithdraw(from, to, quantity, storeName) {
+export function beoswithdraw(from, to, quantity, storeName) {
   return (dispatch: () => void, getState) => {
     const {
       connection: { supportedContracts }
@@ -71,4 +71,4 @@ function beoswithdraw(from, to, quantity, storeName) {
   };
 }
 
-export { beoswithdraw };
+export default { beoswithdraw };

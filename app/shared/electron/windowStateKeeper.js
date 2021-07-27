@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce';
 import { setSetting } from '../actions/settings';
 
-function windowStateKeeper(store, scope) {
+export function windowStateKeeper(store, scope) {
   let window;
   let windowState;
 
@@ -50,6 +50,6 @@ function windowStateKeeper(store, scope) {
   });
 }
 
-export {
+export default {
   windowStateKeeper
 };

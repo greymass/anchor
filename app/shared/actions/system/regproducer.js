@@ -3,7 +3,7 @@ import * as types from '../types';
 import eos from '../helpers/eos';
 import { delegatebwParams } from './delegatebw';
 
-function regproducer(producerKey, producerUrl, producerLocation = 0) {
+export function regproducer(producerKey, producerUrl, producerLocation = 0) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -54,6 +54,6 @@ function regproducer(producerKey, producerUrl, producerLocation = 0) {
   };
 }
 
-export {
+export default {
   regproducer
 };

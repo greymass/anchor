@@ -33,4 +33,4 @@ const createTray = (resourcePath) => {
   return menu;
 };
 
-export { createTray };
+export default { createTray };

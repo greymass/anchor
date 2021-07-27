@@ -56,4 +56,4 @@ const createInterface = (resourcePath, route = '/', closable = true, store) => {
   return ui;
 };
 
-export { createInterface };
+export default { createInterface };

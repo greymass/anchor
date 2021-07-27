@@ -11,7 +11,7 @@ const P2_CHAINCODE = 0x01;
 const P1_FIRST = 0x00;
 const P1_MORE = 0x80;
 
-function foreach<T, A>(
+export function foreach<T, A>(
   arr: T[],
   callback: (T, number) => Promise<A>
 ): Promise<A[]> {

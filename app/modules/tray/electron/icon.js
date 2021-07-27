@@ -61,4 +61,4 @@ const getWindowPosition = (menu, tray) => {
   return { x, y };
 };
 
-export { createTrayIcon };
+export default { createTrayIcon };

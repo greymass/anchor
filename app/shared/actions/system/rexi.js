@@ -4,7 +4,7 @@ import { getTableByBounds } from '../table';
 import { getCPULoans, getNETLoans } from '../rex';
 import eos from '../helpers/eos';
 
-function buyrex(amount) {
+export function buyrex(amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -15,7 +15,7 @@ function buyrex(amount) {
   };
 }
 
-function sellrex(amount) {
+export function sellrex(amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -26,7 +26,7 @@ function sellrex(amount) {
   };
 }
 
-function depositrex(amount) {
+export function depositrex(amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -37,7 +37,7 @@ function depositrex(amount) {
   };
 }
 
-function withdrawrex(amount) {
+export function withdrawrex(amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -48,7 +48,7 @@ function withdrawrex(amount) {
   };
 }
 
-function rentcpu(amount) {
+export function rentcpu(amount) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const data = {
@@ -61,7 +61,7 @@ function rentcpu(amount) {
   };
 }
 
-function rentnet(amount) {
+export function rentnet(amount) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const data = {
@@ -74,7 +74,7 @@ function rentnet(amount) {
   };
 }
 
-function unstaketorex(amount, type) {
+export function unstaketorex(amount, type) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -87,7 +87,7 @@ function unstaketorex(amount, type) {
   };
 }
 
-function mvtosavings(amount) {
+export function mvtosavings(amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -98,7 +98,7 @@ function mvtosavings(amount) {
   };
 }
 
-function mvfrsavings(amount) {
+export function mvfrsavings(amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -108,7 +108,7 @@ function mvfrsavings(amount) {
     rexAction('mvfrsavings', 'MVFRSAVINGSREX', data, dispatch, getState);
   };
 }
-function fundcpuloan(loanId, payment) {
+export function fundcpuloan(loanId, payment) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -120,7 +120,7 @@ function fundcpuloan(loanId, payment) {
   };
 }
 
-function fundnetloan(loanId, payment) {
+export function fundnetloan(loanId, payment) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -132,7 +132,7 @@ function fundnetloan(loanId, payment) {
   };
 }
 
-function defundcpuloan(loanId, amount) {
+export function defundcpuloan(loanId, amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -144,7 +144,7 @@ function defundcpuloan(loanId, amount) {
   };
 }
 
-function defundnetloan(loanId, amount) {
+export function defundnetloan(loanId, amount) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const data = {
@@ -207,7 +207,7 @@ async function rexAction(actionName, actionVariable, data, dispatch, getState) {
   });
 }
 
-export {
+export default {
   buyrex,
   depositrex,
   fundcpuloan,
