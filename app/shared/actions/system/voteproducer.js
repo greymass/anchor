@@ -38,7 +38,7 @@ async function getAction(connection, account, authorization, producers, proxy, n
   return action;
 }
 
-function voteproducers(producers = [], proxy = '') {
+export function voteproducers(producers = [], proxy = '') {
   return async (dispatch: () => void, getState) => {
     const {
       connection,
@@ -93,6 +93,6 @@ function voteproducers(producers = [], proxy = '') {
   };
 }
 
-export {
+export default {
   voteproducers
 };

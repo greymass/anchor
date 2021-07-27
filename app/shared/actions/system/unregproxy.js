@@ -4,7 +4,7 @@ import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 import { undelegatebwParams } from './undelegatebw';
 
-function unregproxy() {
+export function unregproxy() {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -56,6 +56,6 @@ function unregproxy() {
   };
 }
 
-export {
+export default {
   unregproxy
 };

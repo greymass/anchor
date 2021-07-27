@@ -5,7 +5,7 @@ import eos from '../helpers/eos';
 import { setSetting } from '../settings';
 import { getBidForName } from '../namebids';
 
-function bidname(data) {
+export function bidname(data) {
   return (dispatch: () => void, getState) => {
     const {
       settings,
@@ -58,6 +58,6 @@ function bidname(data) {
   };
 }
 
-export {
+export default {
   bidname
 };

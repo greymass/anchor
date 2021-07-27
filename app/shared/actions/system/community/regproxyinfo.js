@@ -3,7 +3,7 @@ import * as types from '../../types';
 import { getTable } from '../../table';
 import eos from '../../helpers/eos';
 
-function setregproxyinfo(data) {
+export function setregproxyinfo(data) {
   return (dispatch: () => void, getState) => {
     const {
       settings,
@@ -44,7 +44,7 @@ function setregproxyinfo(data) {
   };
 }
 
-function removeregproxyinfo() {
+export function removeregproxyinfo() {
   return (dispatch: () => void, getState) => {
     const {
       settings,
@@ -81,7 +81,7 @@ function removeregproxyinfo() {
   };
 }
 
-export {
+export default {
   removeregproxyinfo,
   setregproxyinfo
 };

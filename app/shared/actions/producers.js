@@ -4,7 +4,7 @@ import { get } from 'dot-prop-immutable';
 import eos from './helpers/eos';
 import * as types from './types';
 
-function clearProducerCache() {
+export function clearProducerCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.CLEAR_PRODUCER_CACHE
@@ -12,7 +12,7 @@ function clearProducerCache() {
   };
 }
 
-function clearProducerInfo() {
+export function clearProducerInfo() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_PRODUCERJSON_CLEAR
@@ -20,7 +20,7 @@ function clearProducerInfo() {
   };
 }
 
-function getProducers(previous = false) {
+export function getProducers(previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_PRODUCERS_REQUEST
@@ -127,7 +127,7 @@ function calcVoteWeight(voteDecayPeriod) {
   return 2 ** weight;
 }
 
-function getProducersInfo(previous = false) {
+export function getProducersInfo(previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_PRODUCERSJSON_PENDING
@@ -172,7 +172,7 @@ function getProducersInfo(previous = false) {
   };
 }
 
-function setUnregisteredProducers() {
+export function setUnregisteredProducers() {
   return (dispatch: () => void, getState) => {
     const { accounts, producers, settings } = getState();
     const { list } = producers;
@@ -200,7 +200,7 @@ function setUnregisteredProducers() {
   };
 }
 
-function getProducerInfo(producer) {
+export function getProducerInfo(producer) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_PRODUCERJSON_PENDING,
@@ -240,7 +240,7 @@ function getProducerInfo(producer) {
   };
 }
 
-export {
+export default {
   clearProducerInfo,
   getProducerInfo,
   getProducers,

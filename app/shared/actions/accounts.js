@@ -10,7 +10,7 @@ import EOSHandler from '../utils/EOS/Handler';
 
 const ecc = require('eosjs-ecc');
 
-function clearAccountCache() {
+export function clearAccountCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.CLEAR_ACCOUNT_CACHE
@@ -18,7 +18,7 @@ function clearAccountCache() {
   };
 }
 
-function clearActionsCache() {
+export function clearActionsCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.CLEAR_ACCOUNT_ACTIONS_CACHE
@@ -26,7 +26,7 @@ function clearActionsCache() {
   };
 }
 
-function clearBalanceCache() {
+export function clearBalanceCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.CLEAR_BALANCE_CACHE
@@ -34,12 +34,12 @@ function clearBalanceCache() {
   };
 }
 
-function refreshAccountBalances(account, requestedTokens) {
+export function refreshAccountBalances(account, requestedTokens) {
   return (dispatch: () => void) =>
     dispatch(getCurrencyBalance(account, requestedTokens));
 }
 
-function claimUnstaked(owner) {
+export function claimUnstaked(owner) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -86,7 +86,7 @@ function claimUnstaked(owner) {
   };
 }
 
-function getContractHash(accountName) {
+export function getContractHash(accountName) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_HAS_CONTRACT_PENDING,
@@ -118,7 +118,7 @@ function getContractHash(accountName) {
   };
 }
 
-function checkAccountAvailability(account = '') {
+export function checkAccountAvailability(account = '') {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_AVAILABLE_PENDING,
@@ -154,7 +154,7 @@ function checkAccountAvailability(account = '') {
   };
 }
 
-function checkAccountExists(account = '', node) {
+export function checkAccountExists(account = '', node) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_EXISTS_PENDING,
@@ -186,7 +186,7 @@ function checkAccountExists(account = '', node) {
   };
 }
 
-function getAccount(account = '', onlyAccount = true) {
+export function getAccount(account = '', onlyAccount = true) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GET_ACCOUNT_PENDING,
@@ -249,14 +249,14 @@ function getAccount(account = '', onlyAccount = true) {
   };
 }
 
-function getDelegatedBalances(account) {
+export function getDelegatedBalances(account) {
   return (dispatch: () => void, getState) => {
     const { connection } = getState();
     dispatch(getTable(connection.systemContract, account, 'delband'));
   };
 }
 
-function processLoadedAccount(chainId, account, results, onlyAccount = true) {
+export function processLoadedAccount(chainId, account, results, onlyAccount = true) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -299,7 +299,7 @@ function processLoadedAccount(chainId, account, results, onlyAccount = true) {
   };
 }
 
-function getAccounts(accounts = [], onlyAccount = true) {
+export function getAccounts(accounts = [], onlyAccount = true) {
   return async (dispatch: () => void, getState) => {
     const { connection, features } = getState();
     const { endpoints } = features;
@@ -323,7 +323,7 @@ function getAccounts(accounts = [], onlyAccount = true) {
   };
 }
 
-function getActions(account, start, offset) {
+export function getActions(account, start, offset) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -407,7 +407,7 @@ function getSelectedTokens(connection, requestedTokens, settings) {
   return selectedTokens;
 }
 
-function getCurrencyBalance(account, requestedTokens = false) {
+export function getCurrencyBalance(account, requestedTokens = false) {
   return async (dispatch: () => void, getState) => {
     const {
       connection,
@@ -581,7 +581,7 @@ function formatBalances(balances, forcedSymbol = false) {
   return formatted;
 }
 
-function getAccountByKey(key) {
+export function getAccountByKey(key) {
   return async (dispatch: () => void, getState) => {
     const {
       connection,
@@ -684,7 +684,7 @@ function getAccountByKey(key) {
   };
 }
 
-function getAccountByKeys(keys) {
+export function getAccountByKeys(keys) {
   return async (dispatch: () => void, getState) => {
     // Prevent private keys from submitting if they somehow were saved as a public key
     const filtered = keys.filter((key) => !ecc.isValidPrivate(key));
@@ -743,7 +743,7 @@ function getAccountByKeys(keys) {
   };
 }
 
-function getControlledAccounts(accounts) {
+export function getControlledAccounts(accounts) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -761,7 +761,7 @@ function getControlledAccounts(accounts) {
   };
 }
 
-function clearAccountByKey() {
+export function clearAccountByKey() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_BY_KEY_CLEAR
@@ -769,7 +769,7 @@ function clearAccountByKey() {
   };
 }
 
-function syncAccounts() {
+export function syncAccounts() {
   return (dispatch: () => void, getState) => {
     const {
       accounts,
@@ -805,7 +805,7 @@ function syncAccounts() {
   };
 }
 
-export {
+export default {
   checkAccountAvailability,
   checkAccountExists,
   clearAccountByKey,

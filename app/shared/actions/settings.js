@@ -6,7 +6,7 @@ import { removeWallet } from './wallets';
 
 const { ipcRenderer } = require('electron');
 
-function clearSettingsCache() {
+export function clearSettingsCache() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_ALL_STATES
@@ -14,7 +14,7 @@ function clearSettingsCache() {
   };
 }
 
-function clearSettingsInvalid() {
+export function clearSettingsInvalid() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_INVALID_SETTINGS
@@ -22,7 +22,7 @@ function clearSettingsInvalid() {
   };
 }
 
-function resetApp() {
+export function resetApp() {
   return (dispatch: () => void) => {
     dispatch(clearSettingsCache());
     dispatch(clearAccountCache());
@@ -36,7 +36,7 @@ function resetApp() {
   };
 }
 
-function setSetting(key, value, chainId = false) {
+export function setSetting(key, value, chainId = false) {
   return (dispatch: () => void) => {
     const payload = { [key]: value };
     if (chainId) {
@@ -49,7 +49,7 @@ function setSetting(key, value, chainId = false) {
   };
 }
 
-function setSettings(values) {
+export function setSettings(values) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SET_SETTING,
@@ -58,7 +58,7 @@ function setSettings(values) {
   };
 }
 
-function setSettingWithValidation(key, value) {
+export function setSettingWithValidation(key, value) {
   return (dispatch: () => void) => {
     switch (key) {
       case 'account': {
@@ -86,7 +86,7 @@ function setSettingWithValidation(key, value) {
   };
 }
 
-function addCustomToken(contract, symbol) {
+export function addCustomToken(contract, symbol) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const { customTokens } = settings;
@@ -107,7 +107,7 @@ function addCustomToken(contract, symbol) {
   };
 }
 
-function addCustomTokenBeos(contract, symbol) {
+export function addCustomTokenBeos(contract, symbol) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const { customTokens } = settings;
@@ -127,7 +127,7 @@ function addCustomTokenBeos(contract, symbol) {
   };
 }
 
-function removeCustomToken(contract, symbol) {
+export function removeCustomToken(contract, symbol) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const { customTokens } = settings;
@@ -149,7 +149,7 @@ function removeCustomToken(contract, symbol) {
   };
 }
 
-function setRecentContractAction(contractName, actionName) {
+export function setRecentContractAction(contractName, actionName) {
   return (dispatch: () => void) => dispatch({
     type: types.SET_RECENT_CONTRACT_ACTION,
     payload: {
@@ -159,7 +159,7 @@ function setRecentContractAction(contractName, actionName) {
   });
 }
 
-export {
+export default {
   addCustomToken,
   clearSettingsCache,
   clearSettingsInvalid,

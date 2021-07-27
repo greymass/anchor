@@ -42,4 +42,4 @@ const configureLocalization = (resourcePath, store) => {
   global.i18n = i18n;
 };
 
-export { configureLocalization };
+export default { configureLocalization };

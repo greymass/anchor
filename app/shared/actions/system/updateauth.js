@@ -53,7 +53,7 @@ async function getAction(
   return action;
 }
 
-function updateauth(
+export function updateauth(
   permission,
   parent,
   auth,
@@ -110,6 +110,6 @@ function updateauth(
   };
 }
 
-export {
+export default {
   updateauth
 };

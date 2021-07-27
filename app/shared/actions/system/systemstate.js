@@ -1,6 +1,6 @@
 import * as types from '../types';
 
-function clearSystemState() {
+export function clearSystemState() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_SYSTEM_STATES
@@ -8,6 +8,6 @@ function clearSystemState() {
   };
 }
 
-export {
+export default {
   clearSystemState,
 };

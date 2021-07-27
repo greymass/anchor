@@ -10,7 +10,7 @@ const { ipcRenderer } = require('electron');
 
 // import eos from './helpers/eos';
 
-function retryWithFee(actionType, request) {
+export function retryWithFee(actionType, request) {
   return async (dispatch: () => void, getState) => {
     const { settings } = getState();
     dispatch({
@@ -35,7 +35,7 @@ function retryWithFee(actionType, request) {
   };
 }
 
-function getFuelQuotaStatus(account = null) {
+export function getFuelQuotaStatus(account = null) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     const used = account || settings.account;
@@ -67,7 +67,7 @@ function getFuelQuotaStatus(account = null) {
 }
 
 
-export {
+export default {
   getFuelQuotaStatus,
   retryWithFee
 };

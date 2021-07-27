@@ -5,7 +5,7 @@ import { getPriceFeed } from './blockchains/eos/delphioracle';
 import { getConstants } from './app';
 import { getGlobals } from './globals';
 
-function sync() {
+export function sync() {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
 
@@ -23,6 +23,6 @@ function sync() {
   };
 }
 
-export {
+export default {
   sync
 };
