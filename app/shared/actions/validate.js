@@ -11,7 +11,7 @@ import eos from './helpers/eos';
 
 const ecc = require('eosjs-ecc');
 
-function validateAccount(account) {
+export function validateAccount(account) {
   return (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_ACCOUNT_PENDING });
     // Prevent private keys from submitting
@@ -64,7 +64,7 @@ function validateAccount(account) {
   };
 }
 
-function validateNode(
+export function validateNode(
   node,
   expectedChainId = false,
   saveAsDefault = false,
@@ -219,7 +219,7 @@ function validateNode(
   };
 }
 
-function validateKey(key) {
+export function validateKey(key) {
   return async (dispatch: () => void, getState) => {
     dispatch({ type: types.VALIDATE_KEY_PENDING });
     const {
@@ -273,7 +273,7 @@ function validateKey(key) {
   };
 }
 
-function clearValidationState() {
+export function clearValidationState() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_VALIDATION_STATES
@@ -281,7 +281,7 @@ function clearValidationState() {
   };
 }
 
-export {
+export default {
   clearValidationState,
   validateAccount,
   validateNode,

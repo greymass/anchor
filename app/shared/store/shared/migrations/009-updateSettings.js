@@ -16,4 +16,4 @@ const update = (settings, defaultChainId) => {
   return newSettings;
 };
 
-export { update };
+export default { update };

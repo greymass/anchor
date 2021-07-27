@@ -4,7 +4,7 @@ import * as types from './types';
 
 import eos from './helpers/eos';
 
-function getGlobals() {
+export function getGlobals() {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GET_GLOBALS_REQUEST
@@ -26,7 +26,7 @@ function getGlobals() {
   };
 }
 
-function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS') {
+export function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS') {
   const account = contractName.toLowerCase();
   const symbol = symbolName.toUpperCase();
   return (dispatch: () => void, getState) => {
@@ -63,7 +63,7 @@ function getCurrencyStats(contractName = 'eosio.token', symbolName = 'EOS') {
   };
 }
 
-function getRamStats() {
+export function getRamStats() {
   return (dispatch: () => void, getState) => {
     const { connection } = getState();
     if (!connection.stakedResources) {
@@ -98,7 +98,7 @@ function getRamStats() {
   };
 }
 
-function getRamPrice() {
+export function getRamPrice() {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_RAMPRICE_PENDING
@@ -128,7 +128,7 @@ function getRamPrice() {
   };
 }
 
-export {
+export default {
   getCurrencyStats,
   getGlobals,
   getRamStats,

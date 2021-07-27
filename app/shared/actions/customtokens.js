@@ -6,7 +6,7 @@ import uniqWith from 'lodash/uniqWith';
 import * as types from './types';
 import eos from './helpers/eos';
 
-function getCustomTokens(previous = false) {
+export function getCustomTokens(previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_CUSTOMTOKENS_PENDING
@@ -71,6 +71,6 @@ function getCustomTokens(previous = false) {
   };
 }
 
-export {
+export default {
   getCustomTokens
 };

@@ -3,7 +3,7 @@ import { Transaction } from '@greymass/eosio';
 import * as types from './types';
 import eos from './helpers/eos';
 
-function buildTransaction(contract, action, account, data) {
+export function buildTransaction(contract, action, account, data) {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -53,7 +53,7 @@ function buildTransaction(contract, action, account, data) {
   };
 }
 
-function broadcastTransaction(tx, actionName = false, actionPayload = {}) {
+export function broadcastTransaction(tx, actionName = false, actionPayload = {}) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -82,7 +82,7 @@ function broadcastTransaction(tx, actionName = false, actionPayload = {}) {
   };
 }
 
-function cancelTransaction() {
+export function cancelTransaction() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.CLEAR_TRANSACTION
@@ -90,7 +90,7 @@ function cancelTransaction() {
   };
 }
 
-function clearTransaction() {
+export function clearTransaction() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.CLEAR_TRANSACTION
@@ -98,7 +98,7 @@ function clearTransaction() {
   };
 }
 
-function setTransaction(data) {
+export function setTransaction(data) {
   const raw = JSON.parse(data);
   const abiDefs = [];
   if (raw.contract) {
@@ -163,7 +163,7 @@ function setTransaction(data) {
   };
 }
 
-function signTransaction(tx, contracts = []) {
+export function signTransaction(tx, contracts = []) {
   return (dispatch: () => void, getState) => {
     const {
       connection
@@ -213,7 +213,7 @@ function signTransaction(tx, contracts = []) {
   };
 }
 
-export {
+export default {
   buildTransaction,
   broadcastTransaction,
   clearTransaction,

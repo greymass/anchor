@@ -21,4 +21,4 @@ const update = (blockchains) => {
   return newBlockchains;
 };
 
-export { update };
+export default { update };

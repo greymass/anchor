@@ -4,7 +4,7 @@ import { httpClient, httpQueue } from '../utils/http/generic';
 
 const { ipcRenderer } = require('electron');
 
-function downloadProgress(progress) {
+export function downloadProgress(progress) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.APP_UPDATE_DOWNLOAD_PROGRESS,
@@ -13,13 +13,13 @@ function downloadProgress(progress) {
   };
 }
 
-const initApp = () => (dispatch: () => void) => {
+export const initApp = () => (dispatch: () => void) => {
   return dispatch({
     type: types.APP_INIT
   });
 };
 
-function getConstants() {
+export function getConstants() {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GETCONSTANTS_PENDING
@@ -75,7 +75,7 @@ function getConstants() {
   };
 }
 
-export {
+export default {
   downloadProgress,
   getConstants,
   initApp
