@@ -6,7 +6,7 @@ import eos from '../helpers/eos';
 
 const defaultContract = 'eosio.forum';
 
-export function getProposals(scope = 'eosio.forum', previous = false) {
+function getProposals(scope = 'eosio.forum', previous = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GOVERNANCE_GET_PROPOSALS_PENDING
@@ -91,7 +91,7 @@ function formatBounds(string, prefix = '0') {
   return `0x${formatted}`;
 }
 
-export function getVoteInfo(scope, account) {
+function getVoteInfo(scope, account) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GOVERNANCE_GET_PROPOSALVOTES_PENDING
@@ -155,7 +155,7 @@ export function getVoteInfo(scope, account) {
   }
 };
 
-export function unvoteProposal(scope, voter, proposal_name) {
+function unvoteProposal(scope, voter, proposal_name) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GOVERNANCE_UNVOTE_PROPOSAL_PENDING
@@ -197,7 +197,7 @@ export function unvoteProposal(scope, voter, proposal_name) {
   };
 }
 
-export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
+function voteProposal(scope, voter, proposal_name, vote, vote_json) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GOVERNANCE_VOTE_PROPOSAL_PENDING
@@ -252,7 +252,7 @@ export function voteProposal(scope, voter, proposal_name, vote, vote_json) {
   };
 }
 
-export default {
+export {
   getProposals,
   unvoteProposal,
   voteProposal

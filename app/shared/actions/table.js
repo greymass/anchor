@@ -4,7 +4,7 @@ import { Api, JsonRpc } from 'eosjs2';
 import * as types from './types';
 import eos from './helpers/eos';
 
-export function getTable(code, scope, table, limit = 1000, index = false, previous = false) {
+function getTable(code, scope, table, limit = 1000, index = false, previous = false) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GETTABLE_REQUEST
@@ -64,7 +64,7 @@ export function getTable(code, scope, table, limit = 1000, index = false, previo
   };
 }
 
-export function getTableByBounds(code, scope, table, lower_bound, upper_bound, limit = 1000, index = false, previous = false) {
+function getTableByBounds(code, scope, table, lower_bound, upper_bound, limit = 1000, index = false, previous = false) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GETTABLEBYBOUNDS_REQUEST
@@ -127,13 +127,13 @@ export function getTableByBounds(code, scope, table, lower_bound, upper_bound, l
   };
 }
 
-export function clearTables() {
+function clearTables() {
   return (dispatch: () => void) => {
     dispatch({ type: types.CLEAR_TABLES });
   };
 }
 
-export default {
+export {
   getTable,
   getTableByBounds,
   clearTables

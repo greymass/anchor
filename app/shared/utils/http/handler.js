@@ -57,4 +57,4 @@ const dfuseToken = async (connection) => {
   }
 };
 
-export default { createHttpHandler };
+export { createHttpHandler };

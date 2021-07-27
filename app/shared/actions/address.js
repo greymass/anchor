@@ -2,7 +2,7 @@ import * as types from './types';
 
 import { createHttpHandler } from '../utils/http/handler';
 
-export function lookupFioNames(wallet) {
+function lookupFioNames(wallet) {
   return async (dispatch: () => void, getState) => {
     const {
       connection
@@ -30,6 +30,6 @@ export function lookupFioNames(wallet) {
   };
 }
 
-export default {
+export {
   lookupFioNames,
 };

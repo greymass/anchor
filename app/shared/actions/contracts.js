@@ -1,7 +1,7 @@
 import * as types from './types';
 import eos from './helpers/eos';
 
-export function getAbi(account) {
+function getAbi(account) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_GETABI_PENDING
@@ -26,6 +26,6 @@ export function getAbi(account) {
   };
 }
 
-export default {
+export {
   getAbi
 };

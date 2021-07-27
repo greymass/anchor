@@ -21,7 +21,7 @@ httpClient.interceptors.response.use((response) => {
   return modified;
 });
 
-export default {
+export {
   httpClient,
   httpQueue
 };
