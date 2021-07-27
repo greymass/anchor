@@ -25,7 +25,7 @@ module.exports = (api) => {
     presets: [
       // @babel/preset-env will automatically target our browserslist targets
       require('@babel/preset-env', {
-        modules: false,
+        modules: 'commonjs',
         debug: true
       }),
       require('@babel/preset-typescript'),
@@ -33,6 +33,7 @@ module.exports = (api) => {
       require('@babel/preset-flow')
     ],
     plugins: [
+      require('babel-plugin-add-module-exports'),
       require('@babel/plugin-transform-modules-commonjs'),
       require('@babel/plugin-proposal-function-bind'),
       ...(development ? developmentPlugins : productionPlugins),
