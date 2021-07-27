@@ -17,7 +17,7 @@ export default merge.smart(baseConfig, {
   target: 'electron-main',
 
   entry: [
-    'babel-polyfill',
+    '@babel/polyfill',
     './app/main/main.dev',
   ],
 

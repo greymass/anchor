@@ -10,12 +10,12 @@
     "url": "https://github.com/greymass"
   },
   "scripts": {
-    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
     "postinstall": "npm run electron-rebuild"
   },
   "license": "MIT",
   "dependencies": {
-    "@ledgerhq/hw-transport-node-hid": "^4.73.4",
-    "babel-runtime": "^6.26.0"
+    "@babel/core": "^7.14.8",
+    "@ledgerhq/hw-transport-node-hid": "^4.73.4"
   }
 }
