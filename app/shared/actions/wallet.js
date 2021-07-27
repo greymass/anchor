@@ -344,6 +344,17 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
             },
             type: types.SET_AUTH
           });
+          dispatch({
+            payload: {
+              account: wallet.account,
+              accountData: account,
+              authorization: wallet.authorization,
+              hash,
+              key,
+              pubkey
+            },
+            type: types.SET_CURRENT_KEY
+          });
           // if a callback was provided for after unlock, call it.
           if (callback) {
             callback();
