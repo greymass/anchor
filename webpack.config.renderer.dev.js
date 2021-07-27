@@ -11,11 +11,11 @@ import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
 import chalk from 'chalk';
-import merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import { spawn, execSync } from 'child_process';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 CheckNodeEnv('development');
 
@@ -33,7 +33,7 @@ if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
   execSync('npm run build-dll');
 }
 
-export default merge.smart(baseConfig, {
+export default merge(baseConfig, {
   devtool: 'eval-source-map',
   mode: 'development',
 
@@ -69,59 +69,57 @@ export default merge.smart(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            plugins: [
-              // Here, we include babel plugins that are only required for the
-              // renderer process. The 'transform-*' plugins must be included
-              // before react-hot-loader/babel
-              '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-transform-classes',
-              'react-hot-loader/babel'
-            ],
-          }
-        }
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [
+                require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
       },
       {
         test: /\.global\.css$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
             loader: 'css-loader',
             options: {
               sourceMap: true,
             },
-          }
-        ]
+          },
+        ],
       },
       {
         test: /^((?!\.global).)*\.css$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
               sourceMap: true,
               importLoaders: 1,
-            }
+            },
           },
-        ]
+        ],
       },
       // SASS support - compile all .global.scss files and pipe it to style.css
       {
         test: /\.global\.(scss|sass)$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
           },
           {
             loader: 'css-loader',
@@ -130,29 +128,34 @@ export default merge.smart(baseConfig, {
             },
           },
           {
-            loader: 'sass-loader'
-          }
-        ]
+            loader: 'sass-loader',
+          },
+        ],
       },
       // SASS support - compile all other .scss files and pipe it to style.css
       {
         test: /^((?!\.global).)*\.(scss|sass)$/,
         use: [
           {
-            loader: 'style-loader'
+            loader: 'style-loader',
+          },
+          {
+            loader: '@teamsupercell/typings-for-css-modules-loader',
           },
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
               sourceMap: true,
               importLoaders: 1,
-            }
+            },
           },
           {
-            loader: 'sass-loader'
-          }
-        ]
+            loader: 'sass-loader',
+          },
+        ],
       },
       // WOFF Font
       {
@@ -162,7 +165,7 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'application/font-woff',
-          }
+          },
         },
       },
       // WOFF2 Font
@@ -173,8 +176,19 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'application/font-woff',
-          }
-        }
+          },
+        },
+      },
+      // OTF Font
+      {
+        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'font/otf',
+          },
+        },
       },
       // TTF Font
       {
@@ -183,9 +197,9 @@ export default merge.smart(baseConfig, {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/octet-stream'
-          }
-        }
+            mimetype: 'application/octet-stream',
+          },
+        },
       },
       // EOT Font
       {
@@ -200,15 +214,15 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'image/svg+xml',
-          }
-        }
+          },
+        },
       },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
         use: 'url-loader',
-      }
-    ]
+      },
+    ],
   },
 
   plugins: [
@@ -244,9 +258,7 @@ export default merge.smart(baseConfig, {
       debug: true
     }),
 
-    new ExtractTextPlugin({
-      filename: '[name].css'
-    }),
+    new ReactRefreshWebpackPlugin(),
   ],
 
   node: {
