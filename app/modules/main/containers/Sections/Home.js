@@ -10,8 +10,8 @@ import {
 } from 'react-router-dom';
 
 import ColdWalletContainer from './ColdWallet';
-import GlobalBlockchainChoose from '.../../../shared/containers/Global/Blockchain/Choose';
-import GlobalBlockchainManage from '.../../../shared/containers/Global/Blockchain/Manage';
+import GlobalBlockchainChoose from '../../../../shared/containers/Global/Blockchain/Choose';
+import GlobalBlockchainManage from '../../../../shared/containers/Global/Blockchain/Manage';
 import HomeAccountsContainer from './Home/Accounts';
 import HomeInitializeContainer from './Home/Initialize';
 import HomePasswordContainer from './Home/Password';
