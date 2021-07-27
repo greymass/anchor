@@ -6,7 +6,7 @@ import { getTableByBounds } from '../table';
 import { getCPULoans, getNETLoans } from '../rex';
 import eos from '../helpers/eos';
 
-function depositrentcpu(amount, rstate, usage) {
+export function depositrentcpu(amount, rstate, usage) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const price = rstate.price_per(usage, amount * 1000);
@@ -25,7 +25,7 @@ function depositrentcpu(amount, rstate, usage) {
   };
 }
 
-function depositrentnet(amount, rstate, usage) {
+export function depositrentnet(amount, rstate, usage) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const price = rstate.price_per(usage, amount * 1000);
@@ -104,7 +104,7 @@ async function rexAction(actionName, actionVariable, data, deposit, dispatch, ge
   }));
 }
 
-export {
+export default {
   depositrentcpu,
   depositrentnet,
 };

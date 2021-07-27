@@ -30,4 +30,4 @@ function configureStore(initialState, resourcePath) {
   return { store, persistor };
 }
 
-export { configureStore };
+export default { configureStore };

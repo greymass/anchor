@@ -3,7 +3,7 @@ import { Asset } from '@greymass/eosio';
 import * as types from '../types';
 import eos from '../helpers/eos';
 
-function powerup(sample, pstate, amount, resource, rentBoth = false) {
+export function powerup(sample, pstate, amount, resource, rentBoth = false) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
 
@@ -85,6 +85,6 @@ function powerup(sample, pstate, amount, resource, rentBoth = false) {
     }));
   };
 }
-export {
+export default {
   powerup,
 };

@@ -34,6 +34,6 @@ export function saveFile(event, data, prefix = 'tx', appendDate = true, ext = 'j
   fs.writeFileSync(fileName, data);
 }
 
-export {
+export default {
   saveFile
 };

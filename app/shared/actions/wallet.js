@@ -9,7 +9,7 @@ import { lookupFioNames } from './address';
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 
-function setWalletKey(data, password, mode = 'hot', existingHash = false, auth = false, chainId = false) {
+export function setWalletKey(data, password, mode = 'hot', existingHash = false, auth = false, chainId = false) {
   return (dispatch: () => void, getState) => {
     const { accounts, connection, settings } = getState();
     let hash = existingHash;
@@ -70,7 +70,7 @@ function setWalletKey(data, password, mode = 'hot', existingHash = false, auth =
   };
 }
 
-function setWalletHash(password) {
+export function setWalletHash(password) {
   return (dispatch: () => void) => {
     const hash = encrypt('VALID', password).toString(CryptoJS.enc.Utf8);
     dispatch({
@@ -80,7 +80,7 @@ function setWalletHash(password) {
   };
 }
 
-function setTemporaryKey(key, authorization = 'active') {
+export function setTemporaryKey(key, authorization = 'active') {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     const pubkey = (key) ? ecc.privateToPublic(key, connection.keyPrefix) : '';
@@ -100,7 +100,7 @@ function setTemporaryKey(key, authorization = 'active') {
   };
 }
 
-function lockWallet() {
+export function lockWallet() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.WALLET_LOCK
@@ -108,7 +108,7 @@ function lockWallet() {
   };
 }
 
-function validateHashPassword(password) {
+export function validateHashPassword(password) {
   return (dispatch: () => void, getState) => {
     const { settings } = getState();
     dispatch({
@@ -138,7 +138,7 @@ function validateHashPassword(password) {
   };
 }
 
-function validateWalletPassword(password, useWallet = false) {
+export function validateWalletPassword(password, useWallet = false) {
   return (dispatch: () => void, getState) => {
     let { wallet } = getState();
     // If a wallet was passed to be used, use that instead of state.
@@ -172,7 +172,7 @@ function validateWalletPassword(password, useWallet = false) {
   };
 }
 
-function unlockWallet(password, useWallet = false, unlockAll = true) {
+export function unlockWallet(password, useWallet = false, unlockAll = true) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -289,7 +289,7 @@ function unlockWallet(password, useWallet = false, unlockAll = true) {
   };
 }
 
-function unlockWalletByAuth(account, authorization, password, chainId = false, callback = false) {
+export function unlockWalletByAuth(account, authorization, password, chainId = false, callback = false) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -368,7 +368,7 @@ function unlockWalletByAuth(account, authorization, password, chainId = false, c
   };
 }
 
-function unlockByKey(pubkey, password) {
+export function unlockByKey(pubkey, password) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -414,7 +414,7 @@ function unlockByKey(pubkey, password) {
   };
 }
 
-function clearWallet() {
+export function clearWallet() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.WALLET_REMOVE
@@ -422,7 +422,7 @@ function clearWallet() {
   };
 }
 
-function setWalletMode(walletMode) {
+export function setWalletMode(walletMode) {
   return (dispatch: () => void) => {
     // Set the wallet mode
     dispatch(setSetting('walletMode', walletMode));
@@ -453,7 +453,7 @@ function setWalletMode(walletMode) {
   };
 }
 
-function encrypt(data, pass, iterations = 4500) {
+export function encrypt(data, pass, iterations = 4500) {
   const keySize = 256;
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
   const key = CryptoJS.PBKDF2(pass, salt, {
@@ -469,7 +469,7 @@ function encrypt(data, pass, iterations = 4500) {
   return salt.toString() + iv.toString() + encrypted.toString();
 }
 
-function decrypt(data, pass, iterations = 4500) {
+export function decrypt(data, pass, iterations = 4500) {
   const keySize = 256;
   const salt = CryptoJS.enc.Hex.parse(data.substr(0, 32));
   const iv = CryptoJS.enc.Hex.parse(data.substr(32, 32));
@@ -486,7 +486,7 @@ function decrypt(data, pass, iterations = 4500) {
   return decrypted;
 }
 
-export {
+export default {
   clearWallet,
   decrypt,
   encrypt,

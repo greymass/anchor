@@ -5,7 +5,7 @@ import * as types from './types';
 import eos from './helpers/eos';
 import { setSetting } from './settings';
 
-function getBidForName(name) {
+export function getBidForName(name) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_NAMEBID_PENDING
@@ -52,7 +52,7 @@ function getBidForName(name) {
   };
 }
 
-function getBidsForAccount(previous = false) {
+export function getBidsForAccount(previous = false) {
   return (dispatch: () => void, getState) => {
     const { connection, settings } = getState();
     let { recentBids } = settings;
@@ -107,7 +107,7 @@ function getBidsForAccount(previous = false) {
   };
 }
 
-export {
+export default {
   getBidForName,
   getBidsForAccount
 };

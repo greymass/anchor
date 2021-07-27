@@ -8,7 +8,7 @@ import { delegatebwParams } from './system/delegatebw';
 
 import EOSContract from '../utils/EOS/Contract';
 
-function createAccount(
+export function createAccount(
   accountName,
   activeKey,
   delegatedBw,
@@ -214,6 +214,6 @@ function createAccount(
   };
 }
 
-export {
+export default {
   createAccount
 };

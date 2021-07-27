@@ -26,4 +26,4 @@ function configureStore(initialState) {
   return { store, persistor };
 }
 
-export { configureStore, history };
+export default { configureStore, history };

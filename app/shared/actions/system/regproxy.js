@@ -3,7 +3,7 @@ import * as types from '../types';
 import { getAccount } from '../accounts';
 import eos from '../helpers/eos';
 
-function regproxy() {
+export function regproxy() {
   return (dispatch: () => void, getState) => {
     const {
       connection,
@@ -56,6 +56,6 @@ function regproxy() {
   };
 }
 
-export {
+export default {
   regproxy
 };
