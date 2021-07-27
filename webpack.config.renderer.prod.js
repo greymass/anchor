@@ -4,32 +4,43 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import merge from 'webpack-merge';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import { merge } from 'webpack-merge';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import DeleteSourceMaps from './internals/scripts/DeleteSourceMaps';
 
 CheckNodeEnv('production');
+DeleteSourceMaps();
 
-export default merge.smart(baseConfig, {
-  devtool: 'source-map',
+const devtoolsConfig = process.env.DEBUG_PROD === 'true' ? {
+  devtool: 'source-map'
+} : {};
+
+export default merge(baseConfig, {
+  ...devtoolsConfig,
+
   mode: 'production',
 
   target: 'electron-renderer',
 
   entry: {
     basic: [
-      '@babel/polyfill',
+      'core-js',
+      'regenerator-runtime/runtime',
       path.join(__dirname, 'app/modules/basic/index'),
     ],
     handler: [
-      '@babel/polyfill',
+      'core-js',
+      'regenerator-runtime/runtime',
       path.join(__dirname, 'app/modules/handler/index'),
     ],
     main: [
-      '@babel/polyfill',
+      'core-js',
+      'regenerator-runtime/runtime',
       path.join(__dirname, 'app/modules/main/index'),
     ],
   },
@@ -43,62 +54,19 @@ export default merge.smart(baseConfig, {
 
   module: {
     rules: [
-      // Extract all .global.css to style.css as is
       {
-        test: /\.global\.css$/,
-        use: ExtractTextPlugin.extract({
-          publicPath: './',
-          use: {
-            loader: 'css-loader',
-          },
-          fallback: 'style-loader',
-        })
-      },
-      // Pipe other styles through css modules and append to style.css
-      {
-        test: /^((?!\.global).)*\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-            }
-          }
-        }),
-      },
-      // Add SASS support  - compile all .global.scss files and pipe it to style.css
-      {
-        test: /\.global\.(scss|sass)$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-              }
-            },
-            {
-              loader: 'sass-loader'
-            }
-          ],
-          fallback: 'style-loader',
-        })
-      },
-      // Add SASS support  - compile all other .scss files and pipe it to style.css
-      {
-        test: /^((?!\.global).)*\.(scss|sass)$/,
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-            }
-          },
+        test: /.s?css$/,
+        use: [
           {
-            loader: 'sass-loader'
-          }]
-        }),
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // `./dist` can't be inerhited for publicPath for styles. Otherwise generated paths will be ./dist/dist
+              publicPath: './',
+            },
+          },
+          'css-loader',
+          'sass-loader'
+        ],
       },
       // WOFF Font
       {
@@ -108,7 +76,7 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'application/font-woff',
-          }
+          },
         },
       },
       // WOFF2 Font
@@ -119,8 +87,19 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'application/font-woff',
-          }
-        }
+          },
+        },
+      },
+      // OTF Font
+      {
+        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'font/otf',
+          },
+        },
       },
       // TTF Font
       {
@@ -129,9 +108,9 @@ export default merge.smart(baseConfig, {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/octet-stream'
-          }
-        }
+            mimetype: 'application/octet-stream',
+          },
+        },
       },
       // EOT Font
       {
@@ -146,15 +125,26 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'image/svg+xml',
-          }
-        }
+          },
+        },
       },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
         use: 'url-loader',
-      }
-    ]
+      },
+    ],
+  },
+
+  optimization: {
+    minimize: true,
+    minimizer:
+      [
+        new TerserPlugin({
+          parallel: true,
+        }),
+        new CssMinimizerPlugin(),
+      ],
   },
 
   plugins: [
@@ -171,7 +161,9 @@ export default merge.smart(baseConfig, {
       NODE_ENV: 'production'
     }),
 
-    new ExtractTextPlugin('style.css'),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
