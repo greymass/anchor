@@ -10,7 +10,7 @@ import * as AccountActions from './accounts';
 import * as TableActions from './table';
 import eos from './helpers/eos';
 
-export function setStake(accountName, netAmount, cpuAmount) {
+function setStake(accountName, netAmount, cpuAmount) {
   return (dispatch: () => void, getState) => {
     const {
       accounts,
@@ -111,7 +111,7 @@ export function setStake(accountName, netAmount, cpuAmount) {
   };
 }
 
-export function resetStakeForm() {
+function resetStakeForm() {
   return (dispatch: () => void) => {
     dispatch({
       type: types.RESET_SYSTEM_STATES
@@ -156,7 +156,7 @@ function getStakeChanges(chainSymbol, currentAccount, accountName, delegations, 
   };
 }
 
-export default {
+export {
   resetStakeForm,
   setStake
 };

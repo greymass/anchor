@@ -2,7 +2,7 @@ import { find } from 'lodash';
 import { httpQueue, httpClient } from '../utils/http/generic';
 import * as types from './types';
 
-export function pingNode(endpoint, data = {}, path = '/v1/chain/get_account') {
+function pingNode(endpoint, data = {}, path = '/v1/chain/get_account') {
   return (dispatch: () => void, getState) => {
     const { app } = getState();
     const { host, producer } = endpoint;
@@ -42,7 +42,7 @@ export function pingNode(endpoint, data = {}, path = '/v1/chain/get_account') {
   };
 }
 
-export function pingNodes(endpoints, data = {}, path = '/v1/chain/get_account') {
+function pingNodes(endpoints, data = {}, path = '/v1/chain/get_account') {
   return (dispatch: () => void, getState) => {
     const { ping } = getState();
     const { results } = ping;
@@ -58,7 +58,7 @@ export function pingNodes(endpoints, data = {}, path = '/v1/chain/get_account') 
   };
 }
 
-export function pingSetEstimatedRequests(estimated) {
+function pingSetEstimatedRequests(estimated) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.UTILS_PING_SET_ESTIMATED,
@@ -69,7 +69,7 @@ export function pingSetEstimatedRequests(estimated) {
   };
 }
 
-export function pingStop() {
+function pingStop() {
   return (dispatch: () => void) => {
     httpQueue.clear();
     dispatch({
@@ -78,7 +78,7 @@ export function pingStop() {
   };
 }
 
-export function pingReset() {
+function pingReset() {
   return (dispatch: () => void) => {
     httpQueue.clear();
     dispatch({
@@ -102,7 +102,7 @@ function shuffleArray(array) {
   return shuffled;
 }
 
-export default {
+export {
   pingNode,
   pingNodes,
   pingReset,

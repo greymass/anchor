@@ -12,7 +12,7 @@ interface PendingAccountCreate {
   request: string
 }
 
-export function addPendingAccountCreate(payload: PendingAccountCreate) {
+function addPendingAccountCreate(payload: PendingAccountCreate) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_PENDING_ACCOUNT_CREATE,
@@ -21,7 +21,7 @@ export function addPendingAccountCreate(payload: PendingAccountCreate) {
   };
 }
 
-export function removePendingAccountCreate(payload: PendingAccountCreate) {
+function removePendingAccountCreate(payload: PendingAccountCreate) {
   return (dispatch: () => void) => {
     dispatch({
       type: types.SYSTEM_PENDING_ACCOUNT_REMOVE,
@@ -30,7 +30,7 @@ export function removePendingAccountCreate(payload: PendingAccountCreate) {
   };
 }
 
-export default {
+export {
   addPendingAccountCreate,
   removePendingAccountCreate,
 };

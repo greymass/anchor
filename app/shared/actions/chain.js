@@ -2,7 +2,7 @@ import * as types from './types';
 
 import eos from './helpers/eos';
 
-export function getInfo() {
+function getInfo() {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.GET_CHAIN_INFO_REQUEST
@@ -33,7 +33,7 @@ export function getInfo() {
  * Method to get distribution info
  * Currently only for BEOS
  */
-export function getDistributionInfo() {
+function getDistributionInfo() {
   return (dispatch: () => void, getState) => {
     const { connection, chain: { head_block_num } } = getState();
 
@@ -62,6 +62,6 @@ export function getDistributionInfo() {
   }
 }
 
-export default {
+export {
   getInfo
 };

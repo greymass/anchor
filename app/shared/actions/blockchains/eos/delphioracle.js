@@ -3,7 +3,7 @@ import eos from '../../helpers/eos';
 
 const defaultContract = 'delphioracle';
 
-export function getPriceFeed(chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906') {
+function getPriceFeed(chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906') {
   let scope = 'eosusd';
   switch (chainId) {
     case '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': {
@@ -47,6 +47,6 @@ export function getPriceFeed(chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e
   };
 }
 
-export default {
+export {
   getPriceFeed,
 };

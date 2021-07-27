@@ -5,7 +5,7 @@ import { getTable } from '../table';
 const blackListedMethodAttributes = ['to', 'from'];
 const whiteListedMethods = ['claim', 'open', 'signup'];
 
-export function claimairgrab(airgrab) {
+function claimairgrab(airgrab) {
   return (dispatch: () => void, getState) => {
     const {
       settings,
@@ -74,6 +74,6 @@ export function claimairgrab(airgrab) {
   };
 }
 
-export default {
+export {
   claimairgrab
 };

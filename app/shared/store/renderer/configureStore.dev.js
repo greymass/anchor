@@ -52,4 +52,4 @@ const configureStore = (initialState) => {
   return { store, persistor };
 };
 
-export default { configureStore, history };
+export { configureStore, history };

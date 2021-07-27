@@ -40,7 +40,7 @@ async function getAction(contractAccount, account, authorization, from, to, quan
   return action;
 }
 
-export function transfer(from, to, quantity, memo, symbol) {
+function transfer(from, to, quantity, memo, symbol) {
   return async (dispatch: () => void, getState) => {
     const {
       balances,
@@ -106,7 +106,7 @@ export function transfer(from, to, quantity, memo, symbol) {
 }
 
 
-export function transferSetAsset(amount, asset) {
+function transferSetAsset(amount, asset) {
   return async (dispatch: () => void) => dispatch({
     payload: { data: { amount, asset } },
     type: types.SYSTEM_TRANSFER_SET_ASSET_SUCCESS
@@ -114,7 +114,7 @@ export function transferSetAsset(amount, asset) {
 }
 
 
-export default {
+export {
   transfer,
   transferSetAsset,
 };

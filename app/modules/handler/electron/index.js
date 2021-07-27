@@ -74,4 +74,4 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
   return ui;
 };
 
-export default { createProtocolHandlers };
+export { createProtocolHandlers };
