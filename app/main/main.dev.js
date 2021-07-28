@@ -220,6 +220,15 @@ const initManager = (route = '/', closable = true) => {
   mainWindow.on('close', () => {
     mainWindow = null;
   });
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    log.info('development mode enabled');
+    mainWindow.webContents.on('did-frame-finish-load', async () => {
+      mainWindow.webContents.once('devtools-opened', () => {
+        mainWindow.focus();
+      });
+      mainWindow.webContents.openDevTools();
+    });
+  }
 };
 
 const initMenu = (settings) => {
@@ -259,7 +268,7 @@ const initSessionManager = async () => {
     // Create new Session Manager
     sHandler = new SessionManager(store, pHandler);
     // Connect the session manager
-    await sHandler.manager.connect();
+    sHandler.manager.connect();
     // Release the lock
     initializingSessionManager = false;
   }
