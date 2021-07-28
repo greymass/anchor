@@ -37,19 +37,6 @@ if (process.mainModule.filename.indexOf('app.asar') === -1) {
 
 const { store } = configureStore({}, resourcePath);
 
-const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = [
-    'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
-  ];
-
-  return Promise
-    .all(extensions.map(name => installer.default(installer[name], forceDownload)))
-    .catch(console.log);
-};
-
 // bind all console.log to electron-log
 const cl = console.log.bind(console);
 console.log = (...args) => {
@@ -144,11 +131,6 @@ if (!lock) {
 app.on('ready', async () => {
   log.info('anchor: ready');
   const { settings } = store.getState();
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-    log.info('development mode enabled');
-    // install devtool extensions
-    await installExtensions();
-  }
 
   // Initialize the state of signing requests
   if (settings.allowSigningRequests) {
