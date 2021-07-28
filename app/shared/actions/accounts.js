@@ -1,4 +1,4 @@
-import { chunk, difference, find, forEach, intersection, map, orderBy, pick, reduce, sortBy, uniq } from 'lodash';
+import { chunk, difference, forEach, map, pick, sortBy, uniq } from 'lodash';
 import { Asset } from '@greymass/eosio';
 
 import * as types from './types';
@@ -201,11 +201,18 @@ export function getAccount(account = '', onlyAccount = true) {
     const {
       connection
     } = getState();
-    if (account && (connection.httpEndpoint || (connection.httpEndpoint && connection.httpEndpoint.length !== 0))) {
+    if (
+      account
+      && (
+        connection.httpEndpoint
+        || (connection.httpEndpoint && connection.httpEndpoint.length !== 0)
+      )
+    ) {
       eos(connection, false, true).rpc.get_account(account)
         .then(async (response) => {
           if (!('core_liquid_balance' in response)) {
-            const balance = await eos(connection, false, true).rpc.get_currency_balance(connection.tokenContract, account, connection.chainSymbol);
+            const balance = await eos(connection, false, true)
+              .rpc.get_currency_balance(connection.tokenContract, account, connection.chainSymbol);
             if (balance.length) {
               response.core_liquid_balance = balance[0];
             } else {
@@ -808,13 +815,17 @@ export function syncAccounts() {
 export default {
   checkAccountAvailability,
   checkAccountExists,
+  claimUnstaked,
   clearAccountByKey,
   clearAccountCache,
   clearActionsCache,
+  clearBalanceCache,
   getAccount,
   getAccountByKey,
   getAccountByKeys,
+  getAccounts,
   getActions,
+  getContractHash,
   getCurrencyBalance,
   syncAccounts,
   refreshAccountBalances
