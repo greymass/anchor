@@ -130,6 +130,8 @@ if (!lock) {
 // main start
 app.on('ready', async () => {
   log.info('anchor: ready');
+  app.allowRendererProcessReuse = false;
+
   const { settings } = store.getState();
 
   // Initialize the state of signing requests
@@ -403,17 +405,6 @@ function setBackgroundMode(mode) {
 
 ipcMain.on('setBackgroundMode', (e, mode) => {
   setBackgroundMode(mode);
-});
-
-let networkStatus = 'online';
-ipcMain.on('networkStatusChanged', (e, status) => {
-  if (status === 'online' && networkStatus === 'offline') {
-    networkStatus = status;
-    initSessionManager();
-  }
-  if (status === 'offline') {
-    networkStatus = status;
-  }
 });
 
 ipcMain.on('linkConnect', () => {

@@ -37,7 +37,9 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png'),
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
     }
   });
 

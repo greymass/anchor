@@ -11,7 +11,7 @@ import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
 
 CheckNodeEnv('development');
 
-const dist = path.resolve(process.cwd(), 'dll');
+const dist = path.join(__dirname, './dll');
 
 export default merge(baseConfig, {
   context: process.cwd(),
@@ -58,7 +58,7 @@ export default merge(baseConfig, {
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development'
+      NODE_ENV: 'development',
     }),
 
     new webpack.LoaderOptionsPlugin({
@@ -69,6 +69,6 @@ export default merge(baseConfig, {
           path: path.resolve(process.cwd(), 'dll'),
         },
       },
-    })
+    }),
   ],
 });
