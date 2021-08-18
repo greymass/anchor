@@ -22,8 +22,8 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
   const cursor = screen.getCursorScreenPoint();
   const promptBounds = pHandler.getBounds();
   const currentScreen = screen.getDisplayNearestPoint({ x: cursor.x, y: cursor.y });
-  const outOfBoundsX = promptBounds.x + promptBounds.width > currentScreen.bounds.width;
-  const outOfBoundsY = promptBounds.y + promptBounds.height > currentScreen.bounds.height;
+  const outOfBoundsX = promptBounds.x + promptBounds.width > currentScreen.bounds.x + currentScreen.bounds.width;
+  const outOfBoundsY = promptBounds.y + promptBounds.height > currentScreen.bounds.y + currentScreen.bounds.height;
   const outOfBounds = outOfBoundsX || outOfBoundsY;
   if (outOfBounds) {
     const x = parseInt(currentScreen.workArea.x + ((currentScreen.workArea.width - promptBounds.width) / 2), 10);
