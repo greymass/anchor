@@ -20,8 +20,9 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
 
   ui = new BrowserWindow({
     closable,
-    width: uiStateKeeper.width,
-    height: uiStateKeeper.height,
+    // Ensure the window opens to a minimum height/width
+    width: uiStateKeeper.width > 500 ? uiStateKeeper.width : 500,
+    height: uiStateKeeper.height > 300 ? uiStateKeeper.height : 300,
     title,
     show: false,
     resizable: true,
@@ -44,13 +45,15 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
 
   ui.webContents.on('did-fail-load', () => {
     log.info('manager: failed loading');
+    ui.center();
     ui.show();
     ui.focus();
     ui.setTitle(title);
   });
 
   ui.webContents.on('did-finish-load', () => {
-    log.info('manager: loaded');
+    log.info('manager: successfully loaded');
+    ui.center();
     ui.show();
     ui.focus();
     ui.setTitle(title);
