@@ -22,14 +22,19 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
   const cursor = screen.getCursorScreenPoint();
   const promptBounds = pHandler.getBounds();
   const currentScreen = screen.getDisplayNearestPoint({ x: cursor.x, y: cursor.y });
-  const x = parseInt(currentScreen.workArea.x + ((currentScreen.workArea.width - promptBounds.width) / 2), 10);
-  const y = parseInt(currentScreen.workArea.y + ((currentScreen.workArea.height - promptBounds.height) / 2), 10);
-  pHandler.setBounds({
-    x,
-    y,
-    width: promptBounds.width,
-    height: promptBounds.height,
-  });
+  const outOfBoundsX = promptBounds.x + promptBounds.width > currentScreen.bounds.width;
+  const outOfBoundsY = promptBounds.y + promptBounds.height > currentScreen.bounds.height;
+  const outOfBounds = outOfBoundsX || outOfBoundsY;
+  if (outOfBounds) {
+    const x = parseInt(currentScreen.workArea.x + ((currentScreen.workArea.width - promptBounds.width) / 2), 10);
+    const y = parseInt(currentScreen.workArea.y + ((currentScreen.workArea.height - promptBounds.height) / 2), 10);
+    pHandler.setBounds({
+      x,
+      y,
+      width: promptBounds.width,
+      height: promptBounds.height,
+    });
+  }
 
   pHandler.webContents.send('openUri', url);
   pHandler.setVisibleOnAllWorkspaces(true);
@@ -58,12 +63,12 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
   } = store.getState();
 
   const chainId = request.getChainId().toLowerCase();
-  log.info("requested chainId")
-  log.info(chainId)
+  log.info('requested chainId');
+  log.info(chainId);
 
   const blockchain = find(blockchains, { chainId });
-  log.info("blockchain")
-  log.info(JSON.stringify(blockchain))
+  log.info('blockchain');
+  log.info(JSON.stringify(blockchain));
 
   let authorization;
   let contractName;
@@ -83,17 +88,17 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
       break;
   }
 
-  log.info("authorization:")
-  log.info(JSON.stringify(authorization))
+  log.info('authorization:');
+  log.info(JSON.stringify(authorization));
 
   const entry = find(whitelist, {
     auth: [authorization.actor, authorization.permission].join('@'),
     chainId,
     contract: contractName,
-  })
+  });
 
-  log.info("detected whitelist entry:")
-  log.info(JSON.stringify(entry))
+  log.info('detected whitelist entry:');
+  log.info(JSON.stringify(entry));
 
   if (entry) {
     const { actions, flexible } = entry;
@@ -105,39 +110,39 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
     const block = await EOS.getBlock(head);
     request.abiProvider = {
       getAbi: async (account) => (await EOS.getAbi(account)).abi
-    }
+    };
     const tx = await request.getTransaction(authorization, block);
 
     const modifiedActions = map(actions, clone);
     const modifiedTransaction = map(tx.actions, clone);
     flexible.forEach((e, i) => {
       const flex = keys(pickBy(e));
-      log.info(`flexible keys for ${i}`)
-      log.info(flex)
+      log.info(`flexible keys for ${i}`);
+      log.info(flex);
       modifiedActions[i].data = omit(modifiedActions[i].data, flex);
-      log.info("modified actions")
-      log.info(modifiedActions[i].data)
+      log.info('modified actions');
+      log.info(modifiedActions[i].data);
       modifiedTransaction[i].data = omit(modifiedTransaction[i].data, flex);
-      log.info("modified transaction actions")
-      log.info(modifiedTransaction[i].data)
-    })
+      log.info('modified transaction actions');
+      log.info(modifiedTransaction[i].data);
+    });
 
-    log.info(JSON.stringify(tx))
-    log.info("whitelist actions:")
-    log.info(JSON.stringify(actions))
-    log.info("tx actions:")
-    log.info(JSON.stringify(actions))
+    log.info(JSON.stringify(tx));
+    log.info('whitelist actions:');
+    log.info(JSON.stringify(actions));
+    log.info('tx actions:');
+    log.info(JSON.stringify(actions));
     if (JSON.stringify(modifiedActions) === JSON.stringify(modifiedTransaction)) {
-      log.info("whitelist match!!!!");
+      log.info('whitelist match!!!!');
       const wallet = find(wallets, {
         account: authorization.actor,
         authorization: authorization.permission,
       });
-      log.info("wallet found:")
-      log.info(JSON.stringify(wallet))
+      log.info('wallet found:');
+      log.info(JSON.stringify(wallet));
       const auth = find(auths.keystore, { pubkey: wallet.pubkey });
-      log.info("auth found:")
-      log.info(JSON.stringify(auth))
+      log.info('auth found:');
+      log.info(JSON.stringify(auth));
       if (auth) {
         const signer = eos({
           broadcast: true,
@@ -149,15 +154,15 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
           },
           sign: true,
         }, true);
-        log.info("signing tx")
-        log.info(JSON.stringify(tx))
+        log.info('signing tx');
+        log.info(JSON.stringify(tx));
         setTimeout(() => {
           signer
             .transaction(tx, {
               broadcast: true,
             })
             .then((signed) => {
-              log.info(JSON.stringify(signed))
+              log.info(JSON.stringify(signed));
               // Object
               notifier.notify({
                 icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png'),
@@ -179,15 +184,15 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
               //   payload: { response: signed },
               //   type: types.SYSTEM_ESRURIBROADCAST_SUCCESS
               // });
-            })
+            });
         }, 250);
       } else {
-        log.info("no auth")
+        log.info('no auth');
         pHandler.webContents.send('openUri', url);
         pHandler.show();
       }
     } else {
-      log.info("not whitelisted")
+      log.info('not whitelisted');
       pHandler.webContents.send('openUri', url);
       pHandler.show();
     }
@@ -195,5 +200,4 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
     pHandler.webContents.send('openUri', url);
     pHandler.show();
   }
-
 }
