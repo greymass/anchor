@@ -46,30 +46,6 @@ console.log = (...args) => {
 
 log.info('anchor: initializing');
 
-// log.info(settings)
-// if (settings.allowSigningRequests) {
-//   // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
-//   log.info('anchor: registering URL schemes');
-//   protocol.registerSchemesAsPrivileged([
-//     {
-//       scheme: 'eosio',
-//       privileges: {
-//         standard: true,
-//         secure: true,
-//         supportFetchAPI: true
-//       },
-//     },
-//     {
-//       scheme: 'esr',
-//       privileges: {
-//         standard: true,
-//         secure: true,
-//         supportFetchAPI: true
-//       },
-//     },
-//   ]);
-// }
-
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
@@ -86,14 +62,6 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
   // Log all messages
   log.transports.file.level = 'info';
 }
-
-// crash reporter for failures (NYI)
-// crashReporter.start({
-//   productName: 'anchor',
-//   companyName: '',
-//   submitURL: '',
-//   uploadToServer: false
-// });
 
 // main exceptions to electron-log
 app.on('uncaughtException', (error) => {
