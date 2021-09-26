@@ -214,7 +214,7 @@ class AccountSetupBackup extends Component<Props> {
                   placeholder="Select a printer from the list"
                   onChange={this.setPrinter}
                   options={printers}
-                  value={printers[0].key}
+                  value={printer}
                 />
               )
               : (
