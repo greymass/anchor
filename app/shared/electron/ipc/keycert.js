@@ -249,6 +249,8 @@ export async function printKeyCertificate(
   ptp.print(filePath, { printer }).then(() => {
     // Return the encryption keywords to the frontend
     event.sender.send('returnKeyCertificateWords', cachedWords)
+    // Remove the temporary file
+    fs.rmSync(filePath)
   });
 }
 
