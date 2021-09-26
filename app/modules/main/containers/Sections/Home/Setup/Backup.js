@@ -78,7 +78,7 @@ class AccountSetupBackup extends Component<Props> {
         words: nextProps.accountcreate.words,
       });
     }
-    if (method === 'print' && !printers && nextProps.app.printers) {
+    if (method === 'print' && !printers && nextProps.app.printersReturned) {
       // { key: 'bj', value: 'bj', text: 'Benin' },
       const options = nextProps.app.printers.map((printer) => ({
         key: printer.name,
@@ -169,6 +169,7 @@ class AccountSetupBackup extends Component<Props> {
       printing,
       printer,
       printers,
+      printersReturned,
       request,
       saved,
       verifying,
@@ -300,7 +301,7 @@ class AccountSetupBackup extends Component<Props> {
       );
     }
     let modal = false;
-    if (printing && !print && printers) {
+    if (printing && !print && printersReturned) {
       modal = (
         <Modal
           open
@@ -313,13 +314,20 @@ class AccountSetupBackup extends Component<Props> {
             Select a printer...
           </Header>
           <Modal.Content>
-            <Select
-              fluid
-              placeholder="Select a printer from the list"
-              onChange={this.setPrinter}
-              options={printers}
-              value={printers[0].key}
-            />
+            {(printers.length)
+              ? (
+                <Select
+                  fluid
+                  placeholder="Select a printer from the list"
+                  onChange={this.setPrinter}
+                  options={printers}
+                  value={printers[0].key}
+                />
+              )
+              : (
+                <p>No printers found!</p>
+              )
+            }
           </Modal.Content>
           <Modal.Actions>
             <Button
