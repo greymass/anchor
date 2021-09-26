@@ -44,6 +44,7 @@ class AccountSetupBackup extends Component<Props> {
       print: false,
       printer: undefined,
       printers: undefined,
+      printersReturned: false,
       printing: false,
       request,
       saved: false,
@@ -89,6 +90,7 @@ class AccountSetupBackup extends Component<Props> {
         generating: false,
         printer: options[0].key,
         printers: options,
+        printersReturned: true,
         printing: true,
       });
     }
@@ -189,6 +191,50 @@ class AccountSetupBackup extends Component<Props> {
         <Dimmer active inverted>
           <Loader size="big"><Header>Printing...</Header></Loader>
         </Dimmer>
+      );
+    }
+    let modal = false;
+    if (printing && !print && printersReturned) {
+      modal = (
+        <Modal
+          open
+          closeIcon
+          onClose={this.onCancelPrint}
+          size="small"
+        >
+          <Header icon>
+            <Icon name="print" />
+            Select a printer...
+          </Header>
+          <Modal.Content>
+            {(printers.length)
+              ? (
+                <Select
+                  fluid
+                  placeholder="Select a printer from the list"
+                  onChange={this.setPrinter}
+                  options={printers}
+                  value={printers[0].key}
+                />
+              )
+              : (
+                <p>No printers found!</p>
+              )
+            }
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content="Cancel"
+              onClick={this.onCancelPrint}
+            />
+            <Button
+              content="Print to selected printer"
+              disabled={!printer}
+              onClick={this.onPrint}
+              primary
+            />
+          </Modal.Actions>
+        </Modal>
       );
     }
     let stage = (
@@ -298,50 +344,6 @@ class AccountSetupBackup extends Component<Props> {
           onComplete={this.onComplete}
           words={words}
         />
-      );
-    }
-    let modal = false;
-    if (printing && !print && printersReturned) {
-      modal = (
-        <Modal
-          open
-          closeIcon
-          onClose={this.onCancelPrint}
-          size="small"
-        >
-          <Header icon>
-            <Icon name="print" />
-            Select a printer...
-          </Header>
-          <Modal.Content>
-            {(printers.length)
-              ? (
-                <Select
-                  fluid
-                  placeholder="Select a printer from the list"
-                  onChange={this.setPrinter}
-                  options={printers}
-                  value={printers[0].key}
-                />
-              )
-              : (
-                <p>No printers found!</p>
-              )
-            }
-          </Modal.Content>
-          <Modal.Actions>
-            <Button
-              content="Cancel"
-              onClick={this.onCancelPrint}
-            />
-            <Button
-              content="Print to selected printer"
-              disabled={!printer}
-              onClick={this.onPrint}
-              primary
-            />
-          </Modal.Actions>
-        </Modal>
       );
     }
     return (
