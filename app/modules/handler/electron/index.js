@@ -43,8 +43,6 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     }
   });
 
-  uiStateKeeper.track(ui);
-
   ui.loadURL(`file://${path.join(resourcePath, 'renderer/handler/index.html')}`);
 
   ui.webContents.on('did-finish-load', () => {
@@ -71,7 +69,7 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     }
   });
 
-  configureIPC(ui);
+  configureIPC(ui, store);
 
   return ui;
 };

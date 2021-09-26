@@ -1,4 +1,4 @@
-import { chunk, difference, forEach, map, pick, sortBy, uniq } from 'lodash';
+import { chunk, difference, find, forEach, map, pick, sortBy, uniq } from 'lodash';
 import { Asset } from '@greymass/eosio';
 
 import * as types from './types';
@@ -118,17 +118,21 @@ export function getContractHash(accountName) {
   };
 }
 
-export function checkAccountAvailability(account = '') {
+export function checkAccountAvailability(account = '', chainId = false) {
   return (dispatch: () => void, getState) => {
     dispatch({
       type: types.SYSTEM_ACCOUNT_AVAILABLE_PENDING,
       payload: { account_name: account }
     });
-    const {
-      connection,
-      settings
-    } = getState();
-    if (account && (settings.node || settings.node.length !== 0)) {
+    let { blockchains, connection } = getState();
+    if (chainId) {
+      const blockchain = find(blockchains, { chainId: chainId });
+      connection = {
+        ...connection,
+        httpEndpoint: blockchain.node,
+      }
+    }
+    if (account && (connection.httpEndpoint || connection.httpEndpoint.length !== 0)) {
       eos(connection, false, true).rpc.get_account(account).then((response) => dispatch({
         type: types.SYSTEM_ACCOUNT_AVAILABLE_FAILURE,
         payload: { account_name: account, response }
@@ -148,7 +152,7 @@ export function checkAccountAvailability(account = '') {
       return;
     }
     dispatch({
-      type: types.SYSTEM_GET_ACCOUNT_AVAILABLE_FAILURE,
+      type: types.SYSTEM_ACCOUNT_AVAILABLE_FAILURE,
       payload: { account_name: account },
     });
   };

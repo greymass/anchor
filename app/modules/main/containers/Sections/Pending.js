@@ -8,11 +8,11 @@ import { find } from 'lodash';
 import compose from 'lodash/fp/compose';
 import { Button, Dropdown, Header, Label, Segment, Table } from 'semantic-ui-react';
 
+import { changeModule } from '../../actions/navigation';
 import eos from '../../../../shared/actions/helpers/eos';
 import PendingActions from '../../../../shared/actions/pending';
 import WalletActions from '../../../../shared/actions/wallets';
 import GlobalFragmentChainLogo from '../../../../shared/components/Global/Fragment/ChainLogo';
-
 const { clipboard, ipcRenderer } = require('electron');
 
 class PendingContainer extends Component<Props> {
@@ -134,21 +134,66 @@ class PendingContainer extends Component<Props> {
 
   render() {
     const { loading, ready, warning } = this.state;
-    const { pending, t } = this.props;
+    const { actions, pending, t } = this.props;
     const pendingAccountRequests = pending && pending.accounts && pending.accounts.length > 0;
+    const pendingCertificates = pending && pending.certificates && pending.certificates.length > 0;
     const pendingSigningRequest = pending && pending.request;
     return (
       <React.Fragment>
-        <Header
-          content={t('main_sections_pending_grid_header')}
-          subheader={t('main_sections_pending_grid_subheader')}
-        />
+        {(pendingCertificates)
+          ? (
+            <Segment>
+              <Header
+                content={t('main_sections_pending_certs_header')}
+              />
+              <p>{t('main_sections_pending_certs_subheader')}</p>
+                <Table size="small">
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>
+                        Network
+                      </Table.HeaderCell>
+                      <Table.HeaderCell>
+                        Account Name
+                      </Table.HeaderCell>
+                      <Table.HeaderCell textAlign="right">
+                        Controls
+                      </Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {pending.certificates.map(cert => (
+                      <Table.Row>
+                        <Table.Cell collapsing textAlign="center">
+                          <GlobalFragmentChainLogo
+                            avatar
+                            chainId={cert.chainId}
+                          />
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Header size="small">{cert.account}</Header>
+                        </Table.Cell>
+                        <Table.Cell textAlign="right">
+                          <Button
+                            content="Backup account"
+                            icon="print"
+                            primary
+                            onClick={() => actions.changeModule(`home/account/backup/${cert.chainId}/${cert.account}`)}
+                          />
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+            </Segment>
+          )
+          : false
+        }
         {(pendingSigningRequest)
           ? (
             <Segment>
               <Header
                 content="Pending Signing Request"
-                size="small"
               />
               <p>A signing request is waiting for your approval.</p>
               <Segment stacked textAlign="center">
@@ -174,7 +219,6 @@ class PendingContainer extends Component<Props> {
             <Segment>
               <Header
                 content={t('main_sections_pending_accounts_header')}
-                size="small"
               />
               <p>{t('main_sections_pending_accounts_subheader')}</p>
               <Table size="small">
@@ -294,10 +338,10 @@ class PendingContainer extends Component<Props> {
           )
           : false
         }
-        {(!pendingSigningRequest && !pendingAccountRequests)
+        {(!pendingSigningRequest && !pendingAccountRequests && !pendingCertificates)
           ? (
             <Segment>
-              <p>No pending requests of any kind.</p>
+              <p>No pending actions.</p>
             </Segment>
           )
           : false
@@ -320,6 +364,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      changeModule,
       ...PendingActions,
       ...WalletActions,
     }, dispatch)

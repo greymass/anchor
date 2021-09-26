@@ -12,6 +12,13 @@ interface PendingAccountCreate {
   request: string
 }
 
+interface PendingAccountCertificate {
+  chainId: string,
+  account: string,
+  active: string,
+  owner: string
+}
+
 export function addPendingAccountCreate(payload: PendingAccountCreate) {
   return (dispatch: () => void) => {
     dispatch({
@@ -30,7 +37,28 @@ export function removePendingAccountCreate(payload: PendingAccountCreate) {
   };
 }
 
+
+export function addPendingAccountCertificate(payload: PendingAccountCertificate) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.SYSTEM_PENDING_ACCOUNT_CERTIFICATE_CREATE,
+      payload
+    });
+  };
+}
+
+export function removePendingAccountCertificate(payload: PendingAccountCertificate) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.SYSTEM_PENDING_ACCOUNT_CERTIFICATE_REMOVE,
+      payload
+    });
+  };
+}
+
 export default {
   addPendingAccountCreate,
+  addPendingAccountCertificate,
   removePendingAccountCreate,
+  removePendingAccountCertificate
 };

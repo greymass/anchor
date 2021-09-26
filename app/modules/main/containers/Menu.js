@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Icon, Menu } from 'semantic-ui-react';
+import { Icon, Menu, Modal } from 'semantic-ui-react';
 
 import * as AccountsActions from '../../../shared/actions/accounts';
 import * as AppActions from '../../../shared/actions/app';
@@ -21,12 +21,17 @@ import GlobalAppDisconnected from '../../../shared/containers/Global/App/Disconn
 import GlobalBlockchainDropdown from '../../../shared/containers/Global/Blockchain/Dropdown';
 import GlobalFuelDropdown from '../../../shared/containers/Global/Fuel/Dropdown';
 import GlobalHardwareLedgerStatus from '../../../shared/containers/Global/Hardware/Ledger/Status';
+import SettingsContainer from './Sections/Settings';
 import WalletLockState from '../../../shared/components/Wallet/LockState';
 import WalletMode from '../../../shared/components/Wallet/Mode';
 
 import makeGetKeysUnlocked from '../../../shared/selectors/getKeysUnlocked';
 
 class MenuContainer extends Component<Props> {
+  state = {
+    showSettings: false
+  }
+
   componentDidMount() {
     const {
       actions,
@@ -81,6 +86,10 @@ class MenuContainer extends Component<Props> {
       sync();
     }
   }
+
+  hideSettings = () => this.setState({ showSettings: false })
+  showSettings = () => this.setState({ showSettings: true })
+
   render() {
     const {
       settings,
@@ -90,6 +99,7 @@ class MenuContainer extends Component<Props> {
       wallet,
       unlocked,
     } = this.props;
+    const { showSettings } = this.state;
     const locked = !unlocked;
     return (
       <Menu
@@ -102,6 +112,21 @@ class MenuContainer extends Component<Props> {
           minHeight: '4.428em',
         }}
       >
+        <Modal
+          closeIcon
+          onClose={this.hideSettings}
+          open={showSettings}
+        >
+          <Modal.Header>
+            Anchor Settings
+          </Modal.Header>
+          <Modal.Content style={{ padding: 0 }}>
+            <SettingsContainer
+              onReset={this.hideSettings}
+            />
+          </Modal.Content>
+        </Modal>
+
         <GlobalBlockchainDropdown
           onNavigationChange={this.props.actions.changeModule}
         />
@@ -140,7 +165,7 @@ class MenuContainer extends Component<Props> {
           <Menu.Item
             as="a"
             active={module === 'settings'}
-            onClick={() => this.props.actions.changeModule('settings')}
+            onClick={this.showSettings}
             name="settings"
             color="pink"
           >

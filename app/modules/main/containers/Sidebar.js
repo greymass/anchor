@@ -32,6 +32,7 @@ class SidebarContainer extends Component<Props> {
     const {
       actions,
       blockExplorers,
+      certificates,
       connection,
       navigation,
       pending,
@@ -46,6 +47,7 @@ class SidebarContainer extends Component<Props> {
     } = navigation;
     const background = '#131B33';
     const color = 'rgba(255, 255, 255, 0.7)';
+    // const devMode = process.env.NODE_ENV !== 'production';
     const devMode = false;
     const inSetup = (
       !settings.walletInit
@@ -54,10 +56,14 @@ class SidebarContainer extends Component<Props> {
       || !wallets
     );
     const pendingAccountRequests = pending && pending.accounts && pending.accounts.length > 0;
+    const pendingCertificates = pending && pending.certificates && pending.certificates.length > 0;
     const pendingSigningRequest = pending && pending.request && pending.request.uri;
     let pendingRequests = 0;
     if (pendingAccountRequests) {
       pendingRequests += pending.accounts.length;
+    }
+    if (pendingCertificates) {
+      pendingRequests += pending.certificates.length;
     }
     if (pendingSigningRequest) {
       pendingRequests += 1;
@@ -80,7 +86,7 @@ class SidebarContainer extends Component<Props> {
       >
         <Menu.Item
           as="a"
-          onClick={this.onClick}
+          onClick={(inSetup && settings.advancedOptions) ? this.onClick : undefined}
           name=""
           style={{
             backgroundSize: 'contain',
@@ -112,23 +118,28 @@ class SidebarContainer extends Component<Props> {
             : false
           }
         </Menu.Item>
-        <Menu.Item
-          as="a"
-          active={(!module)}
-          onClick={this.onClick}
-          name=""
-          style={{
-            backgroundColor: (!module) ? background : '',
-            color,
-          }}
-        >
-          <Icon name="home" />
-          {(!settings.sidebarCollapsed)
-            ? <p>{t(inSetup ? 'setup' : 'home')}</p>
-            : false
-          }
-        </Menu.Item>
-        {(pendingAccountRequests || pendingSigningRequest)
+        {(!inSetup || (inSetup && settings.advancedOptions))
+          ? (
+            <Menu.Item
+              as="a"
+              active={(!module)}
+              onClick={this.onClick}
+              name=""
+              style={{
+                backgroundColor: (!module) ? background : '',
+                color,
+              }}
+            >
+              <Icon name="home" />
+              {(!settings.sidebarCollapsed)
+                ? <p>{t(inSetup ? 'setup' : 'home')}</p>
+                : false
+              }
+            </Menu.Item>
+          )
+          : false
+        }
+        {(pendingAccountRequests || pendingSigningRequest || pendingCertificates)
           ? (
             <Menu.Item
               as="a"
@@ -150,7 +161,7 @@ class SidebarContainer extends Component<Props> {
                 {pendingRequests}
               </Label>
               {(!settings.sidebarCollapsed)
-                ? <p>Pending Requests</p>
+                ? <p>Pending Actions</p>
                 : false
               }
             </Menu.Item>
@@ -343,7 +354,7 @@ class SidebarContainer extends Component<Props> {
         <Menu.Item
           as="a"
           name="version"
-          onClick={this.onClick}
+          onClick={(inSetup && settings.advancedOptions) ? this.onClick : undefined}
           style={{
             borderRadius: 0,
             color,
@@ -372,6 +383,7 @@ function mapStateToProps(state) {
   const blockchain = find(state.blockchains, { chainId: state.settings.chainId });
   return {
     blockExplorers: (blockchain) ? state.blockexplorers[blockchain._id] : false,
+    certificates: state.certificates,
     connection: state.connection,
     navigation: state.navigation,
     pending: state.pending,

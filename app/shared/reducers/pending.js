@@ -4,6 +4,7 @@ import * as types from '../actions/types';
 
 const initialState = {
   accounts: [],
+  certificates: [],
   request: false,
 };
 
@@ -20,6 +21,29 @@ export default function pending(state = initialState, action) {
     case types.SYSTEM_ESRURI_SUCCESS: {
       return Object.assign({}, state, {
         request: action.payload
+      });
+    }
+    case types.SYSTEM_PENDING_ACCOUNT_CERTIFICATE_CREATE: {
+      const [, other] = partition(state.certificates, {
+        account: action.payload.account,
+        chainId: action.payload.chainId,
+      });
+      return Object.assign({}, state, {
+        certificates: [
+          action.payload,
+          ...other
+        ]
+      });
+    }
+    case types.SYSTEM_PENDING_ACCOUNT_CERTIFICATE_REMOVE: {
+      const [, other] = partition(state.certificates, {
+        account: action.payload.account,
+        chainId: action.payload.chainId,
+      });
+      return Object.assign({}, state, {
+        certificates: [
+          ...other
+        ]
       });
     }
     case types.SYSTEM_PENDING_ACCOUNT_CREATE: {

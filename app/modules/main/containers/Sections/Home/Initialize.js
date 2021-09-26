@@ -47,7 +47,6 @@ class HomeInitializeContainer extends Component<Props> {
     history.push('/home/blockchains');
     return false;
   }
-
   render() {
     const {
       settings,
