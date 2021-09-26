@@ -15,11 +15,12 @@ class SettingsContainer extends Component<Props> {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     actions: state.actions,
     allBlockExplorers: state.blockexplorers,
     connection: state.connection,
+    onReset: ownProps.onReset,
     settings: state.settings,
   };
 }

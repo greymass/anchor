@@ -1,5 +1,11 @@
 import { app, ipcMain } from 'electron';
 import { checkForUpdates } from './updater';
+import {
+  generateNewAccount,
+  printKeyCertificate,
+  resetKeyCertificateCache,
+  saveKeyCertificate
+} from './ipc/keycert';
 
 const { dialog } = require('electron');
 const fs = require('fs');
@@ -19,8 +25,42 @@ const getDateString = () => {
 
 let saveFileLock = false;
 
-const configureIPC = (ui, primary = false) => {
+const configureIPC = (ui, store, primary = false) => {
   if (primary) {
+
+    ipcMain.on('generateNewAccount', (
+      event,
+      password,
+      chainId,
+      accountName,
+      ownerKey,
+      activeKey,
+    ) => generateNewAccount(event, store, password, chainId, accountName, ownerKey, activeKey));
+
+    ipcMain.on('saveKeyCertificate', (
+      event,
+      password,
+      publicKey,
+      chainId,
+      accountName,
+    ) => saveKeyCertificate(event, store, password, publicKey, chainId, accountName));
+
+    ipcMain.on('printKeyCertificate', (
+      event,
+      password,
+      publicKey,
+      chainId,
+      accountName,
+      printer,
+    ) => printKeyCertificate(event, store, password, publicKey, chainId, accountName, printer));
+
+    ipcMain.on('resetKeyCertificateCache', () => resetKeyCertificateCache())
+
+    ipcMain.on('getPrinters', (event) => {
+      const printers = ui.webContents.getPrinters()
+      event.sender.send('listPrinters', printers)
+    })
+
     ipcMain.on('openFile', (event, openPath = false) => {
       const defaultPath = (openPath || app.getPath('documents'));
       dialog.showOpenDialog({

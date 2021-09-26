@@ -28,10 +28,6 @@ export default function wallets(state = initialState, action) {
         chainId: action.payload.chainId || false,
       };
       const [, other] = partition(state, partitionParams);
-      console.log([
-        action.payload,
-        ...other
-      ])
       return [
         action.payload,
         ...other

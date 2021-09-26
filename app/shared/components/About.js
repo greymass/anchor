@@ -76,7 +76,7 @@ class About extends Component<Props> {
               <p>
                 <a
                   onClick={() => this.openLink('https://greymass.com')}
-                  role='button'
+                  role="button"
                   style={{ cursor: 'pointer' }}
                 >
                   https://greymass.com

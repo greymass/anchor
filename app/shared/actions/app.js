@@ -13,11 +13,9 @@ export function downloadProgress(progress) {
   };
 }
 
-export const initApp = () => (dispatch: () => void) => {
-  return dispatch({
-    type: types.APP_INIT
-  });
-};
+export const initApp = () => (dispatch: () => void) => dispatch({
+  type: types.APP_INIT
+});
 
 export function getConstants() {
   return async (dispatch: () => void, getState) => {
@@ -75,8 +73,14 @@ export function getConstants() {
   };
 }
 
+export const listPrinters = (printers) => (dispatch: () => void) => dispatch({
+  type: types.SYSTEM_LIST_PRINTERS,
+  payload: printers
+});
+
 export default {
   downloadProgress,
   getConstants,
+  listPrinters,
   initApp
 };

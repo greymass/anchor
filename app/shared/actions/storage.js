@@ -8,7 +8,7 @@ const CryptoJS = require('crypto-js');
 export function setStorage(data) {
   return async (dispatch: () => void) => {
     // flush to disk
-    if (window && window.persistor) {
+    if (typeof window !== 'undefined' && window.persistor) {
       setTimeout(window.persistor.flush, 2000);
     }
     // update store

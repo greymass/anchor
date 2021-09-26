@@ -5,6 +5,8 @@ const initialState = {
   data: null,
   // all usable keys
   keys: [],
+  // temporary storage for certificates
+  certificates: [],
   // a mapping of public key -> path for hardware devices
   paths: {},
 };

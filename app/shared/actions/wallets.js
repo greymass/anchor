@@ -302,6 +302,16 @@ export function importWallet(
         walletMode: (modeChange) || mode,
       })));
     }
+    // Ensure the wallet is initialized
+    if (!settings.walletInit) {
+      dispatch(setSetting('walletInit', true));
+    }
+    // Enable the blockchain for the account we imported if its not already
+    const enabledChains = [...settings.blockchains];
+    if (enabledChains.indexOf(chainId) === -1) {
+      enabledChains.push(chainId);
+      dispatch(setSetting('blockchains', [...enabledChains]));
+    }
     return dispatch({
       type: types.IMPORT_WALLET_KEY,
       payload: {
@@ -387,7 +397,7 @@ export function removeWallet(chainId, account, authorization) {
 export function useWallet(chainId, account, authorization) {
   return async (dispatch: () => void, getState) => {
     const {
-      auths, connection, wallet, wallets
+      auths, connection, settings, wallet, wallets
     } = getState();
     // Find the wallet by account name + authorization when possible
     const walletQuery = { account, chainId };
@@ -437,6 +447,9 @@ export function useWallet(chainId, account, authorization) {
           type: types.SET_CURRENT_KEY
         });
       }
+    }
+    if (!settings.chainId) {
+      dispatch(setSetting('chainId', chainId));
     }
     if (newWallet.account !== wallet.account || newWallet.authorization !== wallet.authorization) {
       // Set the active wallet to remember the last used

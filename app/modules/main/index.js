@@ -6,7 +6,14 @@ import { AppContainer } from 'react-hot-loader';
 import { configureStore, history } from '../../shared/store/renderer/configureStore';
 import Root from './containers/Root';
 import Routes from './routes';
-import { downloadProgress } from '../../shared/actions/app';
+
+import {
+  beginAccountCreate,
+  cancelKeyCertificate,
+  returnKeyCertificateWords,
+  returnNewAccountKeys
+} from './actions/account';
+import { downloadProgress, listPrinters } from '../../shared/actions/app';
 
 const { store } = configureStore();
 const { ipcRenderer } = require('electron');
@@ -44,6 +51,18 @@ if (module.hot) {
     renderApp(newRoutes);
   });
 }
+
+ipcRenderer.on('listPrinters', (event, printers) => store.dispatch(listPrinters(printers)));
+ipcRenderer.on('accountCreate', (event, data) => store.dispatch(beginAccountCreate(data)));
+ipcRenderer.on('cancelKeyCertificate', () => store.dispatch(cancelKeyCertificate()));
+ipcRenderer.on('returnKeyCertificateWords', (event, words) => store.dispatch(returnKeyCertificateWords(words)));
+ipcRenderer.on('returnNewAccountKeys', (
+  event,
+  chainId,
+  accountName,
+  active,
+  owner
+) => store.dispatch(returnNewAccountKeys(chainId, accountName, active, owner)));
 
 ipcRenderer.on('downloadProgress', (event, data) => {
   store.dispatch(downloadProgress(data));
