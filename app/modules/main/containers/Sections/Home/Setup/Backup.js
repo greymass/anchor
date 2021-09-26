@@ -160,7 +160,7 @@ class AccountSetupBackup extends Component<Props> {
     }, 1000);
   }
   render() {
-    const { blockchains } = this.props;
+    const { actions, blockchains } = this.props;
     const {
       creating,
       generating,
@@ -190,53 +190,7 @@ class AccountSetupBackup extends Component<Props> {
         </Dimmer>
       );
     }
-    if (verifying) {
-      return (
-        <AccountSetupElementsWords
-          creating={creating}
-          onComplete={this.onComplete}
-          words={words}
-        />
-      );
-    }
-    let modal = false;
-    if (printing && !print && printers) {
-      modal = (
-        <Modal
-          open
-          closeIcon
-          onClose={this.onCancelPrint}
-          size="small"
-        >
-          <Header icon>
-            <Icon name="print" />
-            Select a printer...
-          </Header>
-          <Modal.Content>
-            <Select
-              fluid
-              placeholder="Select a printer from the list"
-              onChange={this.setPrinter}
-              options={printers}
-              value={printers[0].key}
-            />
-          </Modal.Content>
-          <Modal.Actions>
-            <Button
-              content="Cancel"
-              onClick={this.onCancelPrint}
-            />
-            <Button
-              content="Print to selected printer"
-              disabled={!printer}
-              onClick={this.onPrint}
-              primary
-            />
-          </Modal.Actions>
-        </Modal>
-      );
-    }
-    return (
+    let stage = (
       <Segment clearing size="large">
         <Header size="large">
           Backup Account
@@ -318,16 +272,76 @@ class AccountSetupBackup extends Component<Props> {
           }
 
         </Segment>
-        <Segment basic textAlign="center">
+        <Segment attached="top" basic style={{ border: 'none' }} textAlign="center">
           <Button
-            content={!saved ? 'Print or save to continue' : 'Continue'}
+            content={!saved ? 'Print or save to continue' : 'Continue to next step...'}
             disabled={!saved}
             onClick={() => this.setState({ verifying: true })}
             primary={saved}
             size="large"
           />
         </Segment>
+        <Segment attached="bottom" basic style={{ border: 'none' }} textAlign="center">
+          <Button
+            content="Cancel Backup"
+            onClick={() => actions.changeModule('pending')}
+            size="small"
+          />
+        </Segment>
       </Segment>
+    );
+    if (verifying) {
+      stage = (
+        <AccountSetupElementsWords
+          creating={creating}
+          onComplete={this.onComplete}
+          words={words}
+        />
+      );
+    }
+    let modal = false;
+    if (printing && !print && printers) {
+      modal = (
+        <Modal
+          open
+          closeIcon
+          onClose={this.onCancelPrint}
+          size="small"
+        >
+          <Header icon>
+            <Icon name="print" />
+            Select a printer...
+          </Header>
+          <Modal.Content>
+            <Select
+              fluid
+              placeholder="Select a printer from the list"
+              onChange={this.setPrinter}
+              options={printers}
+              value={printers[0].key}
+            />
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              content="Cancel"
+              onClick={this.onCancelPrint}
+            />
+            <Button
+              content="Print to selected printer"
+              disabled={!printer}
+              onClick={this.onPrint}
+              primary
+            />
+          </Modal.Actions>
+        </Modal>
+      );
+    }
+    return (
+      <Modal
+        open
+      >
+        {stage}
+      </Modal>
     );
   }
 }
