@@ -53,7 +53,7 @@ class AccountSetupElementsWords extends Component<Props> {
             <React.Fragment>
               <p>
                 <Button
-                  content="Complete backup"
+                  content="Continue"
                   disabled={!verified}
                   fluid
                   primary
@@ -88,7 +88,7 @@ class AccountSetupElementsWords extends Component<Props> {
           ? (
             <React.Fragment>
               <Button
-                content="Continue"
+                content="Complete Backup"
                 fluid
                 loading={creating}
                 primary
