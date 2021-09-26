@@ -62,7 +62,8 @@ export default function app(state = initialState, action) {
     }
     case types.SYSTEM_LIST_PRINTERS: {
       return Object.assign({}, state, {
-        printers: action.payload
+        printers: action.payload,
+        printersReturned: true,
       });
     }
     default: {
