@@ -1,3 +1,4 @@
+import packageJson from '../../../package.json';
 import * as types from '../actions/types';
 
 const contractBasedFeatures = [
@@ -31,11 +32,14 @@ const initialState = {
   online: true
 };
 
+const { version } = packageJson;
+
 export default function app(state = initialState, action) {
   switch (action.type) {
     case types.APP_INIT: {
       return Object.assign({}, state, {
-        init: true
+        init: true,
+        version,
       });
     }
     case types.APP_UPDATE_DOWNLOAD_PROGRESS: {
@@ -56,7 +60,11 @@ export default function app(state = initialState, action) {
         online: (action.payload === 'online')
       });
     }
-
+    case types.SYSTEM_LIST_PRINTERS: {
+      return Object.assign({}, state, {
+        printers: action.payload
+      });
+    }
     default: {
       return state;
     }

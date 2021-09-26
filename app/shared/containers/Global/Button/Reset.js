@@ -22,13 +22,12 @@ class GlobalButtonResetContainer extends Component<Props> {
     actions.ledgerStopListen();
     this.setState({ open: false }, () => {
       const {
-        actions,
-        history
-      } = this.props;
-      const {
         resetApp
       } = actions;
       resetApp();
+      if (this.props.onReset) {
+        this.props.onReset();
+      }
       actions.changeModule('');
     });
   }
@@ -56,13 +55,14 @@ class GlobalButtonResetContainer extends Component<Props> {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     accounts: state.accounts,
     balances: state.balances,
     chain: state.chain,
     globals: state.globals,
     keys: state.keys,
+    onReset: ownProps.onReset,
     producers: state.producers,
     settings: state.settings,
     system: state.system,

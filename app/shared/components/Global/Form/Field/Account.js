@@ -10,6 +10,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
     super(props);
     this.state = {
       fieldOption: 'manual',
+      maxlength: props.maxlength || 12,
       value: props.value
     };
   }
@@ -18,10 +19,10 @@ export class GlobalFormFieldAccount extends Component<Props> {
     let valid = false;
     switch (this.props.rules) {
       case 'generic':
-        valid = !!(parsed.match(/^[a-z12345]{12}$/g));
+        valid = !!(parsed.match(new RegExp("^[a-z12345]{" + this.state.maxlength + "}$", "g")));
         break;
       default:
-        valid = !!(parsed.match(/^[a-z12345.]{1,12}$/g));
+        valid = !!(parsed.match(new RegExp("^[a-z12345.]{1," + this.state.maxlength + "}$", "g")));
         break;
     }
     this.setState({
@@ -60,6 +61,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
       fluid,
       icon,
       label,
+      labelPosition,
       loading,
       name,
       t,
@@ -112,6 +114,7 @@ export class GlobalFormFieldAccount extends Component<Props> {
         fluid={fluid}
         icon={icon}
         label={inlineLabel}
+        labelPosition={labelPosition}
         loading={loading}
         name={name}
         onChange={this.onChange}

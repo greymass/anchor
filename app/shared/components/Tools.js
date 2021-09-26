@@ -220,7 +220,7 @@ class Tools extends Component<Props> {
               Danger Zone!
             </Header>
             <p>Delete everything and completely reset Anchor.</p>
-            <GlobalButtonResetContainer />
+            <GlobalButtonResetContainer onReset={this.props.onReset} />
           </Segment>
         </Segment>
       </React.Fragment>

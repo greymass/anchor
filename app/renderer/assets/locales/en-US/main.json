@@ -76,7 +76,7 @@
   "main_sections_home_upgrade_subheader_one": "Wallet Storage",
   "main_sections_home_upgrade_header_one": "Upgrading",
   "main_sections_home_upgrade_header_two": "Wallet Storage - Upgrade Required",
-  "main_sections_home_upgrade_subheader_two": "The following wallets need to be upgraded before they can be accessed. Click the button below and enter your local wallet password to complete this process.",
+  "main_sections_home_upgrade_subheader_two": "The following wallets need to be upgraded before they can be accessed. Click the button below and enter your Anchor Password to complete this process.",
   "main_sections_home_upgrade_button_one": "Upgrade Wallet Storage",
   "main_sections_home_upgrade_table_cell_one": "\"{{walletMode}}\" wallet storage - upgrade required",
   "main_sections_overview_sidebar_backup_subheader": "Last Backup",

@@ -1,5 +1,7 @@
 import { get, set } from 'dot-prop-immutable';
 import { pull, uniq } from 'lodash';
+import { v4 as uuid } from 'uuid';
+
 import * as types from '../actions/types';
 
 const initialState = {
@@ -44,6 +46,8 @@ const initialState = {
     // Always track the EOS token
     'eos-mainnet:eosio.token:EOS'
   ],
+  // Unique ID for this wallet
+  deviceId: uuid(),
   // State to view by default in DevTest
   devTestDefaultState: false,
   // An API key for accessing a dfuse instance
@@ -125,7 +129,9 @@ const validSettings = Object.keys(initialState);
 export default function settings(state = initialState, action) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
-      return Object.assign({}, initialState);
+      return Object.assign({}, initialState, {
+        deviceId: uuid()
+      });
     }
     case types.SET_WALLET_HASH: {
       return Object.assign({}, state, {

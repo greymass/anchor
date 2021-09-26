@@ -34,7 +34,7 @@ class GlobalHardwareLedgerStatus extends Component<Props> {
       && status === 'connected'
     ) {
       clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => this.setState({ open: false }), 1500)
+      this.timeout = setTimeout(() => this.setState({ open: false }), 1500);
     }
     if (
       ['awaiting_application', 'awaiting_connection'].includes(status)
@@ -47,7 +47,7 @@ class GlobalHardwareLedgerStatus extends Component<Props> {
       this.setState({ init: true });
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => this.setState({
-        open: true,
+        // open: true,
       }), 1500);
     }
   }

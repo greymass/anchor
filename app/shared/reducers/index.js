@@ -2,6 +2,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 
+import accountcreate from './accountcreate';
 import accounts from './accounts';
 import actions from './actions';
 import app from './app';
@@ -37,6 +38,7 @@ import wallets from './wallets';
 import whitelist from './whitelist';
 
 const rootReducer = combineReducers({
+  accountcreate,
   accounts,
   actions,
   app,

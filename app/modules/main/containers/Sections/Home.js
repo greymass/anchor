@@ -9,6 +9,12 @@ import {
   withRouter
 } from 'react-router-dom';
 
+import AccountSetupBackup from './Home/Setup/Backup';
+import AccountSetupCode from './Home/Setup/Code';
+import AccountSetupCreate from './Home/Setup/Create';
+import AccountSetupHome from './Home/Setup/Account';
+import AccountSetupImport from './Home/Setup/Import';
+import AccountSetupRecover from './Home/Setup/Recover';
 import ColdWalletContainer from './ColdWallet';
 import GlobalBlockchainChoose from '../../../../shared/containers/Global/Blockchain/Choose';
 import GlobalBlockchainManage from '../../../../shared/containers/Global/Blockchain/Manage';
@@ -36,16 +42,18 @@ class HomeContainer extends Component<Props> {
       wallets,
     } = this.props;
     const matchingWallets = wallets.filter(w => (w.chainId === settings.chainId));
-    if (!settings.walletInit) {
-      history.push('/home/init');
-    } else if (!settings.walletHash) {
-      history.push('/home/password');
-    } else if (settings.walletHash && (!settings.chainId || settings.blockchains.length === 0)) {
-      history.push('/home/blockchain');
-    } else if (!matchingWallets || matchingWallets.length === 0) {
-      history.push('/home/accounts');
-    } else if (settings.walletMode === 'cold') {
-      history.push('/home/coldwallet');
+    if (!this.props.location.pathname.startsWith('/home/account')) {
+      if (!settings.walletInit) {
+        history.push('/home/init');
+      } else if (!settings.walletHash) {
+        history.push('/home/password');
+      } else if (settings.walletHash && (!settings.chainId || settings.blockchains.length === 0)) {
+        history.push('/home/blockchain');
+      } else if (!matchingWallets || matchingWallets.length === 0) {
+        history.push('/home/accounts');
+      } else if (settings.walletMode === 'cold') {
+        history.push('/home/coldwallet');
+      }
     }
   };
   render() {
@@ -78,6 +86,12 @@ class HomeContainer extends Component<Props> {
         <HashRouter>
           <Switch>
             <Route exact path="/" component={OverviewContainer} />
+            <Route path="/home/account/backup/:chain_id/:account_name/:first_account?" component={AccountSetupBackup} />
+            <Route path="/home/account/code" component={AccountSetupCode} />
+            <Route path="/home/account/create" component={AccountSetupCreate} />
+            <Route path="/home/account/import" component={AccountSetupImport} />
+            <Route path="/home/account/recover" component={AccountSetupRecover} />
+            <Route path="/home/account/setup" component={AccountSetupHome} />
             <Route path="/home/accounts" component={HomeAccountsContainer} />
             <Route path="/home/blockchains/:chain_id" component={GlobalBlockchainManage} />
             <Route path="/home/blockchain" component={GlobalBlockchainChoose} />

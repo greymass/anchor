@@ -86,8 +86,8 @@ if (!lock) {
     }
     showMain();
     if (pHandler !== null && uri) {
-      if (uri.startsWith('esr:')) {
-        handleUri(resourcePath, store, mainWindow, pHandler, uri, pHandler);
+      if (uri.startsWith('esr:') || uri.startsWith('anchorcreate:')) {
+        handleUri(resourcePath, store, mainWindow, pHandler, uri);
       }
     } else {
       showManager();
@@ -125,7 +125,7 @@ app.on('ready', async () => {
     uri = process.argv && process.argv.slice(1)[0];
   }
   if (uri) {
-    if (uri.startsWith('esr')) {
+    if (uri.startsWith('esr') || uri.startsWith('anchorcreate')) {
       setTimeout(() => {
         handleUri(resourcePath, store, mainWindow, pHandler, uri);
       }, 2000);
@@ -138,7 +138,7 @@ app.on('activate', (e, hasVisibleWindows) => {
 });
 app.on('open-url', (e, url) => {
   if (pHandler) {
-    if (url.startsWith('esr')) {
+    if (url.startsWith('esr') || url.startsWith('anchorcreate')) {
       handleUri(resourcePath, store, mainWindow, pHandler, url);
     }
   } else {
@@ -265,32 +265,28 @@ ipcMain.on('connectSessionManager', initSessionManager);
 
 const enableSigningRequests = () => {
   log.info('enableSigningRequests');
-  // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
-  app.setAsDefaultProtocolClient('eosio');
-  protocol.registerHttpProtocol('eosio', (req, cb) => {
-    log.info('legacy protocol handler: register', req, cb);
-  });
   app.setAsDefaultProtocolClient('esr');
   protocol.registerHttpProtocol('esr', (req, cb) => {
     log.info('protocol handler: register', req, cb);
   });
-  app.setAsDefaultProtocolClient('anchorwallet');
-  protocol.registerHttpProtocol('anchorwallet', (req, cb) => {
-    log.info('app handler: register', req, cb);
-  });
   app.setAsDefaultProtocolClient('anchor');
   protocol.registerHttpProtocol('anchor', (req, cb) => {
+    log.info('app handler: register', req, cb);
+  });
+  app.setAsDefaultProtocolClient('anchorcreate');
+  protocol.registerHttpProtocol('anchorcreate', (req, cb) => {
     log.info('app handler: register', req, cb);
   });
 };
 
 const disableSigningRequests = () => {
   log.info('disableSigningRequests');
-  // TODO: remove eosio:// protocol handler in the future, it conflicts with B1 implementation
-  app.removeAsDefaultProtocolClient('eosio');
-  protocol.unregisterProtocol('eosio');
   app.removeAsDefaultProtocolClient('esr');
   protocol.unregisterProtocol('esr');
+  app.removeAsDefaultProtocolClient('anchor');
+  protocol.unregisterProtocol('anchor');
+  app.removeAsDefaultProtocolClient('anchorcreate');
+  protocol.unregisterProtocol('anchorcreate');
 };
 
 function showMain() {
@@ -313,7 +309,7 @@ function showHandler() {
 
 // Allow ESR Requests from the UI
 ipcMain.on('openUri', (event, data) => {
-  handleUri(resourcePath, store, mainWindow, pHandler, data, pHandler);
+  handleUri(resourcePath, store, mainWindow, pHandler, data);
 });
 
 // Session management IPC handlers

@@ -25,6 +25,7 @@ class HomePasswordContainer extends Component<Props> {
       history,
     } = this.props;
     history.push('/home/blockchain');
+    // history.push('/home/account/setup');
   }
   render() {
     const {

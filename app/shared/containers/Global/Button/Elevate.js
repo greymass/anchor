@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
-import { find } from  'lodash';
 import { Button, Form, Header, Icon, Input, Message, Modal, Segment } from 'semantic-ui-react';
 
 import * as WalletActions from '../../../actions/wallet';
@@ -16,7 +15,7 @@ class GlobalButtonElevate extends Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { validate} = this.props;
+    const { validate } = this.props;
     if (
       this.state.open
       && prevProps.validate.WALLET_PASSWORD === 'PENDING'
@@ -45,24 +44,11 @@ class GlobalButtonElevate extends Component<Props> {
   onSubmit = () => {
     const {
       actions,
-      settings,
-      wallet,
-      wallets
     } = this.props;
     const {
       password
     } = this.state;
-    if (settings.walletHash) {
-      actions.validateHashPassword(password);
-    } else {
-      if (wallet && wallet.data) {
-        actions.validateWalletPassword(password, wallet);
-      } else {
-        // if no wallet is specified, user the first with a password
-        const firstFound = find(wallets, { mode: 'hot' });
-        actions.validateWalletPassword(password, firstFound, wallets);
-      }
-    }
+    actions.validateHashPassword(password);
   }
 
   render() {
