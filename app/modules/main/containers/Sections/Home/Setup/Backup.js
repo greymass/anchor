@@ -41,10 +41,6 @@ class AccountSetupBackup extends Component<Props> {
       isLedger,
       method: false,
       password: undefined,
-      print: false,
-      printer: undefined,
-      printers: undefined,
-      printersReturned: false,
       printing: false,
       request,
       saved: false,
@@ -56,42 +52,22 @@ class AccountSetupBackup extends Component<Props> {
     const {
       cancelled,
       method,
-      printers,
       saved,
     } = this.state;
-    if (method && nextProps.accountcreate.saved !== saved) {
+    if (method && nextProps.accountcreate.saved && nextProps.accountcreate.saved !== saved) {
       this.setState({
         generating: false,
-        print: false,
-        printer: false,
         printing: false,
         saved: nextProps.accountcreate.saved,
         words: nextProps.accountcreate.words,
       });
     }
-    if (method && nextProps.accountcreate.cancelled !== cancelled) {
+    if (method && nextProps.accountcreate.cancelled && nextProps.accountcreate.cancelled !== cancelled) {
       this.setState({
         cancelled: nextProps.accountcreate.cancelled,
         generating: false,
-        print: false,
-        printer: false,
         printing: false,
         words: nextProps.accountcreate.words,
-      });
-    }
-    if (method === 'print' && !printers && nextProps.app.printersReturned) {
-      // { key: 'bj', value: 'bj', text: 'Benin' },
-      const options = nextProps.app.printers.map((printer) => ({
-        key: printer.name,
-        value: printer.name,
-        text: printer.displayName
-      }));
-      this.setState({
-        generating: false,
-        printer: options[0].key,
-        printers: options,
-        printersReturned: true,
-        printing: true,
       });
     }
   }
@@ -99,37 +75,14 @@ class AccountSetupBackup extends Component<Props> {
     ipcRenderer.send('resetKeyCertificateCache');
     this.props.actions.resetAccountCreation();
   }
-  onPrint = () => {
-    const { password, printer, request } = this.state;
-    const { account, chainId, owner } = request;
-    ipcRenderer.send('printKeyCertificate', password, owner, chainId, account, printer);
+  onPrint = (password) => {
+    const { account, chainId, owner } = this.state.request;
+    ipcRenderer.send('printKeyCertificate', password, owner, chainId, account);
     this.setState({
-      password,
-      print: true,
-      printing: true,
-    });
-  }
-  onCancelPrint = () => {
-    this.setState({
-      generating: false,
-      method: undefined,
-      password: undefined,
-      printer: undefined,
-      printers: undefined,
-      printing: false,
-    });
-  }
-  onSelectPrinter = (password) => {
-    ipcRenderer.send('getPrinters');
-    this.setState({
-      generating: true,
       method: 'print',
       password,
-      printers: undefined,
+      printing: true,
     });
-  }
-  setPrinter = (e, { value }) => {
-    this.setState({ printer: value });
   }
   onSave = (password) => {
     const { account, chainId, owner } = this.state.request;
@@ -167,11 +120,7 @@ class AccountSetupBackup extends Component<Props> {
       creating,
       generating,
       password,
-      print,
       printing,
-      printer,
-      printers,
-      printersReturned,
       request,
       saved,
       verifying,
@@ -193,50 +142,6 @@ class AccountSetupBackup extends Component<Props> {
         </Dimmer>
       );
     }
-    let modal = false;
-    if (printing && !print && printersReturned) {
-      modal = (
-        <Modal
-          open
-          closeIcon
-          onClose={this.onCancelPrint}
-          size="small"
-        >
-          <Header icon>
-            <Icon name="print" />
-            Select a printer...
-          </Header>
-          <Modal.Content>
-            {(printers.length)
-              ? (
-                <Select
-                  fluid
-                  placeholder="Select a printer from the list"
-                  onChange={this.setPrinter}
-                  options={printers}
-                  value={printer}
-                />
-              )
-              : (
-                <p>No printers found!</p>
-              )
-            }
-          </Modal.Content>
-          <Modal.Actions>
-            <Button
-              content="Cancel"
-              onClick={this.onCancelPrint}
-            />
-            <Button
-              content="Print to selected printer"
-              disabled={!printer}
-              onClick={this.onPrint}
-              primary
-            />
-          </Modal.Actions>
-        </Modal>
-      );
-    }
     let stage = (
       <Segment clearing size="large">
         <Header size="large">
@@ -245,7 +150,6 @@ class AccountSetupBackup extends Component<Props> {
             Save or print your owner key certificate.
           </Header.Subheader>
         </Header>
-        {modal}
         {loader}
         <Image
           floated="right"
@@ -275,13 +179,13 @@ class AccountSetupBackup extends Component<Props> {
                 color="green"
                 content="Print Certificate"
                 icon="print"
-                onClick={() => this.onSelectPrinter(password)}
+                onClick={() => this.onPrint(password)}
                 size="large"
               />
             )
             : (
               <GlobalButtonElevate
-                onSuccess={(p) => this.onSelectPrinter(p)}
+                onSuccess={(p) => this.onPrint(p)}
                 trigger={(
                   <Button
                     color="green"

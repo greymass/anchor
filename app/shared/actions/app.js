@@ -73,14 +73,8 @@ export function getConstants() {
   };
 }
 
-export const listPrinters = (printers) => (dispatch: () => void) => dispatch({
-  type: types.SYSTEM_LIST_PRINTERS,
-  payload: printers
-});
-
 export default {
   downloadProgress,
   getConstants,
-  listPrinters,
   initApp
 };
