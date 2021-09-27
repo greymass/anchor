@@ -7,7 +7,9 @@ import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 import { find } from 'lodash';
 
-import { Button, Dimmer, Header, Image, Icon, Loader, Modal, Segment, Select, Table } from 'semantic-ui-react';
+import { Button, Confirm, Dimmer, Header, Image, Icon, Loader, Modal, Segment, Select, Table } from 'semantic-ui-react';
+
+import PrintArrow from '../../../../../../renderer/assets/images/print-arrow.jpg';
 
 import { createWallet, resetAccountCreation } from '../../../../actions/account';
 import { changeModule } from '../../../../actions/navigation';
@@ -42,6 +44,7 @@ class AccountSetupBackup extends Component<Props> {
       method: false,
       password: undefined,
       printing: false,
+      printConfirm: false,
       request,
       saved: false,
       verifying: false,
@@ -75,13 +78,22 @@ class AccountSetupBackup extends Component<Props> {
     ipcRenderer.send('resetKeyCertificateCache');
     this.props.actions.resetAccountCreation();
   }
-  onPrint = (password) => {
-    const { account, chainId, owner } = this.state.request;
+  onPrint = () => {
+    const { password, request } = this.state;
+    const { account, chainId, owner } = request;
     ipcRenderer.send('printKeyCertificate', password, owner, chainId, account);
     this.setState({
       method: 'print',
       password,
       printing: true,
+      printConfirm: false,
+    });
+  }
+  onPrintPrompt = (password) => {
+    this.setState({
+      method: 'print',
+      password,
+      printConfirm: true,
     });
   }
   onSave = (password) => {
@@ -91,6 +103,11 @@ class AccountSetupBackup extends Component<Props> {
       generating: true,
       method: 'save',
       password,
+    });
+  }
+  onSelectBackup = () => {
+    this.setState({
+      verifying: false,
     });
   }
   onComplete = () => {
@@ -121,6 +138,7 @@ class AccountSetupBackup extends Component<Props> {
       generating,
       password,
       printing,
+      printConfirm,
       request,
       saved,
       verifying,
@@ -138,8 +156,35 @@ class AccountSetupBackup extends Component<Props> {
     if (printing) {
       loader = (
         <Dimmer active inverted>
-          <Loader size="big"><Header>Printing...</Header></Loader>
+          <Loader size="big">
+            <Header>
+              Printing...
+              <Header.Subheader>
+                Print and close the PDF from the new window to proceed.
+              </Header.Subheader>
+            </Header>
+          </Loader>
         </Dimmer>
+      );
+    }
+    let modal;
+    if (printConfirm) {
+      modal = (
+        <Confirm
+          content={(
+            <Segment attached="top">
+              <Header size="large">
+                Printing your owner key certificate
+              </Header>
+              <p style={{ margin: '2em 0' }}>A new window will be opened displaying your owner key certificate. Click the Print icon in the upper right as shown in the screenshot below in order to start printing.</p>
+              <Image src={PrintArrow} />
+              <p style={{ margin: '2em 0' }}>Click OK to open your certificate in a new window.</p>
+            </Segment>
+          )}
+          open
+          onCancel={this.cancelPrint}
+          onConfirm={() => this.onPrint(password)}
+        />
       );
     }
     let stage = (
@@ -150,6 +195,7 @@ class AccountSetupBackup extends Component<Props> {
             Save or print your owner key certificate.
           </Header.Subheader>
         </Header>
+        {modal}
         {loader}
         <Image
           floated="right"
@@ -179,13 +225,13 @@ class AccountSetupBackup extends Component<Props> {
                 color="green"
                 content="Print Certificate"
                 icon="print"
-                onClick={() => this.onPrint(password)}
+                onClick={() => this.onPrintPrompt(password)}
                 size="large"
               />
             )
             : (
               <GlobalButtonElevate
-                onSuccess={(p) => this.onPrint(p)}
+                onSuccess={(p) => this.onPrintPrompt(p)}
                 trigger={(
                   <Button
                     color="green"
@@ -245,6 +291,7 @@ class AccountSetupBackup extends Component<Props> {
       stage = (
         <AccountSetupElementsWords
           creating={creating}
+          onCancel={this.onSelectBackup}
           onComplete={this.onComplete}
           words={words}
         />
