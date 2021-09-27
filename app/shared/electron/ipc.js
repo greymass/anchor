@@ -51,15 +51,9 @@ const configureIPC = (ui, store, primary = false) => {
       publicKey,
       chainId,
       accountName,
-      printer,
-    ) => printKeyCertificate(event, store, password, publicKey, chainId, accountName, printer));
+    ) => printKeyCertificate(event, store, password, publicKey, chainId, accountName));
 
     ipcMain.on('resetKeyCertificateCache', () => resetKeyCertificateCache())
-
-    ipcMain.on('getPrinters', (event) => {
-      const printers = ui.webContents.getPrinters()
-      event.sender.send('listPrinters', printers)
-    })
 
     ipcMain.on('openFile', (event, openPath = false) => {
       const defaultPath = (openPath || app.getPath('documents'));

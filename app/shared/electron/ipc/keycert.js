@@ -5,7 +5,6 @@ import generatepdf from '@greymass/keycert-pdf'
 import { generate } from '@greymass/keycert'
 import { APIClient, FetchProvider, PrivateKey } from '@greymass/eosio'
 import { EncryptedPrivateKey } from 'eosio-key-encryption'
-import ptp from "pdf-to-printer";
 
 import { find, forEach, partition, pluck, uniq } from 'lodash'
 
@@ -231,7 +230,6 @@ export async function printKeyCertificate(
   publicKey,
   chainId,
   accountName,
-  printer,
 ) {
   if (!cachedPdf) {
     // Generate the certificate based on the account information provided
@@ -242,25 +240,31 @@ export async function printKeyCertificate(
     cachedPdf = await getKeyCertificatePdf(store, cert, chainId)
   }
   // Save the file
-  const filePath = `${app.getPath('documents')}/temporary-certificate.pdf`
+  const filePath = `${app.getPath('documents')}/owner-key-certificate.pdf`
   // Save the file to the specified path
   fs.writeFileSync(filePath, cachedPdf)
   // Open a new BrowserWindow with the PDF allowing the user to print
   const printerWindow = new BrowserWindow({
-    width: 800,
+    autoHideMenuBar: true,
     height: 600,
+    width: 800,
     webPreferences: {
       nodeIntegration: true
     }
   })
-  // Load the PDF
+  // Load the PDF into the BrowserWindow
   printerWindow.loadFile(filePath)
   // When the window closes, return the certificate keywords
   printerWindow.on('closed', () => {
-    // Return the encryption keywords to the frontend
-    event.sender.send('returnKeyCertificateWords', cachedWords)
-    // Remove the temporary file
-    fs.rmSync(filePath)
+    try {
+      // Remove the temporary file
+      fs.rmSync(filePath)
+    } catch (e) {
+      // No catch
+    } finally {
+      // Return the encryption keywords to the frontend
+      event.sender.send('returnKeyCertificateWords', cachedWords)
+    }
   })
 }
 
