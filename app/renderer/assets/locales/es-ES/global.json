@@ -163,7 +163,7 @@
   "global_modal_settings_customtoken_form_account_placeholder": "Enter the contract account name...",
   "global_modal_settings_customtoken_form_symbol_label": "Contract Asset Symbol",
   "global_modal_settings_customtoken_form_symbol_placeholder": "Enter the asset symbol...",
-  "global_modal_settings_customtoken_header": "Add Custom Token to Track",
+  "global_modal_settings_customtoken_header": "Añadir Token personalizado para seguir",
   "global_modal_settings_customtoken_none_tracked": "No custom token accounts tracked.",
   "global_modal_settings_customtoken_notfound_header": "Token no encontrada",
   "global_modal_settings_customtoken_notfound_subheader": "The details for the token entered could not be found.",
