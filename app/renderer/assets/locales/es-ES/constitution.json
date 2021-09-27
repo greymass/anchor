@@ -30,7 +30,7 @@
   "constitution_article_13_body": "Todos los proveedores de servicios que produzcan herramientas para facilitar la construcción y firma de transacciones en nombre de otros miembros presentarán a dichos miembros los términos completos del contrato ricardiano de esta Constitución y otros contratos referenciados. Los proveedores de servicios serán responsables de las pérdidas que resulten de no revelar a los usuarios las condiciones completas del contrato ricardiano.",
   "constitution_article_14_title": "Artículo XIV - Separabilidad",
   "constitution_article_14_body": "If any part of this Constitution is declared unenforceable or invalid, the remainder will continue to be valid and enforceable.",
-  "constitution_article_15_title": "Article XV - Termination of Agreement",
+  "constitution_article_15_title": "Artículo XV - Terminación del Acuerdo",
   "constitution_article_15_body": "A Member is automatically released from all revocable obligations under this Constitution 3 years after the last transaction signed by that Member is incorporated into the blockchain. After 3 years of inactivity an account may be put up for auction and the proceeds distributed to all Members according to the system contract provisions then in effect for such redistribution.",
   "constitution_article_16_title": "Article XVI - Developer Liability",
   "constitution_article_16_body": "Members agree to hold software developers harmless for unintentional mistakes made in the expression of contractual intent, whether or not said mistakes were due to actual or perceived negligence.",
