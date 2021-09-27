@@ -79,6 +79,13 @@ class AccountSetupElementsWords extends Component<Props> {
                 fluid
                 primary
                 onClick={() => this.setState({ stage: 'verify' })}
+                style={{ margin: '1em 0' }}
+              />
+              <Button
+                content="Back to export"
+                fluid
+                onClick={this.props.onCancel}
+                style={{ margin: '1em 0' }}
               />
             </React.Fragment>
           )
