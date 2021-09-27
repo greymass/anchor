@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
+import { PublicKey } from '@greymass/eosio';
 
 import {
   Button,
+  Checkbox,
   Confirm,
   Dropdown,
   Header,
@@ -28,6 +30,7 @@ const defaultState = {
   closable: true,
   confirm: false,
   confirmRemove: false,
+  legacy: false,
   open: false,
   openImport: false,
   openKey: false,
@@ -74,6 +77,7 @@ class ToolsKeys extends Component<Props> {
     this.setState({ confirmRemove: false });
   }
   filterKeys = (e, { value }) => this.setState({ searchFilter: value })
+  toggleLegacy = (e, { checked }) => this.setState({ legacy: checked })
   render() {
     const {
       paths,
@@ -86,6 +90,7 @@ class ToolsKeys extends Component<Props> {
     } = this.props;
     const {
       confirmRemove,
+      legacy,
       openKey,
       searchFilter,
     } = this.state;
@@ -199,13 +204,19 @@ class ToolsKeys extends Component<Props> {
           onCancel={this.onCancelConfirm}
           onConfirm={this.onForceClose}
         />
-        <Table size="small">
+      <Table size="small" key={`legacy-keys-${legacy}`}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>
                 <Input
                   onChange={this.filterKeys}
                   placeholder="Search by Public Key"
+                />
+                <Checkbox
+                  checked={legacy}
+                  label="Show Legacy Format"
+                  onChange={this.toggleLegacy}
+                  style={{ marginLeft: '1em' }}
                 />
               </Table.HeaderCell>
               <Table.HeaderCell collapsing>
@@ -223,7 +234,7 @@ class ToolsKeys extends Component<Props> {
                 <Table.Row>
                   <Table.Cell>
                     <pre style={{ display: 'inline', margin: 0 }}>
-                      {pubkey}
+                      {(legacy) ? pubkey : String(PublicKey.from(pubkey))}
                     </pre>
                     <Dropdown>
                       <Dropdown.Menu>
