@@ -83,7 +83,6 @@
     "i18next-sync-fs-backend": "^1.1.1",
     "node-notifier": "^5.4.3",
     "p-queue": "^6.6.2",
-    "pdf-to-printer": "^3.1.0",
     "pretty-bytes": "^5.1.0",
     "qrcode": "^1.4.4",
     "react": "^16.4.0",

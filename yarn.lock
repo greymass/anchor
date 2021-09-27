@@ -11671,11 +11671,6 @@ pdf-lib@^1.16.0:
     pako "^1.0.11"
     tslib "^1.11.1"
 
-pdf-to-printer@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/pdf-to-printer/-/pdf-to-printer-3.1.0.tgz#bae8abdcf10179599f328b68b45373ed02fbfc6b"
-  integrity sha512-LyMRccnGgRQoatwn4IqQnUYVkln8d4ZpM2uH8IX1rVGhudNr5UbMrffV4ssg0FFQNVsxUoJ0w9jW8JYbewdxjQ==
-
 pend@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
