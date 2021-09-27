@@ -1,7 +1,7 @@
 {
     "tools_account_creation_header": "Confirmar creación de cuenta",
     "tools_airgrab_anything_missing": "Is an airdrop missing from this list? If so, let us know by dropping by the Greymass Wallet telegram channel: ",
-    "main_sections_pending_grid_header": "Pending Actions",
+    "main_sections_pending_grid_header": "Acciones Pendientes",
     "main_sections_pending_grid_subheader": "Listed below are any pending actions you are recommended to take within Anchor.",
     "main_sections_pending_accounts_header": "Account Creation Requests",
     "main_sections_pending_accounts_subheader": "The accounts listed below are ones which you have requested be created. Share the Request URL with an existing account holder or a 3rd party service to have them create your new account.",
