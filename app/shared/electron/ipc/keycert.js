@@ -1,4 +1,4 @@
-import { app } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { scrypt } from 'crypto'
 import fetch from 'electron-fetch'
 import generatepdf from '@greymass/keycert-pdf'
@@ -245,13 +245,23 @@ export async function printKeyCertificate(
   const filePath = `${app.getPath('documents')}/temporary-certificate.pdf`
   // Save the file to the specified path
   fs.writeFileSync(filePath, cachedPdf)
-  // Print the PDF
-  ptp.print(filePath, { printer }).then(() => {
+  // Open a new BrowserWindow with the PDF allowing the user to print
+  const printerWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+  // Load the PDF
+  printerWindow.loadFile(filePath)
+  // When the window closes, return the certificate keywords
+  printerWindow.on('closed', () => {
     // Return the encryption keywords to the frontend
     event.sender.send('returnKeyCertificateWords', cachedWords)
     // Remove the temporary file
     fs.rmSync(filePath)
-  });
+  })
 }
 
 export function resetKeyCertificateCache() {
