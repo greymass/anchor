@@ -50,7 +50,7 @@ class PromptContainer extends Component<Props> {
       this.templateURI();
     }
   }
-  componentDidUnmount() {
+  componentWillUnmount() {
     window.removeEventListener('keydown', this.onKeyPress, true);
   }
   modifyWhitelist = (e, { index, name }) => {

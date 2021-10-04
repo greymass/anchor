@@ -13,7 +13,7 @@ import { setSetting } from '../../../../../shared/actions/settings';
 import { setWalletMode } from '../../../../../shared/actions/wallet';
 
 import WelcomeImportContainer from '../../../../../shared/containers/Welcome/Import';
-
+import GlobalModalAccountImportCert from '../../../../../shared/containers/Global/Account/Import/Cert';
 import LogoText from '../../../../../renderer/assets/images/anchor-text-blue.svg';
 
 class HomeInitializeContainer extends Component<Props> {
@@ -91,6 +91,18 @@ class HomeInitializeContainer extends Component<Props> {
                 {t('main_sections_home_initialize_card_description_one')}
               </Card.Description>
               <WelcomeImportContainer />
+              <Card.Description style={{ margin: '1em' }}>
+                Do you have an owner key certificate?
+              </Card.Description>
+              <GlobalModalAccountImportCert
+                trigger={(
+                  <Button
+                    content="Recover Account"
+                    icon="qrcode"
+                    primary
+                  />
+                )}
+              />
             </Card.Content>
             {(settings.advancedOptions)
               ? (

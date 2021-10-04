@@ -8,10 +8,14 @@ import Root from './containers/Root';
 import Routes from './routes';
 
 import {
+  accountUpdatedViaCertificate,
   beginAccountCreate,
   cancelKeyCertificate,
+  returnKeyCertificateCode,
+  returnKeyCertificateDecrypted,
+  returnKeyCertificateFailed,
   returnKeyCertificateWords,
-  returnNewAccountKeys
+  returnNewAccountKeys,
 } from './actions/account';
 import { downloadProgress, listPrinters } from '../../shared/actions/app';
 
@@ -56,6 +60,10 @@ ipcRenderer.on('listPrinters', (event, printers) => store.dispatch(listPrinters(
 ipcRenderer.on('accountCreate', (event, data) => store.dispatch(beginAccountCreate(data)));
 ipcRenderer.on('cancelKeyCertificate', () => store.dispatch(cancelKeyCertificate()));
 ipcRenderer.on('returnKeyCertificateWords', (event, words) => store.dispatch(returnKeyCertificateWords(words)));
+ipcRenderer.on('returnKeyCertificateDecrypted', (event, cert) => store.dispatch(returnKeyCertificateDecrypted(cert)));
+ipcRenderer.on('returnKeyCertificateFailed', (event, error) => store.dispatch(returnKeyCertificateFailed(error)));
+ipcRenderer.on('accountUpdatedViaCertificate', (event, status) => store.dispatch(accountUpdatedViaCertificate(status)));
+ipcRenderer.on('returnKeyCertificateCode', (event, code) => store.dispatch(returnKeyCertificateCode(code)));
 ipcRenderer.on('returnNewAccountKeys', (
   event,
   chainId,

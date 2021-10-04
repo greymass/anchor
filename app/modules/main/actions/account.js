@@ -4,8 +4,10 @@ import { find } from 'lodash';
 import { Bytes, KeyType, PrivateKey, Serializer, Struct } from '@greymass/eosio';
 import { Base64u } from 'eosio-signing-request';
 
+import EOSAccount from '../../../shared/utils/EOS/Account';
 import * as types from '../../../shared/actions/types';
 import { changeModule } from './navigation';
+import { getAccount } from '../../../shared/actions/accounts';
 import { swapBlockchain } from '../../../shared/actions/blockchains';
 import { addPendingAccountCertificate } from '../../../shared/actions/pending';
 import { importKeyStorage, importWallet, useWallet } from '../../../shared/actions/wallets';
@@ -212,6 +214,15 @@ export function returnKeyCertificateWords(words) {
   };
 }
 
+export function returnKeyCertificateCode(code) {
+  return async (dispatch: () => void) => {
+    dispatch({
+      type: types.ACCOUNT_CREATION_CERT_CODE_RECEIVED,
+      payload: code
+    });
+  };
+}
+
 export function returnNewAccountKeys(chainId, accountName, active, owner) {
   return async (dispatch: () => void) => {
     dispatch({
@@ -219,6 +230,48 @@ export function returnNewAccountKeys(chainId, accountName, active, owner) {
       payload: {
         chainId, accountName, active, owner
       }
+    });
+  };
+}
+
+export function returnKeyCertificateDecrypted(cert) {
+  return async (dispatch: () => void, getState) => {
+    const { httpClient } = await createHttpHandler({});
+    const result = await httpClient.post(`${cert.blockchain.node}/v1/chain/get_account`, {
+      account_name: cert.account.actor,
+    });
+    if (result.status === 200) {
+      if (auth === `${cert.account.actor}@${cert.account.permission}`) {
+        return dispatch({
+          type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED,
+          payload: cert
+        });
+      }
+    }
+    return dispatch({
+      type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED,
+      payload: undefined
+    });
+  };
+}
+
+export function returnKeyCertificateFailed(error) {
+  return async (dispatch: () => void) => {
+    dispatch({
+      type: types.ACCOUNT_KEY_CERTIFICATE_FAILED,
+      payload: error
+    });
+  };
+}
+
+export function accountUpdatedViaCertificate(status) {
+  return async (dispatch: () => void) => {
+    // Establish the local wallet in Anchor
+    dispatch(createWallet(status.chainId, status.accountName, status.publicKey));
+    // Dispatch event to notify the frontend
+    return dispatch({
+      type: types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE,
+      payload: status
     });
   };
 }
@@ -272,12 +325,13 @@ export function verifyAccountExists(chainId, account, activeKey) {
   };
 }
 
-
 export default {
   beginAccountCreate,
   cancelKeyCertificate,
   createAccount,
   resetAccountCreation,
+  returnKeyCertificateCode,
+  returnKeyCertificateFailed,
   returnKeyCertificateWords,
   returnNewAccountKeys,
   verifyAccountExists,

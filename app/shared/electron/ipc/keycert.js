@@ -2,8 +2,9 @@ import { app, BrowserWindow } from 'electron'
 import { scrypt } from 'crypto'
 import fetch from 'electron-fetch'
 import generatepdf from '@greymass/keycert-pdf'
-import { generate } from '@greymass/keycert'
-import { APIClient, FetchProvider, PrivateKey } from '@greymass/eosio'
+import { decrypt as decryptKeyCert, generate, KeyCertificate } from '@greymass/keycert'
+import { Action, APIClient, FetchProvider, Name, PrivateKey, SignedTransaction, Transaction } from '@greymass/eosio'
+import { SigningRequest } from 'eosio-signing-request'
 import { EncryptedPrivateKey } from 'eosio-key-encryption'
 
 import { find, forEach, partition, pluck, uniq } from 'lodash'
@@ -12,11 +13,21 @@ import * as types from '../../actions/types'
 import { addPendingAccountCertificate } from '../../actions/pending'
 import { decrypt } from '../../actions/wallet'
 import { importKeyStorage } from '../../actions/wallets'
-
-const CryptoJS = require('crypto-js')
+import { fuelEndpoints } from '../../utils/EOS/Handler'
+import * as ValidateFuel from '../../utils/EOS/ValidateFuel'
 
 import templateBase64String from './keycert/template'
 import fontBase64String from './keycert/font'
+
+const CryptoJS = require('crypto-js')
+const zlib = require('zlib')
+
+const opts = {
+  zlib: {
+    deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
+    inflateRaw: (data) => new Uint8Array(zlib.inflateRawSync(Buffer.from(data))),
+  }
+}
 
 const { dialog } = require('electron')
 const fs = require('fs')
@@ -181,8 +192,8 @@ async function getKeyCertificatePdf(
 }
 
 // Cached versions allowing user to print and save
-let cachedWords;
-let cachedPdf;
+let cachedWords
+let cachedPdf
 
 export async function saveKeyCertificate(
   event,
@@ -271,4 +282,196 @@ export async function printKeyCertificate(
 export function resetKeyCertificateCache() {
   cachedPdf = undefined
   cachedWords = undefined
+}
+
+async function decryptCertificate(certificate, encryptionWords) {
+  const cert = KeyCertificate.from(certificate)
+  const decrypted = await decryptKeyCert(cert, encryptionWords)
+  return decrypted
+}
+
+export async function decryptKeyCertificate(event, store, certificate, encryptionWords) {
+  // Decrypt the key certificate
+  try {
+    const decrypted = await decryptCertificate(certificate, encryptionWords)
+    // Find the appropriate blockchain information
+    const chainId = String(decrypted.chainId)
+    const { blockchains } = store.getState()
+    const blockchain = find(blockchains, { chainId })
+    event.sender.send('returnKeyCertificateDecrypted', {
+      publicKey: decrypted.privateKey.toPublic().toLegacyString(blockchain.keyPrefix),
+      account: JSON.parse(JSON.stringify(decrypted.account)),
+      blockchain,
+      chainId,
+    })
+  } catch (e) {
+    console.log(e)
+    event.sender.send('returnKeyCertificateFailed', {
+      message: 'Failed to decrypt key certificate',
+      error: e
+    })
+  }
+}
+
+export async function updateKeyWithCertificate(event, store, password, certificate, encryptionWords, reset = false) {
+  // Decrypt the key certificate
+  const decrypted = await decryptCertificate(certificate, encryptionWords)
+  // Find the appropriate blockchain information
+  const chainId = String(decrypted.chainId)
+  const { blockchains } = store.getState()
+  const blockchain = find(blockchains, { chainId })
+  // Generate the new key
+  const newPrivateKey = PrivateKey.generate('K1')
+  // Get the public key to this newly generated key
+  const newPublicKey = newPrivateKey.toPublic()
+  // Import the new key into Anchor
+  store.dispatch(importKeyStorage(
+    password,
+    newPrivateKey.toWif(),
+    newPublicKey.toLegacyString(blockchain.keyPrefix)
+  ))
+  // API Client for use
+  const provider = new FetchProvider(blockchain.node, {fetch})
+  const client = new APIClient({
+    provider
+  })
+  // Generate the update auth transaction with or without Fuel
+  const updateauth = await generateUpdateAuthTransaction(
+    client,
+    chainId,
+    decrypted.account,
+    newPublicKey,
+    reset
+  )
+  // Assemble/sign the transaction with the owner key
+  const transaction = Transaction.from(updateauth.transaction)
+  const signature = decrypted.privateKey.signDigest(transaction.signingDigest(chainId))
+  const signedTransaction = SignedTransaction.from({
+      ...transaction,
+      signatures: [...updateauth.signatures, signature],
+  })
+  // Broadcast
+  const response = await client.v1.chain.push_transaction(signedTransaction)
+  if (response.transaction_id) {
+    // notify renderer
+    event.sender.send('accountUpdatedViaCertificate',   {
+      accountName: String(decrypted.account.actor),
+      chainId,
+      publicKey: newPublicKey.toLegacyString(blockchain.keyPrefix),
+      transactionId: response.transaction_id,
+    })
+  }
+}
+
+async function generateUpdateAuthTransaction(client, chainId, signer, publicKey, reset = false) {
+  // Load required info
+  const info = await client.v1.chain.get_info()
+  const {abi} = await client.v1.chain.get_abi('eosio')
+  // Load existing account data to base permissions upon
+  const accountData = await client.v1.chain.get_account(signer.actor)
+  const permissions = JSON.parse(JSON.stringify(accountData.permissions))
+  const activePermission = find(permissions, {
+    perm_name: 'active'
+  })
+  // Set auth defaults
+  const auth = {
+    threshold: 1,
+    keys: activePermission.required_auth.keys,
+    accounts: activePermission.required_auth.accounts,
+    waits: activePermission.required_auth.waits,
+  }
+  // Define the new auth using the public key
+  const newAuth = {
+    key: publicKey,
+    weight: 1,
+  }
+  // If we are resetting, remove other keys and add this new one
+  if (reset) {
+    auth.keys = [newAuth]
+  } else {
+    // else append this key to the array of existing keys
+    auth.keys = [
+      ...auth.keys,
+      newAuth
+    ].sort((k1, k2) => (k1.key < k2.key ? -1 : 1)) // sort keys
+  }
+  // Create transaction
+  const action = Action.from({
+    account: 'eosio',
+    name: 'updateauth',
+    authorization: [signer],
+    data: {
+      account: signer.actor,
+      auth,
+      parent: 'owner',
+      permission: 'active',
+    }
+  }, abi)
+  const transaction = Transaction.from({
+    ...info.getTransactionHeader(),
+    actions: [action]
+  })
+  // Attempt to load signature from Fuel
+  const response = await getFuelSignature(chainId, transaction, signer)
+  if (response) {
+    // If Fuel responded, use the new transaction
+    return response
+  } else {
+    // else use the original transaction without Fuel
+    return {
+      signatures: [],
+      transaction
+    }
+  }
+}
+
+async function getFuelSignature(chainId, tx, signer) {
+  // Retrieve appropriate endpoint
+  const endpoint = fuelEndpoints[chainId]
+  // If no endpoint, not applicable
+  if (!endpoint) return null
+  // Create an ESR payload to make the request with
+  const request = await SigningRequest.create({
+    transaction: tx,
+    chainId,
+  }, opts)
+  // Call the API and get the signature
+  const response = await fetch(`${endpoint}/v1/resource_provider/request_transaction`, {
+    method: 'POST',
+    body: JSON.stringify({
+      request,
+      signer,
+    })
+  })
+  const { status } = response
+  // If the response was valid, return the signature and modified transaction
+  if (status === 200 ) {
+    const json = await response.json()
+    const { request, signatures } = json.data
+    const [, requestData] = request
+    // Validate the returned data against the requested data
+    await ValidateFuel.validateTransaction(
+      signer,
+      requestData,
+      JSON.parse(JSON.stringify(tx))
+    )
+    // So long as the validation doesn't throw an exception, return signature and new transaction
+    return {
+      signatures,
+      transaction: requestData,
+    }
+  }
+  return null
+}
+
+export function getKeyCertificateCode(event, chainId, accountName, mnemonicWords) {
+  const cert = KeyCertificate.from({
+    chainId,
+    account: {
+      actor: accountName,
+      permission: 'owner',
+    },
+    key: mnemonicWords,
+  });
+  event.sender.send('returnKeyCertificateCode', String(cert))
 }
