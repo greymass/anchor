@@ -241,6 +241,7 @@ export function returnKeyCertificateDecrypted(cert) {
       account_name: cert.account.actor,
     });
     if (result.status === 200) {
+      const auth = new EOSAccount(result.data).getAuthorization(cert.publicKey);
       if (auth === `${cert.account.actor}@${cert.account.permission}`) {
         return dispatch({
           type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED,
