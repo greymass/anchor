@@ -1,10 +1,13 @@
 import { app, ipcMain } from 'electron';
 import { checkForUpdates } from './updater';
 import {
+  decryptKeyCertificate,
   generateNewAccount,
+  getKeyCertificateCode,
   printKeyCertificate,
   resetKeyCertificateCache,
-  saveKeyCertificate
+  saveKeyCertificate,
+  updateKeyWithCertificate,
 } from './ipc/keycert';
 
 const { dialog } = require('electron');
@@ -54,6 +57,27 @@ const configureIPC = (ui, store, primary = false) => {
     ) => printKeyCertificate(event, store, password, publicKey, chainId, accountName));
 
     ipcMain.on('resetKeyCertificateCache', () => resetKeyCertificateCache())
+
+    ipcMain.on('decryptKeyCertificate', (
+      event,
+      certificate,
+      encryptionWords,
+    ) => decryptKeyCertificate(event, store, certificate, encryptionWords))
+
+    ipcMain.on('updateKeyWithCertificate', (
+      event,
+      password,
+      certificate,
+      encryptionWords,
+      reset = false,
+    ) => updateKeyWithCertificate(event, store, password, certificate, encryptionWords, reset))
+
+    ipcMain.on('getKeyCertificateCode', (
+      event,
+      chainId,
+      accountName,
+      mnemonicWords,
+    ) => getKeyCertificateCode(event, chainId, accountName, mnemonicWords))
 
     ipcMain.on('openFile', (event, openPath = false) => {
       const defaultPath = (openPath || app.getPath('documents'));

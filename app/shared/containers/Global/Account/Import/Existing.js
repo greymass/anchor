@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Button, Header, Segment, Tab } from 'semantic-ui-react';
 
+import GlobalModalAccountImportCert from './Cert';
 import GlobalModalAccountImportHot from './Hot';
 import GlobalModalAccountImportLedgerAccounts from './Ledger/Accounts';
 import GlobalModalAccountImportManual from './Manual';
@@ -16,7 +17,7 @@ import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
 
 class GlobalModalAccountImportExisting extends Component<Props> {
   state = {
-    pane: false
+    pane: ''
   }
   onClose = () => {
     this.setState({ pane: false });
@@ -43,6 +44,8 @@ class GlobalModalAccountImportExisting extends Component<Props> {
       switch (pane) {
         case 'hot':
           return <GlobalModalAccountImportHot onClose={this.onClose} />;
+        case 'cert':
+          return <GlobalModalAccountImportCert open onClose={this.onClose} />;
         case 'ledger':
           return (
             <Tab.Pane>
@@ -97,6 +100,19 @@ class GlobalModalAccountImportExisting extends Component<Props> {
               />
             )
           }
+        </Segment>
+        <Segment basic>
+          <Header
+            content={t('global_account_import_exist_header_six')}
+            subheader={t('global_account_import_exist_subheader_six', { connectionChain: connection.chain })}
+          />
+          <Button
+            color="blue"
+            content={t('global_account_import_exist_button_six')}
+            icon="print"
+            pane="cert"
+            onClick={this.onClick}
+          />
         </Segment>
         {(settings.advancedOptions)
           ? (

@@ -62,7 +62,7 @@
   "welcome_path_have_account_button": "Impordi Olemasolev Konto",
   "welcome_path_have_account_header": "Impordi Olemasolev Konto",
   "welcome_path_have_account_subheader": "Kas sul on juba konto nimi ja privaatvõti?",
-  "welcome_restore_wallet_header": "Import Anchor Backup",
+  "welcome_restore_wallet_header": "Import Anchor Backup File",
   "welcome_restore_wallet_subheader": "Restore this wallet to a previous state using a wallet backup file. All settings, networks, and wallets will be recreated.",
   "welcome_select_account": "Vali Konto",
   "welcome_server_connection_fail_content": "Proovi uuesti või sisesta teine server.",
