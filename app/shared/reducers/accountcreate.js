@@ -40,6 +40,18 @@ export default function accountcreate(state = initialState, action) {
         words: action.payload
       });
     }
+    case types.ACCOUNT_CREATION_CERT_CODE_RECEIVED: {
+      return Object.assign({}, state, {
+        code: action.payload,
+        codeReceived: Date.now(),
+      });
+    }
+    case types.ACCOUNT_KEY_CERTIFICATE_FAILED: {
+      return Object.assign({}, state, {
+        decryptFailed: Date.now(),
+        decryptError: action.payload,
+      });
+    }
     case types.ACCOUNT_CREATION_VERIFY_ACCOUNT: {
       let transactionEta = false;
       let transactionIrreversible = false;
@@ -66,6 +78,16 @@ export default function accountcreate(state = initialState, action) {
         transactionEta,
         transactionExists: (action.payload.status === 200),
         transactionIrreversible: action.payload.irreversible,
+      });
+    }
+    case types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED: {
+      return Object.assign({}, state, {
+        decrypted: action.payload
+      });
+    }
+    case types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE: {
+      return Object.assign({}, state, {
+        updatedAccount: action.payload
       });
     }
     default: {

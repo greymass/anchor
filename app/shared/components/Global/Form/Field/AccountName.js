@@ -59,6 +59,7 @@ export class GlobalFormFieldAccountName extends Component<Props> {
         name={name}
         ref={ref}
         onChange={this.onChange}
+        spellcheck="false"
         value={value}
       />
     );
