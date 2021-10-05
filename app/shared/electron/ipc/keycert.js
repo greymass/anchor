@@ -412,16 +412,19 @@ async function generateUpdateAuthTransaction(client, chainId, signer, publicKey,
     actions: [action]
   })
   // Attempt to load signature from Fuel
-  const response = await getFuelSignature(chainId, transaction, signer)
-  if (response) {
-    // If Fuel responded, use the new transaction
-    return response
-  } else {
-    // else use the original transaction without Fuel
-    return {
-      signatures: [],
-      transaction
+  try {
+    const response = await getFuelSignature(chainId, transaction, signer)
+    if (response) {
+      // If Fuel responded, use the new transaction
+      return response
     }
+  } catch(e) {
+    console.log(e)
+  }
+  // else use the original transaction without Fuel
+  return {
+    signatures: [],
+    transaction
   }
 }
 
