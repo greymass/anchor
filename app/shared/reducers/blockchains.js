@@ -265,7 +265,7 @@ const knownChains = [
     "_id": "telos-testnet-2",
     "chainId": "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
     "name": "Telos (Testnet)",
-    "node": "https://testnet.telos.net",
+    "node": "https://telostestnet.greymass.com",
     "voteDecay": false,
     "symbol": "TLOS",
     "testnet": true
