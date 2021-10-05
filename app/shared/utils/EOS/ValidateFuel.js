@@ -1,3 +1,7 @@
+import { Asset, Name, Struct } from '@greymass/eosio';
+
+import { find } from 'lodash';
+
 // Validate the transaction
 async function validateTransaction(signer, modifiedTransaction, serializedTransaction, costs = false) {
   // Ensure the first action is the `greymassnoop:noop`
@@ -9,73 +13,81 @@ async function validateTransaction(signer, modifiedTransaction, serializedTransa
 
 // Validate the actions of the modified transaction vs the original transaction
 async function validateActions(signer, modifiedTransaction, deserializedTransaction, costs) {
-  // // Deserialize the transaction for comparision purposes
-  // const deserializedTransaction = api.deserializeTransaction(serializedTransaction.serializedTransaction);
-
   // Determine how many actions we expect to have been added to the transaction based on the costs
-  const expectedNewActions = determineExpectedActionsLength(costs);
+  const expectedNewActions = determineExpectedActionsLength(costs, modifiedTransaction.actions);
 
   // Ensure the proper number of actions was returned
   validateActionsLength(expectedNewActions, modifiedTransaction, deserializedTransaction);
 
   // Ensure the appended actions were expected
-  await validateActionsContent(signer, expectedNewActions, modifiedTransaction, deserializedTransaction);
+  await validateActionsContent(signer, expectedNewActions, modifiedTransaction, deserializedTransaction, costs);
 }
 
 // Validate the number of actions is the number expected
-function determineExpectedActionsLength(costs) {
+function determineExpectedActionsLength(costs, actions = []) {
   // By default, 1 new action is appended (noop)
   let expectedNewActions = 1;
+
+  // Check to see if Fuel is buying RAM for the account
+  const fuelBuyRam = find(actions, (action) => {
+    const isBuyRam = action.name === 'buyram' && action.account === 'eosio';
+    const fuelAuthorized = action.authorization.length === 1 && action.authorization[0].actor === 'greymassfuel';
+    return isBuyRam && fuelAuthorized;
+  });
+  if (fuelBuyRam) {
+    expectedNewActions += 1;
+  }
 
   // If there are costs associated with this transaction, 1 new actions is added (the fee)
   if (costs) {
     expectedNewActions += 1;
-    // If there is a RAM cost associated with this transaction, 1 new actio is added (the ram purchase)
-    if (costs.ram !== '0.0000 EOS') {
-      expectedNewActions += 1;
-    }
   }
 
   return expectedNewActions;
 }
 
 // Validate the contents of each action
-async function validateActionsContent(signer, expectedNewActions, modifiedTransaction, deserializedTransaction) {
+async function validateActionsContent(signer, expectedNewActions, modifiedTransaction, deserializedTransaction, costs) {
   // Make sure the originally requested actions are still intact and unmodified
   validateActionsOriginalContent(expectedNewActions, modifiedTransaction, deserializedTransaction);
 
   // If a fee has been added, ensure the fee is set properly
-  if (expectedNewActions > 1) {
+  if (costs) {
     await validateActionsFeeContent(signer, modifiedTransaction);
-    // If a ram purchase has been added, ensure the purchase was set properly
-    if (expectedNewActions > 2) {
-      await validateActionsRamContent(signer, modifiedTransaction);
-    }
   }
+}
+
+class Transfer extends Struct {
+    static abiName = 'transfer'
+    static abiFields = [
+      {
+        name: 'from',
+        type: Name,
+      },
+      {
+        name: 'to',
+        type: Name,
+      },
+      {
+        name: 'quantity',
+        type: Asset,
+      },
+      {
+        name: 'memo',
+        type: 'string',
+      },
+    ]
 }
 
 // Ensure the transaction fee transfer is valid
 async function validateActionsFeeContent(signer, modifiedTransaction) {
-  const [feeAction] = await api.deserializeActions([modifiedTransaction.actions[1]]);
-  if (
-    feeAction.account !== 'eosio.token'
-      || feeAction.name !== 'transfer'
-      || feeAction.data.to !== 'fuel.gm'
-  ) {
+  const feeAction = find(modifiedTransaction.actions, {
+    account: 'eosio.token',
+    name: 'transfer',
+  });
+  const transfer = Transfer.from(feeAction);
+  if (!transfer.data.to.equals(Name.from('fuel.gm'))) {
     throw new Error('Fee action was deemed invalid.');
-  }
-}
-
-// Ensure the RAM purchasing action is valid
-async function validateActionsRamContent(signer, modifiedTransaction) {
-  const [ramAction] = await api.deserializeActions([modifiedTransaction.actions[2]]);
-  if (
-    ramAction.account !== 'eosio'
-    || !['buyram', 'buyrambytes'].includes(ramAction.name)
-    || ramAction.data.payer !== 'greymassfuel'
-    || ramAction.data.receiver !== signer.actor
-  ) {
-    throw new Error('RAM action was deemed invalid.');
   }
 }
 
@@ -126,7 +138,6 @@ export default {
   determineExpectedActionsLength,
   validateActionsContent,
   validateActionsFeeContent,
-  validateActionsRamContent,
   validateActionsOriginalContent,
   validateActionsLength,
   validateNoop,
