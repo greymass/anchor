@@ -162,7 +162,7 @@
     "electron": "12",
     "electron-builder": "^22.11.7",
     "electron-debug": "^2.0.0",
-    "electron-log": "^2.2.14",
+    "electron-log": "^4.4.1",
     "electron-notarize": "^1.0.0",
     "electron-rebuild": "^2.3.5",
     "enzyme": "^3.10.0",

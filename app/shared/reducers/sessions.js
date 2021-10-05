@@ -1,5 +1,7 @@
 import * as types from '../actions/types';
 
+import log from 'electron-log';
+
 const initialState = {
   lastClose: false,
   lastCreate: false,
@@ -14,12 +16,17 @@ const initialState = {
   sessions: [],
 };
 
+const slog = log.create('sessions');
+slog.transports.file.format = '[{h}:{i}:{s}] {text}';
+slog.transports.file.fileName = 'session';
+
 export default function sessions(state = initialState, action = {}) {
   switch (action.type) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
     case types.SYSTEM_SESSIONS_EVENT: {
+      slog.info(action.payload);
       const newState = Object.assign({}, state, {
         lastEvent: new Date().toISOString(),
         lastEventType: action.payload.type,
