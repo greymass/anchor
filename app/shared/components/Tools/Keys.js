@@ -230,11 +230,17 @@ class ToolsKeys extends Component<Props> {
           <Table.Body>
             {filtered.map((pubkey) => {
               const matching = wallets.filter((w) => w.pubkey === pubkey);
+              let publicKey
+              try {
+                publicKey = PublicKey.from(pubkey)
+              } catch(e) {
+                return false
+              }
               return (
                 <Table.Row>
                   <Table.Cell>
                     <pre style={{ display: 'inline', margin: 0 }}>
-                      {(legacy) ? pubkey : String(PublicKey.from(pubkey))}
+                      {(legacy) ? pubkey : String(publicKey)}
                     </pre>
                     <Dropdown>
                       <Dropdown.Menu>
