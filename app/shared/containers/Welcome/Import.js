@@ -433,7 +433,7 @@ const blockchains = {
   '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0': 'https://proton.greymass.com/',
   '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd': 'https://protontestnet.greymass.com/',
   '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'https://telos.greymass.com',
-  '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f': 'https://testnet.eos.miami',
+  '1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f': 'https://telostestnet.greymass.com',
   '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f': 'https://api.worbli.io',
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': 'https://wax.greymass.com',
   'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12': 'https://waxtestnet.greymass.com',
