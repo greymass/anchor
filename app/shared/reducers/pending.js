@@ -71,6 +71,9 @@ export default function pending(state = initialState, action) {
         ]
       });
     }
+    case types.SYSTEM_PENDING_DATA_RESTORE: {
+      return Object.assign({}, state, action.payload);
+    }
     default: {
       return state;
     }
