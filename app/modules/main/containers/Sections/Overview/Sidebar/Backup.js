@@ -20,6 +20,7 @@ class OverviewSidebarBackupContainer extends Component<Props> {
     const {
       actions,
       blockchains,
+      pending,
       settings,
       storage,
       wallets,
@@ -29,6 +30,10 @@ class OverviewSidebarBackupContainer extends Component<Props> {
         schema: 'anchor.v2.network',
         data: Object.assign({}, blockchain)
       })),
+      pending: {
+        schema: 'anchor.v1.pending',
+        data: Object.assign({}, pending),
+      },
       settings: {
         schema: 'anchor.v2.settings',
         data: Object.assign({}, settings),
@@ -102,6 +107,7 @@ function mapStateToProps(state) {
   return {
     app: state.app,
     blockchains: state.blockchains,
+    pending: state.pending,
     settings: state.settings,
     storage: state.storage,
     wallets: state.wallets,

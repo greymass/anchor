@@ -11,6 +11,7 @@ import { Button, Form, Label, Message, Modal, Segment } from 'semantic-ui-react'
 
 import * as AccountsActions from '../../actions/accounts';
 import * as BlockchainsActions from '../../actions/blockchains';
+import * as PendingActions from '../../actions/pending';
 import * as SettingsActions from '../../actions/settings';
 import * as StorageActions from '../../actions/storage';
 import * as ValidateActions from '../../actions/validate';
@@ -60,10 +61,17 @@ class WelcomeImportContainer extends Component<Props> {
     try {
       const {
         networks,
+        pending,
         settings,
         storage,
         wallets,
       } = JSON.parse(data);
+      // Restore all pending certificates, if they exist
+      if (pending) {
+          if (pending.schema === 'anchor.v1.pending' && pending.data) {
+            actions.restorePendingData(pending.data)
+          }
+      }
       // Restore all defined networks
       networks.forEach((network) => {
         if (network && ['anchor.v1.network', 'anchor.v2.network'].includes(network.schema)) {
@@ -400,6 +408,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators({
       ...AccountsActions,
       ...BlockchainsActions,
+      ...PendingActions,
       ...SettingsActions,
       ...StorageActions,
       ...ValidateActions,

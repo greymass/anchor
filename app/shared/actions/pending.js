@@ -56,9 +56,19 @@ export function removePendingAccountCertificate(payload: PendingAccountCertifica
   };
 }
 
+export function restorePendingData(payload) {
+  return (dispatch: () => void) => {
+    dispatch({
+      type: types.SYSTEM_PENDING_DATA_RESTORE,
+      payload
+    });
+  };
+}
+
 export default {
   addPendingAccountCreate,
   addPendingAccountCertificate,
   removePendingAccountCreate,
-  removePendingAccountCertificate
+  removePendingAccountCertificate,
+  restorePendingData,
 };
