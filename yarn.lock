@@ -1421,10 +1421,10 @@
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
 
-"@greymass/anchor-link-session-manager@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.0.tgz#bdb074e53ed04f40beff00b5a241d4726ddb3a75"
-  integrity sha512-Ur9I1H7bQqL81TCc1IUHjRBrn4uVz1xvdSEND05NqNFN6oCNup+h3kHrlOLzlh1+CSN4kJB9cLxIbgFT15ya5Q==
+"@greymass/anchor-link-session-manager@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.1.tgz#f81c63d687c7ed0294afaac0dacdfe33213969e4"
+  integrity sha512-UEP5UGN0OGXGBGVNVOiv6VbBy/Y1RzFh1UKGl6JOTqTcFYQKu2DX/1Q2D8VKZMUxiDAwp0EEVB+59ebWaGOUMg==
   dependencies:
     "@greymass/buoy" "^1.0.1"
     "@greymass/eosio" "^0.4.9"
