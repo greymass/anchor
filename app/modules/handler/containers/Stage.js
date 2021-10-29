@@ -55,11 +55,13 @@ class PromptStage extends Component<Props> {
       && prompt.resolved.request.getInfoKey
     ) {
       const onSuccess = prompt.resolved.request.getInfoKey('onSuccess');
-      const [actionType, actionName, actionResult] = onSuccess.split('_');
-      if (onSuccess && !system[actionName] && !system[`${actionName}_LAST_TRANSACTION`] && prompt.response) {
-        this.props.actions.mockDispatch(onSuccess, {
-          tx: prompt.response
-        });
+      if (onSuccess) {
+        const [actionType, actionName, actionResult] = onSuccess.split('_');
+        if (!system[actionName] && !system[`${actionName}_LAST_TRANSACTION`] && prompt.response) {
+          this.props.actions.mockDispatch(onSuccess, {
+            tx: prompt.response
+          });
+        }
       }
     }
   }
