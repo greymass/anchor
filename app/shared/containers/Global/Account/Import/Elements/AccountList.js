@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 import { Checkbox, Divider, Header, List, Segment } from 'semantic-ui-react';
+import { PublicKey } from '@greymass/eosio'
 
 import EOSAccount from '../../../../../utils/EOS/Account';
 
@@ -27,7 +28,8 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
     matches.forEach((account) => {
       const data = accounts[account];
       if (data) {
-        const authorizationList = new EOSAccount(data).getAuthorizations(publicKey);
+        const pubkey = PublicKey.from(publicKey).toLegacyString(connection.keyPrefix)
+        const authorizationList = new EOSAccount(data).getAuthorizations(pubkey);
         authorizationList.forEach((authorization) => {
           const existingWallet = wallets.find(wallet => authorization.perm_name === wallet.authorization &&
               account === wallet.account &&
