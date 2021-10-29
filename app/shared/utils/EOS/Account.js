@@ -1,4 +1,5 @@
 import { filter, find, flatten } from 'lodash';
+import { PublicKey } from '@greymass/eosio';
 
 import EOSAccountStats from './Account/Stats';
 
@@ -90,12 +91,13 @@ export default class EOSAccount {
   }
 
   getAuthorization(pubkey, returnObject = false) {
+    const publicKey = PublicKey.from(pubkey);
     const { account } = this;
     if (account) {
       // Is this the owner key? If so, return authoritization
       const isOwner = find(account.permissions, (perm) =>
         find(perm.required_auth.keys, (key) =>
-          (key.key === pubkey && perm.perm_name === 'owner')));
+          (PublicKey.from(key.key).equals(publicKey) && perm.perm_name === 'owner')));
       if (isOwner) {
         if (returnObject) return isOwner;
         return `${account.account_name}@owner`;
@@ -103,14 +105,14 @@ export default class EOSAccount {
       // Is this the active key? If so, return authoritization
       const isActive = find(account.permissions, (perm) =>
         find(perm.required_auth.keys, (key) =>
-          (key.key === pubkey && perm.perm_name === 'active')));
+          (PublicKey.from(key.key).equals(publicKey) && perm.perm_name === 'active')));
       if (isActive) {
         if (returnObject) return isActive;
         return `${account.account_name}@active`;
       }
       // otherwise find the first non active/owner match
       const permission = find(account.permissions, (perm) =>
-        find(perm.required_auth.keys, (key) => key.key === pubkey));
+        find(perm.required_auth.keys, (key) => PublicKey.from(key.key).equals(publicKey)));
       if (permission) {
         if (returnObject) return permission;
         return `${account.account_name}@${permission.perm_name}`;
