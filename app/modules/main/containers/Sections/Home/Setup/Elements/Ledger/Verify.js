@@ -109,6 +109,7 @@ class AccountSetupElementsLedgerVerify extends Component<Props> {
 
 function mapStateToProps(state) {
   return {
+    ledger: state.ledger,
     system: state.system,
   };
 }
