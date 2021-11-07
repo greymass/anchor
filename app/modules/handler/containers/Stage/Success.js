@@ -90,6 +90,7 @@ class PromptStageSuccess extends Component<Props> {
                         <Table.Cell collapsing>Transaction ID</Table.Cell>
                         <Table.Cell>
                           <ExplorerLink
+                            chainId={prompt.chainId}
                             content={transaction_id}
                             linkData={transaction_id}
                             linkBlockId={(block_num) ? block_num : false}
