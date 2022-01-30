@@ -441,7 +441,10 @@ class WalletPanelFormTransferSend extends Component<Props> {
                         onClick={this.fillMax}
                         style={{ cursor: 'pointer' }}
                       >
-                        {String(Asset.from(balance[asset], `${precision},${asset}`))}
+                        {(balance[asset])
+                          ? String(Asset.from(balance[asset], `${precision},${asset}`))
+                          : 'Select a token'
+                        }
                       </a>
                     </span>
                     {t('transfer_label_token_and_quantity')}
