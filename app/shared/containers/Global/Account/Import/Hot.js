@@ -137,11 +137,16 @@ class GlobalModalAccountImportHot extends Component<Props> {
             onChange={this.onChange}
             value={value}
           />
-          <GlobalAccountImportElementsAccountList
-            publicKey={publicKey}
-            selected={selected}
-            toggleAccount={this.toggleAccount}
-          />
+          {(publicKey)
+            ? (
+              <GlobalAccountImportElementsAccountList
+                publicKey={publicKey}
+                selected={selected}
+                toggleAccount={this.toggleAccount}
+              />
+            )
+            : false
+          }
           <Segment basic clearing>
             <Button
               floated="left"
