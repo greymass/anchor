@@ -5,10 +5,11 @@ import { withTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import compose from "lodash/fp/compose";
+import { debounce } from 'lodash';
 
 import { Button, Header, Icon, Input, Segment } from "semantic-ui-react";
 import GlobalFormFieldAccountName from "../../../../../../../shared/components/Global/Form/Field/AccountName";
-import { checkAccountAvailability } from "../../../../../../../shared/actions/accounts";
+import { checkAccountNameValid } from "../../../../../actions/account";
 
 class AccountSetupElementsAccountName extends Component<Props> {
   state = {
@@ -18,12 +19,12 @@ class AccountSetupElementsAccountName extends Component<Props> {
     premium: "gm",
     valid: false,
   }
-  onChange = (e, { value, valid }) => {
+  onChange = debounce((e, { value, valid }) => {
     let available = false
-    const { blockchain, premium } = this.props.accountcreate
+    const { blockchain, code, premium } = this.props.accountcreate
     const accountName = `${value}.${premium}`
     if (valid) {
-      this.props.actions.checkAccountAvailability(accountName, blockchain.chainId);
+      this.props.actions.checkAccountNameValid(code, accountName);
     }
     this.setState({
       accountName,
@@ -32,7 +33,7 @@ class AccountSetupElementsAccountName extends Component<Props> {
       valid
     })
     this.props.onChange(accountName)
-  }
+  }, 500)
   random = () => {
     const { premium } = this.props.accountcreate
     const length = 12 - premium.length - 1
@@ -52,13 +53,13 @@ class AccountSetupElementsAccountName extends Component<Props> {
     const { accountName, name, premium, valid } = this.state;
     const { accountcreate, onNext, system } = this.props;
     // Ensure account name is available
-    const nameChecked = ["SUCCESS", "FAILURE"].includes(system.ACCOUNT_AVAILABLE);
+    const { nameChecked, nameValid } = accountcreate
     let available = false;
     if (name &&
         name.length !== 0 &&
+        `${name}.${premium}` === nameChecked &&
         nameChecked &&
-        system.ACCOUNT_AVAILABLE === "SUCCESS" &&
-        system.ACCOUNT_AVAILABLE_LAST_ACCOUNT === accountName) {
+        nameValid) {
       available = true;
     }
     // If account is available and valid, allow proceeding to confirmation step
@@ -133,7 +134,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      checkAccountAvailability,
+      checkAccountNameValid,
     }, dispatch)
   };
 }
