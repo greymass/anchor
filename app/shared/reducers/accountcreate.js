@@ -8,6 +8,24 @@ export default function accountcreate(state = initialState, action) {
     case types.RESET_ALL_STATES: {
       return Object.assign({}, initialState);
     }
+    case types.ACCOUNT_CREATION_CHECK_NAME_INVALIDATE: {
+      return Object.assign({}, state, {
+        nameChecked: undefined,
+        nameValid: undefined,
+      });
+    }
+    case types.ACCOUNT_CREATION_CHECK_NAME_VALID: {
+      return Object.assign({}, state, {
+        nameChecked: action.payload.name,
+        nameValid: true,
+      });
+    }
+    case types.ACCOUNT_CREATION_CHECK_NAME_INVALID: {
+      return Object.assign({}, state, {
+        nameChecked: action.payload.name,
+        nameValid: false,
+      });
+    }
     case types.ACCOUNT_CREATION_CODE: {
       return Object.assign({}, state, {
         ...action.payload,
