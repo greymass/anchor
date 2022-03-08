@@ -7,7 +7,6 @@ import { Base64u } from 'eosio-signing-request';
 import EOSAccount from '../../../shared/utils/EOS/Account';
 import * as types from '../../../shared/actions/types';
 import { changeModule } from './navigation';
-import { getAccount } from '../../../shared/actions/accounts';
 import { swapBlockchain } from '../../../shared/actions/blockchains';
 import { addPendingAccountCertificate } from '../../../shared/actions/pending';
 import { importKeyStorage, importWallet, useWallet } from '../../../shared/actions/wallets';
@@ -75,7 +74,7 @@ export function beginAccountCreate(url) {
         code: request.code,
         deviceId: settings.deviceId,
         version: app.version,
-      }, settings);
+      });
       const json = await response.json();
       const blockchain = find(blockchains, { chainId: json.chainId });
       if (response.ok) {
@@ -193,6 +192,33 @@ export function importCreatedAccountKeys(
       active: String(activePrivate.toPublic()),
       owner: String(ownerPrivate.toPublic())
     }));
+  };
+}
+
+export function checkAccountNameValid(code, name) {
+  return async (dispatch: () => void, getState) => {
+    dispatch({
+      type: types.ACCOUNT_CREATION_CHECK_NAME_INVALIDATE,
+      payload: { code, name }
+    });
+    const { app, settings } = getState();
+    const response = await apiRequest('/tickets/check', {
+      code,
+      deviceId: settings.deviceId,
+      name,
+      version: app.version,
+    }, settings);
+    if (response.status === 200) {
+      dispatch({
+        type: types.ACCOUNT_CREATION_CHECK_NAME_VALID,
+        payload: { code, name }
+      });
+    } else {
+      dispatch({
+        type: types.ACCOUNT_CREATION_CHECK_NAME_INVALID,
+        payload: { code, name }
+      });
+    }
   };
 }
 
@@ -329,6 +355,7 @@ export function verifyAccountExists(chainId, account, activeKey) {
 export default {
   beginAccountCreate,
   cancelKeyCertificate,
+  checkAccountNameValid,
   createAccount,
   resetAccountCreation,
   returnKeyCertificateCode,
