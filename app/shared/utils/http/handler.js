@@ -22,7 +22,7 @@ const createHttpHandler = async (connection) => {
 
   const httpClient = axios.create({
     headers,
-    timeout: 3000,
+    timeout: 30000,
   });
 
   return {
