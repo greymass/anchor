@@ -8,7 +8,7 @@ import EOSAccount from '../../../shared/utils/EOS/Account';
 import * as types from '../../../shared/actions/types';
 import { changeModule } from './navigation';
 import { swapBlockchain } from '../../../shared/actions/blockchains';
-import { addPendingAccountCertificate } from '../../../shared/actions/pending';
+import { addPendingAccountCertificate, removePendingAccountCertificate } from '../../../shared/actions/pending';
 import { importKeyStorage, importWallet, useWallet } from '../../../shared/actions/wallets';
 import { createHttpHandler } from '../../../shared/utils/http/handler';
 
@@ -140,6 +140,19 @@ export function createAccount(code, chainId, accountName, activeKey, ownerKey) {
           payload: json.transactionId
         });
       }
+      // If the API fails, remove pending cert (keys are still saved)
+      dispatch(removePendingAccountCertificate({
+        chainId,
+        account: accountName,
+        active: activeKey,
+        owner: ownerKey
+      }));
+      return dispatch({
+        type: types.ACCOUNT_CREATION_CODE_FAILED,
+        payload: {
+          error: json
+        }
+      });
     } catch (e) {
       console.error(e);
     }
