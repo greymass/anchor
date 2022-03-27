@@ -14,6 +14,14 @@ import { createHttpHandler } from '../../../shared/utils/http/handler';
 
 const creationAPI = 'https://create-api.anchor.link';
 
+const historyAPIs = {
+  aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906: 'http://eos.greymass.com',
+  '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840': 'http://jungle3.greymass.com',
+  '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0': 'http://proton.greymass.com',
+  '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11': 'http://telos.greymass.com',
+  '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': 'http://wax.greymass.com',
+};
+
 async function generateSignatureForBody(bodyBytes) {
   let key;
   try {
@@ -312,11 +320,13 @@ export function resetAccountCreation() {
 }
 
 export function verifyTransactionExists(chainId, transactionId) {
-  return async (dispatch: () => void, getState) => {
-    const { blockchains } = getState();
-    const blockchain = find(blockchains, { chainId });
+  return async (dispatch: () => void) => {
+    const node = historyAPIs[chainId];
+    if (!node) {
+      throw new Error('Invalid ChainID');
+    }
     const { httpClient } = await createHttpHandler({});
-    const result = await httpClient.post(`${blockchain.node}/v1/history/get_transaction`, {
+    const result = await httpClient.post(`${node}/v1/history/get_transaction`, {
       id: transactionId,
       traces: false,
     });
