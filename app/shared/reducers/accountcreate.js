@@ -32,6 +32,11 @@ export default function accountcreate(state = initialState, action) {
         error: undefined,
       });
     }
+    case types.ACCOUNT_CREATION_CODE_FAILED: {
+      return Object.assign({}, initialState, {
+        error: action.payload.error,
+      });
+    }
     case types.ACCOUNT_CREATION_CODE_REDEEMED: {
       return Object.assign({}, state, {
         transactionId: action.payload

@@ -42,6 +42,8 @@ class AccountSetupCode extends Component<Props> {
     confirming: false,
     // Awaiting sextant creation response
     creating: false,
+    // API call errored?
+    errored: false,
     // Whether or not keys have been generated
     generated: false,
     // Awaiting generation of keys/certificate
@@ -57,7 +59,7 @@ class AccountSetupCode extends Component<Props> {
   }
   componentWillReceiveProps(nextProps) {
     const {
-      awaiting, creating, generated, generating, irreversible, password
+      awaiting, creating, errored, generated, generating, irreversible, password
     } = this.state;
     const {
       transactionId, transactionExists, transactionIrreversible
@@ -71,6 +73,9 @@ class AccountSetupCode extends Component<Props> {
       this.setState({
         transactionId: nextProps.accountcreate.transactionId
       }, () => this.awaitCreation());
+    }
+    if (creating && !transactionId && !errored && nextProps.accountcreate.error) {
+      this.throwError();
     }
     if (awaiting && !transactionExists && nextProps.accountcreate.transactionExists) {
       this.awaitIrreversible();
@@ -102,6 +107,7 @@ class AccountSetupCode extends Component<Props> {
     // Proceed to the next step
     this.setState({
       creating: true,
+      errored: true,
       generating: false,
       password: undefined,
     });
@@ -129,6 +135,13 @@ class AccountSetupCode extends Component<Props> {
     this.setState({
       awaiting: false,
       irreversible: true
+    });
+  }
+  throwError = () => {
+    clearInterval(this.interval);
+    this.setState({
+      errored: true,
+      errorMessage: this.props.accountcreate.error
     });
   }
   complete = () => {

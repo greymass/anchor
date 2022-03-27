@@ -52,6 +52,8 @@ class AccountSetupRecover extends Component<Props> {
     scan: false,
     // 28 word phrase
     mnemonic: [],
+    // Whether the transaction is irreversible
+    transactionIrreversible: false,
     // Awaiting permission update
     updatingPermissions: false,
   }
@@ -62,6 +64,7 @@ class AccountSetupRecover extends Component<Props> {
       decrypting,
       decryptFailed,
       updatingPermissions,
+      transactionIrreversible,
     } = this.state;
     if (decrypting && nextProps.accountcreate.decrypted) {
       this.setState({
@@ -83,6 +86,12 @@ class AccountSetupRecover extends Component<Props> {
         decryptFailed: nextProps.accountcreate.decryptFailed,
         error: nextProps.accountcreate.decryptError,
       });
+    }
+    if (
+      !transactionIrreversible
+      && nextProps.accountcreate.transactionIrreversible
+    ) {
+      this.complete();
     }
   }
   componentWillUnmount() {
@@ -107,6 +116,7 @@ class AccountSetupRecover extends Component<Props> {
     this.setState({
       complete: true,
       irreversible: false,
+      transactionIrreversible: true,
     });
   }
   handleScan = (data) => {
