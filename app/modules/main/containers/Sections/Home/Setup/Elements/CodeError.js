@@ -14,10 +14,10 @@ class AccountSetupElementsCodeError extends Component<Props> {
     return (
       <Segment>
         <Header>
-          There was an issue with this request.
+          An error occurred, please click your activation link again to retry.
         </Header>
         <p>
-          {error}
+          {JSON.stringify(error)}
         </p>
       </Segment>
     );
