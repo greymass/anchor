@@ -80,7 +80,7 @@ class ContractInterfaceFormAction extends Component<Props> {
         {},
         this.state.form,
         {
-          [name]: checked ? 1 : 0
+          [name]: checked ? true : false
         }
       )
     });
