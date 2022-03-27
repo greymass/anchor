@@ -84,14 +84,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
       if (data) {
         const authorizationList = new EOSAccount(data).getAuthorizations(publicKey);
         authorizationList.forEach((authorization) => {
-          const existingWallet = wallets.find(wallet => (
-            authorization.perm_name === wallet.authorization
-            && account === wallet.account
-            && connection.chainId === wallet.chainId
-          ));
-          if (!existingWallet) {
-            selected.push(`${account}@${authorization.perm_name}`);
-          }
+          selected.push(`${account}@${authorization.perm_name}`);
         });
       }
     });
@@ -109,6 +102,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
       connection,
       onClose,
       settings,
+      system,
       t,
       validate
     } = this.props;
@@ -119,8 +113,10 @@ class GlobalModalAccountImportHot extends Component<Props> {
       value
     } = this.state;
     const matches = accounts.__lookups;
+    const invalidKey = value && !valid;
 
     const disabled = (!selected.length || !valid);
+
     return (
       <Tab.Pane>
         <Segment basic>
@@ -137,6 +133,23 @@ class GlobalModalAccountImportHot extends Component<Props> {
             onChange={this.onChange}
             value={value}
           />
+          {(valid && publicKey && !matches.length && system.ACCOUNT_BY_KEY === 'SUCCESS')
+            ? (
+              <Segment>
+                <p>No accounts found that match this key.</p>
+                <p>{publicKey}</p>
+              </Segment>
+            )
+            : false
+          }
+          {(invalidKey)
+            ? (
+              <Segment>
+                The data entered is not a valid key.
+              </Segment>
+            )
+            : false
+          }
           {(publicKey)
             ? (
               <GlobalAccountImportElementsAccountList

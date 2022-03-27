@@ -32,13 +32,8 @@ class GlobalModalAccountImportElementsAccountList extends Component<Props> {
           const pubkey = PublicKey.from(publicKey).toLegacyString(connection.keyPrefix)
           const authorizationList = new EOSAccount(data).getAuthorizations(pubkey);
           authorizationList.forEach((authorization) => {
-            const existingWallet = wallets.find(wallet => authorization.perm_name === wallet.authorization &&
-                account === wallet.account &&
-                connection.chainId === wallet.chainId);
-            if (!existingWallet) {
-              authorizations[account] = authorizations[account] || [];
-              authorizations[account].push(authorization);
-            }
+            authorizations[account] = authorizations[account] || [];
+            authorizations[account].push(authorization);
           });
         } catch (e) {
           console.log("Public Key being passed is invalid", publicKey)
