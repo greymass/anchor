@@ -54,6 +54,7 @@ class GlobalFormFieldKeyPrivate extends Component<Props> {
           this.props.onChange(e, {
             error,
             name,
+            publicKey: undefined,
             valid: false,
             value: parsed
           });
