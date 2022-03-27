@@ -117,8 +117,8 @@ export function getBlockExplorers() {
         {
           name: 'bloks.io',
           patterns: {
-            account: 'https://telos.bloks.io/account/{account}',
-            txid: 'https://telos.bloks.io/transaction/{txid}'
+            account: 'https://telos.eosauthority.com/account/{account}',
+            txid: 'https://telos.eosauthority.com/transaction/{txid}'
           }
         },
         {
