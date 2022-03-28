@@ -175,7 +175,9 @@ class PromptStage extends Component<Props> {
       password,
       blockchain.chainId,
       // callback
-      () => actions.signURI(resolved.transaction, blockchain, wallet, broadcast, prompt.callback)
+      () => actions.signURI(resolved.transaction, blockchain, wallet, broadcast, prompt.callback),
+      wallet.authAccount,
+      wallet.authAuthorization
     );
   }
   onUnlockAndSignIdentity= (password) => {
@@ -195,7 +197,9 @@ class PromptStage extends Component<Props> {
         prompt,
         blockchain,
         wallet,
-      )
+      ),
+      wallet.authAccount,
+      wallet.authAuthorization
     );
   }
   render() {
@@ -264,8 +268,9 @@ class PromptStage extends Component<Props> {
       ([reqType] = prompt.req);
     }
 
-
-    const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && wallet.pubkey);
+    const hasPublicKey = !!wallet.pubkey
+    const hasAccountAuth = !!(wallet.authAccount && wallet.authAuthorization)
+    const hasWallet = !!(wallet.account && wallet.authorization && wallet.mode && (hasPublicKey || hasAccountAuth));
     const hasCallback = !!(prompt && prompt.callback);
 
     const hasForegroundCallback = !!(
