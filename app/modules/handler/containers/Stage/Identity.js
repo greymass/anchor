@@ -55,6 +55,8 @@ class PromptStageIdentity extends Component<Props> {
     const {
       account,
       authorization,
+      authAccount,
+      authAuthorization,
       mode,
       pubkey,
     } = wallet;
@@ -99,6 +101,8 @@ class PromptStageIdentity extends Component<Props> {
                   <GlobalAccountDropdownSelect
                     account={account}
                     authorization={authorization}
+                    authAccount={authAccount}
+                    authAuthorization={authAuthorization}
                     mode={mode}
                     pubkey={pubkey}
                     chainId={chainId}

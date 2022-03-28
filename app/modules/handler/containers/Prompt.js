@@ -160,9 +160,15 @@ class PromptContainer extends Component<Props> {
     }
   };
   swapAccount = (e, { value }) => {
-    const { actions } = this.props;
+    const { actions, wallets } = this.props;
     const { blockchain } = this.state;
-    const wallet = pick(value, ['account', 'authorization', 'mode', 'path', 'pubkey']);
+    const wallet = pick(value, ['account', 'authorization', 'authAccount', 'authAuthorization', 'chainId', 'mode', 'path', 'pubkey']);
+    if (!wallet.pubkey && wallet.authAccount && wallet.authAuthorization) {
+        const authority = find(wallets, { chainId: wallet.chainId, account: wallet.authAccount, authorization: wallet.authAuthorization })
+        if (authority) {
+            wallet.pubkey = authority.pubkey
+        }
+    }
     this.setState({
       displayShareLink: initialState.displayShareLink,
       enableWhitelist: initialState.enableWhitelist,

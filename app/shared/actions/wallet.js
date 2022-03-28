@@ -289,7 +289,15 @@ export function unlockWallet(password, useWallet = false, unlockAll = true) {
   };
 }
 
-export function unlockWalletByAuth(account, authorization, password, chainId = false, callback = false) {
+export function unlockWalletByAuth(
+  account, 
+  authorization, 
+  password, 
+  chainId = false, 
+  callback = false,
+  authAccount = false,
+  authAuthorization = false,
+) {
   return async (dispatch: () => void, getState) => {
     const state = getState();
     const {
@@ -306,6 +314,15 @@ export function unlockWalletByAuth(account, authorization, password, chainId = f
       query.chainId = chainId;
     }
     const wallet = find(wallets, query);
+    // get the appropriate public key if this is account based auth
+    if (authAccount && authAuthorization) {
+      const authority = find(wallets, {
+        ...query,
+        account: authAccount,
+        authorization: authAuthorization,
+      });
+      wallet.pubkey = authority.pubkey;
+    }
 
     const accountData = accounts[wallet.account];
     const blockchain = find(blockchains, { chainId: wallet.chainId });
