@@ -192,7 +192,7 @@
     "mini-css-extract-plugin": "^2.1.0",
     "minimist": "^1.2.0",
     "ncp": "^2.0.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "npm-logical-tree": "^1.2.1",
     "react-test-renderer": "^16.4.0",
     "redux-logger": "^3.0.6",
