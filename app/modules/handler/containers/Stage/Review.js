@@ -48,7 +48,7 @@ class PromptStageReview extends Component<Props> {
     const matches = authorizers.filter(a => a.actor.toString() === wallet.account
       && a.permission.toString() === wallet.authorization);
     const matching = matches.length > 0;
-    const disabledSwap = !placeholders && matching;
+    const disabledSwap = !placeholders;
     const mismatch = (!placeholders && !matching)
       ? `Could not load the expected accounts for this request: ${authorizers.map(a => [a.actor, a.permission].join('@')).join(', ')}`
       : false;
