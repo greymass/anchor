@@ -25,6 +25,8 @@ class GlobalAccountDropdownSelect extends Component<Props> {
     const {
       account,
       authorization,
+      authAccount,
+      authAuthorization,
       chainId,
       disabled,
       fluid,
@@ -48,6 +50,8 @@ class GlobalAccountDropdownSelect extends Component<Props> {
       <GlobalFragmentWallet
         account={account}
         authorization={authorization}
+        authAccount={authAccount}
+        authAuthorization={authAuthorization}
         mode={mode}
         pubkey={pubkey}
       />

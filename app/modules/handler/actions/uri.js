@@ -1,7 +1,7 @@
 import { find } from 'lodash';
 import { get } from 'dot-prop-immutable';
 import { Serialize } from 'eosjs2';
-import { PrivateKey, Signature } from '@greymass/eosio';
+import { PrivateKey, PublicKey, Signature } from '@greymass/eosio';
 
 import * as types from '../../../shared/actions/types';
 import eos from '../../../shared/actions/helpers/eos';
@@ -357,9 +357,10 @@ export function signIdentityRequest(
     const signer = eos(networkConfig, true, true);
     setTimeout(async () => {
       try {
+        const requiredKeys = [String(PublicKey.from(wallet.pubkey))]
         const signed = await signer.sign({
           chainId: blockchain.chainId,
-          requiredKeys: [signer.convert(wallet.pubkey)],
+          requiredKeys,
           serializedTransaction: prompt.resolved.serializedTransaction,
         });
         const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
