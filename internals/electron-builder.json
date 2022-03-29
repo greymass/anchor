@@ -113,7 +113,7 @@
     "publisherName": "Greymass Inc.",
     "target": [
       {
-        "target": "nsis-web",
+        "target": "nsis",
         "arch": [
           "x64",
           "ia32"
@@ -121,7 +121,7 @@
       }
     ]
   },
-  "nsisWeb": {
+  "nsis": {
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": "always",
     "createStartMenuShortcut": true,
