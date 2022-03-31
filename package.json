@@ -72,7 +72,7 @@
     "electron-updater": "^4.3.1",
     "eosio-signing-request": "2.3.0",
     "eosjs": "16.0.8",
-    "eosjs2": "git://github.com/aaroncox/eosjs2",
+    "eosjs2": "https://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",
     "history": "^4.7.2",
     "humanize-duration": "^3.20.1",
