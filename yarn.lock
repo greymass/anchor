@@ -1444,6 +1444,15 @@
     minimatch "^3.0.4"
     plist "^3.0.4"
 
+"@greymass/account-creation@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@greymass/account-creation/-/account-creation-0.0.1.tgz#38ca39f6f90c8fb061ee63c7cdd6be8a2891f5df"
+  integrity sha512-DhvxrcirRzJCJryzAWMqH2QIGpYw8ZaUwpwVUrZJx72jw3S+sO42etdmRNzSq/L5Hc3YbJSmSSxBZ4BMfHYCdw==
+  dependencies:
+    "@greymass/eosio" "^0.5.2"
+    eosio-signing-request "^2.3.1"
+    tslib "^2.1.0"
+
 "@greymass/anchor-link-session-manager@0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.1.tgz#f81c63d687c7ed0294afaac0dacdfe33213969e4"
@@ -1509,6 +1518,17 @@
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.4.9.tgz#429b0426c0781421903e866612b383953e10e414"
   integrity sha512-gzSqkJETH3jVPGhgeMI4u6ZFPxnc9GzDTJyvjM59YzrIn/FdqGtB2CKNWJoUdHR8aek85ZkTPx1hhl9rCVWh1A==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    elliptic "^6.5.4"
+    hash.js "^1.0.0"
+    tslib "^2.0.3"
+
+"@greymass/eosio@^0.5.2":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.5.5.tgz#ce049bb85bcc0dbbc37181579dec3536900ca7c5"
+  integrity sha512-3SpIjECqdubf3ovrd+K6jvX9AG/wqW2zmFlb6gRlVCLxPSw09Vy/nNBLxLN1E4c2558T8LIYa3/kxteBluC3Zg==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -6266,6 +6286,14 @@ eosio-signing-request@^2.1.0, eosio-signing-request@^2.2.0, eosio-signing-reques
   integrity sha512-lxRBHYkk2rAnnZrFnTqweD1FLH3usL5oE24m3+1zNK2vJHRVlIyUk7tlUlmax78j8+FE54Po8LQCQ8TrCSSFGg==
   dependencies:
     "@greymass/eosio" "^0.4.0"
+    tslib "^2.0.3"
+
+eosio-signing-request@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.4.0.tgz#87e89d4e016a6317e249dc3cc571390a9c2940d3"
+  integrity sha512-jmFAzdXDfuDELN2Xvr857cm/TA0pb9lCoHQvRq9Gb/yp0GfIqWHhJuVyZyLkCHlU2E62rnID7es12qNFmn2l2g==
+  dependencies:
+    "@greymass/eosio" "^0.5.0"
     tslib "^2.0.3"
 
 eosjs-api@7.0.4:
