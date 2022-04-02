@@ -58,9 +58,8 @@ export function beginAccountCreate(url) {
     dispatch(resetAccountCreation());
     const { app, blockchains, settings } = getState();
     const [, data] = url.split(':');
-    const decoded = Base64u.decode(data);
-    const [version, ...payload] = decoded;
-    const request = CreateRequest.from(payload);
+
+    const request = CreateRequest.from(data);
     const codeHash = request.scope && Checksum256.hash(Bytes.from(request.code, 'utf8')).hexString;
     const callbackUrl = codeHash && `https://cb.anchor.link/${codeHash}`;
 

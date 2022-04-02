@@ -18,6 +18,7 @@ import {
 } from '../../../../actions/account';
 import { importPubkeyStorage } from '../../../../../../shared/actions/wallets';
 import { changeModule } from '../../../../actions/navigation';
+import { callbackURIWithProcessed } from '../../../../../handler/actions/uri';
 
 import GlobalModalAccountImportPassword from '../../../../../../shared/containers/Global/Account/Import/Password';
 
@@ -25,7 +26,6 @@ import AccountSetupElementsCodeError from './Elements/CodeError';
 import AccountSetupElementsComplete from './Elements/Complete';
 import AccountSetupElementsConfirm from './Elements/Confirm';
 import AccountSetupElementsAccountName from './Elements/AccountName';
-import {callbackURIWithProcessed} from "../../../../../handler/actions/uri";
 
 const { ipcRenderer } = require('electron');
 
@@ -79,7 +79,7 @@ class AccountSetupCode extends Component<Props> {
       this.throwError();
     }
     if (awaiting && !transactionExists && nextProps.accountcreate.transactionExists) {
-      this.sendCreationCallback()
+      this.sendCreationCallback(nextProps.accountcreate, nextProps.actions.callbackURIWithProcessed);
       this.awaitIrreversible();
     }
     if (
@@ -114,14 +114,15 @@ class AccountSetupCode extends Component<Props> {
       password: undefined,
     });
   }
-  sendCreationCallback = (accountcreate) => {
+  sendCreationCallback = (accountcreate, callbackURIAction) => {
     if (accountcreate.callbackUrl) {
-      callbackURIWithProcessed({
+      callbackURIAction({
+        background: true,
         url: accountcreate.callbackUrl,
         payload: {
           status: 'success',
           network: accountcreate.chainId,
-          actor: accountcreate.account.name,
+          actor: accountcreate.account.accountName,
           permission: 'active',
         }
       });
@@ -155,7 +156,7 @@ class AccountSetupCode extends Component<Props> {
   throwError = () => {
     clearInterval(this.interval);
 
-    const { accountcreate } = this.props;
+    const { accountcreate, actions } = this.props;
 
     this.setState({
       errored: true,
@@ -163,7 +164,8 @@ class AccountSetupCode extends Component<Props> {
     });
 
     if (accountcreate.callbackUrl) {
-      callbackURIWithProcessed({
+      actions.callbackURIWithProcessed({
+        background: true,
         url: accountcreate.callbackUrl,
         payload: {
           status: 'failure',
@@ -356,6 +358,7 @@ function mapDispatchToProps(dispatch) {
       importPubkeyStorage,
       resetAccountCreation,
       verifyAccountExists,
+      callbackURIWithProcessed,
     }, dispatch)
   };
 }
