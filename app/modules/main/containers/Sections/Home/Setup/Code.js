@@ -25,6 +25,7 @@ import AccountSetupElementsCodeError from './Elements/CodeError';
 import AccountSetupElementsComplete from './Elements/Complete';
 import AccountSetupElementsConfirm from './Elements/Confirm';
 import AccountSetupElementsAccountName from './Elements/AccountName';
+import {callbackURIWithProcessed} from "../../../../../handler/actions/uri";
 
 const { ipcRenderer } = require('electron');
 
@@ -78,6 +79,7 @@ class AccountSetupCode extends Component<Props> {
       this.throwError();
     }
     if (awaiting && !transactionExists && nextProps.accountcreate.transactionExists) {
+      this.sendCreationCallback()
       this.awaitIrreversible();
     }
     if (
@@ -112,6 +114,19 @@ class AccountSetupCode extends Component<Props> {
       password: undefined,
     });
   }
+  sendCreationCallback = (accountcreate) => {
+    if (accountcreate.callbackUrl) {
+      callbackURIWithProcessed({
+        url: accountcreate.callbackUrl,
+        payload: {
+          status: 'success',
+          network: accountcreate.chainId,
+          actor: accountcreate.account.name,
+          permission: 'active',
+        }
+      });
+    }
+  }
   interval = false
   awaitCreation = () => {
     clearInterval(this.interval);
@@ -139,10 +154,23 @@ class AccountSetupCode extends Component<Props> {
   }
   throwError = () => {
     clearInterval(this.interval);
+
+    const { accountcreate } = this.props;
+
     this.setState({
       errored: true,
-      errorMessage: this.props.accountcreate.error
+      errorMessage: accountcreate.error
     });
+
+    if (accountcreate.callbackUrl) {
+      callbackURIWithProcessed({
+        url: accountcreate.callbackUrl,
+        payload: {
+          status: 'failure',
+          error: accountcreate.error,
+        }
+      });
+    }
   }
   complete = () => {
     clearInterval(this.interval);
