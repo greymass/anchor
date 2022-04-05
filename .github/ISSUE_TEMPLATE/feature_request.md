@@ -1,23 +1,54 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: anchor, enhancement
-assignees: ''
-
----
-
-**Which platform version of Anchor is this request for?**
-Ex. Desktop, Android, iOS, etc
-
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+name: Feature Request
+description: Propose a new feature for Anchor
+title: "[featurerequest]: "
+labels: ["anchor", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We appreciate you taking the time create a feature request for Anchor!  We will reach out if need be.
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: dropdown
+    id: version
+    attributes:
+      label: Platform
+      description: What platform of Anchor is this intended for?
+      options:
+        - Desktop (MacOS)
+        - Desktop (Windows)
+        - Desktop (Linux)
+        - iOS
+        - Android
+        - All
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please describe the change you'd like to see in Anchor
+      placeholder: Tell us whats you'd like to see
+      value: ""
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Alternatives/Workarounds
+      description: What workarounds or alternatives have you used/considered?
+      value: ""
+    validations:
+      required: true       
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Relevant screenshots or designs
+      description: Please add any screenshots or designs that would assist in explaining your feature request
+      render: shell
