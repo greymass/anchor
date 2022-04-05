@@ -1,8 +1,11 @@
 name: Bug Report
-description: File a bug report
-title: "[Bug]: "
+description: To file a big report, please fill out the form below
+
 labels: ["anchor", "bug"]
 body:
+  - type: markdown
+    attributes:
+      value: "## Note: Be sure to add the title of your bug report in the field above.
   - type: markdown
     attributes:
       value: |
