@@ -4,6 +4,7 @@ title: "[featurerequest]: "
 labels: ["anchor", "enhancement"]
 body:
   - type: markdown
+    id: welcome
     attributes:
       value: |
         We appreciate you taking the time create a feature request for Anchor!  We will reach out if need be.
@@ -35,15 +36,15 @@ body:
       label: Description
       description: Please describe the change you'd like to see in Anchor
       placeholder: Tell us whats you'd like to see
-      value: ""
+      value: "Please describe"
     validations:
       required: true
   - type: textarea
-    id: description
+    id: alternatives
     attributes:
       label: Alternatives/Workarounds
       description: What workarounds or alternatives have you used/considered?
-      value: ""
+      value: "Please describe"
     validations:
       required: true       
   - type: textarea
