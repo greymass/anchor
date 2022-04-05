@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Greymass Support Ticket
-    url: https://support.greymass.com/support/tickets/new
-    about: Please submit your issues here
-  - name: Greymass Support
+  - name: Guides and tutorials for Anchor
     url: https://support.greymass.com
-    about: Head over for guides and knowledge base.
+    about: Read our guides and answers to commonly asked questions about Anchor.
+  - name: User support for Anchor
+    url: https://support.greymass.com/support/tickets/new
+    about: Have a question or encountering a problem while using Anchor? Open a support ticket.
