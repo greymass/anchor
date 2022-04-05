@@ -1,36 +1,53 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: anchor, bug
-assignees: ''
-
----
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Please complete the following information:**
- - Platform: [e.g. Desktop, Android, or iOS]
- - Device: [e.g. iPhone6, Macbook, Pixel 5]
- - OS: [e.g. iOS8.1, Android11, Windows 10]
- - Browser [e.g. chrome, safari]
- - Anchor Version [e.g. 0.35]
-
-**Additional context**
-Add any other context about the problem here
- - Application you're trying to work with
- - Account name that is experiencing the bug [Optional]
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["anchor", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Platform
+      description: What platform of Anchor are you running?
+      options:
+        - Desktop (MacOS)
+        - Desktop (Windows)
+        - Desktop (Linux)
+        - iOS
+        - Android
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Confirmation
+      description: Please confirm that you have added all necessary information
+      options:
+        - label: Confirmed
+          required: true
