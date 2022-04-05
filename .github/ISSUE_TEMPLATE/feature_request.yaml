@@ -1,4 +1,5 @@
 name: Feature Request
+description: Propose a new feature for Anchor
 body:
   - type: markdown
     id: welcome
