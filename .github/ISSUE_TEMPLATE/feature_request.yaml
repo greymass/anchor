@@ -1,5 +1,6 @@
 name: Feature Request
-description: Propose a new feature for Anchor
+description: Add the title of your request in the "Title" field
+labels: ["anchor", "enhancement"]
 body:
   - type: markdown
     id: welcome
