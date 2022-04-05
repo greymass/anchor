@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Greymass Support Ticket
-    url: https://greymass.freshdesk.com/support/tickets/new
+    url: https://support.greymass.com/support/tickets/new
     about: Please submit your issues here
-  - name: Greymass Support Site
-    url: #https://greymass.freshdesk.com/support/home
-    about: Head over for support issues and knowledge base.
+  - name: Greymass Support
+    url: https://support.greymass.com
+    about: Head over for guides and knowledge base.
