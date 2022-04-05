@@ -6,11 +6,12 @@ body:
   - type: markdown
     id: welcome
     attributes:
-      value: "## Be sure to add the title of your request in the field above."
+      value: "## Note: Be sure to add the title of your request in the field above."
   - type: markdown
     id: welcome
     attributes:
       value: |
+             
         We appreciate you taking the time create a feature request for Anchor!  We will reach out if need be.
   - type: input
     id: contact
