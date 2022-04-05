@@ -47,9 +47,3 @@ body:
       value: "Please describe"
     validations:
       required: true       
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Relevant screenshots or designs
-      description: Please add any screenshots or designs that would assist in explaining your feature request
-      render: shell
