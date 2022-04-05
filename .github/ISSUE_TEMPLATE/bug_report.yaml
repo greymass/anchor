@@ -35,6 +35,7 @@ body:
         - Desktop (Linux)
         - iOS
         - Android
+        - All
     validations:
       required: true
   - type: textarea
