@@ -65,10 +65,11 @@ class AccountSetupElementsAccountName extends Component<Props> {
     // If account is available and valid, allow proceeding to confirmation step
     const canProceed = (available && valid)
     return (
-      <Segment>
+      <Segment basic>
         <Header>
           Create a {accountcreate.blockchain.name} account.
         </Header>
+        <p>Enter the desired account name to check its availability.</p>
         <p>
           <GlobalFormFieldAccountName
             label={`.${accountcreate.premium}`}
@@ -80,6 +81,7 @@ class AccountSetupElementsAccountName extends Component<Props> {
             value={name}
           />
         </p>
+        <p>Note: Your account will be whatever you choose and end with a ".gm"</p>
         {(valid)
           ? (
             <p>
@@ -97,9 +99,7 @@ class AccountSetupElementsAccountName extends Component<Props> {
               }
             </p>
           )
-          : (
-            <p>Enter the desired account name to check its availability.</p>
-          )
+          : <p>&nbsp;</p>
         }
         <Button
           icon
