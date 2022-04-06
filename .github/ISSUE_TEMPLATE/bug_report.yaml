@@ -5,6 +5,7 @@ labels: ["anchor", "bug"]
 body:
   - type: markdown
     attributes:
+      label: Nug Report
       value: |
         Please submit your bug report below
   - type: textarea
