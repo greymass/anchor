@@ -41,15 +41,7 @@ body:
       description: How can we get in touch with you if we need more info?
       placeholder: ex. email@example.com
     validations:
-      required: false
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: Alternatives/Workarounds
-      description: What workarounds or alternatives have you used/considered?
-      placeholder: "Please describe"
-    validations:
-      required: true       
+      required: false     
   - type: textarea
     attributes:
       label: Anything else?
