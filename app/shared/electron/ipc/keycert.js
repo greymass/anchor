@@ -122,6 +122,7 @@ function getKeycertParams(store, password, chainId, accountName, ownerPublicKey)
       permission: 'owner'
     },
     chainId,
+    deterministicWords: true
   }
 }
 
