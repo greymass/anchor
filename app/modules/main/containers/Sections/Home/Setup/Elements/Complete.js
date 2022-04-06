@@ -9,25 +9,14 @@ import compose from 'lodash/fp/compose';
 import { Button, Header, Segment } from 'semantic-ui-react';
 
 import { changeModule } from '../../../../../actions/navigation';
-import { createWallet } from '../../../../../actions/account';
 
 class AccountSetupElementsComplete extends Component<Props> {
   state = {
     loading: false
   }
   onSkip = () => {
-    const { accountcreate, actions, ledgerMethod } = this.props;
-    const { account, chainId } = accountcreate;
-    const { active, accountName } = account;
-    this.setState({
-      loading: true
-    }, () => {
-      // update storage
-      actions.createWallet(chainId, accountName, active, ledgerMethod);
-      setTimeout(() => {
-          actions.changeModule('');
-      }, 1000)
-    })
+    const { actions } = this.props;
+    actions.changeModule('');
   }
   render() {
     const { loading } = this.state
