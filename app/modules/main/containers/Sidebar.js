@@ -139,7 +139,7 @@ class SidebarContainer extends Component<Props> {
           )
           : false
         }
-        {(pendingAccountRequests || pendingSigningRequest || pendingCertificates)
+        {(!inSetup && (pendingAccountRequests || pendingSigningRequest || pendingCertificates))
           ? (
             <Menu.Item
               as="a"
