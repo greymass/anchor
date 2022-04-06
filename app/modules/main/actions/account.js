@@ -1,8 +1,9 @@
 import fetch from 'node-fetch';
 import { find } from 'lodash';
 
-import { Bytes, KeyType, PrivateKey, Serializer, Struct } from '@greymass/eosio';
+import { Bytes, KeyType, PrivateKey, Checksum256 } from '@greymass/eosio';
 import { Base64u } from 'eosio-signing-request';
+import { CreateRequest } from '@greymass/account-creation';
 
 import EOSAccount from '../../../shared/utils/EOS/Account';
 import * as types from '../../../shared/actions/types';
@@ -51,32 +52,17 @@ async function apiRequest(path, requestBody) {
   return results;
 }
 
-class CreateRequest extends Struct {
-    static abiName = 'create_request'
-    static abiFields = [
-      {
-        name: 'code',
-        type: 'string',
-      },
-      {
-        name: 'loginUrl',
-        type: 'string?',
-      },
-    ]
-}
-
 export function beginAccountCreate(url) {
   return async (dispatch: () => void, getState) => {
     // Reset data upon initially receiving the request
     dispatch(resetAccountCreation());
     const { app, blockchains, settings } = getState();
     const [, data] = url.split(':');
-    const decoded = Base64u.decode(data);
-    const [version, ...payload] = decoded;
-    const request = Serializer.decode({
-      data: Bytes.from(payload),
-      type: CreateRequest
-    });
+
+    const request = CreateRequest.from(data);
+    const codeHash = request.scope && Checksum256.hash(Bytes.from(request.code, 'utf8')).hexString;
+    const callbackUrl = codeHash && `https://cb.anchor.link/${codeHash}`;
+
     try {
       const response = await apiRequest('/tickets/verify', {
         code: request.code,
@@ -92,6 +78,8 @@ export function beginAccountCreate(url) {
             ...json,
             blockchain,
             code: request.code,
+            scope: request.scope,
+            callbackUrl,
           }
         });
       }
