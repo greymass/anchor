@@ -5,9 +5,6 @@ labels: ["anchor", "bug"]
 body:
   - type: markdown
     attributes:
-      value: "## Note: Be sure to add the title of your bug report in the field above."
-  - type: markdown
-    attributes:
       value: |
         Please submit your bug report below
   - type: textarea
