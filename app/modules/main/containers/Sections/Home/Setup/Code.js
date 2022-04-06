@@ -18,6 +18,7 @@ import {
 } from '../../../../actions/account';
 import { importPubkeyStorage } from '../../../../../../shared/actions/wallets';
 import { changeModule } from '../../../../actions/navigation';
+import { callbackURIWithProcessed } from '../../../../../handler/actions/uri';
 
 import GlobalModalAccountImportPassword from '../../../../../../shared/containers/Global/Account/Import/Password';
 
@@ -78,6 +79,7 @@ class AccountSetupCode extends Component<Props> {
       this.throwError();
     }
     if (awaiting && !transactionExists && nextProps.accountcreate.transactionExists) {
+      this.sendCreationCallback(nextProps.accountcreate, nextProps.actions.callbackURIWithProcessed);
       this.awaitIrreversible();
     }
     if (
@@ -112,6 +114,20 @@ class AccountSetupCode extends Component<Props> {
       password: undefined,
     });
   }
+  sendCreationCallback = (accountcreate, callbackURIAction) => {
+    if (accountcreate.callbackUrl) {
+      callbackURIAction({
+        background: true,
+        url: accountcreate.callbackUrl,
+        payload: {
+          status: 'success',
+          network: accountcreate.chainId,
+          actor: accountcreate.account.accountName,
+          permission: 'active',
+        }
+      });
+    }
+  }
   interval = false
   awaitCreation = () => {
     clearInterval(this.interval);
@@ -139,10 +155,24 @@ class AccountSetupCode extends Component<Props> {
   }
   throwError = () => {
     clearInterval(this.interval);
+
+    const { accountcreate, actions } = this.props;
+
     this.setState({
       errored: true,
-      errorMessage: this.props.accountcreate.error
+      errorMessage: accountcreate.error
     });
+
+    if (accountcreate.callbackUrl) {
+      actions.callbackURIWithProcessed({
+        background: true,
+        url: accountcreate.callbackUrl,
+        payload: {
+          status: 'failure',
+          error: accountcreate.error,
+        }
+      });
+    }
   }
   complete = () => {
     clearInterval(this.interval);
@@ -328,6 +358,7 @@ function mapDispatchToProps(dispatch) {
       importPubkeyStorage,
       resetAccountCreation,
       verifyAccountExists,
+      callbackURIWithProcessed,
     }, dispatch)
   };
 }
