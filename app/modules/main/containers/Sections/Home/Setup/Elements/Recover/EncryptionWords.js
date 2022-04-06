@@ -44,49 +44,57 @@ class AccountSetupRecoverEncryptionWords extends Component<Props> {
     } = this.props;
     return (
       <Segment basic>
-        <Header>
-          Enter Encryption Key
-          <Header.Subheader>Enter the 6 words as displayed labeld as <strong>ENCRYPTION KEY</strong> from your owner key certificate.</Header.Subheader>
-        </Header>
-        {(encryption.length < 6)
+        {(!error)
           ? (
             <React.Fragment>
-              <p>Enter word #{encryption.length + 1}.</p>
-              <GlobalFormFieldWords
-                onAdd={this.addEncryptionWord}
-              />
+              <Header>
+                Enter Encryption Key
+                <Header.Subheader>Enter the 6 words as displayed labeld as <strong>ENCRYPTION KEY</strong> from your owner key certificate.</Header.Subheader>
+              </Header>
+              {(encryption.length < 6)
+                ? (
+                  <React.Fragment>
+                    <p>Enter word #{encryption.length + 1}.</p>
+                    <GlobalFormFieldWords
+                      onAdd={this.addEncryptionWord}
+                    />
+                  </React.Fragment>
+                )
+                : false
+              }
+              <Divider horizontal><Header>Encryption Key</Header></Divider>
+              <Segment secondary>
+                {(encryption.length)
+                  ? (
+                    <AccountSetupElementsWordsList words={encryption} />
+                  )
+                  : (
+                    <p>Enter your first word to get started.</p>
+                  )
+                }
+              </Segment>
             </React.Fragment>
           )
           : false
         }
-        <Divider horizontal><Header>Encryption Key</Header></Divider>
-        <Segment secondary>
-          {(encryption.length)
-            ? (
-              <AccountSetupElementsWordsList words={encryption} />
-            )
-            : (
-              <p>Enter your first word to get started.</p>
-            )
-          }
-        </Segment>
         {(error)
           ? (
             <Message
               error
               header={error.message}
-              content="Check that the encryption words above match. If they do, go back and ensure the network, account name, and mnemonic words also match."
+              content={`Check that the encryption words above match. If they do, go back and ensure the network, account name, and mnemonic words also match. (Error: ${JSON.stringify(error)})`}
             />
           )
-          : false
+          : (
+            <Button
+              content="Continue"
+              disabled={encryption.length !== 6}
+              fluid
+              onClick={this.onClick}
+              primary
+            />
+          )
         }
-        <Button
-          content="Continue"
-          disabled={encryption.length !== 6}
-          fluid
-          onClick={this.onClick}
-          primary
-        />
         <Button
           content="Clear all words"
           fluid
