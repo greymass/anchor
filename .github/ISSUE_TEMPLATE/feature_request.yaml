@@ -6,20 +6,12 @@ body:
   - type: markdown
     id: welcome
     attributes:
-      value: "## Note: Be sure to add the title of your request in the field above."
+      value: "# Feature Request"
   - type: markdown
     id: welcome
     attributes:
       value: |
         We appreciate you taking the time create a feature request for Anchor!  We will reach out if need be.
-  - type: input
-    id: contact
-    attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
-    validations:
-      required: false
   - type: dropdown
     id: version
     attributes:
@@ -39,16 +31,23 @@ body:
     attributes:
       label: Description
       description: Please describe the change you'd like to see in Anchor
-      placeholder: Tell us whats you'd like to see
-      value: "Please describe"
+      placeholder: Tell us what you'd like to see
     validations:
       required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
   - type: textarea
     id: alternatives
     attributes:
       label: Alternatives/Workarounds
       description: What workarounds or alternatives have you used/considered?
-      value: "Please describe"
+      placeholder: "Please describe"
     validations:
       required: true       
   - type: textarea
