@@ -44,6 +44,8 @@ class AccountSetupRecover extends Component<Props> {
     decrypting: false,
     // Last failure time of decryption
     decryptFailed: false,
+    // If the decryption doesn't match the specific account
+    decryptMismatch: false,
     // Awaiting transaction irreverisibility
     irreversible: false,
     // Network (chainId) to recover account on (needed for manual entry)
@@ -63,6 +65,7 @@ class AccountSetupRecover extends Component<Props> {
       error,
       decrypting,
       decryptFailed,
+      decryptMismatch,
       updatingPermissions,
       transactionIrreversible,
     } = this.state;
@@ -84,6 +87,13 @@ class AccountSetupRecover extends Component<Props> {
       this.setState({
         decrypting: false,
         decryptFailed: nextProps.accountcreate.decryptFailed,
+        error: nextProps.accountcreate.decryptError,
+      });
+    }
+    if (decryptMismatch !== nextProps.accountcreate.decryptMismatch && nextProps.accountcreate.decryptMismatch) {
+      this.setState({
+        decrypting: false,
+        decryptMismatch: nextProps.accountcreate.decryptMismatch,
         error: nextProps.accountcreate.decryptError,
       });
     }

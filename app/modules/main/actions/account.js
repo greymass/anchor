@@ -283,6 +283,10 @@ export function returnKeyCertificateDecrypted(cert) {
           payload: cert
         });
       }
+      return dispatch({
+        type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED_MISMATCH,
+        payload: 'The key certificate does not match the account specified.'
+      });
     }
     return dispatch({
       type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED,

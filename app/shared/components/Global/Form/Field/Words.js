@@ -11,7 +11,7 @@ export default class GlobalFormFieldWords extends Component<Props> {
     super(props);
     this.state = {
       value: undefined,
-      words: []
+      words: [],
     };
   }
   onSearch = (e, { value }) => {

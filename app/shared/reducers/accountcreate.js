@@ -103,6 +103,12 @@ export default function accountcreate(state = initialState, action) {
         transactionIrreversible: action.payload.irreversible,
       });
     }
+    case types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED_MISMATCH: {
+      return Object.assign({}, state, {
+        decryptFailed: Date.now(),
+        decryptError: action.payload,
+      });
+    }
     case types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED: {
       return Object.assign({}, state, {
         decrypted: action.payload
