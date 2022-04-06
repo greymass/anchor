@@ -87,6 +87,7 @@ After the build completes, the files will be located in the `releases` folder wi
 git clone https://github.com/greymass/anchor.git anchor
 cd anchor
 nvm use v13
+yarn build-dll
 yarn --frozen-lockfile
 cd app
 yarn --frozen-lockfile
