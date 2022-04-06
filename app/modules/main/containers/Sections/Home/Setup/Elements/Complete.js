@@ -23,7 +23,7 @@ class AccountSetupElementsComplete extends Component<Props> {
     const { accountcreate, actions, ledger, ledgerMethod } = this.props;
     const { accountName, chainId } = accountcreate.account;
     return (
-      <Segment loading={loading} size="large">
+      <Segment basic loading={loading} size="large">
         <Header size="large">
           Account successfully created!
         </Header>
@@ -88,7 +88,6 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       changeModule,
-      createWallet,
     }, dispatch)
   };
 }
