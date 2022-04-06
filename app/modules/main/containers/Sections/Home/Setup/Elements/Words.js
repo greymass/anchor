@@ -46,7 +46,7 @@ class AccountSetupElementsWords extends Component<Props> {
       }
     }
     return (
-      <Segment clearing size="large">
+      <Segment basic clearing size="large">
         {content}
         {(stage === 'verify')
           ? (

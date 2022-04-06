@@ -80,7 +80,7 @@ export default function accountcreate(state = initialState, action) {
       let transactionIrreversible = false;
       if (action.payload.status === 200) {
         const irreversibleTime = new Date(`${action.payload.created}z`);
-        irreversibleTime.setSeconds(irreversibleTime.getSeconds() + 60);
+        irreversibleTime.setSeconds(irreversibleTime.getSeconds() + 30);
         const now = Date.now();
         const diff = (now - irreversibleTime) / 1000;
         const irreversible = diff > 0;

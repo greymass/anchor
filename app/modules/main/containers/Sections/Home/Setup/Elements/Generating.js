@@ -12,7 +12,7 @@ class AccountSetupElementsCertificateGenerating extends Component<Props> {
   render() {
     const { error } = this.props.accountcreate;
     return (
-      <Segment>
+      <Segment basic>
         <Header>
           Generating keys for new account
         </Header>

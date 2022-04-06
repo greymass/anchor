@@ -66,7 +66,7 @@ class AccountSetupElementsConfirm extends Component<Props> {
     } = this.state;
     const disable = (ledgerSetup && !ledgerMethod);
     return (
-      <Segment clearing>
+      <Segment basic clearing>
         <Header>
           Confirm account creation
           <Header.Subheader>

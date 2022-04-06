@@ -5,8 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
-import { PrivateKey } from '@greymass/eosio';
-import { Button, Dimmer, Header, Loader, Segment } from 'semantic-ui-react';
+import { Button, Dimmer, Header, Loader, Modal } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago';
 
 import {
@@ -236,6 +235,10 @@ class AccountSetupCode extends Component<Props> {
       password,
     });
   }
+  onCancel = () => {
+    const { actions } = this.props;
+    actions.changeModule('');
+  }
   onPasswordSet = () => this.props.actions.changeModule('home/account/code')
   render() {
     const {
@@ -249,6 +252,14 @@ class AccountSetupCode extends Component<Props> {
       ledgerMethod,
     } = this.state;
     const { accountcreate, settings } = this.props;
+    let el = (
+      <AccountSetupElementsAccountName
+        accountName={accountName}
+        blockchain={accountcreate.blockchain}
+        onChange={this.onChangeAccountName}
+        onNext={() => this.setState({ confirming: true })}
+      />
+    );
     if (!settings.walletHash) {
       return <GlobalModalAccountImportPassword onComplete={this.onPasswordSet} />;
     }
@@ -259,15 +270,11 @@ class AccountSetupCode extends Component<Props> {
       return (
         <React.Fragment>
           <p>This request is not valid.</p>
-          <Button
-            content="New"
-            onClick={() => ipcRenderer.send('openUri', 'anchorcreate:ASQ5MTUzMjU1OS01ZWMzLTQ0YmMtOTUxZC0yOWRjMWZiMmFiNjEA')}
-          />
         </React.Fragment>
       );
     }
     if (complete) {
-      return (
+      el = (
         <AccountSetupElementsComplete
           accountcreate={accountcreate}
           ledgerMethod={ledgerMethod}
@@ -320,7 +327,7 @@ class AccountSetupCode extends Component<Props> {
     }
     // Show confirming step
     if (confirming || generating || creating || awaiting || irreversible) {
-      return (
+      el = (
         <AccountSetupElementsConfirm
           accountName={accountName}
           blockchain={accountcreate.blockchain}
@@ -332,12 +339,34 @@ class AccountSetupCode extends Component<Props> {
     }
     // If account is available and valid, allow proceeding to confirmation step
     return (
-      <AccountSetupElementsAccountName
-        accountName={accountName}
-        blockchain={accountcreate.blockchain}
-        onChange={this.onChangeAccountName}
-        onNext={() => this.setState({ confirming: true })}
-      />
+      <Modal
+        closeIcon={false}
+        closeOnDimmerClick={false}
+        closeOnDocumentClick={false}
+        open={open}
+        size="small"
+        style={{
+          left: 'auto',
+        }}
+      >
+        <Modal.Header>
+          Account Creation
+        </Modal.Header>
+        <Modal.Content textAlign="center">
+          {el}
+        </Modal.Content>
+        {(complete || confirming || generating || creating || awaiting || irreversible)
+          ? false
+          : (
+            <Modal.Actions>
+              <Button
+                content="Cancel"
+                onClick={this.onCancel}
+              />
+            </Modal.Actions>
+          )
+        }
+      </Modal>
     );
   }
 }

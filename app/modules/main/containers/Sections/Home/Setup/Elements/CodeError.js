@@ -12,9 +12,9 @@ class AccountSetupElementsCodeError extends Component<Props> {
   render() {
     const { error } = this.props.accountcreate;
     return (
-      <Segment>
+      <Segment basic size="large">
         <Header>
-          An error occurred, please click your activation link again to retry.
+          Error with account creation code
         </Header>
         <p>
           {JSON.stringify(error)}
