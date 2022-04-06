@@ -176,10 +176,12 @@ class AccountSetupCode extends Component<Props> {
   }
   complete = () => {
     clearInterval(this.interval);
-    // const { accountcreate } = this.props;
-    // const { account, chainId } = accountcreate;
-    // const { active, accountName } = account;
-    // this.props.actions.createWallet(chainId, accountName, active);
+    const { accountcreate, actions } = this.props;
+    const { ledgerMethod } = this.state;
+    const { account, chainId } = accountcreate;
+    const { active, accountName } = account;
+    // Create wallet definition in Anchor
+    actions.createWallet(chainId, accountName, active, ledgerMethod);
     this.setState({
       complete: true,
       irreversible: false,
