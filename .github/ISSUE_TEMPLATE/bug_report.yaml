@@ -32,20 +32,8 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Current Behavior
-      description: A concise description of what you're experiencing.
-    validations:
-      required: false
-  - type: textarea
-    attributes:
-      label: Expected Behavior
-      description: A concise description of what you expected to happen.
-    validations:
-      required: false
-  - type: textarea
-    attributes:
       label: Steps To Reproduce
-      description: Steps to reproduce the behavior.
+      description: Please walk through the steps to reproduce the issue.  If you aren't able to reproduce the error dependably, please provide as much context as possible.
       placeholder: |
         1. In this environment...
         2. With this config...
