@@ -28,35 +28,37 @@ import AccountSetupElementsAccountName from './Elements/AccountName';
 
 const { ipcRenderer } = require('electron');
 
+const defaultState = {
+  // User specified account name
+  accountName: '',
+  // Public key of the active permission generated in the process
+  activeKey: false,
+  // Awaiting confirmation of creation on-chain by transaction id
+  awaiting: false,
+  // Final account completion status
+  complete: false,
+  // Awaiting user confirmation of account name
+  confirming: false,
+  // Awaiting sextant creation response
+  creating: false,
+  // API call errored?
+  errored: false,
+  // Whether or not keys have been generated
+  generated: false,
+  // Awaiting generation of keys/certificate
+  generating: false,
+  // Awaiting irreversible of account
+  irreversible: false,
+  // The Ledger setup configuration used during creation
+  ledgerMethod: false,
+  // User password temporarily stored to prevent multiple entries
+  password: false,
+  // Transaction ID to monitor for account creation
+  transactionId: false,
+};
+
 class AccountSetupCode extends Component<Props> {
-  state = {
-    // User specified account name
-    accountName: '',
-    // Public key of the active permission generated in the process
-    activeKey: false,
-    // Awaiting confirmation of creation on-chain by transaction id
-    awaiting: false,
-    // Final account completion status
-    complete: false,
-    // Awaiting user confirmation of account name
-    confirming: false,
-    // Awaiting sextant creation response
-    creating: false,
-    // API call errored?
-    errored: false,
-    // Whether or not keys have been generated
-    generated: false,
-    // Awaiting generation of keys/certificate
-    generating: false,
-    // Awaiting irreversible of account
-    irreversible: false,
-    // The Ledger setup configuration used during creation
-    ledgerMethod: false,
-    // User password temporarily stored to prevent multiple entries
-    password: false,
-    // Transaction ID to monitor for account creation
-    transactionId: false,
-  }
+  state = defaultState
   componentWillReceiveProps(nextProps) {
     const {
       awaiting, creating, errored, generated, generating, irreversible, password
@@ -108,7 +110,7 @@ class AccountSetupCode extends Component<Props> {
     // Proceed to the next step
     this.setState({
       creating: true,
-      errored: true,
+      errored: false,
       generating: false,
       password: undefined,
     });
@@ -158,6 +160,7 @@ class AccountSetupCode extends Component<Props> {
     const { accountcreate, actions } = this.props;
 
     this.setState({
+      ...defaultState,
       errored: true,
       errorMessage: accountcreate.error
     });
