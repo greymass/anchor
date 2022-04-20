@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
-import { Button, Segment } from 'semantic-ui-react';
+import { Button, Dimmer, Loader, Segment } from 'semantic-ui-react';
 
 import AccountSetupElementsWordsComplete from './Words/Complete';
 import AccountSetupElementsWordsConfirm from './Words/Confirm';
@@ -37,11 +37,31 @@ class AccountSetupElementsWords extends Component<Props> {
         break;
       }
       case 'verify': {
-        content = <AccountSetupElementsWordsConfirm onVerified={this.onVerified} words={words} />;
+        if (words) {
+          content = <AccountSetupElementsWordsConfirm onVerified={this.onVerified} words={words} />;
+        } else {
+          content = (
+            <Segment>
+              <Dimmer active>
+                <Loader>Loading encryption words...</Loader>
+              </Dimmer>
+            </Segment>
+          );
+        }
         break;
       }
       default: {
-        content = <AccountSetupElementsWordsWrite words={words} />;
+        if (words) {
+          content = <AccountSetupElementsWordsWrite words={words} />;
+        } else {
+          content = (
+            <Segment>
+              <Dimmer active>
+                <Loader>Loading encryption words...</Loader>
+              </Dimmer>
+            </Segment>
+          );
+        }
         break;
       }
     }
