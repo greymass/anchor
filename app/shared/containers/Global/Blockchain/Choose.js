@@ -7,8 +7,9 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import compose from 'lodash/fp/compose';
 
-import { Card, Form, Header, Segment, Step } from 'semantic-ui-react';
+import { Button, Card, Form, Header, Segment, Step } from 'semantic-ui-react';
 
+import { changeModule } from '../../../../modules/main/actions/navigation';
 import GlobalFragmentChainLogo from '../../../components/Global/Fragment/ChainLogo';
 import { swapBlockchain } from '../../../actions/blockchains';
 import { setSetting } from '../../../actions/settings';
@@ -41,6 +42,11 @@ class GlobalBlockchainChoose extends Component<Props> {
     actions.swapBlockchain(chainId);
     actions.setSetting('blockchains', [chainId]);
     history.push('');
+  }
+  goBack = () => {
+    const { actions } = this.props;
+    actions.setSetting('walletInit', false);
+    actions.changeModule('home/init');
   }
   render() {
     const {
@@ -104,6 +110,13 @@ class GlobalBlockchainChoose extends Component<Props> {
                 onChange={this.onChange}
               />
             </Form.Field>
+            <Form.Field>
+              <Button
+                content="Back"
+                icon="cancel"
+                onClick={this.goBack}
+              />
+            </Form.Field>
           </Form>
         </Segment>
       </Segment>
@@ -123,6 +136,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      changeModule,
       setSetting,
       swapBlockchain,
     }, dispatch)
