@@ -59,9 +59,11 @@ export function beginAccountCreate(url) {
     const { app, blockchains, settings } = getState();
     const [, data] = url.split(':');
 
+    console.log({ data });
+
     const request = CreateRequest.from(data);
-    const codeHash = request.scope && Checksum256.hash(Bytes.from(request.code, 'utf8')).hexString;
-    const callbackUrl = codeHash && `https://cb.anchor.link/${codeHash}`;
+    console.log({ request });
+    console.log({ login: request.loginRequest });
 
     try {
       const response = await apiRequest('/tickets/verify', {
@@ -78,8 +80,7 @@ export function beginAccountCreate(url) {
             ...json,
             blockchain,
             code: request.code,
-            scope: request.scope,
-            callbackUrl,
+            request,
           }
         });
       }
@@ -111,6 +112,9 @@ export function beginAccountCreate(url) {
 
 export function createAccount(code, chainId, accountName, activeKey, ownerKey) {
   return async (dispatch: () => void, getState) => {
+    console.log({
+      code, chainId, accountName, activeKey, ownerKey
+    });
     try {
       const { app, settings } = getState();
       const response = await apiRequest('/tickets/create', {
@@ -180,6 +184,13 @@ export function importCreatedAccountKeys(
   activePrivate
 ) {
   return async (dispatch: () => void, getState) => {
+    console.log({
+      password,
+      chainId,
+      accountName,
+      ownerPrivate,
+      activePrivate
+    });
     const { blockchains } = getState();
     const blockchain = find(blockchains, { chainId });
     // Import the owner key temporarily until backup sheet is created
