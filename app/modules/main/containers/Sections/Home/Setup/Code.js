@@ -17,7 +17,7 @@ import {
 } from '../../../../actions/account';
 import { importPubkeyStorage } from '../../../../../../shared/actions/wallets';
 import { changeModule } from '../../../../actions/navigation';
-import { callbackURIWithProcessed } from '../../../../../handler/actions/uri';
+import { callbackURIWithProcessed, signIdentityRequest } from '../../../../../handler/actions/uri';
 
 import GlobalModalAccountImportPassword from '../../../../../../shared/containers/Global/Account/Import/Password';
 
@@ -116,18 +116,14 @@ class AccountSetupCode extends Component<Props> {
     });
   }
   sendCreationCallback = (accountcreate, callbackURIAction) => {
-    if (accountcreate.callbackUrl) {
-      callbackURIAction({
-        background: true,
-        url: accountcreate.callbackUrl,
-        payload: {
-          status: 'success',
-          network: accountcreate.chainId,
-          actor: accountcreate.account.accountName,
-          permission: 'active',
-        }
-      });
+    const { resolvedLoginRequest } = accountcreate;
+
+    if (!resolvedLoginRequest) {
+      return;
     }
+
+    const callbackParams = resolvedLoginRequest.getCallback(accountcreate.loginSignatures);
+    return callbackURIAction(callbackParams);
   }
   interval = false
   awaitCreation = () => {
