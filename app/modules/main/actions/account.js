@@ -1,8 +1,7 @@
 import fetch from 'node-fetch';
 import { find } from 'lodash';
 
-import { Bytes, KeyType, PrivateKey, Checksum256 } from '@greymass/eosio';
-import { Base64u } from 'eosio-signing-request';
+import { Bytes, KeyType, PrivateKey } from '@greymass/eosio';
 import { CreateRequest } from '@greymass/account-creation';
 
 import EOSAccount from '../../../shared/utils/EOS/Account';
