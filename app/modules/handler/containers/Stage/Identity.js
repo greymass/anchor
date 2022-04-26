@@ -31,6 +31,7 @@ class PromptStageIdentity extends Component<Props> {
       wallets,
       t,
     } = this.props;
+
     const {
       resolved,
     } = prompt;
@@ -44,8 +45,9 @@ class PromptStageIdentity extends Component<Props> {
       && resolved.request.isMultiChain()
     ) {
       chainIds = JSON.parse(JSON.stringify(resolved.request.getChainIds()));
+
       const { blockchains } = this.props;
-      multiChain = blockchains.filter(b => {
+      multiChain = !chainIds || blockchains.filter(b => {
         const hasWallet = wallets.filter(w => w.chainId === b.chainId).length > 0;
         const isEnabled = settings.blockchains.includes(b.chainId);
         const isSelectable = chainIds.includes(b.chainId);
