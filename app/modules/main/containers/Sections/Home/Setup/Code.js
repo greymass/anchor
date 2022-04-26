@@ -116,8 +116,7 @@ class AccountSetupCode extends Component<Props> {
     });
   }
   triggerIdentityRequest = (accountcreate) => {
-    console.log({ accountcreate });
-    ipcRenderer.send('openUri', `esr:${resolvedLoginRequest}`);
+    ipcRenderer.send('openUri', accountcreate.loginRequest.replace('//', ''));
   }
   interval = false
   awaitCreation = () => {

@@ -190,9 +190,9 @@ export function setURI(uri) {
         const chainIds = request.getChainIds();
         const accountChains = wallets.map(w => w.chainId);
         // Find the first chainId matching the request that is enabled
-        const matchingRequest = chainIds.filter((chain) =>
+        const matchingRequest = chainIds && chainIds.filter((chain) =>
           accountChains.includes(chain.toString()));
-        [chainId] = matchingRequest;
+        chainId = (matchingRequest || accountChains)[0];
       } else {
         chainId = request.getChainId();
       }
