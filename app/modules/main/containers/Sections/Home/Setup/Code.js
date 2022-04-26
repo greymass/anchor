@@ -17,7 +17,7 @@ import {
 } from '../../../../actions/account';
 import { importPubkeyStorage } from '../../../../../../shared/actions/wallets';
 import { changeModule } from '../../../../actions/navigation';
-import { callbackURIWithProcessed, signIdentityRequest } from '../../../../../handler/actions/uri';
+import { callbackURIWithProcessed } from '../../../../../handler/actions/uri';
 
 import GlobalModalAccountImportPassword from '../../../../../../shared/containers/Global/Account/Import/Password';
 
@@ -80,7 +80,7 @@ class AccountSetupCode extends Component<Props> {
       this.throwError();
     }
     if (awaiting && !transactionExists && nextProps.accountcreate.transactionExists) {
-      this.sendCreationCallback(nextProps.accountcreate, nextProps.actions.callbackURIWithProcessed);
+      this.triggerIdentityRequest(nextProps.accountcreate);
       this.awaitIrreversible();
     }
     if (
@@ -115,15 +115,9 @@ class AccountSetupCode extends Component<Props> {
       password: undefined,
     });
   }
-  sendCreationCallback = (accountcreate, callbackURIAction) => {
-    const { resolvedLoginRequest } = accountcreate;
-
-    if (!resolvedLoginRequest) {
-      return;
-    }
-
-    const callbackParams = resolvedLoginRequest.getCallback(accountcreate.loginSignatures);
-    return callbackURIAction(callbackParams);
+  triggerIdentityRequest = (accountcreate) => {
+    console.log({ accountcreate });
+    ipcRenderer.send('openUri', `esr:${resolvedLoginRequest}`);
   }
   interval = false
   awaitCreation = () => {
@@ -153,24 +147,10 @@ class AccountSetupCode extends Component<Props> {
   throwError = () => {
     clearInterval(this.interval);
 
-    const { accountcreate, actions } = this.props;
-
     this.setState({
       ...defaultState,
       errored: true,
-      errorMessage: accountcreate.error
     });
-
-    if (accountcreate.callbackUrl) {
-      actions.callbackURIWithProcessed({
-        background: true,
-        url: accountcreate.callbackUrl,
-        payload: {
-          status: 'failure',
-          error: accountcreate.error,
-        }
-      });
-    }
   }
   complete = () => {
     clearInterval(this.interval);
