@@ -103,10 +103,7 @@ app.on('ready', async () => {
   const { settings } = store.getState();
 
   // Initialize the state of signing requests
-  if (settings.allowSigningRequests) {
-    enableSigningRequests();
-    log.info('signing requests');
-  }
+  enableSigningRequests();
 
   // Establish tray menu
   initMenu(settings);

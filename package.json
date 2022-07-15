@@ -228,5 +228,8 @@
     "node": ">=12.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
+  },
+  "resolutions": {
+    "@greymass/eosio": "0.6.1-rc1"
   }
 }
