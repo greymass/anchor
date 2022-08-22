@@ -97,13 +97,20 @@ class WalletTransferContainer extends Component<Props> {
       return { contract, symbol };
     });
 
+    console.log(balances);
     const filteredTokens = filter(tokens, (token) => {
-      const isSystemToken = (token === connection.chainSymbol);
-      const isTracked = find(trackedTokens, { symbol: token });
+      const [, tokenSymbol] = token.split('-');
+      const isSystemToken = (tokenSymbol === connection.chainSymbol);
+      console.log(token, connection.chainSymbol, isSystemToken);
+      const isTracked = find(trackedTokens, { symbol: tokenSymbol });
+      console.log(token, trackedTokens, isTracked);
       const hasBalance = balances[settings.account][token] > 0;
-
+      console.log(token, balances, hasBalance);
       return ((isTracked || isSystemToken) && hasBalance);
     });
+
+    console.log(trackedTokens);
+    console.log(filteredTokens);
 
     const hasTransaction = (transaction && transaction.transaction_id);
     let contract;
@@ -188,7 +195,14 @@ class WalletTransferContainer extends Component<Props> {
                 }
                 {filteredTokens.map((symbol) => (
                   <Table.Row>
-                    <Table.Cell textAlign="right">{symbol}</Table.Cell>
+                    <Table.Cell textAlign="right">
+                      <Header size="small">
+                        {symbol.split('-')[1]}
+                        <Header.Subheader>
+                          {symbol.split('-')[0]}
+                        </Header.Subheader>
+                      </Header>
+                    </Table.Cell>
                     <Table.Cell
                       onClick={() => this.props.actions.transferSetAsset(
                         balances[settings.account][symbol],
@@ -199,8 +213,8 @@ class WalletTransferContainer extends Component<Props> {
                       <GlobalAccountFragmentTokenBalance
                         account={settings.account}
                         chainId={settings.chainId}
-                        contract={balances.__contracts[symbol]}
-                        token={symbol}
+                        contract={balances.__contracts[symbol].contract}
+                        token={symbol.split('-')[1]}
                       />
                     </Table.Cell>
                   </Table.Row>

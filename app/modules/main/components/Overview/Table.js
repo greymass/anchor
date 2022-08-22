@@ -39,7 +39,7 @@ class OverviewTable extends Component<Props> {
 
     const tokens = settings.customTokens.filter((token) => {
       const [chain] = token.split(':');
-      return (chain === settings.chainId);
+      return (chain === settings.chainId || chain === 'eos-mainnet');
     }).sort((a, b) => {
       const [, , asymbol] = a.split(':');
       const [, , bsymbol] = b.split(':');
@@ -49,7 +49,7 @@ class OverviewTable extends Component<Props> {
     accountNames.forEach((accountName) => {
       tokens.forEach((token) => {
         const [chain, contract, symbol] = token.split(':');
-        if (chain === settings.chainId) {
+        if (chain === settings.chainId || chain === 'eos-mainnet') {
           if (!accountBalances[accountName]) {
             accountBalances[accountName] = [];
           }
@@ -111,7 +111,7 @@ class OverviewTable extends Component<Props> {
                             <GlobalAccountFragmentSystemTokenBalance
                               account={accountName}
                               chainId={settings.chainId}
-                              contract="eosio"
+                              contract="eosio.token"
                               token={chainSymbol}
                             />
                           </Header>
@@ -121,7 +121,7 @@ class OverviewTable extends Component<Props> {
                             <GlobalAccountFragmentTokenBalance
                               account={accountName}
                               chainId={settings.chainId}
-                              contract="eosio"
+                              contract="eosio.token"
                               token={chainSymbol}
                             />
                           </Header>
@@ -133,7 +133,7 @@ class OverviewTable extends Component<Props> {
                                 <GlobalAccountFragmentSystemTokenValue
                                   account={accountName}
                                   chainId={settings.chainId}
-                                  contract="eosio"
+                                  contract="eosio.token"
                                   token={chainSymbol}
                                 />
                               </Header>
@@ -147,7 +147,7 @@ class OverviewTable extends Component<Props> {
                               <GlobalAccountFragmentTokenStaked
                                 account={accountName}
                                 chainId={settings.chainId}
-                                contract="eosio"
+                                contract="eosio.token"
                                 token={chainSymbol}
                               />
                             </Table.Cell>
@@ -160,7 +160,7 @@ class OverviewTable extends Component<Props> {
                               <GlobalAccountFragmentREXBalance
                                 account={accountName}
                                 chainId={settings.chainId}
-                                contract="eosio"
+                                contract="eosio.token"
                                 token={chainSymbol}
                               />
                             </Table.Cell>
@@ -173,7 +173,7 @@ class OverviewTable extends Component<Props> {
                               <GlobalAccountFragmentTokenDelegated
                                 account={accountName}
                                 chainId={settings.chainId}
-                                contract="eosio"
+                                contract="eosio.token"
                                 token={chainSymbol}
                               />
                             </Table.Cell>
@@ -186,7 +186,7 @@ class OverviewTable extends Component<Props> {
                               <GlobalAccountFragmentTokenRefunding
                                 account={accountName}
                                 chainId={settings.chainId}
-                                contract="eosio"
+                                contract="eosio.token"
                                 token={chainSymbol}
                               />
                             </Table.Cell>

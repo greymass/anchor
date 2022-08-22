@@ -9,11 +9,12 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const { connection } = this.props;
     const [quantity, asset] = props.value.split(' ');
     this.state = {
-      asset: asset || connection.chainSymbol || 'EOS',
+      asset: asset || `${connection.tokenContract.toUpperCase()}-${connection.chainSymbol.toUpperCase()}` || 'EOS',
       quantity
     };
   }
   onChange = debounce((e, { name, value }) => {
+    console.log('onchange', name, value)
     this.setState({
       [name]: value,
     }, () => {
@@ -56,7 +57,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
 
     if (trackedTokensIncludeChainSymbol) {
       trackedTokens.push({
-        contract: 'eosio',
+        contract: 'eosio.token',
         symbol: connection.chainSymbol || 'EOS'
       });
     }
@@ -64,26 +65,25 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
     const options = [];
     // Iterate assets and build the options list based on tracked tokens
     assets.forEach((asset) => {
-      const assetDetails = find(trackedTokens, { symbol: asset });
-      if (assetDetails) {
-        const { contract, symbol } = find(trackedTokens, { symbol: asset });
-        if (
-          (contract && symbol)
-          && (balances[settings.account] && balances[settings.account][asset] > 0)
-        ) {
-          options.push({
-            key: asset,
-            text: `${symbol} (${contract})`,
-            value: asset
-          });
-        }
+      const [contract, symbol] = asset.split('-')
+      if (
+        (contract && symbol)
+        && (balances[settings.account] && balances[settings.account][`${contract.toUpperCase()}-${symbol.toUpperCase()}`] > 0)
+      ) {
+        options.push({
+          key: asset,
+          text: `${symbol} (${contract})`,
+          value: asset
+        });
       }
+
     });
     return (
       <div className="field">
         <label htmlFor={name}>
           {label}
         </label>
+        {this.state.asset}
         <Input
           autoFocus={autoFocus}
           control={Input}
@@ -95,7 +95,7 @@ export default class GlobalFormFieldMultiToken extends Component<Props> {
           style={style}
         >
           <Dropdown
-            defaultValue={this.state.asset || 'EOS'}
+            defaultValue={this.state.asset || 'EOSIO.TOKEN-EOS'}
             name="asset"
             onChange={this.onChange}
             options={options}

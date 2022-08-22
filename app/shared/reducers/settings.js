@@ -44,7 +44,7 @@ const initialState = {
   // Custom tokens the wallet should be tracking
   customTokens: [
     // Always track the EOS token
-    'eos-mainnet:eosio.token:EOS'
+    'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906:eosio.token:EOS'
   ],
   // Unique ID for this wallet
   deviceId: uuid(),

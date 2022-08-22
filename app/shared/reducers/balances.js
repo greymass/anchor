@@ -25,12 +25,13 @@ export default function balances(state = initialState, action) {
         const newBalances = Object.assign({}, state[action.payload.account]);
         const tokenSymbol = `${connection.tokenPrecision || 4},${connection.chainSymbol}`;
         if (results.core_liquid_balance) {
-          newBalances[connection.chainSymbol] = Asset.from(results.core_liquid_balance, tokenSymbol).value;
+          newBalances[`${connection.tokenContract.toUpperCase()}-${connection.chainSymbol.toUpperCase()}`] = Asset.from(results.core_liquid_balance, tokenSymbol).value;
         } else {
-          newBalances[connection.chainSymbol] = Asset.from(0, tokenSymbol).value;
+          newBalances[`${connection.tokenContract.toUpperCase()}-${connection.chainSymbol.toUpperCase()}`] = Asset.from(0, tokenSymbol).value;
         }
         modified = set(state, account, newBalances);
-        modified = set(modified, `__contracts.${connection.chainSymbol.toUpperCase()}`, {
+        const balanceKey = `${connection.tokenContract.toUpperCase()}-${connection.chainSymbol.toUpperCase()}`.replace(/\./g, '\\.')
+        modified = set(modified, `__contracts.${balanceKey}`, {
           contract: connection.tokenContract,
           precision: connection.tokenPrecision,
         });
@@ -46,7 +47,7 @@ export default function balances(state = initialState, action) {
         (res, { code, symbol }) => ({
           ...res,
           ...{
-            [symbol.toUpperCase()]: {
+            [`${code.toUpperCase()}-${symbol.toUpperCase()}`.replace(/\./g, '\\.')]: {
               contract: code,
               precision: {
                 [symbol]: get(action, `payload.precisions.${symbol}`, 4)
@@ -70,9 +71,14 @@ export default function balances(state = initialState, action) {
       } = action.payload;
       let modified;
       const account = account_name.replace(/\./g, '\\.');
-      modified = set(state, account, Object.assign({}, state[account_name], tokens));
+      const modifiedTokens = {}
+      Object.keys(tokens).map(token => {
+        modifiedTokens[`${contract.toUpperCase()}-${token.toUpperCase()}`] = tokens[token]
+      })
+      modified = set(state, account, Object.assign({}, state[account_name], modifiedTokens));
       if (precision[symbol.toUpperCase()] !== undefined) {
-        modified = set(modified, `__contracts.${symbol.toUpperCase()}`, { contract, precision });
+        const balanceKey = `${contract.toUpperCase()}-${symbol.toUpperCase()}`.replace(/\./g, '\\.')
+        modified = set(modified, `__contracts.${balanceKey}`, { contract, precision });
       }
       return modified;
     }

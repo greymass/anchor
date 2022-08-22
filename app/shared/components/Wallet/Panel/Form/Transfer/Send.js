@@ -279,7 +279,9 @@ class WalletPanelFormTransferSend extends Component<Props> {
         precisionValue = precision;
       }
     }
-    const quantity = Asset.from(balance[asset], `${precisionValue},${asset}`);
+    console.log(asset, balance, precisionValue)
+    const quantity = Asset.from(balance[asset], `${precisionValue},${asset.split('-')[1]}`);
+    console.log(String(quantity))
     if (fioFee) {
       quantity.value -= fioFee / 1000000000;
     }
@@ -330,6 +332,8 @@ class WalletPanelFormTransferSend extends Component<Props> {
       waiting,
       waitingStarted
     } = this.state;
+
+    console.log(this.state)
 
     const balance = balances[settings.account];
     const assetContract = balances.__contracts[asset.toUpperCase()];
@@ -442,7 +446,7 @@ class WalletPanelFormTransferSend extends Component<Props> {
                         style={{ cursor: 'pointer' }}
                       >
                         {(balance[asset])
-                          ? String(Asset.from(balance[asset], `${precision},${asset}`))
+                          ? String(Asset.from(balance[asset], `${precision},${asset.split('-')[1]}`))
                           : 'Select a token'
                         }
                       </a>

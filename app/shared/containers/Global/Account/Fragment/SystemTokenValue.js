@@ -27,7 +27,8 @@ const mapStateToProps = (state, ownProps) => {
   const account = ownProps.account.replace(/\./g, '\\.');
   const loaded = isObject(get(state, `balances.${account}`));
   const defaultValue = loaded ? 0 : false;
-  const liquid = get(state, `balances.${account}.${ownProps.token}`, defaultValue);
+  const balanceKey = `${ownProps.contract.toUpperCase()}-${ownProps.token.toUpperCase()}`.replace(/\./g, '\\.');
+  const liquid = get(state, `balances.${account}.${balanceKey}`, defaultValue);
   const path = `accounts.${account}.self_delegated_bandwidth`;
   const cpuWeight = String(get(state, `${path}.cpu_weight`, defaultValue));
   const netWeight = String(get(state, `${path}.net_weight`, defaultValue));

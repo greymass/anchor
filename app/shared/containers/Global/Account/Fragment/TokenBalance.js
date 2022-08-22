@@ -35,13 +35,15 @@ const mapStateToProps = (state, ownProps) => {
   const loaded = !isEmpty(get(state, `balances.${account}.${ownProps.token}`));
   const defaultValue = loaded ? 0 : false;
   // Allow override as prop to use formatting
-  let balance = get(state, `balances.${account}.${ownProps.token}`, defaultValue);
+  console.log(ownProps)
+  const balanceKey = `${ownProps.contract.toUpperCase()}-${ownProps.token.toUpperCase()}`.replace(/\./g, '\\.')
+  let balance = get(state, `balances.${account}.${balanceKey}`, defaultValue);
   if (ownProps.balance !== undefined) {
     balance = ownProps.balance;
   }
   return {
     balance,
-    precision: get(state, `balances.__contracts.${ownProps.token}.precision.${ownProps.token}`, 4),
+    precision: get(state, `balances.__contracts.${ownProps.contract.toUpperCase()}-${ownProps.token.toUpperCase()}.precision.${ownProps.token}`, 4),
   };
 };
 
