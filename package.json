@@ -56,7 +56,7 @@
     "@greymass/anchor-link-session-manager": "0.3.1",
     "@greymass/eosio": "0.6.1",
     "@greymass/eosio-resources": "0.7.0",
-    "@greymass/keycert": "^1.3.0",
+    "@greymass/keycert": "^1.4.0",
     "@greymass/keycert-pdf": "^1.2.0",
     "anchor-link": "^3.5.0",
     "asn1-ber": "^1.0.9",
@@ -228,5 +228,8 @@
     "node": ">=12.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
+  },
+  "resolutions": {
+    "@greymass/eosio": "^0.6.3"
   }
 }
