@@ -169,7 +169,8 @@ export function setURI(uri) {
         }
       };
       // Catch old signing requests during v1 -> v2 spec upgrade
-      const modified = uri.replace('eosio:', 'esr:');
+      let modified = uri.replace('eosio:', 'esr:');
+      modified = uri.replace('esr-anchor:', 'esr:');
       // Interpret the Signing Request
       const request = SigningRequest.from(modified, opts);
       const req = JSON.parse(JSON.stringify(request.data.req));
