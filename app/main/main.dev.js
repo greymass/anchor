@@ -86,7 +86,7 @@ if (!lock) {
     }
     showMain();
     if (pHandler !== null && uri) {
-      if (uri.startsWith('esr:') || uri.startsWith('anchorcreate:')) {
+      if (uri.startsWith('esr:') || uri.startsWith('esr-anchor:') || uri.startsWith('anchorcreate:')) {
         handleUri(resourcePath, store, mainWindow, pHandler, uri);
       }
     } else {
@@ -266,6 +266,10 @@ const enableSigningRequests = () => {
   protocol.registerHttpProtocol('esr', (req, cb) => {
     log.info('protocol handler: register', req, cb);
   });
+  app.setAsDefaultProtocolClient('esr-anchor');
+  protocol.registerHttpProtocol('esr-anchor', (req, cb) => {
+    log.info('protocol handler: register', req, cb);
+  });
   app.setAsDefaultProtocolClient('anchor');
   protocol.registerHttpProtocol('anchor', (req, cb) => {
     log.info('app handler: register', req, cb);
@@ -280,6 +284,8 @@ const disableSigningRequests = () => {
   log.info('disableSigningRequests');
   app.removeAsDefaultProtocolClient('esr');
   protocol.unregisterProtocol('esr');
+  app.removeAsDefaultProtocolClient('esr-anchor');
+  protocol.unregisterProtocol('esr-anchor');
   app.removeAsDefaultProtocolClient('anchor');
   protocol.unregisterProtocol('anchor');
   app.removeAsDefaultProtocolClient('anchorcreate');

@@ -33,8 +33,9 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
     });
   }
 
-  if (url.startsWith('esr:')) {
-    pHandler.webContents.send('openUri', url);
+  if (url.startsWith('esr:') || url.startsWith('esr-anchor:')) {
+    const modified = url.replace('esr-anchor:', 'esr:');
+    pHandler.webContents.send('openUri', modified);
     pHandler.setVisibleOnAllWorkspaces(true);
     pHandler.show();
     pHandler.focus();
