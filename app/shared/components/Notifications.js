@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import GlobalMessageAppUpgradeModal from './Global/Message/App/Upgrade/Modal';
 import WalletUpgrade from './Wallet/Upgrade';
 
-const name = require('electron').remote.app.getName();
-const version = require('electron').remote.app.getVersion();
+const name = 'test'; // require('@electron/remote/main').app.getName();
+const version = 'version'; // require('@electron/remote/main').app.getVersion();
 
 class Notifications extends Component<Props> {
   render() {

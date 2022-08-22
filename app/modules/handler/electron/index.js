@@ -32,7 +32,7 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     minHeight: 500,
     title,
     skipTaskbar: true,
-    show: false,
+    show: true,
     resizable: true,
     backgroundColor: '#f1f0ee',
     icon: path.join(resourcePath, 'renderer/assets/icons/png/64x64.png'),

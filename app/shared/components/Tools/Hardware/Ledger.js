@@ -6,7 +6,7 @@ import { Button, Icon, Input, Header, Label, List, Segment, Table } from 'semant
 
 import ToolsHardwareLedgerStatus from './Ledger/Status';
 
-const { remote } = require('electron');
+const remote = require('@electron/remote/main');
 
 class ToolsHardwareLedger extends Component<Props> {
   state = {

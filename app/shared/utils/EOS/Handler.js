@@ -31,7 +31,7 @@ const eosjs1 = require('eosjs');
 const { transactionHeader } = require('eosjs2/node_modules/eosjs/dist/eosjs-serialize');
 const { stringToPublicKey, publicKeyToString } = require('eosjs2/node_modules/eosjs/dist/eosjs-numeric');
 const { JsSignatureProvider } = require('eosjs2/node_modules/eosjs/dist/eosjs-jssig');
-const { remote } = require('electron');
+const { remote } = require('@electron/remote/main');
 
 const LedgerApi = require('../../actions/helpers/hardware/ledger').default;
 

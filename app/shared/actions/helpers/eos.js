@@ -2,7 +2,7 @@ import { decrypt } from '../wallet';
 import serialize from './ledger/serialize';
 import EOSHandler from '../../utils/EOS/Handler';
 
-const { remote } = require('electron');
+const remote = require('@electron/remote/main');
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');

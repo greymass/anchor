@@ -5,7 +5,8 @@ import HardwareLedger from '../../utils/Hardware/Ledger';
 const Api = require('../helpers/hardware/ledger').default;
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
+const remote = require('@electron/remote/main');
 
 function handleComplete() {
   console.log('complete fired');

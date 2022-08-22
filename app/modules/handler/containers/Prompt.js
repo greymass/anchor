@@ -18,7 +18,7 @@ import PromptStage from './Stage';
 import PromptHeader from '../components/Header';
 import PromptShare from '../components/Share';
 
-const { remote } = require('electron');
+const remote = require("@electron/remote/main");
 
 const initialState = {
   blockchain: {},

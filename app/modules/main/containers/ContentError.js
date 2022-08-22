@@ -10,7 +10,7 @@ import { Container, Form, Header, Segment } from 'semantic-ui-react';
 
 import NavigationActions from '../actions/navigation';
 
-const { getCurrentWindow } = require('electron').remote;
+const { getCurrentWindow } = require('@electron/remote/main');
 
 class ContentErrorContainer extends Component<Props> {
   reset = () => {
