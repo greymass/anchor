@@ -54,7 +54,7 @@
     "@babel/preset-typescript": "^7.14.5",
     "@greymass/account-creation": "^0.0.1",
     "@greymass/anchor-link-session-manager": "0.3.1",
-    "@greymass/eosio": "0.6.1",
+    "@greymass/eosio": "^0.6.4",
     "@greymass/eosio-resources": "0.7.0",
     "@greymass/keycert": "^1.4.0",
     "@greymass/keycert-pdf": "^1.2.0",
