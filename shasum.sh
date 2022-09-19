@@ -8,6 +8,8 @@ shasum -b -a 512 linux-anchor-wallet-1.3.6-amd64.deb
 # shasum -b -a 512 linux-anchor-wallet-1.3.6-amd64.snap
 echo "shasum -b -a 512 linux-anchor-wallet-1.3.6-arm64.deb"
 shasum -b -a 512 linux-anchor-wallet-1.3.6-arm64.deb
+echo "shasum -b -a 512 linux-anchor-wallet-1.3.6-x86_64.rpm"
+shasum -b -a 512 linux-anchor-wallet-1.3.6-x86_64.rpm
 echo "shasum -b -a 512 linux-anchor-wallet-1.3.6-armv7l.deb"
 shasum -b -a 512 linux-anchor-wallet-1.3.6-armv7l.deb
 # echo "shasum -b -a 512 linux-anchor-wallet-1.3.6-i386.deb"
