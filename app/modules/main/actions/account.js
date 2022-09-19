@@ -285,7 +285,15 @@ export function returnKeyCertificateDecrypted(cert) {
       }
       return dispatch({
         type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED_MISMATCH,
-        payload: 'The key certificate does not match the account specified.'
+        payload: {
+          account: cert.account,
+          auth,
+          blockchain: cert.blockchain.chainId,
+          data: result.data.permissions,
+          message: 'The key certificate does not match the account specified.',
+          publicKey: cert.publicKey,
+          server: cert.blockchain.node,
+        }
       });
     }
     return dispatch({
