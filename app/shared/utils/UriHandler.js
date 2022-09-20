@@ -33,6 +33,14 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
     });
   }
 
+  if (url.startsWith('anchorcreate:')) {
+    mainWindow.webContents.send('accountCreate', url);
+    mainWindow.setVisibleOnAllWorkspaces(true);
+    mainWindow.show();
+    mainWindow.focus();
+    mainWindow.setVisibleOnAllWorkspaces(false);
+  }
+
   if (url.startsWith('esr:') || url.startsWith('esr-anchor:')) {
     const modified = url.replace('esr-anchor:', 'esr:');
     pHandler.webContents.send('openUri', modified);
@@ -40,14 +48,6 @@ export default async function handleUri(resourcePath, store, mainWindow, pHandle
     pHandler.show();
     pHandler.focus();
     pHandler.setVisibleOnAllWorkspaces(false);
-  }
-
-  if (url.startsWith('anchorcreate:')) {
-    mainWindow.webContents.send('accountCreate', url);
-    mainWindow.setVisibleOnAllWorkspaces(true);
-    mainWindow.show();
-    mainWindow.focus();
-    mainWindow.setVisibleOnAllWorkspaces(false);
   }
 
   // For the current version, just prompt and don't process whitelist (code above)
