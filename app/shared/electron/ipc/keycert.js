@@ -3,7 +3,7 @@ import { scrypt } from 'crypto'
 import fetch from 'electron-fetch'
 import generatepdf from '@greymass/keycert-pdf'
 import { decrypt as decryptKeyCert, generate, KeyCertificate } from '@greymass/keycert'
-import { Action, APIClient, FetchProvider, Name, PrivateKey, SignedTransaction, Transaction } from '@greymass/eosio'
+import { Action, APIClient, FetchProvider, Name, PublicKey, PrivateKey, SignedTransaction, Transaction } from '@greymass/eosio'
 import { SigningRequest } from 'eosio-signing-request'
 import { EncryptedPrivateKey } from 'eosio-key-encryption'
 
@@ -15,6 +15,7 @@ import { decrypt } from '../../actions/wallet'
 import { importKeyStorage } from '../../actions/wallets'
 import { fuelEndpoints } from '../../utils/EOS/Handler'
 import * as ValidateFuel from '../../utils/EOS/ValidateFuel'
+import EOSAccount from '../../utils/EOS/Account';
 
 import templateBase64String from './keycert/template'
 import fontBase64String from './keycert/font'
@@ -112,9 +113,42 @@ function generateNewAccountKeys(
   }
 }
 
-function getKeycertParams(store, password, chainId, accountName, ownerPublicKey) {
+async function getKeycertParams(store, password, chainId, accountName, expectedPublicKey) {
   const { storage } = store.getState()
-  const privateKey = retrievePrivateKey(storage, password, ownerPublicKey)
+  const client = getAPIClient(store, chainId)
+  const account = await client.v1.chain.get_account(accountName)
+  const accountObj = new EOSAccount(JSON.parse(JSON.stringify(account)))
+  const permission = accountObj.getPermission('owner')
+  if(!permission) {
+    throw new Error('Could not find owner permission.')
+  }
+  if(!permission.required_auth) {
+    throw new Error('Invalid permission, no required auths.')
+  }
+  if(!permission.required_auth.keys.length) {
+    throw new Error('Invalid owner permission, no key auths to reference.')
+  }
+  let privateKey
+  permission.required_auth.keys.forEach((key) => {
+    if (key.weight === 1) {
+      const pubkey = PublicKey.from(key.key)
+      const attemptedKey = retrievePrivateKey(storage, password, String(pubkey))
+      if (attemptedKey) {
+        privateKey = attemptedKey
+      } else {
+        const attemptedKey2 = retrievePrivateKey(storage, password, String(pubkey.toLegacyString()))
+        if (attemptedKey2) {
+          privateKey = attemptedKey2
+        }
+      }
+    }
+  })
+  if (!privateKey) {
+    throw new Error('Owner permission not found in keystore.')
+  }
+  if (privateKey.pubkey !== expectedPublicKey) {
+    console.log(`The expected pubkey didn't match the key in storage, expected: ${expectedPublicKey}, received: ${privateKey.pubkey}. Automatically corrected and exported correct key based on chain results.`)
+  }
   return {
     privateKey: privateKey.key,
     account: {
@@ -134,7 +168,7 @@ export async function generateKeyCert(
   accountName,
 ) {
   // Generate the keycert and keys (if required)
-  const params = getKeycertParams(
+  const params = await getKeycertParams(
     store,
     password,
     chainId,
@@ -167,11 +201,7 @@ export function generateNewAccount(
   event.sender.send('returnNewAccountKeys', chainId, accountName, active, owner)
 }
 
-async function getKeyCertificatePdf(
-  store,
-  cert,
-  chainId,
-) {
+function getAPIClient(store, chainId) {
   // Determin the blockchain and setup an API client
   const { blockchains } = store.getState()
   const blockchain = find(blockchains, { chainId })
@@ -180,6 +210,15 @@ async function getKeyCertificatePdf(
   const client = new APIClient({
     provider
   })
+  return client
+}
+
+async function getKeyCertificatePdf(
+  store,
+  cert,
+  chainId,
+) {
+  const client = getAPIClient(store, chainId)
   // Load state from the chain to populate the PDF with
   const state = await client.v1.chain.get_info()
   // Generate and return PDF
@@ -332,10 +371,7 @@ export async function updateKeyWithCertificate(event, store, password, certifica
     newPublicKey.toLegacyString(blockchain.keyPrefix)
   ))
   // API Client for use
-  const provider = new FetchProvider(blockchain.node, {fetch})
-  const client = new APIClient({
-    provider
-  })
+  const client = getAPIClient(store, chainId)
   // Generate the update auth transaction with or without Fuel
   const updateauth = await generateUpdateAuthTransaction(
     client,
