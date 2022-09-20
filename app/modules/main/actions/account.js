@@ -163,6 +163,7 @@ export function createWallet(chainId, accountName, activeKey, isLedger = false) 
     const { httpClient } = await createHttpHandler({});
     const result = await httpClient.post(`${blockchain.node}/v1/chain/get_account`, {
       account_name: accountName,
+      cachebreak: Date.now()
     });
     const accountObj = new EOSAccount(result.data);
     const permission = accountObj.getPermission('active');
