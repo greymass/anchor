@@ -122,7 +122,7 @@
   "wallet_upgrade_watch_authorization_description": "If you are using in conjunction with a cold wallet, please select the type of key you have imported into the cold wallet. If the account is just being watched, the selected authority doesn't matter.",
   "wallet_upgrade_watch_authorization_header": "Select an authority for this wallet.",
   "wallet_welcome_connection_blockchain_message": "You are connected to the {{blockChainName}}.",
-  "wallet_panel_button_broadcast_transaction": "Broadcast Transaction",
+  "wallet_panel_button_broadcast_transaction": "Import Transaction",
   "wallet_lock_state_popup": "This wallet (and potentially other wallets) is unlocked. Click this icon to lock all of your wallets.",
   "tools_button_reset": "Reset Application",
   "tools_confirm_content_reset": "This action will erase all private keys, settings, accounts and restore this application to its default state. Ensure you have a proper backup before proceeding.",
