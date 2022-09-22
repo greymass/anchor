@@ -14,7 +14,7 @@ import GlobalFormFieldWords from '../../../../../../../../shared/components/Glob
 class AccountSetupRecoverEncryptionWords extends Component<Props> {
   state = {
     // Encryption Keys (6 words)
-    encryption: ['shine', 'aware', 'copper', 'turkey', 'sting', 'logic'],
+    encryption: [],
     expandedError: false,
   }
   addEncryptionWord = (value) => {
