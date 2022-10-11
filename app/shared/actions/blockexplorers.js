@@ -171,6 +171,24 @@ export function getBlockExplorers() {
             txid: 'https://wax.bloks.io/transaction/{txid}'
           }
         },
+      ],
+      "libre-testnet": [
+        {
+          name: "testnet.libre.org/v2/explore",
+          patterns: {
+            account: "https://testnet.libre.org/v2/explore/account/{account}",
+            txid: "https://testnet.libre.org/v2/explore/transaction/{txid}",
+          },
+        },
+      ],
+      "libre-mainnet": [
+        {
+          name: "lb.libre.org/v2/explore",
+          patterns: {
+            account: "https://lb.libre.org/v2/explore/account/{account}",
+            txid: "https://lb.libre.org/v2/explore/transaction/{txid}",
+          },
+        },
       ]
     };
 

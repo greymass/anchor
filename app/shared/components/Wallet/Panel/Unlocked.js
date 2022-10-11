@@ -76,8 +76,8 @@ class WalletPanelUnlocked extends Component<Props> {
     const {
       isWaxChain
     } = this.state;
-    // Disable RAM markets on specific chains (Worbli)
-    const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f');
+    // Disable RAM markets on specific chains (Worbli, Libre)
+    const disableRamMarket = (connection.chainId === '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f' || connection.chainId === '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465');
     // Disable features based on distribution feature (BEOS)
     const distributionPeriod = get(chain, 'distributionPeriodInfo.beosDistribution', false);
 
