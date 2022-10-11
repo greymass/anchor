@@ -99,6 +99,16 @@ const supportedContracts = [
     chainId: '73647cde120091e0a4b85bced2f3cfdb3041e266cbbe95cee59b73235a1b3b6f',
     supportedContracts: [],
   },
+  {
+    // 'libre-testnet'
+    chainId: 'b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee',
+    supportedContracts: ['producerinfo'],
+  },
+  {
+    // 'libre-mainnet'
+    chainId: '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465',
+    supportedContracts: ['producerinfo'],
+  },
 ];
 
 const defaultValues = {
@@ -312,6 +322,23 @@ const knownChains = [
     "testnet": true,
     "tokenPrecision": 8,
     "voteDecayPeriod": 13
+  },
+  {
+    "_id": "libre-testnet",
+    "chainId": "b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee",
+    "name": "Libre (Testnet)",
+    "node": "https://testnet.libre.org",
+    "symbol": "LIBRE",
+    "testnet": true,
+    "tokenPrecision": 4,
+  },
+  {
+    "_id": "libre-mainnet",
+    "chainId": "38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465",
+    "name": "Libre",
+    "node": "https://lb.libre.org",
+    "symbol": "LIBRE",
+    "tokenPrecision": 4,
   }
 ];
 /* eslint-enable */
