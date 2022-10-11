@@ -8,7 +8,7 @@
 <PROJECT_ROOT>/dll/.*
 <PROJECT_ROOT>/release/.*
 <PROJECT_ROOT>/git/.*
-
+.*/node_modules/(?!(styled-components|react|next|memory-cache|next-routes|prop-types|webpack|redux|express))/*.
 [include]
 
 [libs]
