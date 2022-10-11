@@ -64,8 +64,8 @@ If you'd rather build the application yourself, please ensure you have nodejs/np
 ```
 git clone https://github.com/greymass/anchor.git anchor
 cd anchor
-nvm use v13
-yarn --frozen-lockfile
+nvm use v14
+yarn --frozen-lockfile --ignore-engines
 cd app
 yarn --frozen-lockfile
 cd ..
