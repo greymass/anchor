@@ -6325,9 +6325,9 @@ eosjs-ecc@4.0.4:
     ecurve "^1.0.5"
     randombytes "^2.0.5"
 
-"eosjs2@git://github.com/aaroncox/eosjs2":
+"eosjs2@https://github.com/aaroncox/eosjs2":
   version "1.0.0"
-  resolved "git://github.com/aaroncox/eosjs2#0646c5935011445773f5cac6ed0d2b798f5a533a"
+  resolved "https://github.com/aaroncox/eosjs2#0646c5935011445773f5cac6ed0d2b798f5a533a"
   dependencies:
     eosjs v20.0.0
 
