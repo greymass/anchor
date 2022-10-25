@@ -1453,12 +1453,12 @@
     eosio-signing-request "^2.3.1"
     tslib "^2.1.0"
 
-"@greymass/anchor-link-session-manager@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.1.tgz#f81c63d687c7ed0294afaac0dacdfe33213969e4"
-  integrity sha512-UEP5UGN0OGXGBGVNVOiv6VbBy/Y1RzFh1UKGl6JOTqTcFYQKu2DX/1Q2D8VKZMUxiDAwp0EEVB+59ebWaGOUMg==
+"@greymass/anchor-link-session-manager@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.2.tgz#e5174c8379ad82373ebae42942b50a43d2b711fb"
+  integrity sha512-7i9r1erXg/couR5v+9gUJsUrsxeufgLn0NMa+iHGef+iBRqMXruCBL+qixYrm/ICRFIGngDhaOZzaQ43ttYJbQ==
   dependencies:
-    "@greymass/buoy" "^1.0.1"
+    "@greymass/buoy" "^1.0.2"
     "@greymass/eosio" "^0.4.9"
     asmcrypto.js "^2.3.2"
     cross-fetch "^3.1.4"
@@ -1475,10 +1475,10 @@
   dependencies:
     tslib "^2.1.0"
 
-"@greymass/buoy@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@greymass/buoy/-/buoy-1.0.1.tgz#bedd3d56902f337e58c235a32332d0a332f14528"
-  integrity sha512-Q0EmXzTsOETtC6VkSSVbtYttwdbO4Lpa5WoydjEvQJpBMF2CKavfkgNvwPM3W9CUDpOvITdgEtV/lkgNcX0l9Q==
+"@greymass/buoy@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@greymass/buoy/-/buoy-1.0.2.tgz#f0d8ceabfade24d2e81b168377c58aa4ae25dde5"
+  integrity sha512-W5OIFM/+UnBtlp2lrDi/JGyr7HlRa98CQlRlxUswBrbIKybSEPkt4ubSwS/BmyarF05LqfESrrA8rQQNq5bDtQ==
   dependencies:
     eventemitter3 "^4.0.7"
     tslib "^2.1.0"
@@ -1492,10 +1492,10 @@
     bn.js "^4.11.9"
     tslib "^2.1.0"
 
-"@greymass/eosio@0.6.4", "@greymass/eosio@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.4.tgz#9baf8aadacad69d61be20a53e235a9b4cbd97ffa"
-  integrity sha512-Wxr46tgh4J5Nm5tdTx5btJ/MZu36bZfxxCXfWRDAMfOn6FFFwgcZpY/sEv5eH9L2rCvxVrZtd2R8vPGsF/amQQ==
+"@greymass/eosio@^0.4.0", "@greymass/eosio@^0.4.9", "@greymass/eosio@^0.5.0", "@greymass/eosio@^0.5.2", "@greymass/eosio@^0.6.0", "@greymass/eosio@^0.6.3":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.3.tgz#06d4d7979b4c538928c5cb6baba096ef26998f19"
+  integrity sha512-zzY1Wvcr15Q1UroomDJzeFz2MDo90TfY3BaEyZVrqDpWUrTY6mBqblGg/8jmzpSIOvjyTkClifdc2pZTZQdFCw==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -1503,10 +1503,10 @@
     hash.js "^1.0.0"
     tslib "^2.0.3"
 
-"@greymass/eosio@^0.4.0", "@greymass/eosio@^0.4.9", "@greymass/eosio@^0.5.0", "@greymass/eosio@^0.5.2", "@greymass/eosio@^0.6.0", "@greymass/eosio@^0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.3.tgz#06d4d7979b4c538928c5cb6baba096ef26998f19"
-  integrity sha512-zzY1Wvcr15Q1UroomDJzeFz2MDo90TfY3BaEyZVrqDpWUrTY6mBqblGg/8jmzpSIOvjyTkClifdc2pZTZQdFCw==
+"@greymass/eosio@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.6.4.tgz#9baf8aadacad69d61be20a53e235a9b4cbd97ffa"
+  integrity sha512-Wxr46tgh4J5Nm5tdTx5btJ/MZu36bZfxxCXfWRDAMfOn6FFFwgcZpY/sEv5eH9L2rCvxVrZtd2R8vPGsF/amQQ==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
