@@ -1,11 +1,27 @@
 import { createMigrate } from 'redux-persist';
 import createElectronStorage from 'redux-persist-electron-storage';
 
-const migrations = {};
+import { PrivateKey } from '@greymass/eosio';
+
+const fixRequestKey = (sessions) => {
+  const newSessions = Object.assign({}, sessions);
+  try {
+    PrivateKey.fromString(sessions.requestKey, true);
+  } catch (e) {
+    newSessions.requestKey = PrivateKey.generate('K1');
+  }
+  return newSessions;
+};
+
+const migrations = {
+  2: (state) => Object.assign({}, state, {
+    sessions: fixRequestKey(state.sessions),
+  }),
+};
 
 const persistConfig = {
   key: 'anchor-config',
-  version: 1,
+  version: 2,
   migrate: createMigrate(migrations, { debug: true }),
   storage: createElectronStorage(),
   timeout: 0, // The code base checks for falsy, so 0 disables
