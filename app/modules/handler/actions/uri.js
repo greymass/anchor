@@ -372,7 +372,7 @@ export function signIdentityRequest(
             callbackParams.payload = {
               ...callbackParams.payload,
               link_ch: `https://${sessions.linkUrl}/${sessions.linkId}`,
-              link_key: PrivateKey.from(sessions.requestKey).toPublic().toString(),
+              link_key: PrivateKey.fromString(sessions.requestKey, true).toPublic().toString(),
               link_name: 'Anchor Desktop',
             };
             const session = {
