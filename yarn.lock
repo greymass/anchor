@@ -1444,7 +1444,7 @@
     minimatch "^3.0.4"
     plist "^3.0.4"
 
-"@greymass/account-creation@0.0.2":
+"@greymass/account-creation@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@greymass/account-creation/-/account-creation-0.0.2.tgz#ed1d729aee0c1adc1c62dd311db3946aac234cff"
   integrity sha512-JWNs29FYV9OGPzOJ9U2NOzZDq1gX9fNjVdBW5mo/Ds83LGyRO51zvKyu8tTLu8my9MvhkTj+AqnQA/siYKrWPw==
@@ -1476,9 +1476,9 @@
     tslib "^2.1.0"
 
 "@greymass/buoy@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@greymass/buoy/-/buoy-1.0.2.tgz#f0d8ceabfade24d2e81b168377c58aa4ae25dde5"
-  integrity sha512-W5OIFM/+UnBtlp2lrDi/JGyr7HlRa98CQlRlxUswBrbIKybSEPkt4ubSwS/BmyarF05LqfESrrA8rQQNq5bDtQ==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@greymass/buoy/-/buoy-1.0.3.tgz#1bc6f104d51860033ec40e54a8a10293cefc0dca"
+  integrity sha512-hL/+Hj5noB5n5lfZXJKdSJABpeFKtWlFDjSzPzOzw1SKhXNIGX7waW12ew49necdsNC5VN2AQOs1hHBGLENP7g==
   dependencies:
     eventemitter3 "^4.0.7"
     tslib "^2.1.0"
@@ -4945,11 +4945,11 @@ cross-fetch@^2.2.2:
     whatwg-fetch "2.0.4"
 
 cross-fetch@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
-  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
   dependencies:
-    node-fetch "2.6.1"
+    node-fetch "2.6.7"
 
 cross-spawn@^5.1.0:
   version "5.1.0"
@@ -6279,12 +6279,20 @@ eosio-key-encryption@^1.2.0:
     scrypt-js "^3.0.1"
     tslib "^2.1.0"
 
-eosio-signing-request@^2.1.0, eosio-signing-request@^2.2.2:
+eosio-signing-request@^2.1.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.2.2.tgz#281cfe0843dc80205c89003d5638baf70fdcc449"
   integrity sha512-lxRBHYkk2rAnnZrFnTqweD1FLH3usL5oE24m3+1zNK2vJHRVlIyUk7tlUlmax78j8+FE54Po8LQCQ8TrCSSFGg==
   dependencies:
     "@greymass/eosio" "^0.4.0"
+    tslib "^2.0.3"
+
+eosio-signing-request@^2.2.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.5.2.tgz#3cf53d71204d32bb5112e2ac84aba189661a630c"
+  integrity sha512-mkWhsjZYVfyvUujbeSBZ4u1NlT5Pks/VAT2CesUtMsffg1e4LaA2/uijrDoGNkhRzVv4VDxrssh9jVPdyV97rw==
+  dependencies:
+    "@greymass/eosio" "^0.6.0"
     tslib "^2.0.3"
 
 eosio-signing-request@^2.3.1:
@@ -11101,10 +11109,12 @@ node-fetch@2.1.2:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
   integrity sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
 
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+node-fetch@2.6.7, node-fetch@^2.6.1, node-fetch@~2.6.1:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+  dependencies:
+    whatwg-url "^5.0.0"
 
 node-fetch@^1.0.1:
   version "1.7.3"
@@ -11118,13 +11128,6 @@ node-fetch@^2.3.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
-
-node-fetch@^2.6.1, node-fetch@~2.6.1:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
-  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
-  dependencies:
-    whatwg-url "^5.0.0"
 
 node-forge@^0.10.0:
   version "0.10.0"
@@ -15573,15 +15576,10 @@ tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
 
-tslib@^2.0.3, tslib@^2.1.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
-
-tslib@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
-  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
+tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
+  integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
 
 tty-browserify@0.0.0:
   version "0.0.0"
