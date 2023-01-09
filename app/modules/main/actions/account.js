@@ -8,7 +8,10 @@ import EOSAccount from '../../../shared/utils/EOS/Account';
 import * as types from '../../../shared/actions/types';
 import { changeModule } from './navigation';
 import { swapBlockchain } from '../../../shared/actions/blockchains';
-import { addPendingAccountCertificate, removePendingAccountCertificate } from '../../../shared/actions/pending';
+import {
+  addPendingAccountCertificate,
+  removePendingAccountCertificate,
+} from '../../../shared/actions/pending';
 import { importKeyStorage, importWallet, useWallet } from '../../../shared/actions/wallets';
 import { createHttpHandler } from '../../../shared/utils/http/handler';
 
@@ -25,9 +28,9 @@ const historyAPIs = {
 async function generateSignatureForBody(bodyBytes) {
   let key;
   try {
-    (key = require('./token.js'));
+    key = require('./token.js');
   } catch (e) {
-    (key = require('./default-token.js'));
+    key = require('./default-token.js');
   }
   if (typeof key === 'string') {
     key = JSON.parse(key);
@@ -76,7 +79,7 @@ export function beginAccountCreate(url) {
             blockchain,
             code: request.code,
             loginRequest: request.loginRequest.toString(),
-          }
+          },
         });
       }
       if (!response.ok) {
@@ -87,9 +90,10 @@ export function beginAccountCreate(url) {
               payload: {
                 ...json,
                 blockchain,
-                error: 'This code has already been used to create an account and cannot be used again.',
+                error:
+                  'This code has already been used to create an account and cannot be used again.',
                 code: request.code,
-              }
+              },
             });
             break;
           }
@@ -121,21 +125,23 @@ export function createAccount(code, chainId, accountName, activeKey, ownerKey) {
       if (response.ok) {
         return dispatch({
           type: types.ACCOUNT_CREATION_CODE_REDEEMED,
-          payload: json.transactionId
+          payload: json.transactionId,
         });
       }
       // If the API fails, remove pending cert (keys are still saved)
-      dispatch(removePendingAccountCertificate({
-        chainId,
-        account: accountName,
-        active: activeKey,
-        owner: ownerKey
-      }));
+      dispatch(
+        removePendingAccountCertificate({
+          chainId,
+          account: accountName,
+          active: activeKey,
+          owner: ownerKey,
+        })
+      );
       return dispatch({
         type: types.ACCOUNT_CREATION_CODE_FAILED,
         payload: {
-          error: json
-        }
+          error: json,
+        },
       });
     } catch (e) {
       console.error(e);
@@ -159,12 +165,12 @@ export function createWallet(chainId, accountName, activeKey, isLedger = false) 
     const { httpClient } = await createHttpHandler({});
     const result = await httpClient.post(`${blockchain.node}/v1/chain/get_account`, {
       account_name: accountName,
-      cachebreak: Date.now()
+      cachebreak: Date.now(),
     });
     const accountObj = new EOSAccount(result.data);
     const permission = accountObj.getPermission('active');
     let publicKey;
-    permission.required_auth.keys.forEach((key) => {
+    permission.required_auth.keys.forEach(key => {
       if (key.weight === 1) {
         const pubkey = PublicKey.from(key.key).toLegacyString(blockchain.chainSymbol);
         if (storage.keys.includes(pubkey)) {
@@ -173,7 +179,9 @@ export function createWallet(chainId, accountName, activeKey, isLedger = false) 
       }
     });
     if (publicKey !== activeKey) {
-      console.error(`Specified active key doesn't equal public key. Public: ${publicKey}, Active: ${activeKey}`);
+      console.error(
+        `Specified active key doesn't equal public key. Public: ${publicKey}, Active: ${activeKey}`
+      );
     }
     if (!publicKey) {
       console.error(`Couldn't automatically import key: ${activeKey}`);
@@ -204,24 +212,30 @@ export function importCreatedAccountKeys(
     const { blockchains } = getState();
     const blockchain = find(blockchains, { chainId });
     // Import the owner key temporarily until backup sheet is created
-    dispatch(importKeyStorage(
-      password,
-      ownerPrivate.toWif(),
-      ownerPrivate.toPublic().toLegacyString(blockchain.keyPrefix)
-    ));
+    dispatch(
+      importKeyStorage(
+        password,
+        ownerPrivate.toWif(),
+        ownerPrivate.toPublic().toLegacyString(blockchain.keyPrefix)
+      )
+    );
     // Import the active key for normal usage
-    dispatch(importKeyStorage(
-      password,
-      activePrivate.toWif(),
-      activePrivate.toPublic().toLegacyString(blockchain.keyPrefix)
-    ));
+    dispatch(
+      importKeyStorage(
+        password,
+        activePrivate.toWif(),
+        activePrivate.toPublic().toLegacyString(blockchain.keyPrefix)
+      )
+    );
     // Save notification that an owner key certificate needs to be created
-    dispatch(addPendingAccountCertificate({
-      chainId,
-      account: accountName,
-      active: String(activePrivate.toPublic()),
-      owner: String(ownerPrivate.toPublic())
-    }));
+    dispatch(
+      addPendingAccountCertificate({
+        chainId,
+        account: accountName,
+        active: String(activePrivate.toPublic()),
+        owner: String(ownerPrivate.toPublic()),
+      })
+    );
   };
 }
 
@@ -229,24 +243,28 @@ export function checkAccountNameValid(code, name) {
   return async (dispatch: () => void, getState) => {
     dispatch({
       type: types.ACCOUNT_CREATION_CHECK_NAME_INVALIDATE,
-      payload: { code, name }
+      payload: { code, name },
     });
     const { app, settings } = getState();
-    const response = await apiRequest('/tickets/check', {
-      code,
-      deviceId: settings.deviceId,
-      name,
-      version: app.version,
-    }, settings);
+    const response = await apiRequest(
+      '/tickets/check',
+      {
+        code,
+        deviceId: settings.deviceId,
+        name,
+        version: app.version,
+      },
+      settings
+    );
     if (response.status === 200) {
       dispatch({
         type: types.ACCOUNT_CREATION_CHECK_NAME_VALID,
-        payload: { code, name }
+        payload: { code, name },
       });
     } else {
       dispatch({
         type: types.ACCOUNT_CREATION_CHECK_NAME_INVALID,
-        payload: { code, name }
+        payload: { code, name },
       });
     }
   };
@@ -256,7 +274,7 @@ export function cancelKeyCertificate(cert) {
   return async (dispatch: () => void) => {
     dispatch({
       type: types.ACCOUNT_CREATION_CERT_RECEIVE_CANCELLED,
-      payload: cert
+      payload: cert,
     });
   };
 }
@@ -265,7 +283,7 @@ export function returnKeyCertificateWords(words) {
   return async (dispatch: () => void) => {
     dispatch({
       type: types.ACCOUNT_CREATION_CERT_WORDS_RECEIVED,
-      payload: words
+      payload: words,
     });
   };
 }
@@ -274,7 +292,7 @@ export function returnKeyCertificateCode(code) {
   return async (dispatch: () => void) => {
     dispatch({
       type: types.ACCOUNT_CREATION_CERT_CODE_RECEIVED,
-      payload: code
+      payload: code,
     });
   };
 }
@@ -284,8 +302,11 @@ export function returnNewAccountKeys(chainId, accountName, active, owner) {
     dispatch({
       type: types.ACCOUNT_CREATION_NEW_ACCOUNT_RECEIVED,
       payload: {
-        chainId, accountName, active, owner
-      }
+        chainId,
+        accountName,
+        active,
+        owner,
+      },
     });
   };
 }
@@ -301,7 +322,7 @@ export function returnKeyCertificateDecrypted(cert) {
       if (auth === `${cert.account.actor}@${cert.account.permission}`) {
         return dispatch({
           type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED,
-          payload: cert
+          payload: cert,
         });
       }
       return dispatch({
@@ -314,12 +335,12 @@ export function returnKeyCertificateDecrypted(cert) {
           message: 'The key certificate does not match the account specified.',
           publicKey: cert.publicKey,
           server: cert.blockchain.node,
-        }
+        },
       });
     }
     return dispatch({
       type: types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED,
-      payload: undefined
+      payload: undefined,
     });
   };
 }
@@ -328,7 +349,7 @@ export function returnKeyCertificateFailed(error) {
   return async (dispatch: () => void) => {
     dispatch({
       type: types.ACCOUNT_KEY_CERTIFICATE_FAILED,
-      payload: error
+      payload: error,
     });
   };
 }
@@ -340,9 +361,25 @@ export function accountUpdatedViaCertificate(status) {
     // Dispatch event to notify the frontend
     return dispatch({
       type: types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE,
-      payload: status
+      payload: status,
     });
   };
+}
+
+export function accountUpdatedViaCertificateFailure(status) {
+  return async (dispatch: () => void) =>
+    // Dispatch event to notify the frontend
+    dispatch({
+      type: types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE_FAILURE,
+      payload: status,
+    });
+}
+
+export function accountUpdatedViaCertificateFailureReset() {
+  return async (dispatch: () => void) =>
+    dispatch({
+      type: types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE_FAILURE_RESET,
+    });
 }
 
 export function resetAccountCreation() {
@@ -367,13 +404,12 @@ export function verifyTransactionExists(chainId, transactionId) {
     dispatch({
       type: types.ACCOUNT_CREATION_VERIFY_TRANSACTION,
       payload: {
-        block_num: (result.status === 200) ? result.data.block_num : false,
-        last_irreversible_block: (result.status === 200)
-          ? result.data.last_irreversible_block
-          : false,
-        irreversible: (result.status === 200) ? result.data.irreversible : false,
+        block_num: result.status === 200 ? result.data.block_num : false,
+        last_irreversible_block:
+          result.status === 200 ? result.data.last_irreversible_block : false,
+        irreversible: result.status === 200 ? result.data.irreversible : false,
         status: result.status,
-      }
+      },
     });
   };
 }
@@ -389,9 +425,9 @@ export function verifyAccountExists(chainId, account, activeKey) {
     dispatch({
       type: types.ACCOUNT_CREATION_VERIFY_ACCOUNT,
       payload: {
-        created: (result.status === 200) ? result.data.created : false,
+        created: result.status === 200 ? result.data.created : false,
         status: result.status,
-      }
+      },
     });
   };
 }

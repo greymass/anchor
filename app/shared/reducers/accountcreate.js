@@ -39,7 +39,7 @@ export default function accountcreate(state = initialState, action) {
     }
     case types.ACCOUNT_CREATION_CODE_REDEEMED: {
       return Object.assign({}, state, {
-        transactionId: action.payload
+        transactionId: action.payload,
       });
     }
     case types.ACCOUNT_CREATION_CODE_USED: {
@@ -47,20 +47,20 @@ export default function accountcreate(state = initialState, action) {
     }
     case types.ACCOUNT_CREATION_NEW_ACCOUNT_RECEIVED: {
       return Object.assign({}, state, {
-        account: action.payload
+        account: action.payload,
       });
     }
     case types.ACCOUNT_CREATION_CERT_BACKUP_COMPLETE:
     case types.ACCOUNT_CREATION_CERT_RECEIVE_CANCELLED: {
       return Object.assign({}, state, {
         cancelled: Date.now(),
-        words: undefined
+        words: undefined,
       });
     }
     case types.ACCOUNT_CREATION_CERT_WORDS_RECEIVED: {
       return Object.assign({}, state, {
         saved: Date.now(),
-        words: action.payload
+        words: action.payload,
       });
     }
     case types.ACCOUNT_CREATION_CERT_CODE_RECEIVED: {
@@ -89,17 +89,18 @@ export default function accountcreate(state = initialState, action) {
       }
       return Object.assign({}, state, {
         transactionEta,
-        transactionExists: (action.payload.status === 200),
+        transactionExists: action.payload.status === 200,
         transactionIrreversible,
       });
     }
     case types.ACCOUNT_CREATION_VERIFY_TRANSACTION: {
-      const transactionEta = (action.payload.status === 200)
-        ? Math.max(0, (action.payload.block_num - action.payload.last_irreversible_block) / 2)
-        : false;
+      const transactionEta =
+        action.payload.status === 200
+          ? Math.max(0, (action.payload.block_num - action.payload.last_irreversible_block) / 2)
+          : false;
       return Object.assign({}, state, {
         transactionEta,
-        transactionExists: (action.payload.status === 200),
+        transactionExists: action.payload.status === 200,
         transactionIrreversible: action.payload.irreversible,
       });
     }
@@ -111,12 +112,22 @@ export default function accountcreate(state = initialState, action) {
     }
     case types.ACCOUNT_KEY_CERTIFICATE_DECRYPTED: {
       return Object.assign({}, state, {
-        decrypted: action.payload
+        decrypted: action.payload,
       });
     }
     case types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE: {
       return Object.assign({}, state, {
-        updatedAccount: action.payload
+        updatedAccount: action.payload,
+      });
+    }
+    case types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE_FAILURE: {
+      return Object.assign({}, state, {
+        updateError: action.payload,
+      });
+    }
+    case types.ACCOUNT_UPDATED_BY_KEY_CERTIFICATE_FAILURE_RESET: {
+      return Object.assign({}, state, {
+        updateError: undefined,
       });
     }
     default: {
