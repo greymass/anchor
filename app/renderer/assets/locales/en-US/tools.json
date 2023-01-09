@@ -283,6 +283,7 @@
     "tools_menu_keys": "Key Generator",
     "tools_menu_ledger": "Ledger",
     "tools_menu_link_service": "Link Service",
+    "tools_menu_abi_cache": "ABI Cache",
     "tools_menu_linkservice_header": "Link Service",
     "tools_menu_managekeys": "Manage Keys",
     "tools_menu_name_bidding": "Premium Name Bidding",
