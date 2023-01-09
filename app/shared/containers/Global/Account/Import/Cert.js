@@ -7,6 +7,7 @@ import compose from 'lodash/fp/compose';
 import { Modal } from 'semantic-ui-react';
 
 import AccountSetupRecover from '../../../../../modules/main/containers/Sections/Home/Setup/Recover';
+import { resetAccountCreation } from '../../../../../modules/main/actions/account';
 import GlobalModalAccountImportPassword from './Password';
 
 class GlobalModalAccountImportCert extends Component<Props> {
@@ -21,6 +22,7 @@ class GlobalModalAccountImportCert extends Component<Props> {
   }
   onClose = () => {
     this.setState({ open: false });
+    this.props.actions.resetAccountCreation();
     if (this.props.onClose) {
       this.props.onClose();
     }
@@ -63,6 +65,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
+      resetAccountCreation
     }, dispatch)
   };
 }
