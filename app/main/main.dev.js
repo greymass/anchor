@@ -2,6 +2,7 @@
 
 import '@babel/polyfill';
 import { app, crashReporter, ipcMain, protocol } from 'electron';
+import { PrivateKey } from '@greymass/eosio';
 import { configureStore } from '../shared/store/main/configureStore';
 import { createInterface } from '../modules/main/electron';
 import { createTray } from '../modules/tray/electron';
@@ -383,6 +384,19 @@ ipcMain.on('linkDisconnect', () => {
 });
 
 ipcMain.on('linkRestart', () => {
+  initSessionManager();
+});
+
+ipcMain.on('linkKeyReset', () => {
+  const { sessions } = store.getState();
+  console.log('current', sessions);
+  store.dispatch({
+    type: types.SYSTEM_SESSIONS_SYNC,
+    payload: {
+      ...sessions,
+      requestKey: PrivateKey.generate('K1')
+    }
+  });
   initSessionManager();
 });
 

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import TimeAgo from 'react-timeago';
+import { PrivateKey } from '@greymass/eosio';
 
 import { Button, Header, Segment, Table } from 'semantic-ui-react';
 
@@ -11,11 +12,20 @@ class ToolsLinkService extends Component<Props> {
   linkConnect = () => ipcRenderer.send('linkConnect')
   linkDisconnect = () => ipcRenderer.send('linkDisconnect')
   linkRestart = () => ipcRenderer.send('linkRestart')
+  requestKeyReset = () => ipcRenderer.send('linkKeyReset')
   render() {
     const {
       sessions,
       t
     } = this.props;
+    let requestKey;
+    let requestKeyError;
+    try {
+      requestKey = PrivateKey.from(sessions.requestKey).toPublic();
+    } catch (e) {
+      requestKey = 'INVALID KEY';
+      requestKeyError = e;
+    }
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <Header
@@ -58,6 +68,19 @@ class ToolsLinkService extends Component<Props> {
                 </Table.Cell>
                 <Table.Cell key={sessions.linkId}>
                   {sessions.linkId}
+                </Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>
+                  Request Key
+                </Table.Cell>
+                <Table.Cell>
+                  <p>{String(requestKey)}</p>
+                  {requestKeyError ? String(requestKeyError) : ''}
+                  <br />
+                  <Button onClick={this.requestKeyReset}>
+                    Reset Request Key
+                  </Button>
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
