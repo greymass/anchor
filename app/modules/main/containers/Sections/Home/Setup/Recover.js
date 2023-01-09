@@ -330,11 +330,13 @@ class AccountSetupRecover extends Component<Props> {
             <Header.Subheader>
               {String(this.props.accountcreate.updateError.error.message)}
             </Header.Subheader>
-            <Form.TextArea
-              rows={12}
-              style={{ whiteSpace: 'nowrap' }}
-              value={String(this.props.accountcreate.updateError.error.stack)}
-            />
+            <Form>
+              <Form.TextArea
+                rows={12}
+                style={{ whiteSpace: 'nowrap' }}
+                value={String(this.props.accountcreate.updateError.error.stack)}
+              />
+            </Form>
           </Header>
           <Button content="Retry" onClick={this.retry} primary />
         </React.Fragment>
