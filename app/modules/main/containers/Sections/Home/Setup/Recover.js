@@ -13,6 +13,7 @@ import {
   Button,
   Dimmer,
   Divider,
+  Form,
   Grid,
   Header,
   Icon,
@@ -329,11 +330,13 @@ class AccountSetupRecover extends Component<Props> {
             <Header.Subheader>
               {String(this.props.accountcreate.updateError.error.message)}
             </Header.Subheader>
-            <textarea>
-              {String(this.props.accountcreate.updateError.error.stack)}
-            </textarea>
-            <Button content="Retry" onClick={this.retry} primary />
+            <Form.TextArea
+              rows={12}
+              style={{ whiteSpace: 'nowrap' }}
+              value={String(this.props.accountcreate.updateError.error.stack)}
+            />
           </Header>
+          <Button content="Retry" onClick={this.retry} primary />
         </React.Fragment>
       );
     }
