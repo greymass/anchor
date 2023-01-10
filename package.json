@@ -191,7 +191,7 @@
     "jest": "^24.8.0",
     "jest-fetch-mock": "^2.1.2",
     "mini-css-extract-plugin": "^2.1.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "ncp": "^2.0.0",
     "node-sass": "^6.0.1",
     "npm-logical-tree": "^1.2.1",
