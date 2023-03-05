@@ -1,7 +1,7 @@
 import {
   AnchorLinkSessionManager,
   AnchorLinkSessionManagerSession,
-  AnchorLinkSessionManagerStorage
+  AnchorLinkSessionManagerStorage,
 } from '@greymass/anchor-link-session-manager';
 import WebSocket from 'ws';
 
@@ -14,6 +14,7 @@ export default class SessionManager {
   storage: null;
 
   constructor(store, pHandler) {
+    console.log('SessionManager::constructor');
     this.pHandler = pHandler;
     this.store = store;
     const { settings } = this.store.getState();
@@ -28,15 +29,17 @@ export default class SessionManager {
     }
   }
   addSession(data) {
+    console.log('SessionManager::addSession');
     const session = AnchorLinkSessionManagerSession.fromIdentityRequest(
       data.network,
       data.actor,
       data.permission,
-      data.payload,
+      data.payload
     );
     this.manager.addSession(session);
   }
   removeSession(data) {
+    console.log('SessionManager::removeSession');
     const session = new AnchorLinkSessionManagerSession(
       data.network,
       data.actor,
@@ -47,17 +50,15 @@ export default class SessionManager {
     this.manager.removeSession(session);
   }
   createHandler() {
-    const {
-      pHandler,
-      store,
-    } = this;
+    console.log('SessionManager::createHandler');
+    const { pHandler, store } = this;
     pHandler.webContents.send('sessionEvent', 'oncreate');
     this.handler = {
       onStorageUpdate(json) {
         const storage = JSON.parse(json);
         store.dispatch({
           type: types.SYSTEM_SESSIONS_SYNC,
-          payload: storage
+          payload: storage,
         });
       },
       onIncomingRequest(payload) {
@@ -71,7 +72,7 @@ export default class SessionManager {
         if (pHandler && pHandler.webContents) {
           pHandler.webContents.send('sessionEvent', type, JSON.stringify(event));
         }
-      }
+      },
     };
   }
   createStorage() {
