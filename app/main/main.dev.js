@@ -65,7 +65,7 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
 }
 
 // main exceptions to electron-log
-app.on('uncaughtException', (error) => {
+app.on('uncaughtException', error => {
   log.error(error);
 });
 
@@ -75,19 +75,16 @@ if (!lock) {
   app.quit();
 } else {
   app.on('second-instance', (event, argv) => {
-    if (
-      (
-        process.platform === 'win32'
-        || process.platform === 'linux'
-      )
-      && argv
-      && argv.length
-    ) {
+    if ((process.platform === 'win32' || process.platform === 'linux') && argv && argv.length) {
       uri = argv[argv.length - 1];
     }
     showMain();
     if (pHandler !== null && uri) {
-      if (uri.startsWith('esr:') || uri.startsWith('esr-anchor:') || uri.startsWith('anchorcreate:')) {
+      if (
+        uri.startsWith('esr:') ||
+        uri.startsWith('esr-anchor:') ||
+        uri.startsWith('anchorcreate:')
+      ) {
         handleUri(resourcePath, store, mainWindow, pHandler, uri);
       }
     } else {
@@ -160,10 +157,12 @@ app.on('will-quit', () => {
   }
   log.info('anchor: will-quit');
 });
-app.on('quit', () => { log.info('anchor: quit'); });
+app.on('quit', () => {
+  log.info('anchor: quit');
+});
 
 const initManager = (route = '/', closable = true) => {
-  log.info('initManager ' + route);
+  log.info(`initManager ${route}`);
   if (process.platform === 'win32' || process.platform === 'linux') {
     uri = process.argv && process.argv.slice(1)[0];
   }
@@ -182,7 +181,7 @@ const initManager = (route = '/', closable = true) => {
   }
 };
 
-const initMenu = (settings) => {
+const initMenu = settings => {
   // Initialize the menu
   menu = createTray(resourcePath);
   // Set the tray/dock based on settings
@@ -190,17 +189,17 @@ const initMenu = (settings) => {
 };
 
 const initProtocolHandler = (request = false) => {
-  log.info('initProtocolHandler: initializing protocol handler'')
+  log.info('initProtocolHandler: initializing protocol handler');
   pHandler = createProtocolHandlers(resourcePath, store, request);
 };
 
 const showManager = () => {
   if (mainWindow) {
-    log.info('showManager: showing manager')
+    log.info('showManager: showing manager');
     mainWindow.show();
   }
   if (!mainWindow) {
-    log.info('showManager: init manager')
+    log.info('showManager: init manager');
     initManager();
   }
 };
@@ -211,15 +210,15 @@ let initHardwareRetry;
 let initializingSessionManager = false;
 
 const initSessionManager = async () => {
-  log.info('initSessionManager: initializing session manager')
+  log.info('initSessionManager: initializing session manager');
   // Only run if the lock isn't true
   if (!initializingSessionManager) {
-    log.info('initSessionManager: initializing session manager (lock is false)')
+    log.info('initSessionManager: initializing session manager (lock is false)');
     // Enable the lock indicating a connection is in progress
     initializingSessionManager = true;
     // Disconnect if an existing handler is already running
     if (sHandler && sHandler.manager && sHandler.manager.disconnect) {
-      log.info('initSessionManager: disconnecting existing session manager')
+      log.info('initSessionManager: disconnecting existing session manager');
       sHandler.manager.disconnect();
     }
     // Create new Session Manager
@@ -232,15 +231,14 @@ const initSessionManager = async () => {
 };
 
 const initHardwareLedger = (e, signPath, devicePath) => {
-  log.info('initHardwareLedger: initializing hardware ledger')
+  log.info('initHardwareLedger: initializing hardware ledger');
   if (initHardwareRetry) {
-    log.info('initHardwareLedger: clearing hardware ledger retry')
+    log.info('initHardwareLedger: clearing hardware ledger retry');
     clearInterval(initHardwareRetry);
   }
-  Transport
-    .open(devicePath)
-    .then((transport) => {
-      log.info('initHardwareLedger: hardware ledger transport success')
+  Transport.open(devicePath)
+    .then(transport => {
+      log.info('initHardwareLedger: hardware ledger transport success');
       if (process.env.NODE_ENV === 'development') {
         transport.setDebugMode(true);
       }
@@ -249,15 +247,15 @@ const initHardwareLedger = (e, signPath, devicePath) => {
       store.dispatch({
         payload: {
           devicePath,
-          signPath
+          signPath,
         },
-        type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS
+        type: types.HARDWARE_LEDGER_TRANSPORT_SUCCESS,
       });
       store.dispatch(getAppConfiguration());
       return true;
     })
-    .catch((error) => {
-      log.info('initHardwareLedger: hardware ledger transport failure' + error)
+    .catch(error => {
+      log.info(`initHardwareLedger: hardware ledger transport failure ${error}`);
       initHardwareRetry = setInterval(initHardwareLedger(false, signPath, devicePath), 2000);
       store.dispatch({
         payload: {
@@ -344,7 +342,7 @@ ipcMain.on('setAuthorizationHeader', (e, token, expires) => {
     payload: {
       dfuseAuthorization: token,
       dfuseAuthorizationExpires: expires,
-    }
+    },
   });
 });
 
@@ -405,8 +403,8 @@ ipcMain.on('linkKeyReset', () => {
     type: types.SYSTEM_SESSIONS_SYNC,
     payload: {
       ...sessions,
-      requestKey: PrivateKey.generate('K1')
-    }
+      requestKey: PrivateKey.generate('K1'),
+    },
   });
   initSessionManager();
 });
@@ -416,13 +414,13 @@ function setAlternativePayment(request) {
     payload: {
       request,
     },
-    type: types.SET_ALTERNATIVE_RESOURCE_PAYMENT
+    type: types.SET_ALTERNATIVE_RESOURCE_PAYMENT,
   });
 }
 
 function clearAlternativePayment() {
   store.dispatch({
-    type: types.CLEAR_ALTERNATIVE_RESOURCE_PAYMENT
+    type: types.CLEAR_ALTERNATIVE_RESOURCE_PAYMENT,
   });
 }
 
