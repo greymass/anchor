@@ -163,6 +163,7 @@ app.on('will-quit', () => {
 app.on('quit', () => { log.info('anchor: quit'); });
 
 const initManager = (route = '/', closable = true) => {
+  log.info('initManager ' + route);
   if (process.platform === 'win32' || process.platform === 'linux') {
     uri = process.argv && process.argv.slice(1)[0];
   }
@@ -189,14 +190,17 @@ const initMenu = (settings) => {
 };
 
 const initProtocolHandler = (request = false) => {
+  log.info('initProtocolHandler: initializing protocol handler'')
   pHandler = createProtocolHandlers(resourcePath, store, request);
 };
 
 const showManager = () => {
   if (mainWindow) {
+    log.info('showManager: showing manager')
     mainWindow.show();
   }
   if (!mainWindow) {
+    log.info('showManager: init manager')
     initManager();
   }
 };
@@ -207,12 +211,15 @@ let initHardwareRetry;
 let initializingSessionManager = false;
 
 const initSessionManager = async () => {
+  log.info('initSessionManager: initializing session manager')
   // Only run if the lock isn't true
   if (!initializingSessionManager) {
+    log.info('initSessionManager: initializing session manager (lock is false)')
     // Enable the lock indicating a connection is in progress
     initializingSessionManager = true;
     // Disconnect if an existing handler is already running
     if (sHandler && sHandler.manager && sHandler.manager.disconnect) {
+      log.info('initSessionManager: disconnecting existing session manager')
       sHandler.manager.disconnect();
     }
     // Create new Session Manager
@@ -225,12 +232,15 @@ const initSessionManager = async () => {
 };
 
 const initHardwareLedger = (e, signPath, devicePath) => {
+  log.info('initHardwareLedger: initializing hardware ledger')
   if (initHardwareRetry) {
+    log.info('initHardwareLedger: clearing hardware ledger retry')
     clearInterval(initHardwareRetry);
   }
   Transport
     .open(devicePath)
     .then((transport) => {
+      log.info('initHardwareLedger: hardware ledger transport success')
       if (process.env.NODE_ENV === 'development') {
         transport.setDebugMode(true);
       }
@@ -247,6 +257,7 @@ const initHardwareLedger = (e, signPath, devicePath) => {
       return true;
     })
     .catch((error) => {
+      log.info('initHardwareLedger: hardware ledger transport failure' + error)
       initHardwareRetry = setInterval(initHardwareLedger(false, signPath, devicePath), 2000);
       store.dispatch({
         payload: {
