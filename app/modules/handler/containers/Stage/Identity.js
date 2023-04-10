@@ -20,7 +20,6 @@ class PromptStageIdentity extends Component<Props> {
       actions,
       canSign,
       couldSignWithDevice,
-      enableSessions,
       ledger,
       onSelect,
       onSelectChain,
@@ -110,20 +109,6 @@ class PromptStageIdentity extends Component<Props> {
                     chainId={chainId}
                     onSelect={onSelect}
                   />
-                </Form.Field>
-                <Form.Field>
-                  <Segment basic textAlign="center">
-                    <Header
-                      content="Options"
-                      size="small"
-                    />
-                    <Form.Checkbox
-                      checked={enableSessions}
-                      label="Create a session for future use with this app"
-                      onChange={this.props.toggleSessions}
-                      toggle
-                    />
-                  </Segment>
                 </Form.Field>
               </Form>
               {(!canSign && couldSignWithDevice)
