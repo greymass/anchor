@@ -180,7 +180,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^7.9.1",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "fbjs-scripts": "^3.0.0",
     "file-loader": "^6.2.0",
     "find-in-files": "^0.5.0",
