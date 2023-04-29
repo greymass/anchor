@@ -29,7 +29,7 @@
   "welcome_instructions_6": "Choisissez de chiffrer et d'enregistrer une Wallet locale ou de continuer à utiliser un accès temporaire.",
   "welcome_instructions_7": "Avez-vous déjà un compte ou devez-vous en créer un?",
   "welcome_instructions_8": "Connectez votre appareil Ledger et importez un compte qui existe déjà sur l'appareil.",
-  "welcome_instructions_one": "Pour commencer, Anchor doit se connecter à un nœud API EOSIO.",
+  "welcome_instructions_one": "Pour commencer, Anchor doit se connecter à un nœud API Antelope.",
   "welcome_instructions_one_cold": "Pour commencer, anchor doit savoir quelle blockchain la première Wallet importée utilisera.",
   "welcome_instructions_sign_tx": "Utiliser cette Wallet pour signer des transactions?",
   "welcome_key_coldwallet": "Importer une clé privée",
