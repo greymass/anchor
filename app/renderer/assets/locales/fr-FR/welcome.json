@@ -35,7 +35,7 @@
   "welcome_key_coldwallet": "Importer une clé privée",
   "welcome_key_coldwallet_content": "Une Cold Wallet ne peut pas vérifier si la clé privée fournie correspond au compte.",
   "welcome_key_coldwallet_title": "Cold Wallet - Key Import",
-  "welcome_key_compare_content_text": "Toutes les clés EOSIO commencent par le chiffre 5 et comportent 51 caractères.",
+  "welcome_key_compare_content_text": "Toutes les clés Antelope commencent par le chiffre 5 et comportent 51 caractères.",
   "welcome_key_compare_expecting_match_to": "Attendre une clé privée qui correspond à l'une des clés ci-dessous.",
   "welcome_key_compare_fail_invalid_content": "La clé privée que vous avez entrée ne peut pas être convertie en clé publique.",
   "welcome_key_compare_fail_invalid_title": "Clé privée non valide",
