@@ -1,6 +1,6 @@
 {
   "recommendations_header_title": "Security / Best Practices",
-  "recommendations_subheader_text": "You will find here recommendations tailored to your account. Following these will enhance your experience with any EOSIO blockchains.",
+  "recommendations_subheader_text": "You will find here recommendations tailored to your account. Following these will enhance your experience with any Antelope blockchains.",
   "recommendations_success_active_and_owner_different": "It appears that your active and owner keys are different which is what is recommended.",
   "recommendations_success_cpu_staked_sufficient": "You appear to have staked a sufficient number of tokens to CPU which will allow you to use the network efficiently.",
   "recommendations_success_net_staked_sufficient": "You appear to have staked a sufficient number of tokens to Bandwidth which will allow you to use the network efficiently.",

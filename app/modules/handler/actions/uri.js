@@ -335,7 +335,6 @@ export function signIdentityRequest(
       settings,
       sessions,
     } = getState();
-    const { enableSessions } = settings;
     dispatch({
       type: types.SYSTEM_ESRURISIGN_PENDING
     });
@@ -365,7 +364,7 @@ export function signIdentityRequest(
           serializedTransaction: prompt.resolved.serializedTransaction,
         });
         const callbackParams = prompt.resolved.getCallback(signed.signatures, 0);
-        if (enableSessions && prompt.resolved.request.isIdentity()) {
+        if (prompt.resolved.request.isIdentity()) {
           const { info } = prompt.resolved.request.data;
           const isLinkSession = info.some((i) => i.key === 'link');
           if (isLinkSession) {
