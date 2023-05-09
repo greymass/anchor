@@ -1453,12 +1453,12 @@
     eosio-signing-request "^2.3.1"
     tslib "^2.1.0"
 
-"@greymass/anchor-link-session-manager@0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.2.tgz#e5174c8379ad82373ebae42942b50a43d2b711fb"
-  integrity sha512-7i9r1erXg/couR5v+9gUJsUrsxeufgLn0NMa+iHGef+iBRqMXruCBL+qixYrm/ICRFIGngDhaOZzaQ43ttYJbQ==
+"@greymass/anchor-link-session-manager@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@greymass/anchor-link-session-manager/-/anchor-link-session-manager-0.3.3.tgz#2703f31db25853e2115faa52a6ac58f3ca065b40"
+  integrity sha512-c0peUDpZhe8bI9UXE4En1PoDc2iqrITxHmUe6C0iUPwxbj3muoasMoeAoIBemvGZNlyHgybN87i60CXVwAX+Ew==
   dependencies:
-    "@greymass/buoy" "^1.0.2"
+    "@greymass/buoy" "^1.0.3"
     "@greymass/eosio" "^0.4.9"
     asmcrypto.js "^2.3.2"
     cross-fetch "^3.1.4"
@@ -1475,7 +1475,7 @@
   dependencies:
     tslib "^2.1.0"
 
-"@greymass/buoy@^1.0.2":
+"@greymass/buoy@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@greymass/buoy/-/buoy-1.0.3.tgz#1bc6f104d51860033ec40e54a8a10293cefc0dca"
   integrity sha512-hL/+Hj5noB5n5lfZXJKdSJABpeFKtWlFDjSzPzOzw1SKhXNIGX7waW12ew49necdsNC5VN2AQOs1hHBGLENP7g==
