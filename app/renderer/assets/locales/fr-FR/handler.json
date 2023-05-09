@@ -30,7 +30,7 @@
   "handler_header_statistic_one": "Expiré",
   "handler_header_statistic_two": "Terminé",
   "handler_header_statistic_three": "Action (s)",
-  "handler_share_header": "Demande de signature EOSIO (EEP-7)",
+  "handler_share_header": "Demande de signature Antelope (EEP-7)",
   "handler_share_subheader": "Un avantage de l'utilisation du protocole <strong> EOSIO Signing Request </strong> est que vous pouvez partager le lien avec ceux en qui vous avez confiance et vérifier les actions qu'il effectuera avant de signer.",
   "handler_share_grid_header_one": "Partager la demande en tant que lien",
   "handler_share_grid_paragraph_one": "Cette zone de texte contient le lien brut (URI) de cette transaction spécifique. Vous pouvez partager ce lien avec d'autres utilisateurs pour poser des questions ou simplement partager la transaction.",
