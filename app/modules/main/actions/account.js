@@ -149,15 +149,25 @@ export function createAccount(code, chainId, accountName, activeKey, ownerKey) {
   };
 }
 
-export function createWallet(chainId, accountName, activeKey, isLedger = false) {
+export function createWallet(chainId, accountName, activeKey, ledgerMethod = false) {
   return async (dispatch: () => void, getState) => {
     const { ledger, settings, storage } = getState();
     // Determine the wallet mode (hot vs ledger)
     let mode = 'hot';
     let path;
-    if (isLedger) {
-      mode = 'ledger';
-      ({ path } = ledger);
+    if (ledgerMethod) {
+      switch (ledgerMethod) {
+        case 'all':
+        case 'use':
+        default: {
+          mode = 'ledger';
+          ({ path } = ledger);
+          break;
+        }
+        case 'recover':
+          mode = 'hot';
+          break;
+      }
     }
     // Check to ensure we're using the right key
     const { blockchains } = getState();
