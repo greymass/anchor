@@ -78,7 +78,7 @@ export function beginAccountCreate(url) {
             ...json,
             blockchain,
             code: request.code,
-            loginRequest: request.loginRequest.toString(),
+            loginRequest: String(request.loginRequest),
           },
         });
       }
