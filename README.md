@@ -33,12 +33,12 @@ When downloading from either location, check the URL bar of your browser to ensu
 
 ### Current Release
 
-The most recent (v1.3.10) release can downloaded using these links:
+The most recent (v1.3.11) release can downloaded using these links:
 
-- [Windows Installer](https://github.com/greymass/anchor/releases/download/v1.3.10/win-anchor-wallet-1.3.10.exe)
-- [macOS Package](https://github.com/greymass/anchor/releases/download/v1.3.10/mac-anchor-wallet-1.3.10-x64.dmg)
-- [Linux (deb)](https://github.com/greymass/anchor/releases/download/v1.3.10/linux-anchor-wallet-1.3.10-amd64.deb)
-- [Linux (AppImage)](https://github.com/greymass/anchor/releases/download/v1.3.10/linux-anchor-wallet-1.3.10-x86_64.AppImage)
+- [Windows Installer](https://github.com/greymass/anchor/releases/download/v1.3.11/win-anchor-wallet-1.3.11.exe)
+- [macOS Package](https://github.com/greymass/anchor/releases/download/v1.3.11/mac-anchor-wallet-1.3.11-x64.dmg)
+- [Linux (deb)](https://github.com/greymass/anchor/releases/download/v1.3.11/linux-anchor-wallet-1.3.11-amd64.deb)
+- [Linux (AppImage)](https://github.com/greymass/anchor/releases/download/v1.3.11/linux-anchor-wallet-1.3.11-x86_64.AppImage)
 
 The latest release will always be available on the releases page of this repository:
 
