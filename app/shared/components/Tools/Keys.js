@@ -80,9 +80,13 @@ class ToolsKeys extends Component<Props> {
     const { confirmRemove, legacy, openKey, searchFilter } = this.state;
     let filtered = [...pubkeys.available];
     if (searchFilter !== '') {
-      filtered = [...pubkeys.available].filter(k =>
-        k.toLowerCase().includes(searchFilter.toLowerCase())
-      );
+      try {
+        filtered = [...pubkeys.available].filter(k =>
+          PublicKey.from(k).equals(PublicKey.from(searchFilter))
+        );
+      } catch (e) {
+        filtered = [];
+      }
     }
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
