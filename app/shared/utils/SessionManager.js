@@ -7,15 +7,17 @@ import WebSocket from 'ws';
 
 import * as types from '../actions/types';
 
+const { ipcRenderer } = require('electron');
+
 export default class SessionManager {
   handler: null;
-  pHandler: null;
+  // pHandler: null;
   store: null;
   storage: null;
 
-  constructor(store, pHandler) {
+  constructor(store) {
     console.log('SessionManager::constructor');
-    this.pHandler = pHandler;
+    // this.pHandler = pHandler;
     this.store = store;
     const { settings } = this.store.getState();
     if (settings.walletMode !== 'cold') {
@@ -51,8 +53,11 @@ export default class SessionManager {
   }
   createHandler() {
     console.log('SessionManager::createHandler');
-    const { pHandler, store } = this;
-    pHandler.webContents.send('sessionEvent', 'oncreate');
+    const {
+      // pHandler,
+      store,
+    } = this;
+    // pHandler.webContents.send('sessionEvent', 'oncreate');
     this.handler = {
       onStorageUpdate(json) {
         const storage = JSON.parse(json);
@@ -62,17 +67,13 @@ export default class SessionManager {
         });
       },
       onIncomingRequest(payload) {
-        pHandler.webContents.send('openUri', payload);
-        pHandler.setVisibleOnAllWorkspaces(true);
-        pHandler.show();
-        pHandler.focus();
-        pHandler.setVisibleOnAllWorkspaces(false);
+        global.handleUri(payload);
       },
-      onSocketEvent(type, event) {
-        if (pHandler && pHandler.webContents) {
-          pHandler.webContents.send('sessionEvent', type, JSON.stringify(event));
-        }
-      },
+      // onSocketEvent(type, event) {
+      //   if (pHandler && pHandler.webContents) {
+      //     pHandler.webContents.send('sessionEvent', type, JSON.stringify(event));
+      //   }
+      // },
     };
   }
   createStorage() {
