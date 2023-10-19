@@ -85,7 +85,7 @@ if (!lock) {
         uri.startsWith('esr-anchor:') ||
         uri.startsWith('anchorcreate:')
       ) {
-        handleUri(resourcePath, store, mainWindow, pHandler, uri);
+        handleUri(mainWindow, pHandler, uri);
       }
     } else {
       showManager();
@@ -122,7 +122,7 @@ app.on('ready', async () => {
   if (uri) {
     if (uri.startsWith('esr') || uri.startsWith('anchorcreate')) {
       setTimeout(() => {
-        handleUri(resourcePath, store, mainWindow, pHandler, uri);
+        handleUri(mainWindow, pHandler, uri);
       }, 2000);
     }
   }
@@ -134,7 +134,7 @@ app.on('activate', (e, hasVisibleWindows) => {
 app.on('open-url', (e, url) => {
   if (pHandler) {
     if (url.startsWith('esr') || url.startsWith('anchorcreate')) {
-      handleUri(resourcePath, store, mainWindow, pHandler, url);
+      handleUri(mainWindow, pHandler, url);
     }
   } else {
     uri = url;
@@ -222,7 +222,8 @@ const initSessionManager = async () => {
       sHandler.manager.disconnect();
     }
     // Create new Session Manager
-    sHandler = new SessionManager(store, pHandler);
+    const { sessions, settings } = store.getState();
+    sHandler = new SessionManager(sessions, settings);
     // Connect the session manager
     sHandler.manager.connect();
     // Release the lock
@@ -322,7 +323,7 @@ function showHandler() {
 
 // Allow ESR Requests from the UI
 ipcMain.on('openUri', (event, data) => {
-  handleUri(resourcePath, store, mainWindow, pHandler, data);
+  handleUri(mainWindow, pHandler, data);
 });
 
 // Session management IPC handlers
@@ -430,3 +431,5 @@ global.setAlternativePayment = setAlternativePayment;
 global.initSessionManager = initSessionManager;
 global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;
+global.handleUri = data => handleUri(mainWindow, pHandler, data);
+global.storeDispatch = data => store.dispatch(data);

@@ -11,7 +11,14 @@ const path = require('path');
 
 let ui;
 
-const createInterface = (resourcePath, route = '/', closable = true, store, uri = false, pHandler = false) => {
+const createInterface = (
+  resourcePath,
+  route = '/',
+  closable = true,
+  store,
+  uri = false,
+  pHandler = false
+) => {
   log.info('wallet ui: creating');
 
   const uiStateKeeper = windowStateKeeper(store);
@@ -32,14 +39,14 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-    }
+    },
   });
 
   uiStateKeeper.track(ui);
 
   ui.loadURL(`file://${path.join(resourcePath, 'renderer/main/index.html')}#${route}`);
 
-  ui.on('page-title-updated', (e) => {
+  ui.on('page-title-updated', e => {
     e.preventDefault();
   });
 
@@ -62,7 +69,7 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
     }
     // Launch + Load URI, if exists
     if (uri && pHandler) {
-      handleUri(resourcePath, store, ui, pHandler, uri);
+      handleUri(ui, pHandler, uri);
     }
   });
 
