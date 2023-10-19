@@ -222,7 +222,8 @@ const initSessionManager = async () => {
       sHandler.manager.disconnect();
     }
     // Create new Session Manager
-    sHandler = new SessionManager(store);
+    const { sessions, settings } = store.getState();
+    sHandler = new SessionManager(sessions, settings);
     // Connect the session manager
     sHandler.manager.connect();
     // Release the lock
@@ -431,3 +432,4 @@ global.initSessionManager = initSessionManager;
 global.initHardwareLedger = initHardwareLedger;
 global.showManager = showManager;
 global.handleUri = data => handleUri(mainWindow, pHandler, data);
+global.storeDispatch = data => store.dispatch(data);
