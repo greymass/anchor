@@ -448,4 +448,6 @@ const blockchains = {
   'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12': 'https://waxtestnet.greymass.com',
   'b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee': 'https://testnet.libre.org',
   '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465': 'https://lb.libre.org',
+  '9b06067cf9f0a293e854cbdbcf4bc0292bbf1137dd01d3d9300f403706444504': 'https://mainnet.ayetu.net',
+  '                      ': 'https://testnet.ayetu.net',
 };
