@@ -162,7 +162,7 @@
   },
   {
     "_id": "ayetu-testnet",
-    "chainId": "                    ",
+    "chainId": "38b20c9055b39035eaee7fdf450ce9b2572024bcc6d4ee8cddd50662a0cdeff1",
     "keyPrefix": "EOS",
     "name": "Ayetu (Testnet)",
     "node": "https://testnet.ayetu.net",
