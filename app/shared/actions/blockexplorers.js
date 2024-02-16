@@ -194,8 +194,8 @@ export function getBlockExplorers() {
         {
           name: 'scan.ayetu.net',
           patterns: {
-            account: 'https://scan.ayetu.net/account/{account}?network=mainnet',
-            txid: 'https://scan.ayetu.net/transaction/{txid}?network=mainnet'
+            account: 'https://scan.ayetu.net/account/{account}?network=ayetu',
+            txid: 'https://scan.ayetu.net/transaction/{txid}?network=ayetu'
           }
         },
       ],
@@ -203,8 +203,8 @@ export function getBlockExplorers() {
         {
           name: 'scan.ayetu.net',
           patterns: {
-            account: 'https://scan.ayetu.net/account/{account}?network=testnet',
-            txid: 'https://scan.ayetu.net/transaction/{txid}?network=testnet'
+            account: 'https://scan.ayetu.net/account/{account}?network=ayetu-testnet',
+            txid: 'https://scan.ayetu.net/transaction/{txid}?network=ayetu-testnet'
           }
         },
       ],
