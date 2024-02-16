@@ -189,7 +189,25 @@ export function getBlockExplorers() {
             txid: "https://lb.libre.org/v2/explore/transaction/{txid}",
           },
         },
-      ]
+      ],
+      'ayetu-mainnet': [
+        {
+          name: 'scan.ayetu.net',
+          patterns: {
+            account: 'https://scan.ayetu.net/account/{account}?network=mainnet',
+            txid: 'https://scan.ayetu.net/transaction/{txid}?network=mainnet'
+          }
+        },
+      ],
+      'ayetu-testnet': [
+        {
+          name: 'scan.ayetu.net',
+          patterns: {
+            account: 'https://scan.ayetu.net/account/{account}?network=testnet',
+            txid: 'https://scan.ayetu.net/transaction/{txid}?network=testnet'
+          }
+        },
+      ],
     };
 
 
