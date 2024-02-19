@@ -51,46 +51,24 @@ const logos = {
   '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4': waxLogo, // mainnet (wax)
   f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12: waxLogo,
   '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465': libreLogo, // mainnet (libre)
-  b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee: libreLogo // testnet (libre)
+  b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee: libreLogo, // testnet (libre)
   '9b06067cf9f0a293e854cbdbcf4bc0292bbf1137dd01d3d9300f403706444504': ayetuLogo, // mainnet (ayetu)
-  '38b20c9055b39035eaee7fdf450ce9b2572024bcc6d4ee8cddd50662a0cdeff1': ayetuTestnetLogo // testnet (ayetu)
+  '38b20c9055b39035eaee7fdf450ce9b2572024bcc6d4ee8cddd50662a0cdeff1': ayetuTestnetLogo, // testnet (ayetu)
 };
 
 export class GlobalFragmentChainLogo extends PureComponent<Props> {
   render() {
-    const {
-      avatar,
-      className,
-      chainId,
-      name,
-      noPopup,
-      size,
-      style,
-      t,
-    } = this.props;
+    const { avatar, className, chainId, name, noPopup, size, style, t } = this.props;
     let src = logos[chainId];
     if (!logos[chainId]) {
       src = placeholder;
     }
     const image = (
-      <Image
-        avatar={avatar}
-        centered
-        className={className}
-        size={size}
-        src={src}
-        style={style}
-      />
+      <Image avatar={avatar} centered className={className} size={size} src={src} style={style} />
     );
     if (noPopup) return image;
     return (
-      <Popup
-        content={chainId}
-        header={name}
-        inverted
-        position="right center"
-        trigger={image}
-      />
+      <Popup content={chainId} header={name} inverted position="right center" trigger={image} />
     );
   }
 }
