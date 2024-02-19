@@ -149,5 +149,25 @@
     ],
     "systemToken": "LIBRE",
     "testnet": false
+  },
+  {
+    "_id": "ayetu-mainnet",
+    "chainId": "9b06067cf9f0a293e854cbdbcf4bc0292bbf1137dd01d3d9300f403706444504",
+    "keyPrefix": "EOS",
+    "name": "Ayetu",
+    "node": "https://mainnet.ayetu.net",
+    "contracts": [],
+    "systemToken": "SYS",
+    "testnet": false
+  },
+  {
+    "_id": "ayetu-testnet",
+    "chainId": "38b20c9055b39035eaee7fdf450ce9b2572024bcc6d4ee8cddd50662a0cdeff1",
+    "keyPrefix": "EOS",
+    "name": "Ayetu (Testnet)",
+    "node": "https://testnet.ayetu.net",
+    "contracts": [],
+    "systemToken": "SYS",
+    "testnet": true
   }
 ]

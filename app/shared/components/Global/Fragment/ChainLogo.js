@@ -21,6 +21,8 @@ import uxLogo from '../../../../renderer/assets/images/ux.png';
 import worbliLogo from '../../../../renderer/assets/images/worbli.png';
 import waxLogo from '../../../../renderer/assets/images/wax.png';
 import libreLogo from '../../../../renderer/assets/images/libre.png'; // libre
+import ayetuLogo from '../../../../renderer/assets/images/ayetu-512px-dark-text.png'; // ayetu
+import ayetuTestnetLogo from '../../../../renderer/assets/images/ayetu-512px-dark-text-testnet.png'; // ayetu testnet
 
 const logos = {
   b912d19a6abd2b1b05611ae5be473355d64d95aeff0c09bedc8c166cd6468fe4: beosLogo, // mainnet (beos)
@@ -50,6 +52,8 @@ const logos = {
   f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12: waxLogo,
   '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465': libreLogo, // mainnet (libre)
   b64646740308df2ee06c6b72f34c0f7fa066d940e831f752db2006fcc2b78dee: libreLogo // testnet (libre)
+  '9b06067cf9f0a293e854cbdbcf4bc0292bbf1137dd01d3d9300f403706444504': ayetuLogo, // mainnet (ayetu)
+  '38b20c9055b39035eaee7fdf450ce9b2572024bcc6d4ee8cddd50662a0cdeff1': ayetuTestnetLogo // testnet (ayetu)
 };
 
 export class GlobalFragmentChainLogo extends PureComponent<Props> {

@@ -109,6 +109,16 @@ const supportedContracts = [
     chainId: '38b1d7815474d0c60683ecbea321d723e83f5da6ae5f1c1f9fecc69d9ba96465',
     supportedContracts: ['producerinfo'],
   },
+  {
+    // 'ayetu-mainnet'
+    chainId: '9b06067cf9f0a293e854cbdbcf4bc0292bbf1137dd01d3d9300f403706444504',
+    supportedContracts: [],
+  },
+  {
+    // 'ayetu-testnet'
+    chainId: '           ',
+    supportedContracts: [],
+  }
 ];
 
 const defaultValues = {
@@ -338,6 +348,24 @@ const knownChains = [
     "name": "Libre",
     "node": "https://lb.libre.org",
     "symbol": "LIBRE",
+    "tokenPrecision": 4,
+  },
+  {
+    "_id": "ayetu-mainnet",
+    "chainId": "9b06067cf9f0a293e854cbdbcf4bc0292bbf1137dd01d3d9300f403706444504",
+    "name": "Ayetu",
+    "node": "https://mainnet.ayetu.net",
+    "stakedResources": false,
+    "symbol": "SYS",
+    "tokenPrecision": 4,
+  },
+  {
+    "_id": "ayetu-testnet",
+    "chainId": "                       ",
+    "name": "Ayetu (testnet)",
+    "node": "https://testnet.ayetu.net",
+    "stakedResources": false,
+    "symbol": "SYS",
     "tokenPrecision": 4,
   }
 ];
