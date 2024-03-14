@@ -193,9 +193,6 @@ class PromptContainer extends Component<Props> {
       }
     });
   };
-  toggleSessions = () => {
-    this.props.actions.setSetting('enableSessions', !this.props.settings.enableSessions);
-  }
   render() {
     const {
       prompt,
@@ -210,9 +207,6 @@ class PromptContainer extends Component<Props> {
       wallet,
       whitelist,
     } = this.state;
-    const {
-      enableSessions
-    } = settings;
     const {
       response
     } = prompt;
@@ -253,7 +247,6 @@ class PromptContainer extends Component<Props> {
         />
         <PromptStage
           blockchain={blockchain}
-          enableSessions={enableSessions}
           enableWhitelist={enableWhitelist}
           expiration={expiration}
           hasBroadcast={hasBroadcast}
@@ -268,7 +261,6 @@ class PromptContainer extends Component<Props> {
           shouldBroadcast={shouldBroadcast}
           swapAccount={this.swapAccount}
           swapChain={this.swapChain}
-          toggleSessions={this.toggleSessions}
           wallet={wallet}
           whitelist={whitelist}
         />

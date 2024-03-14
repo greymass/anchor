@@ -80,7 +80,7 @@ class AccountSetupCode extends Component<Props> {
       this.throwError();
     }
     if (awaiting && !transactionExists && nextProps.accountcreate.transactionExists) {
-      this.sendCreationCallback(nextProps.accountcreate, nextProps.actions.callbackURIWithProcessed);
+      this.triggerIdentityRequest(nextProps.accountcreate);
       this.awaitIrreversible();
     }
     if (
@@ -115,19 +115,8 @@ class AccountSetupCode extends Component<Props> {
       password: undefined,
     });
   }
-  sendCreationCallback = (accountcreate, callbackURIAction) => {
-    if (accountcreate.callbackUrl) {
-      callbackURIAction({
-        background: true,
-        url: accountcreate.callbackUrl,
-        payload: {
-          status: 'success',
-          network: accountcreate.chainId,
-          actor: accountcreate.account.accountName,
-          permission: 'active',
-        }
-      });
-    }
+  triggerIdentityRequest = (accountcreate) => {
+    ipcRenderer.send('openUri', accountcreate.loginRequest.replace('//', ''));
   }
   interval = false
   awaitCreation = () => {
@@ -157,24 +146,10 @@ class AccountSetupCode extends Component<Props> {
   throwError = () => {
     clearInterval(this.interval);
 
-    const { accountcreate, actions } = this.props;
-
     this.setState({
       ...defaultState,
       errored: true,
-      errorMessage: accountcreate.error
     });
-
-    if (accountcreate.callbackUrl) {
-      actions.callbackURIWithProcessed({
-        background: true,
-        url: accountcreate.callbackUrl,
-        payload: {
-          status: 'failure',
-          error: accountcreate.error,
-        }
-      });
-    }
   }
   complete = () => {
     clearInterval(this.interval);

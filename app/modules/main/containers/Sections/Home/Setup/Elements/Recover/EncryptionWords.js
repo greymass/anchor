@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import compose from 'lodash/fp/compose';
 
-import { Button, Divider, Header, Message, Segment } from 'semantic-ui-react';
+import { Accordion, Button, Divider, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 import AccountSetupElementsWordsList from '../Words/List';
 import GlobalFormFieldWords from '../../../../../../../../shared/components/Global/Form/Field/Words';
@@ -15,6 +15,7 @@ class AccountSetupRecoverEncryptionWords extends Component<Props> {
   state = {
     // Encryption Keys (6 words)
     encryption: [],
+    expandedError: false,
   }
   addEncryptionWord = (value) => {
     this.setState({
@@ -35,9 +36,13 @@ class AccountSetupRecoverEncryptionWords extends Component<Props> {
     this.props.setEncryptionWords(this.state.encryption);
     this.props.onClick();
   }
+  expandError = () => {
+    this.setState({ expandedError: !this.state.expandedError })
+  }
   render() {
     const {
       encryption,
+      expandedError,
     } = this.state;
     const {
       error
@@ -79,11 +84,26 @@ class AccountSetupRecoverEncryptionWords extends Component<Props> {
         }
         {(error)
           ? (
-            <Message
-              error
-              header={error.message}
-              content={`Check that the encryption words above match. If they do, go back and ensure the network, account name, and mnemonic words also match. (Error: ${JSON.stringify(error)})`}
-            />
+            <div>
+              <Message
+                error
+                header={error.message}
+                content={`Check that the encryption words above match. If they do, go back and ensure the network, account name, and mnemonic words also match.`}
+              />
+              <Accordion>
+                <Accordion.Title
+                  active={expandedError}
+                  index={0}
+                  onClick={this.expandError}
+                >
+                  <Icon name='dropdown' />
+                  Expand error details for troubleshooting
+                </Accordion.Title>
+                <Accordion.Content active={expandedError}>
+<pre>{JSON.stringify(error, null, '\t')}</pre>
+                </Accordion.Content>
+              </Accordion>
+            </div>
           )
           : (
             <Button

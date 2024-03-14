@@ -9,6 +9,7 @@ import Routes from './routes';
 
 import {
   accountUpdatedViaCertificate,
+  accountUpdatedViaCertificateFailure,
   beginAccountCreate,
   cancelKeyCertificate,
   returnKeyCertificateCode,
@@ -63,6 +64,7 @@ ipcRenderer.on('returnKeyCertificateWords', (event, words) => store.dispatch(ret
 ipcRenderer.on('returnKeyCertificateDecrypted', (event, cert) => store.dispatch(returnKeyCertificateDecrypted(cert)));
 ipcRenderer.on('returnKeyCertificateFailed', (event, error) => store.dispatch(returnKeyCertificateFailed(error)));
 ipcRenderer.on('accountUpdatedViaCertificate', (event, status) => store.dispatch(accountUpdatedViaCertificate(status)));
+ipcRenderer.on('accountUpdatedViaCertificateFailure', (event, status) => store.dispatch(accountUpdatedViaCertificateFailure(status)));
 ipcRenderer.on('returnKeyCertificateCode', (event, code) => store.dispatch(returnKeyCertificateCode(code)));
 ipcRenderer.on('returnNewAccountKeys', (
   event,

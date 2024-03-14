@@ -1,8 +1,8 @@
 {
   "name": "anchor-wallet",
   "productName": "Anchor Wallet",
-  "version": "1.3.5",
-  "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+  "version": "1.3.12",
+  "description": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/greymass/anchor.git"
@@ -52,11 +52,11 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.14.5",
-    "@greymass/account-creation": "^0.0.1",
-    "@greymass/anchor-link-session-manager": "0.3.1",
-    "@greymass/eosio": "0.6.1",
+    "@greymass/account-creation": "^0.0.2",
+    "@greymass/anchor-link-session-manager": "^0.3.3",
+    "@greymass/eosio": "^0.6.4",
     "@greymass/eosio-resources": "0.7.0",
-    "@greymass/keycert": "^1.3.0",
+    "@greymass/keycert": "^1.4.0",
     "@greymass/keycert-pdf": "^1.2.0",
     "anchor-link": "^3.5.0",
     "asn1-ber": "^1.0.9",
@@ -73,7 +73,7 @@
     "electron-updater": "^4.3.1",
     "eosio-signing-request": "^2.5.1",
     "eosjs": "16.0.8",
-    "eosjs2": "git://github.com/aaroncox/eosjs2",
+    "eosjs2": "https://github.com/aaroncox/eosjs2",
     "fast-sha256": "^1.1.1",
     "history": "^4.7.2",
     "humanize-duration": "^3.20.1",
@@ -228,5 +228,8 @@
     "node": ">=12.x",
     "npm": ">=4.x",
     "yarn": ">=0.21.3"
+  },
+  "resolutions": {
+    "@greymass/eosio": "^0.6.3"
   }
 }

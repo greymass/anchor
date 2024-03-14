@@ -207,7 +207,6 @@ class PromptStage extends Component<Props> {
       auths,
       blockchain,
       blockchains,
-      enableSessions,
       enableWhitelist,
       expiration,
       hasBroadcast,
@@ -225,7 +224,6 @@ class PromptStage extends Component<Props> {
       status,
       system,
       t,
-      toggleSessions,
       validate,
       wallet,
       whitelist,
@@ -451,10 +449,8 @@ class PromptStage extends Component<Props> {
           blockchains={blockchains}
           canSign={canSign}
           couldSignWithDevice={couldSignWithDevice}
-          enableSessions={enableSessions}
           onSelect={this.props.swapAccount}
           onSelectChain={this.props.swapChain}
-          toggleSessions={toggleSessions}
           wallet={wallet}
         />
       );
@@ -471,7 +467,6 @@ class PromptStage extends Component<Props> {
         nextAction = (
           <PromptActionIdentity
             disabled={signing || !canSign}
-            enableSessions={enableSessions}
             loading={signing}
             onClick={this.onSignIdentity}
             wallet={wallet}

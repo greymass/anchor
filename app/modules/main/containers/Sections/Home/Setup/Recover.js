@@ -9,10 +9,22 @@ import { range } from 'lodash';
 import QrReader from 'react-qr-reader';
 import TimeAgo from 'react-timeago';
 
-import { Button, Dimmer, Divider, Grid, Header, Icon, Image, Loader, Segment, Table } from 'semantic-ui-react';
+import {
+  Button,
+  Dimmer,
+  Divider,
+  Form,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Loader,
+  Segment,
+  Table,
+} from 'semantic-ui-react';
 
 import { changeModule } from '../../../../actions/navigation';
-import { resetAccountCreation, verifyTransactionExists } from '../../../../actions/account';
+import { resetAccountCreation, accountUpdatedViaCertificateFailureReset, verifyTransactionExists } from '../../../../actions/account';
 
 import AccountSetupElementsWordsList from './Elements/Words/List';
 import Certificate from '../../../../../../renderer/assets/images/certificate.png';
@@ -58,7 +70,9 @@ class AccountSetupRecover extends Component<Props> {
     transactionIrreversible: false,
     // Awaiting permission update
     updatingPermissions: false,
-  }
+    // Error if occurred during update
+    updateError: false,
+  };
   componentWillReceiveProps(nextProps) {
     const {
       codeReceived,
@@ -74,6 +88,9 @@ class AccountSetupRecover extends Component<Props> {
         decrypting: false,
       });
     }
+    if (updatingPermissions && nextProps.accountcreate.updateError) {
+      this.updateError();
+    }
     if (updatingPermissions && nextProps.accountcreate.updatedAccount) {
       this.awaitIrreversible();
     }
@@ -83,32 +100,35 @@ class AccountSetupRecover extends Component<Props> {
         codeReceived: nextProps.accountcreate.codeReceived,
       });
     }
-    if (decryptFailed !== nextProps.accountcreate.decryptFailed && nextProps.accountcreate.decryptFailed) {
+    if (
+      decryptFailed !== nextProps.accountcreate.decryptFailed &&
+      nextProps.accountcreate.decryptFailed
+    ) {
       this.setState({
         decrypting: false,
         decryptFailed: nextProps.accountcreate.decryptFailed,
         error: nextProps.accountcreate.decryptError,
       });
     }
-    if (decryptMismatch !== nextProps.accountcreate.decryptMismatch && nextProps.accountcreate.decryptMismatch) {
+    if (
+      decryptMismatch !== nextProps.accountcreate.decryptMismatch &&
+      nextProps.accountcreate.decryptMismatch
+    ) {
       this.setState({
         decrypting: false,
         decryptMismatch: nextProps.accountcreate.decryptMismatch,
         error: nextProps.accountcreate.decryptError,
       });
     }
-    if (
-      !transactionIrreversible
-      && nextProps.accountcreate.transactionIrreversible
-    ) {
+    if (!transactionIrreversible && nextProps.accountcreate.transactionIrreversible) {
       this.complete();
     }
   }
   componentWillUnmount() {
     clearInterval(this.interval);
-    this.props.actions.resetAccountCreation();
+    this.props.actions.accountUpdatedViaCertificateFailureReset();
   }
-  interval = false
+  interval = false;
   awaitIrreversible = () => {
     clearInterval(this.interval);
     this.interval = setInterval(() => {
@@ -118,9 +138,16 @@ class AccountSetupRecover extends Component<Props> {
     }, 2000);
     this.setState({
       updatingPermissions: false,
-      irreversible: true
+      irreversible: true,
     });
-  }
+  };
+  updateError = () => {
+    clearInterval(this.interval);
+    this.setState({
+      updatingPermissions: false,
+      updateError: true,
+    });
+  };
   complete = () => {
     clearInterval(this.interval);
     this.setState({
@@ -128,50 +155,50 @@ class AccountSetupRecover extends Component<Props> {
       irreversible: false,
       transactionIrreversible: true,
     });
-  }
-  handleScan = (data) => {
+  };
+  handleScan = data => {
     if (data) {
       this.setState({
         scan: false,
-        code: data
+        code: data,
       });
     }
-  }
-  handleError = (err) => {
+  };
+  handleError = err => {
     console.error(err);
-  }
+  };
   decrypt = () => {
     const { code, encryption } = this.state;
     if (encryption.length === 6) {
       ipcRenderer.send('decryptKeyCertificate', code, encryption);
       this.setState({ decrypting: true });
     }
-  }
-  addDevice = (password) => {
+  };
+  addDevice = password => {
     const { code, encryption } = this.state;
     ipcRenderer.send('updateKeyWithCertificate', password, code, encryption);
     this.setState({
-      updatingPermissions: true
+      updatingPermissions: true,
     });
-  }
-  resetKeys = (password) => {
+  };
+  resetKeys = password => {
     const { code, encryption } = this.state;
     ipcRenderer.send('updateKeyWithCertificate', password, code, encryption, true);
     this.setState({
-      updatingPermissions: true
+      updatingPermissions: true,
     });
-  }
+  };
   resetError = () => {
     this.setState({
-      error: false
+      error: false,
     });
-  }
-  setEncryptionWords = (encryption) => {
+  };
+  setEncryptionWords = encryption => {
     this.setState({ encryption });
-  }
+  };
   setCertificateDetails = (network, account = false, mnemonic = false) => {
     const changes = {
-      network
+      network,
     };
     if (account) {
       changes.account = account;
@@ -180,8 +207,14 @@ class AccountSetupRecover extends Component<Props> {
       changes.mnemonic = mnemonic;
     }
     this.setState(changes);
-  }
-  importOwner = () => {}
+  };
+  retry = () => {
+    this.props.actions.accountUpdatedViaCertificateFailureReset();
+    this.setState({
+      updateError: false,
+    });
+  };
+  importOwner = () => {};
   render() {
     const {
       account,
@@ -193,7 +226,8 @@ class AccountSetupRecover extends Component<Props> {
       mnemonic,
       network,
       scan,
-      updatingPermissions
+      updatingPermissions,
+      updateError,
     } = this.state;
     const { accountcreate, t } = this.props;
     const { decrypted } = accountcreate;
@@ -222,12 +256,14 @@ class AccountSetupRecover extends Component<Props> {
       content = (
         <RecoverEncryptionWords
           error={this.state.error}
-          onBack={() => this.setState({
-            code: false,
-            scan: false,
-            entry: false,
-            error: false
-          })}
+          onBack={() =>
+            this.setState({
+              code: false,
+              scan: false,
+              entry: false,
+              error: false,
+            })
+          }
           onClick={this.decrypt}
           resetError={this.resetError}
           setEncryptionWords={this.setEncryptionWords}
@@ -238,14 +274,18 @@ class AccountSetupRecover extends Component<Props> {
     if (decrypting) {
       loader = (
         <Dimmer active inverted>
-          <Loader size="big"><Header>Decrypting Certificate...</Header></Loader>
+          <Loader size="big">
+            <Header>Decrypting Certificate...</Header>
+          </Loader>
         </Dimmer>
       );
     }
     if (updatingPermissions) {
       loader = (
         <Dimmer active inverted>
-          <Loader size="big"><Header>Updating account...</Header></Loader>
+          <Loader size="big">
+            <Header>Updating account...</Header>
+          </Loader>
         </Dimmer>
       );
     }
@@ -262,22 +302,13 @@ class AccountSetupRecover extends Component<Props> {
                 ~<TimeAgo live={false} date={expected} />
               </Header.Subheader>
             </Header>
-            <Button
-              content="Skip"
-              onClick={this.complete}
-              primary
-            />
+            <Button content="Skip" onClick={this.complete} primary />
           </Loader>
         </Dimmer>
       );
     }
     if (decrypted) {
-      content = (
-        <RecoverAccount
-          addDevice={this.addDevice}
-          resetKeys={this.resetKeys}
-        />
-      );
+      content = <RecoverAccount addDevice={this.addDevice} resetKeys={this.resetKeys} />;
     }
     if (complete) {
       content = (
@@ -291,52 +322,77 @@ class AccountSetupRecover extends Component<Props> {
         </React.Fragment>
       );
     }
+    if (updateError) {
+      content = (
+        <React.Fragment>
+          <Header>
+            An error occurred while updating the account.
+            <Header.Subheader>
+              {String(this.props.accountcreate.updateError.error.message)}
+            </Header.Subheader>
+            <Form>
+              <Form.TextArea
+                rows={12}
+                style={{ whiteSpace: 'nowrap' }}
+                value={String(this.props.accountcreate.updateError.error.stack)}
+              />
+            </Form>
+          </Header>
+          <Button content="Retry" onClick={this.retry} primary />
+        </React.Fragment>
+      );
+    }
     return (
       <Segment basic clearing style={{ marginTop: 0 }}>
         {loader}
-        {(!scan && !entry && !code)
-          ? (
-            <Segment basic>
-              <Image
-                floated="right"
-                src={Certificate}
-                style={{
-                  height: '360px'
-                }}
-              />
-              <Header
-                content={t('global_account_import_exist_header_six')}
-                subheader={t('global_account_import_exist_subheader_six')}
-                style={{ marginTop: 0 }}
-              />
-              <React.Fragment>
-                <Segment style={{ maxWidth: '50%' }}>
-                  <Button
-                    content="Scan with Webcam"
-                    fluid
-                    icon="qrcode"
-                    onClick={() => this.setState({ scan: true, code: false })}
-                    primary
-                    style={{ marginBottom: '1em' }}
-                  />
-                  <p>Scan the QR code from the owner key certificate and enter the 6-word encryption key.</p>
-                </Segment>
-                <Segment style={{ maxWidth: '50%' }}>
-                  <Button
-                    content="Manual Entry"
-                    fluid
-                    icon="keyboard"
-                    onClick={() => this.setState({ entry: true, code: false })}
-                    primary
-                    style={{ marginBottom: '1em' }}
-                  />
-                  <p>Select the network, enter the account name, the 28-word mnemonic key, and the 6-word encryption key from the owner key certificate.</p>
-                </Segment>
-              </React.Fragment>
-            </Segment>
-          )
-          : false
-        }
+        {!scan && !entry && !code ? (
+          <Segment basic>
+            <Image
+              floated="right"
+              src={Certificate}
+              style={{
+                height: '360px',
+              }}
+            />
+            <Header
+              content={t('global_account_import_exist_header_six')}
+              subheader={t('global_account_import_exist_subheader_six')}
+              style={{ marginTop: 0 }}
+            />
+            <React.Fragment>
+              <Segment style={{ maxWidth: '50%' }}>
+                <Button
+                  content="Scan with Webcam"
+                  fluid
+                  icon="qrcode"
+                  onClick={() => this.setState({ scan: true, code: false })}
+                  primary
+                  style={{ marginBottom: '1em' }}
+                />
+                <p>
+                  Scan the QR code from the owner key certificate and enter the 6-word encryption
+                  key.
+                </p>
+              </Segment>
+              <Segment style={{ maxWidth: '50%' }}>
+                <Button
+                  content="Manual Entry"
+                  fluid
+                  icon="keyboard"
+                  onClick={() => this.setState({ entry: true, code: false })}
+                  primary
+                  style={{ marginBottom: '1em' }}
+                />
+                <p>
+                  Select the network, enter the account name, the 28-word mnemonic key, and the
+                  6-word encryption key from the owner key certificate.
+                </p>
+              </Segment>
+            </React.Fragment>
+          </Segment>
+        ) : (
+          false
+        )}
         {content}
       </Segment>
     );
@@ -352,11 +408,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({
-      changeModule,
-      resetAccountCreation,
-      verifyTransactionExists
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        changeModule,
+        resetAccountCreation,
+        verifyTransactionExists,
+        accountUpdatedViaCertificateFailureReset,
+      },
+      dispatch
+    ),
   };
 }
 

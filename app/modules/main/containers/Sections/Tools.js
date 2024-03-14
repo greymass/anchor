@@ -12,6 +12,7 @@ import { withTranslation } from 'react-i18next';
 import { Breadcrumb, Icon, Segment } from 'semantic-ui-react';
 import compose from 'lodash/fp/compose';
 
+import ToolsABICache from './Tools/ABICache';
 import ToolsAccounts from './Tools/Accounts';
 import ToolsAirgrabs from './Tools/Airgrabs';
 import ToolsApiPing from './Tools/ApiPing';
@@ -86,6 +87,7 @@ class ToolsContainer extends Component<Props> {
             <Route exact path="/tools" component={ToolsHome} />
             <Route path="/tools/accounts" component={ToolsAccounts} />
             <Route path="/tools/airgrabs" component={ToolsAirgrabs} />
+            <Route path="/tools/abi_cache" component={ToolsABICache} />
             <Route path="/tools/api_ping" component={ToolsApiPing} />
             <Route path="/tools/api_traffic_log" component={ToolsApiTrafficLog} />
             <Route path="/tools/contacts" component={ToolsContacts} />

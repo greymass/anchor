@@ -79,7 +79,7 @@ class WalletModalContentBroadcast extends Component<Props> {
       importedESR
     } = this.state;
     if (!importedESR) return false;
-    if (importedESR.startsWith('esr:') || importedESR.startsWith('eosio:')) {
+    if (importedESR.startsWith('esr:') || importedESR.startsWith('eosio:') || importedESR.startsWith('esr-anchor:') || importedESR.startsWith('anchorcreate:')) {
       ipcRenderer.send('openUri', importedESR);
     } else {
       ipcRenderer.send('openUri', `esr:${importedESR}`);

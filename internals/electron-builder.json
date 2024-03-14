@@ -24,7 +24,7 @@
       "name": "esr",
       "role": "Viewer",
       "schemes": [
-        "anchor", "esr", "anchorcreate"
+        "anchor", "esr", "anchorcreate", "esr-anchor"
       ]
     }
   ],
@@ -33,12 +33,12 @@
   },
   "linux": {
     "category": "Network",
-    "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+    "description": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
     "desktop": {
       "Name": "anchor-wallet",
-      "GenericName": "Anchor - EOSIO Desktop Wallet",
+      "GenericName": "Anchor - Antelope Desktop Wallet",
       "X-GNOME-FullName": "anchor-wallet",
-      "Comment": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+      "Comment": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
       "Type": "Application",
       "Terminal": "false",
       "StartupNotify": "false",
@@ -58,11 +58,12 @@
           "x64"
         ]
       },
+      "rpm",
       "AppImage"
     ]
   },
   "snap": {
-    "synopsis": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+    "synopsis": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
     "confinement": "devmode",
     "grade": "devel",
     "buildPackages": [

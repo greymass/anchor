@@ -94,6 +94,10 @@ const toolSections = {
     }
   },
   tools_menu_network_utilities_header: {
+    tools_menu_abi_cache: {
+      modes: [undefined, false, 'hot', 'ledger', 'watch'],
+      path: 'tools/abi_cache'
+    },
     tools_menu_performance_header: {
       modes: [undefined, false, 'hot', 'ledger', 'watch'],
       path: 'tools/api_ping'

@@ -1,8 +1,8 @@
 {
   "name": "anchor-wallet",
   "productName": "Anchor Wallet",
-  "version": "1.3.5",
-  "description": "An EOSIO Light Wallet with simple tools for basic activities and advanced tools for power users.",
+  "version": "1.3.12",
+  "description": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "main": "./main.prod.js",
   "author": {
     "name": "Greymass",

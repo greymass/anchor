@@ -1,12 +1,12 @@
-import { get } from 'dot-prop-immutable';
-import { isEqual } from 'lodash';
+import { get } from "dot-prop-immutable";
+import { isEqual } from "lodash";
 
-import * as types from '../actions/types';
+import * as types from "../actions/types";
 
 const initialState = {
   current: {},
   contract: {},
-  pricefeed: {},
+  pricefeed: {}
 };
 
 export default function globals(state = initialState, action) {
@@ -34,17 +34,21 @@ export default function globals(state = initialState, action) {
     case types.GET_CURRENCYSTATS_FAILURE: {
       return Object.assign({}, state, {
         contract: Object.assign({}, state.contract, {
-          [action.payload.account]: Object.assign({}, state.contract[action.payload.account], {
-            [action.payload.symbol]: {
-              status: 'not-found'
+          [action.payload.account]: Object.assign(
+            {},
+            state.contract[action.payload.account],
+            {
+              [action.payload.symbol]: {
+                status: "not-found"
+              }
             }
-          })
+          )
         })
       });
     }
     case types.SYSTEM_PRICEFEEDUSD_SUCCESS: {
       const pricefeed = {
-        [action.payload.scope]: get(action, 'payload.results.rows.0.median')
+        [action.payload.scope]: get(action, "payload.results.rows.0.median")
       };
       if (isEqual(state.pricefeed, pricefeed)) {
         return state;
@@ -54,9 +58,14 @@ export default function globals(state = initialState, action) {
     case types.GET_CURRENCYSTATS_SUCCESS: {
       return Object.assign({}, state, {
         contract: Object.assign({}, state.contract, {
-          [action.payload.account]: Object.assign({}, state.contract[action.payload.account], {
-            [action.payload.symbol]: action.payload.results[action.payload.symbol]
-          })
+          [action.payload.account]: Object.assign(
+            {},
+            state.contract[action.payload.account],
+            {
+              [action.payload.symbol]:
+                action.payload.results[action.payload.symbol]
+            }
+          )
         })
       });
     }

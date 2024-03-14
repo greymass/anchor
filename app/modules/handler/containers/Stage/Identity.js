@@ -20,7 +20,6 @@ class PromptStageIdentity extends Component<Props> {
       actions,
       canSign,
       couldSignWithDevice,
-      enableSessions,
       ledger,
       onSelect,
       onSelectChain,
@@ -31,6 +30,7 @@ class PromptStageIdentity extends Component<Props> {
       wallets,
       t,
     } = this.props;
+
     const {
       resolved,
     } = prompt;
@@ -44,8 +44,9 @@ class PromptStageIdentity extends Component<Props> {
       && resolved.request.isMultiChain()
     ) {
       chainIds = JSON.parse(JSON.stringify(resolved.request.getChainIds()));
+
       const { blockchains } = this.props;
-      multiChain = blockchains.filter(b => {
+      multiChain = !chainIds || blockchains.filter(b => {
         const hasWallet = wallets.filter(w => w.chainId === b.chainId).length > 0;
         const isEnabled = settings.blockchains.includes(b.chainId);
         const isSelectable = chainIds.includes(b.chainId);
@@ -108,20 +109,6 @@ class PromptStageIdentity extends Component<Props> {
                     chainId={chainId}
                     onSelect={onSelect}
                   />
-                </Form.Field>
-                <Form.Field>
-                  <Segment basic textAlign="center">
-                    <Header
-                      content="Options"
-                      size="small"
-                    />
-                    <Form.Checkbox
-                      checked={enableSessions}
-                      label="Create a session for future use with this app"
-                      onChange={this.props.toggleSessions}
-                      toggle
-                    />
-                  </Segment>
                 </Form.Field>
               </Form>
               {(!canSign && couldSignWithDevice)
