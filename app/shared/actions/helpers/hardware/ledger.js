@@ -1,6 +1,6 @@
 const bippath = require('bip32-path');
 
-const CLA = 0xD4;
+const CLA = 0xd4;
 const INS_GET_PUBLIC_KEY = 0x02;
 const INS_SIGN = 0x04;
 const INS_GET_APP_CONFIGURATION = 0x06;
@@ -11,14 +11,12 @@ const P2_CHAINCODE = 0x01;
 const P1_FIRST = 0x00;
 const P1_MORE = 0x80;
 
-export function foreach<T, A>(
-  arr: T[],
-  callback: (T, number) => Promise<A>
-): Promise<A[]> {
+export function foreach<T, A>(arr: T[], callback: (T, number) => Promise<A>): Promise<A[]> {
   function iterate(index, array, result) {
     if (index >= array.length) {
       return result;
-    } return callback(array[index], index).then((res) => {
+    }
+    return callback(array[index], index).then(res => {
       result.push(res);
       return iterate(index + 1, array, result);
     });
@@ -27,12 +25,12 @@ export function foreach<T, A>(
 }
 
 /**
-* EOS API
-*
-* @example
-* import Eos from "@ledgerhq/hw-app-eos";
-* const eos = new Eos(transport)
-*/
+ * EOS API
+ *
+ * @example
+ * import Eos from "@ledgerhq/hw-app-eos";
+ * const eos = new Eos(transport)
+ */
 export default class Eos {
   transport;
 
@@ -40,24 +38,20 @@ export default class Eos {
     this.transport = transport;
     transport.decorateAppAPIMethods(
       this,
-      [
-        'getPublicKey',
-        'signTransaction',
-        'getAppConfiguration'
-      ],
+      ['getPublicKey', 'signTransaction', 'getAppConfiguration'],
       'e0s'
     );
   }
 
   /**
-  * get EOS public key for a given BIP 32 path.
-  * @param path a path in BIP 32 format
-  * @option boolDisplay optionally enable or not the display
-  * @option boolChaincode optionally enable or not the chaincode request
-  * @return an object with a publicKey, address and (optionally) chainCode
-  * @example
-  * eos.getPublicKey("44'/194'/0'/0'/0").then(o => o.address)
-  */
+   * get EOS public key for a given BIP 32 path.
+   * @param path a path in BIP 32 format
+   * @option boolDisplay optionally enable or not the display
+   * @option boolChaincode optionally enable or not the chaincode request
+   * @return an object with a publicKey, address and (optionally) chainCode
+   * @example
+   * eos.getPublicKey("44'/194'/0'/0'/0").then(o => o.address)
+   */
   getPublicKey(
     path: string,
     boolDisplay?: boolean,
@@ -65,13 +59,13 @@ export default class Eos {
   ): Promise<{
     publicKey: string,
     wif: string,
-    chainCode?: string
+    chainCode?: string,
   }> {
     const paths = bippath.fromString(path).toPathArray();
-    const buffer = Buffer.alloc(1 + (paths.length * 4));
+    const buffer = Buffer.alloc(1 + paths.length * 4);
     buffer[0] = paths.length;
     paths.forEach((element, index) => {
-      buffer.writeUInt32BE(element, 1 + (4 * index));
+      buffer.writeUInt32BE(element, 1 + 4 * index);
     });
     return this.transport
       .send(
@@ -85,15 +79,9 @@ export default class Eos {
         const result = {};
         const publicKeyLength = response[0];
         const addressLength = response[1 + publicKeyLength];
-        result.publicKey = response
-          .slice(1, 1 + publicKeyLength)
-          .toString('hex');
-        result.wif =
-        response
-          .slice(
-            1 + publicKeyLength + 1,
-            1 + publicKeyLength + 1 + addressLength
-          )
+        result.publicKey = response.slice(1, 1 + publicKeyLength).toString('hex');
+        result.wif = response
+          .slice(1 + publicKeyLength + 1, 1 + publicKeyLength + 1 + addressLength)
           .toString('ascii');
         if (boolChaincode) {
           result.chainCode = response
@@ -119,7 +107,7 @@ export default class Eos {
   ): Promise<{
     s: string,
     v: string,
-    r: string
+    r: string,
   }> {
     const paths = bippath.fromString(path).toPathArray();
     const toSend = [];
@@ -128,24 +116,25 @@ export default class Eos {
     let first = true;
     let sliceSize = 150;
 
-    for (var i=0; i < rawTxChunks.length; ++i) {
+    console.log('--------------------------------');
+    console.log({ rawTxChunks });
+
+    for (var i = 0; i < rawTxChunks.length; ++i) {
       let offset = 0;
       const rawTxChunk = rawTxChunks[i];
 
       while (offset !== rawTxChunk.length) {
-        const maxChunkSize = first ? sliceSize - 1 - (paths.length * 4) : sliceSize;
+        const maxChunkSize = first ? sliceSize - 1 - paths.length * 4 : sliceSize;
         const chunkSize =
-        offset + maxChunkSize > rawTxChunk.length
-          ? rawTxChunk.length - offset
-          : maxChunkSize;
+          offset + maxChunkSize > rawTxChunk.length ? rawTxChunk.length - offset : maxChunkSize;
 
-        const buffer = Buffer.alloc(first ? 1 + (paths.length * 4) + chunkSize : chunkSize);
+        const buffer = Buffer.alloc(first ? 1 + paths.length * 4 + chunkSize : chunkSize);
         if (first) {
           buffer[0] = paths.length;
           paths.forEach((element, index) => {
-            buffer.writeUInt32BE(element, 1 + (4 * index));
+            buffer.writeUInt32BE(element, 1 + 4 * index);
           });
-          rawTxChunk.copy(buffer, 1 + (4 * paths.length), offset, offset + chunkSize);
+          rawTxChunk.copy(buffer, 1 + 4 * paths.length, offset, offset + chunkSize);
           first = false;
         } else {
           rawTxChunk.copy(buffer, 0, offset, offset + chunkSize);
@@ -154,19 +143,30 @@ export default class Eos {
         offset += chunkSize;
       }
     }
+
+    console.log('--------------------------------');
+    console.log({ paths });
+    console.log({ toSend });
     return foreach(toSend, (data, i) =>
       this.transport
         .send(CLA, INS_SIGN, i === 0 ? P1_FIRST : P1_MORE, 0x00, data)
         .then(apduResponse => {
           response = apduResponse;
           return response;
-        }))
-      .then(() => {
-        const v = response.slice(0, 1).toString('hex');
-        const r = response.slice(1, 1 + 32).toString('hex');
-        const s = response.slice(1 + 32, 1 + 32 + 32).toString('hex');
-        return { v, r, s };
-      });
+        })
+    ).then(() => {
+      console.log('--------------------------------');
+      console.log({ response });
+      const v = response.slice(0, 1).toString('hex');
+      const r = response.slice(1, 1 + 32).toString('hex');
+      const s = response.slice(1 + 32, 1 + 32 + 32).toString('hex');
+
+      console.log('v', v);
+      console.log('r', r);
+      console.log('s', s);
+      console.log('--------------------------------');
+      return { v, r, s };
+    });
   }
 
   getAppConfiguration(): Promise<{ version: string }> {
