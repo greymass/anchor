@@ -145,10 +145,15 @@ app.on('before-quit', () => {
   if (initHardwareRetry) {
     clearInterval(initHardwareRetry);
   }
-  if (sHandler && sHandler.manager) {
-    sHandler.manager.disconnect();
+  if (sHandler && sHandler.destroy) {
+    sHandler.destroy();
   }
-  pHandler.close();
+  if (global.hardwareLedger) {
+    global.hardwareLedger.destroy();
+  }
+  if (pHandler && pHandler.destroy) {
+    pHandler.destroy();
+  }
 });
 app.on('will-quit', () => {
   // If this is a development version, always unregister protocols
@@ -169,6 +174,9 @@ const initManager = (route = '/', closable = true) => {
   mainWindow = createInterface(resourcePath, route, closable, store, uri, pHandler);
   mainWindow.on('close', () => {
     mainWindow = null;
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
   });
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     log.info('development mode enabled');
@@ -217,9 +225,9 @@ const initSessionManager = async () => {
     // Enable the lock indicating a connection is in progress
     initializingSessionManager = true;
     // Disconnect if an existing handler is already running
-    if (sHandler && sHandler.manager && sHandler.manager.disconnect) {
-      log.info('initSessionManager: disconnecting existing session manager');
-      sHandler.manager.disconnect();
+    if (sHandler && sHandler.destroy) {
+      log.info('initSessionManager: destroying existing session manager');
+      sHandler.destroy();
     }
     // Create new Session Manager
     sHandler = new SessionManager(store, pHandler);

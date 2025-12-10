@@ -49,28 +49,39 @@ export default class SessionManager {
     );
     this.manager.removeSession(session);
   }
+  destroy() {
+    if (this.manager && this.manager.disconnect) {
+      this.manager.disconnect();
+    }
+    this.pHandler = null;
+    this.store = null;
+  }
   createHandler() {
     console.log('SessionManager::createHandler');
-    const { pHandler, store } = this;
-    pHandler.webContents.send('sessionEvent', 'oncreate');
+    const self = this;
+    this.pHandler.webContents.send('sessionEvent', 'oncreate');
     this.handler = {
       onStorageUpdate(json) {
         const storage = JSON.parse(json);
-        store.dispatch({
-          type: types.SYSTEM_SESSIONS_SYNC,
-          payload: storage,
-        });
+        if (self.store) {
+          self.store.dispatch({
+            type: types.SYSTEM_SESSIONS_SYNC,
+            payload: storage,
+          });
+        }
       },
       onIncomingRequest(payload) {
-        pHandler.webContents.send('openUri', payload);
-        pHandler.setVisibleOnAllWorkspaces(true);
-        pHandler.show();
-        pHandler.focus();
-        pHandler.setVisibleOnAllWorkspaces(false);
+        if (self.pHandler) {
+          self.pHandler.webContents.send('openUri', payload);
+          self.pHandler.setVisibleOnAllWorkspaces(true);
+          self.pHandler.show();
+          self.pHandler.focus();
+          self.pHandler.setVisibleOnAllWorkspaces(false);
+        }
       },
       onSocketEvent(type, event) {
-        if (pHandler && pHandler.webContents) {
-          pHandler.webContents.send('sessionEvent', type, JSON.stringify(event));
+        if (self.pHandler && self.pHandler.webContents) {
+          self.pHandler.webContents.send('sessionEvent', type, JSON.stringify(event));
         }
       },
     };
