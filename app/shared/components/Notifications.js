@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 
 import GlobalMessageAppUpgradeModal from './Global/Message/App/Upgrade/Modal';
 import WalletUpgrade from './Wallet/Upgrade';
+import packageJson from '../../package.json';
 
-const name = require('electron').remote.app.getName();
-const version = require('electron').remote.app.getVersion();
+const { productName: name, version } = packageJson;
 
 class Notifications extends Component<Props> {
   render() {
