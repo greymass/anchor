@@ -6247,10 +6247,10 @@ electron-updater@^4.3.1:
     lodash.isequal "^4.5.0"
     semver "^7.1.3"
 
-electron@40.10.5:
-  version "40.10.5"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-40.10.5.tgz#0dee3b2cf7fa003954e90f1012cfda56cc249d7b"
-  integrity sha512-VzTIvwOYXZZufT9B83GDQogR1TFqREygRYhm0LE++QhGPjvBeg+W7siOP9K5+9rHMUnRuCX4YU/0ivLekN/UZQ==
+electron@42.5.0:
+  version "42.5.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-42.5.0.tgz#09de6f3f10146ed03c401405da695b5743ecdec7"
+  integrity sha512-cYEKS9XFz+c9fAB4jI0x49yz1FFzB55r3q96wu9YkwwJMv7t9202IE/ltlgy6yitl/J4M7C8JQcmUqdzDvPl/w==
   dependencies:
     "@electron-internal/extract-zip" "^1.0.1"
     "@electron/get" "^5.0.0"
