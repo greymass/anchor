@@ -32,7 +32,7 @@ class ToolsButtonCreateAccount extends Component<Props> {
           content: t('tools_button_create_account'),
           icon: 'share square'
         }}
-        content={ connection.chain === "BEOS" ? (
+        content={ connection.chain === 'BEOS' ? (
           <ToolsFormCreateBitsharesEosAccount
             account={account}
             actions={actions}
@@ -42,18 +42,18 @@ class ToolsButtonCreateAccount extends Component<Props> {
             globals={globals}
             key="CreateAccountForm"
             system={system}
-          /> : (
-            <ToolsFormCreateAccount
-            account={account}
-            actions={actions}
-            balance={balance}
-            connection={connection}
-            contacts={settings.contacts}
-            globals={globals}
-            key="CreateAccountForm"
-            system={system}
           />
-          )
+        ) : (
+            <ToolsFormCreateAccount
+              account={account}
+              actions={actions}
+              balance={balance}
+              connection={connection}
+              contacts={settings.contacts}
+              globals={globals}
+              key="CreateAccountForm"
+              system={system}
+            />
         )}
         icon="share square"
         title={t('tools_create_account_header')}
