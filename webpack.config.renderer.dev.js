@@ -285,9 +285,11 @@ export default merge(baseConfig, {
     },
     before() {
       console.log('Starting Main Process...');
-        spawn('npm', ['run', 'start-main-dev'], {
+      const { ELECTRON_RUN_AS_NODE, NODE_OPTIONS, ...env } = process.env;
+
+        spawn('yarn', ['start-main-dev'], {
           shell: true,
-          env: process.env,
+          env,
           stdio: 'inherit',
         })
           .on('close', (code) => process.exit(code))
