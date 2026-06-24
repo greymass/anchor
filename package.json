@@ -47,7 +47,7 @@
     "prestart": "yarn build",
     "release": "yarn build && electron-builder -mwl",
     "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron --trace-warnings -r @babel/register ./app/main/main.dev",
+    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron --trace-warnings -r ./internals/scripts/BabelRegister.js ./internals/scripts/StartMainDev.js",
     "start-renderer-dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development node --trace-warnings -r @babel/register ./node_modules/webpack/bin/webpack serve --config webpack.config.renderer.dev.js",
     "test": "jest --runInBand"
   },
@@ -162,7 +162,7 @@
     "css-loader": "^3.0.0",
     "css-minimizer-webpack-plugin": "^3.0.2",
     "detect-port": "^1.2.3",
-    "electron": "28.3.3",
+    "electron": "34.5.8",
     "electron-builder": "^23.0.2",
     "electron-debug": "^2.0.0",
     "electron-log": "^4.4.1",
