@@ -18,6 +18,8 @@ module.exports = {
   snapshotSerializers: ['enzyme-to-json/serializer'],
   moduleFileExtensions: ['js', 'json', 'jsx'],
   moduleNameMapper: {
+    '^@electron/remote$': '<rootDir>/config/jest/electronRemoteMock.js',
+    '^@ledgerhq/hw-transport-node-hid$': '<rootDir>/config/jest/ledgerTransportMock.js',
     '\\.(css|less)$': '<rootDir>/config/jest/styleMock.js',
   },
   setupFiles: ['<rootDir>/enzyme.config.js'],

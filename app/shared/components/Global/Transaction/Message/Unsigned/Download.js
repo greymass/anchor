@@ -31,10 +31,17 @@ export class GlobalTransactionMessageUnsignedDownload extends Component<Props> {
   }
   async renderQRCode() {
     const { settings, transaction } = this.props;
+    const transactionData = transaction
+      && transaction.transaction
+      && transaction.transaction.transaction
+      && transaction.transaction.transaction.transaction;
+    if (!settings || !settings.chainId || !transactionData) {
+      return;
+    }
     const { chainId } = settings;
     const req = await SigningRequest.create({
       chainId,
-      transaction: transaction.transaction.transaction.transaction
+      transaction: transactionData
     }, opts);
     const uri = req.encode();
     this.setState({ uri });
