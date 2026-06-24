@@ -25,8 +25,9 @@ Extract only when it clearly reduces duplication, improves readability, isolates
 
 Run commands from the repo `root` with **yarn**.
 
-- `yarn lint`, `yarn build`, `yarn package-win-local`, and `yarn dev` must pass before considering tasks completed.
+- `yarn lint`, `yarn test`, `yarn build`, `yarn package-win-local`, and `yarn dev` must pass before considering tasks completed.
   - `yarn lint` — ESLint.
+  - `yarn test` — Jest tests.
   - `yarn build` — Production builds.
   - `yarn package-win-local` — Windows local build.
   - `yarn dev` — Development server.
