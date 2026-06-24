@@ -1,4 +1,4 @@
-const { remote } = require('electron');
+const { getGlobal } = require('./electron/remote');
 
-const i18n = remote.getGlobal('i18n');
+const i18n = getGlobal('i18n');
 export default i18n;

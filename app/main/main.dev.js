@@ -17,11 +17,14 @@ import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardwa
 
 const log = require('electron-log');
 const path = require('path');
+const remoteMain = require('@electron/remote/main');
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
 const isMac = () => process.platform === 'darwin';
 
 require('electron-context-menu')();
+
+remoteMain.initialize();
 
 let resourcePath = __dirname;
 let mainWindow = null;
@@ -96,7 +99,6 @@ if (!lock) {
 // main start
 app.on('ready', async () => {
   log.info('anchor: ready');
-  app.allowRendererProcessReuse = false;
 
   const { settings } = store.getState();
 

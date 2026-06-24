@@ -1,7 +1,7 @@
 import { createMigrate } from 'redux-persist';
-import createElectronStorage from 'redux-persist-electron-storage';
 
 import { PrivateKey } from '@greymass/eosio';
+import Store from '../../electron/store';
 
 const fixRequestKey = (sessions) => {
   const newSessions = Object.assign({}, sessions);
@@ -17,6 +17,16 @@ const migrations = {
   2: (state) => Object.assign({}, state, {
     sessions: fixRequestKey(state.sessions),
   }),
+};
+
+const createElectronStorage = ({ electronStoreOpts } = {}) => {
+  const store = new Store(electronStoreOpts || {});
+
+  return {
+    getItem: key => Promise.resolve(store.get(key)),
+    setItem: (key, item) => Promise.resolve(store.set(key, item)),
+    removeItem: key => Promise.resolve(store.delete(key))
+  };
 };
 
 const persistConfig = {
