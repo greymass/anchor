@@ -2,7 +2,7 @@ import { decrypt } from '../wallet';
 import serialize from './ledger/serialize';
 import EOSHandler from '../../utils/EOS/Handler';
 
-const { remote } = require('electron');
+const { getGlobal } = require('../../electron/remote');
 const CryptoJS = require('crypto-js');
 const ecc = require('eosjs-ecc');
 const Eos = require('eosjs');
@@ -11,8 +11,8 @@ export default function eos(connection, signing = false, v2 = false) {
   const decrypted = Object.assign({}, connection);
 
   // Add the global dispatch for alternative payments
-  decrypted.setAlternativePayment = remote.getGlobal('setAlternativePayment');
-  decrypted.clearAlternativePayment = remote.getGlobal('clearAlternativePayment');
+  decrypted.setAlternativePayment = getGlobal('setAlternativePayment');
+  decrypted.clearAlternativePayment = getGlobal('clearAlternativePayment');
 
   if (signing && decrypted.keyProviderObfuscated) {
     const {
@@ -44,7 +44,7 @@ export default function eos(connection, signing = false, v2 = false) {
     const signProvider = async ({ transaction }) => {
       const { fc } = Eos(connection);
       const buffer = serialize(fc.types.config.chainId, transaction, fc.types);
-      const { api } = remote.getGlobal('hardwareLedger');
+      const { api } = getGlobal('hardwareLedger');
       const result = await api.signTransaction(
         decrypted.signPath,
         buffer.toString('hex')

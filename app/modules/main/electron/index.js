@@ -8,6 +8,7 @@ import handleUri from '../../../shared/utils/UriHandler';
 
 const log = require('electron-log');
 const path = require('path');
+const remoteMain = require('@electron/remote/main');
 
 let ui;
 
@@ -31,9 +32,9 @@ const createInterface = (resourcePath, route = '/', closable = true, store, uri 
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
+  remoteMain.enable(ui.webContents);
 
   uiStateKeeper.track(ui);
 

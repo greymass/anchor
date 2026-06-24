@@ -8,6 +8,7 @@ import { windowStateKeeper } from '../../../shared/electron/windowStateKeeper';
 const { exec } = require('child_process');
 const log = require('electron-log');
 const path = require('path');
+const remoteMain = require('@electron/remote/main');
 
 const isMac = () => process.platform === 'darwin';
 
@@ -39,9 +40,9 @@ const createProtocolHandlers = (resourcePath, store, request = false) => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
+  remoteMain.enable(ui.webContents);
 
   ui.loadURL(`file://${path.join(resourcePath, 'renderer/handler/index.html')}`);
 

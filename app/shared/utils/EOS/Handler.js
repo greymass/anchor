@@ -38,12 +38,12 @@ const {
 const {
   JsSignatureProvider
 } = require("eosjs2/node_modules/eosjs/dist/eosjs-jssig");
-const { remote } = require("electron");
+const { getGlobal } = require("../../electron/remote");
 
 const LedgerApi = require("../../actions/helpers/hardware/ledger").default;
 
 // Local store for ABIs
-const Store = require("electron-store");
+const Store = require("../../electron/store");
 
 const abiCache = new Store({
   name: "abis"
@@ -553,7 +553,7 @@ class LedgerSignatureProvider {
       authorityProvider: this.getAuthorityProvider(),
       rpc: this.rpc
     });
-    this.ledger = global.hardwareLedger || remote.getGlobal("hardwareLedger");
+    this.ledger = global.hardwareLedger || getGlobal("hardwareLedger");
   }
   getAuthorityProvider() {
     const { rpc } = this;

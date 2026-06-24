@@ -6,7 +6,7 @@ import { Button, Icon, Input, Header, Label, List, Segment, Table } from 'semant
 
 import ToolsHardwareLedgerStatus from './Ledger/Status';
 
-const { remote } = require('electron');
+const { getGlobal } = require('../../../electron/remote');
 
 class ToolsHardwareLedger extends Component<Props> {
   state = {
@@ -30,7 +30,7 @@ class ToolsHardwareLedger extends Component<Props> {
       status,
       t,
     } = this.props;
-    const transport = global.hardwareLedger || remote.getGlobal('hardwareLedger');
+    const transport = global.hardwareLedger || getGlobal('hardwareLedger');
     return (
       <Segment color="violet" piled style={{ margin: 0 }}>
         <ToolsHardwareLedgerStatus

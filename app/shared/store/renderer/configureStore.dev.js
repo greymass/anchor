@@ -1,13 +1,13 @@
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { electronEnhancer } from 'redux-electron-store';
 import { persistStore, persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 import rootReducer from '../../reducers';
 import persistConfig from '../shared/persist';
 import logger from '../shared/logger';
+import { electronEnhancer } from './electronEnhancer';
 
 const history = createHashHistory();
 
