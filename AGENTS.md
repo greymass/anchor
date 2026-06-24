@@ -25,7 +25,8 @@ Extract only when it clearly reduces duplication, improves readability, isolates
 
 Run commands from the repo `root` with **yarn**.
 
-- `yarn lint` and `yarn build` must pass before considering tasks completed.
+- `yarn lint`, `yarn build`, and `yarn package-win-local` must pass before considering tasks completed.
   - `yarn lint` — ESLint.
   - `yarn build` — Production builds.
+  - `yarn package-win-local` — Windows local build.
 - Use `yarn lint-fix` to apply ESLint fixes when formatting fixes are needed.
