@@ -34,7 +34,9 @@ let sHandler = null;
 let pHandler = null;
 let uri = null;
 
-if (process.mainModule.filename.indexOf('app.asar') === -1) {
+const mainModuleFilename = process.mainModule ? process.mainModule.filename : __filename;
+
+if (mainModuleFilename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
   resourcePath = path.join(resourcePath, '../');
 }
