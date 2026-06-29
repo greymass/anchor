@@ -24,6 +24,9 @@
     "wallet"
   ],
   "homepage": "https://github.com/greymass/anchor#readme",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development node --trace-warnings -r @babel/register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js",
@@ -73,6 +76,7 @@
     "electron-fetch": "^1.7.4",
     "electron-store": "^2.0.0",
     "electron-updater": "^4.3.1",
+    "eosio-key-encryption": "^1.2.0",
     "eosio-signing-request": "^2.5.1",
     "eosjs": "16.0.8",
     "eosjs2": "https://github.com/aaroncox/eosjs2",
