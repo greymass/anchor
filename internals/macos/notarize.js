@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { notarize } = require("electron-notarize");
+const { notarize } = require("@electron/notarize");
 
 exports.default = async function notarizing(context) {
   const { electronPlatformName, appOutDir } = context;
@@ -7,20 +7,29 @@ exports.default = async function notarizing(context) {
     return;
   }
 
-  if (!("APPLEID" in process.env && "APPLEIDPASS" in process.env)) {
-    console.warn(
-      "Skipping notarizing step. APPLEID and APPLEIDPASS env variables must be set"
+  const { APPLEID, APPLEIDPASS, APPLETEAMID } = process.env;
+  const missing = [
+    ["APPLEID", APPLEID],
+    ["APPLEIDPASS", APPLEIDPASS],
+    ["APPLETEAMID", APPLETEAMID]
+  ]
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+
+  if (missing.length > 0) {
+    throw new Error(
+      `Cannot notarize: ${missing.join(", ")} not set. ` +
+        "APPLEIDPASS must be an app-specific password from appleid.apple.com."
     );
-    console.log(process.env);
-    return;
   }
 
   const appName = context.packager.appInfo.productFilename;
 
   await notarize({
-    appBundleId: "com.greymass.anchordesktop.release",
+    tool: "notarytool",
     appPath: `${appOutDir}/${appName}.app`,
-    appleId: process.env.APPLEID,
-    appleIdPassword: process.env.APPLEIDPASS
+    appleId: APPLEID,
+    appleIdPassword: APPLEIDPASS,
+    teamId: APPLETEAMID
   });
 };

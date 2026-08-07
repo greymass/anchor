@@ -20,6 +20,10 @@ echo "shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-x64.dmg"
 shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-x64.dmg
 echo "shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-x64.zip"
 shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-x64.zip
+echo "shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-arm64.dmg"
+shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-arm64.dmg
+echo "shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-arm64.zip"
+shasum -b -a 512 mac-anchor-wallet-1.4.0-beta.2-arm64.zip
 echo "shasum -b -a 512 win-anchor-wallet-1.4.0-beta.2.exe"
 shasum -b -a 512 win-anchor-wallet-1.4.0-beta.2.exe
 

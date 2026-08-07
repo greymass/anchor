@@ -89,12 +89,23 @@
     "entitlements": "internals/macos/entitlements.mac.plist",
     "entitlementsInherit": "internals/macos/entitlements.mac.inherit.plist",
     "identity": "Greymass Inc. (CE35MAVD43)",
-    "provisioningProfile": "embedded.provisionprofile",
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
     "target": [
-      "dmg",
-      "zip"
+      {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
+      {
+        "target": "zip",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     ]
   },
   "dmg": {
