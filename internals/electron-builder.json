@@ -115,8 +115,11 @@
   },
   "win": {
     "icon": "app/renderer/assets/icons/win/icon.ico",
-    "signtoolOptions": {
-      "publisherName": "Greymass Inc."
+    "azureSignOptions": {
+      "publisherName": "Greymass Inc.",
+      "endpoint": "https://wus2.codesigning.azure.net/",
+      "codeSigningAccountName": "greymass",
+      "certificateProfileName": "anchor-desktop"
     },
     "target": [
       {
