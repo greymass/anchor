@@ -150,7 +150,7 @@ app.on('open-url', (e, url) => {
 app.on('before-quit', () => {
   log.info('anchor: before-quit');
   if (initHardwareRetry) {
-    clearInterval(initHardwareRetry);
+    clearTimeout(initHardwareRetry);
   }
   if (sHandler && sHandler.manager) {
     sHandler.manager.disconnect();
@@ -213,6 +213,10 @@ const showManager = () => {
 
 let initHardwareRetry;
 let initHardwareOpening = false;
+let initHardwareAttempts = 0;
+// Bound the reconnect loop. A failed open leaks the underlying HID handle until GC
+// reclaims it, so retrying forever keeps the device permanently busy.
+const initHardwareMaxAttempts = 15;
 
 // Lock to prevent multiple session handlers from starting at once
 let initializingSessionManager = false;
@@ -245,6 +249,10 @@ const initHardwareLedger = (e, signPath, devicePath) => {
     clearTimeout(initHardwareRetry);
     initHardwareRetry = null;
   }
+  // A request originating from the renderer is user initiated, so restart the retry budget.
+  if (e) {
+    initHardwareAttempts = 0;
+  }
   // Reopening a HID device that already holds an open handle fails; treat as connected.
   if (global.hardwareLedger && global.hardwareLedger.transport) {
     log.info('initHardwareLedger: transport already open, refreshing app configuration');
@@ -260,6 +268,7 @@ const initHardwareLedger = (e, signPath, devicePath) => {
   Transport.open(devicePath)
     .then(transport => {
       log.info('initHardwareLedger: hardware ledger transport success');
+      initHardwareAttempts = 0;
       if (process.env.NODE_ENV === 'development') {
         transport.setDebugMode(true);
       }
@@ -277,7 +286,12 @@ const initHardwareLedger = (e, signPath, devicePath) => {
     })
     .catch(error => {
       log.info(`initHardwareLedger: hardware ledger transport failure ${error}`);
-      initHardwareRetry = setTimeout(() => initHardwareLedger(false, signPath, devicePath), 2000);
+      initHardwareAttempts += 1;
+      if (initHardwareAttempts < initHardwareMaxAttempts) {
+        initHardwareRetry = setTimeout(() => initHardwareLedger(false, signPath, devicePath), 2000);
+      } else {
+        log.info(`initHardwareLedger: giving up after ${initHardwareAttempts} attempts`);
+      }
       store.dispatch({
         payload: {
           error,
