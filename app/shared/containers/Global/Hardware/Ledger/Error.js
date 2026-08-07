@@ -10,8 +10,6 @@ import * as SettingsActions from '../../../../actions/settings';
 import Status from './Status';
 import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
 
-const { remote } = require('electron');
-
 export class GlobalHardwareLedgerError extends Component<Props> {
   render() {
     const {

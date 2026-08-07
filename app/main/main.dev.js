@@ -17,11 +17,14 @@ import { getAppConfiguration, ledgerStartListen } from '../shared/actions/hardwa
 
 const log = require('electron-log');
 const path = require('path');
+const remoteMain = require('@electron/remote/main');
 const Transport = require('@ledgerhq/hw-transport-node-hid').default;
 
 const isMac = () => process.platform === 'darwin';
 
 require('electron-context-menu')();
+
+remoteMain.initialize();
 
 let resourcePath = __dirname;
 let mainWindow = null;
@@ -31,7 +34,9 @@ let sHandler = null;
 let pHandler = null;
 let uri = null;
 
-if (process.mainModule.filename.indexOf('app.asar') === -1) {
+const mainModuleFilename = process.mainModule ? process.mainModule.filename : __filename;
+
+if (mainModuleFilename.indexOf('app.asar') === -1) {
   log.info('running in debug without asar, modifying path');
   resourcePath = path.join(resourcePath, '../');
 }
@@ -64,9 +69,12 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
   log.transports.file.level = 'info';
 }
 
-// main exceptions to electron-log
-app.on('uncaughtException', error => {
-  log.error(error);
+// main exceptions to electron-log (app does not emit this; process does)
+process.on('uncaughtException', error => {
+  log.error('uncaughtException', error);
+});
+process.on('unhandledRejection', error => {
+  log.error('unhandledRejection', error);
 });
 
 const lock = process.mas || app.requestSingleInstanceLock();
@@ -96,7 +104,6 @@ if (!lock) {
 // main start
 app.on('ready', async () => {
   log.info('anchor: ready');
-  app.allowRendererProcessReuse = false;
 
   const { settings } = store.getState();
 
@@ -205,6 +212,7 @@ const showManager = () => {
 };
 
 let initHardwareRetry;
+let initHardwareOpening = false;
 
 // Lock to prevent multiple session handlers from starting at once
 let initializingSessionManager = false;
@@ -234,8 +242,21 @@ const initHardwareLedger = (e, signPath, devicePath) => {
   log.info('initHardwareLedger: initializing hardware ledger');
   if (initHardwareRetry) {
     log.info('initHardwareLedger: clearing hardware ledger retry');
-    clearInterval(initHardwareRetry);
+    clearTimeout(initHardwareRetry);
+    initHardwareRetry = null;
   }
+  // Reopening a HID device that already holds an open handle fails; treat as connected.
+  if (global.hardwareLedger && global.hardwareLedger.transport) {
+    log.info('initHardwareLedger: transport already open, refreshing app configuration');
+    store.dispatch(getAppConfiguration());
+    return;
+  }
+  // Serialize opens; concurrent connect requests would race for the single HID handle.
+  if (initHardwareOpening) {
+    log.info('initHardwareLedger: open already in progress, ignoring');
+    return;
+  }
+  initHardwareOpening = true;
   Transport.open(devicePath)
     .then(transport => {
       log.info('initHardwareLedger: hardware ledger transport success');
@@ -256,7 +277,7 @@ const initHardwareLedger = (e, signPath, devicePath) => {
     })
     .catch(error => {
       log.info(`initHardwareLedger: hardware ledger transport failure ${error}`);
-      initHardwareRetry = setInterval(initHardwareLedger(false, signPath, devicePath), 2000);
+      initHardwareRetry = setTimeout(() => initHardwareLedger(false, signPath, devicePath), 2000);
       store.dispatch({
         payload: {
           error,
@@ -264,6 +285,9 @@ const initHardwareLedger = (e, signPath, devicePath) => {
         },
         type: types.HARDWARE_LEDGER_TRANSPORT_FAILURE,
       });
+    })
+    .finally(() => {
+      initHardwareOpening = false;
     });
 };
 

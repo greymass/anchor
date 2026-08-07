@@ -10,8 +10,6 @@ import ToolsHardwareLedgerStatus from '../../../../components/Tools/Hardware/Led
 import * as SettingsActions from '../../../../actions/settings';
 import * as HardwareLedgerActions from '../../../../actions/hardware/ledger';
 
-const { remote } = require('electron');
-
 class GlobalHardwareLedgerStatus extends Component<Props> {
   constructor(props) {
     super(props);

@@ -9,8 +9,14 @@ export default class HardwareLedger {
     return this;
   }
   destroy() {
-    if (this.transport && this.transport.close) {
-      this.transport.close();
+    if (this.transport) {
+      const { device } = this.transport;
+      // transport.close() can hang on a pending exchange; close the HID handle directly.
+      if (device && device.close) {
+        try { device.close(); } catch (e) {} // eslint-disable-line no-empty
+      } else if (this.transport.close) {
+        this.transport.close();
+      }
     }
     this.transport = false;
   }

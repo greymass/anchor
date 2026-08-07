@@ -74,14 +74,12 @@ class GlobalButtonWalletUpgradeWatch extends Component<Props> {
         }
       ));
       modal = (
-        <GlobalButtonWalletUpgradeWatch
-          account={current.account}
-          authorization={current.authorization}
-          onSubmit={() => this.upgradeWatchWallet(current.account, current.authorization)}
+        <Modal
           open={open}
-          setAuthorization={this.setAuthorization}
-        />
-
+          size="small"
+          onClose={() => this.setState({ open: false })}
+          closeIcon
+        >
         <Modal.Content>
           <p>Account: {current.account}</p>
           <p>authorization: {current.authorization}</p>
