@@ -2,6 +2,7 @@
   "appId": "com.greymass.anchordesktop.release",
   "productName": "Anchor Wallet",
   "afterSign": "internals/macos/notarize.js",
+  "afterAllArtifactBuild": "internals/macos/staple.js",
   "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
   "asar": true,
   "directories": {
@@ -35,15 +36,17 @@
     "category": "Network",
     "description": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
     "desktop": {
-      "Name": "anchor-wallet",
-      "GenericName": "Anchor - Antelope Desktop Wallet",
-      "X-GNOME-FullName": "anchor-wallet",
-      "Comment": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
-      "Type": "Application",
-      "Terminal": "false",
-      "StartupNotify": "false",
-      "Categories": "Network;",
-      "MimeType": "application/x-esr;x-scheme-handler/esr;application/x-anchor;x-scheme-handler/anchor;"
+      "entry": {
+        "Name": "anchor-wallet",
+        "GenericName": "Anchor - Antelope Desktop Wallet",
+        "X-GNOME-FullName": "anchor-wallet",
+        "Comment": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
+        "Type": "Application",
+        "Terminal": "false",
+        "StartupNotify": "false",
+        "Categories": "Network;",
+        "MimeType": "application/x-esr;x-scheme-handler/esr;application/x-anchor;x-scheme-handler/anchor;"
+      }
     },
     "icon": "app/renderer/assets/icons/png",
     "publish": {
@@ -87,12 +90,23 @@
     "entitlements": "internals/macos/entitlements.mac.plist",
     "entitlementsInherit": "internals/macos/entitlements.mac.inherit.plist",
     "identity": "Greymass Inc. (CE35MAVD43)",
-    "provisioningProfile": "embedded.provisionprofile",
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
     "target": [
-      "dmg",
-      "zip"
+      {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      },
+      {
+        "target": "zip",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     ]
   },
   "dmg": {
@@ -112,9 +126,13 @@
     ]
   },
   "win": {
-    "certificateFile": "greymass.pfx",
     "icon": "app/renderer/assets/icons/win/icon.ico",
-    "publisherName": "Greymass Inc.",
+    "azureSignOptions": {
+      "publisherName": "Greymass Inc.",
+      "endpoint": "https://wus2.codesigning.azure.net/",
+      "codeSigningAccountName": "greymass",
+      "certificateProfileName": "anchor-desktop"
+    },
     "target": [
       {
         "target": "nsis",

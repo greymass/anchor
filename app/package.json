@@ -1,7 +1,7 @@
 {
   "name": "anchor-wallet",
   "productName": "Anchor Wallet",
-  "version": "1.4.0-beta.1",
+  "version": "1.4.0-beta.2",
   "description": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
   "main": "./main.prod.js",
   "author": {
@@ -16,13 +16,13 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.14.8",
-    "@ledgerhq/hw-transport-node-hid": "6.6.0"
+    "@ledgerhq/hw-transport-node-hid": "6.33.5"
   },
   "devDependencies": {
     "@babel/register": "^7.15.3"
   },
   "resolutions": {
     "node-hid": "3.3.0",
-    "usb": "1.7.2"
+    "usb": "2.9.0"
   }
 }
