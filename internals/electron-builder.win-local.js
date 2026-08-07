@@ -4,7 +4,7 @@ module.exports = {
   ...releaseConfig,
   win: {
     icon: releaseConfig.win.icon,
-    publisherName: releaseConfig.win.publisherName,
+    signtoolOptions: releaseConfig.win.signtoolOptions,
     target: [
       {
         target: 'nsis',

@@ -35,15 +35,17 @@
     "category": "Network",
     "description": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
     "desktop": {
-      "Name": "anchor-wallet",
-      "GenericName": "Anchor - Antelope Desktop Wallet",
-      "X-GNOME-FullName": "anchor-wallet",
-      "Comment": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
-      "Type": "Application",
-      "Terminal": "false",
-      "StartupNotify": "false",
-      "Categories": "Network;",
-      "MimeType": "application/x-esr;x-scheme-handler/esr;application/x-anchor;x-scheme-handler/anchor;"
+      "entry": {
+        "Name": "anchor-wallet",
+        "GenericName": "Anchor - Antelope Desktop Wallet",
+        "X-GNOME-FullName": "anchor-wallet",
+        "Comment": "An Antelope Light Wallet with simple tools for basic activities and advanced tools for power users.",
+        "Type": "Application",
+        "Terminal": "false",
+        "StartupNotify": "false",
+        "Categories": "Network;",
+        "MimeType": "application/x-esr;x-scheme-handler/esr;application/x-anchor;x-scheme-handler/anchor;"
+      }
     },
     "icon": "app/renderer/assets/icons/png",
     "publish": {
@@ -112,9 +114,10 @@
     ]
   },
   "win": {
-    "certificateFile": "greymass.pfx",
     "icon": "app/renderer/assets/icons/win/icon.ico",
-    "publisherName": "Greymass Inc.",
+    "signtoolOptions": {
+      "publisherName": "Greymass Inc."
+    },
     "target": [
       {
         "target": "nsis",
