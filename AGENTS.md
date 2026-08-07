@@ -23,13 +23,16 @@ Extract only when it clearly reduces duplication, improves readability, isolates
 
 ## Task Completion Requirements
 
-Run commands from the repo `root` with **yarn**.
+Run commands from the repo `root` with **yarn**, on the Node version pinned in `.nvmrc` (`nvm use`).
 
 - `yarn lint`, `yarn test`, `yarn build`, `yarn package-win-local`, and `yarn dev` must pass before considering tasks completed.
   - `yarn lint` — ESLint.
   - `yarn test` — Jest tests.
   - `yarn build` — Production builds.
-  - `yarn package-win-local` — Windows local build.
+  - `yarn package-win-local` — Windows local build. **Run this on Windows.** Windows packaging cannot be
+    cross-compiled from macOS or Linux: `node-hid` ships `pkg-prebuilds` binaries that `@electron/rebuild`
+    does not recognise, so it attempts a node-gyp source build and fails on a non-Windows host. Building on
+    Windows also means the Ledger HID/USB native modules that ship are the ones actually exercised.
   - `yarn dev` — Development server.
 - Use `yarn lint-fix` to apply ESLint fixes when formatting fixes are needed.
 
