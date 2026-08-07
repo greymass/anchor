@@ -48,7 +48,6 @@
     "import/newline-after-import": "warn",
     "import/no-dynamic-require": "warn",
     "import/prefer-default-export": "warn",
-    "jest/no-disabled-tests": "warn",
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/interactive-supports-focus": "warn",
     "jsx-a11y/label-has-for": "warn",
