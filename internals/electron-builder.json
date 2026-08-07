@@ -2,6 +2,7 @@
   "appId": "com.greymass.anchordesktop.release",
   "productName": "Anchor Wallet",
   "afterSign": "internals/macos/notarize.js",
+  "afterAllArtifactBuild": "internals/macos/staple.js",
   "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
   "asar": true,
   "directories": {
