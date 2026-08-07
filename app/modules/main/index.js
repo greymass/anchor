@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
@@ -36,10 +35,6 @@ class Index extends Component<Props> {
     );
   }
 }
-
-Index.childContextTypes = {
-  persistor: PropTypes.object
-};
 
 const renderApp = routes => {
   render(
