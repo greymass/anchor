@@ -92,6 +92,7 @@
     "identity": "Greymass Inc. (CE35MAVD43)",
     "hardenedRuntime": true,
     "gatekeeperAssess": false,
+    "notarize": false,
     "target": [
       {
         "target": "dmg",
