@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`GlobalTransactionMessageErrorDefault renders correctly 1`] = `
-<div>
-  <p
-    key="error message"
-  />
-</div>
-`;
