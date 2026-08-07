@@ -88,7 +88,7 @@ class ProducersTableRow extends Component<Props> {
           singleLine
         >
           <Header size="small">
-            <span styles={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
+            <span style={{ fontFamily: '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace' }}>
               {producer.address || producer.owner}
             </span>
             <Header.Subheader>
