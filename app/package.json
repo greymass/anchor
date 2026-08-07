@@ -16,13 +16,13 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.14.8",
-    "@ledgerhq/hw-transport-node-hid": "6.6.0"
+    "@ledgerhq/hw-transport-node-hid": "6.33.5"
   },
   "devDependencies": {
     "@babel/register": "^7.15.3"
   },
   "resolutions": {
     "node-hid": "3.3.0",
-    "usb": "1.7.2"
+    "usb": "2.9.0"
   }
 }
