@@ -222,18 +222,6 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": ">=12",
-      "onFail": "warn"
-    },
-    "packageManager": {
-      "name": "npm",
-      "version": ">=4",
-      "onFail": "warn"
-    }
-  },
   "resolutions": {
     "@greymass/eosio": "^0.6.3"
   },
