@@ -23,14 +23,14 @@ export default function transaction(state = initialState, action) {
         actor: 'undefined',
         permission: 'undefined',
       });
-      const requiredSignatures = (String(firstAuth === 'greymassfuel')) ? 2 : 1;
+      const requiredSignatures = (String(firstAuth.actor) === 'greymassfuel') ? 2 : 1;
       return Object.assign({}, state, {
         contracts: action.payload.contracts,
         data: action.payload.transaction,
         decoded: action.payload.decoded,
         signed: !!(
-          action.payload.transaction.transaction
-          && action.payload.transaction
+          action.payload.transaction
+          && action.payload.transaction.transaction
           && action.payload.transaction.transaction.signatures
           && action.payload.transaction.transaction.signatures.length > requiredSignatures - 1
         )
