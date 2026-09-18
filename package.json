@@ -41,7 +41,7 @@
     "lint-fix": "yarn lint --fix",
     "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
-    "package-mac": "yarn build && electron-builder --publish never -c internals/electron-builder.json",
+    "package-mac": "yarn build && electron-builder --publish never -c internals/electron-builder.json && node internals/macos/update-info.js",
     "package-mas": "yarn build && electron-builder --publish never -c internals/electron-builder.mas.json",
     "package-linux": "yarn build && rimraf app/node_modules/usb/build app/node_modules/usb/bin app/node_modules/node-hid/build && electron-builder --linux --publish never -c internals/electron-builder.linux.js",
     "package-win": "yarn build && electron-builder --win --x64 --ia32 --publish never -c internals/electron-builder.json",
