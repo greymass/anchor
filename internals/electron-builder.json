@@ -88,9 +88,6 @@
     "darkModeSupport": false,
     "icon": "app/renderer/assets/icons/mac/icon.icns",
     "minimumSystemVersion": "12.0",
-    "releaseInfo": {
-      "minimumSystemVersion": "21.0.0"
-    },
     "entitlements": "internals/macos/entitlements.mac.plist",
     "entitlementsInherit": "internals/macos/entitlements.mac.inherit.plist",
     "identity": "Greymass Inc. (CE35MAVD43)",
