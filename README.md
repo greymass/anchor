@@ -26,7 +26,7 @@ A dedicated Anchor website will be released in the future with a more detailed b
 
 We urge all users to only download Anchor from one of these two locations:
 
-- The link from the [greymass.com](https://greymass.com) website.
+- The download page at [anchorwallet.io/download](https://anchorwallet.io/download).
 - The README (this file) or releases section of this repository at [github.com/greymass/anchor](https://github.com/greymass/anchor).
 
 When downloading from either location, check the URL bar of your browser to ensure you are in the correct place and not visiting a phishing link.
