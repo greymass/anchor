@@ -166,7 +166,7 @@
     "css-minimizer-webpack-plugin": "^3.0.2",
     "detect-port": "^1.2.3",
     "dotenv": "^16.4.5",
-    "electron": "42.5.0",
+    "electron": "42.11.16",
     "electron-builder": "26.15.7",
     "electron-debug": "^2.0.0",
     "electron-log": "^4.4.1",
